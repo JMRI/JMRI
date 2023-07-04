@@ -106,7 +106,7 @@ public class ConstantValue extends VariableValue {
     public void setValue(int value) {
         int oldVal = _value.getSelectedIndex();
         _value.setSelectedIndex(value);
-        if (oldVal != value || getState() == VariableValue.UNKNOWN) {
+        if (oldVal != value || getState() == ValueState.UNKNOWN) {
             prop.firePropertyChange("Value", null, value);
         }
     }
@@ -156,7 +156,7 @@ public class ConstantValue extends VariableValue {
      *
      */
     @Override
-    public void setCvState(int state) {
+    public void setCvState(ValueState state) {
     }
 
     @Override
@@ -208,7 +208,7 @@ public class ConstantValue extends VariableValue {
     public void readAll() {
         log.debug("read invoked");
         setToRead(false);
-        setState(READ);
+        setState(ValueState.READ);
         setBusy(true);
         setBusy(false);
     }
@@ -225,7 +225,7 @@ public class ConstantValue extends VariableValue {
     public void writeAll() {
         log.debug("write invoked");
         setToWrite(false);
-        setState(STORED);
+        setState(ValueState.STORED);
         setBusy(true);
         setBusy(false);
     }

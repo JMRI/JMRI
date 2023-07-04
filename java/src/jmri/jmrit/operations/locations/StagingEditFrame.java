@@ -2,10 +2,7 @@ package jmri.jmrit.operations.locations;
 
 import java.awt.GridBagLayout;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import jmri.jmrit.operations.locations.tools.TrackDestinationEditAction;
 import jmri.jmrit.operations.routes.Route;
@@ -75,7 +72,7 @@ public class StagingEditFrame extends TrackEditFrame {
 
         super.initComponents(location, track);
 
-        _toolMenu.insert(new TrackDestinationEditAction(_track), TOOL_MENU_OFFSET);
+        _toolMenu.insert(new TrackDestinationEditAction(this), TOOL_MENU_OFFSET);
         addHelpMenu("package.jmri.jmrit.operations.Operations_Staging", true); // NOI18N
 
         // override text strings for tracks

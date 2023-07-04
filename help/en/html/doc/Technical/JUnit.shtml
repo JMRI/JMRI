@@ -346,21 +346,18 @@ on <a href="StartUpScripts.shtml">startup scripts</a>.
       against the build to run the tests against the successful build of the code base.
       <h3 id="Reporting">Error Reporting</h3>
       If a test fails during the continuous integration execution of "alltest", an e-mail is sent
-      to the jmri-build e-mail list as well as to the developers who have checked in code which was
-      included in the build.
-      <p>You may visit the website <a href=
-      "https://lists.sourceforge.net/lists/listinfo/jmri-builds">to subscribe to the jmri-builds
-      e-mail list</a> to get the bad news as quickly as possible, or monitor <a href=
-      "http://sourceforge.net/mailarchive/forum.php?forum_name=jmri-builds">to view the archives of
-      the e-mail list</a> and see past logs. Or you can monitor the "dashboard" at the <a href=
+      to the developers who have checked in code which was included in the build.
+
+      <p>You can monitor the "dashboard" at the <a href=
       "ContinuousIntegration.shtml">continuous integration</a> website.</p>
 
-      <p>(When the build succeeds, nothing is mailed, to cut down on traffic)</p>
+      <a href="https://sourceforge.net/p/jmri/mailman/jmri-builds/">View the archives of
+      the e-mail list</a> and see past logs.
 
       <h3 id="Coverage">Code Coverage Reports</h3>
 
       <p>As part of running the tests, Jenkins accumulates information on how much of the code was
-      executed, called the "code coverage". We use the <a href="http://eclemma.org/jacoco/">JaCoCo
+      executed, called the "code coverage". We use the <a href="https://www.eclemma.org/jacoco/">JaCoCo
       tool</a> to do the accounting. It provides detailed reports at multiple levels:</p>
 
       <ul>
@@ -711,7 +708,7 @@ purpose of the operation?
       </ul>
 
       <p>For example, if creating a thread based on <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomat</a>,
+      "https://www.jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomat</a>,
       you can check the start with:</p>
 
       <pre style="font-family: monospace;">
@@ -858,8 +855,7 @@ TemporaryDir</a>.
           </pre>You should provide the reason for ignoring this test in the <code>@Disabled</code>
 argument. <code>@Disabled</code> without an argument will compile, but Jenkins will mark it as an
 error.
-          <p>Also note the <a href=
-          "https://jmri.org/JavaDoc/doc/jmri/util/junit/annotations/ToDo.html">@jmri.util.junit.annotations.ToDo
+          <p>Also note the <code>@jmri.util.junit.annotations.ToDo</code>
           annotation</a> which indicates that this needs work and provides some more information
           about what needs to be done. The <code>@ToDo</code> is required when an empty test is
           provided to ensure that the parent class test doesn't run, but the parent class is
@@ -872,8 +868,7 @@ error.
           implementation of a test method that's not applicable to this particular concrete test
           class. It might, for example, test a feature or message that's not applicable for a
           specific system's hardware. In that case, you provide a null body to do nothing, and mark
-          the test as not applicable with the <a href=
-          "https://jmri.org/JavaDoc/doc/jmri/util/junit/annotations/NotApplicable.html">@jmri.util.junit.annotations.NotApplicable</a>
+          the test as not applicable with the <code>@jmri.util.junit.annotations.NotApplicable</code>
           annotation like this:</p>
 
           <pre style="font-family: monospace;">
@@ -1043,7 +1038,7 @@ milliseconds can improve the reliability of tests. Also, setting
 
       <ul>
         <li>Do all those operations on the GUI thread by enclosing them in <a href=
-        "https://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html#runOnGUI-jmri.util.ThreadingUtil.ThreadAction-">
+        "https://www.jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html#runOnGUI-jmri.util.ThreadingUtil.ThreadAction-">
           jmri.util.ThreadingUtil.runOnGUI</a> calls so that the entire sequence of operations is
           done on the Swing. This is what's normally done in Swing applications, and it's a test of
           the real operation.
@@ -1060,7 +1055,7 @@ milliseconds can improve the reliability of tests. Also, setting
           example 20) is how many milliseconds the queue has to remain empty before proceeding.
           We're not sure what the best value is; see <a href=
           "https://github.com/JMRI/JMRI/issues/5321">JMRI Issue #5321</a> and <a href=
-          "https://netbeans.org/bugzilla/show_bug.cgi?id=36665">NetBeans bug tracker 36665</a> for
+          "https://bz.apache.org/netbeans/show_bug.cgi?id=36665">NetBeans bug tracker 36665</a> for
           some background discussion. Briefly, since things like flashing cursors fire Swing
           events, the queue doesn't stay idle forever once the primary work is done. A long
           wait-for-empty value may never occur.</p>
@@ -1110,12 +1105,12 @@ milliseconds can improve the reliability of tests. Also, setting
       to run the test multiple ( in this case 1000 ) times.</p>
 
       <p>Check that no remnanat threads are left over after tests, see <code>jmri.util.JUnitUtil.failRemnantThreads</code>
-      in <a href="testingvars">Optional Checks</a>.
+      in <a href="#testingvars">Optional Checks</a>.
       <br/>Ideally, run whole-package Tests in case other Tests being run around the same time are
       leaving Threads that interfere with the flaky test.</p>
 
       <p>Is the Test inheriting objects from other tests?  It may be worth running the tests with a
-      completely fresh <a href="io">JMRI User Profile in a Temporary Directory</a>.</p>
+      completely fresh <a href="#io">JMRI User Profile in a Temporary Directory</a>.</p>
 
       <p>Mocking Frameworks can create a more controlled environment for the class under test by simulating
       external dependencies.  JMRI uses <a href="https://site.mockito.org/">Mockito</a>, org.mockito.Mockito.</p>

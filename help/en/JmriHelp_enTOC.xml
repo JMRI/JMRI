@@ -771,13 +771,18 @@
 
   </tocitem>
   <tocitem text="OpenLCB " target="html.hardware.openlcb.index">
-   <tocitem text="Names " target="html.hardware.openlcb.Names"/>
 
-   <tocitem text="Signal Masts " target="html.hardware.openlcb.OlcbSignalMast"/>
+      <tocitem text="Configure Nodes " target="package.jmri.jmrix.openlcb.swing.networktree.NetworkTreePane"/>
 
-   <tocitem text="Configure Nodes " target="package.jmri.jmrix.openlcb.swing.networktree.NetworkTreePane"/>
+      <tocitem text="Event Table" target="package.jmri.jmrix.openlcb.swing.eventtable.EventTablePane"/>
 
-   <tocitem text="Send OpenLCB Frame " target="package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendFrame"/>
+      <tocitem text="Memory Tool" target="package.jmri.jmrix.openlcb.swing.memtool.MemoryToolPane"/>
+
+      <tocitem text="Names " target="html.hardware.openlcb.Names"/>
+
+      <tocitem text="Signal Masts " target="html.hardware.openlcb.OlcbSignalMast"/>
+
+      <tocitem text="Send Frame" target="package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendFrame"/>
 
   </tocitem>
   <tocitem text="Powerline " target="html.hardware.powerline.index">

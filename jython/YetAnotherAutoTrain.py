@@ -15,7 +15,8 @@
 #           the yaat directory in the user files location:  preference:yaat/TrainList.txt
 # v2.2 -- Add the ability to use "compiled" trains.
 #         Add the ability to create custom extensions.
-# Author:  Dave Sand copyright (c) 2018 - 2020
+# v2.3 -- Add Set turntable position command.
+# Author:  Dave Sand copyright (c) 2018 - 2023
 
 # The following help content is also available at https://jmri.org/help/en/html/scripthelp/yaat/YAAT.shtml
 
@@ -173,6 +174,8 @@ BackAndForth = [
 'Start when sensor BF-Start is active',
 'Set block BF-Left occupied',
 'Assign short address 63 as Shuttle in BF-Left',
+
+'Set turntable TUR1 on panel YAAT Demo to ray 1',
 
 # Test custom extension
 'Copy_memory',
@@ -392,6 +395,8 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
                 self.doSetSpeed(action)
             elif actionKey == 'SetTurnout':
                 self.doSetTurnout(action)
+            elif actionKey == 'SetTurntable':
+                self.doSetTurntable(action)
             elif actionKey == 'Start':
                 self.doStart(action)
             elif actionKey == 'Stop':
@@ -699,6 +704,23 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
             self.waitMsec(250)
         self.waitMsec(turnoutDelay)
 
+    def doSetTurntable(self, action):
+        act, turntableName, panelName, rayIndex = action
+        editorManager = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
+        for layout in editorManager.getAll(jmri.jmrit.display.layoutEditor.LayoutEditor):
+            if layout.getTitle() == panelName:
+                for turntable in layout.getLayoutTurntableViews():
+                    if turntable.getId() == turntableName:
+                        for raytrack in turntable.getRayTrackList():
+                            if raytrack.getConnectionIndex() == rayIndex:
+                                turntable.setPosition(rayIndex)
+                                return
+                        self.displayMessage.append('{} - Turntable error: the ray index, {}, is not found'.format(self.threadName, rayIndex))
+                        return
+                self.displayMessage.append('{} - Turntable error : the turntable name, {}, is not found'.format(self.threadName, turntableName))
+                return
+        self.displayMessage.append('{} - Turntable error: the layout name, {}, is not found'.format(self.threadName, panelName))
+
     def doStart(self, action):
         act, startName, startState = action
         sensor = sensors.getSensor(startName)
@@ -896,6 +918,8 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
                 self.compileSetSpeed(line)
             elif words[0] == 'Set' and words[1] == 'turnout':
                 self.compileSetTurnout(line)
+            elif words[0] == 'Set' and words[1] == 'turntable':
+                self.compileSetTurntable(line)
             elif words[0] == 'Start':
                 self.compileStart(line)
             elif words[0] == 'Stop':
@@ -1370,6 +1394,45 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         else:
             self.actionTokens.append(['SetTurnout', turnoutName, turnoutState, int(num * 1000)])
 
+    def compileSetTurntable(self, line):
+        # Set turntable <turntable name> on panel <panel name> to ray <#>
+        if logLevel > 2: print '  {} - {}'.format(self.threadName, line)
+        words = line.split()
+        flds = 3
+        regex = '\s*Set\s+turntable\s+(.+)\s+on\s+panel\s(.+)\sto\s+ray\s(\d+)'
+
+        pattern = re.compile(regex)
+        result = re.findall(pattern, line)
+        if logLevel > 3: print '    {} - result = {}'.format(self.threadName, result)
+        if len(result) == 0 or len(result[0]) != flds:
+            self.compileMessages.append('{} - Syntax error at line {}: {}'.format(self.threadName, self.lineNumber, line))
+            return
+        grps = result[0]
+        turntableName = grps[0]
+        panelName = grps[1]
+        rayIndex = grps[2]
+
+        try:
+            num = int(rayIndex)
+        except ValueError:
+            self.compileMessages.append('{} - Turntable error at line {}: the ray index, {}, is not a number'.format(self.threadName, self.lineNumber, turnoutWait))
+            return
+
+        editorManager = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
+        for layout in editorManager.getAll(jmri.jmrit.display.layoutEditor.LayoutEditor):
+            if layout.getTitle() == panelName:
+                for turntable in layout.getLayoutTurntableViews():
+                    if turntable.getId() == turntableName:
+                        for raytrack in turntable.getRayTrackList():
+                            if raytrack.getConnectionIndex() == num:
+                                self.actionTokens.append(['SetTurntable', turntableName, panelName, num])
+                                return
+                        self.compileMessages.append('{} - Turntable error at line {}: the ray index, {}, is not found'.format(self.threadName, self.lineNumber, num))
+                        return
+                self.compileMessages.append('{} - Turntable error at line {}: the turntable name, {}, is not found'.format(self.threadName, self.lineNumber, turntableName))
+                return
+        self.compileMessages.append('{} - Turntable error at line {}: the layout name, {}, is not found'.format(self.threadName, self.lineNumber, panelName))
+
     def compileStart(self, line):
         # Start when sensor <sensor name> is <active | inactive>
         if logLevel > 2: print '  {} - {}'.format(self.threadName, line)
@@ -1609,7 +1672,7 @@ def compileRequired(fullPath):
     if logLevel > 1: print 'Source file = {}, source time = {}, compile time = {}'.format(sourceName, sourceTime, pickleTime)
     return (sourceTime > pickleTime, fullPickleLocation)
 
-print 'YAAT v2.2'
+print 'YAAT v2.3'
 startTime = time()
 
 # Process custom extensions

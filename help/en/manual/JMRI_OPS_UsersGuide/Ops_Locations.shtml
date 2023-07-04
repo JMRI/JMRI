@@ -61,8 +61,8 @@
       checked="checked" type="radio"> Name <input name="radio2" id="radio2" value="radio2" type=
       "radio"> Id</strong> Sets the sort order for the locations</p>
 
-      <p style="margin-left: 40px;">Press <input name="button" id="button" value="Add" type=
-      "submit"> to <a href="Ops_AddLocations.shtml"><span style="font-weight: bold;">add a new
+      <p style="margin-left: 40px;">Press <span class="textbutton">Add</span>
+      to <a href="Ops_AddLocations.shtml"><span style="font-weight: bold;">add a new
       Location</span></a>.</p>
 
       <div class="ops-right">

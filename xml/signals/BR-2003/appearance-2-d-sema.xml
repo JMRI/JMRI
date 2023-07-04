@@ -9,11 +9,11 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Kevin</firstname><surname>Dickerson</surname></personname>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -40,15 +40,15 @@
         <date>2014-03-12</date>
         <authorinitials>KD</authorinitials>
         <revremark>Add in Caution for the specific appearance of danger and held</revremark>
-    </revision> 
+    </revision>
   </revhistory>
-  
+
   <aspecttable>BR</aspecttable>
 
   <name>Semephore Distance Signal</name>
-  
+
   <description>This uses a single head to control the appearance</description>
-  
+
   <appearances>
 
     <appearance>
@@ -56,6 +56,7 @@
       <show>green</show>
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaDistantClear.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Proceed.gif</imagelink>
+      <imagelink type="medium">../../../resources/icons/BritishRailSignals/Medium/semaDistantProceed.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -63,9 +64,10 @@
       <show>yellow</show>
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaDistantCaution.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Caution.gif</imagelink>
+      <imagelink type="medium">../../../resources/icons/BritishRailSignals/Medium/semaDistantCaution.gif</imagelink>
     </appearance>
   </appearances>
-  
+
   <specificappearances>
     <danger>
       <aspect>Caution</aspect>
@@ -74,27 +76,27 @@
       <aspect>Caution</aspect>
     </held>
   </specificappearances>
-  
+
   <aspectMappings>
    <aspectMapping>
      <advancedAspect>Danger</advancedAspect>
      <ourAspect>Caution</ourAspect>
    </aspectMapping>
-  
+
    <aspectMapping>
      <advancedAspect>Proceed</advancedAspect>
      <ourAspect>Proceed</ourAspect>
    </aspectMapping>
-   
+
    <aspectMapping>
      <advancedAspect>Off</advancedAspect>
      <ourAspect>Caution</ourAspect>
    </aspectMapping>
-   
+
    <aspectMapping>
      <advancedAspect>On</advancedAspect>
      <ourAspect>Caution</ourAspect>
    </aspectMapping>
   </aspectMappings>
-   
-</appearancetable>  
+
+</appearancetable>

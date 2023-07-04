@@ -7,13 +7,7 @@
 
   <style>
     .dp-center {text-align: center;}
-    .dp-middle {text-align: middle;}
     .dp-right {text-align: right;}
-    .dp-none {list-style-type: none;}
-    .dp-square {list-style-type: square;}
-    .dp-upper-alpha {ist-style-type: upper-alpha;}
-    .dp-lower-alpha {list-style-type: lower-alpha;}
-    .dp-border-2 {border: 2px solid;}
   </style>
 </head>
 <body>
@@ -50,8 +44,7 @@
       </p>
 
       <p>Opens the Send XpressNet Packet prompt so that you can type in a Packet: and click on the
-      <input type="submit" name="button3" id="button3" value="Send"> to transmit via XpressNet to
-      your system.</p>
+      <span class="textbutton">Send</span> button to transmit via XpressNet to your system.</p>
 
       <p><img src="images/Main_XpressNet_02.png" alt="Send Command" width="256" height="97">
       </p>
@@ -89,10 +82,9 @@
 
       <h4><a id="InfoDialog"></a>XPressNet System Information Dialog</h4>
 
-      <p>Click on the <input type="submit" name="button" id="button" value="Get System Info"> to
+      <p>Click on the <span class="textbutton">Get System Info</span> button to
       query the system (Lenz or other) for system information that will be displayed in the dialog.
-      Click on <input type="submit" name="button2" id="button2" value="Close"> to close the
-      dialog.</p>
+      Click on the <span class="textbutton">Close</span> button to close the dialog.</p>
 
       <p><img src="images/Main_XpressNet_01.png" alt="System Information">
       </p>
@@ -105,7 +97,7 @@
 
       <h4><a id="StackMonitor"></a>Command Station Stack Monitor</h4>
 
-      <p>Click the <input type="submit" name="button4" id="button4" value="Refresh"> to update the
+      <p>Click the <span class="textbutton">Refresh</span> button to update the
       display to the current information.</p>
 
       <p><img src="images/Main_XpressNet_03.png" alt="Database" width="523" height="186">

@@ -17,7 +17,7 @@ public class CsvExportModifiedAction extends CsvExportAction {
 
     @Override
     protected boolean isWritable(CvValue cv) {
-        return cv.getState() == AbstractValue.EDITED;
+        return cv.getState() == AbstractValue.ValueState.EDITED;
     }
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CsvExportModifiedAction.class);

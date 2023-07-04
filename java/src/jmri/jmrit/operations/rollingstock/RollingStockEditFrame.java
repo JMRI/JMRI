@@ -2,9 +2,7 @@ package jmri.jmrit.operations.rollingstock;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
+import java.text.*;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
@@ -13,17 +11,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import jmri.IdTag;
-import jmri.IdTagManager;
-import jmri.InstanceManager;
+import jmri.*;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.cars.CarOwners;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
@@ -478,26 +470,25 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
     protected boolean check(RollingStock rs) {
         String roadNum = roadNumberTextField.getText();
-        // hyphen feature needs at least one character to work properly
-        if (roadNum.contains(TrainCommon.HYPHEN)) {
-            String[] s = roadNum.split(TrainCommon.HYPHEN);
-            if (s.length == 0) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("HyphenFeature"), Bundle.getMessage("roadNumNG"),
-                        JOptionPane.ERROR_MESSAGE);
-                return false;
-            }
-        }
-        if (!OperationsXml.checkFileName(roadNum)) { // NOI18N
-            JOptionPane.showMessageDialog(this,
-                    Bundle.getMessage("NameResChar") + NEW_LINE + Bundle.getMessage("ReservedChar"),
-                    Bundle.getMessage("roadNumNG"), JOptionPane.ERROR_MESSAGE);
+        // hyphen feature needs at least one character to work properly        
+        if (roadNum.contains(TrainCommon.HYPHEN) && roadNum.split(TrainCommon.HYPHEN).length == 0) {
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("HyphenFeature"), Bundle.getMessage("roadNumNG"),
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (roadNum.length() > Control.max_len_string_road_number) {
+        // ignore characters after hyphen for field length
+        String rNum = TrainCommon.splitString(roadNum);
+        if (rNum.length() > Control.max_len_string_road_number) {
             JOptionPane.showMessageDialog(this,
                     MessageFormat.format(getRb().getString("RoadNumMustBeLess"),
                             new Object[] { Control.max_len_string_road_number + 1 }),
                     getRb().getString("RoadNumTooLong"), JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (!OperationsXml.checkFileName(roadNum)) {
+            JOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("NameResChar") + NEW_LINE + Bundle.getMessage("ReservedChar"),
+                    Bundle.getMessage("roadNumNG"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         // check rolling stock's weight in tons has proper format
@@ -572,16 +563,18 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
             textRfidSystemName.setText(_rs.getRfid());
         }
         autoTrackCheckBox.setEnabled(true);
-
+    }
+    
+    protected void checkAndSetLocationAndTrack(RollingStock rs) {
         if (locationBox.getSelectedItem() != null && trackLocationBox.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(this, getRb().getString("rsFullySelect"), getRb().getString("rsCanNotLoc"),
                     JOptionPane.ERROR_MESSAGE);
             // update location only if it has changed
-        } else if (_rs.getLocation() == null ||
-                !_rs.getLocation().equals(locationBox.getSelectedItem()) ||
-                _rs.getTrack() == null ||
-                !_rs.getTrack().equals(trackLocationBox.getSelectedItem())) {
-            setLocationAndTrack(_rs);
+        } else if (rs.getLocation() == null ||
+                !rs.getLocation().equals(locationBox.getSelectedItem()) ||
+                rs.getTrack() == null ||
+                !rs.getTrack().equals(trackLocationBox.getSelectedItem())) {
+            setLocationAndTrack(rs);
         }
     }
 

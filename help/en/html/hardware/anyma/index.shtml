@@ -21,15 +21,7 @@
         </li>
 
         <li>
-          <a href="#limitations">Limitations</a>
-        </li>
-
-        <li>
           <a href="#connecting">Connecting</a>
-        </li>
-
-        <li>
-          <a href="#tools">Tools</a>
         </li>
 
         <li>
@@ -47,6 +39,8 @@
 
       <ul>
         <li>Please report your experience</li>
+        <li>If your USB device supports a serial port interface, you may also be able to use
+        the Powerline class for interfacing to DMX</li>
       </ul>
 
       <h2 id="connecting">Connecting</h2>
@@ -67,7 +61,7 @@
       <h3>Third Party info</h3>
 
       <p>Information on the Anyma hardware can be found on the <a href=
-      "http://www.anyma.ch/research/udmx/">Anyma.ch website</a>.</p>
+      "https://www.anyma.ch/research/udmx/">Anyma.ch website</a>.</p>
 
       <p>More information on the Anyma hardware can be found on the <a href=
       "https://wiki.openlighting.org/index.php/Anyma_uDMX">openlighting.org website</a>.</p>

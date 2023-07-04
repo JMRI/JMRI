@@ -2161,7 +2161,7 @@ public class LnDplxGrpInfoImplTest {
         lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
 
-        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false,false);
+        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false,false,false);
         // memo.configureManagers(); // Skip this step, else autonomous loconet traffic is generated!
         jmri.InstanceManager.store(memo,jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
 

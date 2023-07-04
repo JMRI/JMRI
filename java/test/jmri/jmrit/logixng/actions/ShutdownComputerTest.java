@@ -94,16 +94,12 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     @Override
     public void testMaleSocketIsActive() {
         super.testMaleSocketIsActive();
-        JUnitAppender.assertErrorMessage("Shutdown failed");
-        JUnitAppender.assertErrorMessage("Shutdown failed");
     }
 
     @Test
     @Override
     public void testIsActive() {
         super.testIsActive();
-        JUnitAppender.assertErrorMessage("Shutdown failed");
-        JUnitAppender.assertErrorMessage("Shutdown failed");
     }
 
     @Test
@@ -113,22 +109,18 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         action.getSelectEnum().setEnum(ShutdownComputer.Operation.ShutdownComputer);
         action.execute();
         Assert.assertEquals(MockShutDownManager.Result.SHUTDOWN_OS, mockShutDownManager.result);
-        JUnitAppender.assertErrorMessage("Shutdown failed");
 
         action.getSelectEnum().setEnum(ShutdownComputer.Operation.RebootComputer);
         action.execute();
         Assert.assertEquals(MockShutDownManager.Result.RESTART_OS, mockShutDownManager.result);
-        JUnitAppender.assertErrorMessage("Shutdown failed");
 
         action.getSelectEnum().setEnum(ShutdownComputer.Operation.ShutdownJMRI);
         action.execute();
         Assert.assertEquals(MockShutDownManager.Result.SHUTDOWN_JMRI, mockShutDownManager.result);
-        JUnitAppender.assertErrorMessage("Shutdown failed");
 
         action.getSelectEnum().setEnum(ShutdownComputer.Operation.RebootJMRI);
         action.execute();
         Assert.assertEquals(MockShutDownManager.Result.RESTART_JMRI, mockShutDownManager.result);
-        JUnitAppender.assertErrorMessage("Shutdown failed");
     }
 
     // The minimal setup for log4J
@@ -168,7 +160,6 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
 
     @After
     public void tearDown() {
-        JUnitAppender.assertErrorMessage("Shutdown failed");
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
@@ -187,27 +178,23 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         public Result result = null;
 
         @Override
-        public boolean shutdown() {
+        public void shutdown() {
             result = Result.SHUTDOWN_JMRI;
-            return true;
         }
 
         @Override
-        public boolean restart() {
+        public void restart() {
             result = Result.RESTART_JMRI;
-            return true;
         }
 
         @Override
-        public boolean restartOS() {
+        public void restartOS() {
             result = Result.RESTART_OS;
-            return true;
         }
 
         @Override
-        public boolean shutdownOS() {
+        public void shutdownOS() {
             result = Result.SHUTDOWN_OS;
-            return true;
         }
     }
 

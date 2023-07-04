@@ -4,7 +4,7 @@ import java.awt.GraphicsEnvironment;
 
 import jmri.InstanceManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.openlcb.OlcbSystemConnectionMemo;
+import jmri.jmrix.openlcb.OlcbSystemConnectionMemoScaffold;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -12,6 +12,7 @@ import org.junit.jupiter.api.*;
 import org.junit.Assume;
 
 import jmri.jmrix.can.TestTrafficController;
+
 import org.mockito.Mockito;
 
 /**
@@ -34,7 +35,7 @@ public class NetworkTreeActionTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
 
-        memo = Mockito.mock(OlcbSystemConnectionMemo.class);
+        memo = Mockito.mock(OlcbSystemConnectionMemoScaffold.class);
         InstanceManager.setDefault(CanSystemConnectionMemo.class,memo);
     }
 

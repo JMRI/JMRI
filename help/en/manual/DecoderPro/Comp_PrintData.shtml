@@ -9,31 +9,12 @@
     .dp-ctr {
       text-align: center;
     }
-
-    .dp-mid {
-      text-align: middle;
-    }
-
     .dp-right {
       text-align: right;
     }
-
     .dp-none {
       list-style-type: none;
     }
-
-    .dp-sq {
-      list-style-type: square;
-    }
-
-    .dp-ua {
-      list-style-type: upper-alpha
-    }
-
-    .dp-la {
-      list-style-type: lower-alpha
-    }
-
   </style>
 </head>
 <body>
@@ -69,7 +50,7 @@
           "254"><br>
           Select each or all of the decoder items that you want to print</p>
 
-          <p>Click <input name="button" id="button" value="Okay" type="button"> to print then Print
+          <p>Click the <span class="textbutton">Okay</span> button to print, then normally the Print
           dialog for your computer system is displayed.</p>
         </li>
 

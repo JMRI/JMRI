@@ -46,7 +46,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     private int square = 75; // outside dimension of graphic, normally < 2*radius
     private int radius = 50; // max distance in px from center of switch canvas, unit used for relative scaling
     private double popScale = 1.0d;
-    private int showUserName = 1;
+    private SwitchBoardLabelDisplays showUserName = SwitchBoardLabelDisplays.BOTH_NAMES;
     private Color activeColor = Color.RED; // for testing a separate BeanSwitch
     private Color inactiveColor = Color.GREEN;
     Color textColor = Color.BLACK;
@@ -75,7 +75,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     private NamedBeanHandle<?> namedBean = null; // can be Turnout, Sensor or Light
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
     private String _uName = "unconnected";
-    private String _uLabel = ""; // for display, empty if userName == null or showUserName != 1
+    private String _uLabel = ""; // for display, empty if userName == null or showUserName != BOTH_NAMES
 
     /**
      * Ctor.
@@ -125,9 +125,9 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             log.debug("Switch userName from bean: {}", _uName);
             if (_uName == null) {
                 _uName = Bundle.getMessage("NoUserName");
-            } else if (showUserName == 1) { // (menu option setting)
+            } else if (showUserName == SwitchBoardLabelDisplays.BOTH_NAMES) { // (menu option setting)
                 _uLabel = _uName;
-            } else if (showUserName == 2) {
+            } else if (showUserName == SwitchBoardLabelDisplays.USER_NAME) {
                 _switchDisplayName = _uName; // replace system name
             }
         }
@@ -201,13 +201,14 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             default:
                 _icon = false;
                 beanButton.setText(getSwitchButtonLabel(_switchDisplayName + ": ?")); // initial text to display
+                beanButton.setToolTipText(getSwitchButtonToolTip(switchLabel));
                 beanButton.setForeground(textColor);
                 beanButton.setOpaque(true); // to show color from the start
                 this.setBorder(BorderFactory.createLineBorder(backgroundColor, 2));
                 beanButton.addComponentListener(new ComponentAdapter() {
                     @Override
                     public void componentResized(ComponentEvent e) {
-                        if ((showUserName == 1) && (beanButton.getHeight() < 50)) {
+                        if ((showUserName == SwitchBoardLabelDisplays.BOTH_NAMES) && (beanButton.getHeight() < 50)) {
                             beanButton.setVerticalAlignment(JLabel.TOP);
                         } else {
                             beanButton.setVerticalAlignment(JLabel.CENTER); //default
@@ -323,9 +324,9 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         if (_uName == null) {
             _uName = Bundle.getMessage("NoUserName");
         } else {
-            if (showUserName == 1) {
+            if (showUserName == SwitchBoardLabelDisplays.BOTH_NAMES) {
                 _uLabel = _uName;
-            } else if (showUserName == 2) {
+            } else if (showUserName == SwitchBoardLabelDisplays.USER_NAME) {
                 switchLabel = _uName;
             }
         }
@@ -441,15 +442,28 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     }
 
     private String getSwitchButtonLabel(String label) {
-        if ((showUserName == 0) || (_uLabel.equals(""))) {
-            return label;
-        } else if (showUserName == 2) {
-            return _uLabel.substring(0, (Math.min(_uLabel.length(), 35)));
-        } else {
+        if ((showUserName == SwitchBoardLabelDisplays.SYSTEM_NAME) || (_uLabel.equals(""))) {
+            String subLabel = label.substring(0, (Math.min(label.length(), 35))); // reasonable max. to display 2 lines on tile
+            return "<html><center>" + subLabel + "</center></html>"; // lines of text
+        } else if (showUserName == SwitchBoardLabelDisplays.USER_NAME) {
+            String subLabel = label.substring(0, (Math.min(label.length(), 35))); // reasonable max. to display 2 lines on tile
+            return "<html><center>" + subLabel + "</center></html>"; // lines of text
+        } else { // BOTH_NAMES case
             String subLabel = _uLabel.substring(0, (Math.min(_uLabel.length(), 35))); // reasonable max. to display 2 lines on tile
-            return "<html><center>" + label + "</center><br><center><i>" + subLabel + "</i></center></html>"; // 2 lines of text
+            return "<html><center>" + label + "</center><center><i>" + subLabel + "</i></center></html>"; // lines of text
         }
     }
+
+    private String getSwitchButtonToolTip(String label) {
+        if ((showUserName == SwitchBoardLabelDisplays.SYSTEM_NAME) || (_uLabel.equals(""))) {
+            return label;
+        } else if (showUserName == SwitchBoardLabelDisplays.USER_NAME) {
+            return label;
+        } else { // BOTH_NAMES case
+            return _uLabel+" "+label;
+        }
+    }
+
 
     /**
      * Drive the current state of the display from the state of the
@@ -490,8 +504,9 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             }
         }
         if (isText() && !isIcon()) { // to allow text buttons on web switchboard.
-            log.debug("Label = {}", getSwitchButtonLabel(switchLabel));
+            log.debug("Label = {}, setText", getSwitchButtonLabel(switchLabel));
             beanButton.setText(getSwitchButtonLabel(switchLabel));
+            beanButton.setToolTipText(getSwitchButtonToolTip(switchLabel));
             beanButton.setBackground(switchColor); // only the color is visible on macOS
             // TODO get access to bg color of JButton?
             beanButton.setOpaque(true);
@@ -1009,12 +1024,9 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         private String subTag = "";
         private int labelX = 16;
         private int labelY = 53;
-        private int subLabelX = 16;
-        private int subLabelY = 53;
         private int textSize = 12;
         private int subTextSize = 10;
         private float textAlign = 0.0f;
-        private float subTextAlign = 0.0f;
         private float ropOffset = 0f;
         private int r = 10; // radius of circle fitting inside tile rect in px drawing units
         private int _shape = SwitchboardEditor.BUTTON;
@@ -1122,9 +1134,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         }
 
         protected void positionSubLabel(int x, int y, float align, int fontsize) {
-            subLabelX = x;
-            subLabelY = y;
-            subTextAlign = align;
             subTextSize = fontsize;
         }
 
@@ -1201,6 +1210,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 g.setColor(textColor);
             }
 
+            log.trace("about to paintComponent strings");
             g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, textSize));
 
             if (Math.abs(textAlign - Component.CENTER_ALIGNMENT) < .0001) {
@@ -1209,13 +1219,10 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             }
             g.drawString(tag, labelX, labelY); // draw name on top of button image (vertical, horizontal offset from top left)
 
-            if (showUserName == 1) {
+            if (showUserName == SwitchBoardLabelDisplays.BOTH_NAMES) {
                 g.setFont(new Font(Font.SANS_SERIF, Font.ITALIC, Math.max(subTextSize, 6)));
-                if (Math.abs(subTextAlign - Component.CENTER_ALIGNMENT) < .0001) {
-                    FontMetrics metrics2 = g.getFontMetrics(); // figure out where the center of the string is
-                    subLabelX = metrics2.stringWidth(subTag)/-2;
-                }
-                g.drawString(subTag, subLabelX, subLabelY); // draw user name at bottom
+                g.drawString(subTag, labelX, labelY); // draw user name at bottom
+            } else {
             }
         }
     }

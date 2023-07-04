@@ -11,24 +11,12 @@
       text-align: center;
     }
 
-    .dp-mid {
-      text-align: middle;
-    }
-
     .dp-right {
       text-align: right;
     }
 
     .dp-none {
       list-style-type: none;
-    }
-
-    .dp-sq {
-      list-style-type: square;
-    }
-
-    .dp-ua {
-      list-style-type: upper-alpha
     }
 
     .dp-la {
@@ -165,8 +153,8 @@
         the images for reference</p>
       </blockquote>
 
-      <p><input type="submit" name="button" id="button" value="Save to Roster"> After adding images
-      to the image boxes for main image and icon, click on this button to store images in your
+      <p>After adding images to the image boxes for main image and icon, click on the
+      <span class="textbutton">Save to Roster</span> button to store images in your
       Roster.</p>
 
       <p><strong>Links for icons in GIF and images of most Locomotives</strong> <strong>are listed

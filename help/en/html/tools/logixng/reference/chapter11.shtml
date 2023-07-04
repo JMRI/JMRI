@@ -187,9 +187,9 @@
       'West yard'. It will then get the table cell 'Yard table[West yard,Leftmost turnout]' which
       is cell B3 with the value 'IT101'.</p>
 
-      <p>The tables are created using a spreadsheet program and then exported as a
-      <strong><em>TAB</em></strong> delimited CSV file. PanelPro <strong>Tools &rArr; Tables &rArr; LogixNG &rArr;
-      LogixNG Tables</strong> is used to load the table into JMRI memory. See <a href=
+      <p>The tables are created using a spreadsheet program and then exported as a CSV file.
+      PanelPro <strong>Tools &rArr; Tables &rArr; LogixNG &rArr; LogixNG Tables</strong> is used to
+      load the table into JMRI memory. See <a href=
       "../../../../package/jmri/jmrit/beantable/LogixNGTableTable.shtml">LogixNG Tables
       Table</a> for details. The table is not stored in the PanelPro data file. When the data file
       is loaded, a reference to the table will be used to load the CSV file into memory. The CSV
@@ -242,8 +242,8 @@
       <p>Here is the row in the tree editor along with a second row that uses a formula.</p>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter11/select_sample.png"><img src=
-        "images/chapter11/select_sample.png" alt="selection sample" width="843" height="51"></a>
+        <a href="images/chapter11/select_sample.png"><img class="image-border" src=
+        "images/chapter11/select_sample.png" alt="selection sample"></a>
       </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -260,9 +260,6 @@
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h3>The CSV File</h3>
-
-      <p>The CSV files LogixNG uses must be separated with tab, not comma. In OpenOffice Calc,
-      select {Tab} as the field delimiter.</p>
 
       <p><strong>You must not use single or double quotes in the CSV table. OpenOffice Calc uses
       different single quote characters at the beginning of a word and at the end of a word, and if
@@ -286,7 +283,7 @@
 
       <h3 id="TableActions">Table Actions</h3>
 
-      <p>There are two LogixNG actions for working with tables</p>
+      <p>There are four LogixNG actions for working with tables</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -298,9 +295,8 @@
       variable</a>. As each cell is processed, the action will be performed.</p>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter11/for_each_action.png"><img src=
-        "images/chapter11/for_each_action.png" alt="LogixNG table for each action" width="778"
-        height="62"></a>
+        <a href="images/chapter11/for_each_action.png"><img class="image-border"
+        src="images/chapter11/for_each_action.png" alt="LogixNG table for each action"></a>
       </div>
 
       <p>To create the action, select the <strong>Table: For each</strong> type from the
@@ -308,8 +304,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/chapter11/table_for_each.png"><img src=
-        "images/chapter11/table_for_each.png" alt="LogixNG table for each"
-        width="760" height="354"></a>
+        "images/chapter11/table_for_each.png" alt="LogixNG table for each"></a>
       </div>
 
       <p>Select the table, row or column, and then the row name or column name. The name selection
@@ -318,6 +313,83 @@
 
       <p>After the action has been created, add another action to the new A1 do handle the current
       cell item.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h5>Create beans from table<span class="since">since 5.1.6</span></h5>
+
+      <p>A spreadsheet can be used to create some of the standard table entries in PanelPro, such as
+      sensors and turnouts.  The spreadsheet is exported as a CSV file and loaded as a LogixNG
+      Table.</p>
+
+      <p>The system names have to be valid based on the connection and the bean type.  For example,
+      a LocoNet sensor would be <code>LS101</code>.  The user names are free format but must be
+      unique.  If the user names match existing user names, the move user name option needs to be
+      enabled.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter11/create_beans_from_table.png">
+        <img class="image-border" src="images/chapter11/create_beans_from_table.png"
+        alt="Chapter 11 create beans from table"></a>
+      </div>
+
+      <p>Options:</p>
+
+      <dl>
+        <dt>Move the user name to the new bean</dt>
+        <dd><p>If the user name matches an existing user name, the new item is created with its system
+        name and then the user name is <strong>Moved</strong> from the original item.  For example,
+        turnouts were defined using internal system names and user names.  When the real turnout
+        names have been identified, this option can be used to create the real turnouts and move the
+        names from the internal turnouts.</p>
+
+        <p class="noted">After the user names have been moved, it is necessary to store the current
+        PanelPro state, quit and restart PanelPro, and load the xml data file.</p>
+
+        </dd>
+
+        <dt>Update beans to user name</dt>
+        <dd>When the move user name option is enabled, the references will be changed from the
+        system name to the user name.</dd>
+
+        <dt>Remove old bean</dt>
+        <dd>When the move user name option is enabled, the orignal item will be removed if
+        possible.</dd>
+      </dl>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h5>Find table row or column<span class="since">since 5.1.6</span></h5>
+
+      <p>Search table cells for a cell that contains the string value in the bean local variable.
+      When a match is found, a <strong>map</strong> of the cells for the row or column is in the row
+      local variable.  See <a href="chapter8.shtml#variableTypes">Local Variable Types</a>.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter11/find_table_row_col.png">
+        <img class="image-border" src="images/chapter11/find_table_row_col.png"
+        alt="Chapter 11 find table row column"></a>
+      </div>
+
+      <p>A LogixNG table is selected from the <strong>Table</strong> list.</p>
+
+      <p>If <strong>Row or column</strong> is set to <strong><em>Row</em></strong>, a row is
+      selected from the <strong>Row or column name</strong> list.  If a match is found, the row
+      local variable will contain a map of the cells in the column.</p>
+
+      <p>If <strong>Row or column</strong> is set to <strong><em>Column</em></strong>, a column is
+      selected from the <strong>Row or column name</strong> list.  If a match is found, the row
+      local variable will contain a map of the cells in the row.</p>
+
+      <p>The <strong>Local variable for the bean</strong> is the name of a local variable that
+      contains the string value for the search.  In spite of the name, the value can be any text
+      that occurs in the table.</p>
+
+      <p>The <strong>Local variable for the row</strong> is the name of a local variable that will
+      contain the map of the row or column if match is found.  If a match is not found, the row
+      local variable will have a null value.</p>
+
+      <p class="noted">The match process stops when the first cell match occurs.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -331,16 +403,15 @@
       beans - table</strong> action can simplify creating the listeners.</p>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter11/for_each_listen_action.png"><img src=
-        "images/chapter11/for_each_listen_action.png" alt="LogixNG table listen action" width="522"
-        height="31"></a>
+        <a href="images/chapter11/for_each_listen_action.png"><img class="image-border" src=
+        "images/chapter11/for_each_listen_action.png" alt="LogixNG table listen action"></a>
       </div>
 
       <p>To create the action, select the <strong>Listen on beans - Table</strong> type from the
       <strong>Other</strong> category.</p>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter11/table_for_each_listen.png"><img src=
+        <a href="images/chapter11/table_for_each_listen.png"><img class="image-border" src=
         "images/chapter11/table_for_each_listen.png" alt="LogixNG table for each listen"></a>
       </div>
 
@@ -373,7 +444,7 @@
 
       <div style="margin-left: 2em">
         <a href="../images/sample_table.png"><img src="../images/sample_table.png" alt=
-        "LogixNG sample table" width="257" height="140"></a>
+        "LogixNG sample table"></a>
       </div>
 
       <p>See <a href="chapter10.shtml">Chapter 10 - Modules</a> for details about modules.</p>
@@ -383,16 +454,16 @@
       state to toggle.</p>
 
       <div style="margin-left: 2em">
-        <a href="../images/sample_module.png"><img src="../images/sample_module.png" alt=
-        "LogixNG sample module" width="630" height="198"></a>
+        <a href="../images/sample_module.png"><img class="image-border"
+        src="../images/sample_module.png" alt="LogixNG sample module"></a>
       </div>
 
       <p>To invoke the module, a ConditionalNG sets the module's variable with a row name and calls
       the module.</p>
 
       <div style="margin-left: 2em">
-        <a href="../images/sample_logixng.png"><img src="../images/sample_logixng.png" alt=
-        "LogixNG sample logixng" width="345" height="142"></a>
+        <a href="../images/sample_logixng.png"><img class="image-border"
+        src="../images/sample_logixng.png" alt="LogixNG sample logixng"></a>
       </div>
 
       <hr>

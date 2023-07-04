@@ -87,6 +87,19 @@ public class CarsSetFrameTest extends OperationsTestCase {
         JTable ctm = ctf.carsTable;
         f.initComponents(ctm);
         
+        Assert.assertTrue("Ignore selected", f.ignoreStatusCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreLocationCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreDivisionCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreRWECheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreRWLCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreLoadCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreKernelCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreDestinationCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreFinalDestinationCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreTrainCheckBox.isSelected());
+
+        JemmyUtil.enterClickAndLeave(f.ignoreAllButton);
+        
         Assert.assertFalse("Ignore deselected", f.ignoreStatusCheckBox.isSelected());
         Assert.assertFalse("Ignore deselected", f.ignoreLocationCheckBox.isSelected());
         Assert.assertFalse("Ignore deselected", f.ignoreDivisionCheckBox.isSelected());
@@ -97,19 +110,20 @@ public class CarsSetFrameTest extends OperationsTestCase {
         Assert.assertFalse("Ignore deselected", f.ignoreDestinationCheckBox.isSelected());
         Assert.assertFalse("Ignore deselected", f.ignoreFinalDestinationCheckBox.isSelected());
         Assert.assertFalse("Ignore deselected", f.ignoreTrainCheckBox.isSelected());
-
-        JemmyUtil.enterClickAndLeave(f.ignoreAllButton);
         
-        Assert.assertTrue("Ignore deselected", f.ignoreStatusCheckBox.isSelected());
-        Assert.assertTrue("Ignore deselected", f.ignoreLocationCheckBox.isSelected());
-        Assert.assertTrue("Ignore deselected", f.ignoreDivisionCheckBox.isSelected());
-        Assert.assertTrue("Ignore deselected", f.ignoreRWECheckBox.isSelected());
-        Assert.assertTrue("Ignore deselected", f.ignoreRWLCheckBox.isSelected());
-        Assert.assertTrue("Ignore deselected", f.ignoreLoadCheckBox.isSelected());
-        Assert.assertTrue("Ignore deselected", f.ignoreKernelCheckBox.isSelected());
-        Assert.assertTrue("Ignore deselected", f.ignoreDestinationCheckBox.isSelected());
-        Assert.assertTrue("Ignore deselected", f.ignoreFinalDestinationCheckBox.isSelected());
-        Assert.assertTrue("Ignore deselected", f.ignoreTrainCheckBox.isSelected());
+        JemmyUtil.enterClickAndLeave(f.ignoreAllButton);
+           
+        Assert.assertTrue("Ignore selected", f.ignoreStatusCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreLocationCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreDivisionCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreRWECheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreRWLCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreLoadCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreKernelCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreDestinationCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreFinalDestinationCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreTrainCheckBox.isSelected());
+
         
         JUnitUtil.dispose(ctf);
         JUnitUtil.dispose(f);
@@ -126,6 +140,8 @@ public class CarsSetFrameTest extends OperationsTestCase {
         CarsTableFrame ctf = new CarsTableFrame(true, null, null);
         JTable ctm = ctf.carsTable;
         f.initComponents(ctm);
+        
+        JemmyUtil.enterClickAndLeave(f.ignoreAllButton);
         
         Assert.assertFalse("Ignore deselected", f.ignoreStatusCheckBox.isSelected());
         Assert.assertFalse("Ignore deselected", f.ignoreLocationCheckBox.isSelected());
@@ -145,7 +161,13 @@ public class CarsSetFrameTest extends OperationsTestCase {
         Assert.assertTrue(f.locationBox.isEnabled());
         JemmyUtil.enterClickAndLeave(f.ignoreLocationCheckBox);
         Assert.assertFalse(f.locationBox.isEnabled());
+                
+        // check ignore
+        JemmyUtil.enterClickAndLeave(f.ignoreDestinationCheckBox);
+        Assert.assertFalse(f.destinationBox.isEnabled());
         
+        // uncheck ignore
+        JemmyUtil.enterClickAndLeave(f.ignoreDestinationCheckBox);
         Assert.assertTrue(f.destinationBox.isEnabled());
         JemmyUtil.enterClickAndLeave(f.ignoreDestinationCheckBox);
         Assert.assertFalse(f.destinationBox.isEnabled());
@@ -213,6 +235,7 @@ public class CarsSetFrameTest extends OperationsTestCase {
         Assert.assertFalse("Out of service", c888.isOutOfService());
 
         // change the 3 car's status
+        JemmyUtil.enterClickAndLeave(f.ignoreStatusCheckBox);
         JemmyUtil.enterClickAndLeave(f.outOfServiceCheckBox);
         // Save button is labeled "Apply"
         JemmyUtil.enterClickAndLeave(f.saveButton);
@@ -225,7 +248,6 @@ public class CarsSetFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(ctf);
         JUnitUtil.dispose(f);
         JUnitOperationsUtil.checkOperationsShutDownTask();
-
     }
     
     @Test

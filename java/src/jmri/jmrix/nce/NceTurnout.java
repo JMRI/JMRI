@@ -43,30 +43,35 @@ public class NceTurnout extends AbstractTurnout {
         initialize();
     }
 
-    private synchronized void initialize() {
-        numNtTurnouts++; // increment the total number of NCE turnouts
-        // update feedback modes, MONITORING requires PowerPro system with new EPROM    
-        if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006 && tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
-            if (modeNames == null) {
-                if (_validFeedbackNames.length != _validFeedbackModes.length) {
-                    log.error("int and string feedback arrays different length");
+    private void initialize() {
+        synchronized(lock) {
+            numNtTurnouts++; // increment the total number of NCE turnouts
+            // update feedback modes, MONITORING requires PowerPro system with new EPROM    
+            if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006 && tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
+                if (modeNames == null) {
+                    if (_validFeedbackNames.length != _validFeedbackModes.length) {
+                        log.error("int and string feedback arrays different length");
+                    }
+                    modeNames = new String[_validFeedbackNames.length + 1];
+                    modeValues = new int[_validFeedbackNames.length + 1];
+                    for (int i = 0; i < _validFeedbackNames.length; i++) {
+                        modeNames[i] = _validFeedbackNames[i];
+                        modeValues[i] = _validFeedbackModes[i];
+                    }
+                    modeNames[_validFeedbackNames.length] = "MONITORING";
+                    modeValues[_validFeedbackNames.length] = MONITORING;
                 }
-                modeNames = new String[_validFeedbackNames.length + 1];
-                modeValues = new int[_validFeedbackNames.length + 1];
-                for (int i = 0; i < _validFeedbackNames.length; i++) {
-                    modeNames[i] = _validFeedbackNames[i];
-                    modeValues[i] = _validFeedbackModes[i];
-                }
-                modeNames[_validFeedbackNames.length] = "MONITORING";
-                modeValues[_validFeedbackNames.length] = MONITORING;
+                _validFeedbackTypes |= MONITORING;
+                _validFeedbackNames = modeNames;
+                _validFeedbackModes = modeValues;
             }
-            _validFeedbackTypes |= MONITORING;
-            _validFeedbackNames = modeNames;
-            _validFeedbackModes = modeValues;
+            _enableCabLockout = true;
+            _enablePushButtonLockout = true;
         }
-        _enableCabLockout = true;
-        _enablePushButtonLockout = true;
     }
+
+    private static final Object lock = new Object();
+
     static String[] modeNames = null;
     static int[] modeValues = null;
     private static int numNtTurnouts = 0;
@@ -110,7 +115,8 @@ public class NceTurnout extends AbstractTurnout {
 
     /**
      * Send a message to the layout to lock or unlock the turnout pushbuttons if
-     * true, pushbutton lockout enabled
+     * true, pushbutton lockout enabled.
+     * {@inheritDoc}
      */
     @Override
     protected void turnoutPushbuttonLockout(boolean pushButtonLockout) {
@@ -161,14 +167,14 @@ public class NceTurnout extends AbstractTurnout {
     }
 
     /**
-     * NCE turnouts can be inverted
+     * NCE turnouts can be inverted.
      */
     @Override
     public boolean canInvert() {
         return true;
     }
     /**
-     * NCE turnouts can provide both modes when properly configured
+     * NCE turnouts can provide both modes when properly configured.
      *
      * @return Both cab and pushbutton (decoder) modes
      */
@@ -177,7 +183,8 @@ public class NceTurnout extends AbstractTurnout {
 
     /**
      * NCE turnouts support two types of lockouts, pushbutton and cab. Cab
-     * lockout requires the feedback mode to be Monitoring
+     * lockout requires the feedback mode to be Monitoring.
+     * {@inheritDoc}
      */
     @Override
     public boolean canLock(int turnoutLockout) {
@@ -201,7 +208,8 @@ public class NceTurnout extends AbstractTurnout {
     }
 
     /**
-     * Control which turnout locks are enabled
+     * Control which turnout locks are enabled.
+     * {@inheritDoc}
      */
     @Override
     public void enableLockOperation(int turnoutLockout, boolean enabled) {

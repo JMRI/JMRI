@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<aspecttable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd">
+  <name>FS - 1987</name>
+  <reference>Italian Railways Signals</reference>
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year>
+    <year>2010</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Dick</firstname>
+        <surname>Bronson</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Pete</firstname>
+        <surname>Cressman</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+      <email>jake@physics.berkeley.edu</email>
+    </author>
+  <author>
+      <personname>
+        <firstname>Pino</firstname>
+        <surname>Di Biasi</surname>
+      </personname>
+      <email>pinodib@yahoo.com</email>
+    </author>
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+     <revision>
+       <revnumber>1</revnumber>
+       <date>2023-01-01</date>
+       <authorinitials>PDB</authorinitials>
+       <revremark>First version for Italian Signal System</revremark>
+     </revision>
+     <revision>
+       <revnumber>2</revnumber>
+       <date>2023-02-01</date>
+       <authorinitials>PDB</authorinitials>
+       <revremark>Second version for Italian Signal System</revremark>
+     </revision>
+  </revhistory>
+
+  <aspects>
+    <aspect>
+        <name>Rosso</name>
+        <indication>Stop</indication>
+	  <description>One red light</description>
+	  <description>shunting movements are allowed by dwarf signals</description>
+	  <comment>segnale chiuso</comment>
+        <speed>Stop</speed>
+        <speed2>Stop</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Giallo</name>
+      <indication>Expect stop, prepare to stop at next main signal</indication>
+	  <description>One yellow light</description>
+	  <description>if used alone next signal is red</description>
+	  <comment>segnale aperto</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Verde</name>
+      <indication>Proceed, line clear (with timetable speed)</indication>
+	  <description>One green light</description>
+	  <comment>segnale aperto</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Giallo Lampeggiante</name>
+      <indication>1. Next signal is not red but closer to further red signal 2. Used with blinking green as speed advice</indication>
+	  <description>Blinking Yellow</description>
+	  <comment>da usare per 1. o 2. vela</comment>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Rosso-Giallo</name>
+      <indication>Diverging Approach</indication>
+	  <description>Red-Yellow</description>
+	  <comment>da usare per 1. e 2. vela</comment>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Rosso-Giallo Lampeggiante</name>
+      <indication>Diverging Approach</indication>
+	  <description>Red-Blinking Yellow</description>
+	  <comment>da usare per 1. e 2. vela</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Rosso-Verde</name>
+      <indication>Diverging Clear</indication>
+	  <description>Red-Green</description>
+	  <comment>da usare per 1. e 2. vela</comment>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Giallo-Giallo</name>
+      <indication>Diverging Approach</indication>
+	  <description>Yellow-Yellow</description>
+	  <comment>da usare per 1. e 2. vela</comment>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Giallo-Verde</name>
+      <indication>Diverging Approach</indication>
+	  <description>Yellow-Green</description>
+	  <comment>next main signal is set to diverging route max. 30 Km/h</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Giallo-Verde Lampeggiante</name>
+      <indication>Diverging Approach</indication>
+	  <description>Blinking Yellow-Green</description>
+	  <comment>next main signal is set to diverging route max. 60 Km/h</comment>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Giallo-Verde Lampeggiante Alt.</name>
+      <indication>Diverging Approach</indication>
+	  <description>Alternate Blinking Yellow-Green</description>
+	  <comment>next main signal is set to diverging route max. 100 Km/h</comment>
+      <speed>Limited</speed>
+      <speed2>Limited</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Rosso-Giallo-Verde</name>
+      <indication>Diverging Approach</indication>
+	  <description>Alternate Blinking Yellow-Green</description>
+	  <comment>Diverging clear and next main signal is set to diverging route max. 30 Km/h</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Rosso-Giallo-Verde Lampeggiante</name>
+      <indication>Diverging Approach</indication>
+	  <description>Alternate Blinking Yellow-Green</description>
+	  <comment>Diverging clear and next main signal is set to diverging route max. 60 Km/h</comment>
+      <speed>Slow</speed>
+      <speed2>Medium</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Rosso-Giallo-Verde Lampeggiante Alt.</name>
+      <indication>Diverging Approach</indication>
+	  <description>Alternate Blinking Yellow-Green</description>
+	  <comment>Diverging clear and next main signal is set to diverging route max. 100 Km/h</comment>
+      <speed>Slow</speed>
+      <speed2>Limited</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Rosso-Giallo-Giallo</name>
+      <indication>Diverging Approach</indication>
+	  <description>Alternate Blinking Yellow-Green</description>
+	  <comment>Diverging approach</comment>
+      <speed>RestrictedSlow</speed>
+      <speed2>Normal</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Spento</name>
+      <indication>Unlit aspect=red - aspect used for squared single searchlight signal only</indication>
+      <comment>Used on double-track mainline when direction is not inverted</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Fermata</name>
+      <indication>Shunting-Stop</indication>
+	  <description>Real: 2 horizontal white lamps - Panel: dark</description>
+	  <comment>Stop</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Libero Passaggio</name>
+      <indication>Shunting-Clear</indication>
+	  <description>Real: 2 vertical white lamps - Panel: white lamp</description>
+	  <comment>Diverging approach</comment>
+      <speed>RestrictedSlow</speed>
+      <speed2>RestrictedSlow</speed2>
+    </aspect>
+
+  </aspects>
+
+ <imagetypes>
+    <imagetype type="vertical" />
+    <imagetype type="left" />
+    <imagetype type="right" />
+    <imagetype type="vertical squared" />
+    <imagetype type="left squared" />
+    <imagetype type="right squared" />
+    <imagetype type="left Layout Editor" />
+    <imagetype type="right Layout Editor" />
+    <imagetype type="left squared Layout Editor" />
+    <imagetype type="right squared Layout Editor" />
+  </imagetypes>
+
+  <appearancefiles>
+    <appearancefile href="appearance-ACEIacc.1vela.xml"/>
+    <appearancefile href="appearance-ACEIacc.2vele.xml"/>
+    <appearancefile href="appearance-ACEIacc.3vele.xml"/>
+    <appearancefile href="appearance-ACEIavv.1vela.xml"/>
+    <appearancefile href="appearance-ACEIavv.2vele.xml"/>
+    <appearancefile href="appearance-ACEIIcat.1vela.xml"/>
+    <appearancefile href="appearance-ACEIIcat.2vele.xml"/>
+    <appearancefile href="appearance-segnalebasso.xml"/>
+  </appearancefiles>
+
+</aspecttable>

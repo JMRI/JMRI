@@ -37,7 +37,7 @@
     <aspect>
       <name>Diverging Clear</name>
       <indication>Proceed through divergance at indicated speed</indication>
-      <speed>Diverging</speed>
+      <speed>Medium</speed>
       <speed2>Normal</speed2>
       <route>Diverging</route>
       <dccAspect>6</dccAspect>
@@ -53,7 +53,7 @@
     <aspect>
       <name>Diverging Approach</name>
       <indication>Proceed through divergance at indicated speed preparing to stop at next signal</indication>
-      <speed>Diverging</speed>
+      <speed>Medium</speed>
       <speed2>Stop</speed2>
       <route>Diverging</route>
       <dccAspect>2</dccAspect>
@@ -62,23 +62,23 @@
       <name>Approach Diverging</name>
       <indication>Proceed preparing to diverge at next signal</indication>
       <speed>Normal</speed>
-      <speed2>Diverging</speed2>
+      <speed2>Medium</speed2>
       <route>Normal</route>
       <dccAspect>5</dccAspect>
     </aspect>
     <aspect>
       <name>Diverging Approach Diverging</name>
       <indication>Proceed through divergance at indicated speed preparing to diverge at next signal</indication>
-      <speed>Diverging</speed>
-      <speed2>Diverging</speed2>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
       <route>Diverging</route>
       <dccAspect>4</dccAspect>
     </aspect>
     <aspect>
       <name>Restricting</name>
       <indication>Proceed with caution for shunting within shunt limits</indication>
-      <speed>Restricting</speed>
-      <speed2>Restricting</speed2>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
       <route>Either</route>
       <dccAspect>1</dccAspect>
     </aspect>

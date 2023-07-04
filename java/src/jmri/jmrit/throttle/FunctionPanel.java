@@ -29,10 +29,11 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 
     private static final int DEFAULT_FUNCTION_BUTTONS = 24; // just enough to fill the initial pane
     private DccThrottle mThrottle;
-    
+
     private JPanel mainPanel;
     private FunctionButton[] functionButtons;
-    
+    private boolean fnBtnUpdatedFromRoster = false; // avoid to reinit function button twice (from throttle xml and from roster)
+
     private AddressPanel addressPanel = null; // to access roster infos
 
     /**
@@ -44,8 +45,14 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     }
 
     public void destroy() {
+        for (FunctionButton fb : functionButtons) {
+            fb.destroy();
+            fb.removeFunctionListener(this);
+        }
+        functionButtons = null;
         if (addressPanel != null) {
             addressPanel.removeAddressListener(this);
+            addressPanel = null;
         }
         if (mThrottle != null) {
             mThrottle.removePropertyChangeListener(this);
@@ -60,9 +67,9 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 
     /**
      * Resize inner function buttons array
-     * 
+     *
      */
-    private void resizeFnButonsArray(int n) {
+    private void resizeFnButtonsArray(int n) {
         FunctionButton[] newFunctionButtons = new FunctionButton[n];
         System.arraycopy(functionButtons, 0, newFunctionButtons, 0, Math.min( functionButtons.length, n));
         if (n > functionButtons.length) {
@@ -78,7 +85,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         }
         functionButtons = newFunctionButtons;
     }
-    
+
 
     /**
      * Get notification that a function has changed state.
@@ -90,6 +97,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     public void notifyFunctionStateChanged(int functionNumber, boolean isSet) {
         log.debug("notifyFunctionStateChanged: fNumber={} isSet={} " ,functionNumber, isSet);
         if (mThrottle != null) {
+            log.debug("setting throttle {} function {}", mThrottle.getLocoAddress(), functionNumber);
             mThrottle.setFunction(functionNumber, isSet);
         }
     }
@@ -105,6 +113,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     public void notifyFunctionLockableChanged(int functionNumber, boolean isLockable) {
         log.debug("notifyFnLockableChanged: fNumber={} isLockable={} " ,functionNumber, isLockable);
         if (mThrottle != null) {
+            log.debug("setting throttle {} function momentary {}", mThrottle.getLocoAddress(), functionNumber);
             mThrottle.setFunctionMomentary(functionNumber, !isLockable);
         }
     }
@@ -119,7 +128,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             functionButton.setEnabled(isEnabled);
         }
     }
-    
+
     /**
      * Enable or disable all the buttons depending on throttle status
      * If a throttle is assigned, enable all, else disable all
@@ -160,7 +169,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 String imgButtonSizeKey = "function"+functionNumber+"_ThrottleImageButtonSize";
                 if (rosterEntry.getAttribute(imgButtonSizeKey) != null && functionButton.getButtonImageSize() == FunctionButton.DEFAULT_IMG_SIZE) {
                     rosterEntry.deleteAttribute(imgButtonSizeKey);
-                }                
+                }
                 if (functionButton.getButtonImageSize() != FunctionButton.DEFAULT_IMG_SIZE) {
                     rosterEntry.putAttribute(imgButtonSizeKey, ""+functionButton.getButtonImageSize());
                 }
@@ -177,12 +186,12 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                         rosterEntry.setFunctionSelectedImage(functionNumber, imageSelectedPath);
                     }
                 }
-                functionButton.setDirty(false);                
-            }                
+                functionButton.setDirty(false);
+            }
         }
         Roster.getDefault().writeRoster();
     }
-    
+
     /**
      * Place and initialize all the buttons.
      */
@@ -194,13 +203,13 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         scrollPane.getViewport().setOpaque(false); // container already gets this done (for play/edit mode)
         scrollPane.setOpaque(false);
         Border empyBorder = new EmptyBorder(0,0,0,0); // force look'n feel, no border
-        scrollPane.setViewportBorder( empyBorder ); 
+        scrollPane.setViewportBorder( empyBorder );
         scrollPane.setBorder( empyBorder );
         scrollPane.setWheelScrollingEnabled(false); // already used by speed slider
         setContentPane(scrollPane);
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     }
-    
+
     private void setUpDefaultLightFunctionButton() {
         try {
             functionButtons[0].setIconPath("resources/icons/functionicons/svg/lightsOff.svg");
@@ -215,7 +224,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             }
         }
     }
-    
+
     /**
      * Apply preferences
      *   + global throttles preferences
@@ -253,10 +262,10 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             functionButtons[i].updateLnF();
         }
     }
-    
+
     /**
-     * Rebuild function buttons 
-     * 
+     * Rebuild function buttons
+     *
      */
     private void rebuildFnButons(int n) {
         mainPanel.removeAll();
@@ -276,12 +285,13 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      * Update function buttons
      *    - from selected throttle setting and state
      *    - from roster entry if any
-     */    
+     */
     private void updateFnButtons() {
         final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
-        if (mThrottle != null && addressPanel != null) {                
+        if (mThrottle != null && addressPanel != null) {
             RosterEntry rosterEntry = addressPanel.getRosterEntry();
             if (rosterEntry != null) {
+                fnBtnUpdatedFromRoster = true;
                 log.debug("RosterEntry found: {}", rosterEntry.getId());
             }
             for (int i = 0; i < functionButtons.length; i++) {
@@ -293,18 +303,18 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 functionButtons[i].setIsLockable(!mThrottle.getFunctionMomentary(i));
                 functionButtons[i].setDropFolder(FileUtil.getUserResourcePath());
                 // update from roster entry if any
-                if (rosterEntry != null) { 
+                if (rosterEntry != null) {
                     functionButtons[i].setDropFolder(Roster.getDefault().getRosterFilesLocation());
                     boolean needUpdate = false;
                     String imgButtonSize = rosterEntry.getAttribute("function"+i+"_ThrottleImageButtonSize");
                     if (imgButtonSize != null) {
                         try {
                             functionButtons[i].setButtonImageSize(Integer.parseInt(imgButtonSize));
-                            needUpdate = true;                            
+                            needUpdate = true;
                         } catch (NumberFormatException e) {
                             log.debug("setFnButtons(): can't parse button image size attribute ");
                         }
-                    }                    
+                    }
                     String text = rosterEntry.getFunctionLabel(i);
                     if (text != null) {
                         functionButtons[i].setDisplay(true);
@@ -327,11 +337,11 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                     if (fontSize != null) {
                         try {
                             functionButtons[i].setFont(new Font("Monospaced", Font.PLAIN, Integer.parseInt(fontSize)));
-                            needUpdate = true;                            
+                            needUpdate = true;
                         } catch (NumberFormatException e) {
                             log.debug("setFnButtons(): can't parse font size attribute ");
                         }
-                    }                   
+                    }
                     if (needUpdate) {
                         functionButtons[i].updateLnF();
                     }
@@ -353,7 +363,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         fb.setButtonLabel( i<3 ? Bundle.getMessage(Throttle.getFunctionString(i)) : Throttle.getFunctionString(i) );
         fb.setDisplay(true);
         if ((i == 0) && preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
-            setUpDefaultLightFunctionButton();                
+            setUpDefaultLightFunctionButton();
         } else {
             fb.setIconPath(null);
             fb.setSelectedIconPath(null);
@@ -367,11 +377,11 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     }
 
     /**
-     * Reset function buttons : 
+     * Reset function buttons :
      *    - rebuild function buttons
      *    - reset their properties to default
      *    - update according to throttle and roster (if any)
-     * 
+     *
      */
     public void resetFnButtons() {
         // rebuild function buttons
@@ -381,7 +391,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             rebuildFnButons(mThrottle.getFunctions().length);
         }
         // reset their properties to defaults
-        for (int i = 0; i < functionButtons.length; i++) {  
+        for (int i = 0; i < functionButtons.length; i++) {
             resetFnButton(functionButtons[i],i);
         }
         // update according to throttle and roster (if any)
@@ -405,7 +415,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             }
         }
     }
-    
+
     private void setButtonByFuncNumber(int function, boolean lockable, boolean newVal){
         for (FunctionButton button : functionButtons) {
             if (button.getIdentity() == function) {
@@ -451,14 +461,16 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         Element window = e.getChild("window");
         WindowPreferences.setPreferences(this, window);
 
-        java.util.List<Element> buttonElements = e.getChildren("FunctionButton");
+        if (! fnBtnUpdatedFromRoster) {
+            java.util.List<Element> buttonElements = e.getChildren("FunctionButton");
 
-        if (buttonElements != null && buttonElements.size() > 0) {
-            // just in case
-            rebuildFnButons( buttonElements.size() );
-            int i = 0;
-            for (Element buttonElement : buttonElements) {
-                functionButtons[i++].setXml(buttonElement);
+            if (buttonElements != null && buttonElements.size() > 0) {
+                // just in case
+                rebuildFnButons( buttonElements.size() );
+                int i = 0;
+                for (Element buttonElement : buttonElements) {
+                    functionButtons[i++].setXml(buttonElement);
+                }
             }
         }
     }
@@ -471,11 +483,27 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     @Override
     public void notifyAddressThrottleFound(DccThrottle t) {
         log.debug("Throttle found");
-        mThrottle = t;        
+        mThrottle = t;
         mThrottle.addPropertyChangeListener(this);
-        resizeFnButonsArray(mThrottle.getFunctions().length);
+        int numFns = mThrottle.getFunctions().length;
+        if (addressPanel.getRosterEntry() != null) {
+            // +1 because we want the _number_ of functions, and we have to count F0
+            numFns = Math.min(numFns, addressPanel.getRosterEntry().getMaxFnNumAsInt()+1);
+        }
+        log.debug("notifyAddressThrottleFound for {}", numFns);
+        resizeFnButtonsArray(numFns);
         updateFnButtons();
         setEnabled(true);
+    }
+
+    private void adressReleased() {
+        if (mThrottle != null) {
+            mThrottle.removePropertyChangeListener(this);
+        }
+        mThrottle = null;
+        fnBtnUpdatedFromRoster = false;
+        resetFnButtons();
+        setEnabled(false);
     }
 
     /**
@@ -483,13 +511,8 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      */
     @Override
     public void notifyAddressReleased(LocoAddress la) {
-        log.debug("Throttle released");        
-        if (mThrottle != null) {
-            mThrottle.removePropertyChangeListener(this);
-        }
-        mThrottle = null;
-        resetFnButtons(); 
-        setEnabled(false);
+        log.debug("Throttle released");
+        adressReleased();
     }
 
     /**
@@ -505,7 +528,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      * {@inheritDoc}
      */
     @Override
-    public void notifyConsistAddressChosen(int newAddress, boolean isLong) {
+    public void notifyConsistAddressChosen(LocoAddress l) {
     }
 
     /**
@@ -513,15 +536,21 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      * {@inheritDoc}
      */
     @Override
-    public void notifyConsistAddressReleased(int address, boolean isLong) {
+    public void notifyConsistAddressReleased(LocoAddress la) {
+        log.debug("Consist throttle released");
+        adressReleased();
     }
 
-    /**
+   /**
      * Ignored.
      * {@inheritDoc}
      */
     @Override
-    public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
+    public void notifyConsistAddressThrottleFound(DccThrottle t) {
+        log.debug("Consist throttle found");
+        if (mThrottle == null) {
+            notifyAddressThrottleFound(t);
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(FunctionPanel.class);

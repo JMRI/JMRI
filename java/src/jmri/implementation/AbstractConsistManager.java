@@ -51,6 +51,7 @@ public abstract class AbstractConsistManager implements ConsistManager {
     public void delConsist(LocoAddress address) {
         consistTable.get(address).dispose();
         consistTable.remove(address);
+        notifyConsistListChanged();
     }
 
     /**

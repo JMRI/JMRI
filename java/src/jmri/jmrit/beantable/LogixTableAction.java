@@ -1781,7 +1781,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             log.warn("Can't save browsed data, logix {} no longer exits", lgxName);
             return;
         }
-        JFileChooser userFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+        JFileChooser userFileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
         userFileChooser.setApproveButtonText(Bundle.getMessage("BrowserSaveDialogApprove"));  // NOI18N
         userFileChooser.setDialogTitle(Bundle.getMessage("BrowserSaveDialogTitle"));  // NOI18N
         userFileChooser.rescanCurrentDirectory();

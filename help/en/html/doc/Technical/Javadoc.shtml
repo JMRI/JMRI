@@ -17,31 +17,29 @@
       <h1>JMRI Code: Use of Javadoc and UML</h1>
 
       <p>The JMRI library provides the majority of its API documentation via <a href=
-      "http://java.sun.com/j2se/javadoc/writingdoccomments/">Javadoc</a> and <a href=
-      "http://en.wikipedia.org/wiki/Unified_Modeling_Language">UML</a>.</p>
+      "https://www.oracle.com/java/technologies/javase/javadoc.html">Javadoc</a> and <a href=
+      "https://en.wikipedia.org/wiki/Unified_Modeling_Language">UML</a>.</p>
 
       <p>We also use Java <a href=
-      "http://java.sun.com/docs/books/tutorial/java/javaOO/annotations.html">annotations</a> to
+      "https://docs.oracle.com/javase/tutorial/java/annotations/index.html">annotations</a> to
       document our code structure.</p>
 
-      <p>We use the <a href="http://www.umlgraph.org">UmlGraph</a> doclet to automatically create
+      <p>We use the <a href="https://github.com/dspinellis/UMLGraph">UmlGraph</a> doclet to automatically create
       the UML diagrams in our Javadoc pages.</p>
 
       <h2>Javadoc for Developers</h2>
       The <a href=
-      "http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html">Javadoc
+      "https://docs.oracle.com/javase/tutorial/java/annotations/index.html">Oracle Javadoc
       tutorial</a> is a good, but somewhat long, <a href=
-      "http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html">introduction
+      "https://docs.oracle.com/javase/tutorial/java/annotations/index.html">introduction
       to Javadoc</a>. A brief summary of the formatting and tags can be found in <a href=
-      "http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#documentationcomments">
+      "https://docs.oracle.com/javase/tutorial/java/annotations/predefined.html">
       the reference</a>.
-      <p>It's <a href=
-      "http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#packagecomment">recommended</a>
-      that any significant Java package contain a <a href=
-      "http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#packagecomment"><code>
+      <p>It's recommended that Java packages contain a <a href=
+      "https://docs.oracle.com/javase/1.5.0/docs/tooldocs/windows/javadoc.html#packagecomment"><code>
       package-info.java</code></a> file to contain any needed package-level documentation. It can
       also contain any <a href=
-      "http://java.sun.com/docs/books/tutorial/java/javaOO/annotations.html">annotations</a> you
+      "https://docs.oracle.com/javase/tutorial/java/annotations/index.html">annotations</a> you
       want to apply to all classes in the package. If you don't have any annotations you want to
       include, please include</p>
       <div class="wide">
@@ -58,7 +56,7 @@
 
       <p>A nice discussion of how to use the "deprecated" label in documentation is available on
       the <a href=
-      "http://docs.oracle.com/javase/7/docs/technotes/guides/javadoc/deprecation/deprecation.html">"How
+      "https://docs.oracle.com/en/java/javase/11/core/enhanced-deprecation1.html">"How
       and When To Deprecate APIs" page</a>.</p>
 
       <h3 id="html">HTML in Javadoc</h3>
@@ -181,30 +179,24 @@ public void methodName() {
       warnings exceeds 2300 (as of 2017-10-01, down from 3975 on 2017-02-20; progress!). Once the
       number of these warnings is reduced to a managable level, we will stop suppressing them.</p>
 
-      <p>For a summary of current Javadoc errors in the code, see <a href=
-      "https://builds.jmri.org/jenkins/job/Development/job/Builds/lastBuild/warnings3Result/">Builds
-      Jenkins job</a>.</p>
+      <p>CI may fail if invalid JavaDoc is uploaded.</p>
 
       <h2>UML and UmlGraph for Developers</h2>
       <p>UML is a broad and deep language for describing the structure, design and behavior of
       computing systems. JMRI primarly uses UML class diagrams for documenting its structure. Many
-      UML tutorials are available on the web. In particular, a good starting point is the <a href=
-      "http://www.objectmentor.com/resources/articles/umlClassDiagrams.pdf">Object Mentor
-      introduction to class diagrams</a>. For more detail, please see <a href=
+      UML tutorials are available on the web, ie this <a href=
+      "https://www.visual-paradigm.com/guide/uml-unified-modeling-language/uml-class-diagram-tutorial/">UML
+      Class Diagram Tutorial</a>. For more detail, please see <a href=
       "http://web.archive.org/web/20110704185440/http://atlas.kennesaw.edu/~dbraun/csis4650/A&amp;D/UML_tutorial/class.htm">
-      Atlas UML course</a> or <a href="http://edn.embarcadero.com/article/31863">Embarcadero
+      Atlas UML course</a> or <a href="http://web.archive.org/web/20110903065325/http://edn.embarcadero.com:80/article/31863">Embarcadero
       Software introduction</a>.</p>
       <p>Our Ant Javadoc processing makes basic UML class diagrams automatically. For an example,
-      see the <a href="https://jmri.org/JavaDoc/doc/jmri/Sensor.html">Sensor interface Javadoc</a>,
-      then click the "Show UML Class Diagram link" to see the <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/Sensor.png">class diagram embedded in it</a>. For a more
-      complex example see <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/jmrit/progsupport/ProgModeSelector.html">ProgModeSelector
-      class Javadoc</a> then click the "Show UML Class Diagram link" to see the <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/jmrit/progsupport/ProgModeSelector.png">class diagram
-      embedded in it</a>.</p>
+      see the class diagram embedded in <a href="https://www.jmri.org/JavaDoc/doc/jmri/Sensor.html">Sensor 
+      interface Javadoc</a>. For a more complex example see the class diagram in the <a href=
+      "https://www.jmri.org/JavaDoc/doc/jmri/jmrit/progsupport/ProgModeSelector.html">ProgModeSelector
+      class Javadoc</a>.</p>
 
-      <p>You can also define custom UML diagrams using <a href="http://plantuml.com">PlantUML</a>.
+      <p>You can also define custom UML diagrams using <a href="https://plantuml.com">PlantUML</a>.
       For an example of the source syntax to define state and sequence diagrams, see the</p>
       <div class="wide"><code>
         <a href=
@@ -212,7 +204,7 @@ public void methodName() {
         </code>
       </div>
       <p>file. The resulting diagrams are visible in its <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/jmrix/lenz/XNetProgrammer.html">Javadoc output</a>.</p>
+      "https://www.jmri.org/JavaDoc/doc/jmri/jmrix/lenz/XNetProgrammer.html">Javadoc output</a>.</p>
 
       <p>PlantUML can also be used for standalone diagrams, c.f. <a href=
       "SystemStructure.shtml">the connection sequence diagram</a>. To do this, create a .txt file,

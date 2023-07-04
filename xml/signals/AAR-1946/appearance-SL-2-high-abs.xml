@@ -63,6 +63,12 @@
       <authorinitials>BM</authorinitials>
       <revremark>Remove ourAspect values which are not supported by this mast type</revremark>
     </revision>
+    <revision>
+      <revnumber>2.5</revnumber>
+      <date>2023-02-21</date>
+      <authorinitials>BM</authorinitials>
+      <revremark>Added some missing mappings</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>AAR 1946</aspecttable>
@@ -167,6 +173,14 @@
     <aspectMapping>
       <advancedAspect>Clear</advancedAspect>
       <ourAspect>Clear</ourAspect>
+      <ourAspect>Clear Alt</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Clear Alt</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Clear Alt</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
     </aspectMapping>
 
@@ -255,6 +269,26 @@
 
      <aspectMapping>
       <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop and Proceed Medium</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Permissive</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Permissive Medium</advancedAspect>
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
 

@@ -431,6 +431,8 @@
 <mapID target="package.jmri.jmrix.nce.packetgen.NcePacketGenFrame" url="package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml"/>
 <mapID target="package.jmri.jmrix.nce.usbinterface.UsbInterfacePanel" url="package/jmri/jmrix/nce/usbinterface/UsbInterfacePanel.shtml"/>
 <mapID target="package.jmri.jmrix.oaktree.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/oaktree/nodeconfig/NodeConfigFrame.shtml"/>
+<mapID target="package.jmri.jmrix.openlcb.swing.eventtable.EventTablePane" url="package/jmri/jmrix/openlcb/swing/eventtable/EventTablePane.shtml"/>
+<mapID target="package.jmri.jmrix.openlcb.swing.memtool.MemoryToolPane" url="package/jmri/jmrix/openlcb/swing/memtool/MemoryToolPane.shtml"/>
 <mapID target="package.jmri.jmrix.openlcb.swing.networktree.NetworkTreePane" url="package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml"/>
 <mapID target="package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendFrame" url="package/jmri/jmrix/openlcb/swing/send/OpenLcbCanSendFrame.shtml"/>
 <mapID target="package.jmri.jmrix.powerline.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/powerline/nodeconfig/NodeConfigFrame.shtml"/>

@@ -42,6 +42,21 @@ public class MemoryTableDataModelTest extends AbstractBeanTableDataModelBase<Mem
 
     }
 
+    @Test
+    public void testGetValueClassToolTip() {
+        Memory m = (Memory)createBean();
+        javax.swing.JTable tbl = new javax.swing.JTable();
+        tbl.setName("Test Memory Value ToolTip Table");
+        Assertions.assertNull( t.getCellToolTip(tbl, 0, 0));
+        Assertions.assertNull( t.getCellToolTip(tbl, 0, MemoryTableDataModel.VALUECOL));
+        m.setValue("A java.lang.String value");
+        Assertions.assertEquals("java.lang.String", t.getCellToolTip(tbl, 0, MemoryTableDataModel.VALUECOL));
+        
+        t.setValueAt(123, 0, MemoryTableDataModel.VALUECOL);
+        Assertions.assertEquals("java.lang.Integer", t.getCellToolTip(tbl, 0, MemoryTableDataModel.VALUECOL));
+        
+    }
+
     @BeforeEach
     @Override
     public void setUp() {

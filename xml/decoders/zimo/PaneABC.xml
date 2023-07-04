@@ -3,6 +3,7 @@
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 - Ronald Kuhn - add german translation -->
 <!-- version 1.2 - Ronald Kuhn - add options for v39 -->
+<!-- version 1.2 - Ronald Kuhn - transfer label for CV#830-833 to CV700-CV899_MS_series.xml -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>ABC</name>
   <column>
@@ -22,28 +23,61 @@
     </label>
     <row>
       <column>
-        <display item="Distance controlled stopping Distance"/>
-        <display item="Distance controlled stopping speed correction (ABC)"/>
-        <display item="Distance controlled stopping speed correction (HLU)"/>
+        <row>
+          <display item="Distance controlled stopping Distance"/>
+          <display item="Distance controlled stopping Distance" format="hslider" label=""/>
+        </row>
+        <row>
+          <display item="Distance controlled stopping speed correction (ABC)"/>
+          <display item="Distance controlled stopping speed correction (ABC)" format="hslider" label=""/>
+        </row>
+        <row>
+          <display item="Distance controlled stopping speed correction (HLU)"/>
+          <display item="Distance controlled stopping speed correction (HLU)" label="" format="hslider"/>
+        </row>
         <label>
           <text> </text>
         </label>
-      </column>
-      <column>
-        <display item="Distance controlled stopping Distance" format="hslider" label="">
-          <label/>
-        </display>
-        <display item="Distance controlled stopping speed correction (ABC)" format="hslider" label="">
-          <label/>
-        </display>
-        <display item="Distance controlled stopping speed correction (HLU)" label="" format="hslider">
-          <label/>
-        </display>
-        <label>
-          <text> </text>
-        </label>
+        <row>
+          <display item="stopping distance fwd high">
+          </display>
+          <display item="stopping distance fwd high" label="" format="hslider">
+            <label> </label>
+          </display>
+          </row>
+        <row>
+          <display item="stopping distance fwd low">
+          </display>
+          <display item="stopping distance fwd low" label="" format="hslider">
+            <label/>
+          </display>
+        </row>
+        <row>
+          <display item="stopping distance rev high">
+          </display>
+          <display item="stopping distance rev high" label="" format="hslider">
+            <label/>
+          </display>
+        </row>
+        <row>
+          <display item="stopping distance rev low">
+          </display>
+          <display item="stopping distance rev low" label="" format="hslider">
+            <label/>
+          </display>
+        </row>
       </column>
     </row>
+    <row>
+
+      <column>
+
+      </column>
+      <column>
+
+      </column>
+    </row>
+    
     <row>
       <column>
         <label>
@@ -145,6 +179,9 @@
       </column>
     </row>
     <separator/>
+    <label>
+          <text> </text>
+    </label>
     <row>
       <column>
         <display item="Signal Dependent Reaction Time"/>
@@ -152,11 +189,17 @@
           <text> </text>
         </label>
       </column>
-      <column>
-        <display item="Activate Residence Time"/>
-        <label>
+      
+    </row>
+        <separator/>
+    <label>
           <text> </text>
-        </label>
+    </label>
+    <row>
+      <column>
+         <display item="Asymmetric DCC shuttle"/>
+         <display item="ABC Shuttle Wait Time"/>
+         <display item="ABC Shuttle Intermediate Wait Time"/>
       </column>
     </row>
   </column>

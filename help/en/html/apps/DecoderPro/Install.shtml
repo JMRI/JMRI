@@ -40,12 +40,12 @@
         <dt class="left">Download and install JMRI</dt>
 
         <dd class="first">
-          The <a href="https://jmri.org/download/index.shtml">Download page</a> on the main JMRI
+          The <a href="https://www.jmri.org/download/index.shtml">Download page</a> on the main JMRI
           website provides links to download various JMRI versions, along with links to release
           notes, etc.
           <p>Note that there are different downloads for different types of computers (Macintosh,
           Windows, etc), and the procedures for installing JMRI differ. You'll find all that
-          explained on the <a href="https://jmri.org/download/index.shtml">Download page</a>.</p>
+          explained on the <a href="https://www.jmri.org/download/index.shtml">Download page</a>.</p>
         </dd>
 
         <dt class="left">Setup JMRI</dt>

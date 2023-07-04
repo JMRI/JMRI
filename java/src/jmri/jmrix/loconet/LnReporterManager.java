@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 public class LnReporterManager extends jmri.managers.AbstractReporterManager implements LocoNetListener {
 
     protected final LnTrafficController tc;
-    
+
     // ctor has to register for LocoNet events
     public LnReporterManager(LocoNetSystemConnectionMemo memo) {
         super(memo);
@@ -130,7 +130,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
             default:
                 return;
         }
-        log.debug("Reporter[{}]", addr);
+        log.debug("Message for Reporter[{}]", addr);
         LnReporter r = (LnReporter) provideReporter(getSystemNamePrefix() + addr); // NOI18N
         r.messageFromManager(l); // make sure it got the message
     }

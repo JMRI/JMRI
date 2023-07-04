@@ -48,7 +48,8 @@ public class LocoBufferAdapter extends LnPortController {
                 new String[]{Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonYes")} )); // NOI18N
         options.put("InterrogateOnStart", new Option(Bundle.getMessage("InterrogateOnStart"),
                 new String[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo")} )); // NOI18N
-
+        options.put("LoconetProtocolAutoDetect", new Option(Bundle.getMessage("LoconetProtocolAutoDetectLabel"),
+                new String[]{Bundle.getMessage("ButtonNo"),Bundle.getMessage("LoconetProtocolAutoDetect")} )); // NOI18N
     }
     
     /**
@@ -176,6 +177,7 @@ public class LocoBufferAdapter extends LnPortController {
         setTurnoutHandling(getOptionState(option3Name));
         setTranspondingAvailable(getOptionState("TranspondingPresent"));
         setInterrogateOnStart(getOptionState("InterrogateOnStart"));
+        setLoconetProtocolAutoDetect(getOptionState("LoconetProtocolAutoDetect"));
         // connect to a packetizing traffic controller
         LnPacketizer packets = getPacketizer(getOptionState(option4Name));
         packets.connectPort(this);
@@ -185,7 +187,7 @@ public class LocoBufferAdapter extends LnPortController {
         // do the common manager config
 
         this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart);
+                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart, mLoconetProtocolAutoDetect);
         this.getSystemConnectionMemo().configureManagers();
 
         // start operation

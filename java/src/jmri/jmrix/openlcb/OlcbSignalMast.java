@@ -139,7 +139,12 @@ public class OlcbSignalMast extends AbstractSignalMast {
 
             litMachine = new StateMachine<>(connection, node, Boolean.TRUE);
             heldMachine = new StateMachine<>(connection, node, Boolean.FALSE);
-            aspectMachine = new StateMachine<>(connection, node, getAspect());
+            String configureAspect = getAspect();
+            if ( configureAspect == null ) {
+                log.debug("No Starting Aspect set for {}", getDisplayName());
+                configureAspect = "";
+            }
+            aspectMachine = new StateMachine<>(connection, node, configureAspect);
 
             systemMemo.get(OlcbInterface.class).registerMessageListener(new MessageDecoder(){
                 @Override

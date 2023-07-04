@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2023 All rights reserved -->
+<!-- Panes to show I/O lines -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <name>Output Pulse Width</name>
+    <column>
+        <display item="pulseWidth0" label="Channel 0 pulse width (ms)" tooltip="Pulse Width for channel 0 (ms)" />
+        <display item="pulseWidth1" label="Channel 1 pulse width (ms)" tooltip="Pulse Width for channel 1 (ms)" />
+        <display item="pulseWidth2" label="Channel 2 pulse width (ms)" tooltip="Pulse Width for channel 2 (ms)" />
+        <display item="pulseWidth3" label="Channel 3 pulse width (ms)" tooltip="Pulse Width for channel 3 (ms)" />
+    </column>
+    <column>
+        <display item="pulseWidth4" label="Channel 4 pulse width (ms)" tooltip="Pulse Width for channel 4 (ms)" />
+        <display item="pulseWidth5" label="Channel 5 pulse width (ms)" tooltip="Pulse Width for channel 5 (ms)" />
+        <display item="pulseWidth6" label="Channel 6 pulse width (ms)" tooltip="Pulse Width for channel 6 (ms)" />
+        <display item="pulseWidth7" label="Channel 7 pulse width (ms)" tooltip="Pulse Width for channel 7 (ms)" />
+    </column>
+</pane>

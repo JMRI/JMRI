@@ -12,7 +12,7 @@ import org.junit.Test;
 
 /**
  * Test ClipboardEditor
- * 
+ *
  * @author Daniel Bergqvist 2020
  */
 public class ClipboardEditorTest {
@@ -20,11 +20,11 @@ public class ClipboardEditorTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         ClipboardEditor editor = new ClipboardEditor();
         Assert.assertNotNull("object not null", editor);
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -40,7 +40,8 @@ public class ClipboardEditorTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }

@@ -73,8 +73,9 @@
       "../../../resources/icons/BritishRailSignals/">in this folder</a>, all have a transparent
       background.</p>
 
-      <p>The images are of 2 types, Aspects which show a Green / Red / Yellow signal mast icon,<br>
-      along with Large which show a more prototypical graphic.</p>
+      <p>The images are of 3 types, Aspects which show a Green / Red / Yellow signal mast icon,<br>
+      along with "Large" which show a more prototypical graphic, and Medium which
+      provides schematic semaphores at a smaller size.</p>
 
       <table>
         <tr>

@@ -66,6 +66,7 @@ public class DigitalFactory implements DigitalActionFactory {
                         new AbstractMap.SimpleEntry<>(Category.OTHER, LogLocalVariables.class),
                         new AbstractMap.SimpleEntry<>(Category.COMMON, DigitalMany.class),
                         new AbstractMap.SimpleEntry<>(Category.FLOW_CONTROL, Return.class),
+                        new AbstractMap.SimpleEntry<>(Category.FLOW_CONTROL, RunOnce.class),
                         new AbstractMap.SimpleEntry<>(Category.FLOW_CONTROL, Sequence.class),
                         new AbstractMap.SimpleEntry<>(Category.OTHER, ShowDialog.class),
                         new AbstractMap.SimpleEntry<>(Category.OTHER, ShutdownComputer.class),
@@ -73,7 +74,8 @@ public class DigitalFactory implements DigitalActionFactory {
                         new AbstractMap.SimpleEntry<>(Category.FLOW_CONTROL, TableForEach.class),
                         new AbstractMap.SimpleEntry<>(Category.OTHER, Timeout.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, TriggerRoute.class),
-                        new AbstractMap.SimpleEntry<>(Category.OTHER, WebBrowser.class)
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, WebBrowser.class),
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, WebRequest.class)
                 );
 
         return digitalActionClasses;

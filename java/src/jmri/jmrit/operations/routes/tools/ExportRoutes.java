@@ -13,9 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 
 /**
@@ -67,24 +65,29 @@ public class ExportRoutes extends XmlFile {
             for (Route route : InstanceManager.getDefault(RouteManager.class).getRoutesByNameList()) {
                 count++;
                 fileOut.printRecord(route.getName(),
-                        "", // NOI18N
+                        "",
                         route.getComment());
                 for (RouteLocation rl : route.getLocationsBySequenceList()) {
-                    fileOut.printRecord("", // NOI18N
-                            rl.getLocation().getName(),
-                            rl.getTrainDirectionString(),
-                            rl.getMaxCarMoves(),
-                            rl.getRandomControl(),
-                            rl.isPickUpAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"),
-                            rl.isDropAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"),
-                            rl.getWait(),
-                            rl.getFormatedDepartureTime(),
-                            rl.getMaxTrainLength(),
-                            rl.getGrade(),
-                            rl.getTrainIconX(),
-                            rl.getTrainIconY(),
-                            rl.getComment().replace("\n", "<LF>"),
-                            rl.getCommentTextColor());
+                    if (rl.getLocation() != null) {
+                        fileOut.printRecord("",
+                                rl.getLocation().getName(),
+                                rl.getTrainDirectionString(),
+                                rl.getMaxCarMoves(),
+                                rl.getRandomControl(),
+                                rl.isPickUpAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"),
+                                rl.isDropAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"),
+                                rl.getWait(),
+                                rl.getFormatedDepartureTime(),
+                                rl.getMaxTrainLength(),
+                                rl.getGrade(),
+                                rl.getTrainIconX(),
+                                rl.getTrainIconY(),
+                                rl.getComment().replace("\n", "<LF>"),
+                                rl.getCommentTextColor());
+                    } else {
+                        fileOut.printRecord("",
+                                Bundle.getMessage("ErrorTitle"));
+                    }
                 }
             }
 

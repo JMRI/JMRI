@@ -17,21 +17,21 @@ import org.slf4j.LoggerFactory;
 /**
  * Data model for a Reporter Table.
  * Code originally within ReporterTableAction.
- * 
+ *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Steve Young Copyright (C) 2021
  */
 public class ReporterTableDataModel extends BeanTableDataModel<Reporter> {
-    
+
     public static final int LASTREPORTCOL = NUMCOLUMN;
-    
+
     public ReporterTableDataModel(Manager<Reporter> mgr){
         super();
         setManager(mgr);
     }
-    
+
     private ReporterManager reporterManager;
-    
+
     /**
      * {@inheritDoc}
      */
@@ -75,7 +75,7 @@ public class ReporterTableDataModel extends BeanTableDataModel<Reporter> {
         getManager().addPropertyChangeListener(this);
         updateNameList();
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -189,7 +189,21 @@ public class ReporterTableDataModel extends BeanTableDataModel<Reporter> {
     @Override
     public Object getValueAt(int row, int col) {
         if (col == LASTREPORTCOL) {
-            return getValue(sysNameList.get(row));
+
+            String name = sysNameList.get(row);
+            Object value;
+            Reporter r = getManager().getBySystemName(name);
+            if (r == null) {
+                return "";
+            }
+            value = r.getLastReport();
+            if (value == null) {
+                return null;
+            } else if (value instanceof Reportable) {
+                return ((Reportable) value).toReportString();
+            } else {
+                return value.toString();
+            }
         } else
         return super.getValueAt(row, col);
     }
@@ -232,5 +246,5 @@ public class ReporterTableDataModel extends BeanTableDataModel<Reporter> {
     }
 
     private final static Logger log = LoggerFactory.getLogger(ReporterTableDataModel.class);
-    
+
 }

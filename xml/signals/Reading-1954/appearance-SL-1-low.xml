@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Robert</firstname><surname>Raggi</surname></personname>
+    </author>
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2010-01-01</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2022-10-17</date>
+        <authorinitials>RR</authorinitials>
+        <revremark>Updated For Reading Rules</revremark>
+    </revision>
+  </revhistory>
+
+  <aspecttable>Reading-1954</aspecttable>
+  <name>Single head dwarf signal</name>
+  <reference>As described in the publication "Reading Company Rules for the Government of the Operating Department Effective January 1, 1954."</reference>
+  <description>Appearances for a one-searchlight dwarf signal head</description>
+
+  <appearances>
+
+    <appearance>
+      <aspectname>Slow Clear</aspectname>
+      <show>green</show>
+      <reference>Page 87</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-1-low/rule-287.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>yellow</show>
+      <reference>Page 90</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-1-low/rule-290.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <reference>Page 93</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-1-low/rule-292.gif</imagelink>
+    </appearance>
+
+  </appearances>
+  <specificappearances>
+  	<danger>
+  		<aspect>Stop</aspect>
+  	</danger>
+
+  </specificappearances>
+
+
+ <aspectMappings>
+
+
+    <aspectMapping>
+
+      <advancedAspect>Clear</advancedAspect>
+
+      <ourAspect>Slow Clear</ourAspect>
+
+    </aspectMapping>
+
+
+    <aspectMapping>
+      <advancedAspect>Slow Clear</advancedAspect>
+
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+
+
+    <aspectMapping>
+
+      <advancedAspect>Permissive</advancedAspect>
+
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+
+    <aspectMapping>
+
+      <advancedAspect>Restricting</advancedAspect>
+
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+
+      <advancedAspect>Stop</advancedAspect>
+
+      <ourAspect>Restricting</ourAspect>
+
+    </aspectMapping>
+
+
+
+</aspectMappings>
+
+
+  </appearancetable>

@@ -7,13 +7,7 @@
 
   <style>
     .dp-center {text-align: center;}
-    .dp-middle {text-align: middle;}
     .dp-right {text-align: right;}
-    .dp-none {list-style-type: none;}
-    .dp-square {list-style-type: square;}
-    .dp-upper-alpha {ist-style-type: upper-alpha;}
-    .dp-lower-alpha {list-style-type: lower-alpha;}
-    .dp-border-2 {border: 2px solid;}
   </style>
 </head>
 <body>
@@ -128,32 +122,28 @@
 
       <p>The <input name="checkbox" id="checkbox" checked="checked" type="checkbox">
       <strong>Direction Normal ?</strong> determines the direction of the locomotive travel as
-      forwarded or reverse when the consist is traveling forward. Will be grayed out until the lead
+      forward or reverse when the consist is traveling forward. Will be grayed out until the lead
       locomotive is selected.</p>
 
-      <p>The <strong>add</strong> button adds the locomotive to the consist.</p>
+      <p>The <span class="textbutton">add</span> button adds the locomotive to the consist.</p>
 
       <p style="text-align: center;"><img style="width: 691px; height: 282px;" alt="consist" src=
       "images/Main_consist_02.png">
       </p>
 
-      <p>The <strong>reset</strong> buttton removes alll data for the locomotive.</p>
+      <p>The <span class="textbutton">reset</span> buttton removes all data for the locomotive.</p>
 
-      <p><strong><input name="button3" id="button3" value="DEL" type="button"></strong> removes the
-      consist. The list of the consist will have a <input name="button4" id="button4" value="DEL"
-      type="button"> for each locomotive, allowing you to remove any locomotive from the
-      consist.</p>
+      <p><span class="textbutton">DEL</span> button removes the consist.
+      The list of the consist will have a <span class="textbutton">DEL</span> button for each
+      locomotive, allowing you to remove any locomotive from the consist.</p>
 
-      <p><input name="button6" id="button6" value="Delelte" type="button"> deletes the entire
-      consist.</p>
+      <p><span class="textbutton">Delete</span> button deletes the entire consist.</p>
 
-      <p><a href="dp3_Main_Throttle.shtml"><input name="button5" id="button5" value="Throttle"
-      type="button"></a> opens a <strong><a href="dp3_Main_Throttle.shtml">throttle</a></strong>
-      for the consist. Each time that yoiu select throttle the locomotive will be added to the
-      consist.</p>
+      <p><span class="textbutton"><a href="dp3_Main_Throttle.shtml">Throttle</a></span> button opens
+      a <a href="dp3_Main_Throttle.shtml">throttle</a> for the consist.
+      Each time you select the Throttle, the locomotive will be added to the consist.</p>
 
-      <p><input name="button7" id="button7" value="Reverse" type="button"> reverses the direction
-      of the consist.</p>
+      <p><span class="textbutton">Reverse</span> button reverses the direction of the consist.</p>
 
       <hr>
 

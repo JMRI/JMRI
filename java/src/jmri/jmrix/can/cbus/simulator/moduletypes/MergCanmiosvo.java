@@ -28,6 +28,9 @@ public class MergCanmiosvo extends CbusSimulatedModuleProvider {
     
     @Override
     public void configureDummyNode(@Nonnull CbusNode node) {
+
+        node.setnvWriteInLearnOnly(true);
+
         int[] _params = new int[]{
             20, /* 0 num parameters   */
             MANU_MERG, /* 1 manufacturer ID   */

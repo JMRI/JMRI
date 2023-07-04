@@ -41,8 +41,10 @@
           <p>For the provided files, we use the same capitalization, etc, that the decoder
           manufacturer uses in their documentation.</p>
 
-          <p>This new file should go in the <code>decoders</code> subdirectory in the
+          <p>This new file should go in the <code>xml/decoders</code> subdirectory in the
           <code>JMRI</code> User Files Location so that the program can find it.
+          You may have to create this directory (including the xml/ directory above it)
+          if it hasn't already been created.
           You can select "File Locations"
           from the JMRI Help menu to find (and open) the User Files Location. (See the <a href=
           "../../doc/Technical/ProfileFileStructure.shtml"><em>configuration files page</em></a>
@@ -50,7 +52,7 @@
 
           <p>If you're modifying a decoder definition, it is best to start with the most recent
           version, which can always be found here on the JMRI website at <a href=
-          "https://jmri.org/xml/decoders/">https://jmri.org/xml/decoders/</a>. That way, it won't
+          "https://www.jmri.org/xml/decoders/">https://www.jmri.org/xml/decoders/</a>. That way, it won't
           be hard to merge your changes with ones that might have come before. Please don't do any
           more reformatting than you have to. If you change the tech stuff in the top 5 or 10
           lines, or reformat the contents, it gets very hard to tell what's changed and what has
@@ -67,7 +69,7 @@
 
         <dd>
           <p>You'll see something like this at the top of the file (the examples are from the
-          <a href="../../../../../xml/decoders/0NMRA.xml">0NMRA.xml</a> file):</p>
+          <a href="https://github.com/JMRI/JMRI/blob/master/xml/decoders/0NMRA.xml">0NMRA.xml</a> file):</p>
 
           <p class="example">&lt;?xml version="1.0" encoding="utf-8"?&gt;<br>
           &lt;?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?&gt;<br>
@@ -258,8 +260,8 @@
               as decimal digits (as our example), or even base 3 or 5. That's a bit more technical, it's rarely
               needed, but if you do need it refer to the <a href="CreateDecoderAdvanced.shtml#mask">Advanced
               Decoder</a> help page or the <a href=
-              "https://jmri.org/JavaDoc/doc/jmri/jmrit/symbolicprog/VariableValue.html">javadoc</a> for
-              more details. The <a href="xml/decoders/Uhlenbrock_63410.xml">Uhlenbrock_63410</a> definition
+              "https://www.jmri.org/JavaDoc/doc/jmri/jmrit/symbolicprog/VariableValue.html">javadoc</a> for
+              more details. The <a href="https://github.com/JMRI/JMRI/blob/master/xml/decoders/Uhlenbrock_63410.xml">Uhlenbrock_63410</a> definition
               provides an example on CV1.
             </li>
 
@@ -349,7 +351,7 @@
           <p>Decoder definitions can include "fragment files" which provide common definitions of
           some CVs. This has the advantage that they're already created and tested, and often
           include tooltip text, translations and other nice features. See the existing decoder
-          definitions for <a href="https://jmri.org/xml/decoders/nmra">examples</a>. Some key
+          definitions for <a href="https://www.jmri.org/xml/decoders/nmra/">examples</a>. Some key
           ones:</p>
 
           <ul>
@@ -378,7 +380,12 @@
           </ul>
 
           <p>You can also use fragment files to include (hence simplify) <a href=
-          "https://jmri.org/xml/decoders/parts">common sets of enum choices</a>.</p>
+          "https://www.jmri.org/xml/decoders/parts/">common sets of enum choices</a>.</p>
+          <p>Note that you should use the full format for an include statement so that JMRI can find it:
+            <p class="example">&lt;xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/&gt;
+            </p>
+
+
         </dd>
 
         <dt class="left">Checking for syntax errors</dt>

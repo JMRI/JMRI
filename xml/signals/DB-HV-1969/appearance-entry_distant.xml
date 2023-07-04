@@ -66,63 +66,63 @@
       <aspectname>Hp0</aspectname>
       <show>red</show>
       <show>dark</show>
-      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/entry_distant/hp0+dark.gif</imagelink>
-      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/entry_distant/hp0+dark.gif</imagelink>
-      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/entry_distant/hp0+dark.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/entry_distant/hp0+dark.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/entry_distant/hp0+dark.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/entry_distant/hp0+dark.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Hp1+Vr0</aspectname>
       <show>green</show>
       <show>red</show>
-      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/entry_distant/hp1+vr0.gif</imagelink>
-      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/entry_distant/hp1+vr0.gif</imagelink>
-      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/entry_distant/hp1+vr0.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/entry_distant/hp1+vr0.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/entry_distant/hp1+vr0.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/entry_distant/hp1+vr0.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Hp1+Vr1</aspectname>
       <show>green</show>
       <show>green</show>
-      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/entry_distant/hp1+vr1.gif</imagelink>
-      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/entry_distant/hp1+vr1.gif</imagelink>
-      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/entry_distant/hp1+vr1.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/entry_distant/hp1+vr1.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/entry_distant/hp1+vr1.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/entry_distant/hp1+vr1.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Hp1+Vr2</aspectname>
       <show>green</show>
       <show>yellow</show>
-      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/entry_distant/hp1+vr2.gif</imagelink>
-      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/entry_distant/hp1+vr2.gif</imagelink>
-      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/entry_distant/hp1+vr2.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/entry_distant/hp1+vr2.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/entry_distant/hp1+vr2.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/entry_distant/hp1+vr2.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Hp2+Vr0</aspectname>
       <show>yellow</show>
       <show>red</show>
-      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/entry_distant/hp2+vr0.gif</imagelink>
-      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/entry_distant/hp2+vr0.gif</imagelink>
-      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/entry_distant/hp2+vr0.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/entry_distant/hp2+vr0.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/entry_distant/hp2+vr0.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/entry_distant/hp2+vr0.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Hp2+Vr1</aspectname>
       <show>yellow</show>
       <show>green</show>
-      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/entry_distant/hp2+vr1.gif</imagelink>
-      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/entry_distant/hp2+vr1.gif</imagelink>
-      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/entry_distant/hp2+vr1.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/entry_distant/hp2+vr1.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/entry_distant/hp2+vr1.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/entry_distant/hp2+vr1.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Hp2+Vr2</aspectname>
       <show>yellow</show>
       <show>yellow</show>
-      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/entry_distant/hp2+vr2.gif</imagelink>
-      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/entry_distant/hp2+vr2.gif</imagelink>
-      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/entry_distant/hp2+vr2.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/entry_distant/hp2+vr2.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/entry_distant/hp2+vr2.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/entry_distant/hp2+vr2.gif</imagelink>
     </appearance>
 
   </appearances>

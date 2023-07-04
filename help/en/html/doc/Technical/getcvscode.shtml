@@ -46,9 +46,7 @@ cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri co all
 
       <p>Many computers come with CVS installed, including Linux and Mac OS X. If you're using
       Windows, you will need to install a CVS "client" program like <a href=
-      "http://sourceforge.net/project/showfiles.php?group_id=10072&amp;release_id=24467">WinCVS</a>.
-      A recent version can be downloaded from: <a href=
-      "http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip">http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip</a>.</p>
+      "https://sourceforge.net/projects/cvsgui/files/WinCvs/">WinCVS</a>.
 
       <p>To get a copy of the source for your own use, you can use "anonymous checkout". For a
       command line cvs client, make a new directory for the project, change to it, and tell CVS you

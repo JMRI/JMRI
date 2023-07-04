@@ -7,13 +7,7 @@
 
   <style>
     .dp-center {text-align: center;}
-    .dp-middle {text-align: middle;}
     .dp-right {text-align: right;}
-    .dp-none {list-style-type: none;}
-    .dp-square {list-style-type: square;}
-    .dp-upper-alpha {ist-style-type: upper-alpha;}
-    .dp-lower-alpha {list-style-type: lower-alpha;}
-    .dp-border-2 {border: 2px solid;}
   </style>
 </head>
 <body>
@@ -230,9 +224,8 @@
 
         <li style="list-style: none">
           <blockquote>
-            <p>Resets all the Function buttons to the default settings, <input name="button14" id=
-            "button14" value="F1" type="button"> , <input name="button15" id="button15" value="F2"
-            type="button"> , etc.</p>
+            <p>Resets all the Function buttons to the default settings, <span class="textbutton">F1</span> , 
+            <span class="textbutton">F2</span>, etc.</p>
           </blockquote>
         </li>
 

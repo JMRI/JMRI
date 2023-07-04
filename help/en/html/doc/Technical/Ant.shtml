@@ -24,13 +24,13 @@
       <code>ant -version</code> to check. JMRI requires at least version 1.10.6, and should work
       with any version after that.
       <p>If you need to install it, Ant is available for download at <a href=
-      "http://ant.apache.org/">http://ant.apache.org/</a> or via the usual package managers.</p>
+      "https://ant.apache.org/">https://ant.apache.org/</a> or via the usual package managers.</p>
 
       <ul>
         <li>Create a directory to contain your project.</li>
 
         <li>In that project directory, <a href=
-        "https://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">get the code from
+        "https://www.jmri.org/help/en/html/doc/Technical/getgitcode.shtml">get the code from
         GitHub</a>. This will create a <code>jmri</code> subdirectory where Ant will run, and load
         it with source, tests and resources. It will also create and populate directories for xml,
         libraries, etc. in the project directory.
@@ -60,10 +60,10 @@
 
       <h2 id="maven">Maven</h2>
       Maven is an extensible plugin-based build tool for Java development. Maven is available for
-      download at <a href="http://maven.apache.org/">http://maven.apache.org/</a>. Maven will
+      download at <a href="https://maven.apache.org/">https://maven.apache.org/</a>. Maven will
       download the appropriate plugins and dependencies as needed. After installation, the
       following can be done from your JMRI working copy (see <a href=
-      "https://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">Getting the Code</a> for
+      "https://www.jmri.org/help/en/html/doc/Technical/getgitcode.shtml">Getting the Code</a> for
       instructions on creating a working copy):
       <dl>
         <dt>Run unit and integration tests</dt>

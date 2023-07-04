@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 import jmri.InstanceManager;
 import jmri.util.*;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.logixng.LogixNG_Manager;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -89,6 +90,8 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         if ( ! jmri.InstanceManager.getDefault(LayoutBlockManager.class).stabilised ) {
             log.debug(" nor now");
         }
+
+        InstanceManager.getDefault(LogixNG_Manager.class).setupAllLogixNGs();
     }
 
     /**
@@ -122,7 +125,6 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
                 String name = inFile.getName();
                 FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
                 File outFile = new File(FileUtil.getUserFilesPath() + "temp/" + name + "." + index + ".png");
-                System.out.println(outFile);
 
                 java.awt.Dimension size = new java.awt.Dimension(Math.min(le.getTargetPanel().getSize().width, 2000),
                         Math.min(le.getTargetPanel().getSize().height, 1000));
@@ -153,7 +155,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
     }
 
     protected void findAndComparePngFiles(String name, File inFile, File outFile, int index, String subdir) throws IOException {
-        File parent = inFile.getCanonicalFile().getParentFile(); 
+        File parent = inFile.getCanonicalFile().getParentFile();
         Assertions.assertNotNull(parent);
         String filepath = parent.getParent();
         Assertions.assertNotNull(filepath);

@@ -77,7 +77,7 @@
 
       <div style="margin-left: 2em">
         <a href="../logixng/images/SelectActions.png"><img src=
-        "../logixng/images/SelectActions.png" alt="Select Actions" width="147" height="98"></a>
+        "../logixng/images/SelectActions.png" alt="Select Actions"></a>
       </div>
 
       <dl>
@@ -103,7 +103,7 @@
 
           <div style="margin-left: 2em">
             <a href="../logixng/images/CopyLogixNG.png"><img src="../logixng/images/CopyLogixNG.png"
-            alt="Copy LogixNG" width="663" height="171"></a>
+            alt="Copy LogixNG"></a>
           </div>
 
           <p>Enter the user name for the new LogixNG and click on <strong>Copy</strong>.  The
@@ -118,9 +118,15 @@
           and the ConditionalNG content. A confirmation dialog will be displayed.
           <div style="margin-left: 2em">
             <a href="../logixng/images/DeleteLogixNG.png"><img src=
-            "../logixng/images/DeleteLogixNG.png" alt="Delete LogixNG Confirmation" width="367"
-            height="126"></a>
+            "../logixng/images/DeleteLogixNG.png" alt="Delete LogixNG Confirmation"></a>
           </div>
+        </dd>
+
+        <dt>Execute<span class="since">since 5.1.7</span></dt>
+
+        <dd>
+          The <strong>Execute</strong> action can be used to test a LogixNG and its ConditionalNGs
+          while the LogixNG is enabled or disabled.
         </dd>
       </dl>
 
@@ -149,7 +155,7 @@
 
       <div style="margin-left: 2em">
         <a href="../logixng/images/AddLogixNG.png"><img src="../logixng/images/AddLogixNG.png" alt=
-        "Add LogixNG" width="663" height="263"></a>
+        "Add LogixNG"></a>
       </div>
 
       <p>The system name is required. The system name for a LogixNG always begins with the letters

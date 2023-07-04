@@ -1,25 +1,28 @@
 package apps.gui3.paned;
 
+import java.io.File;
+import java.io.IOException;
+
 import apps.AppsBase;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.InstanceManager;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class PanedTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         String[] args = {"DecoderProConfig3.xml"};
         AppsBase a = new Paned(args) {
             // force the application to not actually start.
@@ -57,14 +60,18 @@ public class PanedTest {
         // shutdown the application
         AppsBase.handleQuit();
         JUnitUtil.disposeFrame("DecoderPro Wizard", true, true);
+        
+        JUnitUtil.waitFor(() -> {
+            return JUnitAppender.checkForMessageStartingWith("No pre-existing config file found, searched for ") != null;
+        }, "no existing config Info line seen");
     }
 
     @BeforeEach
-    public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+    public void setUp(@TempDir File tempDir) throws IOException  {
+        JUnitUtil.setUp();
 
         JUnitUtil.resetApplication();
-        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
     }
 
     @AfterEach

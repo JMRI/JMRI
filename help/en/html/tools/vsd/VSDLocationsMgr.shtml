@@ -7,13 +7,7 @@
 
   <style>
     .dp-center {text-align: center;}
-    .dp-middle {text-align: middle;}
     .dp-right {text-align: right;}
-    .dp-none {list-style-type: none;}
-    .dp-square {list-style-type: square;}
-    .dp-upper-alpha {ist-style-type: upper-alpha;}
-    .dp-lower-alpha {list-style-type: lower-alpha;}
-    .dp-border-2 {border: 2px solid;}
   </style>
 </head>
 <body>
@@ -119,7 +113,7 @@
       <h5>Coordinate System</h5>
 
       <p>The VSD Locations system uses a standard "right handed" <a href=
-      "http://en.wikipedia.org/wiki/Cartesian_coordinate_system">Cartesian coordinate system</a>,
+      "https://en.wikipedia.org/wiki/Cartesian_coordinate_system">Cartesian coordinate system</a>,
       where a location is defined by a combination of distances along an X, Y, and Z axis. The
       Origin, or center of the coordinates can be in any convenient location, such as the center of
       the room, a corner of the room, or a corner of the layout.</p>

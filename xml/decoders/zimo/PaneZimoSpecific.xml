@@ -3,6 +3,7 @@
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 - Ronald Kuhn - add german translation -->
 <!-- version 1.2 - Ronald Kuhn - add options for #273, #274, #310 for Non-Sound-Decoder -->
+<!-- version 1.3 - Ronald Kuhn - add options for Motorola Subsequent addresses and Bootloader Version for MS- and MN-series -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Zimo Specific</name>
   <name xml:lang="it">Specifiche Zimo</name>
@@ -102,6 +103,35 @@
         <display item="stopping distance rev low" label="" format="hslider">
           <label/>
         </display>
+
+      </column>
+    </row>
+    <label>
+        <text>     </text>
+    </label>
+    <separator/>
+    <row>
+      <column>
+      <label>
+        <text>     </text>
+       </label>
+        <display item="Operating Mode DC Analogue"/>
+        <display  item="Operating Mode DCC" />
+        <display  item="Operating Mode AC Analogue" />
+        <display  item="Operating Mode MM" />
+        <display  item="Motorola Subsequent addresses" />
+        <display  item="Operating Mode MFX" />
+      
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+      <label>
+        <text>     </text>
+       </label>
+        <display item="Bootloader Version"/>
+        <display item="Bootloader SubVersion" />
       </column>
     </row>
   </column>

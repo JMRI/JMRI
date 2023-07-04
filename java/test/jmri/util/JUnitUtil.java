@@ -1,5 +1,7 @@
 package jmri.util;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -458,6 +460,7 @@ public class JUnitUtil {
      * @param name      name of condition being waited for; will appear in
      *                  Assert.fail if condition not true fast enough
      */
+    @SuppressFBWarnings("REC_CATCH_EXCEPTION")
     static public void waitFor(ReleaseUntil condition, String name) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use waitFor on Swing thread", new Exception());
@@ -466,8 +469,12 @@ public class JUnitUtil {
         int delay = 0;
         try {
             while (delay < WAITFOR_MAX_DELAY) {
-                if (condition.ready()) {
-                    return;
+                try {
+                    if (condition.ready()) {
+                        return;
+                    }
+                } catch(Exception ex) {
+                    Assertions.fail("Exception while processing condition for \"" + name + "\" ", ex);
                 }
                 int priority = Thread.currentThread().getPriority();
                 try {
@@ -475,14 +482,14 @@ public class JUnitUtil {
                     Thread.sleep(WAITFOR_DELAY_STEP);
                     delay += WAITFOR_DELAY_STEP;
                 } catch (InterruptedException e) {
-                    Assert.fail("failed due to InterruptedException");
+                    Assertions.fail("failed due to InterruptedException", e);
                 } finally {
                     Thread.currentThread().setPriority(priority);
                 }
             }
-            Assert.fail("\"" + name + "\" did not occur in time");
+            Assertions.fail("\"" + name + "\" did not occur in time");
         } catch (Exception ex) {
-            Assert.fail("Exception while waiting for \"" + name + "\" " + ex);
+            Assertions.fail("Exception while waiting for \"" + name + "\" ", ex);
         }
     }
 
@@ -575,6 +582,7 @@ public class JUnitUtil {
      * @param name      name of condition being waited for; will appear in
      *                  Assert.fail if condition not true fast enough
      */
+    @SuppressFBWarnings("REC_CATCH_EXCEPTION")
     static public void fasterWaitFor(ReleaseUntil condition, String name) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use waitFor on Swing thread", new Exception());
@@ -583,8 +591,12 @@ public class JUnitUtil {
         int delay = 0;
         try {
             while (delay < 1000) {
-                if (condition.ready()) {
-                    return;
+                try {
+                    if (condition.ready()) {
+                        return;
+                    }
+                } catch(Exception ex) {
+                    Assertions.fail("Exception while processing condition for \"" + name + "\" ", ex);
                 }
                 int priority = Thread.currentThread().getPriority();
                 try {
@@ -592,14 +604,14 @@ public class JUnitUtil {
                     Thread.sleep(5);
                     delay += 5;
                 } catch (InterruptedException e) {
-                    Assert.fail("failed due to InterruptedException");
+                    Assertions.fail("failed due to InterruptedException", e);
                 } finally {
                     Thread.currentThread().setPriority(priority);
                 }
             }
-            Assert.fail("\"" + name + "\" did not occur in time");
+            Assertions.fail("\"" + name + "\" did not occur in time");
         } catch (Exception ex) {
-            Assert.fail("Exception while waiting for \"" + name + "\" " + ex);
+            Assertions.fail("Exception while waiting for \"" + name + "\" ", ex);
         }
     }
 
@@ -984,6 +996,9 @@ public class JUnitUtil {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m9, jmri.Manager.LOGIXNG_STRING_EXPRESSIONS);
         }
         InstanceManager.setDefault(StringExpressionManager.class, m9);
+
+        jmri.jmrit.logixng.actions.NamedBeanType.reset();
+        jmri.jmrit.logixng.actions.CommonManager.reset();
 
         if (activate) m1.activateAllLogixNGs(false, false);
     }
@@ -1497,7 +1512,7 @@ public class JUnitUtil {
                                 // empirically. jemmy leaves anonymous threads
                                 String details = traces[7].getClassName() + "." + traces[7].getMethodName()
                                     +" [" + traces[7].getFileName() + "." + traces[7].getLineNumber() + "]";
-                                        
+
                                 log.warn("Jemmy remnant thread running {}", details );
                                 if ( failRemnantThreads ) {
                                     Assertions.fail("Jemmy remnant thread running " + details);

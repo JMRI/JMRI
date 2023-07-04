@@ -124,6 +124,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
         pLocation.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LocationAndTrack")));
         addItemLeft(pLocation, ignoreLocationCheckBox, 0, 1);
         addItem(pLocation, locationBox, 1, 1);
+        trackLocationBox.setName("trackLocationBox");
         addItem(pLocation, trackLocationBox, 2, 1);
         addItem(pLocation, autoTrackCheckBox, 3, 1);
         pPanel.add(pLocation);
@@ -266,8 +267,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == saveButton) {
-            save();
-            if (Setup.isCloseWindowOnSaveEnabled()) {
+            if (save() && Setup.isCloseWindowOnSaveEnabled()) {
                 dispose();
             }
         }

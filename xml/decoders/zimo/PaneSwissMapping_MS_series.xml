@@ -2140,9 +2140,10 @@
     <row>
     <column>
         <display item="Speed Dependant Headlights">
-          <!--label>Speed Dependant Headlights</label-->
+          <label>Speed Dependant Headlights</label>
           <!--label xml:lang="cs">Světla závislá na rychlosti</label-->
         </display>
+
       </column>
         <label>
           <text> </text>
@@ -2166,11 +2167,11 @@
           <text xml:lang="de">Dimmwert-Gruppen</text>
           <text xml:lang="cs"> Skupiny stmívání </text>
         </label>
+        <label>
+          <text></text>
+        </label>
     </column>
     </row>
-        <label>
-          <text> </text>
-        </label>
     <row>
        
      <column>
@@ -2181,6 +2182,7 @@
           <label xml:lang="de">Gruppe  1  </label>
           <label xml:lang="nl">Groep  1  </label>
         </display>
+
      </column>
      <column>
     <display item="Swiss Dimming 1 brightness">

@@ -46,10 +46,13 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag, 
     }
 
     private String findPrefix() {
-        List<Manager<IdTag>> managerList = InstanceManager.getDefault(ProxyIdTagManager.class).getManagerList();
-        for (Manager<IdTag> m : managerList) {
-            if (m.getBySystemName(mSystemName) != null) {
-                return m.getSystemPrefix();
+        var mgr = InstanceManager.getDefault(IdTagManager.class);
+        if (mgr instanceof ProxyIdTagManager) {
+            List<Manager<IdTag>> managerList = ((ProxyIdTagManager)mgr).getManagerList();
+            for (Manager<IdTag> m : managerList) {
+                if (m.getBySystemName(mSystemName) != null) {
+                    return m.getSystemPrefix();
+                }
             }
         }
         throw new BadSystemNameException();

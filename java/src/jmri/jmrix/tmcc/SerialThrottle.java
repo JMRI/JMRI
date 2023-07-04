@@ -1,6 +1,5 @@
 package jmri.jmrix.tmcc;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
@@ -23,7 +22,7 @@ public class SerialThrottle extends AbstractThrottle {
      * @param address Loco ID
      */
     public SerialThrottle(TmccSystemConnectionMemo memo, DccLocoAddress address) {
-        super(memo);
+        super(memo, 69); // supports 69 functions
         tc = memo.getTrafficController();
 
         // cache settings. It would be better to read the
@@ -54,21 +53,73 @@ public class SerialThrottle extends AbstractThrottle {
     @Override
     public void setFunction(int func, boolean value) {
         updateFunction(func, value);
-        if (func>=0 && func<28) {
-            sendToLayout(SERIAL_FUNCTION_CODES[func] + address.getNumber() * 128);
+        if (func>=0 && func < SERIAL_FUNCTION_CODES.length) {
+            if ( SERIAL_FUNCTION_CODES[func] > 0xFFFF ) {
+                // TMCC 2 format
+                sendToLayout(SERIAL_FUNCTION_CODES[func] + address.getNumber() * 512);
+            } else {
+                // TMCC 1 format
+                sendToLayout(SERIAL_FUNCTION_CODES[func] + address.getNumber() * 128);
+            }
         }
         else {
             super.setFunction(func, value);
         }
     }
 
+    // Translate function number to line characters.
+    // If the upper byte is zero, it will be replaces by 0xF8
+    //    and the address will be set in the low position.
+    // If the upper byte is non-zero, that value will be sent,
+    //    and the address will be set in the upper (TMCC2) position.
     private final static int[] SERIAL_FUNCTION_CODES = new int[] {
-        0x000D, 0x001D, 0x001C, 0x0005, 0x0006, /* 0-4 */
-        0x0010, 0x0011, 0x0012, 0x0013, 0x0014, /* 5-9 */
-        0x0015, 0x0016, 0x0017, 0x0018, 0x0019, /* 10-14 */
-        0x0009, 0x001E, 0x0000, 0x0003, 0x0001, /* 15-19 */
-        0x0004, 0x0007, 0x0047, 0x0042, 0x0028, /* 20-24 */
-        0x0029, 0x002A, 0x002B, /* 25-27 */
+        0x00000D, 0x00001D, 0x00001C, 0x000005, 0x000006, /* Fn0-4 */
+        0x000010, 0x000011, 0x000012, 0x000013, 0x000014, /* Fn5-9 */
+        0x000015, 0x000016, 0x000017, 0x000018, 0x000019, /* Fn10-14 */
+        0x000009, 0x00001E, 0x000000, 0x000003, 0x000001, /* Fn15-19 */
+        0x000004, 0x000007, 0x000047, 0x000042, 0x000028, /* Fn20-24 */
+        0x000029, 0x00002A, 0x00002B, /* 25-27 */
+        // start of TMCC 2 functions
+        0xF801FB, // Fn28 Start Up Sequence 1 (Delayed Prime Mover)
+        0xF801FC, // Fn29 Start Up Sequence 2 (Immediate Start Up)
+        0xF801FD, // Fn30 Shut Down Sequence 1 (Delay w/ Announcement)
+        0xF801FE, // Fn31 Shut down Sequence 2 (Immediate Shut Down)
+        0xF90000, // Fn32
+        0xF90000, // Fn33
+        0xF90000, // Fn34
+        0xF90000, // Fn35
+        0xF90000, // Fn36
+        0xF90000, // Fn37
+        0xF90000, // Fn38
+        0xF90000, // Fn39
+        0xF90000, // Fn40
+        0xF90000, // Fn41
+        0xF90000, // Fn42
+        0xF90000, // Fn43
+        0xF90000, // Fn44
+        0xF90000, // Fn45
+        0xF90000, // Fn46
+        0xF90000, // Fn47
+        0xF90000, // Fn48
+        0xF90000, // Fn49
+        0xF90000, // Fn50
+        0xF90000, // Fn51
+        0xF90000, // Fn52
+        0xF90000, // Fn53
+        0xF90000, // Fn54
+        0xF90000, // Fn55
+        0xF90000, // Fn56
+        0xF90000, // Fn57
+        0xF90000, // Fn58
+        0xF90000, // Fn59
+        0xF90000, // Fn60
+        0xF90000, // Fn61
+        0xF90000, // Fn62
+        0xF90000, // Fn63
+        0xF90000, // Fn64
+        0xF90000, // Fn65
+        0xF90000, // Fn66
+        0xF90000, // Fn67
     };
 
     /**
@@ -76,7 +127,6 @@ public class SerialThrottle extends AbstractThrottle {
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
-    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
     public void setSpeedSetting(float speed) {
         float oldSpeed;
@@ -130,6 +180,11 @@ public class SerialThrottle extends AbstractThrottle {
         firePropertyChange(ISFORWARD, old, isForward);
     }
 
+    /**
+     * Send these messages to the layout four times
+     * to make sure they're accepted.
+     * @param value Content of message to be sent in three bytes
+     */
     protected void sendToLayout(int value) {
         tc.sendSerialMessage(new SerialMessage(value), null);
         tc.sendSerialMessage(new SerialMessage(value), null);

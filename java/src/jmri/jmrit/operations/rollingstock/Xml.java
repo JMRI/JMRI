@@ -53,6 +53,7 @@ public class Xml {
     static final String DESTINATION_ID = "destinationId"; // NOI18N
     static final String SEC_DESTINATION_ID = "secDestinationId"; // NOI18N
     static final String LAST_LOCATION_ID = "lastLocationId"; // NOI18N
+    static final String LAST_TRACK_ID = "lastTrackId"; // NOI18N
     static final String ROUTE_LOCATION_ID = "routeLocationId"; // NOI18N
     static final String ROUTE_DESTINATION_ID = "routeDestinationId"; // NOI18N
     static final String LAST_ROUTE_ID = "lastRouteId"; // NOI18N

@@ -44,11 +44,6 @@
                 <li></li>
             </ul>
 
-        <h4>EasyDCC</h4>
-            <ul>
-                <li>Now allows adding multiple new turnouts at the same time.</li>
-            </ul>
-
         <h4>ESU</h4>
             <ul>
                 <li></li>
@@ -79,15 +74,14 @@
                 <li></li>
             </ul>
 
+        <h4>Lenz XPressNet</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>LocoNet</h4>
             <ul>
-                <li>You can now select separate defaults (in the Preferences -> Defaults pane)
-                for additional types of LocoNet connections.
-                <p>
-                Note: Existing LocoNet connections might give a "The Defaults preferences are invalid"
-                warning when saving preferences.  In that case, click "yes" and then go set
-                all the default radio buttons on the "Defaults" pane to the LocoNet connection.  (You can also
-                click "no", but you'll get the message next time you store too)</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -126,6 +120,11 @@
             </ul>
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Powerline</h4>
             <ul>
                 <li></li>
             </ul>
@@ -310,6 +309,11 @@
                 <li></li>
             </ul>
 
+        <h4>Tam Valley Depot</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>TAMS</h4>
             <ul>
                 <li></li>
@@ -357,7 +361,8 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>New decoder definitions for Firmware 40.18</li>
+                <li>Improve the layout of the Uncouple pane, make sure
+                    that it displays the Uncoupler variable (CV 115).</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -424,13 +429,16 @@
             <li></li>
         </ul>
 
-    <h3>Operations</h3>
-        <a id="Operations" name="Operations"></a>
-        <ul>
-            <li></li>
-        </ul>
+<h3>Operations</h3>
+<a id="Operations" name="Operations"></a>
+<ul>
+  <li>Improvements to the routing code. Program will not use an interchange track if the same
+    train can drop and pull a car.</li>
+  <li>Fixed a bug with export routes.</li>
+  <li>Fixed close on Save for several windows.</li>
+</ul>
 
-   <h3>Panel Editor</h3>
+<h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
             <li></li>
@@ -476,12 +484,6 @@
             <li></li>
        </ul>
 
-    <h3>Turnouts, Lights, Sensors and other elements</h3>
-        <a id="TLae" name="TLae"></a>
-        <ul>
-            <li></li>
-        </ul>
-
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
@@ -500,11 +502,7 @@
 
         <h4>Signal Heads</h4>
             <ul>
-                <li>"Single Output" signal heads had their Thrown and Reversed
-                positions
-                <a href="https://groups.io/g/jmriusers/message/210041">reversed in the "Add..." dialog</a>.
-                This is now corrected.
-                </li>
+                <li></li>
             </ul>
 
         <h4>Signal Masts</h4>
@@ -556,6 +554,12 @@
             <li></li>
         </ul>
 
+    <h3>Turnouts, Lights, Sensors and other elements</h3>
+        <a id="TLae" name="TLae"></a>
+        <ul>
+            <li></li>
+        </ul>
+
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
@@ -595,6 +599,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>SpotBugs has been updated to 4.7.3</li>
+            <li></li>
         </ul>
 

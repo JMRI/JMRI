@@ -58,7 +58,7 @@
       <rule>Rule 408</rule>
       <indication>Proceed, approaching the next signal at DIVERGING speed.</indication>
       <speed>Normal</speed>
-      <speed2>Diverging</speed2>
+      <speed2>Medium</speed2>
       <route>Normal</route>
       <dccAspect>26</dccAspect>
     </aspect>
@@ -166,7 +166,7 @@
       <rule>Rule 420</rule>
       <indication>Proceed, LIMITED speed passing signal and through turnouts, next signal is displaying restricted signal.</indication>
       <speed>Limited</speed>
-      <speed2>Restricting</speed2>
+      <speed2>Restricted</speed2>
       <route>Diverging</route>
       <dccAspect>15</dccAspect>
     </aspect>
@@ -220,7 +220,7 @@
       <rule>Rule 426</rule>
       <indication>Proceed, MEDIUM speed passing signal and through turnouts, next signal is displaying restricted signal.</indication>
       <speed>Medium</speed>
-      <speed2>Restricting</speed2>
+      <speed2>Restricted</speed2>
       <route>Diverging</route>
       <dccAspect>9</dccAspect>
     </aspect>
@@ -237,7 +237,7 @@
       <name>Diverging to Clear</name>
       <rule>Rule 428</rule>
       <indication>Proceed, DIVERGING speed passing signal and through turnouts.</indication>
-      <speed>Diverging</speed>
+      <speed>Medium</speed>
       <speed2>Normal</speed2>
       <route>Diverging</route>
       <dccAspect>7</dccAspect>
@@ -246,8 +246,8 @@
       <name>Diverging to Stop</name>
       <rule>Rule 429</rule>
       <indication>Proceed, DIVERGING speed passing signal and through turnouts, preparing to stop at the next signal.</indication>
-      <speed>Diverging</speed>
-      <speed2>Diverging</speed2>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
       <route>Normal</route>
       <dccAspect>3</dccAspect>
     </aspect>
@@ -255,8 +255,8 @@
       <name>Diverging</name>
       <rule>Rule 430</rule>
       <indication>Proceed, REDUCED speed  not exceeding DIVERGING speedpassing signal and through turnouts.</indication>
-      <speed>Diverging</speed>
-      <speed2>Diverging</speed2>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
       <route>Normal</route>
       <dccAspect>2</dccAspect>
     </aspect>
@@ -352,24 +352,24 @@
     </aspect>
   </aspects>
   <appearancefiles>
-    <appearancefile href="appearance-CROR-3-Hi.xml"></appearancefile>
-    <appearancefile href="appearance-CROR-3A-Hi.xml"></appearancefile>
-    <appearancefile href="appearance-CROR-3L-Hi.xml"></appearancefile>
-    <appearancefile href="appearance-CROR-3D-Hi.xml"></appearancefile>
-    <appearancefile href="appearance-CROR-2S-Hi.xml"></appearancefile>
-    <appearancefile href="appearance-CROR-2SL-Hi.xml"></appearancefile>
-    <appearancefile href="appearance-CROR-2SD-Hi.xml"></appearancefile>
-    <appearancefile href="appearance-CROR-2O-Hi.xml"></appearancefile>
-    <appearancefile href="appearance-CROR-2OL-Hi.xml"></appearancefile>
+    <appearancefile href="appearance-CROR-3-Hi.xml" />
+    <appearancefile href="appearance-CROR-3A-Hi.xml" />
+    <appearancefile href="appearance-CROR-3L-Hi.xml" />
+    <appearancefile href="appearance-CROR-3D-Hi.xml" />
+    <appearancefile href="appearance-CROR-2S-Hi.xml" />
+    <appearancefile href="appearance-CROR-2SL-Hi.xml" />
+    <appearancefile href="appearance-CROR-2SD-Hi.xml" />
+    <appearancefile href="appearance-CROR-2O-Hi.xml" />
+    <appearancefile href="appearance-CROR-2OL-Hi.xml" />
     <appearancefile href="appearance-CROR-2OD-Hi.xml" />
     <appearancefile href="appearance-CROR-1-Hi.xml" />
     <appearancefile href="appearance-CROR-1A-Hi.xml" />
     <appearancefile href="appearance-CROR-1R-Hi.xml" />
-    <appearancefile href="appearance-CROR-2-Lo.xml"></appearancefile>
-    <appearancefile href="appearance-CROR-2L-Lo.xml"></appearancefile>
-    <appearancefile href="appearance-CROR-2D-Lo.xml"></appearancefile>
+    <appearancefile href="appearance-CROR-2-Lo.xml" />
+    <appearancefile href="appearance-CROR-2L-Lo.xml" />
+    <appearancefile href="appearance-CROR-2D-Lo.xml" />
     <appearancefile href="appearance-CROR-1-Lo.xml" />
-    <appearancefile href="appearance-CROR-1A-Lo.xml"></appearancefile>
+    <appearancefile href="appearance-CROR-1A-Lo.xml" />
     <appearancefile href="appearance-CROR-1D-Lo.xml" />
   </appearancefiles>
 </aspecttable>

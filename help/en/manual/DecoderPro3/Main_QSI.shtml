@@ -7,13 +7,7 @@
 
   <style>
     .dp-center {text-align: center;}
-    .dp-middle {text-align: middle;}
     .dp-right {text-align: right;}
-    .dp-none {list-style-type: none;}
-    .dp-square {list-style-type: square;}
-    .dp-upper-alpha {ist-style-type: upper-alpha;}
-    .dp-lower-alpha {list-style-type: lower-alpha;}
-    .dp-border-2 {border: 2px solid;}
   </style>
 </head>
 <body>
@@ -45,7 +39,7 @@
       </p>
 
       <p>Opens the <strong>Send QSI command</strong> prompt to type in a <strong>Command:</strong>
-      and click on <input type="submit" name="button" id="button" value="Send"></p>
+      and click on <span class="textbutton">Send</span> .</p>
 
       <p><img src="images/Main_QSI_01.png" alt="Send Command" width="226" height="99">
       </p>

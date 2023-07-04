@@ -167,6 +167,7 @@ public class SerialNode extends AbstractNode {
         }
         // initialize other operational instance variables
         setMustSend();
+        setOptNet_AUTOPOLL(1);  // always start with polling enabled
         hasActiveSensors = false;
         // register this node
         tc.registerNode(this);
@@ -495,7 +496,7 @@ public class SerialNode extends AbstractNode {
     /**
      * Get CMRInet options.
      * @param optionbit option index.
-     * @return option value.
+     * @return option value: meaning depends on option
      */
     public int getCMRInetOpts(int optionbit) { return (cmrinetOptions[optionbit]); }
     public void setCMRInetOpts(int optionbit,int val) { cmrinetOptions[optionbit] = (byte)val; }
@@ -504,13 +505,13 @@ public class SerialNode extends AbstractNode {
     /**
      * Get cpNode options.
      * @param optionbit option index.
-     * @return option value.
+     * @return option value: meaning depends on option
      */
     public int getcpnodeOpts(int optionbit) { return (cpnodeOptions[optionbit]); }
     public void setcpnodeOpts(int optionbit,int val) { cpnodeOptions[optionbit] = (byte)val; }
     public boolean iscpnodeBit(int optionbit) { return (cpnodeOptions[optionbit] == 1); }
 
-    /**
+    /*
      * get and set specific option bits.
      * Network Option Bits
      */
@@ -519,13 +520,26 @@ public class SerialNode extends AbstractNode {
      * Get if Autopoll bit set.
      * @return true if set, else false.
      */
-    public boolean getOptNet_AUTOPOLL() { return (cmrinetOptions[optbitNet_AUTOPOLL] == 1); }
+    public boolean getOptNet_AUTOPOLL() {
+        var retval = cmrinetOptions[optbitNet_AUTOPOLL] == 1;
+        log.trace("getOptNet_AUTOPOLL() is {}", retval);
+        return (retval);
+    }
+
     public boolean getOptNet_USECMRIX() { return (cmrinetOptions[optbitNet_USECMRIX] == 1); }
     public boolean getOptNet_USEBCC()     { return (cmrinetOptions[optbitNet_USEBCC] == 1); }
     public boolean getOptNet_BIT8()     { return (cmrinetOptions[optbitNet_BIT8] == 1); }
     public boolean getOptNet_BIT15()    { return (cmrinetOptions[optbitNet_BIT15] == 1); }
 
-    public void setOptNet_AUTOPOLL(int val) { cmrinetOptions[optbitNet_AUTOPOLL] = (byte)val; }
+    /**
+     * update Autopoll bit
+     * @param val 1 sets autopoll on, 0 sets it off
+     */
+    public void setOptNet_AUTOPOLL(int val) {
+        log.trace("setOptNet_AUTOPOLL({})", val);
+        cmrinetOptions[optbitNet_AUTOPOLL] = (byte)val;
+    }
+
     public void setOptNet_USECMRIX(int val) { cmrinetOptions[optbitNet_USECMRIX] = (byte)val; }
     public void setOptNet_USEBCC(int val)     { cmrinetOptions[optbitNet_USEBCC] = (byte)val; }
     public void setOptNet_BIT8(int val)     { cmrinetOptions[optbitNet_BIT8] = (byte)val; }
@@ -534,7 +548,7 @@ public class SerialNode extends AbstractNode {
     public int getOptNet_byte0() {return cmrinetOptions[0];}
     public int getOptNet_byte1() {return cmrinetOptions[1];}
 
-    /**
+    /*
      * Node Option Bits.
      */
 

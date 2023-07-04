@@ -519,6 +519,36 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
+    public void testMonitorStringVarious() {
+        msg = new DCCppMessage("=");
+        Assert.assertEquals("Monitor string", "Request TrackManager Config: '='", msg.toMonitorString());
+        msg = DCCppMessage.makeTrackManagerRequestMsg();
+        Assert.assertEquals("Monitor string", "Request TrackManager Config: '='", msg.toMonitorString());
+    }
+
+    @Test
+    public void testMonitorStringThrottleCommandsMsg() {
+        msg = new DCCppMessage("J T");
+        Assert.assertEquals("Monitor string", "Request Turnout ID list", msg.toMonitorString());
+        msg = DCCppMessage.makeTurnoutIDsMsg();
+        Assert.assertEquals("Monitor string", "Request Turnout ID list", msg.toMonitorString());
+        msg = new DCCppMessage("J T 145");
+        Assert.assertEquals("Monitor string", "Request details for Turnout 145", msg.toMonitorString());
+        msg = DCCppMessage.makeTurnoutIDMsg(145);
+        Assert.assertEquals("Monitor string", "Request details for Turnout 145", msg.toMonitorString());
+        msg = new DCCppMessage("T 145 X");
+        Assert.assertEquals("Monitor string", "Request implementation for Turnout 145", msg.toMonitorString());
+        msg = new DCCppMessage("J C");
+        Assert.assertEquals("Monitor string", "Request clock update from CS", msg.toMonitorString());
+        msg = DCCppMessage.makeClockRequestTimeMsg();
+        Assert.assertEquals("Monitor string", "Request clock update from CS", msg.toMonitorString());
+        msg = new DCCppMessage("J C 234 12");
+        Assert.assertEquals("Monitor string", "FastClock Send: 03:54, Rate:12", msg.toMonitorString());
+        msg = DCCppMessage.makeClockSetMsg(234, 12);
+        Assert.assertEquals("Monitor string", "FastClock Send: 03:54, Rate:12", msg.toMonitorString());
+    }
+
+    @Test
     public void testGetBitWriteOpsModeCVMsg() {
         msg = DCCppMessage.makeBitWriteOpsModeCVMsg(17, 4, 3, 1);
         log.debug("write ops bit cv message = '{}'", msg);

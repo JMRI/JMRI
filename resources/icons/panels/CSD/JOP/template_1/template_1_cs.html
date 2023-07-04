@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="cs">
+    <head>
+        <title>JMRI Icons</title>
+        <meta charset="UTF-8">
+        <meta name="author" content="Petr Šídlo" >
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="icon" href="/images/jmri.ico" type="image/png">
+    </head>
+    <body>
+    
+        <h1>Použítí souboru catalogTrees.xml</h1>
+        
+        <p>Soubor <b>catalogTrees.xml</b> z adresáře <b>template_1</b> slouží k rychlému nastavení ikon v <b>Paletě položek</b> pro <b>Control Panel Editor</b> ve stylu <b>JMRI JOP</b>.</p>
+
+        <p>Soubor <a href="catalogTrees.xml">catalogTrees.xml</a> z tohoto adresáře zkopírujte do adresáře <b>Umístění profilu</b>. Předpokladem je, že soubor catalogTrees.xml ještě neexistuje. Pokud ano, budou současná nastavení katalogu ztracena.</p>
+        
+        <h2>Nastavení základních barev</h2>
+        
+        <p>Katalog z adresáře <a href="index.php">template_1</a> používá následující barevné schema:</p>
+        
+        <table><tbody>
+<tr>
+	<th>Význam</th>
+	<th>Příklad</th>
+	<th>RGB dec</th>
+	<th>RGB hex</th>
+</tr>
+<tr>
+	<td>Pozadí</td>
+	<td><img src="../signal/signal-mask/signal_mask_333333.png" width="14" height="24" alt=""></td>
+	<td>51, 51, 51</td>
+	<td>#333333</td>
+</tr>
+<tr>
+	<td>Volno</td>
+	<td bgcolor="#333333"><img src="../track/track-straigth/straigth_grey.png" width="44" height="24" alt=""></td>
+	<td>128, 128, 128</td>
+	<td>#808080</td>
+</tr>
+<tr>
+	<td>Obsazeno</td>
+	<td bgcolor="#333333"><img src="../track/track-straigth/straigth_red.png" width="44" height="24" alt=""></td>
+	<td>255, 0, 0</td>
+	<td>#FF0000</td>
+</tr>
+<tr>
+	<td>Přiděleno</td>
+	<td bgcolor="#333333"><img src="../track/track-straigth/straigth_green.png" width="44" height="24" alt=""></td>
+	<td>0, 255, 0</td>
+	<td>#00FF00</td>
+</tr>
+<tr>
+	<td>Rozkaz</td>
+	<td bgcolor="#333333"><img src="../track/track-straigth/straigth_magenta.png" width="44" height="24" alt=""></td>
+	<td>255, 0, 255</td>
+	<td>#FF00FF</td>
+</tr>
+<tr>
+	<td>Jiný režim</td>
+	<td bgcolor="#333333"><img src="../track/track-straigth/straigth_white.png" width="44" height="24" alt=""></td>
+	<td>255, 255, 255</td>
+	<td>#FFFFFF</td>
+</tr>
+<tr>
+	<td>Mimo provoz</td>
+	<td bgcolor="#333333"><img src="../track/track-straigth/straigth_cyan.png" width="44" height="24" alt=""></td>
+	<td>0, 255, 255</td>
+	<td>#00FFFF</td>
+</tr>
+<tr>
+	<td>Bez detekce</td>
+	<td bgcolor="#333333"><img src="../track/track-straigth/straigth_dashed.png" width="44" height="24" alt=""></td>
+	<td>128, 128, 128</td>
+	<td>#808080</td>
+</tr>
+</tbody></table>
+
+        <h2>Nastavení doplňkových barev</h2>
+        
+        <table><tbody>
+<tr>
+	<th>Význam</th>
+	<th>Příklad</th>
+	<th>RGB dec</th>
+	<th>RGB hex</th>
+</tr>
+<tr>
+	<td>Tlačítko nestisknuto</td>
+	<td bgcolor="#333333"><img src="../button/signal_main_off.png" width="34" height="24" alt=""></td>
+	<td>průhledné</td>
+	<td>průhledné</td>
+</tr>
+<tr>
+	<td>Výhybka stisknuto</td>
+	<td bgcolor="#333333"><img src="../button/turnout_left_on.png" width="24" height="44" alt=""></td>
+	<td>221, 221, 221</td>
+	<td>#DDDDDD</td>
+</tr>
+<tr>
+	<td>Hlavní návěstidlo stisknuto</td>
+	<td bgcolor="#333333"><img src="../button/signal_main_on.png" width="34" height="24" alt=""></td>
+	<td>0, 192, 0</td>
+	<td>#00C000</td>
+</tr>
+<tr>
+	<td>Seřaďovací návěstidlo stisknuto</td>
+	<td bgcolor="#333333"><img src="../button/signal_shunt_on.png" width="34" height="24" alt=""></td>
+	<td>221, 221, 221</td>
+	<td>#DDDDDD</td>
+</tr>
+<tr>
+	<td>Pomocné stavědlo Neaktivní</td>
+	<td bgcolor="#333333"><img src="../tower/tower-auxiliary/tower_auxiliary_grey.png" width="14" height="24" alt=""></td>
+	<td>128, 128, 128</td>
+	<td>#808080</td>
+</tr>
+<tr>
+	<td>Pomocné stavědlo Aktivní</td>
+	<td bgcolor="#333333"><img src="../tower/tower-auxiliary/tower_auxiliary_blue.png" width="14" height="24" alt=""></td>
+	<td>64, 64, 255</td>
+	<td>#4040FF</td>
+</tr>
+<tr>
+	<td>Pomocné stavědlo Neznámý</td>
+	<td bgcolor="#333333"><img src="../tower/tower-auxiliary/tower_auxiliary_black.png" width="14" height="24" alt=""></td>
+	<td>0, 0, 0</td>
+	<td>#000000</td>
+</tr>
+<tr>
+	<td>Pomocné stavědlo Nekonzistentní</td>
+	<td bgcolor="#333333"><img src="../tower/tower-auxiliary/tower_auxiliary_cyan.png" width="14" height="24" alt=""></td>
+	<td>0, 255, 255</td>
+	<td>#00FFFF</td>
+</tr>
+</tbody></table>
+
+        <h2>Geometrie ikon</h2>
+        
+        <p>Všechny ikony jsou navržené tak, aby mohly být umisťovány do mřížky s roztečí <b>10 pixelů</b>. Tato hodnota se dobře pamatuje. Při dodržení mřížky 10 pixelů budou všechny ikony na sebe správně navazovat.</p>
+        
+        <h2>Adresáře</h2>
+
+        <p>Obsah adresáře JOP.</p>
+        
+        <table border="0"><tbody>
+<tr>
+	<td><img src="https://www.jmri.org/icons/folder.gif"></td>
+	<td><a href="../bumper">bumper</a></td> 
+	<td>Zarážedlo</td>
+</tr>
+<tr>
+	<td><img src="https://www.jmri.org/icons/folder.gif"></td>
+	<td><a href="../button">button</a></td>
+	<td>Tlačítko</td>
+</tr>
+<tr>
+	<td><img src="https://www.jmri.org/icons/folder.gif"></td>
+	<td><a href="../curve">curve</a></td>
+	<td>Oblouková kolej</td>
+</tr>
+<tr>
+	<td><img src="https://www.jmri.org/icons/folder.gif"></td>
+	<td><a href="../derailer">derailer</a></td>
+	<td>Výkolejka</td>
+</tr>
+<tr>
+	<td><img src="https://www.jmri.org/icons/folder.gif"></td>
+	<td><a href="../permission">permission</a></td>
+	<td>Řadič</td>
+</tr>
+<tr>
+	<td><img src="https://www.jmri.org/icons/folder.gif"></td>
+	<td><a href="../portal">portal</a></td>
+	<td>Portál</td>
+</tr>
+<tr>
+	<td><img src="https://www.jmri.org/icons/folder.gif"></td>
+	<td><a href="../r-r">r-r</a></td>
+	<td>Přejezd</td>
+</tr>
+<tr>
+	<td><img src="https://www.jmri.org/icons/folder.gif"></td>
+	<td><a href="../signal">signal</a></td>
+	<td>Návěstidlo</td>
+</tr>
+<tr>
+	<td><img src="https://www.jmri.org/icons/folder.gif"></td>
+	<td><a href="../template_1">template_1</a></td>
+	<td>Katalog 1</td>
+</tr>
+<tr>
+	<td><img src="https://www.jmri.org/icons/folder.gif"></td>
+	<td><a href="../template_2">template_2</a></td>
+	<td>Katalog 2</td>
+</tr>
+<tr>
+	<td><img src="https://www.jmri.org/icons/folder.gif"></td>
+	<td><a href="../tower">tower</a></td>
+	<td>Stavědlo</td>
+</tr>
+<tr>
+	<td><img src="https://www.jmri.org/icons/folder.gif"></td>
+	<td><a href="../track">track</a></td>
+	<td>Kolej</td>
+</tr>
+<tr>
+	<td><img src="https://www.jmri.org/icons/folder.gif"></td>
+	<td><a href="../turnout">turnout</a></td>
+	<td>Výhybka</td>
+</tr>
+</tbody></table>
+
+      <!-- Footer.shtml since 2021 -->
+    <hr class="hide">
+    <div id="footer">
+        <ul id="bn"></ul><!-- seems necessary to the formatting? -->
+
+        <p>Thanks and congratulations to
+           <a href="/help/en/Acknowledgements.shtml" title="Who is JMRI">
+            all who contributed</a>! Contact us via the <a href="https://groups.io/g/jmriusers">JMRI users</a> Groups.io
+        group.
+        </p>
+
+        <p>Copyright &copy; 1997 - 2023 JMRI Community.
+        JMRI&reg;, DecoderPro&reg;, PanelPro&trade;, DispatcherPro&trade;, OperationsPro&trade;, SignalPro&trade;, SoundPro&trade;, TrainPro&trade;, Logix&trade;, LogixNG&trade; and associated logos are our trademarks.
+        <a href="/copyright.shtml">Additional information on copyright, trademarks and licenses is linked here.</a>
+        </p>
+
+        <p>
+        <!-- Add a link to Github history of file -->
+        View the
+        <script> // HTMl for each page is generated by the following Javascript
+            var target = window.location.pathname;
+            target = (target.slice(-1) == "/") ? target+"index.shtml" : target;  // do default expansion of empty to index
+
+            // check repository - only directories with files that include Footer.shtml
+            if (target.slice(0,6) == "/help/") {
+                target = "https://github.com/JMRI/JMRI/blob/master"+target;
+            } else if (target.slice(0,5) == "/xml/") {
+                target = "https://github.com/JMRI/JMRI/blob/master"+target;
+            } else { // must be in JMRI/website
+                target = "https://github.com/JMRI/website/blob/master"+target;
+            }
+            //document.write(target+" ")
+            document.write("<a href=\""+target+"\" title=\"File history on GitHub.com\">history of this page and propose edits</a>.")
+        </script>
+        </p>
+
+    </div>
+<!-- /Footer.shtml -->
+
+    </body>
+</html>

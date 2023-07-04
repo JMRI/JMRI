@@ -208,7 +208,7 @@ public class CbusNodeCanListener implements jmri.jmrix.can.CanListener {
     
     private void processParam(CanReply m){
         _node.getNodeTimerManager().clearAllParamTimeout();
-        if (m.getElement(3)==0) { // reset parameters
+        if (m.getElement(3)==0) { // param 0 is number of params
             int [] myarray = new int[(m.getElement(4)+1)]; // +1 to account for index 0 being the parameter count
             java.util.Arrays.fill(myarray, -1);
             // node may already be aware of some params via the initial PNN or STAT
@@ -251,7 +251,7 @@ public class CbusNodeCanListener implements jmri.jmrix.can.CanListener {
 
         } else {
             _node.getNodeParamManager().setParameter( m.getElement(3), m.getElement(4) );
-            if ( m.getElement(3) == 6 ) { // reset NV's
+            if ( m.getElement(3) == 6 ) { // param 3 is number of NVs
                 int [] myarray = new int[(m.getElement(4)+1)]; // +1 to account for index 0 being the NV count
                 java.util.Arrays.fill(myarray, -1);
                 myarray[0] = m.getElement(4);

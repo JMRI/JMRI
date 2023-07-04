@@ -32,6 +32,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.symbolicprog.AbstractValue;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.CvValue;
 import jmri.jmrit.symbolicprog.DccAddressPanel;
@@ -42,7 +43,7 @@ import jmri.jmrit.symbolicprog.Qualifier;
 import jmri.jmrit.symbolicprog.QualifierAdder;
 import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 import jmri.jmrit.symbolicprog.ValueEditor;
-import jmri.jmrit.symbolicprog.ValueRenderer;
+import jmri.jmrit.symbolicprog.CvValueRenderer;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrit.symbolicprog.VariableValue;
 import jmri.util.CvUtil;
@@ -809,10 +810,10 @@ public class PaneProgPane extends javax.swing.JPanel
         }
         while ((varList.size() > 0) && (varListIndex < varList.size())) {
             int varNum = varList.get(varListIndex);
-            int vState = _varModel.getState(varNum);
+            AbstractValue.ValueState vState = _varModel.getState(varNum);
             VariableValue var = _varModel.getVariable(varNum);
             if (log.isDebugEnabled()) {
-                log.debug("nextRead var index {} state {} isToRead: {} label: {}", varNum, VariableValue.stateNameFromValue(vState), var.isToRead(), var.label());
+                log.debug("nextRead var index {} state {} isToRead: {} label: {}", varNum, vState.getName(), var.isToRead(), var.label());
             }
             varListIndex++;
             if (var.isToRead()) {
@@ -971,10 +972,10 @@ public class PaneProgPane extends javax.swing.JPanel
         // look for possible variables
         while ((varList.size() > 0) && (varListIndex < varList.size())) {
             int varNum = varList.get(varListIndex);
-            int vState = _varModel.getState(varNum);
+            AbstractValue.ValueState vState = _varModel.getState(varNum);
             VariableValue var = _varModel.getVariable(varNum);
             if (log.isDebugEnabled()) {
-                log.debug("nextWrite var index {} state {} isToWrite: {} label:{}", varNum, VariableValue.stateNameFromValue(vState), var.isToWrite(), var.label());
+                log.debug("nextWrite var index {} state {} isToWrite: {} label:{}", varNum, vState.getName(), var.isToWrite(), var.label());
             }
             varListIndex++;
             if (var.isToWrite()) {
@@ -1141,7 +1142,7 @@ public class PaneProgPane extends javax.swing.JPanel
         if (e.getSource() == _programmingVar
                 && e.getPropertyName().equals("Busy")
                 && e.getNewValue().equals(Boolean.FALSE)) {
-            if (_programmingVar.getState() == VariableValue.UNKNOWN) {
+            if (_programmingVar.getState() == AbstractValue.ValueState.UNKNOWN) {
                 if (retry == 0) {
                     varListIndex--;
                     retry++;
@@ -2092,8 +2093,10 @@ public class PaneProgPane extends javax.swing.JPanel
 
         cvTable.setRowSorter(sorter);
 
-        cvTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
-        cvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
+        cvTable.setDefaultRenderer(JTextField.class, new CvValueRenderer());
+        cvTable.setDefaultRenderer(JButton.class, new CvValueRenderer());
+        cvTable.setDefaultRenderer(String.class, new CvValueRenderer());
+        cvTable.setDefaultRenderer(Integer.class, new CvValueRenderer());
         cvTable.setDefaultEditor(JTextField.class, new ValueEditor());
         cvTable.setDefaultEditor(JButton.class, new ValueEditor());
         cvTable.setRowHeight(new JButton("X").getPreferredSize().height);

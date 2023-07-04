@@ -7,9 +7,6 @@
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="jmri LogixNG reference local variables">
   <!--#include virtual="/Style.shtml" -->
-  <style>
-    .add_sub {border: solid thin black !important;}
-  </style>
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->
@@ -48,7 +45,7 @@
       variables</strong>.</p>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter8/local_variables_menu.png"><img class="add_sub" src=
+        <a href="images/chapter8/local_variables_menu.png"><img class="image-border" src=
         "images/chapter8/local_variables_menu.png" alt="Chapter 8 local variable menu item"></a>
       </div>
 

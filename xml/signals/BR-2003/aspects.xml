@@ -12,7 +12,7 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Kevin</firstname><surname>Dickerson</surname></personname>
@@ -31,7 +31,7 @@
         <date>2010-02-02</date>
         <authorinitials>KD</authorinitials>
         <revremark>Change position light signal names to "on" and "off", Remove Call-On and change to On</revremark>
-    </revision> 
+    </revision>
     <revision>
         <revnumber>1.2</revnumber>
         <date>2018-07-05</date>
@@ -48,7 +48,6 @@
       <indication>Next signal displaying proceed aspect</indication>
       <description>Green Aspect Showing</description>
       <reference>Section 2.1, 2.2</reference>
-      <comment></comment>
       <speed>Normal</speed>
       <speed2>Normal</speed2>
     </aspect>
@@ -77,7 +76,6 @@
       <indication>Proceed: be prepared to stop at the next signal</indication>
       <description>Yellow Aspect Showing</description>
       <reference>Section 2.1, 2.2</reference>
-      <comment></comment>
       <speed>Slow</speed>
       <speed2>Slow</speed2>
     </aspect>
@@ -97,7 +95,6 @@
       <indication>Stop</indication>
       <description>On all Main Signals this is a Red Aspect Showing, on Semaphore the home signal arm is Horizontal.  Position Light Signals, will either display two red or yellow lights, a red or yellow and a white light.  Where a red lights are used, this indicates stop.  Where a yellow lights are used This indicates stop, if the points are set for a route that would take the movement onto a running line. Movements are allowed to pass the signal if it is being made towards a shunt neck or siding.</description>
       <reference>Section 2.1, 2.2, 2.7</reference>
-      <comment></comment>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
     </aspect>
@@ -107,7 +104,6 @@
       <indication>Proceed at Caution</indication>
       <description>If the position-light signal displays two white lights at 45degrees, this authorises the driver to proceed at caution towards the next stop signal or buffer stop and be prepared to stop short of any obstruction.</description>
       <reference>Section 2.7</reference>
-      <comment></comment>
       <speed>RestrictedSlow</speed>
       <speed2>RestrictedSlow</speed2>
     </aspect>
@@ -117,7 +113,6 @@
       <indication>Stop</indication>
       <description>Position Light Signal, will either display two red or yellow lights, a red or yellow and a white light.  Where red lights are used, this indicates stop.  Where yellow lights are used This indicates stop, if the points are set for a route that would take the movement onto a running line. Movements are allowed to pass the signal if it is being made towards a shunt neck or siding.</description>
       <reference>Section 2.1, 2.2, 2.7</reference>
-      <comment></comment>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
     </aspect>
@@ -127,8 +122,9 @@
   <imagetypes>
     <imagetype type="large"/>
     <imagetype type="aspects"/>
+    <imagetype type="medium"/>
    </imagetypes>
-  
+
  <appearancefiles>
     <appearancefile href="appearance-2-d-sema.xml"/>
     <appearancefile href="appearance-2-d.xml"/>
@@ -152,4 +148,4 @@
     <appearancefile href="appearance-ply.xml"/>
   </appearancefiles>
 </aspecttable>
-  
+

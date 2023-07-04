@@ -66,7 +66,7 @@
                 <p><input name="checkbox" id="checkbox" type="checkbox"> <strong>Invert</strong>
                 will reverse the sequence of the Route when copied.</p>
 
-                <p><input name="button" id="button" value="Copy" type="submit"> press to copy the
+                <p>Press <span class="textbutton">Copy</span> to copy the
                 Route into your Route file.</p>
               </td>
             </tr>
@@ -104,16 +104,16 @@
                   Set the X, Y coordinates where you want the icon located at the selected
                   Location,</p>
 
-                  <p><input name="button3" id="button3" value="Place Test Icons" type="button">
+                  <p>Press <span class="textbutton">Place Test Icons</span> to
                   check location on your layout</p>
 
                   <p><img style="width: 375px; height: 211px;" alt="Demo Panel" src=
                   "images/Ops_Route_DemoPanel.png">
                   </p>
 
-                  <p><input name="button4" id="button4" value="Update Routes" type="button"> update
-                  the Routes with icon data<br>
-                  <input name="button5" id="button5" value="Save" type="button">saves the icon data
+                  <p><span class="textbutton">Update Routes</span> to update
+                  the Routes with icon data, and<br>
+                  <span class="textbutton">Save</span> saves the icon data
                   in the Routes files<br></p>
                 </td>
               </tr>

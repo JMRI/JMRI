@@ -223,6 +223,14 @@ public class DefaultConditionalAction implements ConditionalAction {
                         log.error("invalid NX name= \"{}\" in conditional action", devName);
                     }
                     break;
+                case LOGIX:
+                    try {
+                        bean = jmri.InstanceManager.getDefault(jmri.LogixManager.class).getLogix(devName);
+                    } catch (IllegalArgumentException e) {
+                        bean = null;
+                        log.error("invalid Logix name= \"{}\" in conditional action", devName);
+                    }
+                    break;
                 default:
                     if (getType() == Conditional.Action.TRIGGER_ROUTE) {
                         try {

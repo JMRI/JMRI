@@ -61,6 +61,13 @@ public class FunctionButton extends JToggleButton {
 
     public final static int DEFAULT_IMG_SIZE = 48;
 
+    public void destroy() {        
+        if (editor != null) {
+            editor.destroy();
+        }
+        _throttle = null;
+    }
+    
     /**
      * Get Button Height.
      * @return height.

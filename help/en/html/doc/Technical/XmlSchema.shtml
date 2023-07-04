@@ -19,13 +19,13 @@
       <p>JMRI uses XML for a number of purposes: to hold decoder definitions, for its <a href=
       "XmlPersistance.shtml">persistance system</a> for configuration and panel information, and to
       create parts of the website from other files. This page describes how we specify the content
-      of those files using <a href="http://www.w3schools.com/xml/xml_schema.asp">XML
+      of those files using <a href="https://www.w3schools.com/xml/xml_schema.asp">XML
       schema</a>.</p>
 
       <p>For examples (not a tutorial!) on the structure of our schema, see the <a href=
       "XmlSchemaExamples.shtml">examples page</a>.</p>
 
-      <p>The current schema can be seen online in the <a href="http://jmri.org/xml/schema">schema
+      <p>The current schema can be seen online in the <a href="https://www.jmri.org/xml/schema/">schema
       directory</a>. The most commonly used one is the <a href=
       "http://jmri.org/xml/schema/layout.xsd">layout.xsd schema for panel files</a>. See below on
       how it's organized.</p>
@@ -35,7 +35,7 @@
       <p>Those XML Schema may need to be available to the program when it reads the files, as they
       define the default values of missing attributes and other needed information.</p>
 
-      <p>In the JMRI distributions, these are stored in the <a href="/xml/schema">xml/schema</a>
+      <p>In the JMRI distributions, these are stored in the /xml/schema/
       directory. Note that they are not stored in each directory alongside the XML files. There are
       just too many locations to keep such a set of schema definition files up to date. JMRI
       itself, via the jmri.jmrit.XmlFile class, provides support for locating those files when the
@@ -156,7 +156,7 @@
       layout.xsd is <em>older</em> than layout-2-9-6.xsd, and therefore not to be used for new
       files anymore. Don't assume that layout.xsd is the default for new files!</p>
 
-      <h2>Checking JMRI Schema</h2>
+      <h2 id="junitschematest">Checking JMRI Schema</h2>
       <p>It's important that the JMRI schema definitions be kept semantically correct. If we let too
       many problems build up, we'll eventually have a lot of back-fitting to do. The W3C online
       <a href="https://www.w3schools.com/xml/xml_validator.asp">schema validation tool</a> is a
@@ -196,7 +196,7 @@
 </code>
 </pre>Stylesheets turn XML code, like this schema, into a human-readable form when the XML is
 parsed and displayed by a browser. For an example of that, click on this link to the <a href=
-"http://jmri.org/xml/schema/aspecttable.xsd">aspecttable.xsd</a> schema file. Our standard
+"https://www.jmri.org/xml/schema/aspecttable.xsd">aspecttable.xsd</a> schema file. Our standard
 stylesheet is pretty basic. It just shows basic structure. If anybody knows of a better stylesheet,
 we can certainly switch to it.
       <h3 id="test">JUnit testing</h3>
@@ -248,7 +248,7 @@ we can certainly switch to it.
           comparison fails, but the output file is still OK when you manually inspect it, copy that
           output file to the "loadref" directory (create it if needed) within your test package.
           See <a href=
-          "http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/java/test/jmri/configurexml/loadref"
+          "https://github.com/JMRI/JMRI/tree/master/java/test/jmri/configurexml/loadref"
           target="_blank">test/jmri/configurexml/loadref</a> for an example. LoadAndStoreTest will
           compare to files it finds here, instead of to the original file in the "load"
           subdirectory.</p>
@@ -279,7 +279,7 @@ we can certainly switch to it.
       code: A particular *Xml class is the unit of reuse.</p>
 
       <p>Lots of classes descend from jmri.configurexml.XmAdapter: (<a href=
-      "https://jmri.org/JavaDoc/doc/jmri/configurexml/XmlAdapter.html">see Javadoc</a>)</p>
+      "https://www.jmri.org/JavaDoc/doc/jmri/configurexml/XmlAdapter.html">see Javadoc</a>)</p>
 
       <p>By convention, provide &lt;xsd:annotation&gt;&lt;xsd:appinfo&gt; element containing the
       class name that reads/writes the element:</p>
@@ -289,7 +289,7 @@ we can certainly switch to it.
       &lt;/xs:appinfo&gt; &lt;/xs:annotation&gt;</code>
       <h3>The Venetian Blinds Pattern</h3>
       We are moving toward structuring our XML using the "<a href=
-      "http://www.xfront.com/GlobalVersusLocal.html#ThirdDesignCharacteristics">Venetian Blinds
+      "https://www.xfront.com/GlobalVersusLocal.html#ThirdDesignCharacteristics">Venetian Blinds
       pattern</a>". In this style, the top level elements that are written by classes have types
       defined for them. Any elements that are within those are defined anonymously, within those
       elements. For an example of this, see the <a href=
@@ -303,9 +303,8 @@ we can certainly switch to it.
       They are defined in the <a href=
       "http://jmri.org/xml/schema/types/general.xsd">types/general.xsd</a> file.</p>
 
-      <p>More information on XML schema design patterns is available at <a href=
-      "http://www.ibm.com/developerworks/xml/library/ws-soa-xmlwsdl.html#N1012B">DeveloperWorks</a>
-      and the <a href="http://www.oracle.com/technetwork/java/design-patterns-142138.html">Oracle
+      <p>More information on XML schema design patterns is available at the <a
+      href="https://www.oracle.com/technical-resources/articles/java/design-patterns.html">Oracle
       Java site</a>.</p>
 
       <h3>On Elements vs Attributes</h3>
@@ -369,13 +368,13 @@ we can certainly switch to it.
       For others, browse the <a href="http://jmri.org/xml/schema/types/general.xsd">general types
       schema</a>.
       <h2>External Standards and Future Work</h2>
-      The <a href="http://www.oasis-open.org/">OASIS collaboration</a> defines a number of schema
+      The <a href="https://www.oasis-open.org/">OASIS collaboration</a> defines a number of schema
       and schema elements that have become well-known standards. Were possible, we should use those
-      <a href="http://www.oasis-open.org/specs/index.php">standard elements</a> to improve
+      <a href="https://www.oasis-open.org/specs/index.php">standard elements</a> to improve
       inter-operability. The first ones of interest are:
       <ul>
         <li>
-          <a href="http://docbook.org/">DocBook</a> defines elements for several concepts we use:
+          <a href="https://docbook.org/">DocBook</a> defines elements for several concepts we use:
           <div class="wide">
             <ul>
               <li>author (http://www.docbook.org/tdg/en/html/author.html)</li>
@@ -391,16 +390,16 @@ we can certainly switch to it.
             <ul>
               <li>
                 <a href=
-                "http://www.docbook.org/specs/docbook-5.0-spec-cs-01.html">http://www.docbook.org/specs/docbook-5.0-spec-cs-01.html</a>
+                "https://docbook.org/specs/docbook-5.0-spec-cs-01.html">https://docbook.org/specs/docbook-5.0-spec-cs-01.html</a>
               </li>
 
               <li>
-                <a href="http://www.docbook.org/xml/5.0/xsd/">http://www.docbook.org/xml/5.0/xsd/</a>
+                <a href="https://docbook.org/xml/5.0/xsd/">https://docbook.org/xml/5.0/xsd/</a>
               </li>
 
               <li>
                 <a href=
-                "http://www.docbook.org/xml/5.0/xsd/docbook.xsd">http://www.docbook.org/xml/5.0/xsd/docbook.xsd</a>
+                "https://docbook.org/xml/5.0/xsd/docbook.xsd">https://docbook.org/xml/5.0/xsd/docbook.xsd</a>
               </li>
             </ul>
           </div>
@@ -418,14 +417,14 @@ we can certainly switch to it.
         </li>
 
         <li>
-          <a href="http://www.oasis-open.org/committees/ubl/faq.php">UBL</a>, though aimed at
+          <a href="http://ubl.xml.org/wiki/ubl-faq">UBL</a>, though aimed at
           business transactions, defines elements to represent parties (companies, people),
           devices, model numbers, etc.
         </li>
 
         <li>
           <a href=
-          "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=office">OpenDocument</a>
+          "https://en.wikipedia.org/wiki/OpenDocument">OpenDocument</a>
           (OODF) defines a set of elements and structures for computations as part of its
           spreadsheet module. (But they provide Relax-NG schema, not W3C XML Schema, so that
           doesn't help so much)

@@ -98,7 +98,7 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
 
     void selectSaveFile() {
         if (chooser == null) {
-            setChooser( new JFileChooser(System.getProperty("user.dir"))); // NOI18N
+            setChooser( new jmri.util.swing.JmriJFileChooser(System.getProperty("user.dir"))); // NOI18N
         }
         int retVal = EditorPane.chooser.showSaveDialog(this);
         if (retVal != JFileChooser.APPROVE_OPTION) {

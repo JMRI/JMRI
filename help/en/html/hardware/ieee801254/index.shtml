@@ -21,10 +21,6 @@
         </li>
 
         <li>
-          <a href="#limitations">Limitations</a>
-        </li>
-
-        <li>
           <a href="#connecting">Connecting</a>
         </li>
 
@@ -57,7 +53,7 @@
 
       <ul>
         <li>Nodes can be configured with the <a href=
-        "../../../package/jmri/jmrix/ieee802154/nodeconfig/NodeConfigFrame.shtml">Configure
+        "../../../package/jmri/jmrix/ieee802154/swing/nodeconfig/NodeConfigFrame.shtml">Configure
         Nodes</a> tool
         </li>
       </ul>
@@ -65,9 +61,6 @@
       <h2 id="documentation">Documentation</h2>
 
       <h3>JMRI Help</h3>
-
-      <p>Naming of IEEE801254 outputs is described on a <a href="Names.shtml">separate
-      page</a>.</p>
 
       <h3>Third Party info</h3>
 

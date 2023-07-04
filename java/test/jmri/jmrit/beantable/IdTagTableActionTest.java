@@ -89,9 +89,9 @@ public class IdTagTableActionTest extends AbstractTableActionBase<IdTag> {
     @AfterEach
     @Override
     public void tearDown() {
-        jmri.util.JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
-        JUnitUtil.tearDown();
+        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).dispose();
         a = null;
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(IdTagTableActionTest.class);

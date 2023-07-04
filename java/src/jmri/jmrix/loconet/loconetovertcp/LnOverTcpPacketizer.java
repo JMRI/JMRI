@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 import jmri.jmrix.loconet.LnNetworkPortController;

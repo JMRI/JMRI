@@ -11,15 +11,11 @@ import javax.swing.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.routes.RouteManager;
-import jmri.jmrit.operations.routes.RouteManagerXml;
+import jmri.jmrit.operations.routes.*;
 import jmri.util.swing.ExceptionDisplayFrame;
 import jmri.util.swing.UnexpectedExceptionContext;
 import jmri.web.server.WebServerPreferences;
@@ -392,7 +388,6 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
         }
     }
 
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "checks for instance of OperationsSetupFrame")
     private void save() {
         // check input fields
         int maxTrainLength;
@@ -548,8 +543,9 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
         Setup.setComment(commentTextArea.getText());
 
         InstanceManager.getDefault(OperationsSetupXml.class).writeOperationsFile();
-        if (Setup.isCloseWindowOnSaveEnabled() && this.getTopLevelAncestor() instanceof OperationsSettingsFrame) {
-            ((OperationsSettingsFrame) this.getTopLevelAncestor()).dispose();
+        var topLevelAncestor = getTopLevelAncestor();
+        if (Setup.isCloseWindowOnSaveEnabled() && topLevelAncestor instanceof OperationsSettingsFrame) {
+            ((OperationsSettingsFrame) topLevelAncestor).dispose();
         }
     }
 

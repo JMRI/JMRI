@@ -155,8 +155,8 @@
       category and type sub-menus are displayed.</p>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter4/add_sub_menus.png"><img src=
-        "images/chapter4/add_sub_menus.png" alt="Chapter 4 add sub menus"></a>
+        <a href="images/chapter4/add_sub_menus.png"><img class="image-border"
+        src="images/chapter4/add_sub_menus.png" alt="Chapter 4 add sub menus"></a>
       </div>
 
       <p>The first sub-menu list contains the <strong>Category</strong> names.  The second level

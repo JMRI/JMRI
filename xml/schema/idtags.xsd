@@ -28,6 +28,17 @@
     <xs:include schemaLocation="http://jmri.org/xml/schema/types/general.xsd"/>
     <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/docbook.xsd'/>
 
+      <xs:complexType name="IdTagType">
+        <xs:complexContent>
+          <xs:extension base="NamedBeanType">
+            <xs:sequence>
+              <xs:element name="whereLastSeen" type="systemNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="whenLastSeen" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+
     <xs:element name="idtagtable">
       <xs:annotation>
         <xs:documentation>
@@ -52,22 +63,7 @@
               </xs:sequence>
             </xs:complexType>
           </xs:element>
-        </xs:sequence>
-      </xs:complexType>
 
-      <xs:complexType name="IdTagType">
-        <xs:complexContent>
-          <xs:extension base="NamedBeanType">
-            <xs:sequence>
-              <xs:element name="whereLastSeen" type="systemNameType" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="whenLastSeen" type="xs:string" minOccurs="0" maxOccurs="1"/>
-            </xs:sequence>
-          </xs:extension>
-        </xs:complexContent>
-      </xs:complexType>
-
-      <xs:complexType>
-        <xs:sequence>
           <xs:element name="idtags" minOccurs="0" maxOccurs="1">
           <xs:annotation>
             <xs:documentation>
@@ -79,9 +75,10 @@
               <xs:element name="idtag" type="IdTagType" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
           </xs:complexType>
-        </xs:element>
-        <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+          </xs:element>
+          <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+
 </xs:schema>

@@ -16,7 +16,7 @@ import org.openlcb.*;
  */
 public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
-    private static OlcbSystemConnectionMemo memo;
+    private static OlcbSystemConnectionMemoScaffold memo;
     static Connection connection;
     static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
     static java.util.ArrayList<Message> messages;
@@ -61,6 +61,14 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         // check
         Assert.assertNotNull("real object returned ", t);
         Assert.assertSame("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+
+    @Test
+    public void testLeadingZeros() {
+        Assert.assertNotNull(l.provide("01.02.03.04.05.06.07.08;01.02.03.04.05.06.07.09"));
+        Assert.assertNotNull(l.provide("01.02.03.04.05.06.07.08;01.02.03.04.05.06.07.0A"));
+        Assert.assertNotNull(l.provide("1.02.03.04.05.06.07.08;01.02.03.04.05.06.07.0B"));
+        Assert.assertNotNull(l.provide("01.02.03.04.05.06.07.08;1.02.03.04.05.06.07.0C"));
     }
 
     @Override
@@ -110,7 +118,7 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             }
         };
 
-        memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
+        memo = new OlcbSystemConnectionMemoScaffold(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
         memo.setInterface(new OlcbInterface(nodeID, connection) {
             @Override

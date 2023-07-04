@@ -7,7 +7,7 @@ import org.jdom2.Element;
 
 /**
  * IdTag is a pre-parsed representation of an identification message from the
- * layout.  One use of an IdTag is a device that might be attached to any 
+ * layout.  One use of an IdTag is a device that might be attached to any
  * specific piece of rolling stock to uniquely identify it.
  * <p>
  * Examples include
@@ -27,9 +27,15 @@ import org.jdom2.Element;
  *   <li>A list of key/value pairs holding properties</li>
  * </ul>
  * <p>
- * The system name is of the form IDxxxx where xxxx is the same value as the TagID.
+ * "Seen" is defined as a Reporter has indicated that the IdTag is within the
+ * area served by that Reporter.  "Seen" is not updated to a Reporter reports that the IdTag is
+ * leaving that area.
  * <p>
- * The list of key value pairs is maintained by the reporters parsing and 
+ * The system name is of the form "sDxxxx" where "xxxx" is the same value as the TagID
+ * and "s" is the system prefix for the relevant Reporter (for Reporter-type-specific tags)
+ * or "I" in the more general case.
+ * <p>
+ * The list of key value pairs is maintained by the reporters parsing and
  * updating the list.  This information may vary between implementations.
  * <hr>
  * This file is part of JMRI.

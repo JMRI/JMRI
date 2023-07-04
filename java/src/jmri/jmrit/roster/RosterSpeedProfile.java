@@ -476,7 +476,7 @@ public class RosterSpeedProfile {
         } else {
             spd = getReverseSpeed(speedStep);
         }
-        if (spd <= 0.0f) {
+        if (spd < 0.0f) {
             log.error("Speed not available to compute duration of travel");
             return 0.0f;
         }
@@ -499,7 +499,7 @@ public class RosterSpeedProfile {
         } else {
             spd = getReverseSpeed(speedStep);
         }
-        if (spd <= 0.01f) {
+        if (spd < 0.0f) {
             log.error("Speed not available to compute distance travelled");
             return 0.0f;
         }
@@ -829,7 +829,7 @@ public class RosterSpeedProfile {
                 log.warn("Throttle destroyed before zero length[{}] remaining.",calculatedDistance);
                 calculatedDistance = 0;
             }
-            if (calculatedDistance < 0 && !calculated) {
+            if (calculatedDistance <= 0 && !calculated) {
                 log.error("distance remaining is now 0, but we have not reached desired speed setting {} v {}", desiredSpeedStep, calculatingStep);
                 ss = new SpeedSetting(desiredSpeedStep, 10);
                 synchronized (this) {

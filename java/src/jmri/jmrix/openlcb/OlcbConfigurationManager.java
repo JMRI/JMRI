@@ -19,15 +19,7 @@ import jmri.jmrix.can.TrafficController;
 import jmri.profile.ProfileManager;
 import jmri.util.ThreadingUtil;
 
-import org.openlcb.Connection;
-import org.openlcb.LoaderClient;
-import org.openlcb.MessageDecoder;
-import org.openlcb.MimicNodeStore;
-import org.openlcb.NodeID;
-import org.openlcb.OlcbInterface;
-import org.openlcb.SimpleNodeIdentInfoReplyMessage;
-import org.openlcb.SimpleNodeIdentInfoRequestMessage;
-import org.openlcb.Version;
+import org.openlcb.*;
 import org.openlcb.can.AliasMap;
 import org.openlcb.can.CanInterface;
 import org.openlcb.can.MessageBuilder;
@@ -160,6 +152,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         InstanceManager.setThrottleManager(
                 getThrottleManager());
 
+        InstanceManager.setReporterManager(
+                getReporterManager());
+
         InstanceManager.setLightManager(
                 getLightManager()
         );
@@ -181,6 +176,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         iface.registerMessageListener(loaderClient);
 
         iface.registerMessageListener(new SimpleNodeIdentInfoHandler());
+        iface.registerMessageListener(new PipRequestHandler());
 
         initializeFastClock();
 
@@ -240,7 +236,16 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (type.equals(jmri.TurnoutManager.class)) {
             return true;
         }
+        if (type.equals(jmri.ReporterManager.class)) {
+            return true;
+        }
         if (type.equals(jmri.LightManager.class)) {
+            return true;
+        }
+        if (type.equals(jmri.GlobalProgrammerManager.class)) {
+            return true;
+        }
+        if (type.equals(jmri.AddressedProgrammerManager.class)) {
             return true;
         }
         if (type.equals(AliasMap.class)) {
@@ -294,6 +299,15 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (T.equals(jmri.LightManager.class)) {
             return (T) getLightManager();
         }
+        if (T.equals(jmri.ReporterManager.class)) {
+            return (T) getReporterManager();
+        }
+        if (T.equals(jmri.GlobalProgrammerManager.class)) {
+            return (T) getProgrammerManager();
+        }
+        if (T.equals(jmri.AddressedProgrammerManager.class)) {
+            return (T) getProgrammerManager();
+        }
         if (T.equals(AliasMap.class)) {
             return (T) aliasMap;
         }
@@ -337,7 +351,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return null;
         }
         if (programmerManager == null) {
-            programmerManager = new OlcbProgrammerManager(new OlcbProgrammer());
+            programmerManager = new OlcbProgrammerManager(adapterMemo);
         }
         return programmerManager;
     }
@@ -376,6 +390,18 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             sensorManager = new OlcbSensorManager(adapterMemo);
         }
         return sensorManager;
+    }
+
+    protected OlcbReporterManager reporterManager;
+
+    public OlcbReporterManager getReporterManager() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (reporterManager == null) {
+            reporterManager = new OlcbReporterManager(adapterMemo);
+        }
+        return reporterManager;
     }
 
     @Override
@@ -417,11 +443,13 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
          * Helper function to add a string value to the sequence of bytes to send for SNIP
          * response content.
          *
-         * @param value    string to render into byte stream
-         * @param contents represents the byte stream that will be sent.
+         * @param addString  string to render into byte stream
+         * @param contents   represents the byte stream that will be sent.
+         * @param maxlength  maximum number of characters to include, not counting terminating null
          */
-        private void  addStringPart(String value, List<Byte> contents) {
-            if (value != null && !value.isEmpty()) {
+        private void  addStringPart(String addString, List<Byte> contents, int maxlength) {
+            if (addString != null && !addString.isEmpty()) {
+                String value = addString.substring(0,Math.min(maxlength, addString.length()));
                 byte[] bb = value.getBytes(StandardCharsets.UTF_8);
                 for (byte b : bb) {
                     contents.add(b);
@@ -433,19 +461,22 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
         SimpleNodeIdentInfoHandler() {
             List<Byte> l = new ArrayList<>(256);
+
             l.add((byte)4); // version byte
-            addStringPart("JMRI", l);
-            addStringPart("PanelPro", l);
+            addStringPart("JMRI", l, 40);  // mfg field; 40 char limit in Standard, not counting final null
+            addStringPart("PanelPro", l, 40);  // model
             String name = ProfileManager.getDefault().getActiveProfileName();
             if (name != null) {
-                addStringPart("Profile " + name, l); // hardware version
+                addStringPart(name, l, 20); // hardware version
             } else {
-                addStringPart("", l); // hardware version
+                addStringPart("", l, 20); // hardware version
             }
-            addStringPart(jmri.Version.name(), l); // software version
+            addStringPart(jmri.Version.name(), l, 20); // software version
+
             l.add((byte)2); // version byte
-            addStringPart(adapterMemo.getProtocolOption(OPT_PROTOCOL_IDENT, OPT_IDENT_USERNAME), l);
-            addStringPart(adapterMemo.getProtocolOption(OPT_PROTOCOL_IDENT, OPT_IDENT_DESCRIPTION), l);
+            addStringPart(adapterMemo.getProtocolOption(OPT_PROTOCOL_IDENT, OPT_IDENT_USERNAME), l, 62);
+            addStringPart(adapterMemo.getProtocolOption(OPT_PROTOCOL_IDENT, OPT_IDENT_DESCRIPTION), l, 63);
+
             content = new byte[l.size()];
             for (int i = 0; i < l.size(); ++i) {
                 content[i] = l.get(i);
@@ -463,6 +494,16 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
                 }
             }
         }
+    }
+
+    class PipRequestHandler extends MessageDecoder {
+
+        @Override
+        public void handleProtocolIdentificationRequest(ProtocolIdentificationRequestMessage msg, Connection sender) {
+            long flags = 0x00041000000000L;  // PC, SNIP protocols
+            getInterface().getOutputConnection().put(new ProtocolIdentificationReplyMessage(nodeID, msg.getSourceNodeID(), flags), this);
+        }
+
     }
 
     @Override

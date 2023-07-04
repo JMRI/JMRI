@@ -1,8 +1,6 @@
 package jmri.jmrit.operations.locations.tools;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
+import java.awt.*;
 
 import javax.swing.*;
 
@@ -15,9 +13,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.cars.CarLoad;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -61,7 +57,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
     // check boxes
     JCheckBox loadAndTypeCheckBox = new JCheckBox(Bundle.getMessage("TypeAndLoad"));
     JCheckBox shipLoadAndTypeCheckBox = new JCheckBox(Bundle.getMessage("TypeAndLoad"));
-    JCheckBox holdCars = new JCheckBox();
+    JCheckBox holdCars = new JCheckBox(Bundle.getMessage("HoldCarsWithCustomLoads"));
 
     // radio buttons
     JRadioButton loadNameAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
@@ -202,7 +198,6 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         pOptions.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
         pOptions.setMaximumSize(new Dimension(2000, 400));
         addItem(pOptions, holdCars, 0, 0);
-        holdCars.setText(Bundle.getMessage("HoldCarsWithCustomLoads"));
         holdCars.setToolTipText(Bundle.getMessage("HoldCarsWithCustomLoadsTip"));
 
         // row 12

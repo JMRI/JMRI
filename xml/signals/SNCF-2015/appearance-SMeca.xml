@@ -39,7 +39,7 @@
       <aspectname>Clear</aspectname>
       <show>red</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/Meca/SemaphoreMecaO.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/Meca/SemaphoreMecaO.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Meca/SemaphoreMecaO.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/Meca/SemaphoreMecaO.gif</imagelink>
     </appearance>
 

@@ -64,7 +64,7 @@ public class ShortAddrVariableValue extends DecVariableValue {
                 log.error("CV numbers don't match: {} {}", cvNumbers[i], cv.number());
             }
             cv.setToWrite(true);
-            cv.setState(EDITED);
+            cv.setState(ValueState.EDITED);
             if (log.isDebugEnabled()) {
                 log.debug("Mark to write {}", cv.number());
             }

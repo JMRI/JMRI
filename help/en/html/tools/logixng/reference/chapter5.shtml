@@ -7,9 +7,6 @@
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="jmri LogixNG reference action items">
   <!--#include virtual="/Style.shtml" -->
-  <style>
-    .add_sub {border: solid thin black !important;}
-  </style>
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->
@@ -174,7 +171,7 @@
       <h2 id="digital_action_item">Digital action :: Item</h2>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter5/digital_action_item.png"><img class="add_sub" src=
+        <a href="images/chapter5/digital_action_item.png"><img class="image-border" src=
         "images/chapter5/digital_action_item.png" alt="Chapter 5 digital action item list"></a>
       </div>
 
@@ -388,7 +385,7 @@
       <p>Here is an example using the sin() function.</p>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter5/intensity_example.png"><img src=
+        <a href="images/chapter5/intensity_example.png"><img class="image-border" src=
         "images/chapter5/intensity_example.png" alt="Chapter 5 intensity example"></a>
       </div>
 
@@ -522,6 +519,19 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h4 id="requestUpdateAll">Request update of all sensors<span class="since">since 5.1.6</span></h4>
+
+      <p>Request the current status of sensors.  The request can be limited to specific connections
+      or all connections.  The action depends on whether the connection supports sensor state
+      requests.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/request_sensor_update.png">
+        <img src="images/chapter5/request_sensor_update.png" alt="Chapter 5 request sensor update"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h4>Route</h4>
 
       <ul>
@@ -629,6 +639,16 @@
       <h4>Throttle</h4>
 
       <p>The Throttle action controls a throttle.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/throttle_dialog.png"><img src="images/chapter5/throttle_dialog.png"
+        alt="Chapter 5 throttle dialog"></a>
+      </div>
+
+      <p>The LogixNG throttle can use either the default throttle connection or an alternate throttle
+      connection.  The default connection is defined in <strong>Preferences &rArr; Defaults</strong>.
+      If there is more than one connection, other connections <strong><em>might</em></strong>
+      support a throttle.</p>
 
       <div style="margin-left: 2em">
         <a href="images/chapter5/throttle_action.png"><img src="images/chapter5/throttle_action.png"
@@ -749,7 +769,7 @@
       <h2 id="digital_action_common">Digital action :: Common</h2>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter5/digital_action_common.png"><img class="add_sub" src=
+        <a href="images/chapter5/digital_action_common.png"><img class="image-border" src=
         "images/chapter5/digital_action_common.png" alt="Chapter 5 digital action common list"></a>
       </div>
 
@@ -819,11 +839,30 @@
       <h4>Timer</h4>
 
       <p><strong>Timer</strong> has a number of actions, each executed after a period of time. The
-      time to wait can be 0, which means the related action is executed immediately. The Timer can
-      be configured to only execute the actions once or continuously. The Timer can also be
-      configured to start when the xml data file is loaded or only start when the "Start"
-      expression returns True. The Timer stops when the "Stop" expression returns True. The time
-      unit is selected from the combo box.</p>
+      time to wait can be 0, which means the related action is executed immediately.</p>
+
+      <p>Options:</p>
+      <dl style="margin-left: 2em;">
+        <dt>Start timer immediately on load</dt>
+        <dd>When selected, the timer steps will start when the LogixNG has been loaded.  If this
+        option is not selected, a <strong>Start</strong> expression will be used to start the timer
+        steps when the expression becomes true.</dd>
+
+        <dt>Run timer continuously</dt>
+        <dd>If not selected, the timer will run one time and then stop.  When selected, the timer
+        steps will repeat.  A <strong>Stop</strong> expression can be used to stop the timer
+        steps when the expression becomes true.  The Stop expression can use the same object, such
+        as a sensor that starts the timer when active and then stops the timer when the sensor is
+        inactive.</dd>
+
+        <dt>Start/Stop by Start expression</dt>
+        <dd>When selected, the timer will start when the <strong>Start</strong> expression becomes
+        true and will stop when the <strong>Start</strong> expression becomes false.  The <strong>
+        Stop</strong> expression is ignored.</dd>
+
+        <dt>Combo Box</dt>
+        <dd>Select the time unit.</dd>
+      </dl>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/timer_dialog.png"><img src="images/chapter5/timer_dialog.png" alt=
@@ -844,8 +883,8 @@
       renaming the A1, A2, etc. sockets to meaningful names.</p>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter5/timer_example.png"><img src="images/chapter5/timer_example.png"
-        alt="Chapter 5 timer example"></a>
+        <a href="images/chapter5/timer_example.png"><img class="image-border"
+        src="images/chapter5/timer_example.png" alt="Chapter 5 timer example"></a>
       </div>
 
       <p>Another example is using a Timer to blink a light. Create a Timer with a single socket and
@@ -859,7 +898,7 @@
       <span class="since">since 5.1.3</span></h2>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter5/digital_action_flow_control.png"><img class="add_sub" src=
+        <a href="images/chapter5/digital_action_flow_control.png"><img class="image-border" src=
         "images/chapter5/digital_action_flow_control.png"
         alt="Chapter 5 digital action flow control list"></a>
       </div>
@@ -949,8 +988,8 @@
       <p>The following example sets all of the sensors to Inactive.</p>
 
       <div style="margin-left: 2em;">
-         <a href="images/chapter5/for_each_sample.png"><img src=
-         "images/chapter5/for_each_sample.png" alt="Chapter 5 for each"></a>
+         <a href="images/chapter5/for_each_sample.png"><img class="image-border"
+         src="images/chapter5/for_each_sample.png" alt="Chapter 5 for each"></a>
        </div>
 
        <p>For another example, see <a href="#lob_lv">Listen on beans - Local variable</a>.</p>
@@ -963,25 +1002,47 @@
       the <strong>then</strong> child action, else it executes the <strong>else</strong> child
       action.</p>
 
-      <p>There are two options:</p>
+      <div style="margin-left: 2em;">
+         <a href="images/chapter5/digital_action_ifthenelse.png"><img src=
+         "images/chapter5/digital_action_ifthenelse.png" alt="Chapter 5 if then else dialog"></a>
+      </div>
 
-      <ul>
-        <li><strong>Execute on change:</strong> Executes the Then or the Else action only when the
-        If expression has changed from True to False, or from False to True.  Note that the
-        expression is assumed to be changed whenever the LogixNG is first enabled (including when
-        the xml data file is loaded with "enabled" checked). In the simple example  below, Light IL2
-        will be set "on" when the LogixNG is first enabled (Sensor IS1 status is "unknown").  When
-        the sensor is changed to "inactive" the lights will not change.  When the sensor is then
-        changed to "active," the Light IS1 will also go "on".</li>
+      <p>There are two settings that control the if-then-else processing.</p>
 
-        <li><strong>Always execute:</strong> Executes the Then or the Else action every time the
-        <strong>If Then Else</strong> action is executed, regardless of whether the expression has
-        changed value.</li>
-      </ul>
+      <p><u>When is the If-Then-Else executed</u></p>
+
+      <dl>
+        <dt>Execute on change</dt>
+        <dd> Executes the Then or the Else action only when the If expression has changed from True
+        to False, or from False to True.  Note that the expression is assumed to be changed whenever
+        the LogixNG is first enabled (including when the xml data file is loaded with "enabled"
+        checked). In the simple example  below, Light IL2 will be set "on" when the LogixNG is first
+        enabled (Sensor IS1 status is "unknown").  When the sensor is changed to "inactive" the
+        lights will not change.  When the sensor is then changed to "active," the Light IL1 will
+        also go "on".</dd>
+
+        <dt>Always execute</dt>
+        <dd>Executes the Then or the Else action every time the <strong>If Then Else</strong> action
+        is executed, regardless of whether the expression has changed value.</dd>
+      </dl>
+
+
+      <p><u>How is the If expression evaluated</u><span class="since">since 5.1.6</span></p>
+
+      <dl>
+        <dt>Evaluate all expressions</dt>
+        <dd>All of the expression elements are evaluated to determine the true/false state of the
+        <strong>If</strong>.</dd>
+
+        <dt>Evaluate needed expressions</dt>
+        <dd>Evaluate each expression element until true/false is determined.  An <strong>And</strong>
+        series ends when an element is false. An <strong>Or</strong> series ends when an element is
+        true.</dd>
+      </dl>
 
       <div style="margin-left: 2em;">
-         <a href="images/chapter5/if_then_else.jpg"><img src=
-         "images/chapter5/if_then_else.jpg" alt="Chapter 5 if then else"></a>
+         <a href="images/chapter5/if_then_else.jpg"><img class="image-border"
+         src="images/chapter5/if_then_else.jpg" alt="Chapter 5 if then else"></a>
       </div>
 
       <h5>Else_If<span class="since">since 5.1.3</span></h5>
@@ -993,15 +1054,15 @@
       row and select <strong>Insert new socket before</strong>.</p>
 
       <div style="margin-left: 2em;">
-         <a href="images/chapter5/else_if_insert.png"><img class="add_sub" src=
+         <a href="images/chapter5/else_if_insert.png"><img class="image-border" src=
          "images/chapter5/else_if_insert.png" alt="Chapter 5 else if insert"></a>
       </div>
 
       <p>A new expression/action pair will be added before the Else.</p>
 
       <div style="margin-left: 2em;">
-         <a href="images/chapter5/else_if_items.png"><img src=
-         "images/chapter5/else_if_items.png" alt="Chapter 5 else if items"></a>
+         <a href="images/chapter5/else_if_items.png"><img class="image-border"
+         src="images/chapter5/else_if_items.png" alt="Chapter 5 else if items"></a>
       </div>
 
       <p>Here is simple example of using LogixNG to create signal logic.</p>
@@ -1028,6 +1089,16 @@
 
       <p>If Return is in a ConditionalNG, it's the same as Exit. But if it's in a Module, it only
       exits the Module, not the ConditionalNG.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Run once<span class="since">since 5.3.1</span></h4>
+
+      <p>Run the assigned action only one time during a JMRI session.</p>
+
+      <p>The assigned action will be the <strong>Many</strong> action if there is more than one
+      action to be performed.  This provides an alternate method compared to <strong>Trigger once
+      </strong> for startup initialization.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -1069,8 +1140,8 @@
       </ul>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter5/action_sequence.png"><img src=
-        "images/chapter5/action_sequence.png" alt="Chapter 5 sequence action"></a>
+        <a href="images/chapter5/action_sequence.png"><img class="image-border"
+        src="images/chapter5/action_sequence.png" alt="Chapter 5 sequence action"></a>
       </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -1085,7 +1156,7 @@
       <h2 id="digital_action_display">Digital action :: Display</h2>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter5/digital_action_display.png"><img class="add_sub" src=
+        <a href="images/chapter5/digital_action_display.png"><img class="image-border" src=
         "images/chapter5/digital_action_display.png" alt="Chapter 5 digital action display list"></a>
       </div>
 
@@ -1097,10 +1168,30 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h4>Turnout on LayoutPanel<span class="since">since 5.3.1</span></h4>
+
+      <p>Disable/Enable a turnout item on a specific Layout Editor panel.  A separate action is
+      needed since the turnout image on a Layout Editor panel is not an icon.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/layout_turnout.png"><img src=
+        "images/chapter5/layout_turnout.png" alt="Chapter 5 layout turnout action"></a>
+      </div>
+
+      <p>The action applies to a single turnout item.  To change all of the turnouts, use a
+      <strong>For each</strong> action.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/layout_turnout_foreach.png"><img class="image-border" src=
+        "images/chapter5/layout_turnout_foreach.png" alt="Chapter 5 layout turnout for each"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h2 id="digital_action_mqtt">Digital action :: MQTT <span class="since">since 4.99.7</span></h2>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter5/digital_action_mqtt.png"><img class="add_sub" src=
+        <a href="images/chapter5/digital_action_mqtt.png"><img class="image-border" src=
         "images/chapter5/digital_action_mqtt.png" alt="Chapter 5 digital action mqtt list"></a>
       </div>
 
@@ -1134,7 +1225,7 @@
       <h2 id="digital_action_loconet">Digital action :: LocoNet</h2>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter5/digital_action_loconet.png"><img class="add_sub" src=
+        <a href="images/chapter5/digital_action_loconet.png"><img class="image-border" src=
         "images/chapter5/digital_action_loconet.png" alt="Chapter 5 digital action loconet list"></a>
       </div>
 
@@ -1143,6 +1234,12 @@
       <h4>Clear loconet slots</h4>
 
       <p>This action clears the slot status in the command station if you are using LocoNet.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Set speed to zero for all loco slots<span class="since">since 5.1.6</span></h4>
+
+      <p>Sets the speed of the Digitrax command station slots to zero.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -1155,9 +1252,21 @@
       <h2 id="digital_action_other">Digital action :: Other</h2>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter5/digital_action_other.png"><img class="add_sub" src=
+        <a href="images/chapter5/digital_action_other.png"><img class="image-border" src=
         "images/chapter5/digital_action_other.png" alt="Chapter 5 digital action other list"></a>
       </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Create beans from table<span class="since">since 5.1.6</span></h4>
+
+      <p>See <a href="chapter11.shtml#TableActions">Chapter 11 - Table Actions</a> for details.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Find table row or column<span class="since">since 5.1.6</span></h4>
+
+      <p>See <a href="chapter11.shtml#TableActions">Chapter 11 - Table Actions</a> for details.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -1195,7 +1304,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/chapter5/listen_bean_lv_sample.png">
-        <img src="images/chapter5/listen_bean_lv_sample.png"
+        <img class="image-border" src="images/chapter5/listen_bean_lv_sample.png"
         alt="Chapter 5 listen bean local variable sample"></a>
       </div>
 
@@ -1341,8 +1450,8 @@
       and can be left empty.</p>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter5/show_dialog_validate_execute.png"><img src=
-        "images/chapter5/show_dialog_validate_execute.png" alt="Chapter 5 show dialog validate execute"></a>
+        <a href="images/chapter5/show_dialog_validate_execute.png"><img class="image-border"
+        src="images/chapter5/show_dialog_validate_execute.png" alt="Chapter 5 show dialog validate execute"></a>
       </div>
 
       <dl>
@@ -1367,7 +1476,7 @@
       </div>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter5/show_dialog_button_process"><img src=
+        <a href="images/chapter5/show_dialog_button_process.png"><img src=
         "images/chapter5/show_dialog_button_process.png" alt="Chapter 5 show dialog button process"></a>
       </div>
 
@@ -1379,7 +1488,7 @@
       </div>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter5/show_dialog_ml_sample"><img src=
+        <a href="images/chapter5/show_dialog_ml_sample.png"><img src=
         "images/chapter5/show_dialog_ml_sample.png" alt="Chapter 5 show dialog multiline sample"></a>
       </div>
 
@@ -1391,9 +1500,23 @@
       </div>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter5/show_dialog_input_code"><img src=
+        <a href="images/chapter5/show_dialog_input_code.png"><img src=
         "images/chapter5/show_dialog_input_code.png" alt="Chapter 5 show dialog iniput code"></a>
       </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Shut down task<span class="since">since 5.1.6</span></h4>
+
+      <p>Create a task that will run before JMRI shutdown occurs.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/digital_action_shutdown_task.png"><img class="image-border" src=
+        "images/chapter5/digital_action_shutdown_task.png" alt="Chapter 5 shutdown task"></a>
+      </div>
+
+      <p>If the Expression is empty or returns true, the Action will be executed before JMRI shutdown
+      continues.  If the Expression returns false, the JMRI shutdown process is stopped.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -1445,7 +1568,121 @@
 
       <h4>Web browser</h4>
 
-      <p>The web browser action opens a web page in the web browser.</p>
+      <p>The <strong>Web Browser</strong> action opens a web page in the default web browser.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/digital_action_web_browser.png"><img src=
+        "images/chapter5/digital_action_web_browser.png" alt="web browser"></a>
+      </div>
+
+      <p>The URL is supplied using a string expression.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Web request<span class="since">since 5.3.5</span></h4>
+
+      <p>The <strong>Web Request</strong> action sends a <strong>GET</strong> or <strong>POST</strong>
+      request to a web server.  When the request has completed, the <strong>Execute</strong> action
+      is performed.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/web_request_execute.png"><img src=
+        "images/chapter5/web_request_execute.png" alt="web request execute"></a>
+      </div>
+
+      <p>The request information is defined using the <strong>Web Request</strong> dialog. The
+      dialog settings will depend on the web server application requirements.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/digital_action_web_request.png"><img src=
+        "images/chapter5/digital_action_web_request.png" alt="web request dialog"></a>
+      </div>
+
+      <p class="noted">Note: The <strong>LogixNG_WebRequest_Test.php</strong> portion of the URL is a sample
+      application.</p>
+
+      <h5>Top Level Tabs</h5>
+
+      <dl>
+        <dt>URL</dt>
+
+        <dd>
+          <p>The URL contains the address of the web server.
+
+          For <strong>GET</strong> requests, parameters can be added to the URL using the
+          <strong><em>?name=value&amp;name2=value2</em></strong> format.  Parameters in the Parameter
+          section are also added to the GET request URL.</p>
+
+          <p>For <strong>POST</strong> requests, the parameters are defined in the <strong>
+          Parameters</strong> section.</p>
+        </dd>
+
+        <dt>Charset</dt>
+        <dd>
+          <p>Specify the character set to used for the application.</p>
+
+          <div style="margin-left: 2em;">
+          <a href="images/chapter5/web_request_charset.png"><img src=
+          "images/chapter5/web_request_charset.png" alt="web request character set"></a>
+          </div>
+        </dd>
+
+        <dt>Request method</dt>
+        <dd>
+          <p>Specify the request method to used for the application.</p>
+          <div style="margin-left: 2em;">
+          <a href="images/chapter5/web_request_method.png"><img src=
+          "images/chapter5/web_request_method.png" alt="web request method"></a>
+          </div>
+        </dd>
+
+        <dt>User agent</dt>
+        <dd>
+          <p>Specify the user agent to be used for the request.  The default is <strong><em>Mozilla/5.0
+          </em></strong>.</p>
+        </dd>
+      </dl>
+
+      <h5>Local Variables</h5>
+
+      <dl>
+        <dt>Local variable for response code</dt>
+        <dd>
+          <p>The value of the local variable will be the numeric response code from the server.  For
+          successful requests, the value will be 200.</p>
+        </dd>
+
+        <dt>Local variable for reply content</dt>
+        <dd>
+          <p>The value of the local variable will be the content returned from the server.  Sometimes
+          the content will have error messages detected by the server or the application.</p>
+        </dd>
+
+        <dt>Local variable for cookies</dt>
+        <dd>
+          <p>The value of the local variable will have a copy of the current cookie.  If the cookie
+          needs to be shared by different ConditionalNGs, use a global variable.
+        </dd>
+      </dl>
+
+      <h5>Examples</h5>
+
+      <p>There are two example files included in the JMRI distribution. They are located at
+      <a href="https://www.jmri.org/help/en/html/tools/logixng/reference/WebRequestExample/">help/en/html/tools/logixng/reference/WebRequestExample</a></p>
+
+      <dl>
+        <dt>WebRequest.xml</dt>
+        <dd>
+          <p>This is a layout config xml file that has sample table entries.</p>
+        </dd>
+
+        <dt>LogixNG_WebRequest_Test.php</dt>
+        <dd>
+          <p>This is a <strong>PHP</strong> program that acts as a web based application.  This needs
+          to be installed in a web server that has been configured to run PHP programs. The source code
+          can be downloaded from <a href="https://github.com/JMRI/JMRI/blob/master/help/en/html/tools/logixng/reference/WebRequestExample/LogixNG_WebRequest_Test.php">GitHub</a>.</p>
+        </dd>
+      </dl>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -1457,7 +1694,7 @@
       a Many child with a number of OnChange children.</p>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter5/digital_boolean_action_common.png"><img class="add_sub" src=
+        <a href="images/chapter5/digital_boolean_action_common.png"><img class="image-border" src=
         "images/chapter5/digital_boolean_action_common.png" alt=
         "Chapter 5 digital boolean action common list"></a>
       </div>
@@ -1489,7 +1726,7 @@
       <h2 id="analog_action_item">Analog action :: Item</h2>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter5/analog_action_item.png"><img class="add_sub" src=
+        <a href="images/chapter5/analog_action_item.png"><img class="image-border" src=
         "images/chapter5/analog_action_item.png" alt="Chapter 5 analog action item list"></a>
       </div>
 
@@ -1510,7 +1747,7 @@
       <h2  id="analog_action_common">Analog action :: Common</h2>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter5/analog_action_common.png"><img class="add_sub" src=
+        <a href="images/chapter5/analog_action_common.png"><img class="image-border" src=
         "images/chapter5/analog_action_common.png" alt="Chapter 5 analog action common list"></a>
       </div>
 
@@ -1525,7 +1762,7 @@
       <h2 id="string_action_item">String action :: Item</h2>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter5/string_action_item.png"><img class="add_sub" src=
+        <a href="images/chapter5/string_action_item.png"><img class="image-border" src=
         "images/chapter5/string_action_item.png" alt="Chapter 5 string action item list"></a>
       </div>
 
@@ -1548,7 +1785,7 @@
       <h2  id="string_action_common">String action :: Common</h2>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter5/string_action_common.png"><img class="add_sub" src=
+        <a href="images/chapter5/string_action_common.png"><img class="image-border" src=
         "images/chapter5/string_action_common.png" alt="Chapter 5 string action common list"  ></a>
       </div>
 

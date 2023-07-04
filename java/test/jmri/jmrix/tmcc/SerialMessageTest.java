@@ -11,7 +11,7 @@ import org.junit.jupiter.api.*;
  * @author Bob Jacobsen Copyright 2003
  */
 public class SerialMessageTest extends jmri.jmrix.AbstractMessageTestBase {
-        
+
     SerialMessage msg = null;
 
     @Test
@@ -35,6 +35,12 @@ public class SerialMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         msg.setOpCode(0x54);
         msg.setElement(1, 0x20);
         msg.setElement(2, 0x32);
+        Assert.assertEquals("string compare ", "54 20 32", msg.toString());
+    }
+
+    @Test
+    public void testLongIntForm() {
+        msg = new SerialMessage(0x542032);
         Assert.assertEquals("string compare ", "54 20 32", msg.toString());
     }
 

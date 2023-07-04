@@ -11,6 +11,7 @@ import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
+import jmri.jmrit.display.switchboardEditor.SwitchBoardLabelDisplays;
 import jmri.util.ColorUtil;
 
 import org.jdom2.Attribute;
@@ -234,11 +235,11 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
 
         a = shared.getAttribute("showusername");
         if (a == null || a.getValue().equals("yes")) {
-            panel.setShowUserName(1); // default and migration
+            panel.setShowUserName(SwitchBoardLabelDisplays.BOTH_NAMES); // default and migration
         } else if (a.getValue().equals("no")) {
-            panel.setShowUserName(0); // only how system name
+            panel.setShowUserName(SwitchBoardLabelDisplays.SYSTEM_NAME); // only how system name
         } else {
-            panel.setShowUserName(2); // display name (one, prefer user name)
+            panel.setShowUserName(SwitchBoardLabelDisplays.USER_NAME); // display name (one, prefer user name)
         }
 
         if (shared.getAttribute("iconscale") != null) {

@@ -34,7 +34,7 @@
 
       <li>
         <strong>Open help pages online</strong>: The help page will be displayed by linking to
-        <a href="https://jmri.org">jmri.org</a>. The content on the JMRI website might be more
+        <a href="https://www.jmri.org">jmri.org</a>. The content on the JMRI website might be more
         recent than the content in the local JMRI install location. The page will have the standard
         navigation bar, sidebars and CSS formatting. This option requires that an internet
         connection is available.
@@ -46,7 +46,7 @@
 
     <h2>Further information</h2>
 
-    <p>The main JMRI web page, <a href="https://jmri.org">https://jmri.org</a>, is a good place to
+    <p>The main JMRI web page, <a href="https://www.jmri.org">https://www.jmri.org</a>, is a good place to
     start for information about current status, updates, etc.<br>
     (Depending on your computer, you might have to copy that link to your web browser to be able to
     see external sites properly).</p>
@@ -56,10 +56,10 @@
     post them there. You can subscribe, browse posts, etc. at <a href=
     "https://groups.io/g/jmriusers">https://groups.io/g/jmriusers/</a>.</p>
 
-    <p>Our <a href="https://jmri.org/help/en/html/doc/Technical/index.shtml">technical web
+    <p>Our <a href="https://www.jmri.org/help/en/html/doc/Technical/index.shtml">technical web
     pages</a> are continually being updated. We're always short of documentation, so if you're
     interested in working with the code or updating some Help files, we'd love to help you <a href=
-    "https://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">get started</a>.</p>
+    "https://www.jmri.org/help/en/html/doc/Technical/getgitcode.shtml">get started</a>.</p>
   </div>
   <!-- close #mainContent -->
   <script src="/js/main.js"></script>

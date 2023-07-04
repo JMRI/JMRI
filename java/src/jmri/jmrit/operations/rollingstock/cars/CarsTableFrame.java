@@ -16,9 +16,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.locations.tools.ModifyLocationsAction;
-import jmri.jmrit.operations.rollingstock.cars.tools.PrintCarLoadsAction;
-import jmri.jmrit.operations.rollingstock.cars.tools.ResetCheckboxesCarsTableAction;
-import jmri.jmrit.operations.rollingstock.cars.tools.ShowCheckboxesCarsTableAction;
+import jmri.jmrit.operations.rollingstock.cars.tools.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.tools.TrainsByCarTypeAction;
@@ -67,6 +65,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     JRadioButton sortByWait = new JRadioButton(Bundle.getMessage("Wait"));
     JRadioButton sortByPickup = new JRadioButton(Bundle.getMessage("Pickup"));
     JRadioButton sortByLast = new JRadioButton(Bundle.getMessage("Last"));
+    JRadioButton sortByComment = new JRadioButton(Bundle.getMessage("Comment"));
     ButtonGroup group = new ButtonGroup();
 
     // major buttons
@@ -137,6 +136,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
             movep.add(sortByPickup);
         }
         movep.add(sortByLast);
+        movep.add(sortByComment);
         cp1.add(movep);
 
         // row 2
@@ -210,6 +210,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         addRadioButtonAction(sortByWait);
         addRadioButtonAction(sortByPickup);
         addRadioButtonAction(sortByLast);
+        addRadioButtonAction(sortByComment);
 
         group.add(sortByNumber);
         group.add(sortByRoad);
@@ -232,6 +233,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         group.add(sortByWait);
         group.add(sortByPickup);
         group.add(sortByLast);
+        group.add(sortByComment);
 
         // sort by location
         if (!showAllCars) {
@@ -336,6 +338,9 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         }
         if (ae.getSource() == sortByLast) {
             carsTableModel.setSort(carsTableModel.SORTBY_LAST);
+        }
+        if (ae.getSource() == sortByComment) {
+            carsTableModel.setSort(carsTableModel.SORTBY_COMMENT);
         }
     }
 

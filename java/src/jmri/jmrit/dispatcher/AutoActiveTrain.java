@@ -138,7 +138,16 @@ public class AutoActiveTrain implements ThrottleListener {
         return _autoEngineer.getTargetSpeed();
     }
 
+    public synchronized void setTargetSpeedByPass(float speed) {
+         _autoEngineer.setTargetSpeed(speed);
+    }
+
     public synchronized void setTargetSpeed(float speed) {
+        if (_autoEngineer.isStopped() && getTargetSpeed() == 0.0f && speed > 0.0f) {
+            if (_autoTrainAction.isDelayedStart(speed)) {
+                return;
+            }
+        }
         _autoEngineer.setTargetSpeed(speed);
     }
 
@@ -579,7 +588,8 @@ public class AutoActiveTrain implements ThrottleListener {
             }
         } else if (b.getState() == Block.UNOCCUPIED) {
             log.debug("{}: handleBlockStateChange to UNOCCUPIED - Section {}, Block {}, speed {}", _activeTrain.getTrainName(),
-                    as.getSection().getDisplayName(USERSYS), b.getDisplayName(USERSYS),getTargetSpeed());
+                    as.getSection().getDisplayName(USERSYS), b.getDisplayName(USERSYS),
+                    _autoEngineer == null ? "" : getTargetSpeed());
             if (_stoppingByBlockOccupancy && (b == _stoppingBlock)) {
                 log.trace("{}: setStopNow by block occupancy from Block unoccupied, Block= {}", _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
                 _stoppingByBlockOccupancy = false;
@@ -1811,7 +1821,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         waitNow = false;
                     }
                 } catch (InterruptedException e) {
-                    log.error("InterruptedException while waiting to stop for pause", e);
+                    log.trace("InterruptedException while waiting to stop for pause-indicates action cancelled.", e);
                     waitNow = false;
                     keepGoing = false;
                 }
@@ -1833,7 +1843,7 @@ public class AutoActiveTrain implements ThrottleListener {
                             waitNow = false;
                         }
                     } catch (InterruptedException e) {
-                        log.error("InterruptedException while waiting when paused", e);
+                        log.trace("InterruptedException indicates action cancelled.", e);
                         keepGoing = false;
                     }
                 }
