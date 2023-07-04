@@ -250,7 +250,7 @@
             Improved handling and reporting of NPE, which will help
             debugging
           </td>
-          <td>14/td>
+          <td>14</td>
           <td>14</td>
         </tr>
 
@@ -271,6 +271,15 @@
           </td>
           <td>15</td>
           <td>15</td>
+        </tr>
+
+        <tr>
+          <td>
+            GraalVM provides "complete" Python 3.7 and JavaScript.
+            At least this version will be required for Nashorn replacement.
+          </td>
+          <td>16</td>
+          <td>16</td>
         </tr>
 
         <tr>
@@ -326,6 +335,24 @@
           </td>
           <td>17</td>
           <td>17</td>
+        </tr>
+
+        <tr>
+          <td>
+            The sun.misc package is replaced by jdk.internal.misc, access
+            to which requires the use of the module system.
+          </td>
+          <td>18</td>
+          <td>18</td>
+        </tr>
+
+        <tr>
+          <td>
+            Various elements of the Thread and Locale APIs are marked for deletion, 
+            resulting in about 50 compilation warnings.
+          </td>
+          <td>20</td>
+          <td>20</td>
         </tr>
 
         <tr>

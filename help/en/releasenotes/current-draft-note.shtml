@@ -599,6 +599,9 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>A signal handler has been added to the Shutdown manager such that a 
+            "kill &lt;pid&gt;" command on Mac or Linux will do a normal shutdown.
+            This is particularly useful for e.g. running headless on an RPi.
+            "kill -HUP &lt;pid&gt;" will cause JMRI to quit and restart.
         </ul>
 
