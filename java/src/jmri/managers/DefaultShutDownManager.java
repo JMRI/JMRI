@@ -87,20 +87,33 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
         }
         
         // register a Signal handlers that do shutdown
-        SignalHandler handler = new SignalHandler () {
-            public void handle(Signal sig) {
-                shutdown();
-            }
-        };
         try {
             if (SystemType.isMacOSX() || SystemType.isLinux()) {
-                Signal.handle(new Signal("HUP"), handler);
+                SignalHandler handler = new SignalHandler () {
+                    public void handle(Signal sig) {
+                        shutdown();
+                    }
+                };
                 Signal.handle(new Signal("TERM"), handler);
                 Signal.handle(new Signal("INT"), handler);
+                
+                handler = new SignalHandler () {
+                    public void handle(Signal sig) {
+                        restart();
+                    }
+                };
+                Signal.handle(new Signal("HUP"), handler);     
             } 
-            if (SystemType.isWindows()) {
+            
+            else if (SystemType.isWindows()) {
+                SignalHandler handler = new SignalHandler () {
+                    public void handle(Signal sig) {
+                        shutdown();
+                    }
+                };
                 Signal.handle(new Signal("TERM"), handler);
             }
+            
         } catch (NullPointerException e) {
             log.warn("Failed to add signal handler due to missing signal definition");
         }
