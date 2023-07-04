@@ -98,6 +98,6 @@ public class FileAsFlagSwing extends AbstractDigitalExpressionSwing {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FileAsFlagSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FileAsFlagSwing.class);
 
 }
