@@ -1122,7 +1122,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                             d.posToSet.x = (float) loc2.getX();
                             d.posToSet.y = (float) loc2.getY();
                             d.posToSet.z = 0.0f;
-                            log.info("address {} position to set: {}, location: {}", d.getAddress(), d.posToSet, loc);
+                            log.debug("address {} position to set: {}, location: {}", d.getAddress(), d.posToSet, loc);
                             d.setPosition(d.posToSet);
                         }
                     }
