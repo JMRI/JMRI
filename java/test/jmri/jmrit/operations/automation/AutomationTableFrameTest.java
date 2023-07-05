@@ -12,7 +12,9 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.automation.actions.BuildTrainAction;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
 
 public class AutomationTableFrameTest extends OperationsTestCase {
@@ -355,6 +357,32 @@ public class AutomationTableFrameTest extends OperationsTestCase {
                 automation.getItemsBySequenceList().get(1).getMessageFail());
 
         JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Automation automation = InstanceManager.getDefault(AutomationManager.class)
+                .newAutomation("Automation Save Close");
+        AutomationTableFrame tf = new AutomationTableFrame(automation);
+        tf.initComponents();
+
+        JFrameOperator jfo = new JFrameOperator(tf.getTitle());
+        Assert.assertNotNull("visible and found", jfo);
+
+        // confirm window appears
+        JmriJFrame f = JmriJFrame.getFrame(tf.getTitle());
+        Assert.assertNotNull("exists", f);
+        new JButtonOperator(jfo, Bundle.getMessage("ButtonSave")).doClick();
+        f = JmriJFrame.getFrame(tf.getTitle());
+        Assert.assertNotNull("exists", f);
+        // now close window with save button
+        Setup.setCloseWindowOnSaveEnabled(true);
+        new JButtonOperator(jfo, Bundle.getMessage("ButtonSave")).doClick();
+        jfo.waitClosed();
+        // confirm window is closed
+        f = JmriJFrame.getFrame(tf.getTitle());
+        Assert.assertNull("does not exist", f);
     }
 
     AutomationTableFrame f;

@@ -2,6 +2,7 @@ package jmri.jmrit.operations.automation;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 
 /**
@@ -31,6 +32,5 @@ public class AutomationCopyAction extends AbstractAction {
             f = new AutomationCopyFrame(_automation);
         }
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true); // this also brings the frame into focus
     }
 }
