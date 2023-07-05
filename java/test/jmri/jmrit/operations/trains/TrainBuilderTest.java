@@ -17431,7 +17431,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         c1.setFinalDestination(danvers);
         c1.setFinalDestinationTrack(danversSpur1);
 
-        Assert.assertTrue(train.build());
+        Assert.assertTrue(new TrainBuilder().build(train));
 
         // confirm car is assigned to train and destination is Danvers
         Assert.assertEquals("Train assignment", train, c1.getTrain());
@@ -17447,11 +17447,11 @@ public class TrainBuilderTest extends OperationsTestCase {
         // confirm that routing through yard is enabled
         Assert.assertTrue("Yard routing enabled", Setup.isCarRoutingViaYardsEnabled());
 
-        // routing through yard is enable, and interchanges at Acton and
+        // routing through yard is enabled, and interchanges at Acton and
         // Boston default is to not allow the same train to service. Program
         // should select a yard track.
         train.reset();
-        Assert.assertTrue(train.build());
+        Assert.assertTrue(new TrainBuilder().build(train));
         Assert.assertEquals("Train assignment", train, c1.getTrain());
         Assert.assertEquals("car c1 destination track", bostonYard1, c1.getDestinationTrack());
 
@@ -17460,7 +17460,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // program will attempt to move stuck car
         train.reset();
-        Assert.assertTrue(train.build());
+        Assert.assertTrue(new TrainBuilder().build(train));
         Assert.assertEquals("Train assignment", train, c1.getTrain());
         Assert.assertEquals("car c1 destination track", actonSpur1, c1.getDestinationTrack());
         
@@ -17469,9 +17469,548 @@ public class TrainBuilderTest extends OperationsTestCase {
         bostonInterchange2.addPickupId(train.getId());
         
         train.reset();
-        Assert.assertTrue(train.build());
+        Assert.assertTrue(new TrainBuilder().build(train));
         Assert.assertEquals("Train assignment", train, c1.getTrain());
         Assert.assertEquals("car c1 destination track", bostonInterchange2, c1.getDestinationTrack());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    /**
+     * Test interchange track can't be used by the same train for set outs and
+     * pulls. Uses a turn that can set out and pull from the same interchange
+     * track. This tests multiple train routing. Confirms build warning when
+     * program can't route car.
+     */
+    @Test
+    public void testInterchange3Trains() {
+        // build a set of trains servicing multiple locations.
+        JUnitOperationsUtil.createSevenNormalLocations();
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+        Track actonYard1 = acton.getTrackByName("Acton Yard 1", null);
+        Track actonInterchange2 = acton.getTrackByName("Acton Interchange 2", null);
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
+        Track bostonYard1 = boston.getTrackByName("Boston Yard 1", null);
+        Track bostonInterchange1 = boston.getTrackByName("Boston Interchange 1", null);
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        Location danvers = lmanager.getLocationByName("Danvers");
+        Track danversYard1 = danvers.getTrackByName("Danvers Yard 1", null);
+
+        // Create the turn Acton-Chelmsford-Boston-Acton
+        Route acbaRoute = rmanager.newRoute("Acton-Chelmsford-Boston-Acton");
+        acbaRoute.addLocation(acton);
+        acbaRoute.addLocation(chelmsford);
+        acbaRoute.addLocation(boston);
+        acbaRoute.addLocation(acton);
+        Train acbaTrain = tmanager.newTrain("Acton-Chelmsford-Boston-Acton");
+        acbaTrain.setRoute(acbaRoute);
+
+        // now place car at Boston destination Chelmsford
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", "DAB", "1958", bostonYard1, 0);
+        c1.setFinalDestination(chelmsford);
+
+        // confirm that routing through yard is enabled
+        Assert.assertTrue("Yard routing enabled", Setup.isCarRoutingViaYardsEnabled());
+
+        TrainBuilder tb = new TrainBuilder();
+        Assert.assertTrue(tb.build(acbaTrain));
+
+        // It takes two trains to get car from Boston to Chelmsford.
+        // 1st train acbaTrain pulls car from Boston and spots it to Acton yard.
+        // 2nd train acbaTrain pulls car from Acton and spots it in Chelmsford.
+        Assert.assertEquals("Warnings", 0, tb._warnings);
+        Assert.assertEquals("Train assignment", acbaTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", actonYard1, c1.getDestinationTrack());
+
+        // now force the program to use interchange tracks.
+        Setup.setCarRoutingViaYardsEnabled(false);
+        acbaTrain.reset();
+        tb = new TrainBuilder();
+        Assert.assertTrue(tb.build(acbaTrain));
+
+        // routing should fail, warning, and program attempts to move stuck car
+        Assert.assertEquals("Warnings", 1, tb._warnings);
+        Assert.assertEquals("Train assignment", acbaTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", actonSpur1, c1.getDestinationTrack());
+
+        // now configure interchange at Acton to allow pulls. This will allow
+        // the same train acbaTrain to set out and pull a car from the interchange.
+        actonInterchange2.setPickupOption(Track.TRAINS);
+        actonInterchange2.addPickupId(acbaTrain.getId());
+
+        // 2 train routing
+        acbaTrain.reset();
+        tb = new TrainBuilder();
+        Assert.assertTrue(tb.build(acbaTrain));
+        Assert.assertEquals("Warnings", 0, tb._warnings);
+        Assert.assertEquals("Train assignment", acbaTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", actonInterchange2, c1.getDestinationTrack());
+        acbaTrain.reset();
+
+        // now test 3 train routing
+        // add a train from Danvers to Boston and place car at Danvers
+        Route dbRoute = rmanager.newRoute("Danvers-Boston");
+        dbRoute.addLocation(danvers);
+        dbRoute.addLocation(boston);
+
+        Train dbTrain = tmanager.newTrain("Danvers-Boston");
+        dbTrain.setRoute(dbRoute);
+        c1.setLocation(danvers, danversYard1);
+
+        // 3 train route for car c1
+        // route for car
+        // Danvers->dbTrain->Boston->acbaTrain->Acton->acbaTrain->Chelmsford
+
+        tb = new TrainBuilder();
+        Assert.assertTrue(tb.build(dbTrain));
+        Assert.assertEquals("Warnings", 0, tb._warnings);
+        Assert.assertEquals("Train assignment", dbTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", bostonInterchange1, c1.getDestinationTrack());
+
+        // now cause routing to fail at turn acbaTrain
+        // same train acbaTrain isn't allowed to spot and pull from interchange
+        // tracks
+        actonInterchange2.setPickupOption(Track.ANY);
+
+        dbTrain.reset();
+        tb = new TrainBuilder();
+        Assert.assertTrue(tb.build(dbTrain));
+        Assert.assertEquals("Warnings", 1, tb._warnings);
+        Assert.assertEquals("Train assignment", dbTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", bostonSpur1, c1.getDestinationTrack());
+
+        // now allow yard tracks to be used, set out and pull from the same train are allowed
+        Setup.setCarRoutingViaYardsEnabled(true);
+        dbTrain.reset();
+        tb = new TrainBuilder();
+        Assert.assertTrue(tb.build(dbTrain));
+        Assert.assertEquals("Warnings", 0, tb._warnings);
+        Assert.assertEquals("Train assignment", dbTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", bostonInterchange1, c1.getDestinationTrack());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    /**
+     * Test interchange track can't be used by the same train for set outs and
+     * pulls. Uses a turn that can set out and pull from the same interchange
+     * track. This tests multiple train routing. Confirms build warning when
+     * program can't route car.
+     */
+    @Test
+    public void testInterchange4Trains() {
+        // build a set of trains servicing multiple locations.
+        JUnitOperationsUtil.createSevenNormalLocations();
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonInterchange2 = acton.getTrackByName("Acton Interchange 2", null);
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
+        Track bostonInterchange1 = boston.getTrackByName("Boston Interchange 1", null);
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        Location danvers = lmanager.getLocationByName("Danvers");
+        Track danversYard1 = danvers.getTrackByName("Danvers Yard 1", null);
+        Location essex = lmanager.getLocationByName("Essex");
+
+        // Create the turn Acton-Chelmsford-Boston-Acton
+        Route acbaRoute = rmanager.newRoute("Acton-Chelmsford-Boston-Acton");
+        acbaRoute.addLocation(acton);
+        acbaRoute.addLocation(chelmsford);
+        acbaRoute.addLocation(boston);
+        acbaRoute.addLocation(acton);
+        Train acbaTrain = tmanager.newTrain("Acton-Chelmsford-Boston-Acton");
+        acbaTrain.setRoute(acbaRoute);
+
+        // add a train from Danvers to Boston
+        Route dbRoute = rmanager.newRoute("Danvers-Boston");
+        dbRoute.addLocation(danvers);
+        dbRoute.addLocation(boston);
+        Train dbTrain = tmanager.newTrain("Danvers-Boston");
+        dbTrain.setRoute(dbRoute);
+
+        // add a train from Chelmsford to Essex
+        Route ceRoute = rmanager.newRoute("Chelmsford-Essex");
+        ceRoute.addLocation(chelmsford);
+        ceRoute.addLocation(essex);
+        Train ceTrain = tmanager.newTrain("Chelmsford-Essex");
+        ceTrain.setRoute(ceRoute);
+        
+        // now place car at Danvers destination Essex
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", "DAB", "1958", danversYard1, 0);
+        c1.setFinalDestination(essex);
+        
+        // route for car
+        // Danvers->dbTrain->Boston->acbaTrain->Acton->acbaTrain->Chelmsford->ceTrain->Essex
+
+        // should fail, interchanges at Acton don't allow the train acbaTrain to spot and pull
+        Setup.setCarRoutingViaYardsEnabled(false);
+        TrainBuilder tb = new TrainBuilder();
+        Assert.assertTrue(tb.build(dbTrain));
+        Assert.assertEquals("Warnings", 1, tb._warnings);
+        Assert.assertEquals("Train assignment", dbTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", bostonSpur1, c1.getDestinationTrack());
+
+        // now allow yard tracks to be used, set out and pull from the same train are allowed
+        Setup.setCarRoutingViaYardsEnabled(true);
+        dbTrain.reset();
+        tb = new TrainBuilder();
+        Assert.assertTrue(tb.build(dbTrain));
+        Assert.assertEquals("Warnings", 0, tb._warnings);
+        Assert.assertEquals("Train assignment", dbTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", bostonInterchange1, c1.getDestinationTrack());
+        Setup.setCarRoutingViaYardsEnabled(false);
+        
+        // now configure interchange at Acton to allow pulls. This will allow
+        // train acbaTrain to set out and pull a car from the interchange.
+        actonInterchange2.setPickupOption(Track.TRAINS);
+        actonInterchange2.addPickupId(acbaTrain.getId());
+
+        dbTrain.reset();
+        tb = new TrainBuilder();
+        Assert.assertTrue(tb.build(dbTrain));
+        Assert.assertEquals("Warnings", 0, tb._warnings);
+        Assert.assertEquals("Train assignment", dbTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", bostonInterchange1, c1.getDestinationTrack());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    /**
+     * Test interchange track can't be used by the same train for set outs and
+     * pulls. Uses a turn that can set out and pull from the same interchange
+     * track. This tests multiple train routing. Confirms build warning when
+     * program can't route car.
+     */
+    @Test
+    public void testInterchange5Trains() {
+        // build a set of trains servicing multiple locations.
+        JUnitOperationsUtil.createSevenNormalLocations();
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonInterchange2 = acton.getTrackByName("Acton Interchange 2", null);
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
+        Track bostonInterchange1 = boston.getTrackByName("Boston Interchange 1", null);
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        Location danvers = lmanager.getLocationByName("Danvers");
+        Track danversYard1 = danvers.getTrackByName("Danvers Yard 1", null);
+        Location essex = lmanager.getLocationByName("Essex");
+        Location foxboro = lmanager.getLocationByName("Foxboro");
+
+        // Create the turn Acton-Chelmsford-Boston-Acton
+        Route acbaRoute = rmanager.newRoute("Acton-Chelmsford-Boston-Acton");
+        acbaRoute.addLocation(acton);
+        acbaRoute.addLocation(chelmsford);
+        acbaRoute.addLocation(boston);
+        acbaRoute.addLocation(acton);
+        Train acbaTrain = tmanager.newTrain("Acton-Chelmsford-Boston-Acton");
+        acbaTrain.setRoute(acbaRoute);
+
+        // add a train from Danvers to Boston
+        Route dbRoute = rmanager.newRoute("Danvers-Boston");
+        dbRoute.addLocation(danvers);
+        dbRoute.addLocation(boston);
+        Train dbTrain = tmanager.newTrain("Danvers-Boston");
+        dbTrain.setRoute(dbRoute);
+
+        // add a train from Chelmsford to Essex
+        Route ceRoute = rmanager.newRoute("Chelmsford-Essex");
+        ceRoute.addLocation(chelmsford);
+        ceRoute.addLocation(essex);
+        Train ceTrain = tmanager.newTrain("Chelmsford-Essex");
+        ceTrain.setRoute(ceRoute);
+        
+        // add a train from Essex to Foxboro
+        Route efRoute = rmanager.newRoute("Essex-Foxboro");
+        efRoute.addLocation(essex);
+        efRoute.addLocation(foxboro);
+        Train efTrain = tmanager.newTrain("Essex-Foxboro");
+        efTrain.setRoute(efRoute);
+
+        // now place car at Boston destination Foxboro
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", "DAB", "1958", danversYard1, 0);
+        c1.setFinalDestination(foxboro);
+
+        // now test 5 train routing
+        Setup.setCarRoutingViaYardsEnabled(false);
+        
+        // now configure interchange at Acton to allow pulls. This will allow
+        // the same train to set out and pull a car from the interchange.
+        actonInterchange2.setPickupOption(Track.TRAINS);
+        actonInterchange2.addPickupId(acbaTrain.getId());
+
+        // route for car
+        // Danvers->dbTrain->Boston->acbaTrain->Acton->acbaTrain->Chelmsford->ceTrain->Essex->efTrain->Foxboro
+        TrainBuilder tb = new TrainBuilder();
+        Assert.assertTrue(tb.build(dbTrain));
+        Assert.assertEquals("Warnings", 0, tb._warnings);
+        Assert.assertEquals("Train assignment", dbTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", bostonInterchange1, c1.getDestinationTrack());
+
+        // now cause routing to fail at turn acbaTrain
+        // same train acbaTrain isn't allowed to spot and pull from interchange
+        // tracks
+        actonInterchange2.setPickupOption(Track.ANY);
+
+        dbTrain.reset();
+        tb = new TrainBuilder();
+        Assert.assertTrue(tb.build(dbTrain));
+        Assert.assertEquals("Warnings", 1, tb._warnings);
+        Assert.assertEquals("Train assignment", dbTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", bostonSpur1, c1.getDestinationTrack());
+        dbTrain.reset();
+        
+        // now allow yard tracks to be used, set out and pull from the same train are allowed
+        Setup.setCarRoutingViaYardsEnabled(true);
+        dbTrain.reset();
+        tb = new TrainBuilder();
+        Assert.assertTrue(tb.build(dbTrain));
+        Assert.assertEquals("Warnings", 0, tb._warnings);
+        Assert.assertEquals("Train assignment", dbTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", bostonInterchange1, c1.getDestinationTrack());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    /**
+     * Test interchange track can't be used by the same train for set outs and
+     * pulls. Uses a turn that can set out and pull from the same interchange
+     * track. This tests multiple train routing. Confirms build warning when
+     * program can't route car.
+     */
+    @Test
+    public void testInterchange6Trains() {
+        // build a set of trains servicing multiple locations.
+        JUnitOperationsUtil.createSevenNormalLocations();
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonInterchange2 = acton.getTrackByName("Acton Interchange 2", null);
+        Location boston = lmanager.getLocationByName("Boston");
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        Location danvers = lmanager.getLocationByName("Danvers");
+        Track danversSpur1 = danvers.getTrackByName("Danvers Spur 1", null);
+        Track danversInterchange1 = danvers.getTrackByName("Danvers Interchange 1", null);
+        Location essex = lmanager.getLocationByName("Essex");
+        Location foxboro = lmanager.getLocationByName("Foxboro");
+        Location gulf = lmanager.getLocationByName("Gulf");
+        Track gulfSpur1 = gulf.getTrackByName("Gulf Spur 1", null);
+
+        // Create the turn Acton-Chelmsford-Boston-Acton
+        Route acbaRoute = rmanager.newRoute("Acton-Chelmsford-Boston-Acton");
+        acbaRoute.addLocation(acton);
+        acbaRoute.addLocation(chelmsford);
+        acbaRoute.addLocation(boston);
+        acbaRoute.addLocation(acton);
+        Train acbaTrain = tmanager.newTrain("Acton-Chelmsford-Boston-Acton");
+        acbaTrain.setRoute(acbaRoute);
+
+        // add a train from Danvers to Boston
+        Route dbRoute = rmanager.newRoute("Danvers-Boston");
+        dbRoute.addLocation(danvers);
+        dbRoute.addLocation(boston);
+        Train dbTrain = tmanager.newTrain("Danvers-Boston");
+        dbTrain.setRoute(dbRoute);
+        
+        // add a train from Gulf to Danvers
+        Route gdRoute = rmanager.newRoute("Gulf-Danvers");
+        gdRoute.addLocation(gulf);
+        gdRoute.addLocation(danvers);
+        Train gdTrain = tmanager.newTrain("Gulf-Danvers");
+        gdTrain.setRoute(gdRoute);
+
+        // add a train from Chelmsford to Essex
+        Route ceRoute = rmanager.newRoute("Chelmsford-Essex");
+        ceRoute.addLocation(chelmsford);
+        ceRoute.addLocation(essex);
+        Train ceTrain = tmanager.newTrain("Chelmsford-Essex");
+        ceTrain.setRoute(ceRoute);
+        
+        // add a train from Essex to Foxboro
+        Route efRoute = rmanager.newRoute("Essex-Foxboro");
+        efRoute.addLocation(essex);
+        efRoute.addLocation(foxboro);
+        Train efTrain = tmanager.newTrain("Essex-Foxboro");
+        efTrain.setRoute(efRoute);
+
+        // now place car at Gulf destination Foxboro
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", "DAB", "1958", gulfSpur1, 0);
+        c1.setFinalDestination(foxboro);
+
+        // now test 6 train routing
+        // route for car
+        // Gulf->gdTrain->Danvers->dbTrain->Boston->acbaTrain->Acton->acbaTrain->Chelmsford->ceTrain->Essex->efTrain->Foxboro
+        Setup.setCarRoutingViaYardsEnabled(false);
+        TrainBuilder tb = new TrainBuilder();
+        Assert.assertTrue(tb.build(gdTrain));
+
+        // train acbaTrain isn't allowed to spot and pull from interchange tracks
+        Assert.assertEquals("Warnings", 1, tb._warnings);
+        Assert.assertEquals("Train assignment", gdTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", danversSpur1, c1.getDestinationTrack());
+
+        // now allow yard tracks to be used, set out and pull from train acbaTrain are allowed via yard tracks
+        Setup.setCarRoutingViaYardsEnabled(true);
+        gdTrain.reset();
+        tb = new TrainBuilder();
+        Assert.assertTrue(tb.build(gdTrain));
+        Assert.assertEquals("Warnings", 0, tb._warnings);
+        Assert.assertEquals("Train assignment", gdTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", danversInterchange1, c1.getDestinationTrack());
+        Setup.setCarRoutingViaYardsEnabled(false);
+        
+        // now configure interchange at Acton to allow pulls. This will allow
+        // the train acbaTrain to set out and pull a car from the interchange.
+        actonInterchange2.setPickupOption(Track.TRAINS);
+        actonInterchange2.addPickupId(acbaTrain.getId());
+
+        gdTrain.reset();
+        tb = new TrainBuilder();
+        Assert.assertTrue(tb.build(gdTrain));
+        Assert.assertEquals("Warnings", 0, tb._warnings);
+        Assert.assertEquals("Train assignment", gdTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", danversInterchange1, c1.getDestinationTrack());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    /**
+     * Test interchange track can't be used by the same train for set outs and
+     * pulls. Uses a turn that can set out and pull from the same interchange
+     * track. This tests multiple train routing. Confirms build warning when
+     * program can't route car.
+     */
+    @Test
+    public void testInterchange7Trains() {
+        // build a set of trains servicing multiple locations.
+        JUnitOperationsUtil.createSevenNormalLocations();
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+        Track actonYard1 = acton.getTrackByName("Acton Yard 1", null);
+        Track actonInterchange2 = acton.getTrackByName("Acton Interchange 2", null);
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        Location danvers = lmanager.getLocationByName("Danvers");
+        Track danversInterchange1 = danvers.getTrackByName("Danvers Interchange 1", null);
+        Location essex = lmanager.getLocationByName("Essex");
+        Location foxboro = lmanager.getLocationByName("Foxboro");
+        Track foxboroInterchange2 = foxboro.getTrackByName("Foxboro Interchange 2", null);
+        Location gulf = lmanager.getLocationByName("Gulf");
+
+        Location hillsboro = JUnitOperationsUtil.createOneNormalLocation("Hillsboro");
+
+        // Create the turn Acton-Chelmsford-Boston-Acton
+        Route acbaRoute = rmanager.newRoute("Acton-Chelmsford-Boston-Acton");
+        acbaRoute.addLocation(acton);
+        acbaRoute.addLocation(chelmsford);
+        acbaRoute.addLocation(boston);
+        acbaRoute.addLocation(acton);
+        Train acbaTrain = tmanager.newTrain("Acton-Chelmsford-Boston-Acton");
+        acbaTrain.setRoute(acbaRoute);
+
+        // Create the turn Danvers-Essex-Chelmsford-Danvers
+        Route decdRoute = rmanager.newRoute("Danvers-Essex-Chelmsford-Danvers");
+        decdRoute.addLocation(danvers);
+        decdRoute.addLocation(essex);
+        decdRoute.addLocation(chelmsford);
+        decdRoute.addLocation(danvers);
+        Train decdTrain = tmanager.newTrain("Danvers-Essex-Chelmsford-Danvers");
+        decdTrain.setRoute(decdRoute);
+
+        // Create the turn Foxboro-Gulf-Essex-Foxboro
+        Route fgefRoute = rmanager.newRoute("Foxboro-Gulf-Essex-Foxboro");
+        fgefRoute.addLocation(foxboro);
+        fgefRoute.addLocation(gulf);
+        fgefRoute.addLocation(essex);
+        fgefRoute.addLocation(foxboro);
+        Train fgefTrain = tmanager.newTrain("Foxboro-Gulf-Essex-Foxboro");
+        fgefTrain.setRoute(fgefRoute);
+
+        // Add train from Gulf to Hillsboro
+        Route ghRoute = rmanager.newRoute("Gulf-Hillsboro");
+        ghRoute.addLocation(gulf);
+        ghRoute.addLocation(hillsboro);
+        Train ghTrain = tmanager.newTrain("Gulf-Hillsboro");
+        ghTrain.setRoute(ghRoute);
+
+        // place car in Boston destination Hillsboro
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", "DAB", "1958", bostonSpur1, 0);
+        c1.setFinalDestination(hillsboro);
+
+        // confirm routing through yards is enabled
+        Assert.assertTrue("Yard routing enabled", Setup.isCarRoutingViaYardsEnabled());
+
+        // Route for car c1:
+        // Boston->acbaTrain->Acton->acbaTrain->Chelmsford->decdTrain->Danvers->decdTrain->Essex->
+        // fgefTrain->Foxboro->fgefTrain->Gulf->ghTrain->Hillsboro
+        TrainBuilder tb = new TrainBuilder();
+        Assert.assertTrue(tb.build(acbaTrain));
+        Assert.assertEquals("Warnings", 0, tb._warnings);
+        Assert.assertEquals("Train assignment", acbaTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", actonYard1, c1.getDestinationTrack());
+
+        // now disable routing through yards
+        Setup.setCarRoutingViaYardsEnabled(false);
+
+        acbaTrain.reset();
+        tb = new TrainBuilder();
+        Assert.assertTrue(tb.build(acbaTrain));
+        Assert.assertEquals("Warnings", 1, tb._warnings);
+        Assert.assertEquals("Train assignment", acbaTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", actonSpur1, c1.getDestinationTrack());
+
+        // now configure interchanges at Acton, Danvers, and Foxboro to service
+        // turns
+        actonInterchange2.setPickupOption(Track.TRAINS);
+        actonInterchange2.addPickupId(acbaTrain.getId());
+        danversInterchange1.setPickupOption(Track.TRAINS);
+        danversInterchange1.addPickupId(decdTrain.getId());
+        foxboroInterchange2.setPickupOption(Track.TRAINS);
+        foxboroInterchange2.addPickupId(fgefTrain.getId());
+
+        acbaTrain.reset();
+        tb = new TrainBuilder();
+        Assert.assertTrue(tb.build(acbaTrain));
+        Assert.assertEquals("Warnings", 0, tb._warnings);
+        Assert.assertEquals("Train assignment", acbaTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", actonInterchange2, c1.getDestinationTrack());
+
+        // cause routing to fail at Danvers
+        danversInterchange1.setPickupOption(Track.ANY);
+
+        acbaTrain.reset();
+        tb = new TrainBuilder();
+        Assert.assertTrue(tb.build(acbaTrain));
+        Assert.assertEquals("Warnings", 1, tb._warnings);
+        Assert.assertEquals("Train assignment", acbaTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", actonSpur1, c1.getDestinationTrack());
+
+        // fix Danvers interchange, break Foxboro
+        danversInterchange1.setPickupOption(Track.TRAINS);
+        danversInterchange1.addPickupId(decdTrain.getId());
+        foxboroInterchange2.setPickupOption(Track.ANY);
+
+        acbaTrain.reset();
+        tb = new TrainBuilder();
+        Assert.assertTrue(tb.build(acbaTrain));
+        Assert.assertEquals("Warnings", 1, tb._warnings);
+        Assert.assertEquals("Train assignment", acbaTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", actonSpur1, c1.getDestinationTrack());
+
+        // fix Foxboro
+        foxboroInterchange2.setPickupOption(Track.TRAINS);
+        foxboroInterchange2.addPickupId(fgefTrain.getId());
+
+        acbaTrain.reset();
+        tb = new TrainBuilder();
+        Assert.assertTrue(tb.build(acbaTrain));
+        Assert.assertEquals("Warnings", 0, tb._warnings);
+        Assert.assertEquals("Train assignment", acbaTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", actonInterchange2, c1.getDestinationTrack());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
