@@ -514,8 +514,10 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
      * Handle synchronize check box change
      */
     private void synchronizeChanged(ActionEvent e) {
-        clock.setSynchronize(synchronizeCheckBox.isSelected(), true);
-        changed = true;
+        if (synchronizeCheckBox != null) {
+            clock.setSynchronize(synchronizeCheckBox.isSelected(), true);
+            changed = true;
+        }
     }
 
     /**
@@ -741,7 +743,9 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
                 updateTime();
                 break;
             case "config": //indicates that something in the clock config has changed, so update all
-                synchronizeCheckBox.setSelected(clock.getSynchronize());
+                if (synchronizeCheckBox != null) {
+                    synchronizeCheckBox.setSelected(clock.getSynchronize());
+                }
                 timeSourceBox.setSelectedIndex(clock.getInternalMaster() ? internalSourceIndex : hardwareSourceIndex);
                 switch (clock.getClockInitialRunState()) {
                     case DO_STOP:
