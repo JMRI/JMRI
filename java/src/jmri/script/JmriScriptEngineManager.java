@@ -27,6 +27,7 @@ import jmri.AudioManager;
 import jmri.BlockManager;
 import jmri.CommandStation;
 import jmri.GlobalProgrammerManager;
+import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.Light;
