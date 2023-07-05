@@ -1794,7 +1794,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     }
                 }
                 // restriction to only carry cars to terminal?
+                // ignore send to terminal if a local move
                 if (isSendCarsToTerminalEnabled() &&
+                        !car.isLocalMove() &&
                         !TrainCommon.splitString(car.getLocationName())
                                 .equals(TrainCommon.splitString(getTrainDepartsName())) &&
                         !TrainCommon.splitString(car.getDestinationName())
@@ -1832,8 +1834,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                         !car.isCaboose() &&
                         !car.hasFred() &&
                         !car.isPassenger() &&
-                        TrainCommon.splitString(car.getLocationName())
-                                .equals(TrainCommon.splitString(car.getDestinationName()))) {
+                        car.isLocalMove()) {
                     if (debugFlag) {
                         log.debug("Local move not allowed");
                     }
