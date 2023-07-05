@@ -593,7 +593,7 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Added LayoutEditor turntable support for VSD navigation through a panel.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
