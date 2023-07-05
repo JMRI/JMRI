@@ -123,6 +123,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
 
         // this should agree with help/en/html/tools/scripting/Start.shtml
         Bindings bindings = new SimpleBindings();
+        
         bindings.put("sensors", InstanceManager.getNullableDefault(SensorManager.class));
         bindings.put("turnouts", InstanceManager.getNullableDefault(TurnoutManager.class));
         bindings.put("lights", InstanceManager.getNullableDefault(LightManager.class));
@@ -131,6 +132,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         bindings.put("routes", InstanceManager.getNullableDefault(RouteManager.class));
         bindings.put("blocks", InstanceManager.getNullableDefault(BlockManager.class));
         bindings.put("reporters", InstanceManager.getNullableDefault(ReporterManager.class));
+        bindings.put("idtags", InstanceManager.getNullableDefault(IdTagManager.class));
         bindings.put("memories", InstanceManager.getNullableDefault(MemoryManager.class));
         bindings.put("powermanager", InstanceManager.getNullableDefault(PowerManager.class));
         bindings.put("addressedProgrammers", InstanceManager.getNullableDefault(AddressedProgrammerManager.class));
@@ -143,6 +145,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         bindings.put("sections", InstanceManager.getNullableDefault(SectionManager.class));
         bindings.put("transits", InstanceManager.getNullableDefault(TransitManager.class));
         bindings.put("beans", InstanceManager.getNullableDefault(NamedBeanHandleManager.class));
+        
         bindings.put("CLOSED", Turnout.CLOSED);
         bindings.put("THROWN", Turnout.THROWN);
         bindings.put("CABLOCKOUT", Turnout.CABLOCKOUT);
@@ -164,7 +167,9 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         bindings.put("FLASHYELLOW", SignalHead.FLASHYELLOW);
         bindings.put("FLASHGREEN", SignalHead.FLASHGREEN);
         bindings.put("FLASHLUNAR", SignalHead.FLASHLUNAR);
+        
         bindings.put("FileUtil", FileUtilSupport.getDefault());
+        
         this.context = new SimpleScriptContext();
         this.context.setBindings(bindings, ScriptContext.GLOBAL_SCOPE);
         this.context.setBindings(bindings, ScriptContext.ENGINE_SCOPE);
