@@ -489,7 +489,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Add "idtags" as a script shortcut to the manager like "turnouts" and "sensors"</li>
         </ul>
 
     <h3>Signals</h3>
