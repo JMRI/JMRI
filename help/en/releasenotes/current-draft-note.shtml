@@ -589,7 +589,7 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>json car, engine: remove location, set unknown flag, remove from train</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
