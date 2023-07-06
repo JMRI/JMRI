@@ -32,5 +32,6 @@ public class AutomationCopyAction extends AbstractAction {
             f = new AutomationCopyFrame(_automation);
         }
         f.setExtendedState(Frame.NORMAL);
+        f.setVisible(true); // this also brings the frame into focus
     }
 }

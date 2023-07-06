@@ -44,7 +44,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
     JScrollPane paneShipLoads = new JScrollPane(panelShipLoads);
 
     // major buttons
-    JButton saveTrackButton = new JButton(Bundle.getMessage("SaveTrack"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     JButton addLoadButton = new JButton(Bundle.getMessage("AddLoad"));
     JButton deleteLoadButton = new JButton(Bundle.getMessage("DeleteLoad"));
@@ -207,7 +207,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         panelButtons.setMaximumSize(new Dimension(2000, 200));
 
         // row 13
-        addItem(panelButtons, saveTrackButton, 0, 0);
+        addItem(panelButtons, saveButton, 0, 0);
 
         getContentPane().add(p1);
         getContentPane().add(pane3);
@@ -218,7 +218,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         getContentPane().add(panelButtons);
 
         // setup buttons
-        addButtonAction(saveTrackButton);
+        addButtonAction(saveButton);
 
         addButtonAction(deleteLoadButton);
         addButtonAction(deleteAllLoadsButton);
@@ -283,7 +283,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         if (_track == null) {
             return;
         }
-        if (ae.getSource() == saveTrackButton) {
+        if (ae.getSource() == saveButton) {
             log.debug("track save button activated");
             save();
             if (Setup.isCloseWindowOnSaveEnabled()) {
@@ -342,7 +342,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
     }
 
     protected void updateButtons(boolean enabled) {
-        saveTrackButton.setEnabled(enabled);
+        saveButton.setEnabled(enabled);
 
         loadNameAll.setEnabled(enabled);
         loadNameInclude.setEnabled(enabled);

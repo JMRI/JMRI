@@ -69,12 +69,23 @@ public class TrackDestinationEditFrameTest extends OperationsTestCase {
         Assert.assertFalse("Only cars with destinations", track.isOnlyCarsWithFinalDestinationEnabled());
         
         JemmyUtil.enterClickAndLeave(tdef.onlyCarsWithFD);
-        JemmyUtil.enterClickAndLeave(tdef.saveTrackButton); 
+        JemmyUtil.enterClickAndLeave(tdef.saveButton); 
         
         Assert.assertTrue("Only cars with destinations", track.isOnlyCarsWithFinalDestinationEnabled());
         
         JUnitUtil.dispose(tdef);
-
+    }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Location loc = JUnitOperationsUtil.createOneNormalLocation("Test Location");
+        Track track = loc.addTrack("Interchange", Track.INTERCHANGE);
+        YardEditFrame yef = new YardEditFrame();
+        yef.initComponents(track);
+        TrackDestinationEditFrame f = new TrackDestinationEditFrame();
+        f.initComponents(yef);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrackDestinationEditFrameTest.class);
