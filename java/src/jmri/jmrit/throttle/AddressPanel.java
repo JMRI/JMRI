@@ -366,7 +366,11 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         if (consist != null && consist.getConsistType() == Consist.ADVANCED_CONSIST) {      
             // request a throttle for head locomotive for functions
             DccLocoAddress headLocoAddress = consist.getConsistList().get(0);
-            changeOfAddress(headLocoAddress);
+            // only if consist address is not head locomotive address
+            if (! headLocoAddress.equals(currentAddress)) {
+                log.debug("Advanced consist throttle, requesting secondary throttle for head locomotive function control.");
+                changeOfAddress(headLocoAddress);
+            }
         }
     }
     
