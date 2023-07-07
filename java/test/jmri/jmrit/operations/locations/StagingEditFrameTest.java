@@ -391,6 +391,14 @@ public class StagingEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
         
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Track t = l.addTrack("Test Close", Track.STAGING);
+        StagingEditFrame f = new StagingEditFrame();
+        f.initComponents(l, t);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
+    }
 
     // Ensure minimal setup for log4J
     @Override

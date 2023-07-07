@@ -45,6 +45,19 @@ public class IgnoreUsedTrackFrameTest extends OperationsTestCase {
         
         JUnitUtil.dispose(iutf);
     }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitOperationsUtil.initOperationsData();
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        Location loc = lmanager.getLocationByName("North Industries");
+        Track track = loc.getTrackByName("NI Yard", null);
+        YardEditFrame yef = new YardEditFrame();
+        yef.initComponents(track);
+        IgnoreUsedTrackFrame f = new IgnoreUsedTrackFrame(yef);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
+    }
 
     // private final static Logger log = LoggerFactory.getLogger(IgnoreUsedTrackFrameTest.class);
 

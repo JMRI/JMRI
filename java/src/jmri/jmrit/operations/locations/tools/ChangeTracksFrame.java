@@ -11,10 +11,9 @@ import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationEditFrame;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Action to change all of tracks at a location to the same type of track. Track
@@ -97,6 +96,9 @@ class ChangeTracksFrame extends OperationsFrame {
                 changeTracks(Track.INTERCHANGE);
             } else if (stagingRadioButton.isSelected()) {
                 changeTracks(Track.STAGING);
+            }
+            if (Setup.isCloseWindowOnSaveEnabled()) {
+                dispose();
             }
         }
     }

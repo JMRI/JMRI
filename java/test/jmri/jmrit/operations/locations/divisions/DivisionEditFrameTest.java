@@ -1,20 +1,21 @@
 package jmri.jmrit.operations.locations.divisions;
 
+import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.netbeans.jemmy.operators.*;
+import org.netbeans.jemmy.util.NameComponentChooser;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
+import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
-
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-
-import org.netbeans.jemmy.operators.*;
-import org.netbeans.jemmy.util.NameComponentChooser;
 
 /**
  *
@@ -250,4 +251,14 @@ public class DivisionEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("Number of divisions", 1, dm.getNumberOfdivisions());
         JUnitUtil.dispose(def);
     }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
+        Division division = dm.newDivision("testDivisionName");
+        DivisionEditFrame f = new DivisionEditFrame(division);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
+    }
+
 }
