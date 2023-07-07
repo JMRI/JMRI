@@ -605,5 +605,8 @@
             "kill &lt;pid&gt;" command on Mac or Linux will do a normal shutdown.
             This is particularly useful for e.g. running headless on an RPi.
             "kill -HUP &lt;pid&gt;" will cause JMRI to quit and restart.
+            In addition, the Mac and Linux startup scripts were updated to 
+            pass these signals on to the running process.  Together, this
+            will allow you to run JMRI as a service on Mac and Linux, including the RPi.
         </ul>
 
