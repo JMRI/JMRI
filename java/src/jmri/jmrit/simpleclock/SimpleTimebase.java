@@ -37,6 +37,44 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
 
     protected final SystemConnectionMemo memo;
 
+    private double mFactor = 1.0; // this is the rate factor for the JMRI fast clock
+    private double hardwareFactor = 1.0; // this is the rate factor for the hardware clock
+    //  The above is necessary to support hardware clock Time Sources that fiddle with mFactor to
+    //      synchronize, instead of sending over a new time to synchronize.
+    private double startupFactor = 1.0; // this is the rate requested at startup
+    private boolean startSetRate = true; // if true, the hardware rate will be set to
+    private boolean haveStartupFactor = false; // true if startup factor was ever set.
+    // startupFactor at startup.
+
+    private Date startAtTime;
+    private Date setTimeValue;
+    private Date pauseTime; // null value indicates clock is running
+    private Sensor clockSensor = null; // active when clock is running, inactive when stopped
+    private Memory clockMemory = null; // contains current time on each tick
+    private Memory factorMemory = null; // contains the rate factor for the fast clock
+
+    private boolean internalMaster = true; // false indicates a hardware clock is the master
+    private String masterName = ""; // name of hardware time source, if not internal master
+    private ClockControl hardwareTimeSource = null; // ClockControl instance of hardware time source
+    private boolean synchronizeWithHardware = false; // true indicates need to synchronize
+    private boolean correctHardware = false; // true indicates hardware correction requested
+    private boolean display12HourClock = false; // true if 12-hour clock display is requested
+    private ClockInitialRunState initialState = ClockInitialRunState.DO_START; // what to do with the clock running state at startup
+    private boolean startSetTime = false; // true indicates set fast clock to specified time at
+    //start up requested
+    private Date startTime = new Date(); // specified time for setting fast clock at start up
+    private int startClockOption = NONE; // request start of a clock at start up
+    private boolean notInitialized = true; // true before initialization received from start up
+    private boolean showStopButton = false; // true indicates start up with start/stop button displayed
+
+    private java.text.SimpleDateFormat timeStorageFormat = null;
+
+    private javax.swing.Timer timer = null;
+
+    private int oldHours = -1;
+    private int oldMinutes = -1;
+    private Date oldDate = null;
+
     public SimpleTimebase(InternalSystemConnectionMemo memo) {
         super("SIMPLECLOCK");
         this.memo = memo;
@@ -53,7 +91,6 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     }
 
     final void init(){
-
         // set to start counting from now
         setTime(new Date());
         pauseTime = null;
@@ -75,7 +112,6 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                 log.warn("Unable to create RATEFACTOR time memory variable");
             }
         }
-
     }
 
     /**
@@ -312,7 +348,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                 hardwareTimeSource = InstanceManager.getDefault(ClockControl.class);
                 masterName = hardwareTimeSource.getHardwareClockName();
             }
-            firePropertyChange("config", 0, 1); // inform listeners that the clock config has changed            
+            firePropertyChange("config", 0, 1); // inform listeners that the clock config has changed
         }
     }
 
@@ -584,10 +620,10 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         boolean startStopped = (initialState == ClockInitialRunState.DO_STOP);
         if (synchronizeWithHardware || correctHardware) {
             if (startStopped) {
-                InstanceManager.getList(ClockControl.class).forEach( cc -> 
+                InstanceManager.getList(ClockControl.class).forEach( cc ->
                     cc.initializeHardwareClock( 0, getTime(), (!internalMaster && !startSetTime)) );
             } else {
-                InstanceManager.getList(ClockControl.class).forEach( cc -> 
+                InstanceManager.getList(ClockControl.class).forEach( cc ->
                     cc.initializeHardwareClock( mFactor, getTime(), (!internalMaster && !startSetTime)) );
             }
         } else if (!internalMaster) {
@@ -651,43 +687,6 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     }
 
     /**
-     * InstanceManager.getDefault(jmri.Timebase.class) variables and options
-     */
-    private double mFactor = 1.0; // this is the rate factor for the JMRI fast clock
-    private double hardwareFactor = 1.0; // this is the rate factor for the hardware clock
-    //  The above is necessary to support hardware clock Time Sources that fiddle with mFactor to
-    //      synchronize, instead of sending over a new time to synchronize.
-    private double startupFactor = 1.0; // this is the rate requested at startup
-    private boolean startSetRate = true; // if true, the hardware rate will be set to
-    private boolean haveStartupFactor = false; // true if startup factor was ever set.
-    // startupFactor at startup.
-
-    private Date startAtTime;
-    private Date setTimeValue;
-    private Date pauseTime; // null value indicates clock is running
-    private Sensor clockSensor = null; // active when clock is running, inactive when stopped
-    private Memory clockMemory = null; // contains current time on each tick
-    private Memory factorMemory = null; // contains the rate factor for the fast clock
-
-    private boolean internalMaster = true; // false indicates a hardware clock is the master
-    private String masterName = ""; // name of hardware time source, if not internal master
-    private ClockControl hardwareTimeSource = null; // ClockControl instance of hardware time source
-    private boolean synchronizeWithHardware = false; // true indicates need to synchronize
-    private boolean correctHardware = false; // true indicates hardware correction requested
-    private boolean display12HourClock = false; // true if 12-hour clock display is requested
-    private ClockInitialRunState initialState = ClockInitialRunState.DO_START; // what to do with the clock running state at startup
-    private boolean startSetTime = false; // true indicates set fast clock to specified time at
-    //start up requested
-    private Date startTime = new Date(); // specified time for setting fast clock at start up
-    private int startClockOption = NONE; // request start of a clock at start up
-    private boolean notInitialized = true; // true before initialization received from start up
-    private boolean showStopButton = false; // true indicates start up with start/stop button displayed
-
-    private java.text.SimpleDateFormat timeStorageFormat = null;
-
-    private javax.swing.Timer timer = null;
-
-    /**
      * Start the minute alarm ticking, if it isnt already.
      */
     void startAlarm() {
@@ -695,10 +694,6 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             handleAlarm(null);
         }
     }
-
-    private int oldHours = -1;
-    private int oldMinutes = -1;
-    private Date oldDate = null;
 
     /**
      * Handle an "alarm", which is used to count off minutes.
@@ -788,7 +783,6 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         super.addPropertyChangeListener(listener);
         startAlarm();
     }
-
 
     @Override
     public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
