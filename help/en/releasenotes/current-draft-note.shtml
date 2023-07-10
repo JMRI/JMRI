@@ -121,7 +121,9 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Added two new jython/LCC/CSVToNodeBackup.py and 
+                    jython/LCC/NodeBackupToCSV.py scripts for converting
+                    node backup files back and forth to CSV files.</li>
             </ul>
 
         <h4>Powerline</h4>
