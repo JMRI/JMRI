@@ -16,12 +16,16 @@ package jmri;
  * In contrast to Sensors, a Reporter provides more detailed information. A
  * Sensor provides a status of ACTIVE or INACTIVE, while a Reporter returns an
  * Object. The real type of that object can be whatever a particular Reporter
- * finds useful to report. Typical values might be a String or Int, both of
- * which can be displayed, printed, equated, etc.
+ * finds useful to report. Typical values might be a String, Int, or 
+ * {@link IdTag}, 
+ * all of which can be displayed, printed, equated, etc.
  * <p>
  * A Reporter might also not be able to report all the time. The previous value
  * remains available, but it's also possible to distinguish this case by using
  * the getCurrentReport member function.
+ * <hr>
+ * <p>The various implementations of the Reporter interface:
+ * <a href="doc-files/Reporter.png"><img src="doc-files/Reporter.png" alt="Class diagram of Reporter implementations" height="50%" width="50%"></a>
  * <br>
  * <hr>
  * This file is part of JMRI.
@@ -34,12 +38,72 @@ package jmri;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001, 2023
  * @author Matthew Harris Copyright (C) 2011
  * @see jmri.Sensor
  * @see jmri.ReporterManager
  * @see jmri.InstanceManager
  */
+ 
+/*
+@startuml jmri/doc-files/Reporter.png
+
+note as N1 #E0E0FF
+    Caution:  This class diagram is
+    manually maintained, and may be 
+    incomplete. The CollectingReporter
+    interface is omitted for simplicity.
+end note
+
+interface Reporter
+
+/'
+Interface CollectingReporter
+Reporter <|-- CollectingReporter
+'/
+
+class AbstractReporter
+Reporter <|-- AbstractReporter
+
+interface PhysicalLocationReporter
+
+class AbstractIdTagReporter
+AbstractReporter <|-- AbstractIdTagReporter
+PhysicalLocationReporter <|-- AbstractIdTagReporter
+
+class AbstractRailComReporter
+AbstractIdTagReporter <|-- AbstractRailComReporter
+
+class CbusReporter
+AbstractRailComReporter <|-- CbusReporter
+class Dcc4PcReporter
+AbstractRailComReporter <|-- Dcc4PcReporter
+class Z21CanReporter
+AbstractRailComReporter <|-- Z21CanReporter
+class Z21Reporter
+AbstractRailComReporter <|-- Z21Reporter
+
+class LnReporter
+AbstractIdTagReporter <|-- LnReporter
+class MqttReporter
+AbstractIdTagReporter <|-- MqttReporter
+class OlcbReporter
+AbstractIdTagReporter <|-- OlcbReporter
+class RfidReporter
+AbstractIdTagReporter <|-- RfidReporter
+
+class EcosReporter
+AbstractReporter <|-- EcosReporter
+class JMRIClientReporter
+AbstractReporter <|-- JMRIClientReporter
+class RpsReporter
+AbstractReporter <|-- RpsReporter
+class TrackReporter
+AbstractReporter <|-- TrackReporter
+
+@enduml
+*/
+
 public interface Reporter extends NamedBean {
 
     /**
