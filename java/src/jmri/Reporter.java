@@ -57,31 +57,24 @@ end note
 
 interface Reporter
 
-/'
-Interface CollectingReporter
-Reporter <|-- CollectingReporter
-'/
-
-class AbstractReporter
+abstract AbstractReporter
 Reporter <|-- AbstractReporter
 
-interface PhysicalLocationReporter
-
-class AbstractIdTagReporter
+abstract AbstractIdTagReporter
 AbstractReporter <|-- AbstractIdTagReporter
 PhysicalLocationReporter <|-- AbstractIdTagReporter
 
-class AbstractRailComReporter
-AbstractIdTagReporter <|-- AbstractRailComReporter
+class EcosReporter
+AbstractReporter <|-- EcosReporter
+class JMRIClientReporter
+AbstractReporter <|-- JMRIClientReporter
 
-class CbusReporter
-AbstractRailComReporter <|-- CbusReporter
-class Dcc4PcReporter
-AbstractRailComReporter <|-- Dcc4PcReporter
-class Z21CanReporter
-AbstractRailComReporter <|-- Z21CanReporter
-class Z21Reporter
-AbstractRailComReporter <|-- Z21Reporter
+class RpsReporter
+AbstractReporter <|-- RpsReporter
+class TrackReporter
+AbstractReporter <|-- TrackReporter
+
+interface PhysicalLocationReporter
 
 class LnReporter
 AbstractIdTagReporter <|-- LnReporter
@@ -92,14 +85,17 @@ AbstractIdTagReporter <|-- OlcbReporter
 class RfidReporter
 AbstractIdTagReporter <|-- RfidReporter
 
-class EcosReporter
-AbstractReporter <|-- EcosReporter
-class JMRIClientReporter
-AbstractReporter <|-- JMRIClientReporter
-class RpsReporter
-AbstractReporter <|-- RpsReporter
-class TrackReporter
-AbstractReporter <|-- TrackReporter
+abstract AbstractRailComReporter
+AbstractIdTagReporter <|-- AbstractRailComReporter
+
+class CbusReporter
+AbstractRailComReporter <|-- CbusReporter
+class Dcc4PcReporter
+AbstractRailComReporter <|-- Dcc4PcReporter
+class Z21CanReporter
+AbstractRailComReporter <|-- Z21CanReporter
+class Z21Reporter
+AbstractRailComReporter <|-- Z21Reporter
 
 @enduml
 */
