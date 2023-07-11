@@ -241,8 +241,17 @@
           <td>
             Record types
           </td>
-          <td>14, <br>improved in 16</td>
-          <td>14, <br>improved in 16</td>
+          <td>14, <br>improved in 15 and 16</td>
+          <td>14, <br>improved in 15 and 16</td>
+        </tr>
+
+        <tr>
+          <td>
+            Improved handling and reporting of NPE, which will help
+            debugging
+          </td>
+          <td>14</td>
+          <td>14</td>
         </tr>
 
         <tr>
@@ -266,6 +275,15 @@
 
         <tr>
           <td>
+            GraalVM provides "complete" Python 3.7 and JavaScript.
+            At least this version will be required for Nashorn replacement.
+          </td>
+          <td>16</td>
+          <td>16</td>
+        </tr>
+
+        <tr>
+          <td>
             Strong encapsulation by default.
           </td>
           <td>16</td>
@@ -285,10 +303,80 @@
 
         <tr>
           <td>
+            <code>Objects</code> class has extensions for testing for
+            equality, handling null cases and index manipulation.
+          </td>
+          <td>16</td>
+          <td>16</td>
+        </tr>
+
+        <tr>
+          <td>
+            Improved rendering pipeline on macOS which reduces the
+            number of odd display artifacts. First appearance of fully-native
+            JDK on Apple Silicon.
+          </td>
+          <td>17</td>
+          <td>17</td>
+        </tr>
+
+        <tr>
+          <td>
+            The RMI activation API is removed, which in some cases will
+            break access for LocoNet Server (not LocoNet Over TCP) connections.
+          </td>
+          <td>17</td>
+          <td>17</td>
+        </tr>
+
+        <tr>
+          <td>
             Java 17 is the next LTS version after Java 11.
           </td>
           <td>17</td>
           <td>17</td>
+        </tr>
+
+        <tr>
+          <td>
+            The sun.misc package is replaced by jdk.internal.misc, access
+            to which requires the use of the module system.
+          </td>
+          <td>18</td>
+          <td>18</td>
+        </tr>
+
+        <tr>
+          <td>
+            Various elements of the Thread and Locale APIs are marked for deletion, 
+            resulting in about 50 compilation warnings.
+          </td>
+          <td>20</td>
+          <td>20</td>
+        </tr>
+
+        <tr>
+          <td>
+            JavaDoc improvements: better internal linking, better handling of external packages.
+          </td>
+          <td>20</td>
+          <td>20</td>
+        </tr>
+
+        <tr>
+          <td>
+            Sequenced collections (replaces existing non-standard workarounds)
+          </td>
+          <td>21</td>
+          <td>21</td>
+        </tr>
+
+        <tr>
+          <td>
+            Java 21 is the next LTS version after Java 17.
+          </td>
+          <td>21</td>
+          <td>21</td>
         </tr>
 
       </table>

@@ -219,6 +219,8 @@ method calls.
 
           <li>reporters</li>
 
+          <li>idtags</li>
+
           <li>memories</li>
 
           <li>powermanager</li>
@@ -258,7 +260,10 @@ method calls.
         <p>where the assignment is actually invoking the set method.</p>
 
         <p>Also note that THROWN was defined when running the Python script at startup;<br>
-        CLOSED, ACTIVE, INACTIVE, RED, YELLOW and GREEN are also defined. ( <a href=
+        CLOSED, ACTIVE, INACTIVE, ON, OFF, INCONSISTENT, <br>
+        LOCKED, UNLOCKED, PUSHBUTTONLOCKOUT, CABLOCKOUT, <br>
+        RED, YELLOW, GREEN, LUNAR, DARK, <br>
+        FLASHRED, FLASHYELLOW, FLASHGREEN are also defined. ( <a href=
         "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/script/JmriScriptEngineManager.java">
         These shortcut bindings are defined in Java</a> )</p>
 

@@ -1,18 +1,15 @@
 package jmri.jmrit.audio;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.util.Collections;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import javax.annotation.Nonnull;
+
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractAudioManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide the concrete implementation for the Internal Audio Manager.
@@ -86,7 +83,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
                     log.error("Maximum number of buffers reached ({}) " + MAX_BUFFERS, countBuffers);
                     throw new AudioException("Maximum number of buffers reached (" + countBuffers + ") " + MAX_BUFFERS);
                 }
-                countBuffers++;
+                DefaultAudioManager.setCountBuffers(DefaultAudioManager.countBuffers+1);
                 a = activeAudioFactory.createNewBuffer(systemName, userName);
                 buffers.add(a);
                 break;
@@ -96,7 +93,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
                     log.error("Maximum number of Listeners reached ({}) " + MAX_LISTENERS, countListeners);
                     throw new AudioException("Maximum number of Listeners reached (" + countListeners + ") " + MAX_LISTENERS);
                 }
-                countListeners++;
+                DefaultAudioManager.setCountListeners(DefaultAudioManager.countListeners+1);
                 a = activeAudioFactory.createNewListener(systemName, userName);
                 listeners.add(a);
                 break;
@@ -106,7 +103,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
                     log.error("Maximum number of Sources reached ({}) " + MAX_SOURCES, countSources);
                     throw new AudioException("Maximum number of Sources reached (" + countSources + ") " + MAX_SOURCES);
                 }
-                countSources++;
+                DefaultAudioManager.setCountSources(DefaultAudioManager.countSources+1);
                 a = activeAudioFactory.createNewSource(systemName, userName);
                 sources.add(a);
                 break;
@@ -200,8 +197,6 @@ public class DefaultAudioManager extends AbstractAudioManager {
     /**
      * Initialise the manager and make connections.
      */
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
-    // OK to write to static variables as we only do so if not initialised
     @Override
     public synchronized void init() {
         if (!initialised) {
@@ -220,10 +215,9 @@ public class DefaultAudioManager extends AbstractAudioManager {
             // Register a shutdown task to ensure clean exit
             InstanceManager.getDefault(jmri.ShutDownManager.class).register(audioShutDownTask);
 
-            initialised = true;
-            if (log.isDebugEnabled()) {
-                log.debug("Initialised AudioFactory type: {}", activeAudioFactory.getClass().getSimpleName());
-            }
+            DefaultAudioManager.setInitialised(true);
+            log.debug("Initialised AudioFactory type: {}", activeAudioFactory.getClass().getSimpleName());
+
         }
     }
 
@@ -236,26 +230,24 @@ public class DefaultAudioManager extends AbstractAudioManager {
     }
 
     @Override
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "Synchronized method to ensure correct counter manipulation")
     public synchronized void deregister(@Nonnull Audio s) {
         // Decrement the relevant Audio object counter
         switch (s.getSubType()) {
             case (Audio.BUFFER): {
                 buffers.remove(s);
-                countBuffers--;
+                DefaultAudioManager.setCountBuffers(DefaultAudioManager.countBuffers-1);
                 log.debug("Remove buffer; count: {}", countBuffers);
                 break;
             }
             case (Audio.SOURCE): {
                 sources.remove(s);
-                countSources--;
+                DefaultAudioManager.setCountSources(DefaultAudioManager.countSources-1);
                 log.debug("Remove source; count: {}", countSources);
                 break;
             }
             case (Audio.LISTENER): {
                 listeners.remove(s);
-                countListeners--;
+                DefaultAudioManager.setCountListeners(DefaultAudioManager.countListeners-1);
                 log.debug("Remove listener; count: {}", countListeners);
                 break;
             }
@@ -265,8 +257,6 @@ public class DefaultAudioManager extends AbstractAudioManager {
         super.deregister(s);
     }
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "OK to write to static variables to record static library status")
     @Override
     public void cleanup() {
         // Shutdown AudioFactory and close the output device
@@ -274,11 +264,27 @@ public class DefaultAudioManager extends AbstractAudioManager {
         InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(audioShutDownTask);
         if (activeAudioFactory != null) activeAudioFactory.cleanup();
         // Reset counters
-        countBuffers = 0;
-        countSources = 0;
-        countListeners = 0;
+        DefaultAudioManager.setCountBuffers(0);
+        DefaultAudioManager.setCountSources(0);
+        DefaultAudioManager.setCountListeners(0);
         // Record that we're no longer initialised
-        initialised = false;
+        DefaultAudioManager.setInitialised(false);
+    }
+
+    private static void setCountBuffers(int newCount){
+        countBuffers = newCount;
+    }
+
+    private static void setCountSources(int newCount){
+        countSources = newCount;
+    }
+
+    private static void setCountListeners(int newCount){
+        countListeners = newCount;
+    }
+
+    private static void setInitialised(boolean newValue) {
+        initialised = newValue;
     }
 
     @Override
@@ -294,6 +300,6 @@ public class DefaultAudioManager extends AbstractAudioManager {
         return activeAudioFactory;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(DefaultAudioManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultAudioManager.class);
 
 }

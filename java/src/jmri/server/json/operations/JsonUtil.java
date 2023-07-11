@@ -315,6 +315,7 @@ public class JsonUtil {
         node.put(JsonOperations.BUILT, rs.getBuilt());
         node.put(JSON.COMMENT, rs.getComment());
         node.put(JsonOperations.OUT_OF_SERVICE, rs.isOutOfService());
+        node.put(JsonOperations.LOCATION_UNKNOWN, rs.isLocationUnknown());
         if (rs.getTrack() != null) {
             node.set(JsonOperations.LOCATION, this.getRSLocationAndTrack(rs.getTrack(), rs.getRouteLocation(), locale));
         } else if (rs.getLocation() != null) {
@@ -322,6 +323,11 @@ public class JsonUtil {
         } else {
             node.set(JsonOperations.LOCATION, null);
         }
+        if (rs.getTrain() != null) {
+            node.put(JsonOperations.TRAIN_ID, rs.getTrain().getId());
+        } else {
+            node.set(JsonOperations.TRAIN_ID, null);
+        }        
         if (rs.getDestinationTrack() != null) {
             node.set(JsonOperations.DESTINATION,
                     this.getRSLocationAndTrack(rs.getDestinationTrack(), rs.getRouteDestination(), locale));

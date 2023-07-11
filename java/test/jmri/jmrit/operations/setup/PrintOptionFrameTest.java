@@ -1,12 +1,15 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.GraphicsEnvironment;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.Test;
+
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  *
@@ -47,6 +50,14 @@ public class PrintOptionFrameTest extends OperationsTestCase {
 
         // done
         JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        PrintOptionFrame f = new PrintOptionFrame();
+        f.initComponents();
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintOptionFrameTest.class);

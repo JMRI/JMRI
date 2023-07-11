@@ -88,14 +88,14 @@
                 </td>
                 <td>
                   <p><strong>Run the following scripts at startup</strong><br>
-                  <input name="button2" id="button2" value="Add Script" type="button">
+                  <span class="textbutton">Add Script</span>
                   </p>
 
                   <p><strong>Run the following scripts at shutdown</strong><br>
-                  <input name="button3" id="button3" value="Add Script" type="button">
+                  <span class="textbutton">Add Script</span>
                   </p>
 
-                  <p>Press <input name="button4" id="button4" value="Save" type="button"> to save
+                  <p>Press <span class="textbutton">Save</span> to save
                   your Scripts Settings.</p>
                 </td>
               </tr>

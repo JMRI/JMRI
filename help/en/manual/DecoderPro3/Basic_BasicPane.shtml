@@ -7,13 +7,7 @@
 
   <style>
     .dp-center {text-align: center;}
-    .dp-middle {text-align: middle;}
     .dp-right {text-align: right;}
-    .dp-none {list-style-type: none;}
-    .dp-square {list-style-type: square;}
-    .dp-upper-alpha {ist-style-type: upper-alpha;}
-    .dp-lower-alpha {list-style-type: lower-alpha;}
-    .dp-border-2 {border: 2px solid;}
   </style>
 </head>
 <body>
@@ -81,8 +75,8 @@
       written back to the decoder appear in a orange color. You will see examples of<br>
       this throughout the manual.</p>
       <a id="ReadData"></a> To read the actual settings for these options (and IF your system and
-      installed decoder will allow readback of decoder values), click on the <strong><input name=
-      "button" id="button" value="Read full sheet" type="button"></strong> . The individual
+      installed decoder will allow readback of decoder values), click on the <span 
+      class="textbutton">Read full sheet</span> button. The individual
       settings will turn red while they are in the process of being read (clever, eh?), and will
       turn white once the values have been read successfully from the decoder. Once again,
       DecoderPro must play "Twenty Questions" to get this information, and sometimes even has to
@@ -91,8 +85,8 @@
       "idle") you will see a running account of exactly what DecoderPro is doing, for example, the
       specific CV being read.</p>
 
-      <p>Again, the <input name="button2" id="button2" value="Read full sheet" type="button"> and
-      <strong><input name="button3" id="button3" value="Read all sheets" type="button"></strong>
+      <p>Again, the <span class="textbutton">Read full sheet</span> and
+      <strong><span class="textbutton">Read all sheets</span>
       functions are dependent on your command station. If your system does not have the capability
       to read CVs, then these buttons will not be available.</p>
 
@@ -100,8 +94,8 @@
       new address. To turn on or off 4 digit addressing, select the desired radio button. . Be sure
       that the address type agrees with the number of characters in the address.</p>
 
-      <p>When you are finished, click on <input name="button4" id="button4" value=
-      "Write full sheet" type="button"> to write the new values in the decoder.</p>
+      <p>When you are finished, click on <span class="textbutton">Write full sheet</span>
+      to write the new values in the decoder.</p>
 
       <p><a id="WriteData"></a>Writing usually takes much less time than reading, because the value
       can be sent directly. As the write operation proceeds, the data will change from yellow to
@@ -117,10 +111,9 @@
 
       <p><a id="SaveData"></a> To finish this "basic" programming of a decoder, click once more on
       the <strong>Roster Entry</strong> tab, You will see that the address field has now been
-      filled in, so you can now click on the <strong><input name="button5" id="button5" value=
-      "Save to roster" type="button"></strong> . Your new decoder settings have now been written
-      not only to the decoder, but also saved to a computer file where they may be recalled in the
-      future.</p>
+      filled in, so you can now click on the <span class="textbutton">Save to roster</span> button.
+      Your new decoder settings have now been written not only to the decoder, but also saved to 
+      a computer file where they may be recalled in the future.</p>
 
       <p>I have programmed the address for this locomotive and clicked on the Write full sheet
       button to send the address to the command station to program the decoder. Note that the

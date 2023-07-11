@@ -57,15 +57,15 @@
       <p>First open the <a style="font-weight: bold;" href="Ops_Locations.shtml">Locations</a>
       window.</p>
 
-      <p>Then press <input name="button" id="button" value="Edit" type="submit"> in the column to
+      <p>Then press <span class="textbutton">Edit</span> in the column to
       the right of the location that you desire to schedule and the <strong>Edit Location</strong>
       window will open.</p>
 
       <p><img src="images/Ops_Schedule02.png" alt="Schedule" height="544" width="777">
       </p>
 
-      <p>To Schedule a location, select <input name="button2" id="button2" value="Edit" type=
-      "button"> in the column to the right to schedule the specific track at a location, then the
+      <p>To Schedule a location, select <span class="textbutton">Edit</span>
+      in the column to the right to schedule the specific track at a location, then the
       <strong>Edit (Spur or other type of track) Track</strong> window will open.</p>
 
       <table>
@@ -75,9 +75,8 @@
             </td>
             <td>
               <p>Next to <strong>Optional Schedule</strong> <select name="select" id="select">
-              </select> on the <strong>Edit Spur Track</strong> panel. Press <input name="button3"
-              id="button3" value="Edit" type="submit"> should open the <strong>Add
-              Schedule</strong> panel.</p>
+              </select> on the <strong>Edit Spur Track</strong> panel. Presssing
+              <span class="textbutton">Edit</span> opens the <strong>Add Schedule</strong> panel.</p>
             </td>
           </tr>
         </tbody>
@@ -85,8 +84,8 @@
 
       <p>If the Schedule already exists, the <strong>Edit Schedule for <em>Spur</em> [spur
       name]</strong> window opens so you can modify (or delete) it.<br>
-      If no Schedule is selected, then pressing <input name="button8" id="button8" value="Edit"
-      type="button"> opens the <strong>Add Schedule for <em>Spur</em> [spur name]</strong>
+      If no Schedule is selected, then pressing <span class="textbutton">Edit</span>
+      opens the <strong>Add Schedule for <em>Spur</em> [spur name]</strong>
       pane.</p>
 
       <p><img src="images/Ops_Schedule04.png" alt="Schedule" height="281" width="900">
@@ -100,8 +99,8 @@
         <li>Match mode, if you do not care about car order</li>
       </ul>
 
-      <p>Type a <strong>Name</strong> for your Schedule and then press <input name="button4" id=
-      "button4" value="Add Schedule" type="submit"> on the bottom of the panel. Multiple Spur
+      <p>Type a <strong>Name</strong> for your Schedule and then press 
+      <span class="textbutton">Add Schedule</span> on the bottom of the panel. Multiple Spur
       Tracks can use the same Schedule as long as the Tracks use the same Car types and Roads.</p>
 
       <p><img src="images/Ops_Schedule05.png" alt="Schedule" height="281" width="900">
@@ -115,7 +114,7 @@
         <option>
           Boxcar
         </option>
-      </select> and pressing <input name="button5" id="button5" value="Add car type" type="submit">
+      </select> and pressing <span class="textbutton">Add car type</span> .
       . A new item of Type "Boxcar" should appear in your Schedule list:</p>
 
       <p><img src="images/Ops_Schedule06.png" alt="Schedule" height="281" width="900">
@@ -139,9 +138,9 @@
 
       <p>If you want more than one Car of this Type to be delivered consecutively, increase the
       number in the Count field. The maximum Count is 10 and the minimum is 1. Repeat selecting Car
-      types and pressing <input name="button6" id="button6" value="Add car type" type="submit">
-      until your have a delivery Schedule you like. Press <input name="button7" id="button7" value=
-      "Save Schedule" type="submit"> and close the Add/Edit Schedule panel when you are done.</p>
+      types and pressing <span class="textbutton">Add car type</span>
+      until you have a delivery Schedule that you like. Press <span class="textbutton">Save Schedule</span>
+      and close the Add/Edit Schedule panel when you are done.</p>
 
       <p>Note only Car Types and Roads that are accepted by this Spur Track are available. If a Car
       Type or Road isn't available, check the Car Types and Roads set up for this <a href=

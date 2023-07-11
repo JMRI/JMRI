@@ -59,8 +59,8 @@
               <option>
                 AA
               </option>
-            </select> If your Road is not listed then press <input type="submit" name="button" id=
-            "button" value="Edit"> and the <a href="Ops_CarAttributes.shtml">Edit Car Road</a>. A
+            </select> If your Road is not listed then press <span class="textbutton">Edit</span>
+            and the <a href="Ops_CarAttributes.shtml">Edit Car Road</a>
             dialog box will display. Check this reference for the <a href=
             "http://www.railserve.com/aar_railroad_reporting_marks.html" target="_blank">Railroad
             Reporting Marks.</a></p>
@@ -94,9 +94,8 @@
               <option>
                 Baggage
               </option>
-            </select> from drop-down list. if your type is not listed then press <input type=
-            "submit" name="button19" id="button19" value="Edit"> and the <a href=
-            "Ops_CarAttributes.shtml">Edit Car Type</a> dialog box will display.</p>
+            </select> from drop-down list. if your type is not listed then press <span class="textbutton">Edit</span>
+            and the <a href="Ops_CarAttributes.shtml">Edit Car Type</a> dialog box will display.</p>
 
             <p>The program supports the ability to add a subType to your car types. Adding a
             "-subType" to your car type will create a new type of car. The "-subType" is not
@@ -116,9 +115,8 @@
               <option>
                 32
               </option>
-            </select> If the appropriate Length is not listed then press <input type="submit" name=
-            "button3" id="button3" value="Edit"> and the <a href="Ops_CarAttributes.shtml">Edit Car
-            Length</a> dialog box will display.
+            </select> If the appropriate Length is not listed then press <span class="textbutton">Edit</span>
+            and the <a href="Ops_CarAttributes.shtml">Edit Car Length</a> dialog box will display.
           </td>
         </tr>
 
@@ -129,8 +127,8 @@
           "checkbox4" type="checkbox" id="checkbox4" checked> <strong>Auto</strong> is selected
           based on the car's length, but you can enter a different weight if necessary. If the
           <input type="checkbox" name="checkbox5" id="checkbox5"> <strong>Auto</strong> is not
-          checked then you may use the <input type="submit" name="button4" id="button4" value=
-          "Calculate"> to calculate the weight. When entering the length of a car, enter the length
+          checked then you may use the <span class="textbutton">Calculate</span> button
+          to calculate the weight. When entering the length of a car, enter the length
           of the body and not the total length. For example, a forty foot boxcar has a length of 40
           feet. The program when calculating lengths will add two feet to each end of a car for the
           couplers. Therefore when you place a forty foot car at a siding, it will consume 44 feet
@@ -176,9 +174,8 @@
               <option>
                 Black
               </option>
-            </select> if the applicable Car Color is not listed then press <input type="submit"
-            name="button5" id="button5" value="Edit"> and the <a href=
-            "Ops_CarAttributes.shtml">Edit Color</a> dialog box will display.
+            </select> if the applicable Car Color is not listed then press <span class="textbutton">Edit</span>
+            and the <a href="Ops_CarAttributes.shtml">Edit Color</a> dialog box will display.
           </td>
         </tr>
 
@@ -192,7 +189,7 @@
                 E
               </option>
             </select> state of the car. Select <strong>E</strong> for Empty or <strong>L</strong>
-            for loaded. Press <input type="submit" name="button6" id="button6" value="Edit"> to
+            for loaded. Press <span class="textbutton">Edit</span> to
             create your own Car Load codes, but beware there are restrictions. Only sidings with
             <a href="Ops_schedule.shtml">Schedules</a> can load or unload Cars with custom Load
             types that you've created. It is also suggested that you use a format similar to
@@ -214,7 +211,7 @@
                 Coal Empty
               </option>
             </select> Kernel from drop-down list. If the Kernel you want is not there, press
-            <input type="submit" name="button7" id="button7" value="Edit"> and enter a <a href=
+            <span class="textbutton">Edit</span> and enter a <a href=
             "Ops_CarAttributes.shtml">Kernel name.</a> to add to the list. Then select the Kernel
             from the drop-down list.</p>
           </td>
@@ -233,7 +230,7 @@
           <td>
             You may optionally select an <strong>Owner</strong> <select name="select7" id=
             "select7">
-            </select> or press <input type="submit" name="button8" id="button8" value="Edit"> to
+            </select> or press <span class="textbutton">Edit</span> to
             enter an <a href="Ops_CarAttributes.shtml">Owner.</a> Then select the Owner from the
             menu box.
           </td>
@@ -250,16 +247,15 @@
           <td><img src="images/Ops_CarButtons.png" width="475" height="75" alt="Car Butttons">
           </td>
           <td>
-            <p><input type="submit" name="button9" id="button9" value="Add"> add another car.</p>
+            <p><span class="textbutton">Add</span> add another car.</p>
 
-            <p><input type="submit" name="button10" id="button10" value="Delete"> delete the Car
-            currently open.</p>
+            <p><span class="textbutton">Delete</span"> delete the Car currently open.</p>
 
-            <p><input type="submit" name="button11" id="button11" value="Save"> to store the Car's
+            <p><span class="textbutton">Save</span> to store the Cars'
             settings. The program will create a file (OperationsCarRoster.xml) in your JMRI
             directory in a folder called "operations". A backup file with the last settings for all
-            of your Cars is also created each time the <input type="submit" name="button12" id=
-            "button12" value="Save"> button is pressed.</p>
+            of your Cars is also created each time the <span class="textbutton">Save</span> button is
+            pressed.</p>
           </td>
         </tr>
       </table>
@@ -272,7 +268,7 @@
       </p>
 
       <p>Now if you desire to change a value of a <strong>Cars</strong> attributes that is already
-      in the Cars Roster, press the <input type="submit" name="button2" id="button2" value="Edit">
+      in the Cars Roster, press the <span class="textbutton">Edit</span> button
       to the right of that Car. The <strong><a href="Ops_AddCars.shtml">Edit Car</a></strong>window
       will open, which is almost identical to the <strong>Add Car</strong> window.</p>
 
@@ -281,16 +277,16 @@
 
       <p>You may choose from:</p>
 
-      <p><input type="submit" name="button13" id="button13" value="Delete"> removes the selected
+      <p><span class="textbutton">Delete</span> button removes the selected
       Car from the Roster.</p>
 
-      <p><input type="submit" name="button14" id="button14" value="Add"> add the edited Car as
+      <p><span class="textbutton">Add</span> adds the edited Car as
       another item to the Car Roster.</p>
 
-      <p><input type="submit" name="button15" id="button15" value="Save"> make changes and save
+      <p><span class="textbutton">Save</span> makes changes and saves
       them in the Car Roster.</p>
 
-      <p>The <input type="submit" name="button16" id="button16" value="Set"> when pressed, opens
+      <p>The <span class="textbutton">Set</span> button when pressed, opens
       the <strong>Set Car Location</strong> pane and allows you to override the program and set a
       Car at a Location that is defined in your OperationsPro database.</p>
 
@@ -336,7 +332,7 @@
               <option>
                 E&lt;mpty&gt;
               </option>
-            </select> type of load <input type="button" name="button18" id="button18" value="Edit">
+            </select> type of load <span class="textbutton">Edit</span>
             Edit Load for this Car</p>
 
             <p><strong>Optional</strong> (the values in this box are normally set by
@@ -373,7 +369,7 @@
             </select> optionally set the Train. <input type="checkbox" name="checkbox13" id=
             "checkbox13"> <strong>Auto</strong></p>
 
-            <p><input type="submit" name="button17" id="button17" value="Save"> press to save the
+            <p><span class="textbutton">Save</span> press to save the
             Car Locations that you have set.</p>
 
             <p>Close the window when completed.</p>

@@ -21,13 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>The default behavior for CBus Reporters has been changed to
-                    <u>not</u> clear the report after a timeout. A new
-                    CbusReporterTimeoutControl.py script is provided to
-                    restore the previous behavior:  After a timeout, the
-                    report is cleared.  The script also demonstrates how to
-                    get a more granular control over this behavior.</li>
-                <li>Improved Throttle support for 14 and 28 Speed Steps.</li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -37,8 +31,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>Set Turnout userName from Description when defined in myAutomation.h</li>
-                <li>Support fastclock synchronization to DCC-EX</li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -53,8 +46,7 @@
 
         <h4>ESU</h4>
             <ul>
-                <li>Updated how initialization is done to fix a problem where Sensors
-                    where not being properly located and operated.</li>
+                <li></li>
             </ul>
 
         <h4>Hornby</h4>
@@ -89,12 +81,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>The handling for LocoNet Reporters (i.e. transponding)
-                    has changed.  See the description
-                    <a href="#TLae">below</a>.</li>
-                <li>Improved the timeout handling in the Strict packetizer.</li>
-                <li>Fixed a problem where sometimes buttons in the Slot Monitor
-                    would disappear.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -149,8 +136,7 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
-                <li>Add a delay to read/write programming operations on the main.
-                    This is intended to help when doing reads of indexed CVs.</li>
+                <li></li>
             </ul>
 
         <h4>Secsi</h4>
@@ -170,9 +156,7 @@
 
         <h4>TMCC</h4>
             <ul>
-                <li>Initial support for TMCC 2 "Legacy" functions. The first
-                    uses are to assign F28 through F31 to
-                    <a href="https://www.jmri.org/help/en/html/hardware/tmcc/index.shtml">loco startup and shutdown sounds</a>.</li>
+                <li></li>
             </ul>
 
         <h4>Uhlenbrock Intellibox</h4>
@@ -300,12 +284,6 @@
                 <li></li>
             </ul>
 
-        <h4>Piko</h4>
-            <ul>
-                <li>SmartDecoder XP5.1 - updated lowVersionID, changed CV7-8 to use include file</li>
-                <li>Added Decoder Reset and CV for Decoder Test for Piko SUSI Decoder (Light decoder)</li>
-            </ul>
-
         <h4>Public Domain and DIY decoders</h4>
             <ul>
                 <li></li>
@@ -363,7 +341,7 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li> Extension with additional CVs for the Extended Function Mapping</li>
+                <li></li>
             </ul>
 
         <h4>Umelec</h4>
@@ -383,9 +361,8 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>Small correction to the files for FW v39 and v40</li>
-                <li>Added MN Non-Sound Decoders</li>
-                <li>Added new CV's for MS- and MN-Decoders</li>
+                <li>Improve the layout of the Uncouple pane, make sure
+                    that it displays the Uncoupler variable (CV 115).</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -396,10 +373,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Add an "Export Variables to CSV" menu item in the
-                File menu on individual roster entries.</li>
-            <li>Now shows a progress bar while exporting all roster entries,
-                so that you don't try to use the resulting file too soon.</li>
+            <li></li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -429,7 +403,9 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li>Fix the <strong>Tools &rArr; Check</strong> bezier options.  Remove a bogus error message.</li>
+            <li>A number of issues with the Shape tool have been resolved including Java
+            exceptions and the possibility of truncated shape lines.</li>
+            <li>The Layout Editor help page has been updated with details for using Shapes.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -446,7 +422,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>Add "Entry/Exit" to the "For each" action bean list.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -455,18 +431,16 @@
             <li></li>
         </ul>
 
-    <h3>Operations</h3>
-        <a id="Operations" name="Operations"></a>
-        <ul>
-            <li>New staging feature, the ability to have multiple trains on one physical staging track.</li>
-            <li>Improved OperationsPro help, paper size, additional links from TOC</li>
-            <li>Many improvements to the train build report, car divisions, spurs and schedules, track type, etc.</li>
-            <li>A car's wait count is now set to zero if the car's load name is changed</li>
-            <li>Track tools now function as soon as track is added</li>
-            <li>Made "ignore all" the default setting for the car set window</li>
-        </ul>
+<h3>Operations</h3>
+<a id="Operations" name="Operations"></a>
+<ul>
+  <li>Improvements to the routing code. Program will not use an interchange track if the same
+    train can drop and pull a car.</li>
+  <li>Fixed a bug with export routes.</li>
+  <li>Fixed close on Save for several windows.</li>
+</ul>
 
-   <h3>Panel Editor</h3>
+<h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
             <li></li>
@@ -515,11 +489,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>New AnyRail/AnyRailExportAdditions.py. For use with AnyRail export. Creates hardware occupancy Sensors and Turnouts,
-                  cleans up the generated Blocks, and does some visual tweaks of the panel.</li>
-            <li>New CreateSectionsFromBlocks.py. For each defined occupancy block, attempts to create a one-block Section</li>
-            <li>New AddOccupancyIconsToPanel.py. Create and place SensorIcons and BlockContents for each occupancy Block on a panel</li>
-            <li>Add binding "beans" for NamedBeanHandleManager</li>
+            <li>Add "idtags" as a script shortcut to the manager like "turnouts" and "sensors"</li>
         </ul>
 
     <h3>Signals</h3>
@@ -529,7 +499,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>The BR-2003 system now has medium-size semaphore icons.</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -539,7 +509,7 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li>CheckForNull annotation added to the getAspect method.</li>
+                <li></li>
             </ul>
 
     	<h4>Signal Groups</h4>
@@ -570,24 +540,8 @@
 
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
-            <li>Some minor internal cleanup.</li>
-            <li>If you select a roster entry, the throttle displays functions up to the
-                least of the number of functions available
-                from the layout connection, or the maximum function in the decoder
-                definition.
-                For most decoders, this will be 28,
-                but there are a few definitions that are larger or smaller.</li>
-            <li>Added a consist selector in the address panel</li>
-            <li>Added a "Consist Tool" button in the address panel</li>
-            <li>Behavior with consists enhanced</li>
-        </ul>
-        
-    <h3>Consist Tool</h3>
-        <a id="consist" name="consist"></a>
         <ul>
-            <li>The "Consist Control" entry in the "Tools" menu was renamed "Consist Tool"</li>
-            <li>Consist tool now leverages locomotives icons when available</li>
-            <li>A consist selection combo box was introduced</li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -605,22 +559,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>Fixed a bug in the Reporter Table that was causing the
-                Last Report column to actually display the Current Report.
-                Note that this is just a display bug; the underlying value and
-                property change notifications are correct, so this change won't
-                affect scripts, LogixNG, etc.</li>
-            <li>The definition of "Last Seen" for Id Tags has been
-                clarified to mean "Location where the tag was last seen to be <u>present</u>".
-                Previously, a report that a tag was <u>absent</u> could be marked as the
-                last seen report.  Not all hardware Reporters provide entry/exit reports, as
-                some just indicate that something has been observed in place; their "Last Seen" behavior
-                has not changed.
-                </li>
-            <li>Some Reporters, particularly LocoNet, would improperly clear an "enter" report
-                when an "exits" report for the same tag was seen elsewhere.  This was an
-                error that has been fixed, but if you have scripts or LogixNG that depend on
-                this behavior you might have to update them.
+            <li></li>
         </ul>
 
    <h3>Warrants</h3>
@@ -650,25 +589,24 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>json car, engine: remove location, set unknown flag, remove from train</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>The VSD windows now remember their size and position from one run to another.</li>
+            <li>Added LayoutEditor turntable support for VSD navigation through a panel.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Improved how window preferences are stored to reduce error messages
-                when JMRI is under high load.</li>
-            <li>Update the JMRI install process for Raspberry Pi computers running the Raspberry Pi OS.</li>
-            <li>Updated the roster and locomotive schema and the locomotive DTD to accept current contents.
-                JMRI has been writing extra content in its roster, and the schema and DTD files had not
-                kept up.  This resolves that.
-            <li>The JOAL library has been updated to run natively on Apple Silicon machines.
-            <li>The JInput library has been updated to run natively on Apple Silicon machines.
-            <li>Added a new jmri.util.swing.CountingBusyDialog utility class.
+            <li>A signal handler has been added to the Shutdown manager such that a 
+            "kill &lt;pid&gt;" command on Mac or Linux will do a normal shutdown.
+            This is particularly useful for e.g. running headless on an RPi.
+            "kill -HUP &lt;pid&gt;" will cause JMRI to quit and restart.
+            In addition, the Mac and Linux startup scripts were updated to 
+            pass these signals on to the running process.  Together, this
+            will allow you to run JMRI as a service on Mac and Linux, including the RPi.
         </ul>
+

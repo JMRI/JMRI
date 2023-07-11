@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!--  Version 1.0   24 Nov 2022,  Nigel Cliffe.   Merging various MX and MS-series files to a single unit for MS-Series decoders                        -->
+<!--  Version 1.1   22 Jun 2023,  Ronald Kuhn.    add german translation                        -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <variable item="Load Code 1" CV="260">
@@ -1331,9 +1332,11 @@
       </enumChoice>
     </enumVal>
     <label>Function key to raise diesel sound step</label>
+    <label xml:lang="de">Taste zum Anheben der Dieselstufe</label>
   </variable>  
   <variable item="Diesel sound step" CV="340" tooltip="">
     <decVal min="0" max="10"/>
+    <label xml:lang="de">Dieselstufe anheben auf:</label>
   </variable>    
   <variable item="Switch input 1 playback time" CV="341" default="0" include="208,210,214,215,221,222,224,227,230">
     <decVal min="0" max="255"/>
@@ -1811,6 +1814,7 @@
     </enumVal>
     <label>SpeedLock Feature</label>
     <label xml:lang="cs">Vlastnost Zámek rychlosti</label>
+    <label xml:lang="de">Speedlock-Taste</label>
     <tooltip>If the key is activated, you can control the sound without changing the speed of the locomotive.</tooltip>
     <tooltip xml:lang="de">Wenn Taste aktiv dann kann mit Geschwindigkeitsregler der Sound geregelt werden wobei sich die Geschwindigkeit der Lok nicht ändert.</tooltip>
     <tooltip xml:lang="cs">Pokud je tlačítko aktivní, lze zvuk ovládat regulátorem rychlosti, přičemž rychlost zůstane konstantní.</tooltip>

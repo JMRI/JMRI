@@ -50,15 +50,15 @@ for entry in rosterlist.toArray() :
       commentOut = ""
       dups.append(da)    
 
-  # start macro syntax
-  rc = commentOut + "ROSTER(" + da + ",\"" + entry.getId() + "\",\"" 
+  # start macro syntax and replace some unsupported chars
+  rc = commentOut + "ROSTER(" + da + ",\"" + entry.getId().replace("\"","'") + "\",\"" 
   
   # loop thru and append function labels
   for func in range(0, entry.getMaxFnNumAsInt()+1):   
     label = entry.getFunctionLabel(func)
     if (label is None) : label = ""
     else :
-      label = label.replace("/","-").replace("*","-").replace("\"","-")  # replace some unsupported chars
+      label = label.replace("/","-").replace("*","-").replace("\"","'")  # replace some unsupported chars
       if (not entry.getFunctionLockable(func)) : label = '*' + label # prepend '*' to indicate momentary
     rc = rc + label + "/" # add this label to entry
 

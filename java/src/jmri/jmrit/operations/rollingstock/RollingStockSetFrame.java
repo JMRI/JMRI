@@ -267,8 +267,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == saveButton) {
-            save();
-            if (Setup.isCloseWindowOnSaveEnabled()) {
+            if (save() && Setup.isCloseWindowOnSaveEnabled()) {
                 dispose();
             }
         }

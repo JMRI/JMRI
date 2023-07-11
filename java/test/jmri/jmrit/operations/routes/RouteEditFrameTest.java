@@ -495,4 +495,13 @@ public class RouteEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        RouteManager rManager = InstanceManager.getDefault(RouteManager.class);
+        Route route = rManager.newRoute("Test Route");
+        RouteEditFrame f = new RouteEditFrame();
+        f.initComponents(route);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
+    }
 }

@@ -71,4 +71,9 @@ public class RawTurnoutOperation extends CommonTurnoutOperation {
         return new RawTurnoutOperator(t, interval, maxTries);
     }
 
+    @Override
+    public String getToolTip(){
+        return Bundle.getMessage("TurnoutOperationRawTip");
+    }
+
 }

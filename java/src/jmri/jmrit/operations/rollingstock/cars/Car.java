@@ -568,20 +568,21 @@ public class Car extends RollingStock {
     }
 
     /**
-     * Used to determine if car needs to perform a local move. A local move is
-     * when a car is moved to a different track at the same location.
+     * Used to determine if car is performing a local move. A local move is when
+     * a car is moved to a different track at the same location. Car has to be
+     * assigned to a train.
      * 
      * @return true if local move
      */
     public boolean isLocalMove() {
+        if (getTrain() == null && getLocation() != null) {
+            return TrainCommon.splitString(getLocationName()).equals(TrainCommon.splitString(getDestinationName()));
+        }
         if (getRouteLocation() == null || getRouteDestination() == null) {
             return false;
         }
         if (getRouteLocation().equals(getRouteDestination()) && getTrack() != null) {
             return true;
-        }
-        if (getTrain() == null) {
-            return false;
         }
         if (getTrain().isLocalSwitcher() &&
                 TrainCommon.splitString(getRouteLocation().getName())

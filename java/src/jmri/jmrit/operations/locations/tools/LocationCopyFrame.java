@@ -13,14 +13,13 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainCommon;
 
 /**
@@ -99,8 +98,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_CopyLocation", true); // NOI18N
 
-        pack();
-        setMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight400));
+        initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight400));
 
         // setup buttons
         addButtonAction(copyButton);
@@ -167,6 +165,9 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
             deleteTrack = deleteTrackCheckBox.isSelected();
             // save location file
             OperationsXml.save();
+            if (Setup.isCloseWindowOnSaveEnabled()) {
+                dispose();
+            }
         }
     }
 

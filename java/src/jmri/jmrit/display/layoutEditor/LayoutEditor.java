@@ -266,7 +266,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private int numLayoutSlips = 0;
     private int numLayoutTurnouts = 0;
     private int numLayoutTurntables = 0;
-    private int numShapes = 0;
 
     private LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
 
@@ -1107,9 +1106,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             if (newName != null) {
                 if (!newName.equals(getLayoutName())) {
                     if (InstanceManager.getDefault(EditorManager.class).contains(newName)) {
-                        JOptionPane.showMessageDialog(
-                                null, Bundle.getMessage("CanNotRename"), Bundle.getMessage("PanelExist"),
-                                JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null,
+                            Bundle.getMessage("CanNotRename", Bundle.getMessage("Panel")),
+                            Bundle.getMessage("AlreadyExist", Bundle.getMessage("Panel")),
+                            JOptionPane.ERROR_MESSAGE);
                     } else {
                         setTitle(newName);
                         setLayoutName(newName);
@@ -1601,7 +1601,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             // bring up scale track diagram dialog
             assignBlockToSelection();
         });
-        assignBlockToSelectionMenuItem.setEnabled(_layoutTrackSelection.size() > 0);
+        assignBlockToSelectionMenuItem.setEnabled(!_layoutTrackSelection.isEmpty());
 
         // scale track diagram
         JMenuItem jmi = new JMenuItem(Bundle.getMessage("ScaleTrackDiagram") + "...");
@@ -2397,7 +2397,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         JMenuItem newTrainItem = new JMenuItem(Bundle.getMessage("MenuItemNewTrain"));
         dispMenu.add(newTrainItem);
         newTrainItem.addActionListener((ActionEvent event) -> {
-            if (InstanceManager.getDefault(TransitManager.class).getNamedBeanSet().size() <= 0) {
+            if (InstanceManager.getDefault(TransitManager.class).getNamedBeanSet().isEmpty()) {
                 // Inform the user that there are no Transits available, and don't open the window
                 JOptionPane.showMessageDialog(
                         null,
@@ -3135,7 +3135,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         if (!event.isPopupTrigger()) {
             List<Positionable> selections = getSelectedItems(event);
 
-            if (selections.size() > 0) {
+            if (!selections.isEmpty()) {
                 selections.get(0).doMousePressed(event);
             }
         }
@@ -3561,13 +3561,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 } else if (leToolBarPanel.iconLabelButton.isSelected()) {
                     addIcon();
                 } else if (leToolBarPanel.shapeButton.isSelected()) {
-                    if (selectedObject == null) {
-                        addLayoutShape(currentPoint);
-                        _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                    LayoutShape ls = (LayoutShape) selectedObject;
+                    if (ls == null) {
+                        ls = addLayoutShape(currentPoint);
                     } else {
-                        LayoutShape ls = (LayoutShape) selectedObject;
                         ls.addPoint(currentPoint, selectedHitPointType.shapePointIndex());
                     }
+                    unionToPanelBounds(ls.getBounds());
+                    _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                 } else if (leToolBarPanel.signalMastButton.isSelected()) {
                     addSignalMast();
                 } else {
@@ -3700,7 +3701,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         if (!event.isPopupTrigger() && !isDragging) {
             List<Positionable> selections = getSelectedItems(event);
-            if (selections.size() > 0) {
+            if (!selections.isEmpty()) {
                 selections.get(0).doMouseReleased(event);
                 whenReleased = event.getWhen();
             }
@@ -3709,7 +3710,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         // train icon needs to know when moved
         if (event.isPopupTrigger() && isDragging) {
             List<Positionable> selections = getSelectedItems(event);
-            if (selections.size() > 0) {
+            if (!selections.isEmpty()) {
                 selections.get(0).doMouseDragged(event);
             }
         }
@@ -3933,7 +3934,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 && !awaitingIconChange && !event.isShiftDown() && !event.isControlDown()) {
             List<Positionable> selections = getSelectedItems(event);
 
-            if (selections.size() > 0) {
+            if (!selections.isEmpty()) {
                 selections.get(0).doMouseClicked(event);
             }
         } else if (event.isPopupTrigger() && (whenReleased != event.getWhen())) {
@@ -4381,7 +4382,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 }
             }
         });
-        assignBlockToSelectionMenuItem.setEnabled(_layoutTrackSelection.size() > 0);
+        assignBlockToSelectionMenuItem.setEnabled(!_layoutTrackSelection.isEmpty());
 
         layoutShapes.forEach((ls) -> {
             if (selectionRect.intersects(ls.getBounds())) {
@@ -4479,7 +4480,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         } else {
             _layoutTrackSelection.add(p);
         }
-        assignBlockToSelectionMenuItem.setEnabled(_layoutTrackSelection.size() > 0);
+        assignBlockToSelectionMenuItem.setEnabled(!_layoutTrackSelection.isEmpty());
         redrawPanel();
     }
 
@@ -4565,9 +4566,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     private boolean showAlignPopup() {
-        return ((_positionableSelection.size() > 0)
-                || (_layoutTrackSelection.size() > 0)
-                || (_layoutShapeSelection.size() > 0));
+        return ((!_positionableSelection.isEmpty())
+                || (!_layoutTrackSelection.isEmpty())
+                || (!_layoutShapeSelection.isEmpty()));
     }
 
     /**
@@ -4801,9 +4802,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     leToolBarPanel.setLocationText(currentPoint);
                 }
 
-                if ((_positionableSelection.size() > 0)
-                        || (_layoutTrackSelection.size() > 0)
-                        || (_layoutShapeSelection.size() > 0)) {
+                if ((!_positionableSelection.isEmpty())
+                        || (!_layoutTrackSelection.isEmpty())
+                        || (!_layoutShapeSelection.isEmpty())) {
                     Point2D lastPoint = new Point2D.Double(_lastX, _lastY);
                     Point2D offset = MathUtil.subtract(currentPoint, lastPoint);
                     Point2D newPoint;
@@ -7001,7 +7002,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     @Nonnull
     private LayoutShape addLayoutShape(@Nonnull Point2D p) {
         // get unique name
-        String name = finder.uniqueName("S", ++numShapes);
+        String name = finder.uniqueName("S", getLayoutShapes().size() + 1);
 
         // create object
         LayoutShape o = new LayoutShape(name, p, this);

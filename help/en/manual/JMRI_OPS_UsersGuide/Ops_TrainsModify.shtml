@@ -85,8 +85,7 @@
               <p>Now select the Car Type you want to apply these Trains to using the Type pop-up
               menu and to have both Car Types serviced by the same Trains.</p>
 
-              <p>Press <input name="button" id="button" value="Save" type="button"> to apply your
-              choice.</p>
+              <p>Press <span class="textbutton">Save</span> to apply your choice.</p>
             </td>
           </tr>
         </tbody>

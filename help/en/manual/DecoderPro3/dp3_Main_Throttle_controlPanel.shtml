@@ -7,13 +7,7 @@
 
   <style>
     .dp-center {text-align: center;}
-    .dp-middle {text-align: middle;}
     .dp-right {text-align: right;}
-    .dp-none {list-style-type: none;}
-    .dp-square {list-style-type: square;}
-    .dp-upper-alpha {ist-style-type: upper-alpha;}
-    .dp-lower-alpha {list-style-type: lower-alpha;}
-    .dp-border-2 {border: 2px solid;}
   </style>
 </head>
 <body>
@@ -85,11 +79,9 @@
                       the function from the <strong>Function Panel</strong> that you want to
                       use.</p>
 
-                      <p><input name="button3" id="button3" value="OK" type="button"> Sets the
-                      selections</p>
+                      <p>The <span class="textbutton">OK</span> button sets the selections.</p>
 
-                      <p><input name="button4" id="button4" value="Cancel" type="button"> Cancels
-                      any settings</p>
+                      <p>The <span class="textbutton">Cancel</span> button cancels any settings.</p>
                     </td>
                   </tr>
                 </tbody>
@@ -140,11 +132,11 @@
               "radio"> Forward</strong> and <input name="radio2" id="radio2" value="radio2" type=
               "radio"> <strong>Reverse</strong> set the locomotives direction.</p>
 
-              <p><strong><input name="button9" id="button9" value="Stop!" type="submit"></strong>
+              <p>The <strong><span class="textbutton">Stop!</span></strong> button
               executes an emergency stop, locomotive stops immediately overriding any BEMF or
               momentum programmed into the decoder.</p>
 
-              <p><strong><input name="button10" id="button10" value="Idle" type="submit"></strong>
+              <p>The <strong><span class="textbutton">Idle</span></strong> button
               stops the locomotive smoothly using any momentum setting programmed into the
               decoder..</p>
             </td>

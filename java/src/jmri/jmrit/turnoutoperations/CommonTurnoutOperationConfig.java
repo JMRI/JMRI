@@ -31,8 +31,17 @@ public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
         maxTriesSpinner = new JSpinner();
         intervalSpinner = new JSpinner();
         Box vbox = Box.createVerticalBox();
+        Box headerBox = Box.createHorizontalBox();
         Box hbox1 = Box.createHorizontalBox();
         Box hbox2 = Box.createHorizontalBox();
+
+        // Show Operator Tooltip in header
+        headerBox.add(new JLabel(myOp.getToolTip()));
+        headerBox.setMinimumSize(new Dimension(new JLabel(myOp.getToolTip()).getMinimumSize()));
+
+        vbox.add(headerBox);
+        vbox.add(Box.createVerticalGlue());
+
         vbox.add(hbox2); //Show TimesToTry first, keeping to the order of the help text at right
         vbox.add(hbox1); //Show Interval next
         vbox.add(Box.createVerticalGlue());

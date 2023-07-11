@@ -10,8 +10,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
+import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
 
 /**
@@ -106,5 +105,12 @@ public class AutomationStartupFrameTest extends OperationsTestCase {
         Assert.assertEquals(a2, comboBox.getSelectedItem());
         
         JUnitUtil.dispose(asf);
+    }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        AutomationStartupFrame f = new AutomationStartupFrame();
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 }

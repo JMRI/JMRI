@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.3.6plus+jake+20230523T1559Z+R5afdd11663 on Tue May 23 12:00:00 EDT 2023-->
-  <decoderIndex version="25">
+  <!--Written by JMRI version 5.3.8plus+jake+20230701T1357Z+R4a4131da34 on Sat Jul 01 09:57:40 EDT 2023-->
+  <decoderIndex version="33">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -9185,7 +9185,7 @@
           <!-- Anfahren/Bremsen -->
         </model>
       </family>
-      <family name="PIKO SmartDecoder XP5.1" mfg="PIKO" lowVersionID="1" highVersionID="15" file="Piko_SmartDecoder_XP5.1_Sound.xml">
+      <family name="PIKO SmartDecoder XP5.1" mfg="PIKO" lowVersionID="2" highVersionID="15" file="Piko_SmartDecoder_XP5.1_Sound.xml">
         <!-- to be checked by hardware owner -->
         <model model="PIKO46550-18" numOuts="4" numFns="68" productID="PIKO46550-18" lowVersionID="5">
           <output name="1" label="F0(f)" />
@@ -18391,7 +18391,7 @@
         </model>
       </family>
       <family name="Sep 2018" mfg="Train Control Systems" file="TCS_FW89.xml">
-        <model model="A4X" numOuts="4" numFns="14" lowVersionID="89" productID="4">
+        <model model="A4X" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="4">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18402,7 +18402,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="A6X" numOuts="6" numFns="14" lowVersionID="89" productID="5">
+        <model model="A6X" numOuts="6" numFns="14" lowVersionID="89" highVersionID="94" productID="5">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18415,7 +18415,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="ALD4" numOuts="4" numFns="14" lowVersionID="89" productID="19">
+        <model model="ALD4" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="19">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18425,7 +18425,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="AMD4" numOuts="4" numFns="14" lowVersionID="89" productID="20">
+        <model model="AMD4" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="20">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18435,7 +18435,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="AS6" numOuts="6" numFns="14" lowVersionID="89" productID="47">
+        <model model="AS6" numOuts="6" numFns="14" lowVersionID="89" highVersionID="94" productID="47">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18447,7 +18447,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="ASD4" numOuts="4" numFns="14" lowVersionID="89" productID="21">
+        <model model="ASD4" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="21">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18457,7 +18457,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="AZL4" numOuts="4" numFns="14" lowVersionID="89" productID="61">
+        <model model="AZL4" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="61">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18467,7 +18467,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="CN" numOuts="2" numFns="14" lowVersionID="89" productID="22">
+        <model model="CN" numOuts="2" numFns="14" lowVersionID="89" highVersionID="94" productID="22">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="Dim" />
@@ -18476,7 +18476,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="CN-GP" numOuts="3" numFns="14" lowVersionID="89" productID="23">
+        <model model="CN-GP" numOuts="3" numFns="14" lowVersionID="89" highVersionID="94" productID="23">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18486,7 +18486,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="DP2X" numOuts="2" numFns="14" lowVersionID="89" productID="1">
+        <model model="DP2X" numOuts="2" numFns="14" lowVersionID="89" highVersionID="94" productID="1">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="Dim" />
@@ -18495,7 +18495,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="DP2X-UK" numOuts="2" numFns="14" lowVersionID="89" productID="2">
+        <model model="DP2X-UK" numOuts="2" numFns="14" lowVersionID="89" highVersionID="94" productID="2">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="Dim" />
@@ -18504,7 +18504,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="DP5" numOuts="5" numFns="14" lowVersionID="89" productID="3">
+        <model model="DP5" numOuts="5" numFns="14" lowVersionID="89" highVersionID="94" productID="3">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18516,7 +18516,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="EU621" numOuts="6" numFns="14" lowVersionID="89" productID="44">
+        <model model="EU621" numOuts="6" numFns="14" lowVersionID="89" highVersionID="94" productID="44">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18544,7 +18544,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="EUN651" numOuts="2" numFns="14" lowVersionID="89" productID="24">
+        <model model="EUN651" numOuts="2" numFns="14" lowVersionID="89" highVersionID="94" productID="24">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="Dim" />
@@ -18553,7 +18553,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="G8" numOuts="8" numFns="14" lowVersionID="89" productID="18">
+        <model model="G8" numOuts="8" numFns="14" lowVersionID="89" highVersionID="94" productID="18">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18568,7 +18568,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="IMD4" numOuts="4" numFns="14" lowVersionID="89" productID="33">
+        <model model="IMD4" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="33">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18579,7 +18579,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="IMF4" numOuts="4" numFns="14" lowVersionID="89" productID="34">
+        <model model="IMF4" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="34">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18590,7 +18590,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="IMFP4" numOuts="4" numFns="14" lowVersionID="89" productID="35">
+        <model model="IMFP4" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="35">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18601,7 +18601,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="IMFTA4" numOuts="4" numFns="14" lowVersionID="89" productID="36">
+        <model model="IMFTA4" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="36">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18612,7 +18612,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="IMFTB4" numOuts="4" numFns="14" lowVersionID="89" productID="37">
+        <model model="IMFTB4" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="37">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18623,7 +18623,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="K0D8-A" numOuts="8" numFns="14" lowVersionID="89" productID="25">
+        <model model="K0D8-A" numOuts="8" numFns="14" lowVersionID="89" highVersionID="94" productID="25">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18638,7 +18638,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="K0D8-B" numOuts="8" numFns="14" lowVersionID="89" productID="26">
+        <model model="K0D8-B" numOuts="8" numFns="14" lowVersionID="89" highVersionID="94" productID="26">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18653,7 +18653,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="K0D8-C" numOuts="8" numFns="14" lowVersionID="89" productID="27">
+        <model model="K0D8-C" numOuts="8" numFns="14" lowVersionID="89" highVersionID="94" productID="27">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18668,7 +18668,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="K0D8-D" numOuts="8" numFns="14" lowVersionID="89" productID="28">
+        <model model="K0D8-D" numOuts="8" numFns="14" lowVersionID="89" highVersionID="94" productID="28">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18683,7 +18683,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="K0D8-E" numOuts="8" numFns="14" lowVersionID="89" productID="56">
+        <model model="K0D8-E" numOuts="8" numFns="14" lowVersionID="89" highVersionID="94" productID="56">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18698,7 +18698,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="K0D8-F" numOuts="8" numFns="14" lowVersionID="89" productID="67">
+        <model model="K0D8-F" numOuts="8" numFns="14" lowVersionID="89" highVersionID="94" productID="67">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18713,7 +18713,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="K1D4" numOuts="4" numFns="14" lowVersionID="89" productID="29">
+        <model model="K1D4" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="29">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18724,7 +18724,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="K1D4-NC" numOuts="4" numFns="14" lowVersionID="89" productID="30">
+        <model model="K1D4-NC" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="30">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18735,7 +18735,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="K2D4" numOuts="4" numFns="14" lowVersionID="89" productID="31">
+        <model model="K2D4" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="31">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18746,7 +18746,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="K3D3" numOuts="3" numFns="14" lowVersionID="89" productID="32">
+        <model model="K3D3" numOuts="3" numFns="14" lowVersionID="89" highVersionID="94" productID="32">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18756,22 +18756,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="K4D6" numOuts="6" numFns="14" lowVersionID="89" productID="46">
-          <output name="1" label="White" />
-          <output name="2" label="Yellow" />
-          <output name="3" label="Green" />
-          <output name="4" label="Purple" />
-          <output name="5" label="Brown" />
-          <output name="6" label="Pink" />
-          <output name="7" label="Pnk/Pur" />
-          <output name="8" label="Grn/Brn" />
-          <output name="Dim" />
-          <output name="Ditch" />
-          <output name="Motor" />
-          <output name="BEMF" />
-          <output name="Brake" />
-        </model>
-        <model model="K5D7" numOuts="7" numFns="14" lowVersionID="89" productID="59">
+        <model model="K4D6" numOuts="6" numFns="14" lowVersionID="89" highVersionID="94" productID="46">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18786,7 +18771,22 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="K6D4" numOuts="4" numFns="14" lowVersionID="89" productID="63">
+        <model model="K5D7" numOuts="7" numFns="14" lowVersionID="89" highVersionID="94" productID="59">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Purple" />
+          <output name="5" label="Brown" />
+          <output name="6" label="Pink" />
+          <output name="7" label="Pnk/Pur" />
+          <output name="8" label="Grn/Brn" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+        </model>
+        <model model="K6D4" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="63">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18797,7 +18797,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="K7D4" numOuts="4" numFns="14" lowVersionID="89" productID="64">
+        <model model="K7D4" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="64">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18808,7 +18808,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="KAM4" numOuts="4" numFns="14" lowVersionID="89" productID="55">
+        <model model="KAM4" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="55">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18819,7 +18819,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="KAM4-LED" numOuts="4" numFns="14" lowVersionID="89" productID="57">
+        <model model="KAM4-LED" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="57">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18830,7 +18830,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="KAT12" numOuts="2" numFns="14" lowVersionID="89" productID="48">
+        <model model="KAT12" numOuts="2" numFns="14" lowVersionID="89" highVersionID="94" productID="48">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="Dim" />
@@ -18839,40 +18839,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="KAT14" numOuts="4" numFns="14" lowVersionID="89" productID="49">
-          <output name="1" label="White" />
-          <output name="2" label="Yellow" />
-          <output name="3" label="Green" />
-          <output name="4" label="Purple" />
-          <output name="Dim" />
-          <output name="Ditch" />
-          <output name="Motor" />
-          <output name="BEMF" />
-          <output name="Brake" />
-        </model>
-        <model model="KAT16" numOuts="6" numFns="14" lowVersionID="89" productID="50">
-          <output name="1" label="White" />
-          <output name="2" label="Yellow" />
-          <output name="3" label="Green" />
-          <output name="4" label="Purple" />
-          <output name="5" label="Brown" />
-          <output name="6" label="Pink" />
-          <output name="Dim" />
-          <output name="Ditch" />
-          <output name="Motor" />
-          <output name="BEMF" />
-          <output name="Brake" />
-        </model>
-        <model model="KAT22" numOuts="2" numFns="14" lowVersionID="89" productID="51">
-          <output name="1" label="White" />
-          <output name="2" label="Yellow" />
-          <output name="Dim" />
-          <output name="Ditch" />
-          <output name="Motor" />
-          <output name="BEMF" />
-          <output name="Brake" />
-        </model>
-        <model model="KAT24" numOuts="4" numFns="14" lowVersionID="89" productID="52">
+        <model model="KAT14" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="49">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18883,7 +18850,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="KAT26" numOuts="6" numFns="14" lowVersionID="89" productID="53">
+        <model model="KAT16" numOuts="6" numFns="14" lowVersionID="89" highVersionID="94" productID="50">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18896,7 +18863,16 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="L1D4" numOuts="4" numFns="14" lowVersionID="89" productID="45">
+        <model model="KAT22" numOuts="2" numFns="14" lowVersionID="89" highVersionID="94" productID="51">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+        </model>
+        <model model="KAT24" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="52">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18907,22 +18883,31 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="LL8" numOuts="8" numFns="14" lowVersionID="89" productID="43">
+        <model model="KAT26" numOuts="6" numFns="14" lowVersionID="89" highVersionID="94" productID="53">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
           <output name="4" label="Purple" />
           <output name="5" label="Brown" />
           <output name="6" label="Pink" />
-          <output name="7" label="Pnk/Pur" />
-          <output name="8" label="Grn/Brn" />
           <output name="Dim" />
           <output name="Ditch" />
           <output name="Motor" />
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="LL8-LED" numOuts="8" numFns="14" lowVersionID="89" productID="60">
+        <model model="L1D4" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="45">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Purple" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+        </model>
+        <model model="LL8" numOuts="8" numFns="14" lowVersionID="89" highVersionID="94" productID="43">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18937,7 +18922,22 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="M1" numOuts="2" numFns="14" lowVersionID="89" productID="8">
+        <model model="LL8-LED" numOuts="8" numFns="14" lowVersionID="89" highVersionID="94" productID="60">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Purple" />
+          <output name="5" label="Brown" />
+          <output name="6" label="Pink" />
+          <output name="7" label="Pnk/Pur" />
+          <output name="8" label="Grn/Brn" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+        </model>
+        <model model="M1" numOuts="2" numFns="14" lowVersionID="89" highVersionID="94" productID="8">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="Dim" />
@@ -18946,7 +18946,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="M1P-15" numOuts="2" numFns="14" lowVersionID="89" productID="9">
+        <model model="M1P-15" numOuts="2" numFns="14" lowVersionID="89" highVersionID="94" productID="9">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="Dim" />
@@ -18955,7 +18955,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="M3" numOuts="3" numFns="14" lowVersionID="89" productID="10">
+        <model model="M3" numOuts="3" numFns="14" lowVersionID="89" highVersionID="94" productID="10">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18965,7 +18965,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="M4" numOuts="4" numFns="14" lowVersionID="89" productID="11">
+        <model model="M4" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="11">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18976,7 +18976,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="M4T" numOuts="4" numFns="14" lowVersionID="89" productID="42">
+        <model model="M4T" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="42">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -18986,7 +18986,7 @@
           <output name="Motor" />
           <output name="BEMF" />
         </model>
-        <model model="MC2" numOuts="2" numFns="14" lowVersionID="89" productID="12">
+        <model model="MC2" numOuts="2" numFns="14" lowVersionID="89" highVersionID="94" productID="12">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="Dim" />
@@ -18995,7 +18995,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="MC4" numOuts="4" numFns="14" lowVersionID="89" productID="13">
+        <model model="MC4" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="13">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -19006,7 +19006,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="MP-15N" numOuts="4" numFns="14" lowVersionID="89" productID="38">
+        <model model="MP-15N" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="38">
           <output name="1" label="White" comment="Golden White LED" />
           <output name="2" label="Yellow" comment="Golden White LED" />
           <output name="3" label="Green" />
@@ -19017,7 +19017,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="MZA4" numOuts="4" numFns="14" lowVersionID="89" productID="40">
+        <model model="MZA4" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="40">
           <output name="1" label="White" comment="Golden White LED" />
           <output name="2" label="Yellow" comment="Golden White LED" />
           <output name="3" label="Green" />
@@ -19028,7 +19028,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="T1" numOuts="2" numFns="14" lowVersionID="89" productID="14">
+        <model model="T1" numOuts="2" numFns="14" lowVersionID="89" highVersionID="94" productID="14">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="Dim" />
@@ -19037,7 +19037,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="T1A" numOuts="2" numFns="14" lowVersionID="89" productID="15">
+        <model model="T1A" numOuts="2" numFns="14" lowVersionID="89" highVersionID="94" productID="15">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="Dim" />
@@ -19046,7 +19046,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="T1-LED" numOuts="2" numFns="14" lowVersionID="89" productID="58">
+        <model model="T1-LED" numOuts="2" numFns="14" lowVersionID="89" highVersionID="94" productID="58">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="Dim" />
@@ -19055,18 +19055,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="T4X" numOuts="4" numFns="14" lowVersionID="89" productID="16">
-          <output name="1" label="White" />
-          <output name="2" label="Yellow" />
-          <output name="3" label="Green" />
-          <output name="4" label="Purple" />
-          <output name="Dim" />
-          <output name="Ditch" />
-          <output name="Motor" />
-          <output name="BEMF" />
-          <output name="Brake" />
-        </model>
-        <model model="T4-LED" numOuts="4" numFns="14" lowVersionID="89" productID="54">
+        <model model="T4X" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="16">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -19077,7 +19066,18 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="T6X" numOuts="6" numFns="14" lowVersionID="89" productID="17">
+        <model model="T4-LED" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="54">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Purple" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+        </model>
+        <model model="T6X" numOuts="6" numFns="14" lowVersionID="89" highVersionID="94" productID="17">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -19090,7 +19090,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="VO-1000N" numOuts="4" numFns="14" lowVersionID="89" productID="39">
+        <model model="VO-1000N" numOuts="4" numFns="14" lowVersionID="89" highVersionID="94" productID="39">
           <output name="1" label="White" comment="Golden White LED" />
           <output name="2" label="Yellow" comment="Golden White LED" />
           <output name="3" label="Green" />
@@ -19101,7 +19101,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="Z2" numOuts="2" numFns="14" lowVersionID="89" productID="41">
+        <model model="Z2" numOuts="2" numFns="14" lowVersionID="89" highVersionID="94" productID="41">
           <output name="1" label="White" comment="Golden White LED" />
           <output name="2" label="Yellow" comment="Golden White LED" />
           <output name="Dim" />
@@ -19110,7 +19110,7 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="MT1500" numOuts="2" numFns="14" lowVersionID="89" productID="62">
+        <model model="MT1500" numOuts="2" numFns="14" lowVersionID="89" highVersionID="94" productID="62">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="Dim" />
@@ -24416,6 +24416,70 @@
           <output name="2" label="Yellow" />
           <output name="1" label="Green" />
           <output name="2" label="Violet" />
+        </model>
+      </family>
+      <family name="MN Non-Sound (version 4+)" mfg="Zimo" file="Zimo_MN_small_v4.xml">
+        <model model="MN170 version 4+" lowVersionID="4" highVersionID="42" numOuts="8" numFns="14" productID="124">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MN180N18 version 4+" lowVersionID="4" highVersionID="42" numOuts="6" numFns="14" productID="127">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+        </model>
+        <model model="MN300 version 4+" lowVersionID="4" highVersionID="41" numOuts="8" numFns="14" productID="125">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MN330 version 4+" lowVersionID="4" highVersionID="41" numOuts="12" numFns="14" productID="126">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+          <output name="11" label="FO 9 (+5V)" />
+          <output name="12" label="FO 10 (+5V)" />
+        </model>
+        <model model="MN340C version 4+" lowVersionID="4" highVersionID="41" numOuts="6" numFns="14" productID="123">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+        </model>
+        <model model="MN340D version 4+" lowVersionID="4" highVersionID="41" numOuts="10" numFns="14" productID="123">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7 (+5V)" />
+          <output name="10" label="FO 8 (+5V)" />
         </model>
       </family>
       <family name="MS Sound (version 4+)" mfg="Zimo" file="Zimo_MS_small_v4.xml">

@@ -107,11 +107,10 @@
 
               <p>No <strong>Comment</strong> for this Locomotive</p>
 
-              <p>Now to store your changes by pressing <input name="button13" id="button13" value=
-              "Save" type="submit"> and add the edits to any edited menu item.</p>
+              <p>Now to store your changes by pressing <span class="textbutton">Save</span>
+              and add the edits to any edited menu item.</p>
 
-              <p><input name="button14" id="button14" value="Add " type="submit"> updates your
-              Operations Locomotive Roster.</p>
+              <p><span class="textbutton">Add</span> updates your Operations Locomotive Roster.</p>
             </td>
           </tr>
         </tbody>

@@ -738,4 +738,12 @@ public class LocationEditFrameTest extends OperationsTestCase {
         tef = JmriJFrame.getFrame(Bundle.getMessage("EditYard"));
         Assert.assertNull(tef);
     }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Location loc = JUnitOperationsUtil.createOneNormalLocation("Test Location");
+        LocationEditFrame f = new LocationEditFrame(loc);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
+    }
 }

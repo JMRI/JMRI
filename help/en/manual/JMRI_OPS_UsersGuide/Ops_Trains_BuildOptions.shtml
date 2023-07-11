@@ -110,8 +110,7 @@
               Allow you to create your own custom manifest using .csv file. Import into a program
               like Excel to create a manifest to your liking.</p>
 
-              <p><input name="button" id="button" value="Save" type="button"> settings to disk to
-              preserve them.<br></p>
+              <p>The <span class="textbutton">Save</span> button stores the settings to disk.<br></p>
             </td>
           </tr>
         </tbody>

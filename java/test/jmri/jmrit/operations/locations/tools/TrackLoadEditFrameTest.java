@@ -8,9 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
@@ -59,14 +57,14 @@ public class TrackLoadEditFrameTest extends OperationsTestCase {
         
         JemmyUtil.enterClickAndLeave(tlef.loadNameInclude);
         JemmyUtil.enterClickAndLeave(tlef.loadAndTypeCheckBox);
-        JemmyUtil.enterClickAndLeaveThreadSafe(tlef.saveTrackButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(tlef.saveButton);
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tlef, Bundle.getMessage("ErrorNoLoads"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.waitFor(tlef);
         
         // now add a load "Boxcar & E"
         JemmyUtil.enterClickAndLeave(tlef.addLoadButton);
-        JemmyUtil.enterClickAndLeave(tlef.saveTrackButton);
+        JemmyUtil.enterClickAndLeave(tlef.saveButton);
         
         Assert.assertTrue(track.isLoadNameAndCarTypeAccepted("E", "Boxcar"));
         Assert.assertFalse(track.isLoadNameAndCarTypeAccepted("L", "Boxcar"));
@@ -75,7 +73,16 @@ public class TrackLoadEditFrameTest extends OperationsTestCase {
         Assert.assertFalse(track.isLoadNameAccepted("E"));
         
         JUnitUtil.dispose(tlef);
-
+    }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Location loc = JUnitOperationsUtil.createOneNormalLocation("Test Location");
+        Track track = loc.addTrack("Yard", Track.YARD);
+        TrackLoadEditFrame f = new TrackLoadEditFrame();
+        f.initComponents(loc, track);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrackLoadEditFrameTest.class);

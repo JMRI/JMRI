@@ -21,20 +21,22 @@ import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
  */
 public class TcsImportAction extends GenericImportAction {
 
-    public TcsImportAction(String actionName, CvTableModel pModel, PaneProgFrame pParent, JLabel pStatus, RosterEntry re) {
+    public TcsImportAction(String actionName, CvTableModel pModel, VariableTableModel vModel, PaneProgFrame pParent, JLabel pStatus, RosterEntry re) {
         super(actionName, pModel, pParent, pStatus, "TCS files", "txt", null);
         this.rosterEntry = re;
         this.frame = pParent;
+        this.vModel = vModel;
     }
 
     RosterEntry rosterEntry;
     PaneProgFrame frame;
+    VariableTableModel vModel;
 
     @Override
     boolean launchImporter(File file, CvTableModel tableModel) {
         try {
             // ctor launches operation
-            var importer = new TcsImporter(file);
+            var importer = new TcsImporter(file, tableModel, vModel);
             importer.setRosterEntry(rosterEntry);
 
             // now update the GUI from the roster entry
