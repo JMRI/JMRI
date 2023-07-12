@@ -14,6 +14,7 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.TrackEditFrame;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Action to change the type of track. Track types are Spurs, Yards,
@@ -95,6 +96,9 @@ class ChangeTrackFrame extends OperationsFrame {
                 changeTrack(Track.YARD);
             } else if (interchangeRadioButton.isSelected() && !_track.isInterchange()) {
                 changeTrack(Track.INTERCHANGE);
+            }
+            if (Setup.isCloseWindowOnSaveEnabled()) {
+                dispose();
             }
         }
     }

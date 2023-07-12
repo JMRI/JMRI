@@ -12,6 +12,7 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.setup.Control;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
@@ -118,6 +119,29 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
     
+    @Test
+    public void testCarLoadEditFrameReplaceNoChange() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        // create load to replace
+        CarLoads cl = InstanceManager.getDefault(CarLoads.class);
+        cl.addName("Boxcar", "Test Load");
+        
+        CarLoadEditFrame f = new CarLoadEditFrame();
+        f.initComponents("Boxcar", "Test Load");
+        f.addTextBox.setText("Test Load");
+        
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
+        
+        // dialog window should appear
+        JemmyUtil.pressDialogButton(Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
+        
+        Assert.assertTrue("exists", cl.containsName("Boxcar", "Test Load"));
+
+        JUnitUtil.dispose(f);
+    }
+    
     /**
      * Replace default "E" name
      */
@@ -141,6 +165,33 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         Assert.assertTrue("exists", cl.containsName("Boxcar", "Replace E"));
         
         Assert.assertEquals("default empty name", "Replace E", cl.getDefaultEmptyName());
+
+        JUnitUtil.dispose(f);
+    }
+    
+    /**
+     * Replace default "L" name
+     */
+    @Test
+    public void testCarLoadEditFrameReplaceButtonDefaultLoad() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        CarLoads cl = InstanceManager.getDefault(CarLoads.class);
+        Assert.assertEquals("default load name", "L", cl.getDefaultLoadName());
+        
+        CarLoadEditFrame f = new CarLoadEditFrame();
+        f.initComponents("Boxcar", "L");
+        f.addTextBox.setText("Replace L");
+        
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
+        // dialog window should appear
+        JemmyUtil.pressDialogButton(Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
+        
+        Assert.assertFalse("exists", cl.containsName("Boxcar", "L"));
+        Assert.assertTrue("exists", cl.containsName("Boxcar", "Replace L"));
+        
+        Assert.assertEquals("default empty name", "Replace L", cl.getDefaultLoadName());
 
         JUnitUtil.dispose(f);
     }
@@ -211,5 +262,13 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         Assert.assertTrue("exists", cl.containsName("Boxcar", "L"));
 
         JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        CarLoadEditFrame f = new CarLoadEditFrame();
+        f.initComponents("Boxcar", "L");
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 }

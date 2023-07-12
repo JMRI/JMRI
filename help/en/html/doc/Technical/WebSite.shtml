@@ -290,6 +290,13 @@ LoadModule php5_module libexec/apache2/libphp5.so
         "http://localhost/">http://localhost/index.shtml</a>, which should get you a JMRI top-level
         page.
         </li>
+
+        <li>If <strong>Error 403</strong> occurs with <strong><em>Symbolic link not allowed or link
+        target not accessible</em></strong> in the Apache log, the web server is not able to reach
+        the local JMRI repositories.  The permissions for the user's home directory need
+        to include execute permissions for <strong>Others</strong>. If the permissions are
+        like <strong>rwxr-x---</strong>, add execute authority using <strong>chmod o+x &lt;name&gt;</strong>.</li>
+
       </ol>
 
       <h3 id="catalog">Installing a local XML catalog</h3>

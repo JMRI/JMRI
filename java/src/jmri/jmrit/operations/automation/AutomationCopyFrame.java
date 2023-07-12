@@ -65,13 +65,12 @@ public class AutomationCopyFrame extends OperationsFrame {
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_CopyAutomation", true); // NOI18N
 
-        pack();
-        setMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight200));
-
         setTitle(Bundle.getMessage("TitleAutomationCopy"));
 
         // setup buttons
         addButtonAction(copyButton);
+        
+        initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight200));
     }
 
     @Override

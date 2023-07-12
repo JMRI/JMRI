@@ -1276,7 +1276,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 splitString(car.getLocationName()).equals(splitString(car.getFinalDestinationName())) &&
                 car.getTrack() != _departStageTrack) {
             addLine(_buildReport, FIVE,
-                    Bundle.getMessage("buildCarHasFinalDestNoMove", car.toString(), car.getFinalDestinationName()));
+                    Bundle.getMessage("buildCarHasFinalDestNoMove", car.toString(), car.getLocationName(),
+                            car.getFinalDestinationName(), _train.getName()));
             addLine(_buildReport, FIVE, BLANK_LINE);
             log.debug("Removing car ({}) from list", car.toString());
             _carList.remove(car);

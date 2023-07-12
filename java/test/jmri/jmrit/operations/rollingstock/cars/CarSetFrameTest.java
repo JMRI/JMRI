@@ -1,9 +1,12 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.Assume;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.*;
 import org.netbeans.jemmy.util.NameComponentChooser;
@@ -1067,6 +1070,16 @@ public class CarSetFrameTest extends OperationsTestCase {
         jfo.requestClose();
         jfo.waitClosed();
         JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("DB", "3", "Boxcar", "40", null, 0);
+        CarSetFrame f = new CarSetFrame();
+        f.initComponents();
+        f.load(c3);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
     private void toggleCheckBoxThenClickSave(JFrameOperator jfo, String jCheckBoxText) {

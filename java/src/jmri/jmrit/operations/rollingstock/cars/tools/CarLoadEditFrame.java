@@ -238,6 +238,9 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
                     JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
                 return;
             }
+            if (oldLoadName.equals(loadName)) {
+                return; // do nothing
+            }
             // Comboboxes get deselected during the addName operation
             String loadType = carLoads.getLoadType(_type, oldLoadName);
             String loadPriority = carLoads.getPriority(_type, oldLoadName);

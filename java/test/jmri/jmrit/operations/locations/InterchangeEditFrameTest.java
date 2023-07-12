@@ -2,6 +2,11 @@ package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
 
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
@@ -13,10 +18,6 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  * Tests for the Operations Locations GUI class
@@ -362,6 +363,16 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         
         JUnitUtil.dispose(f);
     }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Track t = l.addTrack("Test Close", Track.INTERCHANGE);
+        InterchangeEditFrame f = new InterchangeEditFrame();
+        f.initComponents(l, t);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
+    }
+
 
 
     // Ensure minimal setup for log4J

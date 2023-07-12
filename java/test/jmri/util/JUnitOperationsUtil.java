@@ -1,10 +1,14 @@
 package jmri.util;
 
+import java.awt.GraphicsEnvironment;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle; // for access operations keys directly.
 
 import org.junit.Assert;
+import org.junit.Assume;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 import jmri.*;
 import jmri.jmrit.operations.OperationsXml;
@@ -695,6 +699,26 @@ public class JUnitOperationsUtil {
         }
         Assert.assertNotNull(in);
         return in;
+    }
+    
+    public static void testCloseWindowOnSave(String title) {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        JFrameOperator jfo = new JFrameOperator(title);
+        Assert.assertNotNull("visible and found", jfo);
+        // confirm window appears
+        JmriJFrame f = JmriJFrame.getFrame(title);
+        Assert.assertNotNull("exists", f);
+        new JButtonOperator(jfo, Bundle.getMessage("ButtonSave")).doClick();
+        f = JmriJFrame.getFrame(title);
+        Assert.assertNotNull("exists", f);
+        // now close window with save button
+        Setup.setCloseWindowOnSaveEnabled(true);
+        new JButtonOperator(jfo, Bundle.getMessage("ButtonSave")).doClick();
+        jfo.waitClosed();
+        // confirm window is closed
+        f = JmriJFrame.getFrame(title);
+        Assert.assertNull("does not exist", f);
     }
 
     public static void checkOperationsShutDownTask() {

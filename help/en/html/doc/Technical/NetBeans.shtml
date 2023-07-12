@@ -172,7 +172,7 @@
     track individual changes on files that you commit.</p>
 
     <p>If you are using <a href="githubdesktopintro.shtml">GitHub Desktop</a>
-    to manage your copy of the JMRI code, create Pull Requests etc. then this will 
+    to manage your copy of the JMRI code, create Pull Requests etc. then this will
     take care of properly convert line endings to the correct format.
     There is no need to change anything within NetBeans.</p>
 

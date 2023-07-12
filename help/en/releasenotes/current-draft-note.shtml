@@ -121,7 +121,9 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Added two new jython/LCC/CSVToNodeBackup.py and 
+                    jython/LCC/NodeBackupToCSV.py scripts for converting
+                    node backup files back and forth to CSV files.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -403,7 +405,9 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+            <li>A number of issues with the Shape tool have been resolved including Java
+            exceptions and the possibility of truncated shape lines.</li>
+            <li>The Layout Editor help page has been updated with details for using Shapes.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -487,7 +491,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Add "idtags" as a script shortcut to the manager like "turnouts" and "sensors"</li>
         </ul>
 
     <h3>Signals</h3>
@@ -587,18 +591,24 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>json car, engine: remove location, set unknown flag, remove from train</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Added LayoutEditor turntable support for VSD navigation through a panel.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>A signal handler has been added to the Shutdown manager such that a 
+            "kill &lt;pid&gt;" command on Mac or Linux will do a normal shutdown.
+            This is particularly useful for e.g. running headless on an RPi.
+            "kill -HUP &lt;pid&gt;" will cause JMRI to quit and restart.
+            In addition, the Mac and Linux startup scripts were updated to 
+            pass these signals on to the running process.  Together, this
+            will allow you to run JMRI as a service on Mac and Linux, including the RPi.
         </ul>
 

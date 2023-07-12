@@ -445,6 +445,12 @@ public class VSDGeoFile extends XmlFile {
                                         layoutTracksInBlock.add(lt); // LevelXing contains 2 blocks, AC and BD; add one more entry here
                                         blockList.add(bl);
                                     }
+                                } else if (lt instanceof LayoutTurntable) {
+                                    LayoutTurntable tt = (LayoutTurntable) lt;
+                                    if (tt.getLayoutBlock() == lblk) {
+                                        layoutTracksInBlock.add(lt);
+                                        blockList.add(bl);
+                                    }
                                 }
                             }
                             log.debug("layoutTracksInBlock: {}", layoutTracksInBlock);

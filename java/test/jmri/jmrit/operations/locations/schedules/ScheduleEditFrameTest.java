@@ -14,12 +14,11 @@ import org.netbeans.jemmy.operators.JTableOperator;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
@@ -270,6 +269,14 @@ public class ScheduleEditFrameTest extends OperationsTestCase {
         
         JUnitUtil.dispose(f);
     }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        setupTest();
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
+    }
+
     
     ScheduleEditFrame f;
     Schedule sch;
