@@ -12,9 +12,9 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.LogixNG_SelectString;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.script.swing.ScriptFileChooser;
 import jmri.util.FileUtil;
 import jmri.util.swing.BeanSelectPanel;
+import jmri.util.swing.JmriJFileChooser;
 
 /**
  * Swing class for jmri.jmrit.logixng.util.LogixNG_SelectString.
@@ -57,21 +57,21 @@ public class LogixNG_SelectStringSwing {
         return internalCreatePanel(selectStr);
     }
 
-    public JPanel createFilenamePanel(@CheckForNull LogixNG_SelectString selectStr) {
+    public JPanel createFilenamePanel(@CheckForNull LogixNG_SelectString selectStr, String path) {
         _panelDirect = new javax.swing.JPanel();
 
         JButton selectFileButton = new JButton("..."); // "File" replaced by ...
         selectFileButton.setMaximumSize(selectFileButton.getPreferredSize());
         selectFileButton.setToolTipText(Bundle.getMessage("FileButtonHint"));  // NOI18N
         selectFileButton.addActionListener((ActionEvent e) -> {
-            ScriptFileChooser scriptFileChooser = new ScriptFileChooser(FileUtil.getScriptsPath());
-            scriptFileChooser.rescanCurrentDirectory();
-            int retVal = scriptFileChooser.showOpenDialog(null);
+            JmriJFileChooser fileChooser = new JmriJFileChooser(path);
+            fileChooser.rescanCurrentDirectory();
+            int retVal = fileChooser.showOpenDialog(null);
             // handle selection or cancel
             if (retVal == JFileChooser.APPROVE_OPTION) {
                 // set selected file location
                 try {
-                    _valueTextField.setText(FileUtil.getPortableFilename(scriptFileChooser.getSelectedFile().getCanonicalPath()));
+                    _valueTextField.setText(FileUtil.getPortableFilename(fileChooser.getSelectedFile().getCanonicalPath()));
                 } catch (java.io.IOException ex) {
                     log.error("exception setting file location", ex);  // NOI18N
                     _valueTextField.setText("");

@@ -13,6 +13,7 @@ import jmri.jmrit.logixng.expressions.FileAsFlag.DeleteOrKeep;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectStringSwing;
+import jmri.util.FileUtil;
 
 /**
  * Configures an FileAsFlag object with a Swing JPanel.
@@ -42,7 +43,7 @@ public class FileAsFlagSwing extends AbstractDigitalExpressionSwing {
         JPanel tabbedPaneNamedBean;
         JPanel tabbedPaneState;
 
-        tabbedPaneNamedBean = _selectFilenameSwing.createFilenamePanel(expression.getSelectFilename());
+        tabbedPaneNamedBean = _selectFilenameSwing.createFilenamePanel(expression.getSelectFilename(), FileUtil.getPreferencesPath());
         tabbedPaneState = _selectDeleteOrKeepSwing.createPanel(expression.getSelectDeleteOrKeep(), DeleteOrKeep.values());
 
         JComponent[] components = new JComponent[]{
