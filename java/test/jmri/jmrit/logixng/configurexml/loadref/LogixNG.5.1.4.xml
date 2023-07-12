@@ -3866,11 +3866,11 @@
       <localVariable />
       <formula />
       <is_isNot>Is</is_isNot>
-      <stateAddressing>Direct</stateAddressing>
-      <dispatcherState>Mode</dispatcherState>
-      <stateReference />
-      <stateLocalVariable />
-      <stateFormula />
+      <state>
+        <addressing>Direct</addressing>
+        <enum>Mode</enum>
+        <listenToMemory>no</listenToMemory>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">

@@ -3,8 +3,6 @@ package jmri.jmrit.logixng.expressions;
 import java.beans.*;
 import java.util.*;
 
-import javax.annotation.Nonnull;
-
 import jmri.*;
 import jmri.Block;
 import jmri.BlockManager;
@@ -14,11 +12,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
 import jmri.jmrit.logixng.util.LogixNG_SelectString;
-import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
-import jmri.util.TypeConversionUtil;
 
 /**
  * This expression evaluates the state of a Block.
@@ -218,6 +212,7 @@ public class ExpressionBlock extends AbstractDigitalExpression
         if (!_listenersAreRegistered) {
             _selectNamedBean.addPropertyChangeListener(this);
             _selectNamedBean.registerListeners();
+            _selectEnum.registerListeners();
             _selectBlockValue.registerListeners();
             _listenersAreRegistered = true;
         }
@@ -229,6 +224,7 @@ public class ExpressionBlock extends AbstractDigitalExpression
         if (_listenersAreRegistered) {
             _selectNamedBean.removePropertyChangeListener(this);
             _selectNamedBean.unregisterListeners();
+            _selectEnum.unregisterListeners();
             _selectBlockValue.unregisterListeners();
             _listenersAreRegistered = false;
         }

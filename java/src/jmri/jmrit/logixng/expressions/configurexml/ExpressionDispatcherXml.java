@@ -4,6 +4,7 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionDispatcher;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
@@ -36,6 +37,8 @@ public class ExpressionDispatcherXml extends jmri.managers.configurexml.Abstract
 
         storeCommon(p, element);
 
+        var selectEnumXml = new LogixNG_SelectEnumXml<ExpressionDispatcher.DispatcherState>();
+
         String trainInfoFileName = p.getTrainInfoFileName();
         if (trainInfoFileName != null) {
             element.addContent(new Element("trainInfoFileName").addContent(trainInfoFileName));
@@ -48,11 +51,7 @@ public class ExpressionDispatcherXml extends jmri.managers.configurexml.Abstract
 
         element.addContent(new Element("is_isNot").addContent(p.get_Is_IsNot().name()));
 
-        element.addContent(new Element("stateAddressing").addContent(p.getStateAddressing().name()));
-        element.addContent(new Element("dispatcherState").addContent(p.getBeanState().name()));
-        element.addContent(new Element("stateReference").addContent(p.getStateReference()));
-        element.addContent(new Element("stateLocalVariable").addContent(p.getStateLocalVariable()));
-        element.addContent(new Element("stateFormula").addContent(p.getStateFormula()));
+        element.addContent(selectEnumXml.store(p.getSelectEnum(), "state"));
 
         return element;
     }
@@ -64,6 +63,17 @@ public class ExpressionDispatcherXml extends jmri.managers.configurexml.Abstract
         ExpressionDispatcher h = new ExpressionDispatcher(sys, uname);
 
         loadCommon(h, shared);
+
+        var selectEnumXml = new LogixNG_SelectEnumXml<ExpressionDispatcher.DispatcherState>();
+
+        selectEnumXml.load(shared.getChild("state"), h.getSelectEnum());
+        selectEnumXml.loadLegacy(
+                shared, h.getSelectEnum(),
+                "stateAddressing",
+                "dispatcherState",
+                "stateReference",
+                "stateLocalVariable",
+                "stateFormula");
 
         try {
             Element elem = shared.getChild("trainInfoFileName");
@@ -90,27 +100,6 @@ public class ExpressionDispatcherXml extends jmri.managers.configurexml.Abstract
             if (is_IsNot != null) {
                 h.set_Is_IsNot(Is_IsNot_Enum.valueOf(is_IsNot.getTextTrim()));
             }
-
-
-            elem = shared.getChild("stateAddressing");
-            if (elem != null) {
-                h.setStateAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            Element dispatcherState = shared.getChild("dispatcherState");
-            if (dispatcherState != null) {
-                h.setBeanState(ExpressionDispatcher.DispatcherState.valueOf(dispatcherState.getTextTrim()));
-            }
-
-            elem = shared.getChild("stateReference");
-            if (elem != null) h.setStateReference(elem.getTextTrim());
-
-            elem = shared.getChild("stateLocalVariable");
-            if (elem != null) h.setStateLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("stateFormula");
-            if (elem != null) h.setStateFormula(elem.getTextTrim());
-
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);
         }
