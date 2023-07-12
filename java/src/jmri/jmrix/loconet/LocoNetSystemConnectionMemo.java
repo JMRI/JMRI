@@ -143,10 +143,11 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
      * @param mTranspondingAvailable    Is the layout configured to provide
      *                                  transopnding reports
      * @param mInterrogate       Send interrogate messages at start up
+     * @param mLoconetProtocolAutoDetect Do we automatically detect the protocol to use or force LocoNet 1.1
      */
     public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry,
                                             boolean mTurnoutExtraSpace, boolean mTranspondingAvailable,
-                                            boolean mInterrogate) {
+                                            boolean mInterrogate, boolean mLoconetProtocolAutoDetect) {
 
         // store arguments
         this.mTurnoutNoRetry = mTurnoutNoRetry;
@@ -164,6 +165,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
             sm.setCommandStationType(type);
             sm.setSystemConnectionMemo(this);
             sm.setTranspondingAvailable(mTranspondingAvailable);
+            sm.setLoconetProtocolAutoDetect(mLoconetProtocolAutoDetect);
 
             // store as CommandStation object
             InstanceManager.store(sm, jmri.CommandStation.class);

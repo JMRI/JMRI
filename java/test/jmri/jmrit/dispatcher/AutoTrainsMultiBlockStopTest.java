@@ -27,7 +27,7 @@ import java.nio.file.StandardCopyOption;
  * @author SG 2021
  *
  * Tests Multiblock stopping.
- * First move a too long train into a two block section. Stops imediatly
+ * First move a too long train into a two block section. Stops immediately
  * Move a very short train in, stop when it gets to far end
  * Move a medium train
  *
@@ -41,11 +41,10 @@ public class AutoTrainsMultiBlockStopTest {
     private static final double TOLERANCE = 0.0001;
 
     // Adjust this if timeouts on the server
-    private int waitInterval = 200;
+    private static final int waitInterval = 200;
 
-    @SuppressWarnings("null")  // spec says cannot happen, everything defined in test data.
     @Test
-    public void testFwdAndReverse40() throws Exception {
+    public void testFwdAndReverse40() {
          jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
         };
         // THe train is 40 long and fits in furthers block..
@@ -54,8 +53,10 @@ public class AutoTrainsMultiBlockStopTest {
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         // load layout file
-        java.io.File f = new java.io.File("java/test/jmri/jmrit/dispatcher/MultiBlockStop.xml");
-        cm.load(f);
+        File f = new File("java/test/jmri/jmrit/dispatcher/MultiBlockStop.xml");
+        Assertions.assertDoesNotThrow(() -> {
+            cm.load(f);
+        });
 
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
 
@@ -97,13 +98,13 @@ public class AutoTrainsMultiBlockStopTest {
             }, "2 sections clear speed normal");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.INACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.ACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
-            }, "1 section clear speed medium");
+            }, "1 section clear speed medium "+ speedMedium + " but was " + aat.getThrottle().getSpeedSetting());
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.INACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 5"), Sensor.ACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Failed To Slow on entry to final section");
@@ -120,7 +121,7 @@ public class AutoTrainsMultiBlockStopTest {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Still going in block 7, 6 still active");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 6"), Sensor.INACTIVE);
-        //JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() ) < TOLERANCE );
             }, "Should have stop on block 6 inactive.");
@@ -151,13 +152,13 @@ public class AutoTrainsMultiBlockStopTest {
             }, "2 sections clear speed normal");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 6"), Sensor.INACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.ACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
             }, "1 section clear speed medium");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 5"), Sensor.INACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.ACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Failed To Slow on entry to begin section");
@@ -174,7 +175,7 @@ public class AutoTrainsMultiBlockStopTest {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Still going in block 1, 2 still active");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.INACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() ) < TOLERANCE );
             }, "Should have stop on block 2 inactive.");
@@ -216,18 +217,19 @@ public class AutoTrainsMultiBlockStopTest {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
             }, "2 sections clear speed normal");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.ACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
             }, "1 section clear speed medium");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.INACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.INACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 5"), Sensor.ACTIVE);
-        JUnitUtil.waitFor(waitInterval);
-        assertEquals(speedStopping, aat.getThrottle().getSpeedSetting(), TOLERANCE , "Throttle should be in reverse");
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Failed To Slow on entry to final section");
+        assertEquals(speedStopping, aat.getThrottle().getSpeedSetting(), TOLERANCE , "Throttle should be in reverse");
+        
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.INACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 6"), Sensor.ACTIVE);
         JUnitUtil.waitFor(waitInterval);
@@ -240,7 +242,7 @@ public class AutoTrainsMultiBlockStopTest {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Still going in block 7, 6, 5 still active");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 5"), Sensor.INACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return aat.getThrottle().getSpeedSetting() == 0.0f;
             }, "Should have stop on block 5 inactive.");
@@ -270,13 +272,13 @@ public class AutoTrainsMultiBlockStopTest {
             }, "2 sections clear speed normal");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 6"), Sensor.INACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.ACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
             }, "1 section clear speed medium");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 5"), Sensor.INACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.ACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Failed To Slow on entry to begin section");
@@ -292,7 +294,7 @@ public class AutoTrainsMultiBlockStopTest {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Still going in block 1, 2, 3 still active");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.INACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return aat.getThrottle().getSpeedSetting() == 0.0f;
             }, "Should have stop on block 2 inactive.");
@@ -328,7 +330,7 @@ public class AutoTrainsMultiBlockStopTest {
             }, "Failed To Start");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.ACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.INACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
             }, "1 section clear speed medium");
@@ -340,7 +342,7 @@ public class AutoTrainsMultiBlockStopTest {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
             }, "1 section clear speed medium");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 5"), Sensor.ACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Failed To Slow on entry to final section");
@@ -355,7 +357,7 @@ public class AutoTrainsMultiBlockStopTest {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Still going in block 7, 6 still active");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.INACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return aat.getThrottle().getSpeedSetting() == 0.0f;
             }, "Should have stop on block 4 inactive.");
@@ -386,13 +388,13 @@ public class AutoTrainsMultiBlockStopTest {
             }, "2 sections clear speed normal");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 6"), Sensor.INACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.ACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
             }, "1 section clear speed medium");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 5"), Sensor.INACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.ACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Failed To Slow on entry to begin section");
@@ -447,13 +449,13 @@ public class AutoTrainsMultiBlockStopTest {
             }, "2 sections clear speed normal");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 6"), Sensor.INACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.ACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
             }, "1 section clear speed medium");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 5"), Sensor.INACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.ACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Failed To Slow on entry to final section");
@@ -470,7 +472,7 @@ public class AutoTrainsMultiBlockStopTest {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Still going in block 1, 2 still active");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.INACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return aat.getThrottle().getSpeedSetting() == 0.0f;
             }, "Should have stop on block 2 inactive.");
@@ -498,13 +500,13 @@ public class AutoTrainsMultiBlockStopTest {
             }, "2 sections clear speed normal");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.INACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.ACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
             }, "1 section clear speed medium");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.INACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 5"), Sensor.ACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Failed To Slow on entry to final section");
@@ -521,7 +523,7 @@ public class AutoTrainsMultiBlockStopTest {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Still going in block 7, 6 still active");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 6"), Sensor.INACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return aat.getThrottle().getSpeedSetting() == 0.0f;
             }, "Should have stop on block 6 inactive.");
@@ -564,12 +566,12 @@ public class AutoTrainsMultiBlockStopTest {
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 6"), Sensor.INACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 5"), Sensor.INACTIVE);
         // fully in block 4
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
             }, "1 section clear");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.ACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Failed To Slow on entry to final section block 3");
@@ -585,7 +587,7 @@ public class AutoTrainsMultiBlockStopTest {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Still going in block 1, 2, 3 still active");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.INACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return aat.getThrottle().getSpeedSetting() == 0.0f;
             }, "Should have stop on block 3 inactive.");
@@ -614,12 +616,12 @@ public class AutoTrainsMultiBlockStopTest {
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.INACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.INACTIVE);
         // fully in block 4
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
             }, "1 section clear speed medium");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 5"), Sensor.ACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Failed To Slow on entry to final section Block 5");
@@ -635,7 +637,7 @@ public class AutoTrainsMultiBlockStopTest {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Still going in block 7, 6, 5 still active");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 5"), Sensor.INACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return aat.getThrottle().getSpeedSetting() == 0.0f;
             }, "Should have stop on block 5 inactive.");
@@ -672,7 +674,7 @@ public class AutoTrainsMultiBlockStopTest {
             }, "Failed To Start");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.ACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 7"), Sensor.INACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
             }, "2 sections clear speed normal");
@@ -683,7 +685,7 @@ public class AutoTrainsMultiBlockStopTest {
             }, "1 section clear speed medium");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 5"), Sensor.INACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.ACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Failed To Slow on entry to final section");
@@ -698,7 +700,7 @@ public class AutoTrainsMultiBlockStopTest {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Still going in block 1, 2 still active");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.INACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return aat.getThrottle().getSpeedSetting() == 0.0f;
             }, "Should have stop on block 2 inactive.");
@@ -724,7 +726,7 @@ public class AutoTrainsMultiBlockStopTest {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
             }, "2 sections clear speed normal");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.ACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
             }, "1 section clear speed medium");
@@ -733,7 +735,7 @@ public class AutoTrainsMultiBlockStopTest {
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.INACTIVE);
         // fully in block 4
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 5"), Sensor.ACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Failed To Slow on entry to final section");
@@ -748,7 +750,7 @@ public class AutoTrainsMultiBlockStopTest {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Still going in block 7, 6, 5 still active");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.INACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        // JUnitUtil.waitFor(waitInterval);
         JUnitUtil.waitFor(() -> {
             return aat.getThrottle().getSpeedSetting() == 0.0f;
             }, "Should have stop on block 6 inactive.");
@@ -808,15 +810,15 @@ public class AutoTrainsMultiBlockStopTest {
     }
 
     // Where in user space the "signals" file tree should live
-    private static File outBaseTrainInfo = null;
-    private static File outBaseSignal = null;
+    private File outBaseTrainInfo = null;
+    private File outBaseSignal = null;
 
     // the file we create that we will delete
-    private static Path outPathTrainInfo1 = null;
-    private static Path outPathWarrentPreferences = null;
+    private Path outPathTrainInfo1 = null;
+    private Path outPathWarrentPreferences = null;
 
-    @BeforeAll
-    public static void doOnce() throws Exception {
+    @BeforeEach
+    public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetFileUtilSupport();
         // set up users files in temp tst area
@@ -862,26 +864,7 @@ public class AutoTrainsMultiBlockStopTest {
         } catch (IOException e) {
             throw e;
         }
-    }
 
-    @AfterAll
-    public static void unDoOnce() {
-        try {
-            Files.delete(outPathTrainInfo1);
-        } catch  (IOException e) {
-            // doesnt matter its gonezo
-        }
-        try {
-            Files.delete(outPathWarrentPreferences);
-        } catch  (IOException e) {
-            // doesnt matter its gonezo
-        }
-    }
-
-    @BeforeEach
-    public void setUp() throws Exception {
-        JUnitUtil.setUp();
-        JUnitUtil.resetFileUtilSupport();
         JUnitUtil.resetProfileManager();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initRosterConfigManager();
@@ -892,6 +875,19 @@ public class AutoTrainsMultiBlockStopTest {
     public void tearDown() throws Exception {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.resetWindows(false,false);
+        
+        try {
+            Files.delete(outPathTrainInfo1);
+        } catch  (IOException e) {
+            // doesnt matter its gonezo
+        }
+        try {
+            Files.delete(outPathWarrentPreferences);
+        } catch  (IOException e) {
+            // doesnt matter its gonezo
+        }
+        
+        
         JUnitUtil.resetFileUtilSupport();
         JUnitUtil.tearDown();
     }

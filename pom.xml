@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>5.3.1-SNAPSHOT</version>
+    <version>5.5.1-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -22,10 +22,10 @@
         <jemmy.version>RELEASE125</jemmy.version>
         <slf4j.version>1.7.25</slf4j.version>
         <jackson-core.version>2.13.4</jackson-core.version>
-        <jackson-databind.version>2.13.4.1</jackson-databind.version>
+        <jackson-databind.version>2.13.4.2</jackson-databind.version>
         <jackson-annotations.version>2.13.4</jackson-annotations.version>
         <jogamp.version>2.3.2</jogamp.version>
-        <openlcb.version>0.7.31</openlcb.version>
+        <openlcb.version>0.7.32</openlcb.version>
         <netbeans.version>RELEASE150</netbeans.version>
         <jacoco.version>0.8.5</jacoco.version>
         <jacoco.reportDir>${basedir}/target/</jacoco.reportDir>
@@ -39,7 +39,7 @@
         <junit5.version>5.9.1</junit5.version>
         <junit.platform.version>1.9.1</junit.platform.version>
         <ant.jvm.args></ant.jvm.args>
-        <argLine>-Xmx1536m -Duser.language=en -Duser.region=US</argLine>
+        <argLine>-Xmx1536m -Duser.language=en -Duser.region=US -Dnashorn.args=--no-deprecation-warning</argLine>
         <!-- define argLines to allow running surefire:test -->
         <surefire.argLine></surefire.argLine>
         <failsafe.argLine></failsafe.argLine>
@@ -705,7 +705,7 @@
                     </groups>
                     <bottom><![CDATA[<i>Copyright &copy; ${project.inceptionYear}&#x2013;{currentYear} JMRI Community.
                     <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
-                       <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
+                       <br><a href="https://www.jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                 ]]>
                     </bottom>
                     <links>
@@ -1456,13 +1456,13 @@
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna-platform</artifactId>
-            <version>5.9.0</version>
+            <version>5.13.0</version>
         </dependency>
         <!-- the following dependency required for Eclipse IDE -->
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
-            <version>5.9.0</version>
+            <version>5.13.0</version>
         </dependency>
         <dependency>
             <groupId>net.java.jinput</groupId>

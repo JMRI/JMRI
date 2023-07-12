@@ -60,6 +60,20 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     private final boolean[] FUNCTION_MOMENTARY_BOOLEAN_ARRAY;
 
     /**
+     * Constants to represent Function Groups.
+     * <p>
+     * The are the same groupings for both normal Functions and Momentary.
+     */
+    protected static final int[] FUNCTION_GROUPS = new int[]{
+        1, 1, 1, 1, 1, /** 0-4 */
+        2, 2, 2, 2, /** 5-8 */   3, 3, 3, 3, /** 9-12 */
+        4, 4, 4, 4, 4, 4, 4, 4, /** 13-20 */ 5, 5, 5, 5, 5, 5, 5, 5, /** 21-28 */
+        6, 6, 6, 6, 6, 6, 6, 6, /** 29-36 */ 7, 7, 7, 7, 7, 7, 7, 7, /** 37-44 */
+        8, 8, 8, 8, 8, 8, 8, 8, /** 45-52 */ 9, 9, 9, 9, 9, 9, 9, 9, /** 53-60 */
+        10, 10, 10, 10, 10, 10, 10, 10,  /** 61-68 */
+    };
+
+    /**
      * Is this object still usable? Set false after dispose, this variable is
      * used to check for incorrect usage.
      */

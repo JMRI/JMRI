@@ -9,6 +9,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Frame for user selection of a startup automation
@@ -64,6 +65,9 @@ public class AutomationStartupFrame extends OperationsFrame implements java.bean
         if (ae.getSource() == saveButton) {
             automationManager.setStartupAutomation((Automation) comboBox.getSelectedItem());
             OperationsXml.save();
+            if (Setup.isCloseWindowOnSaveEnabled()) {
+                dispose();
+            }
         }
     }
 

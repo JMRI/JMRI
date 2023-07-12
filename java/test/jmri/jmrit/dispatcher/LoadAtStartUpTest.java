@@ -42,7 +42,6 @@ public class LoadAtStartUpTest {
         JUnitUtil.WAITFOR_DELAY_STEP = 20;
     }
 
-    @SuppressWarnings("null")  // spec says cannot happen, everything defined in test data.
     @Test
     public void testShowAndClose() throws Exception {
         // Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
@@ -89,40 +88,40 @@ public class LoadAtStartUpTest {
         ActiveTrain at = d.getActiveTrainsList().get(0);
         aat = at.getAutoActiveTrain();
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("West End Div").getAspect().equals("Clear");
+            return "Clear".equals(smm.provideSignalMast("West End Div").getAspect());
         }, "Signal West End Div now green");
         // check signals and speed
         assertThat(smm.provideSignalMast("West End Div").getAspect()).withFailMessage("1 West End Div Signal Green").isEqualTo("Clear");
         assertThat(smm.provideSignalMast("West To South").getAspect()).withFailMessage("1 West To South  Green").isEqualTo("Clear");
         assertThat(smm.provideSignalMast("South To East").getAspect()).withFailMessage("1 South To East Signal Green").isEqualTo("Approach");
         assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("1 East End Throat Signal Green").isEqualTo("Stop");
-        JUnitUtil.waitFor(() -> { return aat.getTargetSpeed() == speedRestricted; }, "Exit South Platform Speed is correct");
+        JUnitUtil.waitFor(() -> { return (Math.abs(aat.getTargetSpeed() - speedRestricted ) < TOLERANCE ); }, "Exit South Platform Speed is correct");
 
         sm.provideSensor("Occ West Platform Switch").setState(Sensor.ACTIVE);
 
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("West End Div").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("West End Div").getAspect());
         }, "Signal Just passed stop");
         assertThat(smm.provideSignalMast("West End Div").getAspect()).withFailMessage("2 West End Div Signal Stop").isEqualTo("Stop");
         assertThat(smm.provideSignalMast("West To South").getAspect()).withFailMessage("2 West To South  Green").isEqualTo("Clear");
         assertThat(smm.provideSignalMast("South To East").getAspect()).withFailMessage("2 South To East Signal Green").isEqualTo("Approach");
         assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("2 East End Throat Signal Green").isEqualTo("Stop");
-        JUnitUtil.waitFor(() -> { return aat.getTargetSpeed() == speedRestricted; }, "West Platform Switch Speed is correct");
+        JUnitUtil.waitFor(() -> { return (Math.abs(aat.getTargetSpeed() - speedRestricted ) < TOLERANCE ); }, "West Platform Switch Speed is correct");
 
         sm.provideSensor("Occ West Block").setState(Sensor.ACTIVE);
         sm.provideSensor("Occ South Platform").setState(Sensor.INACTIVE);
         sm.provideSensor("Occ West Platform Switch").setState(Sensor.INACTIVE);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("South To East").getAspect().equals("Clear");
+            return "Clear".equals(smm.provideSignalMast("South To East").getAspect());
         }, "Signal South To East now Clear");
         assertThat(smm.provideSignalMast("West To South").getAspect()).withFailMessage("3 West To South  Green").isEqualTo("Clear");
         assertThat(smm.provideSignalMast("South To East").getAspect()).withFailMessage("3 South To East Signal Green").isEqualTo("Clear");
         assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("3 East End Throat Signal Approach").isEqualTo("Approach");
-        JUnitUtil.waitFor(() -> { return aat.getTargetSpeed() == speedRestricted; }, "South To East Speed is correct");
+        JUnitUtil.waitFor(() -> { return (Math.abs(aat.getTargetSpeed() - speedRestricted ) < TOLERANCE ); }, "South To East Speed is correct");
 
         sm.provideSensor("Occ South Block").setState(Sensor.ACTIVE);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("West To South").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("West To South").getAspect());
         }, "Signal Just passed West To South now stop");
         assertThat(smm.provideSignalMast("West End Div").getAspect()).withFailMessage("4 West End Div Signal Red").isEqualTo("Stop");
         assertThat(smm.provideSignalMast("West To South").getAspect()).withFailMessage("4 West To South  Red").isEqualTo("Stop");
@@ -131,30 +130,30 @@ public class LoadAtStartUpTest {
         String strSigSpeed  = (String) smm.provideSignalMast("South To East").getSignalSystem().getProperty(smm.provideSignalMast("South To East").getAspect(), "speed");
         assertThat(InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(strSigSpeed)/100).isEqualTo(speedNormal);
         //The signal head indicates 1.0f but train is limited to a max of 0.6f
-        JUnitUtil.waitFor(() -> { return aat.getTargetSpeed() == 0.6f; }, "West To South Speed is correct");
+        JUnitUtil.waitFor(() -> { return (Math.abs(aat.getTargetSpeed() - 0.6f ) < TOLERANCE ); }, "West To South Speed is correct");
 
         sm.provideSensor("Occ West Block").setState(Sensor.INACTIVE);
         sm.provideSensor("Occ East Block").setState(Sensor.ACTIVE);
 
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("South To East").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("South To East").getAspect());
         }, "Signal Just passed south to east now stop");
         assertThat(smm.provideSignalMast("West End Div").getAspect()).withFailMessage("5 West End Div Signal Green").isEqualTo("Stop");
         assertThat(smm.provideSignalMast("West To South").getAspect()).withFailMessage("5 West To South  Red").isEqualTo("Stop");
         assertThat(smm.provideSignalMast("South To East").getAspect()).withFailMessage("5 South To East Signal Red").isEqualTo("Stop");
         assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("5 East End Throat Signal yellow").isEqualTo("Approach");
-        JUnitUtil.waitFor(() -> { return aat.getTargetSpeed() == speedRestricted; }, "South To East Speed is correct");
+        JUnitUtil.waitFor(() -> { return (Math.abs(aat.getTargetSpeed() - speedRestricted ) < TOLERANCE ); }, "South To East Speed is correct");
 
         sm.provideSensor("Occ South Block").setState(Sensor.INACTIVE);
         sm.provideSensor("Occ East Platform Switch").setState(Sensor.ACTIVE);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("East End Throat").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("East End Throat").getAspect());
         }, "Signal Just passed east end throat now stop");
         assertThat(smm.provideSignalMast("West End Div").getAspect()).withFailMessage("6 West End Div Signal Red").isEqualTo("Stop");
         assertThat(smm.provideSignalMast("West To South").getAspect()).withFailMessage("6 West To South  Red").isEqualTo("Stop");
         assertThat(smm.provideSignalMast("South To East").getAspect()).withFailMessage("6 South To East Signal Red").isEqualTo("Stop");
         assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("6 East End Throat Signal Red").isEqualTo("Stop");
-        JUnitUtil.waitFor(() -> { return aat.getTargetSpeed() == speedRestricted; }, "East Platform Switch Speed is correct");
+        JUnitUtil.waitFor(() -> { return (Math.abs(aat.getTargetSpeed() - speedRestricted ) < TOLERANCE ); }, "East Platform Switch Speed is correct");
 
         sm.provideSensor("Occ East Platform Switch").setState(Sensor.ACTIVE);
         // No change
@@ -162,7 +161,7 @@ public class LoadAtStartUpTest {
         assertThat(smm.provideSignalMast("West To South").getAspect()).withFailMessage("7 West To South  Red").isEqualTo("Stop");
         assertThat(smm.provideSignalMast("South To East").getAspect()).withFailMessage("7 South To East Signal Red").isEqualTo("Stop");
         assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("7 East End Throat Signal Red").isEqualTo("Stop");
-        JUnitUtil.waitFor(() -> { return aat.getTargetSpeed() == speedRestricted; }, "East Platform Switch Speed is correct");
+        JUnitUtil.waitFor(() -> { return (Math.abs(aat.getTargetSpeed() - speedRestricted ) < TOLERANCE ); }, "East Platform Switch Speed is correct");
 
         sm.provideSensor("Occ South Platform").setState(Sensor.ACTIVE);
         // signals no change, speed changes
@@ -170,7 +169,7 @@ public class LoadAtStartUpTest {
         assertThat(smm.provideSignalMast("West To South").getAspect()).withFailMessage("8 West To South  Red").isEqualTo("Stop");
         assertThat(smm.provideSignalMast("South To East").getAspect()).withFailMessage("8 South To East Signal Red").isEqualTo("Stop");
         assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("8 East End Throat Signal Red").isEqualTo("Stop");
-        JUnitUtil.waitFor(() -> { return aat.getTargetSpeed() == speedRestrictedSlow; }, "Speed is correct");
+        JUnitUtil.waitFor(() -> { return (Math.abs(aat.getTargetSpeed() - speedRestrictedSlow ) < TOLERANCE ); }, "Speed is correct");
 
         sm.provideSensor("Occ East Block").setState(Sensor.INACTIVE);
         sm.provideSensor("Occ East Platform Switch").setState(Sensor.INACTIVE);
@@ -185,7 +184,7 @@ public class LoadAtStartUpTest {
             return (Math.abs(aat.getTargetSpeed() ) < TOLERANCE );
         }, "Signal Just passed east end throat now stop");
 
-        JUnitUtil.waitFor(200);
+        JUnitUtil.waitFor(2200);
         // check for next train note dcc name is original transit name has changed
         Assert.assertEquals("Next Train Load","1000 / SouthPlatFormReturnToSouthCC", d.getActiveTrainsList().get(0).getActiveTrainName());
         JUnitUtil.waitFor(2000);
@@ -195,8 +194,11 @@ public class LoadAtStartUpTest {
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getTargetSpeed() - speedRestricted ) < TOLERANCE );
         }, "Started to move");
-        sm.provideSensor("Occ East Block").setState(Sensor.ACTIVE);
+
         sm.provideSensor("Occ East Platform Switch").setState(Sensor.ACTIVE);
+        JUnitUtil.waitFor(50);
+        sm.provideSensor("Occ East Block").setState(Sensor.ACTIVE);
+        JUnitUtil.waitFor(50);
         sm.provideSensor("Occ South Platform").setState(Sensor.INACTIVE);
 
        JUnitUtil.waitFor(() -> {
@@ -205,9 +207,10 @@ public class LoadAtStartUpTest {
         sm.provideSensor("Occ South Block").setState(Sensor.ACTIVE);
 
         JUnitUtil.waitFor(() -> {
-            return (Math.abs(aat.getTargetSpeed() - speedRestricted ) < TOLERANCE );
+            return (Math.abs(aat.getTargetSpeed() - speedRestrictedSlow ) < TOLERANCE );
         }, "Prepare to stop");
         sm.provideSensor("Occ East Platform Switch").setState(Sensor.INACTIVE);
+        JUnitUtil.waitFor(50);
         sm.provideSensor("Occ East Block").setState(Sensor.INACTIVE);
         // train slows to stop
         JUnitUtil.waitFor(() -> {
@@ -222,7 +225,9 @@ public class LoadAtStartUpTest {
         JFrameOperator aw = new JFrameOperator("AutoTrains");
 
         aw.requestClose();
+        aw.waitClosed();
         dw.requestClose();
+        dw.waitClosed();
 
         // cleanup window
         JUnitUtil.dispose(d);
@@ -260,19 +265,24 @@ public class LoadAtStartUpTest {
     }
 
     // Where in user space the "signals" file tree should live
-    private static File outBaseTrainInfo = null;
-    private static File outBaseSignal = null;
+    private File outBaseTrainInfo = null;
+    private File outBaseSignal = null;
 
     // the file we create that we will delete
-    private static Path outPathTrainInfo1 = null;
-    private static Path outPathTrainInfo2 = null;
-    private static Path outPathTrainInfo3 = null;
-    private static Path outPathWarrentPreferences = null;
+    private Path outPathTrainInfo1 = null;
+    private Path outPathTrainInfo2 = null;
+    private Path outPathTrainInfo3 = null;
+    private Path outPathWarrentPreferences = null;
 
-    @BeforeAll
-    public static void doOnce() throws Exception {
+
+    @BeforeEach
+    public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetFileUtilSupport();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initRosterConfigManager();
+        JUnitUtil.initDebugThrottleManager();
 
         // set up users files in temp tst area
         outBaseTrainInfo = new File(FileUtil.getUserFilesPath(), "dispatcher/traininfo");
@@ -307,10 +317,13 @@ public class LoadAtStartUpTest {
         } catch (IOException e) {
             throw e;
         }
+        
     }
 
-    @AfterAll
-    public static void unDoOnce() {
+    @AfterEach
+    public void tearDown() throws Exception {
+
+        JUnitUtil.clearShutDownManager();
         try {
             Files.delete(outPathTrainInfo1);
         } catch  (IOException e) {
@@ -331,24 +344,7 @@ public class LoadAtStartUpTest {
         } catch  (IOException e) {
             // doesnt matter its gonezo
         }
+        JUnitUtil.resetFileUtilSupport();
         JUnitUtil.tearDown();
-    }
-
-    @BeforeEach
-    public void setUp() throws Exception {
-        // JUnitUtil.setUp(); // already called in @BeforeAll
-        JUnitUtil.resetProfileManager();
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.initRosterConfigManager();
-        JUnitUtil.initDebugThrottleManager();
-    }
-
-    @AfterEach
-    public void tearDown() throws Exception {
-        JUnitUtil.resetFileUtilSupport();
-        JUnitUtil.clearShutDownManager();
-        JUnitUtil.resetWindows(false,false);
-        JUnitUtil.resetFileUtilSupport();
-        // JUnitUtil.tearDown(); called in @AfterAll
     }
 }

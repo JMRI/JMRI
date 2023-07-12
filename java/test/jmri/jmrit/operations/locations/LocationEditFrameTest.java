@@ -366,6 +366,9 @@ public class LocationEditFrameTest extends OperationsTestCase {
         LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location loc = lManager.getLocationByName("North End Staging");
         Assert.assertNotNull(loc);
+        
+        // turn on id column
+        InstanceManager.getDefault(LocationManager.class).setShowIdEnabled(true);
 
         LocationEditFrame f = new LocationEditFrame(loc);
         Assert.assertNotNull(f);
@@ -484,6 +487,9 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Location loc = JUnitOperationsUtil.createOneNormalLocation("Test Location");
         Assert.assertNotNull(loc);
+        
+        // turn on id column
+        InstanceManager.getDefault(LocationManager.class).setShowIdEnabled(true);
         
         // add a 3rd track for coverage
         Track track3 = loc.addTrack("Test Location Spur 3", Track.SPUR);
@@ -616,6 +622,9 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Location loc = JUnitOperationsUtil.createOneNormalLocation("Test Location");
         Assert.assertNotNull(loc);
+        
+        // turn on id column
+        InstanceManager.getDefault(LocationManager.class).setShowIdEnabled(true);
 
         LocationEditFrame f = new LocationEditFrame(loc);
         Assert.assertNotNull(f);
@@ -728,5 +737,13 @@ public class LocationEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
         tef = JmriJFrame.getFrame(Bundle.getMessage("EditYard"));
         Assert.assertNull(tef);
+    }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Location loc = JUnitOperationsUtil.createOneNormalLocation("Test Location");
+        LocationEditFrame f = new LocationEditFrame(loc);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 }

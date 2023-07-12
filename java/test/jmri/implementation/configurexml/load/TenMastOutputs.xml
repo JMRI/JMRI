@@ -99,9 +99,11 @@
         <bitString aspect="Restricting">0010000000</bitString>
         <bitString aspect="Stop and Proceed" />
         <bitString aspect="Stop">1000000000</bitString>
+        <bitString aspect="Permissive Medium" />
       </bitStrings>
       <disabledAspects>
         <disabledAspect>Stop and Proceed</disabledAspect>
+        <disabledAspect>Permissive Medium</disabledAspect>
       </disabledAspects>
       <resetPreviousStates>yes</resetPreviousStates>
     </matrixsignalmast>

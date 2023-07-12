@@ -102,6 +102,19 @@ public class DCCppSystemConnectionMemo extends DefaultSystemConnectionMemo {
     public void setThrottleManager(ThrottleManager t) {
         store(t,ThrottleManager.class);
     }
+    /*
+     * Provides access to the Clock Control for this particular connection.
+     * NOTE: May return null if the Clock Control has not been set.
+     */
+    public ClockControl getClockControl() {
+        return get(ClockControl.class);
+    }
+
+    public void setClockControl(ClockControl t) {
+        store(t,ClockControl.class);
+        InstanceManager.store(t, ClockControl.class);
+        InstanceManager.setDefault(ClockControl.class, t);
+    }
 
     /*
      * Provides access to the PowerManager for this particular connection.

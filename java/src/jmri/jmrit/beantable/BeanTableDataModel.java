@@ -10,8 +10,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.EventObject;
 import java.util.List;
@@ -19,8 +21,9 @@ import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -486,6 +489,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         table.setDefaultRenderer(JComboBox.class, new BtValueRenderer());
         table.setDefaultEditor(JComboBox.class, new BtComboboxEditor());
         table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
+        table.setDefaultRenderer(Date.class, new DateRenderer());
 
         // allow reordering of the columns
         table.getTableHeader().setReorderingAllowed(true);
@@ -739,6 +743,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         table.setColumnModel(new XTableColumnModel());
         table.createDefaultColumnsFromModel();
         addMouseListenerToHeader(table);
+        table.getTableHeader().setDefaultRenderer(new BeanTableTooltipHeaderRenderer(table.getTableHeader().getDefaultRenderer()));
         return table;
     }
 
@@ -1030,8 +1035,6 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * Display the comment text for the current row as a tool tip.
      *
      * Most of the bean tables use the standard model with comments in column 3.
-     * The SignalMastLogic table uses column 4 for the comment field.
-     * TurnoutTableAction has its own getCellToolTip.
      * <p>
      * @param table The current table.
      * @param row The current row.
@@ -1040,31 +1043,25 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      */
     public String getCellToolTip(JTable table, int row, int col) {
         String tip = null;
-        if (!table.getName().contains("SignalMastLogic")) {
-            int column = COMMENTCOL;
-            if (table.getName().contains("SignalGroup")) column = 2;
-            if (col == column) {
-                T nBean = getBySystemName(sysNameList.get(row));
-                if (nBean != null) {
-                    tip = formatToolTip(nBean.getComment());
-                }
-            }
-        } else {
-            // SML comments are in column 4
-            if (col == 4) {
-                // The table does not have a "system name"
-                SignalMastManager smm = InstanceManager.getDefault(SignalMastManager.class);
-                SignalMast source = smm.getSignalMast((String) table.getModel().getValueAt(row, 0));
-                SignalMast dest = smm.getSignalMast((String) table.getModel().getValueAt(row, 2));
-                if (source != null) {
-                    SignalMastLogic sml = InstanceManager.getDefault(SignalMastLogicManager.class).getSignalMastLogic(source);
-                    if (sml != null && dest != null) {
-                        tip = formatToolTip(sml.getComment(dest));
-                    }
-                }
+        int column = COMMENTCOL;
+        if (table.getName().contains("SignalGroup")) column = 2;
+        if (col == column) {
+            T nBean = getBySystemName(sysNameList.get(row));
+            if (nBean != null) {
+                tip = formatToolTip(nBean.getComment());
             }
         }
         return tip;
+    }
+
+    /**
+     * Get a ToolTip for a Table Column Header.
+     * @param columnModelIndex the model column number.
+     * @return ToolTip, else null.
+     */
+    @OverridingMethodsMustInvokeSuper
+    protected String getHeaderTooltip(int columnModelIndex) {
+        return null;
     }
 
     /**
@@ -1072,7 +1069,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * @param comment The comment string.
      * @return a html formatted string or null if the comment is empty.
      */
-    String formatToolTip(String comment) {
+    protected String formatToolTip(String comment) {
         String tip = null;
         if (comment != null && !comment.isEmpty()) {
             tip = "<html>" + comment.replaceAll(System.getProperty("line.separator"), "<br>") + "</html>";
@@ -1094,6 +1091,10 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             if (columnName != null && !columnName.isEmpty()) {
                 StayOpenCheckBoxItem menuItem = new StayOpenCheckBoxItem(table.getModel().getColumnName(i), tcm.isColumnVisible(tc));
                 menuItem.addActionListener(new HeaderActionListener(tc, tcm));
+                TableModel mod = table.getModel();
+                if (mod instanceof BeanTableDataModel<?>) {
+                    menuItem.setToolTipText(((BeanTableDataModel<?>)mod).getHeaderTooltip(i));
+                }
                 popupMenu.add(menuItem);
             }
 
@@ -1162,6 +1163,27 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 column.setIdentifier(String.format("Column%d", i));
             }
             i += 1;
+        }
+    }
+
+    protected class BeanTableTooltipHeaderRenderer extends DefaultTableCellRenderer  {
+        private final TableCellRenderer _existingRenderer;
+
+        protected BeanTableTooltipHeaderRenderer(TableCellRenderer existingRenderer) {
+            _existingRenderer = existingRenderer;
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            
+            Component rendererComponent = _existingRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            TableModel mod = table.getModel();
+            if ( rendererComponent instanceof JLabel && mod instanceof BeanTableDataModel<?> ) { // Set the cell ToolTip
+                int modelIndex = table.getColumnModel().getColumn(column).getModelIndex();
+                String tooltip = ((BeanTableDataModel<?>)mod).getHeaderTooltip(modelIndex);
+                ((JLabel)rendererComponent).setToolTipText(tooltip);
+            }
+            return rendererComponent;
         }
     }
 
@@ -1472,7 +1494,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * Set the filter to select which beans to include in the table.
      * @param filter the filter
      */
-    public void setFilter(Predicate<? super T> filter) {
+    public synchronized void setFilter(Predicate<? super T> filter) {
         this.filter = filter;
         updateNameList();
     }
@@ -1481,8 +1503,23 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * Get the filter to select which beans to include in the table.
      * @return the filter
      */
-    public Predicate<? super T> getFilter() {
+    public synchronized Predicate<? super T> getFilter() {
         return filter;
+    }
+
+    static class DateRenderer extends DefaultTableCellRenderer {
+
+        private final DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
+
+        @Override
+        public Component getTableCellRendererComponent( JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column) {
+            JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            if ( value instanceof Date) {
+                c.setText(dateFormat.format(value));
+            }
+            return c;
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class);

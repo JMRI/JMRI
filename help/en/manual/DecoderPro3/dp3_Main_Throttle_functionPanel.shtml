@@ -7,13 +7,7 @@
 
   <style>
     .dp-center {text-align: center;}
-    .dp-middle {text-align: middle;}
     .dp-right {text-align: right;}
-    .dp-none {list-style-type: none;}
-    .dp-square {list-style-type: square;}
-    .dp-upper-alpha {ist-style-type: upper-alpha;}
-    .dp-lower-alpha {list-style-type: lower-alpha;}
-    .dp-border-2 {border: 2px solid;}
   </style>
 </head>
 <body>
@@ -42,8 +36,8 @@
             <td colspan="2" rowspan="1" style="width: 45%">
               <p>The <strong>Throttle Function Panel</strong> allows you to select the decoder
               functions from F0 through F15 on first overlay and F16 through F28 on second overlay.
-              Many new Sound decoders use up to 28 functions.. use the <input name="button11" id=
-              "button11" value="*" type="submit"> to toggle between the two overlays</p>
+              Many new Sound decoders use multiple functions.. use the <span class="textbutton">*</span>
+              button to toggle between the two overlays.</p>
 
               <p style="text-align: center;"><img src="images/Main_Throttle_Function.png" alt=
               "Throttle function panel" height="248" width="281">
@@ -102,14 +96,12 @@
               <p><input name="textfield3" id="textfield3" size="5" type="text"> Drag and drop icon
               of your choice into the box. To remove icon right click and click on Remove.</p>
 
-              <p><strong><input name="button12" id="button12" value="OK" type="submit"></strong>
-              sets all the values edited.</p>
+              <p>The <span class="textbutton">OK</span> button sets all the values edited.</p>
 
-              <p><strong><input name="button13" id="button13" value="Cancel" type=
-              "submit"></strong> exits dialog without change.</p>
+              <p>The <span class="textbutton">Cancel</span> button exits dialog without change.</p>
 
-              <p>You can use the <strong>Save</strong> button on the <a href=
-              "dp3_Main_Throttle_addressPanel.shtml"><strong>Address Panel</strong></a>to save the
+              <p>You can use the <span class="textbutton">Save</span> button on the <a href=
+               "dp3_Main_Throttle_addressPanel.shtml"><strong>Address Panel</strong></a>to save the
               edited functions to your locomotives Roster entry.</p>
             </td>
           </tr>

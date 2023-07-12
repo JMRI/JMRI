@@ -7,13 +7,7 @@
 
   <style>
     .dp-center {text-align: center;}
-    .dp-middle {text-align: middle;}
     .dp-right {text-align: right;}
-    .dp-none {list-style-type: none;}
-    .dp-square {list-style-type: square;}
-    .dp-upper-alpha {ist-style-type: upper-alpha;}
-    .dp-lower-alpha {list-style-type: lower-alpha;}
-    .dp-border-2 {border: 2px solid;}
   </style>
 </head>
 <body>
@@ -60,23 +54,20 @@
       <p>DecoderPro&reg; icon and DecoderPro version information is displayed. The version of Java
       installed and in use is also shown</p>
 
-      <p><strong><input name="button" id="button" value=
-      "Service Mode (Programming Track) Programmer" type="button"></strong> Provides access to the
-      decoder programming capability in <a href="Programmer_ServiceMode.shtml"><strong>Service Mode
-      Programmer<br></strong></a> <input name="button2" id="button2" value=
-      "Operations Mode (Main Track) Programmer" type="button"> Provides access to the <a href=
-      "Programmer_OpsMode.shtml"></a><a href="Programmer_OpsMode.shtml"></a><a href=
-      "Programmer_OpsMode.shtml">Operations Mode Programmer.</a><br>
-      <input name="button3" id="button3" value="Help" type="button"> Opens the Help Window<br>
-      <input name="button4" id="button4" value="Quit" type="button"> Exits the program, with
-      confirmation dialog.</p>
+      <p><span class="textbutton">Service Mode (Programming Track) Programmer</span>
+      button provides access to the
+      decoder programming capability in <a href="Programmer_ServiceMode.shtml">Service Mode Programmer</a><br>
+      <span class="textbutton">Operations Mode (Main Track) Programmer</span> Provides access to the
+      <a href="Programmer_OpsMode.shtml">Operations Mode Programmer.</a><br>
+      <span class="textbutton">Help</span> Opens the Help Window<br>
+      <span class="textbutton">Quit</span> Exits the program, with confirmation dialog.</p>
 
       <p>The buttons shown at the bottom of the window are not JMRI defaults, but instead are setup
       in your <strong>preference</strong> to open each time you start DecoderPro&reg;. The following
       are samples that could be set in your preferences. (Shown are for a Digitrax LocoNet
       system)</p>
 
-      <p><strong><input name="button5" id="button5" value="New Throttle..." type="button"></strong>
+      <p><span class="textbutton">New Throttle...</span>
       Opens a throttle window which provides a tool to control your trains, you may open more than
       one throttle and position on the computer screen</p>
 
@@ -84,7 +75,7 @@
       "images/Main_02_Thottle.png"><br>
       </p>
 
-      <p><strong><input name="button6" id="button6" value="Monitor LocoNet" type="button"></strong>
+      <p><span class="textbutton">Monitor LocoNet</span>
       Opens the Monitor LocoNet window that allows you to monitor the commands and responses on the
       LocoNet.</p>
 
@@ -92,7 +83,7 @@
       width="800">
       </p>
 
-      <p><strong><input name="button7" id="button7" value="Power Control" type="button"></strong>
+      <p><span class="textbutton">Power Control</span>
       Opens Power Control window, which allows you to turn track power on or off during operations
       when supported by your system.</p>
 

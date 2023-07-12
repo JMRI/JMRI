@@ -5,6 +5,8 @@ import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
+import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
@@ -40,17 +42,24 @@ public class DefaultIdTagManagerTest extends AbstractProvidingManagerTestBase<Id
 
         Assert.assertNotNull("Returned IdTag is not null", t);
 
-        Assert.assertNotNull("Get by system name is not null", m.getBySystemName("ID0413276BC1"));
-        Assert.assertNotNull("Get by user name is not null", m.getByUserName("Test Tag"));
+        IdTag getBySystemNameID0413276BC1 = m.getBySystemName("ID0413276BC1");
+        Assert.assertNotNull("Get by system name is not null", getBySystemNameID0413276BC1);
+
+        IdTag getByUserNameTestTag = m.getByUserName("Test Tag");
+        Assert.assertNotNull("Get by user name is not null", getByUserNameTestTag );
         Assert.assertNotNull("Get by tag id is not null", m.getByTagID("0413276BC1"));
 
-        Assert.assertNotNull("Get IdTag using system name is not null", m.getIdTag("ID0413276BC1"));
+        IdTag getIdTagID0413276BC1 = m.getIdTag("ID0413276BC1");
+        Assert.assertNotNull("Get IdTag using system name is not null", getIdTagID0413276BC1 );
         Assert.assertNotNull("Get IdTag using user name is not null", m.getIdTag("Test Tag"));
         Assert.assertNotNull("Get IdTag using tag id is not null", m.getIdTag("0413276BC1"));
 
-        Assert.assertTrue("Matching IdTag returned from manager by system name", t.getSystemName().equals(m.getBySystemName("ID0413276BC1").getSystemName()));
-        Assert.assertTrue("Matching IdTag returned from manager by user name", t.getUserName().equals(m.getByUserName("Test Tag").getUserName()));
-        Assert.assertTrue("Matching IdTag returned from manager by tag id", t.getTagID().equals(m.getByTagID("0413276BC1").getTagID()));
+        Assertions.assertEquals( t.getSystemName(), getBySystemNameID0413276BC1.getSystemName(),
+                "Matching IdTag returned from manager by system name");
+        Assertions.assertEquals( t.getUserName(), getByUserNameTestTag.getUserName(),
+                "Matching IdTag returned from manager by user name");
+        Assertions.assertEquals( t.getTagID(), getIdTagID0413276BC1.getTagID(),
+                "Matching IdTag returned from manager by tag id");
 
         Assert.assertNull("Null Object returned from manager by system name", m.getBySystemName("ID99999999"));
         Assert.assertNull("Null Object returned from manager by user name", m.getBySystemName("This doesn't exist"));
@@ -128,19 +137,19 @@ public class DefaultIdTagManagerTest extends AbstractProvidingManagerTestBase<Id
 
     @BeforeEach
     public void setUp() throws Exception {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initIdTagManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initIdTagManager();
         l = getManager();
     }
 
     @AfterEach
     public void tearDown() throws Exception {
         l = null;
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // Override init method so as not to load file

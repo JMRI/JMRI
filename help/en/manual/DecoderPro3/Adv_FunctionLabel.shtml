@@ -7,13 +7,7 @@
 
   <style>
     .dp-center {text-align: center;}
-    .dp-middle {text-align: middle;}
     .dp-right {text-align: right;}
-    .dp-none {list-style-type: none;}
-    .dp-square {list-style-type: square;}
-    .dp-upper-alpha {ist-style-type: upper-alpha;}
-    .dp-lower-alpha {list-style-type: lower-alpha;}
-    .dp-border-2 {border: 2px solid;}
   </style>
 </head>
 <body>
@@ -111,7 +105,7 @@
       <p>You may also edit the function button text in the <a href=
       "dp3_Main_Throttle.shtml"><strong>JMRI Throttle</strong></a> and save those changes to the
       selected Roster entry. To use these changed entries in the future, make sure you click on the
-      <input name="button" id="button" value="Save to Roster" type="submit"> to save these values
+      <span class="textbutton">Save to Roster</span> button to save these values
       into the Roster entry that is in use.</p>
 
       <hr>

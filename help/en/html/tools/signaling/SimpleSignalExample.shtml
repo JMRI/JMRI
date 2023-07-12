@@ -112,8 +112,8 @@
           the block on the right side (Block 1), the messages are:
 
           <pre>
-<!-- Updated for panel included in JMRI 4.1.3 -->
-  Sensor LS1  (Block 1) is Hi.  (BDL16 #1, DS1; DS54/64/SE8c #1, AuxA/A1/DS01)
+
+  Sensor LS1  (Block 1) is Hi
   Requesting Switch at LT285 () to Thrown (output On).
   Requesting Switch at LT291 () to Thrown (output On).
   Requesting Switch at LT282 () to Thrown (output On).

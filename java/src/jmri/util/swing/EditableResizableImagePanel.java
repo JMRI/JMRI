@@ -54,6 +54,14 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
         super(imagePath, w, h);
         setDnd(true);
     }
+    
+    /**
+     * Cleanup the DnD from this component
+     *
+     */
+    public void removeDnd() {
+        URIDrop.remove(this);
+    }
 
     /**
      * Enable or disable drag'n drop, dropped files will be copied in latest

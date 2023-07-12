@@ -7,13 +7,7 @@
 
   <style>
     .dp-center {text-align: center;}
-    .dp-middle {text-align: middle;}
     .dp-right {text-align: right;}
-    .dp-none {list-style-type: none;}
-    .dp-square {list-style-type: square;}
-    .dp-upper-alpha {ist-style-type: upper-alpha;}
-    .dp-lower-alpha {list-style-type: lower-alpha;}
-    .dp-border-2 {border: 2px solid;}
   </style>
 </head>
 <body>
@@ -75,11 +69,10 @@
                   <p>Type the name of your new roster group in the Create new roster Group
                   <input name="textfield" id="textfield" type="text"></p>
 
-                  <p><input name="button" id="button" value="Cancel" type="submit"> if you do not
+                  <p>Click <span class="textbutton">Cancel</span> if you do not
                   want to create a new roster Group</p>
 
-                  <p><input name="button2" id="button2" value="OK" type="submit"> creates a new
-                  roster group</p>
+                  <p>The <span class="textbutton">OK</span> button creates a new roster Group.</p>
                 </td>
               </tr>
             </tbody>
@@ -109,10 +102,10 @@
                     </option>
                   </select></p>
 
-                  <p><input name="button4" id="button5" value="Cancel" type="submit"> if you do not
+                  <p><span class="textbutton">Cancel</span> if you do not
                   want to delete a roster Group</p>
 
-                  <p><input name="button4" id="button6" value="OK" type="submit"> Deletes the
+                  <p><span class="textbutton">OK"</span> Deletes the
                   selected roster group as active</p>
                 </td>
               </tr>
@@ -201,10 +194,10 @@
                   </option>
                 </select></p>
 
-                <p><input name="button5" id="button7" value="Cancel" type="submit"> if you do not
+                <p><span class="textbutton">Cancel</span> if you do not
                 want to associate an engine to a roster Group</p>
 
-                <p><input name="button5" id="button8" value="OK" type="submit"> Associates the
+                <p><span class="textbutton">OK</span> Associates the
                 selected Engine to the selected roster group.</p>
               </td>
             </tr>
@@ -263,11 +256,10 @@
                     </option>
                   </select></p>
 
-                  <p><input name="button9" id="button9" value="Remove" type="submit"> Removes the
+                  <p><span class="textbutton">Remove</span> Removes the
                   selected loco from the selected Roster Group</p>
 
-                  <p><input name="button10" id="button10" value="Exit" type="submit"> Exits the
-                  dialog</p>
+                  <p><span class="textbutton">Exit</span> Exits the dialog</p>
                 </td>
               </tr>
             </tbody>

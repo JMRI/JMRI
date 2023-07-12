@@ -22,7 +22,7 @@
       turnout feedback or occupancy sensors) and outputs (fascia indicator LEDs, signal LED's,
       turnout motors etc.). The original <a href=
       "http://www.locobuffer.com/LocoIO/LocoIO.htm">LocoIO</a> design by John Jabour was further
-      developed by <a href="http://users.telenet.be/deloof/">Hans Deloof</a> from Belgium.<br>
+      developed by <a href="https://locohdl.synology.me/">Hans Deloof</a> from Belgium.<br>
       A typical board contains 16 signal pins, also called channels or ports. Each port can be
       individually programmed as an input or an output, and to perform a number of different things
       (depending on the module's hardware and firmware (PIC) version:</p>
@@ -123,7 +123,7 @@
       definition file.</p>
 
       <h2 id="current">LocoIO Programmer via Roster</h2>
-      <span class="since">Since <a href="https://jmri.org/releasenotes/jmri4.21.2.shtml" target=
+      <span class="since">Since <a href="https://www.jmri.org/releasenotes/jmri4.21.2.shtml" target=
       "_blank">JMRI 4.21.2</a></span>
       <p>The <a href=
       "../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">Public_Domain_HDL_LocoIO</a>
@@ -275,7 +275,7 @@
 
       <ul>
         <li>For more information on the LocoIO and how to use the boards, see <a href=
-        "http://users.telenet.be/deloof/">LocoHDL</a>.
+        "https://locohdl.synology.me/">LocoHDL</a>.
         </li>
 
         <li>Original LocoIO DIY project description is available at <a href=
@@ -293,7 +293,7 @@
       your LocoIO boards with the current programmer, documented <a href="#current">above</a>.</p>
 
       <p>Version 2 was written by John Plocher for JMRI release 1.8 and <em>only</em> dealt with
-      SV1 & SV2 (address/subaddress) and SV3-SV50 (primary Mode, Value1 and Value2 for ports 1-16).
+      SV1 &amp; SV2 (address/subaddress) and SV3-SV50 (primary Mode, Value1 and Value2 for ports 1-16).
       In particular, it did not handle SV0 (board level configuration), SV51-SV98 (alternate
       Opcodes) or SV101-124 (servo config).</p>
 
@@ -396,24 +396,24 @@
       <p>The "Hex Value1,Value2" column sets the address that the LocoIO board will use for LocoNet
       communications. This contains a hexadecimal representation of the two configuration values
       described in John Jabour's LocoIO programming guide. You generally won't need to figure out
-      these addresses, as the <span class="button">capture</span> buttons will find them for
+      these addresses, as the <span class="textbutton">capture</span> buttons will find them for
       you.</p>
 
-      <p>The <span class="button">Read</span> button reads from the LocoIO board via the LocoNet
-      and shows the current configuration for that pin. The <span class="button">Write</span>
+      <p>The <span class="textbutton">Read</span> button reads from the LocoIO board via the LocoNet
+      and shows the current configuration for that pin. The <span class="textbutton">Write</span>
       button stores the current settings to the LocoIO board.</p>
 
-      <p>The <span class="button">Capture</span> button provides an easier way to find a needed
+      <p>The <span class="textbutton">Capture</span> button provides an easier way to find a needed
       LocoNet address. Configure the input and output for a particular pin, then press the
-      <span class="button">Capture</span> button. The address in the next LocoNet message of the
+      <span class="textbutton">Capture</span> button. The address in the next LocoNet message of the
       right type will be put in the address column.</p>
 
       <p>For example, if you have a channel set to act when a "Turnout closed status message" is
-      received, press the <span class="button">Capture</span> button and use your throttle to
+      received, press the <span class="textbutton">Capture</span> button and use your throttle to
       command the correct turnout Closed.</p>
 
       <p>As another example, if the channel is configured to send a "Send throw turnout command",
-      press the <span class="button">Capture</span> button and use your throttle to command the
+      press the <span class="textbutton">Capture</span> button and use your throttle to command the
       correct turnout Thrown.</p>
 
       <p>At the bottom of the table are some general controls. The LocoIO address field sets the
@@ -421,11 +421,11 @@
       programmed; see below for how to change that. Address "0" is a global address which any
       LocoIO board will respond to; make sure you have only one connected when you use that!</p>
 
-      <p>The <span class="button">Set address</span> button will use the global address to
+      <p>The <span class="textbutton">Set address</span> button will use the global address to
       configure a specific address into a LocoIO board. Again, make sure you have only one
       connected.</p>
 
-      <p>The <span class="button">Read All</span> and <span class="button">Write All</span> buttons
+      <p>The <span class="textbutton">Read All</span> and <span class="textbutton">Write All</span> buttons
       read or write all of the channels, and are just a convenience.</p>
 
       <p>Status messages during capture/read/write are displayed at the bottom of the window. If no

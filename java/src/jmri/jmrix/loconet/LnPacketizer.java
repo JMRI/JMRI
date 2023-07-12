@@ -61,7 +61,7 @@ public class LnPacketizer extends LnTrafficController {
     /**
      * Synchronized list used as a transmit queue.
      */
-    protected LinkedList<byte[]> xmtList = new LinkedList<byte[]>();
+    protected LinkedList<byte[]> xmtList = new LinkedList<>();
 
     /**
      * XmtHandler (a local class) object to implement the transmit thread.
@@ -192,7 +192,7 @@ public class LnPacketizer extends LnTrafficController {
         }
     }
     // Defined this way to reduce new object creation
-    private byte[] rcvBuffer = new byte[1];
+    private final byte[] rcvBuffer = new byte[1];
 
     /**
      * Captive class to handle incoming characters. This is a permanent loop,
@@ -461,7 +461,9 @@ public class LnPacketizer extends LnTrafficController {
         // make sure that the xmt priority is no lower than the current priority
         int xmtpriority = (Thread.MAX_PRIORITY - 1 > priority ? Thread.MAX_PRIORITY - 1 : Thread.MAX_PRIORITY);
         // start the XmtHandler in a thread of its own
-        xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
+        if (xmtThread == null) {
+            xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
+        }
         log.debug("Xmt thread starts at priority {}", xmtpriority); // NOI18N
         xmtThread.setDaemon(true);
         xmtThread.setPriority(Thread.MAX_PRIORITY - 1);

@@ -320,8 +320,18 @@ public class ExpressionDispatcher extends AbstractDigitalExpression
                 manageActiveTrain(evt);
                 break;
 
-            case "status":
             case "mode":
+                if ((int) evt.getNewValue() == ActiveTrain.TERMINATED) {
+                    // The Dispatcher active train was terminated by an external process.
+                    // Force the manager to update the LogixNG active train map.
+                    _atManager.getActiveTrain(_trainInfoFileName);
+                    return;
+                }
+
+                getConditionalNG().execute();
+                break;
+
+            case "status":
                 getConditionalNG().execute();
                 break;
 

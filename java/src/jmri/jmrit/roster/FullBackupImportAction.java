@@ -68,7 +68,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
         ZipInputStream zipper = null;
         FileInputStream inputfile = null;
 
-        JFileChooser chooser = new JFileChooser();
+        JFileChooser chooser = new jmri.util.swing.JmriJFileChooser();
 
         String roster_filename_extension = "roster";
         FileNameExtensionFilter filter = new FileNameExtensionFilter(

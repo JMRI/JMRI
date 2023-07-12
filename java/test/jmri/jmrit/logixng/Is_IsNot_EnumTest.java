@@ -9,7 +9,7 @@ import org.junit.Test;
 
 /**
  * Test SwingToolsTest
- * 
+ *
  * @author Daniel Bergqvist 2019
  */
 public class Is_IsNot_EnumTest {
@@ -25,7 +25,7 @@ public class Is_IsNot_EnumTest {
         Assert.assertTrue("Enum is correct",
                 Is_IsNot_Enum.IsNot == Is_IsNot_Enum.valueOf("IsNot"));
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -39,7 +39,8 @@ public class Is_IsNot_EnumTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2022</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2022-11-11</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder 4.1</revremark>
+		</revision>
+	</revhistory>
+	<!-- CV 150 - 157 -->
+	<variable item="Function F0F option 2" CV="150" default="10">
+		<decVal min="0" max="63"/>
+		<label>2nd Dimming - Lights</label>
+		<label xml:lang="de">2. Dimmung - Licht</label>
+		<label xml:lang="nl">2e Dimmen - Licht</label>
+		<label xml:lang="cs">2. Stmívání - Světla</label>
+		<tooltip>min=0 (off), max=63 (100%)</tooltip>
+		<tooltip xml:lang="cs">min=0 (vypnuto), max=63 (100 %)</tooltip>
+	</variable>
+	<variable item="Function 1 option 2" CV="151" default="10">
+		<decVal min="0" max="63"/>
+		<label>2nd Dimming - A1</label>
+		<label xml:lang="de">2. Dimmung - A1</label>
+		<label xml:lang="nl">2e Dimmen - A1</label>
+		<label xml:lang="cs">2. Stmívání - A1</label>
+		<tooltip>min=0 (off), max=63 (100%)</tooltip>
+		<tooltip xml:lang="cs">min=0 (vypnuto), max=63 (100 %)</tooltip>
+	</variable>
+	<variable item="Function 2 option 2" CV="152" default="10">
+		<decVal min="0" max="63"/>
+		<label>2nd Dimming - A2</label>
+		<label xml:lang="de">2. Dimmung - A2</label>
+		<label xml:lang="nl">2e Dimmen - A2</label>
+		<label xml:lang="cs">2. Stmívání - A2</label>
+		<tooltip>min=0 (off), max=63 (100%)</tooltip>
+		<tooltip xml:lang="cs">min=0 (vypnuto), max=63 (100 %)</tooltip>
+	</variable>
+	<variable item="Function 3 option 2" CV="153" minOut="5" default="10">
+		<decVal min="0" max="63"/>
+		<label>2nd Dimming - A3</label>
+		<label xml:lang="de">2. Dimmung - A3</label>
+		<label xml:lang="nl">2e Dimmen - A3</label>
+		<label xml:lang="cs">2. Stmívání - A3</label>
+		<tooltip>min=0 (off), max=63 (100%)</tooltip>
+		<tooltip xml:lang="cs">min=0 (vypnuto), max=63 (100 %)</tooltip>
+	</variable>
+	<variable item="Function 4 option 2" CV="154" minOut="6" default="10">
+		<decVal min="0" max="63"/>
+		<label>2nd Dimming - A4</label>
+		<label xml:lang="de">2. Dimmung - A4</label>
+		<label xml:lang="nl">2e Dimmen - A4</label>
+		<label xml:lang="cs">2. Stmívání - A4</label>
+		<tooltip>min=0 (off), max=63 (100%)</tooltip>
+		<tooltip xml:lang="cs">min=0 (vypnuto), max=63 (100 %)</tooltip>
+	</variable>
+	<variable item="Function 5 option 2" CV="155" minOut="7" default="10">
+		<decVal min="0" max="63"/>
+		<label>2nd Dimming - A5</label>
+		<label xml:lang="de">2. Dimmung - A5</label>
+		<label xml:lang="nl">2e Dimmen - A5</label>
+		<label xml:lang="cs">2. Stmívání - A5</label>
+		<tooltip>min=0 (off), max=63 (100%)</tooltip>
+		<tooltip xml:lang="cs">min=0 (vypnuto), max=63 (100 %)</tooltip>
+	</variable>
+	<variable item="Function 6 option 2" CV="156" minOut="8" default="10">
+		<decVal min="0" max="63"/>
+		<label>2nd Dimming - A6</label>
+		<label xml:lang="de">2. Dimmung - A6</label>
+		<label xml:lang="nl">2e Dimmen - A6</label>
+		<label xml:lang="cs">2. Stmívání - A6</label>
+		<tooltip>min=0 (off), max=63 (100%)</tooltip>
+		<tooltip xml:lang="cs">min=0 (vypnuto), max=63 (100 %)</tooltip>
+	</variable>
+	<variable item="Function 7 option 2" CV="157" minOut="9" default="10">
+		<decVal min="0" max="63"/>
+		<label>2nd Dimming - A7</label>
+		<label xml:lang="de">2. Dimmung - A7</label>
+		<label xml:lang="nl">2e Dimmen - A7</label>
+		<label xml:lang="cs">2. Stmívání - A7</label>
+		<tooltip>min=0 (off), max=63 (100%)</tooltip>
+		<tooltip xml:lang="cs">min=0 (vypnuto), max=63 (100 %)</tooltip>
+	</variable>
+</variables>

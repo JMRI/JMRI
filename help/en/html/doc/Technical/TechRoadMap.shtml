@@ -93,7 +93,7 @@
         </tr>
 
         <tr>
-          <td style="text-align:center">(Intended) 5.0</td>
+          <td style="text-align:center">5.0</td>
           <td>Production version, culmination of Spring 2022 series</td>
           <td style="text-align:center">June 2022</td>
           <td style="text-align:center"><b>11</b></td>
@@ -101,7 +101,7 @@
         </tr>
 
         <tr>
-          <td style="text-align:center">(Intended) 5.2</td>
+          <td style="text-align:center">5.2</td>
           <td>Production version, culmination of Fall 2022 series</td>
           <td style="text-align:center">Jan 2023</td>
           <td style="text-align:center"><b>11</b></td>
@@ -109,12 +109,37 @@
         </tr>
 
         <tr>
-          <td style="text-align:center">(Intended) 5.4</td>
+          <td style="text-align:center">5.4</td>
           <td>Production version, culmination of Spring 2023 series</td>
           <td style="text-align:center">June 2023</td>
           <td style="text-align:center"><b>11</b></td>
           <td style="text-align:center"><b>11</b></td>
         </tr>
+
+        <tr>
+          <td style="text-align:center">(Intended) 5.6</td>
+          <td>Production version, culmination of Fall 2023 series</td>
+          <td style="text-align:center">Jan 2024</td>
+          <td style="text-align:center"><b>11</b></td>
+          <td style="text-align:center"><b>11</b></td>
+        </tr>
+
+        <tr>
+          <td style="text-align:center">(Intended) 5.8</td>
+          <td>Production version, culmination of Spring 2024 series</td>
+          <td style="text-align:center">June 2024</td>
+          <td style="text-align:center"><b>11</b></td>
+          <td style="text-align:center"><b>11</b></td>
+        </tr>
+
+        <tr>
+          <td style="text-align:center">(Intended) 5.10</td>
+          <td>Production version, culmination of Fall 2024 series</td>
+          <td style="text-align:center">Jan 2025</td>
+          <td style="text-align:center"><b>11</b></td>
+          <td style="text-align:center"><b>11</b></td>
+        </tr>
+
 
       </table>
 

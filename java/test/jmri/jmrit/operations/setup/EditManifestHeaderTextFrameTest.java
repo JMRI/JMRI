@@ -3,10 +3,11 @@ package jmri.jmrit.operations.setup;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
@@ -75,6 +76,14 @@ public class EditManifestHeaderTextFrameTest extends OperationsTestCase {
         // done
         JUnitUtil.dispose(f);
         JUnitUtil.dispose(f2);
+    }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        EditManifestHeaderTextFrame f = new EditManifestHeaderTextFrame();
+        f.initComponents();
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
     // private final static Logger log = LoggerFactory.getLogger(EditManifestHeaderTextFrameTest.class);

@@ -51,7 +51,7 @@
                 AA
               </option>
             </select> for the engine. If the desired Road Name abbreviation doesn't exist, press
-            <input type="submit" name="button" id="button" value="Edit"> to open the <a href=
+            <span class="textbutton">Edit</span> to open the <a href=
             "Ops_EngineAttributes.shtml">Edit Locomotive Attributes</a> dialog for Road.</p>
           </td>
         </tr>
@@ -61,8 +61,8 @@
           </td>
           <td>
             <p>Enter the Locomotive's Road Number <input name="textfield" type="text" id=
-            "textfield" size="12"> Use <input type="submit" name="button2" id="button2" value=
-            "Clear"> to remove your entry if you make a typing error.</p>
+             "textfield" size="12"> Use the <span class="textbutton">Clear</span> button 
+            to remove your entry if you make a typing error.</p>
           </td>
         </tr>
 
@@ -74,10 +74,8 @@
               <option>
                 P42
               </option>
-            </select> If the model you need is not in the list then press <input type="submit"
-            name="button3" id="button3" value="Edit"> and the <a href=
-            "Ops_EngineAttributes.shtml">Edit Locomotive Attributes</a> dialog for Model will
-            open.</p>
+            </select> If the model you need is not in the list then press span class="textbutton">Edit</span>
+            and the <a href="Ops_EngineAttributes.shtml">Edit Locomotive Attributes</a> dialog for Model will open.</p>
 
             <p>The program allows you to organize your engines by Model. Each Model can only have
             one engine Type, length, weight and horsepower rating associated with it. For example,
@@ -95,9 +93,8 @@
               <option>
                 Diesel
               </option>
-            </select> If the type you need is not in the list then press <input type="submit" name=
-            "button4" id="button4" value="Edit"> and the <a href="Ops_EngineAttributes.shtml">Edit
-            Locomotive Attributes</a> dialog for Type will open.</p>
+            </select> If the type you need is not in the list then press <span class="textbutton">Edit</span> and the 
+            <a href="Ops_EngineAttributes.shtml">Edit Locomotive Attributes</a> dialog for Type will open.</p>
           </td>
         </tr>
 
@@ -110,10 +107,8 @@
               <option>
                 60
               </option>
-            </select> If the length you need is not in the list then press <input type="submit"
-            name="button5" id="button5" value="Edit"> and the <a href=
-            "Ops_EngineAttributes.shtml">Edit Locomotive Attributes</a> dialog for Length will
-            open.</p>
+            </select> If the length you need is not in the list then press <span class="textbutton">Edit</span> and 
+            the <a href="Ops_EngineAttributes.shtml">Edit Locomotive Attributes</a> dialog for Length will open.</p>
           </td>
         </tr>
 
@@ -150,8 +145,7 @@
           <td>
             <p>If you wish this locomotive to be part of an <strong>Optional Consist <select name=
             "select7" id="select7">
-            </select></strong> , press <input type="submit" name="button6" id="button6" value=
-            "Edit"> which opens the<br>
+            </select></strong> , press <span class="textbutton">Edit</span> which opens the<br>
             <br>
             <img src="images/Ops_AddEngine_consist.png" width="275" height="151" alt="consist">
             where you may enter a new Consist Name. Then select the Consist Name from the drop-down
@@ -182,8 +176,8 @@
               <option>
                 SF
               </option>
-            </select></strong> , if the owner's name is not in the list press <input type="submit"
-            name="button7" id="button7" value="Edit"> which opens
+            </select></strong> , if the owner's name is not in the list press <span class="textbutton">Edit</span>
+            which opens
             <p><img src="images/Ops_AddEngine_owner.png" width="275" height="151" alt="owner">
             </p>
             where you may enter the owner's name. Then select the Owner Name from the drop-down
@@ -202,17 +196,16 @@
           <td><img src="images/Ops_CarButtons.png" width="475" height="75" alt="Buttons">
           </td>
           <td>
-            <p><input type="submit" name="button9" id="button9" value="Add"> add another
-            engine.</p>
+            <p>The <span class="textbutton">Add</span> button adds another engine.</p>
 
-            <p><input type="submit" name="button10" id="button10" value="Delete"> delete the
+            <p>The <span class="textbutton">Delete</span> button deletes the
             currently visible Locomotive.</p>
 
             <p><input type="submit" name="button11" id="button11" value="Save"> to store the
             engine's settings. OperationsPro will create a file (OperationsEngineRoster.xml) in
             your JMRI directory in a folder called "operations". A backup file with the last
-            settings for all of your engines is also created each time the <input type="submit"
-            name="button12" id="button12" value="Save"> button is pressed.</p>
+            settings for all of your engines is also created each time the
+            <span class="textbutton">Save</span> button is pressed.</p>
           </td>
         </tr>
       </table>

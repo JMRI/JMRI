@@ -114,9 +114,9 @@
     <appearance>
       <aspectname>Not Lit</aspectname>
       <show>dark</show>
-      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleF/CibleFdark.gif</imagelink>
-      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleF/CibleFdark.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleF/CibleFdark.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleF/CibleFDark.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleF/CibleFDark.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleF/CibleFDark.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Advanced Approach Restrict30</aspectname>

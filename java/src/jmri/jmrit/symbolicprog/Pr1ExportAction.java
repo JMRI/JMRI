@@ -47,7 +47,7 @@ public class Pr1ExportAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
 
         if (fileChooser == null) {
-            fileChooser = new JFileChooser();
+            fileChooser = new jmri.util.swing.JmriJFileChooser();
         }
 
         int retVal = fileChooser.showSaveDialog(mParent);

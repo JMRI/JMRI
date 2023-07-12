@@ -38,18 +38,26 @@ public class AbstractIdTagReporter extends AbstractReporter
     public void notify(IdTag id) {
         log.debug("Notify: {}",mSystemName);
         if (id != null) {
-            log.debug("Tag: {}",id);
-            Reporter r = id.getWhereLastSeen();
-            if (r != null) {
-                notifyPreviousReporter(r,id);
+            log.debug("Tag {} notified in {}",id, this);
+            // do not update last reporter and last seen if this is an "exit" report
+            // Only happens on LocoNet transponding reports
+            var entryexit = id.getProperty("entryexit");
+            if (entryexit == null || ! entryexit.equals("exits")) {
+                Reporter r = id.getWhereLastSeen();
+                if (r != null) {
+                    log.trace("{} notifyPreviousReporter {}", id, r);
+                    notifyPreviousReporter(r,id);
+                }
+                id.setWhereLastSeen(this);
+                log.trace("{} last seen here: {}",id, this.mSystemName);
+            } else {
+                log.trace("{} skipping setWhereLastSeen on {} exits report", this, id);
             }
-            id.setWhereLastSeen(this);
-            log.debug("Seen here: {}",this.mSystemName);
         }
         setReport(id);
         setState(id != null ? IdTag.SEEN : IdTag.UNSEEN);
     }
-    
+
     private void notifyPreviousReporter(Reporter r, IdTag id) {
         log.debug("Previous reporter: {}",r.getSystemName());
         if (!(r.equals(this)) && r.getCurrentReport() == id
@@ -74,7 +82,7 @@ public class AbstractIdTagReporter extends AbstractReporter
     public int getState() {
         return state;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     @Nonnull
@@ -90,7 +98,7 @@ public class AbstractIdTagReporter extends AbstractReporter
     }
 
     // Methods to support PhysicalLocationReporter interface
-    
+
     /**
      * Get the locomotive address we're reporting about from the current report.
      * {@inheritDoc}
@@ -116,9 +124,9 @@ public class AbstractIdTagReporter extends AbstractReporter
     }
 
     /**
-     * Gets the direction (ENTER/EXIT) of the report. 
+     * Gets the direction (ENTER/EXIT) of the report.
      * <p>
-     * Because of the way 
+     * Because of the way
      * IdTag Reporters work, all reports are ENTER type.
      * {@inheritDoc}
      */
@@ -131,10 +139,10 @@ public class AbstractIdTagReporter extends AbstractReporter
     /**
      * Get the PhysicalLocation of the Reporter
      *
-     * Reports its own location, for now. 
+     * Reports its own location, for now.
      * Not sure if that's the right thing or
      * not. NOT DONE YET
-     * 
+     *
      * {@inheritDoc}
      */
     @Override

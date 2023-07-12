@@ -95,8 +95,8 @@
 
             <li>
               <a id="preview"><strong>Print Preview</strong></a><br>
-              Print window as above opens, <input name="button" id="button" value="OK" type=
-              "button"> opens output in the Printer Preview window (shown at right).
+              Print window as above opens, <span class="textbutton">OK</span>
+              opens output in the Printer Preview window (shown at right).
             </li>
           </ul>
         </li>

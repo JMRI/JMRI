@@ -107,6 +107,7 @@ public class ExpressionSensorSwingTest extends SwingConfiguratorInterfaceTestBas
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -25,7 +25,7 @@
     Provides build services for JMRI libraries and applications
     </description>
 
-    <property name="jmri.copyright.year" value="1997-2022"/>
+    <property name="jmri.copyright.year" value="1997-2023"/>
 
     <property environment="env"/>
 
@@ -138,8 +138,8 @@
         <pathelement location="${libdir}/vecmath-1.5.2.jar"/>
         <pathelement location="${libdir}/mailapi.jar"/>
         <pathelement location="${libdir}/xAPlib.jar"/>
-        <pathelement location="${libdir}/jna-5.9.0.jar"/>
-        <pathelement location="${libdir}/jna-platform-5.9.0.jar"/>
+        <pathelement location="${libdir}/jna-5.13.0.jar"/>
+        <pathelement location="${libdir}/jna-platform-5.13.0.jar"/>
         <pathelement location="${libdir}/commons-lang3-3.7.jar"/>
         <pathelement location="${libdir}/commons-net-3.9.0.jar"/>
         <pathelement location="${libdir}/commons-logging-1.2.jar"/>
@@ -147,7 +147,7 @@
         <pathelement location="${libdir}/commons-compress-1.18.jar"/>
         <pathelement location="${libdir}/jackson-core-2.13.4.jar"/>
         <pathelement location="${libdir}/jackson-annotations-2.13.4.jar"/>
-        <pathelement location="${libdir}/jackson-databind-2.13.4.1.jar"/>
+        <pathelement location="${libdir}/jackson-databind-2.13.4.2.jar"/>
         <pathelement location="${libdir}/jetty-http-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/jetty-io-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/jetty-security-9.4.28.v20200408.jar"/>
@@ -670,6 +670,7 @@
                    deprecation="@{javac.deprecation}"
                    debug="${java.debugging}">
                 <classpath refid="@{javac.classpath}"/>
+                <compilerarg value="-XDignore.symbol.file"/> <!-- suppresses sun.misc warnings on Java 9 -->
                 <compilerarg line="-encoding utf-8"/>
                 <compilerarg value="-Xlint:unchecked"/>
                 <compilerarg value="-Xpkginfo:always"/>  <!-- compile all package-info.java to avoid empty-file warnings -->
@@ -819,6 +820,7 @@
             <sysproperty key="wdm.forceCache" value="true"/>
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -856,6 +858,7 @@
             <sysproperty key="wdm.forceCache" value="true"/>
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1105,6 +1108,7 @@
             <classpath refid="project.class.path"/>
             <sysproperty key="java.security.policy"
                          value="${libdir}/security.policy"/>
+            <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="apple.awt.graphics.UseQuartz" value="true"/>
             <sysproperty key="apple.awt.graphics.EnableQ2DX" value="true"/>
@@ -1140,6 +1144,7 @@
             <classpath refid="project.class.path"/>
             <sysproperty key="java.security.policy"
                          value="${libdir}/security.policy"/>
+            <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path"
@@ -1263,6 +1268,7 @@
             <classpath refid="project.class.path"/>
             <sysproperty key="java.security.policy"
                          value="${libdir}/security.policy"/>
+            <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="apple.awt.graphics.UseQuartz" value="true"/>
             <sysproperty key="apple.awt.graphics.EnableQ2DX" value="true"/>
@@ -1299,6 +1305,7 @@
           fork="yes" >
             <classpath refid="test.class.path"/>
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1414,6 +1421,7 @@
             fork="yes" >
 
               <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+              <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
               <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
               <sysproperty key="log4j.ignoreTCL" path="true/"/>
               <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1440,6 +1448,7 @@
             fork="yes" >
 
               <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+              <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
               <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
               <sysproperty key="log4j.ignoreTCL" path="true/"/>
               <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1470,6 +1479,7 @@
           fork="yes" >
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1495,6 +1505,7 @@
           fork="yes" >
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1526,6 +1537,7 @@
             <sysproperty key="wdm.forceCache" value="true"/>
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1617,6 +1629,7 @@
                 <fileset refid="junitfileset"/>
                 <fork>
                     <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+                    <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
                     <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
                     <sysproperty key="log4j.ignoreTCL" path="true/"/>
                     <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1644,6 +1657,7 @@
           fork="yes" >
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1672,6 +1686,7 @@
             <sysproperty key="wdm.forceCache" value="true"/>
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1708,9 +1723,8 @@
                 </fileset>
                 <fork>
                     <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-
-                   <sysproperty key="cucumber.options" value="--tags 'not @Ignore'"/>
-                    <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+                    <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
+                    <sysproperty key="cucumber.options" value="--tags 'not @Ignore'"/>
                     <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
                     <sysproperty key="log4j.ignoreTCL" path="true/"/>
                     <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1944,7 +1958,7 @@
         </exec>
     </target>
 
-    <target name="javadoc" depends="init, jjdoc, compile-generated-source, plantuml" description="create Javadocs">
+    <target name="javadoc" depends="init, jjdoc, compile-generated-source, plantuml, get-version-string" description="create Javadocs">
         <javadoc packagenames="jmri.*, apps.*"
                  maxmemory="1536m"
                  overview="${source}/jmri/overview.html"
@@ -1997,9 +2011,10 @@
             <classpath refid="compile.class.path"/>
             <doctitle><![CDATA[<h1>JMRI Library API</h1>]]>
             </doctitle>
-            <bottom><![CDATA[<i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
+            <bottom><![CDATA[Made from JMRI version ${release.version-string}
+                    <br><i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
                     <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
-                       <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
+                       <br><a href="https://www.jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                 ]]>
             </bottom>
 
@@ -2026,7 +2041,6 @@
             <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/4.7.3/"/>
             <link href="https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/"/>
             <!-- marking this one offline as it doesn't currently serve the 'package-list' document -->
-            <!-- <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/> -->
             <!-- The following Javadocs were built with JDK 11+ and can't be directly linked -->
             <link offline="true" href="https://static.javadoc.io/com.alexandriasoftware.swing/jinputvalidator/0.8.0/" packagelistLoc="lib/jinputvalidator-0.8.0-package-list"/>
             <link offline="true" href="https://static.javadoc.io/com.tngtech.archunit/archunit/0.11.0/" packagelistLoc="lib/archunit-0.11.0-package-list"/>
@@ -2042,7 +2056,7 @@
     <!-- Requires Graphviz from http://www.graphviz.org            -->
     <!-- Does not work with Java 10 or later,                      -->
     <!-- see https://github.com/gboersma/uml-java-doclet           -->
-    <target name="javadoc-uml" depends="check-java-version-requirement, init, jjdoc, compile-generated-source, plantuml"
+    <target name="javadoc-uml" depends="check-java-version-requirement, init, jjdoc, compile-generated-source, plantuml, get-version-string"
                     description="create Javadocs with UML, requires Java 11">
         <javadoc packagenames="jmri.*, apps.*"
                  maxmemory="1536m"
@@ -2106,9 +2120,10 @@
             <classpath refid="compile.class.path"/>
             <doctitle><![CDATA[<h1>JMRI Library API</h1>]]>
             </doctitle>
-            <bottom><![CDATA[<i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
+            <bottom><![CDATA[Made from JMRI version ${release.version-string}
+                    <br><i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
                     <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
-                       <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
+                       <br><a href="https://www.jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                 ]]>
             </bottom>
 
@@ -2124,7 +2139,6 @@
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
             <!-- marking this one offline as it doesn't currently serve the 'package-list' document -->
-            <!-- <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/> -->
             <!-- The following Javadocs were built with JDK 11+ and can't be directly linked -->
             <link offline="true" href="https://static.javadoc.io/com.alexandriasoftware.swing/jinputvalidator/0.8.0/" packagelistLoc="lib/jinputvalidator-0.8.0-package-list"/>
             <link offline="true" href="https://static.javadoc.io/com.tngtech.archunit/archunit/0.11.0/" packagelistLoc="lib/archunit-0.11.0-package-list"/>
@@ -2255,7 +2269,7 @@
     <target name="tests-spotbugs" depends="dist-tests" description="generate SpotBugs (HTML) report over test code. Specify SpotBugs install with local.properties file or &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; on command line." >
         <spotbugs home="${spotbugs.home}"
                   output="html"
-                  outputFile="${jartarget}/spotbugs.html"
+                  outputFile="${jartarget}/tests-spotbugs.html"
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
                   excludeFilter=".spotbugs.xml"
@@ -2289,7 +2303,7 @@
     <target name="tests-spotbugs-check" depends="dist-tests" description="generate SpotBugs check-only (HTML) report over test code. Specify SpotBugs install with local.properties file or &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; on command line." >
         <spotbugs home="${spotbugs.home}"
                   output="html"
-                  outputFile="${jartarget}/spotbugs-check.html"
+                  outputFile="${jartarget}/tests-spotbugs-check.html"
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
                   excludeFilter=".spotbugs-check.xml"
@@ -2322,7 +2336,7 @@
     <target name="tests-spotbugs-ci" depends="dist-tests" description="generate SpotBugs CI (XML) report over test code. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
         <spotbugs home="${spotbugs.home}"
                   output="xml:withMessages"
-                  outputFile="spotbugs.xml"
+                  outputFile="tests-spotbugs.xml"
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
                   excludeFilter=".spotbugs.xml"
@@ -2355,7 +2369,7 @@
     <target name="tests-spotbugs-check-ci" depends="dist-tests" description="generate SpotBugs CI check-only (XML) report over test code. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
         <spotbugs home="${spotbugs.home}"
                   output="xml:withMessages"
-                  outputFile="spotbugs.xml"
+                  outputFile="tests-spotbugs-check.xml"
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
                   excludeFilter=".spotbugs-check.xml"
@@ -2608,6 +2622,8 @@
         <!-- do these first, so we can then make everything in the new directory executable -->
         <copy todir="${dist.linux}/JMRI">
             <fileset dir="${dist.scripts}"/>
+            <fileset dir="${scriptdir}/Linux"
+                     includes="CreateJmriApps.sh"/>
         </copy>
         <chmod perm="ugo+rx">
             <fileset dir="${dist.linux}/JMRI"/>
@@ -2648,6 +2664,7 @@
                 <exclude name="JMRI/SoundPro"/>
                 <exclude name="JMRI/InstallTest"/>
                 <exclude name="JMRI/JmriFaceless"/>
+                <exclude name="JMRI/CreateJmriApps.sh"/>
             </tarfileset>
             <tarfileset  dir="${dist.linux}" filemode="755">
                 <include name="JMRI/DecoderPro"/>
@@ -2655,6 +2672,7 @@
                 <include name="JMRI/SoundPro"/>
                 <include name="JMRI/InstallTest"/>
                 <include name="JMRI/JmriFaceless"/>
+                <include name="JMRI/CreateJmriApps.sh"/>
             </tarfileset>
         </tar>
     </target>

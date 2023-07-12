@@ -13,12 +13,12 @@ import org.junit.jupiter.api.*;
 public class BuildFailedExceptionTest extends OperationsTestCase {
 
     @Test
-    public void StringTypeConstructorTest() {
+    public void stringTypeConstructorTest() {
         Assert.assertNotNull("BuildFailedException constructor", new BuildFailedException("test exception", "normal"));
     }
 
     @Test
-    public void StringConstructorTest() {
+    public void stringConstructorTest() {
         Assert.assertNotNull("BuildFailedException string constructor", new BuildFailedException("test exception"));
     }
 }

@@ -1,6 +1,8 @@
 package jmri.jmrix.loconet;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.jmrix.loconet.SlotMapEntry.SlotType;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -29,6 +31,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Stephen Williams Copyright (C) 2008
  * @author B. Milhaupt, Copyright (C) 2018
+ * @author S. Gigiel, Copyright (C) 2018
  */
 public class LocoNetSlot {
 
@@ -40,24 +43,69 @@ public class LocoNetSlot {
      * @param slotNum  slot number to be assigned to the new LocoNetSlot object
      */
     public LocoNetSlot(int slotNum) {
-        slot = slotNum;
+        this(slotNum, LnConstants.LOCONETPROTOCOL_UNKNOWN);
     }
 
     /**
+     * Create a slot based solely on a slot number.  The remainder of the slot is
+     * left un-initialized.
+     * <p>
+     * @param slotNum - slot number to be assigned to the new LocoNetSlot object
+     * @param inLoconetProtocol - can be 0 = unknown, 1 = version 1.1, 2 = Expandedslot
+     */
+    public LocoNetSlot(int slotNum, int inLoconetProtocol) {
+        this(slotNum, inLoconetProtocol, SlotType.LOCO);
+        if ((slotNum == 0) || (slotNum > 120 && slot < 128)
+                || (slotNum > 247 && slotNum < 257)
+                || (slotNum > 375 && slotNum < 385)) {
+            slotType = SlotType.SYSTEM;
+        } else {
+            slotType = SlotType.LOCO;
+        }
+    }
+
+    /**
+     * Create a slot , initialize slotnum, protocol and slot type
+     * <p>
+     * @param slotNum - slot number to be assigned to the new LocoNetSlot object
+     * @param inLoconetProtocol - can be 0 = unknown, 1 = version 1.1, 2 = Expandedslot
+     * @param inSlotType - SLotType enum
+     */
+    public LocoNetSlot(int slotNum, int inLoconetProtocol, SlotType inSlotType) {
+        slot = slotNum;
+        loconetProtocol = inLoconetProtocol;
+        if (slotNum > 127 ) {
+            // has to be 2
+            loconetProtocol = LnConstants.LOCONETPROTOCOL_TWO;
+        }
+        slotType = inSlotType;
+    }
+
+
+    /**
      * Creates a slot object based on the contents of a LocoNet message.
-     * The slot number is assumed to be found in byte 2 of the message
-     *
+     * The slot number is assumed to be found in byte 2 of the message if message is 0xE6 or bytes 2 and 3 for 0xE7
+     * <p>
      * @param l  a LocoNet message
      * @throws LocoNetException if the slot does not have an easily-found
      * slot number
      */
     public LocoNetSlot(LocoNetMessage l) throws LocoNetException {
+        // TODO: Consider removing, only used in testing.
         // TODO: Consider limiting the types of LocoNet message which can be
         // used to construct the object to only LocoNet slot write or slot
         // report messages, since a LocoNetSlot object constructed from a LocoNet
         // "speed" message or "dir/func" message does not give any other useful
         // information for object initialization.
-        slot = l.getElement(2);
+        if ( l.getOpCode() == LnConstants.OPC_SL_RD_DATA || l.getOpCode() == LnConstants.OPC_WR_SL_DATA)  {
+            slot = l.getElement(2);
+            loconetProtocol = LnConstants.LOCONETPROTOCOL_ONE;
+        } else if (l.getOpCode() == LnConstants.OPC_EXP_RD_SL_DATA || l.getOpCode() == LnConstants.OPC_EXP_WR_SL_DATA) {
+            slot = ( (l.getElement(2) & 0x03 ) *128) + l.getElement(3);
+            loconetProtocol = LnConstants.LOCONETPROTOCOL_TWO;
+        } else {
+           throw new LocoNetException("Invalid loconet message for setting up a slot");
+        }
         setSlot(l);
     }
 
@@ -72,6 +120,45 @@ public class LocoNetSlot {
         return slot;
     }  // cannot modify the slot number once created
 
+    /**
+     * Set the Slot Type
+     * @param value enum for slottype
+     */
+    public void setSlotType(SlotType value) {
+        slotType = value;
+    }
+
+    /***
+     *
+     * @return true if this is a systems slot else false
+     */
+    public boolean isSystemSlot() {
+        return slotType == SlotType.SYSTEM;
+    }
+
+    /***
+     *
+     * @return true if this is a systems slot else false
+     */
+    public SlotType getSlotType() {
+         return slotType;
+     }
+
+    /**
+     *
+     * @return the protocol level support by the slot.
+     */
+    public int getProtocol() {
+        return loconetProtocol;
+    }
+
+    /**
+     * set the protocol to be used
+     * @param value one,two or unknown
+     */
+   protected void setProtocol(int value) {
+        loconetProtocol = value;
+   }
 
     /**
      * Get decoder mode.
@@ -142,6 +229,20 @@ public class LocoNetSlot {
 
     public int ss2() {
         return ss2;
+    }
+
+    /**
+     * Get the state of the Acquire Throttle / slot.
+     * It is fully initialized if this is true.
+     * If it is false then any changes to its state may be lost.
+     * @return true
+     */
+    public boolean getIsInitilized() {
+        return isInitialized;
+    }
+
+    protected void setIsInitialized(boolean state) {
+        isInitialized = state;
     }
 
     /**
@@ -726,7 +827,6 @@ public class LocoNetSlot {
         return snd + (ss2 & 2) * 64;
     }
 
-    // global track status should be reference through SlotManager
     boolean localF9 = false;
     boolean localF10 = false;
     boolean localF11 = false;
@@ -764,7 +864,102 @@ public class LocoNetSlot {
     @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     public void setSlot(LocoNetMessage l) throws LocoNetException { // exception if message can't be parsed
         // sort out valid messages, handle
+        if (slotType != SlotType.LOCO && slotType != SlotType.SYSTEM) {
+            slotType =  SlotType.LOCO;
+            log.warn("Slot [{}] not in map but reports loco, check command station type",slot);
+        }
         switch (l.getOpCode()) {
+            case LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR:  //speed and functions
+                if (l.getElement(3) != expandedThrottleControllingID) {
+                    // Message is not from owning throttle
+                    log.debug("OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR for slot[{}] sent from throttle[{}], slot owned by [{}]",slot,l.getElement(3),expandedThrottleControllingID);
+                    return;
+                }
+                if (((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_SPEED) == 0)
+                        && (((stat & LnConstants.CONSIST_MASK) != LnConstants.CONSIST_MID) &&
+                        ((stat & LnConstants.CONSIST_MASK) != LnConstants.CONSIST_SUB))) {
+                    // speed and direction
+                    spd = l.getElement(4);
+                    dirf = dirf & 0b11011111;
+                    if ((l.getElement(1) & 0b00001000) != 0) {
+                        dirf = dirf | 0b00100000;
+                    }
+                } else if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F0F6) {
+                    // function grp 1
+                    dirf = dirf & 0b11100000;
+                    dirf = dirf | (l.getElement(4) & 0b00011111);
+                    snd = snd & 0b11111100;
+                    snd = snd | ((l.getElement(4) & 0b01100000) >> 5);
+                } else if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F7F13) {
+                    // function grp 2
+                    snd = snd & 0b11110011;
+                    snd = snd | ((l.getElement(4) & 0b00000011) << 2);
+                    localF9 = ((l.getElement(4) & 0b00000100) != 0);
+                    localF10 = ((l.getElement(4) & 0b00001000) != 0);
+                    localF11 = ((l.getElement(4) & 0b00010000) != 0);
+                    localF12 = ((l.getElement(4) & 0b00100000) != 0);
+                    localF13 = ((l.getElement(4) & 0b01000000) != 0);
+                } else if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F14F20) {
+                    localF14 = ((l.getElement(4) & 0b00000001) != 0);
+                    localF15 = ((l.getElement(4) & 0b00000010) != 0);
+                    localF16 = ((l.getElement(4) & 0b00000100) != 0);
+                    localF17 = ((l.getElement(4) & 0b00001000) != 0);
+                    localF18 = ((l.getElement(4) & 0b00010000) != 0);
+                    localF19 = ((l.getElement(4) & 0b00100000) != 0);
+                    localF20 = ((l.getElement(4) & 0b01000000) != 0);
+                } else if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF
+                        || (l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON) {
+                    localF21 = ((l.getElement(4) & 0b00000001) != 0);
+                    localF22 = ((l.getElement(4) & 0b00000010) != 0);
+                    localF23 = ((l.getElement(4) & 0b00000100) != 0);
+                    localF24 = ((l.getElement(4) & 0b00001000) != 0);
+                    localF25 = ((l.getElement(4) & 0b00010000) != 0);
+                    localF26 = ((l.getElement(4) & 0b00100000) != 0);
+                    localF27 = ((l.getElement(4) & 0b01000000) != 0);
+                    localF28 = ((l.getElement(1) & 0b00010000) != 0);
+                }
+                notifySlotListeners();
+                break;
+            case LnConstants.OPC_EXP_RD_SL_DATA:
+            case LnConstants.OPC_EXP_WR_SL_DATA:
+                lastUpdateTime = System.currentTimeMillis();
+                stat = l.getElement(4);
+                addr = l.getElement(5) + 128 * l.getElement(6);
+                spd = l.getElement(8);
+                if (loconetProtocol == LnConstants.LOCONETPROTOCOL_UNKNOWN) {
+                    // it has to be 2 
+                    loconetProtocol = LnConstants.LOCONETPROTOCOL_TWO;
+                }
+                dirf = l.getElement(10) & 0b00111111;
+                id = l.getElement(18) + 128 * l.getElement(19);
+                expandedThrottleControllingID = l.getElement(18);
+                snd = snd & 0b11111100;
+                snd = snd |  ( (l.getElement(11) & 0b01100000) >> 5) ;
+                snd = l.getElement(11) & 0b00001111;
+                trk = l.getElement(7);
+                localF9  = ((l.getElement(11) & 0b00010000 ) != 0);
+                localF10 = ((l.getElement(11) & 0b00100000 ) != 0);
+                localF11 = ((l.getElement(11) & 0b01000000 ) != 0);
+                localF12 = ((l.getElement(9)  & 0b00010000 ) != 0);
+                localF13 = ((l.getElement(12) & 0b00000001 ) != 0);
+                localF14 = ((l.getElement(12) & 0b00000010 ) != 0);
+                localF15 = ((l.getElement(12) & 0b00000100 ) != 0);
+                localF16 = ((l.getElement(12) & 0b00001000 ) != 0);
+                localF17 = ((l.getElement(12) & 0b00010000 ) != 0);
+                localF18 = ((l.getElement(12) & 0b00100000 ) != 0);
+                localF19 = ((l.getElement(12) & 0b01000000 ) != 0);
+                localF20 = ((l.getElement(9)  & 0b00100000 ) != 0);
+                localF21 = ((l.getElement(13) & 0b00000001 ) != 0);
+                localF22 = ((l.getElement(13) & 0b00000010 ) != 0);
+                localF23 = ((l.getElement(13) & 0b00000100 ) != 0);
+                localF24 = ((l.getElement(13) & 0b00001000 ) != 0);
+                localF25 = ((l.getElement(13) & 0b00010000 ) != 0);
+                localF26 = ((l.getElement(13) & 0b00100000 ) != 0);
+                localF27 = ((l.getElement(13) & 0b01000000 ) != 0);
+                localF28 = ((l.getElement(9)  & 0b01000000 ) != 0);
+                leadSlot = (((l.getElement(9) & 0x03)   * 128) + l.getElement(8) );
+                notifySlotListeners();
+                break;
             case LnConstants.OPC_SL_RD_DATA:
                 lastUpdateTime = System.currentTimeMillis();
             //fall through
@@ -774,6 +969,9 @@ public class LocoNetSlot {
                 }            // valid, so fill contents
                 if (slot != l.getElement(2)) {
                     log.error("Asked to handle message not for this slot ({}) {}", slot, l);
+                }
+                if (loconetProtocol == LnConstants.LOCONETPROTOCOL_UNKNOWN) {
+                    loconetProtocol = LnConstants.LOCONETPROTOCOL_ONE;   // all it can be...
                 }
                 stat = l.getElement(3);
                 _pcmd = l.getElement(4);
@@ -785,6 +983,7 @@ public class LocoNetSlot {
                 // item 9 is in add2
                 snd = l.getElement(10);
                 id = l.getElement(11) + 128 * l.getElement(12);
+                expandedThrottleControllingID = l.getElement(11);
 
                 notifySlotListeners();
                 return;
@@ -878,7 +1077,7 @@ public class LocoNetSlot {
                 }
                 return;
             }
-            case LnConstants.RE_OPC_IB2_SPECIAL: {
+            case LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL: {
                 if (l.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN) {
                     // IB function message
                     int data = l.getElement(4);
@@ -917,6 +1116,31 @@ public class LocoNetSlot {
                             return;
                     }
                 }
+                int src = slot;
+                int dest = ((l.getElement(3) & 0x07) * 128) + (l.getElement(4) & 0x7f);
+                // null move or change status or consisting or?
+                if ((l.getElement(1) & 0b11111000) == 0b00111000) {
+                    if (((l.getElement(3) & 0b01110000) == 0b01100000)) {
+                        stat = l.getElement(4);
+                        notifySlotListeners();
+                        return;
+                    } else if ((l.getElement(3) & 0b01110000) == 0b01010000) {
+                        // unconsisting returns slot contents so do nothing to this slot
+                        return;
+                    } else if ((l.getElement(3) & 0b01110000) == 0b01000000) {
+                        //consisting do something?
+                        //Set From slot as slave to slot as master
+                        stat = stat | LnConstants.CONSIST_TOP;
+                        notifySlotListeners();
+                        return;
+                    } else if (src == 0 && dest == 0) {
+                        stat = stat & ~LnConstants.LOCO_IN_USE;
+                        log.debug("set idle");
+                        notifySlotListeners();
+                        return;
+                    }
+                }
+                return;
             }
             default: {
                 throw new LocoNetException("message can't be parsed"); // NOI18N
@@ -977,11 +1201,21 @@ public class LocoNetSlot {
      * @return Formatted LocoNet message to change value.
      */
     public LocoNetMessage writeMode(int status) {
-        LocoNetMessage l = new LocoNetMessage(4);
-        l.setOpCode(LnConstants.OPC_SLOT_STAT1);
-        l.setElement(1, slot);
-        l.setElement(2, (stat & ~LnConstants.DEC_MODE_MASK) | status);
-        return l;
+        if (loconetProtocol != LnConstants.LOCONETPROTOCOL_TWO ) {
+            LocoNetMessage l = new LocoNetMessage(4);
+            l.setOpCode(LnConstants.OPC_SLOT_STAT1);
+            l.setElement(1, slot);
+            l.setElement(2, (stat & ~LnConstants.DEC_MODE_MASK) | status);
+            return l;
+        } else {
+            LocoNetMessage l = new LocoNetMessage(6);
+            l.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL);
+            l.setElement(1, ((slot / 128) & 0x03) | 0b00111000 ) ;
+            l.setElement(2, slot & 0x7f);
+            l.setElement(3, 0x60);
+            l.setElement(4, (stat & ~LnConstants.DEC_MODE_MASK) | status);
+            return l;
+        }
     }
 
     /**
@@ -997,17 +1231,73 @@ public class LocoNetSlot {
     }
 
     /**
+     * Set the throttle ID in the slot
+     *
+     * @param throttleId full id
+     */
+    public void setThrottleIdentity(int throttleId) {
+        id = throttleId;
+    }
+
+    /**
+     * Get the throttle ID in the slot
+     *
+     *@return the Id of the Throttle
+     */
+    public int getThrottleIdentity() {
+        return id;
+    }
+
+    public int getLeadSlot() {
+        return leadSlot;
+    }
+
+    /**
      * Update the status mode bits in STAT1 (D5, D4)
      *
      * @param status New values for STAT1 (D5, D4)
      * @return Formatted LocoNet message to change value.
      */
     public LocoNetMessage writeStatus(int status) {
-        LocoNetMessage l = new LocoNetMessage(4);
-        l.setOpCode(LnConstants.OPC_SLOT_STAT1);
-        l.setElement(1, slot);
-        l.setElement(2, (stat & ~LnConstants.LOCOSTAT_MASK) | status);
-        return l;
+        if (loconetProtocol != LnConstants.LOCONETPROTOCOL_TWO ) {
+            LocoNetMessage l = new LocoNetMessage(4);
+            l.setOpCode(LnConstants.OPC_SLOT_STAT1);
+            l.setElement(1, slot);
+            l.setElement(2, (stat & ~LnConstants.LOCOSTAT_MASK) | status);
+            return l;
+        } else {
+            LocoNetMessage l = new LocoNetMessage(6);
+            l.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL);
+            l.setElement(1, ((slot / 128) & 0x03) | 0b00111000 ) ;
+            l.setElement(2, slot & 0x7f);
+            l.setElement(3, 0x60);
+            l.setElement(4, (stat & ~LnConstants.LOCOSTAT_MASK) | status);
+            return l;
+        }
+    }
+
+    /**
+     * Update Speed
+     *
+     * @param speed new speed
+     * @return Formatted LocoNet message to change value.
+     */
+    public LocoNetMessage writeSpeed(int speed) {
+        if (loconetProtocol != LnConstants.LOCONETPROTOCOL_TWO) {
+            LocoNetMessage l = new LocoNetMessage(4);
+            l.setOpCode(LnConstants.OPC_LOCO_SPD);
+            l.setElement(1, slot );
+            l.setElement(2, speed);
+            return l;
+        } else {
+            LocoNetMessage l = new LocoNetMessage(6);
+            l.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
+            l.setElement(1, ((slot / 128) & 0x03) | ((dirf &  LnConstants.DIRF_DIR ) >> 2) );
+            l.setElement(2, slot & 0x7f);
+            l.setElement(3, (id & 0x7f));
+            l.setElement(4, speed);
+            return l;
+        }
     }
 
     /**
@@ -1019,11 +1309,44 @@ public class LocoNetSlot {
      * @return LocoNet message which "dispatches" the slot
     */
     public LocoNetMessage dispatchSlot() {
-        LocoNetMessage l = new LocoNetMessage(4);
-        l.setOpCode(LnConstants.OPC_MOVE_SLOTS);
-        l.setElement(1, slot);
-        l.setElement(2, 0);
-        return l;
+        if (loconetProtocol != LnConstants.LOCONETPROTOCOL_TWO) {
+            LocoNetMessage l = new LocoNetMessage(4);
+            l.setOpCode(LnConstants.OPC_MOVE_SLOTS);
+            l.setElement(1, slot);
+            l.setElement(2, 0);
+            return l;
+        } else {
+            LocoNetMessage l = new LocoNetMessage(6);
+            l.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL);
+            l.setElement(1, ((slot / 128) & 0x03) | 0b00111000 ) ;
+            l.setElement(2, slot & 0x7f);
+            l.setElement(3, 0);
+            l.setElement(4, 0);
+            return l;
+        }
+    }
+
+    /**
+     * Create a message to perform a null move on this slot.
+     * @return correct LocoNetMessage for protocol being used.
+     */
+    public LocoNetMessage writeNullMove() {
+        if (loconetProtocol != LnConstants.LOCONETPROTOCOL_TWO) {
+            // perform the null slot move for low numbered slots
+            LocoNetMessage msg = new LocoNetMessage(4);
+            msg.setOpCode(LnConstants.OPC_MOVE_SLOTS);
+            msg.setElement(1, slot);
+            msg.setElement(2, slot);
+            return (msg);
+        }
+        // or the null move for higher numbered slots
+        LocoNetMessage msg = new LocoNetMessage(6);
+        msg.setOpCode(0xd4);
+        msg.setElement(1, (slot / 128) | 0b00111000);
+        msg.setElement(2, slot & 0b01111111);
+        msg.setElement(3, (slot / 128) & 0b00000111);
+        msg.setElement(4, slot & 0b01111111);
+        return msg;
     }
 
     /**
@@ -1050,26 +1373,74 @@ public class LocoNetSlot {
      * of a change in the slot contents.
      */
     public LocoNetMessage writeSlot() {
-        LocoNetMessage l = new LocoNetMessage(14);
-        l.setOpCode(LnConstants.OPC_WR_SL_DATA);
-        l.setElement(1, 0x0E);
-        l.setElement(2, slot & 0x7F);
-        l.setElement(3, stat & 0x7F);
-        l.setElement(4, addr & 0x7F);
-        l.setElement(9, (addr / 128) & 0x7F);
-        l.setElement(5, spd & 0x7F);
-        l.setElement(6, dirf & 0x7F);
-        l.setElement(7, trk & 0x7F);
-        l.setElement(8, ss2 & 0x7F);
-        // item 9 is add2
-        l.setElement(10, snd & 0x7F);
-        l.setElement(11, id & 0x7F);
-        l.setElement(12, (id / 128) & 0x7F);
+        if (loconetProtocol != LnConstants.LOCONETPROTOCOL_TWO || slot == LnConstants.FC_SLOT) { //special case for fc
+            LocoNetMessage l = new LocoNetMessage(14);
+            l.setOpCode(LnConstants.OPC_WR_SL_DATA);
+            l.setElement(1, 0x0E);
+            l.setElement(2, slot & 0x7F);
+            l.setElement(3, stat & 0x7F);
+            l.setElement(4, addr & 0x7F);
+            l.setElement(9, (addr / 128) & 0x7F);
+            l.setElement(5, spd & 0x7F);
+            l.setElement(6, dirf & 0x7F);
+            l.setElement(7, trk & 0x7F);
+            l.setElement(8, ss2 & 0x7F);
+            // item 9 is add2
+            l.setElement(10, snd & 0x7F);
+            l.setElement(11, id & 0x7F);
+            l.setElement(12, (id / 128) & 0x7F);
+            return l;
+        }
+        LocoNetMessage l = new LocoNetMessage(21);
+        l.setOpCode(LnConstants.OPC_EXP_WR_SL_DATA);
+        l.setElement(1, 0x15);
+        l.setElement(2, (slot / 128) & 0x03);
+        l.setElement(3, slot & 0x7F);
+        l.setElement(4, stat & 0x7F);
+        l.setElement(6, (addr / 128) & 0x7F);
+        l.setElement(5, addr & 0x7F);
+        l.setElement(7, ( trk | 0x40 ) & 0x7F);  // track power status and Expanded slot protocol
+        l.setElement(8, spd & 0x7F);
+        l.setElement(9, (isF12() ? 0b00010000 : 0x00 )
+                | (isF20() ? 0b00100000 : 0x00)
+                | (isF28() ? 0b01000000 : 0x00));
+        l.setElement(10, ( isForward() ? 0x00 : 0x00100000)
+                | (isF0() ? 0b00010000 : 0x00)
+                | (isF1() ? 0b00000001 : 0x00)
+                | (isF2() ? 0b00000010 : 0x00)
+                | (isF3() ? 0b00000100 : 0x00)
+                | (isF4() ? 0b00001000 : 0x00));
+        l.setElement(11, ( isF5() ? 0b00000001 : 0x00)
+                | ( isF6() ? 0b00000010 : 0x00)
+                | ( isF7() ? 0b00000100 : 0x00)
+                | ( isF8() ? 0b00001000 : 0x00)
+                | ( isF9() ? 0b00010000 : 0x00)
+                | (isF10() ? 0b00100000 : 0x00)
+                | (isF11() ? 0b01000000 : 0x00));
+        l.setElement(12,( isF13() ? 0b00000001 : 0x00)
+                | (isF14() ? 0b00000010 : 0x00)
+                | (isF15() ? 0b00000100 : 0x00)
+                | (isF16() ? 0b00001000 : 0x00)
+                | (isF17() ? 0b00010000 : 0x00)
+                | (isF18() ? 0b00100000 : 0x00)
+                | (isF19() ? 0b01000000 : 0x00));
+        l.setElement(13,( isF21() ? 0b00000001 : 0x00)
+                | (isF22() ? 0b00000010 : 0x00)
+                | (isF23() ? 0b00000100 : 0x00)
+                | (isF24() ? 0b00001000 : 0x00)
+                | (isF25() ? 0b00010000 : 0x00)
+                | (isF26() ? 0b00100000 : 0x00)
+                | (isF27() ? 0b01000000 : 0x00));
+        l.setElement(18, id & 0x7F);
+        l.setElement(19, (id / 128) & 0x7F);
         return l;
     }
 
     // data values to echo slot contents
     final private int slot;   // <SLOT#> is the number of the slot that was read.
+    private boolean isInitialized; // set when full initilization is complete with the throttle ID.
+    private int loconetProtocol; // protocol used by the slot.
+    private SlotType slotType; // system, loco, unknown
     private int stat; // <STAT> is the status of the slot
     private int addr; // full address of the loco, made from
     //    <ADDR> is the low 7 (0-6) bits of the Loco address
@@ -1081,6 +1452,8 @@ public class LocoNetSlot {
     private int snd;  // <SND> is the settings for functions F5-F8
     private int id;  // throttle id, made from
     //     <ID1> and <ID2> normally identify the throttle controlling the loco
+    private int expandedThrottleControllingID; //the throttle ID byte that is used in sending commands that require a throttle ID. (ID1)
+    private int leadSlot; // the top slot for this slot in a consist.
 
     private int _pcmd;  // hold pcmd and pstat for programmer
 
@@ -1138,6 +1511,38 @@ public class LocoNetSlot {
             SlotListener client = v.get(i);
             client.notifyChangedSlot(this);
         }
+    }
+
+    /**
+     * For fast-clock slot, set a "CLK_CNTRL" bit On. This method logs an error
+     * if invoked for a slot other than the fast-clock slot.
+     * <p>
+     *
+     * @param val is the new "CLK_CNTRL" bit value to turn On
+     */
+    public void setFcCntrlBitOn(int val) {
+        // TODO: consider throwing a LocoNetException if issued for a slot other
+        // than the "fast clock slot".
+        if (getSlot() != LnConstants.FC_SLOT) {
+            log.error("setFcCntrl invalid for slot [{}]", getSlot());
+        }
+        snd |= val;
+    }
+
+    /**
+     * For fast-clock slot, set a "CLK_CNTRL" bit Off. This method logs an error
+     * if invoked for a slot other than the fast-clock slot.
+     * <p>
+     *
+     * @param val is the new "CLK_CNTRL" bit value to turn Off
+     */
+    public void setFcCntrlBitOff(int val) {
+        // TODO: consider throwing a LocoNetException if issued for a slot other
+        // than the "fast clock slot".
+        if (getSlot() != LnConstants.FC_SLOT) {
+            log.error("setFcCntrl invalid for slot [{}]" , getSlot());
+        }
+        snd &= ~val;
     }
 
     /**
@@ -1283,18 +1688,27 @@ public class LocoNetSlot {
         if (getSlot() != LnConstants.FC_SLOT) {
             log.error("getFcFracMins invalid for slot {}", getSlot());
         }
-        return 0x3FFF - ((addr & 0x7F) | ((spd & 0x7F) << 7));
+        return ((addr & 0x7F) | ((spd & 0x7F) << 8));
     }
 
     /**
      * Set the "frac_mins" value.
+     * This has to be calculated as required by the Command Station,
+     * then bit shifted if required.
+     * It is comprised of a base number and the distance from the base to 0x8000
+     * or 0x4000 deoending on command station.
+     * It is read and written as is LO,HO and loses the bit 7 of the LO.
+     * It was never intended for external use.
+     * The base can be found by setting the clock to 0xXX7F, with a rate of 1
+     * and pounding the clock every 250 to 100 msecs until it roles.
      * <p>
-     * Note that the new fractional minutes value is not effective until a LocoNet
-     * message is sent which writes the fast-clock slot data.
+     * Note 1: The new fractional minutes value is not effective until a LocoNet slot write happens
+     * <p>
+     * Note 2: DT40x &amp; DT500 throttles ignore this value, and set only the whole minutes.
      * <p>
      * This method logs an error if invoked for a slot other than the fast-clock slot.
-     *
-     * @param val is the new fast-clock "fractional minutes"
+     * <p>
+     * @param val is the new fast-clock "fractional minutes" including the base, and bit shifted if required.
      */
     public void setFcFracMins(int val) {
         // TODO: consider throwing a LocoNetException if issued for a slot other
@@ -1302,9 +1716,9 @@ public class LocoNetSlot {
         if (getSlot() != LnConstants.FC_SLOT) {
             log.error("setFcFracMins invalid for slot {}", getSlot());
         }
-        int temp = 0x3FFF - val;
-        addr = addr | (temp & 0x7F);
-        spd = (temp >> 7) & 0x7F;
+        int temp = 0x7F7F & val;
+        addr = (addr & 0x7F00) | (temp & 0x7F);
+        spd = (temp >> 8) & 0x7F;
     }
 
     /**

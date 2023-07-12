@@ -231,7 +231,6 @@ public class StoreAndCompare extends AbstractAction {
 
             String[] startsWithStrings = {
                 "  <!--Written by JMRI version",
-                "  <timebase",      // time changes from timezone to timezone
                 "    <test>",       // version changes over time
                 "    <modifier",    // version changes over time
                 "    <major",       // version changes over time

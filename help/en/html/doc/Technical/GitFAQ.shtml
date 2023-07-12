@@ -592,7 +592,7 @@ to do that command once to define "arnie" as an alias you can use in "git fetch"
           <p>There is a ".gitattributes" file that tells (most) command-line Git implementations
           how to handle this properly. Unfortunately, not all IDEs obey the directives in the file.
           For example, to get NetBeans on Windows to handle line-ends properly, a specific plugin
-          must be installed. See the <a href="NetBeans.shtml">NetBeans JMRI page</a> for
+          must be installed. See the <a href="NetBeans.shtml#windows">NetBeans JMRI help page</a> for
           specifics.</p>
 
           <p>If a file with changed line-ends is accidentally committed and forwarded in a

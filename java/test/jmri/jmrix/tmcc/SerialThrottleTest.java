@@ -331,15 +331,25 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         instance.setF27(f27);
     }
 
+    /**
+     * Test of setF28 method, of class AbstractThrottle.
+     */
+    @Test
+    @Override
+    public void testSetF28() {
+        boolean f28 = false;
+        instance.setF28(f28);
+    }
+
     @Test
     @Override
     public void testOutOfRangeSetFunction(){
         instance.setFunction(-1, true);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: -1");
 
-        instance.setFunction(29, true);
-        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 29");
-        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set function number: 29");
+        instance.setFunction(69, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 69");
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set function number: 69");
     }
 
     SerialTrafficController tcis;
@@ -356,6 +366,7 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         tm = new SerialThrottleManager(memo);
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, tm);
         instance = new SerialThrottle(memo, new jmri.DccLocoAddress(1024, true));
+        setMaxFns(69);
     }
 
     @AfterEach

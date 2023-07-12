@@ -25,12 +25,14 @@ import org.junit.*;
  */
 public class StoreAndLoadTest {
 
+    private CreateLogixNGTreeScaffold createLogixNGTreeScaffold;
+
     @Test
     public void testLogixNGs() throws PropertyVetoException, Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // Add new LogixNG actions and expressions to jmri.jmrit.logixng.CreateLogixNGTreeScaffold
-        CreateLogixNGTreeScaffold.createLogixNGTree();
+        createLogixNGTreeScaffold.createLogixNGTree();
 
         LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
 
@@ -45,8 +47,8 @@ public class StoreAndLoadTest {
             FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
             File firstFile = new File(FileUtil.getUserFilesPath() + "temp/" + "LogixNG_temp.xml");
             File secondFile = new File(FileUtil.getUserFilesPath() + "temp/" + "LogixNG.xml");
-            log.info("Temporary first file: %s%n", firstFile.getAbsoluteFile());
-            log.info("Temporary second file: %s%n", secondFile.getAbsoluteFile());
+            log.info("Temporary first file: {}", firstFile.getAbsoluteFile());
+            log.info("Temporary second file: {}", secondFile.getAbsoluteFile());
 
             final String treeIndent = "   ";
             StringWriter stringWriter = new StringWriter();
@@ -73,7 +75,7 @@ public class StoreAndLoadTest {
             //**********************************
             // Delete all the LogixNGs, ConditionalNGs, and so on before reading the file.
             //**********************************
-            CreateLogixNGTreeScaffold.cleanup();
+            createLogixNGTreeScaffold.cleanup();
 
             LogixNG_Thread.stopAllLogixNGThreads();
             LogixNG_Thread.assertLogixNGThreadNotRunning();
@@ -153,6 +155,7 @@ public class StoreAndLoadTest {
 
         JUnitAppender.assertErrorMessage("systemName is already registered: IH1");
         JUnitAppender.assertErrorMessage("systemName is already registered: IH2");
+        JUnitAppender.assertWarnMessage("No state variables found for conditional IX1C1");
     }
 
 
@@ -186,13 +189,14 @@ public class StoreAndLoadTest {
 
     @Before
     public void setUp() {
-        CreateLogixNGTreeScaffold.setUp();
+        createLogixNGTreeScaffold = new CreateLogixNGTreeScaffold();
+        createLogixNGTreeScaffold.setUp();
     }
 
     @After
     public void tearDown() {
 //        JUnitAppender.clearBacklog();    // REMOVE THIS!!!
-        CreateLogixNGTreeScaffold.tearDown();
+        createLogixNGTreeScaffold.tearDown();
     }
 
 

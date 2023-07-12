@@ -6,13 +6,7 @@
 
   <style>
     .dp-center {text-align: center;}
-    .dp-middle {text-align: middle;}
     .dp-right {text-align: right;}
-    .dp-none {list-style-type: none;}
-    .dp-square {list-style-type: square;}
-    .dp-upper-alpha {ist-style-type: upper-alpha;}
-    .dp-lower-alpha {list-style-type: lower-alpha;}
-    .dp-border-2 {border: 2px solid;}
   </style>
 </head>
 <body>
@@ -60,16 +54,16 @@
         <p>The buttons located at the bottom each column:</p>
 
         <ul>
-          <li><strong><input name="button" id="button" value="Update" type="button"></strong> -
+          <li>The <strong><span class="textbutton">Update</span></strong> button
           puts a new series of values in the bottom row of the memory display and moves the old
           values up one row.</li>
 
-          <li><strong><input name="button2" id="button2" value="Collect Memory" type=
-          "button"></strong> - reduces the amount of used memory to the minimum possible by asking
+          <li>The <strong><span class="textbutton">Collect Memory</span></strong> button
+          reduces the amount of used memory to the minimum possible by asking
           Java to run a garbage collection.</li>
 
-          <li><strong><input name="button3" id="button3" value="Testt" type="button"></strong> -
-          Runs a test of the memory allocation and collection process ( not used by regular
+          <li>The <strong><span class="textbutton">Test</span></strong> button
+          runs a test of the memory allocation and collection process ( not used by regular
           users)</li>
         </ul>
       </blockquote>
@@ -171,8 +165,8 @@
         <p><img src="images/Main_Debug02.png" alt="log entry" height="85" width="525">
         </p>
 
-        <p><strong>Message</strong>: Type your message and then click the <input name="button4" id=
-        "button4" value="Add" type="button"> to add the message to the log file.</p>
+        <p><strong>Message</strong>: Type your message and then click the
+        <span class="textbutton">Add</span> button to add the message to the log file.</p>
       </blockquote>
 
       <p><strong>Display Message Log</strong>

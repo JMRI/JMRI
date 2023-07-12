@@ -130,6 +130,7 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
         }
         loco = getLocoAddrFromTranspondingMsg(l); // get loco address
 
+        log.debug("Transponding Report at {} for {}",_number, loco);
         notify(null); // set report to null to make sure listeners update
 
         idTag = InstanceManager.getDefault(TranspondingTagManager.class).provideIdTag("" + loco);
@@ -145,7 +146,7 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
                 entrySet.remove(idTag);
             }
         }
-        log.debug("Tag: {}", idTag);
+        log.debug("Tag: {} entry {}", idTag, enter);
         notify(idTag);
         setState(enter ? loco : -1);
     }
@@ -171,19 +172,19 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
      * @param l Message from which to extract LISSY content
      */
     void lissyReport(LocoNetMessage l) {
-        
-        // Only report messages where bit 6 is set in element 3, 
-        // because these are the only messages with valid loco addresses     
-        if ((l.getElement(3) & 0x40) != 0) { 
+
+        // Only report messages where bit 6 is set in element 3,
+        // because these are the only messages with valid loco addresses
+        if ((l.getElement(3) & 0x40) != 0) {
             int loco = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
-            
+
             // train category - Perhaps add to idTag as property?
             int category = l.getElement(2) + 1;
-    
+
             // get direction
             // north assumes loco is passing sensors S1->S2
             boolean north = ((l.getElement(3) & 0x20) == 0);
-    
+
             notify(null); // set report to null to make sure listeners update
             // get loco address
             IdTag idTag = InstanceManager.getDefault(TranspondingTagManager.class).provideIdTag(""+loco+":"+category);

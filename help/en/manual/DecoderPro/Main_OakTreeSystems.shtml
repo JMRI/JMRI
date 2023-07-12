@@ -7,13 +7,7 @@
 
   <style>
     .dp-center {text-align: center;}
-    .dp-middle {text-align: middle;}
     .dp-right {text-align: right;}
-    .dp-none {list-style-type: none;}
-    .dp-square {list-style-type: square;}
-    .dp-upper-alpha {ist-style-type: upper-alpha;}
-    .dp-lower-alpha {list-style-type: lower-alpha;}
-    .dp-border-2 {border: 2px solid;}
   </style>
 </head>
 <body>
@@ -45,9 +39,9 @@
       </p>
 
       <p>Opens the Send Oak Tree serial command prompt, which will allow you to type in a
-      <strong>Command:</strong> then click on <input type="submit" name="button" id="button" value=
-      "Send"> . You may also type in an <strong>Address:</strong> and poll the system by clicking
-      on the <input type="submit" name="button2" id="button2" value="Send poll"> .</p>
+      <strong>Command:</strong> then click on <span class="textbutton">Send</span>.
+      You may also type in an <strong>Address:</strong> and poll the system by clicking
+      on the <span class="textbutton">Send poll</span> button.</p>
 
       <p><img src="images/Main_OakTree01.png" alt="Send Command Oak Tree" width="303" height="133">
       </p>

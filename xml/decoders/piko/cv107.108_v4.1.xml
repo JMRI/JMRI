@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2022</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2022-11-11</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder 4.1</revremark>
+		</revision>
+	</revhistory>
+	<variable item="Output 1 effect generated" CV="107" default="0" mask="VVVVXXXX" minOut="3">
+		<enumVal>
+			<enumChoice choice="Deactivated">
+				<choice>Deactivated</choice>
+				<choice xml:lang="de">deaktiviert</choice>
+				<choice xml:lang="it">Disattivato</choice>
+				<choice xml:lang="cs">Deaktivováno</choice>
+			</enumChoice>
+			<enumChoiceGroup exclude="73115">
+				<enumChoice choice="A1">
+					<choice>A1</choice>
+				</enumChoice>
+				<enumChoice choice="A2">
+					<choice>A2</choice>
+				</enumChoice>
+			</enumChoiceGroup>
+			<enumChoiceGroup exclude="73115,73145,73405,73415,74120">
+				<enumChoice choice="A3">
+					<choice>A3</choice>
+				</enumChoice>
+				<enumChoice choice="A4">
+					<choice>A4</choice>
+				</enumChoice>
+			</enumChoiceGroup>
+			<enumChoiceGroup exclude="73105,73115,73145,73405,73415,74120">
+				<enumChoice choice="A5">
+					<choice>A5</choice>
+				</enumChoice>
+				<enumChoice choice="A6">
+					<choice>A6</choice>
+				</enumChoice>
+				<enumChoice choice="A7">
+					<choice>A7</choice>
+				</enumChoice>
+			</enumChoiceGroup>
+		</enumVal>
+		<label>Front Light Off - Output</label>
+		<label xml:lang="de">Licht vorne Aus - Ausgang</label>
+		<label xml:lang="it">Luci frontali off - uscita</label>
+		<label xml:lang="nl">Frontlicht Uit - Uitgang</label>
+		<label xml:lang="cs">Přední světla vypnuto - Výstup</label>
+		<tooltip>Deactivated - will deactivate BOTH Front and Rear light switch off option</tooltip>
+		<tooltip xml:lang="de">Ist eine der Licht vorne oder hinten AUS option deaktiviert, so gilt die zwei als deaktiviert</tooltip>
+		<tooltip xml:lang="it">Disattivata - saranno disattivate entrambe le opzioni di spegnimento luci frontali e posteriori</tooltip>
+		<tooltip xml:lang="cs">Deaktivováno - deaktivuje OBOJE Přední i Zadní světla volba přepínač vypnuto</tooltip>
+	</variable>
+	<variable item="Output 1 behavior" CV="107" default="0" mask="XXXXVVVV" minOut="3">
+		<enumVal>
+			<enumChoice choice="None">
+				<choice>None</choice>
+				<choice xml:lang="de">keine</choice>
+				<choice xml:lang="it">nessuno</choice>
+				<choice xml:lang="cs">Nic</choice>
+			</enumChoice>
+			<enumChoice choice="F1">
+				<choice>F1</choice>
+			</enumChoice>
+			<enumChoice choice="F2">
+				<choice>F2</choice>
+			</enumChoice>
+			<enumChoice choice="F3">
+				<choice>F3</choice>
+			</enumChoice>
+			<enumChoice choice="F4">
+				<choice>F4</choice>
+			</enumChoice>
+			<enumChoice choice="F5">
+				<choice>F5</choice>
+			</enumChoice>
+			<enumChoice choice="F6">
+				<choice>F6</choice>
+			</enumChoice>
+			<enumChoice choice="F7">
+				<choice>F7</choice>
+			</enumChoice>
+			<enumChoice choice="F8">
+				<choice>F8</choice>
+			</enumChoice>
+			<enumChoice choice="F9">
+				<choice>F9</choice>
+			</enumChoice>
+			<enumChoice choice="F10">
+				<choice>F10</choice>
+			</enumChoice>
+			<enumChoice choice="F11">
+				<choice>F11</choice>
+			</enumChoice>
+			<enumChoice choice="F12">
+				<choice>F12</choice>
+			</enumChoice>
+		</enumVal>
+		<label>Front Light Off - Function</label>
+		<label xml:lang="de">Licht vorne Aus - Funktion</label>
+		<label xml:lang="it">Luci anteriori off - Funzione</label>
+		<label xml:lang="nl">Frontlicht Uit - Functieknop</label>
+		<label xml:lang="cs">Přední světla vypnuto - Funkce</label>
+		<tooltip>Selected function must not be used for other purpose with the function mapping</tooltip>
+		<tooltip xml:lang="de">Die hier eingetragenen Funktionsnummern müssen über das Function-Mapping keine anderen Ausgänge einschalten</tooltip>
+		<tooltip xml:lang="it">La funzione selezionata non deve essere usata per altri scopi con la mappa funzioni</tooltip>
+		<tooltip xml:lang="cs">Vybraná funkce nesmí být použita poro jiný účel pomocí mapování funkcí</tooltip>
+	</variable>
+	<variable item="Output 2 effect generated" CV="108" default="0" mask="VVVVXXXX" minOut="4">
+		<enumVal>
+			<enumChoice choice="Deactivated">
+				<choice>Deactivated</choice>
+				<choice xml:lang="de">deaktiviert</choice>
+				<choice xml:lang="it">Disattivato</choice>
+				<choice xml:lang="cs">Deaktivováno</choice>
+			</enumChoice>
+			<enumChoiceGroup exclude="73115">
+				<enumChoice choice="A1">
+					<choice>A1</choice>
+				</enumChoice>
+				<enumChoice choice="A2">
+					<choice>A2</choice>
+				</enumChoice>
+			</enumChoiceGroup>
+			<enumChoiceGroup exclude="73105,73115,73145,73405,73415,74120">
+				<enumChoice choice="A3">
+					<choice>A3</choice>
+				</enumChoice>
+				<enumChoice choice="A4">
+					<choice>A4</choice>
+				</enumChoice>
+			</enumChoiceGroup>
+			<enumChoiceGroup exclude="73105,73115,73145,73405,73415,74120">
+				<enumChoice choice="A5">
+					<choice>A5</choice>
+				</enumChoice>
+				<enumChoice choice="A6">
+					<choice>A6</choice>
+				</enumChoice>
+				<enumChoice choice="A7">
+					<choice>A7</choice>
+				</enumChoice>
+			</enumChoiceGroup>
+		</enumVal>
+		<label>Rear Light Off - Output</label>
+		<label xml:lang="de">Licht hinten Aus - Ausgang</label>
+		<label xml:lang="it">Luci posteriori off - Uscita</label>
+		<label xml:lang="nl">Sluitlichten Uit - Uitgang</label>
+		<label xml:lang="cs">Zadní světla vypnuto - Výstup</label>
+		<tooltip>Deactivated - will deactivate BOTH Front and Rear light switch off option</tooltip>
+		<tooltip xml:lang="de">Ist eine der Licht vorne oder hinten AUS option deaktiviert, so gilt die zwei als deaktiviert</tooltip>
+		<tooltip xml:lang="it">Disattivata - saranno disattivate entrambe le opzioni di spegnimento luci frontali e posteriori</tooltip>
+		<tooltip xml:lang="cs">Deaktivováno - deaktivuje OBOJE Přední i Zadní světla volba přepínač vypnuto</tooltip>
+	</variable>
+	<variable item="Output 2 behavior" CV="108" default="0" mask="XXXXVVVV" minOut="4">
+		<enumVal>
+			<enumChoice choice="None">
+				<choice>None</choice>
+				<choice xml:lang="de">keine</choice>
+				<choice xml:lang="it">nessuno</choice>
+				<choice xml:lang="cs">Nic</choice>
+			</enumChoice>
+			<enumChoice choice="F1">
+				<choice>F1</choice>
+			</enumChoice>
+			<enumChoice choice="F2">
+				<choice>F2</choice>
+			</enumChoice>
+			<enumChoice choice="F3">
+				<choice>F3</choice>
+			</enumChoice>
+			<enumChoice choice="F4">
+				<choice>F4</choice>
+			</enumChoice>
+			<enumChoice choice="F5">
+				<choice>F5</choice>
+			</enumChoice>
+			<enumChoice choice="F6">
+				<choice>F6</choice>
+			</enumChoice>
+			<enumChoice choice="F7">
+				<choice>F7</choice>
+			</enumChoice>
+			<enumChoice choice="F8">
+				<choice>F8</choice>
+			</enumChoice>
+			<enumChoice choice="F9">
+				<choice>F9</choice>
+			</enumChoice>
+			<enumChoice choice="F10">
+				<choice>F10</choice>
+			</enumChoice>
+			<enumChoice choice="F11">
+				<choice>F11</choice>
+			</enumChoice>
+			<enumChoice choice="F12">
+				<choice>F12</choice>
+			</enumChoice>
+		</enumVal>
+		<label>Rear Light Off - Function</label>
+		<label xml:lang="de">Licht hinten Aus - Funktion</label>
+		<label xml:lang="it">Luci posteriori off - Funzione</label>
+		<label xml:lang="nl">Sluitlichten Uit - Functieknop</label>
+		<label xml:lang="cs">Zadní světla vypnuto - Funkce</label>
+		<tooltip>Selected function must not be used for other purpose with the function mapping</tooltip>
+		<tooltip xml:lang="de">Die hier eingetragenen Funktionsnummern müssen über das Function-Mapping keine anderen Ausgänge einschalten</tooltip>
+		<tooltip xml:lang="it">La funzione selezionata non deve essere usata per altri scopi con la mappa funzioni</tooltip>
+		<tooltip xml:lang="cs">Vybraná funkce nesmí být použita poro jiný účel pomocí mapování funkcí</tooltip>
+	</variable>
+</variables>

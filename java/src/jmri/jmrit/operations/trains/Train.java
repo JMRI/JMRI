@@ -761,6 +761,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public Track getDepartureTrack() {
         return _departureTrack;
     }
+    
+    public boolean isDepartingStaging() {
+        return getDepartureTrack() != null;
+    }
 
     public void setTerminationTrack(Track track) {
         Track old = _terminationTrack;
@@ -1790,7 +1794,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     }
                 }
                 // restriction to only carry cars to terminal?
+                // ignore send to terminal if a local move
                 if (isSendCarsToTerminalEnabled() &&
+                        !car.isLocalMove() &&
                         !TrainCommon.splitString(car.getLocationName())
                                 .equals(TrainCommon.splitString(getTrainDepartsName())) &&
                         !TrainCommon.splitString(car.getDestinationName())
@@ -1798,16 +1804,11 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     if (debugFlag) {
                         log.debug("option send cars to terminal is enabled");
                     }
-                    // check to see if local move allowed
-                    if (!isAllowLocalMovesEnabled() ||
-                            isAllowLocalMovesEnabled() &&
-                                    !TrainCommon.splitString(car.getLocationName())
-                                            .equals(TrainCommon.splitString(car.getDestinationName())))
-                        addLine(buildReport,
-                                MessageFormat.format(Bundle.getMessage("trainCanNotCarryCarOption"),
-                                        new Object[] { getName(), car.toString(), car.getLocationName(),
-                                                car.getTrackName(), car.getDestinationName(),
-                                                car.getDestinationTrackName() }));
+                    addLine(buildReport,
+                            MessageFormat.format(Bundle.getMessage("trainCanNotCarryCarOption"),
+                                    new Object[]{getName(), car.toString(), car.getLocationName(),
+                                            car.getTrackName(), car.getDestinationName(),
+                                            car.getDestinationTrackName()}));
                     continue;
                 }
                 // don't allow local move when car is in staging
@@ -1833,8 +1834,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                         !car.isCaboose() &&
                         !car.hasFred() &&
                         !car.isPassenger() &&
-                        TrainCommon.splitString(car.getLocationName())
-                                .equals(TrainCommon.splitString(car.getDestinationName()))) {
+                        car.isLocalMove()) {
                     if (debugFlag) {
                         log.debug("Local move not allowed");
                     }

@@ -25,7 +25,7 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalExpression_ExpressionBlock">
+    <xs:complexType name="LogixNG_DigitalExpression_ExpressionBlockType">
       <xs:annotation>
         <xs:documentation>
           Define the XML stucture for storing the contents of a ExpressionBlock class.

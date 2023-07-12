@@ -48,12 +48,12 @@ abstract public class LayoutSlip extends LayoutTurnout {
 
     /**
      * Constructor method.
-     * 
+     *
      * @param id slip ID.
      * @param models the layout editor.
      * @param type slip type, SINGLE_SLIP or DOUBLE_SLIP.
      */
-    public LayoutSlip(String id, 
+    public LayoutSlip(String id,
             LayoutEditor models, TurnoutType type) {
         super(id, models, type);
 
@@ -858,10 +858,10 @@ abstract public class LayoutSlip extends LayoutTurnout {
         List<LayoutConnectivity> results = new ArrayList<>();
 
         log.trace("Start in LayoutSlip.getLayoutConnectivity for {}", getName());
-        
+
         LayoutConnectivity lc = null;
         LayoutBlock lbA = getLayoutBlock(), lbB = getLayoutBlockB(), lbC = getLayoutBlockC(), lbD = getLayoutBlockD();
-        
+
         log.trace("    type: {}", type);
         log.trace("     lbA: {}", lbA);
         log.trace("     lbB: {}", lbB);
@@ -875,15 +875,15 @@ abstract public class LayoutSlip extends LayoutTurnout {
                 lc = new LayoutConnectivity(lbA, lbC);
                 lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AC);
 
-                // The following line needs to change, because it uses location of 
-                // the points on the SlipView itself. Switch to 
+                // The following line needs to change, because it uses location of
+                // the points on the SlipView itself. Switch to
                 // direction from connections
                 //lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsC()));
                 lc.setDirection( models.computeDirectionAC(this) );
-                
+
                 log.trace("getLayoutConnectivity lbA != lbC");
                 log.trace("  Block boundary  ('{}'<->'{}') found at {}", lbA, lbC, this);
-                
+
                 results.add(lc);
             }
             if (lbB != lbD) {
@@ -892,15 +892,15 @@ abstract public class LayoutSlip extends LayoutTurnout {
                 lc = new LayoutConnectivity(lbB, lbD);
                 lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_BD);
 
-                // The following line needs to change, because it uses location of 
-                // the points on the SlipView itself. Switch to 
+                // The following line needs to change, because it uses location of
+                // the points on the SlipView itself. Switch to
                 // direction from connections
                 //lc.setDirection(Path.computeDirection(getCoordsB(), getCoordsD()));
                 lc.setDirection( models.computeDirectionBD(this) );
-                
+
                 log.trace("getLayoutConnectivity lbA != lbC");
                 log.trace("  Block boundary  ('{}'<->'{}') found at {}", lbB, lbD, this);
-                
+
                 results.add(lc);
             }
             if (lbA != lbD) {
@@ -909,15 +909,15 @@ abstract public class LayoutSlip extends LayoutTurnout {
                 lc = new LayoutConnectivity(lbA, lbD);
                 lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AD);
 
-                // The following line needs to change, because it uses location of 
-                // the points on the SlipView itself. Switch to 
+                // The following line needs to change, because it uses location of
+                // the points on the SlipView itself. Switch to
                 // direction from connections
                 //lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsD()));
                 lc.setDirection( models.computeDirectionAD(this) );
-                
+
                 log.trace("getLayoutConnectivity lbA != lbC");
                 log.trace("  Block boundary  ('{}'<->'{}') found at {}", lbA, lbD, this);
-                
+
                 results.add(lc);
             }
             if ((type == TurnoutType.DOUBLE_SLIP) && (lbB != lbC)) {
@@ -925,16 +925,16 @@ abstract public class LayoutSlip extends LayoutTurnout {
                 log.debug("Block boundary  ('{}'<->'{}') found at {}", lbB, lbC, this);
                 lc = new LayoutConnectivity(lbB, lbC);
                 lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_BC);
-                
-                // The following line needs to change, because it uses location of 
-                // the points on the SlipView itself. Switch to 
+
+                // The following line needs to change, because it uses location of
+                // the points on the SlipView itself. Switch to
                 // direction from connections
                 //lc.setDirection(Path.computeDirection(getCoordsB(), getCoordsC()));
                 lc.setDirection( models.computeDirectionBC(this) );
-                
+
                 log.trace("getLayoutConnectivity lbA != lbC");
                 log.trace("  Block boundary  ('{}'<->'{}') found at {}", lbB, lbC, this);
-                
+
                 results.add(lc);
             }
         }
@@ -974,5 +974,22 @@ abstract public class LayoutSlip extends LayoutTurnout {
     //      and collectContiguousTracksNamesInBlockNamed methods
     //      inherited from LayoutTurnout
     //
+
+    /**
+     * Create the tooltip name string for a slip.
+     * @return the turnout display names or the Id.
+     */
+    @Nonnull
+    @Override
+    public  String getNameString() {
+        var turnout = getTurnout();
+        var turnoutB = getTurnoutB();
+        if (turnout != null && turnoutB != null) {
+            return turnout.getDisplayName(jmri.NamedBean.DisplayOptions.USERNAME_SYSTEMNAME) + " : " +
+                    turnoutB.getDisplayName(jmri.NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
+        }
+        return getId();
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlip.class);
 }

@@ -10,7 +10,7 @@ import org.junit.Test;
 
 /**
  * Test TimeDiagram
- * 
+ *
  * @author Daniel Bergqvist Copyright (C) 2018
  */
 public class LogixNGInitializationTableTest {
@@ -18,7 +18,7 @@ public class LogixNGInitializationTableTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         LogixNGInitializationTable b = new LogixNGInitializationTable();
         Assert.assertNotNull("exists", b);
     }
@@ -36,6 +36,7 @@ public class LogixNGInitializationTableTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

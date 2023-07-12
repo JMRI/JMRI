@@ -55,20 +55,10 @@
                         <xs:sequence>
                           <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
 
-                          <xs:element name="initalValueType" minOccurs="1" maxOccurs="1">
-                            <xs:simpleType>
-                              <xs:restriction base="xs:token">
-                                <xs:enumeration value="None"/>
-                                <xs:enumeration value="Integer"/>
-                                <xs:enumeration value="FloatingNumber"/>
-                                <xs:enumeration value="String"/>
-                                <xs:enumeration value="LocalVariable"/>
-                                <xs:enumeration value="Memory"/>
-                                <xs:enumeration value="Reference"/>
-                                <xs:enumeration value="Formula"/>
-                              </xs:restriction>
-                            </xs:simpleType>
-                          </xs:element>
+                          <xs:element name="initialValueType" type="LogixNG_LocalVariable_InitialValueType_Type" minOccurs="0" maxOccurs="1"/>
+                          <!-- This are for backwards compability up until JMRI 5.3.5 due to spelling error -->
+                          <xs:element name="initalValueType" type="LogixNG_LocalVariable_InitialValueType_Type" minOccurs="0" maxOccurs="1"/>
+                          <!-- This are for backwards compability up until JMRI 5.3.5 due to spelling error -->
 
                           <xs:element name="initialValueData" type="xs:string" minOccurs="1" maxOccurs="1"/>
 

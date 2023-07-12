@@ -41,7 +41,7 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
         return logixNG;
     }
 
-    private static int beanID = 901;
+    private int beanID = 901;
 
     @Override
     public MaleSocket getConnectableChild() {
@@ -381,6 +381,7 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

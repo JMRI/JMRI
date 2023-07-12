@@ -7,13 +7,7 @@
 
   <style>
     .dp-center {text-align: center;}
-    .dp-middle {text-align: middle;}
     .dp-right {text-align: right;}
-    .dp-none {list-style-type: none;}
-    .dp-square {list-style-type: square;}
-    .dp-upper-alpha {ist-style-type: upper-alpha;}
-    .dp-lower-alpha {list-style-type: lower-alpha;}
-    .dp-border-2 {border: 2px solid;}
   </style>
 </head>
 <body>
@@ -71,7 +65,8 @@
 
       <p>With input from locomotive tracking hardware, Virtual Sound Decoder is able to move the
       apparent source of the locomotive sound to follow the locomotive's position on the
-      layout.</p>
+      layout. Well, there is an option to do this without any hardware, 
+      <a href="VSDLocationsMgr.shtml#advanced_location_following">see below</a>.</p>
 
       <h5>Location Following Setup</h5>
       To enable location following you will need a hardware method of tracking the locomotive's
@@ -210,6 +205,13 @@
       the apparent source of the locomotive sound to follow the locomotive's position on the
       layout.</p>
 
+      <p><strong>However, there is an option to do this without tracking hardware:</strong>
+      simply uncheck the CheckBox "Use Blocks" in VSD Preferences.<br>
+      This data driven "sound following" based on a LayoutEditor panel works as long as there
+      is an available piece of track.<br>
+      A disadvantage: a mechanical issue may stop a loco but will not stop the sound
+      following - sound and loco position will get out of sync.</p>
+
       <p>The next section presents two setup possibilities - a newer and simple way based on a
       LayoutEditor panel and an earlier way by adding some geometric layout data into a file.
       </p>
@@ -258,17 +260,14 @@
       possible starting Block, then open the throttle.</p>
 
       <p>The current sound position is printed in the System Console.</p>
-      <p>No further block setting is necessary if your are in Simulator Mode and the CheckBox
-      "Use Blocks" in VSD Preferences is unchecked.</p>
+
       <p>Watch the System Console for events that stop the sound positioning.</p>
       <p>To use another panel do also change the panel title in the VSDGeoData.xml.</p>
 
-      <p>Turntables are not supported. The sound position remains unchanged, until you 
-      reverse the locomotive traveling direction.</p>
-
       <p>Routes, Signals and Dispatcher are not tested.</p>
-      <p><em>Note:</em> To hear the surround sound, at least two speakers are required.</p>
- 
+      <p><em>Note 1:</em> To hear the surround sound, at least two speakers are required.</p>
+      <p><em>Note 2:</em> A turntable must have a ray track at a 180 degree offset for each ray
+      track. The turntable support started with JMRI Test Release 5.5.2.</p>
  
       <p><strong>And here is the old setup version of Advanced Location Following.</strong></p>
 

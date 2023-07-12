@@ -22,8 +22,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.jmrix.loconet.alm.Alm;
-
 /**
  * A utility class for formatting LocoNet packets into human-readable text.
  * <p>
@@ -685,6 +683,7 @@ public class LocoNetMessageInterpret {
                 break;
             }
 
+            //                   0xE4
             case LnConstants.OPC_LISSY_UPDATE: {
                 result = interpretOpcLissyUpdate(l);
                 if (result.length() > 0) {
@@ -693,6 +692,7 @@ public class LocoNetMessageInterpret {
                 break;
             }
 
+            //                    0xED
             case LnConstants.OPC_IMM_PACKET: {
                 result = interpretOpcImmPacket(l);
                 if (result.length() > 0) {
@@ -701,6 +701,7 @@ public class LocoNetMessageInterpret {
                 break;
             }
 
+            //                     0xD3
             case LnConstants.RE_OPC_PR3_MODE: {
                 result = interpretOpcPr3Mode(l);
                 if (result.length() > 0) {
@@ -709,6 +710,7 @@ public class LocoNetMessageInterpret {
                 break;
             }
 
+            //                      0xA3
             case LnConstants.RE_OPC_IB2_F9_F12: {
                 result = interpretIb2F9_to_F12(l);
                 if (result.length() > 0) {
@@ -719,7 +721,8 @@ public class LocoNetMessageInterpret {
 
 //          TODO: put this back for intellibox cmd station.
 //            it conflicts with loconet speed/dir etc.
-            case LnConstants.RE_OPC_IB2_SPECIAL: { // 0xD4
+            //                        0xD4
+            case LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL: {
                 result = interpretIb2Special(l);
                 if (result.length() > 0) {
                     return result;
@@ -2597,7 +2600,7 @@ public class LocoNetMessageInterpret {
         if (sensor != null) {
             String uname = sensor.getUserName();
             if ((uname != null) && (!uname.isEmpty())) {
-                sensorUserName = uname;
+                sensorUserName = " ("+uname+")";
             }
         }
 
@@ -3060,14 +3063,22 @@ public class LocoNetMessageInterpret {
     private static String interpretProgSlot(LocoNetMessage l, String mode, int id1, int id2, int command) {
         /*
          * ********************************************************************************************
-         * Programmer track: * ================= * The programmer track is
-         * accessed as Special slot #124 ( $7C, 0x7C). It is a full *
-         * asynchronous shared system resource. * * To start Programmer task,
-         * write to slot 124. There will be an immediate LACK acknowledge * that
-         * indicates what programming will be allowed. If a valid programming
-         * task is started, * then at the final (asynchronous) programming
-         * completion, a Slot read <E7> from slot 124 * will be sent. This is
-         * the final task status reply. * * Programmer Task Start: *
+         * Programmer track:
+         * =================
+         * The programmer track is
+         * accessed as Special slot #124 ( $7C, 0x7C). It is a full
+         * asynchronous shared system resource.
+         *
+         * To start Programmer task,
+         * write to slot 124. There will be an immediate LACK acknowledge
+         * that indicates what programming will be allowed. If a valid programming
+         * task is started,
+         * then at the final (asynchronous) programming
+         * completion, a Slot read <E7> from slot 124 will be sent. This is
+         * the final task status reply.
+         *
+         * Programmer Task Start:
+         *
          * ----------------------
          * <p>
          * <0xEF>,<0E>,<7C>,<PCMD>,<0>,<HOPSA>,<LOPSA>,<TRK>;<CVH>,<CVL>,
@@ -3094,13 +3105,23 @@ public class LocoNetMessageInterpret {
          * the master will also contain the Programmer Busy status in bit 3 of
          * the <TRK> byte. * * A <PCMD> value of
          * <00> will abort current SERVICE mode programming task and will echo
-         * with * an <E6> RD the command string that was aborted. * * <PCMD>
-         * Programmer Command: * -------------------------- * Defined as * D7 -0
-         * * D6 -Write/Read 1= Write, * 0=Read * D5 -Byte Mode 1= Byte
-         * operation, * 0=Bit operation (if possible) * D4 -TY1 Programming Type
-         * select bit * D3 -TY0 Prog type select bit * D2 -Ops Mode 1=Ops Mode
-         * on Mainlines, * 0=Service Mode on Programming Track * D1 -0 reserved
-         * * D0 -0-reserved * * Type codes: * ----------- * Byte Mode Ops Mode
+         * with an <E6> RD the command string that was aborted.
+         *
+         * <PCMD>
+         * Programmer Command:
+         * --------------------------
+         * Defined as
+         * D7 -0
+         * D6 -Write/Read 1= Write, 0=Read
+         * D5 -Byte Mode 1= Byte operation, 0=Bit operation (if possible)
+         * D4 -TY1 Programming Type select bit
+         * D3 -TY0 Prog type select bit
+         * D2 -Ops Mode 1=Ops Mode on Mainlines, 0=Service Mode on Programming Track
+         * D1 -0 reserved
+         * D0 -0-reserved
+         *
+         * Type codes:
+         * ----------- * Byte Mode Ops Mode
          * TY1 TY0 Meaning * 1 0 0 0 Paged mode byte Read/Write on Service Track
          * * 1 0 0 0 Paged mode byte Read/Write on Service Track * 1 0 0 1
          * Direct mode byteRead/Write on Service Track * 0 0 0 1 Direct mode bit
@@ -3781,8 +3802,8 @@ public class LocoNetMessageInterpret {
          * All documentation appears to be in German.
          */
         log.debug("Message from LISSY: {}", Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString()));
-        switch (l.getElement(1)) {           
-            case 0x08: // Format LISSY message              
+        switch (l.getElement(1)) {
+            case 0x08: // Format LISSY message
                 int unit = (l.getElement(4) & 0x7F);
                 if ((l.getElement(3) & 0x40) != 0) { // Loco movement
                     int category = l.getElement(2) + 1;
@@ -3793,7 +3814,7 @@ public class LocoNetMessageInterpret {
                           Integer.toString(category),
                           ((l.getElement(3) & 0x20) == 0
                           ? Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_NORTH")
-                          : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_SOUTH")));  
+                          : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_SOUTH")));
                 } else { // other messages
                     switch (l.getElement(2)) {
                       case 0x00: // Loco speed
@@ -3807,10 +3828,10 @@ public class LocoNetMessageInterpret {
                                 unit,
                                 ((l.getElement(6) & 0x01) == 0
                                 ? Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_BLOCK_FREE")
-                                : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_BLOCK_OCCUPIED")));   
+                                : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_BLOCK_OCCUPIED")));
                       default:
                           break;
-                    }   
+                    }
                 }
                 break;
 
@@ -4624,7 +4645,7 @@ public class LocoNetMessageInterpret {
      */
     public static String interpretAlm(LocoNetMessage l) {
         if (l.getElement(1) == 0x10) {
-        String ret;
+            String ret;
             ret = jmri.jmrix.loconet.alm.almi.Almi.interpretAlm(l);
             if (ret.length() > 1) {
                 return ret;
@@ -4696,10 +4717,10 @@ public class LocoNetMessageInterpret {
 
     private static String interpretPocExpLocoSpdDirFunction(LocoNetMessage l) {
         int slot = ((l.getElement(1) & 0x03) * 128) + (l.getElement(2) & 0x7f);
-        if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_SPEED) == 0) {
+        if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_SPEED) == LnConstants.OPC_EXP_SEND_SPEED_AND_DIR_FWD) {
             // speed and direction
             int spd = l.getElement(4);
-            String direction = Bundle.getMessage((l.getElement(1) & 0b00001000) != 0
+            String direction = Bundle.getMessage((l.getElement(1) & LnConstants.OPC_EXP_SEND_SPEED_AND_DIR_REV) != 0
                     ? "LN_MSG_DIRECTION_REV" : "LN_MSG_DIRECTION_FWD");
             String throttleID = Integer.toHexString(l.getElement(3));
             return Bundle.getMessage("LN_MSG_OPC_EXP_SPEED_DIRECTION", slot, spd, direction, throttleID);
@@ -4711,23 +4732,23 @@ public class LocoNetMessageInterpret {
                     : Bundle.getMessage("LN_MSG_FUNC_OFF");
         }
         if ((l.getElement(1) &
-                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F0F6_MASK) {
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F0F6) {
             return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F0_F6", slot, fn[3], fn[7], fn[6], fn[5], fn[4], fn[2],
                     fn[1]);
         } else if ((l.getElement(1) &
-                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F7F13_MASK) {
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F7F13) {
             return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F7_F13", slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
                     fn[1]);
         } else if ((l.getElement(1) &
-                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F14F20_MASK) {
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F14F20) {
             return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F14_F20",slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
                     fn[1]);
         } else if ((l.getElement(1) &
-                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF_MASK) {
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF) {
             return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F21_F28",slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
                     fn[1], Bundle.getMessage("LN_MSG_FUNC_OFF"));
         } else if ((l.getElement(1) &
-                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON_MASK) {
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON) {
             return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F21_F28", slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
                     fn[1], Bundle.getMessage("LN_MSG_FUNC_ON"));
         }
@@ -4833,31 +4854,11 @@ public class LocoNetMessageInterpret {
      * @return a format message.
      */
     private static String interpretExtendedSlot_StatusData_Base(LocoNetMessage l, int slot) {
-        String hwType = "";
-        int hwSerial;
-        switch (l.getElement(16)) {
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
-                hwType = "DCS240";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
-                hwType = "DCS210";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS52:
-                hwType = "DCS52";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_BXP88:
-                hwType = "BXP88";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_BXPA1:
-                hwType = "BXPA1";
-                break;
-            default:
-                hwType = "Unknown";
-        }
-        hwSerial = ((l.getElement(19) & 0x0f) * 128 ) + l.getElement(18);
+        String hwType = LnConstants.IPL_NAME(l.getElement(16));
+        int hwSerial = ((l.getElement(19) & 0x3f) * 128 ) + l.getElement(18);
         return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_BASE",
                 hwType,
-                hwSerial);
+                hwSerial + "(" + Integer.toHexString(hwSerial).toUpperCase() + ")");
     }
 
     /**
@@ -4870,38 +4871,16 @@ public class LocoNetMessageInterpret {
         double hwVersion ;
         double swVersion ;
         int hwSerial;
-        String hwType;
-        switch (l.getElement(14)) {
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DB210:
-                hwType = "DB210";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240PLUS:
-                hwType = "DCS240+";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210PLUS:
-                hwType = "DCS210+";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
-                hwType = "DCS240";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
-                hwType = "DCS210";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_BXP88:
-                hwType = "BXP88";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_BXPA1:
-                hwType = "BXPA1";
-                break;
-            default:
-                hwType = "Unknown";
+        String hwType = LnConstants.IPL_NAME(l.getElement(14));
+        if ((l.getElement(19) & 0x40) == 0x40) {
+            hwType = hwType + Bundle.getMessage("LN_MSG_COMMAND_STATION");
         }
-        hwSerial = ((l.getElement(19) & 0x0f) * 128 ) + l.getElement(18);
+        hwSerial = ((l.getElement(19) & 0x3f) * 128 ) + l.getElement(18);
         hwVersion = ((double)(l.getElement(17) & 0x78) / 8 ) + ((double)(l.getElement(17) & 0x07) / 10 ) ;
         swVersion = ((double)(l.getElement(16) & 0x78) / 8 ) + ((double)(l.getElement(16) & 0x07) / 10 ) ;
         return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_BASEDETAIL",
                 hwType,
-                hwSerial,
+                hwSerial + "(" + Integer.toHexString(hwSerial).toUpperCase() + ")",
                 hwVersion,
                 swVersion);
     }
@@ -4953,7 +4932,17 @@ public class LocoNetMessageInterpret {
 
     private static String interpretExtendedSlot_StatusData_Flags(LocoNetMessage l, int slot) {
         //TODO need more sample data
-        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_FLAGS");
+        String msgRsyncMax = Bundle.getMessage("LN_MSG_OFF");
+        if ((l.getElement(4) & 0x80) == 0x80) {
+            msgRsyncMax = Bundle.getMessage("LN_MSG_ON");
+        }
+        String msgUSB = Bundle.getMessage("LN_MSG_OFF");
+        if ((l.getElement(5) & 0x20) == 0x20) {
+            msgUSB = Bundle.getMessage("LN_MSG_ON");
+        }
+        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_FLAGS",
+                msgRsyncMax,
+                msgUSB );
     }
 
     /**

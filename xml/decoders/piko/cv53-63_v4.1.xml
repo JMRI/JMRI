@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2022</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2022-11-11</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder 4.1</revremark>
+		</revision>
+	</revhistory>
+	<!-- CVs 53-58  Motor Control-->
+	<variable item="EMF Option min Periode" CV="53" default="40">
+		<decVal max="255"/>
+		<label>Repetition rate</label>
+		<label xml:lang="de">Minimale Periodendauer der Motorregelung</label>
+		<label xml:lang="nl">Herhaling Motorregeling</label>
+		<label xml:lang="cs">Míra opakování</label>
+		<tooltip>Lower if the locomotive does not run smoothly - Value * 0.1 msec</tooltip>
+		<tooltip xml:lang="de">verkleinern, wenn Lok ungleichmäßig läuft in 100μs Schritten (max = CV 202)</tooltip>
+		<tooltip xml:lang="nl">verlaag als Loc ongelijkmatig rijdt - Waarde * 0,1 ms</tooltip>
+		<tooltip xml:lang="cs">Pokud lokomotiva nejede plynule snižte hodnotu - Hodnota × 0,1 ms</tooltip>
+	</variable>
+	<variable item="EMF Static Config" CV="54" default="100">
+		<decVal max="255"/>
+		<label>Motor regulation P Constant</label>
+		<label xml:lang="de">Motorregelung P-Konstante</label>
+		<label xml:lang="nl">Motorregeling P-Constante</label>
+		<label xml:lang="cs">Regulace motoru P-složka</label>
+	</variable>
+	<variable item="EMF Dynamic Config" CV="55" default="40">
+		<decVal max="255"/>
+		<label>Motor regulation I Constant</label>
+		<label xml:lang="de">Motorregelung  I-Konstante</label>
+		<label xml:lang="nl">Motorregeling  I-Constante</label>
+		<label xml:lang="cs">Regulace motoru  I-složka</label>
+	</variable>
+	<variable item="EMF Droop Config" CV="56" default="32">
+		<decVal max="255"/>
+		<label>Motor regulation D Constant</label>
+		<label xml:lang="de">Motorregelung D-Konstante</label>
+		<label xml:lang="nl">Motorregeling D-Constante</label>
+		<label xml:lang="cs">Regulace motoru D-složka</label>
+	</variable>
+	<variable item="EMF Option 3" CV="57" default="6">
+		<decVal max="255"/>
+		<label>Control Offset</label>
+		<label xml:lang="de">Regeler Offset</label>
+		<label xml:lang="nl">Regelaar Offset</label>
+		<label xml:lang="cs">Posunutí regulace</label>
+		<tooltip>Lower Value if top speed too low, Raise Value if Speed at Step 1 too fast</tooltip>
+		<tooltip xml:lang="de">verkleinern, wenn Höchstgeschwindigkeit zu gering - vergrößern, wenn geschwindigkeit Schritt 1 zu schnell</tooltip>
+		<tooltip xml:lang="nl">verlaag als topsnelheid te laag - verhoog als snelheid in Stap 1 te snel</tooltip>
+		<tooltip xml:lang="cs">Snižte hodnotu pokud je horní rychlost příliš malá, Zvyšte hodnotu pokud je rychlost na 1. kroku příliš vysoká</tooltip>
+	</variable>
+	<variable item="EMF Option 2" CV="58" default="8">
+		<decVal max="255"/>
+		<label>Time slot for AD measurement</label>
+		<label xml:lang="de">Messlücke zur EMK-Messung</label>
+		<label xml:lang="nl">Tijdsduur AD-meting</label>
+		<label xml:lang="cs">Časový slot pro AD měření</label>
+		<tooltip>Increase if loc does not run smoothly at low speeds - Decrease if the top speed is too low after CV53 has been lowered</tooltip>
+		<tooltip xml:lang="de">vergrößern, wenn Lok bei geringer Geschwindigkeit ungleichmäßig läuft; verkleinern, wenn bei heruntergesetztem CV 53 Höchstgeschwindigkeit der Lok zu gering ist</tooltip>
+		<tooltip xml:lang="nl">verhoog als de Loc op lage snelheid onregelmatig rijdt; verlaag als bij verlaagde CV 53 topsnelheid van Loc te laag is</tooltip>
+		<tooltip xml:lang="cs">Zvyšte, pokud lokomotiva nejede plynule při malých rychlostech - Snižte pokud na horní rychlosti je příliš nízká poté co CV53 bylo sníženo</tooltip>
+	</variable>
+	<!--CV 59 Reset incl at the bottom-->
+	<variable item="Reset" CV="59" default="0">
+		<!-- Piko -->
+		<decVal/>
+		<label>Reset: </label>
+		<label xml:lang="it">ID Costruttore: </label>
+		<label xml:lang="fr">ID constructeur: </label>
+		<label xml:lang="de">Reset Werkseinstellung: </label>
+		<label xml:lang="nl">Fabrikant-ID: </label>
+		<label xml:lang="cs">ID výrobce: </label>
+		<tooltip>1=CVs 0-256, 2=RailCom Plus, 3=Advanced Function Mapping, 4=PWM Modulation</tooltip>
+		<tooltip xml:lang="de">1=CVs 0-256, 2=RailCom Plus, 3=Erweitertes Function Mapping, 4=PWM-Modulation</tooltip>
+	</variable>
+	<variable item="Short circuit supervision" CV="60" readOnly="yes">
+		<decVal max="9"/>
+		<label>Motor and Function Output Short circuit supervision</label>
+		<label xml:lang="de">Kurzschluss- und Temperaturüberwachung</label>
+		<label xml:lang="nl">Kortsluitbeveiliging Motor- und Functie-uitgangen</label>
+		<label xml:lang="cs">Kontrola zkratu na motoru a funkčních výstupech</label>
+		<tooltip>Do not change! 0=deactivated / 137=activated</tooltip>
+		<tooltip xml:lang="cs">Neměňte! 0=deaktivováno - 137=aktivováno</tooltip>
+	</variable>
+	<variable item="Shutdown Temperature" CV="61" readOnly="yes">
+		<decVal/>
+		<label>Shutdown Temperature</label>
+		<label xml:lang="de">Konstante für Temperaturabschaltung</label>
+		<label xml:lang="nl">Uitschakeltemperatuur</label>
+		<label xml:lang="cs">Vypínací teplota</label>
+		<tooltip>in °C, different with each decoder</tooltip>
+		<tooltip xml:lang="cs">v °C, rozdílné pro každý dekodér</tooltip>
+	</variable>
+	<variable item="Function Outputs Short Constant" CV="62" readOnly="yes">
+		<decVal/>
+		<label>Function Outputs Short Constant</label>
+		<label xml:lang="de">Kurzschlussüberwachung Fkt.-Ausgänge</label>
+		<label xml:lang="nl">Kortsluitbeveiliging functieuitgangen</label>
+		<label xml:lang="cs">Konstanta zkratu funkčního výstupu</label>
+	</variable>
+	<variable item="Motor Output Short Constant" CV="63" readOnly="yes">
+		<decVal/>
+		<label>Motor Output Short Constant</label>
+		<label xml:lang="de">Kurzschlussüberwachung Motorausgang</label>
+		<label xml:lang="nl">Kortsluitbeveiliging motoruitgang</label>
+		<label xml:lang="cs">Konstanta zkratu motorového výstupu</label>
+	</variable>
+</variables>

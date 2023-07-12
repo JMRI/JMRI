@@ -445,11 +445,11 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                         endSpeedType, _warrant.getCurrentBlockName()));
             }
             _ramp.setParameters(endSpeedType, endBlockIdx);
-            _ramp._rampDown = (endBlockIdx >= 0) || endSpeedType.equals(Warrant.Stop);
-            setIsRamping(true);
-            _holdRamp = false;
-            setWaitforClear(true);
             synchronized (_rampLockObject) {
+                _ramp._rampDown = (endBlockIdx >= 0) || endSpeedType.equals(Warrant.Stop);
+//                setIsRamping(true);
+                _holdRamp = false;
+                setWaitforClear(true);
                 _rampLockObject.notifyAll(); // free wait at ThrottleRamp.run()
                 log.debug("{}: rampSpeedTo calls notify _rampLockObject", _warrant.getDisplayName());
             }
@@ -457,6 +457,10 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             log.error("Can't launch ramp for speed {}! _ramp Thread.State= {}. Waited {}ms",
                     endSpeedType, _ramp.getState(), time);
             _warrant.debugInfo();
+            setSpeedToType(endSpeedType);
+            _ramp.quit(true);
+            _ramp.interrupt();
+            _ramp = null;
         }
     }
 
@@ -1176,9 +1180,11 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         @SuppressFBWarnings(value="UW_UNCOND_WAIT", justification="waits may be indefinite until satisfied or thread aborted")
         public void run() {
             while (!_die) {
+                setIsRamping(false);
                 synchronized (_rampLockObject) {
                     try {
                         _rampLockObject.wait(); // wait until notified by rampSpeedTo() calls quit()
+                        setIsRamping(true);
                     } catch (InterruptedException ie) {
                         log.debug("As expected", ie);
                     }
@@ -1186,7 +1192,6 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                 if (_die) {
                     break;
                 }
-                setIsRamping(true);
                 stop = false;
                 doRamp();
             }

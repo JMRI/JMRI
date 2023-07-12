@@ -26,7 +26,7 @@
       <ul>
         <li>One solution is to use a "USB-to-Serial" Adapter to solve this. A typical unit is the
         <a href=
-        "http://www.tripplite.com/high-speed-usb-to-serial-adapter-keyspan~USA19HS/">Keyspan
+        "https://tripplite.eaton.com/high-speed-usb-to-serial-adapter-keyspan~USA19HS/">Keyspan
         USA-19HS series of adapters</a> by Tripplite. We recommend these Keyspan adapters; we use a
         Keyspan 19-series adapter during the release testing, and have found them to work reliably
         in all cases so far.
@@ -95,7 +95,7 @@
       adapter provided by <a href="http://www.rr-cirkits.com">RR-Cirkits</a>, and many
       do-it-yourself adapters. If you're using this adapter with a Macintosh or Linux computer, be
       sure to download the most recent drivers from the <a href=
-      "http://www.ftdichip.com/FTDrivers.htm">FTDI</a> website, as early versions had bugs.</p>
+      "https://ftdichip.com/drivers/">FTDI</a> website, as early versions had bugs.</p>
 
       <h3 id="LI100">XpressNet via LI100</h3>
 

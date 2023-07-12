@@ -1,13 +1,17 @@
 package jmri.jmrit.symbolicprog;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.util.HashMap;
+
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
@@ -35,6 +39,27 @@ public abstract class AbstractVariableValueTestBase {
     abstract void checkReadOnlyValue(VariableValue var, String comment, String value);
 
     // start of base tests
+
+    // Test the ValueState enum
+    @Test
+    public void testValueStateEnum() {
+        Assert.assertEquals(Color.red.brighter(), AbstractValue.ValueState.UNKNOWN.getColor());
+        Assert.assertEquals(Color.orange, AbstractValue.ValueState.EDITED.getColor());
+        Assert.assertNull(AbstractValue.ValueState.READ.getColor());
+        Assert.assertNull(AbstractValue.ValueState.STORED.getColor());
+        Assert.assertEquals(Color.yellow, AbstractValue.ValueState.FROMFILE.getColor());
+        Assert.assertNull(AbstractValue.ValueState.SAME.getColor());
+        Assert.assertEquals(Color.red.brighter(), AbstractValue.ValueState.DIFFERENT.getColor());
+
+        Assert.assertEquals("Unknown", AbstractValue.ValueState.UNKNOWN.getName());
+        Assert.assertEquals("Edited", AbstractValue.ValueState.EDITED.getName());
+        Assert.assertEquals("Read", AbstractValue.ValueState.READ.getName());
+        Assert.assertEquals("Stored", AbstractValue.ValueState.STORED.getName());
+        Assert.assertEquals("FromFile", AbstractValue.ValueState.FROMFILE.getName());
+        Assert.assertEquals("Same", AbstractValue.ValueState.SAME.getName());
+        Assert.assertEquals("Different", AbstractValue.ValueState.DIFFERENT.getName());
+    }
+
     // check label, item from ctor
     @Test
     public void testVariableNaming() {
@@ -216,11 +241,11 @@ public abstract class AbstractVariableValueTestBase {
         variable.readAll();
         // wait for reply (normally, done by callback; will check that later)
         JUnitUtil.waitFor(()-> !variable.isBusy(), "variable.isBusy");
-        
+
         checkValue(variable, "text var value ", "14");
-        Assertions.assertEquals(AbstractValue.READ, variable.getState(), "var state ");
+        Assertions.assertEquals(AbstractValue.ValueState.READ, variable.getState(), "var state ");
         Assertions.assertEquals(123, cv.getValue(), "cv value");
-        Assertions.assertEquals(AbstractValue.READ, cv.getState(), "CV state ");
+        Assertions.assertEquals(AbstractValue.ValueState.READ, cv.getState(), "CV state ");
     }
 
     // check a write operation to the variable
@@ -238,10 +263,10 @@ public abstract class AbstractVariableValueTestBase {
         variable.writeAll();
         // wait for reply (normally, done by callback; will check that later)
         JUnitUtil.waitFor(()-> !variable.isBusy(), "variable.isBusy");
-        
+
         checkValue(variable, "value ", "5");
-        Assertions.assertEquals(AbstractValue.STORED, variable.getState(), "var state ");
-        Assertions.assertEquals(AbstractValue.STORED, cv.getState(), "cv state ");
+        Assertions.assertEquals(AbstractValue.ValueState.STORED, variable.getState(), "var state ");
+        Assertions.assertEquals(AbstractValue.ValueState.STORED, cv.getState(), "cv state ");
         Assertions.assertEquals(5 * 4 + 128 + 1, p.lastWrite(), "last program write "); // include checking original bits
     }
 
@@ -260,10 +285,10 @@ public abstract class AbstractVariableValueTestBase {
         cv.write(statusLabel);  // JLabel is for reporting status, ignored here
         // wait for reply (normally, done by callback; will check that later)
         JUnitUtil.waitFor(()-> !cv.isBusy(), "cv.isBusy");
-        
+
         checkValue(variable, "value ", "5");
-        Assertions.assertEquals(AbstractValue.STORED, variable.getState(), "variable state ");
-        Assertions.assertEquals(AbstractValue.STORED, cv.getState(), "cv state ");
+        Assertions.assertEquals(AbstractValue.ValueState.STORED, variable.getState(), "variable state ");
+        Assertions.assertEquals(AbstractValue.ValueState.STORED, cv.getState(), "cv state ");
         Assertions.assertEquals(5 * 4 + 3, p.lastWrite(), "value written "); // includes initial value bits
         Assertions.assertEquals("OK", statusLabel.getText(), "status label ");
     }
@@ -278,11 +303,11 @@ public abstract class AbstractVariableValueTestBase {
         v.put("81", cv);
         // create a variable pointed at CV 81, loaded as 5, manually notified
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
-        Assertions.assertEquals(VariableValue.FROMFILE, variable.getState(), "initial state");
-        cv.setState(CvValue.UNKNOWN);
-        Assertions.assertEquals(VariableValue.UNKNOWN, variable.getState(), "after CV set unknown");
+        Assertions.assertEquals(VariableValue.ValueState.FROMFILE, variable.getState(), "initial state");
+        cv.setState(AbstractValue.ValueState.UNKNOWN);
+        Assertions.assertEquals(VariableValue.ValueState.UNKNOWN, variable.getState(), "after CV set unknown");
         setValue(variable, "5");
-        Assertions.assertEquals(VariableValue.EDITED, variable.getState(), "state after setValue");
+        Assertions.assertEquals(VariableValue.ValueState.EDITED, variable.getState(), "state after setValue");
     }
 
     // check the state <-> color connection for value
@@ -295,10 +320,10 @@ public abstract class AbstractVariableValueTestBase {
         v.put("81", cv);
         // create a variable pointed at CV 81, loaded as 5, manually notified
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
-        Assertions.assertEquals(VariableValue.COLOR_FROMFILE, variable.getCommonRep().getBackground(), "FROM_FILE color");
+        Assertions.assertEquals(VariableValue.ValueState.FROMFILE.getColor(), variable.getCommonRep().getBackground(), "FROM_FILE color");
 
-        cv.setState(CvValue.UNKNOWN);
-        Assertions.assertEquals(VariableValue.COLOR_UNKNOWN, variable.getCommonRep().getBackground(), "UNKNOWN color");
+        cv.setState(AbstractValue.ValueState.UNKNOWN);
+        Assertions.assertEquals(VariableValue.ValueState.UNKNOWN.getColor(), variable.getCommonRep().getBackground(), "UNKNOWN color");
     }
 
     // check the state <-> color connection for rep when var changes
@@ -314,18 +339,18 @@ public abstract class AbstractVariableValueTestBase {
         // get a representation
         JComponent rep = (JComponent) variable.getNewRep("");
 
-        Assertions.assertEquals(VariableValue.COLOR_FROMFILE, variable.getCommonRep().getBackground(), "FROMFILE color");
-        Assertions.assertEquals(VariableValue.COLOR_FROMFILE, rep.getBackground(), "FROMFILE color");
+        Assertions.assertEquals(VariableValue.ValueState.FROMFILE.getColor(), variable.getCommonRep().getBackground(), "FROMFILE color");
+        Assertions.assertEquals(VariableValue.ValueState.FROMFILE.getColor(), rep.getBackground(), "FROMFILE color");
 
-        cv.setState(CvValue.UNKNOWN);
+        cv.setState(AbstractValue.ValueState.UNKNOWN);
 
-        Assertions.assertEquals(VariableValue.COLOR_UNKNOWN, variable.getCommonRep().getBackground(), "UNKNOWN color");
-        Assertions.assertEquals(VariableValue.COLOR_UNKNOWN, rep.getBackground(), "UNKNOWN color");
+        Assertions.assertEquals(VariableValue.ValueState.UNKNOWN.getColor(), variable.getCommonRep().getBackground(), "UNKNOWN color");
+        Assertions.assertEquals(VariableValue.ValueState.UNKNOWN.getColor(), rep.getBackground(), "UNKNOWN color");
 
         setValue(variable, "5");
 
-        Assertions.assertEquals(VariableValue.COLOR_EDITED, variable.getCommonRep().getBackground(), "EDITED color");
-        Assertions.assertEquals(VariableValue.COLOR_EDITED, rep.getBackground(), "EDITED color");
+        Assertions.assertEquals(VariableValue.ValueState.EDITED.getColor(), variable.getCommonRep().getBackground(), "EDITED color");
+        Assertions.assertEquals(VariableValue.ValueState.EDITED.getColor(), rep.getBackground(), "EDITED color");
     }
 
     // check the state <-> color connection for var when rep changes
@@ -342,20 +367,20 @@ public abstract class AbstractVariableValueTestBase {
         // get a representation
         JComponent rep = (JComponent) variable.getNewRep("");
 
-        Assertions.assertEquals(VariableValue.COLOR_FROMFILE, variable.getCommonRep().getBackground(), "FROMFILE color");
-        Assertions.assertEquals(VariableValue.COLOR_FROMFILE, rep.getBackground(), "FROMFILE color");
+        Assertions.assertEquals(VariableValue.ValueState.FROMFILE.getColor(), variable.getCommonRep().getBackground(), "FROMFILE color");
+        Assertions.assertEquals(VariableValue.ValueState.FROMFILE.getColor(), rep.getBackground(), "FROMFILE color");
 
-        cv.setState(CvValue.UNKNOWN);
-        Assertions.assertEquals(VariableValue.COLOR_UNKNOWN, variable.getCommonRep().getBackground(), "UNKNOWN color");
-        Assertions.assertEquals(VariableValue.COLOR_UNKNOWN, rep.getBackground(), "UNKNOWN color");
+        cv.setState(AbstractValue.ValueState.UNKNOWN);
+        Assertions.assertEquals(VariableValue.ValueState.UNKNOWN.getColor(), variable.getCommonRep().getBackground(), "UNKNOWN color");
+        Assertions.assertEquals(VariableValue.ValueState.UNKNOWN.getColor(), rep.getBackground(), "UNKNOWN color");
 
         try {   // might be either of two reps?
             ((JComboBox<String>) rep).setSelectedItem("9");
         } catch (java.lang.ClassCastException e) {
             ((JTextField) rep).setText("9");
             ((JTextField) rep).postActionEvent();
-            Assertions.assertEquals(VariableValue.COLOR_EDITED, variable.getCommonRep().getBackground(), "EDITED color");
-            Assertions.assertEquals(VariableValue.COLOR_EDITED, rep.getBackground(), "EDITED color");
+            Assertions.assertEquals(VariableValue.ValueState.EDITED.getColor(), variable.getCommonRep().getBackground(), "EDITED color");
+            Assertions.assertEquals(VariableValue.ValueState.EDITED.getColor(), rep.getBackground(), "EDITED color");
         }
     }
 
@@ -419,8 +444,8 @@ public abstract class AbstractVariableValueTestBase {
 
         checkValue(var1, "var 1 value", "5");
         checkValue(var2, "var 2 value", "5");
-        Assertions.assertEquals(AbstractValue.STORED, var1.getState(), "1st variable state ");
-        Assertions.assertEquals(AbstractValue.STORED, var2.getState(), "2nd variable state ");
+        Assertions.assertEquals(AbstractValue.ValueState.STORED, var1.getState(), "1st variable state ");
+        Assertions.assertEquals(AbstractValue.ValueState.STORED, var2.getState(), "2nd variable state ");
         Assertions.assertEquals(5 * 4 + 3, p.lastWrite(), "value written to programmer "); // includes initial value bits
     }
 

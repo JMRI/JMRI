@@ -103,20 +103,20 @@ public class CbusPredefinedMetersTest {
         CbusNodeTableDataModel nodeModel = memo.get(CbusConfigurationManager.class)
             .provide(CbusNodeTableDataModel.class);
 
-        Assertions.assertEquals(1,tcis.numListeners(),"node table listening "+tcis.getListeners());
+        Assertions.assertEquals(2,tcis.numListeners(),"node table and programmer listening "+tcis.getListeners());
         enable();
-        Assert.assertEquals("mm listening",2,tcis.numListeners());
+        Assert.assertEquals("mm listening",3,tcis.numListeners());
         disable();
-        Assert.assertEquals("mm not listening",1,tcis.numListeners());
+        Assert.assertEquals("mm not listening",2,tcis.numListeners());
 
         CbusNode testCs = nodeModel.provideNodeByNodeNum(777);
         testCs.setCsNum(0);
-        Assert.assertEquals("node + node table listening",2,tcis.numListeners());
+        Assert.assertEquals("node + node table listening",3,tcis.numListeners());
 
         enable();
-        Assert.assertEquals("multimeter listening",3,tcis.numListeners());
+        Assert.assertEquals("multimeter listening",4,tcis.numListeners());
         disable();
-        Assert.assertEquals("mm not listening",2,tcis.numListeners());
+        Assert.assertEquals("mm not listening",3,tcis.numListeners());
 
         nodeModel.dispose();
         testCs.dispose();

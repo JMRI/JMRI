@@ -68,6 +68,7 @@ public class EasyDccConsistManager extends AbstractConsistManager {
         EasyDccConsist consist;
         consist = new EasyDccConsist((DccLocoAddress) address, _memo);
         consistTable.put(address, consist);
+        notifyConsistListChanged();
         return consist;
     }
 

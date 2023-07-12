@@ -1,10 +1,9 @@
 package jmri.jmrit.operations.automation.actions;
 
 import javax.swing.JComboBox;
+
 import jmri.InstanceManager;
-import jmri.jmrit.operations.automation.Automation;
-import jmri.jmrit.operations.automation.AutomationItem;
-import jmri.jmrit.operations.automation.AutomationManager;
+import jmri.jmrit.operations.automation.*;
 
 public class GotoAction extends Action {
 
@@ -57,11 +56,14 @@ public class GotoAction extends Action {
     @Override
     public JComboBox<AutomationItem> getComboBox() {
         if (getAutomationItem() != null) {
-            Automation automation = InstanceManager.getDefault(AutomationManager.class).getAutomationById(getAutomationItem().getId().split(Automation.REGEX)[0]);
-            JComboBox<AutomationItem> cb = automation.getComboBox();
-            cb.removeItem(getAutomationItem());
-            cb.setSelectedItem(getAutomationItem().getGotoAutomationItem());
-            return cb;
+            Automation automation = InstanceManager.getDefault(AutomationManager.class)
+                    .getAutomationById(getAutomationItem().getId().split(Automation.REGEX)[0]);
+            if (automation != null) {
+                JComboBox<AutomationItem> cb = automation.getComboBox();
+                cb.removeItem(getAutomationItem());
+                cb.setSelectedItem(getAutomationItem().getGotoAutomationItem());
+                return cb;
+            }
         }
         return null;
     }

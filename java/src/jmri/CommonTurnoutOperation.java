@@ -66,7 +66,7 @@ public abstract class CommonTurnoutOperation extends TurnoutOperation {
 
     @Override
     public boolean equivalentTo(TurnoutOperation other) {
-        if (this.getClass() == other.getClass()) {
+        if (other!= null && this.getClass() == other.getClass()) {
             return interval == ((CommonTurnoutOperation) other).interval
                     && maxTries == ((CommonTurnoutOperation) other).maxTries;
         } else {

@@ -158,6 +158,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.ShutdownComputer.class);
         classes.add(jmri.jmrit.logixng.actions.SimulateTurnoutFeedback.class);
         classes.add(jmri.jmrit.logixng.actions.WebBrowser.class);
+        classes.add(jmri.jmrit.logixng.actions.WebRequest.class);
         map.put(Category.OTHER, classes);
 
         Assert.assertTrue("maps are equal",

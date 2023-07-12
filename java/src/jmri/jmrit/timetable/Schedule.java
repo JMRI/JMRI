@@ -39,6 +39,21 @@ public class Schedule {
     private int _startHour = 0;
     private int _duration = 24;
 
+    /**
+     * Make a copy of the schedule.
+     * @param layoutId The new layoutId, if zero use the current layout id.
+     * @return a new schedule instance.
+     */
+    public Schedule getCopy(int layoutId) {
+        if (layoutId == 0) layoutId = getLayoutId();
+        Schedule copy = new Schedule(layoutId);
+        copy.setScheduleName(Bundle.getMessage("DuplicateCopyName", _scheduleName));
+        copy.setEffDate(_effDate);
+        copy.setStartHour(_startHour);
+        copy.setDuration(_duration);
+        return copy;
+    }
+
     public int getScheduleId() {
         return _scheduleId;
     }

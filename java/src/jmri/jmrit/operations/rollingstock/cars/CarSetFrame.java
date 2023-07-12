@@ -107,6 +107,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         pLoad.setLayout(new GridBagLayout());
         pLoad.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Load")));
         addItemLeft(pLoad, ignoreLoadCheckBox, 1, 0);
+        loadComboBox.setName("loadComboBox");
         addItem(pLoad, loadComboBox, 2, 0);
         addItem(pLoad, editLoadButton, 3, 0);
         pOptional.add(pLoad);
@@ -410,6 +411,8 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
             if (!car.getLoadName().equals(load)) {
                 if (carLoads.containsName(car.getTypeName(), load)) {
                     car.setLoadName(load);
+                    car.setWait(0); // car could be at spur with schedule
+                    car.setScheduleItemId(Car.NONE);
                     updateComboBoxesLoadChange();
                 } else {
                     JOptionPane.showMessageDialog(this,
@@ -679,6 +682,8 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
             // update car load
             if (!ignoreLoadCheckBox.isSelected() && carLoads.containsName(car.getTypeName(), _car.getLoadName())) {
                 car.setLoadName(_car.getLoadName());
+                car.setWait(0); // car could be at spur with schedule
+                car.setScheduleItemId(Car.NONE);
             }
             // update kernel
             if (!ignoreKernelCheckBox.isSelected()) {

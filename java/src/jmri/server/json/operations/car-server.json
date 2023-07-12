@@ -107,6 +107,13 @@
             "type": "boolean",
             "description": "True if the car is performing a local move; false otherwise"
         },
+        "trainId": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "id of train car is assigned to, null if not assigned"
+        },
         "destination": {
             "type": [
                 "object",
@@ -135,6 +142,10 @@
         "outOfService": {
             "type": "boolean",
             "description": "True if out of service; false otherwise"
+        },
+        "locationUnknown": {
+            "type": "boolean",
+            "description": "True if car is lost, false otherwise"
         },
         "rename": {
             "type": "string",

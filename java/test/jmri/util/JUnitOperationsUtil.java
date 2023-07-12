@@ -1,37 +1,32 @@
 package jmri.util;
 
+import java.awt.GraphicsEnvironment;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle; // for access operations keys directly.
 
 import org.junit.Assert;
+import org.junit.Assume;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
-import jmri.ShutDownTask;
+import jmri.*;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.automation.Automation;
-import jmri.jmrit.operations.automation.AutomationItem;
-import jmri.jmrit.operations.automation.AutomationManager;
+import jmri.jmrit.operations.automation.*;
 import jmri.jmrit.operations.automation.actions.*;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.LocationManagerXml;
-import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.locations.schedules.Schedule;
-import jmri.jmrit.operations.locations.schedules.ScheduleItem;
-import jmri.jmrit.operations.locations.schedules.ScheduleManager;
+import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.locations.schedules.*;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.*;
+import jmri.jmrit.operations.rollingstock.engines.Consist;
+import jmri.jmrit.operations.rollingstock.engines.ConsistManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.TrainManagerXml;
+import jmri.jmrit.operations.trains.*;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 
@@ -420,6 +415,42 @@ public class JUnitOperationsUtil {
 
         return route;
     }
+    
+    public static Route createFiveLocationTurnRoute() {
+
+        RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+
+        createSevenNormalLocations();
+
+        Route route = rmanager.newRoute("Route Acton-Boston-Chelmsford-Danvers-Essex-Essex-Danvers-Chelmsford-Boston-Acton");
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Location boston = lmanager.getLocationByName("Boston");
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        Location danvers = lmanager.getLocationByName("Danvers");
+        Location essex = lmanager.getLocationByName("Essex");
+
+        route.addLocation(acton);
+        route.addLocation(boston);
+        route.addLocation(chelmsford);
+        route.addLocation(danvers);
+        route.addLocation(essex);
+        
+        RouteLocation rlE = route.addLocation(essex); // enter 2nd time for train reversal
+        rlE.setTrainDirection(RouteLocation.SOUTH);
+        RouteLocation rlD = route.addLocation(danvers);
+        rlD.setTrainDirection(RouteLocation.SOUTH);
+        RouteLocation rlC = route.addLocation(chelmsford);
+        rlC.setTrainDirection(RouteLocation.SOUTH);
+        RouteLocation rlB = route.addLocation(boston);
+        rlB.setTrainDirection(RouteLocation.SOUTH);
+        RouteLocation rlA = route.addLocation(acton);
+        rlA.setTrainDirection(RouteLocation.SOUTH);
+        rlA.setPickUpAllowed(false); // don't include cars at destination
+
+        return route;
+    }
 
     /**
      * Creates a location with 2 spurs, 2 interchanges, and 2 yards
@@ -668,6 +699,26 @@ public class JUnitOperationsUtil {
         }
         Assert.assertNotNull(in);
         return in;
+    }
+    
+    public static void testCloseWindowOnSave(String title) {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        JFrameOperator jfo = new JFrameOperator(title);
+        Assert.assertNotNull("visible and found", jfo);
+        // confirm window appears
+        JmriJFrame f = JmriJFrame.getFrame(title);
+        Assert.assertNotNull("exists", f);
+        new JButtonOperator(jfo, Bundle.getMessage("ButtonSave")).doClick();
+        f = JmriJFrame.getFrame(title);
+        Assert.assertNotNull("exists", f);
+        // now close window with save button
+        Setup.setCloseWindowOnSaveEnabled(true);
+        new JButtonOperator(jfo, Bundle.getMessage("ButtonSave")).doClick();
+        jfo.waitClosed();
+        // confirm window is closed
+        f = JmriJFrame.getFrame(title);
+        Assert.assertNull("does not exist", f);
     }
 
     public static void checkOperationsShutDownTask() {

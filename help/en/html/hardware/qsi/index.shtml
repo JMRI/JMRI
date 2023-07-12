@@ -38,8 +38,8 @@
       had trouble using JMRI and the Quantum Programmer with non-QSI decoders, particularly other
       kinds of sound decoders. In those cases, the solution has usually been to use a programming
       track booster such as the <a href=
-      "http://tonystrains.com/powerpax-dcc-programming-booster/">PowerPax</a> or <a href=
-      "http://www.soundtraxx.com/access/ptb100.php">PTB-100</a>.</p>
+      "https://tonystrains.com/news/powerpax-dcc-programming-booster/">PowerPax</a> or <a href=
+      "https://soundtraxx.com/accessories/installation-accessories/dcc-accessories/ptb-100-programming-track-booster/">PTB-100</a>.</p>
 
       <h2 id="connecting">Connecting</h2>
 
@@ -56,14 +56,15 @@
       can alternate between using JMRI and the Quantum Programmer application (though not at the
       same time, of course).</p>
 
-      <p>Max Ettinger has provided <a href="https://jmri.org/install/qsidriver/">detailed
+      <p>Max Ettinger has provided <a href="https://www.jmri.org/install/qsidriver/">detailed
       instructions</a> for how to install these.</p>
 
       <h4 id="driverMac">Mac OS X</h4>
 
       <ol>
         <li>Download the <a href=
-        "http://downloads.sourceforge.net/jmri/corby-osx-V1_04_1-release.dmg">installation file</a>
+        "https://sourceforge.net/projects/jmri/files/support%20files/QSI%20Programmer%20driver%20for%20Mac%20OS%20X/corby-osx-V1_04_1-release.dmg/download"
+        >installation file</a>
         for the Mac OS X driver. This is a disk image (.dmg) file that should open as a new Finder
         window. If not, double click on it.
         </li>
@@ -83,8 +84,8 @@
 
       <ol>
         <li>Download the <a href=
-        "http://downloads.sourceforge.net/jmri/cornwall-redhat9-V0_84.tar">installation file</a>
-        for the Linux driver. This is a .tar archive file.
+        "https://sourceforge.net/projects/jmri/files/support%20files/QSI%20Programmer%20Driver%20for%20Linux/cornwall-redhat9-V0_84.tar/download"
+        >installation file</a> for the Linux driver. This is a .tar archive file.
         </li>
 
         <li>Expand the archive to somewhere convenient, and change directory to there.</li>

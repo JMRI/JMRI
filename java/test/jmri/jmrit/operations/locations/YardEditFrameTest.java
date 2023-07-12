@@ -3,18 +3,19 @@ package jmri.jmrit.operations.locations;
 import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.netbeans.jemmy.operators.JCheckBoxOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-import org.netbeans.jemmy.operators.JCheckBoxOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.junit.Assume;
 
 /**
  * Tests for the Operations Locations GUI class
@@ -322,6 +323,15 @@ public class YardEditFrameTest extends OperationsTestCase {
         Assert.assertTrue("Boxcar is accepted", t.isTypeNameAccepted("Boxcar"));
 
         JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Track t = l.addTrack("Test Close", Track.YARD);
+        YardEditFrame f = new YardEditFrame();
+        f.initComponents(l, t);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
     // Ensure minimal setup for log4J

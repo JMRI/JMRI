@@ -7,13 +7,7 @@
 
   <style>
     .dp-center {text-align: center;}
-    .dp-middle {text-align: middle;}
     .dp-right {text-align: right;}
-    .dp-none {list-style-type: none;}
-    .dp-square {list-style-type: square;}
-    .dp-upper-alpha {ist-style-type: upper-alpha;}
-    .dp-lower-alpha {list-style-type: lower-alpha;}
-    .dp-border-2 {border: 2px solid;}
   </style>
 </head>
 <body>
@@ -45,8 +39,7 @@
       </p>
 
       <p>Opens the <strong>Send power line device command</strong> prompt to allow you to type in a
-      <strong>Command</strong> and <input type="button" name="button" id="button" value="Send"> it
-      to the powerline device.</p>
+      <strong>Command</strong> and <span class="textbutton">Send</span> it to the powerline device.</p>
 
       <p><img src="images/Main_PowerControl_01.png" alt="Send Command" width="325" height="143">
       </p>

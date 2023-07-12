@@ -3,14 +3,12 @@ package jmri.jmrit.operations.locations.schedules;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 
@@ -49,6 +47,19 @@ public class ScheduleOptionsFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(sf);
         JUnitUtil.dispose(f);
     }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Location loc = JUnitOperationsUtil.createOneNormalLocation("Test");
+        Track track = loc.getTrackByName("Test Spur 1", null);
+        ScheduleManager sManager = InstanceManager.getDefault(ScheduleManager.class);
+        Schedule schedule = sManager.newSchedule("test schedule");
+        ScheduleEditFrame sef = new ScheduleEditFrame(schedule, track);
+        ScheduleOptionsFrame f = new ScheduleOptionsFrame(sef);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
+    }
+
 
     // private final static Logger log = LoggerFactory.getLogger(ScheduleOptionsFrameTest.class);
 }

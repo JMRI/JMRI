@@ -7,13 +7,7 @@
 
   <style>
     .dp-center {text-align: center;}
-    .dp-middle {text-align: middle;}
     .dp-right {text-align: right;}
-    .dp-none {list-style-type: none;}
-    .dp-square {list-style-type: square;}
-    .dp-upper-alpha {ist-style-type: upper-alpha;}
-    .dp-lower-alpha {list-style-type: lower-alpha;}
-    .dp-border-2 {border: 2px solid;}
   </style>
 </head>
 <body>
@@ -123,29 +117,26 @@
       <p><strong>New Locomotive</strong> text box : type in a new locomotive address or select from
       you roster using the drop-down list.</p>
 
-      <p>Clicking the <strong><input type="button" name="button" id="button" value="adds"></strong>
+      <p>Clicking the <strong><span class="textbutton">adds</span></strong>
       will add the locomotive to the consist and it will appear in the list area of the window.</p>
 
-      <p>Clicking the <strong><input type="button" name="button2" id="button2" value=
-      "Button"></strong> will clear the information of the current locomotive.</p>
+      <p>Clicking the <strong><span class="textbutton">Button</span></strong>
+      will clear the information of the current locomotive.</p>
 
       <p>The <input name="checkbox" type="checkbox" id="checkbox" checked> <strong>Direction Normal
-      ?</strong> determines the direction of the locomotive travel as forwarded or reverse when the
+      ?</strong> checkbox determines the direction of the locomotive travel as forwarded or reverse when the
       consist is traveling forward. Will be grayed out until the lead locomotive is selected.</p>
 
-      <p><strong><input type="button" name="button3" id="button3" value="DEL"></strong> removes the
-      consist. The list of the consist will have a <input type="button" name="button4" id="button4"
-      value="DEL"> for each locomotive, allowing you to remove any locomotive from the consist.</p>
+      <p>The <strong><span class="textbutton">DEL</span></strong> button removes the
+      consist. The list of the consist will have a <span class="textbutton">DEL</span> button for each locomotive,
+      allowing you to remove any locomotive from the consist.</p>
 
-      <p><input type="button" name="button6" id="button6" value="Delelte"> deletes the entire
-      consist.</p>
+      <p>The <span class="textbutton">Delete</span> button deletes the entire consist.</p>
 
-      <p><a href="Main_Throttle.shtml"><input type="button" name="button5" id="button5" value=
-      "Throttle"></a> opens a <strong><a href="Main_Throttle.shtml">throttle</a></strong> for the
-      consist.</p>
+      <p>The <a href="Main_Throttle.shtml"><span class="textbutton">Throttle</span></a> button
+      opens a <strong><a href="Main_Throttle.shtml">throttle</a></strong> for the consist.</p>
 
-      <p><input type="button" name="button7" id="button7" value="Reverse"> reverses the direction
-      of the consist.</p>
+      <p>The <span class="textbutton">Reverse</span> button reverses the direction of the consist.</p>
 
       <hr>
 

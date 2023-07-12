@@ -1,237 +1,195 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
-
-<appearancetable
-    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
->
-
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2009</year><year>2010</year><holder>JMRI</holder>
+    <year>2009</year>
+    <year>2010</year>
+    <holder>JMRI</holder>
   </copyright>
-  
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
-        <personname><firstname>John</firstname><surname>Lang</surname></personname>
-    </author>    
+      <personname>
+        <firstname>John</firstname>
+        <surname>Lang</surname>
+      </personname>
+    </author>
   </authorgroup>
-
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-        <revnumber>1</revnumber>
-        <date>2013-04-01</date>
-        <authorinitials>JDL</authorinitials>
-        <revremark>Initial version</revremark>
+      <revnumber>1</revnumber>
+      <date>2013-04-01</date>
+      <authorinitials>JDL</authorinitials>
+      <revremark>Initial version</revremark>
     </revision>
-    
     <revision>
-        <revnumber>2</revnumber>
-        <date>2013-07-10</date>
-        <authorinitials>JDL</authorinitials>
-        <revremark>aspect mapping revisions</revremark>
+      <revnumber>2</revnumber>
+      <date>2013-07-10</date>
+      <authorinitials>JDL</authorinitials>
+      <revremark>aspect mapping revisions</revremark>
     </revision>
-    
     <revision>
-        <revnumber>2.1</revnumber>
-        <date>2013-12-30</date>
-        <authorinitials>JDL</authorinitials>
-        <revremark>fixed aspect name reference in appearence files. tweaked aspect mappings</revremark>
+      <revnumber>2.1</revnumber>
+      <date>2013-12-30</date>
+      <authorinitials>JDL</authorinitials>
+      <revremark>fixed aspect name reference in appearence files. tweaked aspect mappings</revremark>
     </revision>
-    
     <revision>
-        <revnumber>2.2</revnumber>
-        <date>2015-06-12</date>
-        <authorinitials>JDL</authorinitials>
-        <revremark>added aspect mapping to Held Aspect</revremark>
+      <revnumber>2.2</revnumber>
+      <date>2015-06-12</date>
+      <authorinitials>JDL</authorinitials>
+      <revremark>added aspect mapping to Held Aspect</revremark>
     </revision>
-    
   </revhistory>
-
   <aspecttable>NYC-1956</aspecttable>
   <name>Double searchlight high permissive signal</name>
   <reference>As described in the New York Central System publication "Rules of the Operating Department, Effective October 28, 1956."</reference>
   <description>Appearances for a two-searchlight signal head without other badging</description>
-  
   <appearances>
-
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
       <show>red</show>
       <reference>Rule 281</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-per/Rule 281.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-per/Rule_281.gif</imagelink>
     </appearance>
-
     <appearance>
       <aspectname>Advance Approach Medium</aspectname>
       <show>green</show>
       <show>yellow</show>
       <reference>Rule 281A</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-per/Rule 281A.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-per/Rule_281A.gif</imagelink>
     </appearance>
-
     <appearance>
       <aspectname>Approach Limited</aspectname>
       <show>yellow</show>
       <show>flashgreen</show>
       <reference>Rule 281B</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-per/Rule 281B.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-per/Rule_281B.gif</imagelink>
     </appearance>
-        
     <appearance>
       <aspectname>Approach Medium</aspectname>
       <show>yellow</show>
       <show>green</show>
       <reference>Rule 282</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-per/Rule 282.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-per/Rule_282.gif</imagelink>
     </appearance>
-        
     <appearance>
       <aspectname>Advance Approach</aspectname>
       <show>yellow</show>
       <show>yellow</show>
       <reference>Rule 282A</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-per/Rule 282A.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-per/Rule_282A.gif</imagelink>
     </appearance>
-  
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <show>red</show>
       <reference>Rule 285</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-per/Rule 285.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-per/Rule_285.gif</imagelink>
     </appearance>
-
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>red</show>
       <show>yellow</show>
       <reference>Rule 290</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-per/Rule 290.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-per/Rule_290.gif</imagelink>
     </appearance>
-     
     <appearance>
       <aspectname>Stop and Proceed</aspectname>
       <show>red</show>
       <show>red</show>
       <reference>Rule 291</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-per/Rule 291.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-per/Rule_291.gif</imagelink>
     </appearance>
-    
   </appearances>
-
   <specificappearances>
-  	<danger>
-  		<aspect>Stop and Proceed</aspect>
-  	</danger>
-  	<held>
-  		<aspect>Stop and Proceed</aspect>
-  	</held>
+    <danger>
+      <aspect>Stop and Proceed</aspect>
+    </danger>
+    <held>
+      <aspect>Stop and Proceed</aspect>
+    </held>
   </specificappearances>
-  
   <aspectMappings>
-     <aspectMapping>
+    <aspectMapping>
       <advancedAspect>Clear</advancedAspect>
       <ourAspect>Clear</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Advance Approach Medium</advancedAspect>
       <ourAspect>Clear</ourAspect>
     </aspectMapping>
-       
     <aspectMapping>
       <advancedAspect>Approach Limited</advancedAspect>
       <ourAspect>Clear</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Limited Clear</advancedAspect>
       <ourAspect>Approach Limited</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Limited-Approach</advancedAspect>
       <ourAspect>Approach Limited</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Approach Medium</advancedAspect>
       <ourAspect>Approach Limited</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Advance Approach</advancedAspect>
       <ourAspect>Approach Limited</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Medium Clear</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Medium-Advance Approach</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Medium-Approach Slow</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Approach Slow</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
       <ourAspect>Advance Approach</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Medium-Approach</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Slow-Clear</advancedAspect>
       <ourAspect>Advance Approach</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Slow-Approach</advancedAspect>
       <ourAspect>Advance Approach</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
       <ourAspect>Advance Approach</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Stop and Proceed</advancedAspect>
       <ourAspect>Approach</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Stop</advancedAspect>
       <ourAspect>Approach</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Held</advancedAspect>
       <ourAspect>Approach</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-
   </aspectMappings>
-  
-</appearancetable>  
-  
-
-  
+</appearancetable>

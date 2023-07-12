@@ -4,8 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.Vector;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -64,7 +67,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         _status = status;
 
         // define just address CV at start, pending some variables
-        // boudreau: not sure why we need the statement below, 
+        // boudreau: not sure why we need the statement below,
         // messes up building CV table for CV #1 when in ops mode.
         //addCV("1", false, false, false);
     }
@@ -198,21 +201,21 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
             case VALCOLUMN:
                 return _cvDisplayVector.elementAt(row).getTableEntry();
             case STATECOLUMN:
-                int state = _cvDisplayVector.elementAt(row).getState();
+                AbstractValue.ValueState state = _cvDisplayVector.elementAt(row).getState();
                 switch (state) {
-                    case CvValue.UNKNOWN:
+                    case UNKNOWN:
                         return Bundle.getMessage("CvStateUnknown");
-                    case CvValue.READ:
+                    case READ:
                         return Bundle.getMessage("CvStateRead");
-                    case CvValue.EDITED:
+                    case EDITED:
                         return Bundle.getMessage("CvStateEdited");
-                    case CvValue.STORED:
+                    case STORED:
                         return Bundle.getMessage("CvStateStored");
-                    case CvValue.FROMFILE:
+                    case FROMFILE:
                         return Bundle.getMessage("CvStateFromFile");
-                    case CvValue.SAME:
+                    case SAME:
                         return Bundle.getMessage("CvStateSame");
-                    case CvValue.DIFF:
+                    case DIFFERENT:
                         return Bundle.getMessage("CvStateDiff") + " "
                                 + _cvDisplayVector.elementAt(row).getDecoderValue();
                     default:
@@ -343,7 +346,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
     public boolean decoderDirty() {
         int len = _cvDisplayVector.size();
         for (int i = 0; i < len; i++) {
-            if (_cvDisplayVector.elementAt(i).getState() == CvValue.EDITED) {
+            if (_cvDisplayVector.elementAt(i).getState() == AbstractValue.ValueState.EDITED) {
                 if (log.isDebugEnabled()) {
                     log.debug("CV decoder dirty due to {}", _cvDisplayVector.elementAt(i).number());
                 }
@@ -352,6 +355,27 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         }
         return false;
     }
+
+    /**
+     * Register a VariableValue in a common store mapping CV numbers to
+     * variable names. This is for use by e.g. a CVTable to show tooltips
+     * efficiently.
+     * @param cv specific CV number that the variable references
+     * @param variableName from the variable being defined
+     */
+    public void registerCvToVariableMapping(String cv, String variableName) {
+        // is there already a Set for these?
+        if ( ! cvToVarMap.containsKey(cv)) {
+            // no, create one
+            cvToVarMap.put(cv, Collections.newSetFromMap(new HashMap<String, Boolean>()));
+        }
+        // add the String
+        cvToVarMap.get(cv).add(variableName);
+    }
+
+    public Set<String> getCvToVariableMapping(String cv) { return cvToVarMap.get(cv); }
+
+    private HashMap<String, Set<String>> cvToVarMap = new HashMap<>();
 
     public void dispose() {
         if (log.isDebugEnabled()) {
@@ -375,6 +399,8 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         }
 
         // null references, so that they can be gc'd even if this isn't.
+        cvToVarMap = null;
+
         _cvDisplayVector.removeAllElements();
         _cvDisplayVector = null;
 
@@ -389,9 +415,20 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 
         _cvAllMap.clear();
         _cvAllMap = null;
-        
+
         _status = null;
-        
+
+    }
+
+    int holdsAddress() {
+        int shortAddr = getCvByNumber("1").getValue();
+        int longAddr = ((getCvByNumber("17").getValue()-192)<<8)+getCvByNumber("18").getValue();
+        int addr = holdsLongAddress() ? longAddr : shortAddr;
+        return addr;
+    }
+
+    boolean holdsLongAddress() {
+        return (getCvByNumber("29").getValue() & 0x20) != 0;
     }
 
     private final static Logger log = LoggerFactory.getLogger(CvTableModel.class);

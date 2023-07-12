@@ -729,7 +729,7 @@
           multiple Logixs. (To develop such a test would be very difficult.)</p>
         </li>
 
-        <li>
+        <li id="LogixLogicLoop">
           <strong>What should I do if I think I have a "logic loop"?</strong>
           <p>When they do occur, "logic loops" can be a bit scary to trouble shoot. Your computer
           may appear to be locked up, or slowed to a crawl as the loop uses up most of the
@@ -740,14 +740,14 @@
           below) then enable them one by one until you discover the loop.</p>
 
           <p>If the panel file containing Logixs loads automatically when the program starts up,
-          press and release the shift key a few times rapidly as soon as you see the small JMRI
-          splash screen (the first thing you see during start up). Your panel file will be loaded
-          with all Logixs disabled.</p>
+          press <strong>F8</strong> as soon as you see the small JMRI splash screen (the first thing
+          you see during start up). Your panel file will be loaded with all Logixs disabled.</p>
 
-          <p>If you load your panel file manually using the Panels &gt; Open Panel... menu, before
-          loading your file, go to the <strong>Debug</strong> menu and select <strong>Load Logixs
-          Disabled</strong>. After responding OK to the message, load your panel file as you
-          normally would. Your panel file will be loaded with all Logixs disabled.</p>
+          <p>If you load your panel file manually using the <strong>File &rArr; Load table content
+          and panels...</strong> menu, before loading your file, go to the <strong>Debug</strong>
+          menu and select <strong>Load Logixs Disabled</strong>. After responding OK to the message,
+          load your panel file as you normally would. Your panel file will be loaded with all Logixs
+          disabled.</p>
 
           <p>After loading your panel file, open the Logix Table and verify that all Logixs are
           disabled. If you know which Logix is causing the trouble, you can then fix it or delete

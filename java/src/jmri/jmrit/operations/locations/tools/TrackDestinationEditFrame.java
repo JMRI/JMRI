@@ -37,7 +37,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
     JScrollPane paneDestinations = new JScrollPane(panelDestinations);
 
     // major buttons
-    JButton saveTrackButton = new JButton(Bundle.getMessage("SaveTrack"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     JButton checkDestinationsButton = new JButton(Bundle.getMessage("CheckDestinations"));
 
     // radio buttons
@@ -57,8 +57,8 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         super(Bundle.getMessage("TitleEditTrackDestinations"));
     }
 
-    public void initComponents(Track track) {
-        _track = track;
+    public void initComponents(TrackEditFrame tef) {
+        _track = tef._track;
 
         // the following code sets the frame's initial state
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -123,7 +123,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 
         // row 13
         addItem(panelButtons, checkDestinationsButton, 0, 0);
-        addItem(panelButtons, saveTrackButton, 1, 0);
+        addItem(panelButtons, saveButton, 1, 0);
 
         getContentPane().add(p1);
         getContentPane().add(pane3);
@@ -133,7 +133,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 
         // setup buttons
         addButtonAction(checkDestinationsButton);
-        addButtonAction(saveTrackButton);
+        addButtonAction(saveButton);
 
         addRadioButtonAction(destinationsAll);
         addRadioButtonAction(destinationsInclude);
@@ -168,7 +168,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         if (_track == null) {
             return;
         }
-        if (ae.getSource() == saveTrackButton) {
+        if (ae.getSource() == saveButton) {
             log.debug("track save button activated");
             _track.setOnlyCarsWithFinalDestinationEnabled(onlyCarsWithFD.isSelected());
             OperationsXml.save();
@@ -183,7 +183,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
     }
 
     protected void enableButtons(boolean enabled) {
-        saveTrackButton.setEnabled(enabled);
+        saveButton.setEnabled(enabled);
         checkDestinationsButton.setEnabled(enabled);
         destinationsAll.setEnabled(enabled);
         destinationsInclude.setEnabled(enabled);

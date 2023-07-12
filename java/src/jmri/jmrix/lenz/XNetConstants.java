@@ -284,16 +284,36 @@ public final class XNetConstants {
 
     public static final int LOCO_SET_FUNC_GROUP5 = 0x28; /* set functions F21-F28*/
 
+    public static final int LOCO_SET_FUNC_GROUP6 = 0x29; /* set functions F29-36*/
+
+    public static final int LOCO_SET_FUNC_GROUP7 = 0x2A; /* set functions F37-44*/
+
+    public static final int LOCO_SET_FUNC_GROUP8 = 0x2B; /* set functions F45-52*/
+
+    public static final int LOCO_SET_FUNC_GROUP9 = 0x50; /* set functions F53-60*/
+
+    public static final int LOCO_SET_FUNC_GROUP10= 0x51; /* set functions F61-68*/
+
     /* these set momentary status for functions with 0xE4 as the opcode*/
-    public static final int LOCO_SET_FUNC_Group1 = 0x24; /* set functions F0-F4*/
+    public static final int LOCO_SET_FUNC_GROUP1_MOMENTARY = 0x24; /* set functions F0-F4*/
 
-    public static final int LOCO_SET_FUNC_Group2 = 0x25; /* set functions F5-F8*/
+    public static final int LOCO_SET_FUNC_GROUP2_MOMENTARY = 0x25; /* set functions F5-F8*/
 
-    public static final int LOCO_SET_FUNC_Group3 = 0x26; /* set functions F9-F12*/
+    public static final int LOCO_SET_FUNC_GROUP3_MOMENTARY = 0x26; /* set functions F9-F12*/
 
-    public static final int LOCO_SET_FUNC_Group4 = 0x27; /* set functions F13-F20*/
+    public static final int LOCO_SET_FUNC_GROUP4_MOMENTARY = 0x27; /* set functions F13-F20*/
 
-    public static final int LOCO_SET_FUNC_Group5 = 0x2C; /* set functions F21-F28*/
+    public static final int LOCO_SET_FUNC_GROUP5_MOMENTARY = 0x2C; /* set functions F21-F28*/
+
+    public static final int LOCO_SET_FUNC_GROUP6_MOMENTARY = 0x2D; /* set functions F29-36*/
+
+    public static final int LOCO_SET_FUNC_GROUP7_MOMENTARY = 0x2E; /* set functions F37-44*/
+
+    public static final int LOCO_SET_FUNC_GROUP8_MOMENTARY = 0x52; /* set functions F45-52*/
+
+    public static final int LOCO_SET_FUNC_GROUP9_MOMENTARY = 0x53; /* set functions F53-60*/
+
+    public static final int LOCO_SET_FUNC_GROUP10_MOMENTARY= 0x54; /* set functions F61-68*/
 
     /* add a unit to a multi-unit set opcode requires addition of the
      direction relative to the lead unit as the least significant bit

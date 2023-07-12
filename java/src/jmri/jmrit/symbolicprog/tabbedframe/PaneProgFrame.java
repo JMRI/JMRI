@@ -81,6 +81,8 @@ abstract public class PaneProgFrame extends JmriJFrame
     String programmerShowEmptyPanes = "";
     String decoderShowEmptyPanes = "";
     String decoderAllowResetDefaults = "";
+    String suppressFunctionLabels = "";
+    String suppressRosterMedia = "";
 
     // GUI member declarations
     JTabbedPane tabPane = new JTabbedPane();
@@ -96,6 +98,9 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     ShutDownTask decoderDirtyTask;
     ShutDownTask fileDirtyTask;
+
+    public RosterEntryPane getRosterPane() { return _rPane;}
+    public FunctionLabelPane getFnLabelPane() { return _flPane;}
 
     /**
      * Abstract method to provide a JPanel setting the programming mode, if
@@ -176,15 +181,24 @@ abstract public class PaneProgFrame extends JmriJFrame
         importSubMenu.add(new Pr1ImportAction(Bundle.getMessage("MenuImportPr1"), cvModel, this, progStatus));
         importSubMenu.add(new LokProgImportAction(Bundle.getMessage("MenuImportLokProg"), cvModel, this, progStatus));
         importSubMenu.add(new QuantumCvMgrImportAction(Bundle.getMessage("MenuImportQuantumCvMgr"), cvModel, this, progStatus));
+        importSubMenu.add(new TcsImportAction(Bundle.getMessage("MenuImportTcsFile"), cvModel, variableModel, this, progStatus, _rosterEntry));
+        if (TcsDownloadAction.willBeEnabled()) {
+            importSubMenu.add(new TcsDownloadAction(Bundle.getMessage("MenuImportTcsCS"), cvModel, variableModel, this, progStatus, _rosterEntry));
+        }
 
         // add "Export" submenu; this is hierarchical because
         // some of the names are so long, and we expect more formats
         JMenu exportSubMenu = new JMenu(Bundle.getMessage("MenuExport"));
         fileMenu.add(exportSubMenu);
         exportSubMenu.add(new CsvExportAction(Bundle.getMessage("MenuExportCSV"), cvModel, this));
+        exportSubMenu.add(new CsvExportModifiedAction(Bundle.getMessage("MenuExportCSVModified"), cvModel, this));
         exportSubMenu.add(new Pr1ExportAction(Bundle.getMessage("MenuExportPr1DOS"), cvModel, this));
         exportSubMenu.add(new Pr1WinExportAction(Bundle.getMessage("MenuExportPr1WIN"), cvModel, this));
-        exportSubMenu.add(new CsvExportModifiedAction(Bundle.getMessage("MenuExportCSVModified"), cvModel, this));
+        exportSubMenu.add(new CsvExportVariablesAction(Bundle.getMessage("MenuExportVariables"), variableModel, this));
+        exportSubMenu.add(new TcsExportAction(Bundle.getMessage("MenuExportTcsFile"), cvModel, variableModel, _rosterEntry, this));
+        if (TcsDownloadAction.willBeEnabled()) {
+            exportSubMenu.add(new TcsUploadAction(Bundle.getMessage("MenuExportTcsCS"), cvModel, variableModel, _rosterEntry, this));
+        }
 
         // add "Import" submenu; this is hierarchical because
         // some of the names are so long, and we expect more formats
@@ -937,6 +951,24 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
         log.debug("decoderShowEmptyPanes={}", decoderShowEmptyPanes);
 
+        // get the suppressFunctionLabels attribute, if yes/no update our state
+        if (decoderRoot.getAttribute("suppressFunctionLabels") != null) {
+            log.debug("Found in decoder suppressFunctionLabels={}", decoderRoot.getAttribute("suppressFunctionLabels").getValue());
+            suppressFunctionLabels = decoderRoot.getAttribute("suppressFunctionLabels").getValue();
+        } else {
+            suppressFunctionLabels = "";
+        }
+        log.debug("suppressFunctionLabels={}", suppressFunctionLabels);
+
+        // get the suppressRosterMedia attribute, if yes/no update our state
+        if (decoderRoot.getAttribute("suppressRosterMedia") != null) {
+            log.debug("Found in decoder suppressRosterMedia={}", decoderRoot.getAttribute("suppressRosterMedia").getValue());
+            suppressRosterMedia = decoderRoot.getAttribute("suppressRosterMedia").getValue();
+        } else {
+            suppressRosterMedia = "";
+        }
+        log.debug("suppressRosterMedia={}", suppressRosterMedia);
+
         // get the allowResetDefaults attribute, if yes/no update our state
         if (decoderRoot.getAttribute("allowResetDefaults") != null) {
             log.debug("Found in decoder allowResetDefaults={}", decoderRoot.getAttribute("allowResetDefaults").getValue());
@@ -1103,7 +1135,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     void readConfig(Element root, RosterEntry r) {
-        // check for "programmer" element at start
+         // check for "programmer" element at start
         Element base;
         if ((base = root.getChild("programmer")) == null) {
             log.error("xml file top element is not programmer");
@@ -1122,7 +1154,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
 
         // add the Function Label tab
-        if (root.getChild("programmer").getAttribute("showFnLanelPane").getValue().equals("yes")) {
+        if (root.getChild("programmer").getAttribute("showFnLanelPane").getValue().equals("yes")
+                && !suppressFunctionLabels.equals("yes")
+            ) {
             tabPane.addTab(Bundle.getMessage("FUNCTION LABELS"), makeFunctionLabelPane(r));
         } else {
             // make it, just don't make it visible
@@ -1130,7 +1164,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
 
         // add the Media tab
-        if (root.getChild("programmer").getAttribute("showRosterMediaPane").getValue().equals("yes")) {
+        if (root.getChild("programmer").getAttribute("showRosterMediaPane").getValue().equals("yes")
+                && !suppressRosterMedia.equals("yes")
+            ) {
             tabPane.addTab(Bundle.getMessage("ROSTER MEDIA"), makeMediaPane(r));
         } else {
             // create it, just don't make it visible

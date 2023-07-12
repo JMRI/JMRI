@@ -137,7 +137,7 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
         }
 
         LnTcpServer.getDefault().removeClient(this); // NPE here:
-        log.info("ClientRxHandler: Exiting");
+        // log.info("ClientRxHandler: Exiting");
     }
 
     public void close() {
@@ -207,7 +207,7 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
             parentThread = null;
             msg = null;
             outBuf = null;
-            log.info("ClientTxHandler: Exiting");
+            //log.info("ClientTxHandler: Exiting");
         }
     }
 

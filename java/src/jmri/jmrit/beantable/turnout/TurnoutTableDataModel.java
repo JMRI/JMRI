@@ -136,9 +136,9 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
             case MODECOL:
                 return Bundle.getMessage("ModeLabel");
             case SENSOR1COL:
-                return Bundle.getMessage("BlockSensor") + "1";
+                return Bundle.getMessage("BlockSensor") + " 1";
             case SENSOR2COL:
-                return Bundle.getMessage("BlockSensor") + "2";
+                return Bundle.getMessage("BlockSensor") + " 2";
             case OPSONOFFCOL:
                 return Bundle.getMessage("TurnoutAutomationMenu");
             case OPSEDITCOL:
@@ -159,6 +159,27 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
                 return "";
             default:
                 return super.getColumnName(col);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected String getHeaderTooltip(int col) {
+        switch (col) {
+            case SENSOR1COL:
+                return Bundle.getMessage("Sensor1Tip", turnoutManager.getThrownText());
+            case SENSOR2COL:
+                return Bundle.getMessage("Sensor2Tip", turnoutManager.getClosedText());
+            case OPSONOFFCOL:
+                return Bundle.getMessage("TurnoutAutomationTip");
+            case KNOWNCOL:
+                return Bundle.getMessage("FeedbackTip");
+            case MODECOL:
+                return Bundle.getMessage("FeedbackModeTip");
+            default:
+                return super.getHeaderTooltip(col);
         }
     }
 
@@ -683,6 +704,12 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
                     break;
                 case QUERYCOL:
                     column.setIdentifier("QueryState");
+                    break;
+                case SENSOR1COL:
+                    column.setIdentifier("Sensor1");
+                    break;
+                case SENSOR2COL:
+                    column.setIdentifier("Sensor2");
                     break;
                 default:
                 // use existing value

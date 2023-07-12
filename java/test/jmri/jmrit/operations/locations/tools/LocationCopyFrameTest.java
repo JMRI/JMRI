@@ -68,8 +68,15 @@ public class LocationCopyFrameTest  extends OperationsTestCase {
         Assert.assertNotNull("exists", loc);
 
         JUnitUtil.dispose(f);
-
     }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        LocationCopyFrame f = new LocationCopyFrame();
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
+    }
+
 
     // private final static Logger log = LoggerFactory.getLogger(LocationCopyFrameTest.class);
 

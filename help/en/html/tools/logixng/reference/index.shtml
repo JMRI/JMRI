@@ -32,6 +32,10 @@
         </li>
 
         <li>
+          <a href="chapter1_1.shtml">Chapter 1.1 - Map Logix concepts to LogixNG</a><span class="since">since 5.3.7</span>
+        </li>
+
+        <li>
           <a href="chapter2.shtml">Chapter 2 - The clipboard</a>
         </li>
 

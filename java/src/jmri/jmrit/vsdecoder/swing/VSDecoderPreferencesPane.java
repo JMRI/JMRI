@@ -279,7 +279,7 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
         } else {
             path = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath();
         }
-        final JFileChooser fc = new JFileChooser(path);
+        final JFileChooser fc = new jmri.util.swing.JmriJFileChooser(path);
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int rv = fc.showOpenDialog(this);
         if (rv == JFileChooser.APPROVE_OPTION) {
@@ -299,7 +299,7 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
         } else {
             path = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath();
         }
-        final JFileChooser fc = new JFileChooser(path);
+        final JFileChooser fc = new jmri.util.swing.JmriJFileChooser(path);
         fc.setFileFilter(new FileNameExtensionFilter(Bundle.getMessage("LoadVSDFileChooserFilterLabel"), "vsd", "zip")); // NOI18N
         fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
         int rv = fc.showOpenDialog(this);

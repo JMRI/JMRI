@@ -26,8 +26,7 @@ public class SignalSystemXml {
             log.error("appearance file (xml/{}) doesn't exist", file);
             throw new IllegalArgumentException("appearance file (xml/" + file + ") doesn't exist");
         }
-        jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile() {
-        };
+        jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile();
         Element root;
         try {
             root = xf.rootFromURL(url);
@@ -174,10 +173,13 @@ public class SignalSystemXml {
 
 
     public void save(SignalSystem signalSystem) {
-        String fileName = FileUtil.getProfilePath() + "xml/signals/" + signalSystem.getFolderName() + "/aspects.xml";
+        save(signalSystem, FileUtil.getProfilePath() + "xml/signals/");
+    }
 
-        XmlFile xmlFile = new XmlFile() {
-        };
+    public void save(SignalSystem signalSystem, String path) {
+        String fileName = path + signalSystem.getFolderName() + "/aspects.xml";
+
+        XmlFile xmlFile = new XmlFile();
         xmlFile.makeBackupFile(fileName);
         File file = new File(fileName);
         try {
@@ -235,20 +237,20 @@ public class SignalSystemXml {
 
         Element copyright = new Element("copyright", namespace);
         for (String date : signalSystem.getCopyright().getDates()) {
-            copyright.addContent(new Element("year").setText(date));
+            copyright.addContent(new Element("year", namespace).setText(date));
         }
-        copyright.addContent(new Element("holder").setText(signalSystem.getCopyright().getHolder()));
+        copyright.addContent(new Element("holder", namespace).setText(signalSystem.getCopyright().getHolder()));
         root.addContent(copyright);
 
         Element authorGroup = new Element("authorgroup", namespace);
         for (Author author : signalSystem.getAuthors()) {
-            Element authorElement = new Element("author");
-            Element personName = new Element("personname");
-            personName.addContent(new Element("firstname").setText(author.getFirstName()));
-            personName.addContent(new Element("surname").setText(author.getSurName()));
+            Element authorElement = new Element("author", namespace);
+            Element personName = new Element("personname", namespace);
+            personName.addContent(new Element("firstname", namespace).setText(author.getFirstName()));
+            personName.addContent(new Element("surname", namespace).setText(author.getSurName()));
             authorElement.addContent(personName);
             if (author.getEmail() != null && !author.getEmail().isBlank()) {
-                authorElement.addContent(new Element("email").addContent(author.getEmail()));
+                authorElement.addContent(new Element("email", namespace).addContent(author.getEmail()));
             }
             authorGroup.addContent(authorElement);
         }
@@ -256,11 +258,11 @@ public class SignalSystemXml {
 
         Element revhistory = new Element("revhistory", namespace);
         for (Revision revision : signalSystem.getRevisions()) {
-            Element revisionElement = new Element("revision");
-            revisionElement.addContent(new Element("revnumber").setText(revision.getRevNumber()));
-            revisionElement.addContent(new Element("date").setText(revision.getDate()));
-            revisionElement.addContent(new Element("authorinitials").setText(revision.getAuthorInitials()));
-            revisionElement.addContent(new Element("revremark").setText(revision.getRemark()));
+            Element revisionElement = new Element("revision", namespace);
+            revisionElement.addContent(new Element("revnumber", namespace).setText(revision.getRevNumber()));
+            revisionElement.addContent(new Element("date", namespace).setText(revision.getDate()));
+            revisionElement.addContent(new Element("authorinitials", namespace).setText(revision.getAuthorInitials()));
+            revisionElement.addContent(new Element("revremark", namespace).setText(revision.getRemark()));
             revhistory.addContent(revisionElement);
         }
         root.addContent(revhistory);

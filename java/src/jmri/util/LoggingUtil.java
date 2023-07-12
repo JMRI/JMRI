@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 public class LoggingUtil {
 
     protected static Map<Logger, Set<String>> warnedOnce = new HashMap<>();
+    protected static Map<Logger, Set<String>> infodOnce = new HashMap<>();
     protected static boolean logDeprecations = true;
 
     /**
@@ -29,8 +30,8 @@ public class LoggingUtil {
      * @param args   message arguments
      * @return true if the log was emitted this time
      */
-    @SuppressFBWarnings({ "SLF4J_UNKNOWN_ARRAY","SLF4J_FORMAT_SHOULD_BE_CONST"})
-        // justification = "Passing varargs array through")
+    @SuppressFBWarnings( value = {"SLF4J_UNKNOWN_ARRAY", "SLF4J_FORMAT_SHOULD_BE_CONST"},
+        justification = "Passing arguments through")
     public static boolean warnOnce(@Nonnull Logger logger, @Nonnull String msg, Object... args) {
         Set<String> loggerSet = warnedOnce.computeIfAbsent(logger, l -> new HashSet<>());
         // if it exists, there was a prior warning given
@@ -39,6 +40,30 @@ public class LoggingUtil {
         }
         loggerSet.add(msg);
         logger.warn(msg, args);
+        return true;
+    }
+
+    /**
+     * Emit a particular INFO-level message just once.
+     * <p>
+     * Goal is to be lightweight and fast; this will only be used in a few
+     * places, and only those should appear in data structure.
+     *
+     * @param logger the source of the warning
+     * @param msg    info message
+     * @param args   message arguments
+     * @return true if the log was emitted this time
+     */
+    @SuppressFBWarnings( value = {"SLF4J_UNKNOWN_ARRAY","SLF4J_FORMAT_SHOULD_BE_CONST"},
+        justification = "Passing arguments through")
+    public static boolean infoOnce(@Nonnull Logger logger, @Nonnull String msg, Object... args) {
+        Set<String> loggerSet = infodOnce.computeIfAbsent(logger, l -> new HashSet<>());
+        // if it exists, there was a prior info given
+        if (loggerSet.contains(msg)) {
+            return false;
+        }
+        loggerSet.add(msg);
+        logger.info(msg, args);
         return true;
     }
 

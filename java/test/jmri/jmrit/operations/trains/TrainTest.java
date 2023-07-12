@@ -1,26 +1,15 @@
 package jmri.jmrit.operations.trains;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.locations.schedules.Schedule;
-import jmri.jmrit.operations.locations.schedules.ScheduleItem;
-import jmri.jmrit.operations.locations.schedules.ScheduleManager;
+import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.locations.schedules.*;
 import jmri.jmrit.operations.rollingstock.cars.*;
-import jmri.jmrit.operations.rollingstock.engines.Consist;
-import jmri.jmrit.operations.rollingstock.engines.ConsistManager;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.rollingstock.engines.*;
+import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 
@@ -749,14 +738,16 @@ public class TrainTest extends OperationsTestCase {
         Track actonYard1 = A.getTrackByName("Acton Yard 1", null);
         Assert.assertNotNull(actonYard1);
         placeFourEngines(actonYard1);
+        
+        rA.setMaxCarMoves(8);
+        rB.setMaxCarMoves(9);
 
-        // 7 moves per location requires 2 engines, build should fail
+        // 17 moves requires 2 engines, build should fail
         Assert.assertFalse(train.build());
         Assert.assertFalse("Train should not build, needs 2 engines", train.isBuilt());
 
-        rA.setMaxCarMoves(5);
-        rB.setMaxCarMoves(5);
-        rC.setMaxCarMoves(5);
+        // 16 moves requires 1 engine
+        rB.setMaxCarMoves(8);
 
         Assert.assertTrue(train.build());
         Assert.assertTrue("Train should build, only needs a single engine", train.isBuilt());
@@ -779,6 +770,9 @@ public class TrainTest extends OperationsTestCase {
         Track actonYard1 = A.getTrackByName("Acton Yard 1", null);
         Assert.assertNotNull(actonYard1);
         placeFourEngines(actonYard1);
+        
+        // 17 moves requires 2 engines, build should fail
+        rA.setMaxCarMoves(10);
 
         Assert.assertFalse(train.build());
         Assert.assertFalse("Train should not build, only single engines", train.isBuilt());
@@ -4792,6 +4786,7 @@ public class TrainTest extends OperationsTestCase {
         train1.setRoute(route);
 
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", null, 0);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("A", "2", "Boxcar", "40", null, 0);
 
         // place car at start of route
         Location acton = lmanager.getLocationByName("Acton");
@@ -4801,9 +4796,22 @@ public class TrainTest extends OperationsTestCase {
         c1.setDestination(acton, actonYard1);
 
         Assert.assertEquals("Place car on track", Track.OKAY, c1.setLocation(acton, actonSpur1));
+        
+        // place car middle of route
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        Track chelmsfordSpur1 = chelmsford.getTrackByName("Chelmsford Spur 1", null);
+        // give the car a destination
+        Track chelmsfordYard1 = chelmsford.getTrackByName("Chelmsford Yard 1", null);
+        c2.setDestination(chelmsford, chelmsfordYard1);
+
+        Assert.assertEquals("Place car on track", Track.OKAY, c2.setLocation(chelmsford, chelmsfordSpur1));
+        
+        // local move should override
+        train1.setSendCarsToTerminalEnabled(true);
 
         // should be serviced by train
         Assert.assertTrue(train1.isServiceable(c1));
+        Assert.assertTrue(train1.isServiceable(c2));
 
         // don't allow local moves
         train1.setAllowLocalMovesEnabled(false);

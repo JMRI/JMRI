@@ -5,7 +5,7 @@
 <!-- This XSLT transform is used when a JMRI decoder definition -->
 <!-- file is displayed by a web browser -->
 
-<!-- This file is part of JMRI.  Copyright 2007-2018.                       -->
+<!-- This file is part of JMRI.  Copyright 2007-2023.                       -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -29,7 +29,7 @@
      via the build.xml file. We build it by concatenation
      because XPath will evaluate '1997 - 2017' to '20'.
 -->
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2022')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2023')" />
 
 <!-- This first template matches our root element in the input file.
      This will trigger the generation of the HTML skeleton document.
@@ -88,7 +88,7 @@
 JMRI software, including this file, is distributed under license. That
 license defines the terms under which you can use, modify and/or distribute
 it. Please see our
-<a href="http://jmri.org/Copyright.html">licensing page</a>
+<a href="https://www.jmri.org/Copyright.html">licensing page</a>
 for more information.
 </p>
 <hr/>
@@ -157,10 +157,10 @@ for more information.
 
 
 <hr/>
-This page was produced by <a href="http://jmri.org">JMRI</a>.
+This page was produced by <a href="https://www.jmri.org">JMRI</a>.
 <p/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear" /> JMRI Community.
 <p/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
-<p/><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
+<p/><a href="https://www.jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
   </body>
 </html>
 

@@ -325,7 +325,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         Assertions.assertEquals(1, nBusyFalse, "only one Busy -> false transition ");
 
         Assertions.assertEquals("" + ((123 & 0x3f) + (123) * 64), ((JTextField) var.getCommonRep()).getText(), "text value ");  // 15227 = (1230x3f)*256+123
-        Assertions.assertEquals(AbstractValue.READ, var.getState(), "Var state");
+        Assertions.assertEquals(AbstractValue.ValueState.READ, var.getState(), "Var state");
         Assertions.assertEquals(123, cv1.getValue(), "CV 1 value ");  // 123 with 128 bit set
         Assertions.assertEquals(123, cv2.getValue(), "CV 2 value ");
     }
@@ -356,7 +356,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         Assertions.assertEquals(61, cv1.getValue(), "CV 1 value ");
         Assertions.assertEquals(74, cv2.getValue(), "CV 2 value ");
         Assertions.assertEquals("4797", ((JTextField) var.getCommonRep()).getText(), "text ");
-        Assertions.assertEquals(AbstractValue.STORED, var.getState(), "Var state");
+        Assertions.assertEquals(AbstractValue.ValueState.STORED, var.getState(), "Var state");
         Assertions.assertEquals(74, p.lastWrite(), "last write");
         // how do you check separation of the two writes?  State model?
     }
