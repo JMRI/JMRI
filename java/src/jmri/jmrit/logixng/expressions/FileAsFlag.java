@@ -9,7 +9,6 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.*;
-import jmri.util.TimerUtil;
 
 
 /**
@@ -26,21 +25,10 @@ public class FileAsFlag extends AbstractDigitalExpression
     private final LogixNG_SelectEnum<DeleteOrKeep> _selectDeleteOrKeep =
             new LogixNG_SelectEnum<>(this, DeleteOrKeep.values(), DeleteOrKeep.Keep, this);
 
-    private ProtectedTimerTask _timerTask;
-    private final int _delay = 5;
-    private boolean _lastResult;
-    private JmriException _thrownException;
-
 
     public FileAsFlag(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-
-        try {
-            _lastResult = internalEvaluate();
-        } catch (JmriException e) {
-            _thrownException = e;
-        }
     }
 
     @Override
@@ -70,7 +58,9 @@ public class FileAsFlag extends AbstractDigitalExpression
         return Category.OTHER;
     }
 
-    private boolean internalEvaluate() throws JmriException {
+    /** {@inheritDoc} */
+    @Override
+    public boolean evaluate() throws JmriException {
 
         String filename = _selectFilename.evaluateValue(getConditionalNG());
         DeleteOrKeep deleteOrKeep = _selectDeleteOrKeep.evaluateEnum(getConditionalNG());
@@ -90,20 +80,6 @@ public class FileAsFlag extends AbstractDigitalExpression
         } catch (IOException e) {
             throw new JmriException("IOException has occurred: " + e.getLocalizedMessage(), e);
         }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean evaluate() throws JmriException {
-
-        if (_thrownException != null) {
-            JmriException e = _thrownException;
-            _thrownException = null;
-            throw e;
-        }
-
-        // Check this every ?? seconds
-        return internalEvaluate();
     }
 
     @Override
@@ -139,22 +115,6 @@ public class FileAsFlag extends AbstractDigitalExpression
     @Override
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
-            _timerTask = new ProtectedTimerTask() {
-                @Override
-                public void execute() {
-                    try {
-                        boolean _lastLastResult = _lastResult;
-                        _lastResult = internalEvaluate();
-                        if (_lastResult != _lastLastResult) {
-                            getConditionalNG().execute();
-                        }
-                    } catch (JmriException e) {
-                        _thrownException = e;
-                    }
-                }
-            };
-
-            TimerUtil.schedule(_timerTask, _delay*1000, _delay*1000);
             _listenersAreRegistered = true;
         }
     }
@@ -163,7 +123,6 @@ public class FileAsFlag extends AbstractDigitalExpression
     @Override
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
-            _timerTask.cancel();
             _listenersAreRegistered = false;
         }
     }
