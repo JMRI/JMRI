@@ -809,11 +809,16 @@
 
       <h5 id="fileasflag">File as flag<span class="since">since 5.5.2</span></h5>
 
-      <p>The <strong>File as flag</strong> expression checks for the existence of a
-      file.  If the file exists, the expression returns <strong>true</strong>, otherwise
-      it returns <strong>false</strong>.  When the file is found, it can be kept or
-      deleted.  An easy way to create the flag file is to use the <code>touch</code>
-      command or the equivalent for the operating system.</p>
+      <p>The <strong>File as flag</strong> expression checks for the existence of a file.  If the
+      file exists, the expression returns <strong>true</strong>, otherwise it returns <strong>false
+      </strong>.  When the file is found, it can be kept or deleted.  Normally the file will be
+      created by some process that needs to notify JMRI about an event.  For Linux and macOS,
+      <strong><code>touch <em>filename</em></code></strong> works from the command line or a script.
+      The are several options for Windows, such as
+      <strong><code>copy nul <em>filename</em></code></strong>,
+      <strong><code>type nul > <em>filename</em></code></strong>, or
+      <strong><code>echo > <em>filename</em></code></strong>.</p>
+
 
       <div style="margin-left: 2em;">
         <a href="images/chapter6/file_as_flag.png"><img src=
