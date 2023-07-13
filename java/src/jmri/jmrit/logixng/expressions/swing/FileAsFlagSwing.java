@@ -43,7 +43,7 @@ public class FileAsFlagSwing extends AbstractDigitalExpressionSwing {
         JPanel tabbedPaneNamedBean;
         JPanel tabbedPaneState;
 
-        tabbedPaneNamedBean = _selectFilenameSwing.createFilenamePanel(expression.getSelectFilename(), FileUtil.getPreferencesPath());
+        tabbedPaneNamedBean = _selectFilenameSwing.createFilenamePanel(expression.getSelectFilename(), FileUtil.getUserFilesPath());
         tabbedPaneState = _selectDeleteOrKeepSwing.createPanel(expression.getSelectDeleteOrKeep(), DeleteOrKeep.values());
 
         JComponent[] components = new JComponent[]{
