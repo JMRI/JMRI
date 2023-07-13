@@ -142,22 +142,14 @@
           These are explained in the <a href="chapter9.shtml">Formula</a> chapter.
         </dd>
 
-        <dd>
-        </dd>
-
         <dt>Cancel</dt>
 
         <dd>Close the dialog without applying any changes.</dd>
-
-        <dd>
-        </dd>
 
         <dt>Create/OK</dt>
 
         <dd>Save the new expression or the changes to an existing expression.</dd>
 
-        <dd>
-        </dd>
       </dl>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -812,6 +804,54 @@
         <a href="images/chapter6/connection_expression.png"><img src=
         "images/chapter6/connection_expression.png" alt="Chapter 6 connection expression"></a>
       </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h5 id="fileasflag">File as flag<span class="since">since 5.5.2</span></h5>
+
+      <p>The <strong>File as flag</strong> expression checks for the existence of a
+      file.  If the file exists, the expression returns <strong>true</strong>, otherwise
+      it returns <strong>false</strong>.  When the file is found, it can be kept or
+      deleted.  An easy way to create the flag file is to use the <code>touch</code>
+      command or the equivalent for the operating system.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/file_as_flag.png"><img src=
+        "images/chapter6/file_as_flag.png" alt="Chapter 6 file as flag expression"></a>
+      </div>
+
+      <p>The file selector is used to create the path to the file and file name.  The
+      default path is the <strong>user files location</strong>.  If the file does not
+      currently exist, select a different file and then replace the file name with the
+      planned file name before creating the expression.</p>
+
+      <p>The default file action when the file is found is <strong>Keep file</strong>.  The
+      <strong>Delete file</strong> action can be selected which would be useful for
+      repetitive external events.</p>
+
+      <p><strong><u>Example</u></strong></p>
+
+      <p>The LogixNG <a href="chapter5.shtml#timeraction">Timer</a> action is used to
+      run the <strong>File as flag</strong> expresson every 5 seconds.  When the file
+      exists, an internal sensor is set <strong>Active</strong>.  The file is deleted and
+      the timer loop resumes running <strong>File as flag</strong>.  The sensor is used
+      to trigger another process which handles the event.  For simple actions,
+      <strong>Then</strong> could be used to do the work.</p>
+
+      <p>Configure the Timer action.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/file_as_flag_ex_timer.png"><img src=
+        "images/chapter6/file_as_flag_ex_timer.png" alt="Chapter 6 file as flag timer"></a>
+      </div>
+
+      <p>Create the LogixNG.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/file_as_flag_ex_lng.png"><img src=
+        "images/chapter6/file_as_flag_ex_lng.png" alt="Chapter 6 file as flag example"></a>
+      </div>
+
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
