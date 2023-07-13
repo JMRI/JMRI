@@ -32,10 +32,10 @@ import org.junit.*;
 public class CreateLogixNGTreeScaffold {
 
     private static boolean setupHasBeenCalled = false;
-    
+
     private static void setUpCalled(boolean newVal){
         setupHasBeenCalled = newVal;
-    } 
+    }
 
     private LocoNetSystemConnectionMemo _locoNetMemo;
     private MqttSystemConnectionMemo _mqttMemo;
@@ -4381,6 +4381,27 @@ public class CreateLogixNGTreeScaffold {
         false1 = new False(digitalExpressionManager.getAutoSystemName(), null);
         false1.setComment("A comment");
         maleSocket = digitalExpressionManager.registerExpression(false1);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+
+        FileAsFlag fileAsFlag = new FileAsFlag(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(fileAsFlag);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        fileAsFlag = new FileAsFlag(digitalExpressionManager.getAutoSystemName(), null);
+        fileAsFlag.setComment("A comment");
+        fileAsFlag.getSelectFilename().setValue("file.txt");
+        fileAsFlag.getSelectFilename().setAddressing(NamedBeanAddressing.Direct);
+        fileAsFlag.getSelectFilename().setFormula("\"IT\"+index");
+        fileAsFlag.getSelectFilename().setLocalVariable("index");
+        fileAsFlag.getSelectFilename().setReference("{IM1}");
+        fileAsFlag.getSelectDeleteOrKeep().setEnum(FileAsFlag.DeleteOrKeep.Delete);
+        fileAsFlag.getSelectDeleteOrKeep().setAddressing(NamedBeanAddressing.Direct);
+        fileAsFlag.getSelectDeleteOrKeep().setFormula("\"IT\"+index");
+        fileAsFlag.getSelectDeleteOrKeep().setLocalVariable("index");
+        fileAsFlag.getSelectDeleteOrKeep().setReference("{IM1}");
+        maleSocket = digitalExpressionManager.registerExpression(fileAsFlag);
         and.getChild(indexExpr++).connect(maleSocket);
 
 
