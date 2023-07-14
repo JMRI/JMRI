@@ -148,22 +148,14 @@
           These are explained in the <a href="chapter9.shtml">Formula</a> chapter.
         </dd>
 
-        <dd>
-        </dd>
-
         <dt>Cancel</dt>
 
         <dd>Close the dialog without applying any changes.</dd>
-
-        <dd>
-        </dd>
 
         <dt>Create/OK</dt>
 
         <dd>Save the new action or the changes to an existing action.</dd>
 
-        <dd>
-        </dd>
       </dl>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -836,7 +828,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>Timer</h4>
+      <h4 id="timeraction">Timer</h4>
 
       <p><strong>Timer</strong> has a number of actions, each executed after a period of time. The
       time to wait can be 0, which means the related action is executed immediately.</p>
@@ -1522,8 +1514,8 @@
 
       <h4>Shutdown</h4>
 
-      <p>The ShutdownComputer action can either shutdown or restart the computer, or shutdown or
-      restart JMRI.</p>
+      <p>The <strong>Shutdown</strong> action can either shutdown or restart the computer, or
+      shutdown or restart JMRI.  The default action is <strong>Shut down JMRI</strong>.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
