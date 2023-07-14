@@ -81,7 +81,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>Shutdown LocoNetOverTcp connection cleanly when program ends</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -121,9 +121,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Added two new jython/LCC/CSVToNodeBackup.py and 
-                    jython/LCC/NodeBackupToCSV.py scripts for converting
-                    node backup files back and forth to CSV files.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -363,8 +361,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>Improve the layout of the Uncouple pane, make sure
-                    that it displays the Uncoupler variable (CV 115).</li>
+                <li></li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -405,14 +402,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>A number of issues with the Shape tool have been resolved including Java
-            exceptions and the possibility of truncated shape lines.</li>
-            <li>The Layout Editor help page has been updated with details for using Shapes.</li>
-            <li>Previously, Reporter icons would display
-                "&lt;no report&gt;" when the report information was null, i.e. there was no 
-                information available from the Reporter.  This has been changed
-                to a hyphen ("-") when there's no information available to reduce screen
-                clutter on complex panels.
+	        <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -429,8 +419,6 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The expression <strong>File as flag</strong> has been added. It returns true if
-              a particular file exists.</li>
           <li></li>
         </ul>
 
@@ -440,16 +428,13 @@
             <li></li>
         </ul>
 
-<h3>Operations</h3>
-<a id="Operations" name="Operations"></a>
-<ul>
-  <li>Improvements to the routing code. Program will not use an interchange track if the same
-    train can drop and pull a car.</li>
-  <li>Fixed a bug with export routes.</li>
-  <li>Fixed close on Save for several windows.</li>
-</ul>
+    <h3>Operations</h3>
+        <a id="Operations" name="Operations"></a>
+        <ul>
+            <li></li>
+        </ul>
 
-<h3>Panel Editor</h3>
+   <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
             <li></li>
@@ -498,7 +483,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Add "idtags" as a script shortcut to the manager like "turnouts" and "sensors"</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -598,24 +583,18 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li>json car, engine: remove location, set unknown flag, remove from train</li>
+            <li></li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>Added LayoutEditor turntable support for VSD navigation through a panel.</li>
+            <li></li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>A signal handler has been added to the Shutdown manager such that a 
-            "kill &lt;pid&gt;" command on Mac or Linux will do a normal shutdown.
-            This is particularly useful for e.g. running headless on an RPi.
-            "kill -HUP &lt;pid&gt;" will cause JMRI to quit and restart.
-            In addition, the Mac and Linux startup scripts were updated to 
-            pass these signals on to the running process.  Together, this
-            will allow you to run JMRI as a service on Mac and Linux, including the RPi.
+            <li></li>
         </ul>
 
