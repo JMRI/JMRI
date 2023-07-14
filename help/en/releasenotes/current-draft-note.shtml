@@ -408,6 +408,11 @@
             <li>A number of issues with the Shape tool have been resolved including Java
             exceptions and the possibility of truncated shape lines.</li>
             <li>The Layout Editor help page has been updated with details for using Shapes.</li>
+            <li>Previously, Reporter icons would display
+                "&lt;no report&gt;" when the report information was null, i.e. there was no 
+                information available from the Reporter.  This has been changed
+                to a hyphen ("-") when there's no information available to reduce screen
+                clutter on complex panels.
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
