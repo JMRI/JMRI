@@ -12,10 +12,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteManager;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
-import jmri.util.ThreadingUtil;
+import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
 
 /**
@@ -565,7 +562,16 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(trainEditFrame);
         JUnitOperationsUtil.checkOperationsShutDownTask();
-
+    }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Train train = new Train("TESTTRAINID", "TESTTRAINNAME");
+        Route route = new Route("ROUTEID","ROUTENAME");
+        train.setRoute(route);
+        TrainEditFrame f = new TrainEditFrame(train);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
     @Override
