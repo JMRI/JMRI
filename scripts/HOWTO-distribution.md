@@ -487,9 +487,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.5.2+R196d5a62b6.dmg](https://github.com/JMRI/JMRI/releases/download/v5.5.2/JMRI.5.5.2+R196d5a62b6.dmg) | 426f639b0f9892e67de78c3cf4e637b540f2c962c8563d8626f86d70234e041d
-[JMRI.5.5.2+R196d5a62b6.exe](https://github.com/JMRI/JMRI/releases/download/v5.5.2/JMRI.5.5.2+R196d5a62b6.exe) | 3b6c8cbc87ad4798822158bd9ae24263f00691387ee4e3a28be9eb534dc4d5a6
-[JMRI.5.5.2+R196d5a62b6.tgz](https://github.com/JMRI/JMRI/releases/download/v5.5.2/JMRI.5.5.2+R196d5a62b6.tgz) | e3ffda3bc452a84d27e2b0400ab075c90e287b569ce86349737bce0ab86f17fe
+[JMRI.5.5.2+Rd7395db1dc.dmg](https://github.com/JMRI/JMRI/releases/download/v5.5.2/JMRI.5.5.2+Rd7395db1dc.dmg) | 18408ea501373e740efbe4a91528db1c8dd7eaa868df6e0a5b584a43f22e854f
+[JMRI.5.5.2+Rd7395db1dc.exe](https://github.com/JMRI/JMRI/releases/download/v5.5.2/JMRI.5.5.2+Rd7395db1dc.exe) | 4f1c16492233fa769dbeeb2259a66da6711d8164147e25d4f3e9b184941702fd
+[JMRI.5.5.2+Rd7395db1dc.tgz](https://github.com/JMRI/JMRI/releases/download/v5.5.2/JMRI.5.5.2+Rd7395db1dc.tgz) | f7557d2f86dce90256cffb51595dbfa41e729328e27f218f33ccbb92fc8d69e6
 
 ```
 
@@ -583,7 +583,7 @@ This is the next release in the 5.6 cycle. It's intended to be created from the 
 
 - Mail announcement to
 
-[jmriusers@groups.io](mailto:jmriusers@groups.io?subject=Test%20version%205.5.2%20of%20JMRI/DecoderPro%20is%20available%20for%20download&body=Test%20version%205.5.2%20of%20JMRI/DecoderPro%20is%20available%20for%20download.%0A%0AThis%20is%20the%20next%20in%20a%20series%20of%20test%20releases%20that%20will%20culminate%20in%20a%20production%20release,%20hopefully%20in%20Summer%202023.%20It's%20really%20helpful%20when%20people%20download,%20install%20and%20use%20these%20test%20versions%20so%20we%20can%20find%20and%20fix%20any%20inadvertent%20new%20problems%20early.%0A%0A-%20Alt:%20There%20have%20been%20a%20lot%20of%20updates%20in%20this%20version,%20so%20it%20should%20be%20considered%20experimental.%0A-%20Alt:%20We're%20getting%20close%20to%20the%20end%20of%20the%20development%20series,%20so%20we'd%20appreciate%20feedback%20on%20whether%20or%20not%20this%20release%20works%20for%20your%20layout.%0A%0AIf%20you%20are%20currently%20using%20JMRI%204.99.10%20or%20earlier,%20there%20is%20an%20update%20process%20that%20we%20strongly%20recommend.%20See%20the%20release%20note%20section%20on%20updates:%0A<https://www.jmri.org/releasenotes/jmri5.5.2.shtml#update>%0A%0AFor%20more%20information%20on%20the%20issues,%20new%20features%20and%20bug%20fixes%20in%205.5.2%20please%20see%20the%20release%20note:%0A<https://www.jmri.org/releasenotes/jmri5.5.2.shtml>%0A%0ANote%20that%20JMRI%20is%20made%20available%20under%20the%20GNU%20General%20Public%20License.%20For%20more%20information,%20please%20see%20our%20copyright%20and%20licensing%20page.%0A<https://www.jmri.org/Copyright.html>%0A%0AThe%20download%20links,%20along%20with%20lots%20of%20other%20information%20which%20we%20hope%20you'll%20read,%20can%20be%20found%20on%20the%20release%20note%20page:%0A<https://www.jmri.org/releasenotes/jmri5.5.2.shtml>%0A)
+[jmriusers@groups.io](mailto:jmriusers@groups.io?subject=Test%20version%205.5.2%20of%20JMRI/DecoderPro%20is%20available%20for%20download&body=Test%20version%205.5.2%20of%20JMRI/DecoderPro%20is%20available%20for%20download.%0A%0AThis%20is%20the%20next%20in%20a%20series%20of%20test%20releases%20that%20will%20culminate%20in%20a%20production%20release,%20hopefully%20in%20December%202023.%20It's%20really%20helpful%20when%20people%20download,%20install%20and%20use%20these%20test%20versions%20so%20we%20can%20find%20and%20fix%20any%20inadvertent%20new%20problems%20early.%0A%0A-%20Alt:%20There%20have%20been%20a%20lot%20of%20updates%20in%20this%20version,%20so%20it%20should%20be%20considered%20experimental.%0A-%20Alt:%20We're%20getting%20close%20to%20the%20end%20of%20the%20development%20series,%20so%20we'd%20appreciate%20feedback%20on%20whether%20or%20not%20this%20release%20works%20for%20your%20layout.%0A%0AIf%20you%20are%20currently%20using%20JMRI%204.99.10%20or%20earlier,%20there%20is%20an%20update%20process%20that%20we%20strongly%20recommend.%20See%20the%20release%20note%20section%20on%20updates:%0A<https://www.jmri.org/releasenotes/jmri5.5.2.shtml#update>%0A%0AFor%20more%20information%20on%20the%20issues,%20new%20features%20and%20bug%20fixes%20in%205.5.2%20please%20see%20the%20release%20note:%0A<https://www.jmri.org/releasenotes/jmri5.5.2.shtml>%0A%0ANote%20that%20JMRI%20is%20made%20available%20under%20the%20GNU%20General%20Public%20License.%20For%20more%20information,%20please%20see%20our%20copyright%20and%20licensing%20page.%0A<https://www.jmri.org/Copyright.html>%0A%0AThe%20download%20links,%20along%20with%20lots%20of%20other%20information%20which%20we%20hope%20you'll%20read,%20can%20be%20found%20on%20the%20release%20note%20page:%0A<https://www.jmri.org/releasenotes/jmri5.5.2.shtml>%0A)
 
 
 Subject:
@@ -596,7 +596,7 @@ Content:
 
     Test version 5.5.2 of JMRI/DecoderPro is available for download.
 
-    This is the next in a series of test releases that will culminate in a production release, hopefully in early Summer 2023. It's really helpful when people download, install and use these test versions so we can find and fix any inadvertent new problems early.
+    This is the next in a series of test releases that will culminate in a production release, hopefully in December 2023. It's really helpful when people download, install and use these test versions so we can find and fix any inadvertent new problems early.
 
     If you are currently using JMRI 4.99.10 or earlier, there is an update process that we strongly recommend. See the release note section on updates:
     <https://www.jmri.org/releasenotes/jmri5.5.2.shtml#update>
