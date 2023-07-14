@@ -253,8 +253,6 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         toolMenu.add(new AutomationsTableFrameAction());
         toolMenu.add(new TrainCopyAction());
         toolMenu.add(new TrainsScriptAction(this));
-        toolMenu.add(new PrintSavedTrainManifestAction(false, null));
-        toolMenu.add(new PrintSavedTrainManifestAction(true, null));
         toolMenu.add(new SetupExcelProgramFrameAction());
         toolMenu.add(new ExportTrainRosterAction());
         toolMenu.add(new ExportTimetableAction());
@@ -262,6 +260,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         toolMenu.addSeparator();
         toolMenu.add(new TrainByCarTypeAction(null));
         toolMenu.addSeparator();
+        toolMenu.add(new PrintSavedTrainManifestAction(false, null));
+        toolMenu.add(new PrintSavedTrainManifestAction(true, null));
         toolMenu.add(new PrintTrainsAction(false, this));
         toolMenu.add(new PrintTrainsAction(true, this));
 

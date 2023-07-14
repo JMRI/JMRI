@@ -84,6 +84,15 @@ public class SetupExcelProgramManifestFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        SetupExcelProgramManifestFrame f = new SetupExcelProgramManifestFrame();
+        f.initComponents();
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
 
     // private final static Logger log = LoggerFactory.getLogger(SetupExcelProgramManifestFrameTest.class);
 
