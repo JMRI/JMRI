@@ -942,6 +942,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
     @SuppressWarnings("fallthrough")
     @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     private void updateEditPressed(ActionEvent e) {
+        log.debug("newedit ", e);
         if ( signalHeadBeingEdited==null ){
             createNewSigHead();
             return;
@@ -1235,7 +1236,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
             case "jmri.jmrix.grapevine.SerialSignalHead":
                 break;
             default:
-                log.error("Internal error - cannot update signal of type {}", className, e.getSource());
+                log.error("Internal error - cannot update signal of type {}", className );
                 break;
         }
         // successful

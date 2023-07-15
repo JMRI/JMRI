@@ -430,5 +430,5 @@ public class SignalHeadTableModel extends jmri.jmrit.beantable.BeanTableDataMode
         super.dispose();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalHeadTableAction.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalHeadTableModel.class);
 }
