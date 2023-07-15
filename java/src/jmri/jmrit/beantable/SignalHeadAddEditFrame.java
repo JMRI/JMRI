@@ -942,7 +942,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
     @SuppressWarnings("fallthrough")
     @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     private void updateEditPressed(ActionEvent e) {
-        log.debug("newedit ", e);
+        log.debug("newedit {}", e);
         if ( signalHeadBeingEdited==null ){
             createNewSigHead();
             return;
