@@ -394,7 +394,14 @@ public class SignalHeadTableModel extends jmri.jmrit.beantable.BeanTableDataMode
 
     private void makeEditSignalWindow(@Nonnull final SignalHead head) {
         if (editFrame == null) {
-            editFrame = createNewEditFrame(head);
+            editFrame = new SignalHeadAddEditFrame(head){
+                @Override
+                public void dispose() {
+                    editFrame = null;
+                    super.dispose();
+                }
+            };
+            editFrame.initComponents();
         } else {
             if (head.equals(editFrame.getSignalHead())) {
                 editFrame.setVisible(true);
@@ -406,19 +413,6 @@ public class SignalHeadTableModel extends jmri.jmrit.beantable.BeanTableDataMode
                 editFrame.setVisible(true);
             }
         }
-    }
-
-    private SignalHeadAddEditFrame createNewEditFrame(SignalHead head) {
-        // set up a new edit window
-        editFrame = new SignalHeadAddEditFrame(head);
-        editFrame.initComponents();
-        editFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                editFrame = null;
-            }
-        });
-        return editFrame;
     }
 
     @Override

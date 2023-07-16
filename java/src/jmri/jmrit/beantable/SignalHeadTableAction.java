@@ -59,23 +59,21 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
     /**
      * Provide GUI for adding a new SignalHead.
      * <p>
-     * Because there are multiple options, each of which requires different
-     * inputs, we directly manipulate which parts of the GUI are displayed when
-     * the selected type is changed.
-     *
+     * Creates a new SignalHeadAddEditFrame, or makes an existing frame visible
+     * and clearing the SystemName and UserName fields.
      * @param e name of the event heard
      */
     @Override
     protected void addPressed(ActionEvent e) {
         if (addFrame == null) {
-            addFrame = new SignalHeadAddEditFrame(null);
-            addFrame.initComponents();
-            addFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            addFrame = new SignalHeadAddEditFrame(null){
                 @Override
-                public void windowClosing(java.awt.event.WindowEvent e) {
+                public void dispose() {
                     addFrame = null;
+                    super.dispose();
                 }
-            });
+            };
+            addFrame.initComponents();
         } else {
             // clear older entries
             addFrame.setVisible(true);
