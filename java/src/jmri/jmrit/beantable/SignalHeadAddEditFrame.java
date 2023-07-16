@@ -87,8 +87,8 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
     private final static String TURNOUT_STATE_THROWN = InstanceManager.getDefault(TurnoutManager.class).getThrownText();
     private final static String TURNOUT_STATE_CLOSED = InstanceManager.getDefault(TurnoutManager.class).getClosedText();
 
-    private final static int[] turnoutStateValues = new int[]{Turnout.CLOSED, Turnout.THROWN};
-    private final static String[] turnoutStateStrings = new String[]{TURNOUT_STATE_CLOSED, TURNOUT_STATE_THROWN};
+    private final static int[] TURNOUT_STATE_VALUES = new int[]{Turnout.CLOSED, Turnout.THROWN};
+    private final static String[] TURNOUT_STATE_STRINGS = new String[]{TURNOUT_STATE_CLOSED, TURNOUT_STATE_THROWN};
 
     private final static String[] SIGNAL_STATE_STRINGS = new String[]{
         Bundle.getMessage("SignalHeadStateDark"),
@@ -154,13 +154,13 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
     private final JLabel stateLabel6 = new JLabel(stateLabel1.getText());
     private final JLabel stateLabel7 = new JLabel(stateLabel1.getText());
 
-    private final JComboBox<String> turnoutStateBox1 = new JComboBox<>(turnoutStateStrings);
-    private final JComboBox<String> turnoutStateBox2 = new JComboBox<>(turnoutStateStrings);
-    private final JComboBox<String> turnoutStateBox3 = new JComboBox<>(turnoutStateStrings);
-    private final JComboBox<String> turnoutStateBox4 = new JComboBox<>(turnoutStateStrings);
-    private final JComboBox<String> turnoutStateBox5 = new JComboBox<>(turnoutStateStrings);
-    private final JComboBox<String> turnoutStateBox6 = new JComboBox<>(turnoutStateStrings);
-    private final JComboBox<String> turnoutStateBox7 = new JComboBox<>(turnoutStateStrings);
+    private final JComboBox<String> turnoutStateBox1 = new JComboBox<>(TURNOUT_STATE_STRINGS);
+    private final JComboBox<String> turnoutStateBox2 = new JComboBox<>(TURNOUT_STATE_STRINGS);
+    private final JComboBox<String> turnoutStateBox3 = new JComboBox<>(TURNOUT_STATE_STRINGS);
+    private final JComboBox<String> turnoutStateBox4 = new JComboBox<>(TURNOUT_STATE_STRINGS);
+    private final JComboBox<String> turnoutStateBox5 = new JComboBox<>(TURNOUT_STATE_STRINGS);
+    private final JComboBox<String> turnoutStateBox6 = new JComboBox<>(TURNOUT_STATE_STRINGS);
+    private final JComboBox<String> turnoutStateBox7 = new JComboBox<>(TURNOUT_STATE_STRINGS);
 
     private final JComboBox<String> signalStateBox2 = new JComboBox<>(SIGNAL_STATE_STRINGS);
     private final JComboBox<String> signalStateBox3 = new JComboBox<>(SIGNAL_STATE_STRINGS);
@@ -483,19 +483,19 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
             var redTFlash = ((LsDecSignalHead) signalHeadBeingEdited).getFlashRed();
             var darkT = ((LsDecSignalHead) signalHeadBeingEdited).getDark();
             if (greenT!=null) turnoutSelect1.setDefaultNamedBean(greenT.getBean());
-            setTurnoutStateInBox(turnoutStateBox1, ((LsDecSignalHead) signalHeadBeingEdited).getGreenState(), turnoutStateValues);
+            setTurnoutStateInBox(turnoutStateBox1, ((LsDecSignalHead) signalHeadBeingEdited).getGreenState(), TURNOUT_STATE_VALUES);
             if (yellowT!=null) turnoutSelect2.setDefaultNamedBean(yellowT.getBean());
-            setTurnoutStateInBox(turnoutStateBox2, ((LsDecSignalHead) signalHeadBeingEdited).getYellowState(), turnoutStateValues);
+            setTurnoutStateInBox(turnoutStateBox2, ((LsDecSignalHead) signalHeadBeingEdited).getYellowState(), TURNOUT_STATE_VALUES);
             if (redT!=null) turnoutSelect3.setDefaultNamedBean(redT.getBean());
-            setTurnoutStateInBox(turnoutStateBox3, ((LsDecSignalHead) signalHeadBeingEdited).getRedState(), turnoutStateValues);
+            setTurnoutStateInBox(turnoutStateBox3, ((LsDecSignalHead) signalHeadBeingEdited).getRedState(), TURNOUT_STATE_VALUES);
             if (greenTFlash!=null) turnoutSelect4.setDefaultNamedBean(greenTFlash.getBean());
-            setTurnoutStateInBox(turnoutStateBox4, ((LsDecSignalHead) signalHeadBeingEdited).getFlashGreenState(), turnoutStateValues);
+            setTurnoutStateInBox(turnoutStateBox4, ((LsDecSignalHead) signalHeadBeingEdited).getFlashGreenState(), TURNOUT_STATE_VALUES);
             if (yellowTFlash!=null) turnoutSelect5.setDefaultNamedBean(yellowTFlash.getBean());
-            setTurnoutStateInBox(turnoutStateBox5, ((LsDecSignalHead) signalHeadBeingEdited).getFlashYellowState(), turnoutStateValues);
+            setTurnoutStateInBox(turnoutStateBox5, ((LsDecSignalHead) signalHeadBeingEdited).getFlashYellowState(), TURNOUT_STATE_VALUES);
             if (redTFlash!=null) turnoutSelect6.setDefaultNamedBean(redTFlash.getBean());
-            setTurnoutStateInBox(turnoutStateBox6, ((LsDecSignalHead) signalHeadBeingEdited).getFlashRedState(), turnoutStateValues);
+            setTurnoutStateInBox(turnoutStateBox6, ((LsDecSignalHead) signalHeadBeingEdited).getFlashRedState(), TURNOUT_STATE_VALUES);
             if (darkT!=null) turnoutSelect7.setDefaultNamedBean(darkT.getBean());
-            setTurnoutStateInBox(turnoutStateBox7, ((LsDecSignalHead) signalHeadBeingEdited).getDarkState(), turnoutStateValues);
+            setTurnoutStateInBox(turnoutStateBox7, ((LsDecSignalHead) signalHeadBeingEdited).getDarkState(), TURNOUT_STATE_VALUES);
         } else if (ACELA_ASPECT.equals(type)) {
             AcelaNode tNode = AcelaAddress.getNodeFromSystemName(signalHeadBeingEdited.getSystemName(), InstanceManager.getDefault(AcelaSystemConnectionMemo.class));
             if (tNode == null) {
@@ -817,7 +817,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
 
     private int turnoutStateFromBox(JComboBox<String> box) {
         String mode = (String) box.getSelectedItem();
-        int result = StringUtil.getStateFromName(mode, turnoutStateValues, turnoutStateStrings);
+        int result = StringUtil.getStateFromName(mode, TURNOUT_STATE_VALUES, TURNOUT_STATE_STRINGS);
         if (result < 0) {
             log.warn("unexpected mode string in turnoutMode: {}", mode);
             throw new IllegalArgumentException();
