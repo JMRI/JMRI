@@ -100,6 +100,12 @@
       <authorinitials>WK</authorinitials>
       <revremark>Excluded similar CV9xx for Sound Decoder 2020</revremark>
     </revision>
+    <revision>
+      <revnumber>9</revnumber>
+      <date>2023-07-17</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>disable unimplemented CV by PD-series</revremark>
+    </revision>
   </revhistory>
   <!-- Calls to std NMRA templates   -->
   <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
@@ -909,7 +915,7 @@
     <enumVal>
         <enumChoice choice="32KHz"/>
         <enumChoice choice="16KHz"/>
-        <enumChoice choice="low" exclude="PD05A,PD12A">
+        <enumChoice choice="low" exclude="130,131,132,133,134">
             <choice>Low frequency</choice>
             <choice xml:lang="de">Niederfrequent</choice>
             <choice xml:lang="fr">Basse fréquence</choice>

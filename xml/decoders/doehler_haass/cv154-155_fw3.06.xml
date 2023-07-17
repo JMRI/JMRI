@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 3 - Ronald Kuhn - exclude CV 154 for PD05A -->
 <!-- version 2 - Alain Le Marchand - for fw 3.10 -->
 <!-- version 1 - Ronald Kuhn - for fw 3.06 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <variable item="Deceleration forward backward" CV="154" default="0">
+  <variable item="Deceleration forward backward" CV="154" default="0" exclude="131">
     <decVal/>
      <label>Deceleration forward and backward</label>
      <label xml:lang="de">Bremsrampe vorwärts und rückwärts</label>
