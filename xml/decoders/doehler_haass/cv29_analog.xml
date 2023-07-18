@@ -23,6 +23,12 @@
         <surname>Billon</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Ronald</firstname>
+        <surname>Kuhn</surname>
+      </personname>
+    </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
@@ -38,6 +44,12 @@
       <authorinitials>EF</authorinitials>
       <revremark>Italian translation 2014</revremark>
     </revision>
+    <revision>
+      <revnumber>3</revnumber>
+      <date>2023-07-17</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>disable analog mode for PD05A</revremark>
+    </revision>
   </revhistory>
   <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
     <enumVal>
@@ -48,7 +60,7 @@
         <choice xml:lang="ca">NMRA Digital only (ca)</choice>
         <choice xml:lang="de">Nur Digital nach NMRA</choice>
       </enumChoice>
-      <enumChoice choice="DC conversion enabled">
+      <enumChoice choice="DC conversion enabled" exclude="131">
         <choice>DC conversion enabled</choice>
         <choice xml:lang="it">Conversione Analogica Abilitata</choice>
         <choice xml:lang="fr">Mode analogique activé</choice>

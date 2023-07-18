@@ -12,6 +12,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version version="1.7" author="Ronald Kuhn, ronald@wirkuhns.de" lastUpdated="20230717"/>
+  <!--  change file for CV13 because PD05A does not support analog and added PD06A, PD18A, PD18MU and PD21A -->
   <version version="1.6" author="Alain Le Marchand, AlanUS.forum@gmail.com" lastUpdated="20220416"/>
   <!--  Added PD10MU definition -->
   <version version="1.5" author="Marc Fournier, forfoum@videotron.ca" lastUpdated="20211103"/>
@@ -471,7 +473,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="PD05A (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="2" numFns="16" productID="131" comment="PD05A-0 / PD05A-2 / PD05A-3 with update from May 2020" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+      <model model="PD05A (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="2" numFns="16" productID="131" comment="PD05A-0 / PD05A-2 / PD05A-3 with update from May 2020" maxInputVolts="30V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -488,7 +490,37 @@
           <label xml:lang="de">Rangier-|gang</label>
           <label xml:lang="ca">Marxa de maniobres</label>
         </output>
-        <size length="5.0" width="7.9" height="2.5" units="mm"/>
+        <size length="5.2" width="8.0" height="2.5" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+        </protocols>
+      </model>
+      <model model="PD06A (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="4" numFns="16" productID="132" comment="PD06A-0 / PD06A-3" maxInputVolts="18V" maxMotorCurrent="0.2A/6V" maxTotalCurrent="0.5A" connector="other/Wires">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Poserior</label>
+        </output>
+        <output name="7" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
+        </output>
+        <output name="8" label="Shunting|Speed">
+          <label xml:lang="de">Rangier-|gang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
+        </output>
+        <size length="6.8" width="11.4" height="2.8" units="mm"/>
         <protocols>
           <protocol>dcc</protocol>
         </protocols>
@@ -553,6 +585,96 @@
           <protocol>dcc</protocol>
         </protocols>
       </model>
+      <model model="PD18A (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="4" numFns="16" productID="134" comment="PD18A" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Poserior</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
+        </output>
+        <output name="7" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
+        </output>
+        <output name="8" label="Shunting|Speed">
+          <label xml:lang="de">Rangier-|gang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
+        </output>
+        <size length="23.8" width="10.8" height="2.0" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+        </protocols>
+      </model>
+      <model model="PD18MU (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="4" numFns="16" productID="134" comment="PD18MU" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Poserior</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
+        </output>
+        <output name="7" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
+        </output>
+        <output name="8" label="Shunting|Speed">
+          <label xml:lang="de">Rangier-|gang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
+        </output>
+        <size length="9.0" width="9.7" height="2.9" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+        </protocols>
+      </model>
+      <model model="PD21A (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="4" numFns="16" productID="133" comment="PD21A-4" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="21MTC">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Poserior</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
+        </output>
+        <output name="7" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
+        </output>
+        <output name="8" label="Shunting|Speed">
+          <label xml:lang="de">Rangier-|gang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
+        </output>
+        <size length="21.2" width="15.5" height="2.9" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+        </protocols>
+      </model>
 
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
@@ -572,7 +694,7 @@
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv65_fw3.08.xml"/>
       <!-- SECTION 3    - Analog functions  -->
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv29_analog.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv13_analogModeFunction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_analogModeFunction.xml"/>
       <!-- SECTION 4    - Basic Railcom feedback  -->
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv28-29_railcom_base.xml"/>
