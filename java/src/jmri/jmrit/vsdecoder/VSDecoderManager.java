@@ -902,6 +902,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                 d.savedSound.setTunnel(blockPositionlists.get(d.setup_index).get(new_rp_index).isTunnel()); // set the tunnel status
                 log.debug("address {}: position to set: {}", d.getAddress(), d.posToSet);
                 d.setPosition(d.posToSet); // Sound set position
+                changeDirection(d, locoAddress, new_rp_index);
                 stopSoundPositionTimer(d);
                 startSoundPositionTimer(d); // timer restart
             } else {
