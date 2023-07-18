@@ -246,7 +246,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
             // use the NamedIcon as a source for the sizes
             int logoScaleWidth = faceSize / 6;
             int logoScaleHeight = (int) ((float) logoScaleWidth * (float) jmriIcon.getIconHeight() / jmriIcon.getIconWidth());
-            scaledLogo = logo.getScaledInstance(logoScaleWidth, logoScaleHeight, Image.SCALE_SMOOTH);
+            scaledLogo = logo.getScaledInstance(Math.max(1, logoScaleWidth), Math.max(1, logoScaleHeight), Image.SCALE_SMOOTH);
             scaledIcon.setImage(scaledLogo);
             logoWidth = scaledIcon.getIconWidth();
             logoHeight = scaledIcon.getIconHeight();
