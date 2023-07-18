@@ -495,7 +495,7 @@
           <protocol>dcc</protocol>
         </protocols>
       </model>
-      <model model="PD06A (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="4" numFns="16" productID="132" comment="PD06A-0 / PD06A-3" maxInputVolts="18V" maxMotorCurrent="0.2A/6V" maxTotalCurrent="0.5A" connector="other/Wires">
+      <model model="PD06A (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="4" numFns="16" productID="132" comment="PD06A-0 / PD06A-3" maxInputVolts="18V" maxMotorCurrent="0.2A/6V" maxTotalCurrent="0.5A" connector="Wires">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
