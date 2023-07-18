@@ -589,7 +589,7 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Fixed a bug with wrong direction in an oval layout.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
