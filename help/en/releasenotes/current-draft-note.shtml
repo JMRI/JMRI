@@ -216,7 +216,8 @@
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
-                <li></li>
+                <li>added PD06A, PD18A, PD18MU and PD21A</li>
+                <li>disable unimplemented CV by PD-series</li>
             </ul>
 
         <h4>ESU</h4>
@@ -597,4 +598,3 @@
         <ul>
             <li></li>
         </ul>
-

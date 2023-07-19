@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 6 - 2023-07-17 - RK - disable unimplemented options for PD10MU -->
 <!-- version 5 - 2020-05-02 - RK - added initialmapping functions -->
 <!-- version 4 - 2015-10-14 - PB - grids added and new SD fw functions -->
 <!-- version 3 - 2015-03-05 - PB - Spelling.  -->
@@ -503,6 +504,7 @@
     </label>
     <separator/>
     <row>
+     <group exclude="130">
       <column>
         <label>
           <text> </text>
@@ -581,6 +583,7 @@
         </grid>
         <!-- END - Initialmapping grid -->
       </column>
+     </group>
     </row>
   </column>
 </pane>
