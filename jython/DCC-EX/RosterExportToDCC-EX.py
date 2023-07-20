@@ -1,9 +1,9 @@
 # RosterExportToDCC-EX.py, v1.2.0, 04/14/2023
 # Export all JMRI Roster Entries as ROSTER() macro calls
 #  Syntax: ROSTER(999,"Loco Name","F0/F1/*F2/F3/F4/F5/F6/F7/F8")
+#  This is accessed from the "DCC++ Menu" (See jmri.jmrix.dccpp.swing.DCCppRosterExportAction.java)
 #  Run the script. It will show a list of formatted ROSTER() calls which you can copy.
-#  Copy the lines into your myAutomation.h and compile+upload DCC-EX to your Arduino.
-#  For convenience, you can "add script to button..." in Preferences, Startup
+#  Copy the lines into your myAutomation.h and compile+upload DCC-EX to your Arduino. 
 # NOTE: EX-CommandStation cannot (yet) handle multiple roster entries with the same address
 # Author: mstevetodd, copyright 2023
 # Part of the JMRI distribution
