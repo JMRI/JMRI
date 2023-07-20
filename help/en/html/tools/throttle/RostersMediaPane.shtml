@@ -63,7 +63,10 @@
       <ul>
        <li>speedLabels : a json formated array of labels to be displayed on the JMRI throttle speed sliders, for instance the entry could be : <br> 
         <br>[ { "value" : 40, "label" : "SS" } , { "value" : 80, "label": "NS"} , { "value" : 100, "label": "FS"} ] <br><br>
-        where "value" is a number of speed increment and "label" a text string. Note that label support HTML text formating, for instance : "&lt;html&gt;&lt;FONT COLOR=RED&gt;SS&lt;/FONT&gt;&lt;/html&gt;" would display the SS label red  </li><br>
+        where "value" is a number of speed increment and "label" a text string. <br><br>Note that label support HTML text formating, 
+        for instance : "&lt;html&gt;&lt;font color=red&gt;SS&lt;/font&gt;&lt;/html&gt;" would display the SS label red  
+       or "&lt;html&gt;&lt;font size=25 color=green&gt;FS&lt;/font&gt;&lt;/html&gt;" FS with color green and size 25</li>
+       <br>
        <li>... many more custom settings from various JMRI tools</li>
       </ul>
       </p><br>
