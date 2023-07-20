@@ -81,7 +81,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         idleButton.setToolTipText(Bundle.getMessage("ToolTipIdleButton"));
 
         // general GUI config
-        setLayout(new java.awt.GridLayout(3, 2, 0, 5)); // r, c, hgap , vgap
+        setLayout(new java.awt.GridLayout(3, 2, 3, 5)); // r, c, hgap , vgap
 
         // Add margin around the panel
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)); // top, left, btm, right
