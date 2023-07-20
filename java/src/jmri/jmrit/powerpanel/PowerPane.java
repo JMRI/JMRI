@@ -81,10 +81,10 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         idleButton.setToolTipText(Bundle.getMessage("ToolTipIdleButton"));
 
         // general GUI config
-        setLayout(new java.awt.GridLayout(3, 2, 5, 5)); // r, c, hgap , vgap
+        setLayout(new java.awt.GridLayout(3, 2, 0, 5)); // r, c, hgap , vgap
 
         // Add margin around the panel
-        setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)); // top, left, btm, right
 
         // set minimum size ( for all 6 cells in the layout ) to prevent twitching
         onOffStatus.setMinimumSize(new java.awt.Dimension(getLabelMinimumWidth(), onOffStatus.getPreferredSize().height));
@@ -207,16 +207,18 @@ public class PowerPane extends jmri.util.swing.JmriPanel
 
     /**
      * Get Minimum width for the current power status JLabel.
-     * On / off are unlikely to be long strings so we check Idle / Unknown.
      * @return minimum width
      */
     private int getLabelMinimumWidth (){
-        JLabel tmp = new JLabel(Bundle.getMessage("StatusIdle"));
+        String[] bundleStrings = {"StatusIdle", "StatusOn", "StatusOff", "StatusUnknown"};
+        JLabel tmp = new JLabel(Bundle.getMessage("LabelLayoutPower"));
+        int a=tmp.getWidth();
         tmp.setIcon(onIcon);
-        int a = tmp.getWidth();
-        tmp.setText(Bundle.getMessage("StatusUnknown"));
-        a = Math.max(a, tmp.getWidth()) + 2;
-        return a;
+        for ( String bs : bundleStrings ) {
+            tmp.setText(Bundle.getMessage(bs));
+            a = Math.max(a, tmp.getWidth());
+        }
+        return a+2;
     }
 
     private String getConnectionLabelString(){
