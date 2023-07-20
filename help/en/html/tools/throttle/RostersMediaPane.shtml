@@ -62,7 +62,7 @@
       <p>Some known special settings :
       <ul>
        <li>speedLabels : a json formated array of labels to be displayed on the JMRI throttle speed sliders, for instance the entry could be : <br> 
-        <br>[ { "value" : 40, "label" : "SS } , { "value" : 80, "label": "NS"} , { "value" : 100, "label": "FS"} ] <br><br>
+        <br>[ { "value" : 40, "label" : "SS" } , { "value" : 80, "label": "NS"} , { "value" : 100, "label": "FS"} ] <br><br>
       where "value" is a number of speed increment and "label" a text string </li><br>
        <li>... many more custom settings from various JMRI tools</li>
       </ul>
