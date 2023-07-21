@@ -1,7 +1,8 @@
 
     <!-- contains new warnings for the release under development -->
     <li>
-        None yet
+        <strong>LocoNet Server</strong> and <strong>LocoNet Client</strong> has been removed.
+        If you are using these, you need to change the connection to <strong>LocoNet over TCP</strong> instead.
     </li>
     <li>
     </li>
