@@ -5,7 +5,8 @@
   <title>JMRI: SpeedoConsole</title>
   <meta name="author" content="Andrew Crosland">
   <meta name="author" content="Dennis Miller">
-  <meta name="keywords" content="JMRI help Route Add Edit"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI Bachrus Speedo console">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->
