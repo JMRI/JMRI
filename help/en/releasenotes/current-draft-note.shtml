@@ -32,6 +32,7 @@
         <h4>DCC++ and DCC-EX</h4>
             <ul>
                 <li>Call "Roster Export to DCC-EX" from DCC++ menu</li>
+                <li>Traffic Monitor - Added option to suppress the parsed text</li>
             </ul>
 
         <h4>DCC4pc</h4>

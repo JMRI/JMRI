@@ -10,21 +10,8 @@ import jmri.jmrix.dccpp.serial.SerialDCCppPacketizer;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.io.PrintStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JToggleButton;
-import javax.swing.SwingConstants;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import javax.swing.*;
 
 /**
  * Frame displaying (and logging) DCCpp command messages.
@@ -37,26 +24,24 @@ public class DCCppMonFrame extends jmri.jmrix.AbstractMonFrame implements DCCppL
 
     // member declarations
     final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.dccpp.swing.DCCppSwingBundle"); // NOI18N
-      
-    protected DCCppTrafficController tc = null;
-    protected DCCppSystemConnectionMemo _memo = null;
 
-    protected SerialDCCppPacketizer serialDCCppTC = null;
+    private DCCppTrafficController tc = null;
+    private DCCppSystemConnectionMemo _memo = null;
 
-    protected final JPanel serialPane = new JPanel();
-    protected final JLabel queuedEntriesLabel = new JLabel("", SwingConstants.LEFT); // NOI18N
-    protected final JToggleButton pauseRefreshButton = new JToggleButton();
-    protected final JButton clearRefreshQueueButton = new JButton();
-    
+    private SerialDCCppPacketizer serialDCCppTC = null;
+
+    private final JPanel serialPane = new JPanel();
+    private final JLabel queuedEntriesLabel = new JLabel("", SwingConstants.LEFT); // NOI18N
+    private final JToggleButton pauseRefreshButton = new JToggleButton();
+    private final JButton clearRefreshQueueButton = new JButton();
+    private final JCheckBox displayTranslatedCheckBox = new JCheckBox(Bundle.getMessage("ButtonShowTranslation"));
+
+    private final String doNotDisplayTranslatedCheck = this.getClass().getName() + ".DoNotDisplayTranslated"; // NOI18N
+
     public DCCppMonFrame(DCCppSystemConnectionMemo memo) {
         super();
         _memo = memo;        
     }
-
-    @Override
-    public void dispose() { 
-        super.dispose();
-  }
 
     @Override
     protected String title() {
@@ -127,27 +112,19 @@ public class DCCppMonFrame extends jmri.jmrix.AbstractMonFrame implements DCCppL
     //-------------------
     @Override
     public synchronized void message(DCCppMessage l) {
-        // display the raw data if requested  
-        StringBuilder raw = new StringBuilder();
-        if (rawCheckBox.isSelected()) {
-            raw.append(l.toString());
-        }
 
         // display the decoded data
-        String text = l.toMonitorString();
-        nextLine("TX: " + text + "\n", raw.toString());
+        StringBuilder text = new StringBuilder();
+        if ( displayTranslatedCheckBox.isSelected() ) {
+            text.append("TX: ");
+            text.append(l.toMonitorString());
+        }
+        text.append("\n");
 
+        nextLine(text.toString(), (rawCheckBox.isSelected() ? l.toString() : ""));
         refreshQueuedMessages();
 
     }
-
-    volatile PrintStream logStream = null;
-
-    // to get a time string
-    DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
-
-    StringBuffer linesBuffer = new StringBuffer();
-    private final static Logger log = LoggerFactory.getLogger(DCCppMonFrame.class);
 
     @Override
     public void message(DCCppReply l) {
@@ -157,15 +134,14 @@ public class DCCppMonFrame extends jmri.jmrix.AbstractMonFrame implements DCCppL
             log.debug("Message in Monitor: '{}' opcode {}", l, Character.toString(l.getOpCodeChar()));
         }
 
-        // display the raw data if requested  
-        StringBuilder raw = new StringBuilder();
-        if (rawCheckBox.isSelected()) {
-            raw.append(l.toString());
+        StringBuilder text = new StringBuilder();
+        if ( displayTranslatedCheckBox.isSelected() ) {
+            text.append(" RX: ");
+            text.append(l.toMonitorString());
         }
+        text.append("\n");
 
-        // display the decoded data
-        String text = l.toMonitorString();
-        nextLine("RX: " + text + "\n", raw.toString());
+        nextLine( text.toString(), (rawCheckBox.isSelected() ? l.toString() : ""));
 
         //enable or disable the refresh pane based on support by command station
         if (l.isStatusReply()) { 
@@ -213,5 +189,46 @@ public class DCCppMonFrame extends jmri.jmrix.AbstractMonFrame implements DCCppL
             }
         }
     }
-}
 
+    private void displayTranslatedEvent(final ActionEvent e) {
+        if ( neitherCheckBoxSelected() ) {
+            rawCheckBox.setSelected(true);
+        }
+    }
+
+    private void rawCheckBoxEvent(final ActionEvent e) {
+        if ( neitherCheckBoxSelected() ) {
+            displayTranslatedCheckBox.setSelected(true);
+        }
+    }
+
+    private boolean neitherCheckBoxSelected() {
+        return (!( displayTranslatedCheckBox.isSelected()) ) && (!(rawCheckBox.isSelected()));
+    }
+
+    @Override
+    public JPanel getCheckBoxPanel(){
+        JPanel a = super.getCheckBoxPanel();
+        a.add(displayTranslatedCheckBox,0);
+        displayTranslatedCheckBox.addActionListener(this::displayTranslatedEvent);
+        rawCheckBox.addActionListener(this::rawCheckBoxEvent);
+        
+        displayTranslatedCheckBox.setSelected(!userPrefs.getSimplePreferenceState(doNotDisplayTranslatedCheck));
+        rawCheckBoxEvent(null); // if neither raw on tranalated selected, display translated.
+        return a;
+    }
+
+    @Override
+    public void dispose() {
+        if ( tc != null ) {
+            tc.removeDCCppListener(~0, this);
+        }
+        if (userPrefs!=null) {
+            userPrefs.setSimplePreferenceState(doNotDisplayTranslatedCheck, !displayTranslatedCheckBox.isSelected());
+        }
+        super.dispose();
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppMonFrame.class);
+
+}
