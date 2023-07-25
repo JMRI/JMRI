@@ -581,6 +581,22 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         });
     }
 
+    /**
+     * Set initial power state
+     * 
+     * If connection option is set for track power on the property change is sent
+     * before we are registered with the power manager so force a change in the
+     * slot thread
+     * 
+     * @param powerOption true if power on at startup
+     */
+    public void setPowerState(boolean powerOption) {
+        if (powerOption == true) {
+            powerChanged = true;
+            powerState = PowerManager.ON;
+        }
+    }
+    
     @Override
     /**
      * The run() method will only be called (from SprogSystemConnectionMemo
@@ -617,16 +633,19 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                 if (sendSprogAddress) {
                     // If we need to change the SPROGs default address, do that immediately,
                     // regardless of the power state.
+                    log.debug("Set new address");
                     sendMessage(new SprogMessage("A " + currentSprogAddress + " 0"));
                     replyAvailable = false;
                     sendSprogAddress = false;
                 } else if (powerChanged && (powerState == PowerManager.ON) && !waitingForReply) {
                     // Power has been turned on so send an idle packet to start the
                     // message/reply handshake
+                    log.debug("Send idle to start message/reply handshake");
                     sendPacket(jmri.NmraPacket.idlePacket(), SprogConstants.S_REPEATS);
                     powerChanged = false;
                     time = System.currentTimeMillis();
                 } else if (replyAvailable && (powerState == PowerManager.ON)) {
+                    log.debug("Reply available");
                     // Received a reply whilst power is on, so send another packet
                     // Get next packet to send if track power is on
                     byte[] p;
@@ -649,6 +668,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                         log.debug("Packet sent");
                     } else {
                         // Send a decoder idle packet to prompt a reply from hardware and keep things running
+                        log.debug("Idle sent");
                         sendPacket(jmri.NmraPacket.idlePacket(), SprogConstants.S_REPEATS);
                     }
                     timeNow = System.currentTimeMillis();
