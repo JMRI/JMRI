@@ -136,7 +136,8 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
-                <li></li>
+                <li>JMRI will now leave the layout power unchanged when it terminates.
+                    Previously, it would turn the power on if it was off.</li>
             </ul>
 
         <h4>Secsi</h4>

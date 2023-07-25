@@ -25,6 +25,11 @@ public class Z21XNetStreamPortController extends jmri.jmrix.lenz.XNetStreamPortC
             protected AbstractMRReply newReply() {
                return new Z21XNetReply();
             }
+            @Override
+            protected void terminate() {
+                // This overrides the default Lenz behavior of turning the power back on
+                // by deliberately doing nothing.
+            }
         };
         packets.connectPort(this);
 
