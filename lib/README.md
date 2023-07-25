@@ -190,9 +190,11 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - unlike jython-slim-2.7.2.jar, includes embedded Java dependencies
 
 ##### jinput (including jinput.jar, three jinput DLLs, and two libjinputs)
-- from <https://jinput.dev.java.net/> jinput_dist_20090401
-- (most recent as of 2010-Jan-02)
-- libjinput-osx.jnilib is a custom version lipo'd from the x86 version above and a custom arm64 build from https://shadowfacts.net/2022/lwjgl-arm64/ and https://github.com/shadowfacts/jinput-arm64
+# - from <https://jinput.dev.java.net/> jinput_dist_20090401
+# - (most recent as of 2010-Jan-02)
+# - libjinput-osx.jnilib is a custom version lipo'd from the x86 version above and a custom arm64 build from https://shadowfacts.net/2022/lwjgl-arm64/ and https://github.com/shadowfacts/jinput-arm64
+- from https://github.com/jinput/jinput/tags
+- fetched from maven repository
 
 ##### JavaMail 1.4.1 (used to validate email address formats)
 - mailapi.jar
