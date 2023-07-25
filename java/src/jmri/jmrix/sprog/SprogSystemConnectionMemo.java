@@ -141,6 +141,8 @@ public class SprogSystemConnectionMemo extends DefaultSystemConnectionMemo imple
 
     /**
      * Configure the programming manager and "command station" objects.
+     * 
+     * @param powerOption true if track power at startup is ON
      */
     public void configureCommandStation(boolean powerOption) {
         if(classObjectMap.containsKey(CommandStation.class)) {
@@ -171,11 +173,22 @@ public class SprogSystemConnectionMemo extends DefaultSystemConnectionMemo imple
         this.configureCommandStation(false);
     }
     
+    /**
+     * Configure the programming manager and "command station" objects.
+     * 
+     * @param slots number of command station slots
+     */
     public void configureCommandStation(int slots) {
         numSlots = slots;
         this.configureCommandStation(false);
     }
 
+    /**
+     * Configure the programming manager and "command station" objects.
+     * 
+     * @param slots number of command station slots
+     * @param powerOption true if track power at startup is ON
+     */
     public void configureCommandStation(int slots, String powerOption) {
         numSlots = slots;
         if (powerOption != null && powerOption.equals(Bundle.getMessage("PowerStateOn"))) {
