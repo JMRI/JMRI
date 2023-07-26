@@ -3,8 +3,7 @@
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Reporters Documentation</title>
-  <meta name="Author" content="Bob Jacobsen">
-  <meta name="Author" content="Jerry Grochow">
+  <meta name="Author" content="Bob Jacobsen, Jerry Grochow">
   <meta name="keywords" content="sensor model railroad JMRI decoderpro panelpro">
   <!--#include virtual="/Style.shtml" -->
   <style>
@@ -73,7 +72,7 @@
         provides easy access to the contents of all Reporters that JMRI knows about. 
         JMRI automatically creates Reporter objects for certain connection types
         (currently <a href="../hardware/loconet/Addressing.shtml#transponding">LocoNet 
-        transponders</a> and <a href="../hardware/rfid/index.shtml">RFID readers</a>.
+        transponders</a> and <a href="../hardware/rfid/index.shtml">RFID readers</a>).
         There is also an <a href="../../package/jmri/jmrit/beantable/ReporterAddEdit.shtml">"Add..." button</a>
         for creating your own Reporters, either "internal" or for any 
         <a href="https://www.jmri.org/help/en/html/hardware/mqtt/index.shtml#objects">MQTT connections</a>.</p>
@@ -112,7 +111,7 @@
             <td>With IDTag UserName or IDTag; Sensor (if associated) set Active</td>
             <td>#Cleared when object appears in another Reporter</td>
             <td>IDTag Table</td>
-            <td>CbusReporter: extends AbstractRailComReporter implements CanListener</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/can/cbus/CbusReporter.html">CbusReporter extends AbstractRailComReporter</a></td>
  <!-- Why does CbusReporter extend AbstractRailComReporter rather than AbstractIdTagReporter which
  seems more appropriate for what it does?  @jerryg2003 2023-06-29 -->           
         </tr>
@@ -121,77 +120,77 @@
             <td>With RailCom packet information</td>
             <td>When empty RailCom packet received</td>
             <td>RailCom Table</td>
-            <td>Dcc4PcReporter: extends AbstractRailComReporter</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/dcc4pc/Dcc4PcReporter.html">Dcc4PcReporter</a> extends AbstractRailComReporter</td>
         </tr>
         <tr><td>Digitrax Transponding*</td>
             <td>On receiving Block Entry with new ReporterID</td>
             <td>From Block Entry message</td>
             <td>On Block Exit message</td>
             <td>#</td>
-            <td>LnReporter: extends AbstractIdTagReporter</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/loconet/LnReporter.html">LnReporter</a> extends AbstractIdTagReporter</td>
         </tr>
         <tr><td>ECOS</td>
             <td>#</td>
             <td>#</td>
             <td>#</td>
             <td>#</td>
-            <td>EcosReporter: extends AbstractReporter implements PhysicalLocationReporter</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/ecos/EcosReporter.html">EcosReporter</a> extends AbstractReporter</td>
         </tr>
         <tr><td>Internal</td>
             <td>Manually or via script</td>
             <td>Manually or via script</td>
             <td>Manually or via script</td>
             <td>IDTag Table must be updated manually or via script</td>
-            <td>TrackReporter: extends AbstractReporter implements CollectingReporter</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/internal/TrackReporter.html">TrackReporter</a> extends AbstractReporter</td>
         </tr>
         <tr><td>JMRI Client</td>
             <td>#</td>
             <td>#</td>
             <td>#</td>
             <td>#</td>
-            <td>JMRIClientReporter: extends AbstractReporter implements JMRIClientListener</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/jmriclient/JMRIClientReporter.html">JMRIClientReporter</a> extends AbstractReporter</td>
         </tr>
         <tr><td>Lissy Detectors</td>
             <td>#</td>
             <td>#</td>
             <td>#</td>
             <td>#</td>
-            <td>LnReporter: extends AbstractIdTagReporter implements CollectingReporter</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/loconet/LnReporter.html">LnReporter</a> extends AbstractIdTagReporter</td>
         </tr>
         <tr><td>MQTT</td>
             <td>Manually or via script</td>
             <td>On receipt of IDTag, with IDTag and additional message contents</td>
             <td>Cleared by a blank message or when object appears in another Reporter</td>
             <td>IDTag Table entried created and updated</td>
-            <td>MqttReporter: extends AbstractIDTagReporter implements MqttEventListener</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/mqtt/MqttReporter.html">MqttReporter</a> extends AbstractIDTagReporter</td>
         </tr>
         <tr><td>OpenLCB/LCC*</td>
             <td>Manually or via script</td>
             <td>On Event Report in the range specified by the Reporter SystemName</td>
             <td>#</td>
             <td>RailCom Table entries created and updated</td>
-            <td>OlcbReporter: extends AbstractIdTagReporter</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/openlcb/OlcbReporter.html">OlcbReporter</a> extends AbstractIdTagReporter</td>
         </tr>
         <tr><td>RFID Connection*</td>
             <td>When IDTag message with new Reporter ID received [Also create Sensor]</td>
             <td>With IDTag UserName or IDTag; Sensor set Active</td>
             <td>Current Report (and Sensor) automaticly cleared after 2 seconds</td>
             <td>IDTag Table, Sensor Table entried created and updated</td>
-            <td>RfidReporter: extends AbstractIdTagReporter</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/rfid/RfidReporter.html">RfidReporter</a> extends AbstractIdTagReporter</td>
         </tr>
         <tr><td>RPS</td>
             <td>#</td>
             <td>#</td>
             <td>#</td>
             <td>#</td>
-            <td>RpsReporter: extends AbstractReporter implements MeasurementListener</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/rps/RpsReporter.html">RpsReporter</a> extends AbstractReporter</td>
         </tr>
         <tr><td>Z21 (Roco)</td>
             <td>#</td>
             <td>#</td>
             <td>#</td>
             <td>#</td>
-            <td>Z21Reporter, Z21CanReporter: extends AbstractRailComReporter</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/roco/z21/Z21Reporter.html">Z21Reporter</a>, <a href="../../../../avaDoc/doc/jmri/jmrix/roco/z21/Z21CanReporter.html">Z21CanReporter</a> extend AbstractRailComReporter</td>
         </tr>
         </table>
           
