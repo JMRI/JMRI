@@ -147,7 +147,9 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li></li>
+                <li>
+                    Track power ON at startup option would turn on track power but not send packets, requiring track power to be cycled. Fixed.
+                </li>
             </ul>
 
         <h4>TAMS</h4>
