@@ -20,7 +20,7 @@ import jmri.jmrix.cmri.serial.SerialTrafficController;
  */
 public class SerialFilterFrame extends jmri.util.JmriJFrame {
 
-    ArrayList<SerialNode> monitorNode = new  ArrayList<SerialNode>();
+    ArrayList<SerialNode> monitorNode = new  ArrayList<>();
 
     // node table pane items
     protected JPanel nodeEnablePanel = null;
@@ -74,13 +74,13 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
 */
     public static final int numMonPkts     = monPktRFE;
     public static final int lastStdPkt     = monPktTransmit+1;
-    static final int[] monPktTypeID = {
-                                                0x49, 0x50, 0x52, 0x54, 0x45,
-                                                0x51, 0x44, 0x57, 0x41, 0x43,
-                                                0x4D, 0x3F
-                                              };
+    // static final int[] monPktTypeID = {
+    //                                             0x49, 0x50, 0x52, 0x54, 0x45,
+    //                                             0x51, 0x44, 0x57, 0x41, 0x43,
+    //                                             0x4D, 0x3F
+    //                                           };
 
-    ArrayList<JCheckBox> packetChkBoxes = new ArrayList<JCheckBox>();
+    ArrayList<JCheckBox> packetChkBoxes = new ArrayList<>();
     String packetChkBoxLabels[] = {
                                    "(I) Initialize    ",
                                    "(P) Poll          ",
@@ -216,22 +216,12 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
         enableSelectButtons.add(nodeMonitorAll);
         nodeMonitorAll.setVisible(true);
         nodeMonitorAll.setToolTipText(Bundle.getMessage("AllButtonTip"));
-        nodeMonitorAll.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                nodeMonitorAllButtonActionPerformed();
-            }
-        });
+        nodeMonitorAll.addActionListener(this::nodeMonitorAllButtonActionPerformed);
 
         enableSelectButtons.add(nodeMonitorNone);
         nodeMonitorNone.setVisible(true);
         nodeMonitorNone.setToolTipText(Bundle.getMessage("NoneButtonTip"));
-        nodeMonitorNone.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                nodeMonitorNoneButtonActionPerformed();
-            }
-        });
+        nodeMonitorNone.addActionListener(this::nodeMonitorNoneButtonActionPerformed);
 
         add(enableSelectButtons);
 
@@ -247,22 +237,12 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
         packetSelectButtons.add(packetMonitorAll);
         packetMonitorAll.setVisible(true);
         packetMonitorAll.setToolTipText(Bundle.getMessage("AllButtonTip"));
-        packetMonitorAll.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                packetMonitorAllButtonActionPerformed();
-            }
-        });
+        packetMonitorAll.addActionListener(this::packetMonitorAllButtonActionPerformed);
 
         packetSelectButtons.add(packetMonitorNone);
         packetMonitorNone.setVisible(true);
         packetMonitorNone.setToolTipText(Bundle.getMessage("NoneButtonTip") );
-        packetMonitorNone.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                packetMonitorNoneButtonActionPerformed();
-            }
-        });
+        packetMonitorNone.addActionListener(this::packetMonitorNoneButtonActionPerformed);
 
         add(packetSelectButtons);
 
@@ -274,24 +254,15 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
 
         haltPollButton.setVisible(true);
         haltPollButton.setToolTipText(Bundle.getMessage("HaltPollButtonTip"));
-        haltPollButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                haltpollButtonActionPerformed(e);
-            }
-        });
+        haltPollButton.addActionListener(this::haltpollButtonActionPerformed);
         mainButtons.add(haltPollButton);
 
         mainButtons.add(Box.createRigidArea(new Dimension(30, 0)));
 
         doneButton.setVisible(true);
         doneButton.setToolTipText(Bundle.getMessage("DoneButtonTip"));
-        doneButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                doneButtonActionPerformed();
-            }
-        });
+        doneButton.addActionListener(this::doneButtonActionPerformed);
+
         mainButtons.add(doneButton);
         mainButtons.setVisible(true);
         add(mainButtons);
@@ -322,33 +293,33 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
      * Set MonitorNodePackets.
      *
      */
-    public void nodeMonitorAllButtonActionPerformed() {
+    public void nodeMonitorAllButtonActionPerformed(ActionEvent e) {
         for(int i=0; i<monitorNode.size(); i++) {
             monitorNode.get(i).setMonitorNodePackets(false);
             nodeTableModel.setValueAt(monitorNode.get(i).getMonitorNodePackets(), i, NodeTableModel.ENABLED_COLUMN);
         }
     }
 
-    public void nodeMonitorNoneButtonActionPerformed() {
+    public void nodeMonitorNoneButtonActionPerformed(ActionEvent e) {
         for(int i=0; i<monitorNode.size(); i++) {
             monitorNode.get(i).setMonitorNodePackets(true);
             nodeTableModel.setValueAt(monitorNode.get(i).getMonitorNodePackets(), i, NodeTableModel.ENABLED_COLUMN);
         }
     }
 
-    public void packetMonitorAllButtonActionPerformed() {
+    public void packetMonitorAllButtonActionPerformed(ActionEvent e) {
         for (int i=0; i<lastStdPkt; i++) {
             packetChkBoxes.get(i).setSelected(true);
         }
     }
 
-    public void packetMonitorNoneButtonActionPerformed() {
+    public void packetMonitorNoneButtonActionPerformed(ActionEvent e) {
         for (int i=0; i<lastStdPkt; i++) {
             packetChkBoxes.get(i).setSelected(false);
         }
     }
 
-    public void doneButtonActionPerformed() {
+    public void doneButtonActionPerformed(ActionEvent e) {
         setVisible(false);
         dispose();
     }
@@ -374,13 +345,13 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
         public void itemStateChanged(ItemEvent e){
             JCheckBox pktTypeChkBox = (JCheckBox) e.getSource();
             int pktTypeIndex = 0;
-            SerialNode aNode = null;
+            SerialNode aNode;
             do {
                 if (pktTypeChkBox == packetChkBoxes.get(pktTypeIndex)) {
                     for (int i=0; i < monitorNode.size(); i++) {
                         aNode = monitorNode.get(i);
                         if (aNode != null) {
-                            aNode.setMonitorPacketBit(pktTypeIndex,(packetChkBoxes.get(pktTypeIndex).isSelected() ? true : false));
+                            aNode.setMonitorPacketBit(pktTypeIndex,(packetChkBoxes.get(pktTypeIndex).isSelected()));
                         }
                     }
                     return;
@@ -409,11 +380,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
 
         @Override
         public boolean isCellEditable(int r, int c) {
-            if (c != NODEADDR_COLUMN) {
-                return true;
-            } else {
-                return false;
-            }
+            return c != NODEADDR_COLUMN;
         }
 
         @Override
@@ -429,16 +396,13 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
         @Override
         public Object getValueAt(int r, int c) {
 
-            if (c == NODEADDR_COLUMN) {
-                return monitorNode.get(r).getNodeAddress();
-            } else if (c == ENABLED_COLUMN) {
-                if (monitorNode.get(r).getMonitorNodePackets()) {
+            switch (c) {
+                case NODEADDR_COLUMN:
+                    return monitorNode.get(r).getNodeAddress();
+                case ENABLED_COLUMN:
+                    return monitorNode.get(r).getMonitorNodePackets();
+                default:
                     return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return true;
             }
         }
 
@@ -457,8 +421,8 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
         public static final int NUMCOLUMNS = ENABLED_COLUMN+1;
     }
 
-    private String[] nodeEnableColumnsNames = {"Node", "Monitor"};
+    private final String[] nodeEnableColumnsNames = {"Node", "Monitor"};
 
-    // private final static Logger log = LoggerFactory.getLogger(SerialFilterFrame.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialFilterFrame.class);
 
 }
