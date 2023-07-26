@@ -2,7 +2,6 @@ package jmri.jmrit.withrottle;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -12,38 +11,37 @@ import org.junit.jupiter.api.*;
  */
 public class FacelessServerTest {
 
-    private FacelessServer panel;
+    private FacelessServer server = null;
 
     @Test
-    public void testCtor() {
-        Assert.assertNotNull("exists", panel );
+    public void testFacelessServerCtor() {
+        Assertions.assertNotNull(server, "exists" );
     }
 
     @Test
     public void testGetDeviceList() {
-        Assert.assertNotNull("exists", panel.getDeviceList() );
+        Assertions.assertNotNull(server);
+        Assertions.assertNotNull( server.getDeviceList(), "exists" );
     }
 
     @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-        panel = new FacelessServer(){
-           @Override
-           public void listen(){
-           }
+        server = new FacelessServer(){
+            @Override
+            public void listen(){
+            }
         };
     }
-    
+
     @AfterEach
     public void tearDown() throws Exception {
-        try {
-          panel.disableServer();
-          JUnitUtil.waitFor( () -> { return panel.isListen; });
-        } catch(java.lang.NullPointerException npe) {
-          // not all tests fully configure the server, so an
-          // NPE here is ok.
-        }
+        Assertions.assertNotNull(server);
+        server.disableServer();
+        JUnitUtil.waitFor( () -> { return !server.isListen; },"Server stops listening flag");
+
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
+
 }
