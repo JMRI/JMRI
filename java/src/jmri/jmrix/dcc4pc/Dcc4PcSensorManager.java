@@ -351,11 +351,11 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     public final static int CONSIST_ADDRESS = 0x08;
 
     /**
-     * Determining if the railcomm data is duplicated. If it is then this
-     * instructs the rc input to move things about.
-     * @param value Railcomm and data
+     * Determine if the Railcom data is duplicated.
+     * If it is then this instructs the Reporter to move things about.
+     * @param value Railcom data
      * @param seq message sequence number
-     * @param rc RailCommand to request action(s) from
+     * @param rc Reporter to request action(s) from
      * @return value calculated locally
      */
     int decodeDuplicatePacket(int value, int seq, Dcc4PcReporter rc) {
