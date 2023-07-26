@@ -128,7 +128,7 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
         }
 
         var aspectsAttr = shared.getAttribute("aspects");
-        if ( aspectsAttr != null ) { // considered normal if the attribute is not present
+        if ( aspectsAttr != null ) {
             try {
                     aspects = aspectsAttr.getIntValue();
             } catch (org.jdom2.DataConversionException e) {
