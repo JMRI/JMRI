@@ -1,5 +1,7 @@
 package jmri;
 
+import javax.annotation.Nonnull;
+
 /**
  * Represent a single signal head. (Try saying that ten times fast!) A signal
  * may have more than one of these (e.g. a signal mast consisting of several
@@ -68,7 +70,7 @@ public interface SignalHead extends Signal {
      * Changes in this value can be listened to using the
      * {@literal Appearance} property.
      *
-     * @return the appearance
+     * @return the appearance, e.g. SignalHead.YELLOW
      */
     public int getAppearance();
 
@@ -79,37 +81,60 @@ public interface SignalHead extends Signal {
      */
     public void setAppearance(int newAppearance);
 
+    
+    /**
+     * Get the current Signal Head Appearance Key.
+     * @return Key, or empty String if no valid appearance set.
+     */
+    @Nonnull
     public String getAppearanceKey();
 
+    /**
+     * Get the Appearance Key for a particular Appearance.
+     * @param appearance id for the key, e.g. SignalHead.GREEN
+     * @return the Appearance Key, e.g. "Green" or empty String if unknown.
+     * The key can be used as a Bundle String, e.g.
+     * Bundle.getMessage(getAppearanceKey(SignalHead.RED))
+     */
+    @Nonnull
     public String getAppearanceKey(int appearance);
 
+    /**
+     * Get the current appearance name.
+     * @return Name of the Appearance, e.g. "Dark" or "Flashing Red"
+     */
+    @Nonnull
     public String getAppearanceName();
 
+    /**
+     * Get the Appearance Name for a particular Appearance.
+     * @param appearance id for the Name.
+     * @return the Appearance Name, or empty String if unknown.
+     */
+    @Nonnull
     public String getAppearanceName(int appearance);
 
     /**
-     * Get whether the signal head is lit or dark. Changes to this value can be
-     * listened to using the {@literal Lit} property.
-     *
-     * @return true if lit; false if dark
+     * {@inheritDoc}
      */
     @Override
     public boolean getLit();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setLit(boolean newLit);
 
     /**
-     * Get whether the signal head is held. Changes to this value can be listened to
-     * using the {@literal Held} property. It controls what mechanisms can
-     * control the head's appearance. The actual semantics are defined by those
-     * external mechanisms.
-     *
-     * @return true if held; false otherwise
+     * {@inheritDoc}
      */
     @Override
     public boolean getHeld();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setHeld(boolean newHeld);
 
