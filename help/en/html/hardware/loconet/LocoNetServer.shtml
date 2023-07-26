@@ -17,6 +17,12 @@
     <div id="mainContent">
       <h1>Hardware Support: Connecting Multiple Computers to LocoNet&reg; via JMRI LocoNet Server</h1>
 
+      <div class="noted">
+        <span class="since">since 5.5.3</span>
+        <p>Note: LocoNet Server has been removed from JMRI. Use LocoNet over TCP instead. See <a href=
+        "https://www.jmri.org/help/en/html/hardware/loconet/LbServer.shtml">LocoNetOverTCP LbServer</a> for details.</p>
+      </div>
+
       <p>This page describes how to use the inbuilt LocoNet&reg; Client/Server capability of JMRI to
       connect multiple computers to a single LocoNet-equipped layout.</p>
 

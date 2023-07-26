@@ -486,9 +486,6 @@
             when disconnected from a layout</a>.</p>
 
             <p class="dl">Configure: Remote connection to a LocoNet via <a href=
-            "loconet/LocoNetServer.shtml">JMRI LocoNet Server</a>.</p>
-
-            <p class="dl">Configure: Remote connection to a LocoNet via <a href=
             "loconet/LbServer.shtml">LbServer</a>. More information on <a href=
             "loconet/LocoNetworking.shtml">connecting multiple computers to a single
             LocoNet</a></p>
@@ -716,9 +713,6 @@
 
             <p class="dl">Configure: <a href="loconet/LocoNetSim.shtml">LocoNet Simulator for use
             when disconnected from a layout</a>.</p>
-
-            <p class="dl">Configure: Remote connection to a LocoNet via <a href=
-            "loconet/LocoNetServer.shtml">JMRI LocoNet Server</a>.</p>
 
             <p class="dl">Configure: Remote connection to a LocoNet via <a href=
             "loconet/LbServer.shtml">LbServer</a>. More information on <a href=
@@ -1147,9 +1141,6 @@
 
             <p class="dl">Configure: <a href="loconet/LocoNetSim.shtml">LocoNet Simulator for use
             when disconnected from a layout</a>.</p>
-
-            <p class="dl">Configure: Remote connection to a LocoNet via <a href=
-            "loconet/LocoNetServer.shtml">JMRI LocoNet Server</a>.</p>
 
             <p class="dl">Configure: Remote connection to a LocoNet via <a href=
             "loconet/LbServer.shtml">LbServer</a>. More information on <a href=
