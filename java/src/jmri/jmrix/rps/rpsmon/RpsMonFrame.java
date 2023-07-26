@@ -15,13 +15,11 @@ import jmri.jmrix.rps.RpsSystemConnectionMemo;
 public class RpsMonFrame extends jmri.jmrix.AbstractMonFrame
         implements ReadingListener, MeasurementListener {
 
-    RpsSystemConnectionMemo memo = null;
+    // RpsSystemConnectionMemo memo = null;
 
     public RpsMonFrame(RpsSystemConnectionMemo _memo) {
         super();
-        memo = _memo;
-        Distributor.instance().addReadingListener(this);
-        Distributor.instance().addMeasurementListener(this);
+        // memo = _memo;
     }
 
     @Override
@@ -40,6 +38,8 @@ public class RpsMonFrame extends jmri.jmrix.AbstractMonFrame
 
     @Override
     protected void init() {
+        Distributor.instance().addReadingListener(this);
+        Distributor.instance().addMeasurementListener(this);
     }
 
     @Override
