@@ -1018,6 +1018,9 @@
         <li>Benny Tj&auml;der, <!-- etxbct -->
         who provided the MQTT Last Will support and a Swedish signal system.
 
+        <li>Warner Thuis, <!-- warnerthuis -->
+            who provided a TAMS decoder definition
+            
         <li>Kenneth Tj&oslash;stheim, <!-- SeaU2 -->
             who provided the Norway-2001 signal system</li>
 
