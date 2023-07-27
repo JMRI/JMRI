@@ -39,6 +39,7 @@ public class VSDOptionsDialog extends JDialog {
     public VSDOptionsDialog(JPanel parent, String title) {
         super(SwingUtilities.getWindowAncestor(parent), title);
         initComponents();
+        setLocationRelativeTo(parent);
     }
 
     public void initComponents() {
