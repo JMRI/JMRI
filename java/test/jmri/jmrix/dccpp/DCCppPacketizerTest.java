@@ -21,7 +21,7 @@ public class DCCppPacketizerTest extends DCCppTrafficControllerTest {
     /**
      * Local test class to make DCCppPacketizer more felicitous to test
      */
-    class StoppingDCCppPacketizer extends DCCppPacketizer {
+    private static class StoppingDCCppPacketizer extends DCCppPacketizer {
 
         public StoppingDCCppPacketizer(jmri.jmrix.dccpp.DCCppCommandStation p) {
             super(p);
