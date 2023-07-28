@@ -27,12 +27,6 @@ public class DCCppPacketizerTest extends DCCppTrafficControllerTest {
             super(p);
         }
 
-        @SuppressWarnings("deprecation")        // Thread.stop()
-        public void stop() {
-            xmtThread.stop();
-            rcvThread.stop();
-        }
-
         // methods removed for testing
         @Override
         protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
