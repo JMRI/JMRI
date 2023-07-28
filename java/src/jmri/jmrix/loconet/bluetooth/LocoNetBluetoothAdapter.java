@@ -235,7 +235,8 @@ public class LocoNetBluetoothAdapter extends LnPortController {
         return new int[]{};
     }
 
-    protected static @Nonnull Vector<String> discoverPortNames() {
+    @Nonnull
+    protected static Vector<String> discoverPortNames() {
         Vector<String> portNameVector = new Vector<>();
         try {
             RemoteDevice[] devices = LocalDevice.getLocalDevice().getDiscoveryAgent().retrieveDevices(DiscoveryAgent.PREKNOWN);
