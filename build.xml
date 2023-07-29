@@ -133,7 +133,12 @@
         <pathelement location="${libdir}/joal.jar"/>
         <pathelement location="${libdir}/jsoup-1.15.3.jar"/>
         <pathelement location="${libdir}/jython-standalone-2.7.2.jar"/>
-        <pathelement location="${libdir}/log4j-1.2.17.jar"/>
+        <pathelement location="${libdir}/slf4j-api-2.0.7.jar"/><!-- sl4fj API -->
+        <pathelement location="${libdir}/slf4j-reload4j-2.0.7.jar"/><!-- sl4fj to log4j41.2 -->
+        <pathelement location="${libdir}/jul-to-slf4j-2.0.7.jar"/><!-- java.util.logging to sl4fj -->
+        <pathelement location="${libdir}/log4j-api-2.20.0.jar"/><!-- log4j2 API -->
+        <pathelement location="${libdir}/log4j-1.2-api-2.20.0.jar"/><!-- log4j1.2 to log4j2 API bridge -->
+        <pathelement location="${libdir}/log4j-core-2.20.0.jar"/><!-- log4j2 Core -->
         <pathelement location="${libdir}/javax.servlet-api-3.1.0.jar"/>
         <pathelement location="${libdir}/vecmath-1.5.2.jar"/>
         <pathelement location="${libdir}/mailapi.jar"/>
@@ -159,9 +164,6 @@
         <pathelement location="${libdir}/websocket-common-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/websocket-server-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/websocket-servlet-9.4.28.v20200408.jar"/>
-        <pathelement location="${libdir}/slf4j-api-1.7.25.jar"/>
-        <pathelement location="${libdir}/slf4j-log4j12-1.7.25.jar"/>
-        <pathelement location="${libdir}/jul-to-slf4j-1.7.25.jar"/>
         <pathelement location="${libdir}/xbee-java-library-1.3.1.jar"/>
         <pathelement location="${libdir}/pi4j-core-1.2.jar"/>
         <pathelement location="${libdir}/commons-io-2.11.0.jar"/>
