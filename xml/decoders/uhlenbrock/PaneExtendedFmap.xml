@@ -117,7 +117,7 @@
 			<!--start Mapping row #1-->
 			<row>
 				<label>
-					<text>Mapping #1 - Conditions: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #1 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #1 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #1 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #1 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
@@ -720,7 +720,7 @@
 			<!--start Mapping row #2-->
 			<row>
 				<label>
-					<text>Mapping #2 - Conditions: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #2 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #2 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #2 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #2 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
@@ -1323,7 +1323,7 @@
 			<!--start Mapping row #3-->
 			<row>
 				<label>
-					<text>Mapping #3 - Conditions: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #3 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #3 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #3 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #3 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
@@ -1926,7 +1926,7 @@
 			<!--start Mapping row #4-->
 			<row>
 				<label>
-					<text>Mapping #4 - Conditions: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #4 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #4 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #4 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #4 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
@@ -2529,7 +2529,7 @@
 			<!--start Mapping row #5 -->
 			<row>
 				<label>
-					<text>Mapping #5 - Conditions: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #5 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #5 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #5 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #5 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
@@ -3132,7 +3132,7 @@
 			<!--start Mapping row #6 -->
 			<row>
 				<label>
-					<text>Mapping #6  - Conditions: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #6 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #6 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #6 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #6 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
@@ -3735,7 +3735,7 @@
 			<!--start Mapping row #7  -->
 			<row>
 				<label>
-					<text>Mapping #7 - Conditions: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #7 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #7 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #7 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #7 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
@@ -4338,7 +4338,7 @@
 			<!--start Mapping row #8  -->
 			<row>
 				<label>
-					<text>Mapping #8 - Conditions: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #8 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #8 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #8 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #8 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
@@ -4941,7 +4941,7 @@
 			<!--start Mapping row #9  -->
 			<row>
 				<label>
-					<text>Mapping #9 - Conditions: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #9 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #9 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #9 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #9 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
@@ -5557,7 +5557,7 @@
 				<!--start Mapping row #17-->
 				<row>
 					<label>
-						<text>Mapping #17 - Conditions: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #17 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #17 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #17 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #17 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
@@ -6160,7 +6160,7 @@
 				<!--start Mapping row #18-->
 				<row>
 					<label>
-						<text>Mapping #18 - Conditions: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #18 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #18 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #18 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #18 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
@@ -6763,7 +6763,7 @@
 				<!--start Mapping row #19-->
 				<row>
 					<label>
-						<text>Mapping #19 - Conditions: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #19 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #19 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #19 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #19 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
@@ -7366,7 +7366,7 @@
 				<!--start Mapping row #20-->
 				<row>
 					<label>
-						<text>Mapping #20 - Conditions: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #20 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #20 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #20 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #20 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
@@ -7969,7 +7969,7 @@
 				<!--start Mapping row #21 -->
 				<row>
 					<label>
-						<text>Mapping #21 - Conditions: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #21 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #21 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #21 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #21 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
@@ -8572,7 +8572,7 @@
 				<!--start Mapping row #22 -->
 				<row>
 					<label>
-						<text>Mapping #22  - Conditions: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #22 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #22 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #22 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #22 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
@@ -9175,7 +9175,7 @@
 				<!--start Mapping row #23  -->
 				<row>
 					<label>
-						<text>Mapping #23 - Conditions: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #23 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #23 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #23 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #23 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
@@ -9778,7 +9778,7 @@
 				<!--start Mapping row #24  -->
 				<row>
 					<label>
-						<text>Mapping #24 - Conditions: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #24 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #24 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #24 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #24 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
@@ -10381,7 +10381,7 @@
 				<!--start Mapping row #25  -->
 				<row>
 					<label>
-						<text>Mapping #25 - Conditions: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #25 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #25 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #25 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
 					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #25 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
