@@ -603,5 +603,5 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The external libraries used for Logging have been updated.</li>
         </ul>
