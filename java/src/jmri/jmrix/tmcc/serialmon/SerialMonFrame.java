@@ -42,7 +42,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         if (l.getNumDataElements() < 3) {
             nextLine("Truncated message of length " + l.getNumDataElements() + "\n",
                     l.toString());
-            return;
         } else {
             nextLine("Cmd: " + parse(l.getOpCode(), l.getAsWord()) + "\n", l.toString());
         }
@@ -54,7 +53,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         if (l.getNumDataElements() < 2) {
             nextLine("Truncated reply of length " + l.getNumDataElements() + ": \"" + l.toString() + "\"\n",
                     l.toString());
-            return;
         } else {
             nextLine("Rep: " + parse(l.getOpCode(), l.getAsWord()) + "\n", l.toString());
         }
