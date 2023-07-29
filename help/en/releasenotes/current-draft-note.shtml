@@ -126,9 +126,9 @@
                     <a href="https://github.com/openlcb/OpenLCB_Java/pulls">PR 231</a>.
                     </li>
                 <li>Added a contextual menu (right click, ctrl click) to tabs in the CDI display that 
-                    contains "Cut" and "Paste" options. 
-                    Cut and paste works both within one window and across windows. 
-                    You can only paste into a tab of the same type from which you cut. 
+                    contains "Copy" and "Paste" options. 
+                    Copy and paste works both within one window and across windows. 
+                    You can only paste into a tab of the same type from which you copied. 
                     The data stored in the clipboard is in the format of the usual backup files.
                     </li>
             </ul>
