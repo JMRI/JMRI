@@ -128,7 +128,7 @@ which checks the dates of the control files to make sure they've been updated wh
 
 ##### openlcb.jar
  - 0.7.32 from https://github.com/openlcb/OpenLCB_Java
- - Through PR#228 included
+ - Through PR#231 included
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
