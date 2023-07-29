@@ -11,6 +11,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Peter Ulvestad" version="9" lastUpdated="20230726"/>
+  <!-- Version 9 Added Excludes -->
   <version author="Peter Ulvestad" version="9" lastUpdated="20230719"/>
   <!-- Version 9 Added Function Labels -->
   <version author="jacobsen@mac.com" version="8" lastUpdated="20150628"/>
@@ -776,7 +778,7 @@
       <variable label="Motor" CV="52.10" default="11" comment="QSI" item="CV52.10">
         <decVal max="15"/>
       </variable>
-      <variable label="Turbo" CV="52.14" default="11" comment="QSI" item="CV52.14" exclude="112">
+      <variable label="Turbo" CV="52.14" default="11" comment="QSI" item="CV52.14" exclude="101, 112">
         <decVal max="15"/>
       </variable>
       <variable label="Air Pump" CV="52.16" default="11" comment="QSI" item="CV52.16">
@@ -794,7 +796,7 @@
       <variable label="Squealing Brakes" CV="52.24" default="11" comment="QSI" item="CV52.24">
         <decVal max="15"/>
       </variable>
-      <variable label="Dynamic Brakes" CV="52.28" default="8" comment="QSI" item="CV52.28">
+      <variable label="Dynamic Brakes" CV="52.28" default="8" comment="QSI" item="CV52.28" exclude="101">
         <decVal max="15"/>
       </variable>
       <variable label="Coupler Sounds" CV="52.34" default="11" comment="QSI" item="CV52.34">

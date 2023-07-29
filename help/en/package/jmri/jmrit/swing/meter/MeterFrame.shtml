@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Voltage / Current Meter</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI current voltage track power current ampage ammeter ampmeter meter">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>Voltage / Current Meter</h1>
+
+      <p>Some hardware types can report back to JMRI the track volatage and current being consumed.</p>
+
+      <p>The displayed Meter is selectable via the Voltage meters and Current meters menus.</p>
+
+      <p><img src="MeterFrame_600x250.png" alt="JMRI Current Voltage Meter"></p>
+
+      <p>The settings menu contains options to edit the unit display options ( eg. Volt, Millivolt ),
+      along with the number of whole numbers and decimal places.</p>
+
+      <p>The Voltage / Current Meter can be opened from the
+      <a href="../../../../../html/apps/PanelPro/ToolsMenu.shtml">JMRI Tools Menu</a>.</p>
+
+      <p>To swtich track power on and off, see the 
+      <a href="../../powerpanel/PowerPanelFrame.shtml">Power Control</a>.
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+  </div>
+  <!-- close #mBody -->
+  <script src="/js/main.js"></script>
+</body>
+</html>

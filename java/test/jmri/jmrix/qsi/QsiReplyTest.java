@@ -78,6 +78,7 @@ public class QsiReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         m = msg = new QsiReply();
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         memo = null;

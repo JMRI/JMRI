@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public interface SignalHeadManager extends Manager<SignalHead> {
+public interface SignalHeadManager extends Manager<SignalHead>, Disposable {
 
     /** {@inheritDoc} */
     @Override

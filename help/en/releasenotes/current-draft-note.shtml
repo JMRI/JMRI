@@ -32,6 +32,7 @@
         <h4>DCC++ and DCC-EX</h4>
             <ul>
                 <li>Call "Roster Export to DCC-EX" from DCC++ menu</li>
+                <li>Traffic Monitor - Added option to suppress the parsed text</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -136,7 +137,8 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
-                <li></li>
+                <li>JMRI will now leave the layout power unchanged when it terminates.
+                    Previously, it would turn the power on if it was off.</li>
             </ul>
 
         <h4>Secsi</h4>
@@ -146,12 +148,14 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li></li>
+                <li>
+                    Track power ON at startup option would turn on track power but not send packets, requiring track power to be cycled. Fixed.
+                </li>
             </ul>
 
         <h4>TAMS</h4>
             <ul>
-                <li></li>
+                <li>New decoder definition for the LD-G-9 decoder.</li>
             </ul>
 
         <h4>TMCC</h4>
@@ -591,6 +595,9 @@
         <a id="VSD" name="VSD"></a>
         <ul>
             <li>Fixed a bug with wrong direction in an oval layout.</li>
+            <li>Minor change on the Manager window GUI. The windows for adding
+            a VSDecoder and to handle the option now are centered to the manager
+            window. This is not a functional change.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
