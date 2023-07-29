@@ -564,8 +564,8 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertEquals("Throttle in THROTTLEIDLE state", DCCppThrottle.THROTTLEIDLE, ((DCCppThrottle)instance).requestState);
     }
 
-    private DCCppInterfaceScaffold tc;
-    private DCCppSystemConnectionMemo memo;
+    private DCCppInterfaceScaffold tc = null;
+    private DCCppSystemConnectionMemo memo = null;
     private DCCppThrottleManager tm;
 
     @Override

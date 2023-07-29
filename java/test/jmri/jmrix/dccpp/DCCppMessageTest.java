@@ -500,6 +500,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testGetWriteOpsModeCVMsg() {
         msg = DCCppMessage.makeWriteOpsModeCVMsg(17, 4, 3);
+        Assertions.assertNotNull(msg);
         log.debug("write ops cv message = '{}'", msg);
         Assert.assertEquals("length", 8, msg.getNumDataElements());
         Assert.assertEquals("0th byte", 'w', msg.getElement(0) & 0xFF);
@@ -515,6 +516,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringWriteOpsModeCVMsg() {
         msg = DCCppMessage.makeWriteOpsModeCVMsg(17, 4, 3);
+        Assertions.assertNotNull(msg);
         Assert.assertEquals("Monitor string", "Ops Write Byte Cmd: Address: 17, CV: 4, Value: 3", msg.toMonitorString());
     }
 
@@ -830,6 +832,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         m = msg = new DCCppMessage("T 42 1");
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = msg = null;

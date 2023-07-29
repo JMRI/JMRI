@@ -2,7 +2,6 @@ package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,20 +13,19 @@ import org.junit.jupiter.api.*;
 public class DCCppMessageExceptionTest {
 
    @Test
-   public void ConstructorTest(){
-      Assert.assertNotNull("DCCppMessageException constructor",new DCCppMessageException());
+   public void testDCCppMessageExceptionConstructor(){
+      Assertions.assertNotNull(new DCCppMessageException(), "DCCppMessageException constructor");
    }
 
    @Test
-   public void StringConstructorTest(){
-      Assert.assertNotNull("DCCppMessageException string constructor",new DCCppMessageException("test exception"));
+   public void testDCCppMessageExceptionStringConstructor(){
+      Assertions.assertNotNull(new DCCppMessageException("test exception"), "DCCppMessageException string constructor");
    }
 
    @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();
-
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
    }
 
    @AfterEach
