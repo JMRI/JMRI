@@ -29,7 +29,7 @@ public interface Reportable {
       *
       * @return a report string representing the Object.
       */
-     public default String toReportString(){
+     default String toReportString(){
         return toString();
      }
 

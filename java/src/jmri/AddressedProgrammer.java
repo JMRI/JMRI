@@ -41,9 +41,9 @@ package jmri;
  */
 public interface AddressedProgrammer extends Programmer {
 
-    public boolean getLongAddress();
+    boolean getLongAddress();
 
-    public int getAddressNumber();
+    int getAddressNumber();
 
-    public String getAddress();
+    String getAddress();
 }

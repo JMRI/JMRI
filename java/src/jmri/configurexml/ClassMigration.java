@@ -23,6 +23,6 @@ public interface ClassMigration {
      * @return the map of migrations, or an empty map if none are provided.
      */
     @Nonnull
-    public Map<String, String> getMigrations();
+    Map<String, String> getMigrations();
 
 }

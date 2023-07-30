@@ -20,16 +20,16 @@ public interface DigitalBooleanActionManager extends BaseManager<MaleDigitalBool
      * @return the male socket for this action
      * @throws IllegalArgumentException if the action has an invalid system name
      */
-    public MaleDigitalBooleanActionSocket registerAction(@Nonnull DigitalBooleanActionBean action)
+    MaleDigitalBooleanActionSocket registerAction(@Nonnull DigitalBooleanActionBean action)
             throws IllegalArgumentException;
     
     /**
      * Create a new system name for an DigitalBooleanActionBean.
      * @return a new system name
      */
-    public String getAutoSystemName();
+    String getAutoSystemName();
 
-    public FemaleDigitalBooleanActionSocket createFemaleSocket(
+    FemaleDigitalBooleanActionSocket createFemaleSocket(
             Base parent, FemaleSocketListener listener, String socketName);
 
     /**
@@ -37,7 +37,7 @@ public interface DigitalBooleanActionManager extends BaseManager<MaleDigitalBool
      * 
      * @return a set of entries with category and class
      */
-    public Map<Category, List<Class<? extends Base>>> getActionClasses();
+    Map<Category, List<Class<? extends Base>>> getActionClasses();
 
     /*.*
      * Add an DigitalBooleanActionBean.
@@ -45,7 +45,7 @@ public interface DigitalBooleanActionManager extends BaseManager<MaleDigitalBool
      * @param action the action to add
      * @throws IllegalArgumentException if the action has an invalid system name
      */
-//    public void addAction(DigitalBooleanActionBean action)
+//    void addAction(DigitalBooleanActionBean action)
 //            throws IllegalArgumentException;
 
     /*.*
@@ -55,11 +55,11 @@ public interface DigitalBooleanActionManager extends BaseManager<MaleDigitalBool
      * @param name User name or system name to match
      * @return null if no match found
      */
-//    public DigitalBooleanActionBean getAction(String name);
+//    DigitalBooleanActionBean getAction(String name);
 
-//    public DigitalBooleanActionBean getByUserName(String s);
+//    DigitalBooleanActionBean getByUserName(String s);
 
-//    public DigitalBooleanActionBean getBySystemName(String s);
+//    DigitalBooleanActionBean getBySystemName(String s);
 
     /**
      * {@inheritDoc}
@@ -68,7 +68,7 @@ public interface DigitalBooleanActionManager extends BaseManager<MaleDigitalBool
      * {@link #getSystemNamePrefix() } and "DA";
      */
     @Override
-    public default String getSubSystemNamePrefix() {
+    default String getSubSystemNamePrefix() {
         return getSystemNamePrefix() + "DB";
     }
 
@@ -78,6 +78,6 @@ public interface DigitalBooleanActionManager extends BaseManager<MaleDigitalBool
      *
      * @param x the DigitalBooleanAction to delete
      */
-    public void deleteDigitalBooleanAction(MaleDigitalBooleanActionSocket x);
+    void deleteDigitalBooleanAction(MaleDigitalBooleanActionSocket x);
     
 }

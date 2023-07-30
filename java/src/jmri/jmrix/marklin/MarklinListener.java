@@ -8,7 +8,7 @@ package jmri.jmrix.marklin;
  */
 public interface MarklinListener extends jmri.jmrix.AbstractMRListener {
 
-    public void message(MarklinMessage m);
+    void message(MarklinMessage m);
 
-    public void reply(MarklinReply m);
+    void reply(MarklinReply m);
 }

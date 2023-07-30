@@ -19,6 +19,6 @@ public interface MrcPanelInterface {
      * classes.
      * @param memo system connection memo
      */
-    public void initComponents(MrcSystemConnectionMemo memo);
+    void initComponents(MrcSystemConnectionMemo memo);
 
 }

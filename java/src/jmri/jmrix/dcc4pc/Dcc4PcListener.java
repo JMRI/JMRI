@@ -10,9 +10,9 @@ package jmri.jmrix.dcc4pc;
  */
 public interface Dcc4PcListener extends jmri.jmrix.AbstractMRListener {
 
-    public void message(Dcc4PcMessage m);
+    void message(Dcc4PcMessage m);
 
-    public void reply(Dcc4PcReply m);
+    void reply(Dcc4PcReply m);
 
-    public void handleTimeout(Dcc4PcMessage m);
+    void handleTimeout(Dcc4PcMessage m);
 }

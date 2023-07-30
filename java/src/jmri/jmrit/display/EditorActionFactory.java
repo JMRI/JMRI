@@ -17,7 +17,7 @@ public interface EditorActionFactory extends JmriServiceProviderInterface {
      * @return the action
      */
     @Nonnull
-    public AbstractAction createAction();
+    AbstractAction createAction();
 
     /**
      * Get the title used for the action returned by {@link #createAction()}.
@@ -25,5 +25,5 @@ public interface EditorActionFactory extends JmriServiceProviderInterface {
      * @return the title
      */
     @Nonnull
-    public String getTitle();
+    String getTitle();
 }

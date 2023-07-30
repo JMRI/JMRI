@@ -7,7 +7,7 @@ package jmri.jmrix.cmri.serial;
  */
 public interface SerialListener extends jmri.jmrix.AbstractMRListener {
 
-    public void message(SerialMessage m);
+    void message(SerialMessage m);
 
-    public void reply(SerialReply m);
+    void reply(SerialReply m);
 }

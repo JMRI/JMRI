@@ -16,6 +16,6 @@ public interface MaleStringExpressionSocket
      * IllegalArgumentException before checking if an error has occured.
      */
     @Override
-    public String evaluate() throws JmriException;
+    String evaluate() throws JmriException;
     
 }

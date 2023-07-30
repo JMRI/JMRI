@@ -30,7 +30,7 @@ public interface VetoableChangeProvider {
      *
      * @param listener The VetoableChangeListener to be added
      */
-    public void addVetoableChangeListener(@CheckForNull VetoableChangeListener listener);
+    void addVetoableChangeListener(@CheckForNull VetoableChangeListener listener);
 
     /**
      * Add a {@link java.beans.VetoableChangeListener} for a specific property.
@@ -47,7 +47,7 @@ public interface VetoableChangeProvider {
      * @return An array of VetoableChangeListeners.
      */
     @Nonnull
-    public VetoableChangeListener[] getVetoableChangeListeners();
+    VetoableChangeListener[] getVetoableChangeListeners();
 
     /**
      * Get all {@link java.beans.VetoableChangeListener}s currently listening to
@@ -57,14 +57,14 @@ public interface VetoableChangeProvider {
      * @return An array of VetoableChangeListeners.
      */
     @Nonnull
-    public VetoableChangeListener[] getVetoableChangeListeners(@CheckForNull String propertyName);
+    VetoableChangeListener[] getVetoableChangeListeners(@CheckForNull String propertyName);
 
     /**
      * Remove the specified listener from this object.
      *
      * @param listener The {@link java.beans.VetoableChangeListener} to remove.
      */
-    public void removeVetoableChangeListener(@CheckForNull VetoableChangeListener listener);
+    void removeVetoableChangeListener(@CheckForNull VetoableChangeListener listener);
 
     /**
      * Remove the specified listener of the specified property from this object.
@@ -73,6 +73,6 @@ public interface VetoableChangeProvider {
      * @param listener     The {@link java.beans.VetoableChangeListener} to
      *                     remove.
      */
-    public void removeVetoableChangeListener(@CheckForNull String propertyName, @CheckForNull VetoableChangeListener listener);
+    void removeVetoableChangeListener(@CheckForNull String propertyName, @CheckForNull VetoableChangeListener listener);
 
 }

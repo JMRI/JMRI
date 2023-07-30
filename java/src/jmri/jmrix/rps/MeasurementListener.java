@@ -7,6 +7,6 @@ package jmri.jmrix.rps;
  */
 public interface MeasurementListener {
 
-    public void notify(Measurement r);
+    void notify(Measurement r);
 
 }

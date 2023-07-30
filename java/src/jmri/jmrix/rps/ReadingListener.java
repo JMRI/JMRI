@@ -7,6 +7,6 @@ package jmri.jmrix.rps;
  */
 public interface ReadingListener {
 
-    public void notify(Reading r);
+    void notify(Reading r);
 
 }

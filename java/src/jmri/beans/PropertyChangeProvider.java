@@ -30,7 +30,7 @@ public interface PropertyChangeProvider {
      *
      * @param listener The PropertyChangeListener to be added
      */
-    public void addPropertyChangeListener(@CheckForNull PropertyChangeListener listener);
+    void addPropertyChangeListener(@CheckForNull PropertyChangeListener listener);
 
     /**
      * Add a {@link java.beans.PropertyChangeListener} for a specific property.
@@ -38,7 +38,7 @@ public interface PropertyChangeProvider {
      * @param propertyName The name of the property to listen on.
      * @param listener     The PropertyChangeListener to be added
      */
-    public void addPropertyChangeListener(@CheckForNull String propertyName,
+    void addPropertyChangeListener(@CheckForNull String propertyName,
             @CheckForNull PropertyChangeListener listener);
 
     /**
@@ -48,7 +48,7 @@ public interface PropertyChangeProvider {
      * @return An array of PropertyChangeListeners.
      */
     @Nonnull
-    public PropertyChangeListener[] getPropertyChangeListeners();
+    PropertyChangeListener[] getPropertyChangeListeners();
 
     /**
      * Get all {@link java.beans.PropertyChangeListener}s currently listening to
@@ -58,14 +58,14 @@ public interface PropertyChangeProvider {
      * @return an array of PropertyChangeListeners
      */
     @Nonnull
-    public PropertyChangeListener[] getPropertyChangeListeners(@CheckForNull String propertyName);
+    PropertyChangeListener[] getPropertyChangeListeners(@CheckForNull String propertyName);
 
     /**
      * Remove the specified listener from this object.
      *
      * @param listener The {@link java.beans.PropertyChangeListener} to remove.
      */
-    public void removePropertyChangeListener(@CheckForNull PropertyChangeListener listener);
+    void removePropertyChangeListener(@CheckForNull PropertyChangeListener listener);
 
     /**
      * Remove the specified listener of the specified property from this object.
@@ -74,7 +74,7 @@ public interface PropertyChangeProvider {
      * @param listener     The {@link java.beans.PropertyChangeListener} to
      *                     remove.
      */
-    public void removePropertyChangeListener(@CheckForNull String propertyName,
+    void removePropertyChangeListener(@CheckForNull String propertyName,
             @CheckForNull PropertyChangeListener listener);
 
 }

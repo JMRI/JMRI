@@ -7,8 +7,8 @@ package jmri.jmrix.rps;
  */
 public interface Constants {
 
-    static final int NREADINGS = 8;
-    static final int NSENSORS = 4;
-    static final int MAXTIME = 40000;
+    int NREADINGS = 8;
+    int NSENSORS = 4;
+    int MAXTIME = 40000;
 
 }

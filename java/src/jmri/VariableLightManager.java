@@ -26,7 +26,7 @@ public interface VariableLightManager extends Manager<VariableLight> {
 
     /** {@inheritDoc} */
     @Override
-    public void dispose();
+    void dispose();
 
     /**
      * Locate a VariableLight by its user name.
@@ -37,7 +37,7 @@ public interface VariableLightManager extends Manager<VariableLight> {
     @CheckReturnValue
     @CheckForNull
     @Override
-    public VariableLight getByUserName(@Nonnull String s);
+    VariableLight getByUserName(@Nonnull String s);
 
     /**
      * Locate a VariableLight by its system name.
@@ -48,6 +48,6 @@ public interface VariableLightManager extends Manager<VariableLight> {
     @CheckReturnValue
     @CheckForNull
     @Override
-    public VariableLight getBySystemName(@Nonnull String s);
+    VariableLight getBySystemName(@Nonnull String s);
 
 }

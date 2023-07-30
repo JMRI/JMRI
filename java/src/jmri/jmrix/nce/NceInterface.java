@@ -8,9 +8,9 @@ package jmri.jmrix.nce;
  */
 public interface NceInterface {
 
-    public void addNceListener(NceListener l);
+    void addNceListener(NceListener l);
 
-    public void removeNceListener(NceListener l);
+    void removeNceListener(NceListener l);
 
     /**
      * Test operational status of interface.

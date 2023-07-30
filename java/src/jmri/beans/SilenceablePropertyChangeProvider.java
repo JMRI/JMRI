@@ -26,5 +26,5 @@ public interface SilenceablePropertyChangeProvider extends PropertyChangeProvide
      * @throws IllegalArgumentException if propertyName represents a property
      *                                  that should not be silenced
      */
-    public void setPropertyChangesSilenced(@Nonnull String propertyName, boolean silenced);
+    void setPropertyChangesSilenced(@Nonnull String propertyName, boolean silenced);
 }

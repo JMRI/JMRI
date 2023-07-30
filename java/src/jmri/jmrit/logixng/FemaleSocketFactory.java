@@ -7,6 +7,6 @@ package jmri.jmrit.logixng;
  */
 public interface FemaleSocketFactory {
     
-    public FemaleSocketManager.SocketType getFemaleSocketType();
+    FemaleSocketManager.SocketType getFemaleSocketType();
     
 }

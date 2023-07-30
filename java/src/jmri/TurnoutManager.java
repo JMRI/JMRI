@@ -62,12 +62,12 @@ public interface TurnoutManager extends ProvidingManager<Turnout>, NameIncrement
      *                                  be parsed.
      */
     @Nonnull
-    public Turnout provideTurnout(@Nonnull String name) throws IllegalArgumentException;
+    Turnout provideTurnout(@Nonnull String name) throws IllegalArgumentException;
 
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    default public Turnout provide(@Nonnull String name) throws IllegalArgumentException { return provideTurnout(name); }
+    default Turnout provide(@Nonnull String name) throws IllegalArgumentException { return provideTurnout(name); }
 
     /**
      * Get an existing Turnout or return null if it doesn't exist.
@@ -78,7 +78,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout>, NameIncrement
      * @return null if no match found
      */
     @CheckForNull
-    public Turnout getTurnout(@Nonnull String name);
+    Turnout getTurnout(@Nonnull String name);
 
     /**
      * Get the Turnout with the given system name or null if no instance
@@ -89,7 +89,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout>, NameIncrement
      */
     @CheckForNull
     @Override
-    public Turnout getBySystemName(@Nonnull String systemName);
+    Turnout getBySystemName(@Nonnull String systemName);
 
     /**
      * Get the Turnout with the given user name or null if no instance
@@ -100,7 +100,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout>, NameIncrement
      */
     @CheckForNull
     @Override
-    public Turnout getByUserName(@Nonnull String userName);
+    Turnout getByUserName(@Nonnull String userName);
 
     /**
      * Return a Turnout with the specified system and user names.
@@ -135,7 +135,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout>, NameIncrement
      *                                  be parsed
      */
     @Nonnull
-    public Turnout newTurnout(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
+    Turnout newTurnout(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
     /**
      * Get text to be used for the Turnout.CLOSED state in user communication.
@@ -145,7 +145,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout>, NameIncrement
      * @return the textual representation of {@link jmri.Turnout#CLOSED}
      */
     @Nonnull
-    public String getClosedText();
+    String getClosedText();
 
     /**
      * Get text to be used for the Turnout.THROWN state in user communication.
@@ -155,7 +155,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout>, NameIncrement
      * @return the textual representation of {@link jmri.Turnout#THROWN}
      */
     @Nonnull
-    public String getThrownText();
+    String getThrownText();
 
     /**
      * Get a list of the valid TurnoutOperation subtypes for use with turnouts
@@ -165,7 +165,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout>, NameIncrement
      *         supported
      */
     @Nonnull
-    public String[] getValidOperationTypes();
+    String[] getValidOperationTypes();
 
     /**
      * Get, from the user, the number of addressed bits used to control a
@@ -181,7 +181,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout>, NameIncrement
      * @param systemName the turnout system name
      * @return the bit length for turnout control
      */
-    public int askNumControlBits(@Nonnull String systemName);
+    int askNumControlBits(@Nonnull String systemName);
 
     /**
      * Determine if the manager supports multiple control bits, as
@@ -192,7 +192,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout>, NameIncrement
      * @return true if manager supports multiple control bits for the turnout;
      *         false otherwise
      */
-    public boolean isNumControlBitsSupported(@Nonnull String systemName);
+    boolean isNumControlBitsSupported(@Nonnull String systemName);
 
     /**
      * Get, from the user, the type of output to be used bits to control a
@@ -207,7 +207,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout>, NameIncrement
      * @param systemName the turnout system name
      * @return 0 for steady state or the number of seconds for a pulse control
      */
-    public int askControlType(@Nonnull String systemName);
+    int askControlType(@Nonnull String systemName);
 
     /**
      * Determine if the manager supports the handling of pulsed and steady state
@@ -219,7 +219,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout>, NameIncrement
      *         {@link #askControlType(java.lang.String)}; false otherwise
      *
      */
-    public boolean isControlTypeSupported(@Nonnull String systemName);
+    boolean isControlTypeSupported(@Nonnull String systemName);
 
     /**
      * Get a system name for a given hardware address and system prefix.
@@ -232,15 +232,15 @@ public interface TurnoutManager extends ProvidingManager<Turnout>, NameIncrement
      *                            given address, possibly due to invalid address
      *                            format
      */
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
+    String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
-    public void setDefaultClosedSpeed(@Nonnull String speed) throws JmriException;
+    void setDefaultClosedSpeed(@Nonnull String speed) throws JmriException;
 
-    public void setDefaultThrownSpeed(@Nonnull String speed) throws JmriException;
+    void setDefaultThrownSpeed(@Nonnull String speed) throws JmriException;
 
-    public String getDefaultThrownSpeed();
+    String getDefaultThrownSpeed();
 
-    public String getDefaultClosedSpeed();
+    String getDefaultClosedSpeed();
 
     /**
      * Get the Interval (in ms) to wait between output commands.
@@ -248,14 +248,14 @@ public interface TurnoutManager extends ProvidingManager<Turnout>, NameIncrement
      *
      * @return the (Turnout) Output Interval in milliseconds
      */
-    public int getOutputInterval();
+    int getOutputInterval();
 
     /**
      * Set the Interval (in ms) to wait between output commands.
      *
      * @param newInterval the new Output Interval in Milliseconds
      */
-    public void setOutputInterval(int newInterval);
+    void setOutputInterval(int newInterval);
 
     /**
      * Get end time of latest OutputInterval, calculated from the current time.
@@ -263,6 +263,6 @@ public interface TurnoutManager extends ProvidingManager<Turnout>, NameIncrement
      * @return end time in milliseconds or current time if no interval was set or timer has completed
      */
     @Nonnull
-    public LocalDateTime outputIntervalEnds();
+    LocalDateTime outputIntervalEnds();
 
 }

@@ -22,17 +22,17 @@ import jmri.util.PhysicalLocation;
  */
 public interface PhysicalLocationReporter {
 
-    static public enum Direction {
+    enum Direction {
 
         UNKNOWN, ENTER, EXIT
     }
 
-    public LocoAddress getLocoAddress(String s);
+    LocoAddress getLocoAddress(String s);
 
-    public Direction getDirection(String s);
+    Direction getDirection(String s);
 
-    public PhysicalLocation getPhysicalLocation();
+    PhysicalLocation getPhysicalLocation();
 
-    public PhysicalLocation getPhysicalLocation(String s);
+    PhysicalLocation getPhysicalLocation(String s);
 
 }

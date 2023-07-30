@@ -11,7 +11,7 @@ public interface Qualifier {
     /**
      * Process the current value and do whatever is needed.
      */
-    public void update();
+    void update();
 
     /**
      * Check whether this Qualifier is currently in the OK, qualified-to-act
@@ -19,7 +19,7 @@ public interface Qualifier {
      *
      * @return true if this Qualifier is currently saying OK
      */
-    public boolean currentDesiredState();
+    boolean currentDesiredState();
 
     /**
      * Drive the available or not state of the qualified object.
@@ -28,6 +28,6 @@ public interface Qualifier {
      * like a Variable or Pane.
      * @param enable true to drive, else false.
      */
-    public void setWatchedAvailable(boolean enable);
+    void setWatchedAvailable(boolean enable);
 
 }

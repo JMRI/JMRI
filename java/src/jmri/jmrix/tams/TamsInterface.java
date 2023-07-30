@@ -10,9 +10,9 @@ package jmri.jmrix.tams;
  */
 public interface TamsInterface {
 
-    public void addTamsListener(TamsListener l);
+    void addTamsListener(TamsListener l);
 
-    public void removeTamsListener(TamsListener l);
+    void removeTamsListener(TamsListener l);
 
     /**
      * Test operational status of interface.
