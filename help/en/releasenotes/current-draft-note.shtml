@@ -225,8 +225,9 @@
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
-                <li>added PD06A, PD18A, PD18MU and PD21A</li>
+                <li>added PD06A, PD18A, PD18MU and PD21A and 2nd generation-decoder of DH-series</li>
                 <li>disable unimplemented CV by PD-series</li>
+                <li>new definition-files for FW 1.13 for SD*-, FW 1.15 for SH*-, FW 3.13 for DH*-decoder</li>
             </ul>
 
         <h4>ESU</h4>

@@ -22,7 +22,7 @@
       <revremark>Initial file as a copy of nmra/analogModeFunction.xml because PD05A does not allow analog operation</revremark>
     </revision>
   </revhistory>
-    <variable item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" minFn="1" exclude="131">
+    <variable item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" minFn="1" exclude="60,131">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Analog Mode Function Status - F1</label>
       <label xml:lang="it">Stato Funzioni in analogico - F1</label>
@@ -37,7 +37,7 @@
       <tooltip xml:lang="nl">Selecteer om functie F1 te activeren tijdens Analoog rijden</tooltip>
       <tooltip xml:lang="es">Marque para habilitar la función F1 cuando se use en modo análogo</tooltip>
     </variable>
-    <variable item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" minFn="2" exclude="131">
+    <variable item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" minFn="2" exclude="60,131">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Analog Mode Function Status - F2</label>
       <label xml:lang="it">Stato Funzioni in analogico - F2</label>
@@ -52,7 +52,7 @@
       <tooltip xml:lang="nl">Selecteer om functie F2 te activeren tijdens Analoog rijden</tooltip>
       <tooltip xml:lang="es">Marque para habilitar la función F2 cuando se use en modo análogo</tooltip>
     </variable>
-    <variable item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" minFn="3" exclude="131">
+    <variable item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" minFn="3" exclude="60,131">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Analog Mode Function Status - F3</label>
       <label xml:lang="it">Stato Funzioni in analogico - F3</label>
@@ -67,7 +67,7 @@
       <tooltip xml:lang="nl">Selecteer om functie F3 te activeren tijdens Analoog rijden</tooltip>
       <tooltip xml:lang="es">Marque para habilitar la función F3 cuando se use en modo análogo</tooltip>
     </variable>
-    <variable item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" minFn="4" exclude="131">
+    <variable item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" minFn="4" exclude="60,131">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Analog Mode Function Status - F4</label>
       <label xml:lang="it">Stato Funzioni in analogico - F4</label>
@@ -82,7 +82,7 @@
       <tooltip xml:lang="nl">Selecteer om functie F4 te activeren tijdens Analoog rijden</tooltip>
       <tooltip xml:lang="es">Marque para habilitar la función F4 cuando se use en modo análogo</tooltip>
     </variable>
-    <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" minFn="5" exclude="131">
+    <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" minFn="5" exclude="60,131">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Analog Mode Function Status - F5</label>
       <label xml:lang="it">Stato Funzioni in analogico - F5</label>
@@ -98,7 +98,7 @@
       <tooltip xml:lang="nl">Selecteer om functie F5 te activeren tijdens Analoog rijden</tooltip>
       <tooltip xml:lang="es">Marque para habilitar la función F5 cuando se use en modo análogo</tooltip>
     </variable>
-    <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" minFn="6" exclude="131">
+    <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" minFn="6" exclude="60,131">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Analog Mode Function Status - F6</label>
       <label xml:lang="it">Stato Funzioni in analogico - F6</label>
@@ -113,7 +113,7 @@
       <tooltip xml:lang="nl">Selecteer om functie F6 te activeren tijdens Analoog rijden</tooltip>
       <tooltip xml:lang="es">Marque para habilitar la función F6 cuando se use en modo análogo</tooltip>
     </variable>
-    <variable item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" minFn="7" exclude="131">
+    <variable item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" minFn="7" exclude="60,131">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Analog Mode Function Status - F7</label>
       <label xml:lang="it">Stato Funzioni in analogico - F7</label>
@@ -128,7 +128,7 @@
       <tooltip xml:lang="nl">Selecteer om functie F7 te activeren tijdens Analoog rijden</tooltip>
       <tooltip xml:lang="es">Marque para habilitar la función F7 cuando se use en modo análogo</tooltip>
     </variable>
-    <variable item="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" minFn="8" exclude="131">
+    <variable item="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" minFn="8" exclude="60,131">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Analog Mode Function Status - F8</label>
       <label xml:lang="it">Stato Funzioni in analogico - F8</label>
