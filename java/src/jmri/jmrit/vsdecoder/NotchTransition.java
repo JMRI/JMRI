@@ -49,6 +49,4 @@ class NotchTransition extends SoundBite {
         next_notch = p;
     }
 
-    //private static final Logger log = LoggerFactory.getLogger(NotchTransition.class);
-
 }

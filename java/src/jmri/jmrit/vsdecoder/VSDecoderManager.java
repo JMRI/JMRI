@@ -57,7 +57,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2018-2022
+ * @author Klaus Killinger Copyright (C) 2018-2023
  */
 public class VSDecoderManager implements PropertyChangeListener {
 
