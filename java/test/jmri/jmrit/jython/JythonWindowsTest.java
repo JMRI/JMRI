@@ -53,7 +53,7 @@ public class JythonWindowsTest {
         JUnitUtil.dispose(f);
 
         // error messages are a fail
-        if (jmri.util.JUnitAppender.clearBacklog(org.apache.log4j.Level.WARN) != 0) {
+        if (jmri.util.JUnitAppender.clearBacklog(org.slf4j.event.Level.WARN) != 0) {
            Assert.fail("Emitted error messages caused test to fail");
         }
     }
@@ -71,7 +71,7 @@ public class JythonWindowsTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @AfterEach
