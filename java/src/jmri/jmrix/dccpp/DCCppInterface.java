@@ -36,6 +36,9 @@ public interface DCCppInterface {
      * in a reply, you need to register a DCCppListener object to watch the
      * message stream. When sending, you specify (in 2nd parameter) who
      * you are, so you're not redundantly notified of this message.
+     *
+     * @param msg message to send.
+     * @param replyTo listener to receive replies.
      */
     void sendDCCppMessage(DCCppMessage msg, DCCppListener replyTo);
 
@@ -64,11 +67,19 @@ public interface DCCppInterface {
     /**
      * Stop notification of things happening on the XNet. Note that mask and XNetListener
      * must match a previous request exactly.
+     *
+     * @param mask The OR of the key values of messages to be reported (to
+     *             reduce traffic, provide for listeners interested in different
+     *             things)
+     *
+     * @param listener Object to be notified of removal.
      */
     void removeDCCppListener(int mask, DCCppListener listener);
 
     /**
      * Check whether an implementation is operational. True indicates OK.
+     *
+     * @return true if implementation is operational.
      */
     public boolean status();
 
