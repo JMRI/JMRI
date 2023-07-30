@@ -1479,6 +1479,7 @@ public class JUnitUtil {
                  || name.startsWith("Image Animator ")
                  || name.startsWith("JmDNS(")
                  || name.startsWith("JmmDNS pool")
+                 || name.startsWith("JNA Cleaner")
                  || name.startsWith("ForkJoinPool.commonPool-worker")
                  || name.startsWith("SocketListener(")
                  || name.startsWith("Libgraal")
