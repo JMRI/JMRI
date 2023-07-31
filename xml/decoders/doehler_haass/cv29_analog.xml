@@ -52,7 +52,9 @@
     </revision>
   </revhistory>
   <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
-    <defaultItem default="2" include="60,131,DH06A,DH06A_3.03,DH06A_3.04,DH06A_2014.10,DH06A_2014.11,DH06A_2015.01,60"/>
+    <!-- Dif. Default for DH06A -->
+    <defaultItem default="2" include="60"/>
+    <!-- defaultItem default="2" include="60,131,DH06A,DH06A_3.03,DH06A_3.04,DH06A_2014.10,DH06A_2014.11,DH06A_2015.01,60"/-->
     <enumVal>
       <enumChoice choice="NMRA Digital only">
         <choice>NMRA Digital only</choice>
