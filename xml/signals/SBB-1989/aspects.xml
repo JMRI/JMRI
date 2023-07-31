@@ -52,6 +52,16 @@
   <aspects>
 
     <aspect>
+        <name>Spento</name>
+        <indication>Stop</indication>
+	  <description>no light</description>
+	  <description></description>
+	  <comment>Fermata</comment>
+        <speed>Stop</speed>
+        <speed2>Stop</speed2>
+    </aspect>   
+
+    <aspect>
         <name>Rosso</name>
         <indication>Stop</indication>
 	  <description>One red light</description>
@@ -67,15 +77,15 @@
 	  <description>One blinking red light</description>
 	  <description>Proceed at 20km/h</description>
 	  <comment>next signal is red</comment>
-        <speed>Stop</speed>
-        <speed2>Stop</speed2>
+        <speed>RestrictedSlow</speed>
+        <speed2>RestrictedSlow</speed2>
     </aspect>
     
     <aspect>
       <name>Arancione</name>
       <indication>Expect stop, prepare to stop at next main signal</indication>
 	  <description>One orange light</description>
-	  <description>if used alone next signal is red</description>
+	  <description>if no speed limit is shown, next signal is red</description>
 	  <comment>segnale aperto</comment>
       <speed>Slow</speed>
       <speed2>Slow</speed2>
