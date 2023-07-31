@@ -48,10 +48,12 @@
       <revnumber>3</revnumber>
       <date>2023-07-17</date>
       <authorinitials>RK</authorinitials>
-      <revremark>disable analog mode for PD05A</revremark>
+      <revremark>disable analog mode for DH06A and PD05A</revremark>
     </revision>
   </revhistory>
   <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
+    <!-- Dif. Default for DH06A -->
+    <defaultItem default="2" include="60,131,DH06A,DH06A_3.03,DH06A_3.04,DH06A_2014.10,DH06A_2014.11,DH06A_2015.01,60"/>
     <enumVal>
       <enumChoice choice="NMRA Digital only">
         <choice>NMRA Digital only</choice>
@@ -60,7 +62,7 @@
         <choice xml:lang="ca">NMRA Digital only (ca)</choice>
         <choice xml:lang="de">Nur Digital nach NMRA</choice>
       </enumChoice>
-      <enumChoice choice="DC conversion enabled" exclude="131">
+      <enumChoice choice="DC conversion enabled" exclude="60,131">
         <choice>DC conversion enabled</choice>
         <choice xml:lang="it">Conversione Analogica Abilitata</choice>
         <choice xml:lang="fr">Mode analogique activé</choice>
