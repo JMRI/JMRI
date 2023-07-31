@@ -88,6 +88,10 @@ public interface Positionable extends Cloneable, InlineLogixNG {
 
     void showHidden();
 
+    void setEmptyHidden(boolean enabled);
+
+    boolean isEmptyHidden();
+
     int getDisplayLevel();
 
     void setDisplayLevel(int l);
