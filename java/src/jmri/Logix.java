@@ -93,10 +93,8 @@ public interface Logix extends NamedBean {
      * @param order      the order this conditional should calculate in if
      *                   order is negative, the conditional is added at the end
      *                   of current group of conditionals
-     * @return true if the Conditional was added, false otherwise (most likely
-     *         false indicates that maximum number of Conditionals was exceeded)
      */
-    public boolean addConditional(String systemName, int order);
+    public void addConditional(String systemName, int order);
 
     /**
      * Add a child Conditional to the parent Logix.
