@@ -162,7 +162,8 @@
         <h4>SPROG</h4>
             <ul>
                 <li>
-                    Track power ON at startup option would turn on track power but not send packets, requiring track power to be cycled. Fixed.
+                    Track power ON at startup option would turn on track power but not send packets, 
+                    requiring track power to be cycled. Fixed.
                 </li>
             </ul>
 
@@ -501,7 +502,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Add a "jython/RunSystemCommandExample.py" sample for
+                how to run a system command from a JMRI script.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -617,4 +619,6 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>The external libraries used for Logging have been updated.</li>
+            <li>Added a jython/test/loconet directory for LocoNet-specific scripting tests,
+                along with an initial test.</li>
         </ul>
