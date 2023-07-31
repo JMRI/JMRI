@@ -119,16 +119,30 @@ which checks the dates of the control files to make sure they've been updated wh
 - version 2.03
 - from <http://java.sun.com/javase/technologies/desktop/javahelp/>
 
-##### log4j.jar
-- version 1.2.17
+##### log4j-api-2.20.0.jar, log4j-core-2.20.0.jar
+- version 2.20.0
+- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api/2.20.0
+- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core/2.20.0
 
-##### slf4j-api-1.7.25.jar, slf4j-log4j12-1.7.25.jar, jul-to-slf4j-1.7.25.jar
-- slf4j logging interface to log4j
-- from http://www.slf4j.org
+##### log4j-1.2-api-2.20.0.jar
+- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-1.2-api/2.20.0
+- log4j1.2 API to bridge to log4j2
+
+##### slf4j-api-2.0.7.jar
+- slf4j API
+- from https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+
+##### jul-to-slf4j-2.0.7.jar
+- java.util.logging to slf4j
+- from https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j/2.0.7
+
+##### slf4j-reload4j-2.0.7.jar
+- slf4j logging interface to log4j1.2
+- from https://mvnrepository.com/artifact/org.slf4j/slf4j-reload4j
 
 ##### openlcb.jar
  - 0.7.32 from https://github.com/openlcb/OpenLCB_Java
- - Through PR#228 included
+ - Through PR#231 included
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
