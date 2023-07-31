@@ -27,10 +27,10 @@
         <h4>C/MRI</h4>
             <ul>
                 <li>Provided an extra copy of the output data when preparing
-                C/MRI output data for a "T" ("Transmit") message type.  This 
-		prevents a "data buffer overrun" in a pre-configured buffer 
+                C/MRI output data for a "T" ("Transmit") message type.  This
+		prevents a "data buffer overrun" in a pre-configured buffer
 		when the output data changes when the process assemble the data.
-		(The previous implementation could run out of available bytes 
+		(The previous implementation could run out of available bytes
 		in the buffer, and the data would not be sent.)</li>
             </ul>
 
@@ -608,5 +608,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The <strong>Hide when empty and not editing</strong> menu item has been added to
+            the right click pop-up menus for block content labels, memory labels and LogixNG global
+            variable labels.  This applies to Panel Editor, Control Panel Editor and Layout Editor
+            panels.</li>
         </ul>
