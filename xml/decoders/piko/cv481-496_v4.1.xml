@@ -33,12 +33,6 @@
 		</revision>
 		<revision>
 			<revnumber>2</revnumber>
-			<date>2023-05-10</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Korrekturen und default Werte</revremark>
-		</revision>
-		<revision>
-			<revnumber>3</revnumber>
 			<date>2023-07-19</date>
 			<authorinitials>UG</authorinitials>
 			<revremark>Change all defaults values to 0</revremark>
@@ -46,242 +40,242 @@
 	</revhistory>
 	<!-- Bank 1 CVs Extended Function Mapping rows 1-16 (Index CV 32 = 0) -->
 	<!-- group hides/shows with CV 32 choice = 0 -->
-	<!-- Mapping Line 9 CV385 - 400 -->
-	<!-- Line 9 Mapping conditions On -->
-	<variable item="Z9 Direction Fw" CV="385.31=8.32=0" mask="VXXXXXXX" default="0">
+	<!-- Mapping Line 15 CV481 - 496 -->
+	<!-- Line 15 Mapping conditions On -->
+	<variable item="Z15 Direction Fw" CV="481.31=8.32=0" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Forward</label>
 		<label xml:lang="de">Vorwärts</label>
 		<label xml:lang="cs">Vpřed</label>
 	</variable>
-	<variable item="Z9 Moving Yes" CV="385.31=8.32=0" mask="XVXXXXXX" default="0">
+	<variable item="Z15 Moving Yes" CV="481.31=8.32=0" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Moving</label>
 		<label xml:lang="de">Fahrend</label>
 		<label xml:lang="cs">Pohyb</label>
 	</variable>
-	<!--Line 9 Function Buttons On-->
-	<variable item="Z9 F0 Cond On" CV="385.31=8.32=0" mask="XXXVXXXX" default="0">
+	<!--Line 15 Function Buttons On-->
+	<variable item="Z15 F0 Cond On" CV="481.31=8.32=0" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F1 Cond On" CV="385.31=8.32=0" mask="XXXXXXXV" default="0">
+	<variable item="Z15 F1 Cond On" CV="481.31=8.32=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F2 Cond On" CV="385.31=8.32=0" mask="XXXXXXVX" default="0">
+	<variable item="Z15 F2 Cond On" CV="481.31=8.32=0" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F3 Cond On" CV="385.31=8.32=0" mask="XXXXXVXX" default="0">
+	<variable item="Z15 F3 Cond On" CV="481.31=8.32=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F4 Cond On" CV="385.31=8.32=0" mask="XXXXVXXX" default="0">
+	<variable item="Z15 F4 Cond On" CV="481.31=8.32=0" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F5 Cond On" CV="386.31=8.32=0" mask="XXXXXXXV" default="0">
+	<variable item="Z15 F5 Cond On" CV="482.31=8.32=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F6 Cond On" CV="386.31=8.32=0" mask="XXXXXXVX" default="0">
+	<variable item="Z15 F6 Cond On" CV="482.31=8.32=0" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F7 Cond On" CV="386.31=8.32=0" mask="XXXXXVXX" default="0">
+	<variable item="Z15 F7 Cond On" CV="482.31=8.32=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F8 Cond On" CV="386.31=8.32=0" mask="XXXXVXXX" default="0">
+	<variable item="Z15 F8 Cond On" CV="482.31=8.32=0" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F9 Cond On" CV="386.31=8.32=0" mask="XXXVXXXX" default="0">
+	<variable item="Z15 F9 Cond On" CV="482.31=8.32=0" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F10 Cond On" CV="386.31=8.32=0" mask="XXVXXXXX" default="0">
+	<variable item="Z15 F10 Cond On" CV="482.31=8.32=0" mask="XXVXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F11 Cond On" CV="386.31=8.32=0" mask="XVXXXXXX" default="0">
+	<variable item="Z15 F11 Cond On" CV="482.31=8.32=0" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F12 Cond On" CV="386.31=8.32=0" mask="VXXXXXXX" default="0">
+	<variable item="Z15 F12 Cond On" CV="482.31=8.32=0" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F13 Cond On" CV="387.31=8.32=0" mask="XXXXXXXV" default="0">
+	<variable item="Z15 F13 Cond On" CV="483.31=8.32=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F14 Cond On" CV="387.31=8.32=0" mask="XXXXXXVX" default="0">
+	<variable item="Z15 F14 Cond On" CV="483.31=8.32=0" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F15 Cond On" CV="387.31=8.32=0" mask="XXXXXVXX" default="0">
+	<variable item="Z15 F15 Cond On" CV="483.31=8.32=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F16 Cond On" CV="387.31=8.32=0" mask="XXXXVXXX" default="0">
+	<variable item="Z15 F16 Cond On" CV="483.31=8.32=0" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F17 Cond On" CV="387.31=8.32=0" mask="XXXVXXXX" default="0">
+	<variable item="Z15 F17 Cond On" CV="483.31=8.32=0" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F18 Cond On" CV="387.31=8.32=0" mask="XXVXXXXX" default="0">
+	<variable item="Z15 F18 Cond On" CV="483.31=8.32=0" mask="XXVXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F19 Cond On" CV="387.31=8.32=0" mask="XVXXXXXX" default="0">
+	<variable item="Z15 F19 Cond On" CV="483.31=8.32=0" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F20 Cond On" CV="387.31=8.32=0" mask="VXXXXXXX" default="0">
+	<variable item="Z15 F20 Cond On" CV="483.31=8.32=0" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F21 Cond On" CV="388.31=8.32=0" mask="XXXXXXXV" default="0">
+	<variable item="Z15 F21 Cond On" CV="484.31=8.32=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F22 Cond On" CV="388.31=8.32=0" mask="XXXXXXVX" default="0">
+	<variable item="Z15 F22 Cond On" CV="484.31=8.32=0" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F23 Cond On" CV="388.31=8.32=0" mask="XXXXXVXX" default="0">
+	<variable item="Z15 F23 Cond On" CV="484.31=8.32=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F24 Cond On" CV="388.31=8.32=0" mask="XXXXVXXX" default="0">
+	<variable item="Z15 F24 Cond On" CV="484.31=8.32=0" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F25 Cond On" CV="388.31=8.32=0" mask="XXXVXXXX" default="0">
+	<variable item="Z15 F25 Cond On" CV="484.31=8.32=0" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F26 Cond On" CV="388.31=8.32=0" mask="XXVXXXXX" default="0">
+	<variable item="Z15 F26 Cond On" CV="484.31=8.32=0" mask="XXVXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F27 Cond On" CV="388.31=8.32=0" mask="XVXXXXXX" default="0">
+	<variable item="Z15 F27 Cond On" CV="484.31=8.32=0" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F28 Cond On" CV="388.31=8.32=0" mask="VXXXXXXX" default="0">
+	<variable item="Z15 F28 Cond On" CV="484.31=8.32=0" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<!-- Line 9 Mapping conditions Off -->
-	<variable item="Z9 Direction Rv" CV="391.31=8.32=0" mask="VXXXXXXX" default="0">
+	<!-- Line 15 Mapping conditions Off -->
+	<variable item="Z15 Direction Rv" CV="487.31=8.32=0" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Reverse</label>
 		<label xml:lang="de">Rückwärts</label>
 		<label xml:lang="cs">Vzad</label>
 	</variable>
-	<variable item="Z9 Moving No" CV="391.31=8.32=0" mask="XVXXXXXX" default="0">
+	<variable item="Z15 Moving No" CV="487.31=8.32=0" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Not moving</label>
 		<label xml:lang="de">Stehend</label>
 		<label xml:lang="cs">Bez pohybu</label>
 	</variable>
-	<!-- Line 9 Function Buttons Off -->
-	<variable item="Z9 F0 Cond Off" CV="391.31=8.32=0" mask="XXXVXXXX" default="0">
+	<!-- Line 15 Function Buttons Off -->
+	<variable item="Z15 F0 Cond Off" CV="487.31=8.32=0" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F1 Cond Off" CV="391.31=8.32=0" mask="XXXXXXXV" default="0">
+	<variable item="Z15 F1 Cond Off" CV="487.31=8.32=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F2 Cond Off" CV="391.31=8.32=0" mask="XXXXXXVX" default="0">
+	<variable item="Z15 F2 Cond Off" CV="487.31=8.32=0" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F3 Cond Off" CV="391.31=8.32=0" mask="XXXXXVXX" default="0">
+	<variable item="Z15 F3 Cond Off" CV="487.31=8.32=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F4 Cond Off" CV="391.31=8.32=0" mask="XXXXVXXX" default="0">
+	<variable item="Z15 F4 Cond Off" CV="487.31=8.32=0" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F5 Cond Off" CV="392.31=8.32=0" mask="XXXXXXXV" default="0">
+	<variable item="Z15 F5 Cond Off" CV="488.31=8.32=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F6 Cond Off" CV="392.31=8.32=0" mask="XXXXXXVX" default="0">
+	<variable item="Z15 F6 Cond Off" CV="488.31=8.32=0" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F7 Cond Off" CV="392.31=8.32=0" mask="XXXXXVXX" default="0">
+	<variable item="Z15 F7 Cond Off" CV="488.31=8.32=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F8 Cond Off" CV="392.31=8.32=0" mask="XXXXVXXX" default="0">
+	<variable item="Z15 F8 Cond Off" CV="488.31=8.32=0" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F9 Cond Off" CV="392.31=8.32=0" mask="XXXVXXXX" default="0">
+	<variable item="Z15 F9 Cond Off" CV="488.31=8.32=0" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F10 Cond Off" CV="392.31=8.32=0" mask="XXVXXXXX" default="0">
+	<variable item="Z15 F10 Cond Off" CV="488.31=8.32=0" mask="XXVXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F11 Cond Off" CV="392.31=8.32=0" mask="XVXXXXXX" default="0">
+	<variable item="Z15 F11 Cond Off" CV="488.31=8.32=0" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F12 Cond Off" CV="392.31=8.32=0" mask="VXXXXXXX" default="0">
+	<variable item="Z15 F12 Cond Off" CV="488.31=8.32=0" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F13 Cond Off" CV="393.31=8.32=0" mask="XXXXXXXV" default="0">
+	<variable item="Z15 F13 Cond Off" CV="489.31=8.32=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F14 Cond Off" CV="393.31=8.32=0" mask="XXXXXXVX" default="0">
+	<variable item="Z15 F14 Cond Off" CV="489.31=8.32=0" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F15 Cond Off" CV="393.31=8.32=0" mask="XXXXXVXX" default="0">
+	<variable item="Z15 F15 Cond Off" CV="489.31=8.32=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F16 Cond Off" CV="393.31=8.32=0" mask="XXXXVXXX" default="0">
+	<variable item="Z15 F16 Cond Off" CV="489.31=8.32=0" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F17 Cond Off" CV="393.31=8.32=0" mask="XXXVXXXX" default="0">
+	<variable item="Z15 F17 Cond Off" CV="489.31=8.32=0" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F18 Cond Off" CV="393.31=8.32=0" mask="XXVXXXXX" default="0">
+	<variable item="Z15 F18 Cond Off" CV="489.31=8.32=0" mask="XXVXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F19 Cond Off" CV="393.31=8.32=0" mask="XVXXXXXX" default="0">
+	<variable item="Z15 F19 Cond Off" CV="489.31=8.32=0" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F20 Cond Off" CV="393.31=8.32=0" mask="VXXXXXXX" default="0">
+	<variable item="Z15 F20 Cond Off" CV="489.31=8.32=0" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F21 Cond Off" CV="394.31=8.32=0" mask="XXXXXXXV" default="0">
+	<variable item="Z15 F21 Cond Off" CV="490.31=8.32=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F22 Cond Off" CV="394.31=8.32=0" mask="XXXXXXVX" default="0">
+	<variable item="Z15 F22 Cond Off" CV="490.31=8.32=0" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F23 Cond Off" CV="394.31=8.32=0" mask="XXXXXVXX" default="0">
+	<variable item="Z15 F23 Cond Off" CV="490.31=8.32=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F24 Cond Off" CV="394.31=8.32=0" mask="XXXXVXXX" default="0">
+	<variable item="Z15 F24 Cond Off" CV="490.31=8.32=0" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F25 Cond Off" CV="394.31=8.32=0" mask="XXXVXXXX" default="0">
+	<variable item="Z15 F25 Cond Off" CV="490.31=8.32=0" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F26 Cond Off" CV="394.31=8.32=0" mask="XXVXXXXX" default="0">
+	<variable item="Z15 F26 Cond Off" CV="490.31=8.32=0" mask="XXVXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F27 Cond Off" CV="394.31=8.32=0" mask="XVXXXXXX" default="0">
+	<variable item="Z15 F27 Cond Off" CV="490.31=8.32=0" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F28 Cond Off" CV="394.31=8.32=0" mask="VXXXXXXX" default="0">
+	<variable item="Z15 F28 Cond Off" CV="490.31=8.32=0" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<!--Line 9 Mapping Output 1-->
-	<variable item="Z9 Out1 A1" CV="397.31=8.32=0" default="0" mask="XXXXXXXV" minOut="3">
+	<!--Line 15 Mapping Output 1-->
+	<variable item="Z15 Out1 A1" CV="493.31=8.32=0" default="0" mask="XXXXXXXV" minOut="3">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 Out1 A2" CV="397.31=8.32=0" default="0" mask="XXXXXXVX" minOut="4">
+	<variable item="Z15 Out1 A2" CV="493.31=8.32=0" default="0" mask="XXXXXXVX" minOut="4">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 Out1 A3" CV="397.31=8.32=0" default="0" mask="XXXXXVXX" minOut="5">
+	<variable item="Z15 Out1 A3" CV="493.31=8.32=0" default="0" mask="XXXXXVXX" minOut="5">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 Out1 A4" CV="397.31=8.32=0" default="0" mask="XXXXVXXX" minOut="6">
+	<variable item="Z15 Out1 A4" CV="493.31=8.32=0" default="0" mask="XXXXVXXX" minOut="6">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 Out1 A5" CV="397.31=8.32=0" default="0" mask="XXXVXXXX" minOut="7">
+	<variable item="Z15 Out1 A5" CV="493.31=8.32=0" default="0" mask="XXXVXXXX" minOut="7">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 Out1 A6" CV="397.31=8.32=0" default="0" mask="XXVXXXXX" minOut="8">
+	<variable item="Z15 Out1 A6" CV="493.31=8.32=0" default="0" mask="XXVXXXXX" minOut="8">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 Out1 A7" CV="397.31=8.32=0" default="0" mask="XVXXXXXX" minOut="9">
+	<variable item="Z15 Out1 A7" CV="493.31=8.32=0" default="0" mask="XVXXXXXX" minOut="9">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 Out1 A8" CV="397.31=8.32=0" default="0" mask="VXXXXXXX" minOut="10">
+	<variable item="Z15 Out1 A8" CV="493.31=8.32=0" default="0" mask="VXXXXXXX" minOut="10">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<!--Line 9 Mapping Output 2-->
-	<variable item="Z9 Out2 Staging" CV="398.31=8.32=0" mask="VXXXXXXX" default="0">
+	<!--Line 15 Mapping Output 2-->
+	<variable item="Z15 Out2 Staging" CV="494.31=8.32=0" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Shunting Mode</label>
 		<label xml:lang="de">Rangiergang</label>
 		<label xml:lang="cs">Režim posun</label>
 	</variable>
-	<variable item="Z9 Out2 Braking" CV="398.31=8.32=0" mask="XVVVXXXX">
+	<variable item="Z15 Out2 Braking" CV="494.31=8.32=0" mask="XVVVXXXX">
 		<enumVal>
 			<enumChoice choice="None">
 				<choice>None</choice>
@@ -312,311 +306,311 @@
 		<tooltip xml:lang="de">ABV-Stufe 1 aus / 2 - 3 aktivieren</tooltip>
 		<tooltip xml:lang="cs">Brzdící krok 1 - 3 aktivován</tooltip>
 	</variable>
-	<variable item="Z9 Out2 Aux0_Front" CV="398.31=8.32=0" mask="XXXXXXXV" default="0">
+	<variable item="Z15 Out2 Aux0_Front" CV="494.31=8.32=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 Out2 Aux0_Rear" CV="398.31=8.32=0" mask="XXXXXXVX" default="0">
+	<variable item="Z15 Out2 Aux0_Rear" CV="494.31=8.32=0" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 Out2 SUSI_CLK" CV="398.31=8.32=0" mask="XXXXXVXX" default="0">
+	<variable item="Z15 Out2 SUSI_CLK" CV="494.31=8.32=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>SUSI CLK:</label>
 	</variable>
-	<variable item="Z9 Out2 SUSI_DATA" CV="398.31=8.32=0" mask="XXXXVXXX" default="0">
+	<variable item="Z15 Out2 SUSI_DATA" CV="494.31=8.32=0" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>SUSI DATA:</label>
 	</variable>
-	<!--Line 9 Mapping Output 3 2nd Dimming-->
-	<variable item="Z9 Out3 A1" CV="399.31=8.32=0" default="0" mask="XXXXXXXV" minOut="3">
+	<!--Line 15 Mapping Output 3 2nd Dimming-->
+	<variable item="Z15 Out3 A1" CV="495.31=8.32=0" default="0" mask="XXXXXXXV" minOut="3">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 Out3 A2" CV="399.31=8.32=0" default="0" mask="XXXXXXVX" minOut="4">
+	<variable item="Z15 Out3 A2" CV="495.31=8.32=0" default="0" mask="XXXXXXVX" minOut="4">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 Out3 A3" CV="399.31=8.32=0" default="0" mask="XXXXXVXX" minOut="5">
+	<variable item="Z15 Out3 A3" CV="495.31=8.32=0" default="0" mask="XXXXXVXX" minOut="5">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 Out3 A4" CV="399.31=8.32=0" default="0" mask="XXXXVXXX" minOut="6">
+	<variable item="Z15 Out3 A4" CV="495.31=8.32=0" default="0" mask="XXXXVXXX" minOut="6">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 Out3 A5" CV="399.31=8.32=0" default="0" mask="XXXVXXXX" minOut="7">
+	<variable item="Z15 Out3 A5" CV="495.31=8.32=0" default="0" mask="XXXVXXXX" minOut="7">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 Out3 A6" CV="399.31=8.32=0" default="0" mask="XXVXXXXX" minOut="8">
+	<variable item="Z15 Out3 A6" CV="495.31=8.32=0" default="0" mask="XXVXXXXX" minOut="8">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 Out3 A7" CV="399.31=8.32=0" default="0" mask="XVXXXXXX" minOut="9">
+	<variable item="Z15 Out3 A7" CV="495.31=8.32=0" default="0" mask="XVXXXXXX" minOut="9">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 Out3 A8" CV="399.31=8.32=0" default="0" mask="VXXXXXXX" minOut="10">
+	<variable item="Z15 Out3 A8" CV="495.31=8.32=0" default="0" mask="VXXXXXXX" minOut="10">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<!--Line 9 Mapping Output 4-->
-	<variable item="Z9 Out4 Cross" CV="400.31=8.32=0" mask="XXXXXXXV" default="0">
+	<!--Line 15 Mapping Output 4-->
+	<variable item="Z15 Out4 Cross" CV="496.31=8.32=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Cross</label>
 	</variable>
-	<!--Line 9 SUSI Function Key-->
-	<variable item="Z9 SUSI F22" CV="400.31=8.32=0" mask="XXXXXXVX" default="0">
+	<!--Line 15 SUSI Function Key-->
+	<variable item="Z15 SUSI F22" CV="496.31=8.32=0" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 SUSI F23" CV="400.31=8.32=0" mask="XXXXXVXX" default="0">
+	<variable item="Z15 SUSI F23" CV="496.31=8.32=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 SUSI F24" CV="400.31=8.32=0" mask="XXXXVXXX" default="0">
+	<variable item="Z15 SUSI F24" CV="496.31=8.32=0" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 SUSI F25" CV="400.31=8.32=0" mask="XXXVXXXX" default="0">
+	<variable item="Z15 SUSI F25" CV="496.31=8.32=0" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 SUSI F26" CV="400.31=8.32=0" mask="XXVXXXXX" default="0">
+	<variable item="Z15 SUSI F26" CV="496.31=8.32=0" mask="XXVXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 SUSI F27" CV="400.31=8.32=0" mask="XVXXXXXX" default="0">
+	<variable item="Z15 SUSI F27" CV="496.31=8.32=0" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 SUSI F28" CV="400.31=8.32=0" mask="VXXXXXXX" default="0">
+	<variable item="Z15 SUSI F28" CV="496.31=8.32=0" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<!-- end of Line 9 -->
+	<!-- end of Line 10 -->
 	<!-- Bank 2 CVs Extended Function Mapping rows 17-32 (Index CV 32 = 1) -->
 	<!-- group hides/shows with CV 31 choice = 0 -->
-	<!-- Mapping Line 25 CV385 - 400 -->
-	<!-- Line 25 Mapping conditions On -->
-	<variable item="Z25 Direction Fw" CV="385.31=8.32=1" mask="VXXXXXXX" default="0">
+	<!-- Mapping Line 31 CV481 - 496 -->
+	<!-- Line 31 Mapping conditions On -->
+	<variable item="Z31 Direction Fw" CV="481.31=8.32=1" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Forward</label>
 		<label xml:lang="de">Vorwärts</label>
 		<label xml:lang="cs">Vpřed</label>
 	</variable>
-	<variable item="Z25 Moving Yes" CV="385.31=8.32=1" mask="XVXXXXXX" default="0">
+	<variable item="Z31 Moving Yes" CV="481.31=8.32=1" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Moving</label>
 		<label xml:lang="de">Fahrend</label>
 		<label xml:lang="cs">Pohyb</label>
 	</variable>
-	<!--Line 25 Function Buttons On-->
-	<variable item="Z25 F0 Cond On" CV="385.31=8.32=1" mask="XXXVXXXX" default="0">
+	<!--Line 31 Function Buttons On-->
+	<variable item="Z31 F0 Cond On" CV="481.31=8.32=1" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F1 Cond On" CV="385.31=8.32=1" mask="XXXXXXXV" default="0">
+	<variable item="Z31 F1 Cond On" CV="481.31=8.32=1" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F2 Cond On" CV="385.31=8.32=1" mask="XXXXXXVX" default="0">
+	<variable item="Z31 F2 Cond On" CV="481.31=8.32=1" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F3 Cond On" CV="385.31=8.32=1" mask="XXXXXVXX" default="0">
+	<variable item="Z31 F3 Cond On" CV="481.31=8.32=1" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F4 Cond On" CV="385.31=8.32=1" mask="XXXXVXXX" default="0">
+	<variable item="Z31 F4 Cond On" CV="481.31=8.32=1" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F5 Cond On" CV="386.31=8.32=1" mask="XXXXXXXV" default="0">
+	<variable item="Z31 F5 Cond On" CV="482.31=8.32=1" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F6 Cond On" CV="386.31=8.32=1" mask="XXXXXXVX" default="0">
+	<variable item="Z31 F6 Cond On" CV="482.31=8.32=1" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F7 Cond On" CV="386.31=8.32=1" mask="XXXXXVXX" default="0">
+	<variable item="Z31 F7 Cond On" CV="482.31=8.32=1" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F8 Cond On" CV="386.31=8.32=1" mask="XXXXVXXX" default="0">
+	<variable item="Z31 F8 Cond On" CV="482.31=8.32=1" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F9 Cond On" CV="386.31=8.32=1" mask="XXXVXXXX" default="0">
+	<variable item="Z31 F9 Cond On" CV="482.31=8.32=1" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F10 Cond On" CV="386.31=8.32=1" mask="XXVXXXXX" default="0">
+	<variable item="Z31 F10 Cond On" CV="482.31=8.32=1" mask="XXVXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F11 Cond On" CV="386.31=8.32=1" mask="XVXXXXXX" default="0">
+	<variable item="Z31 F11 Cond On" CV="482.31=8.32=1" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F12 Cond On" CV="386.31=8.32=1" mask="VXXXXXXX" default="0">
+	<variable item="Z31 F12 Cond On" CV="482.31=8.32=1" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F13 Cond On" CV="387.31=8.32=1" mask="XXXXXXXV" default="0">
+	<variable item="Z31 F13 Cond On" CV="483.31=8.32=1" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F14 Cond On" CV="387.31=8.32=1" mask="XXXXXXVX" default="0">
+	<variable item="Z31 F14 Cond On" CV="483.31=8.32=1" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F15 Cond On" CV="387.31=8.32=1" mask="XXXXXVXX" default="0">
+	<variable item="Z31 F15 Cond On" CV="483.31=8.32=1" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F16 Cond On" CV="387.31=8.32=1" mask="XXXXVXXX" default="0">
+	<variable item="Z31 F16 Cond On" CV="483.31=8.32=1" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F17 Cond On" CV="387.31=8.32=1" mask="XXXVXXXX" default="0">
+	<variable item="Z31 F17 Cond On" CV="483.31=8.32=1" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F18 Cond On" CV="387.31=8.32=1" mask="XXVXXXXX" default="0">
+	<variable item="Z31 F18 Cond On" CV="483.31=8.32=1" mask="XXVXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F19 Cond On" CV="387.31=8.32=1" mask="XVXXXXXX" default="0">
+	<variable item="Z31 F19 Cond On" CV="483.31=8.32=1" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F20 Cond On" CV="387.31=8.32=1" mask="VXXXXXXX" default="0">
+	<variable item="Z31 F20 Cond On" CV="483.31=8.32=1" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F21 Cond On" CV="388.31=8.32=1" mask="XXXXXXXV" default="0">
+	<variable item="Z31 F21 Cond On" CV="484.31=8.32=1" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F22 Cond On" CV="388.31=8.32=1" mask="XXXXXXVX" default="0">
+	<variable item="Z31 F22 Cond On" CV="484.31=8.32=1" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F23 Cond On" CV="388.31=8.32=1" mask="XXXXXVXX" default="0">
+	<variable item="Z31 F23 Cond On" CV="484.31=8.32=1" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F24 Cond On" CV="388.31=8.32=1" mask="XXXXVXXX" default="0">
+	<variable item="Z31 F24 Cond On" CV="484.31=8.32=1" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F25 Cond On" CV="388.31=8.32=1" mask="XXXVXXXX" default="0">
+	<variable item="Z31 F25 Cond On" CV="484.31=8.32=1" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F26 Cond On" CV="388.31=8.32=1" mask="XXVXXXXX" default="0">
+	<variable item="Z31 F26 Cond On" CV="484.31=8.32=1" mask="XXVXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F27 Cond On" CV="388.31=8.32=1" mask="XVXXXXXX" default="0">
+	<variable item="Z31 F27 Cond On" CV="484.31=8.32=1" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F28 Cond On" CV="388.31=8.32=1" mask="VXXXXXXX" default="0">
+	<variable item="Z31 F28 Cond On" CV="484.31=8.32=1" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<!-- Line 25 Mapping conditions Off -->
-	<variable item="Z25 Direction Rv" CV="391.31=8.32=1" mask="VXXXXXXX" default="0">
+	<!-- Line 31 Mapping conditions Off -->
+	<variable item="Z31 Direction Rv" CV="487.31=8.32=1" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Reverse</label>
 		<label xml:lang="de">Rückwärts</label>
 		<label xml:lang="cs">Vzad</label>
 	</variable>
-	<variable item="Z25 Moving No" CV="391.31=8.32=1" mask="XVXXXXXX" default="0">
+	<variable item="Z31 Moving No" CV="487.31=8.32=1" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Not moving</label>
 		<label xml:lang="de">Stehend</label>
 		<label xml:lang="cs">Bez pohybu</label>
 	</variable>
-	<!-- Line 25 Function Buttons Off -->
-	<variable item="Z25 F0 Cond Off" CV="391.31=8.32=1" mask="XXXVXXXX" default="0">
+	<!-- Line 31 Function Buttons Off -->
+	<variable item="Z31 F0 Cond Off" CV="487.31=8.32=1" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F1 Cond Off" CV="391.31=8.32=1" mask="XXXXXXXV" default="0">
+	<variable item="Z31 F1 Cond Off" CV="487.31=8.32=1" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F2 Cond Off" CV="391.31=8.32=1" mask="XXXXXXVX" default="0">
+	<variable item="Z31 F2 Cond Off" CV="487.31=8.32=1" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F3 Cond Off" CV="391.31=8.32=1" mask="XXXXXVXX" default="0">
+	<variable item="Z31 F3 Cond Off" CV="487.31=8.32=1" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F4 Cond Off" CV="391.31=8.32=1" mask="XXXXVXXX" default="0">
+	<variable item="Z31 F4 Cond Off" CV="487.31=8.32=1" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F5 Cond Off" CV="392.31=8.32=1" mask="XXXXXXXV" default="0">
+	<variable item="Z31 F5 Cond Off" CV="488.31=8.32=1" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F6 Cond Off" CV="392.31=8.32=1" mask="XXXXXXVX" default="0">
+	<variable item="Z31 F6 Cond Off" CV="488.31=8.32=1" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F7 Cond Off" CV="392.31=8.32=1" mask="XXXXXVXX" default="0">
+	<variable item="Z31 F7 Cond Off" CV="488.31=8.32=1" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F8 Cond Off" CV="392.31=8.32=1" mask="XXXXVXXX" default="0">
+	<variable item="Z31 F8 Cond Off" CV="488.31=8.32=1" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F9 Cond Off" CV="392.31=8.32=1" mask="XXXVXXXX" default="0">
+	<variable item="Z31 F9 Cond Off" CV="488.31=8.32=1" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F10 Cond Off" CV="392.31=8.32=1" mask="XXVXXXXX" default="0">
+	<variable item="Z31 F10 Cond Off" CV="488.31=8.32=1" mask="XXVXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F11 Cond Off" CV="392.31=8.32=1" mask="XVXXXXXX" default="0">
+	<variable item="Z31 F11 Cond Off" CV="488.31=8.32=1" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F12 Cond Off" CV="392.31=8.32=1" mask="VXXXXXXX" default="0">
+	<variable item="Z31 F12 Cond Off" CV="488.31=8.32=1" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F13 Cond Off" CV="393.31=8.32=1" mask="XXXXXXXV" default="0">
+	<variable item="Z31 F13 Cond Off" CV="489.31=8.32=1" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F14 Cond Off" CV="393.31=8.32=1" mask="XXXXXXVX" default="0">
+	<variable item="Z31 F14 Cond Off" CV="489.31=8.32=1" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F15 Cond Off" CV="393.31=8.32=1" mask="XXXXXVXX" default="0">
+	<variable item="Z31 F15 Cond Off" CV="489.31=8.32=1" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F16 Cond Off" CV="393.31=8.32=1" mask="XXXXVXXX" default="0">
+	<variable item="Z31 F16 Cond Off" CV="489.31=8.32=1" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F17 Cond Off" CV="393.31=8.32=1" mask="XXXVXXXX" default="0">
+	<variable item="Z31 F17 Cond Off" CV="489.31=8.32=1" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F18 Cond Off" CV="393.31=8.32=1" mask="XXVXXXXX" default="0">
+	<variable item="Z31 F18 Cond Off" CV="489.31=8.32=1" mask="XXVXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F19 Cond Off" CV="393.31=8.32=1" mask="XVXXXXXX" default="0">
+	<variable item="Z31 F19 Cond Off" CV="489.31=8.32=1" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F20 Cond Off" CV="393.31=8.32=1" mask="VXXXXXXX" default="0">
+	<variable item="Z31 F20 Cond Off" CV="489.31=8.32=1" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F21 Cond Off" CV="394.31=8.32=1" mask="XXXXXXXV" default="0">
+	<variable item="Z31 F21 Cond Off" CV="490.31=8.32=1" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F22 Cond Off" CV="394.31=8.32=1" mask="XXXXXXVX" default="0">
+	<variable item="Z31 F22 Cond Off" CV="490.31=8.32=1" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F23 Cond Off" CV="394.31=8.32=1" mask="XXXXXVXX" default="0">
+	<variable item="Z31 F23 Cond Off" CV="490.31=8.32=1" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F24 Cond Off" CV="394.31=8.32=1" mask="XXXXVXXX" default="0">
+	<variable item="Z31 F24 Cond Off" CV="490.31=8.32=1" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F25 Cond Off" CV="394.31=8.32=1" mask="XXXVXXXX" default="0">
+	<variable item="Z31 F25 Cond Off" CV="490.31=8.32=1" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F26 Cond Off" CV="394.31=8.32=1" mask="XXVXXXXX" default="0">
+	<variable item="Z31 F26 Cond Off" CV="490.31=8.32=1" mask="XXVXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F27 Cond Off" CV="394.31=8.32=1" mask="XVXXXXXX" default="0">
+	<variable item="Z31 F27 Cond Off" CV="490.31=8.32=1" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F28 Cond Off" CV="394.31=8.32=1" mask="VXXXXXXX" default="0">
+	<variable item="Z31 F28 Cond Off" CV="490.31=8.32=1" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<!--Line 25 Mapping Output 1-->
-	<variable item="Z25 Out1 A1" CV="397.31=8.32=1" default="0" mask="XXXXXXXV" minOut="3">
+	<!--Line 31 Mapping Output 1-->
+	<variable item="Z31 Out1 A1" CV="493.31=8.32=1" default="0" mask="XXXXXXXV" minOut="3">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 Out1 A2" CV="397.31=8.32=1" default="0" mask="XXXXXXVX" minOut="4">
+	<variable item="Z31 Out1 A2" CV="493.31=8.32=1" default="0" mask="XXXXXXVX" minOut="4">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 Out1 A3" CV="397.31=8.32=1" default="0" mask="XXXXXVXX" minOut="5">
+	<variable item="Z31 Out1 A3" CV="493.31=8.32=1" default="0" mask="XXXXXVXX" minOut="5">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 Out1 A4" CV="397.31=8.32=1" default="0" mask="XXXXVXXX" minOut="6">
+	<variable item="Z31 Out1 A4" CV="493.31=8.32=1" default="0" mask="XXXXVXXX" minOut="6">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 Out1 A5" CV="397.31=8.32=1" default="0" mask="XXXVXXXX" minOut="7">
+	<variable item="Z31 Out1 A5" CV="493.31=8.32=1" default="0" mask="XXXVXXXX" minOut="7">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 Out1 A6" CV="397.31=8.32=1" default="0" mask="XXVXXXXX" minOut="8">
+	<variable item="Z31 Out1 A6" CV="493.31=8.32=1" default="0" mask="XXVXXXXX" minOut="8">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 Out1 A7" CV="397.31=8.32=1" default="0" mask="XVXXXXXX" minOut="9">
+	<variable item="Z31 Out1 A7" CV="493.31=8.32=1" default="0" mask="XVXXXXXX" minOut="9">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 Out1 A8" CV="397.31=8.32=1" default="0" mask="VXXXXXXX" minOut="10">
+	<variable item="Z31 Out1 A8" CV="493.31=8.32=1" default="0" mask="VXXXXXXX" minOut="10">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<!--Line 25 Mapping Output 2-->
-	<variable item="Z25 Out2 Staging" CV="398.31=8.32=1" mask="VXXXXXXX" default="0">
+	<!--Line 31 Mapping Output 2-->
+	<variable item="Z31 Out2 Staging" CV="494.31=8.32=1" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Shunting Mode</label>
 		<label xml:lang="de">Rangiergang</label>
 		<label xml:lang="cs">Režim posun</label>
 	</variable>
-	<variable item="Z25 Out2 Braking" CV="398.31=8.32=1" mask="XVVVXXXX">
+	<variable item="Z31 Out2 Braking" CV="494.31=8.32=1" mask="XVVVXXXX">
 		<enumVal>
 			<enumChoice choice="None">
 				<choice>None</choice>
@@ -647,72 +641,72 @@
 		<tooltip xml:lang="de">ABV-Stufe 1 aus / 2 - 3 aktivieren</tooltip>
 		<tooltip xml:lang="cs">Brzdící krok 1 - 3 aktivován</tooltip>
 	</variable>
-	<variable item="Z25 Out2 Aux0_Front" CV="398.31=8.32=1" mask="XXXXXXXV" default="0">
+	<variable item="Z31 Out2 Aux0_Front" CV="494.31=8.32=1" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 Out2 Aux0_Rear" CV="398.31=8.32=1" mask="XXXXXXVX" default="0">
+	<variable item="Z31 Out2 Aux0_Rear" CV="494.31=8.32=1" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 Out2 SUSI_CLK" CV="398.31=8.32=1" mask="XXXXXVXX" default="0">
+	<variable item="Z31 Out2 SUSI_CLK" CV="494.31=8.32=1" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>SUSI CLK:</label>
 	</variable>
-	<variable item="Z25 Out2 SUSI_DATA" CV="398.31=8.32=1" mask="XXXXVXXX" default="0">
+	<variable item="Z31 Out2 SUSI_DATA" CV="494.31=8.32=1" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>SUSI DATA:</label>
 	</variable>
-	<!--Line 25 Mapping Output 3 2nd Dimming-->
-	<variable item="Z25 Out3 A1" CV="399.31=8.32=1" default="0" mask="XXXXXXXV" minOut="3">
+	<!--Line 31 Mapping Output 3 2nd Dimming-->
+	<variable item="Z31 Out3 A1" CV="495.31=8.32=1" default="0" mask="XXXXXXXV" minOut="3">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 Out3 A2" CV="399.31=8.32=1" default="0" mask="XXXXXXVX" minOut="4">
+	<variable item="Z31 Out3 A2" CV="495.31=8.32=1" default="0" mask="XXXXXXVX" minOut="4">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 Out3 A3" CV="399.31=8.32=1" default="0" mask="XXXXXVXX" minOut="5">
+	<variable item="Z31 Out3 A3" CV="495.31=8.32=1" default="0" mask="XXXXXVXX" minOut="5">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 Out3 A4" CV="399.31=8.32=1" default="0" mask="XXXXVXXX" minOut="6">
+	<variable item="Z31 Out3 A4" CV="495.31=8.32=1" default="0" mask="XXXXVXXX" minOut="6">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 Out3 A5" CV="399.31=8.32=1" default="0" mask="XXXVXXXX" minOut="7">
+	<variable item="Z31 Out3 A5" CV="495.31=8.32=1" default="0" mask="XXXVXXXX" minOut="7">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 Out3 A6" CV="399.31=8.32=1" default="0" mask="XXVXXXXX" minOut="8">
+	<variable item="Z31 Out3 A6" CV="495.31=8.32=1" default="0" mask="XXVXXXXX" minOut="8">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 Out3 A7" CV="399.31=8.32=1" default="0" mask="XVXXXXXX" minOut="9">
+	<variable item="Z31 Out3 A7" CV="495.31=8.32=1" default="0" mask="XVXXXXXX" minOut="9">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 Out3 A8" CV="399.31=8.32=1" default="0" mask="VXXXXXXX" minOut="10">
+	<variable item="Z31 Out3 A8" CV="495.31=8.32=1" default="0" mask="VXXXXXXX" minOut="10">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<!--Line 25 Mapping Output 4-->
-	<variable item="Z25 Out4 Cross" CV="400.31=8.32=1" mask="XXXXXXXV" default="0">
+	<!--Line 31 Mapping Output 4-->
+	<variable item="Z31 Out4 Cross" CV="496.31=8.32=1" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Cross</label>
 	</variable>
-	<!--Line 25 SUSI Function Key-->
-	<variable item="Z25 SUSI F22" CV="400.31=8.32=1" mask="XXXXXXVX" default="0">
+	<!--Line 31 SUSI Function Key-->
+	<variable item="Z31 SUSI F22" CV="496.31=8.32=1" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 SUSI F23" CV="400.31=8.32=1" mask="XXXXXVXX" default="0">
+	<variable item="Z31 SUSI F23" CV="496.31=8.32=1" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 SUSI F24" CV="400.31=8.32=1" mask="XXXXVXXX" default="0">
+	<variable item="Z31 SUSI F24" CV="496.31=8.32=1" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 SUSI F25" CV="400.31=8.32=1" mask="XXXVXXXX" default="0">
+	<variable item="Z31 SUSI F25" CV="496.31=8.32=1" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 SUSI F26" CV="400.31=8.32=1" mask="XXVXXXXX" default="0">
+	<variable item="Z31 SUSI F26" CV="496.31=8.32=1" mask="XXVXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 SUSI F27" CV="400.31=8.32=1" mask="XVXXXXXX" default="0">
+	<variable item="Z31 SUSI F27" CV="496.31=8.32=1" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 SUSI F28" CV="400.31=8.32=1" mask="VXXXXXXX" default="0">
+	<variable item="Z31 SUSI F28" CV="496.31=8.32=1" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<!-- end of Line 25 -->	
+	<!-- end of Line 31 -->
 </variables>
 
