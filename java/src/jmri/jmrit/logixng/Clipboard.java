@@ -14,7 +14,7 @@ public interface Clipboard {
      * 
      * @return true if empty, false otherwise
      */
-    public boolean isEmpty();
+    boolean isEmpty();
     
     /**
      * Add an item to the clipboard.
@@ -25,7 +25,7 @@ public interface Clipboard {
      * @param errors a list of potential errors
      * @return true if success, false otherwise
      */
-    public boolean add(MaleSocket maleSocket, List<String> errors);
+    boolean add(MaleSocket maleSocket, List<String> errors);
     
     /**
      * Get the top item on the clipboard and remove it from the clipboard.
@@ -34,7 +34,7 @@ public interface Clipboard {
      * 
      * @return the top item
      */
-    public MaleSocket fetchTopItem();
+    MaleSocket fetchTopItem();
     
     /**
      * Get the top item on the clipboard without removing it from the clipboard.
@@ -43,14 +43,14 @@ public interface Clipboard {
      * 
      * @return the top item
      */
-    public MaleSocket getTopItem();
+    MaleSocket getTopItem();
     
     /**
      * Get the female socket root of the clipboard tree.
      * 
      * @return the root female socket
      */
-    public FemaleSocket getFemaleSocket();
+    FemaleSocket getFemaleSocket();
     
     /**
      * Moves an item on the clipboard to the top of the clipboard.
@@ -60,12 +60,12 @@ public interface Clipboard {
      * 
      * @param maleSocket the male socket to put on the top
      */
-    public void moveItemToTop(MaleSocket maleSocket);
+    void moveItemToTop(MaleSocket maleSocket);
     
     /**
      * Setup this object and its children.
      * This method is used to lookup system names for child sockets.
      */
-    public void setup();
+    void setup();
     
 }

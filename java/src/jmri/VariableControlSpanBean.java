@@ -20,7 +20,7 @@ public interface VariableControlSpanBean extends NamedBean {
      * @return the number of bits
      */
     @CheckReturnValue
-    public int getNumberControlBits();
+    int getNumberControlBits();
 
     /**
      * Set number of input/output bits this bean controls.
@@ -28,6 +28,6 @@ public interface VariableControlSpanBean extends NamedBean {
      * @param num the size of the input/output, currently 1 or 2
      */
     @InvokeOnLayoutThread
-    public void setNumberControlBits(int num);
+    void setNumberControlBits(int num);
 
 }

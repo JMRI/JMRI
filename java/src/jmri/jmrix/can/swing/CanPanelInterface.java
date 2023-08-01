@@ -18,6 +18,6 @@ public interface CanPanelInterface {
      * classes.
      * @param memo system connection.
      */
-    public void initComponents(CanSystemConnectionMemo memo);
+    void initComponents(CanSystemConnectionMemo memo);
 
 }

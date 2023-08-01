@@ -19,6 +19,6 @@ public interface LnPanelInterface {
      *
      * @param memo  a {@link jmri.jmrix.loconet.LocoNetSystemConnectionMemo} object
      */
-    public void initComponents(LocoNetSystemConnectionMemo memo);
+    void initComponents(LocoNetSystemConnectionMemo memo);
 
 }

@@ -54,12 +54,12 @@ public interface ReporterManager extends ProvidingManager<Reporter>, NameIncreme
      *                                  can't be parsed.
      */
     @Nonnull
-    public Reporter provideReporter(@Nonnull String name) throws IllegalArgumentException;
+    Reporter provideReporter(@Nonnull String name) throws IllegalArgumentException;
 
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    default public Reporter provide(@Nonnull String name) throws IllegalArgumentException { return provideReporter(name); }
+    default Reporter provide(@Nonnull String name) throws IllegalArgumentException { return provideReporter(name); }
 
     /**
      * Locate via user name, then system name if needed. If that fails, return
@@ -69,7 +69,7 @@ public interface ReporterManager extends ProvidingManager<Reporter>, NameIncreme
      * @return null if no match found
      */
     @CheckForNull
-    public Reporter getReporter(@Nonnull String name);
+    Reporter getReporter(@Nonnull String name);
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
@@ -80,7 +80,7 @@ public interface ReporterManager extends ProvidingManager<Reporter>, NameIncreme
      */
     @CheckForNull
     @Override
-    public Reporter getBySystemName(@Nonnull String systemName);
+    Reporter getBySystemName(@Nonnull String systemName);
 
     /**
      * Locate an instance based on a user name. Returns null if no instance
@@ -91,7 +91,7 @@ public interface ReporterManager extends ProvidingManager<Reporter>, NameIncreme
      */
     @CheckForNull
     @Override
-    public Reporter getByUserName(@Nonnull String userName);
+    Reporter getByUserName(@Nonnull String userName);
 
     /**
      * Locate an instance based on a user name, or if that fails, by system
@@ -101,7 +101,7 @@ public interface ReporterManager extends ProvidingManager<Reporter>, NameIncreme
      * @return requested Reporter object or null if none exists
      */
     @CheckForNull
-    public Reporter getByDisplayName(@Nonnull String userName);
+    Reporter getByDisplayName(@Nonnull String userName);
 
     /**
      * Return an instance with the specified system and user names.
@@ -135,7 +135,7 @@ public interface ReporterManager extends ProvidingManager<Reporter>, NameIncreme
      *                                  be parsed.
      */
     @Nonnull
-    public Reporter newReporter(@Nonnull String systemName, String userName) throws IllegalArgumentException;
+    Reporter newReporter(@Nonnull String systemName, String userName) throws IllegalArgumentException;
 
     /**
      * Get a system name for a given hardware address and system prefix.
@@ -149,12 +149,12 @@ public interface ReporterManager extends ProvidingManager<Reporter>, NameIncreme
      *                            format
      */
     @Nonnull
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
+    String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getEntryToolTip();
+    String getEntryToolTip();
 
 }

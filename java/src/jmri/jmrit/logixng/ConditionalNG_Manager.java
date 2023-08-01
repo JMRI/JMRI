@@ -22,7 +22,7 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
      * @param userName   The user name
      * @return a new ConditionalNG or null if unable to create
      */
-    public ConditionalNG createConditionalNG(LogixNG logixNG, String systemName, String userName)
+    ConditionalNG createConditionalNG(LogixNG logixNG, String systemName, String userName)
             throws IllegalArgumentException;
 
     /**
@@ -33,7 +33,7 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
      * @param userName The user name
      * @return a new ConditionalNG or null if unable to create
      */
-    public ConditionalNG createConditionalNG(LogixNG logixNG, String userName)
+    ConditionalNG createConditionalNG(LogixNG logixNG, String userName)
             throws IllegalArgumentException;
 
     /**
@@ -45,7 +45,7 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
      * @param threadID   The thread ID that this ConditionalNG will execute on
      * @return a new ConditionalNG or null if unable to create
      */
-    public ConditionalNG createConditionalNG(
+    ConditionalNG createConditionalNG(
             LogixNG logixNG, String systemName, String userName, int threadID)
             throws IllegalArgumentException;
 
@@ -58,7 +58,7 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
      * @param threadID  The thread ID that this ConditionalNG will execute on
      * @return a new ConditionalNG or null if unable to create
      */
-    public ConditionalNG createConditionalNG(LogixNG logixNG, String userName, int threadID)
+    ConditionalNG createConditionalNG(LogixNG logixNG, String userName, int threadID)
             throws IllegalArgumentException;
 
     /**
@@ -69,14 +69,14 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    public ConditionalNG getConditionalNG(LogixNG logixNG, String name);
+    ConditionalNG getConditionalNG(LogixNG logixNG, String name);
 
     /**
      * Find the LogixNG which has the ConditionalNG system name in its ConditionalNG_Entry list.
      * @param systemName The ConditionalNG system name.
      * @return the parent LogixNG or null if none found.
      */
-    public LogixNG getParentLogixNG(String systemName);
+    LogixNG getParentLogixNG(String systemName);
 
     /**
      * Find the ConditionalNG which is a member of the LogixNG with the supplied user name.
@@ -84,15 +84,15 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
      * @param name    The requested ConditionalNG user name.
      * @return the ConditionalNG or null if none found.
      */
-    public ConditionalNG getByUserName(LogixNG logixNG, String name);
+    ConditionalNG getByUserName(LogixNG logixNG, String name);
 
     /** {@inheritDoc} */
     @Override
-    public ConditionalNG getByUserName(String name);
+    ConditionalNG getByUserName(String name);
 
     /** {@inheritDoc} */
     @Override
-    public ConditionalNG getBySystemName(String name);
+    ConditionalNG getBySystemName(String name);
 
     /**
      * {@inheritDoc}
@@ -101,7 +101,7 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
      * {@link #getSystemNamePrefix() } and "C";
      */
     @Override
-    public default String getSubSystemNamePrefix() {
+    default String getSubSystemNamePrefix() {
         return getSystemNamePrefix() + "C";
     }
 
@@ -109,7 +109,7 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
      * Create a new system name for a ConditionalNG.
      * @return a new system name
      */
-    public String getAutoSystemName();
+    String getAutoSystemName();
 
     /**
      * Delete ConditionalNG by removing it from the manager. The ConditionalNG must first
@@ -124,7 +124,7 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
      *
      * @param s true if ConditionalNG should be disabled when loaded
      */
-    public void setLoadDisabled(boolean s);
+    void setLoadDisabled(boolean s);
 
     /**
      * Set whenether execute() should run on the GUI thread at once or should
@@ -134,6 +134,6 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
      * @param value true if execute() should run on GUI thread delayed,
      * false otherwise.
      */
-    public void setRunOnGUIDelayed(boolean value);
+    void setRunOnGUIDelayed(boolean value);
 
 }

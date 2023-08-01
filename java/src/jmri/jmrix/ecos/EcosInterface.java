@@ -8,9 +8,9 @@ package jmri.jmrix.ecos;
  */
 public interface EcosInterface {
 
-    public void addEcosListener(EcosListener l);
+    void addEcosListener(EcosListener l);
 
-    public void removeEcosListener(EcosListener l);
+    void removeEcosListener(EcosListener l);
 
     /**
      * Test operational status of interface.

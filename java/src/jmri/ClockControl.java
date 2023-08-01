@@ -41,7 +41,7 @@ public interface ClockControl {
      *
      * @return the status
      */
-    public int getStatus();
+    int getStatus();
 
     /**
      * Get name of hardware clock Note: If there is no hardware clock,
@@ -50,7 +50,7 @@ public interface ClockControl {
      *
      * @return the name
      */
-    public String getHardwareClockName();
+    String getHardwareClockName();
 
     /**
      * Returns true if hardware clock accuracy can be corrected using the
@@ -58,7 +58,7 @@ public interface ClockControl {
      *
      * @return true if correctable; false otherwise
      */
-    public boolean canCorrectHardwareClock();
+    boolean canCorrectHardwareClock();
     
     /**
      * Returns 'true' if hardware clock can be set to 12 or 24 hour display from
@@ -66,14 +66,14 @@ public interface ClockControl {
      *
      * @return true if settable; false otherwise
      */
-    public boolean canSet12Or24HourClock();
+    boolean canSet12Or24HourClock();
 
     /**
      * Returns true if hardware clock requires an integer rate.
      *
      * @return true if integer rates only; false otherwise
      */
-    public boolean requiresIntegerRate();
+    boolean requiresIntegerRate();
 
     /**
      * Set the rate of the Fast Clock.
@@ -84,7 +84,7 @@ public interface ClockControl {
      *
      * @param newRate the new rate
      */
-    public void setRate(double newRate);
+    void setRate(double newRate);
 
     /**
      * Get the rate of the Fast Clock.
@@ -95,21 +95,21 @@ public interface ClockControl {
      * 
      * @return Fast Clock rate.
      */
-    public double getRate();
+    double getRate();
 
     /**
      * Set the fast clock time.
      *
      * @param now the new time
      */
-    public void setTime(Date now);
+    void setTime(Date now);
 
     /**
      * Get the fast clock time.
      *
      * @return current time.
      */
-    public Date getTime();
+    Date getTime();
 
     /**
      * Start hardware fast clock Some hardware fast clocks continue to
@@ -118,7 +118,7 @@ public interface ClockControl {
      *
      * @param now the starting time
      */
-    public void startHardwareClock(Date now);
+    void startHardwareClock(Date now);
 
     /**
      * Stop hardware fast clock.
@@ -126,7 +126,7 @@ public interface ClockControl {
      * can be stopped and started.
      *
      */
-    public void stopHardwareClock();
+    void stopHardwareClock();
 
     /**
      * Initialize the hardware fast clock Note: When the hardware clock control
@@ -142,6 +142,6 @@ public interface ClockControl {
      * @param now     the time
      * @param getTime true if hardware clock should be used; false otherwise
      */
-    public void initializeHardwareClock(double rate, Date now, boolean getTime);
+    void initializeHardwareClock(double rate, Date now, boolean getTime);
 
 }

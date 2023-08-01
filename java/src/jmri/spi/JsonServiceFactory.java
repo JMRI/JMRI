@@ -37,7 +37,7 @@ public interface JsonServiceFactory<H extends JsonHttpService, S extends JsonSoc
      * @return An array of types this service responds to
      */
     @Nonnull
-    public String[] getTypes(@Nonnull String version);
+    String[] getTypes(@Nonnull String version);
 
     /**
      * Get the message type(s) services created by this factory send, if not
@@ -52,7 +52,7 @@ public interface JsonServiceFactory<H extends JsonHttpService, S extends JsonSoc
      * @return An array of types this service sends, but does not respond to
      */
     @Nonnull
-    public default String[] getSentTypes(@Nonnull String version) {
+    default String[] getSentTypes(@Nonnull String version) {
         return new String[0];
     }
 
@@ -69,7 +69,7 @@ public interface JsonServiceFactory<H extends JsonHttpService, S extends JsonSoc
      * @return An array of types this service sends, but does not respond to
      */
     @Nonnull
-    public default String[] getReceivedTypes(@Nonnull String version) {
+    default String[] getReceivedTypes(@Nonnull String version) {
         return new String[0];
     }
 
@@ -82,7 +82,7 @@ public interface JsonServiceFactory<H extends JsonHttpService, S extends JsonSoc
      * @return A service or null if the service does not support sockets
      */
     @Nonnull
-    public S getSocketService(@Nonnull JsonConnection connection, @Nonnull String version);
+    S getSocketService(@Nonnull JsonConnection connection, @Nonnull String version);
 
     /**
      * Create a JSON HTTP service.
@@ -92,6 +92,6 @@ public interface JsonServiceFactory<H extends JsonHttpService, S extends JsonSoc
      * @return A servlet or null if the service does not support HTTP
      */
     @Nonnull
-    public H getHttpService(@Nonnull ObjectMapper mapper, @Nonnull String version);
+    H getHttpService(@Nonnull ObjectMapper mapper, @Nonnull String version);
 
 }

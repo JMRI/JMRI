@@ -16,6 +16,6 @@ public interface MaleAnalogActionSocket
      * IllegalArgumentException before checking if an error has occured.
      */
     @Override
-    public void setValue(double value) throws JmriException;
+    void setValue(double value) throws JmriException;
 
 }

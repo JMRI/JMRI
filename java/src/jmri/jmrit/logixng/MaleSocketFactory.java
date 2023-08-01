@@ -18,6 +18,6 @@ public interface MaleSocketFactory<T extends NamedBean> {
      * @param maleSocket the male socket to be encapsulated
      * @return the new male socket that encapsulates the old male socket
      */
-    public T encapsulateMaleSocket(BaseManager<T> manager, T maleSocket);
+    T encapsulateMaleSocket(BaseManager<T> manager, T maleSocket);
     
 }

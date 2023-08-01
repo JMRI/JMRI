@@ -14,17 +14,17 @@ import javax.swing.JPanel;
  */
 public interface ConnectionConfig {
 
-    public String name();
+    String name();
 
-    public String getInfo();
+    String getInfo();
 
-    public PortAdapter getAdapter();
+    PortAdapter getAdapter();
 
-    public String getConnectionName();
+    String getConnectionName();
 
-    public String getManufacturer();
+    String getManufacturer();
 
-    public void setManufacturer(String Manufacturer);
+    void setManufacturer(String Manufacturer);
 
     /** 
      * Load the Swing widgets needed to configure
@@ -37,7 +37,7 @@ public interface ConnectionConfig {
      *
      * @param details the specific Swing object to be configured and filled
      */
-    public void loadDetails(JPanel details);
+    void loadDetails(JPanel details);
 
     /**
      * Register the ConnectionConfig with the running JMRI process.
@@ -48,25 +48,25 @@ public interface ConnectionConfig {
      * <li>Adding this object to the default (@link ConnectionConfigManager}
      * </ul>
      */
-    public void register();
+    void register();
     
     /** 
      * Done with this ConnectionConfig object.
      * Invoked in {@link JmrixConfigPane} when switching
      * away from this particular mode. 
      */
-    public void dispose();
+    void dispose();
 
-    public boolean getDisabled();
+    boolean getDisabled();
 
-    public void setDisabled(boolean disabled);
+    void setDisabled(boolean disabled);
 
     /**
      * Determine if configuration needs to be written to disk.
      *
      * @return true if configuration needs to be saved, false otherwise
      */
-    public boolean isDirty();
+    boolean isDirty();
 
     /**
      * Determine if application needs to be restarted for configuration changes
@@ -74,5 +74,5 @@ public interface ConnectionConfig {
      *
      * @return true if application needs to restart, false otherwise
      */
-    public boolean isRestartRequired();
+    boolean isRestartRequired();
 }

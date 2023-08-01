@@ -28,47 +28,47 @@ public interface CabSignalManager {
      * @param address the cab signal for the address
      * @return an existing or new cab signal
      */
-    public CabSignal getCabSignal(LocoAddress address);
+    CabSignal getCabSignal(LocoAddress address);
 
     /**
      * Remove an old CabSignal.
      *
      * @param address the address associated with the cab signal
      */
-    public void delCabSignal(LocoAddress address);
+    void delCabSignal(LocoAddress address);
 
     /**
      * Get a list of known cab signal addresses.
      *
      * @return list of cab signal addresses
      */
-    public Set<LocoAddress> getCabSignalList();
+    Set<LocoAddress> getCabSignalList();
 
     /**
      * Get an array of known cab signals.
      *
      * @return array of cab signals
      */
-    public CabSignal[] getCabSignalArray();
+    CabSignal[] getCabSignalArray();
 
     /**
      * Register a CabSignalListListener object with this CabSignalManager
      *
      * @param listener a CabSignal List Listener object.
      */
-    public void addCabSignalListListener(CabSignalListListener listener);
+    void addCabSignalListListener(CabSignalListListener listener);
 
     /**
      * Remove a CabSignalListListener object with this CabSignalManager
      *
      * @param listener a CabSignal List Listener object.
      */
-    public void removeCabSignalListListener(CabSignalListListener listener);
+    void removeCabSignalListListener(CabSignalListListener listener);
 
     /**
      * Notify the registered CabSignalListListener objects that the CabSignalList
      * has changed.
      */
-    public void notifyCabSignalListChanged();
+    void notifyCabSignalListChanged();
 
 }

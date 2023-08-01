@@ -15,6 +15,6 @@ public interface MaleDigitalActionSocket extends MaleSocket, DigitalActionBean {
      * IllegalArgumentException before checking if an error has occured.
      */
     @Override
-    public void execute() throws JmriException;
+    void execute() throws JmriException;
     
 }

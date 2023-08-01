@@ -35,172 +35,172 @@ public interface Audio extends NamedBean {
     /**
      * Definition of AudioSource NamedBean sub-type code
      */
-    public static final char SOURCE = 'S';
+    char SOURCE = 'S';
 
     /**
      * Definition of AudioBuffer NamedBean sub-type code
      */
-    public static final char BUFFER = 'B';
+    char BUFFER = 'B';
 
     /**
      * Definition of AudioListener NamedBean sub-type code
      */
-    public static final char LISTENER = 'L';
+    char LISTENER = 'L';
 
     // Define orientation constants
     /**
      * Definition of Audio object orientation at vector code
      */
-    public static final int AT = 0x01;
+    int AT = 0x01;
 
     /**
      * Definition of Audio object orientation up vector code
      */
-    public static final int UP = 0x02;
+    int UP = 0x02;
 
     // Define state variables for Audio objects
     /**
      * Default state for any newly created Audio object
      */
-    public static final int STATE_INITIAL = 0x00;
+    int STATE_INITIAL = 0x00;
 
     // Define applicable states for Source sub-types
     /**
      * State code for an AudioSource when stopped
      */
-    public static final int STATE_STOPPED = 0x10;
+    int STATE_STOPPED = 0x10;
 
     /**
      * State code for an AudioSource when playing
      */
-    public static final int STATE_PLAYING = 0x11;
+    int STATE_PLAYING = 0x11;
 
     // Define applicable states for Buffer sub-types
     /**
      * State code for an AudioBuffer when empty
      */
-    public static final int STATE_EMPTY = 0x20;
+    int STATE_EMPTY = 0x20;
 
     /**
      * State code for an AudioBuffer when loaded
      */
-    public static final int STATE_LOADED = 0x21;
+    int STATE_LOADED = 0x21;
 
     // Define applicable states for Listener sub-types
     /**
      * State code for an AudioListener when positioned
      */
-    public static final int STATE_POSITIONED = 0x30;
+    int STATE_POSITIONED = 0x30;
 
     /**
      * State code for an AudioListener when moving
      */
-    public static final int STATE_MOVING = 0x31;
+    int STATE_MOVING = 0x31;
 
     // Define Audio command constants
     // Constants defining Factory related commands
     /**
      * Command to initialise AudioFactory
      */
-    public static final int CMD_INIT_FACTORY = 0x01;
+    int CMD_INIT_FACTORY = 0x01;
 
     // Constants defining Buffer related commands
     /**
      * Command to load the sound
      */
-    public static final int CMD_LOAD_SOUND = 0x20;
+    int CMD_LOAD_SOUND = 0x20;
 
     // Constants defining Source related commands
     /**
      * Command to bind Buffer to Source
      */
-    public static final int CMD_BIND_BUFFER = 0x30;
+    int CMD_BIND_BUFFER = 0x30;
 
     /**
      * Command to queue Buffer to Source
      */
-    public static final int CMD_QUEUE_BUFFERS = 0x31;
+    int CMD_QUEUE_BUFFERS = 0x31;
 
     /**
      * Command to unqueue used Buffers from Source
      */
-    public static final int CMD_UNQUEUE_BUFFERS = 0x32;
+    int CMD_UNQUEUE_BUFFERS = 0x32;
 
     /**
      * Command to play this Source from the beginning
      */
-    public static final int CMD_PLAY = 0x40;
+    int CMD_PLAY = 0x40;
 
     /**
      * Command to stop playing this Source and rewind to the start
      */
-    public static final int CMD_STOP = 0x41;
+    int CMD_STOP = 0x41;
 
     /**
      * Command to start or stop this Source from the beginning
      */
-    public static final int CMD_PLAY_TOGGLE = 0x42;
+    int CMD_PLAY_TOGGLE = 0x42;
 
     /**
      * Command to pause playback of this Source and retain the position
      */
-    public static final int CMD_PAUSE = 0x43;
+    int CMD_PAUSE = 0x43;
 
     /**
      * Command to resume playback of this Source from the current position
      */
-    public static final int CMD_RESUME = 0x44;
+    int CMD_RESUME = 0x44;
 
     /**
      * Command to pause or resume this Source from the current position
      */
-    public static final int CMD_PAUSE_TOGGLE = 0x45;
+    int CMD_PAUSE_TOGGLE = 0x45;
 
     /**
      * Command to rewind this Source to the beginning
      */
-    public static final int CMD_REWIND = 0x46;
+    int CMD_REWIND = 0x46;
 
     /**
      * Command to fade in and start playback of this Source
      */
-    public static final int CMD_FADE_IN = 0x47;
+    int CMD_FADE_IN = 0x47;
 
     /**
      * Command to fade out and stop playback of this Source
      */
-    public static final int CMD_FADE_OUT = 0x48;
+    int CMD_FADE_OUT = 0x48;
 
     /**
      * Command to reset the position of this Source
      */
-    public static final int CMD_RESET_POSITION = 0x49;
+    int CMD_RESET_POSITION = 0x49;
 
     // Define state variables for fade states
     /**
      * Fade state of Source when not fading
      */
-    public static final int FADE_NONE = 0x00;
+    int FADE_NONE = 0x00;
 
     /**
      * Fade state of Source when fading out
      */
-    public static final int FADE_OUT = 0x01;
+    int FADE_OUT = 0x01;
 
     /**
      * Fade state of Source when fading in
      */
-    public static final int FADE_IN = 0x02;
+    int FADE_IN = 0x02;
 
     /**
      * Maximum distance for Audio objects
      */
-    public static final float MAX_DISTANCE = 9999.99f;
+    float MAX_DISTANCE = 9999.99f;
 
     /**
      * Number of decimal places for float values to be stored in
      */
-    public static final double DECIMAL_PLACES = 2;
+    double DECIMAL_PLACES = 2;
 
     /**
      * An Audio object can represent one of a number of subtypes of object.
@@ -217,13 +217,13 @@ public interface Audio extends NamedBean {
      *
      * @return subType char
      */
-    public char getSubType();
+    char getSubType();
 
     /**
      * Method used to update the current state of the Audio object
      *
      * @param oldState the former state
      */
-    public void stateChanged(int oldState);
+    void stateChanged(int oldState);
 
 }

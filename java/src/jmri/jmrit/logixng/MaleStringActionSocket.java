@@ -17,6 +17,6 @@ public interface MaleStringActionSocket
      * IllegalArgumentException before checking if an error has occured.
      */
     @Override
-    public void setValue(@Nonnull String value) throws JmriException;
+    void setValue(@Nonnull String value) throws JmriException;
     
 }

@@ -24,6 +24,6 @@ public interface CollectingReporter extends Reporter {
      /**
       * @return the collection of elements associated with this reporter.
       */
-     public java.util.Collection<Object> getCollection();
+     java.util.Collection<Object> getCollection();
 
 }

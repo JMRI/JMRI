@@ -37,7 +37,7 @@ public interface Mx1Interface {
      * message stream. When sending, you specify (in 2nd parameter) who
      * you are so you're not redundantly notified of this message.
      */
-    public void sendMx1Message(Mx1Message msg, Mx1Listener replyTo);
+    void sendMx1Message(Mx1Message msg, Mx1Listener replyTo);
 
     /**
      * Request notification of things happening on the MX-1.
@@ -70,42 +70,42 @@ public interface Mx1Interface {
     /*
      * Check whether an implementation is operational. True indicates OK.
      */
-    public boolean status();
+    boolean status();
 
     /**
      * Mask value to request notification of all incoming messages
      */
-    public static final int ALL = ~0;
+    int ALL = ~0;
 
     /**
      * Mask value to request notification of messages effecting slot status,
      * including the programming slot
      */
-    public static final int SLOTINFO = 1;
+    int SLOTINFO = 1;
 
     /**
      * Mask value to request notification of messages associated with
      * programming
      */
-    public static final int PROGRAMMING = 2;
+    int PROGRAMMING = 2;
 
     /**
      * Mask value to request notification of messages indicating changes in
      * turnout status
      */
-    public static final int TURNOUTS = 4;
+    int TURNOUTS = 4;
 
     /**
      * Mask value to request notification of messages indicating changes in
      * sensor status
      */
-    public static final int SENSORS = 8;
+    int SENSORS = 8;
 
     /**
      * Mask value to request notification of messages associated with layout
      * power
      */
-    public static final int POWER = 16;
+    int POWER = 16;
 
 }
 

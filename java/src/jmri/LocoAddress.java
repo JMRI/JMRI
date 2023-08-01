@@ -22,11 +22,11 @@ package jmri;
 @javax.annotation.concurrent.Immutable
 public interface LocoAddress {
 
-    public int getNumber();
+    int getNumber();
 
-    public Protocol getProtocol();
+    Protocol getProtocol();
 
-    public enum Protocol {
+    enum Protocol {
 
         DCC_SHORT("dcc_short", "ProtocolDCC_Short"), // NOI18N
         DCC_LONG("dcc_long", "ProtocolDCC_Long"), // NOI18N
