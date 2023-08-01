@@ -20,7 +20,7 @@ public interface StartupModelFactory extends JmriServiceProviderInterface {
      *
      * @return The class this factory generates.
      */
-    public Class<? extends StartupModel> getModelClass();
+    Class<? extends StartupModel> getModelClass();
 
     /**
      * Get the description for models this factory generates. This is used in
@@ -28,7 +28,7 @@ public interface StartupModelFactory extends JmriServiceProviderInterface {
      *
      * @return A short description.
      */
-    public String getDescription();
+    String getDescription();
 
     /**
      * Get the action text for models this factory generates. This is used in
@@ -40,14 +40,14 @@ public interface StartupModelFactory extends JmriServiceProviderInterface {
      *
      * @return Action text
      */
-    public String getActionText();
+    String getActionText();
 
     /**
      * Create a new instance of the model.
      *
      * @return the new instance
      */
-    public StartupModel newModel();
+    StartupModel newModel();
 
     /**
      * Allow user to edit the model.
@@ -55,11 +55,11 @@ public interface StartupModelFactory extends JmriServiceProviderInterface {
      * @param model  the model to edit
      * @param parent the parent component for the editing UI
      */
-    public void editModel(StartupModel model, Component parent);
+    void editModel(StartupModel model, Component parent);
 
     /**
      * Provides a mechanism for the {@link StartupActionsManager} to run
      * any required post-construction initialization.
      */
-    public void initialize();
+    void initialize();
 }

@@ -110,7 +110,7 @@ public interface Reporter extends NamedBean {
      *
      * @return the last report or null
      */
-    public Object getLastReport();
+    Object getLastReport();
 
     /**
      * Query the current report. If there is no current report available (e.g.
@@ -119,7 +119,7 @@ public interface Reporter extends NamedBean {
      *
      * @return the current report or null
      */
-    public Object getCurrentReport();
+    Object getCurrentReport();
 
     /**
      * Set the report to an arbitrary object.
@@ -132,13 +132,13 @@ public interface Reporter extends NamedBean {
      *
      * @param r the report
      */
-    public void setReport(Object r);
+    void setReport(Object r);
 
     /**
      * Provide an integer form of the last report.
      *
      */
     @Override
-    public int getState();
+    int getState();
 
 }

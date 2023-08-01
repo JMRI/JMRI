@@ -7,9 +7,9 @@ package jmri.jmrix.easydcc;
  */
 public interface EasyDccInterface {
 
-    public void addEasyDccListener(EasyDccListener l);
+    void addEasyDccListener(EasyDccListener l);
 
-    public void removeEasyDccListener(EasyDccListener l);
+    void removeEasyDccListener(EasyDccListener l);
 
     boolean status(); // true if the implementation is operational
 

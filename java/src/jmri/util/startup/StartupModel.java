@@ -22,14 +22,14 @@ public interface StartupModel {
      * @return the name, an empty string, or null
      */
     @CheckForNull
-    public String getName();
+    String getName();
 
     /**
      * Set the name of the model.
      *
      * @param name the name, an empty string, or null
      */
-    public void setName(@CheckForNull String name);
+    void setName(@CheckForNull String name);
 
     /**
      * Test is model is a valid model. Invalid models will not be shown or saved
@@ -37,7 +37,7 @@ public interface StartupModel {
      *
      * @return true if valid; false otherwise
      */
-    public boolean isValid();
+    boolean isValid();
 
     /**
      * Perform the startup action.
@@ -46,7 +46,7 @@ public interface StartupModel {
      *                       startup item; the original exception should be
      *                       available as {@link Exception#getCause()}
      */
-    public void performAction() throws JmriException;
+    void performAction() throws JmriException;
 
     /**
      * Get the exceptions thrown by the startup model.
@@ -55,7 +55,7 @@ public interface StartupModel {
      *         list if no exceptions were thrown
      */
     @Nonnull
-    public List<Exception> getExceptions();
+    List<Exception> getExceptions();
 
     /**
      * Add an exception to the list of exceptions thrown when loading the model
@@ -63,5 +63,5 @@ public interface StartupModel {
      *
      * @param exception the exception to retain with the model
      */
-    public void addException(@Nonnull Exception exception);
+    void addException(@Nonnull Exception exception);
 }

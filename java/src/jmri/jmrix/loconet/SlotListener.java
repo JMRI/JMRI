@@ -8,5 +8,5 @@ package jmri.jmrix.loconet;
  */
 public interface SlotListener extends java.util.EventListener {
 
-    public void notifyChangedSlot(LocoNetSlot s);
+    void notifyChangedSlot(LocoNetSlot s);
 }

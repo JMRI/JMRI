@@ -20,14 +20,14 @@ public interface StringExpressionManager extends BaseManager<MaleStringExpressio
      * @return the male socket for this expression
      * @throws IllegalArgumentException if the expression has an invalid system name
      */
-    public MaleStringExpressionSocket registerExpression(@Nonnull StringExpressionBean expression)
+    MaleStringExpressionSocket registerExpression(@Nonnull StringExpressionBean expression)
             throws IllegalArgumentException;
     
     /**
      * Create a new system name for an Expression.
      * @return a new system name
      */
-    public String getAutoSystemName();
+    String getAutoSystemName();
 
     /**
      * Create a female socket for analog expressions
@@ -36,7 +36,7 @@ public interface StringExpressionManager extends BaseManager<MaleStringExpressio
      * @param socketName the name of the new socket
      * @return the new female socket
      */
-    public FemaleStringExpressionSocket createFemaleSocket(
+    FemaleStringExpressionSocket createFemaleSocket(
             Base parent, FemaleSocketListener listener, String socketName);
     
     /**
@@ -44,7 +44,7 @@ public interface StringExpressionManager extends BaseManager<MaleStringExpressio
      * 
      * @return a set of entries with category and class
      */
-    public Map<Category, List<Class<? extends Base>>> getExpressionClasses();
+    Map<Category, List<Class<? extends Base>>> getExpressionClasses();
 
     /*.*
      * Add an Expression.
@@ -52,7 +52,7 @@ public interface StringExpressionManager extends BaseManager<MaleStringExpressio
      * @param expression the expression to add
      * @throws IllegalArgumentException if the expression has an invalid system name
      */
-//    public void addExpression(Expression expression)
+//    void addExpression(Expression expression)
 //            throws IllegalArgumentException;
 
     /*.*
@@ -62,11 +62,11 @@ public interface StringExpressionManager extends BaseManager<MaleStringExpressio
      * @param name User name or system name to match
      * @return null if no match found
      */
-//    public Expression getExpression(String name);
+//    Expression getExpression(String name);
 
-//    public Expression getByUserName(String s);
+//    Expression getByUserName(String s);
 
-//    public Expression getBySystemName(String s);
+//    Expression getBySystemName(String s);
 
     /**
      * {@inheritDoc}
@@ -75,7 +75,7 @@ public interface StringExpressionManager extends BaseManager<MaleStringExpressio
      * {@link #getSystemNamePrefix() } and "SE";
      */
     @Override
-    public default String getSubSystemNamePrefix() {
+    default String getSubSystemNamePrefix() {
         return getSystemNamePrefix() + "SE";
     }
 
@@ -85,6 +85,6 @@ public interface StringExpressionManager extends BaseManager<MaleStringExpressio
      *
      * @param x the StringExpression to delete
      */
-    public void deleteStringExpression(MaleStringExpressionSocket x);
+    void deleteStringExpression(MaleStringExpressionSocket x);
 
 }

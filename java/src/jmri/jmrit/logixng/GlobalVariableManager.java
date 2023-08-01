@@ -24,7 +24,7 @@ public interface GlobalVariableManager extends Manager<GlobalVariable> {
      * @param userName   the user name
      * @return a new GlobalVariable or null if unable to create
      */
-    public GlobalVariable createGlobalVariable(String systemName, String userName)
+    GlobalVariable createGlobalVariable(String systemName, String userName)
             throws IllegalArgumentException;
 
     /**
@@ -34,7 +34,7 @@ public interface GlobalVariableManager extends Manager<GlobalVariable> {
      * @param userName the user name
      * @return a new GlobalVariable or null if unable to create
      */
-    public GlobalVariable createGlobalVariable(String userName)
+    GlobalVariable createGlobalVariable(String userName)
             throws IllegalArgumentException;
 
     /**
@@ -44,21 +44,21 @@ public interface GlobalVariableManager extends Manager<GlobalVariable> {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    public GlobalVariable getGlobalVariable(String name);
+    GlobalVariable getGlobalVariable(String name);
 
     /** {@inheritDoc} */
     @Override
-    public GlobalVariable getByUserName(String name);
+    GlobalVariable getByUserName(String name);
 
     /** {@inheritDoc} */
     @Override
-    public GlobalVariable getBySystemName(String name);
+    GlobalVariable getBySystemName(String name);
 
     /**
      * Create a new system name for a GlobalVariable.
      * @return a new system name
      */
-    public String getAutoSystemName();
+    String getAutoSystemName();
 
     /**
      * {@inheritDoc}
@@ -67,7 +67,7 @@ public interface GlobalVariableManager extends Manager<GlobalVariable> {
      * {@link #getSystemNamePrefix() } and "GV";
      */
     @Override
-    public default String getSubSystemNamePrefix() {
+    default String getSubSystemNamePrefix() {
         return getSystemNamePrefix() + "GV";
     }
 
@@ -86,6 +86,6 @@ public interface GlobalVariableManager extends Manager<GlobalVariable> {
      * @param writer the stream to print the tree to
      * @param indent the indentation of each level
      */
-    public void printTree(Locale locale, PrintWriter writer, String indent);
+    void printTree(Locale locale, PrintWriter writer, String indent);
 
 }

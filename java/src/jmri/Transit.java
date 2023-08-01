@@ -47,11 +47,11 @@ public interface Transit extends NamedBean {
     /**
      * The idle, or available for assignment to an ActiveTrain state.
      */
-    public static final int IDLE = 0x02;
+    int IDLE = 0x02;
     /**
      * The assigned to an ActiveTrain state.
      */
-    public static final int ASSIGNED = 0x04;
+    int ASSIGNED = 0x04;
 
     /**
      * Set the state of this Transit.
@@ -59,33 +59,33 @@ public interface Transit extends NamedBean {
      * @param state {@link #IDLE} or {@link #ASSIGNED}
      */
     @Override
-    public void setState(int state);
+    void setState(int state);
 
     /**
      * Add a Section to this Transit.
      *
      * @param s the Section object to add
      */
-    public void addTransitSection(TransitSection s);
+    void addTransitSection(TransitSection s);
 
     /**
      * Get the list of TransitSections.
      *
      * @return a copy of the internal list of TransitSections or an empty list
      */
-    public ArrayList<TransitSection> getTransitSectionList();
+    ArrayList<TransitSection> getTransitSectionList();
 
     /**
      * Get the maximum sequence number used in this Transit.
      *
      * @return the maximum sequence
      */
-    public int getMaxSequence();
+    int getMaxSequence();
 
     /**
      * Remove all TransitSections in this Transit.
      */
-    public void removeAllSections();
+    void removeAllSections();
 
     /**
      * Check if a Section is in this Transit.
@@ -93,7 +93,7 @@ public interface Transit extends NamedBean {
      * @param s the section to check for
      * @return true if the section is present; false otherwise
      */
-    public boolean containsSection(Section s);
+    boolean containsSection(Section s);
 
     /**
      * Get a List of Sections with a given sequence number.
@@ -101,7 +101,7 @@ public interface Transit extends NamedBean {
      * @param seq the sequence number
      * @return the list of of matching sections or an empty list if none
      */
-    public ArrayList<Section> getSectionListBySeq(int seq);
+    ArrayList<Section> getSectionListBySeq(int seq);
 
     /**
      * Get a List of TransitSections with a given sequence number.
@@ -109,7 +109,7 @@ public interface Transit extends NamedBean {
      * @param seq the sequence number
      * @return the list of of matching sections or an empty list if none
      */
-    public ArrayList<TransitSection> getTransitSectionListBySeq(int seq);
+    ArrayList<TransitSection> getTransitSectionListBySeq(int seq);
 
     /**
      * Get a List of sequence numbers for a given Section.
@@ -117,7 +117,7 @@ public interface Transit extends NamedBean {
      * @param s the section to match
      * @return the list of matching sequence numbers or an empty list if none
      */
-    public ArrayList<Integer> getSeqListBySection(Section s);
+    ArrayList<Integer> getSeqListBySection(Section s);
 
     /**
      * Check if a Block is in this Transit.
@@ -125,7 +125,7 @@ public interface Transit extends NamedBean {
      * @param block the block to check for
      * @return true if block is present; false otherwise
      */
-    public boolean containsBlock(Block block);
+    boolean containsBlock(Block block);
 
     /**
      * Get the number of times a Block is in this Transit.
@@ -133,7 +133,7 @@ public interface Transit extends NamedBean {
      * @param block the block to check for
      * @return the number of times block is present; 0 if block is not present
      */
-    public int getBlockCount(Block block);
+    int getBlockCount(Block block);
 
     /**
      * Get a Section from one of its Blocks and its sequence number.
@@ -142,7 +142,7 @@ public interface Transit extends NamedBean {
      * @param seq the sequence number of the Section
      * @return the Section or null if no matching Section is present
      */
-    public Section getSectionFromBlockAndSeq(Block b, int seq);
+    Section getSectionFromBlockAndSeq(Block b, int seq);
 
     /**
      * Get Section from one of its EntryPoint Blocks and its sequence number.
@@ -151,7 +151,7 @@ public interface Transit extends NamedBean {
      * @param seq the sequence number of the Section
      * @return the Section or null if no matching Section is present
      */
-    public Section getSectionFromConnectedBlockAndSeq(Block b, int seq);
+    Section getSectionFromConnectedBlockAndSeq(Block b, int seq);
 
     /**
      * Get the direction of a Section in the transit from its sequence number.
@@ -162,7 +162,7 @@ public interface Transit extends NamedBean {
      *         or {@link jmri.Section#REVERSE} or zero if s and seq are not in a
      *         TransitSection together
      */
-    public int getDirectionFromSectionAndSeq(Section s, int seq);
+    int getDirectionFromSectionAndSeq(Section s, int seq);
 
     /**
      * Get a TransitSection in the transit from its Section and sequence number.
@@ -171,7 +171,7 @@ public interface Transit extends NamedBean {
      * @param seq the sequence number of the Section
      * @return the transit section or null if not found
      */
-    public TransitSection getTransitSectionFromSectionAndSeq(Section s, int seq);
+    TransitSection getTransitSectionFromSectionAndSeq(Section s, int seq);
 
     /**
      * Get a list of all blocks internal to this Transit. Since Sections may be
@@ -182,7 +182,7 @@ public interface Transit extends NamedBean {
      *
      * @return the list of all Blocks or an empty list if none are present
      */
-    public ArrayList<Block> getInternalBlocksList();
+    ArrayList<Block> getInternalBlocksList();
 
     /**
      * Get a list of sequence numbers in this Transit. This list is generated by
@@ -192,7 +192,7 @@ public interface Transit extends NamedBean {
      * @return the list of all sequence numbers or an empty list if no Blocks
      *         are present
      */
-    public ArrayList<Integer> getBlockSeqList();
+    ArrayList<Integer> getBlockSeqList();
 
     /**
      * Get a list of all entry Blocks to this Transit. These are Blocks that a
@@ -203,7 +203,7 @@ public interface Transit extends NamedBean {
      *
      * @return the list of all blocks or an empty list if none are present
      */
-    public ArrayList<Block> getEntryBlocksList();
+    ArrayList<Block> getEntryBlocksList();
 
     /**
      * Get a list of all destination blocks that can be reached from a specified
@@ -222,7 +222,7 @@ public interface Transit extends NamedBean {
      *                       otherwise
      * @return a list of destination Blocks or an empty list if none exist
      */
-    public ArrayList<Block> getDestinationBlocksList(Block startBlock, boolean startInTransit);
+    ArrayList<Block> getDestinationBlocksList(Block startBlock, boolean startInTransit);
 
     /**
      * Get a list of destination Block sequence numbers in this Transit. This
@@ -232,7 +232,7 @@ public interface Transit extends NamedBean {
      * @return the list of all destination Block sequence numbers or an empty
      *         list if no destination Blocks are present
      */
-    public ArrayList<Integer> getDestBlocksSeqList();
+    ArrayList<Integer> getDestBlocksSeqList();
 
     /**
      * Check if this Transit is capable of continuous running.
@@ -248,7 +248,7 @@ public interface Transit extends NamedBean {
      *
      * @return true if continuous running is possible; otherwise false
      */
-    public boolean canBeResetWhenDone();
+    boolean canBeResetWhenDone();
 
     /**
      * Initialize blocking sensors for Sections in this Transit. This should be
@@ -259,10 +259,10 @@ public interface Transit extends NamedBean {
      *
      * @return 0 if no errors, number of errors otherwise.
      */
-    public int initializeBlockingSensors();
+    int initializeBlockingSensors();
 
-    public void removeTemporarySections();
+    void removeTemporarySections();
 
-    public boolean removeLastTemporarySection(Section s);
+    boolean removeLastTemporarySection(Section s);
 
 }

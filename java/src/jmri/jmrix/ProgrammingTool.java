@@ -17,7 +17,7 @@ public interface ProgrammingTool {
      * @param programmerFile the programmer file
      * @param p the programmer
      */
-    public void openPaneOpsProgFrame(RosterEntry re, String name,
+    void openPaneOpsProgFrame(RosterEntry re, String name,
                                      String programmerFile, Programmer p);
 
 }

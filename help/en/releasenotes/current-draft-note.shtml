@@ -234,8 +234,9 @@
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
-                <li>added PD06A, PD18A, PD18MU and PD21A</li>
+                <li>added PD06A, PD18A, PD18MU and PD21A and 2nd generation-decoder of DH-series</li>
                 <li>disable unimplemented CV by PD-series</li>
+                <li>new definition-files for FW 1.13 for SD*-, FW 1.15 for SH*-, FW 3.13 for DH*-decoder</li>
             </ul>
 
         <h4>ESU</h4>
@@ -504,6 +505,8 @@
         <ul>
             <li>Add a "jython/RunSystemCommandExample.py" sample for
                 how to run a system command from a JMRI script.</li>
+            <li>Scripts that output Logging statements with log4j should be updated to import sl4fj logging.
+            <br><a href="https://github.com/JMRI/JMRI/pull/12237/files">See here for some examples</a> on how to do this.</li>
         </ul>
 
     <h3>Signals</h3>

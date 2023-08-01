@@ -16,12 +16,12 @@ public interface MaleDigitalExpressionSocket
      * IllegalArgumentException before checking if an error has occured.
      */
     @Override
-    public boolean evaluate() throws JmriException;
+    boolean evaluate() throws JmriException;
     
     /**
      * Get the last result of the evaluation.
      * @return the last result
      */
-    public boolean getLastResult();
+    boolean getLastResult();
     
 }

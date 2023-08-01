@@ -19,6 +19,6 @@ public interface QuitHandler {
      * @param eo The quit event object.
      * @return allow quit to continue.
      */
-    abstract public boolean handleQuitRequest(EventObject eo);
+    boolean handleQuitRequest(EventObject eo);
 
 }

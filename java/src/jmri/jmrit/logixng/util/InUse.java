@@ -6,6 +6,6 @@ package jmri.jmrit.logixng.util;
  */
 public interface InUse {
 
-    public boolean isInUse();
+    boolean isInUse();
 
 }

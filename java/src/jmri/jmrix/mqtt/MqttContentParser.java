@@ -17,7 +17,7 @@ public interface MqttContentParser<T extends NamedBean> {
      * @param topic MQTT topic.
      * @throws IllegalArgumentException if the payload is unparsable.
      */
-    public void beanFromPayload(@Nonnull T bean, @Nonnull String payload, @Nonnull String topic);
+    void beanFromPayload(@Nonnull T bean, @Nonnull String payload, @Nonnull String topic);
     
     /**
      * Create the payload for a particular state transformation on 
@@ -26,6 +26,6 @@ public interface MqttContentParser<T extends NamedBean> {
      * @param newState The value to be sent to the layout; this is not yet present in the bean
      * @return String payload to transfer via MQTT.
      */
-    public @Nonnull String payloadFromBean(@Nonnull T bean, int newState);
+    @Nonnull String payloadFromBean(@Nonnull T bean, int newState);
      
 }

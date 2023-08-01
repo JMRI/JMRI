@@ -50,21 +50,21 @@ import jmri.jmrit.XmlFile;
  */
 public interface ConfigureManager {
 
-    public void registerPref(Object o);
+    void registerPref(Object o);
 
-    public void removePrefItems();
+    void removePrefItems();
 
-    public void registerConfig(Object o);
+    void registerConfig(Object o);
 
-    public void registerConfig(Object o, int x);
+    void registerConfig(Object o, int x);
 
-    public void registerTool(Object o);
+    void registerTool(Object o);
 
-    public void registerUser(Object o);
+    void registerUser(Object o);
 
-    public void registerUserPrefs(Object o);
+    void registerUserPrefs(Object o);
 
-    public void deregister(Object o);
+    void deregister(Object o);
 
     /**
      * Find the ith instance of an object of particular class that's been
@@ -81,7 +81,7 @@ public interface ConfigureManager {
      * @param index a 1-based index of the object to return
      * @return an object of class c or null
      */
-    public Object findInstance(Class<?> c, int index);
+    Object findInstance(Class<?> c, int index);
 
     /**
      * Returns a list of instances stored for a given class.
@@ -89,28 +89,28 @@ public interface ConfigureManager {
      * @param c Class of the desired objects
      * @return an List of objects of class c or null
      */
-    public List<Object> getInstanceList(Class<?> c);
+    List<Object> getInstanceList(Class<?> c);
 
     /**
      * Stores just preferences information.
      * <p>
      * Where that information is stored is implementation-specific.
      */
-    public void storePrefs();
+    void storePrefs();
 
     /**
      * Stores just preferences information.
      *
      * @param file the to store preferences into
      */
-    public void storePrefs(File file);
+    void storePrefs(File file);
 
     /**
      * Stores just user preferences information.
      *
      * @param file the file to store user preferences into
      */
-    public void storeUserPrefs(File file);
+    void storeUserPrefs(File file);
 
     /**
      * Stores just configuration information.
@@ -118,7 +118,7 @@ public interface ConfigureManager {
      * @param file Output file
      * @return true if successful; false otherwise
      */
-    public boolean storeConfig(File file);
+    boolean storeConfig(File file);
 
     /**
      * Stores user and config information.
@@ -126,7 +126,7 @@ public interface ConfigureManager {
      * @param file Output file
      * @return true if succeeded
      */
-    public boolean storeUser(File file);
+    boolean storeUser(File file);
 
     /**
      * Create the objects defined in a particular configuration file
@@ -135,7 +135,7 @@ public interface ConfigureManager {
      * @return true if succeeded
      * @throws jmri.JmriException if unable to load file due to internal error
      */
-    public boolean load(File file) throws JmriException;
+    boolean load(File file) throws JmriException;
 
     /**
      * Create the objects defined in a particular configuration file
@@ -144,7 +144,7 @@ public interface ConfigureManager {
      * @return true if succeeded
      * @throws jmri.JmriException if unable to load URL due to internal error
      */
-    public boolean load(URL file) throws JmriException;
+    boolean load(URL file) throws JmriException;
 
     /**
      * Create the objects defined in a particular configuration file
@@ -155,7 +155,7 @@ public interface ConfigureManager {
      * @throws JmriException if problem during load
      * @since 2.11.2
      */
-    public boolean load(File file, boolean registerDeferred) throws JmriException;
+    boolean load(File file, boolean registerDeferred) throws JmriException;
 
     /**
      * Create the objects defined in a particular configuration file
@@ -166,7 +166,7 @@ public interface ConfigureManager {
      * @throws JmriException if problem during load
      * @since 2.11.2
      */
-    public boolean load(URL file, boolean registerDeferred) throws JmriException;
+    boolean load(URL file, boolean registerDeferred) throws JmriException;
 
     /**
      * Create the objects defined in a particular configuration file that have
@@ -178,7 +178,7 @@ public interface ConfigureManager {
      * @see jmri.configurexml.XmlAdapter#loadDeferred()
      * @since 2.11.2
      */
-    public boolean loadDeferred(File file) throws JmriException;
+    boolean loadDeferred(File file) throws JmriException;
 
     /**
      * Create the objects defined in a particular configuration file that have
@@ -190,7 +190,7 @@ public interface ConfigureManager {
      * @see jmri.configurexml.XmlAdapter#loadDeferred()
      * @since 2.11.2
      */
-    public boolean loadDeferred(URL file) throws JmriException;
+    boolean loadDeferred(URL file) throws JmriException;
 
     /**
      * Provide a method-specific way of locating a file to be loaded from a
@@ -199,7 +199,7 @@ public interface ConfigureManager {
      * @param filename Local filename, perhaps without path information
      * @return Corresponding {@link java.net.URL}
      */
-    public URL find(String filename);
+    URL find(String filename);
 
     /**
      * Make a backup file.
@@ -207,19 +207,19 @@ public interface ConfigureManager {
      * @param file to be backed up
      * @return true if successful
      */
-    public boolean makeBackup(File file);
+    boolean makeBackup(File file);
 
     /**
      * Control the scope of validation of XML files when loading.
      *
      * @param validate the validation scope
      */
-    public void setValidate(XmlFile.Validate validate);
+    void setValidate(XmlFile.Validate validate);
 
     /**
      * Get the scope of validation of XML files when loading.
      *
      * @return the validation scope
      */
-    public XmlFile.Validate getValidate();
+    XmlFile.Validate getValidate();
 }

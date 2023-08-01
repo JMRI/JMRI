@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface ManagingPreferencesPanel extends PreferencesPanel {
 
-    public abstract List<PreferencesPanel> getPreferencesPanels();
+    List<PreferencesPanel> getPreferencesPanels();
 }

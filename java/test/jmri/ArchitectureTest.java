@@ -273,7 +273,6 @@ public class ArchitectureTest {
     @ArchTest
     public static final ArchRule noLog4JinJmri = noClasses()
             .that().resideInAPackage("jmri..")
-            .and().areNotAnnotatedWith(Deprecated.class)
             .should().dependOnClassesThat().resideInAPackage("org.apache.log4j");
 
     /**

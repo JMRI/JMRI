@@ -9,14 +9,14 @@ import jmri.jmrix.loconet.LocoNetMessage;
  */
 public interface LnMessageBufferInterface extends Remote {
 
-    public void enable(int mask) throws RemoteException;
+    void enable(int mask) throws RemoteException;
 
-    public void disable(int mask) throws RemoteException;
+    void disable(int mask) throws RemoteException;
 
-    public void clear() throws RemoteException;
+    void clear() throws RemoteException;
 
-    public Object[] getMessages(long timeout) throws RemoteException;
+    Object[] getMessages(long timeout) throws RemoteException;
 
-    public void sendLocoNetMessage(LocoNetMessage m) throws RemoteException;
+    void sendLocoNetMessage(LocoNetMessage m) throws RemoteException;
 
 }

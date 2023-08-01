@@ -39,7 +39,7 @@ public interface InstanceInitializer {
      *                                  supported by this InstanceInitalizer
      */
     @Nonnull
-    public <T> Object getDefault(@Nonnull Class<T> type);
+    <T> Object getDefault(@Nonnull Class<T> type);
 
     /**
      * Get the set of classes for which this InstanceInitializer can provide
@@ -49,5 +49,5 @@ public interface InstanceInitializer {
      *         {@link #getDefault(java.lang.Class)} will never be called.
      */
     @Nonnull
-    public Set<Class<?>> getInitalizes();
+    Set<Class<?>> getInitalizes();
 }

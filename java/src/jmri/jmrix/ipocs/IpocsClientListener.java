@@ -8,8 +8,8 @@ import jmri.jmrix.ipocs.protocol.Message;
  * @since 4.21.2
  */
 public interface IpocsClientListener {
-  public String getUserName();
-  public void clientConnected(IpocsClientHandler client);
-  public void clientDisconnected(IpocsClientHandler client);
-  public void onMessage(IpocsClientHandler client, Message msg);
+  String getUserName();
+  void clientConnected(IpocsClientHandler client);
+  void clientDisconnected(IpocsClientHandler client);
+  void onMessage(IpocsClientHandler client, Message msg);
 }

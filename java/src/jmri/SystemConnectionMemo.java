@@ -35,12 +35,12 @@ public interface SystemConnectionMemo extends jmri.beans.PropertyChangeProvider 
     @OverridingMethodsMustInvokeSuper
     <T> T get(Class<T> type);
 
-    public static final String DISABLED = "ConnectionDisabled";
-    public static final String USER_NAME = "ConnectionNameChanged";
-    public static final String SYSTEM_PREFIX = "ConnectionPrefixChanged";
-    public static final String INTERVAL = "OutputInterval";
-    public static final String STORE = "Store";
-    public static final String DEREGISTER = "Deregister";
+    String DISABLED = "ConnectionDisabled";
+    String USER_NAME = "ConnectionNameChanged";
+    String SYSTEM_PREFIX = "ConnectionPrefixChanged";
+    String INTERVAL = "OutputInterval";
+    String STORE = "Store";
+    String DEREGISTER = "Deregister";
 
     /**
      * Provide a factory for getting startup actions.

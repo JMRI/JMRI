@@ -54,16 +54,16 @@ import javax.annotation.Nonnull;
  */
 public interface SignalHead extends Signal {
 
-    public static final int DARK = 0x00;
-    public static final int RED = 0x01;
-    public static final int FLASHRED = 0x02;
-    public static final int YELLOW = 0x04;
-    public static final int FLASHYELLOW = 0x08;
-    public static final int GREEN = 0x10;
-    public static final int FLASHGREEN = 0x20;
-    public static final int LUNAR = 0x40;
-    public static final int FLASHLUNAR = 0x80;
-    public static final int HELD = 0x100;
+    int DARK = 0x00;
+    int RED = 0x01;
+    int FLASHRED = 0x02;
+    int YELLOW = 0x04;
+    int FLASHYELLOW = 0x08;
+    int GREEN = 0x10;
+    int FLASHGREEN = 0x20;
+    int LUNAR = 0x40;
+    int FLASHLUNAR = 0x80;
+    int HELD = 0x100;
 
     /**
      * Get the Signal Head Appearance.
@@ -72,14 +72,14 @@ public interface SignalHead extends Signal {
      *
      * @return the appearance, e.g. SignalHead.YELLOW
      */
-    public int getAppearance();
+    int getAppearance();
 
     /**
      * Set the Signal Head Appearance.
      *
      * @param newAppearance integer representing a valid Appearance for this head
      */
-    public void setAppearance(int newAppearance);
+    void setAppearance(int newAppearance);
 
     
     /**
@@ -87,7 +87,7 @@ public interface SignalHead extends Signal {
      * @return Key, or empty String if no valid appearance set.
      */
     @Nonnull
-    public String getAppearanceKey();
+    String getAppearanceKey();
 
     /**
      * Get the Appearance Key for a particular Appearance.
@@ -97,14 +97,14 @@ public interface SignalHead extends Signal {
      * Bundle.getMessage(getAppearanceKey(SignalHead.RED))
      */
     @Nonnull
-    public String getAppearanceKey(int appearance);
+    String getAppearanceKey(int appearance);
 
     /**
      * Get the current appearance name.
      * @return Name of the Appearance, e.g. "Dark" or "Flashing Red"
      */
     @Nonnull
-    public String getAppearanceName();
+    String getAppearanceName();
 
     /**
      * Get the Appearance Name for a particular Appearance.
@@ -112,38 +112,38 @@ public interface SignalHead extends Signal {
      * @return the Appearance Name, or empty String if unknown.
      */
     @Nonnull
-    public String getAppearanceName(int appearance);
+    String getAppearanceName(int appearance);
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public boolean getLit();
+    boolean getLit();
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setLit(boolean newLit);
+    void setLit(boolean newLit);
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public boolean getHeld();
+    boolean getHeld();
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setHeld(boolean newHeld);
+    void setHeld(boolean newHeld);
 
     /**
      * Get an array of appearance indexes valid for the mast type.
      *
      * @return array of appearance state values available on this mast type
      */
-    public int[] getValidStates();
+    int[] getValidStates();
 
     /**
      * Get an array of non-localized appearance keys valid for the mast type.
@@ -151,7 +151,7 @@ public interface SignalHead extends Signal {
      *
      * @return array of translated appearance names available on this mast type
      */
-    public String[] getValidStateKeys();
+    String[] getValidStateKeys();
 
     /**
      * Get an array of localized appearance descriptions valid for the mast type.
@@ -159,6 +159,6 @@ public interface SignalHead extends Signal {
      *
      * @return array of translated appearance names
      */
-    public String[] getValidStateNames();
+    String[] getValidStateNames();
 
 }

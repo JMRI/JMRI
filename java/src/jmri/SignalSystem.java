@@ -31,16 +31,16 @@ import java.util.Enumeration;
  */
 public interface SignalSystem extends NamedBean {
 
-    public void setProperty(String aspect, String key, Object value);
+    void setProperty(String aspect, String key, Object value);
 
-    public Object getProperty(String aspect, String key);
+    Object getProperty(String aspect, String key);
 
     /**
      * Add an image or icon type available for use with this signaling system.
      *
      * @param type the image type
      */
-    public void setImageType(String type);
+    void setImageType(String type);
 
     /**
      * Returns a list of the image/icon sets available for use with this
@@ -48,14 +48,14 @@ public interface SignalSystem extends NamedBean {
      *
      * @return all image types or an empty list
      */
-    public Enumeration<String> getImageTypeList();
+    Enumeration<String> getImageTypeList();
 
     /**
      * Get all aspects currently defined.
      *
      * @return all aspects or an empty list
      */
-    public Enumeration<String> getAspects();  // eventually, change to return Set<>
+    Enumeration<String> getAspects();  // eventually, change to return Set<>
 
     /**
      * Get all keys currently defined on any aspect.
@@ -66,7 +66,7 @@ public interface SignalSystem extends NamedBean {
      *
      * @return all keys or an empty list
      */
-    public Enumeration<String> getKeys(); // eventually, change to return Set<>
+    Enumeration<String> getKeys(); // eventually, change to return Set<>
 
     /**
      * Is this aspect known?
@@ -74,11 +74,11 @@ public interface SignalSystem extends NamedBean {
      * @param aspect the aspect to check
      * @return true if known; false otherwise
      */
-    public boolean checkAspect(String aspect);
+    boolean checkAspect(String aspect);
 
-    public String getAspect(Object obj, String key);
+    String getAspect(Object obj, String key);
 
-    public float getMaximumLineSpeed();
+    float getMaximumLineSpeed();
     
     /**
      * Provide a multi-line summary of the signal system content,
@@ -89,6 +89,6 @@ public interface SignalSystem extends NamedBean {
      * to type, and to change often.
      * @return summary string.
      */
-    public String summary();
+    String summary();
 
 }
