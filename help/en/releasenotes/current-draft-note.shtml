@@ -501,7 +501,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Scripts that output Logging statements with log4j should be updated to import sl4fj logging.
+            <br><a href="https://github.com/JMRI/JMRI/pull/12237/files">See here for some examples</a> on how to do this.</li>
         </ul>
 
     <h3>Signals</h3>

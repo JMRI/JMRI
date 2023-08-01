@@ -13,7 +13,7 @@ import jmri
 import java
 import java.beans
 
-from org.apache.log4j import Logger
+from org.slf4j import LoggerFactory
 
 # Define one sensor listener. 
 class HoldSignalForSensorListener(java.beans.PropertyChangeListener):
@@ -33,7 +33,7 @@ class HoldSignalForSensorListener(java.beans.PropertyChangeListener):
     return
 
 ####################################################################
-logger = Logger.getLogger("jmri.jmrit.jython.exec.HoldSignalForSensor")
+logger = LoggerFactory.getLogger("jmri.jmrit.jython.exec.HoldSignalForSensor")
    
 #set up each sensor to signalhead connection, repeat as needed.   
 #  note: signalhead must already exist
