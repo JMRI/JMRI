@@ -644,8 +644,11 @@
         <li>Alain Le Marchand, <!-- GitHub: AlanUS -->
          who provided a number of decoder definitions and updates</li>
 
+        <li>Bo Leer-Andersen <!-- GitHub: boleer -->
+        who brought a lot of interfaces up to date.</li>
+
         <li>Karl Johan Lisby, <!-- kjlisby  -->
-         who made large improvements to the Uhlenbrock Intellibox support and contributed the
+        who made large improvements to the Uhlenbrock Intellibox support and contributed the
         Signal Controlled Warrant support</li>
 
         <li>Peter Lloyd-Jones, who contributed a script for playing a sound when a function key is
