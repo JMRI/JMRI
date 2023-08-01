@@ -14,7 +14,8 @@ public class Log4JErrorIsErrorTest {
 
     @Test
     public void testNoLog4JMessages() {
-        Assert.assertFalse("Unexpected ERROR or FATAL messages emitted", jmri.util.JUnitAppender.unexpectedMessageSeen(org.apache.log4j.Level.ERROR));
+        Assert.assertFalse("Unexpected ERROR or FATAL messages emitted", 
+            jmri.util.JUnitAppender.unexpectedMessageSeen(org.slf4j.event.Level.ERROR));
     }
 
     @BeforeEach

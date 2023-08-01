@@ -4,7 +4,6 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
-import org.apache.log4j.Level;
 import org.junit.jupiter.api.*;
 
 import jmri.Light;
@@ -29,7 +28,6 @@ public class IpocsLightTest extends jmri.implementation.AbstractLightTestBase {
     light.doNewState(-1, Light.OFF);
     //assertEquals(Light.OFF, light.getState());
     light.doNewState(-1, Light.UNKNOWN);
-    jmri.util.JUnitAppender.suppressMessage(Level.DEBUG, "Unknown light order state");
     //assertEquals(Light.OFF, light.getState());
   }
 
