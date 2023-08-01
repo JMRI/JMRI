@@ -169,8 +169,8 @@ public class Z21SimulatorAdapterTest {
         }
         a.terminateThread();
         // suppress two timeout messages that occur
-        JUnitAppender.suppressMessageStartsWith(org.apache.log4j.Level.WARN, "Timeout on reply to message:");
-        JUnitAppender.suppressMessageStartsWith(org.apache.log4j.Level.WARN, "Timeout on reply to message:");
+        JUnitAppender.suppressWarnMessageStartsWith("Timeout on reply to message:");
+        JUnitAppender.suppressWarnMessageStartsWith("Timeout on reply to message:");
         a.dispose();
         JUnitUtil.tearDown();
     }

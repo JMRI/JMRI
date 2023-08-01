@@ -29,7 +29,7 @@ public interface InstanceManagerAutoInitialize {
      * Perform any initialization that occurs after this object has been
      * constructed and made available by the InstanceManager.
      */
-    public void initialize();
+    void initialize();
 
 }
 

@@ -24,5 +24,5 @@ public interface CabSignalListListener extends java.util.EventListener {
      * Receive notification that the cab signal manager has changed its signal
      * list.
      */
-    public void notifyCabSignalListChanged();
+    void notifyCabSignalListChanged();
 }

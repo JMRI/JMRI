@@ -13,13 +13,13 @@ public interface DigitalActionFactory {
     /**
      * Init the factory, for example create categories.
      */
-    public default void init() {}
+    default void init() {}
     
     /**
      * Get a set of classes that implements the DigitalAction interface.
      * 
      * @return a set of entries with category and class
      */
-    public Set<Map.Entry<Category, Class<? extends DigitalActionBean>>> getActionClasses();
+    Set<Map.Entry<Category, Class<? extends DigitalActionBean>>> getActionClasses();
     
 }

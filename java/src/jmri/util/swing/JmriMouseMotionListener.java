@@ -16,7 +16,7 @@ public interface JmriMouseMotionListener extends java.util.EventListener {
      * @param listener the JmriMouseListener
      * @return the MouseListener
      */
-    public static java.awt.event.MouseMotionListener adapt(JmriMouseMotionListener listener) {
+    static java.awt.event.MouseMotionListener adapt(JmriMouseMotionListener listener) {
         return new java.awt.event.MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
@@ -42,13 +42,13 @@ public interface JmriMouseMotionListener extends java.util.EventListener {
      * Drag&amp;Drop operation.
      * @param e the event to be processed
      */
-    public void mouseDragged(JmriMouseEvent e);
+    void mouseDragged(JmriMouseEvent e);
 
     /**
      * Invoked when the mouse cursor has been moved onto a component
      * but no buttons have been pushed.
      * @param e the event to be processed
      */
-    public void mouseMoved(JmriMouseEvent e);
+    void mouseMoved(JmriMouseEvent e);
 
 }

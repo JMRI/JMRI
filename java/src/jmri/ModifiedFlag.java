@@ -29,12 +29,12 @@ public interface ModifiedFlag {
      *
      * @param flag true if the object has been modified
      */
-    public void setModifiedFlag(boolean flag);
+    void setModifiedFlag(boolean flag);
 
     /**
      * Get the current value of the modified flag.
      *
      * @return true if the object has been modified and needs to be stored
      */
-    public boolean getModifiedFlag();
+    boolean getModifiedFlag();
 }

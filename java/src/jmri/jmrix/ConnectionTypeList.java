@@ -26,7 +26,7 @@ public interface ConnectionTypeList extends JmriServiceProviderInterface {
      * @return an Array of classes or an empty Array if none
      */
     @Nonnull
-    public String[] getAvailableProtocolClasses();
+    String[] getAvailableProtocolClasses();
 
     /**
      * Get a list of manufacturer names supported by the classes specified in
@@ -35,5 +35,5 @@ public interface ConnectionTypeList extends JmriServiceProviderInterface {
      * @return an Array of manufacturers or an empty Array if none
      */
     @Nonnull
-    public String[] getManufacturers();
+    String[] getManufacturers();
 }

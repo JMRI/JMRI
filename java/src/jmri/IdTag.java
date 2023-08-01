@@ -57,7 +57,7 @@ public interface IdTag extends NamedBean {
      * Constant representing an "unseen" state, indicating that the ID tag has
      * not yet been seen.
      */
-    public static final int UNSEEN = 0x02;
+    int UNSEEN = 0x02;
 
     /**
      * Constant representing a "seen" state, indicating that the tag has been
@@ -72,7 +72,7 @@ public interface IdTag extends NamedBean {
      * <li>{@link #getWhenLastSeen()}
      * </ul>
      */
-    public static final int SEEN = 0x03;
+    int SEEN = 0x03;
 
     /**
      * Retrieve a string representation of this tag ID
@@ -82,7 +82,7 @@ public interface IdTag extends NamedBean {
      * @return the tag ID
      */
     @Nonnull
-    public String getTagID();
+    String getTagID();
 
     /**
      * Set the Reporter that last saw this tag.
@@ -93,7 +93,7 @@ public interface IdTag extends NamedBean {
      * @see #getWhereLastSeen()
      * @see #getWhenLastSeen()
      */
-    public void setWhereLastSeen(Reporter reporter);
+    void setWhereLastSeen(Reporter reporter);
 
     /**
      * Return the Reporter that last saw this tag, or null if not yet seen
@@ -101,7 +101,7 @@ public interface IdTag extends NamedBean {
      * @return Reporter object where last seen, or null
      */
     @CheckForNull
-    public Reporter getWhereLastSeen();
+    Reporter getWhereLastSeen();
 
     /**
      * Return the Date/Time when this tag was last seen, or null if not yet seen
@@ -109,7 +109,7 @@ public interface IdTag extends NamedBean {
      * @return Date object when last seen, or null
      */
     @CheckForNull
-    public Date getWhenLastSeen();
+    Date getWhenLastSeen();
 
     /**
      * Store the contents of this IdTag object as an XML element
@@ -117,13 +117,13 @@ public interface IdTag extends NamedBean {
      * @param storeState Determine if the state of this IdTag should be stored
      * @return Element with IdTag contents
      */
-    public Element store(boolean storeState);
+    Element store(boolean storeState);
 
     /**
      * Load contents of IdTag object from an XML element
      *
      * @param e Element containing IdTag details
      */
-    public void load(@Nonnull Element e);
+    void load(@Nonnull Element e);
 
 }

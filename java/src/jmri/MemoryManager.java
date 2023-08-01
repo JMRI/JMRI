@@ -1,3 +1,13 @@
+/*
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ *
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ */
 package jmri;
 
 import javax.annotation.CheckForNull;
@@ -12,7 +22,7 @@ import javax.annotation.Nonnull;
  * Memory memory = InstanceManager.memoryManagerInstance().provideMemory("status");
  * </pre>
  * <p>
- * Each Memory has a two names. The "user" name is entirely free form, and can
+ * Each Memory has two names. The "user" name is entirely free form, and can
  * be used for any purpose. The "system" name is provided by the system-specific
  * implementations, if any, and provides a unique mapping to the layout control
  * system (for example LocoNet or NCE) and address within that system. Note that
@@ -20,24 +30,12 @@ import javax.annotation.Nonnull;
  * which case the "Internal" Memory objects are still available with names like
  * IM23.
  * <p>
- * Much of the book-keeping is implemented in the AbstractMemoryManager class,
+ * Much of the bookkeeping is implemented in the <code>AbstractMemoryManager</code> class,
  * which can form the basis for a system-specific implementation.
- *
- * <hr>
- * This file is part of JMRI.
- * <p>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * @author Bob Jacobsen Copyright (C) 2004
  * @see jmri.Memory
  * @see jmri.managers.AbstractMemoryManager
  * @see jmri.InstanceManager
+ * @author Bob Jacobsen, Copyright (C) 2004
  */
 public interface MemoryManager extends ProvidingManager<Memory> {
 
@@ -57,7 +55,7 @@ public interface MemoryManager extends ProvidingManager<Memory> {
      *                                  be parsed.
      */
     @Nonnull
-    public Memory provideMemory(@Nonnull String name) throws IllegalArgumentException;
+    Memory provideMemory(@Nonnull String name) throws IllegalArgumentException;
 
     /**
      * Get an existing Turnout or return null if it doesn't exist. 
@@ -68,7 +66,7 @@ public interface MemoryManager extends ProvidingManager<Memory> {
      * @return null if no match found
      */
     @CheckForNull
-    public Memory getMemory(@Nonnull String name);
+    Memory getMemory(@Nonnull String name);
 
     /**
      * Locate an existing Memory based on a system name.
@@ -79,7 +77,7 @@ public interface MemoryManager extends ProvidingManager<Memory> {
      */
     @CheckForNull
     @Override
-    public Memory getBySystemName(@Nonnull String systemName);
+    Memory getBySystemName(@Nonnull String systemName);
 
     /**
      * Locate an existing Memory based on a user name.
@@ -90,7 +88,7 @@ public interface MemoryManager extends ProvidingManager<Memory> {
      */
     @CheckForNull
     @Override
-    public Memory getByUserName(@Nonnull String userName);
+    Memory getByUserName(@Nonnull String userName);
 
     /**
      * Return a Memory with the specified system and user names. Note that
@@ -122,7 +120,7 @@ public interface MemoryManager extends ProvidingManager<Memory> {
      *                                  parsed.
      */
     @Nonnull
-    public Memory newMemory(@Nonnull String systemName,@CheckForNull String userName)throws IllegalArgumentException;
+    Memory newMemory(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
     /**
      * For use with User GUI, to allow the auto generation of systemNames, where
@@ -138,6 +136,6 @@ public interface MemoryManager extends ProvidingManager<Memory> {
      *                                  parsed.
      */
     @Nonnull
-    public Memory newMemory(@CheckForNull String userName) throws IllegalArgumentException;
+    Memory newMemory(@CheckForNull String userName) throws IllegalArgumentException;
 
 }

@@ -16,7 +16,7 @@ public interface AbstractLogixNGEditor<E extends NamedBean> {
     /**
      * Create a custom listener event.
      */
-    public interface EditorEventListener extends EventListener {
+    interface EditorEventListener extends EventListener {
 
         /**
          * An event that gets delivered from the editor
@@ -32,7 +32,7 @@ public interface AbstractLogixNGEditor<E extends NamedBean> {
      *
      * @param listener The recipient
      */
-    public void addEditorEventListener(EditorEventListener listener);
+    void addEditorEventListener(EditorEventListener listener);
     
     /**
      * Remove a listener -- not used.
@@ -41,6 +41,6 @@ public interface AbstractLogixNGEditor<E extends NamedBean> {
      */
     public void removeEditorEventListener(EditorEventListener listener);
     
-    public void bringToFront();
+    void bringToFront();
     
 }

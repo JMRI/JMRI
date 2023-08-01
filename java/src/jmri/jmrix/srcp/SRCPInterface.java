@@ -7,9 +7,9 @@ package jmri.jmrix.srcp;
  */
 public interface SRCPInterface {
 
-    public void addSRCPListener(SRCPListener l);
+    void addSRCPListener(SRCPListener l);
 
-    public void removeSRCPListener(SRCPListener l);
+    void removeSRCPListener(SRCPListener l);
 
     boolean status();   // true if the implementation is operational
 

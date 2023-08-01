@@ -10,6 +10,6 @@ public interface EcosListener extends jmri.jmrix.AbstractMRListener {
 
     public void message(EcosMessage m);
 
-    public void reply(EcosReply m);
+    void reply(EcosReply m);
 
 }

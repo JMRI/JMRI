@@ -58,7 +58,7 @@ public interface ThrottleListener extends EventListener {
      * @param address address of the failed request
      * @param reason  failure cause
      */
-    public void notifyFailedThrottleRequest(LocoAddress address, String reason);
+    void notifyFailedThrottleRequest(LocoAddress address, String reason);
     
     /**
      * Get notification that a throttle request is in use by another
@@ -67,7 +67,7 @@ public interface ThrottleListener extends EventListener {
      * @param address The LocoAddress that needs the decision.
      * @param question The question being asked, steal / cancel, share / cancel, steal / share / cancel
      */
-    public void notifyDecisionRequired(LocoAddress address, DecisionType question);
+    void notifyDecisionRequired(LocoAddress address, DecisionType question);
 
 }
 

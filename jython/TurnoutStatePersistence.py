@@ -20,7 +20,7 @@ import java
 import java.io
 import java.util
 import org.apache.commons.csv
-from org.apache.log4j import Logger
+from org.slf4j import LoggerFactory
 
 # Define turnout state file
 # Default is 'TurnoutState.csv' stored in the preferences directory
@@ -36,12 +36,12 @@ class PersistTurnoutStateTask(jmri.implementation.AbstractShutDownTask):
     #
     # The logger has been instantiated within the pseudo package:
     #   'jmri.jmrit.jython.exec'
-    # This allows for easy identification and configuration of log4j.
+    # This allows for easy identification and configuration of logging.
     #
     # To show debug messages, add the following line (without quotes) to
     # the file 'default.lcf' located in the JMRI program directory:
     #   'log4j.category.jmri.jmrit.jython.exec=DEBUG'
-    log = Logger.getLogger("jmri.jmrit.jython.exec.TurnoutStatePersistence.PersistTurnoutStateTask")
+    log = LoggerFactory.getLogger("jmri.jmrit.jython.exec.TurnoutStatePersistence.PersistTurnoutStateTask")
 
     # Define task to run at ShutDown
     def run(self):

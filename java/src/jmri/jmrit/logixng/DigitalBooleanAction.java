@@ -16,6 +16,6 @@ public interface DigitalBooleanAction extends Base {
      * @param hasChangedToFalse true if the expression has changed to false, false otherwise
      * @throws JmriException when an exception occurs
      */
-    public void execute(boolean hasChangedToTrue, boolean hasChangedToFalse) throws JmriException;
+    void execute(boolean hasChangedToTrue, boolean hasChangedToFalse) throws JmriException;
     
 }

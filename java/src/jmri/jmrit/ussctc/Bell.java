@@ -7,6 +7,6 @@ package jmri.jmrit.ussctc;
  */
 public interface Bell {
 
-    public void ring();
+    void ring();
 
 }

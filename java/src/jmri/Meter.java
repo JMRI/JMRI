@@ -8,7 +8,7 @@ package jmri;
  */
 public interface Meter extends AnalogIO {
     
-    public enum Unit {
+    enum Unit {
         
         /**
          * The meter measures in percent: 0.0 - 100.0
@@ -36,17 +36,17 @@ public interface Meter extends AnalogIO {
         Micro;
     }
     
-    public Unit getUnit();
+    Unit getUnit();
 
     /**
      * Enable this meter
      */
-    public void enable();
+    void enable();
 
     /**
      * Disable this meter
      */
-    public void disable();
+    void disable();
     
     /**
      * Remove references to and from this object, so that it can eventually be
@@ -55,6 +55,6 @@ public interface Meter extends AnalogIO {
      * The meter must be disabled before it's disposed.
      */
     @Override
-    public void dispose();
+    void dispose();
 
 }

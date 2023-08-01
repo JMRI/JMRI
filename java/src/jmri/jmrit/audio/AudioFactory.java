@@ -36,18 +36,18 @@ public interface AudioFactory {
      *
      * @return true, if initialisation successful
      */
-    public boolean init();
+    boolean init();
 
     /**
      * Perform any implementation specific clean-up operations.
      */
-    public void cleanup();
+    void cleanup();
 
     /**
      * Determine if this AudioFactory is initialised
      * @return true if initialised
      */
-    public boolean isInitialised();
+    boolean isInitialised();
 
     /**
      * Provide a specific new AudioBuffer object.
@@ -56,7 +56,7 @@ public interface AudioFactory {
      * @param userName   for this object instance
      * @return a new specific AudioBuffer
      */
-    public AudioBuffer createNewBuffer(String systemName, String userName);
+    AudioBuffer createNewBuffer(String systemName, String userName);
 
     /**
      * Provide a specific new AudioListener object.
@@ -65,14 +65,14 @@ public interface AudioFactory {
      * @param userName   for this object instance
      * @return a new specific AudioListener
      */
-    public AudioListener createNewListener(String systemName, String userName);
+    AudioListener createNewListener(String systemName, String userName);
 
     /**
      * Get the currently active Listener object.
      *
      * @return active AudioListener
      */
-    public AudioListener getActiveAudioListener();
+    AudioListener getActiveAudioListener();
 
     /**
      * Provide a specific new AudioSource object.
@@ -81,7 +81,7 @@ public interface AudioFactory {
      * @param userName   for this object instance
      * @return a new specific AudioSource
      */
-    public AudioSource createNewSource(String systemName, String userName);
+    AudioSource createNewSource(String systemName, String userName);
 
     /**
      * Queues a new AudioCommand for subsequent execution.
@@ -91,14 +91,14 @@ public interface AudioFactory {
      * @param newAudioCommand AudioCommand to queue or null to execute queue
      * @return true, if further commands exist; false, if empty
      */
-    public boolean audioCommandQueue(AudioCommand newAudioCommand);
+    boolean audioCommandQueue(AudioCommand newAudioCommand);
 
     /**
      * Get the currently active Command thread.
      *
      * @return active CommandThread
      */
-    public Thread getCommandThread();
+    Thread getCommandThread();
 
     /**
      * Set if this AudioFactory should attenuate sources based on their
@@ -108,7 +108,7 @@ public interface AudioFactory {
      *
      * @param attenuated true if distance attenuation to be used
      */
-    public void setDistanceAttenuated(boolean attenuated);
+    void setDistanceAttenuated(boolean attenuated);
 
     /**
      * Determine if this AudioFactory attenuates sources based on their
@@ -116,6 +116,6 @@ public interface AudioFactory {
      *
      * @return true if distance attenuation used
      */
-    public boolean isDistanceAttenuated();
+    boolean isDistanceAttenuated();
 
 }

@@ -9,6 +9,6 @@ import jmri.jmrix.loconet.LnTrafficController;
  */
 interface LnMessageServerInterface extends Remote {
 
-    public LnMessageBufferInterface getMessageBuffer(LnTrafficController tc) throws RemoteException;
+    LnMessageBufferInterface getMessageBuffer(LnTrafficController tc) throws RemoteException;
 
 }

@@ -24,11 +24,11 @@ public interface WebMenuItem {
      * @return the path to the menu item
      */
     @Nonnull
-    public String getPath();
+    String getPath();
 
     /**
      * Get the URL for the menu item. This may be an absolute URL path in the
-     * JMRI web service, a URL that resolves to some other public location, or a
+     * JMRI web service, a URL that resolves to some other location, or a
      * JavaScript trigger. If null, the menu item will not have a link. If the
      * HREF starts with {@literal ng-click:}, it will be treated as a JavaScript
      * trigger instead of a URL.
@@ -36,7 +36,7 @@ public interface WebMenuItem {
      * @return the hyper-reference or null if the item is not a link
      */
     @CheckForNull
-    public String getHref();
+    String getHref();
 
     /**
      * Get the icon for the menu item. This icon needs to be the class
@@ -51,7 +51,7 @@ public interface WebMenuItem {
      * @return the class(es) for the icon or null if no icon is to be used
      */
     @CheckForNull
-    public String getIconClass();
+    String getIconClass();
 
     /**
      * Get the title for the menu item. This is displayed in the menu.
@@ -60,7 +60,7 @@ public interface WebMenuItem {
      * @return the localized title
      */
     @Nonnull
-    public String getTitle(@Nonnull Locale locale);
+    String getTitle(@Nonnull Locale locale);
 
     /**
      * The relative position of the menu item. If two menu items have the same
@@ -69,7 +69,7 @@ public interface WebMenuItem {
      *
      * @return the relative position
      */
-    public int getPosition();
+    int getPosition();
 
     /**
      * Indicate if the menu item should have a separator before it. Note that if
@@ -79,7 +79,7 @@ public interface WebMenuItem {
      * @return true if there should be a separator before the item; false
      *         otherwise
      */
-    public boolean isSeparatedBefore();
+    boolean isSeparatedBefore();
 
     /**
      * Indicate if the menu item should have a separator after it. Note that if
@@ -89,7 +89,7 @@ public interface WebMenuItem {
      * @return true if there should be a separator after the item; false
      *         otherwise
      */
-    public boolean isSeparatedAfter();
+    boolean isSeparatedAfter();
 
     /**
      * Indicate if the menu item is the anchor for a dynamic menu. A dynamic
@@ -99,6 +99,6 @@ public interface WebMenuItem {
      * @return true if the menu item is an anchor for a dynamic menu; false
      *         otherwise
      */
-    public boolean isDynamic();
+    boolean isDynamic();
 
 }

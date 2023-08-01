@@ -25,15 +25,15 @@ import jmri.profile.ProfileManager;
  */
 public interface Metadata {
 
-    public static final String JMRIVERSION = "JMRIVERSION"; // NOI18N
-    public static final String JMRIVERCANON = "JMRIVERCANON"; // NOI18N
-    public static final String JMRIVERMAJOR = "JMRIVERMAJOR"; // NOI18N
-    public static final String JMRIVERMINOR = "JMRIVERMINOR"; // NOI18N
-    public static final String JMRIVERTEST = "JMRIVERTEST"; // NOI18N
-    public static final String JVMVERSION = "JVMVERSION"; // NOI18N
-    public static final String JVMVENDOR = "JVMVENDOR"; // NOI18N
-    public static final String ACTIVEPROFILE = "activeProfile"; // NOI18N
-    public static final String COPYRIGHT = "copyright"; // NOI18N
+    String JMRIVERSION = "JMRIVERSION"; // NOI18N
+    String JMRIVERCANON = "JMRIVERCANON"; // NOI18N
+    String JMRIVERMAJOR = "JMRIVERMAJOR"; // NOI18N
+    String JMRIVERMINOR = "JMRIVERMINOR"; // NOI18N
+    String JMRIVERTEST = "JMRIVERTEST"; // NOI18N
+    String JVMVERSION = "JVMVERSION"; // NOI18N
+    String JVMVENDOR = "JVMVENDOR"; // NOI18N
+    String ACTIVEPROFILE = "activeProfile"; // NOI18N
+    String COPYRIGHT = "copyright"; // NOI18N
 
     /**
      * Return the value of the named meta data, or any valid system property.
@@ -41,7 +41,7 @@ public interface Metadata {
      * @param name name of meta data or property to return
      * @return String value of requested data or null
      */
-    public static String getBySystemName(String name) {
+    static String getBySystemName(String name) {
         if (name.equalsIgnoreCase(JMRIVERSION)) {
             return jmri.Version.name();
         } else if (name.equalsIgnoreCase(JMRIVERCANON)) {
@@ -70,7 +70,7 @@ public interface Metadata {
      *
      * @return String[]
      */
-    public static String[] getSystemNameArray() {
+    static String[] getSystemNameArray() {
         String[] names = {JMRIVERSION,
             JMRIVERCANON,
             JMRIVERMAJOR,
@@ -87,7 +87,7 @@ public interface Metadata {
      * Get the list of known meta-data names.
      * @return the list of names
      */
-    public static List<String> getSystemNameList() {
+    static List<String> getSystemNameList() {
         return Arrays.asList(Metadata.getSystemNameArray());
     }
 

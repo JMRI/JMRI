@@ -22,7 +22,7 @@ public interface XmlAdapter {
      *                   required by the input XML.
      * @return true if successful
      */
-    public boolean load(Element e) throws JmriConfigureXmlException;
+    boolean load(Element e) throws JmriConfigureXmlException;
 
     /**
      * Create a set of configured objects from their XML description.
@@ -35,7 +35,7 @@ public interface XmlAdapter {
      *                   required by the input XML
      * @return true if successful
      */
-    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException;
+    boolean load(Element shared, Element perNode) throws JmriConfigureXmlException;
 
     /**
      * Determine if this set of configured objects should be loaded after basic
@@ -44,7 +44,7 @@ public interface XmlAdapter {
      * @return true to defer loading
      * @since 2.11.2
      */
-    public boolean loadDeferred();
+    boolean loadDeferred();
 
     /**
      * Create a set of configured objects from their XML description, using an
@@ -58,7 +58,7 @@ public interface XmlAdapter {
      * @throws JmriConfigureXmlException when a error prevents creating the objects as as
      *                   required by the input XML
      */
-    public void load(Element e, Object o) throws JmriConfigureXmlException;
+    void load(Element e, Object o) throws JmriConfigureXmlException;
 
     /**
      * Create a set of configured objects from their XML description, using an
@@ -73,7 +73,7 @@ public interface XmlAdapter {
      * @throws JmriConfigureXmlException when a error prevents creating the objects as as
      *                   required by the input XML
      */
-    public void load(Element shared, Element perNode, Object o) throws JmriConfigureXmlException;
+    void load(Element shared, Element perNode, Object o) throws JmriConfigureXmlException;
 
     /**
      * Store the object in XML
@@ -83,7 +83,7 @@ public interface XmlAdapter {
      *          in ConfigXmlManager.
      * @return The XML representation Element
      */
-    public Element store(Object o);
+    Element store(Object o);
 
     /**
      * Store the object in XML
@@ -95,9 +95,9 @@ public interface XmlAdapter {
      *               false if the returned element should be per-node.
      * @return The XML representation Element
      */
-    public Element store(Object o, boolean shared);
+    Element store(Object o, boolean shared);
 
-    public int loadOrder();
+    int loadOrder();
 
     /**
      * Provide a simple handler for errors.
@@ -116,7 +116,7 @@ public interface XmlAdapter {
      *                                   propagated upward to higher-level error
      *                                   handling
      */
-    public void handleException(
+    void handleException(
             @Nonnull String description,
             @CheckForNull String operation,
             @CheckForNull String systemName,
@@ -130,21 +130,21 @@ public interface XmlAdapter {
      *
      * @param errorHandler the error handler or null to ignore parser errors
      */
-    public void setExceptionHandler(ErrorHandler errorHandler);
+    void setExceptionHandler(ErrorHandler errorHandler);
 
     /**
      * Get the current error handler.
      *
      * @return the error handler or null if no error handler is assigned
      */
-    public ErrorHandler getExceptionHandler();
+    ErrorHandler getExceptionHandler();
 
     /**
      * Get the default error handler.
      *
      * @return the default error handler
      */
-    public static ErrorHandler getDefaultExceptionHandler() {
+    static ErrorHandler getDefaultExceptionHandler() {
         if (GraphicsEnvironment.isHeadless()) {
             return new ErrorHandler();
         }

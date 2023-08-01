@@ -20,7 +20,7 @@ public interface StringIO extends NamedBean {
      * @param value the desired string value
      * @throws jmri.JmriException general error when setting the value fails
      */
-    public void setCommandedStringValue(@Nonnull String value) throws JmriException;
+    void setCommandedStringValue(@Nonnull String value) throws JmriException;
 
     /**
      * Query the commanded string. This is a bound parameter, so you can also
@@ -29,7 +29,7 @@ public interface StringIO extends NamedBean {
      * @return the string value
      */
     @Nonnull
-    public String getCommandedStringValue();
+    String getCommandedStringValue();
 
     /**
      * Query the known string value. This is a bound parameter, so you can also
@@ -40,7 +40,7 @@ public interface StringIO extends NamedBean {
      * @return the known string value
      */
     @Nonnull
-    default public String getKnownStringValue() {
+    default String getKnownStringValue() {
         return getCommandedStringValue();
     }
 
@@ -48,7 +48,7 @@ public interface StringIO extends NamedBean {
      * Get the maximum length of string that this StringIO can handle.
      * @return the maximum length or 0 if arbitrary lengths are accepted.
      */
-    default public int getMaximumLength() {
+    default int getMaximumLength() {
         return 0;
     }
 
@@ -56,7 +56,7 @@ public interface StringIO extends NamedBean {
      * Request an update from the layout soft/hardware. May not even happen, and
      * if it does it will happen later; listen for the result.
      */
-    default public void requestUpdateFromLayout() {
+    default void requestUpdateFromLayout() {
     }
 
 }

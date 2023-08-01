@@ -18,7 +18,7 @@ public interface ProxyManager<B extends NamedBean> extends Manager<B> {
      * @param manager the Manager to add; if manager has already been added, it
      *                will not be added again
      */
-    public void addManager(@Nonnull Manager<B> manager);
+    void addManager(@Nonnull Manager<B> manager);
 
     /**
      * Get the default manager or the internal manager if no default manager has
@@ -27,7 +27,7 @@ public interface ProxyManager<B extends NamedBean> extends Manager<B> {
      * @return the default manager or the internal manager
      */
     @Nonnull
-    public Manager<B> getDefaultManager();
+    Manager<B> getDefaultManager();
 
     /**
      * Returns a list of all managers, including the internal manager. This is
@@ -36,7 +36,7 @@ public interface ProxyManager<B extends NamedBean> extends Manager<B> {
      *
      * @return the list of managers
      */
-    public List<Manager<B>> getManagerList();
+    List<Manager<B>> getManagerList();
 
     /**
      * Get a list of all managers, with the default as the first item and internal
@@ -44,6 +44,6 @@ public interface ProxyManager<B extends NamedBean> extends Manager<B> {
      *
      * @return the list of managers
      */
-    public List<Manager<B>> getDisplayOrderManagerList();
+    List<Manager<B>> getDisplayOrderManagerList();
 
 }

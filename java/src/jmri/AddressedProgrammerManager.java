@@ -47,7 +47,7 @@ public interface AddressedProgrammerManager extends PropertyChangeProvider {
      * @return null only if there isn't an Ops Mode Programmer in the system
      */
     @CheckForNull
-    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress);
+    AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress);
 
     /**
      * Gain access to a Addressed Mode Programmer without reservation.
@@ -56,7 +56,7 @@ public interface AddressedProgrammerManager extends PropertyChangeProvider {
      * @return null only if there isn't an Ops Mode Programmer in the system
      */
     @CheckForNull
-    public default AddressedProgrammer getAddressedProgrammer(@Nonnull DccLocoAddress address) {
+    default AddressedProgrammer getAddressedProgrammer(@Nonnull DccLocoAddress address) {
         return this.getAddressedProgrammer(address.isLongAddress(), address.getNumber());
     }
 
@@ -69,7 +69,7 @@ public interface AddressedProgrammerManager extends PropertyChangeProvider {
      * @return null if the address is in use by a reserved programmer
      */
     @CheckForNull
-    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress);
+    AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress);
 
     /**
      * Gain access to a (the) Addressed Mode Programmer, in the process
@@ -79,7 +79,7 @@ public interface AddressedProgrammerManager extends PropertyChangeProvider {
      * @return null if the address is in use by a reserved programmer
      */
     @CheckForNull
-    public default AddressedProgrammer reserveAddressedProgrammer(@Nonnull DccLocoAddress address) {
+    default AddressedProgrammer reserveAddressedProgrammer(@Nonnull DccLocoAddress address) {
         return this.reserveAddressedProgrammer(address.isLongAddress(), address.getNumber());
     }
 
@@ -89,7 +89,7 @@ public interface AddressedProgrammerManager extends PropertyChangeProvider {
      *
      * @param p the programmer to release
      */
-    public void releaseAddressedProgrammer(@Nonnull AddressedProgrammer p);
+    void releaseAddressedProgrammer(@Nonnull AddressedProgrammer p);
 
     /**
      * Convenience method to check whether you'll be able to get an Addressed
@@ -97,7 +97,7 @@ public interface AddressedProgrammerManager extends PropertyChangeProvider {
      *
      * @return false if there's no chance of getting one
      */
-    public boolean isAddressedModePossible();
+    boolean isAddressedModePossible();
 
     /**
      * Convenience method to check whether you'll be able to get an Addressed
@@ -106,7 +106,7 @@ public interface AddressedProgrammerManager extends PropertyChangeProvider {
      * @param address the address to get a programmer for
      * @return false if there's no chance of getting one
      */
-    public boolean isAddressedModePossible(@Nonnull LocoAddress address);
+    boolean isAddressedModePossible(@Nonnull LocoAddress address);
 
     /**
      * Get the list of {@link ProgrammingMode} (generally) supported by
@@ -120,7 +120,7 @@ public interface AddressedProgrammerManager extends PropertyChangeProvider {
      * @return the programming modes or an empty list
      */
     @Nonnull
-    public List<ProgrammingMode> getDefaultModes();
+    List<ProgrammingMode> getDefaultModes();
 
     /**
      * Provides the human-readable representation for including
@@ -130,7 +130,7 @@ public interface AddressedProgrammerManager extends PropertyChangeProvider {
      * @return the name for the programmer
      */
     @Nonnull
-    public String getUserName();
+    String getUserName();
 
     /**
      * Provides the human-readable representation for including
@@ -141,5 +141,5 @@ public interface AddressedProgrammerManager extends PropertyChangeProvider {
      */
     @Nonnull
     @Override
-    public String toString();
+    String toString();
 }

@@ -12,7 +12,7 @@ public interface AnalogIOManager extends Manager<AnalogIO> {
      * @param clazz the NamedBean class that should be registered in this manager
      * @param manager the manager that managers the NamedBeans of type clazz
      */
-    public default void addBeanType(Class<? extends AnalogIO> clazz, Manager<? extends NamedBean> manager) {
+    default void addBeanType(Class<? extends AnalogIO> clazz, Manager<? extends NamedBean> manager) {
         throw new UnsupportedOperationException();
     }
 
@@ -21,7 +21,7 @@ public interface AnalogIOManager extends Manager<AnalogIO> {
      * @param clazz the NamedBean class that should be registered in this manager
      * @param manager the manager that managers the NamedBeans of type clazz
      */
-    public default void removeBeanType(Class<? extends AnalogIO> clazz, Manager<? extends NamedBean> manager) {
+    default void removeBeanType(Class<? extends AnalogIO> clazz, Manager<? extends NamedBean> manager) {
         throw new UnsupportedOperationException();
     }
 

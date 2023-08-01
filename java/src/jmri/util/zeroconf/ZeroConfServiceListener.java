@@ -9,10 +9,10 @@ import java.util.EventListener;
  */
 public interface ZeroConfServiceListener extends EventListener {
 
-    public void serviceQueued(ZeroConfServiceEvent se);
+    void serviceQueued(ZeroConfServiceEvent se);
 
-    public void servicePublished(ZeroConfServiceEvent se);
+    void servicePublished(ZeroConfServiceEvent se);
 
-    public void serviceUnpublished(ZeroConfServiceEvent se);
+    void serviceUnpublished(ZeroConfServiceEvent se);
 
 }

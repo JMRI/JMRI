@@ -8,5 +8,5 @@ package jmri.jmrix.loconet.locostats;
  */
 public interface LocoNetInterfaceStatsListener extends java.util.EventListener {
  
-    public void notifyChangedInterfaceStatus(Object s);
+    void notifyChangedInterfaceStatus(Object s);
 }

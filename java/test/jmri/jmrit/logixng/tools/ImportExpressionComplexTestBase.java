@@ -268,14 +268,7 @@ public abstract class ImportExpressionComplexTestBase {
     public void teardownTest() {
         // JUnitAppender.clearBacklog();    REMOVE THIS!!!
 
-        List<LoggingEvent> list = new ArrayList<>(JUnitAppender.getBacklog());
-        for (LoggingEvent event : list) {
-            if ((event.getLevel() == Level.WARN)
-                    && event.getMessage().toString().equals(
-                            "Import Conditional 'IX1C1' to LogixNG 'IQ:AUTO:0001'")) {
-                JUnitAppender.suppressErrorMessage(event.getMessage().toString());
-            }
-        }
+        JUnitAppender.suppressWarnMessage("Import Conditional 'IX1C1' to LogixNG 'IQ:AUTO:0001'");
 
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
