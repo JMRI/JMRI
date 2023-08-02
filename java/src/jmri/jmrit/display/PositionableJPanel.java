@@ -46,6 +46,7 @@ public class PositionableJPanel extends JPanel implements Positionable, JmriMous
     protected boolean _viewCoordinates = false;
     protected boolean _controlling = true;
     protected boolean _hidden = false;
+    protected boolean _emptyHidden = false;
     protected int _displayLevel;
     private double _scale = 1.0;    // scaling factor
 
@@ -154,6 +155,16 @@ public class PositionableJPanel extends JPanel implements Positionable, JmriMous
         } else {
             setVisible(false);
         }
+    }
+
+    @Override
+    public void setEmptyHidden(boolean hide) {
+        _emptyHidden = hide;
+    }
+
+    @Override
+    public boolean isEmptyHidden() {
+        return _emptyHidden;
     }
 
     public void setLevel(int l) {
