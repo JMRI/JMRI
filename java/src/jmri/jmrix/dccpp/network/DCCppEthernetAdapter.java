@@ -83,20 +83,17 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
      * Set up the keepAliveTimer, and start it.
      */
     private void keepAliveTimer() {
-        if (keepAliveTimer == null) {
-            keepAliveTimer = new java.util.TimerTask(){
-                    @Override
-                    public void run() {
-                        // If the timer times out, send a request for status
-                        DCCppEthernetAdapter.this.getSystemConnectionMemo().getDCCppTrafficController()
-                            .sendDCCppMessage(
-                                              jmri.jmrix.dccpp.DCCppMessage.makeCSStatusMsg(),
-                                              null);
-                    }
-                };
-        } else {
-            keepAliveTimer.cancel();
+        if (keepAliveTimer != null) {
+            return; //one already exists, exit
         }
+        keepAliveTimer = new java.util.TimerTask(){
+                @Override
+                public void run() {
+                    // If the timer times out, send a request for status
+                    DCCppEthernetAdapter.this.getSystemConnectionMemo().getDCCppTrafficController()
+                        .sendDCCppMessage(jmri.jmrix.dccpp.DCCppMessage.makeCSStatusMsg(), null);
+                }
+            };
         jmri.util.TimerUtil.schedule(keepAliveTimer, keepAliveTimeoutValue, keepAliveTimeoutValue);
     }
     
