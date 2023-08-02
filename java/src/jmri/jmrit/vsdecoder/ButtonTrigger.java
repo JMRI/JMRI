@@ -1,5 +1,15 @@
 package jmri.jmrit.vsdecoder;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import javax.swing.AbstractButton;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseListener;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Button trigger.
  *
@@ -18,16 +28,6 @@ package jmri.jmrit.vsdecoder;
  *
  * @author Mark Underwood Copyright (C) 2011
  */
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import javax.swing.AbstractButton;
-import jmri.util.swing.JmriMouseEvent;
-import jmri.util.swing.JmriMouseListener;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class ButtonTrigger extends Trigger implements ActionListener, JmriMouseListener {
 
     enum ButtonAction {

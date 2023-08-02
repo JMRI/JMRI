@@ -20,16 +20,16 @@ public interface DigitalActionManager extends BaseManager<MaleDigitalActionSocke
      * @return the male socket for this action
      * @throws IllegalArgumentException if the action has an invalid system name
      */
-    public MaleDigitalActionSocket registerAction(@Nonnull DigitalActionBean action)
+    MaleDigitalActionSocket registerAction(@Nonnull DigitalActionBean action)
             throws IllegalArgumentException;
     
     /**
      * Create a new system name for an DigitalActionBean.
      * @return a new system name
      */
-    public String getAutoSystemName();
+    String getAutoSystemName();
 
-    public FemaleDigitalActionSocket createFemaleSocket(
+    FemaleDigitalActionSocket createFemaleSocket(
             Base parent, FemaleSocketListener listener, String socketName);
 
     /**
@@ -37,7 +37,7 @@ public interface DigitalActionManager extends BaseManager<MaleDigitalActionSocke
      * 
      * @return a set of entries with category and class
      */
-    public Map<Category, List<Class<? extends Base>>> getActionClasses();
+    Map<Category, List<Class<? extends Base>>> getActionClasses();
 
     /**
      * {@inheritDoc}
@@ -46,7 +46,7 @@ public interface DigitalActionManager extends BaseManager<MaleDigitalActionSocke
      * {@link #getSystemNamePrefix() } and "DA";
      */
     @Override
-    public default String getSubSystemNamePrefix() {
+    default String getSubSystemNamePrefix() {
         return getSystemNamePrefix() + "DA";
     }
 
@@ -56,6 +56,6 @@ public interface DigitalActionManager extends BaseManager<MaleDigitalActionSocke
      *
      * @param x the DigitalActionBean to delete
      */
-    public void deleteDigitalAction(MaleDigitalActionSocket x);
+    void deleteDigitalAction(MaleDigitalActionSocket x);
     
 }

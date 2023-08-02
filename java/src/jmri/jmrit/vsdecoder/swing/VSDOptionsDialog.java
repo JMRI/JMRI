@@ -12,20 +12,19 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 
 /**
- * class VSDOptionsDialog
+ * Options dialog to add a Train to a VSDecoder.
  *
- * Configuration dialog for setting up a new VSDecoder
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
@@ -39,6 +38,7 @@ public class VSDOptionsDialog extends JDialog {
     public VSDOptionsDialog(JPanel parent, String title) {
         super(SwingUtilities.getWindowAncestor(parent), title);
         initComponents();
+        setLocationRelativeTo(parent);
     }
 
     public void initComponents() {
@@ -70,7 +70,5 @@ public class VSDOptionsDialog extends JDialog {
         }
         dispose();
     }
-
-    //    private static final Logger log = LoggerFactory.getLogger(VSDOptionsDialog.class);
 
 }

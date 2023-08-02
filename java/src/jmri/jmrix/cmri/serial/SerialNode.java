@@ -1172,8 +1172,12 @@ public class SerialNode extends AbstractNode {
         // Count the number of DLE's to be inserted
         int nOutBytes = numOutputCards() * (bitsPerCard / 8);
         int nDLE = 0;
+        byte[] oA; // current values of the output bits for this node
+        
+        oA = outputArray.clone();
+
         for (int i = 0; i < nOutBytes; i++) {
-            if ((outputArray[i] == 2) || (outputArray[i] == 3) || (outputArray[i] == 16)) {
+            if ((oA[i] == 2) || (oA[i] == 3) || (oA[i] == 16)) {
                 nDLE++;
             }
         }
@@ -1185,17 +1189,16 @@ public class SerialNode extends AbstractNode {
         int k = 2;
         for (int i = 0; i < nOutBytes; i++) {
             // perform C/MRI required DLE processing
-            if ((outputArray[i] == 2) || (outputArray[i] == 3) || (outputArray[i] == 16)) {
+            if ((oA[i] == 2) || (oA[i] == 3) || (oA[i] == 16)) {
                 m.setElement(k, 16);  // DLE
                 k++;
             }
             // add output byte
-            m.setElement(k, outputArray[i]);
+            m.setElement(k, oA[i]);
             k++;
         }
         return m;
     }
-
     boolean warned = false;
 
     void warn(String s) {

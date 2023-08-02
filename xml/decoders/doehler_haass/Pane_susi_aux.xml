@@ -37,6 +37,12 @@
 		<griditem gridx="1" gridy="3" gridwidth="1">
 				<display item="AUX2 Mapping"/>
 		</griditem>
+		<griditem gridx="0" gridy="4" gridwidth="1">
+				<display item="Function assignment automatic idle"/>
+		</griditem>
+		<griditem gridx="1" gridy="4" gridwidth="1">
+				<display item="Function assignment forced acceleration"/>
+		</griditem>
 	</grid>
 	<label>
       <text> </text>

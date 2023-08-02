@@ -1983,7 +1983,7 @@ class createandshowGUI(TableModelListener):
                 for item in items:
                     if self.logLevel > 0: print "item", item
                     fp.write('"%s"' %item)
-                    if i != 3: fp.write(",")
+                    if i != 4: fp.write(",")
                     i+=1
                 fp.write('\n')
                 #fp.write('\n'.join(item))

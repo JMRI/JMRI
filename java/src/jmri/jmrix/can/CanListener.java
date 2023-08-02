@@ -11,13 +11,13 @@ public interface CanListener extends jmri.jmrix.AbstractMRListener {
      * Called when an outgoing message is sent to the CAN Network.
      * @param m the CanMessage being sent.
      */
-    public void message(CanMessage m);
+    void message(CanMessage m);
 
     /**
      * Called when an incoming CanFrame is received from the CAN Network.
      * @param m the CanReply being received.
      */
-    public void reply(CanReply m);
+    void reply(CanReply m);
     
     /**
      * Add a Traffic Controller Listener.
@@ -25,7 +25,7 @@ public interface CanListener extends jmri.jmrix.AbstractMRListener {
      * avoids Leaking Constructor errors.
      * @param tcToAdd The system memo CAN Traffic Controller
      */
-    public default void addTc(TrafficController tcToAdd) {
+    default void addTc(TrafficController tcToAdd) {
         if (tcToAdd != null) {
             tcToAdd.addCanListener(this);
         }
@@ -37,7 +37,7 @@ public interface CanListener extends jmri.jmrix.AbstractMRListener {
      * avoids Leaking Constructor errors.
      * @param memoToAdd The CAN system Connection.
      */
-    public default void addTc(CanSystemConnectionMemo memoToAdd) {
+    default void addTc(CanSystemConnectionMemo memoToAdd) {
         if (memoToAdd != null) {
             addTc(memoToAdd.getTrafficController());
         }
@@ -47,7 +47,7 @@ public interface CanListener extends jmri.jmrix.AbstractMRListener {
      * Remove a Traffic Controller Listener.
      * @param tcToRemove The system memo CAN Traffic Controller.
      */
-    public default void removeTc(TrafficController tcToRemove) {
+    default void removeTc(TrafficController tcToRemove) {
         if (tcToRemove != null) {
             tcToRemove.removeCanListener(this);
         }
@@ -57,7 +57,7 @@ public interface CanListener extends jmri.jmrix.AbstractMRListener {
      * Remove a Traffic Controller Listener.
      * @param memoToRemove The CAN system Connection.
      */
-    public default void removeTc(CanSystemConnectionMemo memoToRemove) {
+    default void removeTc(CanSystemConnectionMemo memoToRemove) {
         if (memoToRemove != null) {
             removeTc(memoToRemove.getTrafficController());
         }

@@ -19,6 +19,6 @@ public interface PowerlinePanelInterface {
      * classes.
      * @param memo Connection details memo
      */
-    public void initComponents(SerialSystemConnectionMemo memo);
+    void initComponents(SerialSystemConnectionMemo memo);
 
 }

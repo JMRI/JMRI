@@ -1,10 +1,11 @@
 package jmri.implementation;
 
 import java.util.Arrays;
+
+import javax.annotation.CheckForNull;
+
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implement SignalHead for the MERG Signal Driver 2.
@@ -42,9 +43,9 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         mFeather = feather;
         mHome = home;
         if (mHome) {
-            setAppearance(RED);
+            MergSD2SignalHead.this.setAppearance(RED);
         } else {
-            setAppearance(YELLOW);
+            MergSD2SignalHead.this.setAppearance(YELLOW);
         }
     }
 
@@ -61,9 +62,9 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         mFeather = feather;
         mHome = home;
         if (mHome) {
-            setAppearance(RED);
+            MergSD2SignalHead.this.setAppearance(RED);
         } else {
-            setAppearance(YELLOW);
+            MergSD2SignalHead.this.setAppearance(YELLOW);
         }
     }
 
@@ -188,14 +189,17 @@ public class MergSD2SignalHead extends DefaultSignalHead {
     boolean mFeather = false;
     boolean mHome = true; //Home Signal = true, Distance Signal = false
 
+    @CheckForNull
     public NamedBeanHandle<Turnout> getInput1() {
         return mInput1;
     }
 
+    @CheckForNull
     public NamedBeanHandle<Turnout> getInput2() {
         return mInput2;
     }
 
+    @CheckForNull
     public NamedBeanHandle<Turnout> getInput3() {
         return mInput3;
     }
@@ -375,18 +379,15 @@ public class MergSD2SignalHead extends DefaultSignalHead {
 
     @Override
     boolean isTurnoutUsed(Turnout t) {
-        if (getInput1() != null && t.equals(getInput1().getBean())) {
+        if (mInput1 != null && t.equals(mInput1.getBean())) {
             return true;
         }
-        if (getInput2() != null && t.equals(getInput2().getBean())) {
+        if (mInput2 != null && t.equals(mInput2.getBean())) {
             return true;
         }
-        if (getInput3() != null && t.equals(getInput3().getBean())) {
-            return true;
-        }
-        return false;
+        return (mInput3 != null && t.equals(mInput3.getBean()));
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MergSD2SignalHead.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MergSD2SignalHead.class);
 
 }

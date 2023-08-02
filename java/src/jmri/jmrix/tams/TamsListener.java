@@ -10,9 +10,9 @@ package jmri.jmrix.tams;
  */
 public interface TamsListener extends jmri.jmrix.AbstractMRListener {
 
-    public void message(TamsMessage m);
+    void message(TamsMessage m);
 
-    public void reply(TamsReply m);
+    void reply(TamsReply m);
 }
 
 

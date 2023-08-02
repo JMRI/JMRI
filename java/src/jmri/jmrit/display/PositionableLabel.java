@@ -67,6 +67,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     protected boolean _viewCoordinates = true;
     protected boolean _controlling = true;
     protected boolean _hidden = false;
+    protected boolean _emptyHidden = false;
     protected int _displayLevel;
 
     protected String _unRotatedText;
@@ -199,6 +200,16 @@ public class PositionableLabel extends JLabel implements Positionable {
         } else {
             setVisible(false);
         }
+    }
+
+    @Override
+    public void setEmptyHidden(boolean hide) {
+        _emptyHidden = hide;
+    }
+
+    @Override
+    public boolean isEmptyHidden() {
+        return _emptyHidden;
     }
 
     /**
@@ -1142,6 +1153,19 @@ public class PositionableLabel extends JLabel implements Positionable {
 
     @Override
     public void setText(String text) {
+        if (this instanceof BlockContentsIcon || this instanceof MemoryIcon || this instanceof GlobalVariableIcon) {
+            if (_editor != null && !_editor.isEditable()) {
+                if (isEmptyHidden()) {
+                    log.debug("label setText: {} :: {}", text, getNameString());
+                    if (text == null || text.isEmpty()) {
+                        setVisible(false);
+                    } else {
+                        setVisible(true);
+                    }
+                }
+            }
+        }
+
         _unRotatedText = text;
         _text = (text != null && text.length() > 0);  // when "" is entered for text, and a font has been specified, the descender distance moves the position
         if (/*_rotateText &&*/!isIcon() && (_namedIcon != null || _degrees != 0)) {

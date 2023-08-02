@@ -25,7 +25,7 @@ public interface WebServerConfiguration {
      */
     @CheckReturnValue
     @Nonnull
-    public Map<String, String> getFilePaths();
+    Map<String, String> getFilePaths();
 
     /**
      * Get paths that are to redirected by the web server.
@@ -35,7 +35,7 @@ public interface WebServerConfiguration {
      */
     @CheckReturnValue
     @Nonnull
-    public Map<String, String> getRedirectedPaths();
+    Map<String, String> getRedirectedPaths();
 
     /**
      * Get paths that are not to be returned. Requests for paths listed here
@@ -47,6 +47,6 @@ public interface WebServerConfiguration {
      */
     @CheckReturnValue
     @Nonnull
-    public List<String> getForbiddenPaths();
+    List<String> getForbiddenPaths();
 
 }

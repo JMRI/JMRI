@@ -1592,6 +1592,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 }
                 setDisplayLevelMenu(p, popup);
                 setHiddenMenu(p, popup);
+                setEmptyHiddenMenu(p, popup);
                 setEditIdMenu(p, popup);
                 popup.addSeparator();
                 setLogixNGPositionableMenu(p, popup);

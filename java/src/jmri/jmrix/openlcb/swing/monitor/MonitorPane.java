@@ -71,7 +71,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
     public void initComponents(CanSystemConnectionMemo memo) {
         this.memo = memo;
 
-        memo.getTrafficController().addCanListener(this);
+        memo.getTrafficController().addCanConsoleListener(this);
 
         aliasMap = memo.get(org.openlcb.can.AliasMap.class);
         messageBuilder = new MessageBuilder(aliasMap);

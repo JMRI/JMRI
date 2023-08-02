@@ -8,8 +8,8 @@ package jmri.jmrix.qsi;
  */
 public interface QsiListener extends java.util.EventListener {
 
-    public void message(QsiMessage m);
+    void message(QsiMessage m);
 
-    public void reply(QsiReply m);
+    void reply(QsiReply m);
 
 }

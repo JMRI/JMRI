@@ -38,23 +38,23 @@ public interface AudioBuffer extends Audio {
     /**
      * Definition of unknown audio format
      */
-    public static final int FORMAT_UNKNOWN = 0x00;
+    int FORMAT_UNKNOWN = 0x00;
     /**
      * Definition of 8-bit mono audio format
      */
-    public static final int FORMAT_8BIT_MONO = 0x11;
+    int FORMAT_8BIT_MONO = 0x11;
     /**
      * Definition of 16-bit mono audio format
      */
-    public static final int FORMAT_16BIT_MONO = 0x12;
+    int FORMAT_16BIT_MONO = 0x12;
     /**
      * Definition of 8-bit stereo audio format
      */
-    public static final int FORMAT_8BIT_STEREO = 0x21;
+    int FORMAT_8BIT_STEREO = 0x21;
     /**
      * Definition of 16-bit stereo audio format
      */
-    public static final int FORMAT_16BIT_STEREO = 0x22;
+    int FORMAT_16BIT_STEREO = 0x22;
 
     /**
      * Definition of 8-bit quad multi-channel audio format.
@@ -64,7 +64,7 @@ public interface AudioBuffer extends Audio {
      * <p>
      * JavaSound and Null implementations do not support these formats.
      */
-    public static final int FORMAT_8BIT_QUAD = 0x41;
+    int FORMAT_8BIT_QUAD = 0x41;
     /**
      * Definition of 16-bit quad multi-channel audio format.
      * <p>
@@ -73,7 +73,7 @@ public interface AudioBuffer extends Audio {
      * <p>
      * JavaSound and Null implementations do not support these formats.
      */
-    public static final int FORMAT_16BIT_QUAD = 0x42;
+    int FORMAT_16BIT_QUAD = 0x42;
     /**
      * Definition of 8-bit 5.1 multi-channel audio format.
      * <p>
@@ -82,7 +82,7 @@ public interface AudioBuffer extends Audio {
      * <p>
      * JavaSound and Null implementations do not support these formats.
      */
-    public static final int FORMAT_8BIT_5DOT1 = 0x61;
+    int FORMAT_8BIT_5DOT1 = 0x61;
     /**
      * Definition of 16-bit 5.1 multi-channel audio format.
      * <p>
@@ -91,7 +91,7 @@ public interface AudioBuffer extends Audio {
      * <p>
      * JavaSound and Null implementations do not support these formats.
      */
-    public static final int FORMAT_16BIT_5DOT1 = 0x62;
+    int FORMAT_16BIT_5DOT1 = 0x62;
     /**
      * Definition of 8-bit 6.1 multi-channel audio format.
      * <p>
@@ -100,7 +100,7 @@ public interface AudioBuffer extends Audio {
      * <p>
      * JavaSound and Null implementations do not support these formats.
      */
-    public static final int FORMAT_8BIT_6DOT1 = 0x71;
+    int FORMAT_8BIT_6DOT1 = 0x71;
     /**
      * Definition of 16-bit 6.1 multi-channel audio format.
      * <p>
@@ -109,7 +109,7 @@ public interface AudioBuffer extends Audio {
      * <p>
      * JavaSound and Null implementations do not support these formats.
      */
-    public static final int FORMAT_16BIT_6DOT1 = 0x72;
+    int FORMAT_16BIT_6DOT1 = 0x72;
     /**
      * Definition of 8-bit 7.1 multi-channel audio format.
      * <p>
@@ -118,7 +118,7 @@ public interface AudioBuffer extends Audio {
      * <p>
      * JavaSound and Null implementations do not support these formats.
      */
-    public static final int FORMAT_8BIT_7DOT1 = 0x81;
+    int FORMAT_8BIT_7DOT1 = 0x81;
     /**
      * Definition of 16-bit 7.1 multi-channel audio format.
      * <p>
@@ -127,7 +127,7 @@ public interface AudioBuffer extends Audio {
      * <p>
      * JavaSound and Null implementations do not support these formats.
      */
-    public static final int FORMAT_16BIT_7DOT1 = 0x82;
+    int FORMAT_16BIT_7DOT1 = 0x82;
 
     /**
      * Return the url of the sound sample
@@ -139,7 +139,7 @@ public interface AudioBuffer extends Audio {
      *
      * @return url
      */
-    public String getURL();
+    String getURL();
 
     /**
      * Sets the url of the sound sample
@@ -151,7 +151,7 @@ public interface AudioBuffer extends Audio {
      *
      * @param pUrl URL for location containing sound sample data
      */
-    public void setURL(String pUrl);
+    void setURL(String pUrl);
 
     /**
      * Sets the input stream of the sound sample
@@ -163,7 +163,7 @@ public interface AudioBuffer extends Audio {
      *
      * @param stream InputStream containing sound sample data
      */
-    public void setInputStream(InputStream stream);
+    void setInputStream(InputStream stream);
 
     /**
      * Retrieves the format of the sound sample stored in this buffer
@@ -175,7 +175,7 @@ public interface AudioBuffer extends Audio {
      *
      * @return constant representing format
      */
-    public int getFormat();
+    int getFormat();
 
     /**
      * Retrieves the length of the sound sample stored in this buffer
@@ -188,7 +188,7 @@ public interface AudioBuffer extends Audio {
      * @return length of sound sample in frames
      * @see #getFrameSize()
      */
-    public long getLength();
+    long getLength();
 
     /**
      * Retrieves the frequency of the sound sample stored in this buffer
@@ -200,7 +200,7 @@ public interface AudioBuffer extends Audio {
      *
      * @return frequency of sound sample in Hz
      */
-    public int getFrequency();
+    int getFrequency();
 
     /**
      * Retrieves the length of a sound sample frame stored in this buffer
@@ -212,7 +212,7 @@ public interface AudioBuffer extends Audio {
      *
      * @return length of sound sample frame in bytes
      */
-    public int getFrameSize();
+    int getFrameSize();
 
     /**
      * Sets the start loop point of the sound sample stored in this buffer
@@ -224,7 +224,7 @@ public interface AudioBuffer extends Audio {
      *
      * @param startLoopPoint position of start loop point in samples
      */
-    public void setStartLoopPoint(long startLoopPoint);
+    void setStartLoopPoint(long startLoopPoint);
 
     /**
      * Retrieves the start loop point of the sound sample stored in this buffer
@@ -236,7 +236,7 @@ public interface AudioBuffer extends Audio {
      *
      * @return position of start loop point in samples
      */
-    public long getStartLoopPoint();
+    long getStartLoopPoint();
 
     /**
      * Sets the end loop point of the sound sample stored in this buffer
@@ -248,7 +248,7 @@ public interface AudioBuffer extends Audio {
      *
      * @param endLoopPoint position of end loop point in samples
      */
-    public void setEndLoopPoint(long endLoopPoint);
+    void setEndLoopPoint(long endLoopPoint);
 
     /**
      * Retrieves the end loop point of the sound sample stored in this buffer
@@ -260,7 +260,7 @@ public interface AudioBuffer extends Audio {
      *
      * @return position of end loop point in samples
      */
-    public long getEndLoopPoint();
+    long getEndLoopPoint();
 
     /**
      * Sets that this buffer is to be streamed as opposed to loaded in full. Can
@@ -275,7 +275,7 @@ public interface AudioBuffer extends Audio {
      * @param streamed buffer is streamed from file or loaded in full
      * @see #isStreamedForced()
      */
-    public void setStreamed(boolean streamed);
+    void setStreamed(boolean streamed);
 
     /**
      * Retrieves the current streaming setting of this buffer
@@ -287,7 +287,7 @@ public interface AudioBuffer extends Audio {
      *
      * @return current streaming setting
      */
-    public boolean isStreamed();
+    boolean isStreamed();
 
     /**
      * Determines if this buffer can be loaded in full or if it must be streamed
@@ -301,7 +301,7 @@ public interface AudioBuffer extends Audio {
      *
      * @return True if buffer must be streamed; False it can be loaded in full
      */
-    public boolean isStreamedForced();
+    boolean isStreamedForced();
 
-    public boolean loadBuffer(ByteBuffer b, int format, int frequency);
+    boolean loadBuffer(ByteBuffer b, int format, int frequency);
 }

@@ -11,7 +11,7 @@ public interface OlcbConstants {
     /**
      * Prefix for EventIDs stored as IdTags
      */
-    public static final String tagPrefix = "IDOpenLCB$";
+    String tagPrefix = "IDOpenLCB$";
 }
 
 

@@ -142,6 +142,11 @@ public class ClientActions {
             }
 
             @Override
+            /**
+             * Make a sensor from a single Event ID.
+             * Set the user name from the CDI description (if available)
+             * {@inheritDoc}
+             */
             public void makeSensor(String ev, String mdesc) {
                 jmri.Sensor sensor =
                         jmri.InstanceManager.sensorManagerInstance()

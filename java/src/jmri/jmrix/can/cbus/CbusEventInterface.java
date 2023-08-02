@@ -15,7 +15,7 @@ public interface CbusEventInterface {
      * @return Event for the Action, may be null
      */
     @CheckForNull
-    public abstract CanMessage getBeanOnMessage();
+    CanMessage getBeanOnMessage();
     
     /**
      * Get event for primary Bean Off Action.
@@ -23,7 +23,7 @@ public interface CbusEventInterface {
      * @return Event for the Action, may be null
      */
     @CheckForNull
-    public abstract CanMessage getBeanOffMessage();
+    CanMessage getBeanOffMessage();
     
     /**
      * Check if CanMessage is an event.
@@ -31,7 +31,7 @@ public interface CbusEventInterface {
      * @return Passed CanMessage if event, else null.
      */
     @CheckForNull
-    public default CanMessage checkEvent(CanMessage m) {
+    default CanMessage checkEvent(CanMessage m) {
         if ( CbusMessage.isEvent(m) ){
             return m;
         }

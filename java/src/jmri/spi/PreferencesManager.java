@@ -44,7 +44,7 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
      *                                 issue that prevents regular use of the
      *                                 application
      */
-    public void initialize(Profile profile) throws InitializationException;
+    void initialize(Profile profile) throws InitializationException;
 
     /**
      * Test if the PreferencesManager is initialized without errors for the
@@ -58,7 +58,7 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
      *                regardless of profile
      * @return true if the provider is initialized without exceptions
      */
-    public boolean isInitialized(Profile profile);
+    boolean isInitialized(Profile profile);
 
     /**
      * Test if the PreferencesManager is initialized, but threw an
@@ -72,7 +72,7 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
      *                regardless of profile
      * @return true if the provide is initialized with exceptions
      */
-    public boolean isInitializedWithExceptions(Profile profile);
+    boolean isInitializedWithExceptions(Profile profile);
 
     /**
      * Get the set of exceptions thrown during initialization for the provided
@@ -104,7 +104,7 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
      *         empty set instead of null.
      */
     @Nonnull
-    public Collection<Class<? extends PreferencesManager>> getRequires();
+    Collection<Class<? extends PreferencesManager>> getRequires();
 
     /**
      * Get the set of Classes that this PreferencesManager can be registered as
@@ -115,7 +115,7 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
      *         PreferencesManager, return an empty set instead of null.
      */
     @Nonnull
-    public Iterable<Class<?>> getProvides();
+    Iterable<Class<?>> getProvides();
 
     /**
      * Save the preferences that this provider manages for the provided Profile.
@@ -124,6 +124,6 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
      *                be null to save preferences that apply to the current user
      *                regardless of profile
      */
-    public void savePreferences(Profile profile);
+    void savePreferences(Profile profile);
 
 }

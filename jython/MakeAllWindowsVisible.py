@@ -38,7 +38,7 @@ import javax
 import javax.swing
 import javax.swing.JButton
 
-import org.apache.log4j     ##  For the log output
+from org.slf4j import LoggerFactory     ##  For the log output
 ##
 ##  In order to see the debug output in the session.log file and/or the JMRI System Console window
 ##  Do the following steps:
@@ -66,8 +66,8 @@ class moveLeftOutPanels(jmri.jmrit.automat.AbstractAutomaton):
 ########
 # Define the common shared variable members
 
-    # Debug logging log4j overhead:
-    log = org.apache.log4j.Logger.getLogger( "jmri.jmrit.jython.exec.script.moveLeftOutPanels" )
+    # Debug logging
+    log = LoggerFactory.getLogger( "jmri.jmrit.jython.exec.script.moveLeftOutPanels" )
 
     # Dialog related members:
     cautionJmriJFrameTitle = "CAUTION"

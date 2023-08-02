@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
  */
 public interface DeviceManager {
 
-    public void listen();
+    void listen();
 
-    public default void createServerThread() {
+    default void createServerThread() {
         new DeviceManagerThread(this).start();
     }
 
@@ -22,7 +22,7 @@ public interface DeviceManager {
      *
      * @param dl the device listener to add 
      */
-    public void addDeviceListener(DeviceListener dl);
+    void addDeviceListener(DeviceListener dl);
 
     /**
      * Remove a device listener from the list that will be added for each new
@@ -30,26 +30,26 @@ public interface DeviceManager {
      *
      * @param dl the device listener to remove
      */
-    public void removeDeviceListener(DeviceListener dl);
+    void removeDeviceListener(DeviceListener dl);
 
     /**
      * Specify a roster group to send
      *
      * @param group the roster group. 
      */
-    public void setSelectedRosterGroup(String group);
+    void setSelectedRosterGroup(String group);
 
     /**
      * the roster group to send. 
      *
      * @return the roster group
      */
-    public String getSelectedRosterGroup();
+    String getSelectedRosterGroup();
 
     /**
      * Container for running {@link #listen() } in a separate thread.
      */
-    public static class DeviceManagerThread extends Thread {
+    class DeviceManagerThread extends Thread {
 
         DeviceManager manager;
 

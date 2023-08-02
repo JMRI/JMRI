@@ -14,14 +14,14 @@ public interface DigitalExpressionBean extends NamedBean, DigitalExpression {
      * getState() if the method evaluate() returned false the last time it was
      * called.
      */
-    public static final int FALSE = 0x02;
+    int FALSE = 0x02;
 
     /**
      * Constant representing an "false" state. It's returned from the method
      * getState() if the method evaluate() returned false the last time it was
      * called.
      */
-    public static final int TRUE = 0x04;
+    int TRUE = 0x04;
     
     /**
      * Notify property change listeners that the result of the expression
@@ -29,6 +29,6 @@ public interface DigitalExpressionBean extends NamedBean, DigitalExpression {
      * @param oldResult the old last result
      * @param newResult the new last result
      */
-    public void notifyChangedResult(boolean oldResult, boolean newResult);
+    void notifyChangedResult(boolean oldResult, boolean newResult);
     
 }

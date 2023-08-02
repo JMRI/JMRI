@@ -7,9 +7,9 @@ package jmri.jmrix.oaktree;
  */
 public interface SerialInterface {
 
-    public void addSerialListener(SerialListener l);
+    void addSerialListener(SerialListener l);
 
-    public void removeSerialListener(SerialListener l);
+    void removeSerialListener(SerialListener l);
 
     boolean status();   // true if the implementation is operational
 

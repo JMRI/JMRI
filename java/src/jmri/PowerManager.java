@@ -38,31 +38,31 @@ import jmri.beans.PropertyChangeProvider;
  */
 public interface PowerManager extends PropertyChangeProvider {
 
-    static final int UNKNOWN = NamedBean.UNKNOWN;
-    static final int ON = 0x02;
-    static final int OFF = 0x04;
-    static final int IDLE = 0x08; // not supported by some connection types
+    int UNKNOWN = NamedBean.UNKNOWN;
+    int ON = 0x02;
+    int OFF = 0x04;
+    int IDLE = 0x08; // not supported by some connection types
 
     /**
      * {@link java.beans.PropertyChangeEvent}s are fired with this property name.
      * <p>
      * {@value #POWER}
      */
-    static final String POWER = "power"; // as recommended in JavaBeans Spec // NOI18N
+    String POWER = "power"; // as recommended in JavaBeans Spec // NOI18N
 
-    public void setPower(int v) throws JmriException;
+    void setPower(int v) throws JmriException;
 
     @CheckReturnValue
-    public int getPower();
+    int getPower();
 
     // to free resources when no longer used
-    public void dispose() throws JmriException;
+    void dispose() throws JmriException;
 
-    public default boolean implementsIdle() {
+    default boolean implementsIdle() {
         // By default the Power Manager does not implement the IDLE power state
         return false;
     }
 
     @CheckReturnValue
-    @Nonnull public String getUserName();
+    @Nonnull String getUserName();
 }

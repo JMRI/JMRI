@@ -2,6 +2,8 @@ package jmri.jmrix;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
+
 import jmri.SystemConnectionMemo;
 
 /**
@@ -27,7 +29,7 @@ public interface PortAdapter {
     /**
      * Configure all of the other jmrix widgets needed to work with this adapter.
      */
-    public void configure();
+    void configure();
 
     /**
      * Query the status of this connection.
@@ -35,38 +37,38 @@ public interface PortAdapter {
      *
      * @return true if OK, at least as far as known
      */
-    public boolean status();
+    boolean status();
 
     /**
      * Open the connection.
      *
      * @throws java.io.IOException if unable to connect
      */
-    public void connect() throws java.io.IOException;
+    void connect() throws IOException;
 
-    public String getCurrentPortName();
+    String getCurrentPortName();
 
     /**
      * Get the InputStream from the port.
      *
      * @return the InputStream from the port
      */
-    public DataInputStream getInputStream();
+    DataInputStream getInputStream();
 
     /**
      * Get the outputStream to the port.
      *
      * @return the outputStream to the port
      */
-    public DataOutputStream getOutputStream();
+    DataOutputStream getOutputStream();
 
-    public String getOption1Name();
+    String getOption1Name();
 
-    public String getOption2Name();
+    String getOption2Name();
 
-    public String getOption3Name();
+    String getOption3Name();
 
-    public String getOption4Name();
+    String getOption4Name();
 
     /**
      * Set the first port option. Only to be used after construction,
@@ -74,7 +76,7 @@ public interface PortAdapter {
      *
      * @param value to set the option to
      */
-    public void configureOption1(String value);
+    void configureOption1(String value);
 
     /**
      * Set the second port option. Only to be used after construction,
@@ -82,7 +84,7 @@ public interface PortAdapter {
      *
      * @param value to set the option to
      */
-    public void configureOption2(String value);
+    void configureOption2(String value);
 
     /**
      * Set the third port option. Only to be used after construction,
@@ -90,7 +92,7 @@ public interface PortAdapter {
      *
      * @param value to set the option to
      */
-    public void configureOption3(String value);
+    void configureOption3(String value);
 
     /**
      * Set the fourth port option. Only to be used after construction,
@@ -98,18 +100,18 @@ public interface PortAdapter {
      *
      * @param value to set the option to
      */
-    public void configureOption4(String value);
+    void configureOption4(String value);
 
     /**
      * Get a list of all the options configured against this adapter.
      *
      * @return Array of option identifier strings
      */
-    public String[] getOptions();
+    String[] getOptions();
 
-    public boolean isOptionAdvanced(String option);
+    boolean isOptionAdvanced(String option);
 
-    public String getOptionDisplayName(String option);
+    String getOptionDisplayName(String option);
 
     /**
      * Set the value of an option.
@@ -117,7 +119,7 @@ public interface PortAdapter {
      * @param option the name string of the option
      * @param value the string value to set the option to
      */
-    public void setOptionState(String option, String value);
+    void setOptionState(String option, String value);
 
     /**
      * Get the string value of a specific option.
@@ -125,7 +127,7 @@ public interface PortAdapter {
      * @param option the name of the option to query
      * @return the option value
      */
-    public String getOptionState(String option);
+    String getOptionState(String option);
 
     /**
      * Get a list of the various choices allowed with an given option.
@@ -133,7 +135,7 @@ public interface PortAdapter {
      * @param option the name of the option to query
      * @return list of valid values for the option
      */
-    public String[] getOptionChoices(String option);
+    String[] getOptionChoices(String option);
 
     /**
      * Should this option be represented by a text field
@@ -141,49 +143,49 @@ public interface PortAdapter {
      * @param option Name of the option to check
      * @return true for text representation preferred
      */
-    public boolean isOptionTypeText(String option);
+    boolean isOptionTypeText(String option);
     
     /**
      * Should this option be represented by a password field
      * @param option Name of the option to check
      * @return true for text representation preferred
      */
-    public boolean isOptionTypePassword(String option);
+    boolean isOptionTypePassword(String option);
     
     /**
      * Get the system manufacturer's name.
      *
      * @return manufacturer's name
      */
-    public String getManufacturer();
+    String getManufacturer();
 
     /**
      * Set the system manufacturer's name.
      *
      * @param Manufacturer the manufacturer's name
      */
-    public void setManufacturer(String Manufacturer);
+    void setManufacturer(String Manufacturer);
 
     /**
      * Return the disabled state of the adapter.
      *
      * @return true if disabled
      */
-    public boolean getDisabled();
+    boolean getDisabled();
 
     /**
      * Set whether the connection is disabled.
      *
      * @param disabled When true, disables operation
      */
-    public void setDisabled(boolean disabled);
+    void setDisabled(boolean disabled);
 
     /**
      * Get the user name for this adapter.
      *
      * @return the username or null
      */
-    public String getUserName();
+    String getUserName();
 
     /**
      * Set the user name for this adapter.
@@ -191,14 +193,14 @@ public interface PortAdapter {
      * @param userName the new user name
      * @throws IllegalArgumentException if another adapter has this user name
      */
-    public void setUserName(String userName) throws IllegalArgumentException;
+    void setUserName(String userName) throws IllegalArgumentException;
 
     /**
      * Get the system prefix for this adapter.
      *
      * @return the system prefix or null
      */
-    public String getSystemPrefix();
+    String getSystemPrefix();
 
     /**
      * Set the system prefix for this adapter.
@@ -207,9 +209,9 @@ public interface PortAdapter {
      * @throws IllegalArgumentException if another adapter has this system
      *                                  prefix
      */
-    public void setSystemPrefix(String systemPrefix) throws IllegalArgumentException;
+    void setSystemPrefix(String systemPrefix) throws IllegalArgumentException;
 
-    public SystemConnectionMemo getSystemConnectionMemo();
+    SystemConnectionMemo getSystemConnectionMemo();
 
     /**
      * Replace the existing SystemConnectionMemo with another one. Overriding
@@ -223,24 +225,24 @@ public interface PortAdapter {
      *                                  of SystemConnectionMemo
      * @throws NullPointerException     if connectionMemo is null
      */
-    public void setSystemConnectionMemo(SystemConnectionMemo connectionMemo) throws IllegalArgumentException;
+    void setSystemConnectionMemo(SystemConnectionMemo connectionMemo) throws IllegalArgumentException;
 
     /**
      * This is called when a connection is to be disposed.
      */
-    public void dispose();
+    void dispose();
 
     /**
      * This is called when a connection is initially lost.
      */
-    public void recover();
+    void recover();
 
     /**
      * Determine if configuration needs to be written to disk.
      *
      * @return true if configuration needs to be saved, false otherwise
      */
-    public boolean isDirty();
+    boolean isDirty();
 
     /**
      * Determine if application needs to be restarted for configuration changes
@@ -248,32 +250,32 @@ public interface PortAdapter {
      *
      * @return true if application needs to restart, false otherwise
      */
-    public boolean isRestartRequired();
+    boolean isRestartRequired();
     
     /**
      * Set the maximum interval between reconnection attempts.
      * @param maxInterval in seconds.
      */
-    public void setReconnectMaxInterval(int maxInterval);
+    void setReconnectMaxInterval(int maxInterval);
     
     /**
      * Set the maximum number of reconnection attempts.
      * -1 will set an infinite number of attempts.
      * @param maxAttempts total maximum reconnection attempts.
      */
-    public void setReconnectMaxAttempts(int maxAttempts);
+    void setReconnectMaxAttempts(int maxAttempts);
     
     /**
      * Get the maximum interval between reconnection attempts.
      * @return maximum interval in seconds.
      */
-    public int getReconnectMaxInterval();
+    int getReconnectMaxInterval();
     
     /**
      * Get the maximum number of reconnection attempts which should be made.
      * A value of -1 means no maximum value, i.e. infinite attempts.
      * @return total number of attempts which should be made.
      */
-    public int getReconnectMaxAttempts();
+    int getReconnectMaxAttempts();
 
 }

@@ -16,19 +16,19 @@ public interface Function {
      * Get the module of the function, for example "Math" or "Conversion".
      * @return the module name
      */
-    public String getModule();
+    String getModule();
     
     /**
      * Get the descriptions of the constants in the module.
      * @return the description of the constants
      */
-    public String getConstantDescriptions();
+    String getConstantDescriptions();
     
     /**
      * Get name of the function, for example "sin" or "int"
      * @return the name
      */
-    public String getName();
+    String getName();
     
     /**
      * Calculate the function
@@ -37,13 +37,13 @@ public interface Function {
      * @return the result
      * @throws JmriException in case of an error
      */
-    public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+    Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
             throws JmriException;
     
     /**
      * Get the description of the function in Markdown format
      * @return the description
      */
-    public String getDescription();
+    String getDescription();
     
 }

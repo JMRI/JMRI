@@ -1,12 +1,11 @@
 package jmri.util;
 
-import org.apache.log4j.Level;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
 
 /**
  * Tests for the jmri.util.LoggingUtil and jmir.util.JUnitLoggingUtil classes.

@@ -1,31 +1,27 @@
 package jmri.jmrit.withrottle;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test simple functioning of UserInterface
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class UserInterfaceTest {
-
-    private UserInterface panel = null;
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+public class UserInterfaceTest extends jmri.util.JmriJFrameTestBase {
 
     @Test
-    public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("exists", panel);
+    public void testUserInterfaceCtor() {
+        Assertions.assertNotNull( frame, "exists" );
     }
 
+    @Override
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initRosterConfigManager();
@@ -39,26 +35,21 @@ public class UserInterfaceTest {
             public void listen() {
             }
         });
-        if (!GraphicsEnvironment.isHeadless()) {
-            panel = new UserInterface();
-        }
+        frame = new UserInterface();
     }
 
+    @Override
     @AfterEach
-    public void tearDown() throws Exception {
-        if (!GraphicsEnvironment.isHeadless()) {
-            try {
-                panel.disableServer();
-                JUnitUtil.waitFor(() -> {
-                    return panel.isListen;
-                });
-                JUnitUtil.dispose(panel);
-            } catch (java.lang.NullPointerException npe) {
-                // not all tests fully configure the server, so an
-                // NPE here is ok.
-            }
-        }
+    public void tearDown() {
+
+        ((UserInterface)frame).disableServer();
+        JUnitUtil.waitFor(() -> {
+            return !((UserInterface)frame).isListen;
+        },"Panel stops listening flag");
+
         JUnitUtil.clearShutDownManager();
-        JUnitUtil.tearDown();
+        super.tearDown();
+
     }
+
 }

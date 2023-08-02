@@ -3,7 +3,8 @@
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Understanding the Data Management</title>
-  <meta name="author" content="Jerry Grochow"><!--#include virtual="/Style.shtml" -->
+  <meta name="author" content="Jerry Grochow">
+  <!--#include virtual="/Style.shtml" -->
   <!-- Sortable tables -->
   <!-- <script src="../../../web/js/sorttable.js"></script> for local testing -->
 
@@ -188,16 +189,14 @@
           <th>Creates/Stores</th>
           <th style="width: 10%">Store Command</th>
           <th>Where Stored</th>
-          <th>
-          </th>
+          <th></th>
         </tr>
 
         <tr>
           <td class="type">Layout Elements</td>
           <td class="data">LE Panels, Track Connections, Block Assignments, Signal Placement</td>
           <td class="where">
-            <a href="../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>
-          </td>
+            <a href="../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a></td>
           <td class="who">UC/US</td>
           <td class="cmd">2, 3(b)</td>
           <td class="store">"[user named].xml" files where specified (default is the User Files
@@ -210,7 +209,7 @@
           <td class="data">Sensor, Turnout, Block, Light</td>
           <td class="where">Table for specific element type</td>
           <td class="who">UC/US</td>
-          <td class="cmd">2, 3(a), 3(b)
+          <td class="cmd">2, 3
           <!-- "Save->" under the File pulldown on each Table window. Wherever "Store Panels" is a command.
           In <a href="../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>: "Store configuration only" or
           "Store configuration and panels" which stores tables and panels --></td>
@@ -223,9 +222,7 @@
           <td class="type">Layout Elements</td>
           <td class="data">Icons, Images, Image Index</td>
           <td class="where">
-            <a href="../../package/jmri/jmrit/display/IconAdder.shtml">Icon Editor</a>, Image Index
-            Editor
-          </td>
+            <a href="../../package/jmri/jmrit/display/IconAdder.shtml">Icon Editor</a>, Image Index Editor</td>
           <td class="who">UC/US</td>
           <td class="cmd">5</td>
           <!-- In Image Index Editor or <a href="/package/jmri/jmrit/display/ControlPanelEditor.shtml">Control Panel Editor</a>:
@@ -233,18 +230,16 @@
 
           <td class="store">Image/icon files where specified (default is the User Files Location
           directory). Image index in catalogTrees.xml in the User Files location.</td>
-          <td>
-          </td>
+          <td></td>
         </tr>
 
         <tr>
           <td class="type">Layout Elements</td>
           <td class="data">Blocks</td>
           <td class="where">
-            <a href="../../package/jmri/jmrit/beantable/BlockTable.shtml">Block Table</a>
-          </td>
+            <a href="../../package/jmri/jmrit/beantable/BlockTable.shtml">Block Table</a></td>
           <td class="who">UC/US</td>
-          <td class="cmd">2, 3(a), 3(b)</td>
+          <td class="cmd">2, 3</td>
           <!-- "Save->" under the File pulldown on each Table window. Wherever "Store Panels" is a command.
           In <a href="../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>: "Store configuration only" or
           "Store configuration and panels" which stores tables and panels -->
@@ -259,12 +254,9 @@
           <td class="data">Throttles</td>
           <td class="where">??</td>
           <td class="who">UC/US</td>
-          <td class="cmd">
-          </td>
-          <td class="store">
-          </td>
-          <td>
-          </td>
+          <td class="cmd"></td>
+          <td class="store"></td>
+          <td></td>
         </tr>
 
         <tr>
@@ -272,20 +264,19 @@
           <td class="data">Consisting</td>
           <td class="where">??</td>
           <td class="who">UC/US</td>
-          <td class="cmd">
-          </td>
-          <td class="store">
-          </td>
-          <td>
-          </td>
+          <td class="cmd"></td>
+          <td class="store"></td>
+          <td></td>
         </tr>
 
         <tr>
           <td class="type">Operations Elements</td>
           <td class="data">Block Contents (Value)</td>
-          <td class="where">??</td>
-          <td class="who">UC/US followed by <strong>AS</strong></td>
-          <td class="cmd">User enters first Block Value, then JMRI updates automatically.</td>
+          <td class="where">
+            <a href="../../package/jmri/jmrit/beantable/BlockTable.shtml">Block Table</a></td>
+          <td class="who">UC/<strong>AS</strong> [User enters then Block Tracking auto updates]
+            or <strong>AC/AS</strong> [if Reporter linked to Block]</td>
+          <td class="cmd">NA</td>
           <td class="store">blockvalues.xml in User Files location</td>
           <td>&#10004;</td>
         </tr>
@@ -307,7 +298,7 @@
             <a href="../../package/jmri/jmrit/logix/OBlockTable.shtml">OBlock Table</a>
           </td>
           <td class="who">UC/US</td>
-          <td class="cmd">2, 3(a), 3(b)</td>
+          <td class="cmd">2, 3</td>
           <!-- "Save->" under the File pulldown on each Table window. In
           <a href="/package/jmri/jmrit/display/ControlPanelEditor.shtml">Control Panel Editor</a>: "Store Panels" under
           the File pulldown menu. -->
@@ -324,11 +315,23 @@
             <a href="../../package/jmri/jmrit/display/CircuitBuilder.shtml">Circuit Builder</a>
           </td>
           <td class="who"><strong>AC</strong>/US</td>
-          <td class="cmd">2, 3(a), 3(b)</td>
+          <td class="cmd">2, 3</td>
           <!-- "Save->" under the File pulldown on each Table window. In
           <a href="/package/jmri/jmrit/display/ControlPanelEditor.shtml">Control Panel Editor</a>: "Store Panels" under
           the File pulldown menu. -->
 
+          <td class="store">"[user named].xml" files where specified (default is the User Files
+          Location directory)</td>
+          <td>&#10004;</td>
+        </tr>
+
+        <tr>
+          <td class="type">Operations Elements</td>
+          <td class="data">Reporter</td>
+          <td class="where">Automatically by LocoNet transponding, RFID;
+                    or manually <a href="../tools/Reporters.shtml">Reporter Table</a></td>
+          <td class="who"><strong>AC</strong> or UC/US</td>
+          <td class="cmd">3</td>
           <td class="store">"[user named].xml" files where specified (default is the User Files
           Location directory)</td>
           <td>&#10004;</td>
@@ -378,7 +381,7 @@
           <td class="where">
           </td>
           <td class="who">UC/US</td>
-          <td class="cmd">2, 3(a), 3(b)</td>
+          <td class="cmd">2, 3</td>
           <td class="store">Included in the tables and panels xml data file</td>
           <td>
           </td>
@@ -441,6 +444,16 @@
           </td>
           <td class="cmd">NA</td>
           <td class="store">In backupPanels/ in Profile location</td>
+          <td>&#10004;</td>
+        </tr>
+
+        <tr>
+          <td class="type">RFID</td>
+          <td class="data">ID Tag Info</td>
+          <td class="where">When RFID tags are read via RFID, MQTT, or other Reporter message</td>
+          <td class="who"><strong>AC/AS</strong></td>
+          <td class="cmd">NA</td>
+          <td class="store">In subdirectory "idtags" in User Files Location</td>
           <td>&#10004;</td>
         </tr>
 
@@ -544,7 +557,7 @@
           </td>
           <td class="who">
           </td>
-          <td class="cmd">1, 2, 3(a), 3(b), 4(a), 4(b), 4(c), 5, 6?</td>
+          <td class="cmd">1, 2, 3, 4(a), 4(b), 4(c), 5, 6?</td>
           <td class="store">
           </td>
           <td>
@@ -558,22 +571,15 @@
 
       <h2 id="catalpha">Category/Alphabetic Index</h2>
 
-
           <h3 id="layout">Layout elements:</h3>
           Describe the physical layout
           <ul>
             <li>Layout Editor (LE) Panel</li>
-
             <li>Control Panel Editor (CPE) Panel</li>
-
             <li>Block</li>
-
             <li>Turnout</li>
-
             <li>Sensor</li>
-
             <li>Light</li>
-
             <li>MORE</li>
           </ul>
           <br>
@@ -582,9 +588,7 @@
           Specify engine and other DCC controlled components
           <ul>
             <li>Roster main page</li>
-
             <li>Roster entry</li>
-
             <li>Roster group</li>
           </ul>
           <br>
@@ -593,34 +597,35 @@
           Additional information about the physical layout used for operational control of the railroad
           <ul>
             <li>Block</li>
-
             <li>OBlock</li>
-
             <li>OPath</li>
-
             <li>Portal</li>
-
             <li>Route</li>
-
             <li>LRoute</li>
-
             <li>Warrant</li>
-
             <li>Script</li>
-
             <li>Memory Variable</li>
-
+            <li>Reporter</li>
             <li>MORE</li>
           </ul>
           <br>
+
+        <h3 id="hardware">Hardware:</h3>
+          Additional information about specific types of hardware
+          <ul>
+            <li>RFID</li>
+            <li>MORE</li>
+          </ul>
+          <br>
+
+
+
 
         <h3 id="pref">System preferences:</h3>
         Information used by JMRI to customize look, feel, and operation of the JMRI system
           <ul>
             <li>Connection</li>
-
             <li>Start-up</li>
-
             <li>MORE</li>
           </ul>
           <br>
@@ -628,9 +633,7 @@
           <h3 id="other">Other:</h3>
           <ul>
             <li>Window size/position</li>
-
             <li>Script</li>
-
             <li>MORE</li>
           </ul>
           <br>

@@ -44,10 +44,16 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>6</revnumber>
+      <date>2023-07-22</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>Exclude Sound Decoders 2022</revremark>
+    </revision>
+    <revision>
       <revnumber>5</revnumber>
       <date>2023-07-17</date>
       <authorinitials>RK</authorinitials>
-      <revremark>disable unimplemented CV by PD-series</revremark>
+      <revremark>disable unimplemented CV by PD-series and DH06A</revremark>
     </revision>
     <revision>
       <revnumber>4</revnumber>
@@ -62,12 +68,6 @@
       <revremark>Exclude Sound Decoders 2020</revremark>
     </revision>
     <revision>
-      <revnumber>1</revnumber>
-      <date>2016-12-14</date>
-      <authorinitials>RK</authorinitials>
-      <revremark>merge different CV137-files</revremark>
-    </revision>
-    <revision>
       <revnumber>2</revnumber>
       <date>2019-07-28</date>
       <authorinitials>ALM</authorinitials>
@@ -80,7 +80,7 @@
       <revremark>merge different CV137-files</revremark>
     </revision>
   </revhistory>
-  <variable CV="137" item="SUSI mode" mask="XXXXXXXV" exclude="130,131,132,133,134">
+  <variable CV="137" item="SUSI mode" mask="XXXXXXXV" exclude="60,130,131,132,133,134">
     <enumVal>
       <enumChoice choice="Activated" value="0">
         <choice>Activated</choice>
@@ -110,7 +110,7 @@
     <label xml:lang="ca">Desactiva estalvi d'energia</label>
     <tooltip>bit 1</tooltip>
   </variable>
-  <variable CV="137" item="Revert SUSI direction" mask="XXXXXVXX" exclude="130,131,132,133,134">
+  <variable CV="137" item="Revert SUSI direction" mask="XXXXXVXX" exclude="60,130,131,132,133,134">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Revert SUSI direction</label>
     <label xml:lang="fr">Inverser sens de marche SUSI</label>
@@ -118,14 +118,14 @@
       <label xml:lang="ca">nverteix sentit SUSI</label>
     <tooltip>bit 2</tooltip>
   </variable>
-  <variable CV="137" item="Deactivate SUSI startup delay" mask="XXXXVXXX" exclude="130,131,132,133,134,Sound Decoders (2020)">
+  <variable CV="137" item="Deactivate SUSI startup delay" mask="XXXXVXXX" exclude="130,131,132,133,134,Sound Decoders (2020),Sound Decoders (2022)">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Deactivate SUSI startup delay</label>
     <label xml:lang="fr">Désactiver délai de départ SUSI</label>
     <label xml:lang="de">SUSI­Anfahrverzögerung ausschalten</label>
     <tooltip>bit 3</tooltip>
   </variable>
-  <variable CV="137" item="Extended mapping" mask="XXXVXXXX" exclude="130,131,132,133,134">
+  <variable CV="137" item="Extended mapping" mask="XXXVXXXX" exclude="60,130,131,132,133,134">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Extended mapping</label>
     <label xml:lang="de">Erweiterte Funktionszuordnung</label>
@@ -133,7 +133,7 @@
     <tooltip>bit4</tooltip>
     <tooltip xml:lang="de">Erweiterte Funktionszuordnungen aktivieren</tooltip>
   </variable>
-  <variable CV="137" item="SUSI outputs mapping" mask="XXVXXXXX" exclude="130,131,132,133,134">
+  <variable CV="137" item="SUSI outputs mapping" mask="XXVXXXXX" exclude="60,130,131,132,133,134">
     <!--xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/-->
     <enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
      <enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">

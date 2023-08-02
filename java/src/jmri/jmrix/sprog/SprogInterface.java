@@ -8,9 +8,9 @@ package jmri.jmrix.sprog;
  */
 public interface SprogInterface {
 
-    public void addSprogListener(SprogListener l);
+    void addSprogListener(SprogListener l);
 
-    public void removeSprogListener(SprogListener l);
+    void removeSprogListener(SprogListener l);
 
     /**
      * Test operational status of interface.

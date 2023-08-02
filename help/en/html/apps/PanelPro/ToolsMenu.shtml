@@ -205,7 +205,7 @@
           <a href="../../tools/speedometer/index.shtml">Speedometer</a>
         </li>
 
-        <li>Voltage / Current Meter</li>
+        <li><a href="../../../package/jmri/jmrit/swing/meter/MeterFrame.shtml">Voltage / Current Meter</a></li>
 
         <li>
           <a href="../../../package/jmri/jmrit/sensorgroup/SensorGroupFrame.shtml">Sensor

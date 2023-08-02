@@ -26,12 +26,18 @@
 
         <h4>C/MRI</h4>
             <ul>
-                <li></li>
+                <li>Provided an extra copy of the output data when preparing
+                C/MRI output data for a "T" ("Transmit") message type.  This
+		prevents a "data buffer overrun" in a pre-configured buffer
+		when the output data changes when the process assemble the data.
+		(The previous implementation could run out of available bytes
+		in the buffer, and the data would not be sent.)</li>
             </ul>
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
                 <li>Call "Roster Export to DCC-EX" from DCC++ menu</li>
+                <li>Traffic Monitor - Added option to suppress the parsed text</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -122,7 +128,15 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>OpenLCB library updated through
+                    <a href="https://github.com/openlcb/OpenLCB_Java/pulls">PR 231</a>.
+                    </li>
+                <li>Added a contextual menu (right click, ctrl click) to tabs in the CDI display that
+                    contains "Copy" and "Paste" options.
+                    Copy and paste works both within one window and across windows.
+                    You can only paste into a tab of the same type from which you copied.
+                    The data stored in the clipboard is in the format of the usual backup files.
+                    </li>
             </ul>
 
         <h4>Powerline</h4>
@@ -137,7 +151,8 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
-                <li></li>
+                <li>JMRI will now leave the layout power unchanged when it terminates.
+                    Previously, it would turn the power on if it was off.</li>
             </ul>
 
         <h4>Secsi</h4>
@@ -147,12 +162,15 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li></li>
+                <li>
+                    Track power ON at startup option would turn on track power but not send packets, 
+                    requiring track power to be cycled. Fixed.
+                </li>
             </ul>
 
         <h4>TAMS</h4>
             <ul>
-                <li></li>
+                <li>New decoder definition for the LD-G-9 decoder.</li>
             </ul>
 
         <h4>TMCC</h4>
@@ -217,8 +235,9 @@
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
-                <li>added PD06A, PD18A, PD18MU and PD21A</li>
+                <li>added PD06A, PD18A, PD18MU and PD21A and 2nd generation-decoder of DH-series</li>
                 <li>disable unimplemented CV by PD-series</li>
+                <li>new definition-files for FW 1.13 for SD*-, FW 1.15 for SH*-, FW 3.13 for DH*-decoder</li>
             </ul>
 
         <h4>ESU</h4>
@@ -343,7 +362,7 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li></li>
+                <li>Some translations to German and pane design changes</li>
             </ul>
 
         <h4>Umelec</h4>
@@ -485,7 +504,10 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Add a "jython/RunSystemCommandExample.py" sample for
+                how to run a system command from a JMRI script.</li>
+            <li>Scripts that output Logging statements with log4j should be updated to import sl4fj logging.
+            <br><a href="https://github.com/JMRI/JMRI/pull/12237/files">See here for some examples</a> on how to do this.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -495,7 +517,9 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>Pino Di Biasi provided a
+                Swiss Railways (SBB in German, CFF in French and FFS in Italian)
+                signal system definition.</li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -592,10 +616,19 @@
         <a id="VSD" name="VSD"></a>
         <ul>
             <li>Fixed a bug with wrong direction in an oval layout.</li>
+            <li>Minor change on the Manager window GUI. The windows for adding
+            a VSDecoder and to handle the option now are centered to the manager
+            window. This is not a functional change.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+          <li>The external libraries used for Logging have been updated.</li>
+          <li>The <strong>Hide when empty and not editing</strong> menu item has been added to
+            the right click pop-up menus for block content labels, memory labels and LogixNG global
+            variable labels.  This applies to Panel Editor, Control Panel Editor and Layout Editor
+            panels.</li>
+          <li>Added a jython/test/loconet directory for LocoNet-specific scripting tests,
+              along with an initial test.</li>
         </ul>

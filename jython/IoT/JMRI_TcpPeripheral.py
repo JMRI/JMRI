@@ -57,10 +57,10 @@ import java.beans
 import socket
 import threading
 import time
-from org.apache.log4j import Logger
+from org.slf4j import LoggerFactory
 import jmri
 
-TcpPeripheral_log = Logger.getLogger("jmri.jmrit.jython.exec.TcpPeripheral")
+TcpPeripheral_log = LoggerFactory.getLogger("jmri.jmrit.jython.exec.TcpPeripheral")
 
 CONN_TIMEOUT = 3.0 # timeout (seconds)
 MAX_HEARTBEAT_FAIL = 5 # multiply by CONN_TIMEOUT for maximum time interval (send heartbeat after CONN_TIMEOUT * (MAX_HEARTBEAT_FAIL / 2))
