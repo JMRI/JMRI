@@ -157,13 +157,13 @@
           documentation pages</a> for more details.
         </dd>
 
+        <dt>Use Blocks</dt>
+
+        <dd>If unchecked, Blocks are ignored. This may be helpful on Advanced Location Following. Default: checked.</dd>
+
         <dt>Default VSD File Path</dt>
 
         <dd>This path is the default path for the "Load VSD File" chooser box.</dd>
-
-        <dt>Default VSD File Name</dt>
-
-        <dd>Is no longer used.</dd>
       </dl>
 
       <hr>
