@@ -1441,6 +1441,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
           <td>Estimated Departure Time</td>
           <td>Time</td>
         </tr>
+        
+        <tr>
+          <td>HOLD</td>
+          <td>Hold Car</td>
+          <td>See PC or SC below, and note below</td>
+        </tr>
 
         <tr>
           <td>LC</td>
@@ -1622,6 +1628,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>The loco parameters for pick up loco (PL) and set out loco (SL) are: road, number,
         model, length, type, hp, location name, track name, destination name, destination track
         name, owner name, consist name, is lead loco in consist, loco comment, IDTag, DCC address.</p>
+
+      <p>
+        The program will include "Hold Car" for spurs and C/I tracks that are only serviced by one train.
+        Configure the spur or C/I track option <a href="#RestrictingTrackToCertainTrains">Select
+          trains or routes for car pick ups</a> to "Trains" and only select one train.
+      </p>
 
       <h4 id="GenerateCsvSwitchLists">Generate CSV Switch Lists</h4>
 
