@@ -284,7 +284,7 @@ public class CbusNodeBackupManager {
 
 
             } catch (JDOMException ex) {
-                log.error("File invalid: {} {}",file.getName(), ex.getMessage(), ex);  // NOI18N
+                log.error("File invalid: {}",file.getName(), ex);  // NOI18N
                 return;
             } catch (IOException ex) {
                 // file might not yet exist as 1st time Node on Network

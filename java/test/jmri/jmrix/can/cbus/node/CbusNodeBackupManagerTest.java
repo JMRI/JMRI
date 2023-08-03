@@ -387,7 +387,7 @@ public class CbusNodeBackupManagerTest {
             java.nio.file.StandardCopyOption.REPLACE_EXISTING);
         
         t.doLoad();
-        JUnitAppender.assertErrorMessageStartsWith("File invalid: 41378.xml Error on line 6: The element");
+        JUnitAppender.assertErrorMessageStartsWith("File invalid: 41378.xml");
         
     }
 
