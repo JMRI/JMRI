@@ -1,7 +1,9 @@
 
     <!-- contains new warnings for the release under development -->
     <li>
-        None yet
+        <strong>LocoNet Server</strong> and <strong>LocoNet Client</strong> have been removed.
+        If you are using these, you need to change the connection to
+        <a href="https://www.jmri.org/help/en/html/hardware/loconet/LbServer.shtml">LocoNet over TCP</a> instead.
     </li>
     <li>
     </li>
