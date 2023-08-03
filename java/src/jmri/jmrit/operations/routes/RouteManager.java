@@ -1,9 +1,6 @@
 package jmri.jmrit.operations.routes;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.JComboBox;
 
@@ -11,9 +8,7 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.InstanceManagerAutoInitialize;
+import jmri.*;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -174,6 +169,23 @@ public class RouteManager extends PropertyChangeSupport implements InstanceManag
             out.add(en.nextElement());
         }
         return out;
+    }
+    
+    /**
+     * Used to determine if a location is part of any route.
+     * 
+     * @param loc The location being checked.
+     * @return null if location isn't used, otherwise a route using the
+     *         location.
+     */
+    public Route isLocationInUse(Location loc) {
+        for (Route route : getList()) {
+            RouteLocation rl = route.getLastLocationByName(loc.getName());
+           if (rl != null) {
+               return route;
+           }
+        }
+        return null;
     }
 
     public JComboBox<Route> getComboBox() {
