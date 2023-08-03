@@ -82,7 +82,7 @@ public class CbusBasicNodeWithMgrsCommandStationTest {
         tcis.terminateThreads();
         memo = null;
         tcis = null;
-        
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

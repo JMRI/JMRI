@@ -217,6 +217,7 @@ public class CbusEventRequestDataModelTest {
         memo.dispose();
         tcis = null;
         memo = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
 
     }
