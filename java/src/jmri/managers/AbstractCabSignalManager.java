@@ -183,6 +183,9 @@ abstract public class AbstractCabSignalManager implements CabSignalManager, jmri
     @Override
     public void dispose(){
         InstanceManager.getDefault(BlockManager.class).removePropertyChangeListener("beans", this::handleBlockConfigChanged);
+        for(CabSignal c : signalList.values()){
+            c.dispose();
+        }
         removeListenerFromBlocks();
     } 
 
