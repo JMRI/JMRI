@@ -623,6 +623,7 @@
             <li>Minor change on the Manager window GUI. The windows for adding
             a VSDecoder and to handle the option now are centered to the manager
             window. This is not a functional change.</li>
+            <li>Removed unimplemented methods for "AudioMode" and "DefaultVSDFileName".</li>
         </ul>
 
     <h3>Miscellaneous</h3>

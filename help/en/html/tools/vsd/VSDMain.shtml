@@ -241,7 +241,7 @@
       <p>The VSDecoder Preferences pane allows the user to change various preferences in how the
       VSDecoder works.</p>
 
-      <p><img src="images/VSD_Preferences.png" alt="Preferences window" width="773" height="248">
+      <p><img src="images/VSD_Preferences.png" alt="Preferences window" width="613" height="203">
       </p>
 
       <h5>Auto Start Engine</h5>
@@ -323,10 +323,6 @@
       <h5>Default VSD File Path</h5>
 
       <p>This path is the default path for the "Load VSD File" chooser box.</p>
-
-      <h5>Default VSD File Name</h5>
-
-      <p>Was required for the first version of Auto-Load. Is no longer used.</p>
 
       <h5>Cancel / Apply / Save Buttons</h5>
 
