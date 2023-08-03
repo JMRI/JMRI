@@ -172,6 +172,7 @@ public class Z21SimulatorAdapterTest {
         JUnitAppender.suppressWarnMessageStartsWith("Timeout on reply to message:");
         JUnitAppender.suppressWarnMessageStartsWith("Timeout on reply to message:");
         a.dispose();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

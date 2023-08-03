@@ -103,6 +103,7 @@ public class Z21XNetSimulatorAdapterTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
