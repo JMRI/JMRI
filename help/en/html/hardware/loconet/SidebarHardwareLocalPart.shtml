@@ -27,7 +27,6 @@
                     </ul>
                     <li>Networking</li>
                     <ul>
-                        <li><a href="LocoNetServer.shtml">LocoNet Client/Server</a></li>
                         <li><a href="LbServer.shtml">LocoNetOverTCP LbServer</a></li>
                         <li><a href="BTLocoBridge.shtml">LocoBridge Adapter</a></li>
                         <li><a href="StandaloneLocoNet.shtml">Standalone LocoNet</a>

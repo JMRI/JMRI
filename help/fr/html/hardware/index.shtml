@@ -144,8 +144,6 @@
             <p class="dl"> Configurer: <a href="loconet/LocoNetSim.shtml">LocoNet
             Simulator pour une utilisation en cas de d&#233;connexion d'un
             r&#233;seau </a>.</p>
-            <p class="dl">Configurer: connexion &#224; distance via un LocoNet
-            <a href="loconet/LocoNetServer.shtml"> Serveur LocoNet JMRI </a>.</p>
             <p class="dl"> Configurer: connexion &#224; distance via un LocoNet
             <a href="loconet/LbServer.shtml">LbServer</a>.
             <a href="loconet/LocoNetworking.shtml">Informations
