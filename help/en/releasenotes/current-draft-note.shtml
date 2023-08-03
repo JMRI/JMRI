@@ -136,6 +136,7 @@
                     You can only paste into a tab of the same type from which you copied.
                     The data stored in the clipboard is in the format of the usual backup files.
                     </li>
+                <li>Added a Send PIP Inquiry button to the Send tool</li>
             </ul>
 
         <h4>Powerline</h4>
