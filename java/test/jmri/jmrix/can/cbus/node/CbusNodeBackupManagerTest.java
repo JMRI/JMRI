@@ -387,7 +387,7 @@ public class CbusNodeBackupManagerTest {
             java.nio.file.StandardCopyOption.REPLACE_EXISTING);
         
         t.doLoad();
-        JUnitAppender.assertErrorMessageStartsWith("File invalid: org.jdom2.input.JDOMParseException: Error on line 6:");
+        JUnitAppender.assertErrorMessageStartsWith("File invalid: 41378.xml Error on line 6: The element");
         
     }
 
@@ -407,6 +407,7 @@ public class CbusNodeBackupManagerTest {
         Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
