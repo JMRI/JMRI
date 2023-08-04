@@ -357,7 +357,8 @@
 
         <tr>
           <td>
-            JavaDoc improvements: better internal linking, better handling of external packages.
+            JavaDoc improvements: better internal linking, better handling of external packages,
+            <a href="https://blogs.oracle.com/javamagazine/post/java-javadoc-snippet">code snippets</a>.
           </td>
           <td>20</td>
           <td>20</td>
