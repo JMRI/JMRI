@@ -253,7 +253,7 @@ public class CbusConfigurationManagerTest {
         t = null;
         tcis = null;
         memo = null;
-        
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
 
     }

@@ -111,6 +111,7 @@ public class CbusNewEventPaneTest  {
         tc = null;
         memo = null;
 
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -229,6 +229,7 @@ public class CbusEventTableActionTest {
         tm.dispose();
         sm.dispose();
 
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
 
     }

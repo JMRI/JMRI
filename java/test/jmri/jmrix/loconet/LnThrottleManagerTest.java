@@ -1271,6 +1271,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             lnis.dispose();
         }
         lnis = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

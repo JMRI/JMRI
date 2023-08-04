@@ -195,6 +195,9 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         b = new JButton("Send Request Events");
         b.addActionListener(this::sendRequestEvents);
         pane2.add(b);
+        b = new JButton("Send PIP Request");
+        b.addActionListener(this::sendRequestPip);
+        pane2.add(b);
 
         pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
@@ -336,6 +339,11 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     public void sendRequestEvents(java.awt.event.ActionEvent e) {
         Message m = new IdentifyEventsAddressedMessage(srcNodeID, destNodeID());
+        connection.put(m, null);
+    }
+
+    public void sendRequestPip(java.awt.event.ActionEvent e) {
+        Message m = new ProtocolIdentificationRequestMessage(srcNodeID, destNodeID());
         connection.put(m, null);
     }
 

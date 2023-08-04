@@ -24,6 +24,7 @@ public class CabSignalPaneTest extends jmri.util.swing.JmriPanelTest {
     @Override
     @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
