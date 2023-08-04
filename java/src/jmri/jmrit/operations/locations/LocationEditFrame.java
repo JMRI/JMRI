@@ -20,6 +20,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.routes.tools.ShowRoutesServingLocationAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainCommon;
@@ -362,6 +363,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         }
         toolMenu.addSeparator();
         toolMenu.add(new ShowTrainsServingLocationAction(_location, null));
+        toolMenu.add(new ShowRoutesServingLocationAction(_location));
         toolMenu.addSeparator();
         toolMenu.add(new PrintLocationsAction(false, _location));
         toolMenu.add(new PrintLocationsAction(true, _location));

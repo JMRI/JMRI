@@ -12,6 +12,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.schedules.SchedulesTableAction;
 import jmri.jmrit.operations.locations.tools.*;
+import jmri.jmrit.operations.routes.tools.ShowRoutesServingLocationAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.swing.JTablePersistenceManager;
@@ -95,6 +96,7 @@ public class LocationsTableFrame extends OperationsFrame {
         }
         toolMenu.addSeparator();
         toolMenu.add(new ShowTrainsServingLocationAction(null, null));
+        toolMenu.add(new ShowRoutesServingLocationAction(null));
         toolMenu.addSeparator();
         toolMenu.add(new PrintLocationsAction(false));
         toolMenu.add(new PrintLocationsAction(true));

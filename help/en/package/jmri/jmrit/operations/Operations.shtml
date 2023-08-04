@@ -174,6 +174,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 
                 <li><a href="#ShowTrainsServicingThisLocation">Show Trains Servicing this
                     Location</a></li>
+                <li><a href="#ShowRoutesServicingThisLocation">Show Routes Servicing this
+                    Location</a></li>
 
                 <li><a href="#PrintLocation">Print or Preview</a></li>
               </ul></li>
@@ -2341,6 +2343,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         trains that can can actually work the location, deselect the "Show all Trains" checkbox. You
         can also determine if a certain car type will be serviced by the trains visiting the
         location. Use the "Type" drop down menu to select a car type.</p>
+        
+      <h4 id="ShowRoutesServicingThisLocation">Show Routes Servicing this Location</h4>
+
+      <p>This tool will show all of the routes that can service a location. You can also edit a
+        route directly with this tool.</p>
 
       <h3 id="Yards">Yards</h3>
       A yard is used to store cars and locomotives. A car's load status does not change when
