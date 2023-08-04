@@ -61,10 +61,10 @@ public class SampleScriptTest {
             jmri.script.JmriScriptEngineManager.getDefault().eval(file);
         } catch (javax.script.ScriptException ex1) {
             log.error("ScriptException during test of {}", file, ex1);
-            Assert.fail("ScriptException during test of " + file);
+            Assertions.fail("ScriptException during test of " + file, ex1);
         } catch (java.io.IOException ex2) {
             log.error("IOException during test of {}", file, ex2);
-            Assert.fail("IOException during test of " + file);
+            Assertions.fail("IOException during test of " + file, ex2);
         }
 
         if (file.toPath().endsWith("LoggingTest.py")) {
