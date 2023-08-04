@@ -274,6 +274,7 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         tcis.terminateThreads();
         tcis = null;
         r = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
 
     }

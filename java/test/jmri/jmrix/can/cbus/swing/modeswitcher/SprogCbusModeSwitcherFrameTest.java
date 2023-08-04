@@ -46,6 +46,7 @@ public class SprogCbusModeSwitcherFrameTest extends jmri.util.JmriJFrameTestBase
         Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();
     }
 }

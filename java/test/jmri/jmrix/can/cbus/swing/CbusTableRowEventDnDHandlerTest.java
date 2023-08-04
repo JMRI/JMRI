@@ -96,16 +96,12 @@ public class CbusTableRowEventDnDHandlerTest  {
 
     @AfterEach
     public void tearDown() {
-        if (dm != null) {
-            dm.skipSaveOnDispose();
-            dm.dispose();
-            dm = null;
-        }
-        if(memo != null){
-            memo.dispose();
-            memo = null;
-        }
+        dm = null;
+        Assertions.assertNotNull(memo);
+        memo.dispose();
+        memo = null;
         t = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

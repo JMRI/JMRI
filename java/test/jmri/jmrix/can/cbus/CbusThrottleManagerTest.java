@@ -1038,6 +1038,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         memo = null;
         tc.terminateThreads();
         tc = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -1,6 +1,7 @@
 package jmri.managers;
 
 import jmri.IdTag;
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -146,6 +147,8 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
     @Override
     public void tearDown() {
         l = null;
+        InstanceManager.getDefault(jmri.IdTagManager.class).dispose();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

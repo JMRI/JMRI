@@ -142,6 +142,7 @@ public class CbusCreateBeanPaneTest  {
             dm.skipSaveOnDispose();
             dm.dispose();
         }
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
