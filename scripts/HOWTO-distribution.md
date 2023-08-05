@@ -329,7 +329,7 @@ If you're developing any additional (post-5.5.3) changes that you want in the JM
 
 - Click "New Item"
 
-- Click "Copy Existing Item". Fill out the new 5.5.3 release name at the top. Enter the 5.3.6 most recent release at the bottom.  Click "OK"
+- Click "Copy Existing Item". Fill out the new 5.5.3 release name at the top. Enter the 5.5.2 most recent release at the bottom.  Click "OK"
 
 - Update
 
