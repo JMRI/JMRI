@@ -70,8 +70,6 @@ public class TrainEditFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(trainEditFrame, Bundle.getMessage("TrainNoRoute"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.waitFor(trainEditFrame);
 
-        Assert.assertEquals("train depart time", "15:45", train.getDepartureTime());
-
         // test route field, 5 routes and a blank
         Assert.assertEquals("Route Combobox item count", 6, trainEditFrame.routeBox.getItemCount());
         ThreadingUtil.runOnGUI(() -> {
@@ -129,6 +127,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(trainEditFrame.cabooseRadioButton);
         JemmyUtil.enterClickAndLeave(trainEditFrame.saveTrainButton);
+        Assert.assertEquals("train depart time", "15:45", train.getDepartureTime());
         Assert.assertEquals("train requirements Caboose", Train.CABOOSE, train.getRequirements());
 
         Assert.assertEquals("caboose road 1", "", train.getCabooseRoad());
