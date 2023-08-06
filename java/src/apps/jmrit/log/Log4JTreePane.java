@@ -1,8 +1,9 @@
 package apps.jmrit.log;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.List;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+
 import java.util.*;
 
 import javax.swing.*;
@@ -111,7 +112,7 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
         for (Logger category : loggerContext.getLoggers()) {
             loggersWithLevels.add(new LoggerInfo(category.getName() , category.getLevel()));
         }
-        java.util.Collections.sort(loggersWithLevels); // sorts by real name alphabetically
+        Collections.sort(loggersWithLevels); // sorts by real name alphabetically
         return loggersWithLevels;
     }
 
