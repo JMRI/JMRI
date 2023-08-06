@@ -595,6 +595,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Logging levels ( eg. INFO, DEBUG ) can be changed for the current session in
+            <a href="https://www.jmri.org/en/package/apps/jmrit/log/Log4JTreePane.shtml">Display / Edit Log Categories</a></li>
         </ul>
 
