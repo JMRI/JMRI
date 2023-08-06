@@ -580,7 +580,7 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
     
         String reval = JOptionPane.showInputDialog(this,
                                      "Edit Current Memory Value",
-                                     getMemory().getValue().toString());
+                                     getMemory().getValue());
     
         setValue(reval);
         updateSize();
