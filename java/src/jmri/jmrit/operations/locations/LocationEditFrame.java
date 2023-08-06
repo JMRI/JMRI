@@ -21,6 +21,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.routes.tools.ShowRoutesServingLocationAction;
+import jmri.jmrit.operations.routes.tools.ShowRoutesServingLocationFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainCommon;
@@ -479,6 +480,9 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
                     Bundle.getMessage("RouteUsesLocation", route.getName(), location.getName()),
                     Bundle.getMessage("CanNotDeleteLocation"),
                     JOptionPane.ERROR_MESSAGE);
+            // show all the routes using this location
+            ShowRoutesServingLocationFrame frame = new ShowRoutesServingLocationFrame();
+            frame.initComponents(location);
             return;
         }
         int count = location.getNumberRS();
