@@ -4,9 +4,6 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Swing action to create and register a LogFrame object.
  *
@@ -33,6 +30,6 @@ public class LogAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LogAction.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogAction.class);
 
 }
