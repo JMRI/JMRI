@@ -119,14 +119,13 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
     private void populateTextArea(List<LoggerInfo> loggers){
         StringBuilder result = new StringBuilder();
         for (LoggerInfo s : loggers) {
-            result.append("  ").append(s.toString()).append("\n");
+            result.append("  ").append(s.toString()).append(System.lineSeparator());
         }
-        String textIncludingFinalCr = result.toString();
 
         JScrollBar b = scroll.getVerticalScrollBar();
         int beforeScroll = b.getValue();
         int caret = text.getCaretPosition();
-        text.setText(textIncludingFinalCr.substring(0, textIncludingFinalCr.length() - 2));
+        text.setText(result.toString());
         text.setCaretPosition(caret);
         b.setValue(beforeScroll);
     }
