@@ -2,6 +2,8 @@ package apps.jmrit.log;
 
 import jmri.util.JUnitUtil;
 
+import org.apache.logging.log4j.LogManager;
+
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.*;
@@ -35,9 +37,8 @@ public class Log4JTreePaneTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @Test
-    public void testButtons(){
-        LoggerFactory.getLogger("apps.morefoo");
-        LoggerFactory.getLogger("jmri.util");
+    public void testChangeALoggingLevel(){
+        String testLoggerName = "apps.jmrit.log.Log4JTreePaneTest.testChangeALoggingLevel";
 
         new jmri.util.swing.JmriNamedPaneAction("Log4J Tree",
                 new jmri.util.swing.sdi.JmriJFrameInterface(),
@@ -46,24 +47,24 @@ public class Log4JTreePaneTest extends jmri.util.swing.JmriPanelTest {
         JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("MenuItemLogTreeAction"));
         Assertions.assertNotNull(jfo);
 
-        LoggerFactory.getLogger("apps.evenmorefoo");
-        JButtonOperator refreshOp = new JButtonOperator(jfo, Bundle.getMessage("ButtonRefreshCategories"));
-        refreshOp.doClick();
-
-        JTextAreaOperator jtfo = new JTextAreaOperator(jfo, 0);
-        Assertions.assertTrue(jtfo.getText().contains("apps.evenmorefoo"));
-
+        // enter logger name
+        JTextFieldOperator tfo = new JTextFieldOperator(jfo,0);
+        tfo.clearText();
+        tfo.enterText(testLoggerName);
         JComboBoxOperator logLevelSelect = new JComboBoxOperator(jfo, 1);
         logLevelSelect.setSelectedItem(org.apache.logging.log4j.Level.TRACE);
+        new JButtonOperator(jfo, Bundle.getMessage("ButtonEditLoggingLevel")).doClick();
 
-        new JComboBoxOperator(jfo, 0).setSelectedItem("apps.evenmorefoo");
-        JButtonOperator jbo = new JButtonOperator(jfo, Bundle.getMessage("ButtonEditLoggingLevel"));
-        jbo.doClick();
-        Assertions.assertTrue(LoggerFactory.getLogger("apps.evenmorefoo").isTraceEnabled());
+        JTextAreaOperator jtfo = new JTextAreaOperator(jfo, 0);
+        JUnitUtil.waitFor(() -> jtfo.getText().contains(testLoggerName) , "Test found in list");
+        JUnitUtil.waitFor(() -> LogManager.getLogger(testLoggerName).isTraceEnabled() , "log level changed to trace");
+        Assertions.assertTrue(LogManager.getLogger(testLoggerName).isTraceEnabled());
 
+        new JComboBoxOperator(jfo, 0).setSelectedItem(testLoggerName);
         logLevelSelect.setSelectedItem(org.apache.logging.log4j.Level.ERROR);
-        jbo.doClick();
-        Assertions.assertFalse(LoggerFactory.getLogger("apps.evenmorefoo").isTraceEnabled());
+        new JButtonOperator(jfo, Bundle.getMessage("ButtonEditLoggingLevel")).doClick();
+        JUnitUtil.waitFor(() -> !LogManager.getLogger(testLoggerName).isTraceEnabled() , "log level changed to error");
+        Assertions.assertFalse(LogManager.getLogger(testLoggerName).isTraceEnabled());
 
         jfo.requestClose();
         jfo.waitClosed();
