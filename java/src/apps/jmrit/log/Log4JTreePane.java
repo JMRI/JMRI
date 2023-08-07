@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
-import org.apache.logging.log4j.core.config.Configurator;
+import org.apache.logging.log4j.core.config.*;
 
 /**
  * Show the current Log4J Logger tree.
@@ -27,7 +27,7 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
     private JScrollPane scroll;
     private JComboBox<Level> levelSelectionComboBox;
     private JComboBox<String> categoryComboBox;
-    private final static String DEFAULT_LEVEL_STRING = Bundle.getMessage("DefaultLoggingLevel");
+    private final static String ROOT_LEVEL_STRING = Bundle.getMessage("RootLoggingLevel");
     private final static Level[] SELECTABLE_LEVELS = new Level[]{ Level.TRACE, Level.DEBUG, Level.INFO, Level.WARN, Level.ERROR, Level.OFF};
 
     /**
@@ -61,6 +61,7 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
         JButton refreshButton = new JButton(Bundle.getMessage("ButtonRefreshCategories"));
         refreshButton.addActionListener(this::refreshButtonPressed);
         topP.add(refreshButton);
+        topP.add(new JLabel(Bundle.getMessage("LogConfiguredInherited")));
         add(topP,BorderLayout.NORTH);
         
         // start scrolled to top
@@ -78,6 +79,7 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
         categoryComboBox = new JComboBox<>();
         jmri.util.swing.JComboBoxUtil.setupComboBoxMaxRows(categoryComboBox);
         categoryComboBox.setToolTipText(Bundle.getMessage("EditLoggingLevelToolTip"));
+        categoryComboBox.setEditable(true);
 
         JPanel topPanel = new JPanel(new FlowLayout());
         topPanel.add(categoryComboBox);
@@ -107,13 +109,25 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
     }
 
     private static List<LoggerInfo> getAllLoggersWithLevels() {
-        List<LoggerInfo> loggersWithLevels = new ArrayList<>();
+        HashMap<String, LoggerInfo> hs = new HashMap<>();
         LoggerContext loggerContext = (LoggerContext) LogManager.getContext(false);
         for (Logger category : loggerContext.getLoggers()) {
-            loggersWithLevels.add(new LoggerInfo(category.getName() , category.getLevel()));
+            hs.put(category.getName(), new LoggerInfo(category.getName() , category.getLevel()));
         }
-        Collections.sort(loggersWithLevels); // sorts by real name alphabetically
-        return loggersWithLevels;
+
+        Configuration config = loggerContext.getConfiguration();
+        Map<String, LoggerConfig> mm = config.getLoggers(); // does not include root logger
+        mm.forEach((key, value) -> {
+            hs.putIfAbsent(key, new LoggerInfo(value.getName() , value.getLevel()));
+            hs.get(key).setInConfig();
+        });
+        // ensure root logger in list
+        hs.putIfAbsent("", new LoggerInfo("" , config.getRootLogger().getLevel()));
+        hs.get("").setInConfig();
+
+        List<LoggerInfo> valuesList = new ArrayList<>(hs.values());
+        Collections.sort(valuesList); // sorts by real name alphabetically
+        return valuesList;
     }
 
     private void populateTextArea(List<LoggerInfo> loggers){
@@ -136,7 +150,7 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
         for ( LoggerInfo l : loggers ) {
             categoryComboBox.addItem(l.getLoggerName());
         }
-        categoryComboBox.setSelectedItem(f == null ? DEFAULT_LEVEL_STRING : f);
+        categoryComboBox.setSelectedItem(f == null ? ROOT_LEVEL_STRING : f);
     }
 
     private void editButtonPressed(ActionEvent e) {
@@ -144,7 +158,7 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
         String f = (String)categoryComboBox.getSelectedItem();
         Level l = (Level)levelSelectionComboBox.getSelectedItem();
         log.info("changing Logging for {} to {}",f,l);
-        if ( DEFAULT_LEVEL_STRING.equals(f) ){
+        if ( ROOT_LEVEL_STRING.equals(f) ){
             f=""; // empty String is actual name for root logger.
         }
         Configurator.setLevel(LogManager.getLogger(f), l);
@@ -167,6 +181,7 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
 
         private final String loggerName;
         private final Level level;
+        private boolean inConfig = false;
 
         private LoggerInfo(String loggerName, Level level) {
             this.loggerName = loggerName;
@@ -174,7 +189,11 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
         }
 
         String getLoggerName() {
-            return (loggerName.isBlank() ? DEFAULT_LEVEL_STRING : loggerName);
+            return (loggerName.isBlank() ? ROOT_LEVEL_STRING : loggerName);
+        }
+
+        private void setInConfig(){
+            inConfig = true;
         }
 
         @Override
@@ -186,9 +205,8 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
         public String toString() {
             StringBuilder s = new StringBuilder();
             s.append(getLoggerName()).append("  ");
-            if ( level == null ){
-                s.append("{ ").append(((LoggerContext) LogManager.getContext(false))
-                    .getRootLogger().getLevel().name()).append(" }");
+            if ( !inConfig ){
+                s.append("{ ").append(level.name()).append(" }");
             } else {
                 s.append("[ ").append(level.name()).append(" ]");
             }
