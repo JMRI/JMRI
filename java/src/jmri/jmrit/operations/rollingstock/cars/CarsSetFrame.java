@@ -42,10 +42,9 @@ public class CarsSetFrame extends CarSetFrame {
         _carsTable = carsTable;
         _carsTableModel = (CarsTableModel) carsTable.getModel();
 
-        super.initComponents();
+        super.initComponents("package.jmri.jmrit.operations.Operations_SetCars");
 
         setTitle(Bundle.getMessage("TitleSetCars"));
-        addHelpMenu("package.jmri.jmrit.operations.Operations_SetCars", true); // NOI18N
         // modify Save button text to "Apply";
         saveButton.setText(Bundle.getMessage("ButtonApply"));
         // disable edit load button if no cars selected
@@ -80,6 +79,9 @@ public class CarsSetFrame extends CarSetFrame {
         if (rows.length > 0) {
             Car car = _carsTableModel.getCarAtIndex(_carsTable.convertRowIndexToModel(rows[0]));
             super.load(car);
+        } else {
+            enableComponents(true);
+            showMessageDialogWarning();
         }
     }
 
@@ -132,8 +134,7 @@ public class CarsSetFrame extends CarSetFrame {
             cars.add(car);
         }
         if (rows.length == 0) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("selectCars"), Bundle
-                    .getMessage("carNoneSelected"), JOptionPane.WARNING_MESSAGE);
+            showMessageDialogWarning();
             return false;
         } else if (cars.get(0) != _car) {
             log.debug("Default car isn't the first one selected");
@@ -167,7 +168,12 @@ public class CarsSetFrame extends CarSetFrame {
                 askKernelChange = false; // changing kernel name
             }
         }
-        return true;
+        return false; // all good, but don't close window
+    }
+    
+    private void showMessageDialogWarning() {
+        JOptionPane.showMessageDialog(this, Bundle.getMessage("selectCars"), Bundle
+                .getMessage("carNoneSelected"), JOptionPane.WARNING_MESSAGE);
     }
 
     private final static Logger log = LoggerFactory.getLogger(CarsSetFrame.class);

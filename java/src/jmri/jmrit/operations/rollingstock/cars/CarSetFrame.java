@@ -74,9 +74,16 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
     private static boolean autoReturnWhenLoadedTrackCheckBoxSelected = false;
 
     private static boolean enableDestination = false;
+    
+    private String _help = "package.jmri.jmrit.operations.Operations_CarsSet";
 
     public CarSetFrame() {
         super(Bundle.getMessage("TitleCarSet"));
+    }
+    
+    public void initComponents(String help) {
+        _help = help;
+        initComponents();
     }
 
     @Override
@@ -89,7 +96,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         toolMenu.add(new EnableDestinationAction(this));
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
-        addHelpMenu("package.jmri.jmrit.operations.Operations_CarsSet", true); // NOI18N
+        addHelpMenu(_help, true); // NOI18N
 
         // initial caps for some languages i.e. German
         editLoadButton.setToolTipText(

@@ -15,10 +15,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.routes.tools.PrintRouteAction;
-import jmri.jmrit.operations.routes.tools.RouteBlockingOrderEditFrameAction;
-import jmri.jmrit.operations.routes.tools.RouteCopyAction;
-import jmri.jmrit.operations.routes.tools.SetTrainIconRouteAction;
+import jmri.jmrit.operations.routes.tools.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
@@ -233,16 +230,15 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
             log.debug("route save button activated");
             Route route = routeManager.getRouteByName(routeNameTextField.getText());
             if (_route == null && route == null) {
-                saveNewRoute();
+                saveNewRoute(); // can't happen, save button is disabled
             } else {
                 if (route != null && route != _route) {
                     reportRouteExists(Bundle.getMessage("save"));
                     return;
                 }
-                saveRoute();
-            }
-            if (Setup.isCloseWindowOnSaveEnabled()) {
-                dispose();
+                if (saveRoute() && Setup.isCloseWindowOnSaveEnabled()) {
+                    dispose();
+                }
             }
         }
         if (ae.getSource() == deleteRouteButton) {
@@ -336,20 +332,21 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         loadToolMenu();
     }
 
-    private void saveRoute() {
-        if (!checkName(Bundle.getMessage("save"))) {
-            return;
-        }
-        _route.setName(routeNameTextField.getText());
-        _route.setComment(commentTextField.getText());
-
+    private boolean saveRoute() {
         if (routeTable.isEditing()) {
             log.debug("route table edit true");
             routeTable.getCellEditor().stopCellEditing();
         }
-        checkTrainDirections();
+        
+        if (!checkName(Bundle.getMessage("save")) || !checkTrainDirections()) {
+            return false;
+        }
+        _route.setName(routeNameTextField.getText());
+        _route.setComment(commentTextField.getText());
+
         // save route file
         OperationsXml.save();
+        return true;
     }
 
     /**
@@ -378,7 +375,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
     /*
      * Checks to see if user has disabled the saved train directions for this route.
      */
-    private void checkTrainDirections() {
+    private boolean checkTrainDirections() {
         // get the valid train directions
         List<String> directions = Setup.getTrainDirectionList();
         for (RouteLocation rl : _route.getLocationsBySequenceList()) {
@@ -388,9 +385,10 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
                         MessageFormat.format(Bundle.getMessage("RouteDirectionError"),
                                 new Object[] { rl.getTrainDirectionString() }),
                         JOptionPane.ERROR_MESSAGE);
-                return;
+                return false;
             }
         }
+        return true;
     }
 
     private void reportRouteExists(String s) {
