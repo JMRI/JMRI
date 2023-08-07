@@ -577,20 +577,12 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
     }
 
     protected void editMemoryValue() {
-        JTextField newMemory = new JTextField(20);
-        if (getMemory().getValue() != null) {
-            newMemory.setText(getMemory().getValue().toString());
-        }
-        Object[] options = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), newMemory};
-        int retval = JOptionPane.showOptionDialog(this,
-                "Edit Current Memory Value", namedMemory.getName(),
-                0, JOptionPane.INFORMATION_MESSAGE, null,
-                options, options[2]);
-
-        if (retval != 1) {
-            return;
-        }
-        setValue(newMemory.getText());
+    
+        String reval = JOptionPane.showInputDialog(this,
+                                     "Edit Current Memory Value",
+                                     getMemory().getValue());
+    
+        setValue(reval);
         updateSize();
     }
 
