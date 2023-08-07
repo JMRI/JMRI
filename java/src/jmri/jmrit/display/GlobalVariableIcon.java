@@ -463,20 +463,12 @@ public class GlobalVariableIcon extends MemoryOrGVIcon implements java.beans.Pro
     }
 
     protected void editGlobalVariableValue() {
-        JTextField newGlobalVariable = new JTextField(20);
-        if (getGlobalVariable().getValue() != null) {
-            newGlobalVariable.setText(getGlobalVariable().getValue().toString());
-        }
-        Object[] options = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), newGlobalVariable};
-        int retval = JOptionPane.showOptionDialog(this,
-                "Edit Current GlobalVariable Value", namedGlobalVariable.getName(),
-                0, JOptionPane.INFORMATION_MESSAGE, null,
-                options, options[2]);
-
-        if (retval != 1) {
-            return;
-        }
-        setValue(newGlobalVariable.getText());
+    
+        String reval = JOptionPane.showInputDialog(this,
+                                     Bundle.getMessage("EditCurrentGlobalVariableValue", namedGlobalVariable.getName()),
+                                     getGlobalVariable().getValue());
+    
+        setValue(reval);
         updateSize();
     }
 
