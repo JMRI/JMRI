@@ -174,7 +174,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 
                 <li><a href="#ShowTrainsServicingThisLocation">Show Trains Servicing this
                     Location</a></li>
-                <li><a href="#ShowRoutesServicingThisLocation">Show Routes Servicing this
+                <li><a href="#ShowRoutesServicingThisLocation">Show Routes Servicing
                     Location</a></li>
 
                 <li><a href="#PrintLocation">Print or Preview</a></li>
@@ -2344,7 +2344,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         can also determine if a certain car type will be serviced by the trains visiting the
         location. Use the "Type" drop down menu to select a car type.</p>
         
-      <h4 id="ShowRoutesServicingThisLocation">Show Routes Servicing this Location</h4>
+      <h4 id="ShowRoutesServicingThisLocation">Show Routes Servicing Location</h4>
 
       <p>This tool will show all of the routes that can service a location. You can also edit a
         route directly with this tool.</p>

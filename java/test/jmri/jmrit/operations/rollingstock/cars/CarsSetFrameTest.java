@@ -39,18 +39,17 @@ public class CarsSetFrameTest extends OperationsTestCase {
         CarsSetFrame f = new CarsSetFrame();
         CarsTableFrame ctf = new CarsTableFrame(true, null, null);
         JTable ctm = ctf.carsTable;
+        // select CP 888
+        ctm.setRowSelectionInterval(2, 2);
         f.initComponents(ctm);
         f.setTitle("Test Cars Set Frame");
-
-        CarManager cManager = InstanceManager.getDefault(CarManager.class);
-        Car c888 = cManager.getByRoadAndNumber("CP", "888");
-        Assert.assertNotNull("car exists", c888);
-        f.load(c888);
+ 
+        // Save button is labeled "Apply"
+        JemmyUtil.enterClickAndLeave(f.saveButton);
 
         JUnitUtil.dispose(ctf);
         JUnitUtil.dispose(f);
         JUnitOperationsUtil.checkOperationsShutDownTask();
-
     }
 
     @Test
@@ -62,8 +61,19 @@ public class CarsSetFrameTest extends OperationsTestCase {
         CarsSetFrame f = new CarsSetFrame();
         CarsTableFrame ctf = new CarsTableFrame(true, null, null);
         JTable ctm = ctf.carsTable;
-        f.initComponents(ctm);
-        f.setTitle("Test Cars Set Frame");
+        
+        Thread initComp = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                f.initComponents(ctm);
+            }
+        });
+        initComp.setName("cars set frame"); // NOI18N
+        initComp.start();
+        
+        // no cars selected dialog should appear
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("carNoneSelected"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
 
         // Save button is labeled "Apply"
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
@@ -85,7 +95,19 @@ public class CarsSetFrameTest extends OperationsTestCase {
         CarsSetFrame f = new CarsSetFrame();
         CarsTableFrame ctf = new CarsTableFrame(true, null, null);
         JTable ctm = ctf.carsTable;
-        f.initComponents(ctm);
+
+        Thread initComp = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                f.initComponents(ctm);
+            }
+        });
+        initComp.setName("cars set frame"); // NOI18N
+        initComp.start();
+        
+        // no cars selected dialog should appear
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("carNoneSelected"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
         
         Assert.assertTrue("Ignore selected", f.ignoreStatusCheckBox.isSelected());
         Assert.assertTrue("Ignore selected", f.ignoreLocationCheckBox.isSelected());
@@ -139,6 +161,9 @@ public class CarsSetFrameTest extends OperationsTestCase {
         CarsSetFrame f = new CarsSetFrame();
         CarsTableFrame ctf = new CarsTableFrame(true, null, null);
         JTable ctm = ctf.carsTable;
+        
+        // select the first three cars CP 99, CP 777, and CP 888
+        ctm.setRowSelectionInterval(0, 2);
         f.initComponents(ctm);
         
         JemmyUtil.enterClickAndLeave(f.ignoreAllButton);
