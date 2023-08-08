@@ -565,6 +565,11 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             if (specified.equals(YES)) {
                 firstTrain = _train;
             } else if (specified.equals(NOT_NOW)) {
+                // found a two train route for this car, show the car's route
+                List<Train> trains = new ArrayList<>(Arrays.asList(_train, secondTrain));
+                tracks = new ArrayList<>(Arrays.asList(track, car.getFinalDestinationTrack()));
+                showRoute(car, trains, tracks);
+                
                 addLine(_buildReport, SEVEN,
                         MessageFormat.format(Bundle.getMessage("RouterTrainCanNotDueTo"),
                                 new Object[]{_train.getName(), car.toString(), track.getLocation().getName(),
@@ -728,11 +733,11 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         // start with interchanges
         List<Track> tracks;
         tracks = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.INTERCHANGE);
-        loadTracks(car, testCar, tracks);
+        loadTracksAndTrains(car, testCar, tracks);
         // next load yards if enabled
         if (Setup.isCarRoutingViaYardsEnabled()) {
             tracks = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.YARD);
-            loadTracks(car, testCar, tracks);
+            loadTracksAndTrains(car, testCar, tracks);
         }
         // add staging if requested
         if (useStaging) {
@@ -743,7 +748,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     tracks.add(staging);
                 }
             }
-            loadTracks(car, testCar, tracks);
+            loadTracksAndTrains(car, testCar, tracks);
         }
 
         if (_nextLocationTracks.isEmpty()) {
@@ -1154,7 +1159,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     MessageFormat.format(Bundle.getMessage("RouterTrainCanNotDueTo"),
                             new Object[]{_train.getName(), car.toString(), track.getLocation().getName(),
                                     track.getName(), _train.getServiceStatus()}));
-            return true; // the issue is route moves or train length
+            return false; // the issue is route moves or train length
         }
         // check to see if track is staging
         if (track.isStaging() &&
@@ -1197,14 +1202,20 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         return clone;
     }
 
-    private void loadTracks(Car car, Car testCar, List<Track> tracks) {
+    /*
+     * Creates two sets of tracks when routing. 1st set (_nextLocationTracks) is
+     * one hop away from car's current location. 2nd set is all other tracks
+     * (_otherLocationTracks) that aren't one hop away from car's current
+     * location or destination. Also creates the list of trains used to service
+     * _nextLocationTracks.
+     */
+    private void loadTracksAndTrains(Car car, Car testCar, List<Track> tracks) {
         for (Track track : tracks) {
             if (track == car.getTrack()) {
                 continue; // don't use car's current track
             }
             // note that last could equal next if this routine was used for two
-            // train
-            // routing
+            // train routing
             if (_lastLocationTracks.contains(track)) {
                 continue;
             }
@@ -1230,9 +1241,10 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             if (car.getTrack().isStaging() && !specified.equals(YES)) {
                 train = null;
             }
-            // is the option to car by specified enabled?
+            // is the option carry all cars with a final destination enabled?
             if (train != null &&
                     _train != null &&
+                    _train != train &&
                     _train.isServiceAllCarsWithFinalDestinationsEnabled() &&
                     !specified.equals(YES)) {
                 addLine(_buildReport, SEVEN,
