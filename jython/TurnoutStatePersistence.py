@@ -124,7 +124,7 @@ class PersistTurnoutStateTask(jmri.implementation.AbstractShutDownTask):
 class LoadTurnoutState(jmri.jmrit.automat.AbstractAutomaton):
 
     # Get reference to the logger
-    log = Logger.getLogger("jmri.jmrit.jython.exec.TurnoutStatePersistence.LoadTurnoutState")
+    log = LoggerFactory.getLogger("jmri.jmrit.jython.exec.TurnoutStatePersistence.LoadTurnoutState")
 
     # Perform any initialisation
     def init(self):
