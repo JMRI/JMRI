@@ -483,7 +483,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>TurnoutStatePersistence.py was not correctly updated to use SLF4J in 5.5.3, fixed in 5.5.4</li>
         </ul>
 
     <h3>Signals</h3>
