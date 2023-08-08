@@ -300,20 +300,12 @@ public class BlockContentsIcon extends MemoryIcon {
     }
 
     protected void editBlockValue() {
-        JTextField newBlock = new JTextField(20);
-        if (getBlock().getValue() != null) {
-            newBlock.setText(getBlock().getValue().toString());
-        }
-        Object[] options = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), newBlock};
-        int retval = JOptionPane.showOptionDialog(this,
-                Bundle.getMessage("EditCurrentBlockValue"), namedBlock.getName(),
-                0, JOptionPane.INFORMATION_MESSAGE, null,
-                options, options[1]);
-
-        if (retval != 1) {
-            return;
-        }
-        setValue(newBlock.getText());
+    
+        String reval = JOptionPane.showInputDialog(this,
+                                     Bundle.getMessage("EditCurrentBlockValue", namedBlock.getName()),
+                                     getBlock().getValue());
+    
+        setValue(reval);
         updateSize();
     }
 
