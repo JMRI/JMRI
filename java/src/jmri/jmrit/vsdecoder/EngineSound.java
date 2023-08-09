@@ -47,7 +47,6 @@ public class EngineSound extends VSDSound {
 
     public EngineSound(String name) {
         super(name);
-        is_playing = false;
         engine_started = false;
         initialized = init();
     }
@@ -72,7 +71,6 @@ public class EngineSound extends VSDSound {
     @Override
     public void stop() {
         log.info("Emergency Stop called!");
-        is_playing = false;
     }
 
     @Override

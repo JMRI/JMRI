@@ -49,7 +49,6 @@ class DieselSound extends EngineSound {
         log.debug("EngineSound Play: current_notch = {}", current_notch);
         if (notch_sounds.containsKey(current_notch) && (isEngineStarted() || auto_start_engine)) {
             notch_sounds.get(current_notch).play();
-            is_playing = true;
         }
     }
 
@@ -58,7 +57,6 @@ class DieselSound extends EngineSound {
     public void loop() {
         if (notch_sounds.containsKey(current_notch) && (isEngineStarted() || auto_start_engine)) {
             notch_sounds.get(current_notch).play();
-            is_playing = true;
         }
     }
 
@@ -67,7 +65,6 @@ class DieselSound extends EngineSound {
         if (notch_sounds.containsKey(current_notch)) {
             notch_sounds.get(current_notch).stop();
         }
-        is_playing = false;
     }
 
     @Override

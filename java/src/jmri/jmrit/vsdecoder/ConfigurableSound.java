@@ -48,7 +48,6 @@ class ConfigurableSound extends VSDSound {
 
     public ConfigurableSound(String name) {
         super(name);
-        is_playing = false;
     }
 
     public boolean init() {
@@ -101,22 +100,10 @@ class ConfigurableSound extends VSDSound {
         return true;
     }
 
-    /**
-     * Get the audio playing state.
-     * @return the playing state
-     * @deprecated As of 4.99.6, use {Audio.STATE_PLAYING} instead
-     */
-    @Deprecated(since="4.99.6")
-    @Override
-    public boolean isPlaying() {
-        return is_playing;
-    }
-
     @Override
     public void play() {
         if (use_short_sound) {
             short_sound.play();
-            is_playing = false; // short sound, won't be playing long...
         } else {
             if (use_start_sound) {
                 t = newTimer(start_sound.getLengthAsInt(), false, new ActionListener() {
@@ -128,7 +115,6 @@ class ConfigurableSound extends VSDSound {
                 start_sound.play();
                 if (use_mid_sound) {
                     t.start();
-                    is_playing = true;
                 }
             } else if (use_mid_sound) {
                 mid_sound.setLooped(true);
@@ -155,7 +141,6 @@ class ConfigurableSound extends VSDSound {
             mid_sound.setLooped(true);
             mid_sound.play();
         }
-        is_playing = true;
     }
 
     // Catch the timer pop after the start sound is played and trigger the (looped) sustain sound.
@@ -198,7 +183,6 @@ class ConfigurableSound extends VSDSound {
             end_sound.setLooped(false);
             end_sound.play();
         }
-        is_playing = false;
     }
 
     @Override

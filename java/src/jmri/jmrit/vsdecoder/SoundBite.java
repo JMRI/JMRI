@@ -244,24 +244,20 @@ class SoundBite extends VSDSound {
     @Override
     public void play() {
         sound_src.play();
-        is_playing = true;
     }
 
     @Override
     public void loop() {
         sound_src.play();
-        is_playing = true;
     }
 
     @Override
     public void stop() {
         sound_src.stop();
-        is_playing = false;
     }
 
     public void pause() {
         sound_src.pause();
-        is_playing = false;
     }
 
     public void rewind() {
@@ -276,7 +272,6 @@ class SoundBite extends VSDSound {
         } else {
             sound_src.fadeOut();
         }
-        is_playing = false;
     }
 
     @Override
@@ -287,7 +282,6 @@ class SoundBite extends VSDSound {
         } else {
             sound_src.fadeIn();
         }
-        is_playing = true;
     }
 
     @Override

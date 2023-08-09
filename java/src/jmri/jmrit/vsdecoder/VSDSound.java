@@ -36,7 +36,6 @@ abstract public class VSDSound {
 
     Timer t;
 
-    boolean is_playing;
     boolean is_tunnel;
     String name;
     float gain;  // this is the (fixed) gain relative to the other sounds in this Profile
@@ -47,16 +46,6 @@ abstract public class VSDSound {
     public VSDSound(String name) {
         this.name = name;
         gain = default_gain;
-    }
-
-    /**
-     * Get the audio playing state.
-     * @return the playing state
-     * @deprecated As of 4.99.6, use {Audio.STATE_PLAYING} instead
-     */
-    @Deprecated(since="4.99.6")
-    public boolean isPlaying() {
-        return is_playing;
     }
 
     protected Timer newTimer(int time, boolean repeat, ActionListener al) {
