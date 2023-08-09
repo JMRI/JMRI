@@ -60,7 +60,7 @@
       <dl style="margin-left: 2em">
         <dt>Log Message</dt>
 
-        <dt>Display Log Categories</dt>
+        <dt><a href="../../../package/apps/jmrit/log/Log4JTreePane.shtml">Display / Edit Log Categories</a></dt>
 
         <dd>
         </dd>
@@ -94,7 +94,7 @@
       <hr>
 
       <dl style="margin-left: 2em">
-        <dt>USB Input Control</dt>
+        <dt><a href="../../../package/jmri/jmrix/jinput/treemodel/TreeFrame.shtml">USB Input Control</a></dt>
 
         <dt>USB Devices</dt>
 

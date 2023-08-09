@@ -595,6 +595,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>Logging levels ( eg. INFO, DEBUG ) can be changed for the current session in
+            <a href="https://www.jmri.org/en/package/apps/jmrit/log/Log4JTreePane.shtml">Display / Edit Log Categories</a></li>
             <li>The way data is entered in memory icons, block icons
                 and global variable icons have been improved.</li>
             <li>You can now set the preferences to open the RailCom table at startup.</li>
