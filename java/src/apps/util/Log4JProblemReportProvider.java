@@ -32,7 +32,7 @@ public class Log4JProblemReportProvider implements LogProblemReportProvider {
                 list.add(new File(f.getFileName()));
             }
         });
-        return list.toArray(File[]::new);
+        return list.toArray(new File[list.size()]);
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Log4JProblemReportProvider.class);
