@@ -88,7 +88,7 @@ public class VSDManagerFrame extends JmriJFrame {
     public VSDManagerFrame() {
         super(true, true);
         this.addPropertyChangeListener(VSDecoderManager.instance());
-        is_auto_loading = VSDecoderManager.instance().getVSDecoderPreferences().isAutoLoadingDefaultVSDFile();
+        is_auto_loading = VSDecoderManager.instance().getVSDecoderPreferences().isAutoLoadingVSDFile();
         is_viewing = VSDecoderManager.instance().getVSDecoderList().isEmpty() ? false : true;
         initGUI();
     }

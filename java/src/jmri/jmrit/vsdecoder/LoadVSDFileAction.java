@@ -52,9 +52,6 @@ public class LoadVSDFileAction extends AbstractAction {
         // Shouldn't this be in the resource bundle?
     }
 
-    JFileChooser fileChooser;
-    private String last_path = null;
-
     /**
      * The action is performed. Let the user choose the file to load from. Read
      * XML for each VSDecoder Profile.
@@ -63,43 +60,27 @@ public class LoadVSDFileAction extends AbstractAction {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (fileChooser == null) {
-            // Need to somehow give the user a history...
-            // Must investigate JFileChooser...
-            String start_dir = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath();
-            if (last_path != null) {
-                start_dir = last_path;
-            }
+        JFileChooser fileChooser;
+        String dir_external =
+                jmri.util.FileUtil.getExternalFilename(VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath());
 
-            log.debug("Using path: {}", start_dir);
+        fileChooser = new jmri.util.swing.JmriJFileChooser(dir_external);
+        fileChooser.setFileFilter(new FileNameExtensionFilter(Bundle.getMessage("LoadVSDFileChooserFilterLabel"), "vsd", "zip")); // NOI18N
+        fileChooser.setCurrentDirectory(new File(dir_external));
+        fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
 
-            fileChooser = new jmri.util.swing.JmriJFileChooser(start_dir);
-            fileChooser.setFileFilter(new FileNameExtensionFilter(Bundle.getMessage("LoadVSDFileChooserFilterLabel"), "vsd", "zip")); // NOI18N
-            fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
-            fileChooser.setCurrentDirectory(new File(start_dir));
-        }
         int retVal = fileChooser.showOpenDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) {
-            return;
-            // give up if no file selected
-        }
-
-        loadVSDFile(fileChooser.getSelectedFile().toString());
-
-        // Store the last used directory
-        try {
-            last_path = fileChooser.getCurrentDirectory().getCanonicalPath();
-        } catch (java.io.IOException err) {
-            log.debug("Error getting current directory", err);
-            last_path = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath();
+            loadVSDFile(fileChooser.getSelectedFile().toString());
         }
     }
 
     public static boolean loadVSDFile(String fp) {
         // Check whether the file exists
-        File file = new File(fp);
+        String fp_external = jmri.util.FileUtil.getExternalFilename(fp);
+        File file = new File(fp_external);
         if (!file.exists()) {
-            log.error("Cannot locate VSD File {}", fp);
+            log.error("Cannot locate VSD File {}", fp_external);
             if (!GraphicsEnvironment.isHeadless()) {
                 JOptionPane.showMessageDialog(null, "Cannot locate VSD File",
                         Bundle.getMessage("VSDFileError"), JOptionPane.ERROR_MESSAGE);
@@ -111,7 +92,7 @@ public class LoadVSDFileAction extends AbstractAction {
         VSDFile vsdfile;
         try {
             // Create a VSD (zip) file.
-            vsdfile = new VSDFile(fp);
+            vsdfile = new VSDFile(fp_external);
             log.debug("VSD File name: {}", vsdfile.getName());
             if (vsdfile.isInitialized()) {
                 VSDecoderManager.instance().loadProfiles(vsdfile);
@@ -133,20 +114,6 @@ public class LoadVSDFileAction extends AbstractAction {
             log.error("IOException opening file {}", fp, ze);
             return false;
         }
-
-        /*
-         File f = null;
-         try {
-         f = new File(fp);
-         return loadVSDFile(f);
-         } catch (java.io.IOException ioe) {
-         log.warn("IO Error auto-loading VSD File: " + (f==null?"(null)":f.getAbsolutePath()) + " ", ioe);
-         return false;
-         } catch (NullPointerException npe) {
-         log.warn("NP Error auto-loading VSD File: FP = " + fp, npe);
-         return false;
-         }
-         */
     }
 
     private static final Logger log = LoggerFactory.getLogger(LoadVSDFileAction.class);
