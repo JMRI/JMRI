@@ -83,24 +83,38 @@ public class VSDecoderPreferences {
         }
         org.jdom2.Attribute a;
         org.jdom2.Element c;
-        if ((a = e.getAttribute("isAutoStartingEngine")) != null) {
-            setAutoStartEngine(a.getValue().compareTo("true") == 0);
+
+        a = e.getAttribute("isAutoStartingEngine");
+        if (a != null) {
+            setAutoStartEngine(a.getValue().equals("true"));
         }
-        if ((a = e.getAttribute("isAutoLoadingVSDFile")) != null) {
-            setAutoLoadVSDFile(a.getValue().compareTo("true") == 0);
+        // new attribute name!
+        a = e.getAttribute("isAutoLoadingVSDFile");
+        if (a != null) {
+            setAutoLoadVSDFile(a.getValue().equals("true"));
+        } else {
+            // try the old name, in case the user has not saved his preferences since the name change;  JMRI 5.5.4
+            a = e.getAttribute("isAutoLoadingDefaultVSDFile");
+            if (a != null) {
+                setAutoLoadVSDFile(a.getValue().equals("true"));
+            }
         }
-        if ((a = e.getAttribute("useBlocks")) != null) {
-            setUseBlocksSetting(a.getValue().compareTo("true") == 0);
+        a = e.getAttribute("useBlocks");
+        if (a != null) {
+            setUseBlocksSetting(a.getValue().equals("true"));
         }
-        if ((c = e.getChild("DefaultVSDFilePath")) != null) {
+        c = e.getChild("DefaultVSDFilePath");
+        if (c != null) {
             setDefaultVSDFilePath(c.getValue());
         }
-        if ((c = e.getChild("ListenerPosition")) != null) {
+        c = e.getChild("ListenerPosition");
+        if (c != null) {
             _listenerPosition = new ListeningSpot(c);
         } else {
             _listenerPosition = new ListeningSpot();
         }
-        if ((c = e.getChild("MasterVolume")) != null) {
+        c = e.getChild("MasterVolume");
+        if (c != null) {
             setMasterVolume(Integer.parseInt(c.getValue()));
         }
     }
