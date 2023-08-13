@@ -802,7 +802,12 @@ public class VSDecoderManager implements PropertyChangeListener {
                             // look for additional geometric layout information
                             if (geofile_ok) {
                                 Reporter rp = (Reporter) event.getSource();
-                                int new_rp = Integer.parseInt(Manager.getSystemSuffix(rp.getSystemName()));
+                                int new_rp = 0;
+                                try {
+                                    new_rp = Integer.parseInt(Manager.getSystemSuffix(rp.getSystemName()));
+                                } catch (java.lang.NumberFormatException e) {
+                                    log.warn("Invalid Reporter system name '{}'", rp.getSystemName());
+                                }
                                 // Check: Reporter must be valid for GeoData processing
                                 //    use the current Reporter list as a filter (changeable by a Train selection)
                                 if (reporterlists.get(d.setup_index).contains(new_rp)) {

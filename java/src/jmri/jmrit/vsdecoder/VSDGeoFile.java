@@ -232,7 +232,12 @@ public class VSDGeoFile extends XmlFile {
                     np = c1.getChildText("reporter-systemname");
                     Reporter rep = jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getBySystemName(np);
                     if (rep != null) {
-                        rep_int = Integer.parseInt(jmri.Manager.getSystemSuffix(rep.getSystemName()));
+                        try {
+                            rep_int = Integer.parseInt(jmri.Manager.getSystemSuffix(rep.getSystemName()));
+                        } catch (java.lang.NumberFormatException e) {
+                            log.warn("File {}: Reporter System Name '{}' is not valid for VSD", VSDGeoDataFileName, np);
+                            num_issues++;
+                        }
                         reporterlist[setup_index].add(rep_int);
                         n = c1.getChildText("position");
                         // An element "position" is required and a XML schema and a XML schema is not yet in place
