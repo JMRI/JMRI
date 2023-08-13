@@ -68,7 +68,7 @@ However, for this script to provide useful metrics, it should be executed before
 #
 import jmri
 import java
-import org.apache.log4j
+import org.slf4j.LoggerFactory
 
 
 class FollowJumpingPanel(jmri.jmrit.automat.AbstractAutomaton):
@@ -91,7 +91,7 @@ class FollowJumpingPanel(jmri.jmrit.automat.AbstractAutomaton):
     def handle(self):
 
         # Debug logging log4j overhead:
-        LogfileWrite = org.apache.log4j.Logger.getLogger("jmri.jmrit.jython.exec.script.FollowJumpingPanel")
+        LogfileWrite = org.slf4j.LoggerFactory.getLogger("jmri.jmrit.jython.exec.script.FollowJumpingPanel")
 
         # The JMRI Main Window is moved to the lower left corner of the screen, but only
         # because, a script to do that task has been modified for the Jumping Panel diagnostics
