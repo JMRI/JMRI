@@ -42,7 +42,8 @@
 
       <p>Uhlenbrock and Digikeijs/Digirails publish the Article number for each (new) device. For
       example, the Digikeijs DigiBoost DR5033 has Article number 5033, which was registered with
-      Uhlenbrock.<br>
+      Uhlenbrock. The Uhlenbrock 63330 has Article number 6333, the Uhlenbrock 63410 has 6341
+      (skip last zero).<br>
       Enter the Article number eg. 5033 in the "Article" field before proceeding.<br>
       Next, enter the Module Address in the corresponding field.</p>
 
