@@ -70,7 +70,7 @@ public class LoadVSDFileAction extends AbstractAction {
         fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
 
         int retVal = fileChooser.showOpenDialog(null);
-        if (retVal != JFileChooser.APPROVE_OPTION) {
+        if (retVal == JFileChooser.APPROVE_OPTION) {
             loadVSDFile(fileChooser.getSelectedFile().toString());
         }
     }
