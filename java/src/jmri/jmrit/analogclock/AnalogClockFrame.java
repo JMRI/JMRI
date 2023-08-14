@@ -287,7 +287,6 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
         }
 
         // show either "Stopped" or rate, depending on state
-        System.out.println(" update "+clock.getRun());
         if (! clock.getRun()) {
             amPm = amPm + " Stopped";
         } else {
