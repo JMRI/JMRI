@@ -1,5 +1,8 @@
 package jmri.jmrix.openlcb.swing.send;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -45,7 +48,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     // member declarations
     final JLabel jLabel1 = new JLabel();
     final JButton sendButton = new JButton();
-    final JTextField packetTextField = new JTextField(12);
+    final JTextField packetTextField = new JTextField(60);
 
     // internal members to hold sequence widgets
     static final int MAXSEQUENCE = 4;
@@ -60,8 +63,8 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     final JTextField datagramContentsField = new JTextField("20 61 00 00 00 00 08");  // NOI18N
     final JTextField configNumberField = new JTextField("40");                        // NOI18N
     final JTextField configAddressField = new JTextField("000000");                   // NOI18N
-    final JTextField readDataField = new JTextField(80);
-    final JTextField writeDataField = new JTextField(80);
+    final JTextField readDataField = new JTextField(60);
+    final JTextField writeDataField = new JTextField(60);
     final JComboBox<String> addrSpace = new JComboBox<>(new String[]{"CDI", "All", "Config", "None"});
 
     Connection connection;
@@ -120,14 +123,14 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         for (int i = 0; i < MAXSEQUENCE; i++) {
             pane2.add(new JLabel(Integer.toString(i + 1)));
             mUseField[i] = new JCheckBox();
-            mPacketField[i] = new JTextField(10);
+            mPacketField[i] = new JTextField(20);
             mDelayField[i] = new JTextField(10);
             pane2.add(mUseField[i]);
             pane2.add(mPacketField[i]);
             pane2.add(mDelayField[i]);
         }
-        pane2.add(mRunButton); // starts a new row in layout
         add(pane2);
+        add(mRunButton); // below rows
 
         mRunButton.addActionListener(this::runButtonActionPerformed);
 
@@ -164,8 +167,10 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         b.addActionListener(this::sendVerifyNodeGlobalID);
         pane2.add(b);
 
+        // event messages 
         add(new JSeparator());
-        add(addLineLabel("Send OpenLCB event message:"));
+        sendEventField.setColumns(24);
+        add(addLineLabel("Send OpenLCB event message with eventID:", sendEventField));
         pane2 = new JPanel();
         pane2.setLayout(new WrapLayout());
         add(pane2);
@@ -184,9 +189,10 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         b = new JButton("Send Event Produced");
         b.addActionListener(this::sendEventPerformed);
         pane2.add(b);
-        pane2.add(new JLabel("Event ID (8 bytes):"));
-        pane2.add(sendEventField);
+        //pane2.add(new JLabel("Event ID (8 bytes):"));
+        //pane2.add(sendEventField);
 
+        // addressed messages
         add(new JSeparator());
         add(addLineLabel("Send OpenLCB addressed message to:", nodeSelector));
         pane2 = new JPanel();
@@ -206,6 +212,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         b.addActionListener(this::sendDatagramPerformed);
         pane2.add(b);
         pane2.add(new JLabel("Contents: "));
+        datagramContentsField.setColumns(45);
         pane2.add(datagramContentsField);
         b = new JButton("Send Datagram Reply");
         b.addActionListener(this::sendDatagramReply);
@@ -250,6 +257,9 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     private JPanel getSendSinglePacketJPanel() {
+        JPanel outer = new JPanel();
+        outer.setLayout(new BoxLayout(outer, BoxLayout.X_AXIS));
+        
         JPanel pane1 = new JPanel();
         pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
 
@@ -261,6 +271,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         sendButton.setToolTipText("Send frame");
 
         packetTextField.setToolTipText("Frame as hex pairs, e.g. 82 7D; standard header in (), extended in []");
+        packetTextField.setMaximumSize(packetTextField.getPreferredSize());
 
         pane1.add(jLabel1);
         pane1.add(packetTextField);
@@ -268,7 +279,11 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane1.add(Box.createVerticalGlue());
 
         sendButton.addActionListener(this::sendButtonActionPerformed);
-        return pane1;
+        
+        outer.add(Box.createHorizontalGlue());
+        outer.add(pane1);
+        outer.add(Box.createHorizontalGlue());
+        return outer;
     }
 
     @Override
@@ -293,10 +308,16 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         if (c != null) {
-            p.add(lab);
+            p.add(lab, BorderLayout.EAST);
+            if (c instanceof JTextField) {
+                int height = lab.getMinimumSize().height+4;
+                int width = c.getMinimumSize().width;
+                Dimension d = new Dimension(width, height);
+                c.setMaximumSize(d);
+            }
             p.add(c);
         } else {
-            p.add(lab);
+            p.add(lab, BorderLayout.EAST);
         }
         p.add(Box.createHorizontalGlue());
         return p;
