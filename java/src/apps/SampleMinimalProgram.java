@@ -69,8 +69,6 @@ public class SampleMinimalProgram {
             Configurator.initialize(null, configFile);
             log.debug("Logging initialised with {}", configFile);
         } catch ( Exception ex ) {
-            System.err.println("Could not initialise logging for log config file "
-                + configFile + " " + ex);
             Configurator.reconfigure();
             Configurator.setRootLevel(org.apache.logging.log4j.Level.WARN);
             log.error("Unable to load Logging Configuration with file {}", configFile, ex);

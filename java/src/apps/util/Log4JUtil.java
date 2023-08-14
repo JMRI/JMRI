@@ -116,8 +116,8 @@ public class Log4JUtil {
             configureLogging(loggingControlFileLocation);
         } else {
             Configurator.reconfigure();
-            Configurator.setRootLevel(Level.WARN);
-            System.err.println("Unable to load Configuration "+ logFile);
+            Configurator.setRootLevel(Level.INFO);
+            log.error("Unable to load Configuration {}", logFile);
             if (!GraphicsEnvironment.isHeadless()) {
                 JOptionPane.showMessageDialog(null,
                     "Could not locate Logging Configuration file " + logFile,
@@ -191,20 +191,20 @@ public class Log4JUtil {
             System.setProperty(SYS_PROP_LOG_PATH, FileUtil.getPreferencesPath() + "log" + File.separator);
         }
         File logDir = new File(System.getProperty(SYS_PROP_LOG_PATH));
+        String createLogErr = null;
         if (!logDir.exists()) {
             try {
                 Files.createDirectories(logDir.toPath());
             } catch ( IOException ex ) {
-                System.err.println("Could not create directory for log files, " + ex.getMessage());
+                createLogErr = "Could not create directory for log files, " + ex.getMessage();
             }
         }
-
         try {
             Configurator.initialize(null, configFile);
             log.debug("Logging initialised with {}", configFile);
         } catch ( Exception ex ) {
-            System.err.println("Could not initialise logging for log config file "
-                + configFile + " " + ex);
+            Configurator.reconfigure();
+            Configurator.setRootLevel(Level.INFO);
             if (!GraphicsEnvironment.isHeadless()) {
                 JOptionPane.showMessageDialog(null,
                         "Could not Initialise Logging " + ex.getMessage(),
@@ -212,7 +212,10 @@ public class Log4JUtil {
                         JOptionPane.ERROR_MESSAGE);
             }
         }
-        
+        if (createLogErr!=null) { // wait until Logging init
+            log.error("Could not create directory for log files at {} {}",
+                System.getProperty(SYS_PROP_LOG_PATH), createLogErr);
+        }
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Log4JUtil.class);
