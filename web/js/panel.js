@@ -154,6 +154,8 @@ var requestPanelXML = function(panelName) {
         success: function(data, textStatus, jqXHR) {
             processPanelXML(data, textStatus, jqXHR);
             setTitle($gPanel["name"]);  // set final title once load completes, helps with testing
+            // set new attribute data-panel-name on the panel-area div to the panel name so that a user's css can use it.
+            $("#panel-area").attr("data-panel-name", $gPanel["name"]);
         },
         error: function( jqXHR, textStatus, errorThrown) {
             alert("Error retrieving panel xml from server.  Please press OK to retry.\n\nDetails: " +
