@@ -83,7 +83,7 @@
         <li>Create a test file with the new content. Ideally, this won't require using the screen,
         so it can actually be loaded and stored as part of headlesstest. In that case, put your
         file in a "load" test subdirectory (see below). At a minimum, though, put your file in a
-        "verify" test subdirectory so that your schema changes will be tested. For more on this,
+        "valid" test subdirectory so that your schema changes will be tested. For more on this,
         see <a href="#junitschematest">below</a>.
         </li>
       </ol>
@@ -207,7 +207,7 @@ we can certainly switch to it.
           <p>That's done by having a SchemaTest class in your test-tree package (see e.g. <a href=
           "https://github.com/JMRI/JMRI/blob/master/java/test/jmri/configurexml/SchemaTest.java">test/jmri/configurexml/SchemaTest.java</a>
           for an example) that checks all the XML files kept there. If that's in place, just put a
-          copy of a (new) typical XML file in the existing "verify" subdirectory.</p>
+          copy of a (new) typical XML file in the existing "valid" subdirectory.</p>
 
           <p>To more extensively check your schema, you can check that it fails XML files that you
           think are not valid. There are lots of ways to be not valid, and you don't need to check
@@ -216,10 +216,9 @@ we can certainly switch to it.
           You should document that reason via comments in the file itself so your colleagues can
           figure it out later.</p>
 
-          <p>If there's no "verify" subdirectory, create one and add it to the end of the
+          <p>If there's no "valid" subdirectory, create one and add it to the end of the
           SchemaTest class in that package. If there's no SchemaTest class, create one by
-          replicating an existing one, see link above. Don't forget to add it to PackageTest so it
-          gets invoked!</p>
+          replicating an existing one, see link above.</p>
         </li>
 
         <li>If you're working on configurexml files (panel files), and your new code isn't involved
@@ -237,8 +236,7 @@ we can certainly switch to it.
 
           <p>If there's no "load" subdirectory, create one and add it to the end of the
           LoadAndStoreTest class in that package. If there's no LoadAndStoreTest class, create one
-          by replicating an existing one, see link above. Don't forget to add it to PackageTest so
-          it gets invoked!</p>
+          by replicating an existing one, see link above.</p>
 
           <p>When LoadAndStoreTest runs, it loads the files in the load directory one-by-one,
           storing each back out to the "temp" directory within the local preferences directory, and
