@@ -31,7 +31,7 @@ import jmri.jmrit.vsdecoder.VSDecoderPreferences;
  *
  * @author Mark Underwood Copyright (C) 2011
  */
-class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyChangeListener {
+class VSDecoderPreferencesPane extends JPanel implements PropertyChangeListener {
 
     private javax.swing.JCheckBox cbAutoStartEngine;
     private javax.swing.JCheckBox cbAutoLoadVSDFile;
@@ -156,7 +156,7 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
             return;
         }
         cbAutoStartEngine.setSelected(tp.isAutoStartingEngine());
-        cbAutoLoadVSDFile.setSelected(tp.isAutoLoadingDefaultVSDFile());
+        cbAutoLoadVSDFile.setSelected(tp.isAutoLoadingVSDFile());
         cbUseBlocks.setSelected(tp.getUseBlocksSetting());
         tfDefaultVSDFilePath.setText(tp.getDefaultVSDFilePath());
     }
@@ -164,7 +164,7 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
     private VSDecoderPreferences getVSDecoderPreferences() {
         VSDecoderPreferences tp = new VSDecoderPreferences();
         tp.setAutoStartEngine(cbAutoStartEngine.isSelected());
-        tp.setAutoLoadDefaultVSDFile(cbAutoLoadVSDFile.isSelected());
+        tp.setAutoLoadVSDFile(cbAutoLoadVSDFile.isSelected());
         tp.setUseBlocksSetting(cbUseBlocks.isSelected());
         tp.setDefaultVSDFilePath(tfDefaultVSDFilePath.getText());
         tp.setListenerPosition(VSDecoderManager.instance().getVSDecoderPreferences().getListenerPosition());
@@ -181,7 +181,7 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
         } else {
             path = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath();
         }
-        final JFileChooser fc = new jmri.util.swing.JmriJFileChooser(path);
+        final JFileChooser fc = new jmri.util.swing.JmriJFileChooser(jmri.util.FileUtil.getExternalFilename(path));
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int rv = fc.showOpenDialog(this);
         if (rv == JFileChooser.APPROVE_OPTION) {

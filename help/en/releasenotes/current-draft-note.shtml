@@ -590,6 +590,9 @@
         <a id="VSD" name="VSD"></a>
         <ul>
             <li>Removed deprecated method isPlaying - use Audio.STATE_PLAYING.</li>
+            <li>Added optional portable file access in VSD. To be used in Roster Media (VSDecoder_Path)
+                and VSD Preferences (Default VSD File Path). For Portable File Access see
+                <a href="https://www.jmri.org/help/en/html/doc/Technical/FileNames.shtml">here</a>.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
