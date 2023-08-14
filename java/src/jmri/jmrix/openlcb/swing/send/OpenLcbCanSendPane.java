@@ -1,6 +1,5 @@
 package jmri.jmrix.openlcb.swing.send;
 
-import java.awt.FlowLayout;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -12,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
@@ -21,12 +21,12 @@ import jmri.jmrix.can.cbus.CbusAddress;
 import jmri.jmrix.openlcb.swing.ClientActions;
 import jmri.util.StringUtil;
 import jmri.util.javaworld.GridLayout2;
+import jmri.util.swing.WrapLayout;
+
 import org.openlcb.*;
 import org.openlcb.can.AliasMap;
 import org.openlcb.implementations.MemoryConfigurationService;
 import org.openlcb.swing.NodeSelector;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * User interface for sending OpenLCB CAN frames to exercise the system
@@ -136,13 +136,13 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         add(new JLabel("Send special frame:"));
 
         pane2 = new JPanel();
-        pane2.setLayout(new FlowLayout());
+        pane2.setLayout(new WrapLayout());
         pane2.add(new JLabel("Src Node alias:"));
         pane2.add(srcAliasField);
         add(pane2);
 
         pane2 = new JPanel();
-        pane2.setLayout(new FlowLayout());
+        pane2.setLayout(new WrapLayout());
         add(pane2);
         JButton b;
         b = new JButton("Send CIM");
@@ -155,7 +155,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         add(addLineLabel("Send OpenLCB global message:"));
 
         pane2 = new JPanel();
-        pane2.setLayout(new FlowLayout());
+        pane2.setLayout(new WrapLayout());
         add(pane2);
         b = new JButton("Send Verify Nodes Global");
         b.addActionListener(this::sendVerifyNodeGlobal);
@@ -167,7 +167,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         add(new JSeparator());
         add(addLineLabel("Send OpenLCB event message:"));
         pane2 = new JPanel();
-        pane2.setLayout(new FlowLayout());
+        pane2.setLayout(new WrapLayout());
         add(pane2);
         b = new JButton("Send Request Consumers");
         b.addActionListener(this::sendReqConsumers);
@@ -190,7 +190,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         add(new JSeparator());
         add(addLineLabel("Send OpenLCB addressed message to:", nodeSelector));
         pane2 = new JPanel();
-        pane2.setLayout(new FlowLayout());
+        pane2.setLayout(new WrapLayout());
         add(pane2);
         b = new JButton("Send Request Events");
         b.addActionListener(this::sendRequestEvents);
@@ -200,7 +200,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2.add(b);
 
         pane2 = new JPanel();
-        pane2.setLayout(new FlowLayout());
+        pane2.setLayout(new WrapLayout());
         add(pane2);
         b = new JButton("Send Datagram");
         b.addActionListener(this::sendDatagramPerformed);
@@ -216,14 +216,14 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         add(addLineLabel("Send OpenLCB Configuration Command:"));
 
         pane2 = new JPanel();
-        pane2.setLayout(new FlowLayout());
+        pane2.setLayout(new WrapLayout());
         add(pane2);
         pane2.add(new JLabel("Memory Address: "));
         pane2.add(configAddressField);
         pane2.add(new JLabel("Address Space: "));
         pane2.add(addrSpace);
         pane2 = new JPanel();
-        pane2.setLayout(new FlowLayout());
+        pane2.setLayout(new WrapLayout());
         add(pane2);
         pane2.add(new JLabel("Byte Count: "));
         pane2.add(configNumberField);
@@ -234,7 +234,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2.add(readDataField);
 
         pane2 = new JPanel();
-        pane2.setLayout(new FlowLayout());
+        pane2.setLayout(new WrapLayout());
         add(pane2);
         b = new JButton("Write");
         b.addActionListener(this::writePerformed);
@@ -583,6 +583,6 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     // private data
     private TrafficController tc = null; //was CanInterface
-    private final static Logger log = LoggerFactory.getLogger(OpenLcbCanSendPane.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OpenLcbCanSendPane.class);
 
 }
