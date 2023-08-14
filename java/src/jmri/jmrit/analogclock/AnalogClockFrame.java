@@ -286,15 +286,21 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
             amPm = "Midnight";
         }
 
-        String rate = ""+(int)clock.userGetRate();
-        if (Math.floor(clock.userGetRate()) != clock.userGetRate()) {
-            var format = new java.text.DecimalFormat("0.###");  // no trailing zeros
-            rate = format.format(clock.userGetRate());
+        // show either "Stopped" or rate, depending on state
+        System.out.println(" update "+clock.getRun());
+        if (! clock.getRun()) {
+            amPm = amPm + " Stopped";
+        } else {
+            // running, display rate
+            String rate = ""+(int)clock.userGetRate();
+            if (Math.floor(clock.userGetRate()) != clock.userGetRate()) {
+                var format = new java.text.DecimalFormat("0.###");  // no trailing zeros
+                rate = format.format(clock.userGetRate());
+            }
+
+            // add rate to amPm string for display
+            amPm = amPm + " " + rate + ":1";
         }
-
-        // add rate to amPm string for display
-        amPm = amPm + " " + rate + ":1";
-
         repaint();
     }
 
@@ -307,7 +313,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
         updateButtonText();
 
         // paint the clock too
-        repaint();
+        update();
     }
 
     /**
