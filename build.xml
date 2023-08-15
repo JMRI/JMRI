@@ -2506,7 +2506,7 @@
                      includes="xml/,resources/,help/,web/,jython/"
                      excludes="help/en/manual/**,web/app/**" />
             <fileset dir="${scriptdir}"
-                     includes="default.lcf,COPYING"/>
+                     includes="default_lcf.xml,COPYING"/>
             <fileset dir="${scriptdir}/WinInstallFiles"
                      includes="*"/>
             <fileset dir="."
@@ -2558,7 +2558,7 @@
             <fileset dir="${dist.apps}"
                      includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/"/>
             <fileset dir="scripts"
-                     includes="default.lcf,COPYING"/>
+                     includes="default_lcf.xml,COPYING"/>
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
         </copy>
@@ -2635,7 +2635,7 @@
                      includes="xml/,resources/,help/,web/,jython/"
                      excludes="help/en/manual/**,web/app/**" />
             <fileset dir="${scriptdir}"
-                     includes="default.lcf,COPYING"/>
+                     includes="default_lcf.xml,COPYING"/>
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
         </copy>
