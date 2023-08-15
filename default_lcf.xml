@@ -65,7 +65,7 @@
             T is defined to preserve messages between sessions and to keep up to
             2 previous log files in addition to the current. -->
         <RollingFile name="T" fileName="${sys:jmri.log.path}messages.log"
-                     filePattern="${jmri.log.path}messages.log.%i">
+                     filePattern="${sys:jmri.log.path}messages.log.%i">
             <PatternLayout pattern="%d{ISO8601} %-37.37c{2} %-5p - %m [%t]%n"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="1000KB"/>
