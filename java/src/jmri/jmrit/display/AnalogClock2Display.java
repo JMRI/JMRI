@@ -389,20 +389,20 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         minuteAngle = minutes * 6.;
         hourAngle = hours * 30. + 30. * minuteAngle / 360.;
         if (hours < 12) {
-            amPm = Bundle.getMessage("AM");
+            amPm = Bundle.getMessage("ClockAM");
         } else {
-            amPm = Bundle.getMessage("PM");
+            amPm = Bundle.getMessage("ClockPM");
         }
         if (hours == 12 && minutes == 0) {
-            amPm = Bundle.getMessage("Noon");
+            amPm = Bundle.getMessage("ClockNoon");
         }
         if (hours == 0 && minutes == 0) {
-            amPm = Bundle.getMessage("Midnight");
+            amPm = Bundle.getMessage("ClockMidnight");
         }
 
         // show either "Stopped" or rate, depending on state
         if (! clock.getRun()) {
-            amPm = amPm + " "+Bundle.getMessage("Stopped");
+            amPm = amPm + " "+Bundle.getMessage("ClockStopped");
         } else {
             // running, display rate
             String rate = ""+(int)clock.userGetRate();
