@@ -565,7 +565,7 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li></li>
+            <li>panel.js - add data-panel-name attribute to support panel-specific css</li>
         </ul>
 
     <h3>Where Used</h3>
