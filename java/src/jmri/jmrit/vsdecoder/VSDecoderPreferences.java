@@ -38,14 +38,13 @@ public class VSDecoderPreferences {
 
     // Private variables to hold preference values
     private boolean _autoStartEngine = false; // play engine sound w/o waiting for "Engine Start" button pressed.
-    private boolean _autoLoadDefaultVSDFile = false; // Automatically load a VSD file.
+    private boolean _autoLoadVSDFile = false; // Automatically load a VSD file.
     private boolean _use_blocks = true;
     private String _defaultVSDFilePath = null;
     private ListeningSpot _listenerPosition;
     private int _masterVolume;
 
     // Other internal variables
-    //private Dimension _winDim = new Dimension(800,600);
     private String prefFile;
     private ArrayList<PropertyChangeListener> listeners;
 
@@ -84,24 +83,38 @@ public class VSDecoderPreferences {
         }
         org.jdom2.Attribute a;
         org.jdom2.Element c;
-        if ((a = e.getAttribute("isAutoStartingEngine")) != null) {
-            setAutoStartEngine(a.getValue().compareTo("true") == 0);
+
+        a = e.getAttribute("isAutoStartingEngine");
+        if (a != null) {
+            setAutoStartEngine(a.getValue().equals("true"));
         }
-        if ((a = e.getAttribute("isAutoLoadingDefaultVSDFile")) != null) {
-            setAutoLoadDefaultVSDFile(a.getValue().compareTo("true") == 0);
+        // new attribute name!
+        a = e.getAttribute("isAutoLoadingVSDFile");
+        if (a != null) {
+            setAutoLoadVSDFile(a.getValue().equals("true"));
+        } else {
+            // try the old name, in case the user has not saved his preferences since the name change;  JMRI 5.5.4
+            a = e.getAttribute("isAutoLoadingDefaultVSDFile");
+            if (a != null) {
+                setAutoLoadVSDFile(a.getValue().equals("true"));
+            }
         }
-        if ((a = e.getAttribute("useBlocks")) != null) {
-            setUseBlocksSetting(a.getValue().compareTo("true") == 0);
+        a = e.getAttribute("useBlocks");
+        if (a != null) {
+            setUseBlocksSetting(a.getValue().equals("true"));
         }
-        if ((c = e.getChild("DefaultVSDFilePath")) != null) {
+        c = e.getChild("DefaultVSDFilePath");
+        if (c != null) {
             setDefaultVSDFilePath(c.getValue());
         }
-        if ((c = e.getChild("ListenerPosition")) != null) {
+        c = e.getChild("ListenerPosition");
+        if (c != null) {
             _listenerPosition = new ListeningSpot(c);
         } else {
             _listenerPosition = new ListeningSpot();
         }
-        if ((c = e.getChild("MasterVolume")) != null) {
+        c = e.getChild("MasterVolume");
+        if (c != null) {
             setMasterVolume(Integer.parseInt(c.getValue()));
         }
     }
@@ -117,7 +130,7 @@ public class VSDecoderPreferences {
         org.jdom2.Element ec;
         org.jdom2.Element e = new org.jdom2.Element("VSDecoderPreferences");
         e.setAttribute("isAutoStartingEngine", "" + isAutoStartingEngine());
-        e.setAttribute("isAutoLoadingDefaultVSDFile", "" + isAutoLoadingDefaultVSDFile());
+        e.setAttribute("isAutoLoadingVSDFile", "" + isAutoLoadingVSDFile());
         e.setAttribute("useBlocks", "" + getUseBlocksSetting());
         ec = new Element("DefaultVSDFilePath");
         ec.setText("" + getDefaultVSDFilePath());
@@ -132,7 +145,7 @@ public class VSDecoderPreferences {
 
     public void set(VSDecoderPreferences tp) {
         setAutoStartEngine(tp.isAutoStartingEngine());
-        setAutoLoadDefaultVSDFile(tp.isAutoLoadingDefaultVSDFile());
+        setAutoLoadVSDFile(tp.isAutoLoadingVSDFile());
         setUseBlocksSetting(tp.getUseBlocksSetting());
         setDefaultVSDFilePath(tp.getDefaultVSDFilePath());
         setListenerPosition(tp.getListenerPosition());
@@ -149,7 +162,7 @@ public class VSDecoderPreferences {
 
     public boolean compareTo(VSDecoderPreferences tp) {
         return (isAutoStartingEngine() != tp.isAutoStartingEngine()
-                || isAutoLoadingDefaultVSDFile() != tp.isAutoLoadingDefaultVSDFile()
+                || isAutoLoadingVSDFile() != tp.isAutoLoadingVSDFile()
                 || getUseBlocksSetting() != tp.getUseBlocksSetting()
                 || !(getDefaultVSDFilePath().equals(tp.getDefaultVSDFilePath()))
                 || !(getListenerPosition().equals(tp.getListenerPosition()))
@@ -213,8 +226,8 @@ public class VSDecoderPreferences {
         _autoStartEngine = b;
     }
 
-    public boolean isAutoLoadingDefaultVSDFile() {
-        return _autoLoadDefaultVSDFile;
+    public boolean isAutoLoadingVSDFile() {
+        return _autoLoadVSDFile;
     }
 
     public void setUseBlocksSetting(boolean b) {
@@ -225,8 +238,8 @@ public class VSDecoderPreferences {
         return _use_blocks;
     }
 
-    public void setAutoLoadDefaultVSDFile(boolean b) {
-        _autoLoadDefaultVSDFile = b;
+    public void setAutoLoadVSDFile(boolean b) {
+        _autoLoadVSDFile = b;
     }
 
     public ListeningSpot getListenerPosition() {
