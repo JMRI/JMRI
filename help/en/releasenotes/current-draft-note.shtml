@@ -603,5 +603,6 @@
             <li>The way data is entered in memory icons, block icons
                 and global variable icons have been improved.</li>
             <li>You can now set the preferences to open the RailCom table at startup.</li>
+            <li>The analog fast clock now shows when the fast clock has been stopped.</li>
         </ul>
 
