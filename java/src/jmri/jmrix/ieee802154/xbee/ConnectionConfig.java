@@ -28,7 +28,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
-    JButton b = new JButton(Bundle.getMessage("ConfigureXbeeTitle"));
+    final JButton b = new JButton(Bundle.getMessage("ConfigureXbeeTitle"));
 
     /**
      * {@inheritDoc}

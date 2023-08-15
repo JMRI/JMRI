@@ -50,7 +50,7 @@ public class XBeeNode extends IEEE802154Node {
      */
     public XBeeNode() {
         identifier = "";
-        pinObjects = new HashMap<Integer, NamedBean>();
+        pinObjects = new HashMap<>();
         isPolled = false;
     }
 
@@ -61,7 +61,7 @@ public class XBeeNode extends IEEE802154Node {
                 StringUtil.arrayToString(pan),
                 StringUtil.arrayToString(user),
                 StringUtil.arrayToString(global));
-        pinObjects = new HashMap<Integer, NamedBean>();
+        pinObjects = new HashMap<>();
         isPolled = false;
         userAddress = new XBee16BitAddress(user);
         globalAddress = new XBee64BitAddress(global);
@@ -78,7 +78,7 @@ public class XBeeNode extends IEEE802154Node {
         }
 
         log.debug("Created new node from RemoteXBeeDevice: {}", rxd.toString() );
-        pinObjects = new HashMap<Integer, NamedBean>();
+        pinObjects = new HashMap<>();
         isPolled = false;
         device = rxd;
         userAddress = device.get16BitAddress();
@@ -164,7 +164,7 @@ public class XBeeNode extends IEEE802154Node {
      */
     @Override
     public void resetTimeout(AbstractMRMessage m) {
-        return;
+        // intentionally empty
     }
 
     /**
@@ -406,10 +406,6 @@ public class XBeeNode extends IEEE802154Node {
     }
 
     private jmri.jmrix.AbstractStreamConnectionConfig connectedConfig = null;
-
-    /**
-     * Provide a string representation of this XBee Node.
-     */
 
     /**
      * Provide a string representation of this XBee Node.

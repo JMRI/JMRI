@@ -58,32 +58,14 @@ public class XBeeAddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Add
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(new JLabel(Bundle.getMessage("LabelNodeAddress") + " "));
         panel.add(nodeAddrField);
-        /*nodeAddrField.addActionListener(new java.awt.event.ActionListener() {
-
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-            }
-        });*/
         nodeAddrField.setToolTipText(Bundle.getMessage("TipNodeAddress"));
         panel.add(new JLabel(Bundle.getMessage("LabelNodeAddress64") + " "));
         panel.add(nodeAddr64Field);
         nodeAddr64Field.setToolTipText(Bundle.getMessage("TipNodeAddress64"));
-        /*nodeAddr64Field.addActionListener(new java.awt.event.ActionListener() {
-
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-            }
-        });*/
         panel.add(new JLabel(Bundle.getMessage("LabelNodeIdentifier") + " "));
         panel.add(nodeIdentifierField);
         nodeIdentifierField.setToolTipText(Bundle.getMessage("TipNodeIdentifier"));
 
-        /*nodeIdentifierField.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                nodeAddrField.setSelectedIndex(nodeIdentifierField.getSelectedIndex());
-            }
-        });*/
         initAddressBoxes();
         contentPane.add(panel);
 
@@ -93,18 +75,14 @@ public class XBeeAddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Add
         addButton.setText(Bundle.getMessage("ButtonAdd"));
         addButton.setVisible(true);
         addButton.setToolTipText(Bundle.getMessage("TipAddButton"));
-        addButton.addActionListener((java.awt.event.ActionEvent e) -> {
-            addButtonActionPerformed();
-        });
+        addButton.addActionListener((java.awt.event.ActionEvent e) -> addButtonActionPerformed());
         panel4.add(addButton);
         panel4.add(cancelButton);
         cancelButton.setText(Bundle.getMessage("ButtonCancel"));
         cancelButton.setVisible(true);
         cancelButton.setToolTipText(Bundle.getMessage("TipCancelButton"));
         panel4.add(cancelButton);
-        cancelButton.addActionListener((java.awt.event.ActionEvent e) -> {
-            cancelButtonActionPerformed();
-        });
+        cancelButton.addActionListener((java.awt.event.ActionEvent e) -> cancelButtonActionPerformed());
         contentPane.add(panel4);
 
         // pack for display

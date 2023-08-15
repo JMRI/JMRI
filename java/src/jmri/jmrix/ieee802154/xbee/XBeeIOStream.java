@@ -34,7 +34,7 @@ final public class XBeeIOStream extends AbstractPortController {
     private Thread sourceThread;  // thread writing to the remote xbee
     private Thread sinkThread;  // thread reading from the remote xbee
 
-    private RemoteXBeeDevice remoteXBee;
+    private final RemoteXBeeDevice remoteXBee;
     private final XBeeTrafficController xtc;
 
     public XBeeIOStream(XBeeNode node, XBeeTrafficController tc) {
@@ -214,8 +214,8 @@ final public class XBeeIOStream extends AbstractPortController {
                     if (message != null) {
                         byte data[] = message.getData();
                         log.debug("Received {}", data);
-                        for (int i = 0; i < data.length; i++) {
-                            pipe.write(data[i]);
+                        for (byte datum : data) {
+                            pipe.write(datum);
                         }
                     }
                 } catch (java.io.IOException ioe) {

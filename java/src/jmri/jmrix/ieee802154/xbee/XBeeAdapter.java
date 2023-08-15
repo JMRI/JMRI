@@ -88,7 +88,6 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
                 } else {
                     log.warn("SerialEvent: DATA_AVAILABLE but no data available.");
                 }
-                return;
             } else if (log.isDebugEnabled()) {
                 switch (type) {
                     case SerialPortEvent.DATA_AVAILABLE:
@@ -211,12 +210,12 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         }
     }
 
-    private String[] validSpeeds = new String[]{Bundle.getMessage("Baud1200"),
+    private final String[] validSpeeds = new String[]{Bundle.getMessage("Baud1200"),
             Bundle.getMessage("Baud2400"), Bundle.getMessage("Baud4800"),
             Bundle.getMessage("Baud9600"), Bundle.getMessage("Baud19200"),
             Bundle.getMessage("Baud38400"), Bundle.getMessage("Baud57600"),
             Bundle.getMessage("Baud115200")};
-    private int[] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200};
+    private final int[] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200};
 
     @Override
     public int defaultBaudIndex() {

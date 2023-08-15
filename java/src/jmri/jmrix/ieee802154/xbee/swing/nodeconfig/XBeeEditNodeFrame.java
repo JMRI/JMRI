@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 public class XBeeEditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.EditNodeFrame {
 
     private XBeeTrafficController xtc = null;
-    private javax.swing.JTextField nodeIdentifierField = new javax.swing.JTextField();
+    private final javax.swing.JTextField nodeIdentifierField = new javax.swing.JTextField();
     private XBeeNodeConfigFrame parent = null;
 
 
@@ -78,24 +78,14 @@ public class XBeeEditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Ed
         editButton.setText(Bundle.getMessage("ButtonEdit"));
         editButton.setVisible(true);
         editButton.setToolTipText(Bundle.getMessage("TipEditButton"));
-        editButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                editButtonActionPerformed();
-            }
-        });
+        editButton.addActionListener(e -> editButtonActionPerformed());
         panel4.add(editButton);
         panel4.add(cancelButton);
         cancelButton.setText(Bundle.getMessage("ButtonCancel"));
         cancelButton.setVisible(true);
         cancelButton.setToolTipText(Bundle.getMessage("TipCancelButton"));
         panel4.add(cancelButton);
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                cancelButtonActionPerformed();
-            }
-        });
+        cancelButton.addActionListener(e -> cancelButtonActionPerformed());
         contentPane.add(panel4);
 
         // pack for display
