@@ -138,12 +138,13 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
     }
 
     /**
-     * Get an XBee Message requesting an digital output pin be turned on or off.
+     * Get an XBee Message requesting a digital output pin be turned on or off.
      * @param address XBee Address of the node.  This can be either 
      16 bit or 64 bit.
      * @param pin the DIO Pin on the XBee to use.
-     * @param on boolean value stating whether or not the pin should be turned
+     * @param on boolean value stating whether the pin should be turned
      *        on (true) or off (false)
+     * @return XBeeMessage with a message requesting a digital IO pin be turned on or off.
      */
     @SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
     public static XBeeMessage getRemoteDoutMessage(Object address, int pin, boolean on) {
@@ -161,6 +162,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
      * @param address XBee Address of the node.  This can be either 
      16 bit or 64 bit.
      * @param pin the DIO Pin on the XBee to use.
+     * @return XBeeMessage with a digital IO pin status request.
      */
     @SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
     public static XBeeMessage getRemoteDoutMessage(Object address, int pin) {
@@ -174,6 +176,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
     /**
      * Get an XBee Message requesting an IO sample from the node.
      * @param address XBee Address of the node.  This can be either 
+     * @return XBeeMessage with a force IO sample request.
      16 bit or 64 bit.
      */
     @SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
