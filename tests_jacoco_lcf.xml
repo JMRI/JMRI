@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- tests_lcf.xml
 
-When updating this file, please also update tests_jacoco_lcf.xml
-which runs the tests with the DEBUG Level to increase unit test coverage.
+This file should replicate tests_lcf.xml
+although with Logging at Debug level to increase unit test coverage.
 
 This configures three appenders:  J, R and A.
 J and R are used routinely; A is for debugging use.
@@ -31,12 +31,12 @@ Then the logging level on each appender (see below) is used to decide if
 the data is actually logged.
 
 -->
-<Configuration status="WARN" name="JUnitTestsConfig">
+<Configuration status="DEBUG" name="JUnitTestsConfig">
 
     <Appenders>
         <Console name="A" target="SYSTEM_ERR">
             <PatternLayout pattern="%d{ss,SSS} [%t] %-5p %c{2}.%M() - %m%n"/>
-            <ThresholdFilter level="WARN"/>
+            <ThresholdFilter level="DEBUG"/>
         </Console>
 
         <File name="R" fileName="tests.log">
@@ -47,12 +47,12 @@ the data is actually logged.
         https://github.com/JMRI/JMRI/blob/master/java/test/jmri/util/JUnitAppender.java -->
         <JUnitAppender name="J">
             <PatternLayout pattern="%-5p - %m [%t] %c{4}.%M()%n"/>
-            <ThresholdFilter level="INFO"/>
+            <ThresholdFilter level="DEBUG"/>
         </JUnitAppender>
 
     </Appenders>
     <Loggers>
-        <Root level="WARN">
+        <Root level="DEBUG">
             <!-- <AppenderRef ref="A"/> -->
             <AppenderRef ref="R"/>
             <AppenderRef ref="J"/>
@@ -75,29 +75,10 @@ the data is actually logged.
 
 
         <!-- ################################################################### -->
-        <!-- #    Settings needed for specific tests (last so not accidentally overridden) -->
+        <!-- # Settings needed for specific tests (last so not accidentally overridden) -->
+        <!-- # These tests are run at Debug Level for test unit coverage.        # -->
         <!-- # ################################################################### -->
 
-        <!-- Needed for Jenkins I18N testing -->
-        <Logger name="jmri.util.I18NTest" level="DEBUG"/>
-
-        <!-- Force classpath info into early log -->
-        <Logger name="jmri.VersionTest" level="INFO"/>
-        <Logger name="jmri.ClassPathTest" level="INFO"/>
-
-        <!-- Needed for jmri.util.JUnitAppenderTest -->
-        <Logger name="jmri.util.JUnitAppenderTest" level="INFO"/>
-
-        <!-- Needed for jmri.util.LoggingUtilTest -->
-        <Logger name="jmri.util.LoggingUtilTest" level="INFO"/>
-        <Logger name="LoggingUtilTest-extra-logger" level="INFO"/>
-
-        <!-- INFO is part of application tests -->
-        <Logger name="apps.Apps" level="INFO"/>
-        <Logger name="apps.AppsBase" level="INFO"/>
-        <Logger name="apps.PanelPro.PanelPro" level="INFO"/>
-        <Logger name="apps.gui3.Apps3" level="INFO"/>
-        <Logger name="apps.gui3.dp3.DecoderPro3" level="INFO"/>
 
     </Loggers>
     
