@@ -19,7 +19,7 @@ import jmri.jmrix.BroadcastMessage;
 public class XBeeBroadcastMessage extends XBeeMessage implements BroadcastMessage {
 
 
-    private XBeeBroadcastMessage(){};
+    private XBeeBroadcastMessage(){}
 
     private XBeeBroadcastMessage(XBeeAPIPacket xbp){
         super(xbp);
