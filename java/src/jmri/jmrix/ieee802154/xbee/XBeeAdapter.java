@@ -2,7 +2,6 @@ package jmri.jmrix.ieee802154.xbee;
 
 import com.digi.xbee.api.connection.ConnectionType;
 import com.digi.xbee.api.connection.IConnectionInterface;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.IOException;
 import java.util.Arrays;
 import org.slf4j.Logger;
@@ -72,7 +71,6 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         return null; // normal operation
     }
 
-    @SuppressFBWarnings(value = {"NO_NOTIFY_NOT_NOTIFYALL", "NN_NAKED_NOTIFY"}, justification="The notify call is notifying the receive thread that data is available.  There is only one receive thead, so no reason to call notifyAll.")
     @Override
     public void serialEvent(SerialPortEvent e) {
         int type = e.getEventType();
@@ -180,8 +178,6 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         tc.setAdapterMemo(this.getSystemConnectionMemo());
         tc.connectPort(this);
         this.getSystemConnectionMemo().configureManagers();
-        // Configure the form of serial address validation for this connection
-        // adaptermemo.setSerialAddress(new jmri.jmrix.ieee802154.SerialAddress(adaptermemo));
     }
 
     /**
