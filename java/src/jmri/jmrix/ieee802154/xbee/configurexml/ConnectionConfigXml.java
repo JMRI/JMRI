@@ -62,7 +62,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             while (node != null) {
                 // add node as an element
                 Element n = new Element("node");
-                n.setAttribute("name", Integer.valueOf(node.getNodeAddress()).toString());
+                n.setAttribute("name", Integer.toString(node.getNodeAddress()));
                 e.addContent(n);
                 // add parameters to the node as needed
                 n.addContent(makeParameter("address",

@@ -4,6 +4,8 @@ import com.digi.xbee.api.connection.ConnectionType;
 import com.digi.xbee.api.connection.IConnectionInterface;
 import java.io.IOException;
 import java.util.Arrays;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.*;
@@ -71,6 +73,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         return null; // normal operation
     }
 
+    @SuppressFBWarnings(value = {"NN_NAKED_NOTIFY"}, justification="The notify call is notifying the receive thread that data is available due to an event.")
     @Override
     public void serialEvent(SerialPortEvent e) {
         int type = e.getEventType();
