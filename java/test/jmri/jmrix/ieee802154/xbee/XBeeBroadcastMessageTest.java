@@ -29,7 +29,7 @@ class XBeeBroadcastMessageTest extends AbstractMessageTestBase {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        m = XBeeBroadcastMessage.getTX16BroadcastMessage(testPayload);;
+        m = XBeeBroadcastMessage.getTX16BroadcastMessage(testPayload);
     }
 
     @AfterEach
@@ -42,6 +42,6 @@ class XBeeBroadcastMessageTest extends AbstractMessageTestBase {
     void rightTX16BroadcastPayload() {
         XBeeBroadcastMessage msg = (XBeeBroadcastMessage)  m;
         for (int i = 0; i < testPayload.length; i++)
-            Assert.assertEquals("payload element " + i, testPayload[i], (byte) msg.getXBeeRequest().getAPIData()[i+4]);
+            Assert.assertEquals("payload element " + i, testPayload[i], msg.getXBeeRequest().getAPIData()[i+4]);
     }
 }
