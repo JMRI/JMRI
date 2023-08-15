@@ -133,6 +133,11 @@ public class TestingLoggerConfiguration {
     static private void configureLogging(@Nonnull String configFile) {
         // System.out.println("TestingLoggerConfiguration configureLogging " + configFile);
 
+        // set the log4j config file location programatically
+        // so that JUL adapter is enabled first
+        // and Jython / JavaScript use the same LoggerContext
+        System.setProperty("log4j2.configurationFile", configFile);
+
         // ensure the logging directory exists
         // if it's not writable, the console will get the error from log4j, so
         // we don't need to explictly test for that here, just make sure the
