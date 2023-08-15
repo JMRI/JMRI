@@ -56,7 +56,7 @@
 
         <!-- R File Appender  set to output to a single log file.
             This is defined for systems that can't (or don't want to) have rolling files. -->
-        <File name="R" fileName="${sys:jmri.log.path}session.log">
+        <File name="R" fileName="${sys:jmri.log.path}session.log" append="false">
             <PatternLayout pattern="%d{ISO8601} %-37.37c{2} %-5p - %m [%t]%n"/>
         </File>
 
@@ -65,7 +65,7 @@
             T is defined to preserve messages between sessions and to keep up to
             2 previous log files in addition to the current. -->
         <RollingFile name="T" fileName="${sys:jmri.log.path}messages.log"
-                     filePattern="${sys:jmri.log.path}messages.log.%i">
+            filePattern="${sys:jmri.log.path}messages.log.%i" append="true">
             <PatternLayout pattern="%d{ISO8601} %-37.37c{2} %-5p - %m [%t]%n"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="1000KB"/>

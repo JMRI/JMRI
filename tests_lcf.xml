@@ -39,7 +39,7 @@ the data is actually logged.
             <ThresholdFilter level="WARN"/>
         </Console>
 
-        <File name="R" fileName="tests.log">
+        <File name="R" fileName="tests.log" append="false">
             <PatternLayout pattern="%d{ss,SSS} [%t] %-5p %c{2}.%M() - %m%n"/>
         </File>
 
