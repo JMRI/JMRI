@@ -2220,6 +2220,21 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         your Manifests you must select the print location comments <a href="#ManifestComments">option</a>.
       </p>
 
+      <h4>Delete Location</h4>
+
+      Use the delete location button to remove a location from your roster. Before deleting a
+      location you should do the following:
+      <ol>
+        <li>Terminate or reset all trains</li>
+        <li>Remove the location from all train routes</li>
+        <li>Remove all rolling stock from the location's tracks (optional)</li>
+      </ol>
+
+      <p>
+        You can quickly determine which routes are using a location by using the location tool <a
+          href="#ShowRoutesServicingThisLocation">Show Routes Servicing Location</a>
+      </p>
+
       <h3 id="Yardmaster">Yardmaster</h3>
 
       <p>
@@ -4370,7 +4385,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         set outs, or any combination of 5 pick ups or set outs. Picking up or dropping off a <a
           href="#Kernel">kernel</a> (group of cars) represents one move. Moving a car or kernel from
         one track to another at the same location also represents one move. The program doesn't
-        normally create local car moves, you can use <a href="#Schedules">schedules</a> to change
+        normally create local car moves, however you can use <a href="#Schedules">schedules</a> or
+        <a href="#LocationDivision">divisions</a> to change
         the program's behavior. To modify the number of moves for a location, double click directly
         on the cell in the route table. When entering the desired number of car moves, enter
         reasonable numbers that reflect what you want the program to do for you. For example, if you
@@ -4502,18 +4518,19 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       though the train only arrived and departed once. Note that names "Danville", "Danville-1", and
       "Danville-(example)" are all the same with regards to the Manifest and switch list printouts,
       but the program deals with them as though they were different locations.
+
       <p>For example, you can control if there are set outs or pick ups at any location in the
         route. Therefore if you wanted to only set out 3 cars, you could specify only set outs and 3
         moves. But what if you wanted to set out 3 cars and pick up 7 cars. If you specify 10 moves
         for a location it can be any combination of 10 pick ups and set outs. Using "Danville" as
         our location, we can in our route specify "Danville" twice, back to back. In the first
-        "Danville" we can specify 3 set outs only. In the second "Danville" we can specify 7 pick
-        ups only. Now the program will "try" and meet your request by picking up to 7 cars and
+        "Danville" we can specify 7 pick ups only. In the second "Danville" we can specify 3 set
+        outs only. Now the program will "try" and meet your request by picking up to 7 cars and
         dropping off up to 3 cars.</p>
 
       <p>Another example, the program will not allow you to have staging tracks and other types
         of tracks (spurs, yards, interchanges) at the same location. But using the names above, we
-        could assign yard and spur tracks to "Danville", and then as long as "Danville-1" was the
+        could assign yard and spur tracks to "Danville", and then as long as "Danville-1" (staging) was the
         last or first location in a route, assign staging tracks to "Danville-1". Now when the train
         terminates at Danville, the yard and spur tracks are serviced, and then the train terminates
         into staging at "Danville-1".</p>
@@ -4530,10 +4547,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         an issue, we create a route for the locals that services "Danville-1", then "Danville", and
         then "Danville-1". At the first "Danville-1" we request only pick ups at the spurs, at
         "Danville" we specify both pick ups and set outs to the yard, and at the second "Danville-1"
-        we specify only set outs.</p>
-
-      <p>Another solution is to simply use the spur's ability to select which trains can service
-        the track.</p>
+        we specify only set outs. Another solution is to simply use the spur's ability to select
+        which trains can service the track.</p>
 
       <h3 id="RouteTools">Route Tools</h3>
 
