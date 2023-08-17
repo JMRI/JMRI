@@ -109,11 +109,10 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         for train in trains_to_be_scheduled:
             if scheduled[train] == False:
                 if self.logLevel > 0: print "train",train,"scheduled[train]",scheduled[train]
-                RunTrain_instance[train] = RunTrain()
                 if "stopping" in train.getDescription():
-                    run_train_dict[train] = RunTrain_instance[train].RunTrain(train, g.g_stopping)
+                    run_train_dict[train] = RunTrain(train, g.g_stopping)
                 else:
-                    run_train_dict[train] = RunTrain_instance[train].RunTrain(train, g.g_express)
+                    run_train_dict[train] = RunTrain(train, g.g_express)
                 run_train_dict[train].setName("schedule_" + train.getName())
                 run_train_dict[train].start()
                 scheduled[train] = True
@@ -199,8 +198,10 @@ class TimeListener(java.beans.PropertyChangeListener):
         tListener.cancel()
 
     def process_operations_trains(self, event ):
+        global timebase
 
-        self.curr_time = event.newValue
+        hour = timebase.getTime().getHours()
+        self.curr_time = event.newValue + hour * 60
         self.prev_time = self.curr_time -1
 
         if self.logLevel > 1: print "TimeListener: process_operations_trains"

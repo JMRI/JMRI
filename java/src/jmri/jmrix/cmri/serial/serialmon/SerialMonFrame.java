@@ -7,17 +7,10 @@ import jmri.jmrix.cmri.serial.SerialReply;
 import jmri.jmrix.cmri.serial.SerialNode;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.PrintStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 /**
  * Frame displaying (and logging) CMRI serial command messages.
@@ -27,7 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
     // member declarations
-    String deltaTCheck = this.getClass().getName()+".DeltaT"; // NOI18N
+    // String deltaTCheck = this.getClass().getName()+".DeltaT"; // NOI18N
    
     protected JButton packetfilterButton = new JButton(Bundle.getMessage("FilterPacketsText") );  // NOI18N
     protected static int _DLE    = 0x10;    
@@ -67,12 +60,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         packetfilterButton.setVisible(true);
         packetfilterButton.setToolTipText(Bundle.getMessage("FilterPacketTip"));  // NOI18N
         pane1.add(packetfilterButton);
-        packetfilterButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                openPacketFilterPerformed(e);
-            }
-        });
+        packetfilterButton.addActionListener(this::openPacketFilterPerformed);
         
         paneA.add(pane1);
         getContentPane().add(paneA);
@@ -130,13 +118,13 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         }
         f.setVisible(true);
     }
-    
+
     //-------------------
     //  Transmit Packets
     //-------------------
     @Override
     public synchronized void message(SerialMessage l) {
-        int aPacketTypeID = 0;
+
         SerialNode monitorNode = (SerialNode) _memo.getTrafficController().getNodeFromAddress(l.getUA());
         
         // Test for node and packets being monitored
@@ -144,7 +132,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         if (monitorNode == null) return;       
         if (!monitorNode.getMonitorNodePackets()) return;
 
-        aPacketTypeID = l.getElement(1);
+        int aPacketTypeID = l.getElement(1);
         
         // check for valid length
         if (l.getNumDataElements() < 2) {
@@ -234,7 +222,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             break;
 
                         default:
-                            sb.append("Unrecognized node type NDP: ["+ndp+"] ");
+                            sb.append("Unrecognized node type NDP: [").append(ndp).append("] ");
                             break;
 
                         } //ndp case
@@ -254,7 +242,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     //-------------------
     @Override
     public synchronized void reply(SerialReply l) {
-        int aPacketTypeID = 0;
 
         // Test for node and packets being monitored 
         //------------------------------------------
@@ -267,7 +254,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             return;
         }
 
-        aPacketTypeID = l.getElement(1);
+        int aPacketTypeID = l.getElement(1);
 
         // check for valid length
         if (l.getNumDataElements() < 2) {
@@ -312,13 +299,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         }
     }
 
-    volatile PrintStream logStream = null;
-
-    // to get a time string
-    DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
-
-    StringBuffer linesBuffer = new StringBuffer();
-    private final static Logger log = LoggerFactory.getLogger(SerialMonFrame.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialMonFrame.class);
 
 }
 

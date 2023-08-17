@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
@@ -165,7 +166,16 @@ public class TrainRoadOptionsFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
-
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        Train train = tmanager.newTrain("Test");
+        TrainEditFrame trainEditFrame = new TrainEditFrame(train);
+        TrainRoadOptionsFrame f = new TrainRoadOptionsFrame();
+        f.initComponents(trainEditFrame);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
+    }
     // private final static Logger log = LoggerFactory.getLogger(TrainRoadOptionsFrameTest.class);
 
 }

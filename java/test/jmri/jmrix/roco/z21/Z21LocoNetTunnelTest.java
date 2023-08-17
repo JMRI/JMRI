@@ -25,8 +25,8 @@ public class Z21LocoNetTunnelTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initConfigureManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
 
         memo = new Z21SystemConnectionMemo();
         tc = new Z21InterfaceScaffold() {
@@ -50,6 +50,7 @@ public class Z21LocoNetTunnelTest {
         tunnel = null;
         tc = null;
         memo = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

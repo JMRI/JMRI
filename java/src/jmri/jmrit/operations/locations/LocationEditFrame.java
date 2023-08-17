@@ -18,6 +18,10 @@ import jmri.jmrit.operations.locations.divisions.*;
 import jmri.jmrit.operations.locations.tools.*;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
+import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.routes.tools.ShowRoutesServingLocationAction;
+import jmri.jmrit.operations.routes.tools.ShowRoutesServingLocationFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainCommon;
@@ -360,6 +364,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         }
         toolMenu.addSeparator();
         toolMenu.add(new ShowTrainsServingLocationAction(_location, null));
+        toolMenu.add(new ShowRoutesServingLocationAction(_location));
         toolMenu.addSeparator();
         toolMenu.add(new PrintLocationsAction(false, _location));
         toolMenu.add(new PrintLocationsAction(true, _location));
@@ -416,49 +421,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         }
         if (ae.getSource() == deleteLocationButton) {
             log.debug("location delete button activated");
-            Location l = locationManager.getLocationByName(locationNameTextField.getText());
-            if (l == null) {
-                return;
-            }
-            int rs = l.getNumberRS();
-            if (rs > 0) {
-                if (JOptionPane.showConfirmDialog(this,
-                        MessageFormat.format(Bundle.getMessage("ThereAreCars"), new Object[] { Integer.toString(rs) }),
-                        Bundle.getMessage("deletelocation?"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
-                    return;
-                }
-            } else {
-                if (JOptionPane.showConfirmDialog(this,
-                        MessageFormat.format(Bundle.getMessage("DoYouWantToDeleteLocation"),
-                                new Object[] { locationNameTextField.getText() }),
-                        Bundle.getMessage("deletelocation?"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
-                    return;
-                }
-            }
-
-            yardModel.dispose();
-            spurModel.dispose();
-            interchangeModel.dispose();
-            stagingModel.dispose();
-
-            if (yef != null) {
-                yef.dispose();
-            }
-            if (sef != null) {
-                sef.dispose();
-            }
-            if (ief != null) {
-                ief.dispose();
-            }
-            if (stef != null) {
-                stef.dispose();
-            }
-
-            locationManager.deregister(l);
-            _location = null;
-            selectCheckboxes(false);
-            enableCheckboxes(false);
-            enableButtons(false);
+            deleteLocation();
             // save location file
             OperationsXml.save();
         }
@@ -503,6 +466,64 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         setTrainDirectionBoxes();
         saveLocation();
         loadToolMenu();
+    }
+    
+    private void deleteLocation() {
+        Location location = locationManager.getLocationByName(locationNameTextField.getText());
+        if (location == null) {
+            return;
+        }
+        // check to see if any route uses this location
+        Route route = InstanceManager.getDefault(RouteManager.class).isLocationInUse(location);
+        if (route != null) {
+            JOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("RouteUsesLocation", route.getName(), location.getName()),
+                    Bundle.getMessage("CanNotDeleteLocation"),
+                    JOptionPane.ERROR_MESSAGE);
+            // show all the routes using this location
+            ShowRoutesServingLocationFrame frame = new ShowRoutesServingLocationFrame();
+            frame.initComponents(location);
+            return;
+        }
+        int count = location.getNumberRS();
+        if (count > 0) {
+            if (JOptionPane.showConfirmDialog(this,
+                    MessageFormat.format(Bundle.getMessage("ThereAreCars"), new Object[] { Integer.toString(count) }),
+                    Bundle.getMessage("deletelocation?"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                return;
+            }
+        } else {
+            if (JOptionPane.showConfirmDialog(this,
+                    MessageFormat.format(Bundle.getMessage("DoYouWantToDeleteLocation"),
+                            new Object[] { locationNameTextField.getText() }),
+                    Bundle.getMessage("deletelocation?"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                return;
+            }
+        }
+
+        yardModel.dispose();
+        spurModel.dispose();
+        interchangeModel.dispose();
+        stagingModel.dispose();
+
+        if (yef != null) {
+            yef.dispose();
+        }
+        if (sef != null) {
+            sef.dispose();
+        }
+        if (ief != null) {
+            ief.dispose();
+        }
+        if (stef != null) {
+            stef.dispose();
+        }
+
+        locationManager.deregister(location);
+        _location = null;
+        selectCheckboxes(false);
+        enableCheckboxes(false);
+        enableButtons(false);
     }
 
     private void saveLocation() {

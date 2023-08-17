@@ -9,9 +9,9 @@ package jmri.jmrix.rfid;
  */
 public interface RfidInterface {
 
-    public void addRfidListener(RfidListener l);
+    void addRfidListener(RfidListener l);
 
-    public void removeRfidListener(RfidListener l);
+    void removeRfidListener(RfidListener l);
 
     boolean status();   // true if the implementation is operational
 

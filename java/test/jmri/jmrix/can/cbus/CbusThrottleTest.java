@@ -1250,6 +1250,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         memo = null;
         tc.terminateThreads();
         tc = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
 
     }

@@ -31,12 +31,12 @@ import javax.swing.tree.TreeModel;
  */
 public interface CatalogTree extends NamedBean, TreeModel {
 
-    public static final char IMAGE = 'I';    // letter to filter for images/icons
-    public static final char SOUND = 'S';    // letter to filter for sounds 
-    public static final char SCRIPT = 'T';    // letter to filter for scripts
-    public static final char NOFILTER = 'N';    // letter for unfiltered
-    public static final char FILESYS = 'F';    // typeLetter for tree based on file system
-    public static final char XML = 'X';    // typeLetter for index tree stored in XML file
+    char IMAGE = 'I';    // letter to filter for images/icons
+    char SOUND = 'S';    // letter to filter for sounds
+    char SCRIPT = 'T';    // letter to filter for scripts
+    char NOFILTER = 'N';    // letter for unfiltered
+    char FILESYS = 'F';    // typeLetter for tree based on file system
+    char XML = 'X';    // typeLetter for index tree stored in XML file
 
     /**
      * Recursively add a representation of the resources below a particular
@@ -48,7 +48,7 @@ public interface CatalogTree extends NamedBean, TreeModel {
      * @param pParent Node for the parent of the resource to be scanned, e.g.
      *                where in the tree to insert it.
      */
-    public void insertNodes(String pName, String pPath, CatalogTreeNode pParent);
+    void insertNodes(String pName, String pPath, CatalogTreeNode pParent);
 
     /**
      * Starting point to recursively add nodes to the tree by scanning a file
@@ -56,12 +56,12 @@ public interface CatalogTree extends NamedBean, TreeModel {
      *
      * @param pathToRoot Path to Directory to be scanned
      */
-    public void insertNodes(String pathToRoot);
+    void insertNodes(String pathToRoot);
 
     /**
      * Get the root element of the tree as a jmri.CatalogTreeNode object.
      * (Instead of Object, as parent swing.TreeModel provides)
      */
     @Override
-    public CatalogTreeNode getRoot();
+    CatalogTreeNode getRoot();
 }

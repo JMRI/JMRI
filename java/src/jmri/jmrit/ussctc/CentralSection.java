@@ -13,12 +13,12 @@ public interface CentralSection<To extends Enum<To>, From extends Enum<From>> {
      * has started and obtain the value to be sent over the line.
      * @return The value to be conveyed to the field.
      */
-    public To codeSendStart();
+    To codeSendStart();
     
     /**
      * Provides the code sequence to the central CTC machine at the end of the indication-send operation.
      * @param value to be conveyed.
      */
-    public void indicationComplete(From value);    
+    void indicationComplete(From value);
     
 }

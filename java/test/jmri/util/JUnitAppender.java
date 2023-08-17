@@ -114,7 +114,11 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
         unexpectedInfoContent = content;
     }
 
-    public static boolean unexpectedMessageSeen(Level l) {
+    public static boolean unexpectedMessageSeen(org.slf4j.event.Level l) {
+        return unexpectedMessageSeen(convertSlf4jLevelToLog4jLevel(l));
+    }
+
+    private static boolean unexpectedMessageSeen(Level l) {
         if (l == Level.FATAL) {
             return unexpectedFatalSeen;
         }
@@ -130,7 +134,11 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
         throw new java.lang.IllegalArgumentException("Did not expect " + l);
     }
 
-    public static String unexpectedMessageContent(Level l) {
+    public static String unexpectedMessageContent(org.slf4j.event.Level l) {
+        return unexpectedMessageContent(convertSlf4jLevelToLog4jLevel(l));
+    }
+
+    private static String unexpectedMessageContent(Level l) {
         if (l == Level.FATAL) {
             return unexpectedFatalContent;
         }
@@ -152,10 +160,14 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
         throw new java.lang.IllegalArgumentException("Did not expect " + l);
     }
 
+    public static void resetUnexpectedMessageFlags(org.slf4j.event.Level severity) {
+        resetUnexpectedMessageFlags(convertSlf4jLevelToLog4jLevel(severity));
+    }
+
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SF_SWITCH_FALLTHROUGH",
         justification = "cases statements are organized to flow")
     @SuppressWarnings("fallthrough")
-    public static void resetUnexpectedMessageFlags(Level severity) {
+    private static void resetUnexpectedMessageFlags(Level severity) {
         switch (severity.toInt()) {
             case Level.INFO_INT:
                 setUnexpectedInfoSeen(false);
@@ -237,12 +249,16 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      * used to skip over messages that don't matter, e.g. during setting up a
      * test. Removed messages are not sent for further logging.
      *
-     * @param level lowest level counted in return value, e.g. WARN means WARN
+     * @param l lowest level counted in return value, e.g. WARN means WARN
      *                  and higher will be counted
      * @return count of skipped messages
      * @see #clearBacklog()
      */
-    public static int clearBacklog(Level level) {
+    public static int clearBacklog(org.slf4j.event.Level l) {
+        return clearBacklog(convertSlf4jLevelToLog4jLevel(l));
+    }
+
+    private static int clearBacklog(Level level) {
         if (list.isEmpty()) {
             return 0;
         }
@@ -424,7 +440,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      * @param level the level at which to suppress the message
      * @param msg   the message to suppress
      */
-    public static void suppressMessage(Level level, String msg) {
+    private static void suppressMessage(Level level, String msg) {
         if (list.isEmpty()) {
             return;
         }
@@ -473,7 +489,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      * @param level the level at which to suppress the message
      * @param msg   text at start of the message to suppress
      */
-    public static void suppressMessageStartsWith(Level level, String msg) {
+    private static void suppressMessageStartsWith(Level level, String msg) {
         if (list.isEmpty()) {
             return;
         }
@@ -629,7 +645,11 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      * @param msg the message to assert exists
      * @param level the Logging Level which should match
      */
-    public static void assertMessage(String msg, Level level) {
+    public static void assertMessage(String msg, org.slf4j.event.Level level) {
+        assertMessage(msg, convertSlf4jLevelToLog4jLevel(level));
+    }
+
+    private static void assertMessage(String msg, Level level) {
         LoggingEvent evt = checkForMessage(msg);
         if (evt == null) {
             Assertions.fail("Looking for message \"" + msg + "\" and didn't find it");
@@ -727,6 +747,22 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
         }
         String s1 = e1.getMessage().toString();
         return StringUtils.deleteWhitespace(s1).startsWith(StringUtils.deleteWhitespace(s2));
+    }
+
+    private static Level convertSlf4jLevelToLog4jLevel(org.slf4j.event.Level slf4jLevel) {
+        switch (slf4jLevel) {
+            case TRACE:
+                return Level.TRACE;
+            case DEBUG:
+                return Level.DEBUG;
+            case INFO:
+                return Level.INFO;
+            case WARN:
+                return Level.WARN;
+            case ERROR:
+            default:
+                return Level.ERROR;
+        }
     }
 
     public static JUnitAppender instance() {

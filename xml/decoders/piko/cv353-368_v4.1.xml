@@ -31,12 +31,18 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Initial version for Piko SmartDecoder 4.1</revremark>
 		</revision>
+		<revision>
+			<revnumber>2</revnumber>
+			<date>2023-07-19</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Change all defaults values to 0</revremark>
+		</revision>
 	</revhistory>
 	<!-- Bank 1 CVs Extended Function Mapping rows 1-16 (Index CV 32 = 0) -->
 	<!-- group hides/shows with CV 32 choice = 0 -->
 	<!-- Mapping Line 7 CV353 - 368 -->
 	<!-- Line 7 Mapping conditions On -->
-	<variable item="Z7 Direction Fw" CV="353.31=8.32=0" mask="VXXXXXXX" default="1">
+	<variable item="Z7 Direction Fw" CV="353.31=8.32=0" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Forward</label>
 		<label xml:lang="de">Vorwärts</label>
@@ -49,7 +55,7 @@
 		<label xml:lang="cs">Pohyb</label>
 	</variable>
 	<!--Line 7 Function Buttons On-->
-	<variable item="Z7 F0 Cond On" CV="353.31=8.32=0" mask="XXXVXXXX" default="1">
+	<variable item="Z7 F0 Cond On" CV="353.31=8.32=0" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
 	<variable item="Z7 F1 Cond On" CV="353.31=8.32=0" mask="XXXXXXXV" default="0">
@@ -171,7 +177,7 @@
 	<variable item="Z7 F6 Cond Off" CV="360.31=8.32=0" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z7 F7 Cond Off" CV="360.31=8.32=0" mask="XXXXXVXX" default="1">
+	<variable item="Z7 F7 Cond Off" CV="360.31=8.32=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
 	<variable item="Z7 F8 Cond Off" CV="360.31=8.32=0" mask="XXXXVXXX" default="0">
@@ -213,10 +219,10 @@
 	<variable item="Z7 F20 Cond Off" CV="361.31=8.32=0" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z7 F21 Cond Off" CV="362.31=8.32=0" mask="XXXXXXXV" default="1">
+	<variable item="Z7 F21 Cond Off" CV="362.31=8.32=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z7 F22 Cond Off" CV="362.31=8.32=0" mask="XXXXXXVX" default="1">
+	<variable item="Z7 F22 Cond Off" CV="362.31=8.32=0" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
 	<variable item="Z7 F23 Cond Off" CV="362.31=8.32=0" mask="XXXXXVXX" default="0">
@@ -238,7 +244,7 @@
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
 	<!--Line 7 Mapping Output 1-->
-	<variable item="Z7 Out1 A1" CV="365.31=8.32=0" default="1" mask="XXXXXXXV" minOut="3">
+	<variable item="Z7 Out1 A1" CV="365.31=8.32=0" default="0" mask="XXXXXXXV" minOut="3">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
 	<variable item="Z7 Out1 A2" CV="365.31=8.32=0" default="0" mask="XXXXXXVX" minOut="4">
@@ -300,7 +306,7 @@
 		<tooltip xml:lang="de">ABV-Stufe 1 aus / 2 - 3 aktivieren</tooltip>
 		<tooltip xml:lang="cs">Brzdící krok 1 - 3 aktivován</tooltip>
 	</variable>
-	<variable item="Z7 Out2 Aux0_Front" CV="366.31=8.32=0" mask="XXXXXXXV" default="1">
+	<variable item="Z7 Out2 Aux0_Front" CV="366.31=8.32=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
 	<variable item="Z7 Out2 Aux0_Rear" CV="366.31=8.32=0" mask="XXXXXXVX" default="0">
@@ -367,7 +373,7 @@
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
 	<!-- end of Line 7 -->
-		<!-- Bank 2 CVs Extended Function Mapping rows 17-32 (Index CV 32 = 1) -->
+	<!-- Bank 2 CVs Extended Function Mapping rows 17-32 (Index CV 32 = 1) -->
 	<!-- group hides/shows with CV 31 choice = 0 -->
 	<!-- Mapping Line 23 CV353 - 368 -->
 	<!-- Line 23 Mapping conditions On -->

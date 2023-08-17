@@ -28,21 +28,21 @@ public interface ConsistManager {
      * @param address the consist address
      * @return an existing or new consist
      */
-    public Consist getConsist(LocoAddress address);
+    Consist getConsist(LocoAddress address);
 
     /**
      * Remove an old Consist.
      *
      * @param address the consist address
      */
-    public void delConsist(LocoAddress address);
+    void delConsist(LocoAddress address);
 
     /**
      * Does this implementation support Command Station Consists?
      *
      * @return true if command station consists are supported; false otherwise
      */
-    public boolean isCommandStationConsistPossible();
+    boolean isCommandStationConsistPossible();
 
     /**
      * Does a command station consist require a separate consist address from
@@ -51,14 +51,14 @@ public interface ConsistManager {
      * @return true is command station consist requires separate address; false
      *         otherwise
      */
-    public boolean csConsistNeedsSeperateAddress();
+    boolean csConsistNeedsSeperateAddress();
 
     /**
      * Get a list of known consist addresses.
      *
      * @return list of addresses
      */
-    public ArrayList<LocoAddress> getConsistList();
+    ArrayList<LocoAddress> getConsistList();
 
     /**
      * Translate Error Codes relieved by a consistListener into Strings
@@ -66,39 +66,39 @@ public interface ConsistManager {
      * @param errorCode the code
      * @return the description
      */
-    public String decodeErrorCode(int errorCode);
+    String decodeErrorCode(int errorCode);
 
     /**
      * Request an update from the layout, loading Consists from the command
      * station.
      */
-    public void requestUpdateFromLayout();
+    void requestUpdateFromLayout();
 
     /**
      * Register a ConsistListListener object with this ConsistManager
      *
      * @param listener a Consist List Listener object.
      */
-    public void addConsistListListener(ConsistListListener listener);
+    void addConsistListListener(ConsistListListener listener);
 
     /**
      * Remove a ConsistListListener object with this ConsistManager
      *
      * @param listener a Consist List Listener object.
      */
-    public void removeConsistListListener(ConsistListListener listener);
+    void removeConsistListListener(ConsistListListener listener);
 
     /**
      * Notify the registered ConsistListListener objects that the ConsistList
      * has changed.
      */
-    public void notifyConsistListChanged();
+    void notifyConsistListChanged();
 
     /**
      * Can this consist manager be disabled?
      * @return true if the manager can be disabled, false otherwise
      */
-    public default boolean canBeDisabled() {
+    default boolean canBeDisabled() {
         return false;
     }
 
@@ -106,7 +106,7 @@ public interface ConsistManager {
      * Register a listener that is called if this manager is enabled or disabled.
      * @param listener the listener
      */
-    public default void registerEnableListener(EnableListener listener) {
+    default void registerEnableListener(EnableListener listener) {
         // Do nothing
     }
 
@@ -114,7 +114,7 @@ public interface ConsistManager {
      * Unregister a listener that is called if this manager is enabled or disabled.
      * @param listener the listener
      */
-    public default void unregisterEnableListener(EnableListener listener) {
+    default void unregisterEnableListener(EnableListener listener) {
         // Do nothing
     }
     
@@ -122,16 +122,16 @@ public interface ConsistManager {
      * Check if this manager is enabled
      * @return true if enabled
      */
-    public default boolean isEnabled() {
+    default boolean isEnabled() {
         return true;
     }
 
     /**
      * A listener that listens to whether the manager is enabled or disabled.
      */
-    public interface EnableListener {
+    interface EnableListener {
 
-        public void setEnabled(boolean value);
+        void setEnabled(boolean value);
     }
 
 }

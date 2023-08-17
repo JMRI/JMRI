@@ -26,7 +26,7 @@ public class PowerPanelAction extends jmri.util.swing.JmriNamedPaneAction {
         this(Bundle.getMessage("TitlePowerPanel"));
     }
 
-    void checkManager() {
+    final void checkManager() {
         // disable ourself if there is no power Manager
         if (jmri.InstanceManager.getNullableDefault(jmri.PowerManager.class) == null) {
             setEnabled(false);

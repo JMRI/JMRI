@@ -20,9 +20,9 @@ import java.util.Date;
  */
 public interface MrcTrafficListener {
 
-    public void notifyXmit(Date timestamp, MrcMessage m);
+    void notifyXmit(Date timestamp, MrcMessage m);
 
-    public void notifyRcv(Date timestamp, MrcMessage m);
+    void notifyRcv(Date timestamp, MrcMessage m);
 
-    public void notifyFailedXmit(Date timestamp, MrcMessage m);
+    void notifyFailedXmit(Date timestamp, MrcMessage m);
 }

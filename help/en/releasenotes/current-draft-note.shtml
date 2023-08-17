@@ -121,7 +121,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>The presentation of the "Send Frame" tool was improved.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -361,8 +361,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>Improve the layout of the Uncouple pane, make sure
-                    that it displays the Uncoupler variable (CV 115).</li>
+                <li></li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -403,9 +402,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>A number of issues with the Shape tool have been resolved including Java
-            exceptions and the possibility of truncated shape lines.</li>
-            <li>The Layout Editor help page has been updated with details for using Shapes.</li>
+	        <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -431,16 +428,13 @@
             <li></li>
         </ul>
 
-<h3>Operations</h3>
-<a id="Operations" name="Operations"></a>
-<ul>
-  <li>Improvements to the routing code. Program will not use an interchange track if the same
-    train can drop and pull a car.</li>
-  <li>Fixed a bug with export routes.</li>
-  <li>Fixed close on Save for several windows.</li>
-</ul>
+    <h3>Operations</h3>
+        <a id="Operations" name="Operations"></a>
+        <ul>
+            <li></li>
+        </ul>
 
-<h3>Panel Editor</h3>
+   <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
             <li></li>
@@ -489,7 +483,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Add "idtags" as a script shortcut to the manager like "turnouts" and "sensors"</li>
+            <li>TurnoutStatePersistence.py was not correctly updated to use SLF4J in 5.5.3, fixed in 5.5.4</li>
         </ul>
 
     <h3>Signals</h3>
@@ -571,7 +565,7 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li></li>
+            <li>panel.js - add data-panel-name attribute to support panel-specific css</li>
         </ul>
 
     <h3>Where Used</h3>
@@ -589,24 +583,26 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li>json car, engine: remove location, set unknown flag, remove from train</li>
+            <li></li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>Added LayoutEditor turntable support for VSD navigation through a panel.</li>
+            <li>Removed deprecated method isPlaying - use Audio.STATE_PLAYING.</li>
+            <li>Added optional portable file access in VSD. To be used in Roster Media (VSDecoder_Path)
+                and VSD Preferences (Default VSD File Path). For Portable File Access see
+                <a href="https://www.jmri.org/help/en/html/doc/Technical/FileNames.shtml">here</a>.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>A signal handler has been added to the Shutdown manager such that a 
-            "kill &lt;pid&gt;" command on Mac or Linux will do a normal shutdown.
-            This is particularly useful for e.g. running headless on an RPi.
-            "kill -HUP &lt;pid&gt;" will cause JMRI to quit and restart.
-            In addition, the Mac and Linux startup scripts were updated to 
-            pass these signals on to the running process.  Together, this
-            will allow you to run JMRI as a service on Mac and Linux, including the RPi.
+            <li>Logging levels ( eg. INFO, DEBUG ) can be changed for the current session in
+            <a href="https://www.jmri.org/en/package/apps/jmrit/log/Log4JTreePane.shtml">Display / Edit Log Categories</a></li>
+            <li>The way data is entered in memory icons, block icons
+                and global variable icons have been improved.</li>
+            <li>You can now set the preferences to open the RailCom table at startup.</li>
+            <li>The analog fast clock now shows when the fast clock has been stopped.</li>
         </ul>
 

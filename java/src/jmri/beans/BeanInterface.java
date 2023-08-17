@@ -36,7 +36,7 @@ public interface BeanInterface {
      * @param index index of the property element to change
      * @param value the value to set the property to
      */
-    public void setIndexedProperty(@Nonnull String key, int index, @CheckForNull Object value);
+    void setIndexedProperty(@Nonnull String key, int index, @CheckForNull Object value);
 
     /**
      * Get the value of an element in an indexed property.
@@ -51,7 +51,7 @@ public interface BeanInterface {
      * @return value of the property or null
      */
     @CheckForNull
-    public Object getIndexedProperty(@Nonnull String key, int index);
+    Object getIndexedProperty(@Nonnull String key, int index);
 
     /**
      * Set the value of a property.
@@ -64,7 +64,7 @@ public interface BeanInterface {
      * @param key   name of the property
      * @param value the value to set the property to
      */
-    public void setProperty(@Nonnull String key, @CheckForNull Object value);
+    void setProperty(@Nonnull String key, @CheckForNull Object value);
 
     /**
      * Get the value of a property.
@@ -78,7 +78,7 @@ public interface BeanInterface {
      * @return The value of the property or null
      */
     @CheckForNull
-    public Object getProperty(@Nonnull String key);
+    Object getProperty(@Nonnull String key);
 
     /**
      * Test that a property exists.
@@ -91,7 +91,7 @@ public interface BeanInterface {
      * @param key name of the property
      * @return true is property <i>key</i> exists
      */
-    public boolean hasProperty(@Nonnull String key);
+    boolean hasProperty(@Nonnull String key);
 
     /**
      * Test that a property exists and is indexed.
@@ -104,7 +104,7 @@ public interface BeanInterface {
      * @param key name of the property
      * @return true is property <i>key</i> exists and is indexed
      */
-    public boolean hasIndexedProperty(@Nonnull String key);
+    boolean hasIndexedProperty(@Nonnull String key);
 
     /**
      * List all property names or keys.
@@ -119,5 +119,5 @@ public interface BeanInterface {
      * @return property names or an empty Set.
      */
     @Nonnull
-    public Set<String> getPropertyNames();
+    Set<String> getPropertyNames();
 }

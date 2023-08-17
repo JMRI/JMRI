@@ -37,7 +37,7 @@ public interface ShutDownManager extends PropertyChangeProvider {
      * @param task the task to execute
      * @throws NullPointerException if the task is null
      */
-    public void register(@Nonnull ShutDownTask task);
+    void register(@Nonnull ShutDownTask task);
 
     /**
      * Register a task for verification that JMRI should stop. An attempt to
@@ -46,7 +46,7 @@ public interface ShutDownManager extends PropertyChangeProvider {
      * @param task the verification task
      * @throws NullPointerException if the task is null
      */
-    public void register(@Nonnull Callable<Boolean> task);
+    void register(@Nonnull Callable<Boolean> task);
 
     /**
      * Register a task that runs when JMRI is stopping. An attempt to
@@ -55,7 +55,7 @@ public interface ShutDownManager extends PropertyChangeProvider {
      * @param task the execution task
      * @throws NullPointerException if the task is null
      */
-    public void register(@Nonnull Runnable task);
+    void register(@Nonnull Runnable task);
 
     /**
      * Deregister a task. Attempts to deregister a task that is not
@@ -63,7 +63,7 @@ public interface ShutDownManager extends PropertyChangeProvider {
      *
      * @param task the task not to execute
      */
-    public void deregister(@CheckForNull ShutDownTask task);
+    void deregister(@CheckForNull ShutDownTask task);
 
     /**
      * Deregister a task. Attempts to deregister a task that is not
@@ -71,7 +71,7 @@ public interface ShutDownManager extends PropertyChangeProvider {
      *
      * @param task the task not to call
      */
-    public void deregister(@CheckForNull Callable<Boolean> task);
+    void deregister(@CheckForNull Callable<Boolean> task);
 
     /**
      * Deregister a task. Attempts to deregister a task that is not
@@ -79,13 +79,13 @@ public interface ShutDownManager extends PropertyChangeProvider {
      *
      * @param task the task not to run
      */
-    public void deregister(@CheckForNull Runnable task);
+    void deregister(@CheckForNull Runnable task);
 
     @Nonnull
-    public List<Callable<Boolean>> getCallables();
+    List<Callable<Boolean>> getCallables();
 
     @Nonnull
-    public List<Runnable> getRunnables();
+    List<Runnable> getRunnables();
 
     /**
      * Run the shutdown tasks, and then terminate the program with status 210 if
@@ -97,7 +97,7 @@ public interface ShutDownManager extends PropertyChangeProvider {
      * shell script (Linux/macOS/UNIX) can catch the exit status and tell the
      * operating system to restart.
      */
-    public void restartOS();
+    void restartOS();
 
     /**
      * Run the shutdown tasks, and then terminate the program with status 100 if
@@ -109,7 +109,7 @@ public interface ShutDownManager extends PropertyChangeProvider {
      * shell script (Linux/macOS/UNIX) can catch the exit status and restart the
      * JMRI java program.
      */
-    public void restart();
+    void restart();
 
     /**
      * Run the shutdown tasks, and then terminate the program with status 200 if
@@ -120,7 +120,7 @@ public interface ShutDownManager extends PropertyChangeProvider {
      * By exiting the program with status 200, the batch file (MS Windows) or
      * shell script (Linux/macOS/UNIX) can catch the exit status and shutdown the OS
      */
-    public void shutdownOS();
+    void shutdownOS();
 
     /**
      * Run the shutdown tasks, and then terminate the program with status 0 if
@@ -128,7 +128,7 @@ public interface ShutDownManager extends PropertyChangeProvider {
      * the shutdown was aborted by the user, in which case the program should
      * continue to operate.
      */
-    public void shutdown();
+    void shutdown();
 
     /**
      * Allow components that normally request confirmation to shutdown to
@@ -137,5 +137,5 @@ public interface ShutDownManager extends PropertyChangeProvider {
      *
      * @return true if shutting down or restarting
      */
-    public boolean isShuttingDown();
+    boolean isShuttingDown();
 }

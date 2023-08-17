@@ -1,11 +1,13 @@
 package jmri.jmrit.operations.trains.excel;
 
 import java.awt.GraphicsEnvironment;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.Test;
+
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  *

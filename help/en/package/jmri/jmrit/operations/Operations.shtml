@@ -11,6 +11,14 @@
 <body>
   <!--#include virtual="/Header.shtml" -->
 
+<!-- This document contains general descriptions of the OperaitonsPro functions and should, therefore,  be considered
+for moving to the help/en/html/apps/OperationsPro subdirectory of the help hierarchy to be consistent with "Organization of the help files"
+as stated in https://www.jmri.org/help/en/html/doc/Technical/Help.shtml.  This would entail changing reference links in some 30 other files.
+  jerryg2003 2023-07-17 -->
+
+<!-- Formatting of command sequences has been changed to use &rArr; instead of -&gt; as is current best practice.
+Command sequences should also be enclose in "strong" formatting.    jerryg2003 2023-07-17 -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
       <h1>JMRI: OperationsPro&trade;</h1>
@@ -48,13 +56,13 @@
       </p>
 
       <p>OperationsPro&trade; is included in the JMRI suite of tools and can be found under the
-        main menu heading "Tools-&gt;OperationsPro".</p>
+        main menu heading "Tools&rArr;OperationsPro".</p>
 
       <p>
         <img src="images/MainMenuDecoderPro.png" alt="">
       </p>
 
-      <h2>Table of Contents</h2>
+      <h2 id="toc">Table of Contents</h2>
 
       <ul>
         <li><a href="#newUserAdvice">New User Advice</a></li>
@@ -165,6 +173,8 @@
                 <li><a href="#ShowCars">Show Cars</a></li>
                 
                 <li><a href="#ShowTrainsServicingThisLocation">Show Trains Servicing this
+                    Location</a></li>
+                <li><a href="#ShowRoutesServicingThisLocation">Show Routes Servicing
                     Location</a></li>
 
                 <li><a href="#PrintLocation">Print or Preview</a></li>
@@ -494,6 +504,8 @@
         <li><a href="#OperationsWebAccess">Operations Web Access</a></li>
       </ul>
 
+      <p style="page-break-after: always"><a href="#toc">[Click to go back to TOC]</a></p>
+
       <h3 id="newUserAdvice">New User Advice</h3>
       OperationsPro&trade; has been designed to create car movements that make sense to you and your
       crew. There are many options and features that the program provides and it can be a bit
@@ -574,12 +586,12 @@
       under "Edit" select "Preferences..." then "Config Profiles". Create a new <a
         href="../../../apps/TabbedPreferences.shtml#Profiles">Configuration Profile</a> for each
       layout that you want to manage. The database for each layout is unique and not shared with the
-      other layouts. You can find each set of operation files under JMRI-&gt; "profile name" -&gt;
+      other layouts. You can find each set of operation files under JMRI&rArr; "profile name" &rArr;
       operations.
       <h3 id="OperationFiles">Operations Files</h3>
 
       <p>OperationsPro&trade; uses up to six XML files to store the operations database. You can
-        find these files by selecting from the main menu bar, Help-&gt;File Locations, a new window
+        find these files by selecting from the main menu bar, Help&rArr;File Locations, a new window
         should appear showing where your JMRI user files are. The operation files are stored in a
         directory called "operations" located inside a directory that uses the name of your profile.
         Once you start entering your data into OperationsPro&trade;, you can find up to six
@@ -629,17 +641,17 @@
       <h3 id="demo">Operations Demo Files</h3>
       The operations program provides a set of demo files to help introduce you to the some of the
       features and capabilities of this program. To load the demo files, first open the Operations <a
-        href="#Settings">Settings</a> window "Tools-&gt;Operations-&gt;Settings", and in the upper
+        href="#Settings">Settings</a> window "Tools&rArr;Operations&rArr;Settings", and in the upper
       left corner of the Setting window is the "Tools" menu, select "Load Demo Files". The program
       will create a <a href="#BackupRestore">backup</a> of your current configuration if you have
       one, and then loads the demo files. Restart JMRI to complete the demo load process.
       <p>The demo program also supplies a simple panel to show how the train icons work. Load
-        the panel before building the trains by selecting from the main JMRI menu, "File-&gt;Load
+        the panel before building the trains by selecting from the main JMRI menu, "File&rArr;Load
         table content and panels..." a window should appear and open the "operations" directory and
         then select the "Operations Demo Panel.xml" file.</p>
 
       <h3 id="QuickStartHelp">Quick Start Help</h3>
-      From the main menu bar for JMRI find the "Tools-&gt;Operations" menu. There are six items in
+      From the main menu bar for JMRI find the "Tools&rArr;Operations" menu. There are six items in
       this menu. We recommend that you start with <a href="#Settings">Settings</a> and work your way
       down to <a href="#Trains">Trains</a>.
       <p>
@@ -848,9 +860,10 @@
         problems with the program. You can access the system console from any menu bar under
         "Help".</p>
 
+      <p style="page-break-after: always"><a href="#toc">[Click to go back to TOC]</a></p>
       <h2 id="Settings">Settings</h2>
       The Settings window contains general parameters for the Operations application. Select from
-      the JMRI main window "Tools-&gt;Operations-&gt;Settings" to open the Settings window. The
+      the JMRI main window "Tools&rArr;Operations&rArr;Settings" to open the Settings window. The
       Settings window has fields and buttons to allow you to enter your railroad name, the
       directions your train's travel, the scale that you are using, printer and icon controls, and
       the ability to create backups and restore files for operations.
@@ -868,7 +881,7 @@
         this way all of the other applications in JMRI will reference the same railroad name. You
         can also change the railroad name by going to the <a
           href="../../../apps/TabbedPreferences.shtml">JMRI: Preferences Pane</a> found under
-        "Edit-&gt;Preferences..." from the main menu bar.
+        "Edit&rArr;Preferences..." from the main menu bar.
       </p>
 
       <h4>Train Directions</h4>
@@ -944,7 +957,7 @@
       the next time you restart JMRI.
       <p>
         You can also automatically open any of the six operations windows when you start JMRI. From
-        the main menu, under "Edit-&gt;Preferences..." select <a
+        the main menu, under "Edit&rArr;Preferences..." select <a
           href="../../../apps/TabbedPreferences.shtml#Startup">Start Up</a>, and add a "Perform
         action" startup item for the desired window.
       </p>
@@ -968,7 +981,7 @@
       <h3 id="PanelOptionsTrainIcons">Panel Options (Train Icons)</h3>
       If you want the OperationsPro&trade; to place an icon representing the train on a panel, enter
       the panel's name (NOT the panel's file path name!), otherwise leave the name blank to disable.
-      Load the panel using the main menu "File-&gt;Load table content and panels..." or use the <a
+      Load the panel using the main menu "File&rArr;Load table content and panels..." or use the <a
         href="../../../apps/TabbedPreferences.shtml#Startup">Open file</a> option available in JMRI:
       Preferences Pane to load the panel at startup.
       <p>
@@ -1009,8 +1022,8 @@
       <h4>Save</h4>
 
       <p>When you're finished with the settings window, press the save button to store your
-        settings in a file named "Operations.xml". You can find this file in JMRI-&gt; "profile
-        name" -&gt; operations. OperationsPro&trade; will also create a backup file each time you
+        settings in a file named "Operations.xml". You can find this file in JMRI&rArr; "profile
+        name" &rArr; operations. OperationsPro&trade; will also create a backup file each time you
         press the save button.</p>
 
       <h3 id="Backup">Backup</h3>
@@ -1133,7 +1146,7 @@
 
       <h3 id="SettingsOptions">Options</h3>
       OperationsPro&trade; has several options that can be modified by selecting
-      Operations-&gt;Settings-&gt;Tools-&gt;Options.
+      Operations&rArr;Settings&rArr;Tools&rArr;Options.
       <p>
         <img src="images/SettingsOptions.png" alt="">
       </p>
@@ -1430,6 +1443,12 @@
           <td>Estimated Departure Time</td>
           <td>Time</td>
         </tr>
+        
+        <tr>
+          <td>HOLD</td>
+          <td>Hold Car</td>
+          <td>See PC or SC below, and note below</td>
+        </tr>
 
         <tr>
           <td>LC</td>
@@ -1612,6 +1631,12 @@
         model, length, type, hp, location name, track name, destination name, destination track
         name, owner name, consist name, is lead loco in consist, loco comment, IDTag, DCC address.</p>
 
+      <p>
+        The program will include "Hold Car" for spurs and C/I tracks that are only serviced by one train.
+        Configure the spur or C/I track option <a href="#RestrictingTrackToCertainTrains">Select
+          trains or routes for car pick ups</a> to "Trains" and only select one train.
+      </p>
+
       <h4 id="GenerateCsvSwitchLists">Generate CSV Switch Lists</h4>
 
       <p>You can also generate custom switch lists using a comma separated values (.csv) files.
@@ -1727,22 +1752,28 @@
       <h4 id="EnableValueFields">Enable Value Fields</h4>
       You can use the value field to enter the value or cost of your rolling stock. You can rename
       the value field if you wish and use it for other purposes.
-      <h4 id="EnableIdentificationTagFields">Enable Identification Tag Fields</h4>
+      
+      <h4 id="EnableIdentificationTagFields">Enable Identification Tag Fields
+      [<strong>Settings&rArr;Tools&rArr;Options&rArr;[scroll to the bottom]</strong></h4>
       You can enable the assignment of reporters and tags for your locations and rolling stock.
       Reporters can be assigned to locations and tracks. When this option is enabled, the Cars and
       Locomotives windows will display the last location and time the rolling stock was detected.
-      The edit car and locomotive windows allow you to select an <a
-        href="../../../../html/tools/IdTags.shtml">ID tag</a> that has been entered into JMRI. The
-      edit location and track windows allow you to select <a
+      The Edit car and locomotive windows allow you to select an <a
+      href="../../../../html/tools/IdTags.shtml">ID tag</a> that has been entered into JMRI
+      (scroll to bottom of "Optional" window frame). The
+      Edit location and track windows allow you to select <a
         href="../../../../html/tools/Reporters.shtml">Reporters</a> that you want to associate with
-      them. You can rename the RFID field if you wish and use it for other purposes.
+      them. You can rename the RFID field if you wish and use it for other purposes by changing the 
+      value on the Identification Tag Fields line.
+      
       <h4 id="EnableVirtualSoundDecoder">Enable physical locations for Virtual Sound Decoder</h4>
       If you're using Virtual Sound Decoder, you can enter the physical coordinates of your
       locations by enabling this option.
 
+      <p style="page-break-after: always"><a href="#toc">[Click to go back to TOC]</a></p>
       <h2 id="PrintOptions">Manifest Print Options</h2>
       You can modify the how OperationsPro&trade; prints the train <a href="#PrintingManifests">Manifests</a> and the location switch
-      lists. From the "Operations-&gt;Settings-&gt;Tools" menu select "Manifest Print Options" to
+      lists. From the "Operations&rArr;Settings&rArr;Tools" menu select "Manifest Print Options" to
       open the window. Press the "Save" button located at the bottom of the window to enable your
       changes. The "Save" button will also cause the program to update the Manifests for all trains
       that are built. This allows you to modify your Manifests without having to rebuild your
@@ -1960,7 +1991,7 @@
         the color change by placing &lt;/FONT&gt; at the end of the line.</p>
 
       <h3 id="BuildReportDetails">Build Report Options</h3>
-      From the "Operations-&gt;Settings-&gt;Tools" or "Operations-&gt;Trains-&gt;Tools" menu select
+      From the "Operations&rArr;Settings&rArr;Tools" or "Operations&rArr;Trains&rArr;Tools" menu select
       "Build Report Options" to open the build report options window.
       <p>
         The program when building a train produces a <a href="#BuildReports">build report</a> for
@@ -2035,7 +2066,7 @@
         on the main menu will no longer be visible, as there are no operations files to load. If you
         want to once again use the operations feature, you can either load the demo files or restore
         a previous backup. To do this, open the Operations Settings page by selecting the "Settings"
-        option in the Tools-&gt;Operations menu of the main page. From there you can do either a
+        option in the Tools&rArr;Operations menu of the main page. From there you can do either a
         restore or a load of the demo files in the usual way.
       </p>
 
@@ -2045,10 +2076,11 @@
       will create a backup of the operations files each time the program is started. To delete older
       obsolete files, use this tool.
 
+      <p style="page-break-after: always"><a href="#toc">[Click to go back to TOC]</a></p>
       <h2 id="Locations">Locations</h2>
       Locations are places on your railroad that trains visit to pick up or set out cars and
       locomotives. Locations can be cities, towns, stations, or just places where trains need to
-      work cars. Select "Tools-&gt;Operations-&gt;Locations" to add or edit the locations on your
+      work cars. Select "Tools&rArr;Operations&rArr;Locations" to add or edit the locations on your
       railroad.
       <p>
         <img src="images/Locations.png" alt="">
@@ -2063,6 +2095,9 @@
           href="#SwitchList">(Switch List)</a> that allows you to see the scheduled pick ups and set
         outs by train. Only trains that have work for the location are available.
       </p>
+      <p>If the <a href="#EnableIdentificationTagFields">Enable ID Tag</a> option has been selected, 
+      an additional column for "Reporters" will be displayed.</p>
+
 
       <h3 id="AddLocation">Add or Edit Location</h3>
 
@@ -2292,7 +2327,8 @@
         track, and the delete cars tool when only showing cars on a track, will only delete those
         cars.</p>
 
-      <h4 id="LocationReporter">Id Tag Reader at this Location</h4>
+      <h4 id="LocationReporter">Id Tag Reader at this Location 
+      [only if <a href="#EnableIdentificationTagFields">Enable ID Tag</a> option has been selected]</h4>
 
       <p>
         The "Id Tag Reader at this Location" dropdown allows you to add a <a
@@ -2307,6 +2343,11 @@
         trains that can can actually work the location, deselect the "Show all Trains" checkbox. You
         can also determine if a certain car type will be serviced by the trains visiting the
         location. Use the "Type" drop down menu to select a car type.</p>
+        
+      <h4 id="ShowRoutesServicingThisLocation">Show Routes Servicing Location</h4>
+
+      <p>This tool will show all of the routes that can service a location. You can also edit a
+        route directly with this tool.</p>
 
       <h3 id="Yards">Yards</h3>
       A yard is used to store cars and locomotives. A car's load status does not change when
@@ -2524,7 +2565,7 @@
         Select from the "Delivery" pull down menu the train schedule (day) when you want the car
         delivered, or leave it blank if a car can be delivered at any time. When a train schedule
         (day) is selected for either delivery or pickup, a car will only be serviced when that train
-        schedule (day) is active. See Trains -&gt; Tools -&gt; <a href="#TrainSchedules">Train
+        schedule (day) is active. See Trains &rArr; Tools &rArr; <a href="#TrainSchedules">Train
           Schedules</a> to select the train schedule (day) for your session.
       </p>
 
@@ -2572,7 +2613,7 @@
       <p>
         Select under "Pickup" when you want the car pulled from the spur. When a train schedule
         (day) is selected for either delivery or pickup, a car will only be serviced when that train
-        schedule (day) is active. See Trains -&gt; Tools -&gt; <a href="#TrainSchedules">Train
+        schedule (day) is active. See Trains &rArr; Tools &rArr; <a href="#TrainSchedules">Train
           Schedules</a> to select the train schedule (day) for your session.
       </p>
 
@@ -2652,7 +2693,7 @@
       <h4 id="ControllingCarsToSpur">Controlling Cars to the Spur / Industry</h4>
 
       <p>If you need to adjust the number of cars "en route" to a spur with a schedule, select
-        in the edit schedule window "Tools-&gt;Options". A new window should appear with two
+        in the edit schedule window "Tools&rArr;Options". A new window should appear with two
         options, the ability to control how many car loads the program will generate from staging,
         and if the spur has an alternate track. The first option, "Percentage of custom loads
         generated by staging", has a default value of 100% which means only generate enough cars to
@@ -2667,7 +2708,7 @@
       <h4>Alternate Track</h4>
 
       <p>
-        The second option under "Tools-&gt;Options" in the schedule window is the ability to specify
+        The second option under "Tools&rArr;Options" in the schedule window is the ability to specify
         an alternate track. The program when it finds a spur full will try to send cars to the
         alternate track. If you don't specify an alternate, the program will try to send cars with a
         custom load or final destination to a yard at that location. The alternate track feature can
@@ -2917,7 +2958,7 @@
         names so our train Manifests look more prototypical. Note that if you use only one staging
         location that the program doesn't normally allow cars to travel from staging and return to
         the same staging location. If you want the program to allow this type of operation, see
-        Settings-&gt;Tools-&gt;<a href="#AllowCarsToReturnToStaging">Options</a>
+        Settings&rArr;Tools&rArr;<a href="#AllowCarsToReturnToStaging">Options</a>
       </p>
 
       <p>
@@ -3218,7 +3259,7 @@
       OperationsPro&trade; allows you to "pool" a set of tracks at a location. Tracks in a pool
       share their track lengths with each other. This is useful if you've divided a location into
       track segments and you want each segment to adjust its length based on the program's demands.
-      To create and place a track into a pool, select Tools-&gt;Pools in one of the track edit
+      To create and place a track into a pool, select Tools&rArr;Pools in one of the track edit
       windows. Enter a name for your pool and press the "Add" button. You can also specify the
       minimum length for the track. A minimum track length prevents the other tracks in the pool
       from acquiring all of the track's length. Next select a pool name for the track and press
@@ -3392,7 +3433,7 @@
 
       <h4 id="ChangeTrackType">Change Track Type</h4>
       If you want to change the track type to a spur, interchange or yard, in the edit track window,
-      select Tools-&gt;Change Track Type. Select the desired track type and press "Save".
+      select Tools&rArr;Change Track Type. Select the desired track type and press "Save".
       
       <h4>Show Cars</h4>
 
@@ -3489,6 +3530,7 @@
         </li>
       </ul>
 
+      <p style="page-break-after: always"><a href="#toc">[Click to go back to TOC]</a></p>
       <h2 id="Cars">Cars</h2>
       The cars window allows you to edit your car roster. You can enter a car's road (reporting
       mark), number, type, and length. The program will automatically calculate the car's maximum
@@ -3502,10 +3544,14 @@
       <p>
         <img src="images/Cars.png" alt="">
       </p>
+      <p>If the <a href="#EnableIdentificationTagFields">Enable ID Tag</a> option has been selected, 
+      a check box for "RFID" will appear in the bottom box on this page.  If that is checked, 
+      additional columns for "Reported Location", "Reported Date", and "RFID" will be displayed.</p>
+
 
       <h3>Table Sort</h3>
       To sort cars by a particular attribute, select any of the radio buttons in the "Sort by" list.
-      One of the more useful sorts is by location. You can under "Tools-&gt;Car Roster" print a list
+      One of the more useful sorts is by location. You can under "Tools&rArr;Car Roster" print a list
       of cars by their location and track when the radio button "Location" is selected. You can also
       sort the table by clicking on any of the column headings. To perform a double sort, select the
       first sort by selecting one of the "Sort by" radio buttons, then click on the final sort by
@@ -3549,7 +3595,7 @@
         If you prefer to use comma delimiters (comma separated values) instead of spaces, use a file
         with a .csv extension or place the word "comma" at the start of your import file and use
         commas instead of spaces. You can also have the program create a comma separated values file
-        for you by selecting the <a href="#CarsTools">Export to file</a> under the "Tools-&gt;Car
+        for you by selecting the <a href="#CarsTools">Export to file</a> under the "Tools&rArr;Car
         Roster" menu in the "Cars" window. The following are two examples of importing cars with
         comma delimiters.
       </p>
@@ -3571,7 +3617,7 @@
       </p>
 
       <p>To import a file, use the "Tools" menu in the upper left hand corner of the Cars
-        window. Then select "Tools-&gt;Car Roster-&gt;Import from file". Note that the program will
+        window. Then select "Tools&rArr;Car Roster&rArr;Import from file". Note that the program will
         only add cars that don't exist in the program's car roster. If the car already exists, the
         import will be skipped by the program.</p>
 
@@ -3604,7 +3650,7 @@
 
       <h3 id="CarsEdit">Adding Cars to your Roster</h3>
       To manually add a car to your roster, press the "Add" button located at the bottom of the
-      "Tools-&gt;Operations-&gt;Cars" window. Once a car has been created, you can use the "Edit"
+      "Tools&rArr;Operations&rArr;Cars" window. Once a car has been created, you can use the "Edit"
       button for a car in the "Cars" window to modify the car's attributes.
       <p>
         <img src="images/EditCar.png" alt="">
@@ -3751,7 +3797,8 @@
       <h4>Comment</h4>
       You can enter a comment for this car. The comment isn't shown on Manifests or switch lists.
 
-      <h4 id="CARIDTAG">Id Tag</h4>
+      <h4 id="CARIDTAG">Id Tag
+            [only if <a href="#EnableIdentificationTagFields">Enable ID Tag</a> option has been selected]</h4>
       The Id Tag dropdown allows you to associate a <a href="../../../../html/tools/IdTags.shtml">IdTag</a>
       with this piece of rolling stock. If any of the locations have an associated <a
         href="#LocationReporter">Id Tag Reader at Location</a> and the Id Tag associated with this
@@ -3767,8 +3814,8 @@
 
       <h4>Save</h4>
       <p>Press "Save" to store the car's attributes after you've made changes. The program will
-        create a file named "OperationsCarRoster.xml". You can find this file in JMRI-&gt; "profile
-        name" -&gt; operations. A backup file with the last settings for all of your cars is also
+        create a file named "OperationsCarRoster.xml". You can find this file in JMRI&rArr; "profile
+        name" &rArr; operations. A backup file with the last settings for all of your cars is also
         created each time the "Save" button is pressed.</p>
 
       <h3 id="EditCarAttributes">Edit Car Attribute Names</h3>
@@ -3972,19 +4019,19 @@
       <h4>Car Roster</h4>
       The "Car Roster" has a sub-menu that allows you to import and export cars, delete cars, reset
       car move counts, and print or preview your car roster.
-      <h4>Car Roster-&gt;Import from file</h4>
+      <h4>Car Roster&rArr;Import from file</h4>
       See <a href="#ImportingCars">Importing Cars from a File</a>.
-      <h4>Car Roster-&gt;Export to file</h4>
+      <h4>Car Roster&rArr;Export to file</h4>
       In addition to <a href="#ImportingCars">Import from file</a> feature described earlier, you
       can also export your cars to a comma separated values file. The "Export to file" function
       creates a file named "ExportOperationsCarRoster.csv" in the operations directory. Note that
       the export cars tool will only export the cars shown in the cars window for a location or
       track.
-      <h4>Car Roster-&gt;Delete all cars</h4>
+      <h4>Car Roster&rArr;Delete all cars</h4>
       You can remove all of the cars in your roster by using the "Delete all cars" option. Note that
       when only viewing cars for a track, the tool changes to "Delete cars on Track track name", and
       will only delete the cars on the track being viewed.
-      <h4>Car Roster-&gt;Reset move count all cars</h4>
+      <h4>Car Roster&rArr;Reset move count all cars</h4>
 
       <p>The "Reset move count all cars" will zero out all of the cars move counts. In normal
         use you should never reset the car move counts. The program uses the move counts to
@@ -3997,7 +4044,7 @@
         train out of town, so don't reset the car moves if you want to put your new additions
         immediately to work!</p>
 
-      <h4>Car Roster-&gt;Print and Preview</h4>
+      <h4>Car Roster&rArr;Print and Preview</h4>
 
       <p>You can also preview and print your car roster. The preview and print features use the
         same "Sort by" radio buttons as the cars window. One of the more useful sorts is by
@@ -4011,7 +4058,7 @@
         cars for that location or track. In addition to only printing the cars shown, the export
         cars tool will only export the cars shown in the cars window for a location or track. When
         viewing cars for a specific track, you can delete the cars on that track by selecting "Car
-        Roster -&gt; Delete Cars on Track track name".</p>
+        Roster &rArr; Delete Cars on Track track name".</p>
 
       <h4>Show Checkboxes</h4>
 
@@ -4032,7 +4079,7 @@
 
       <p>
         The tool "Modify Trains by Car Type" allows you to modify the car types that your trains
-        will service can be found under Trains-&gt;Tools or Cars-&gt;Tools. Very useful when adding
+        will service can be found under Trains&rArr;Tools or Cars&rArr;Tools. Very useful when adding
         a new car type to your roster. See <a href="#ModifyTrainsByCarType">Modify Trains by Car
           Type</a> for more info.
       </p>
@@ -4057,6 +4104,7 @@
       <p>After making your changes, be sure to press "Save" in the Cars window if you want to
         keep your changes.</p>
 
+      <p style="page-break-after: always"><a href="#toc">[Click to go back to TOC]</a></p>
       <h2 id="Locomotives">Locomotives</h2>
       The locomotives window allows you to edit your locomotive roster. You can enter a locomotive's
       number, road (reporting mark), model, type, and length. You can optionally add the
@@ -4067,6 +4115,11 @@
       <p>
         <img src="images/Locomotives.png" alt="">
       </p>
+      
+      <p>If the <a href="#EnableIdentificationTagFields">Enable ID Tag</a> option has been selected, 
+      a check box for "RFID" will appear in the bottom box on this page.  If that is checked, 
+      additional columns for "Reported Location", "Reported Date", and "RFID" will be displayed.</p>
+
 
       <h3 id="ImportLocomotives">Import Locomotives</h3>
       If you already have a list of locomotives in your JMRI roster or in a database, you can import
@@ -4074,7 +4127,7 @@
       <h3>Import Locomotives from the JMRI Roster</h3>
       The program will only import locomotives from your JMRI roster that have a road and number. To
       get your locomotives from your JMRI roster, select "Import from JMRI roster" from the
-      Tools-&gt;Operations-&gt;Locomotives-&gt;Tools-&gt;Locomotive Roster menu. Only locomotives
+      Tools&rArr;Operations&rArr;Locomotives&rArr;Tools&rArr;Locomotive Roster menu. Only locomotives
       that don't exist will be added to the programs locomotive roster. This way you can use this
       tool any time you add locomotives to your JMRI locomotive roster. The JMRI locomotive roster
       doesn't have the length field, so a default length is entered for you. You should correct the
@@ -4111,7 +4164,7 @@
         and trailing spaces if they exist between the commas.</p>
 
       <p>To import a file, use the "Tools" menu in the upper left hand corner of the Locomotives
-        window. Select "Tools-&gt;Locomotive Roster-&gt;Import from file. Note that the program will
+        window. Select "Tools&rArr;Locomotive Roster&rArr;Import from file. Note that the program will
         only add locomotives that don't exist in the program's locomotive roster. If the locomotive
         already exists, it will be skipped by the program.</p>
 
@@ -4169,7 +4222,8 @@
           href="#BuildlocoConsist">build loco consist from single locos.</a>
       </p>
 
-      <h4 id="LocomotiveIDTAG">Id Tag</h4>
+      <h4 id="LocomotiveIDTAG">Id Tag
+            [only if <a href="#EnableIdentificationTagFields">Enable ID Tag</a> option has been selected]</h4>
       The Id Tag dropdown allows you to associate a
       <a href="../../../../html/tools/IdTags.shtml">IdTag</a> with this piece of rolling stock. If
       any of the locations have an associated
@@ -4180,7 +4234,7 @@
       <h4>Save</h4>
 
       <p>Press "Save" to store the locomotive's settings. The program will create a file named
-        "OperationsEngineRoster.xml". You can find this file in JMRI-&gt; "profile name" -&gt;
+        "OperationsEngineRoster.xml". You can find this file in JMRI&rArr; "profile name" &rArr;
         operations. A backup file with the last settings for all of your locomotives is also created
         each time the "Save" button is pressed.</p>
 
@@ -4190,19 +4244,19 @@
       <h4>Locomotive Roster</h4>
       The "Locomotive Roster" has a sub-menu that allows you to import and export locomotives,
       delete locomotives, reset locomotive move counts, and print or preview your locomotive roster.
-      <h4>Locomotive Roster-&gt;Import Locomotives from the JMRI Roster</h4>
+      <h4>Locomotive Roster&rArr;Import Locomotives from the JMRI Roster</h4>
       See <a href="#ImportLocomotives">Import Locomotives from the JMRI Roster</a>.
-      <h4>Locomotive Roster-&gt;Import from file</h4>
+      <h4>Locomotive Roster&rArr;Import from file</h4>
       See <a href="#ImportLocomotives">Importing Locomotives from a File</a>.
-      <h4>Locomotive Roster-&gt;Export to file</h4>
+      <h4>Locomotive Roster&rArr;Export to file</h4>
       In addition to <a href="#ImportLocomotives">Import from file</a> feature described earlier,
       you can also export your locomotives to a comma separated values file. The "Export to file"
       function creates a file named "ExportOperationsLocomotiveRoster.csv" in the operations
       directory.
-      <h4>Locomotive Roster-&gt;Delete all locomotives</h4>
+      <h4>Locomotive Roster&rArr;Delete all locomotives</h4>
       You can remove all of the locomotives in your roster by using the "Delete all locomotives"
       option.
-      <h4>Locomotive Roster-&gt;Reset move count all locomotives</h4>
+      <h4>Locomotive Roster&rArr;Reset move count all locomotives</h4>
       <p>The "Reset move count all locomotives" will zero out all of the locomotive move counts.
         In normal use you should never reset the locomotive move counts. The program uses the move
         counts to determine which locomotives have difficulty finding valid destination tracks.
@@ -4215,7 +4269,7 @@
         of town, so don't reset the locomotive moves if you want to put your new additions
         immediately to work!</p>
 
-      <h4>Locomotive Roster-&gt;Print and Preview</h4>
+      <h4>Locomotive Roster&rArr;Print and Preview</h4>
       <p>You can also preview and print your locomotive roster. The preview and print features
         use the same "Sort by" radio buttons as the locomotives window. One of the more useful sorts
         is by "Location", this allows you to quickly verify your locomotive locations before or
@@ -4240,11 +4294,12 @@
         are generated by the program, but you can use these fields to force a locomotive to a
         specific location using a specified train.</p>
 
+      <p style="page-break-after: always"><a href="#toc">[Click to go back to TOC]</a></p>
       <h2 id="Routes">Routes</h2>
       A route is a list of locations (stations) that a train will visit. Later you can decide if the
       train stops at a location for work. Routes can be point to point or out and back. A route that
       returns to its origin is often referred to as a "turn". To build a route, select
-      "Tools-&gt;Operations-&gt;Routes".
+      "Tools&rArr;Operations&rArr;Routes".
       <p>
         <img src="images/Routes.png" alt="">
       </p>
@@ -4394,7 +4449,7 @@
       <h4>Save Route</h4>
 
       <p>Press "Save Route" to save your route. The program will create a file named
-        "OperationsRouteRoster.xml". You can find this file in JMRI-&gt; "profile name" -&gt;
+        "OperationsRouteRoster.xml". You can find this file in JMRI&rArr; "profile name" &rArr;
         operations. A backup file with the last settings for all of your routes is also created each
         time the "Save Route" button is pressed.</p>
 
@@ -4518,7 +4573,7 @@
         Use this tool to set the default X and Y coordinates of your train icons for each location.
         The tool allows you to specify the icon coordinates based on the train's direction. You can
         also update all of your existing routes and locations with these new coordinates. As an
-        alternative, you can use a route's "Tools-&gt;Set Train Icon Coordinates for this Route" in
+        alternative, you can use a route's "Tools&rArr;Set Train Icon Coordinates for this Route" in
         the <a href="#EditRoute">Edit Route</a> window to create coordinates unique to a specific
         route. Enter the name of the <a href="#PanelOptionsTrainIcons">panel</a> you wish to use in
         the Settings window.
@@ -4529,9 +4584,10 @@
       The "Export Routes" tool produces a comma separated values (.csv) file called
       "ExportOperationsRoutes.csv" containing details of the existing routes.
 
+      <p style="page-break-after: always"><a href="#toc">[Click to go back to TOC]</a></p>
       <h2 id="Trains">Trains</h2>
       Now that we've created our <a href="#Routes">Routes</a> we need trains to move cars! Create a
-      train by selecting "Tools-&gt;Operations-&gt;Trains" from the top level menu.
+      train by selecting "Tools&rArr;Operations&rArr;Trains" from the top level menu.
       <p>
         <img src="images/Trains.png" alt="">
       </p>
@@ -4704,7 +4760,7 @@
       <h4>Save Train</h4>
 
       <p>Press "Save Train" to save your train. The program will create a file named
-        "OperationsTrainRoster.xml". You can find this file in JMRI-&gt; "profile name" -&gt;
+        "OperationsTrainRoster.xml". You can find this file in JMRI&rArr; "profile name" &rArr;
         operations. A backup file with the last settings for all of your trains is also created each
         time the "Save Train" button is pressed.</p>
 
@@ -4713,7 +4769,7 @@
       <p>In the upper left side of each "Edit Train" window is the "Tools" menu for that train.</p>
 
       <h3 id="TrainBuildOptions">Train Build Options</h3>
-      In the edit train window menu under "Tools-&gt;Train Build Options" are additional options for
+      In the edit train window menu under "Tools&rArr;Train Build Options" are additional options for
       building a train. You can control which car owners, and built dates the train will service,
       and have up two locomotive and caboose changes in the train's route. You can also add a
       request for helper locomotives. Press the "Save Train" button after you've completed your
@@ -4876,7 +4932,7 @@
 
       <h3 id="TrainLoadOptions">Train Load Options</h3>
       You can decide which car loads the train will service. Select under the "Edit
-      Train-&gt;Tools-&gt;Train Load Options". This will bring up a new window with several options.
+      Train&rArr;Tools&rArr;Train Load Options". This will bring up a new window with several options.
       <p>If the train will service any load name, select the "Accept all" radio button. If you
         want the train to service only some load names, select "Accept only" radio button. To build
         a list of load names that the train will not service, select the "Exclude" radio button.</p>
@@ -4889,7 +4945,7 @@
 
       <h3 id="TrainRoadOptions">Train Road Options</h3>
       You can control the roads that the train will service. Select under the "Edit
-      Train-&gt;Tools-&gt;Train Road Options". This will bring up a new window with several options.
+      Train&rArr;Tools&rArr;Train Road Options". This will bring up a new window with several options.
       <p>If the train will service any road, select the "Accept all" radio button. If you want
         to accept only some roads, select "Accept only" radio button. Then use the menu of roads and
         "Add Road" button to make a list of roads that the train will service. To remove a road from
@@ -4908,7 +4964,7 @@
 
       <p>You can optionally have a unique railroad name and logo for each train in your roster.
         You can also decide if your Manifests show the train's arrival and departure times. Use the
-        "Edit Train-&gt;Tools-&gt;Manifest Options" to set these options.</p>
+        "Edit Train&rArr;Tools&rArr;Manifest Options" to set these options.</p>
 
       <h3 id="CopyTrain">Copy Train</h3>
 
@@ -4918,12 +4974,12 @@
       <h3 id="EditTrainScripts">Scripts</h3>
       If you want to run a <a
         href="../../../../html/tools/scripting/index.shtml">script</a> when a train is built, moves
-      or terminates, select under the "Edit Train-&gt;Tools-&gt;Scripts". This will bring up a new
+      or terminates, select under the "Edit Train&rArr;Tools&rArr;Scripts". This will bring up a new
       window with several script options.
       <p>
         Included in the <a href="https://jmri.org/jython/operations">jython directory</a> are
         several examples of operation oriented scripts. These scripts are included in the JMRI
-        download and can be found in the jmri-&gt;jython-&gt;operations directory.
+        download and can be found in the jmri&rArr;jython&rArr;operations directory.
       </p>
 
 
@@ -4970,7 +5026,7 @@
 
       <h4 id="ModifyTrainsByCarType">Modify Trains by Car Type</h4>
       The ability to modify the car types that your trains will service can be found under
-      Trains-&gt;Tools-&gt;Modify Trains by Car Type or Cars-&gt;Tools-&gt;Modify Trains by Car
+      Trains&rArr;Tools&rArr;Modify Trains by Car Type or Cars&rArr;Tools&rArr;Modify Trains by Car
       Type. Very useful when adding a new car type to your roster.
       <p>
         <img src="images/ModifyTrainsByCarType.png" alt="">
@@ -4994,7 +5050,7 @@
       <h4 id="ChangeTrainDepartureTimes">Change Train Departure Times</h4>
 
       <p>Use this window to change all of your train departure times by certain number of hours.
-        It can be found under Trains-&gt;Tools. Useful if you're trying to match the train departure
+        It can be found under Trains&rArr;Tools. Useful if you're trying to match the train departure
         times to a real or fast clock. You also have the option to change the departure times in
         your routes.</p>
 
@@ -5012,7 +5068,7 @@
 
       <h4 id="TrainSchedules">Train Schedules</h4>
       The Train Schedules window allows you to define which trains will run on any given day, and
-      can be found under the Trains-&gt;Tools. For each day of the week, select which trains you
+      can be found under the Trains&rArr;Tools. For each day of the week, select which trains you
       want to build. Then select which day you want by selecting the appropriate radio button. Then
       press the "Apply" button to update the
       <a href="#Trains">Trains</a> "Build" checkboxes. Use the "Save" button to store any changes
@@ -5330,7 +5386,7 @@
 
       <h4 id="SetupExcelProgram">Setup Excel Program (Manifest Creator)</h4>
       The ability to configure an Excel program to create custom manifests can be found under Trains
-      -&gt; Tools. Dan Foltz who is a JMRI user/programmer wrote the "Manifest Creator" and "Switch
+      &rArr; Tools. Dan Foltz who is a JMRI user/programmer wrote the "Manifest Creator" and "Switch
       List Creator". You can find a copies of the programs at
       <a href="https://manifestcreator.weebly.com/">Manifest Creator - Add on to JMRI.</a> Place the
       program "MC4JMRI.xls" or "SWC4JMRI.xlsm" along with any other files needed in the
@@ -5633,6 +5689,7 @@
         move. You can also disable this restriction see <a href="#AllowLocalCarMovements">Options.</a>
       </p>
 
+      <p style="page-break-after: always"><a href="#toc">[Click to go back to TOC]</a></p>
       <h2 id="BuildingTrains">Building Trains</h2>
       To build one train, press the "Build" button in the row for the desired train in the
       <a href="#Trains">Trains</a> window. The button will become "Print" or "Preview" after the
@@ -5658,6 +5715,7 @@
       <p>You can also control which trains are shown in the Trains window. When the "Show All"
         checkbox is deselected, only trains that have the "Build" checkbox selected are shown.</p>
 
+      <p style="page-break-after: always"><a href="#toc">[Click to go back to TOC]</a></p>
       <h2 id="TrainStatus">Train Status</h2>
       After pressing the "Build" button for a train, the train's status will become "Built",
       "Partial X/Y", or "Build Failed". A "Built" train status means that the program was able to
@@ -5681,6 +5739,7 @@
         and the train's status becomes "Terminated" along with the date and time of when the train
         was terminated.</p>
 
+      <p style="page-break-after: always"><a href="#toc">[Click to go back to TOC]</a></p>
       <h2 id="BuildReports">Build Reports</h2>
       If you want to examine how a train was built, you can select the "Build Reports" checkbox at
       the bottom of the train window, and then press the "Print" or "Preview" button for that train.
@@ -5702,8 +5761,8 @@
           Report Options</a> for more information on how to change the build report detail level.
       </p>
 
+      <p style="page-break-after: always"><a href="#toc">[Click to go back to TOC]</a></p>
       <h2 id="TroubleShootingBuildingTrains">Problems Building Trains How to Fix</h2>
-
       <p>
         The most common reason for a build failure is requesting a caboose or car with FRED and the
         program can't find a caboose or car with FRED at the start of the train's route. The program
@@ -5745,7 +5804,7 @@
       <a href="#BuildReports">Build Report</a> and saves it to a file. Normally you would access the
       build report from the
       <a href="#BuildingTrains">Trains</a> window or from the edit train "Tools" menu. The train
-      build report text files can be found in the operations-&gt;buildstatus directory. The build
+      build report text files can be found in the operations&rArr;buildstatus directory. The build
       report shows the steps the operations program goes through while building a train. The first
       page provides the route the train will travel and the number of car moves requested for each
       location. The report then shows the car type and locomotive types that the train will service.
@@ -6135,6 +6194,7 @@
         quitting JMRI allows the operations program to resume exactly at the point where you pressed
         the "Save Builds" button.</p>
 
+      <p style="page-break-after: always"><a href="#toc">[Click to go back to TOC]</a></p>
       <h2 id="BuildingMultipleTrainsSession">Building Multiple Trains for a Session</h2>
       Most operating sessions require more than one train to keep your crew busy. The correct way to
       do this is to build and print all of the trains needed before terminating them. So if you need
@@ -6159,12 +6219,13 @@
         track the actual movement of the trains during your session. As long as the trains on your
         layout match the locations in the program you can build a new train.</p>
 
+      <p style="page-break-after: always"><a href="#toc">[Click to go back to TOC]</a></p>
       <h2 id="OperationWindows">Operations Windows</h2>
-
       <p>All of the Operations windows can be resized and placed to your liking. You can also
         adjust the table columns widths and the order the columns are displayed. When you close the
         window, the size and window location on your screen is saved.</p>
 
+      <p style="page-break-after: always"><a href="#toc">[Click to go back to TOC]</a></p>
       <h2 id="OperationsWebAccess">Operations Web Access</h2>
       You can also access some of the OperationPro&trade; windows from a browser. For more
       information see

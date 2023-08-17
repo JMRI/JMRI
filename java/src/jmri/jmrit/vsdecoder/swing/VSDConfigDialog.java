@@ -111,6 +111,7 @@ public class VSDConfigDialog extends JDialog {
             }
         });
         initComponents();
+        setLocationRelativeTo(parent);
     }
 
     /**

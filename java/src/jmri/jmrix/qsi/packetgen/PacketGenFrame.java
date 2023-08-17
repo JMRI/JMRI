@@ -3,7 +3,6 @@ package jmri.jmrix.qsi.packetgen;
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import jmri.jmrix.qsi.QsiMessage;
-import jmri.jmrix.qsi.QsiReply;
 import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 
 /**
@@ -12,7 +11,7 @@ import jmri.jmrix.qsi.QsiSystemConnectionMemo;
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2008
  */
-public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.qsi.QsiListener {
+public class PacketGenFrame extends jmri.util.JmriJFrame {
 
     private QsiSystemConnectionMemo _memo = null;
 
@@ -55,12 +54,7 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.q
         getContentPane().add(packetTextField);
         getContentPane().add(sendButton);
 
-        sendButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                sendButtonActionPerformed(e);
-            }
-        });
+        sendButton.addActionListener(this::sendButtonActionPerformed);
 
         // pack for display
         pack();
@@ -69,7 +63,7 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.q
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         String input = packetTextField.getText();
         // TODO check input + feedback on error. Too easy to cause NPE
-        _memo.getQsiTrafficController().sendQsiMessage(createPacket(input), this);
+        _memo.getQsiTrafficController().sendQsiMessage(createPacket(input), null);
     }
 
     /**
@@ -89,22 +83,6 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.q
             m.setElement(i, b[i]);
         }
         return m;
-    }
-
-    /** 
-     * {@inheritDoc}
-     * Ignores messages.
-     */
-    @Override
-    public void message(QsiMessage m) {
-    }
-
-    /** 
-     * {@inheritDoc}
-     * Ignores replies.
-     */
-    @Override
-    public void reply(QsiReply r) {
     }
 
 }

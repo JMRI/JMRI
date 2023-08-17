@@ -52,6 +52,11 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
 
     public JPanel createPanel(
             @CheckForNull LogixNG_SelectEnum<E> selectEnum, E[] enumArray) {
+        return createPanel(selectEnum, enumArray, null);
+    }
+
+    public JPanel createPanel(
+            @CheckForNull LogixNG_SelectEnum<E> selectEnum, E[] enumArray, E defaultValue) {
 
         JPanel panel = new JPanel();
 
@@ -100,6 +105,10 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
         _formulaTextField.setColumns(30);
         _panelFormula.add(_formulaTextField);
 
+
+        if (defaultValue != null) {
+            _enumComboBox.setSelectedItem(defaultValue);
+        }
 
         if (selectEnum != null) {
             switch (selectEnum.getAddressing()) {

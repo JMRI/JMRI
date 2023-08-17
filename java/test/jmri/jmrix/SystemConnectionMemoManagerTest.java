@@ -116,6 +116,7 @@ public class SystemConnectionMemoManagerTest {
         lnis1 = null;
         lnis2 = null;
 
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

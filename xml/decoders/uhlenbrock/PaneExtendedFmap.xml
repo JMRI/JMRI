@@ -46,11 +46,17 @@
 			<revremark>Added "Tillig 0423x" decoder</revremark>
 		</revision>
 		<revision>
-			<revnumber>5</revnumber>
+			<revnumber>4</revnumber>
 			<date>2023-05-10</date>
 			<authorinitials>UG</authorinitials>
 			<revremark>Erweiterung des Erweiterten Function Mappings</revremark>
-		</revision>		
+		</revision>
+		<revision>
+			<revnumber>5</revnumber>
+			<date>2023-07-19</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Pane design changes</revremark>
+		</revision>			
 	</revhistory>
 	<name>Ext Function Map</name>
 	<name xml:lang="de">Erw. Funktionsmapping</name>
@@ -61,7 +67,7 @@
 			<column>
 				<display item="Advanced Function Mapping" format="checkbox"/>
 				<label>
-					<text>Extended Function Mapping - not completed</text>
+					<text>Extended Function Mapping - not complete</text>
 					<text xml:lang="de">  - nicht komplett implementiert -</text>
 					<text xml:lang="nl">Uitgebreide Functiemapping - nog verder uit te breiden</text>
 					<text xml:lang="cs">Rozšířené mapování funkcí - bude dokončeno</text>
@@ -89,10 +95,7 @@
 				<display item="Bank switch 1"/>
 				<display item="Bank switch 2"/>
 				<label>
-					<text>Extended Function Mapping - to be completed</text>
-					<text xml:lang="de">Erweiterte Funktionsmapping - nur teilweise implementiert</text>
-					<text xml:lang="nl">Uitgebreide Functiemapping - nog verder uit te breiden</text>
-					<text xml:lang="cs">Rozšířené mapování funkcí - bude dokončeno</text>
+					<text>   </text>
 				</label>
 				<label>
 					<text>   </text>
@@ -114,10 +117,10 @@
 			<!--start Mapping row #1-->
 			<row>
 				<label>
-					<text>Mapping #1 - Conditions: </text>
-					<text xml:lang="de">Erweitertes Fkt.-Mapping #1 - Bedingungen: </text>
-					<text xml:lang="nl">Mapping #1 - Voorwaarden: </text>
-					<text xml:lang="cs">Mapování #1 - Podmínky: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #1 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #1 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #1 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #1 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
 				</label>
 			</row>
 			<row>
@@ -717,10 +720,10 @@
 			<!--start Mapping row #2-->
 			<row>
 				<label>
-					<text>Mapping #2 - Conditions: </text>
-					<text xml:lang="de">Erweitertes Fkt.-Mapping #2 - Bedingungen: </text>
-					<text xml:lang="nl">Mapping #2 - Voorwaarden: </text>
-					<text xml:lang="cs">Mapování #2 - Podmínky: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #2 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #2 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #2 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #2 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
 				</label>
 			</row>
 			<row>
@@ -1320,10 +1323,10 @@
 			<!--start Mapping row #3-->
 			<row>
 				<label>
-					<text>Mapping #3 - Conditions: </text>
-					<text xml:lang="de">Erweitertes Fkt.-Mapping #3 - Bedingungen: </text>
-					<text xml:lang="nl">Mapping #3 - Voorwaarden: </text>
-					<text xml:lang="cs">Mapování #3 - Podmínky: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #3 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #3 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #3 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #3 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
 				</label>
 			</row>
 			<row>
@@ -1923,10 +1926,10 @@
 			<!--start Mapping row #4-->
 			<row>
 				<label>
-					<text>Mapping #4 - Conditions: </text>
-					<text xml:lang="de">Erweitertes Fkt.-Mapping #4 - Bedingungen: </text>
-					<text xml:lang="nl">Mapping #4 - Voorwaarden: </text>
-					<text xml:lang="cs">Mapování #4 - Podmínky: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #4 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #4 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #4 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #4 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
 				</label>
 			</row>
 			<row>
@@ -2526,10 +2529,10 @@
 			<!--start Mapping row #5 -->
 			<row>
 				<label>
-					<text>Mapping #5 - Conditions: </text>
-					<text xml:lang="de">Erweitertes Fkt.-Mapping #5 - Bedingungen: </text>
-					<text xml:lang="nl">Mapping #5 - Voorwaarden: </text>
-					<text xml:lang="cs">Mapování #5 - Podmínky: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #5 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #5 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #5 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #5 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
 				</label>
 			</row>
 			<row>
@@ -3129,10 +3132,10 @@
 			<!--start Mapping row #6 -->
 			<row>
 				<label>
-					<text>Mapping #6  - Conditions: </text>
-					<text xml:lang="de">Erweitertes Fkt.-Mapping #6 - Bedingungen: </text>
-					<text xml:lang="nl">Mapping #6  - Voorwaarden: </text>
-					<text xml:lang="cs">Mapování #6  - Podmínky: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #6 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #6 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #6 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #6 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
 				</label>
 			</row>
 			<row>
@@ -3732,10 +3735,10 @@
 			<!--start Mapping row #7  -->
 			<row>
 				<label>
-					<text>Mapping #7 - Conditions: </text>
-					<text xml:lang="de">Erweitertes Fkt.-Mapping #7 - Bedingungen: </text>
-					<text xml:lang="nl">Mapping #7  - Voorwaarden: </text>
-					<text xml:lang="cs">Mapování #7  - Podmínky: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #7 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #7 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #7 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #7 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
 				</label>
 			</row>
 			<row>
@@ -4335,10 +4338,10 @@
 			<!--start Mapping row #8  -->
 			<row>
 				<label>
-					<text>Mapping #8 - Conditions: </text>
-					<text xml:lang="de">Erweitertes Fkt.-Mapping #8 - Bedingungen: </text>
-					<text xml:lang="nl">Mapping #8  - Voorwaarden: </text>
-					<text xml:lang="cs">Mapování #8  - Podmínky: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #8 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #8 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #8 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #8 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
 				</label>
 			</row>
 			<row>
@@ -4938,10 +4941,10 @@
 			<!--start Mapping row #9  -->
 			<row>
 				<label>
-					<text>Mapping #9 - Conditions: </text>
-					<text xml:lang="de">Erweitertes Fkt.-Mapping #9 - Bedingungen: </text>
-					<text xml:lang="nl">Mapping #9  - Voorwaarden: </text>
-					<text xml:lang="cs">Mapování #9  - Podmínky: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #9 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #9 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #9 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #9 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
 				</label>
 			</row>
 			<row>
@@ -5554,10 +5557,10 @@
 				<!--start Mapping row #17-->
 				<row>
 					<label>
-						<text>Mapping #17 - Conditions: </text>
-						<text xml:lang="de">Erweitertes Fkt.-Mapping #17 - Bedingungen: </text>
-						<text xml:lang="nl">Mapping #17 - Voorwaarden: </text>
-						<text xml:lang="cs">Mapování #17 - Podmínky: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #17 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #17 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #17 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #17 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
 					</label>
 				</row>
 				<row>
@@ -6157,10 +6160,10 @@
 				<!--start Mapping row #18-->
 				<row>
 					<label>
-						<text>Mapping #18 - Conditions: </text>
-						<text xml:lang="de">Erweitertes Fkt.-Mapping #18 - Bedingungen: </text>
-						<text xml:lang="nl">Mapping #18 - Voorwaarden: </text>
-						<text xml:lang="cs">Mapování #18 - Podmínky: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #18 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #18 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #18 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #18 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
 					</label>
 				</row>
 				<row>
@@ -6760,10 +6763,10 @@
 				<!--start Mapping row #19-->
 				<row>
 					<label>
-						<text>Mapping #19 - Conditions: </text>
-						<text xml:lang="de">Erweitertes Fkt.-Mapping #19 - Bedingungen: </text>
-						<text xml:lang="nl">Mapping #19 - Voorwaarden: </text>
-						<text xml:lang="cs">Mapování #19 - Podmínky: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #19 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #19 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #19 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #19 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
 					</label>
 				</row>
 				<row>
@@ -7363,10 +7366,10 @@
 				<!--start Mapping row #20-->
 				<row>
 					<label>
-						<text>Mapping #20 - Conditions: </text>
-						<text xml:lang="de">Erweitertes Fkt.-Mapping #20 - Bedingungen: </text>
-						<text xml:lang="nl">Mapping #20 - Voorwaarden: </text>
-						<text xml:lang="cs">Mapování #20 - Podmínky: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #20 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #20 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #20 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #20 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
 					</label>
 				</row>
 				<row>
@@ -7966,10 +7969,10 @@
 				<!--start Mapping row #21 -->
 				<row>
 					<label>
-						<text>Mapping #21 - Conditions: </text>
-						<text xml:lang="de">Erweitertes Fkt.-Mapping #21 - Bedingungen: </text>
-						<text xml:lang="nl">Mapping #21 - Voorwaarden: </text>
-						<text xml:lang="cs">Mapování #21 - Podmínky: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #21 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #21 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #21 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #21 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
 					</label>
 				</row>
 				<row>
@@ -8569,10 +8572,10 @@
 				<!--start Mapping row #22 -->
 				<row>
 					<label>
-						<text>Mapping #22  - Conditions: </text>
-						<text xml:lang="de">Erweitertes Fkt.-Mapping #22 - Bedingungen: </text>
-						<text xml:lang="nl">Mapping #22  - Voorwaarden: </text>
-						<text xml:lang="cs">Mapování #22  - Podmínky: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #22 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #22 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #22 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #22 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
 					</label>
 				</row>
 				<row>
@@ -9172,10 +9175,10 @@
 				<!--start Mapping row #23  -->
 				<row>
 					<label>
-						<text>Mapping #23 - Conditions: </text>
-						<text xml:lang="de">Erweitertes Fkt.-Mapping #23 - Bedingungen: </text>
-						<text xml:lang="nl">Mapping #23  - Voorwaarden: </text>
-						<text xml:lang="cs">Mapování #23  - Podmínky: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #23 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #23 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #23 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #23 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
 					</label>
 				</row>
 				<row>
@@ -9775,10 +9778,10 @@
 				<!--start Mapping row #24  -->
 				<row>
 					<label>
-						<text>Mapping #24 - Conditions: </text>
-						<text xml:lang="de">Erweitertes Fkt.-Mapping #24 - Bedingungen: </text>
-						<text xml:lang="nl">Mapping #24  - Voorwaarden: </text>
-						<text xml:lang="cs">Mapování #24  - Podmínky: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #24 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #24 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #24 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #24 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
 					</label>
 				</row>
 				<row>
@@ -10378,10 +10381,10 @@
 				<!--start Mapping row #25  -->
 				<row>
 					<label>
-						<text>Mapping #25 - Conditions: </text>
-						<text xml:lang="de">Erweitertes Fkt.-Mapping #25 - Bedingungen: </text>
-						<text xml:lang="nl">Mapping #25  - Voorwaarden: </text>
-						<text xml:lang="cs">Mapování #25  - Podmínky: </text>
+					<text>&lt;html&gt;&lt;strong&gt;Mapping #25 - Conditions: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="de">&lt;html&gt;&lt;strong&gt;Erweitertes Fkt.-Mapping #25 - Bedingungen: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Mapping #25 - Voorwaarden: &lt;/strong&gt;&lt;/html&gt;</text>
+					<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Mapování #25 - Podmínky: &lt;/strong&gt;&lt;/html&gt;</text>
 					</label>
 				</row>
 				<row>

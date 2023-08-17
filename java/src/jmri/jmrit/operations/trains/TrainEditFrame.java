@@ -410,8 +410,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                     reportTrainExists(Bundle.getMessage("save"));
                     return;
                 }
-                checkRoute(); // check to see if use supplied a route, just warn if no route
-                saveTrain();
+                // check to see if user supplied a route
+                if (!checkRoute() || !saveTrain()) {
+                    return;
+                }
             }
             if (Setup.isCloseWindowOnSaveEnabled()) {
                 dispose();
@@ -501,12 +503,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         loadToolMenu(toolMenu);
     }
 
-    private void saveTrain() {
+    private boolean saveTrain() {
         if (!checkName(Bundle.getMessage("save"))) {
-            return;
+            return false;
         }
         if (!checkModel() || !checkEngineRoad()) {
-            return;
+            return false;
         }
         if (!_train.getName().equals(trainNameTextField.getText().trim()) ||
                 !_train.getRawDescription().equals(trainDescriptionTextField.getText()) ||
@@ -537,6 +539,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         _train.setComment(TrainCommon.formatColorString(commentTextArea.getText(), commentColorChooser.getColor()));
         // save train file
         OperationsXml.save();
+        return true;
     }
 
     /**

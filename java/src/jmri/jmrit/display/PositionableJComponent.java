@@ -33,6 +33,7 @@ public class PositionableJComponent extends JComponent implements Positionable {
     private boolean _viewCoordinates = false;
     private boolean _controlling = true;
     private boolean _hidden = false;
+    private boolean _emptyHidden = false;
     private int _displayLevel;
     private double _scale;         // user's scaling factor
 
@@ -149,6 +150,16 @@ public class PositionableJComponent extends JComponent implements Positionable {
         } else {
             setVisible(false);
         }
+    }
+
+    @Override
+    public void setEmptyHidden(boolean hide) {
+        _emptyHidden = hide;
+    }
+
+    @Override
+    public boolean isEmptyHidden() {
+        return _emptyHidden;
     }
 
     /**

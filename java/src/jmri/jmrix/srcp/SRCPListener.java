@@ -8,11 +8,11 @@ package jmri.jmrix.srcp;
  */
 public interface SRCPListener extends jmri.jmrix.AbstractMRListener {
 
-    public void message(SRCPMessage m);
+    void message(SRCPMessage m);
 
-    public void reply(SRCPReply m);
+    void reply(SRCPReply m);
 
-    public void reply(jmri.jmrix.srcp.parser.SimpleNode n);
+    void reply(jmri.jmrix.srcp.parser.SimpleNode n);
 }
 
 

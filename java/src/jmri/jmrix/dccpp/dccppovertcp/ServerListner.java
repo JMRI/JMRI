@@ -7,7 +7,7 @@ package jmri.jmrix.dccpp.dccppovertcp;
  */
 public interface ServerListner {
 
-    public void notifyServerStateChanged(Server s);
+    void notifyServerStateChanged(Server s);
 
-    public void notifyClientStateChanged(Server s);
+    void notifyClientStateChanged(Server s);
 }

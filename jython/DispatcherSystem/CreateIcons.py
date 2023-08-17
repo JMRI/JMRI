@@ -590,16 +590,16 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         cdlManager = jmri.InstanceManager.getDefault(jmri.ConditionalManager)
         lgx = lgxManager.createNewLogix('IX:DSLX:1', 'Run Dispatcher')
         cdl = cdlManager.createNewConditional('IX:DSLX:1C1', 'Run Dispatcher')
-        if lgx.addConditional('IX:DSLX:1C1', 0):
-            if cdl is not None:
-                cdl.setUserName('Run Dispatcher')
-                vars = []
-                vars.append(jmri.ConditionalVariable(False, jmri.Conditional.Operator.AND, jmri.Conditional.Type.SENSOR_ACTIVE, 'startDispatcherSensor', True))
-                cdl.setStateVariables(vars)
-                actions = []
-                actions.append(jmri.implementation.DefaultConditionalAction(1, jmri.Conditional.Action.RUN_SCRIPT, '', -1, 'program:jython/DispatcherSystem/RunDispatchMaster.py'))
-                cdl.setAction(actions)
-                lgx.activateLogix()
+        lgx.addConditional('IX:DSLX:1C1', 0):
+        if cdl is not None:
+            cdl.setUserName('Run Dispatcher')
+            vars = []
+            vars.append(jmri.ConditionalVariable(False, jmri.Conditional.Operator.AND, jmri.Conditional.Type.SENSOR_ACTIVE, 'startDispatcherSensor', True))
+            cdl.setStateVariables(vars)
+            actions = []
+            actions.append(jmri.implementation.DefaultConditionalAction(1, jmri.Conditional.Action.RUN_SCRIPT, '', -1, 'program:jython/DispatcherSystem/RunDispatchMaster.py'))
+            cdl.setAction(actions)
+            lgx.activateLogix()
 
     # **************************************************
     # add Icons

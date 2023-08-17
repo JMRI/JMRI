@@ -8,8 +8,8 @@ package jmri.jmrix.sprog;
  */
 public interface SprogListener extends java.util.EventListener {
 
-    public void notifyMessage(SprogMessage m);
+    void notifyMessage(SprogMessage m);
 
-    public void notifyReply(SprogReply m);
+    void notifyReply(SprogReply m);
 
 }

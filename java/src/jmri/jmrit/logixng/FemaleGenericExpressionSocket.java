@@ -10,7 +10,7 @@ import jmri.JmriException;
 public interface FemaleGenericExpressionSocket
         extends FemaleSocket {
 
-    public enum SocketType {
+    enum SocketType {
         DIGITAL("SocketTypeDigital"),
         ANALOG("SocketTypeAnalog"),
         STRING("SocketTypeString"),
@@ -33,7 +33,7 @@ public interface FemaleGenericExpressionSocket
      * Get the current active socket.
      * @return the currently active socket or null if no socket is active
      */
-    public FemaleSocket getCurrentActiveSocket();
+    FemaleSocket getCurrentActiveSocket();
     
     /**
      * Set the type of the socket.
@@ -43,7 +43,7 @@ public interface FemaleGenericExpressionSocket
      * connected and if the new type doesn't match the currently connected
      * socket.
      */
-    public void setSocketType(SocketType socketType)
+    void setSocketType(SocketType socketType)
             throws SocketAlreadyConnectedException;
     
     /**
@@ -51,7 +51,7 @@ public interface FemaleGenericExpressionSocket
      * 
      * @return the type of socket
      */
-    public SocketType getSocketType();
+    SocketType getSocketType();
     
     /**
      * Evaluate this expression.
@@ -68,6 +68,6 @@ public interface FemaleGenericExpressionSocket
      * @throws JmriException when an exception occurs
      */
     @CheckForNull
-    public Object evaluateGeneric() throws JmriException;
+    Object evaluateGeneric() throws JmriException;
     
 }

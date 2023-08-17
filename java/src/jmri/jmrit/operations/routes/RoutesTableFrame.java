@@ -10,10 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.routes.tools.ExportRoutesAction;
-import jmri.jmrit.operations.routes.tools.PrintRoutesAction;
-import jmri.jmrit.operations.routes.tools.RouteCopyAction;
-import jmri.jmrit.operations.routes.tools.SetTrainIconPositionAction;
+import jmri.jmrit.operations.routes.tools.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.swing.JTablePersistenceManager;
 
@@ -84,6 +81,8 @@ public class RoutesTableFrame extends OperationsFrame {
         toolMenu.add(new RouteCopyAction());
         toolMenu.add(new SetTrainIconPositionAction());
         toolMenu.add(new ExportRoutesAction());
+        toolMenu.addSeparator();
+        toolMenu.add(new ShowRoutesServingLocationAction(null));
         toolMenu.addSeparator();
         toolMenu.add(new PrintRoutesAction(false));
         toolMenu.add(new PrintRoutesAction(true));

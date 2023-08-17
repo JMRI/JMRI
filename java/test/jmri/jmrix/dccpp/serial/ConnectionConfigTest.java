@@ -11,20 +11,26 @@ import org.junit.jupiter.api.*;
  **/
 public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase  {
 
-   @BeforeEach
-   @Override
-   public void setUp() {
+    @Override
+    public void testGetInfo() {
+        super.testGetInfo();
+        jmri.util.JUnitAppender.suppressErrorMessageStartsWith("No usable ports returned");
+    }
+
+    @BeforeEach
+    @Override
+    public void setUp() {
         JUnitUtil.setUp();
 
         JUnitUtil.initDefaultUserMessagePreferences();
         cc = new ConnectionConfig(new DCCppAdapter()); // adapter assumed in test
-   }
+    }
 
-   @AfterEach
-   @Override
-   public void tearDown(){
+    @AfterEach
+    @Override
+    public void tearDown(){
         cc = null;
         JUnitUtil.tearDown();
-   }
+    }
 
 }

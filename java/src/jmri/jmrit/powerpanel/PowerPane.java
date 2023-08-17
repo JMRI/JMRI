@@ -7,8 +7,6 @@ import javax.swing.JMenu;
 import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.jmrit.catalog.NamedIcon;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Pane for power control
@@ -30,6 +28,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
 
     // GUI member declarations
     JLabel onOffStatus = new JLabel(Bundle.getMessage("LabelUnknown"));
+    JLabel connLabel = new JLabel(Bundle.getMessage("LabelLayoutPower"));
     JButton onButton = new JButton(Bundle.getMessage("ButtonOn"));
     JButton offButton = new JButton(Bundle.getMessage("ButtonOff"));
     JButton idleButton = new JButton(Bundle.getMessage("ButtonIdle"));
@@ -46,7 +45,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
      */
     @Override
     public List<JMenu> getMenus() {
-        java.util.ArrayList<JMenu> list = new java.util.ArrayList<JMenu>();
+        java.util.ArrayList<JMenu> list = new java.util.ArrayList<>();
         list.add(selectMenu);
         return list;
     }
@@ -82,10 +81,16 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         idleButton.setToolTipText(Bundle.getMessage("ToolTipIdleButton"));
 
         // general GUI config
-        setLayout(new jmri.util.javaworld.GridLayout2(3, 2, 6, 0)); // r, c, hgap , vgap
+        setLayout(new java.awt.GridLayout(3, 2, 3, 5)); // r, c, hgap , vgap
+
+        // Add margin around the panel
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)); // top, left, btm, right
+
+        // set minimum size ( for all 6 cells in the layout ) to prevent twitching
+        onOffStatus.setMinimumSize(new java.awt.Dimension(getLabelMinimumWidth(), onOffStatus.getPreferredSize().height));
 
         // install items in GUI
-        add(new JLabel(Bundle.getMessage("LabelLayoutPower")));
+        add(connLabel);
         add(onButton);
         add(onOffStatus); // on row 2
         add(offButton);
@@ -153,6 +158,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
                 listening.addPropertyChangeListener(this);
             }
             idleButton.setVisible(listening.implementsIdle());
+            connLabel.setText(getConnectionLabelString());
         }
         return true;
     }
@@ -199,6 +205,31 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         }
     }
 
+    /**
+     * Get Minimum width for the current power status JLabel.
+     * @return minimum width
+     */
+    private int getLabelMinimumWidth (){
+        String[] bundleStrings = {"StatusIdle", "StatusOn", "StatusOff", "StatusUnknown"};
+        JLabel tmp = new JLabel(Bundle.getMessage("LabelLayoutPower"));
+        int a=tmp.getWidth();
+        tmp.setIcon(onIcon);
+        for ( String bs : bundleStrings ) {
+            tmp.setText(Bundle.getMessage(bs));
+            a = Math.max(a, tmp.getWidth());
+        }
+        return a+2;
+    }
+
+    private String getConnectionLabelString(){
+        StringBuilder s = new StringBuilder("<html>");
+        if (listening != null && selectMenu.getItemCount()>1 ) {
+            s.append( listening.getUserName()).append("<br>");
+        }
+        s.append(Bundle.getMessage("LabelLayoutPower")).append("</html>");
+        return s.toString();
+    }
+
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent ev) {
         log.debug("PropertyChange received ");
@@ -234,6 +265,6 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PowerPane.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PowerPane.class);
 
 }

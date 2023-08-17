@@ -38,6 +38,16 @@ abstract public class AbstractCanTrafficController
     }
 
     /**
+     * Add a CanListener to start of the notification list.
+     * This is intended only for Consoles to receive the CanFrame 1st,
+     * not after another Listener has sent a response to that Frame.
+     * @param l The CanListener to add.
+     */
+    public synchronized void addCanConsoleListener(CanListener l) {
+        this.addConsoleListener(l);
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

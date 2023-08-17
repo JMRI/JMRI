@@ -19,16 +19,19 @@ abstract public class LnSystemConnectionMemoTestBase<M extends DefaultSystemConn
 
     @BeforeEach
     @OverridingMethodsMustInvokeSuper  // invoke first
+    @Override
     public void setUp() {
        JUnitUtil.setUp();
     }
 
     @AfterEach
     @OverridingMethodsMustInvokeSuper  // invoke last
+    @Override
     public void tearDown() {
         JUnitUtil.removeMatchingThreads("LnPowerManager LnTrackStatusUpdateThread");
         JUnitUtil.removeMatchingThreads("LnSensorUpdateThread");
 
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

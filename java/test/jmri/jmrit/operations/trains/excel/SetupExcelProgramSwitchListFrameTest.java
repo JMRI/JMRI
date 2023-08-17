@@ -82,6 +82,15 @@ public class SetupExcelProgramSwitchListFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        SetupExcelProgramSwitchListFrame f = new SetupExcelProgramSwitchListFrame();
+        f.initComponents();
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
 
     // private final static Logger log = LoggerFactory.getLogger(SetupExcelProgramSwitchListFrameTest.class);
 

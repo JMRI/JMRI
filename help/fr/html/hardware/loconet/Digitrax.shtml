@@ -468,7 +468,6 @@ pour plus d'informations.
       <li><a href="LocoNetworking.shtml">Connection de Multiple Ordinateurs &#224; un r&#233;seau LocoNet&reg;</a>
         <ul>
         <li><a href="LbServer.shtml">Connection de Multiple Ordinateurs &#224; LocoNet&reg; via LBServer</a></li>
-        <li><a href="LocoNetServer.shtml">Connection de Multiple Ordinateurs &#224; LocoNet via LocoNet&reg; Server</a></li>
         </ul>
       </li>
       <li>Une &#233;tude technique ax&#233;e sur <a href="DigitraxPower/index.shtml">les questions d'alimentation</a> dans certains produits Digitrax</li>

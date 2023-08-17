@@ -30,7 +30,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
     }
 
 // The methods to implement the QsiInterface
-    protected Vector<QsiListener> cmdListeners = new Vector<QsiListener>();
+    protected Vector<QsiListener> cmdListeners = new Vector<>();
 
     @Override
     public boolean status() {

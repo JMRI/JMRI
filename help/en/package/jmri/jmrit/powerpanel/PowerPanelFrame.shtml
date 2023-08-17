@@ -4,7 +4,8 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Power Control</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Route Add Edit"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help power control voltage on off">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->
@@ -13,17 +14,30 @@
     <div id="mainContent" class="no-sidebar">
       <h1>Power Control</h1>
 
-      <p>The On/Off buttons on this pane do the same thing the Power On/Off buttons do on your hand
-      held throttle. It turns the DCC Rail A/B voltage On/Off.</p>
+      <p>The <span class="textbutton">On</span> and <span class="textbutton">Off</span> buttons in
+      this window do the same thing the Power On/Off buttons may do on your hand
+      held throttle. They turn the track voltage On and Off.</p>
+
+      <p><img src="images/PowerControlOn_193x171.png" alt=
+      "Power control Panel"></p>
+
+      <p>If there are multiple hardware types, the connection can be chosen via the dropdown menu,
+      and the connection name is displayed in the control.</p>
+      <p>The initial power status of some system types may be unknown.</p>
 
       <p>Where the DCC system supports a concept of an "Idle" state for DCC track power, and JMRI
       has been updated to support that feature, the pane will include an "Idle" button. Exactly
-      what the "Idle" state means is DCC system-dependent. An example is shown in the image
-      below.</p>
+      what the "Idle" state means is DCC system-dependent.</p>
 
-      <p><img src="images/PowerControlWithIdleButton.png" alt=
+      <p><img src="images/PowerControlWithIdleButton_193x171.png" alt=
       "Power control panel showing Idle pushbutton">
       </p>
+
+      <p>The Power Control can be opened from the
+      <a href="../../../../html/apps/PanelPro/ToolsMenu.shtml">JMRI Tools Menu</a>.</p>
+      
+      <p>Some systems can report how much layout power is being used, see the
+      <a href="../swing/meter/MeterFrame.shtml">Voltage / Current Meter</a>.
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>

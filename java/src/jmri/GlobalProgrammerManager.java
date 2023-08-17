@@ -43,7 +43,7 @@ public interface GlobalProgrammerManager extends PropertyChangeProvider {
      *         this Manager.
      */
     @CheckForNull
-    public Programmer getGlobalProgrammer();
+    Programmer getGlobalProgrammer();
 
     /**
      * Gain access to the Global Mode Programmer, in the process reserving it
@@ -52,7 +52,7 @@ public interface GlobalProgrammerManager extends PropertyChangeProvider {
      * @return null if the existing Global Mode programmer is in use
      */
     @CheckForNull
-    public Programmer reserveGlobalProgrammer();
+    Programmer reserveGlobalProgrammer();
 
     /**
      * Return access to the Global Mode Programmer, so that it can be used
@@ -60,7 +60,7 @@ public interface GlobalProgrammerManager extends PropertyChangeProvider {
      *
      * @param p the Programmer to release
      */
-    public void releaseGlobalProgrammer(@Nonnull Programmer p);
+    void releaseGlobalProgrammer(@Nonnull Programmer p);
 
     /**
      * Convenience method to check whether you'll be able to get a Global Mode
@@ -68,7 +68,7 @@ public interface GlobalProgrammerManager extends PropertyChangeProvider {
      *
      * @return false if there's no chance of getting one
      */
-    public boolean isGlobalProgrammerAvailable();
+    boolean isGlobalProgrammerAvailable();
 
     /**
      * Provides the human-readable representation for including
@@ -78,7 +78,7 @@ public interface GlobalProgrammerManager extends PropertyChangeProvider {
      * @return user name of the GlobalProgrammerManager
      */
     @Nonnull
-    public String getUserName();
+    String getUserName();
 
     /**
      * toString() provides the human-readable representation for including
@@ -89,5 +89,5 @@ public interface GlobalProgrammerManager extends PropertyChangeProvider {
      */
     @Nonnull
     @Override
-    public String toString();
+    String toString();
 }

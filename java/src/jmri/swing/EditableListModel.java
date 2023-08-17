@@ -12,7 +12,7 @@ import javax.swing.ListModel;
  */
 public interface EditableListModel<E> extends ListModel<E> {
 
-    public boolean isCellEditable(int index);
+    boolean isCellEditable(int index);
 
-    public void setValueAt(E value, int index);
+    void setValueAt(E value, int index);
 }

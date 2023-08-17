@@ -109,9 +109,7 @@ public class DefaultLogix extends AbstractNamedBean
     }
 
     /**
-     * Add a Conditional to this Logix Returns true if Conditional was
-     * successfully added, returns false if the maximum number of conditionals
-     * has been exceeded.
+     * Add a Conditional to this Logix R
      *
      * @param systemName The Conditional system name
      * @param order       the order this conditional should calculate in if
@@ -119,9 +117,8 @@ public class DefaultLogix extends AbstractNamedBean
      *                   of current group of conditionals
      */
     @Override
-    public boolean addConditional(String systemName, int order) {
+    public void addConditional(String systemName, int order) {
         _conditionalSystemNames.add(systemName);
-        return (true);
     }
 
     /**

@@ -83,6 +83,7 @@ public class CbusEventTablePrintActionTest {
     public void tearDown() {
         Assertions.assertNotNull(memo);
         memo.dispose();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -26,7 +26,7 @@ public interface RouteManager extends ProvidingManager<Route> {
 
     // to free resources when no longer used
     @Override
-    public void dispose();
+    void dispose();
 
     /**
      * Provides existing Route by UserName then SystemName if one exists.
@@ -37,7 +37,7 @@ public interface RouteManager extends ProvidingManager<Route> {
      * @throws IllegalArgumentException if there is trouble creating a new Route
      */
     @Nonnull
-    public Route provideRoute(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
+    Route provideRoute(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
     /**
      * Create a new Route if the route does not exist.
@@ -49,7 +49,7 @@ public interface RouteManager extends ProvidingManager<Route> {
      * @throws IllegalArgumentException if there is trouble creating a new Route
      */
     @Nonnull
-    public Route newRoute(@Nonnull String userName) throws IllegalArgumentException;
+    Route newRoute(@Nonnull String userName) throws IllegalArgumentException;
 
     /**
      * Locate via user name, then system name if needed.
@@ -59,15 +59,15 @@ public interface RouteManager extends ProvidingManager<Route> {
      * @return null if no match found
      */
     @CheckForNull
-    public Route getRoute(@Nonnull String name);
+    Route getRoute(@Nonnull String name);
 
     @CheckForNull
     @Override
-    public Route getByUserName(@Nonnull String s);
+    Route getByUserName(@Nonnull String s);
 
     @CheckForNull
     @Override
-    public Route getBySystemName(@Nonnull String s);
+    Route getBySystemName(@Nonnull String s);
 
     /**
      * Delete Route by removing it from the manager. The Route must first be
