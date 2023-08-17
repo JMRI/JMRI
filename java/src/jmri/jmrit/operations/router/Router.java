@@ -331,9 +331,6 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             addLine(_buildReport, SEVEN,
                     MessageFormat.format(Bundle.getMessage("TrainDoesNotServiceCar"), new Object[]{_train.getName(),
                             car.toString(), clone.getDestinationName(), clone.getDestinationTrackName()}));
-            if (!_train.getServiceStatus().equals(Train.NONE)) {
-                addLine(_buildReport, SEVEN, _train.getServiceStatus());
-            }
             _status = MessageFormat.format(STATUS_NOT_THIS_TRAIN, new Object[]{testTrain.getName()});
             return true; // car can be routed, but not by this train!
         }
