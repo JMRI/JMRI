@@ -1,9 +1,14 @@
 
     <!-- contains new warnings for the release under development -->
     <li>
-        None yet
+        Scripts that output Logging statements with log4jv1.x ( org.apache.log4j ) imports will stop working 
+        from JMRI 4.5.4 and should be updated to use SLF4J logging.
+        <br>See <a href="https://github.com/JMRI/JMRI/pull/12237/files">here</a> for some examples on how to do this.
     </li>
     <li>
+        Custom default.lcf Logging Control Files will cease to take effect from JMRI 4.5.4
+        <br>To create a custom default_lcf.xml in the new Logging Configuration format, see 
+        <a href="https://www.jmri.org/help/en/html/apps/Debug.shtml">JMRI Debugging and Logging</a>
     </li>
     <li>
     </li>
