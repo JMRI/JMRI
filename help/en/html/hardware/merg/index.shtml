@@ -44,6 +44,7 @@
 
         <p>For an overview of CBUS see the separate <a href="../can/cbus/index.shtml">CBUS help
         topic</a>.</p>
+        <p>For JMRI installation issues, see <a href="https://www.jmri.org/install/Debug.shtml">Debugging Your Installation</a>.</p>
       </div>
 
       <h2 id="connecting">Connecting</h2>
@@ -176,14 +177,10 @@
 
         <p>The MERG system allows for advanced consisting to be set using CANCMD and CANCABs.</p>
 
-        <p>Although the CBUS protocol and CANCMD support Advanced Consisting, this has not been
-        implemented within JMRI at present.</p>
-
         <p><a href="../../../html/tools/consisttool/ConsistTool.shtml" title="JMRI Consisting">JMRI
-        Consisting</a> : Advanced Decoder Consisting (Decoder Assisted Consist) is currently
-        unsupported, hence this is set to Internal in the CBUS preferences.</p>
+        Consisting</a> : Advanced Decoder Consisting (Decoder Assisted Consist)</p>
 
-        <p>Primary Address Consists are supported however.</p>
+        <p>Primary Address Consists are also supported.</p>
 
         <h3>Connecting a MERG DCC Command Station (CANCMD , CANCSB etc.)</h3>
 
@@ -253,18 +250,6 @@
 
           <li>
             <a href="https://www.merg.org.uk/forum/">MERG Forum</a> (members only)
-          </li>
-
-          <li>For extra logging while debugging, locate and edit the default.lcf file in the root
-          of the JMRI install, see the pattern at the end of the file.<br>
-          General CBUS logging - log4j.category.jmri.jmrix.can.cbus=DEBUG<br>
-          Connection logging - log4j.category.jmri.jmrix.can.adapters.gridconnect=DEBUG<br>
-          The extra logging will appear in the JMRI console, also the JMRI error logs.</li>
-
-          <li>
-            <a href=
-            "https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+merg">https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+merg</a>
-            Current known (open) issues relating to MERG by the JMRI developers on Github.
           </li>
 
           <li>
