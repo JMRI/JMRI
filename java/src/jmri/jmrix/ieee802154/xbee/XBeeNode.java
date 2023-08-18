@@ -43,7 +43,7 @@ public class XBeeNode extends IEEE802154Node {
     private XBee16BitAddress userAddress = null;
     private XBee64BitAddress globalAddress = null;
 
-    private final static byte DefaultPanID[] = {0x00,0x00};
+    private final static byte[] DefaultPanID = {0x00,0x00};
 
     /**
      * Create a new instance of XBeeNode.
@@ -54,7 +54,7 @@ public class XBeeNode extends IEEE802154Node {
         isPolled = false;
     }
 
-    public XBeeNode(byte pan[], byte user[], byte global[]) {
+    public XBeeNode(byte[] pan, byte[] user, byte[] global) {
         super(pan, user, global);
         identifier = "";
         log.debug("Created new node with panId: {} userId: {} and GUID: {}",
@@ -67,7 +67,7 @@ public class XBeeNode extends IEEE802154Node {
         globalAddress = new XBee64BitAddress(global);
     }
 
-    public XBeeNode(RemoteXBeeDevice rxd) throws TimeoutException, XBeeException {
+    public XBeeNode(RemoteXBeeDevice rxd) throws XBeeException {
         super(DefaultPanID, rxd.get16BitAddress().getValue(), rxd.get64BitAddress().getValue());
         identifier = rxd.getNodeID();
 
@@ -77,7 +77,7 @@ public class XBeeNode extends IEEE802154Node {
           // we dont need the PAN ID for communicaiton,so just continue.
         }
 
-        log.debug("Created new node from RemoteXBeeDevice: {}", rxd.toString() );
+        log.debug("Created new node from RemoteXBeeDevice: {}", rxd );
         pinObjects = new HashMap<>();
         isPolled = false;
         device = rxd;
@@ -418,7 +418,7 @@ public class XBeeNode extends IEEE802154Node {
     }
 
 
-    private byte PRValue[] = null;
+    private byte[] PRValue = null;
     private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
     private final Lock readLock = readWriteLock.readLock();
     private final Lock writeLock = readWriteLock.writeLock();

@@ -78,7 +78,7 @@ public class AssignmentTableModel extends AbstractTableModel {
 
    @Override
    public Object getValueAt(int r, int c) {
-      Integer pin = r;
+      int pin = r;
       try {
          switch (c) {
             case BIT_COLUMN:

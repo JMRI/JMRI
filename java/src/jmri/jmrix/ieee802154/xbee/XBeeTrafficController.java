@@ -1,7 +1,6 @@
 package jmri.jmrix.ieee802154.xbee;
 
 import com.digi.xbee.api.RemoteXBeeDevice;
-import com.digi.xbee.api.XBee;
 import com.digi.xbee.api.XBeeDevice;
 import com.digi.xbee.api.exceptions.TimeoutException;
 import com.digi.xbee.api.exceptions.XBeeException;
@@ -60,7 +59,6 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      * Make connection to an existing PortController object.
      */
     @Override
-    @SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "WA_NOT_IN_LOOP"}, justification="The unconditional wait outside of a loop is used to allow the hardware to react to a reset request.")
     public void connectPort(AbstractPortController p) {
         // Attach XBee to the port
         try {
@@ -68,17 +66,11 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
                XBeeAdapter xbp = (XBeeAdapter) p;
                xbee = new XBeeDevice(xbp);
                xbee.open();
-               xbee.reset();
                xbee.setReceiveTimeout(200);
-               try {
-                  synchronized(this){
-                     wait(2000);
-                  }
-               } catch (java.lang.InterruptedException e) {
-               }
                xbee.addPacketListener(this);
                xbee.addModemStatusListener(this);
                xbee.addDataListener(this);
+               resetLocalXBee();
 
             } else {
                throw new java.lang.IllegalArgumentException("Wrong adapter type specified when connecting to the port.");
@@ -90,18 +82,15 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         }
         // and start threads
         xmtThread = jmri.util.ThreadingUtil.newThread(
-                xmtRunnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            transmitLoop();
-                        } catch (ThreadDeath td) {
-                            if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", td, td);
-                            // ThreadDeath must be thrown per Java API Javadocs
-                            throw td;
-                        } catch (Throwable e) {
-                            if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", e, e);
-                        }
+                xmtRunnable = () -> {
+                    try {
+                        transmitLoop();
+                    } catch (ThreadDeath td) {
+                        if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", td, td);
+                        // ThreadDeath must be thrown per Java API Javadocs
+                        throw td;
+                    } catch (Throwable e) {
+                        if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", e, e);
                     }
                 });
 
@@ -114,6 +103,18 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         xmtThread.setDaemon(true);
         xmtThread.setPriority(Thread.MAX_PRIORITY-1);      //bump up the priority
         xmtThread.start();
+    }
+
+    @SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "WA_NOT_IN_LOOP"}, justification="The unconditional wait outside of a loop is used to allow the hardware to react to a reset request.")
+    private void resetLocalXBee() throws XBeeException {
+        xbee.reset();
+        try {
+           synchronized(this){
+              wait(2000);
+           }
+        } catch (InterruptedException e) {
+            log.debug("timeout interupted after reset request");
+        }
     }
 
     /**
@@ -394,6 +395,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     @Override
     protected void terminate(){
        if(xbee!=null) {
+          terminateThreads();
           xbee.close();
           xbee=null;
        }

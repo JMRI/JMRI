@@ -9,6 +9,8 @@ import com.digi.xbee.api.packet.common.RemoteATCommandPacket;
 import com.digi.xbee.api.packet.common.TransmitPacket;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import java.util.Arrays;
+
 /**
  * This is a wrapper class for a Digi XBeeAPIPacket.
  *
@@ -46,7 +48,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
      * @param l length
      */
     public XBeeMessage(byte[] a, int l) {
-        super(String.valueOf(a), l);
+        super(Arrays.toString(a), l);
     }
 
     /**
@@ -57,7 +59,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
      */
     public XBeeMessage(XBeeAPIPacket request) {
         _nDataChars = request.getPacketData().length;
-        byte data[] = request.getPacketData();
+        byte[] data = request.getPacketData();
         _dataChars = new int[_nDataChars];
         for(int i=0;i<_nDataChars;i++) {
            _dataChars[i] = data[i];
@@ -91,7 +93,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
     public String toString() {
         String s = "";
         if (xbm != null) {
-            byte packet[] = xbm.getPacketData();
+            byte[] packet = xbm.getPacketData();
             for (byte b : packet) {
                 s = jmri.util.StringUtil.appendTwoHexFromInt(b, s);
             }
@@ -148,8 +150,8 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
      */
     @SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
     public static XBeeMessage getRemoteDoutMessage(Object address, int pin, boolean on) {
-        byte onValue[] = {0x5};
-        byte offValue[] = {0x4};
+        byte[] onValue = {0x5};
+        byte[] offValue = {0x4};
         if (address instanceof XBee16BitAddress) {
             return new XBeeMessage(new RemoteATCommandPacket(XBeeAPIPacket.NO_FRAME_ID,XBee64BitAddress.COORDINATOR_ADDRESS,(XBee16BitAddress) address, XBeeTransmitOptions.NONE,"D" + pin, on ? onValue : offValue));
         } else {

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.jmrix.ConnectionStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.*;
@@ -60,6 +61,9 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
 
                 // log events
                 setPortEventLogging(activeSerialPort);
+                ConnectionStatus.instance().setConnectionState(
+                        this.getSystemConnectionMemo().getUserName(),
+                        this.getCurrentPortName(), ConnectionStatus.CONNECTION_UP);
             }
 
             opened = true;
@@ -91,9 +95,6 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
                 }
             } else if (log.isDebugEnabled()) {
                 switch (type) {
-                    case SerialPortEvent.DATA_AVAILABLE:
-                        log.info("SerialEvent: DATA_AVAILABLE is {}", e.getNewValue());
-                        return;
                     case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
                         log.info("SerialEvent: OUTPUT_BUFFER_EMPTY is {}", e.getNewValue());
                         return;
@@ -123,12 +124,14 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
                         return;
                     default:
                         log.info("SerialEvent of unknown type: {} value: {}", type, e.getNewValue());
-                        return;
                 }
             }
         } catch (java.io.IOException ex) {
             // it's best not to throw the exception because the RXTX thread may not be prepared to handle
-            log.error("RXTX error in serialEvent method", ex);
+            log.error("IOException when handling event {} for port {}", e, this.getCurrentPortName(), ex);
+            ConnectionStatus.instance().setConnectionState(
+                    this.getSystemConnectionMemo().getUserName(),
+                    this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
         }
     }
 

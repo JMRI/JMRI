@@ -128,9 +128,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         XBeeConnectionMemo xcm = (XBeeConnectionMemo) adapter.getSystemConnectionMemo();
         XBeeTrafficController xtc = (XBeeTrafficController) xcm.getTrafficController();
         for (Element n : l) {
-            byte GUID[] = jmri.util.StringUtil.bytesFromHexString(findParmValue(n, "GUID"));
+            byte[] GUID = jmri.util.StringUtil.bytesFromHexString(findParmValue(n, "GUID"));
             XBee64BitAddress guid = new XBee64BitAddress(GUID);
-            byte addr[] = jmri.util.StringUtil.bytesFromHexString(findParmValue(n, "address"));
+            byte[] addr = jmri.util.StringUtil.bytesFromHexString(findParmValue(n, "address"));
             XBee16BitAddress address = new XBee16BitAddress(addr);
             String Identifier = findParmValue(n, "name");
             // create the RemoteXBeeDevice for the node.

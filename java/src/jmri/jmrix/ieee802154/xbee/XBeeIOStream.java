@@ -165,7 +165,7 @@ final public class XBeeIOStream extends AbstractPortController {
                 } catch (java.io.IOException e) {
                     log.error("IOException reading serial data from pipe before sending to XBee");
                 }
-                byte dataArray[] = new byte[data.size()];
+                byte[] dataArray = new byte[data.size()];
                 int i = 0;
                 for (Byte n : data) {
                     dataArray[i++] = n;
@@ -212,7 +212,7 @@ final public class XBeeIOStream extends AbstractPortController {
                 try {
                     com.digi.xbee.api.models.XBeeMessage message = xtc.getXBee().readDataFrom(node, 100);
                     if (message != null) {
-                        byte data[] = message.getData();
+                        byte[] data = message.getData();
                         log.debug("Received {}", data);
                         for (byte datum : data) {
                             pipe.write(datum);

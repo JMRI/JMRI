@@ -103,7 +103,7 @@ public class XBeeAddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Add
         // if the 64 bit address field is blank, use the "Unknown" address".
         XBee64BitAddress guid;
         if(!(nodeAddr64Field.getText().equals(""))) {
-           byte GUID[] = jmri.util.StringUtil.bytesFromHexString(nodeAddr64Field.getText());
+           byte[] GUID = jmri.util.StringUtil.bytesFromHexString(nodeAddr64Field.getText());
            guid = new XBee64BitAddress(GUID);
         } else {
            guid = XBee64BitAddress.UNKNOWN_ADDRESS;
@@ -111,7 +111,7 @@ public class XBeeAddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Add
         // if the 16 bit address field is blank, use the "Unknown" address".
         XBee16BitAddress address;
         if(!(nodeAddrField.getText().equals(""))){
-           byte addr[] = jmri.util.StringUtil.bytesFromHexString(nodeAddrField.getText());
+           byte[] addr = jmri.util.StringUtil.bytesFromHexString(nodeAddrField.getText());
            address = new XBee16BitAddress(addr);
         } else {
            address = XBee16BitAddress.UNKNOWN_ADDRESS;

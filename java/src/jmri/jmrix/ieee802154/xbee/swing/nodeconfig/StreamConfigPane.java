@@ -250,7 +250,7 @@ public class StreamConfigPane extends JmrixConfigPane {
                 } catch (ClassCastException cce) {
                     // the list may include non-StreamConnectinoConfig
                     // objects, so just ignore those.
-                    continue;
+                    log.trace("ignoring {} as invalid connection type", classConnectionNameList1);
                 } catch (NullPointerException | ClassNotFoundException | InstantiationException |
                             IllegalAccessException | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
                     log.warn("Attempt to load {} failed", classConnectionNameList1, e);

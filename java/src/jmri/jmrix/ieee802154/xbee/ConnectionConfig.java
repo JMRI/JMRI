@@ -47,6 +47,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return Bundle.getMessage("XBeeNetworkTitle");
     }
 
+    @SuppressWarnings("SameReturnValue")
     public boolean isOptList1Advanced() {
         return false;
     }
