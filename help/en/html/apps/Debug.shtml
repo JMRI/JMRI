@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Debugging</title>
+  <meta name="keywords" content="JMRI panelpro decoderpro help debug debugging log logging">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Debugging and System Logging</h1>
+      
+      <ul class="snav">
+      <li><a href="#where">Where JMRI Logs to</a></li>
+      <li><a href="#tools">Debugging Tools</a></li>
+      <li><a href="#levels">Logger Levels and Names</a></li>
+      <li><a href="#logging_configuration">Logging Configuration</a></li>
+      <li><a href="#xml">Debugging XML Files</a></li>
+      </ul>
+      
+      <p>For installation issues, see <a href="https://www.jmri.org/install/Debug.shtml">Debugging an installation</a></p>
+
+        <h3 id="where">Where JMRI Logs to</h3>
+
+          <p>The System Console can be viewed via Help &rArr; System Console<br>
+          This displays the log from the current JMRI session.
+          </p>
+
+          <p>The &quot;session.log&quot; file contains the log for the current session.
+          <br>This log file is reset just before each JMRI session startup.
+          <br>This file can be viewed live with the tail command.
+          </p>
+
+          <p>Rolling Log Files contain logging for the current and previous sessions.
+          <br>These start from &quot;messages.log&quot; and have a maximum file size of 1000KB .
+          <br>Logs are rolled over, up to 3 files deep.
+          </p>
+
+          <p>The session and rolling log files are stored in the &quot;log&quot; directory within the User Settings Directory.
+          <br>Help &rArr; File Locations &rArr; <span class="textbutton">Open Log Files Location</span>
+          </p>
+        
+          <p>These defaults can be changed by editing your <a href="#logging_configuration">Logging Configuration</a>.</p>
+
+        <h3 id="tools">Debugging Tools</h3>
+          
+          <p><a href="../../package/apps/SystemConsole.shtml">JMRI System Console</a>
+          <br>Displays current session log.
+          <br>Help &rArr; System Console
+          </p>
+          
+          <p><a href="../../package/apps/jmrit/log/Log4JTreePane.shtml">View / Edit Log Categories</a>
+          <br>View current logging levels for each Logger category name.
+          <br>Debug &rArr; Display / Edit Logging Categories
+          </p>
+          
+          <p>Log Message...
+          <br>Manually add a LogEvent to the logging.
+          <br>Debug &rArr; Log Message...
+          </p>
+          
+          <p>There are various tools for checking files in the <a href="PanelPro/DebugMenu.shtml">Debug Menu</a>.
+          
+        <h3 id="levels">Logger Levels and Names</h3>
+        
+          <p>A Logger Category is essentially the name given to an Event Logger.
+          <br>The Logger Category name is normally defined by the JMRI Java Class associated with it.
+          <br>Typical Logger Category names would be <code>jmri.jmrit</code> or <code>jmri.jmrit.operations</code>
+          <br>Loggers inherit, so for example <code>apps.jmrit.log.Log4JTreePane</code> , the Level would be inherited from one of these Logger categories :</p>
+
+        <ul>
+        <li>apps.jmrit.log.Log4JTreePane</li>
+        <li>apps.jmrit.log</li>
+        <li>apps.jmrit</li>
+        <li>apps</li>
+        <li>Root Logging Level</li>
+        </ul>
+        
+          <p>Setting the Logging Level will also invoke the higher levels.
+          <br>e.g. setting a Category to WARN will also display ERROR messages but not INFO or below.
+          
+          <br>The Logging levels are :</p>
+          <ul>
+          <li>ALL ( TRACE + DEBUG + INFO + WARN + ERROR )</li>
+          <li>TRACE ( + DEBUG + INFO + WARN + ERROR )</li>
+          <li>DEBUG ( + INFO + WARN + ERROR ) </li>
+          <li>INFO ( + WARN + ERROR )</li>
+          <li>WARN ( + ERROR )</li>
+          <li>ERROR</li>
+          <li>OFF</li>
+          </ul>
+          </p>
+          <p>The FATAL level ( not in the SLF4J interface hence not used by JMRI ) between ERROR and OFF is omitted for clarity</p>
+          
+        <h3 id="logging_configuration">Logging Configuration</h3>
+          
+          <p>It is possible to edit the current state of Logger Categories and their
+          Logging Levels via the View / Edit Logging Categories Tool ( Debug Menu ).
+          <br>Changes are maintained for the duration of the JMRI session.
+          </p>
+          
+          <p>To make persistent changes to the Logging Configuration effective from JMRI startup,
+          changes will need to be made within the &quot;<a
+           href="https://github.com/JMRI/JMRI/blob/master/default_lcf.xml">default_lcf.xml</a>&quot; file.
+          </p>
+
+          <p>A &quot;default_lcf.xml&quot; file in the User Settings directory will take
+          precedence over the default_lcf.xml file in the main program directory.
+          <br>
+          The main program directory version will be reset each time JMRI is updated,
+          whereas the user preference version will not be updated.
+          </p>
+
+          <p>The &quot;default_lcf.xml&quot; file contains lots of comments on what the various terms mean.
+          <br>Content within the <code>&lt;&#45;&#45; &#45;&#45;&gt;</code> symbols is processed as a comment,
+          not part of the configuration.</p>
+          
+          <p>Of most relevance is the section towards the bottom of the file containing the Logger elements.
+          <br>eg. to enable logging at DEBUG level for the whole of JMRI core, remove the comment arrows.</p>
+          
+          <p class="important"><code><strong>&lt;Logger name=&quot;jmri&quot; level=&quot;DEBUG&quot;&sol;&gt;</strong></code></p>
+          
+          
+          <p>The Logger name is the Logging Category ( in this case &quot;jmri&quot; ) which will set jmri
+          and all classes inheriting from it ( a lot of classes ) to log code comments which are set at DEBUG Level or higher.</p>
+          
+          <p>If the file is saved and JMRI restarted, there will be a LOT of extra events in the logs.</p>
+
+          <p>The TRACE and DEBUG levels will output a lot of information, and will slow down
+          operation significantly.
+          
+          <p>It is possible to request more information on just parts of JMRI.</p>
+          
+          <p>For example, Layout Editor begugging could be enabled by adding 
+          
+          <br><code><strong>&lt;Logger name=&quot;jmri.jmrit.display.layoutEditor&quot; level=&quot;DEBUG&quot;&sol;&gt;</strong></code>
+
+          <p>Remember to save the default_lcf.xml file in your user Settings Files for the configuration to be retained
+          following JMRI being updated.</p>
+          
+          <p class="important">Prior to JMRI 5.5.4 , logging configuration was controlled by a &quot;default.lcf&quot;
+          file within the JMRI program install directory, or overridden by a file of the same name in the user settings directory.
+          <br>Open that file with a standard text editor for details on how to change the logging category levels.</p>
+          
+          <p>For the full configuration specification and to change other logging settings ( rolling log file sizes etc. ), see 
+          <a href="https://logging.apache.org/log4j/2.x/manual/configuration.html#XML">Log4J2 xml Configuration</a>.</p>
+          
+          <p>For more technical details on JMRI Logging, see <a href="https://www.jmri.org/help/en/html/doc/Technical/Logging.shtml">JMRI Code: How to Use the Logging Facilities</a>.</p>
+          
+
+
+        <h3 id="xml">Debugging problems with XML files</h3>
+
+       
+          <p>When an XML file can't be parsed, you'll get some hard-to-understand error messages.
+          The most important part of this is the line number. Use that to start looking for the
+          problem.</p>
+
+          <p>You might be able to get better debugging information by trying to open the file with
+          Internet Explorer. The debugging information it provides is generally more detailed than
+          that provided by the XML routines in the JDOM libraries used by JMRI and DecoderPro.</p>
+
+          <p>Note that Explorer needs to see both the .xml file, plus the definition information in
+          the .xsd Schema file. If you get a message like "error in system resource", you need to put a
+          copy of the associated .xsd file (e.g. decoder-config.xsd; see the top few lines of your file)
+          in the directory with your new
+          file. Schema .xsd's can be found in the Schema subdirectory of the xml directory.</p>
+
+          <p>Also see the checking tools within the Debug Menu.</p>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>
