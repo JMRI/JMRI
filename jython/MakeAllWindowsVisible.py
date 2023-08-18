@@ -40,11 +40,8 @@ import javax.swing.JButton
 
 from org.slf4j import LoggerFactory     ##  For the log output
 ##
-##  In order to see the debug output in the session.log file and/or the JMRI System Console window
-##  Do the following steps:
-##      1)  if not already done, make a copy of the file named "default.lcf" in the program: folder and save it in the settings: folder
-##      2)  edit your copy to insert the line "log4j.category.jmri.jmrit.jython.exec=DEBUG" (without the quotes) near the bottom of
-##
+## NOTE: to enable logging, see https://www.jmri.org/help/en/html/apps/Debug.shtml
+## Add the Logger Category name "jmri.jmrit.jython.exec" at DEBUG Level.
 
 
 
