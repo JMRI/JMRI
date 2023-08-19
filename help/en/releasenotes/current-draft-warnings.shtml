@@ -2,7 +2,7 @@
     <!-- contains new warnings for the release under development -->
     <li>
         Scripts that output Logging statements with log4jv1.x ( org.apache.log4j ) imports will stop working 
-        from JMRI 4.5.4 and should be updated to use SLF4J logging.
+        from JMRI 5.5.4 and should be updated to use SLF4J logging.
         <br>See <a href="https://github.com/JMRI/JMRI/pull/12237/files">here</a> for some examples on how to do this.
     </li>
     <li>
