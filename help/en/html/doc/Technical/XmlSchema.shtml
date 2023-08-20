@@ -184,15 +184,12 @@ xmllint -noout -schema http://www.w3.org/2001/XMLSchema.xsd myChangedFile.xsd
 
       <p>For a quick file check, Linux and Mac OS X users can validate from the command line with
       e.g.</p>
-      <div class="wide">
-      <pre>
-<code>
+<code class="block">
  cd xml
  xmllint -schema schema/aspecttable.xsd -noout signals/sample-aspects.xml
 </code>
-      </pre></div>
-      <code>xmllint</code> can't check schema files themselves, unfortunately, because their schema
-      isn't something it can handle.
+      <code>xmllint</code> can check schema files themselves if you specify
+      <code>-schema http://www.w3.org/2001/XMLSchema.xsd</code> in the command.
       <p>Your schema docs should point to our standard stylesheet in their head matter:</p>
 
       <pre>
@@ -286,10 +283,16 @@ we can certainly switch to it.
 
       <p>By convention, provide &lt;xsd:annotation&gt;&lt;xsd:appinfo&gt; element containing the
       class name that reads/writes the element:</p>
-      <code class="block">&lt;xs:annotation&gt; &lt;xs:documentation&gt; Some human readable docs
-      go here &lt;/xs:documentation&gt; &lt;xs:appinfo&gt; &lt;jmri:usingclass
-      configurexml="false"&gt;jmri.managers.DefaultSignalSystemManager&lt;/jmri:usingclass&gt;
-      &lt;/xs:appinfo&gt; &lt;/xs:annotation&gt;</code>
+<code class="block">
+&lt;xs:annotation&gt; 
+    &lt;xs:documentation&gt; 
+        Some human readable docs go here 
+    &lt;/xs:documentation&gt; 
+    &lt;xs:appinfo&gt; 
+        &lt;jmri:usingclass configurexml="false"&gt;jmri.managers.DefaultSignalSystemManager&lt;/jmri:usingclass&gt;
+    &lt;/xs:appinfo&gt;
+&lt;/xs:annotation&gt;
+</code>
       <h3>The Venetian Blinds Pattern</h3>
       We are moving toward structuring our XML using the "<a href=
       "https://www.xfront.com/GlobalVersusLocal.html#ThirdDesignCharacteristics">Venetian Blinds
@@ -370,7 +373,45 @@ we can certainly switch to it.
       </dl>
       For others, browse the <a href="http://jmri.org/xml/schema/types/general.xsd">general types
       schema</a>.
-      <h2>External Standards and Future Work</h2>
+      
+      
+    <h2>Copyright, Author and Revision Information</h2>
+      <p>For various reasons, we are moving to DocBook format for Copyright, Author and Revision
+      information in our XML files (instance files).</p>
+      <p>Sample XML:</p>
+      <code class="block">
+&lt;copyright&gt;
+    &lt;year&gt;2009&lt;/year&gt;
+    &lt;year&gt;2010&lt;/year&gt;
+    &lt;holder&gt;JMRI&lt;/holder&gt;
+&lt;/copyright&gt;
+&lt;authorgroup&gt;
+    &lt;author&gt;
+        &lt;personname&gt;
+            &lt;firstname&gt;Sample&lt;/firstname&gt;
+            &lt;surname&gt;Name&lt;/surname&gt;
+        &lt;/personname&gt;
+        &lt;email&gt;name@com.domain&lt;/email&gt; 
+    &lt;/author&gt;
+&lt;/authorgroup&gt;
+&lt;revhistory&gt;
+    &lt;revision&gt;
+        &lt;revnumber&gt;1&lt;/revnumber&gt;
+        &lt;date&gt;2009-12-28&lt;/date&gt;
+        &lt;dauthorinitials&gt;initials&lt;/authorinitials&gt;
+    &lt;/revision&gt;
+&lt;/revhistory&gt;
+</code>
+    
+    <p>For an example, see the 
+    <a href="/xml/decoders/0NMRA.xml">NMRA standard decoder definition</a>
+    in xml/decoders/0NMRA.xml.</p>
+    
+    <p>The exact schema definition for this in 
+    <a href="/xml/schema/docbook">schema/docbook</a></p>
+      
+      
+<h2>External Standards and Future Work</h2>
       The <a href="https://www.oasis-open.org/">OASIS collaboration</a> defines a number of schema
       and schema elements that have become well-known standards. Were possible, we should use those
       <a href="https://www.oasis-open.org/specs/index.php">standard elements</a> to improve
@@ -436,33 +477,6 @@ we can certainly switch to it.
 
       <p>Learning to use these will require some work, as we can't assume that computers using JMRI
       have internet access, so can't just reference the entire schema as remote entities.</p>
-
-      <h2>Copyright, Author and Revision Information</h2>
-      <p>For various reasons, we need to move to DocBook format for Copyright, Author and Revision
-      information in our XML files (instance files).</p>
-      <p>Sample XML:</p>
-      <code class="block">&lt;db:copyright&gt; &lt;db:year&gt;2009&lt;/db:year&gt;
-      &lt;db:year&gt;2010&lt;/db:year&gt;&lt;
-      db:holder&gt;JMRI&lt;/db:holder&gt;&lt;/db:copyright&gt; &lt;db:authorgroup&gt;
-      &lt;db:author&gt;
-      &lt;db:personname&gt;&lt;db:firstname&gt;Sample&lt;/db:firstname&gt;&lt;db:surname&gt;Name&lt;/db:surname&gt;&lt;/db:personname&gt;
-      &lt;db:email&gt;name@com.domain&lt;/db:email&gt; &lt;/db:author&gt; &lt;/db:authorgroup&gt;
-      &lt;db:revhistory&gt; &lt;db:revision&gt; &lt;db:revnumber&gt;1&lt;/db:revnumber&gt;
-      &lt;db:date&gt;2009-12-28&lt;/db:date&gt;
-      &lt;db:authorinitials&gt;initials&lt;/db:authorinitials&gt; &lt;/db:revision&gt;
-      &lt;/db:revhistory&gt;</code>
-      <p>Sample schema description: (But see the real one, which is provided in schema/docbook)</p>
-      <code class="block">&lt;xs:element ref="docbook:copyright" minOccurs="1" maxOccurs="1" &gt;
-      &lt;xs:annotation&gt;&lt;xs:documentation&gt; DocBook element(s) providing copyright
-      information in standard form. Must be present.
-      &lt;/xs:documentation&gt;&lt;/xs:annotation&gt; &lt;/xs:element&gt; &lt;xs:element
-      ref="docbook:authorgroup" minOccurs="1" maxOccurs="unbounded" &gt;
-      &lt;xs:annotation&gt;&lt;xs:documentation&gt; DocBook element(s) describing the authors in
-      standard form &lt;/xs:documentation&gt;&lt;/xs:annotation&gt; &lt;/xs:element&gt;
-      &lt;xs:element ref="docbook:revhistory" minOccurs="1" maxOccurs="unbounded" &gt;
-      &lt;xs:annotation&gt;&lt;xs:documentation&gt; DocBook element(s) describing the revision
-      history in standard form &lt;/xs:documentation&gt;&lt;/xs:annotation&gt;
-      &lt;/xs:element&gt;</code>
 
       <!--#include virtual="/Footer.shtml" -->
     </div> <!-- closes #mainContent-->
