@@ -74,6 +74,11 @@
         <li>Add the new elements and attributes to the most recent version of the schema
         file(s).</li>
 
+        <li>Check your updated schema files are valid with e.g.
+<code class="block">
+xmllint -noout -schema http://www.w3.org/2001/XMLSchema.xsd myChangedFile.xsd
+</code>
+
         <li>Run "ant headlesstest" to make sure that the older files already present in the tests
         can still be processed. Fix anything that breaks. (You may discover at this point that you
         didn't actually make a backward compatible change, in which case either improve that or see
