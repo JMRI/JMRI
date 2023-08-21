@@ -613,16 +613,19 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         log.debug("Disposing {}", getTitle());
         URIDrop.remove(backgroundPanel);
         addressPanel.removeAddressListener(this);
+        // should the throttle list table stop listening to that throttle?
+        if ( allThrottlesTableModel.getNumberOfEntriesFor(addressPanel.getCurrentAddress()) == 1 ) {
+            throttleManager.removeListener(addressPanel.getCurrentAddress(), allThrottlesTableModel);
+            allThrottlesTableModel.fireTableDataChanged();
+        }
+        // remove from the throttle list table
         InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel().removeThrottleFrame(this, addressPanel.getCurrentAddress());
         // check for any special disposing in InternalFrames
         controlPanel.destroy();
         functionPanel.destroy();
         speedPanel.destroy();
         backgroundPanel.destroy();
-        // remove from the throttle list table
-        throttleManager.removeListener(addressPanel.getCurrentAddress(), allThrottlesTableModel);
-        allThrottlesTableModel.fireTableDataChanged();
-        // dispose of this last because it will release and destroy throttle.
+        // dispose of this last because it will release and destroy the throttle.
         addressPanel.destroy();
     }
 
@@ -993,8 +996,10 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         setLastUsedSaveFile(null);
         setFrameTitle();
         throttleWindow.updateGUI();
-        throttleManager.removeListener(la, allThrottlesTableModel);
-        allThrottlesTableModel.fireTableDataChanged();
+        if ( allThrottlesTableModel.getNumberOfEntriesFor((DccLocoAddress) la) == 1 ) {
+            throttleManager.removeListener(la, allThrottlesTableModel);
+            allThrottlesTableModel.fireTableDataChanged();
+        }
     }
 
     @Override
