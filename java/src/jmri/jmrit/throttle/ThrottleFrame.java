@@ -619,6 +619,9 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         functionPanel.destroy();
         speedPanel.destroy();
         backgroundPanel.destroy();
+        // remove from the throttle list table
+        throttleManager.removeListener(addressPanel.getCurrentAddress(), allThrottlesTableModel);
+        allThrottlesTableModel.fireTableDataChanged();
         // dispose of this last because it will release and destroy throttle.
         addressPanel.destroy();
     }
