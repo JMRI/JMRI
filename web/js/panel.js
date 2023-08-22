@@ -1581,6 +1581,9 @@ function $drawIcon($widget) {
             ovlCSS = {position:'absolute', left: $widget.x + 'px', top: $widget.y + 'px', zIndex: $widget.level*1 + 1, pointerEvents: 'none'};
             $.extend(ovlCSS, $widget.styles); // append the styles from the widget
             delete ovlCSS['background-color'];  // clear the background color
+            if (isDefined($widget.fixedHeight)) {
+            	$.extend(ovlCSS, {lineHeight: $widget.fixedHeight + 'px'}); // add lineheight for vertical centering (if set)
+            }
             $("#panel-area>#" + $widget.id + "-overlay").css(ovlCSS);
         }
     } else {
