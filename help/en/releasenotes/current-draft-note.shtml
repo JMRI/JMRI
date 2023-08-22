@@ -121,7 +121,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>The presentation of the "Send Frame" tool was improved.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -565,7 +565,7 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li></li>
+            <li>panel.js - add data-panel-name attribute to support panel-specific css</li>
         </ul>
 
     <h3>Where Used</h3>
@@ -603,5 +603,6 @@
             <li>The way data is entered in memory icons, block icons
                 and global variable icons have been improved.</li>
             <li>You can now set the preferences to open the RailCom table at startup.</li>
+            <li>The analog fast clock now shows when the fast clock has been stopped.</li>
         </ul>
 

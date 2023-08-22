@@ -191,6 +191,7 @@ public class TurnoutOperationFrameTest {
         if ( memo != null ) {
             memo.dispose();
         }
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

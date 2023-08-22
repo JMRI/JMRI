@@ -456,6 +456,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                     JOptionPane.showMessageDialog(this,
                             MessageFormat.format(Bundle.getMessage("rsCanNotFinalMsg"), car.toString(), status),
                             Bundle.getMessage("rsCanNotFinal"), JOptionPane.WARNING_MESSAGE);
+                    return false;
                 } else {
                     // check to see if car can be routed to final destination
                     Router router = InstanceManager.getDefault(Router.class);
@@ -467,6 +468,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                                         finalDestinationBox.getSelectedItem(),
                                         finalDestTrack == null ? "" : finalDestTrack.getName()),
                                 Bundle.getMessage("rsCanNotFinal"), JOptionPane.WARNING_MESSAGE);
+                        return false;
                     }
                 }
             }

@@ -43,7 +43,7 @@ public class JUnitAppenderTest {
         // second not match
         Assert.assertNull(JUnitAppender.checkForMessage(msg));
     }
-    
+
     @Test
     public void testCheckForMessageWarn() {
         String msg = "Message for testing to find";
@@ -53,7 +53,7 @@ public class JUnitAppenderTest {
         Assert.assertNotNull(JUnitAppender.checkForMessage(msg));
         Assert.assertNull(JUnitAppender.checkForMessage(msg));
     }
-    
+
     @Test
     public void testCheckForMessageInfo() {
         String msg = "Message for testing to find";
@@ -78,7 +78,7 @@ public class JUnitAppenderTest {
         Assert.assertNotNull(JUnitAppender.checkForMessageStartingWith(msg));
         Assert.assertNull(JUnitAppender.checkForMessageStartingWith(msg));
     }
-    
+
     @Test
     public void testCheckForMessageStartWarn() {
         String msg = "Message for testing to find";
@@ -91,7 +91,7 @@ public class JUnitAppenderTest {
         Assert.assertNotNull(JUnitAppender.checkForMessageStartingWith(msg));
         Assert.assertNull(JUnitAppender.checkForMessageStartingWith(msg));
     }
-    
+
     @Test
     public void testCheckForMessageStartInfo() {
         String msg = "Message for testing to find";
@@ -211,14 +211,14 @@ public class JUnitAppenderTest {
     public void testClearBacklogDefaultNone() {
         Assert.assertEquals(0,JUnitAppender.clearBacklog());
     }
-        
+
     @Test
     public void testClearBacklogDefaultWarn() {
         log.warn("warn message");
         Assert.assertEquals(1,JUnitAppender.clearBacklog());
         Assert.assertEquals(0,JUnitAppender.clearBacklog());
     }
-        
+
     @Test
     public void testClearBacklogDefaultError() {
         log.error("error message");
@@ -240,7 +240,7 @@ public class JUnitAppenderTest {
         Assert.assertEquals(1,JUnitAppender.clearBacklog());
         Assert.assertEquals(0,JUnitAppender.clearBacklog());
     }
-    
+
     @Test
     public void testClearBacklogAtInfoWithInfo() {
         Assume.assumeTrue(log.isInfoEnabled());
@@ -308,4 +308,5 @@ public class JUnitAppenderTest {
     }
 
     private final static Logger log = LoggerFactory.getLogger(JUnitAppenderTest.class);
+
 }
