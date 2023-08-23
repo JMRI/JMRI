@@ -316,7 +316,10 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * {@inheritDoc}
      */
     @Override
-    public void addPropertyChangeListener(PropertyChangeListener l) {        
+    public void addPropertyChangeListener(PropertyChangeListener l) {
+        if (l == null) {
+            return;
+        }        
         log.debug("addPropertyChangeListener(): Adding property change {} to {}", l.getClass().getSimpleName(), getLocoAddress());
         if ( Arrays.asList(getPropertyChangeListeners()).contains(l) ){
             log.warn("Preventing {} adding duplicate PCL to {}",  l.getClass().getSimpleName(), this.getClass().getName());
@@ -331,6 +334,9 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      */
     @Override
     public void removePropertyChangeListener(PropertyChangeListener l) {
+        if (l == null) {
+            return;
+        }
         log.debug("removePropertyChangeListener(): Removing property change {} from {}", l.getClass().getSimpleName(), getLocoAddress());
         super.removePropertyChangeListener(l);
         log.debug("removePropertyChangeListener(): listeners size is {}", getPropertyChangeListeners().length);
