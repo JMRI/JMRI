@@ -380,6 +380,7 @@ public class LoadAndStoreAllSignalSystemsTest {
     @BeforeEach
     public void setUp(@TempDir File tempDir) throws IOException  {
         JUnitUtil.setUp();
+        // tempDir = new File("temp/temp/SignalSystemEditor");
         JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
