@@ -284,7 +284,7 @@ class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
                 if self.logLevel > 0: print "train_to_move", train_to_move
                 if train_to_move != None:
                     if self.logLevel > 0: print "************************************moving train******************",train_to_move
-                    move_train = MoveTrain(station_from, station_to, train_to_move, self.graph);print("a")
+                    move_train = MoveTrain(station_from, station_to, train_to_move, self.graph)
                     move_train.move_between_stations(station_from, station_to, train_to_move)
                     move_train = None
                 else:
@@ -467,7 +467,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                             train_to_move = start_block.getValue()
 
 
-                        move_train = MoveTrain(station_from, station_to, train_to_move, self.graph); print("C")
+                        move_train = MoveTrain(station_from, station_to, train_to_move, self.graph)
                         #move_train.move_between_stations(station_from, station_to, train_to_move, self.graph)
                         move_train = None
                         if self.logLevel > 0: print "finished move between stations station_from = ", station_from, " station_to = ", station_to

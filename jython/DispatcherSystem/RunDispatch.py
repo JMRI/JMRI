@@ -134,7 +134,6 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
     def ListOptions(self, list_items, title, options, selected_item = "no item"):
         list = JList(list_items)
         if selected_item != "no item":
-            print "selected_item", selected_item
             list.setSelectedValue(selected_item, True)
         else:
             list.setSelectedIndex(0)
@@ -240,7 +239,6 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
                                          None,
                                          options,
                                          options[0])
-        print "s= ",s, options[s]
         if s == JOptionPane.CLOSED_OPTION:
             self.CLOSED_OPTION = True
             return
@@ -324,7 +322,6 @@ class modifiableJComboBox:
         jcb.setEditable(True)
         JOptionPane.showMessageDialog( None, jcb, msg, JOptionPane.QUESTION_MESSAGE)
         self.ans = str(jcb.getSelectedItem())
-        print "self.ans", self.ans
 
     def return_val(self):
         return self.ans
@@ -748,7 +745,6 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         if set_route_sensor.getKnownState() == ACTIVE:
             if self.logLevel > 0: print ("set_route")
             test = self.set_route(sensor_changed, button_sensor_name, button_station_name)
-            print "returned"
             if self.logLevel > 0: print "test = " , test
             sensor_changed.setKnownState(INACTIVE)
             self.button_sensors_to_watch = copy.copy(self.button_sensors)
@@ -822,42 +818,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         location = LocationManager.newLocation(button_station_name)
         #print "addLocation1", location
         route.addLocation(location)
-        # msg = "Start of Route Selectiom"
-        # msg = msg + "\nselected station " + button_station_name + "."
-        # title = "Continue selecting stations"
-        #
-        # opt1 = "Select another station"
-        # opt2 = "Cancel Route"
-        # opt3 = "Set action to run before route starts"
-        #
-        # s = self.od.customQuestionMessage3str(msg,title,opt1,opt2,opt3)
-        #
-        #
-        # if self.od.CLOSED_OPTION == True:
-        #     return False
-        # if s == JOptionPane.NO_OPTION:
-        #     return False
-        # if s == opt2:
-        #     return
-        # if s == opt3:
-        #     action_list = self.add_actions(route,LocationManager, button_station_name, no_stations_chosen)
-            # if what_to_do == 'continue':
-            #     pass
-            # elif what_to_do == 'complete':
-            #     complete = True
-            # elif what_to_do == 'cancel':
-            #     sensor_changed.setKnownState(INACTIVE)
-            #     RouteManager.deregister(route)
-            #     return
-            # else:
-            #     print "ERROR in set_route"
-        # if self.logLevel > 0: print "button_station_name", button_station_name
-        # if self.logLevel > 0: print "button_sensor_name", button_sensor_name
-        # #set name of route
-        # if self.logLevel > 0: print ("in dispatch train")
-        # msg = "Name of Route"
-        # route_name = JOptionPane.showInputDialog(None,msg)
-        #create route
+
 
         first_station = button_station_name
         prev_station = first_station
@@ -871,16 +832,9 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         i = 0
         while complete == False:
             i +=1
-            print "in loop"
-
             #select station start
             no_stations_chosen = i+1
             if self.logLevel > 0: print ("In loop")
-
-            # button_station_name = self.wait_for_button()
-            # last_station = button_station_name
-            # location = LocationManager.newLocation(button_station_name)
-            # route.addLocation(location)
             opt1 = "Select another station"
             opt2 = "Complete Route"
             opt3 = "Set action to run in this station"
@@ -897,7 +851,6 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                       msg += " and actions " + ", ".join(selected_actions) + "\n"
                 msg += "Have you more stations on route?"
                 title = "Continue selecting stations"
-                print "prev_station, last_station", prev_station, last_station
                 transit_name = self.get_transit_name(prev_station, last_station)
                 if self.forward_stopping_sensor_exists(transit_name):
                     s = self.od.customQuestionMessage4str(msg,title, opt1, opt2, opt3, opt4)
@@ -905,66 +858,33 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                     s = self.od.customQuestionMessage3str(msg,title, opt1, opt2, opt3)
 
             if self.od.CLOSED_OPTION == True:
-                print "closed option"
                 sensor_changed.setKnownState(INACTIVE)
                 RouteManager.deregister(route)
                 return
             elif s == opt1:
-                print "opt1"
                 selected_actions = []
                 self.get_buttons()
                 # self.button_sensors_to_watch = copy.copy(self.button_sensors)
                 # self.button_sensors_to_watch.remove(sensor_changed)
-                print("gothere4")
                 prev_sensor_changed = sensor_changed
                 prev_station = last_station
-                print "last_station before", last_station
-                print "prev_station", prev_station
                 [last_station, sensor_changed] = self.wait_for_button(prev_sensor_changed)
-                print "last_station after", last_station
                 button_station_name = last_station
                 location = LocationManager.newLocation(button_station_name)
-                # if stop_mode != None:
-                #     print "setting location comment", stop_mode
-                #     self.save_stop_mode(stop_mode, location)
-                #     location.setComment(stop_mode)
                 routeLocation = route.addLocation(location)
                 routeLocation.setComment("qwerty")
-                # route.register(RouteLocation(location))
-                print "the comment is: ", routeLocation.getComment()
                 loc = route.getLastLocationByName(button_station_name)
-                print "comment retrieved: ", loc.getName(), loc.getComment()
                 stop_mode = None
             elif s == opt2:
-                print "opt2"
                 complete = True
-            print "got here1"
             if s == opt3:
-                print "in opt3"
                 selected_actions = self.add_actions(route,LocationManager, button_station_name, no_stations_chosen, selected_actions)
-                # if what_to_do == 'continue':
-                #     pass
-                # elif what_to_do == 'complete':
-                #     complete = True
-                # elif what_to_do == 'cancel':
-                #     sensor_changed.setKnownState(INACTIVE)
-                #     RouteManager.deregister(route)
-                #     return
-                # else:
-                #     print "ERROR in set_route"
             elif s == opt4:
-                print "in opt4"
                 stop_mode = self.get_stop_mode()
                 routeLocation = route.getLastLocationByName(button_station_name)
-                print "got route location ", routeLocation.getName(), "comment ", routeLocation.getComment()
                 if stop_mode != None:
-                    print "settingrouteLocation comment", stop_mode
                     self.save_stop_mode(stop_mode, routeLocation)
-                    print "new comment", routeLocation.getComment()
-
                 complete = False
-                print "finished opt4"
-            print "got here2", complete
             Firstloop = False
 
 
@@ -997,7 +917,6 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         StateVertex_start = station_from_name
         StateVertex_end = station_to_name
         paths = DijkstraShortestPath.findPathBetween(g.g_express, StateVertex_start, StateVertex_end)
-        print "paths size", paths, paths.size()
         e = paths[paths.size()-1]
         traininfoFileName = self.get_filename(e, "fwd")
         trainInfo = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(traininfoFileName)
@@ -1006,7 +925,6 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
     def forward_stopping_sensor_exists(self, transit_name):
         forward_stopping_sensor = self.forward_stopping_sensor(transit_name)
         if forward_stopping_sensor != None:
-            print "returning True"
             return True
         else:
             return False
@@ -1014,32 +932,20 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
     def forward_stopping_sensor(selfself, transit_name):
         transit = transits.getTransit(transit_name)
         transit_section_list = transit.getTransitSectionList()
-        print "transit_section_list", transit_section_list
-        print "transit.getMaxSequence()", transit.getMaxSequence()
         transit_section = transit_section_list[transit.getMaxSequence()-1]
-        print "transit_section", transit_section
         section = transit_section.getSection()
-        print "section", section
         forward_stopping_sensor = section.getForwardStoppingSensor()
         return forward_stopping_sensor
     def wait_for_button(self, prev_sensor_changed):
-        print "wait for button"
         self.button_sensors_to_watch = copy.copy(self.button_sensors)
         if prev_sensor_changed in self.button_sensors_to_watch:
             self.button_sensors_to_watch.remove(prev_sensor_changed)
         button_sensors_to_watch_JavaList = java.util.Arrays.asList(self.button_sensors_to_watch)
-        # i
-        #     self.button_sensors_to_watch.remove(sensor_changed)
         self.waitSensorState(button_sensors_to_watch_JavaList, ACTIVE)
         prev_sensor_changed.setKnownState(INACTIVE)
         sensor_changed = [sensor for sensor in self.button_sensors_to_watch if sensor.getKnownState() == ACTIVE][0]
         button_sensor_name = sensor_changed.getUserName()
         button_station_name = self.get_block_name_from_button_sensor_name(button_sensor_name)
-        # sensor_changed.setKnownState(INACTIVE)   = leave until after queried for next station
-        print "return wait for button"
-        # self.button_sensors_to_watch = copy.copy(self.button_sensors)
-        # self.button_sensors_to_watch.remove(sensor_changed)
-
         return [button_station_name, sensor_changed]
     def get_stop_mode(self):
         title = "Set Stop mode"
@@ -1054,7 +960,6 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
     def save_stop_mode(self, stop_mode, location):
         if stop_mode != "Use Default":
             location.setComment(stop_mode)
-            print "comment", location.getName(), location.getComment()
 
     def action_directory_in_DispatcherSystem(self):
         path = jmri.util.FileUtil.getScriptsPath() + "DispatcherSystem" + java.io.File.separator + "actions"
@@ -1116,7 +1021,6 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def add_python_file_to_route(self, python_file, route, LocationManager):
         location = LocationManager.newLocation(python_file)
-        print "add_python file", location
         route.addLocation(location)
 
     def check_whether_select_another_station(self, button_station_name, selected_actions, no_of_stations_chosen):
@@ -1505,16 +1409,10 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 return False
             elif s == opt1:
                 [last, penultimate] = self.getLastBlockInAllowedDirection(e, first_station)
-                print "[last, penultimate]", [last, penultimate]
-                # [first, second] = self.getFirstTwoBlocksInAllowedDirection(e, first_station)
                 path_name =  e.getItem("path_name")
-                # print "[first, second]", [first, second]
                 section_list = self.get_section(path_name, last)
-                print "section_list", section_list
                 sensor_name = self.choose_stop_sensor(section_list[0])
-                print "about to set stopping sensor", sensor_name
                 for section in section_list:
-                    print "setting sensor ", sensor , " in section ", section.getUserName()
                     section.setForwardStoppingSensorName(sensor_name)
                 sensor_changed.setKnownState(INACTIVE)
                 self.button_sensors_to_watch = copy.copy(self.button_sensors)
@@ -2130,7 +2028,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                                 if g == None:
                                     if self.logLevel > 0: print "G IS NONE"
                                 if self.logLevel > 1: print("b")
-                                move_train = MoveTrain(station_block_name, button_station_name, train_to_move, g.g_express); print("b")
+                                move_train = MoveTrain(station_block_name, button_station_name, train_to_move, g.g_express)
 
                                 instanceList.append(move_train)
                                 if move_train.setup():
@@ -2143,7 +2041,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                                 if self.logLevel > 0: print "moving slow"
                                 if g == None:
                                     if self.logLevel > 0: print "G IS NONE"
-                                move_train = MoveTrain(station_block_name, button_station_name, train_to_move, g.g_stopping);print("d")
+                                move_train = MoveTrain(station_block_name, button_station_name, train_to_move, g.g_stopping)
 
                                 instanceList.append(move_train)
                                 if move_train.setup():
