@@ -74,7 +74,6 @@ public interface Positionable extends Cloneable, InlineLogixNG {
 
     /**
      * Remove a class name to this Positionable
-     * @param className the class name
      */
     public void removeAllClasses();
 
