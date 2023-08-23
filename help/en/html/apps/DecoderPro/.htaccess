@@ -1,0 +1,6 @@
+RewriteEngine on
+
+# Provide redirects for removed pages
+
+# Debug.shtml moved to html\apps
+RewriteRule ^Debug\.shtml$ ../Debug.shtml [R=301,L]

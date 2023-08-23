@@ -57,21 +57,20 @@
 
       <dl>
         <dt>jmri.log</dt>
+        <dd>Name of the JMRI logging configuration file, typically default_lcf.xml</dd>
 
-        <dd>Name of JMRI's logging control file, typically default.lcf</dd>
+        <dt>jmri.log4jconfigfilename</td>
+        <dd>Name of the JMRI Test logging configuration file, typically tests_lcf.xml</dd>
 
         <dt>jmri.log.path</dt>
-
         <dd>The directory for storing logs. If not specified, logs are stored in the JMRI settings
         directory.</dd>
 
         <dt>jmri.prefsdir</dt>
-
         <dd>By setting this property, you can explicitly set where JMRI looks for it's preference
         directory.</dd>
 
         <dt>jmri.inset.height</dt>
-
         <dd>
           If set, provides a minimum inset value for the height of JMRI windows. The inset is the
           space allowed for decorations at the top and bottom of the screen. Set this to a positive
@@ -81,7 +80,6 @@
         </dd>
 
         <dt>jmri.inset.width</dt>
-
         <dd>If set, provides a minimum inset value for the width of JMRI windows. The inset is the
         space allowed for decorations around the sides of the screen. Set this to a positive
         integer N to ensure that JMRI windows open with at least N pixels available on the

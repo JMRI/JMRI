@@ -85,38 +85,12 @@
       <h3>Configuration</h3>
       Par convention, les applications JMRI attendront pour initialiser Log4J utilisant le fichier
       de contrôle de connexion: "<a href=
-      "https://github.com/JMRI/JMRI/blob/master/default.lcf">default.lcf</a>" JMRI qui contient une
-      version du fichier defaut.lcf avec de nombreux commentaires. ( Ce fichier doit être
+      "https://github.com/JMRI/JMRI/blob/master/default_lcf.xml">default_lcf.xml</a>" JMRI qui contient une
+      version du fichier defaut_lcf.xml avec de nombreux commentaires. ( Ce fichier doit être
       impérativement dans le "Répertoire Program", qui peut être trouvé en sélectionnant l'élémment
-      "Emplacement" dans le menu Aide principal ) Le reste de cette section décrit le contenu d'un
-      fichier de contrôle de connexion utilisant le contenu du fichier default.lcf comme exemple.
-      <p>La ligne:</p>
-
-      <pre>
- log4j.rootCategory= INFO, A1, T, R
-</pre>contrôle où va la sortie connexion. Plus tard dans le fichier, il y a des indices A1, T et R
-définis qui écrivent les messages vers:
-      <ul>
-        <li>A1 - la console sur l'ordinateur local, réellement stdout/stderr, qui est aussi
-        disponible via l'élément Console du menu Aide JMRI.</li>
-
-        <li>R - un simple fichier. Par défaut, il est appelé "session.log". Celui-ci démarre à
-        chaque fois que JMRI est relancé</li>
-
-        <li>T - un jeu de fichiers tournants. Le fichier actuel est appelé "messages.log". Quand il
-        atteint 2 MB, il tourne pour un nouveau fichier. Les deux versions les plus anciennes sont
-        gardées Notez que cela se poursuit à travers le redémarrage du programme, de sorte que vous
-        pouvez voir tous les messages enregistrés au début ou à la fin du programme.</li>
-      </ul>
-      Les fichiers sont stockés dans un répertoire spécifié par les paramètres de jmri.log.path qui
-      est pointé par défaut vers le sous répertoire log dans le répertoire preferences
-      <p>Le fichier "default.lcf" détermine aussi le format de la sortie par le réglage des
-      paramètres du "circuit".</p>
-
-      <pre><code>
-log4j.appender.R.layout=org.apache.log4j.PatternLayout<br>
-log4j.appender.R.layout.ConversionPattern=%d{ISO8601} %-37.37c{2} %-5p - %m [%t]%n
-</code></pre>
+      "Emplacement" dans le menu Aide principal )</p>
+      
+      
       <p>Un exemple de ce format par défaut:</p>
 
       <pre><code>

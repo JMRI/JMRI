@@ -616,11 +616,10 @@
             <a href="https://groups.io/g/jmriusers/">JMRI Users at Groups.io</a>
           </li>
 
-          <li>For extra logging while debugging, locate and edit the default.lcf file in the root
-          of the JMRI install, see the pattern at the end of the file.<br>
-          General CBUS logging - log4j.category.jmri.jmrix.can.cbus=DEBUG<br>
-          Connection logging - log4j.category.jmri.jmrix.can.adapters.gridconnect=DEBUG<br>
-          The extra logging will appear in the JMRI console, also the JMRI error logs.</li>
+          <li>To enable extra logging while debugging CBUS, see
+          <a href="../../../apps/Debug.shtml">JMRI Debugging</a> and add the Logger Category names
+          <br><code>jmri.jmrix.can.cbus</code> and <code>jmri.jmrix.can.adapters</code> .
+          </li>
 
           <li>
             <a href=
