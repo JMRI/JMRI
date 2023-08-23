@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
@@ -38,6 +40,7 @@ public class PositionableJPanel extends JPanel implements Positionable, JmriMous
     protected Editor _editor = null;
 
     private String _id;            // user's Id or null if no Id
+    private Set<String> _classes = new HashSet<>(); // user's classes
 
     private ToolTip _tooltip;
     protected boolean _showTooltip = true;
@@ -96,6 +99,35 @@ public class PositionableJPanel extends JPanel implements Positionable, JmriMous
     @Override
     public String getId() {
         return _id;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void addClass(String className) {
+        _editor.positionalAddClass(this, className);
+        _classes.add(className);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void removeClass(String className) {
+        _editor.positionalRemoveClass(this, className);
+        _classes.remove(className);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void removeAllClasses() {
+        for (String className : _classes) {
+            _editor.positionalRemoveClass(this, className);
+        }
+        _classes.clear();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Set<String> getClasses() {
+        return java.util.Collections.unmodifiableSet(_classes);
     }
 
     @Override

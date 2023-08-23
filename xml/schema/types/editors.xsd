@@ -110,6 +110,7 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:attribute name="id" type="xs:string"></xs:attribute>
+      <xs:attribute name="classes" type="xs:string"></xs:attribute>
       <xs:attribute name="x" type="xs:int" use="required"></xs:attribute>
       <xs:attribute name="y" type="xs:int" use="required"></xs:attribute>
       <xs:attribute name="level" type="xs:int"></xs:attribute>

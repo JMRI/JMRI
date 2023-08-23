@@ -114,6 +114,7 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
 
     private ArrayList<Positionable> _contents = new ArrayList<>();
     private Map<String, Positionable> _idContents = new HashMap<>();
+    private Map<String, Set<Positionable>> _classContents = new HashMap<>();
     protected JLayeredPane _targetPanel;
     private JFrame _targetFrame;
     private JScrollPane _panelScrollPane;
@@ -325,6 +326,14 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
 
     public Map<String, Positionable> getIdContents() {
         return Collections.unmodifiableMap(_idContents);
+    }
+
+    public Set<String> getClassNames() {
+        return Collections.unmodifiableSet(_classContents.keySet());
+    }
+
+    public Set<Positionable> getPositionablesByClassName(String className) {
+        return Collections.unmodifiableSet(_classContents.get(className));
     }
 
     public void setDefaultToolTip(ToolTip dtt) {
@@ -1014,6 +1023,7 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
 
             ed._contents = new ArrayList<>(_contents);
             ed._idContents = new HashMap<>(_idContents);
+            ed._classContents = new HashMap<>(_classContents);
 
             for (Positionable p : _contents) {
                 p.setEditor(ed);
@@ -1378,6 +1388,20 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
     }
 
     /**
+     * Add a menu entry to edit Classes of the Positionable item
+     *
+     * @param p     the item
+     * @param popup the menu to add the entry to
+     */
+    public void setEditClassesMenu(Positionable p, JPopupMenu popup) {
+        if (p.getDisplayLevel() == BKG) {
+            return;
+        }
+
+        popup.add(CoordinateEdit.getClassesEditAction(p, "EditClasses", this));
+    }
+
+    /**
      * Check if edit of a conditional is in progress.
      *
      * @return true if this is the case, after showing dialog to user
@@ -1488,6 +1512,41 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
 
         if (p.getId() != null) _idContents.remove(p.getId());
         if (newId != null) _idContents.put(newId, p);
+    }
+
+    /**
+     * Add a class name to the Positionable
+     * @param p the Positionable
+     * @param className the class name
+     * @throws IllegalArgumentException if the name contains a comma
+     */
+    public void positionalAddClass(Positionable p, String className) {
+
+        if (className == null) {
+            throw new IllegalArgumentException("Class name must not be null");
+        }
+        if (className.isBlank()) {
+            throw new IllegalArgumentException("Class name must not be blank");
+        }
+        if (className.contains(",")) {
+            throw new IllegalArgumentException("Class name must not contain a comma");
+        }
+
+        if (p.getClasses().contains(className)) return;
+
+        _classContents.computeIfAbsent(className, o -> new HashSet<>()).add(p);
+    }
+
+    /**
+     * Removes a class name from the Positionable
+     * @param p the Positionable
+     * @param className the class name
+     */
+    public void positionalRemoveClass(Positionable p, String className) {
+
+        if (p.getClasses().contains(className)) return;
+
+        _classContents.get(className).remove(p);
     }
 
     /**
@@ -1672,6 +1731,9 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
             if (il instanceof LocoIcon) {
                 il.remove();
                 if (il.getId() != null) _idContents.remove(il.getId());
+                for (String className : il.getClasses()) {
+                    _classContents.get(className).remove(il);
+                }
             }
         }
     }
@@ -1782,6 +1844,9 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
                 throw new Positionable.DuplicateIdException();
             }
             _idContents.put(l.getId(), l);
+        }
+        for (String className : l.getClasses()) {
+            _classContents.get(className).add(l);
         }
         if (log.isDebugEnabled()) {
             log.debug("putItem {} to _contents. level= {}", l.getNameString(), l.getDisplayLevel());
@@ -2805,6 +2870,9 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
         //Container parent = this.getParent();
         // force redisplay
         if (l.getId() != null) _idContents.remove(l.getId());
+        for (String className : l.getClasses()) {
+            _classContents.get(className).remove(l);
+        }
         return _contents.remove(l);
     }
 
@@ -2845,6 +2913,8 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
         setVisible(false);
         _contents.clear();
         _idContents.clear();
+        for (var list : _classContents.values()) list.clear();
+        _classContents.clear();
         removeAll();
         super.dispose();
     }

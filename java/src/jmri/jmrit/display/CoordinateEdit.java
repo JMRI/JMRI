@@ -209,6 +209,24 @@ public class CoordinateEdit extends JmriJFrame {
     }
     //////////////////////////////////////////////////////////////
 
+    public static AbstractAction getClassesEditAction(
+            final Positionable pos, final String title, final Editor editor) {
+
+        return new AbstractAction(Bundle.getMessage(title) + "...") {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CoordinateEdit f = new CoordinateEdit();
+                f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
+                f.init(Bundle.getMessage(title), pos, false);
+                f.initClasses(editor);
+                f.setVisible(true);
+                f.setLocationRelativeTo((Component) pos);
+            }
+        };
+    }
+    //////////////////////////////////////////////////////////////
+
     public static AbstractAction getTextEditAction(final Positionable pos, final String title) {
         return new AbstractAction(Bundle.getMessage(title) + "...") {
 
@@ -644,6 +662,43 @@ public class CoordinateEdit extends JmriJFrame {
         cancelButton.addActionListener(e -> {
             PositionableLabel pp = (PositionableLabel) pl;
 //            pp.setId(oldStr);
+            pp.updateSize();
+            dispose();
+        });
+        pack();
+    }
+
+    public void initClasses(final Editor editor) {
+        PositionableLabel pLabel = (PositionableLabel) pl;
+        oldStr = String.join(",", pLabel.getClasses());
+        textX = new JLabel();
+        textX.setText(Bundle.getMessage("EnterClasses") + ":");
+        textX.setVisible(true);
+
+        xTextField = new JTextField(15);
+        xTextField.setText(oldStr);
+        xTextField.setToolTipText(Bundle.getMessage("TooltipEnterClasses"));
+
+        getContentPane().setLayout(new GridBagLayout());
+        addTextItems();
+
+        okButton.addActionListener(e -> {
+            PositionableLabel pp = (PositionableLabel) pl;
+            pp.removeAllClasses();
+            String t = xTextField.getText();
+            if (t != null && t.length() > 0) {
+                for (String className : t.split(",")) {
+                    if (!className.isBlank()) {
+                        pp.addClass(className.trim());
+                    }
+                }
+            }
+            pp.updateSize();
+            dispose();
+        });
+        okButton.getRootPane().setDefaultButton(okButton);
+        cancelButton.addActionListener(e -> {
+            PositionableLabel pp = (PositionableLabel) pl;
             pp.updateSize();
             dispose();
         });
