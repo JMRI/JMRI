@@ -316,12 +316,14 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * {@inheritDoc}
      */
     @Override
-    public void addPropertyChangeListener(PropertyChangeListener l) {
+    public void addPropertyChangeListener(PropertyChangeListener l) {        
+        log.debug("addPropertyChangeListener(): Adding property change {} to {}", l.getClass().getSimpleName(), getLocoAddress());
         if ( Arrays.asList(getPropertyChangeListeners()).contains(l) ){
-            log.warn("Preventing {} adding duplicate PCL to {}", l, this.getClass().getName());
+            log.warn("Preventing {} adding duplicate PCL to {}",  l.getClass().getSimpleName(), this.getClass().getName());
             return;
         }
         super.addPropertyChangeListener(l);
+        log.debug("addPropertyChangeListener(): listeners size is {}", getPropertyChangeListeners().length);
     }
 
     /**
@@ -329,11 +331,11 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      */
     @Override
     public void removePropertyChangeListener(PropertyChangeListener l) {
-        log.debug("Removing property change {}", l);
+        log.debug("removePropertyChangeListener(): Removing property change {} from {}", l.getClass().getSimpleName(), getLocoAddress());
         super.removePropertyChangeListener(l);
-        log.debug("remove listeners size is {}", getPropertyChangeListeners().length);
+        log.debug("removePropertyChangeListener(): listeners size is {}", getPropertyChangeListeners().length);
         if (getPropertyChangeListeners().length == 0) {
-            log.debug("No listeners so calling ThrottleManager.dispose with an empty ThrottleListener");
+            log.debug("No listeners so calling ThrottleManager.dispose with an empty ThrottleListener for {}",getLocoAddress());
             InstanceManager.throttleManagerInstance().disposeThrottle(this, new ThrottleListener() {
                 @Override
                 public void notifyFailedThrottleRequest(LocoAddress address, String reason) {

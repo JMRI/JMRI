@@ -220,10 +220,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         }
 
         requestedAddress = null;
-        throttle = t;
         currentAddress = (DccLocoAddress) t.getLocoAddress();
-        throttle.addPropertyChangeListener(this);
-
         // can we find a roster entry?
         if ((rosterEntry == null)
                 && (InstanceManager.getDefault(ThrottlesPreferences.class).isUsingExThrottle())
@@ -234,6 +231,26 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
                 rosterEntry = l.get(0);
             }
         }
+        
+        if (consistAddress != null) {
+            // if we get there, it means we got the throttle for the head locomotive of a consist
+            // only update the function panel
+            log.debug("Advanced consist throttle, got the throttle for the head locomotive functions control");
+            (new ArrayList<AddressListener>(listeners)).forEach((l) -> {
+                if (l instanceof FunctionPanel) {
+                    l.notifyAddressThrottleFound(t);
+                }
+            });
+            return;
+        }
+        
+        if (throttle != null) {
+            log.debug("notifyThrottleFound() throttle non null, called for loc {}",t.getLocoAddress());
+            return;
+        }  
+        
+        throttle = t;        
+        throttle.addPropertyChangeListener(this);
 
         // update GUI
         updateGUIOnThrottleFound(true);
@@ -335,6 +352,10 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
      * @param t An instantiation of the DccThrottle with the address requested.
      */
     public void notifyConsistThrottleFound(DccThrottle t) {
+        if (consistThrottle != null) {
+            log.debug("notifyConsistThrottleFound() consistThrottle non null, called for loc {}",t.getLocoAddress());
+            return;
+        }        
         requestedAddress = null;
         consistThrottle = t;
         currentAddress = (DccLocoAddress) t.getLocoAddress();
@@ -415,13 +436,15 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
      */
     public void notifyThrottleDisposed() {
         log.debug("notifyThrottleDisposed");
+        notifyListenersOfThrottleRelease();
         updateGUIOnThrottleFound(false);
         rosterEntry = null;
+        if (consistThrottle != null) {
+            consistThrottle.removePropertyChangeListener(this);
+        }
         if (throttle != null) {
             throttle.removePropertyChangeListener(this);
         }
-        throttle = null;
-        notifyListenersOfThrottleRelease();
     }
 
     /**
@@ -690,20 +713,24 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
      * Release the current address.
      */
     public void releaseAddress() {
+        notifyThrottleDisposed();
         if (throttle != null) {
             throttleManager.releaseThrottle(throttle, this);
+            throttle = null;
         }
         if (consistThrottle != null) {
             throttleManager.releaseThrottle(consistThrottle, this);
             consistThrottle = null;
         }
-        notifyThrottleDisposed();
     }
 
     private void notifyListenersOfThrottleRelease() {
         if (listeners != null) {
             listeners.forEach((l) -> {
                 // log.debug("Notify address listener {} of release", l.getClass());
+                if (consistAddress != null) {
+                    l.notifyConsistAddressReleased(consistAddress);
+                }
                 l.notifyAddressReleased(currentAddress);
             });
         }
