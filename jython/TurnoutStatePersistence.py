@@ -38,9 +38,9 @@ class PersistTurnoutStateTask(jmri.implementation.AbstractShutDownTask):
     #   'jmri.jmrit.jython.exec'
     # This allows for easy identification and configuration of logging.
     #
-    # To show debug messages, add the following line (without quotes) to
-    # the file 'default.lcf' located in the JMRI program directory:
-    #   'log4j.category.jmri.jmrit.jython.exec=DEBUG'
+    # NOTE: to enable logging, see https://www.jmri.org/help/en/html/apps/Debug.shtml
+    # Add the Logger Category name "jmri.jmrit.jython.exec" at DEBUG Level.
+
     log = LoggerFactory.getLogger("jmri.jmrit.jython.exec.TurnoutStatePersistence.PersistTurnoutStateTask")
 
     # Define task to run at ShutDown
