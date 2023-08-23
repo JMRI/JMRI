@@ -27,7 +27,7 @@ public class PositionableJComponent extends JComponent implements Positionable {
     protected Editor _editor = null;
 
     private String _id;            // user's Id or null if no Id
-    private Set<String> _classes = new HashSet<>(); // user's classes
+    private final Set<String> _classes = new HashSet<>(); // user's classes
 
     private ToolTip _tooltip;
     private boolean _showTooltip = true;

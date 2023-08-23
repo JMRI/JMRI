@@ -14,9 +14,7 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.ToolTip;
-import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.MaleSocket;
 
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
@@ -164,7 +162,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         if (p.getId() != null) element.setAttribute("id", p.getId());
 
         var classes = p.getClasses();
-        if (classes != null) {
+        if (!classes.isEmpty()) {
             StringBuilder classNames = new StringBuilder();
             for (String className : classes) {
                 if (className.contains(",")) {

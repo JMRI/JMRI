@@ -40,7 +40,7 @@ public class PositionableJPanel extends JPanel implements Positionable, JmriMous
     protected Editor _editor = null;
 
     private String _id;            // user's Id or null if no Id
-    private Set<String> _classes = new HashSet<>(); // user's classes
+    private final Set<String> _classes = new HashSet<>(); // user's classes
 
     private ToolTip _tooltip;
     protected boolean _showTooltip = true;

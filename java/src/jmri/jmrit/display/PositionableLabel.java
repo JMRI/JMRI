@@ -56,7 +56,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     protected Editor _editor;
 
     private String _id;            // user's Id or null if no Id
-    private Set<String> _classes = new HashSet<>(); // user's classes
+    private final Set<String> _classes = new HashSet<>(); // user's classes
 
     protected boolean _icon = false;
     protected boolean _text = false;
