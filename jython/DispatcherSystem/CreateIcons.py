@@ -48,10 +48,12 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     controlSensors.append([i, 'soundSensor', 'Enable Announcements', 10, 5]); i += 1
     controlSensors.append([i, 'simulateSensor', 'Simulate Dispatched Trains', 10, 5]); i += 1
     controlSensors.append([i, 'checkRouteSensor', 'Dispatch Path must be clear', 10, 5]); i += 1
+    controlSensors.append([i, 'stopAtStopSensor', 'Stop at Stop Sensors (Default)', 10, 5]); i += 1
 
     controlSensors.append([i, 'setDispatchSensor', 'Run Dispatch', 0, 5]); i += 1
     controlSensors.append([i, 'setRouteSensor', 'Setup Route', 0, 5]); i += 1
     controlSensors.append([i, 'setStoppingDistanceSensor', 'Set Stopping Length', 0, 5]); i += 1
+    controlSensors.append([i, 'setStopSensor', 'Set Stop Sensor', 0, 5]); i += 1
     controlSensors.append([i, 'setStationWaitTimeSensor', 'Set Station Wait Time', 0, 5]); i += 1
     controlSensors.append([i, 'setStationDirectionSensor', 'Set Station Direction', 0, 5]); i += 1
     controlSensors.append([i, 'setTransitBlockRestrictionSensor', 'Restrict Transit Operation', 0, 5]); i += 1
@@ -70,6 +72,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         if self.perform_initial_checks():
             self.waitMsec(5000)
             self.show_progress(0)
+            #self.saveForwardStoppingSensors()
             self.removeIconsAndLabels()
             self.removeLogix()
             self.removeTransits()
@@ -79,7 +82,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             self.removeSensors()
             self.show_progress(40)
             self.updatePanels()
-            self.waitMsec(5000)
+            # self.waitMsec(5000)
             self.get_list_of_stopping_points()
             self.addSensors()
             self.generateSML()
@@ -88,6 +91,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             self.show_progress(80)
             self.addLogix()
             self.addIcons()
+            self.retrieveForwardStoppingSensors()
             self.stop_all_threads()
             self.end_show_progress()
 
@@ -590,7 +594,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         cdlManager = jmri.InstanceManager.getDefault(jmri.ConditionalManager)
         lgx = lgxManager.createNewLogix('IX:DSLX:1', 'Run Dispatcher')
         cdl = cdlManager.createNewConditional('IX:DSLX:1C1', 'Run Dispatcher')
-        lgx.addConditional('IX:DSLX:1C1', 0):
+        lgx.addConditional('IX:DSLX:1C1', 0)
         if cdl is not None:
             cdl.setUserName('Run Dispatcher')
             vars = []
@@ -793,6 +797,53 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         label.setLocation(int(x), int(y))
         panel.putItem(label)
 
+    def saveForwardStoppingSensors(self):
+        forward_stop_sensors = \
+            [["section: " , str(section.getUserName()), " stop sensor: " , str(section.getForwardStoppingSensor().getUserName())] \
+             for section in sections.getNamedBeanSet() if section.getForwardStoppingSensor() != None]
+        self.write_list(forward_stop_sensors)
+
+    def retrieveForwardStoppingSensors(self):
+        forward_stop_sensors = self.read_list()
+        [sections.getSection(section_name).setForwardStoppingSensorName(forward_stopping_sensor_name) \
+         for [sn_prompt, section_name, fss_prompt, forward_stopping_sensor_name] in forward_stop_sensors \
+         if sections.getSection(section_name) is not None]
+    def directory(self):
+        path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "forwardStoppingSensors"
+        if not os.path.exists(path):
+            os.makedirs(path)
+        return path + java.io.File.separator
+    def write_list(self, a_list):
+        # store list in binary file so 'wb' mode
+        file = self.directory() + "forwardStoppingSensors.txt"
+        #print "block_info" , a_list
+        #print "file"  +file
+        with open(file, 'wb') as fp:
+            for items in a_list:
+                i = 0
+                for item in items:
+                    fp.write('%s' %item)
+                    if i < 3 : fp.write(",")
+                    i+=1
+                fp.write('\n')
+
+    # Read list to memory
+    def read_list(self):
+        # for reading also binary mode is important
+        file = self.directory() + "forwardStoppingSensors.txt"
+        n_list = []
+        try:
+            with open(file, 'rb') as fp:
+                for line in fp:
+                    x = line[:-1]
+                    #print x
+                    y = x.split(",")
+                    #print "y" , y
+                    n_list.append(y)
+            return n_list
+        except:
+            return ["",""]
+
 class DisplayProgress:
     def __init__(self):
         #labels don't seem to work. This is the only thing I could get to work. Improvements welcome
@@ -805,6 +856,7 @@ class DisplayProgress:
     def killLabel(self):
         self.frame1.setVisible(False)
         self.frame1 = None
+
 
 
 

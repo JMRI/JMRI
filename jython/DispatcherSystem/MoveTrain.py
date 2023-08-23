@@ -34,12 +34,13 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
     global trains
     global time_last_train
 
-    def __init__(self, station_from_name, station_to_name, train_name, graph):
+    def __init__(self, station_from_name, station_to_name, train_name, graph, stop_mode = None):
         self.logLevel = 0
         self.station_from_name = station_from_name
         self.station_to_name = station_to_name
         self.train_name = train_name
         self.graph = graph
+        self.stop_mode = stop_mode
 
     def setup(self):
         return True
@@ -399,7 +400,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             # if we failed to run the transit try again once before letting the operator have a go
             if result == False:
                 self.waitMsec(5000)  # wait 5 secs
-                msg = "Failure to dispatch train " + train + " retrying moving from " + from_name + " to " + to_name
+                msg = "Failure to dispatch train " + train + " retrying moving from " + from_name + " to " + to_name + "."
                 title = ""
                 opt1 = "try again"
                 opt2 = "cancel"
@@ -439,52 +440,52 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def doDispatch(self, traininfoFileName, type, value):
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
-        try:
-            if self.logLevel > 1: print "traininfoFileName",traininfoFileName
+        # try:
+        if self.logLevel > 1: print "traininfoFileName",traininfoFileName
 
-            train_name = value
-            train = trains[train_name]
+        train_name = value
+        train = trains[train_name]
+        trainInfo = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(traininfoFileName)
+        trainInfo_modified = self.modify_trainInfo(trainInfo, train_name)  # sets the speed factor and other train dependent factors
+        #trainInfo_modified = trainInfo
+        result = DF.loadTrainFromTrainInfo(trainInfo_modified, type, value)
+        #result = DF.loadTrainFromTrainInfo(traininfoFileName, type, value)
+        train["allocating"] = False   # this flag is used when checking to see whether path for dispatch is clear
+        if result == -1:
+            if self.train_name == "shunter": print "     ",
+            print "error: result from dispatcher frame" , result
+            # delete the transit so can try loading the transit again
             trainInfo = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(traininfoFileName)
-            trainInfo_modified = self.modify_trainInfo(trainInfo, train_name)  # sets the speed factor and other train dependent factors
-            #trainInfo_modified = trainInfo
-            result = DF.loadTrainFromTrainInfo(trainInfo_modified, type, value)
-            #result = DF.loadTrainFromTrainInfo(traininfoFileName, type, value)
-            train["allocating"] = False   # this flag is used when checking to see whether path for dispatch is clear
-            if result == -1:
-                if self.train_name == "shunter": print "     ",
-                print "error: result from dispatcher frame" , result
-                # delete the transit so can try loading the transit again
-                trainInfo = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(traininfoFileName)
-                transit_name = trainInfo.getTransitName()
-                # if self.train_name == "shunter": print "     ",
-                # print "transit_name", transit_name
-                # TransitManager = jmri.InstanceManager.getDefault(jmri.TransitManager)
-                # transit = TransitManager.getTransit(transit_name)
-                # if transit != None:
-                #     TransitManager.deleteTransit(transit)
-                active_train_list = [active_Train for active_train in DF.getActiveTrainsList() \
-                                if active_train.getTransitName() == transit_name]
-                # print "active_train_list", active_train_list
-                # print "all active trains", DF.getActiveTrainsList()
-                if active_train_list == []:
-                    active_train = None
-                else:
-                    active_train = active_train_list[0]
-                    # print "deleting active train ", active_train
-                    DF.terminateActiveTrain(active_train)
-                    train_name == value
-                    if train_name in trains:
-                        trains.remove(train_name)
-                return False  #No train allocated
+            transit_name = trainInfo.getTransitName()
+            # if self.train_name == "shunter": print "     ",
+            # print "transit_name", transit_name
+            # TransitManager = jmri.InstanceManager.getDefault(jmri.TransitManager)
+            # transit = TransitManager.getTransit(transit_name)
+            # if transit != None:
+            #     TransitManager.deleteTransit(transit)
+            active_train_list = [active_Train for active_train in DF.getActiveTrainsList() \
+                            if active_train.getTransitName() == transit_name]
+            # print "active_train_list", active_train_list
+            # print "all active trains", DF.getActiveTrainsList()
+            if active_train_list == []:
+                active_train = None
             else:
-                if self.train_name == "shunter": print "     ",
-                # print "result from dispatcher frame" , result
-                DF = None
-                return True
-        except:
-            if self.logLevel > 1: print ("FAILURE tried to run dispatcher with file {} type {} value {}".format(traininfoFileName,  type, value))
+                active_train = active_train_list[0]
+                # print "deleting active train ", active_train
+                DF.terminateActiveTrain(active_train)
+                train_name == value
+                if train_name in trains:
+                    trains.remove(train_name)
+            return False  #No train allocated
+        else:
+            if self.train_name == "shunter": print "     ",
+            # print "result from dispatcher frame" , result
             DF = None
-            return False
+            return True
+        # except:
+        #     if self.logLevel > 1: print ("FAILURE tried to run dispatcher with file {} type {} value {}".format(traininfoFileName,  type, value))
+        #     DF = None
+        #     return False
 
     def get_train_length(self, new_train_name):
         EngineManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.engines.EngineManager)
@@ -520,8 +521,6 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         return [engine, speed_factor]
 
     def modify_trainInfo(self, trainInfo, train_name):
-        # print "in modify_trainInfo"
-        # print "train_name", train_name
         [engine,current_length] = self.get_train_length(train_name)  #get the engine name
         # print "in modify_trainInfo1a length = ", current_length
         trainInfo.setMaxTrainLength(float(current_length))
@@ -536,10 +535,36 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             msg = "speedFactor set is out of range " + str(current_speed_factor) + "\nSpeed Factor set to 100% " + "for train " + train_name
             OptionDialog().displayMessage(msg)
         trainInfo.setSpeedFactor(float(speedFactor))
-        # print "in modify_trainInfo2c ", speedFactor
+        if self.forward_stopping_sensor_exists(trainInfo):
+            # set default
+
+            if sensors.getSensor("stopAtStopSensor").getKnownState() == ACTIVE:
+                trainInfo.setUseSpeedProfile(False)
+            else:
+                trainInfo.setUseSpeedProfile(True)
+            # overwrite with set values
+            if self.stop_mode == None:
+                pass
+            elif self.stop_mode == "Use Stop Sensor":
+                trainInfo.setUseSpeedProfile(False)
+            elif self.stop_m0de == "Stop using Speed Profile":
+                trainInfo.setUseSpeedProfile(True)
+            else:
+                print "ERROR incorrect value for stop mode"
 
         return trainInfo
 
+    def forward_stopping_sensor_exists(self, traininfo):
+        transit_name = traininfo.getTransitId()
+        transit = transits.getTransit(transit_name)
+        transit_section_list = transit.getTransitSectionList()
+        section_list = transit.getSectionListBySeq(transit.getMaxSequence())
+        section = section_list[0]
+        forward_stopping_sensor = section.getForwardStoppingSensor()
+        if forward_stopping_sensor != None:
+            return True
+        else:
+            return False
     def set_sensor(self, sensorName, sensorState):
         sensor = sensors.getSensor(sensorName)
         if sensor is None:
@@ -745,6 +770,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         transit_name = trainInfo.getTransitName()
         transit_id = trainInfo.getTransitId()
         return  [transit_name, transit_id]
+
 
 
 class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
@@ -2219,4 +2245,5 @@ class MyTableModel (DefaultTableModel):
     def setValueAt(self, value, row, col) :
         self.data[row][col] = value
         self.fireTableCellUpdated(row, col)
+
 

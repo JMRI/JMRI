@@ -143,6 +143,8 @@ class SimulationMaster(jmri.jmrit.automat.AbstractAutomaton):
         return state
 
 
+
+
 class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
 
     ###########################################
@@ -215,6 +217,13 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
                     self.waitMsec(50)
 
         if response == "Finished":
+            if self.forward_stopping_sensor_exists(self.activeTrain):
+                # simulate the stopping sensor being activated
+                # if we are stopping by speed profile we won't use it, but that doesn't matter
+                forward_stopping_sensor = self.forward_stopping_sensor(self.activeTrain)
+                forward_stopping_sensor.setKnownState(ACTIVE)
+                self.waitMsec(2000)
+                forward_stopping_sensor.setKnownState(INACTIVE)
             if self.logLevel > 0: print "FINISHED"
             # (Note train will be removed from trains_being_simulated by looking at the dispatched train list
             # which will have the train removed when the dispatch finishes)
@@ -371,3 +380,18 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
             return "status = running"
         else:
             return "status = not running"
+
+    def forward_stopping_sensor_exists(self, transit_name):
+        forward_stopping_sensor = self.forward_stopping_sensor(transit_name)
+        if forward_stopping_sensor != None:
+            return True
+        else:
+            return False
+
+    def forward_stopping_sensor(selfself, activeTrain):
+        transit = activeTrain.getTransit()
+        transit_section_list = transit.getTransitSectionList()
+        transit_section = transit_section_list[transit.getMaxSequence()-1]
+        section = transit_section.getSection()
+        forward_stopping_sensor = section.getForwardStoppingSensor()
+        return forward_stopping_sensor
