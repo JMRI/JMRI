@@ -49,12 +49,6 @@ public class SimpleServerFrame extends jmri.util.JmriJFrame {
     JToggleButton stopButton = new JToggleButton("Stop Simple Server");
     JToggleButton closeButton = new JToggleButton("Close Simple Server");
 
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
-    }
-
     public void startSimpleServer() {
         InstanceManager.getDefault(SimpleServer.class).start();
     }
