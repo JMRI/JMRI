@@ -104,7 +104,7 @@ abstract public class AbstractReporterServer {
             // If the Commanded State changes, show transition state as "<inconsistent>"
             if (e.getPropertyName().equals("currentReport")) {
                 var n = e.getNewValue();
-                String now = null; // current report is null, which is expected.
+                String now = null; // current report might be null
                 if ( n != null ){
                     now = n.toString();
                 }
