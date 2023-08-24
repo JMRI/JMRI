@@ -60,7 +60,7 @@ public class DefaultTransitManagerXml extends jmri.managers.configurexml.Abstrac
 
                 ArrayList<TransitSection> tsList = transit.getTransitSectionList();
                 if ( tsList.isEmpty() ){
-                    log.error("Not Storing Transit \"{}\" as it has no TransitSections", transit.getDisplayName());
+                    log.warn("Not Storing Transit \"{}\" as it has no TransitSections", transit.getDisplayName());
                     continue;
                 }
 
