@@ -4,30 +4,25 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.*;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.util.exceptionhandler.UncaughtExceptionHandler;
 
-import org.apache.log4j.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.core.Appender;
+import org.apache.logging.log4j.core.appender.FileAppender;
+import org.apache.logging.log4j.core.appender.RollingFileAppender;
+import org.apache.logging.log4j.core.config.Configurator;
 
 /**
  * Common utility methods for working with Log4J in tests.
  * <p>
- * Two system properties influence how logging is configured in JMRI:
- * <dl>
- * <dt>jmri.log</dt><dd>The logging control file. If this file is not an
- * absolute path, this file is searched for in the following order:<ol>
- * <li>JMRI settings directory</li>
- * <li>JMRI installation (program) directory</li>
- * </ol>
- * If this property is not specified, the logging control file
- * <i>default.lcf</i> is used, following the above search order to find it.
- * </dd>
- * <dt>jmri.log.path</dt><dd>The directory for storing logs. If not specified,
- * logs are stored in the JMRI preferences directory.</dd>
- * </dl>
+ * See also jmri.apps.util.Log4JUtil
+ * <p>
+ * Used by JUnitUtil setUpLoggingAndCommonProperties
+ * which passes either System Property 'jmri.log4jconfigfilename' , or if
+ * unset 'tests_lcf.xml' as the Logging Configuration File Filename.
  *
  * @author Bob Jacobsen Copyright 2009, 2010
  * @author Randall Wood Copyright 2014, 2020
@@ -35,58 +30,66 @@ import org.slf4j.LoggerFactory;
 public class TestingLoggerConfiguration {
 
     private static final String LOG_HEADER = "****** JMRI log *******";
-    private static final Logger log = LoggerFactory.getLogger(TestingLoggerConfiguration.class);
+    public static final String SYS_PROP_LOG_PATH =  "jmri.log.path";
 
     /**
-     * Initialize logging, specifying a control file.
+     * Initialize logging, specifying a Configuration file.
      *
-     * @param controlfile the logging control file
+     * @param configFile the Logging Configuration file
      */
-    static public void initLogging(@Nonnull String controlfile) {
-        initLog4J(controlfile);
+    static public void initLogging(@Nonnull String configFile) {
+        // System.out.println("TestingLoggerConfiguration initLogging " + configFile);
+        initLog4J(configFile);
     }
 
     /**
      * Initialize Log4J.
      * <p>
      * Use the logging control file specified in the <i>jmri.log</i> property
-     * or, if none, the default.lcf file. If the file is absolute and cannot be
+     * or, if none, the default_lcf.xml file. If the file is absolute and cannot be
      * found, look for the file first in the settings directory and then in the
      * installation directory.
      *
-     * @param logFile the logging control file
+     * @param logConfigFile the logging control file
      * @see jmri.util.FileUtil#getPreferencesPath()
      * @see jmri.util.FileUtil#getProgramPath()
      */
-    static void initLog4J(@Nonnull String logFile) {
-        if (LogManager.getRootLogger().getAllAppenders().hasMoreElements()) {
+    static void initLog4J(@Nonnull String logConfigFile) {
+        Logger logger = LogManager.getLogger();
+        Map<String, Appender> appenderMap = ((org.apache.logging.log4j.core.Logger) logger).getAppenders();
+        if ( appenderMap.size() > 1 ) {
             log.debug("initLog4J already initialized!");
             return;
         }
 
+        // System.out.println("about to init jul etc. ");
         // initialize the java.util.logging to log4j bridge
         initializeJavaUtilLogging();
 
         // initialize log4j - from logging control file (lcf) only
-        try {
-            if (new File(logFile).isAbsolute() && new File(logFile).canRead()) {
-                configureLogging(logFile);
-            } else if (new File(FileUtil.getPreferencesPath() + logFile).canRead()) {
-                configureLogging(FileUtil.getPreferencesPath() + logFile);
-            } else if (new File(FileUtil.getProgramPath() + logFile).canRead()) {
-                configureLogging(FileUtil.getProgramPath() + logFile);
-            } else {
-                BasicConfigurator.configure();
-                org.apache.log4j.Logger.getRootLogger().setLevel(Level.WARN);
-            }
-        } catch (java.lang.NoSuchMethodError e) {
-            log.error("Exception starting logging", e);
-        } catch (IOException ex) {
-            BasicConfigurator.configure();
-            org.apache.log4j.Logger.getRootLogger().setLevel(Level.WARN);
+        String loggingControlFileLocation = getLoggingConfig(logConfigFile);
+        if ( loggingControlFileLocation != null ) {
+            configureLogging(loggingControlFileLocation);
+        } else {
+            Configurator.reconfigure();
+            Configurator.setRootLevel(Level.WARN);
+            System.err.println("Unable to load Configuration "+ logConfigFile);
         }
         // install default exception handler so uncaught exceptions are logged, not printed
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler());
+    }
+
+    @CheckForNull
+    public static String getLoggingConfig(@Nonnull String logConfigFileLocation) {
+        if (new File(logConfigFileLocation).isAbsolute() && new File(logConfigFileLocation).canRead()) {
+            return logConfigFileLocation;
+        } else if ( new File(FileUtil.getPreferencesPath() + logConfigFileLocation).canRead()) {
+            return FileUtil.getPreferencesPath() + logConfigFileLocation;
+        } else if ( new File(FileUtil.getProgramPath() + logConfigFileLocation).canRead()) {
+            return FileUtil.getProgramPath() + logConfigFileLocation;
+        } else {
+            return null;
+        }
     }
 
     static void initializeJavaUtilLogging() {
@@ -102,15 +105,15 @@ public class TestingLoggerConfiguration {
     @Nonnull
     static public String startupInfo(@Nonnull String program) {
         log.info(LOG_HEADER);
-        Enumeration<org.apache.log4j.Logger> e = org.apache.log4j.Logger.getRootLogger().getAllAppenders();
-        while (e.hasMoreElements()) {
-            Appender a = (Appender) e.nextElement();
+        Logger logger = LogManager.getLogger();
+        Map<String, Appender  > appenderMap = ((org.apache.logging.log4j.core.Logger) logger).getAppenders();
+        appenderMap.forEach((key, a) -> {
             if (a instanceof RollingFileAppender) {
-                log.info("This log is appended to file: {}", ((FileAppender) a).getFile());
+                log.info("This log is appended to file: {}", ((RollingFileAppender) a).getFileName());
             } else if (a instanceof FileAppender) {
-                log.info("This log is stored in file: {}", ((FileAppender) a).getFile());
+                log.info("This log is stored in file: {}", ((FileAppender) a).getFileName());
             }
-        }
+        });
         return (program + " version " + jmri.Version.name()
                 + " starts under Java " + System.getProperty("java.version", "<unknown>")
                 + " on " + System.getProperty("os.name", "<unknown>")
@@ -127,25 +130,39 @@ public class TestingLoggerConfiguration {
      *
      * @see jmri.util.FileUtil#getPreferencesPath()
      */
-    static private void configureLogging(@Nonnull String configFile) throws IOException {
-        Properties p = new Properties();
-        try (FileInputStream f = new FileInputStream(configFile)) {
-            p.load(f);
-        }
+    static private void configureLogging(@Nonnull String configFile) {
+        // System.out.println("TestingLoggerConfiguration configureLogging " + configFile);
 
-        if (System.getProperty("jmri.log.path") == null || p.getProperty("jmri.log.path") == null) {
-            System.setProperty("jmri.log.path", FileUtil.getPreferencesPath() + "log" + File.separator);
-            p.put("jmri.log.path", System.getProperty("jmri.log.path"));
-        }
-        File logDir = new File(p.getProperty("jmri.log.path"));
+        // set the log4j config file location programatically
+        // so that JUL adapter is enabled first
+        // and Jython / JavaScript use the same LoggerContext
+        System.setProperty("log4j2.configurationFile", configFile);
+
         // ensure the logging directory exists
         // if it's not writable, the console will get the error from log4j, so
         // we don't need to explictly test for that here, just make sure the
         // directory is created if need be.
-        if (!logDir.exists()) {
-            Files.createDirectories(logDir.toPath());
+        if (System.getProperty(SYS_PROP_LOG_PATH) == null ) {
+            System.setProperty(SYS_PROP_LOG_PATH, FileUtil.getPreferencesPath() + "log" + File.separator);
         }
-        PropertyConfigurator.configure(p);
+        File logDir = new File(System.getProperty(SYS_PROP_LOG_PATH));
+        if (!logDir.exists()) {
+            try {
+                Files.createDirectories(logDir.toPath());
+            } catch ( IOException ex ) {
+                System.err.println("Could not create directory for log files, " + ex.getMessage());
+            }
+        }
+
+        try {
+            Configurator.initialize(null, configFile);
+            log.debug("Logging initialised with {}", configFile);
+        } catch ( Exception ex ) {
+            System.err.println("Could not initialise logging for log config file "
+                + configFile + " " + ex);
+        }
     }
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TestingLoggerConfiguration.class);
+    
 }

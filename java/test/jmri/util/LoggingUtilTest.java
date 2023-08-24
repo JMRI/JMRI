@@ -19,7 +19,7 @@ public class LoggingUtilTest {
         log.warn("WARN message succeeds");
         JUnitAppender.assertWarnMessage("WARN message succeeds");
 
-        log.debug("DEBUG message"); // should be suppressed see tests.lcf
+        log.debug("DEBUG message"); // should be suppressed see tests_lcf.xml
 
         Assert.assertTrue(JUnitAppender.verifyNoBacklog());        
     }

@@ -10,9 +10,7 @@ import jmri.jmrit.signalsystemeditor.*;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -34,16 +32,16 @@ public class LoadAndStoreAllSignalSystemsTest {
 
     private void checkImageLinks(SignalSystem signalSystem, SignalMastType smt, List<ImageLink> imageLinks) throws IOException {
         for (ImageLink link : imageLinks) {
-            if (link.getImageLink().startsWith("http:") || link.getImageLink().startsWith("http:")) {
-                log.error(String.format("Signal system: %s, Signal mast: %s, File %s is a http link%n",
-                        signalSystem.getFolderName(), smt.getFileName(), link.getImageLink()));
-            } else {
-                File file = new File("xml/signals" + link.getImageLink());
-                if (!file.getCanonicalFile().exists()) {
-                    log.error(String.format("Signal system: %s, Signal mast: %s, File %s does not exists%n",
-                            signalSystem.getFolderName(), smt.getFileName(), file.getCanonicalPath()));
-                }
-            }
+
+            Assertions.assertFalse( link.getImageLink().startsWith("http:"),
+                String.format("Signal system: %s, Signal mast: %s, File %s is a http link%n",
+                signalSystem.getFolderName(), smt.getFileName(), link.getImageLink()));
+
+            File file = new File("xml/signals" + link.getImageLink());
+            Assertions.assertTrue( file.getCanonicalFile().exists(),
+                String.format("Signal system: %s, Signal mast: %s, File %s does not exists%n",
+                signalSystem.getFolderName(), smt.getFileName(), file.getCanonicalPath()));
+
         }
     }
 
@@ -68,7 +66,7 @@ public class LoadAndStoreAllSignalSystemsTest {
                 String newFilename = link.getImageLink();
                 File file = new File("xml/signals" + filename).getCanonicalFile();
                 File newFile = new File("xml/signals" + newFilename).getCanonicalFile();
-                Assert.assertTrue(String.format("Can rename file %s to file %s", file, newFile), file.renameTo(newFile));
+                Assertions.assertTrue( file.renameTo(newFile), String.format("Can rename file %s to file %s", file, newFile));
                 changed = true;
             } else {
                 filenamesWithSpaces.add(link.getImageLink());
@@ -88,7 +86,7 @@ public class LoadAndStoreAllSignalSystemsTest {
     private boolean checkSpaces(SignalSystem signalSystem) throws IOException {
         boolean spacesRemoved = false;
         List<String> filenamesWithSpaces = new ArrayList<>();
-        Assert.assertFalse("The signal system folder name contains no spaces: " + signalSystem.getFolderName(), signalSystem.getFolderName().contains(" "));
+        Assertions.assertFalse( signalSystem.getFolderName().contains(" "), "The signal system folder name contains no spaces: " + signalSystem.getFolderName());
 
         for (SignalMastType smt : signalSystem.getSignalMastTypes()) {
             boolean changed = false;
@@ -138,7 +136,9 @@ public class LoadAndStoreAllSignalSystemsTest {
     private static Stream<Arguments> getFiles(File directory, boolean recurse, boolean pass) {
         ArrayList<Arguments> files = new ArrayList<>();
         if (directory.isDirectory()) {
-            for (File file : directory.listFiles()) {
+            var list = directory.listFiles();
+            Assertions.assertNotNull(list);
+            for (File file : list ) {
                 if (file.isDirectory()) {
                     if (recurse) {
                         files.addAll(getFiles(file, recurse, pass).collect(Collectors.toList()));
@@ -174,6 +174,7 @@ public class LoadAndStoreAllSignalSystemsTest {
 
             // Remove BOM (Byte Order Mark)
             // https://en.wikipedia.org/wiki/Byte_order_mark
+            Assertions.assertNotNull(line2);
             if (line2.codePointAt(0) == 65279) {
                 line2 = line2.substring(1);
             }
@@ -286,15 +287,13 @@ public class LoadAndStoreAllSignalSystemsTest {
                     next2 = next2.substring(0, next2.length() - "\"/>".length()) + "\" />";
                 }
 
-                boolean match = false;  // assume failure (pessimist!)
-
-                if (!match && !line1.equals(line2)) {
+                if (!line1.equals(line2)) {
                     log.error("match failed in LoadAndStoreTest:");
                     log.error("    file1:line {}: \"{}\"", lineNumber1, line1);
                     log.error("    file2:line {}: \"{}\"", lineNumber2, line2);
                     log.error("  comparing file1:\"{}\"", inFile1.getPath());
                     log.error("         to file2:\"{}\"", inFile2.getPath());
-                    Assert.assertEquals(line1, line2);
+                    Assertions.assertEquals(line2, line1);
                 }
                 line1 = next1;
                 line2 = next2;
@@ -337,6 +336,7 @@ public class LoadAndStoreAllSignalSystemsTest {
         log.debug("Start check file {}", file.getCanonicalPath());
 
         File signalSystemFolder = file.getCanonicalFile().getParentFile();
+        Assertions.assertNotNull(signalSystemFolder);
         String signalSystemName = signalSystemFolder.getName();
 
         if (!signalSystemName.equals(lastSignalSystem)) {
@@ -359,8 +359,10 @@ public class LoadAndStoreAllSignalSystemsTest {
                 signalMastXml.save(signalSystem, signalMastType, true);
             }
 
+            File parentFile = file.getParentFile();
+            Assertions.assertNotNull(parentFile);
             File compFile = new File(FileUtil.getProfilePath()
-                    + "xml/signals/" + "/" + file.getParentFile().getName() + "/" + file.getName() );
+                    + "xml/signals/" + "/" + parentFile.getName() + "/" + file.getName() );
             checkFile(compFile, file);
         }
     }
@@ -368,15 +370,17 @@ public class LoadAndStoreAllSignalSystemsTest {
     @ParameterizedTest(name = "{index}: {0} (pass={1})")
     @MethodSource("data")
     public void loadAndStoreTest(File file, boolean pass) throws Exception {
-        if (!file.getParent().equals("xml/signals") && !file.getParent().equals("xml\\signals")) {
+        String parentFile = file.getParent();
+        Assertions.assertNotNull(parentFile);
+        if (!parentFile.equals("xml/signals") && !parentFile.equals("xml\\signals")) {
             loadAndStoreFileCheck(file);
         }
     }
 
     @BeforeEach
     public void setUp(@TempDir File tempDir) throws IOException  {
-        tempDir = new File("temp/temp/SignalSystemEditor");
         JUnitUtil.setUp();
+        // tempDir = new File("temp/temp/SignalSystemEditor");
         JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();

@@ -47,13 +47,8 @@ class InitializeTurnoutsSensors(jmri.jmrit.automat.AbstractAutomaton):
     #        visible in the JMRI System console window at runtime and 
     #        are appended to file: preference:systemfiles\messages.log
     #        are stored in file: preference:systemfiles\session.log
-    #   To output the debug messages, see instructions regarding "default.lcf" file at
-    #       https://www.jmri.org/help/en/html/doc/Technical/Logging.shtml
-    #   and append either of the following lines to the end of your copy of that file:
-    '''
-log4j.category.jmri.jmrit.jython.exec=DEBUG
-log4j.category.jmri.jmrit.jython.exec=TRACE
-    '''
+    #   # NOTE: to enable logging, see https://www.jmri.org/help/en/html/apps/Debug.shtml
+    #        Add the Logger Category name "jmri.jmrit.jython.exec" at TRACE Level.
 
     # override AbstractAutomaton parent class initialization
     def init(self):
