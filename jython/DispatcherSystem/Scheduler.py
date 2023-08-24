@@ -284,8 +284,8 @@ class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
                 if self.logLevel > 0: print "train_to_move", train_to_move
                 if train_to_move != None:
                     if self.logLevel > 0: print "************************************moving train******************",train_to_move
-                    move_train = MoveTrain(station_from, station_to, train_to_move, self.graph)
-                    move_train.move_between_stations(station_from, station_to, train_to_move)
+                    move_train = MoveTrain(station_from, station_to, train_to_move, self.graph).start()
+                    # move_train.move_between_stations(station_from, station_to, train_to_move, self.graph)
                     move_train = None
                 else:
                     msg = "1No train in block for scheduled train starting from " + station_from
@@ -382,7 +382,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                 self.no_repetitions = 0
 
     def handle(self):
-        #print "in handle", self.mycount
+        if self.logLevel > 0: print "in handle", self.mycount
         if self.delay > 0 and self.mycount == 0:  # only delay on the first iteration
             self.waitMsec(self.delay)
         if int(self.mycount) <= int(self.no_repetitions):
@@ -437,9 +437,9 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                     if self.logLevel > 0: print "train_to_move", train_to_move
                     if train_to_move != None:
                         if self.logLevel > 0: print "************************************moving train******************",train_to_move
-                        move_train = MoveTrain(station_from, station_to, train_to_move, self.graph, station_comment)
+                        move_train = MoveTrain(station_from, station_to, train_to_move, self.graph, station_comment).start()
                         #if self.check_train_in_start_block(train_to_move, station_from)
-                        # move_train.move_between_stations(station_from, station_to, train_to_move, self.graph, station_comment)
+                        # move_train.move_between_stations(station_from, station_to, train_to_move, self.graph)
                         move_train = None
                         if self.logLevel > 0: print "finished move between stations station_from = ", station_from, " station_to = ", station_to
                         end_block = blocks.getBlock(station_to)
@@ -467,8 +467,8 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                             train_to_move = start_block.getValue()
 
 
-                        move_train = MoveTrain(station_from, station_to, train_to_move, self.graph)
-                        #move_train.move_between_stations(station_from, station_to, train_to_move, self.graph)
+                        move_train = MoveTrain(station_from, station_to, train_to_move, self.graph).start()
+                        # move_train.move_between_stations(station_from, station_to, train_to_move, self.graph)
                         move_train = None
                         if self.logLevel > 0: print "finished move between stations station_from = ", station_from, " station_to = ", station_to
                         end_block = blocks.getBlock(station_to)  #do following in case the block sensor is a bit dodgy

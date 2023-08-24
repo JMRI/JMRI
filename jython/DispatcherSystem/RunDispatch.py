@@ -44,8 +44,9 @@ import imp
 import copy
 import org
 import sys
+import java.awt.Dimension
 
-from javax.swing import JOptionPane, JFrame, JLabel, JButton, JTextField, JFileChooser, JMenu, JMenuItem, JMenuBar,JComboBox,JDialog,JList
+from javax.swing import JScrollPane, JOptionPane, JFrame, JLabel, JButton, JTextField, JFileChooser, JMenu, JMenuItem, JMenuBar,JComboBox,JDialog,JList
 
 import sys
 
@@ -106,15 +107,19 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
     CLOSED_OPTION = False
     logLevel = 0
 
-    def List(self, title, list_items):
+    def List(self, title, list_items, preferred_size = "default"):
         list = JList(list_items)
         list.setSelectedIndex(0)
+        # list.setPreferredSize(1000, 1000)
+        scrollPane = JScrollPane(list);
+        if preferred_size != "default":
+            scrollPane.setPreferredSize(preferred_size)     # preferred_size should be set to Dimension(300, 500) say
         i = []
         self.CLOSED_OPTION = False
         options = ["OK"]
         while len(i) == 0:
-            s = JOptionPane.showOptionDialog(None,
-            list,
+            s = JOptionPane().showOptionDialog(None,
+            scrollPane,
             title,
             JOptionPane.YES_NO_OPTION,
             JOptionPane.PLAIN_MESSAGE,
@@ -131,15 +136,16 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
 
 
     #list and option buttons
-    def ListOptions(self, list_items, title, options, selected_item = "no item"):
+    def ListOptions(self, list_items, title, options, preferred_size = "default"):
         list = JList(list_items)
-        if selected_item != "no item":
-            list.setSelectedValue(selected_item, True)
-        else:
+        if list_items != []:
             list.setSelectedIndex(0)
+        scrollPane = JScrollPane(list);
+        if preferred_size != "default":
+            scrollPane.setPreferredSize(preferred_size)   # preferred_size should be set to Dimension(300, 500) say
         self.CLOSED_OPTION = False
         s = JOptionPane.showOptionDialog(None,
-            list,
+            scrollPane,
             title,
             JOptionPane.YES_NO_OPTION,
             JOptionPane.PLAIN_MESSAGE,
@@ -149,6 +155,8 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
         if s == JOptionPane.CLOSED_OPTION:
             self.CLOSED_OPTION = True
             return [None,None]
+        if list_items == []:
+            return [None, options[s]]
         index = list.getSelectedIndices()[0]
         return [list_items[index], options[s]]
 
@@ -839,12 +847,11 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             opt2 = "Complete Route"
             opt3 = "Set action to run in this station"
             opt4 = "Specify Stopping Mode at Station"
-
             if i == 1:
                 msg = "Start of Route Selectiom"
                 msg = msg + "\nselected station " + button_station_name + "."
                 title = "Continue selecting stations?"
-                s = self.od.customQuestionMessage3str(msg,title, opt1, opt2, opt3)
+                s = self.od.customQuestionMessage2str(msg, title, opt1, opt3)
             else:
                 msg = "selected station " + button_station_name + ". \n"
                 if selected_actions != None and selected_actions != []:
@@ -1431,7 +1438,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             self.button_sensors_to_watch.remove(sensor_changed)
             sensor_changed.setKnownState(INACTIVE)
 
-    def choose_stop_sensor(self, section)0.
+    def choose_stop_sensor(self, section):
         title = "set stop sensor for section " + section.getUserName()
         list_items = [sensor.getUserName() \
                       for sensor in sensors.getNamedBeanSet() \
@@ -2029,7 +2036,6 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                                     if self.logLevel > 0: print "G IS NONE"
                                 if self.logLevel > 1: print("b")
                                 move_train = MoveTrain(station_block_name, button_station_name, train_to_move, g.g_express)
-
                                 instanceList.append(move_train)
                                 if move_train.setup():
                                     move_train.setName(train_to_move)
@@ -2042,7 +2048,6 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                                 if g == None:
                                     if self.logLevel > 0: print "G IS NONE"
                                 move_train = MoveTrain(station_block_name, button_station_name, train_to_move, g.g_stopping)
-
                                 instanceList.append(move_train)
                                 if move_train.setup():
                                     move_train.setName(train_to_move)

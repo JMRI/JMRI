@@ -946,15 +946,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         # if self.od.CLOSED_OPTION == True:
         # return
         # if result == "Run Route":
-        RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
-        list_items = RouteManager.getRoutesByNameList()
-        title = "choose route"
-        s = self.od.List(title, list_items)
-        if self.od.CLOSED_OPTION == True:
-            return
-        routeName = str(s)
-        if self.logLevel > 0: print "routeName", routeName
-        route = RouteManager.getRouteByName(routeName)
+
 
         trains_to_choose = self.get_list_of_engines_to_move()
         # msg = "trains_to_choose" + str(trains_to_choose)
@@ -964,8 +956,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             msg = "There are no trains available for dispatch\nTrains dispatched are:\n"+str_trains_dispatched+"\n"
             title = "Cannot move train"
             opt1 = "continue"
-            opt2 = "stop all dispatches" \
-                   ""
+            opt2 = "stop all dispatches"
             result = self.od.customQuestionMessage2str(msg, title, opt1, opt2)
             if result == "stop all dispatches":
                 delete_transits()
@@ -975,6 +966,33 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         if self.od.CLOSED_OPTION == True:
             return
         station_from = self.get_position_of_train(engine)
+        RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
+        opt1a = "show routes starting at train position"
+        opt1b = "show all routes"
+        opt1 = opt1a
+        opt2 = "OK"
+        s = opt1
+        list_items = RouteManager.getRoutesByNameList()
+        while s == opt1:
+            title = "choose route"
+            d = int(min(500, max(len(list_items),1)*20*0.81))   #get a nice size for the list box
+            [l,s] = self.od.ListOptions(list_items,title,[opt2,opt1], Dimension(50, d))
+            if self.od.CLOSED_OPTION == True:
+                return
+            if s == opt1:
+                xx = [str(station_block_name) for station_block_name in g.station_block_list \
+                      if blocks.getBlock(station_block_name).getValue()==engine]
+                if opt1 == opt1a:
+                    station_where_engine_is = [str(station_block_name) for station_block_name in g.station_block_list \
+                                               if blocks.getBlock(station_block_name).getValue()==engine][0]
+                    list_items = [l for l in list_items if str(l.getName()).startswith(str(station_where_engine_is))]
+                    s = opt1 = opt1b
+                else:
+                    list_items = RouteManager.getRoutesByNameList()
+                    s = opt1 = opt1a
+        routeName = str(l)
+        if self.logLevel > 0: print "routeName", routeName
+        route = RouteManager.getRouteByName(routeName)
 
         list_items = ["stop at end of route", "return to start position", "return to start and repeat", "cancel"]
         title = "What do you want to do"
@@ -1043,17 +1061,6 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                 if self.logLevel > 0: print "removing" ,train
                 trains_to_choose.remove(train)
                 if self.logLevel > 0: print "trains_to_choose",trains_to_choose
-
-        # # JOptionPane.showMessageDialog(None,msg)
-        # if trains_to_choose == []:
-        #     str_trains_dispatched= (' '.join(trains_dispatched))
-        #     msg = "There are no trains available for dispatch\nTrains dispatched are:\n"+str_trains_dispatched+"\n"
-        #     title = "Cannot move train"
-        #     opt1 = "continue"
-        #     opt2 = "reset all allocations"
-        #     result = self.od.customQuestionMessage2str(msg, title, opt1, opt2)
-        #     if result == "reset all allocations":
-        #         trains_dispatched = []
         return trains_to_choose
 
     def get_position_of_train(self, train_to_move):
