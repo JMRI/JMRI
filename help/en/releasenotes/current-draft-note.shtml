@@ -372,7 +372,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Added ability to identify Dietz decoder models with CV128</li>
         </ul>
 
     <h3>CTC Tool</h3>
