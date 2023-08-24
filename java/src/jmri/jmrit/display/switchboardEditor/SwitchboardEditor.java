@@ -828,6 +828,7 @@ public class SwitchboardEditor extends Editor {
                     int maxW = (super.getTargetFrame().getWidth() - 10) / colNum; // int division, subtract 2x3px for border
                     int maxH = (super.getTargetFrame().getHeight() - verticalMargin) / Math.max(rows, 1); // for footer
                     _tileSize = Math.min(maxW, maxH); // store for tile graphics
+                    log.debug("_tileSize {} from {}, {}", _tileSize, maxW, maxH);
                 }
             //tmp }
         });
@@ -1256,9 +1257,10 @@ public class SwitchboardEditor extends Editor {
         // rows = (total + columns - 1) / columns (int roundup) to account for unused tiles in grid:
         // for 23 switches we need at least 24 tiles (4x6, 3x8, 2x12 etc)
         // similar calculations repeated in panel.js for web display
-        //log.debug("CELL SIZE optimum found: CxR = {}x{}, tileSize = {}", ((totalDisplayed + rowsNum - 1) / rowsNum), rowsNum, tileSize);
+        log.debug("CELL SIZE optimum found: CxR = {}x{} for {} x {} pixels", ((totalDisplayed + rowsNum - 1) / rowsNum), rowsNum, super.getTargetFrame().getWidth(), super.getTargetFrame().getHeight());
 
         _tileSize = Math.round((float) paneHeight / Math.max(rowsNum, 1)); // recalculate tileSize from rowNum, store for tile graphics
+        log.debug("_tileSize {} from {} / {}", _tileSize, paneHeight, rowsNum);
         return rowsNum;
     }
 
