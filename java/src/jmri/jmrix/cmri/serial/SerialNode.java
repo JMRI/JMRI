@@ -1242,6 +1242,7 @@ public class SerialNode extends AbstractNode {
                     }
                     // save for next time
                     sensorTempSetting[i] = Sensor.ACTIVE;
+                    ((SerialSensor)sensorArray[i]).lastStateFromLayout = Sensor.ACTIVE;
                 } else {
                     // considered INACTIVE
                     if (((sensorTempSetting[i] == Sensor.INACTIVE)
@@ -1253,6 +1254,7 @@ public class SerialNode extends AbstractNode {
                     }
                     // save for next time
                     sensorTempSetting[i] = Sensor.INACTIVE;
+                    ((SerialSensor)sensorArray[i]).lastStateFromLayout = Sensor.INACTIVE;
                 }
             }
         } catch (JmriException e) {
