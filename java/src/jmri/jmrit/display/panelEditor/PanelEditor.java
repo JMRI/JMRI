@@ -613,6 +613,7 @@ public class PanelEditor extends Editor implements ItemListener {
                 setHiddenMenu(p, popup);
                 setEmptyHiddenMenu(p, popup);
                 setEditIdMenu(p, popup);
+                setEditClassesMenu(p, popup);
                 popup.addSeparator();
                 setLogixNGPositionableMenu(p, popup);
                 popup.addSeparator();

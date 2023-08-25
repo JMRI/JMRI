@@ -14,9 +14,7 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.ToolTip;
-import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.MaleSocket;
 
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
@@ -162,6 +160,20 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
     public void storeCommonAttributes(Positionable p, Element element) {
 
         if (p.getId() != null) element.setAttribute("id", p.getId());
+
+        var classes = p.getClasses();
+        if (!classes.isEmpty()) {
+            StringBuilder classNames = new StringBuilder();
+            for (String className : classes) {
+                if (className.contains(",")) {
+                    throw new UnsupportedOperationException("Comma is not allowed in class names");
+                }
+                if (classNames.length() > 0) classNames.append(",");
+                classNames.append(className);
+            }
+            element.setAttribute("classes", classNames.toString());
+        }
+
         element.setAttribute("x", "" + p.getX());
         element.setAttribute("y", "" + p.getY());
         element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
@@ -471,6 +483,16 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                 throw new JmriConfigureXmlException("Positionable id is not unique", e);
             }
         }
+
+        if (element.getAttribute("classes") != null) {
+            String classes = element.getAttribute("classes").getValue();
+            for (String className : classes.split(",")) {
+                if (!className.isBlank()) {
+                    l.addClass(className);
+                }
+            }
+        }
+
         try {
             l.setControlling(!element.getAttribute("forcecontroloff").getBooleanValue());
         } catch (DataConversionException e1) {
