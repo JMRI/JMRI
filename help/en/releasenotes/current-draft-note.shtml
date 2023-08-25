@@ -122,6 +122,7 @@
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
                 <li>The presentation of the "Send Frame" tool was improved.</li>
+                <li>Fixed some subtle bugs when pasting CDI panes.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -372,7 +373,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Added ability to identify Dietz decoder models with CV128</li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -617,5 +618,6 @@
                 and global variable icons have been improved.</li>
             <li>You can now set the preferences to open the RailCom table at startup.</li>
             <li>The analog fast clock now shows when the fast clock has been stopped.</li>
+            <li>Updated batik-transcoder 1.14 to 1.17, resolving a security issue</li>
         </ul>
 

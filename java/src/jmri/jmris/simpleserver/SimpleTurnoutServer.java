@@ -8,8 +8,6 @@ import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.jmris.AbstractTurnoutServer;
 import jmri.jmris.JmriConnection;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Simple Server interface between the JMRI turnout manager and a network
@@ -38,13 +36,16 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
     @Override
     public void sendStatus(String turnoutName, int Status) throws IOException {
         addTurnoutToList(turnoutName);
-        if (Status == Turnout.THROWN) {
-            this.sendMessage(TURNOUT + turnoutName + " THROWN\n");
-        } else if (Status == Turnout.CLOSED) {
-            this.sendMessage(TURNOUT + turnoutName + " CLOSED\n");
-        } else {
-            //  unknown state
-            this.sendMessage(TURNOUT + turnoutName + " UNKNOWN\n");
+        switch (Status) {
+            case Turnout.THROWN:
+                this.sendMessage(TURNOUT + turnoutName + " THROWN\n");
+                break;
+            case Turnout.CLOSED:
+                this.sendMessage(TURNOUT + turnoutName + " CLOSED\n");
+                break;
+            default: //  unknown state
+                this.sendMessage(TURNOUT + turnoutName + " UNKNOWN\n");
+                break;
         }
     }
 
@@ -59,16 +60,12 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
         String turnoutName = statusString.split(" ")[1];
         log.debug("status: {}", statusString);
         if (statusString.contains("THROWN")) {
-            if (log.isDebugEnabled()) {
-                log.debug("Setting Turnout THROWN");
-            }
+            log.debug("Setting Turnout THROWN");
             // create turnout if it does not exist since throwTurnout() no longer does so
             this.initTurnout(turnoutName);
             throwTurnout(turnoutName);
         } else if (statusString.contains("CLOSED")) {
-            if (log.isDebugEnabled()) {
-                log.debug("Setting Turnout CLOSED");
-            }
+            log.debug("Setting Turnout CLOSED");
             // create turnout if it does not exist since closeTurnout() no longer does so
             this.initTurnout(turnoutName);
             closeTurnout(turnoutName);
@@ -91,5 +88,5 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(SimpleTurnoutServer.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SimpleTurnoutServer.class);
 }
