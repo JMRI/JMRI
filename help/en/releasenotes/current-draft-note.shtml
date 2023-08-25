@@ -374,6 +374,7 @@
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
             <li>Added ability to identify Dietz decoder models with CV128</li>
+            <li>Moved an excessive warning message to being a debug message<li>
         </ul>
 
     <h3>CTC Tool</h3>
