@@ -1152,11 +1152,6 @@
         "images/chapter5/digital_action_display.png" alt="Chapter 5 digital action display list"></a>
       </div>
 
-      <div style="margin-left: 2em;">
-        <a href="images/chapter5/digital_action_displayold.png"><img class="image-border" src=
-        "images/chapter5/digital_action_displayold.png" alt="Chapter 5 digital action display list"></a>
-      </div>
-
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h4>Icon/Label by class on panel<span class="since">since 5.5.4</span></h4>
