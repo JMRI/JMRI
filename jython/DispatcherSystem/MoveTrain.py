@@ -35,7 +35,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
     global time_last_train
 
     def __init__(self, station_from_name, station_to_name, train_name, graph, stop_mode = None):
-        self.logLevel = 0
+        self.logLevel = 2
         self.station_from_name = station_from_name
         self.station_to_name = station_to_name
         self.train_name = train_name
@@ -535,22 +535,35 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             msg = "speedFactor set is out of range " + str(current_speed_factor) + "\nSpeed Factor set to 100% " + "for train " + train_name
             OptionDialog().displayMessage(msg)
         trainInfo.setSpeedFactor(float(speedFactor))
+        print "self.forward_stopping_sensor_exists(trainInfo)",self.forward_stopping_sensor_exists(trainInfo)
+        print "sensors.getSensor('stopAtStopSensor').getKnownState()", sensors.getSensor("stopAtStopSensor").getKnownState(), ACTIVE
         if self.forward_stopping_sensor_exists(trainInfo):
+            print "forward_stopping_sensor_exists"
             # set default
-
             if sensors.getSensor("stopAtStopSensor").getKnownState() == ACTIVE:
                 trainInfo.setStopBySpeedProfile(False)
+                trainInfo.setUseSpeedProfile(False)
+                print "set", trainInfo.getStopBySpeedProfile(), trainInfo.getUseSpeedProfile()
             else:
                 trainInfo.setStopBySpeedProfile(True)
+                trainInfo.setUseSpeedProfile(True)
+                print "unset", trainInfo.getStopBySpeedProfile(), trainInfo.getUseSpeedProfile()
             # overwrite with set values
             if self.stop_mode == None:
+                print "pass"
                 pass
             elif self.stop_mode == "Use Stop Sensor":
                 trainInfo.setStopBySpeedProfile(False)
+                trainInfo.setUseSpeedProfile(False)
+                "print unset", trainInfo.getStopBySpeedProfile(), trainInfo.getUseSpeedProfile()
             elif self.stop_m0de == "Stop using Speed Profile":
                 trainInfo.setStopBySpeedProfile(True)
+                trainInfo.setUseSpeedProfile(True)
+                "print set", trainInfo.getStopBySpeedProfile(), trainInfo.getUseSpeedProfile()
             else:
                 print "ERROR incorrect value for stop mode"
+        else:
+            print "forward_stopping_sensor_exists not!"
 
         return trainInfo
 
