@@ -35,7 +35,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
     global time_last_train
 
     def __init__(self, station_from_name, station_to_name, train_name, graph, stop_mode = None):
-        self.logLevel = 2
+        self.logLevel = 0
         self.station_from_name = station_from_name
         self.station_to_name = station_to_name
         self.train_name = train_name
