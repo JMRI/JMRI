@@ -615,7 +615,7 @@
             <a href="https://www.jmri.org/help/en/html/apps/Debug.shtml">JMRI Debugging and Logging</a>
             </li>
             <li>Logging levels ( eg. INFO, DEBUG ) can be changed for the current session in
-            <a href="https://www.jmri.org/en/package/apps/jmrit/log/Log4JTreePane.shtml">Display / Edit Log Categories</a></li>
+            <a href="https://www.jmri.org/help/en/package/apps/jmrit/log/Log4JTreePane.shtml">Display / Edit Log Categories</a></li>
             <li>Logging Libraries have been fully updated to Log4J 2.20</li>
             <li>The way data is entered in memory icons, block icons
                 and global variable icons have been improved.</li>
