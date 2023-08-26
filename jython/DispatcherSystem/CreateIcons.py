@@ -716,7 +716,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                 x += 20
                 self.addTextLabel(panel, control[2], x, y)
 
-        panel.setSize(300, 470)
+        panel.setSize(300, 540)
         panel.setAllEditable(False)
         panel.setVisible(True)
 
@@ -805,9 +805,10 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
     def retrieveForwardStoppingSensors(self):
         forward_stop_sensors = self.read_list()
-        [sections.getSection(section_name).setForwardStoppingSensorName(forward_stopping_sensor_name) \
-         for [sn_prompt, section_name, fss_prompt, forward_stopping_sensor_name] in forward_stop_sensors \
-         if sections.getSection(section_name) is not None]
+        if forward_stop_sensors != []:
+            [sections.getSection(section_name).setForwardStoppingSensorName(forward_stopping_sensor_name) \
+             for [sn_prompt, section_name, fss_prompt, forward_stopping_sensor_name] in forward_stop_sensors \
+             if forward_stop_sensors is not [] and sections.getSection(section_name) is not None]
     def directory(self):
         path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "forwardStoppingSensors"
         if not os.path.exists(path):
@@ -842,7 +843,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                     n_list.append(y)
             return n_list
         except:
-            return ["",""]
+            return []
 
 class DisplayProgress:
     def __init__(self):

@@ -539,16 +539,16 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             # set default
 
             if sensors.getSensor("stopAtStopSensor").getKnownState() == ACTIVE:
-                trainInfo.setUseSpeedProfile(False)
+                trainInfo.setStopBySpeedProfile(False)
             else:
-                trainInfo.setUseSpeedProfile(True)
+                trainInfo.setStopBySpeedProfile(True)
             # overwrite with set values
             if self.stop_mode == None:
                 pass
             elif self.stop_mode == "Use Stop Sensor":
-                trainInfo.setUseSpeedProfile(False)
+                trainInfo.setStopBySpeedProfile(False)
             elif self.stop_m0de == "Stop using Speed Profile":
-                trainInfo.setUseSpeedProfile(True)
+                trainInfo.setStopBySpeedProfile(True)
             else:
                 print "ERROR incorrect value for stop mode"
 
@@ -779,8 +779,6 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
     # we make the allocated flag global as we will use it in DispatchMaster when we dispatch a train
 
     global trains_allocated
-    logLevel = 0
-    #instanceList = []   # List of file based instances
 
     def init(self):
         self.logLevel = 0
@@ -811,9 +809,15 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
 
 
         #display the allocated trains
-        action = self.choose_action()
+        title = "Setup trains"
+        msg = "setup one or more trains"
+        opt1 = "1 train"
+        opt2 = "several trains"
+        opt3 = "check/swap train direction"
+        #opt4 = "reset trains"
+        action = self.od.customQuestionMessage3str(msg, title, opt1, opt2, opt3)
         #msg = "choose"
-        #actions = ["setup 1 train","setup several trains", "check train direction", "reset trains"]
+        #actions = ["setup 1 train","setup several trains", "check/swap train direction", "reset trains"]
         #action = self.od.List(msg, actions)
         if action == "1 train":
             # msg = "choose"
@@ -883,7 +887,6 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         elif action == "several trains":
             createandshowGUI(self)
 
-
         elif action == "reset trains":
             msg = self.get_all_trains_msg()
             msg +=  "\nReset all these trains\n"
@@ -895,62 +898,70 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
                 pass
             elif ans == JOptionPane.NO_OPTION:
                 self.reset_allocation1()
-        #elif action == "reset control sensors"
-        else: #"check train direction"
-            all_trains = self.get_all_roster_entries_with_speed_profile()
-            if all_trains == []:
-                msg = "There are no engines with speed profiles, cannot operate without any"
-                JOptionPane.showMessageDialog(None,msg)
+        # elif action == "check/swap train direction" #"check train direction"  Keep in case new code has errors
+        #     all_trains = self.get_all_roster_entries_with_speed_profile()
+        #     if all_trains == []:
+        #         msg = "There are no engines with speed profiles, cannot operate without any"
+        #         JOptionPane.showMessageDialog(None,msg)
+        #     else:
+        #         # msg = self.get_allocated_trains_msg()
+        #         # title = None
+        #         # opt1 = "Select section"
+        #         # s = self.od.customMessage(msg, title, opt1)
+        #         # if self.logLevel > 0: print "station_block_name",station_block_name, "s", s
+        #         # if self.od.CLOSED_OPTION == False:
+        #
+        #         msg = "Select section"
+        #         sections_to_choose = self.get_allocated_trains_sections()
+        #         new_section_name = self.od.List(msg, sections_to_choose)
+        #         if self.od.CLOSED_OPTION == False:
+        #             msg = "Select the train in " + new_section_name
+        #             trains_to_choose = self.get_allocated_trains()
+        #             if trains_to_choose == []:
+        #                 s = OptionDialog().displayMessage("no more trains with speed profiles \nto select")
+        #             else:
+        #                 new_train_name = self.od.List(msg, trains_to_choose)
+        #                 if self.od.CLOSED_OPTION == False:
+        #                     #print "need to find the direction of train", new_train_name
+        #                     self.check_train_direction(new_train_name, new_section_name)
+        elif action == "check/swap train direction":
+            trains_to_choose = self.get_allocated_trains()
+            if trains_to_choose == []:
+                s = OptionDialog().displayMessage("no alloocated trains \nto select")
             else:
-                # msg = self.get_allocated_trains_msg()
-                # title = None
-                # opt1 = "Select section"
-                # s = self.od.customMessage(msg, title, opt1)
-                # if self.logLevel > 0: print "station_block_name",station_block_name, "s", s
-                # if self.od.CLOSED_OPTION == False:
-
-                msg = "Select section"
-                sections_to_choose = self.get_allocated_trains_sections()
-                new_section_name = self.od.List(msg, sections_to_choose)
-                if self.od.CLOSED_OPTION == False:
-                    msg = "Select the train in " + new_section_name
-                    trains_to_choose = self.get_allocated_trains()
-                    if trains_to_choose == []:
-                        s = OptionDialog().displayMessage("no more trains with speed profiles \nto select")
-                    else:
-                        new_train_name = self.od.List(msg, trains_to_choose)
-                        if self.od.CLOSED_OPTION == False:
-                            #print "need to find the direction of train", new_train_name
-                            self.check_train_direction(new_train_name, new_section_name)
+                msg = "Select the required train"
+                new_train_name = self.od.List(msg, trains_to_choose)
+                train_block = [block.getUserName() for block in blocks.getNamedBeanSet() if block.getValue() == new_train_name][0]
+                if self.get_allocated_trains_sections() != []:
+                    return True
+                new_section_names = [sections.getSection(section_name).getUserName() \
+                                    for section_name in self.get_allocated_trains_sections() \
+                                    if train_block in [block.getUserName() \
+                                                        for block in sections.getSection(section_name).getBlockList()]]
+                if new_section_names == []:
+                    return True
+                else:
+                    new_section_name = new_section_names[0]
+                    if self.od.CLOSED_OPTION == False:
+                        self.check_train_direction(new_train_name, new_section_name)
 
         return True
 
     # def createAndShowGUI(self, super):
     #     createandshowGUI(self,super)
 
-    def choose_action(self):
-        title = ""
-        msg = "setup one or more trains"
-        opt1 = "1 train"
-        opt2 = "several trains"
-        opt3 = "other actions"
-        reply = self.od.customQuestionMessage3str(msg, title, opt1, opt2, opt3)
-        if self.od.CLOSED_OPTION == True:
-            return "cancel"
-        if reply == opt1:
-            return opt1
-        elif reply == opt2:
-            return opt2
-        else:
-            title = ""
-            msg = "setup one or more trains"
-            opt1 = "check train direction"
-            opt2 = "reset trains"
-            reply = self.od.customQuestionMessage2str(msg, title, opt1, opt2)
-            if reply == opt1:
-                return opt1
-            else:
-                return opt2
+    # def choose_action(self):
+    #     title = ""
+    #     msg = "setup one or more trains"
+    #     opt1 = "1 train"
+    #     opt2 = "several trains"
+    #     opt3 = "check/swap train direction"
+    #     opt4 = "reset trains"
+    #     reply = self.od.customQuestionMessage4str(msg, title, opt1, opt2, opt3, opt4)
+    #     if self.od.CLOSED_OPTION == True:
+    #         return "cancel"
+    #     else:
+    #         return reply
 
     def check_train_direction(self, train_name, station_block_name):
         global train
@@ -965,13 +976,42 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
             if not in_siding:
                 # highlight the penultimate block
                 penultimate_layout_block.setUseExtraColor(True)
-                msg = "train travelling " + direction + " away from highlighted block"
+                msg = "train travelling " + self.swap_direction(direction) + " towards highlighted block"
                 s = OptionDialog().displayMessage(msg)
                 penultimate_layout_block.setUseExtraColor(saved_state)
             else:
-                msg = "train travelling " + direction + " away from siding"
-                s = OptionDialog().displayMessage(msg)
+
+                closed = False
+                while closed == False:
+                    penultimate_layout_block.setUseExtraColor(True)
+                    direction = train["direction"]
+                    msg = "train travelling " + self.swap_direction(direction) + " towards highlighted block"
+                    title = "swap directions of " +  train_name
+                    opt1 = "swap direction"
+                    opt2 = "Close"
+                    s = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
+                    if s == JOptionPane.CLOSED_OPTION:
+                        closed = True
+                    if s == opt1:
+                        self.swap_train_direction(train_name)
+                        closed = False
+                    if s == opt2:
+                        closed = True
                 penultimate_layout_block.setUseExtraColor(saved_state)
+
+    def swap_train_direction(self, train_name):
+        global train
+        if train_name in trains:
+            train = trains[train_name]
+            direction = train["direction"]
+            train["direction"] = self.swap_direction(direction)
+
+    def swap_direction(self, direction):
+        if direction == "reverse":
+            direction = "forward"
+        else:
+            direction = "reverse"
+        return direction
 
 
     def get_train_length(self, new_train_name):
