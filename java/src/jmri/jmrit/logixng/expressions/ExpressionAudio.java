@@ -28,6 +28,8 @@ public class ExpressionAudio extends AbstractDigitalExpression
             new LogixNG_SelectNamedBean<>(
                     this, Audio.class, InstanceManager.getDefault(AudioManager.class), this);
 
+    private boolean _hasChangedState = false;
+
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
 
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
@@ -36,6 +38,9 @@ public class ExpressionAudio extends AbstractDigitalExpression
     private String _stateLocalVariable = "";
     private String _stateFormula = "";
     private ExpressionNode _stateExpressionNode;
+
+    private boolean _checkOnlyOnChange;
+
 
     public ExpressionAudio(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -60,6 +65,8 @@ public class ExpressionAudio extends AbstractDigitalExpression
         copy.setStateReference(_stateReference);
         copy.setStateLocalVariable(_stateLocalVariable);
         copy.setStateFormula(_stateFormula);
+
+        copy.setCheckOnlyOnChange(_checkOnlyOnChange);
 
         return manager.registerExpression(copy);
     }
@@ -134,6 +141,15 @@ public class ExpressionAudio extends AbstractDigitalExpression
     }
 
 
+    public void setCheckOnlyOnChange(boolean triggerOnlyOnChange) {
+        _checkOnlyOnChange = triggerOnlyOnChange;
+    }
+
+    public boolean isCheckOnlyOnChange() {
+        return _checkOnlyOnChange;
+    }
+
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -181,6 +197,10 @@ public class ExpressionAudio extends AbstractDigitalExpression
         }
 
         int currentState = audio.getState();
+
+        if (_checkOnlyOnChange && !_hasChangedState) {
+            return false;
+        }
 
         if (_is_IsNot == Is_IsNot_Enum.Is) {
             return currentState == checkAudioState.getID();
@@ -231,7 +251,11 @@ public class ExpressionAudio extends AbstractDigitalExpression
         }
 
 
-        return Bundle.getMessage(locale, "Audio_Long", namedBean, _is_IsNot.toString(), state);
+        if (_checkOnlyOnChange) {
+            return Bundle.getMessage(locale, "Audio_Long4", namedBean, _is_IsNot.toString(), state, Bundle.getMessage(locale, "Audio_CheckOnlyOnChange"));
+        } else {
+            return Bundle.getMessage(locale, "Audio_Long3", namedBean, _is_IsNot.toString(), state);
+        }
     }
 
     /** {@inheritDoc} */
@@ -263,6 +287,9 @@ public class ExpressionAudio extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        if (!Objects.equals(evt.getNewValue(), evt.getOldValue())) {
+            _hasChangedState = true;
+        }
         getConditionalNG().execute();
     }
 

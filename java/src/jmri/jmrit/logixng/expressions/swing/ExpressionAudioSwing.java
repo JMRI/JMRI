@@ -36,6 +36,8 @@ public class ExpressionAudioSwing extends AbstractDigitalExpressionSwing {
     private JTextField _turnoutStateLocalVariableTextField;
     private JTextField _turnoutStateFormulaTextField;
 
+    private JCheckBox _checkOnlyOnChangeCheckBox;
+
 
     public ExpressionAudioSwing() {
     }
@@ -49,6 +51,9 @@ public class ExpressionAudioSwing extends AbstractDigitalExpressionSwing {
         ExpressionAudio expression = (ExpressionAudio)object;
 
         panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        JPanel innerPanel = new JPanel();
 
         _selectNamedBeanSwing = new LogixNG_SelectNamedBeanSwing<>(
                 InstanceManager.getDefault(AudioManager.class), getJDialog(), this);
@@ -100,6 +105,9 @@ public class ExpressionAudioSwing extends AbstractDigitalExpressionSwing {
         _panelAudioStateFormula.add(_turnoutStateFormulaTextField);
 
 
+        _checkOnlyOnChangeCheckBox = new JCheckBox(Bundle.getMessage("Audio_CheckOnlyOnChange"));
+
+
         if (expression != null) {
             _is_IsNot_ComboBox.setSelectedItem(expression.get_Is_IsNot());
 
@@ -114,6 +122,7 @@ public class ExpressionAudioSwing extends AbstractDigitalExpressionSwing {
             _turnoutStateReferenceTextField.setText(expression.getStateReference());
             _turnoutStateLocalVariableTextField.setText(expression.getStateLocalVariable());
             _turnoutStateFormulaTextField.setText(expression.getStateFormula());
+            _checkOnlyOnChangeCheckBox.setSelected(expression.isCheckOnlyOnChange());
         }
 
         JComponent[] components = new JComponent[]{
@@ -124,7 +133,10 @@ public class ExpressionAudioSwing extends AbstractDigitalExpressionSwing {
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
                 Bundle.getMessage("ExpressionAudio_Components"), components);
 
-        for (JComponent c : componentList) panel.add(c);
+        for (JComponent c : componentList) innerPanel.add(c);
+
+        panel.add(innerPanel);
+        panel.add(_checkOnlyOnChangeCheckBox);
     }
 
     /** {@inheritDoc} */
@@ -185,6 +197,8 @@ public class ExpressionAudioSwing extends AbstractDigitalExpressionSwing {
         } catch (ParserException e) {
             throw new RuntimeException("ParserException: "+e.getMessage(), e);
         }
+
+        expression.setCheckOnlyOnChange(_checkOnlyOnChangeCheckBox.isSelected());
     }
 
     /** {@inheritDoc} */

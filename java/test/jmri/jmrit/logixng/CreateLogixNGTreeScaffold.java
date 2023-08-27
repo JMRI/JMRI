@@ -3236,6 +3236,7 @@ public class CreateLogixNGTreeScaffold {
         expressionAudio.setStateFormula("\"IT\"+index2");
         expressionAudio.setStateLocalVariable("index2");
         expressionAudio.setStateReference("{IM2}");
+        expressionAudio.setCheckOnlyOnChange(true);
         maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
         and.getChild(indexExpr++).connect(maleSocket);
 
@@ -3252,6 +3253,7 @@ public class CreateLogixNGTreeScaffold {
         expressionAudio.setStateFormula("\"IT\"+index2");
         expressionAudio.setStateLocalVariable("index2");
         expressionAudio.setStateReference("{IM2}");
+        expressionAudio.setCheckOnlyOnChange(false);
         maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
         and.getChild(indexExpr++).connect(maleSocket);
 

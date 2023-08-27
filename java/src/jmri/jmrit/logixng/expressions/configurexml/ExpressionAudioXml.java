@@ -47,6 +47,8 @@ public class ExpressionAudioXml extends jmri.managers.configurexml.AbstractNamed
         element.addContent(new Element("stateLocalVariable").addContent(p.getStateLocalVariable()));
         element.addContent(new Element("stateFormula").addContent(p.getStateFormula()));
 
+        element.addContent(new Element("checkOnlyOnChange").addContent(p.isCheckOnlyOnChange()? "yes" : "no"));
+
         return element;
     }
 
@@ -85,6 +87,11 @@ public class ExpressionAudioXml extends jmri.managers.configurexml.AbstractNamed
 
             elem = shared.getChild("stateFormula");
             if (elem != null) h.setStateFormula(elem.getTextTrim());
+
+            Element checkOnlyOnChangeElem = shared.getChild("checkOnlyOnChange");
+            if (checkOnlyOnChangeElem != null) {
+                h.setCheckOnlyOnChange("yes".equals(checkOnlyOnChangeElem.getTextTrim()));
+            }
 
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);

@@ -70,12 +70,12 @@
               <xs:element name="stateLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="stateFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
 
-<!--              <xs:element name="enabled" type="yesNoType" /> -->
+              <xs:element name="checkOnlyOnChange" type="yesNoType" />
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
-<!--            <xs:attribute name="enabled" type="yesNoType" /> -->
+
             <xs:attribute name="class" type="classType" use="required"/>
 
     </xs:complexType>
