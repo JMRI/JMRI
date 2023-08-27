@@ -26,9 +26,9 @@ public class MqttLightManager extends jmri.managers.AbstractLightManager {
     }
     
     @Nonnull
-    public String sendTopicPrefix = "cmd/track/light/";
+    public String sendTopicPrefix = "track/light/";
     @Nonnull
-    public String rcvTopicPrefix  = "state/track/light/";
+    public String rcvTopicPrefix  = "track/light/";
 
     /**
      * {@inheritDoc}
