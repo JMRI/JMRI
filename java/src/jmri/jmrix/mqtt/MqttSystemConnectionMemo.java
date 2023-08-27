@@ -2,6 +2,7 @@ package jmri.jmrix.mqtt;
 
 import java.util.Comparator;
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrix.ConfiguringSystemConnectionMemo;
@@ -11,6 +12,7 @@ import jmri.util.NamedBeanComparator;
 /**
  *
  * @author Lionel Jeanson
+ * @author Dean Cording (c) 2023
  */
 public class MqttSystemConnectionMemo extends DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
 
@@ -23,15 +25,14 @@ public class MqttSystemConnectionMemo extends DefaultSystemConnectionMemo implem
 
     @Override
     public void configureManagers() {
-//        setPowerManager(new jmri.jmrix.jmriclient.JMRIClientPowerManager(this));
-//        jmri.InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
 
         InstanceManager.setTurnoutManager(getTurnoutManager());
         InstanceManager.setSensorManager(getSensorManager());
         InstanceManager.setLightManager(getLightManager());
         InstanceManager.setReporterManager(getReporterManager());
-
-//        jmri.InstanceManager.setReporterManager(getReporterManager());
+        InstanceManager.setThrottleManager(getThrottleManager());
+        InstanceManager.store(getPowerManager(), PowerManager.class);
+        InstanceManager.store(getConsistManager(), ConsistManager.class);
 
         // prefix for MqttSignalMasts
         MqttSignalMast.setSendTopicPrefix(getMqttAdapter().getOptionState("15"));
@@ -95,6 +96,53 @@ public class MqttSystemConnectionMemo extends DefaultSystemConnectionMemo implem
                     t.setRcvTopicPrefix(getMqttAdapter().getOptionState("13"));
                     return t;
                 });
+    }
+
+    public MqttThrottleManager getThrottleManager() {
+        if (getDisabled()) {
+            return null;
+        }
+        return (MqttThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class,(Class<?> c) -> {
+                    MqttThrottleManager t = new MqttThrottleManager(this);
+                    t.setSendThrottleTopic(getMqttAdapter().getOptionState("16.3"));
+                    t.setRcvThrottleTopic(getMqttAdapter().getOptionState("16.5"));
+                    t.setSendDirectionTopic(getMqttAdapter().getOptionState("17.3"));
+                    t.setRcvDirectionTopic(getMqttAdapter().getOptionState("17.5"));
+                    t.setSendFunctionTopic(getMqttAdapter().getOptionState("18.3"));
+                    t.setRcvFunctionTopic(getMqttAdapter().getOptionState("18.5"));
+                    return t;
+                });
+    }
+
+    public MqttPowerManager getPowerManager() {
+        if (getDisabled()) {
+            return null;
+        }
+        return (MqttPowerManager) classObjectMap.computeIfAbsent(PowerManager.class,(Class<?> c) -> {
+                    MqttPowerManager t = new MqttPowerManager(this);
+                    t.setSendTopic(getMqttAdapter().getOptionState("20.3"));
+                    t.setRcvTopic(getMqttAdapter().getOptionState("20.5"));
+                    return t;
+                });
+    }
+
+    public MqttConsistManager getConsistManager() {
+        if (getDisabled()) {
+            return null;
+        }
+        return (MqttConsistManager) classObjectMap.computeIfAbsent(ConsistManager.class,(Class<?> c) -> {
+                    MqttConsistManager t = new MqttConsistManager(this);
+                    t.setSendTopic(getMqttAdapter().getOptionState("19.3"));
+                    return t;
+                });
+    }
+
+    public void setPowerManager(@Nonnull PowerManager p) {
+        store(p,PowerManager.class);
+    }
+
+    public void setConsistManager(@Nonnull ConsistManager c) {
+        store(c,ConsistManager.class);
     }
 
     void setMqttAdapter(MqttAdapter ma) {

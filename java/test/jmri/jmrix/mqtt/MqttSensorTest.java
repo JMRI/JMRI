@@ -26,7 +26,8 @@ public class MqttSensorTest extends jmri.implementation.AbstractSensorTestBase {
         // prepare an interface
         a = new MqttAdapterScaffold(true);
         t = new MqttSensor(a, "MS1", "track/sensor/1", "track/sensor/1");
-        Assertions.assertEquals( 0, a.getPublishCount());
+        Assertions.assertEquals( 1, a.getPublishCount());
+        Assertions.assertNotEquals( "track/sensor/1", a.getLastTopic(),"topic");
     }
 
     @Override

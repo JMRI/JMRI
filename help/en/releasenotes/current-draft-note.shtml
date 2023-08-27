@@ -102,7 +102,11 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>Added support for Track Power control</li>
+                <li>Added support for throttle control  - speed, direction, and functions</li>
+                <li>Added support for Command Station consists</li>
+                <li>Fixed bug that stopped retained MQTT messages from being received on start up.</li>
+                <li>Clear Last Will and Testament on startup</li>
             </ul>
 
         <h4>MRC</h4>
