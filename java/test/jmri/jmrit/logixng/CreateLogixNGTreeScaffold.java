@@ -2255,6 +2255,20 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        jmri.jmrit.display.logixng.ActionPositionableByClass actionPositionableByClass =
+                new jmri.jmrit.display.logixng.ActionPositionableByClass(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionPositionableByClass);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionPositionableByClass =
+                new jmri.jmrit.display.logixng.ActionPositionableByClass(digitalActionManager.getAutoSystemName(), null);
+        actionPositionableByClass.setClassName("TheClass");
+        maleSocket = digitalActionManager.registerAction(actionPositionableByClass);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         jmri.jmrit.logixng.actions.ActionRequestUpdateAllSensors actionRequestUpdateAllSensors =
                 new jmri.jmrit.logixng.actions.ActionRequestUpdateAllSensors(digitalActionManager.getAutoSystemName(), null, _locoNetMemo);
         maleSocket = digitalActionManager.registerAction(actionRequestUpdateAllSensors);

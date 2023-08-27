@@ -144,6 +144,10 @@
         </li>
 
         <li>
+          <a href="../apps/Debug.shtml">Debugging and System Logging</a> after installation
+        </li>
+
+        <li>
           <a href="../apps/Errors.shtml">Error Codes</a>
         </li>
 

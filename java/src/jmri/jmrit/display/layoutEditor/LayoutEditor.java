@@ -3902,6 +3902,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     setHiddenMenu(p, popup);
                     setEmptyHiddenMenu(p, popup);
                     setEditIdMenu(p, popup);
+                    setEditClassesMenu(p, popup);
                     popup.addSeparator();
                     setLogixNGPositionableMenu(p, popup);
                 }

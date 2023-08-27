@@ -11,8 +11,6 @@ import java.util.HashMap;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.util.zeroconf.ZeroConfService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This is the main JMRI Server implementation.
@@ -220,5 +218,7 @@ public class JmriServer {
     public void stopClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
         outStream.writeBytes("");
     }
-    private final static Logger log = LoggerFactory.getLogger(JmriServer.class);
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriServer.class);
+
 }

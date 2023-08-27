@@ -2,6 +2,8 @@ package jmri.jmrit.display.switchboardEditor;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
@@ -164,15 +166,15 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             case SwitchboardEditor.SLIDER: // slider shape
                 iconSwitch = new IconSwitch(_shape, beanTypeChar); // draw as Graphic2D
                 iconSwitch.setPreferredSize(new Dimension(2*radius, 2*radius)); // tweak layout
-                iconSwitch.positionLabel(0, 5*radius/-8, Component.CENTER_ALIGNMENT, Math.max(12, radius/4));
-                iconSwitch.positionSubLabel(0, radius/-5, Component.CENTER_ALIGNMENT, Math.max(9, radius/5)); // smaller (system name)
+                iconSwitch.positionLabel(0, 5*radius/-8, Component.CENTER_ALIGNMENT, getLabelFontSize(radius, _switchDisplayName));
+                iconSwitch.positionSubLabel(0, radius/-5, Component.CENTER_ALIGNMENT, getSubLabelFontSize(radius, _uName)); // smaller (system name)
                 this.add(iconSwitch);
                 break;
             case SwitchboardEditor.KEY: // Maerklin style keyboard
                 iconSwitch = new IconSwitch(_shape, beanTypeChar); // draw as Graphic2D
                 iconSwitch.setPreferredSize(new Dimension(2*radius, 2*radius)); // tweak layout
-                iconSwitch.positionLabel(0, 0, Component.CENTER_ALIGNMENT, Math.max(12, radius/4));
-                iconSwitch.positionSubLabel(0, 3*radius/10, Component.CENTER_ALIGNMENT, Math.max(9, radius/5)); // smaller (system name)
+                iconSwitch.positionLabel(0, 0, Component.CENTER_ALIGNMENT, getLabelFontSize(radius, _switchDisplayName));
+                iconSwitch.positionSubLabel(0, 3*radius/10, Component.CENTER_ALIGNMENT, getSubLabelFontSize(radius, _uName)); // smaller (system name)
                 // provide x, y offset, depending on image size and free space
                 this.add(iconSwitch);
                 break;
@@ -184,14 +186,14 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 iconSwitch.setPreferredSize(new Dimension(2*radius, 2*radius));
                 switch (beanTypeChar) {
                     case 'T' :
-                        iconSwitch.positionLabel(0, 5*radius/-8, Component.CENTER_ALIGNMENT, Math.max(12, radius/4));
-                        iconSwitch.positionSubLabel(0, radius/-4, Component.CENTER_ALIGNMENT, Math.max(9, radius/5));
+                        iconSwitch.positionLabel(0, 5*radius/-8, Component.CENTER_ALIGNMENT, getLabelFontSize(radius, _switchDisplayName));
+                        iconSwitch.positionSubLabel(0, radius/-4, Component.CENTER_ALIGNMENT, getSubLabelFontSize(radius, _uName));
                         break;
                     case 'S' :
                     case 'L' :
                     default :
-                        iconSwitch.positionLabel(0, 5*radius/-8, Component.CENTER_ALIGNMENT, Math.max(12, radius/4));
-                        iconSwitch.positionSubLabel(0, radius/-3, Component.CENTER_ALIGNMENT, Math.max(9, radius/5));
+                        iconSwitch.positionLabel(0, 5*radius/-8, Component.CENTER_ALIGNMENT, getLabelFontSize(radius, _switchDisplayName));
+                        iconSwitch.positionSubLabel(0, radius/-3, Component.CENTER_ALIGNMENT, getSubLabelFontSize(radius, _uName));
                 }
                 // common (in)activecolor etc defined in SwitchboardEditor, retrieved by Servlet
                 this.setBorder(BorderFactory.createLineBorder(backgroundColor, 3));
@@ -303,6 +305,33 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         log.debug("Created switch {}", index);
     }
 
+    static final AffineTransform affinetransform = new AffineTransform();     
+    static final FontRenderContext frc = new FontRenderContext(affinetransform,true,true);    
+
+    int getLabelFontSize(int radius, String text) {
+        int fontSize = Math.max(12, radius/4);
+        // see if that fits using font metrics
+        if (text != null) {
+            Font font = new Font(Font.SANS_SERIF, Font.BOLD, fontSize); 
+            int textwidth = (int)(font.getStringBounds(text, frc).getWidth());
+            fontSize = Math.min(fontSize, fontSize*2*radius*9/textwidth/10); // integer arithmetic: fit in 90% of radius*2
+            log.trace("calculate fontsize {} from radius {} and textwidth {} for string \"{}\"", fontSize, radius, textwidth, text);
+        }
+        return Math.max(fontSize, 5); // but go no smaller than 6 point
+    }
+    
+    int getSubLabelFontSize(int radius, String text) {
+        int fontSize = Math.max(9, radius/5);
+        // see if text fits using font metrics, if not correct it with a smaller font size
+        if (text != null) {
+            Font font = new Font(Font.SANS_SERIF, Font.BOLD, fontSize); 
+            int textwidth = (int)(font.getStringBounds(text, frc).getWidth());
+            fontSize = Math.min(fontSize, fontSize*2*radius*9/textwidth/10); // integer arithmetic: fit in 90% of radius*2
+            log.trace("calculate fontsize {} from radius {} and textwidth {} for string \"{}\"", fontSize, radius, textwidth, text);
+        }
+        return Math.max(fontSize, 5); // but go no smaller than 6 point
+    }
+    
     public NamedBean getNamedBean() {
         return _bname;
     }
@@ -1022,11 +1051,17 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         private BufferedImage image2;
         private String tag = "tag";
         private String subTag = "";
+
         private int labelX = 16;
         private int labelY = 53;
         private int textSize = 12;
-        private int subTextSize = 10;
         private float textAlign = 0.0f;
+
+        private int subLabelX = 16;
+        private int subLabelY = 53;
+        private int subTextSize = 12;
+        private float subTextAlign = 0.0f;
+
         private float ropOffset = 0f;
         private int r = 10; // radius of circle fitting inside tile rect in px drawing units
         private int _shape = SwitchboardEditor.BUTTON;
@@ -1134,6 +1169,9 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         }
 
         protected void positionSubLabel(int x, int y, float align, int fontsize) {
+            subLabelX = x;
+            subLabelY = y;
+            subTextAlign = align;
             subTextSize = fontsize;
         }
 
@@ -1210,7 +1248,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 g.setColor(textColor);
             }
 
-            log.trace("about to paintComponent strings");
             g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, textSize));
 
             if (Math.abs(textAlign - Component.CENTER_ALIGNMENT) < .0001) {
@@ -1220,8 +1257,12 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             g.drawString(tag, labelX, labelY); // draw name on top of button image (vertical, horizontal offset from top left)
 
             if (showUserName == SwitchBoardLabelDisplays.BOTH_NAMES) {
-                g.setFont(new Font(Font.SANS_SERIF, Font.ITALIC, Math.max(subTextSize, 6)));
-                g.drawString(subTag, labelX, labelY); // draw user name at bottom
+                g.setFont(new Font(Font.SANS_SERIF, Font.ITALIC, subTextSize));
+                if (Math.abs(subTextAlign - Component.CENTER_ALIGNMENT) < .0001) {
+                    FontMetrics metrics = g.getFontMetrics(); // figure out where the center of the string is
+                    subLabelX = metrics.stringWidth(subTag)/-2;
+                }
+                g.drawString(subTag, subLabelX, subLabelY); // draw user name at bottom
             } else {
             }
         }

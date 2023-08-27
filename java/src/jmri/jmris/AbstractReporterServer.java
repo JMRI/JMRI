@@ -8,8 +8,6 @@ import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Reporter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract interface between the a JMRI reporter and a network connection
@@ -20,7 +18,6 @@ import org.slf4j.LoggerFactory;
 abstract public class AbstractReporterServer {
 
     private final HashMap<String, ReporterListener> reporters;
-    private static final Logger log = LoggerFactory.getLogger(AbstractReporterServer.class);
 
     public AbstractReporterServer() {
         reporters = new HashMap<>();
@@ -106,12 +103,10 @@ abstract public class AbstractReporterServer {
         public void propertyChange(PropertyChangeEvent e) {
             // If the Commanded State changes, show transition state as "<inconsistent>"
             if (e.getPropertyName().equals("currentReport")) {
-                String now;
-                try {
-                    now = e.getNewValue().toString();
-                } catch (NullPointerException npe) {
-                    // current report is null, which is expected.
-                    now = null;
+                var n = e.getNewValue();
+                String now = null; // current report might be null
+                if ( n != null ){
+                    now = n.toString();
                 }
                 try {
                     sendReport(name, now);
@@ -126,4 +121,7 @@ abstract public class AbstractReporterServer {
         String name = null;
         Reporter reporter = null;
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractReporterServer.class);
+
 }

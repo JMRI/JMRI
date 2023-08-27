@@ -273,7 +273,7 @@ public class ArchitectureTest {
     @ArchTest
     public static final ArchRule noLog4JinJmri = noClasses()
             .that().resideInAPackage("jmri..")
-            .should().dependOnClassesThat().resideInAPackage("org.apache.log4j");
+            .should().dependOnClassesThat().resideInAPackage("org.apache.logging.log4j");
 
     /**
      * Confine JDOM to configurexml packages.
