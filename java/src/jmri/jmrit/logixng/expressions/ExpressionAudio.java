@@ -37,14 +37,6 @@ public class ExpressionAudio extends AbstractDigitalExpression
     private String _stateFormula = "";
     private ExpressionNode _stateExpressionNode;
 
-    private NamedBeanAddressing _dataAddressing = NamedBeanAddressing.Direct;
-    private String _dataReference = "";
-    private String _dataLocalVariable = "";
-    private String _dataFormula = "";
-    private ExpressionNode _dataExpressionNode;
-
-    private String _blockValue = "";
-
     public ExpressionAudio(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
@@ -69,11 +61,6 @@ public class ExpressionAudio extends AbstractDigitalExpression
         copy.setStateLocalVariable(_stateLocalVariable);
         copy.setStateFormula(_stateFormula);
 
-        copy.setDataAddressing(_dataAddressing);
-        copy.setDataReference(_dataReference);
-        copy.setDataLocalVariable(_dataLocalVariable);
-        copy.setDataFormula(_dataFormula);
-        copy.setAudioValue(_blockValue);
         return manager.registerExpression(copy);
     }
 
@@ -147,63 +134,6 @@ public class ExpressionAudio extends AbstractDigitalExpression
     }
 
 
-    public void setDataAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _dataAddressing = addressing;
-        parseDataFormula();
-    }
-
-    public NamedBeanAddressing getDataAddressing() {
-        return _dataAddressing;
-    }
-
-    public void setDataReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _dataReference = reference;
-    }
-
-    public String getDataReference() {
-        return _dataReference;
-    }
-
-    public void setDataLocalVariable(@Nonnull String localVariable) {
-        _dataLocalVariable = localVariable;
-    }
-
-    public String getDataLocalVariable() {
-        return _dataLocalVariable;
-    }
-
-    public void setDataFormula(@Nonnull String formula) throws ParserException {
-        _dataFormula = formula;
-        parseDataFormula();
-    }
-
-    public String getDataFormula() {
-        return _dataFormula;
-    }
-
-    private void parseDataFormula() throws ParserException {
-        if (_dataAddressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _dataExpressionNode = parser.parseExpression(_dataFormula);
-        } else {
-            _dataExpressionNode = null;
-        }
-    }
-
-
-    public void setAudioValue(@Nonnull String value) {
-        _blockValue = value;
-    }
-
-    public String getAudioValue() {
-        return _blockValue;
-    }
-
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -232,31 +162,6 @@ public class ExpressionAudio extends AbstractDigitalExpression
 
             default:
                 throw new IllegalArgumentException("invalid _addressing state: " + _stateAddressing.name());
-        }
-    }
-
-    private String getNewData() throws JmriException {
-
-        switch (_dataAddressing) {
-            case Reference:
-                return ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _dataReference);
-
-            case LocalVariable:
-                SymbolTable symbolTable =
-                        getConditionalNG().getSymbolTable();
-                return TypeConversionUtil
-                        .convertToString(symbolTable.getValue(_dataLocalVariable), false);
-
-            case Formula:
-                return _dataExpressionNode != null
-                        ? TypeConversionUtil.convertToString(
-                                _dataExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false)
-                        : null;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _dataAddressing.name());
         }
     }
 
