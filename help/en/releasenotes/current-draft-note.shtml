@@ -570,7 +570,7 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>Fixed problems that were causing Learn Warrant to fail</li>
         </ul>
 
    <h3>Web Access</h3>
