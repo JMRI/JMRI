@@ -943,7 +943,8 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
                 msg = "Select the required train"
                 new_train_name = self.od.List(msg, trains_to_choose)
                 train_block = [block.getUserName() for block in blocks.getNamedBeanSet() if block.getValue() == new_train_name][0]
-                self.check_train_direction(new_train_name, train_block)
+                if train_block is not None:
+                    self.check_train_direction(new_train_name, train_block)
         return True
 
     def check_train_direction(self, train_name, station_block_name):
