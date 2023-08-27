@@ -45,11 +45,13 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     }
 
     public void destroy() {
-        for (FunctionButton fb : functionButtons) {
-            fb.destroy();
-            fb.removeFunctionListener(this);
+        if (functionButtons != null) {
+            for (FunctionButton fb : functionButtons) {
+                fb.destroy();
+                fb.removeFunctionListener(this);
+            }
+            functionButtons = null;
         }
-        functionButtons = null;
         if (addressPanel != null) {
             addressPanel.removeAddressListener(this);
             addressPanel = null;
