@@ -16,7 +16,8 @@
                 xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"
                 showEmptyPanes="no">
 
-    <version author="Knut Schwichtenberg" version="1" lastUpdated="20151122" />
+    <version author="Knut Schwichtenberg" version="1.1" lastUpdated="20220712" />
+    <version author="Pal A Olsen" version="1.2" lastUpdated="20230821" />
 
     <decoder>
 
@@ -30,8 +31,8 @@
 
         <variables>
 
-            <variable CV="9998" item="Long Address" 
-                      comment="Board SV address" 
+            <variable CV="9998" item="Long Address"
+                      comment="Board SV address"
                       infoOnly="yes" mask="VVVVVVVV" default="1024"
                       tooltip="Device address MUST be unique across all SV2 devices on the LocoNet connection">
                 <splitVal highCV="9999" upperMask="XVVVVVVV" min="1024" max="32383" />
@@ -40,7 +41,7 @@
             </variable>
 
             <variable CV="1" item="Advanced Group 1 Option 1"
-                      readOnly="yes" 
+                      readOnly="yes"
                       comment="Size of memory in bytes">
                 <enumVal>
                     <enumChoice value="0">
@@ -62,7 +63,7 @@
                 <label>EEPROM Size</label>
                 <label xml:lang="de">EEPROM Größe</label>
                 <tooltip>&lt;html&gt;
-                         This is &lt;strong&gt;SV1&lt;/strong&gt; as defined 
+                         This is &lt;strong&gt;SV1&lt;/strong&gt; as defined
                          by the LocoNet SV programming protocol.&lt;br/&gt;
                          It reflects the size of the EEPROM memory.&lt;br/&gt;
                          (Defined to be read only)
@@ -70,15 +71,15 @@
                 </tooltip>
             </variable>
 
-            <variable CV="2" item="SV2:Software Version"
+            <variable CV="2" item="SV2:Software Version" label="SV2"
                       readOnly="yes">
                 <decVal />
                 <label>Software Version</label>
                 <label xml:lang="de">Softwareversion</label>
                 <tooltip>&lt;html&gt;
-                         This is &lt;strong&gt;SV2&lt;/strong&gt; as defined 
+                         This is &lt;strong&gt;SV2&lt;/strong&gt; as defined
                          by the LocoNet SV programming protocol.&lt;br/&gt;
-                         It's the software version as defined by SV programming 
+                         It's the software version as defined by SV programming
                          or IPL protocol.&lt;br/&gt;
                          (Defined to be read only)
                          &lt;/html&gt;
@@ -136,7 +137,7 @@
             <variable CV="9" item="Advanced Group 1 Option 6"
                       readOnly="no" mask="XVVVVVVV"
                       comment="Loco address">
-                <splitVal highCV="8" upperMask="XVVVVVVV" />
+                <splitVal highCV="8" upperMask="XVVVVVVV" min="1"/>
                 <!-- TODO: limit values from 0 to 10239 -->
                 <label>Controlled Loco address (mobile decoder address)</label>
                 <label xml:lang="de">Adresse der zugewiesen Lokomotive</label>
@@ -150,7 +151,24 @@
                 </tooltip>
             </variable>
 
-            <variable CV="10" item="Advanced Group 1 Option 7">
+            <variable CV="8" item="Advanced Group 1 Option 5"
+                      readOnly="no" mask="VXXXXXXX">
+                <enumVal>
+                    <enumChoice value="0">
+                        <choice>Address active</choice>
+                        <choice xml:lang="de">Adress aktive</choice>
+                    </enumChoice>
+                    <enumChoice value="1">
+                        <choice>No Address assigned</choice>
+                        <choice xml:lang="de">Keine Adresse zugewiesen</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Loco Address</label>
+                <label xml:lang="de">Adresse der Lokomotive</label>
+                <tooltip>SV8, Bit7</tooltip>
+            </variable>
+
+            <variable CV="10" item="Advanced Group 1 Option 4">
                 <enumVal>
                     <enumChoice value="0">
                         <choice>28 Speed Steps</choice>
@@ -187,7 +205,7 @@
                 </tooltip>
             </variable>
 
-            <variable CV="11" item="Advanced Group 1 Option 8">
+            <variable CV="11" item="Advanced Group 1 Option 2">
                 <enumVal>
                     <enumChoice value="85">
                         <choice>Operation mode (0x55)</choice>
@@ -207,8 +225,8 @@
                 </tooltip>
             </variable>
 
-            <variable CV="12" item="Advanced Group 1 Option 9"
-                      readOnly="no" mask="VXXXXXXX">
+            <variable CV="12" item="Advanced Group 1 Option 10"
+                      readOnly="yes" mask="VXXXXXXX">
                 <enumVal>
                     <enumChoice value="0">
                         <choice>Forward-Reverse-Switch</choice>
@@ -224,8 +242,8 @@
                 <tooltip>SV12, Bit7</tooltip>
             </variable>
 
-            <variable CV="12" item="Advanced Group 1 Option 11"
-                      readOnly="no" mask="XVXXXXXX">
+            <variable CV="12" item="Advanced Group 1 Option 9"
+                      readOnly="yes" mask="XVXXXXXX">
                 <enumVal>
                     <enumChoice value="0">
                         <choice>One Shift only</choice>
@@ -241,8 +259,13 @@
                 <tooltip>SV12, Bit6</tooltip>
             </variable>
 
-            <variable CV="12" item="Advanced Group 1 Option 12"
-                      readOnly="no" mask="XXXXXXVV">
+            <variable CV="12" item="Advanced Group 1 Option 7"
+                      readOnly="yes" mask="XXXXXXVV">
+                <qualifier>
+                   <variableref>SV2:Software Version</variableref>
+                   <relation>le</relation>
+                   <value>21</value>
+                </qualifier>
                 <enumVal>
                     <enumChoice value="0">
                         <choice>Undefined</choice>
@@ -261,6 +284,75 @@
                 <label xml:lang="de">FREDi Variante (wie vom Selbstest erkannt)</label>
                 <tooltip>SV12, Bit0 and Bit1</tooltip>
             </variable>
+
+            <variable CV="12" item="Advanced Group 1 Option 8"
+                      readOnly="yes" mask="XXXXVVVV">
+                <qualifier>
+                   <variableref>SV2:Software Version</variableref>
+                   <relation>gt</relation>
+                   <value>21</value>
+                </qualifier>
+                <enumVal>
+                    <enumChoice value="0">
+                        <choice>Undefined</choice>
+                        <choice xml:lang="de">Undefiniert</choice>
+                    </enumChoice>
+                    <enumChoice value="1">
+                        <choice>Increment Encoder F1-F4</choice>
+                        <choice xml:lang="de">Inkremental-Geber</choice>
+                    </enumChoice>
+                    <enumChoice value="2">
+                        <choice>Analogue Poti F1-F4</choice>
+                        <choice xml:lang="de">Analoges Poti F1-F4</choice>
+                    </enumChoice>
+                    <enumChoice value="3">
+		    <choice>Analogue Poti F1-F4 (obsolete)</choice>
+                        <choice xml:lang="de">Analoges Poti F1-F4</choice>
+                    </enumChoice>
+                    <enumChoice value="4">
+                        <choice>Matrix FREDi</choice>
+                        <choice xml:lang="de">Matrix FREDi</choice>
+                    </enumChoice>
+                    <enumChoice value="6">
+                        <choice>Matrix FREDi (SWD)</choice>
+                        <choice xml:lang="de">Matrix FREDi (SWD)</choice>
+                    </enumChoice>
+                    <enumChoice value="14">
+                        <choice>FREDi with Break-button/switch</choice>
+                        <choice xml:lang="de">FREDi mit Bremstaste/Schalter</choice>
+                    </enumChoice>
+                    <enumChoice value="15">
+                        <choice>Undefined</choice>
+                        <choice xml:lang="de">Undefiniert</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>FREDi type as detected by the selftest</label>
+                <label xml:lang="de">FREDi Variante (wie vom Selbstest erkannt)</label>
+                <tooltip>SV12 - Bit0, Bit1, Bit2 and Bit3</tooltip>
+            </variable>
+
+	   <!--
+           <variable CV="12" item="Advanced Group 1 Option 3"
+                      readOnly="no" mask="XXXXXVVV">
+                <enumVal>
+                    <enumChoice value="7">
+                        <choice>Undefined</choice>
+                        <choice xml:lang="de">Undefiniert</choice>
+                    </enumChoice>
+                    <enumChoice value="1">
+                        <choice>Increment Encoder</choice>
+                        <choice xml:lang="de">Inkremental-Geber</choice>
+                    </enumChoice>
+                    <enumChoice value="3">
+                        <choice>Analogue Poti</choice>
+                        <choice xml:lang="de">Analoges Poti</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>FREDi Speed knob as detected by the selftest</label>
+                <label xml:lang="de">FREDi Geschwindigkeitsknopf (wie vom Selbstest erkannt)</label>
+                <tooltip>SV12, Bit0, Bit1 and Bit2</tooltip>
+            </variable>
+	    -->
 
             <variable CV="13" item="SV13:High part of Software Version No."
                       readOnly="yes">
@@ -393,6 +485,133 @@
                 <tooltip>SV30</tooltip>
             </variable>
 
+            <variable CV="31" item="SV31:Function Mode F13" comment="F13">
+                <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-FREDiFunctionKeyMode.xml" />
+                <label>Function F13</label>
+                <label xml:lang="de">Funktion F13</label>
+                <tooltip>SV31</tooltip>
+            </variable>
+
+            <variable CV="32" item="SV32:Function Mode F14" comment="F14">
+                <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-FREDiFunctionKeyMode.xml" />
+                <label>Function F14</label>
+                <label xml:lang="de">Funktion F14</label>
+                <tooltip>SV32</tooltip>
+            </variable>
+
+            <variable CV="33" item="SV33:Function Mode F15" comment="F15">
+                <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-FREDiFunctionKeyMode.xml" />
+                <label>Function F15</label>
+                <label xml:lang="de">Funktion F15</label>
+                <tooltip>SV33</tooltip>
+            </variable>
+
+            <variable CV="34" item="SV34:Function Mode F16" comment="F16">
+                <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-FREDiFunctionKeyMode.xml" />
+                <label>Function F16</label>
+                <label xml:lang="de">Funktion F16</label>
+                <tooltip>SV34</tooltip>
+            </variable>
+
+            <!-- SV35-42 spare for future extension -->
+
+            <variable CV="43" item="Advanced Group 1 Option 11" default="255">
+	        <qualifier>
+                   <variableref>SV2:Software Version</variableref>
+                   <relation>gt</relation>
+                   <value>21</value>
+               </qualifier>
+
+                <enumVal>
+                    <enumChoice value="0">
+                        <choice>Enabled</choice>
+                        <choice xml:lang="de">Aktivert</choice>
+                    </enumChoice>
+                    <enumChoice value="255">
+                        <choice>Disabled</choice>
+                        <choice xml:lang="de">Inaktiv</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Using OPC-IMM (Digitrax compatible) for functions above F12</label>
+		<label xml:lang="de">Verwenden OPC-IMM für Funktionen über F9 (Digitrax-kompatibel)</label>
+		<tooltip>SV43</tooltip>
+            </variable>
+
+            <variable CV="44" item="Advanced Group 1 Option 12" default="19">
+                <qualifier>
+			<variableref>Advanced Group 1 Option 8</variableref>
+                    <relation>eq</relation>
+                    <value>14</value>
+                </qualifier>
+                <enumVal>
+		    <enumChoice value="0">
+                        <choice>Break function disabled</choice>
+		    </enumChoice>
+		    <enumChoice value="1">
+                        <choice>F1</choice>
+		    </enumChoice>
+		    <enumChoice value="2">
+                        <choice>F2</choice>
+		    </enumChoice>
+		    <enumChoice value="3">
+                        <choice>F3</choice>
+		    </enumChoice>
+		    <enumChoice value="4">
+                        <choice>F4</choice>
+		    </enumChoice>
+		    <enumChoice value="5">
+                        <choice>F5</choice>
+		    </enumChoice>
+		    <enumChoice value="6">
+                        <choice>F6</choice>
+		    </enumChoice>
+		    <enumChoice value="7">
+                        <choice>F7</choice>
+		    </enumChoice>
+		    <enumChoice value="8">
+                        <choice>F8</choice>
+		    </enumChoice>
+		    <enumChoice value="9">
+                        <choice>F9</choice>
+		    </enumChoice>
+		    <enumChoice value="10">
+                        <choice>F10</choice>
+		    </enumChoice>
+		    <enumChoice value="11">
+                        <choice>F11</choice>
+		    </enumChoice>
+		    <enumChoice value="12">
+                        <choice>F12</choice>
+		    </enumChoice>
+		    <enumChoice value="13">
+                        <choice>F13</choice>
+		    </enumChoice>
+		    <enumChoice value="14">
+                        <choice>F14</choice>
+		    </enumChoice>
+		    <enumChoice value="15">
+                        <choice>F15</choice>
+		    </enumChoice>
+		    <enumChoice value="16">
+                        <choice>F16</choice>
+		    </enumChoice>
+		    <enumChoice value="17">
+                        <choice>F17</choice>
+		    </enumChoice>
+		    <enumChoice value="18">
+                        <choice>F18</choice>
+		    </enumChoice>
+		    <enumChoice value="19">
+                        <choice>F19</choice>
+		    </enumChoice>
+		    <enumChoice value="255">
+                        <choice>Unassigned</choice>
+		    </enumChoice>
+	        </enumVal>
+                <label>Select Break function (Range F1-F19)</label>
+                <label xml:lang="de">Auswahl der Bremsfunktion im Bereich von F1-F19</label>
+		<tooltip>SV44</tooltip>
+            </variable>
         </variables>
     </decoder>
 
