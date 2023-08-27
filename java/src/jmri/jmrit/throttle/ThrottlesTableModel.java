@@ -57,6 +57,19 @@ public class ThrottlesTableModel extends AbstractTableModel implements java.bean
         fireTableDataChanged();
     }
 
+    public int getNumberOfEntriesFor(DccLocoAddress la) {
+        if (la == null) { 
+            return 0; 
+        }
+        int ret = 0;
+        for (ThrottleFrame tf: throttleFrames) {
+            if (( tf.getAddressPanel().getCurrentAddress() == la) || (tf.getAddressPanel().getConsistAddress() == la)) {
+                ret++;
+            }
+        }
+        return ret;
+    }
+
     public void removeThrottleFrame(ThrottleFrame tf, DccLocoAddress la) {
         throttleFrames.remove(tf);
         fireTableDataChanged();
