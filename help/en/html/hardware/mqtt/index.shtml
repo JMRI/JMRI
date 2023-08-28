@@ -292,12 +292,12 @@
         their aspect when changed.  These do not receive anything from the layout.
         </li>
 
-        <li><strong>Track Power</strong>: JRMI sends Track Power ON/OFF commands on the "Power
+        <li><strong>Track Power</strong>: JMRI sends Track Power ON/OFF commands on the "Power
         send topic" and receives the track power status on the "Power receive topic".
         </li>
 
-        <li><strong>Throttle Control</strong>: JRMI supports controlling cabs over MQTT.  The protocol is
-        controller agnostic though the internal design of JRMI imposes some compliance with DCC standards.
+        <li><strong>Throttle Control</strong>: JMRI supports controlling cabs over MQTT.  The protocol is
+        controller agnostic though the internal design of JMRI imposes some compliance with DCC standards.
         <br>Using a Throttle Control over MQTT provides for:
         <ul>
         <li><strong>Throttle</strong>: The speed setting as a 0-100 percentage value is sent on the
@@ -308,7 +308,7 @@
         <li><strong>Function</strong>: Function states are sent on the "Function send topic" and received
         on the "Function receive topic".  The string "$function" within each topic is substituted with
         the number of the function.Function state values are "ON" and "OFF".</li>
-        <li><strong>Consist</strong>: MQTT supports Command Station Consists in JRMI using the standard
+        <li><strong>Consist</strong>: MQTT supports Command Station Consists in JMRI using the standard
          Consist Tool. All of the loco addresses that make up a consist are listed in the
         "Consist send topic" when a throttle is controlling that consist address.  It is up to the controller
         to determine how it controls the individual locos in the consist.</li>
