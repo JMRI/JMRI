@@ -54,6 +54,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ThrottleFrame extends JDesktopPane implements ComponentListener, AddressListener {
 
+    private DccThrottle throttle;
     private final ThrottleManager throttleManager;
     private final ThrottlesTableModel allThrottlesTableModel = InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel();
 
@@ -613,13 +614,20 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         log.debug("Disposing {}", getTitle());
         URIDrop.remove(backgroundPanel);
         addressPanel.removeAddressListener(this);
+        // should the throttle list table stop listening to that throttle?
+        if (throttle!=null &&  allThrottlesTableModel.getNumberOfEntriesFor((DccLocoAddress) throttle.getLocoAddress()) == 1 ) {
+            throttleManager.removeListener(throttle.getLocoAddress(), allThrottlesTableModel);
+            allThrottlesTableModel.fireTableDataChanged();
+        }
+        
+        // remove from the throttle list table
         InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel().removeThrottleFrame(this, addressPanel.getCurrentAddress());
         // check for any special disposing in InternalFrames
         controlPanel.destroy();
         functionPanel.destroy();
         speedPanel.destroy();
         backgroundPanel.destroy();
-        // dispose of this last because it will release and destroy throttle.
+        // dispose of this last because it will release and destroy the throttle.
         addressPanel.destroy();
     }
 
@@ -987,15 +995,27 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
     @Override
     public void notifyAddressReleased(LocoAddress la) {
+        if (throttle == null) {
+            log.debug("notifyAddressReleased() throttle already null, called for loc {}",la);
+            return;
+        }
         setLastUsedSaveFile(null);
         setFrameTitle();
-        throttleWindow.updateGUI();
-        throttleManager.removeListener(la, allThrottlesTableModel);
-        allThrottlesTableModel.fireTableDataChanged();
+        throttleWindow.updateGUI(); 
+        if (throttle!=null && allThrottlesTableModel.getNumberOfEntriesFor((DccLocoAddress) throttle.getLocoAddress()) == 1 )  {
+            throttleManager.removeListener(throttle.getLocoAddress(), allThrottlesTableModel);
+            allThrottlesTableModel.fireTableDataChanged();
+        }
+        throttle = null;
     }
 
     @Override
-    public void notifyAddressThrottleFound(DccThrottle throttle) {
+    public void notifyAddressThrottleFound(DccThrottle t) {
+        if (throttle != null) {
+            log.debug("notifyAddressThrottleFound() throttle non null, called for loc {}",t.getLocoAddress());
+            return;
+        }
+        throttle = t;
         if ((InstanceManager.getDefault(ThrottlesPreferences.class).isUsingExThrottle())
                 && (InstanceManager.getDefault(ThrottlesPreferences.class).isAutoLoading())
                 && (addressPanel != null) && (addressPanel.getRosterEntry() != null)

@@ -482,7 +482,10 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      */
     @Override
     public void notifyAddressThrottleFound(DccThrottle t) {
-        log.debug("Throttle found");
+        log.debug("Throttle found for {}",t);
+        if (mThrottle != null) {
+            mThrottle.removePropertyChangeListener(this);
+        }
         mThrottle = t;
         mThrottle.addPropertyChangeListener(this);
         int numFns = mThrottle.getFunctions().length;
@@ -490,7 +493,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             // +1 because we want the _number_ of functions, and we have to count F0
             numFns = Math.min(numFns, addressPanel.getRosterEntry().getMaxFnNumAsInt()+1);
         }
-        log.debug("notifyAddressThrottleFound for {}", numFns);
+        log.debug("notifyAddressThrottleFound number of functions {}", numFns);
         resizeFnButtonsArray(numFns);
         updateFnButtons();
         setEnabled(true);
