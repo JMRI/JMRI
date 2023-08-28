@@ -89,6 +89,7 @@ public class MqttPowerManager extends AbstractPowerManager<MqttSystemConnectionM
             switch (message) {
                 case onText: super.setPower(ON); break;
                 case offText: super.setPower(OFF); break;
+                default: log.error("Invalid message {}", message); break;
             }
         } catch (JmriException e) {
             log.error("JMRI Exception {}", e);

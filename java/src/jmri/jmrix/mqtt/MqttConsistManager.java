@@ -70,7 +70,7 @@ public class MqttConsistManager extends AbstractConsistManager {
             return consistTable.get(address);
         }
         MqttConsist consist;
-        consist = new MqttConsist((DccLocoAddress) address, (MqttSystemConnectionMemo) adapterMemo,
+        consist = new MqttConsist((DccLocoAddress) address, adapterMemo,
                 sendTopicPrefix);
         consistTable.put(address, consist);
         notifyConsistListChanged();
@@ -117,6 +117,6 @@ public class MqttConsistManager extends AbstractConsistManager {
 
 
 
-    private final static Logger log = LoggerFactory.getLogger(MqttConsistManager.class);
+//    private final static Logger log = LoggerFactory.getLogger(MqttConsistManager.class);
 
 }

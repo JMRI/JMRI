@@ -226,7 +226,7 @@ public class MqttConsist extends jmri.implementation.DccConsist {
 
         for (DccLocoAddress  address : consistDir.keySet()) {
             consistMakeup = consistMakeup.concat(consistDir.get(address) ? "":"-").concat(String.valueOf(address.getNumber())).concat(" ");
-        };
+        }
 
         return consistMakeup.trim();
 

@@ -126,6 +126,7 @@ public class MqttSystemConnectionMemo extends DefaultSystemConnectionMemo implem
                 });
     }
 
+    @Override
     public MqttConsistManager getConsistManager() {
         if (getDisabled()) {
             return null;
@@ -141,6 +142,7 @@ public class MqttSystemConnectionMemo extends DefaultSystemConnectionMemo implem
         store(p,PowerManager.class);
     }
 
+    @Override
     public void setConsistManager(@Nonnull ConsistManager c) {
         store(c,ConsistManager.class);
     }

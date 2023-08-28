@@ -266,6 +266,9 @@ import jmri.ThrottleListener;
                     break;
                 case "STOP":
                     super.setSpeedSetting(-1);
+                    break;
+                default:
+                    log.error("Invalid message {}", message);
             }
         } else {
 

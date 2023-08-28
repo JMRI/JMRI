@@ -2,6 +2,7 @@ package jmri.jmrix.mqtt;
 
 import jmri.SpeedStepMode;
 import jmri.util.JUnitUtil;
+import jmri.util.JUnitAppender;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -220,12 +221,14 @@ public class MqttThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertTrue(instance.getIsForward());
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/direction", "XXXX");
+        JUnitAppender.suppressErrorMessage("Invalid message XXXX");
         Assert.assertTrue(instance.getIsForward());
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/direction", "REVERSE");
         Assert.assertFalse(instance.getIsForward());
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/direction", "XXXX");
+        JUnitAppender.suppressErrorMessage("Invalid message XXXX");
         Assert.assertFalse(instance.getIsForward());
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/direction", "STOP");
@@ -238,12 +241,14 @@ public class MqttThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertFalse(instance.getFunction(1));
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/function/1", "XXX");
+        JUnitAppender.suppressErrorMessage("Invalid message XXX");
         Assert.assertFalse(instance.getFunction(1));
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/function/1", "ON");
         Assert.assertTrue(instance.getFunction(1));
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/function/1", "XXX");
+        JUnitAppender.suppressErrorMessage("Invalid message XXX");
         Assert.assertFalse(instance.getFunction(1));
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/function/23", "ON");
@@ -254,6 +259,7 @@ public class MqttThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertFalse(instance.getFunction(23));
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/function/23", "XXX");
+        JUnitAppender.suppressErrorMessage("Invalid message XXX");
         Assert.assertFalse(instance.getFunction(23));
         Assert.assertFalse(instance.getFunction(1));
 
@@ -262,6 +268,7 @@ public class MqttThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertFalse(instance.getFunction(1));
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/function/23", "XXX");
+        JUnitAppender.suppressErrorMessage("Invalid message XXX");
         Assert.assertFalse(instance.getFunction(23));
         Assert.assertFalse(instance.getFunction(1));
 
