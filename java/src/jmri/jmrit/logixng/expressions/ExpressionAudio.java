@@ -202,6 +202,8 @@ public class ExpressionAudio extends AbstractDigitalExpression
             return false;
         }
 
+        _hasChangedState = false;
+
         if (_is_IsNot == Is_IsNot_Enum.Is) {
             return currentState == checkAudioState.getID();
         } else {
