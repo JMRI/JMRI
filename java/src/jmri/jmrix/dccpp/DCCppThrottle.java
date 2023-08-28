@@ -38,7 +38,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      * @param controller system connection traffic controller.
      */
     public DCCppThrottle(DCCppSystemConnectionMemo memo, DCCppTrafficController controller) {
-        super(memo);
+        super(memo, 69); // supports up to F68
         tc = controller;
         requestList = new LinkedBlockingQueue<RequestMessage>();
         this.isForward = true; //loco should default to forward
@@ -52,7 +52,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      * @param controller system connection traffic controller.
      */
     public DCCppThrottle(DCCppSystemConnectionMemo memo, LocoAddress address, DCCppTrafficController controller) {
-        super(memo);
+        super(memo, 69); // supports up to F68
         tc = controller;
         if (address instanceof DccLocoAddress) {
             this.setDccAddress(address.getNumber());

@@ -577,6 +577,7 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         tm = new DCCppThrottleManager(memo);
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, tm);
         instance = new DCCppThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
+        setMaxFns(69);
     }
 
     @Override
