@@ -3646,7 +3646,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>To improve the speed of the car import, you can close the cars window. It takes
         significantly more processor cycles to update the cars window than to actually import the
-        cars.</p>
+        cars. The program will report to the system console information and warnings during the
+        import. You can access the system console from any menu bar under "Help"</p>
 
       <p>
         After importing your cars, you must save them if you want to keep them as part of your
