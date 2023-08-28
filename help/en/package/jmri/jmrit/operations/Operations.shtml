@@ -3589,8 +3589,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       If you already have a list of cars in a database, you can import the cars into the program.
       The import function requires an ACSII text file, with one line for each car. The car import
       requires four attributes and the order is car number, road (reporting mark), type, and length.
-      All four car attributes are required for the import to work correctly. The following shows two
-      examples of the correct format:
+      All four car attributes are required for the import to work correctly. The program requires
+      each car to have a unique road and number. Use the
+      <a href="#CarRoadNumber">hyphen</a> feature if you have cars with the same road and number.
+      The following shows two examples of the correct format:
       <p>
         336 GCR Flat 40<br> 655578 UP Boxcar 40
       </p>
@@ -3598,7 +3600,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>Each line can start with a space and multiple spaces between fields is okay. Optionally
         you can include additional attributes in the following order; weight, color, owner name,
         date built, and location. The location can have two fields, the location name followed by
-        the location's spur or yard name separated by a hyphen. The following shows two examples of
+        the location's spur or yard name separated by a . The following shows two examples of
         the correct format:</p>
 
       <p>
@@ -3676,11 +3678,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>Select the road (reporting mark) for the car. If the desired road doesn't exist, press
         the "Edit" button to the right of the road select menu box. This will allow you to add a new
-        road or delete any that you don't need. You can use the "hyphen" feature to create unique
-        road names. The program will drop the hyphen and the following characters when printing a
+        road or delete any that you don't need. You can use the "" feature to create unique
+        road names. The program will drop the  and the following characters when printing a
         Manifest or switch list.</p>
 
-      <h4>Road Number</h4>
+      <h4 id="CarRoadNumber">Road Number</h4>
 
       <p>Enter the car's road number in the text box. The program requires a unique road and
         number for each car. If you have cars with identical roads and numbers, simply add a -1, -2,
