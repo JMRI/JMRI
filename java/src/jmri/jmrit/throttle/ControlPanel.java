@@ -1295,7 +1295,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     @Override
     public void notifyAddressReleased(LocoAddress la) {
         if (throttle == null) {
-            log.debug("notifyAddressReleased() throttle alreaday null, called for loc {}",la);
+            log.debug("notifyAddressReleased() throttle already null, called for loc {}", la);
             return;
         }        
         this.setEnabled(false);
