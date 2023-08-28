@@ -3600,7 +3600,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>Each line can start with a space and multiple spaces between fields is okay. Optionally
         you can include additional attributes in the following order; weight, color, owner name,
         date built, and location. The location can have two fields, the location name followed by
-        the location's spur or yard name separated by a . The following shows two examples of
+        the location's spur or yard name separated by a hyphen. The following shows two examples of
         the correct format:</p>
 
       <p>
@@ -3678,8 +3678,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>Select the road (reporting mark) for the car. If the desired road doesn't exist, press
         the "Edit" button to the right of the road select menu box. This will allow you to add a new
-        road or delete any that you don't need. You can use the "" feature to create unique
-        road names. The program will drop the  and the following characters when printing a
+        road or delete any that you don't need. You can use the "hyphen" feature to create unique
+        road names. The program will drop the hyphen and the following characters when printing a
         Manifest or switch list.</p>
 
       <h4 id="CarRoadNumber">Road Number</h4>
