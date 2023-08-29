@@ -48,7 +48,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     @API(status=API.Status.MAINTAINED)
     public String baseTopic = DEFAULT_BASETOPIC;
 
-    HashMap<String, ArrayList<MqttEventListener>> mqttEventListeners;
+    HashMap<String, ArrayList<MqttEventListener>> mqttEventListeners = new HashMap<>();
 
     MqttClient mqttClient;
 
@@ -86,6 +86,25 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         options.put("13", new Option("Reporter topic :",    new String[]{Bundle.getMessage("TopicReporter")}, Option.Type.TEXT));
         options.put("14", new Option("Signal Head topic :", new String[]{Bundle.getMessage("TopicSignalHead")}, Option.Type.TEXT));
         options.put("15", new Option("Signal Mast topic :", new String[]{Bundle.getMessage("TopicSignalMast")}, Option.Type.TEXT));
+        options.put("16.3", new Option(Bundle.getMessage("NameTopicThrottleSend"),
+                                       new String[]{Bundle.getMessage("TopicThrottleSend")},  Option.Type.TEXT));
+        options.put("16.5", new Option(Bundle.getMessage("NameTopicThrottleRcv"),
+                                       new String[]{Bundle.getMessage("TopicThrottleRcv")},  Option.Type.TEXT));
+        options.put("17.3", new Option(Bundle.getMessage("NameTopicDirectionSend"),
+                                       new String[]{Bundle.getMessage("TopicThrottleSend")},  Option.Type.TEXT));
+        options.put("17.5", new Option(Bundle.getMessage("NameTopicDirectionRcv"),
+                                       new String[]{Bundle.getMessage("TopicThrottleRcv")},  Option.Type.TEXT));
+        options.put("18.3", new Option(Bundle.getMessage("NameTopicFunctionSend"),
+                                       new String[]{Bundle.getMessage("TopicThrottleSend")},  Option.Type.TEXT));
+        options.put("18.5", new Option(Bundle.getMessage("NameTopicFunctionRcv"),
+                                       new String[]{Bundle.getMessage("TopicThrottleRcv")},  Option.Type.TEXT));
+        options.put("19.3", new Option(Bundle.getMessage("NameTopicConsistSend"),
+                                       new String[]{Bundle.getMessage("TopicConsistSend")},  Option.Type.TEXT));
+        options.put("20.3", new Option(Bundle.getMessage("NameTopicPowerSend"),
+                                       new String[]{Bundle.getMessage("TopicPowerSend")},  Option.Type.TEXT));
+        options.put("20.5", new Option(Bundle.getMessage("NameTopicPowerRcv"),
+                                       new String[]{Bundle.getMessage("TopicPowerRcv")},  Option.Type.TEXT));
+
         options.put("LastWillTopic", new Option(Bundle.getMessage("NameTopicLastWill"),
                     new String[]{Bundle.getMessage("TopicLastWill")}, Option.Type.TEXT));
         options.put("LastWillMessage", new Option(Bundle.getMessage("NameMessageLastWill"),
@@ -123,7 +142,6 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         mqttEventListeners = new HashMap<>();
         getSystemConnectionMemo().setMqttAdapter(this);
         getSystemConnectionMemo().configureManagers();
-        mqttClient.setCallback(this);
     }
 
     @Override
@@ -161,9 +179,13 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
                     || ( ! getOptionState("LastWillTopic").isEmpty()
                     && ! getOptionState("LastWillMessage").isEmpty())) {
                 mqttClient.connect(getMqttConnectionOptions());
+
+                publish(getOptionState("LastWillTopic"), "");
+
             } else {
                 mqttClient.connect();
             }
+            mqttClient.setCallback(this);
 
         } catch (MqttException ex) {
             throw new IOException("Can't create MQTT client", ex);
@@ -212,7 +234,12 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             jmri.util.LoggingUtil.warnOnce(log, "Trying to unsubscribe before connect/configure is done");
             return;
         }
-        mqttEventListeners.get(fullTopic).remove(mel);
+        try {
+            mqttEventListeners.get(fullTopic).remove(mel);
+        } catch (NullPointerException e) {
+            // Not subscribed
+            return;
+        }
         if (mqttEventListeners.get(fullTopic).isEmpty()) {
             try {
                 mqttClient.unsubscribe(fullTopic);
