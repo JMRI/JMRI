@@ -832,6 +832,12 @@
             number of "access violation" messages.  These are just advisory
             with Java 17, but will become mandatory failures in some later
             version of Java (Java 21?)
+        <li>(Development only) Improved error checking in the Javadoc
+            process generates hundreds of warnings that can hide real problems.
+            These will need to be cleaned up.
+        <li>(Development only) Deprecations that are marked for removal 
+            generate un-suppressible warning messages.
+            These will need to be cleaned up.
       </ol>
       
       <!--#include virtual="/Footer.shtml" -->
