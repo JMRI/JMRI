@@ -14,6 +14,7 @@ import jmri.jmrit.operations.rollingstock.ImportRollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.trains.TrainCommon;
 
 /**
  * This routine will import engines into the operation database. Each field is
@@ -181,7 +182,7 @@ public class ImportEngines extends ImportRollingStock {
                             Bundle.getMessage("EngineLengthMissing"), JOptionPane.ERROR_MESSAGE);
                     break;
                 }
-                if (engineNumber.length() > Control.max_len_string_road_number) {
+                if (TrainCommon.splitString(engineNumber).length() > Control.max_len_string_road_number) {
                     JOptionPane.showMessageDialog(
                             null, MessageFormat.format(Bundle.getMessage("EngineRoadNumberTooLong"),
                                     new Object[]{engineRoad, engineNumber, engineNumber}),
