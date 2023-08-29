@@ -116,9 +116,9 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         if (_typeExternalTable.isSelected()) {
             String fileName = _csvFileName.getText();
             if (fileName == null || fileName.isEmpty()) {
-                JOptionPane.showMessageDialog(addLogixNGFrame,
+                jmri.util.swing.JmriJOptionPane.showMessageDialog(addLogixNGFrame,
                         Bundle.getMessage("LogixNGError2"), Bundle.getMessage("ErrorTitle"), // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
+                        jmri.util.swing.JmriJOptionPane.ERROR_MESSAGE);
                 return null;
             }
             if (_csvTabbed.isSelected()) {
