@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
@@ -19,6 +18,7 @@ import jmri.implementation.SignalSpeedMap;
 import jmri.util.swing.JComboBoxUtil;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.swing.NamedBeanComboBox;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Provides an edit panel for a turnout object.
@@ -85,7 +85,7 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
     private String useBlockSpeed = Bundle.getMessage("UseGlobal", "Block Speed");
     private TurnoutOperationConfig config;
     private BeanItemPanel feedback;
-    private JPanel turnoutOperation = new JPanel();
+    private final JPanel turnoutOperation = new JPanel();
 
     private BeanItemPanel feedback() {
         feedback = new BeanItemPanel();
@@ -158,10 +158,10 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                 String newName = operationsName.getText();
                 if ((currentOperation != null) && (newName != null) && !newName.isEmpty()) {
                     if (!currentOperation.rename(newName)) {
-                        JOptionPane.showMessageDialog(null,
+                        JmriJOptionPane.showMessageDialog(turnoutOperation,
                                 Bundle.getMessage("ErrorDuplicateUserName", newName),
                                 Bundle.getMessage("ErrorTitle"),
-                                JOptionPane.ERROR_MESSAGE);
+                                JmriJOptionPane.ERROR_MESSAGE);
                     } else {
                         automationBox.addItem(newName);
                         automationBox.setSelectedItem(newName);
@@ -193,12 +193,12 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                 try {
                     bean.provideFirstFeedbackSensor(sensorFeedBack1ComboBox.getSelectedItemDisplayName());
                 } catch (jmri.JmriException ex) {
-                    JOptionPane.showMessageDialog(null, ex.toString());
+                    JmriJOptionPane.showMessageDialog(turnoutOperation, ex.toString());
                 }
                 try {
                     bean.provideSecondFeedbackSensor(sensorFeedBack2ComboBox.getSelectedItemDisplayName());
                 } catch (jmri.JmriException ex) {
-                    JOptionPane.showMessageDialog(null, ex.toString());
+                    JmriJOptionPane.showMessageDialog(turnoutOperation, ex.toString());
                 }
             }
         });
@@ -449,26 +449,26 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
       speed.setSaveItem(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String speed = (String) closedSpeedBox.getSelectedItem();
-                if (speed != null) {
+                String newSpeed = (String) closedSpeedBox.getSelectedItem();
+                if (newSpeed != null) {
                     try {
-                        bean.setStraightSpeed(speed);
-                        if ((!speedListClosed.contains(speed)) && !speed.contains("Global")) {
-                            speedListClosed.add(speed);
+                        bean.setStraightSpeed(newSpeed);
+                        if ((!speedListClosed.contains(newSpeed)) && !newSpeed.contains("Global")) {
+                            speedListClosed.add(newSpeed);
                         }
                     } catch (jmri.JmriException ex) {
-                        JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
+                        JmriJOptionPane.showMessageDialog(speed, ex.getMessage() + "\n" + newSpeed);
                     }
                 }
-                speed = (String) thrownSpeedBox.getSelectedItem();
-                if (speed != null) {
+                newSpeed = (String) thrownSpeedBox.getSelectedItem();
+                if (newSpeed != null) {
                     try {
-                        bean.setDivergingSpeed(speed);
-                        if ((!speedListThrown.contains(speed)) && !speed.contains("Global")) {
-                            speedListThrown.add(speed);
+                        bean.setDivergingSpeed(newSpeed);
+                        if ((!speedListThrown.contains(newSpeed)) && !newSpeed.contains("Global")) {
+                            speedListThrown.add(newSpeed);
                         }
                     } catch (jmri.JmriException ex) {
-                        JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
+                        JmriJOptionPane.showMessageDialog(speed, ex.getMessage() + "\n" + newSpeed);
                     }
                 }
             }
