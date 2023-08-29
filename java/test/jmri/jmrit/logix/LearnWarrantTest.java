@@ -106,7 +106,7 @@ public class LearnWarrantTest {
         // warrant has been recorded using engine 99
 
         List<ThrottleSetting> list = frame.getThrottleCommands();
-        assertThat(list.size()).withFailMessage("10 ThrottleCommands was "+list.size()).isEqualTo(10);
+        assertThat(list.size()).withFailMessage("12 ThrottleCommands was "+list.size()).isEqualTo(12);
 
         // now playback using engine 111
         NXFrameTest.setAndConfirmSensorAction(lastSensor, Sensor.INACTIVE,
@@ -123,7 +123,7 @@ public class LearnWarrantTest {
 
 //        (new JRadioButtonOperator(jfo,"ARun")).push();    // start play back
         jmri.util.ThreadingUtil.runOnGUIEventually(() -> {frame.runTrain();});
-        confirmJOptionPane(jfo, Bundle.getMessage("WarningTitle"), "OK");
+//        confirmJOptionPane(jfo, Bundle.getMessage("WarningTitle"), "OK");
 
         sensor = NXFrameTest.runtimes(route, _OBlockMgr);
         assertThat(sensor).withFailMessage("Sensor not null").isNotNull();

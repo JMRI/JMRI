@@ -45,11 +45,13 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     }
 
     public void destroy() {
-        for (FunctionButton fb : functionButtons) {
-            fb.destroy();
-            fb.removeFunctionListener(this);
+        if (functionButtons != null) {
+            for (FunctionButton fb : functionButtons) {
+                fb.destroy();
+                fb.removeFunctionListener(this);
+            }
+            functionButtons = null;
         }
-        functionButtons = null;
         if (addressPanel != null) {
             addressPanel.removeAddressListener(this);
             addressPanel = null;
@@ -489,7 +491,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         mThrottle = t;
         mThrottle.addPropertyChangeListener(this);
         int numFns = mThrottle.getFunctions().length;
-        if (addressPanel.getRosterEntry() != null) {
+        if (addressPanel != null && addressPanel.getRosterEntry() != null) {
             // +1 because we want the _number_ of functions, and we have to count F0
             numFns = Math.min(numFns, addressPanel.getRosterEntry().getMaxFnNumAsInt()+1);
         }
