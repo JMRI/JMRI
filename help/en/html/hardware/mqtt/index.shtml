@@ -292,6 +292,34 @@
         their aspect when changed.  These do not receive anything from the layout.
         </li>
 
+        <li><strong>Track Power</strong>: JMRI sends Track Power ON/OFF commands on the "Power
+        send topic" and receives the track power status on the "Power receive topic".
+        </li>
+
+        <li><strong>Throttle Control</strong>: JMRI supports controlling cabs over MQTT.  The protocol is
+        controller agnostic though the internal design of JMRI imposes some compliance with DCC standards.
+        <br>Using a Throttle Control over MQTT provides for:
+        <ul>
+        <li><strong>Throttle</strong>: The speed setting as a 0-100 percentage value is sent on the
+        "Throttle send topic" and received on the "Throttle receive topic".</li>
+        <li><strong>Direction</strong>: The throttle direction is sent on the "Direction send topic" and
+        received on the "Direction receive topic".  Direction values are "FORWARD" and "REVERSE", and "STOP"
+        for an emergency stop.</li>
+        <li><strong>Function</strong>: Function states are sent on the "Function send topic" and received
+        on the "Function receive topic".  The string "$function" within each topic is substituted with
+        the number of the function.Function state values are "ON" and "OFF".</li>
+        <li><strong>Consist</strong>: MQTT supports Command Station Consists in JMRI using the standard
+         Consist Tool. All of the loco addresses that make up a consist are listed in the
+        "Consist send topic" when a throttle is controlling that consist address.  It is up to the controller
+        to determine how it controls the individual locos in the consist.</li>
+        </ul>
+
+        In the topics listed above, the string "$address" in the topic name is replaced with the loco
+        or consist address that the throttle is controlling.  When the throttle is Released, all of the
+        above topics are removed from MQTT. If a throttle is Dispatched, the topics are retained on MQTT -
+        this allows for locos to be controlled from a script but be able to be taken over and manually
+        controlled as required (ie for shunting operations).
+
       </ul>
 
       <p>All other messages on these defined topics are ignored by the standard JMRI processing.</p>

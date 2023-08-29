@@ -63,7 +63,8 @@ public class ThrottlesTableModel extends AbstractTableModel implements java.bean
         }
         int ret = 0;
         for (ThrottleFrame tf: throttleFrames) {
-            if (( tf.getAddressPanel().getCurrentAddress() == la) || (tf.getAddressPanel().getConsistAddress() == la)) {
+            if ( tf.getAddressPanel().getThrottle() != null && // is throttle active
+                    (( tf.getAddressPanel().getCurrentAddress() == la) || (tf.getAddressPanel().getConsistAddress() == la )) ) { // is it the one we're looking for
                 ret++;
             }
         }
