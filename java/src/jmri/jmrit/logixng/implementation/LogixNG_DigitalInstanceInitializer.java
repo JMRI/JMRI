@@ -28,7 +28,7 @@ import org.openide.util.lookup.ServiceProvider;
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2014
  * @since 2.9.4
  */

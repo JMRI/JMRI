@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * <p>
  * This is a class (instead of a {@link jmri.jmrit.roster.Roster} member
  * function) to simplify use of {@link jmri.Programmer} callbacks.
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2015
  * @see jmri.jmrit.symbolicprog.CombinedLocoSelPane

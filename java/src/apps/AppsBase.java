@@ -34,7 +34,7 @@ import apps.util.Log4JUtil;
  * There are a series of steps in the configuration:
  * <dl>
  * <dt>preInit<dd>Initialize log4j, invoked from the main()
- * <dt>ctor<dd>
+ * <dt>ctor<dd>Construct the basic application object
  * </dl>
  *
  * @author Bob Jacobsen Copyright 2009, 2010
