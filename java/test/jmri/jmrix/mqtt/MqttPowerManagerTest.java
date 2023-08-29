@@ -19,7 +19,6 @@ import org.junit.Assert;
 public class MqttPowerManagerTest extends AbstractPowerManagerTestBase {
 
     private MqttSystemConnectionMemo memo = null;
-    private MqttThrottleManager tm;
     private MqttAdapterScaffold a;
 
     public String sendPowerTopic = "track/power";
@@ -27,33 +26,33 @@ public class MqttPowerManagerTest extends AbstractPowerManagerTestBase {
 
     protected void hearOn(){
         ((MqttPowerManager)p).notifyMqttMessage(rcvPowerTopic, "ON");
-    };
+    }
 
     protected void hearOff(){
         ((MqttPowerManager)p).notifyMqttMessage(rcvPowerTopic, "OFF");
-    };
+    }
 
     protected void hearIdle(){};
 
     protected void sendOnReply(){
         ((MqttPowerManager)p).notifyMqttMessage(rcvPowerTopic, "ON");
-    };  // get a reply to On command from layout
+    }  // get a reply to On command from layout
 
     protected void sendOffReply(){
         ((MqttPowerManager)p).notifyMqttMessage(rcvPowerTopic, "OFF");
-    }; // get a reply to Off command from layout
+    } // get a reply to Off command from layout
 
-    protected void sendIdleReply(){};
+    protected void sendIdleReply(){}
 
-    protected int numListeners(){return 0;};
+    protected int numListeners(){return 0;}
 
-    protected int outboundSize(){return 0;};
+    protected int outboundSize(){return 0;}
 
-    protected boolean outboundOnOK(int index){return false;};
+    protected boolean outboundOnOK(int index){return false;}
 
-    protected boolean outboundOffOK(int index){return false;};
+    protected boolean outboundOffOK(int index){return false;}
 
-    protected boolean outboundIdleOK(int index){return false;};
+    protected boolean outboundIdleOK(int index){return false;}
 
 
         // test setting power on, off, then getting reply from system
