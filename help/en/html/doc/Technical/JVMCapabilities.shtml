@@ -812,6 +812,28 @@
           </tr>
         </tbody>
       </table>
+      
+      <a id="jdk17">
+      <h2>Running JMRI 5 on Java 17 or later</h2>
+      There are some known problems when running JMRI 
+      on Java versions later than the recommended Java 11.
+      Specifically, for JMRI 5 on Java 17 these include:
+      
+      <ol>
+        <li>There is no JavaScript (ECMAscript) interpreter available
+            so .js scripts can't be run within JMRI.  Note that this 
+            does not affect JavaScript run on a web browser, so that
+            JMRI's webserver capability will still work OK.
+        <li>The module system prevents LibUSB (ch.ntb.usb) from accessing the hardware. 
+            This is used in a few scripts. Not clear if its developers will 
+            be issuing an update or not; possibly JMRI will have to 
+            switch to a different library.
+        <li>The Java module system will in certain circumstances emit a large
+            number of "access violation" messages.  These are just advisory
+            with Java 17, but will become mandatory failures in some later
+            version of Java (Java 21?)
+      </ol>
+      
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
