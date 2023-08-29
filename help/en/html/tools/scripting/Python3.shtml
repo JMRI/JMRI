@@ -151,10 +151,12 @@ class Automat(AbstractAutomaton) :
         print ("handle in Python 3")
         return False
                 </code></pre>
+<!-- The following was fixed in Java 17 Graal 23, which we recommend above
                 but when you're doing that you can't add any additional
                 methods to the new class.  This might require rethinking
                 how to connect Java class code to your own scripting code;
                 we hope to have some recommendations soon.
+ -->
 
             <li>The "syntax error" message doesn't tell you where the
                 error was found.  This is a real pain.
