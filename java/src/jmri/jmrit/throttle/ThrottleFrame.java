@@ -1004,8 +1004,8 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         throttleWindow.updateGUI(); 
         if (throttle!=null && allThrottlesTableModel.getNumberOfEntriesFor((DccLocoAddress) throttle.getLocoAddress()) == 1 )  {
             throttleManager.removeListener(throttle.getLocoAddress(), allThrottlesTableModel);
-            allThrottlesTableModel.fireTableDataChanged();
         }
+        allThrottlesTableModel.fireTableDataChanged();
         throttle = null;
     }
 

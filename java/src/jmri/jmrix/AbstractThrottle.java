@@ -326,7 +326,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
             return;
         }
         super.addPropertyChangeListener(l);
-        log.debug("addPropertyChangeListener(): listeners size is {}", getPropertyChangeListeners().length);
+        log.debug("addPropertyChangeListener(): throttle: {} listeners size is {}", getLocoAddress(), getPropertyChangeListeners().length);
     }
 
     /**
@@ -339,7 +339,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         }
         log.debug("removePropertyChangeListener(): Removing property change {} from {}", l.getClass().getSimpleName(), getLocoAddress());
         super.removePropertyChangeListener(l);
-        log.debug("removePropertyChangeListener(): listeners size is {}", getPropertyChangeListeners().length);
+        log.debug("removePropertyChangeListener(): throttle: {} listeners size is {}", getLocoAddress(), getPropertyChangeListeners().length);
         if (getPropertyChangeListeners().length == 0) {
             log.debug("No listeners so calling ThrottleManager.dispose with an empty ThrottleListener for {}",getLocoAddress());
             InstanceManager.throttleManagerInstance().disposeThrottle(this, new ThrottleListener() {
