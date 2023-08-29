@@ -1,5 +1,6 @@
 package jmri.jmrix.mqtt;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
@@ -131,7 +132,7 @@ public class MqttConsist extends jmri.implementation.DccConsist {
      * Remove an address from the internal consist list object.
      */
     private synchronized void removeFromConsistList(DccLocoAddress LocoAddress) {
-        log.debug("Remove from consist list address {} direction{}", LocoAddress);
+        log.debug("Remove from consist list address {}", LocoAddress);
         consistDir.remove(LocoAddress);
         consistList.remove(LocoAddress);
         notifyConsistListeners(LocoAddress, ConsistListener.OPERATION_SUCCESS);
@@ -184,7 +185,7 @@ public class MqttConsist extends jmri.implementation.DccConsist {
      */
     @Override
     public synchronized void remove(DccLocoAddress LocoAddress) {
-        log.debug("Remove from advanced consist address {} direction {}", LocoAddress);
+        log.debug("Remove from advanced consist address {}", LocoAddress);
 
         if (consistType == CS_CONSIST) {
             removeFromConsistList(LocoAddress);
@@ -220,6 +221,7 @@ public class MqttConsist extends jmri.implementation.DccConsist {
 
     }
 
+    @SuppressFBWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "false positive")
     private String getConsistMakeup() {
 
         String consistMakeup = "";

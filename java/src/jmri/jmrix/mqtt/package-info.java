@@ -4,7 +4,6 @@
  * Supports turnouts, sensors, lights, reporters, masts, and throttles.
  * <p>
  * Default system letter is "M".
- * <p>
  *
  * <h2>Related Documentation</h2>
  *

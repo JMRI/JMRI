@@ -93,6 +93,7 @@ public class MqttConsistManager extends AbstractConsistManager {
      * If a consist exists with the given address, the consist is activated on the controller,
      * otherwise it does nothing.
      * This is used by a throttle in case it is controlling a consist.
+     * @param address Consist address to be activated
      */
     public void activateConsist(LocoAddress address) {
 
@@ -106,6 +107,7 @@ public class MqttConsistManager extends AbstractConsistManager {
      * If a consist exists with the given address, the consist is deactivated on the controller,
      * otherwise it does nothing.
      * This is used by a throttle in case it is controlling a consist.
+     * @param address Consist address to be deactivated
      */
     public void deactivateConsist(LocoAddress address) {
 
