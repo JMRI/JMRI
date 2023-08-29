@@ -12,7 +12,6 @@ import jmri.JmriException;
 import jmri.managers.AbstractPowerManager;
 
 import javax.annotation.Nonnull;
-import jmri.JmriException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -92,7 +91,7 @@ public class MqttPowerManager extends AbstractPowerManager<MqttSystemConnectionM
                 default: log.error("Invalid message {}", message); break;
             }
         } catch (JmriException e) {
-            log.error("JMRI Exception {}", e);
+            log.error("JMRI Exception", e);
         }
     }
 

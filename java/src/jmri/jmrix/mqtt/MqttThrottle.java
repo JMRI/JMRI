@@ -82,7 +82,13 @@ import jmri.ThrottleListener;
 
     /**
      * Constructor.
-     * @param memo system connection.
+     * @param memo system connection
+     * @param sendThrottleTopic     MQTT topic for sending speed
+     * @param rcvThrottleTopic      MQTT topic for receiving speed
+     * @param sendDirectionTopic    MQTT topic for sending direction
+     * @param rcvDirectionTopic     MQTT topic for receiving direction
+     * @param sendFunctionTopic     MQTT topic for sending function values
+     * @param rcvFunctionTopic      MQTT topic for receiving function values
      * @param address loco address to set on throttle
      */
     public MqttThrottle(MqttSystemConnectionMemo memo, String sendThrottleTopic, String rcvThrottleTopic,
@@ -199,7 +205,7 @@ import jmri.ThrottleListener;
      */
     @Override
     protected void throttleDispose() {
-        log.debug("throttleDispose ", address);
+        log.debug("throttleDispose {}", address);
 
         finishRecord();
     }
@@ -274,7 +280,7 @@ import jmri.ThrottleListener;
 
             Matcher functionMatcher = functionPattern.matcher(receivedTopic);
             if (functionMatcher.matches()) {
-                updateFunction(Integer.valueOf(functionMatcher.group(1)),(message.equals("ON")));
+                updateFunction(Integer.parseInt(functionMatcher.group(1)),(message.equals("ON")));
             }
         }
     }

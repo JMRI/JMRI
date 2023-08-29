@@ -3,7 +3,6 @@ package jmri.jmrix.mqtt;
 import java.util.EnumSet;
 import java.util.HashMap;
 
-import jmri.jmrix.mqtt.MqttThrottle;
 import jmri.DccThrottle;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
@@ -96,7 +95,7 @@ public class MqttThrottleManager extends AbstractThrottleManager {
         return true;
     }
 
-	/**
+    /**
      * MQTT based systems can have multiple throttles for the same
      * device
      * <p>
@@ -185,7 +184,9 @@ public class MqttThrottleManager extends AbstractThrottleManager {
     @Override
     public void releaseThrottle(DccThrottle t, ThrottleListener l) {
         log.debug("releaseThrottle {}", t);
-        ((MqttThrottle)t).throttleRelease();
+        if (t instanceof MqttThrottle) { // should always be the case as it was made that way
+            ((MqttThrottle)t).throttleRelease();
+        }
         disposeThrottle(t, l);
     }
 
