@@ -32,7 +32,7 @@ public class MqttPowerManagerTest extends AbstractPowerManagerTestBase {
         ((MqttPowerManager)p).notifyMqttMessage(rcvPowerTopic, "OFF");
     }
 
-    protected void hearIdle(){};
+    protected void hearIdle(){}
 
     protected void sendOnReply(){
         ((MqttPowerManager)p).notifyMqttMessage(rcvPowerTopic, "ON");
