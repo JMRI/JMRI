@@ -428,6 +428,8 @@
         <ul>
           <li>The <strong>Icon/Label by class on panel</strong> action is added.
               It allows LogixNG to control all icons/labels of a class.</li>
+          <li>The <strong>Audio</strong> expression has been added. It lets
+              LogixNG listen on an Audio and take appropriate action.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>

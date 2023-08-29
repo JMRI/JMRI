@@ -3218,6 +3218,113 @@ public class CreateLogixNGTreeScaffold {
         and.getChild(indexExpr++).connect(maleSocket);
 
 
+        ExpressionAudio expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        expressionAudio.setComment("A comment");
+//        expressionAudio.getSelectNamedBean().setNamedBean(turnout1);
+        expressionAudio.setBeanState(ExpressionAudio.AudioState.Initial);
+        expressionAudio.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionAudio.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionAudio.getSelectNamedBean().setLocalVariable("index");
+        expressionAudio.getSelectNamedBean().setReference("{IM1}");
+        expressionAudio.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionAudio.setStateAddressing(NamedBeanAddressing.LocalVariable);
+        expressionAudio.setStateFormula("\"IT\"+index2");
+        expressionAudio.setStateLocalVariable("index2");
+        expressionAudio.setStateReference("{IM2}");
+        expressionAudio.setCheckOnlyOnChange(true);
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        expressionAudio.setComment("A comment");
+//        expressionAudio.getSelectNamedBean().setNamedBean(turnout1);
+        expressionAudio.setBeanState(ExpressionAudio.AudioState.Stopped);
+        expressionAudio.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionAudio.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionAudio.getSelectNamedBean().setLocalVariable("index");
+        expressionAudio.getSelectNamedBean().setReference("{IM1}");
+        expressionAudio.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionAudio.setStateAddressing(NamedBeanAddressing.Formula);
+        expressionAudio.setStateFormula("\"IT\"+index2");
+        expressionAudio.setStateLocalVariable("index2");
+        expressionAudio.setStateReference("{IM2}");
+        expressionAudio.setCheckOnlyOnChange(false);
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        expressionAudio.setComment("A comment");
+//        expressionAudio.getSelectNamedBean().setNamedBean(turnout1);
+        expressionAudio.setBeanState(ExpressionAudio.AudioState.Playing);
+        expressionAudio.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        expressionAudio.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionAudio.getSelectNamedBean().setLocalVariable("index");
+        expressionAudio.getSelectNamedBean().setReference("{IM1}");
+        expressionAudio.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionAudio.setStateAddressing(NamedBeanAddressing.Reference);
+        expressionAudio.setStateFormula("\"IT\"+index2");
+        expressionAudio.setStateLocalVariable("index2");
+        expressionAudio.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        expressionAudio.setComment("A comment");
+//        expressionAudio.getSelectNamedBean().setNamedBean(turnout1);
+        expressionAudio.setBeanState(ExpressionAudio.AudioState.Positioned);
+        expressionAudio.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        expressionAudio.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionAudio.getSelectNamedBean().setLocalVariable("index");
+        expressionAudio.getSelectNamedBean().setReference("{IM1}");
+        expressionAudio.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionAudio.setStateAddressing(NamedBeanAddressing.Direct);
+        expressionAudio.setStateFormula("\"IT\"+index2");
+        expressionAudio.setStateLocalVariable("index2");
+        expressionAudio.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        expressionAudio.setBeanState(ExpressionAudio.AudioState.Empty);
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        expressionAudio.setBeanState(ExpressionAudio.AudioState.Initial);
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        expressionAudio.setBeanState(ExpressionAudio.AudioState.Loaded);
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        expressionAudio.setBeanState(ExpressionAudio.AudioState.Moving);
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        expressionAudio.setBeanState(ExpressionAudio.AudioState.Playing);
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        expressionAudio.setBeanState(ExpressionAudio.AudioState.Positioned);
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        expressionAudio.setBeanState(ExpressionAudio.AudioState.Stopped);
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+
         ExpressionBlock expressionBlock = new ExpressionBlock(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionBlock);
         maleSocket.setEnabled(false);
