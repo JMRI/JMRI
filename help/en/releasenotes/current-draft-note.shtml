@@ -223,7 +223,7 @@
 
         <h4>ESU</h4>
             <ul>
-                <li></li>
+                <li>The LokPilot Basic 1.0 decoder definition is now product-ID specific.</li>
             </ul>
 
         <h4>Hornby</h4>
@@ -288,7 +288,7 @@
 
         <h4>Public Domain and DIY decoders</h4>
             <ul>
-                <li></li>
+                <li>Updated to support FREDi v2.2</li>
             </ul>
 
         <h4>QSI</h4>
@@ -424,6 +424,8 @@
         <ul>
           <li>The <strong>Icon/Label by class on panel</strong> action is added.
               It allows LogixNG to control all icons/labels of a class.</li>
+          <li>The <strong>Audio</strong> expression has been added. It lets
+              LogixNG listen on an Audio and take appropriate action.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -570,7 +572,7 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>Fixed problems that were causing Learn Warrant to fail</li>
         </ul>
 
    <h3>Web Access</h3>
