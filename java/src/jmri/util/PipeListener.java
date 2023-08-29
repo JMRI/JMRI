@@ -27,9 +27,11 @@ public class PipeListener extends Thread {
             while (true) {
                 try {
                     c[0] = (char) pr.read();
-                    ta.append(new String(c));   // odd way to do this, but only
-                    // way I could think of with only one
-                    // new object created
+                    jmri.util.ThreadingUtil.runOnGUI(() -> {
+                        ta.append(new String(c));   // odd way to do this, but only
+                        // way I could think of with only one
+                        // new object created
+                    });
                 } catch (IOException ex) {
                     if (ex.getMessage().equals("Write end dead") || ex.getMessage().equals("Pipe broken")) {
                         // happens when the writer thread, possibly a script, terminates
