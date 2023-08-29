@@ -60,6 +60,7 @@ public class MqttPowerManagerTest extends AbstractPowerManagerTestBase {
     public void testSetPowerOn() throws JmriException {
         Assert.assertEquals(PowerManager.UNKNOWN, p.getPower());
         p.setPower(PowerManager.ON);
+        JUnitUtil.waitFor( ()->{ return a.getPublishCount()==2; }, "publish triggered");
         Assert.assertEquals(rcvPowerTopic, a.getLastTopic());
         Assert.assertEquals("ON", new String(a.getLastPayload()));
         Assert.assertEquals(PowerManager.UNKNOWN, p.getPower());
@@ -72,6 +73,7 @@ public class MqttPowerManagerTest extends AbstractPowerManagerTestBase {
     public void testSetPowerOff() throws JmriException {
         Assert.assertEquals(PowerManager.UNKNOWN, p.getPower());
         p.setPower(PowerManager.OFF);
+        JUnitUtil.waitFor( ()->{ return a.getPublishCount()==2; }, "publish triggered");
         Assert.assertEquals(rcvPowerTopic, a.getLastTopic());
         Assert.assertEquals("OFF", new String(a.getLastPayload()));
         Assert.assertEquals(PowerManager.UNKNOWN, p.getPower());

@@ -170,6 +170,7 @@ public class MqttConsistTest extends jmri.implementation.AbstractConsistTestBase
         // nothing added, should be false for all.
         Assert.assertFalse("Consist Contains",c.contains(A));
         Assert.assertFalse("Consist Contains",c.contains(B));
+        JUnitUtil.waitFor( ()->{ return a.getPublishCount()==1; }, "publish triggered");
         Assert.assertEquals("track/state", a.getLastTopic());
         Assert.assertEquals("", new String(a.getLastPayload()));
 
@@ -180,6 +181,7 @@ public class MqttConsistTest extends jmri.implementation.AbstractConsistTestBase
 
         // Activate consist
         ((MqttConsist)c).activate();
+        JUnitUtil.waitFor( ()->{ return a.getPublishCount()==2; }, "publish triggered");
         Assert.assertEquals("cab/3/consist", a.getLastTopic());
         Assert.assertEquals("200", new String(a.getLastPayload()));
 
@@ -188,6 +190,7 @@ public class MqttConsistTest extends jmri.implementation.AbstractConsistTestBase
         Assert.assertTrue("Consist Contains",c.contains(A));
         Assert.assertTrue("Consist Contains",c.contains(B));
 
+        JUnitUtil.waitFor( ()->{ return a.getPublishCount()==3; }, "publish triggered");
         Assert.assertEquals("cab/3/consist", a.getLastTopic());
         Assert.assertEquals("200 -250", new String(a.getLastPayload()));
 
@@ -195,10 +198,12 @@ public class MqttConsistTest extends jmri.implementation.AbstractConsistTestBase
         Assert.assertFalse("Consist Contains",c.contains(A));
         Assert.assertTrue("Consist Contains",c.contains(B));
 
+        JUnitUtil.waitFor( ()->{ return a.getPublishCount()==4; }, "publish triggered");
         Assert.assertEquals("cab/3/consist", a.getLastTopic());
         Assert.assertEquals("-250", new String(a.getLastPayload()));
 
          ((MqttConsist)c).deactivate();
+         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==5; }, "publish triggered");
         Assert.assertEquals("cab/3/consist", a.getLastTopic());
         Assert.assertEquals("", new String(a.getLastPayload()));
 
