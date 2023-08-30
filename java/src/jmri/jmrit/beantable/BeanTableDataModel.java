@@ -1035,7 +1035,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * Display the comment text for the current row as a tool tip.
      *
      * Most of the bean tables use the standard model with comments in column 3.
-     * <p>
+     *
      * @param table The current table.
      * @param row The current row.
      * @param col The current column.

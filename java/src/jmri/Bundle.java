@@ -41,7 +41,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1

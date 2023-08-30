@@ -29,7 +29,6 @@ import org.openlcb.swing.*;
 
 /**
  * Pane for displaying a table of relationships of nodes, producers and consumers
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2023
  * @since 5.3.4

@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement LightManager for XBee connections.
- * <p>
  *
  * @author Paul Bender Copyright (C) 2014
  */

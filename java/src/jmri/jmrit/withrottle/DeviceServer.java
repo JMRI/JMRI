@@ -659,7 +659,6 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     }
     /**
      * Send an Alert message (simple text string) to this client
-     * <p>
      * @param message
      * Format: HMmessage
      */
@@ -670,7 +669,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
     /**
      * Send an Info message (simple text string) to this client
-     * <p>
+     *
      * @param message
      * Format: Hmmessage
      */

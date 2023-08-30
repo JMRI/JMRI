@@ -14,7 +14,7 @@
     <!--#include virtual="/Header.shtml" -->
 
     <div id="mBody">
-        <!--#include virtual="Sidebar.shtml" --> <!-- choose from local ("Sidebar.shtml") or global ("/Sidebar.shtml") -->
+        <!--#include virtual="Sidebar.shtml" --> 
     <div id="mainContent">
 
 	    <div id="teaser"> <!-- Optional -->
@@ -31,7 +31,7 @@
 		        write scripts that are critical to your railroad's operation using Python 3.
 		    <p>
 		        Please note that Python 3 support is currently only available for macOS and Linux
-		        computers.  Some of the components it requires are not year available for Windows.
+		        computers.  Some of the components it requires are not yet available for Windows.
 		        We'll update to use them and make Windows support available as soon as those
 		        components are updated.
 		    </p>
@@ -87,7 +87,9 @@
             <p>
             To do that, follow
             <a href="https://www.graalvm.org/docs/getting-started/#install-graalvm">the GraalVM install instructions</a>
-            to install a Java 11 version.
+            to install a Java 17 or later version. Note that using Java 17 will cause
+            some problems for other JMRI functions, see the
+            <a href="../../doc/Technical/JVMCapabilities.shtml#jdk17">description of those</a>.
             <p>
             Once you do that and start JMRI, a "Python 3" choice should appear in the
             language selector in the Script Input Window, and the file choosers for
@@ -149,16 +151,12 @@ class Automat(AbstractAutomaton) :
         print ("handle in Python 3")
         return False
                 </code></pre>
+<!-- The following was fixed in Java 17 Graal 23, which we recommend above
                 but when you're doing that you can't add any additional
                 methods to the new class.  This might require rethinking
                 how to connect Java class code to your own scripting code;
                 we hope to have some recommendations soon.
-
-            <li>There's a problem with the various
-                <code>wait</code> calls in <code>AbstractAutomaton</code>,
-                e.g. <code>waitMsec(..)</code> and similar,
-                that can result in JMRI locking up. We don't currently
-                have a workaround for this.
+ -->
 
             <li>The "syntax error" message doesn't tell you where the
                 error was found.  This is a real pain.

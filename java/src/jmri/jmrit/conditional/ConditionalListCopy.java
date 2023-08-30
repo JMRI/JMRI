@@ -248,7 +248,7 @@ public class ConditionalListCopy extends ConditionalList {
 
     /**
      * Respond to the Done button in the Edit Logix window.
-     * <p>
+     *
      * @param e The event heard
      */
     void donePressed(ActionEvent e) {

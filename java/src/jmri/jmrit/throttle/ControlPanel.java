@@ -33,7 +33,6 @@ import org.w3c.dom.Document;
 /**
  * A JInternalFrame that contains a JSlider to control loco speed, and buttons
  * for forward, reverse and STOP.
- * <p>
  *
  * @author glen Copyright (C) 2002
  * @author Bob Jacobsen Copyright (C) 2007, 2021

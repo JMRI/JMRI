@@ -7831,7 +7831,7 @@ final public class LayoutEditorTools {
      * If the NX deletes fail due to Conditional references or user deny, the
      * assignment is not deleted. No additional notification is necessary since
      * they have already been notified or made a choice to not continue.
-     * <p>
+     *
      * @param sensor The sensor to be removed.
      * @return true if the sensor has been removed.
      */

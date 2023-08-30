@@ -16,7 +16,6 @@ public class AcelaSignalHead extends DefaultSignalHead {
 
     /**
      * Create a SignalHead object, with only a system name.
-     * <p>
      * @param systemName should have been previously validated.
      * @param memo system connection.
      */
@@ -42,7 +41,7 @@ public class AcelaSignalHead extends DefaultSignalHead {
 
     /**
      * Create a SignalHead object, with both system and user names.
-     * <p>
+     *
      * @param systemName should have been previously validated.
      * @param userName user name.
      * @param memo system connection.
