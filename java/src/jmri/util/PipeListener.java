@@ -35,7 +35,7 @@ public class PipeListener extends Thread {
                     int nRead = pr.read(cbuf, 0, BUFFER_SIZE);  // blocking read
                     String content = new String(Arrays.copyOf(cbuf, nRead)); // retain only filled chars
 
-                    jmri.util.ThreadingUtil.runOnGUI(() -> {
+                    jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
                         ta.append(content);
                     });
 
