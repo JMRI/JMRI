@@ -409,10 +409,10 @@ public class LogixNGGlobalVariableTableAction extends AbstractLogixNGTableAction
                     try {
                         gv.initialize();
                     } catch (JmriException | RuntimeException e) {
-                        JOptionPane.showMessageDialog(null,
+                        jmri.util.swing.JmriJOptionPane.showMessageDialog(null,
                                 e.getLocalizedMessage(),
                                 Bundle.getMessage("ErrorTitle"), // NOI18N
-                                JOptionPane.ERROR_MESSAGE);
+                                jmri.util.swing.JmriJOptionPane.ERROR_MESSAGE);
                     }
                     break;
 
