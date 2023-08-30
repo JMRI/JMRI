@@ -241,7 +241,7 @@ public class ImportCars extends ImportRollingStock {
                             JOptionPane.ERROR_MESSAGE);
                     break;
                 }
-                if (carType.length() > Control.max_len_string_attibute) {
+                if (TrainCommon.splitString(carType).length() > Control.max_len_string_attibute) {
                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("CarTypeNameTooLong"),
                             new Object[]{carRoad, carNumber, carType}),
                             MessageFormat.format(Bundle.getMessage("carAttribute"),
