@@ -163,6 +163,24 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h5>Audio</h5>
+
+      <p>Returns true if the selected audio object has the indicated state.  The drop-down list
+      contains the defined audio listeners, audio buffers and audio sources.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/digital_expression_audio.png"><img src=
+        "images/chapter6/digital_expression_audio.png" alt="Chapter 6 expression audio item"></a>
+      </div>
+
+      <p>The <strong>Check only on change</strong> option is used to the modify the behavior of the
+      expression evaluation.  When the option is not enabled, the normal evaluation occurs:
+      <strong><em>Does the current state match the indicated state</em></strong>.  When the option
+      is enabled, the evaluation becomes:  <strong><em>Has the current state changed to the indicated
+      state since the last check</em></strong>.
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Block</h5>
 
       <ul>
