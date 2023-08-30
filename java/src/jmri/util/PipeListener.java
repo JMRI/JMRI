@@ -2,13 +2,17 @@ package jmri.util;
 
 import java.io.IOException;
 import java.io.PipedReader;
+import java.util.Arrays;
 import javax.swing.JTextArea;
 
 /**
  * Small service class to read characters from a pipe and post them to a
- * JTextArea for display
+ * JTextArea for display.
  *
- * @author Bob Jacobsen Copyright (C) 2004
+ * This expects the pipe to remain open, so has no code to handle
+ * a broken pipe gracefully.
+ *
+ * @author Bob Jacobsen Copyright (C) 2004, 2023
  */
 public class PipeListener extends Thread {
 
@@ -20,18 +24,21 @@ public class PipeListener extends Thread {
         this.ta = ta;
     }
 
+    static final int BUFFER_SIZE = 120;
+    
     @Override
     public void run() {
         try {
-            char[] c = new char[1];
+            char[] cbuf = new char[BUFFER_SIZE];
             while (true) {
                 try {
-                    c[0] = (char) pr.read();
+                    int nRead = pr.read(cbuf, 0, BUFFER_SIZE);  // blocking read
+                    String content = new String(Arrays.copyOf(cbuf, nRead)); // retain only filled chars
+
                     jmri.util.ThreadingUtil.runOnGUI(() -> {
-                        ta.append(new String(c));   // odd way to do this, but only
-                        // way I could think of with only one
-                        // new object created
+                        ta.append(content);
                     });
+
                 } catch (IOException ex) {
                     if (ex.getMessage().equals("Write end dead") || ex.getMessage().equals("Pipe broken")) {
                         // happens when the writer thread, possibly a script, terminates
