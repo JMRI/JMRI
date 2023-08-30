@@ -1,3 +1,5 @@
+The jython/test/Python3Test.py3 provides some examples of these.
+
 You can access jmri.Turnout.CLOSED but jmri.Turnout.UNKNOWN is undefined.  You have to access jmri.NamedBean.UNKNOWN instead, which is a real pain.
 
 The Jython property wrapper syntax that makes the next two lines the same is not available:
