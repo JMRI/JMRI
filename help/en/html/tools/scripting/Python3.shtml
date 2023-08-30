@@ -162,6 +162,12 @@ class Automat(AbstractAutomaton) :
                 error was found.  This is a real pain.
 
           </ul>
+          
+          For the most up-to-date information on these, see
+          the 
+          <a href="https://github.com/JMRI/JMRI/blob/master/java/graalvm/DIFFERENCES.md">Differences.md file</a> 
+          and the
+          <a href="http://jmri.org/jython/test/Python3Test.py3">jython/test/Python3Test.py3 demo file</a>.
 		</div>
 
         <!--#include virtual="/Footer.shtml" -->
