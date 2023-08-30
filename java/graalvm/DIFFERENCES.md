@@ -8,7 +8,7 @@ The Jython property wrapper syntax that makes the next two lines the same is not
 	turnout.getState()
 ```
 
-Some super-class methods need to be called via e.g.
+Some Java super-class methods of a Python class need to be called via e.g.
 ```
 	self.__super__.waitMsec(1000)
 ```
@@ -27,14 +27,19 @@ We can't yet put JMRI symbols into the Python context, so you have to run
 ```
 	exec(open("jython/jmri_bindings.py3").read())
 ```
-at the start of each script.
+at the start of each script. This provides definitions for the usual symbols: ON, OFF, ACTIVE, turnouts, sensors etc.
 
 Referencing a class type needs a java.type wrapper:
 ```
     sm = jmri.InstanceManager.getNullableDefault(java.type('jmri.SensorManager'))
 ```
+We've put a helper method in place for that specific case
+```
+    sm = jmri.InstanceManager.getNullableDefault('jmri.SensorManager')
+```
+but you may need the `java.type('jmri.SensorManager')` syntax in other places.
 
 The debugging support is terrible:  Syntax errors generate opaque error messages that don’t point to the relevant line in the script.
 
-AbstractAutomaton subclasses occasionally cause the whole of JMRI to stop with a thread deadlock.  Not understood why the GraalVM Python interpreter is taking a lock on the Swing/AWT thread.
+AbstractAutomaton subclasses occasionally cause the whole of JMRI to stop with a thread deadlock.  Not understood why the GraalVM Python interpreter is occasionally taking a lock on the Swing/AWT thread.
 
