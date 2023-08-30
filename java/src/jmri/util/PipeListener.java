@@ -35,6 +35,9 @@ public class PipeListener extends Thread {
                     int nRead = pr.read(cbuf, 0, BUFFER_SIZE);  // blocking read
                     String content = new String(Arrays.copyOf(cbuf, nRead)); // retain only filled chars
 
+                    // The following used to be runOnGui (i.e. not "Eventually")
+                    // but that occasionally caused the Swing/AWT thread to block
+                    // with very large input strings.  Please don't change it back.
                     jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
                         ta.append(content);
                     });
