@@ -143,7 +143,7 @@ public interface Light extends DigitalIO {
      * <p>
      * Note that the state may have other values, such as INTERMEDIATE or a form
      * of transitioning, but that these may not be directly set.
-     * <p>
+     *
      * @param newState the new desired state
      * @throws IllegalArgumentException if invalid newState provided
      */

@@ -1050,7 +1050,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
     /**
      * Check the antecedent and logic type.
-     * <p>
+     *
      * @param antecedentText The user supplied antecedent text
      * @return false if antecedent can't be validated
      */

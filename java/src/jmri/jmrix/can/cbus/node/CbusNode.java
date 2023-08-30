@@ -181,7 +181,6 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
     
     /**
      * Custom toString reports the Node Number Name
-     * <p>
      * @return string eg "1234 UserName" or "256 CANPAN" if no UserName. No trailing space.
      *
      * {@inheritDoc} 
@@ -193,7 +192,7 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
     
     /**
      * Reports just the name, not the user name.
-     * <p>
+     *
      * @return string eg "CANPAN"
      *
      */

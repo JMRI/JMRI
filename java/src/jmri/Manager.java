@@ -284,8 +284,6 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * Convenience implementation of
      * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}
      * that verifies name has has at least 1 number in the String.
-     * <p>
-     *
      *
      * @param name   the system name to validate
      * @param locale the locale for a localized exception; this is needed for
@@ -306,8 +304,6 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * Convenience implementation of
      * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}
      * that verifies name String is purely numeric.
-     * <p>
-     *
      *
      * @param name   the system name to validate
      * @param locale the locale for a localized exception; this is needed for

@@ -727,7 +727,6 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
      * 1) Build a list of affected NX pairs.
      * 2) Check for Conditional references.
      * 3) If no references, do the delete process with user approval.
-     * <p>
      * @since 4.11.2
      * @param sensor The sensor whose pairs should be deleted.
      * @return true if the delete was successful. False if prevented by
@@ -919,7 +918,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
      * Rebuild the delete pair list based on the supplied sensor.
      * Find all of the NX pairs that use this sensor as either a source or
      * destination.  They will be candidates for deletion.
-     * <p>
+     *
      * @since 4.11.2
      * @param sensor The sensor being deleted,
      */

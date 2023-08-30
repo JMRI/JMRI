@@ -253,7 +253,6 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
      * Executes all registered {@link jmri.ShutDownTask}
      * Runs the Early shutdown tasks, the main shutdown tasks,
      * then terminates the program with provided status.
-     * <p>
      *
      * @param status integer status on program exit
      * @param exit   true if System.exit() should be called if all tasks are

@@ -25,7 +25,6 @@ import org.openlcb.swing.memconfig.MemConfigDescriptionPane;
 
 /**
  * Pane for doing various memory operations
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2023
  * @since 5.3.4

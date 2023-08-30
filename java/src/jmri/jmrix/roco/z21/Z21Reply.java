@@ -10,7 +10,6 @@ import jmri.DccLocoAddress;
  * Replies are of the format: 2 bytes length 2 bytes opcode n bytes data
  * <p>
  * numeric data is sent in little endian format.
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Paul Bender Copyright (C) 2014
