@@ -229,7 +229,7 @@ public class JmriJOptionPane {
         int centreWidth;
         int centreHeight;
         Window w = findWindowForComponent(parentComponent);
-        if ( w == null) {
+        if ( w == null || !w.isVisible() ) {
             centreWidth = Toolkit.getDefaultToolkit().getScreenSize().width / 2;
             centreHeight = Toolkit.getDefaultToolkit().getScreenSize().height / 2;
         } else {
