@@ -29,12 +29,11 @@ import jmri.util.SystemType;
 import jmri.util.com.sun.TransferActionListener;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.XTableColumnModel;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import jmri.util.table.ToggleButtonEditor;
 import jmri.util.table.ToggleButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * GUI to define OBlocks.
@@ -361,15 +360,15 @@ public class TableFrames implements InternalFrameListener {
         // don't return an element if there are no Blocks to include
         if (blkList.isEmpty()) {
             log.warn("no Blocks to convert"); // NOI18N
-            JOptionPane.showMessageDialog(desktopframe, Bundle.getMessage("ImportNoBlocks"),
-                    Bundle.getMessage("InfoTitle"), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(desktopframe, Bundle.getMessage("ImportNoBlocks"),
+                    Bundle.getMessage("InfoTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
             return;
         } else {
             if (_showWarnings) {
-                int reply = JOptionPane.showOptionDialog(null,
+                int reply = JmriJOptionPane.showOptionDialog(null,
                         Bundle.getMessage("ImportBlockConfirm", oblockPrefix(), blkList.size()),
                         Bundle.getMessage("QuestionTitle"),
-                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                        JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null,
                         new Object[]{Bundle.getMessage("ButtonYes"),
                                 Bundle.getMessage("ButtonCancel")},
                         Bundle.getMessage("ButtonYes")); // standard JOptionPane can't be found in Jemmy log4J
@@ -1599,6 +1598,6 @@ public class TableFrames implements InternalFrameListener {
         //log.debug("Internal frame deactivated: {}", frame.getTitle());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TableFrames.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TableFrames.class);
 
 }
