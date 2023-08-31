@@ -25,22 +25,25 @@ import javax.swing.*;
  */
 public class JmriJOptionPane {
 
-    public final static int CANCEL_OPTION = JOptionPane.CANCEL_OPTION;
-    public final static int OK_OPTION = JOptionPane.OK_OPTION;
-    public final static int OK_CANCEL_OPTION = JOptionPane.OK_CANCEL_OPTION;
-    public final static int YES_OPTION = JOptionPane.YES_OPTION;
-    public final static int YES_NO_OPTION = JOptionPane.YES_NO_OPTION;
+    public static final int CANCEL_OPTION = JOptionPane.CANCEL_OPTION;
+    public static final int OK_OPTION = JOptionPane.OK_OPTION;
+    public static final int OK_CANCEL_OPTION = JOptionPane.OK_CANCEL_OPTION;
+    public static final int YES_OPTION = JOptionPane.YES_OPTION;
+    public static final int YES_NO_OPTION = JOptionPane.YES_NO_OPTION;
     public static final int YES_NO_CANCEL_OPTION = JOptionPane.YES_NO_CANCEL_OPTION;
-    public final static int NO_OPTION = JOptionPane.NO_OPTION;
+    public static final int NO_OPTION = JOptionPane.NO_OPTION;
 
-    public final static int CLOSED_OPTION = JOptionPane.CLOSED_OPTION;
-    public final static int DEFAULT_OPTION = JOptionPane.DEFAULT_OPTION;
-    public final static Object UNINITIALIZED_VALUE = JOptionPane.UNINITIALIZED_VALUE;
+    public static final int CLOSED_OPTION = JOptionPane.CLOSED_OPTION;
+    public static final int DEFAULT_OPTION = JOptionPane.DEFAULT_OPTION;
+    public static final Object UNINITIALIZED_VALUE = JOptionPane.UNINITIALIZED_VALUE;
 
-    public final static int ERROR_MESSAGE = JOptionPane.ERROR_MESSAGE;
-    public final static int INFORMATION_MESSAGE = JOptionPane.INFORMATION_MESSAGE;
-    public final static int QUESTION_MESSAGE = JOptionPane.QUESTION_MESSAGE;
-    public final static int WARNING_MESSAGE = JOptionPane.WARNING_MESSAGE;
+    public static final int ERROR_MESSAGE = JOptionPane.ERROR_MESSAGE;
+    public static final int INFORMATION_MESSAGE = JOptionPane.INFORMATION_MESSAGE;
+    public static final int QUESTION_MESSAGE = JOptionPane.QUESTION_MESSAGE;
+    public static final int WARNING_MESSAGE = JOptionPane.WARNING_MESSAGE;
+
+    public static final String YES_STRING = UIManager.getString("OptionPane.yesButtonText", Locale.getDefault());
+    public static final String NO_STRING = UIManager.getString("OptionPane.noButtonText", Locale.getDefault());
 
     // class only supplies static methods
     protected JmriJOptionPane(){}
@@ -207,7 +210,9 @@ public class JmriJOptionPane {
             dialog.setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
         }
         setDialogLocation(parentComponent, dialog);
-        dialog.setVisible(true);
+        dialog.setAlwaysOnTop(true);
+        dialog.toFront();
+        dialog.setVisible(true); // and waits for input
         dialog.dispose();
     }
 
@@ -249,6 +254,6 @@ public class JmriJOptionPane {
         return findWindowForComponent(component.getParent());
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriJOptionPane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriJOptionPane.class);
 
 }
