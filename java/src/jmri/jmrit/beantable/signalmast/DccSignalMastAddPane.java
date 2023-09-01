@@ -12,6 +12,7 @@ import javax.swing.border.TitledBorder;
 import jmri.*;
 import jmri.implementation.DccSignalMast;
 import jmri.util.*;
+import jmri.util.swing.JmriJOptionPane;
 
 import org.openide.util.lookup.ServiceProvider;
 
@@ -243,11 +244,11 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         try {
             aspect = Integer.parseInt(strAspect.trim());
         } catch (java.lang.NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("DCCMastAspectNumber"));
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("DCCMastAspectNumber"));
             return false;
         }
         if (aspect < 0 || aspect > 31) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("DCCMastAspectOutOfRange"));
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("DCCMastAspectOutOfRange"));
             log.error("invalid aspect {}", aspect);
             return false;
         }
@@ -345,25 +346,25 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
 
     private boolean validateDCCAddress() {
         if (dccAspectAddressField.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("DCCMastAddressBlank"));
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("DCCMastAddressBlank"));
             return false;
         }
         int address;
         try {
             address = Integer.parseInt(dccAspectAddressField.getText().trim());
         } catch (java.lang.NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("DCCMastAddressNumber"));
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("DCCMastAddressNumber"));
             return false;
         }
 
         if (address < NmraPacket.accIdLowLimit || address > NmraPacket.accIdAltHighLimit) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("DCCMastAddressOutOfRange"));
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("DCCMastAddressOutOfRange"));
             log.error("invalid address {}", address);
             return false;
         }
         if (DccSignalMast.isDCCAddressUsed(address) != null) {
             String msg = Bundle.getMessage("DCCMastAddressAssigned", new Object[]{dccAspectAddressField.getText(), DccSignalMast.isDCCAddressUsed(address)});
-            JOptionPane.showMessageDialog(null, msg);
+            JmriJOptionPane.showMessageDialog(this, msg);
             return false;
         }
         return true;

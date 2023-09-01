@@ -7,6 +7,7 @@ import jmri.Turnout;
 import jmri.TurnoutOperation;
 import static jmri.jmrit.beantable.turnout.TurnoutTableDataModel.editingOps;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
+import jmri.util.swing.JmriJOptionPane;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,11 +60,11 @@ public class TurnoutOperationEditorDialog extends JDialog {
             Box buttonBox = Box.createHorizontalBox();
             JButton nameButton = new JButton(Bundle.getMessage("NameSetting"));
             nameButton.addActionListener(e -> {
-                String newName = JOptionPane.showInputDialog(Bundle.getMessage("NameParameterSetting"));
+                String newName = JmriJOptionPane.showInputDialog(self, Bundle.getMessage("NameParameterSetting"),"");
                 if (newName != null && !newName.isEmpty()) {
                     if (!myOp.rename(newName)) {
-                        JOptionPane.showMessageDialog(self, Bundle.getMessage("TurnoutErrorDuplicate"),
-                                Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(self, Bundle.getMessage("TurnoutErrorDuplicate"),
+                                Bundle.getMessage("WarningTitle"), JmriJOptionPane.ERROR_MESSAGE);
                     }
                     setTitle();
                     myTurnout.setTurnoutOperation(null);

@@ -22,10 +22,9 @@ import jmri.NamedBean.DisplayOptions;
 import jmri.util.JmriJFrame;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.swing.JComboBoxUtil;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a TransitTable GUI.
@@ -336,9 +335,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         if ((sectionManager.getNamedBeanSet().size()) > 0) {
             addEditPressed();
         } else {
-            JOptionPane.showMessageDialog(null, rbx
+            JmriJOptionPane.showMessageDialog(null, rbx
                     .getString("Message21"), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -638,9 +637,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
 
     void addNextSectionPressed(ActionEvent e) {
         if (primarySectionBoxList.isEmpty()) {
-            JOptionPane.showMessageDialog(addFrame, rbx
+            JmriJOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message25"), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         int index = primarySectionBox.getSelectedIndex();
@@ -709,9 +708,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
 
     void insertAtBeginningPressed(ActionEvent e) {
         if (insertAtBeginningBoxList.isEmpty()) {
-            JOptionPane.showMessageDialog(addFrame, rbx
+            JmriJOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message35"), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         int index = insertAtBeginningBox.getSelectedIndex();
@@ -839,10 +838,10 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             }
         }
         if (possibles.isEmpty()) {
-            JOptionPane.showMessageDialog(addFrame,
+            JmriJOptionPane.showMessageDialog(addFrame,
                     java.text.MessageFormat.format(rbx.getString("Message36"),
                             new Object[]{"" + seq}), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         int k = 0;
@@ -851,10 +850,10 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             for (int j = 0; j < possibles.size(); j++) {
                 choices[j] = possibleNames.get(j);
             }
-            Object selName = JOptionPane.showInputDialog(addFrame,
+            Object selName = JmriJOptionPane.showInputDialog(addFrame,
                     rbx.getString("ReplacePrimaryChoice"),
                     rbx.getString("ReplacePrimaryTitle"),
-                    JOptionPane.QUESTION_MESSAGE, null, choices, choices[0]);
+                    JmriJOptionPane.QUESTION_MESSAGE, null, choices, choices[0]);
             if (selName == null) {
                 return;
             }
@@ -890,9 +889,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     int getSeqNum() {
         int n = (Integer) seqNum.getValue(); // JSpinner int from 1 - sectionList.size()
         if (n > curSequenceNum) {
-            JOptionPane.showMessageDialog(null, rbx
+            JmriJOptionPane.showMessageDialog(null, rbx
                     .getString("Message34"), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return 0;
         }
         return n;
@@ -1026,10 +1025,10 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             }
         }
         if (possibles.isEmpty()) {
-            JOptionPane.showMessageDialog(addFrame,
+            JmriJOptionPane.showMessageDialog(addFrame,
                     java.text.MessageFormat.format(rbx.getString("Message37"),
                             new Object[]{"" + seq}), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         int k = 0;
@@ -1038,10 +1037,10 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             for (int j = 0; j < possibles.size(); j++) {
                 choices[j] = possibleNames.get(j);
             }
-            Object selName = JOptionPane.showInputDialog(addFrame,
+            Object selName = JmriJOptionPane.showInputDialog(addFrame,
                     rbx.getString("AddAlternateChoice"),
                     rbx.getString("AddAlternateTitle"),
-                    JOptionPane.QUESTION_MESSAGE, null, choices, choices[0]);
+                    JmriJOptionPane.QUESTION_MESSAGE, null, choices, choices[0]);
             if (selName == null) {
                 return;
             }
@@ -1070,9 +1069,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
 
     void addAlternateSectionPressed(ActionEvent e) {
         if (alternateSectionBoxList.isEmpty()) {
-            JOptionPane.showMessageDialog(addFrame, rbx
+            JmriJOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message24"), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         int index = alternateSectionBox.getSelectedIndex();
@@ -1109,8 +1108,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 curTransit = transitManager.createNewTransit(sName, uName);
             }
         } catch (IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(addFrame, ex.getLocalizedMessage(), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(addFrame, ex.getLocalizedMessage(), Bundle.getMessage("ErrorTitle"),
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         sysName.setText(curTransit.getSystemName());
@@ -1139,9 +1138,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             // check that new user name is unique
             Transit tTransit = transitManager.getByUserName(uName);
             if (tTransit != null) {
-                JOptionPane.showMessageDialog(addFrame, rbx
+                JmriJOptionPane.showMessageDialog(addFrame, rbx
                         .getString("Message22"), Bundle.getMessage("ErrorTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
@@ -1170,9 +1169,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         //With these the route has to start outside the transit
         /*
         if ((sectionList.size() <= 1) || (curSequenceNum <= 1)) {
-            JOptionPane.showMessageDialog(addFrame, rbx
+            JmriJOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message26"), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }   */
 
@@ -1975,16 +1974,16 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         // check if anything entered
         if (sName.length() < 1) {
             // no sensor selected
-            JOptionPane.showMessageDialog(addEditActionFrame, (rbx.getString("NoSensorError")),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(addEditActionFrame, (rbx.getString("NoSensorError")),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         // get the sensor corresponding to this name
         Sensor s = InstanceManager.sensorManagerInstance().getSensor(sName);
         if (s == null) {
             // There is no sensor corresponding to this name
-            JOptionPane.showMessageDialog(addEditActionFrame, (rbx.getString("SensorEntryError")),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(addEditActionFrame, (rbx.getString("SensorEntryError")),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (!sName.equals(s.getUserName())) {
@@ -2001,8 +2000,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         // check if anything is selected
         if (sName.length() < 1) {
             // no signal selected
-            JOptionPane.showMessageDialog(addEditActionFrame, (rbx.getString("NoSignalError")),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(addEditActionFrame, (rbx.getString("NoSignalError")),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         // get the signalMast or signalHead corresponding to this name
@@ -2013,8 +2012,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         }
         if (sm == null && sh == null) {
             // There is no signal corresponding to this name
-            JOptionPane.showMessageDialog(addEditActionFrame, (rbx.getString("SignalEntryError")),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(addEditActionFrame, (rbx.getString("SignalEntryError")),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -2066,16 +2065,16 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 tWhatData2 = (Integer) whatMinuteSpinner2.getValue();
                 tWhatString = whatStringField.getText();
                 if ((tWhatString == null) || tWhatString.isEmpty() || (tWhatString.length() < 1)) {
-                    JOptionPane.showMessageDialog(addEditActionFrame, (rbx.getString("MissingPattern")),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(addEditActionFrame, (rbx.getString("MissingPattern")),
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                     return false;
                 }
                 tWhatString = tWhatString.trim().toLowerCase();
                 for (int i = 0; i < tWhatString.length(); i++) {
                     char c = tWhatString.charAt(i);
                     if ((c != 's') && (c != 'l')) {
-                        JOptionPane.showMessageDialog(addEditActionFrame, (rbx.getString("ErrorPattern")),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(addEditActionFrame, (rbx.getString("ErrorPattern")),
+                                Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                         return false;
                     }
                 }
@@ -2852,6 +2851,6 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         return Bundle.getMessage("TitleTransitTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TransitTableAction.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TransitTableAction.class);
 
 }
