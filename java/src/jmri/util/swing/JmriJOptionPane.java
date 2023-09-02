@@ -155,7 +155,24 @@ public class JmriJOptionPane {
     }
 
     /**
-     * Displays an input dialog.
+     * Displays a String input dialog.
+     * @param parentComponent       The parent component relative to which the dialog is displayed.
+     * @param message               The message to be displayed in the dialog.
+     * @param initialSelectionValue The initial value pre-selected in the input dialog.
+     * @return The user's String input value, or {@code null} if the dialog is closed or the input value is uninitialized.
+     * @throws HeadlessException   if the current environment is headless (no GUI available).
+     */
+    @CheckForNull
+    public static String showInputDialog(@CheckForNull Component parentComponent,
+        String message, String initialSelectionValue ){
+        return (String)showInputDialog(parentComponent, message,
+            UIManager.getString("OptionPane.inputDialogTitle",
+            Locale.getDefault()), QUESTION_MESSAGE, null, null,
+            initialSelectionValue);
+    }
+
+    /**
+     * Displays an Object input dialog.
      * @param parentComponent       The parent component relative to which the dialog is displayed.
      * @param message               The message to be displayed in the dialog.
      * @param initialSelectionValue The initial value pre-selected in the input dialog.
@@ -163,9 +180,9 @@ public class JmriJOptionPane {
      * @throws HeadlessException   if the current environment is headless (no GUI available).
      */
     @CheckForNull
-    public static String showInputDialog(@CheckForNull Component parentComponent,
-        String message, String initialSelectionValue ){
-        return (String)showInputDialog(parentComponent, message,
+    public static Object showInputDialog(@CheckForNull Component parentComponent,
+        String message, Object initialSelectionValue ){
+        return showInputDialog(parentComponent, message,
             UIManager.getString("OptionPane.inputDialogTitle",
             Locale.getDefault()), QUESTION_MESSAGE, null, null,
             initialSelectionValue);
@@ -241,7 +258,8 @@ public class JmriJOptionPane {
         }
         int centerX = centreWidth - ( dialog.getWidth() / 2 );
         int centerY = centreHeight - ( dialog.getHeight() / 2 );
-        dialog.setLocation( new Point(centerX, centerY));
+        // set top left of Dialog at least 0px into the screen.
+        dialog.setLocation( new Point(Math.max(0, centerX), Math.max(0, centerY)));
     }
 
     @CheckForNull
