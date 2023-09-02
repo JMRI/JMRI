@@ -23,6 +23,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import jmri.Application;
+import jmri.util.swing.JmriJOptionPane;
 
 import org.apiguardian.api.API;
 
@@ -277,10 +278,10 @@ public class IssueReporter extends JFrame implements ClipboardOwner, DocumentLis
             URI uri = report.submit(repoCB.getItemAt(repoCB.getSelectedIndex()));
             List<File> attachments = report.getAttachments();
             if (!attachments.isEmpty()) {
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("IssueReporter.attachments.message"),
                         Bundle.getMessage("IssueReporter.attachments.title"),
-                        JOptionPane.INFORMATION_MESSAGE);
+                        JmriJOptionPane.INFORMATION_MESSAGE);
                 Desktop.getDesktop().open(attachments.get(0).getParentFile());
             }
             if ( Desktop.getDesktop().isSupported( Desktop.Action.BROWSE) ) {
@@ -290,11 +291,11 @@ public class IssueReporter extends JFrame implements ClipboardOwner, DocumentLis
             } else {
                 // Can't open browser, ask the user to instead
                 Object[] options = {Bundle.getMessage("IssueReporter.browser.copy"), Bundle.getMessage("IssueReporter.browser.skip")};
-                int choice = JOptionPane.showOptionDialog(this,
+                int choice = JmriJOptionPane.showOptionDialog(this,
                     Bundle.getMessage("IssueReporter.browser.message"), // message
                     Bundle.getMessage("IssueReporter.browser.title"), // window title
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.INFORMATION_MESSAGE,
+                    JmriJOptionPane.YES_NO_OPTION,
+                    JmriJOptionPane.INFORMATION_MESSAGE,
                     null, // icon
                     options,
                     Bundle.getMessage("IssueReporter.browser.copy")
@@ -313,17 +314,17 @@ public class IssueReporter extends JFrame implements ClipboardOwner, DocumentLis
             
         } catch (IOException | URISyntaxException ex) {
             log.error("Unable to report issue", ex);
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("IssueReporter.error.message", ex.getLocalizedMessage()),
                     Bundle.getMessage("IssueReporter.error.title"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
         } catch (IssueReport414Exception ex) {
             BodyTransferable bt = new BodyTransferable(report.getBody());
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(bt, this);
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("IssueReporter.414.message"),
                     Bundle.getMessage("IssueReporter.414.title"),
-                    JOptionPane.INFORMATION_MESSAGE);
+                    JmriJOptionPane.INFORMATION_MESSAGE);
             submitReport(report);
         }
     }
