@@ -129,7 +129,10 @@ public final class GraalJSEngineFactory implements ScriptEngineFactory {
             .allowExperimentalOptions(true)
             //.allowAllAccess(true) // no such method
             //.option("polyglot.python.allowHostAccess", "true") // option not found
-            .option("python.EmulateJython", "true") // Jython-compatible class structure
+            
+            // The following is necessary to allow e.g. "import jmri" to work
+            .option("python.EmulateJython", "true")
+            
             .build();
     }
 
