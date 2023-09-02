@@ -428,7 +428,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             case DELETECOL:
                 // button fired, delete Bean
                 deleteBean(row, col);
-                break;
+                return; // manager will update rows if a delete occurs
             default:
                 NamedBeanPropertyDescriptor<?> desc = getPropertyColumnDescriptor(col);
                 if (desc == null) {
@@ -445,8 +445,14 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     }
 
     protected void deleteBean(int row, int col) {
-        jmri.util.ThreadingUtil.runOnGUI(() ->
-            new DeleteBeanWorker(getBySystemName(sysNameList.get(row))));
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
+            try {
+                var worker = new DeleteBeanWorker(getBySystemName(sysNameList.get(row)));
+                log.debug("Delete Bean {}", worker.toString());
+            } catch (Exception e ){
+                log.error("Exception while deleting bean", e);
+            }
+        });
     }
 
     /**
