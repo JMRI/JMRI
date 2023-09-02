@@ -171,7 +171,12 @@
 
       <p>Prefer use of jmri.util.swing.WrapLayout to java.awt.FlowLayout, because
       WrapLayout properly handles the case of its contents wrapping into two lines.
-      When that happens, FlowLayout will often not display the second line.
+      When that happens, FlowLayout will often not display the second line.</p>
+
+      <p>jmri.util.swing.JmriJOptionPane is preferred over javax.swing.JOptionPane.
+      The Modality of the latter will block the whole JVM UI until they are closed.
+      This causes issues with Always on Top Frames, which will also be blocked,
+      potentially with the Dialog hidden behind the Frame.</p>
       
       <!--#include virtual="/Footer.shtml" -->
     </div> <!-- closes #mainContent-->

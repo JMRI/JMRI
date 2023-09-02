@@ -133,11 +133,12 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
      * Protocol Specific Simple Functions
      */
     /**
-     * send a String to the other end of the telnet connection. The String is
-     * composed of a set of attributes.
+     * send a String to the other end of the telnet connection.
+     * The String is composed of a set of attributes.
      *
      * @param contents is the ArrayList of Attributes to be sent. A linefeed
      *                 ('\n") is appended to the String.
+     * @throws java.io.IOException if unable to send.
      */
     @Override
     public void sendMessage(ArrayList<Attribute> contents) throws IOException {
@@ -252,10 +253,14 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
     }
 
     /**
-     * Parse operation commands. They all start with "OPERATIONS" followed by a
-     * command like "LOCATIONS". A command like "TRAINLENGTH" requires a train
-     * name. The delimiter is the tab character.
+     * Parse operation commands.
+     * They all start with "OPERATIONS" followed by a command like "LOCATIONS".
+     * A command like "TRAINLENGTH" requires a train name.
+     * The delimiter is the tab character.
      *
+     * @param statusString the string to parse.
+     * @throws jmri.JmriException if unable to parse status.
+     * @throws java.io.IOException if unable to send response.
      */
     @Override
     public void parseStatus(String statusString) throws JmriException, IOException {
@@ -275,52 +280,54 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
             } else if (TRAINS.equals(tag)) {
                 sendTrainList();
             } else if (trainName != null) {
-                if (TRAINLENGTH.equals(tag)) {
-                    value = constructTrainLength(trainName);
-                    if (value != null) {
-                        response.add(new Attribute(TRAINLENGTH, value));
-                    }
-                } else if (TRAINWEIGHT.equals(tag)) {
-                    value = constructTrainWeight(trainName);
-                    if (value != null) {
-                        response.add(new Attribute(TRAINWEIGHT, value));
-                    }
-                } else if (TRAINCARS.equals(tag)) {
-                    value = constructTrainNumberOfCars(trainName);
-                    if (value != null) {
-                        response.add(new Attribute(TRAINCARS, value));
-                    }
-                } else if (TRAINLEADLOCO.equals(tag)) {
-                    value = constructTrainLeadLoco(trainName);
-                    if (value != null) {
-                        response.add(new Attribute(TRAINLEADLOCO, value));
-                    }
-                } else if (TRAINCABOOSE.equals(tag)) {
-                    value = constructTrainCaboose(trainName);
-                    if (value != null) {
-                        response.add(new Attribute(TRAINCABOOSE, value));
-                    }
-                } else if (TRAINSTATUS.equals(tag)) {
-                    value = constructTrainStatus(trainName);
-                    if (value != null) {
-                        response.add(new Attribute(TRAINSTATUS, value));
-                    }
-                } else if (TERMINATE.equals(tag)) {
-                    value = terminateTrain(trainName);
-                    if (value != null) {
-                        response.add(new Attribute(TERMINATE, value));
-                    }
-                } else if (TRAINLOCATION.equals(tag)) {
-                    if (field.getValue() == null) {
-                        value = constructTrainLocation(trainName);
-                    } else {
-                        value = setTrainLocation(trainName, (String) field.getValue());
-                    }
-                    if (value != null) {
-                        response.add(new Attribute(TRAINLOCATION, value));
-                    }
-                } else {
+                if (null == tag) {
                     throw new jmri.JmriException();
+                } else switch (tag) {
+                    case TRAINLENGTH:
+                        value = constructTrainLength(trainName);
+                        if (value != null) {
+                            response.add(new Attribute(TRAINLENGTH, value));
+                        }   break;
+                    case TRAINWEIGHT:
+                        value = constructTrainWeight(trainName);
+                        if (value != null) {
+                            response.add(new Attribute(TRAINWEIGHT, value));
+                        }   break;
+                    case TRAINCARS:
+                        value = constructTrainNumberOfCars(trainName);
+                        if (value != null) {
+                            response.add(new Attribute(TRAINCARS, value));
+                        }   break;
+                    case TRAINLEADLOCO:
+                        value = constructTrainLeadLoco(trainName);
+                        if (value != null) {
+                            response.add(new Attribute(TRAINLEADLOCO, value));
+                        }   break;
+                    case TRAINCABOOSE:
+                        value = constructTrainCaboose(trainName);
+                        if (value != null) {
+                            response.add(new Attribute(TRAINCABOOSE, value));
+                        }   break;
+                    case TRAINSTATUS:
+                        value = constructTrainStatus(trainName);
+                        if (value != null) {
+                            response.add(new Attribute(TRAINSTATUS, value));
+                        }   break;
+                    case TERMINATE:
+                        value = terminateTrain(trainName);
+                        if (value != null) {
+                            response.add(new Attribute(TERMINATE, value));
+                        }   break;
+                    case TRAINLOCATION:
+                        if (field.getValue() == null) {
+                            value = constructTrainLocation(trainName);
+                        } else {
+                            value = setTrainLocation(trainName, (String) field.getValue());
+                        }   if (value != null) {
+                            response.add(new Attribute(TRAINLOCATION, value));
+                        }   break;
+                    default:
+                        throw new jmri.JmriException();
                 }
             } else {
                 throw new jmri.JmriException();

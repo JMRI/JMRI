@@ -1215,16 +1215,17 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     public VariableValue findVar(String name) {
         for (int i = 0; i < getRowCount(); i++) {
             if (name.equals(getItem(i))) {
-                log.debug("findVar matched '{}' by Item", name);
+                log.trace("findVar matched '{}' by Item", name);
                 return getVariable(i);
             }
         }
         for (int i = 0; i < getRowCount(); i++) {
             if (name.equals(getLabel(i))) {
-                log.warn("findVar matched '{}' by Label rather than Item", name);
+                log.trace("findVar matched '{}' by Label rather than Item", name);
                 return getVariable(i);
             }
         }
+        log.debug("findVar did not match {}, returns null", name);
         return null;
     }
 

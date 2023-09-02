@@ -284,6 +284,9 @@
         <li>Joe Comuzzi <!-- jcomuzzi -->
          added new icon tests and added a definition for CNJ 1974 signals</li>
 
+        <li>Dean Cording <!-- DeanCording -->
+         who extended the MQTT support to power and throttles, and fixed some key bugs</li>
+
         <li>John Crellin contributed numerous new and improved decoder definitions for MRC decoders
         and the Kato FL11.</li>
 

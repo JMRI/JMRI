@@ -9,8 +9,6 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmris.AbstractSensorServer;
 import jmri.jmris.JmriConnection;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Simple Server interface between the JMRI Sensor manager and a network
@@ -42,12 +40,16 @@ public class SimpleSensorServer extends AbstractSensorServer {
     public void sendStatus(String sensorName, int Status) throws IOException {
         addSensorToList(sensorName);
 
-        if (Status == Sensor.INACTIVE) {
-            this.sendMessage(SENSOR + sensorName + " INACTIVE\n");
-        } else if (Status == Sensor.ACTIVE) {
-            this.sendMessage(SENSOR + sensorName + " ACTIVE\n");
-        } else {
-            this.sendMessage(SENSOR + sensorName + " UNKNOWN\n");
+        switch (Status) {
+            case Sensor.INACTIVE:
+                this.sendMessage(SENSOR + sensorName + " INACTIVE\n");
+                break;
+            case Sensor.ACTIVE:
+                this.sendMessage(SENSOR + sensorName + " ACTIVE\n");
+                break;
+            default:
+                this.sendMessage(SENSOR + sensorName + " UNKNOWN\n");
+                break;
         }
     }
 
@@ -61,15 +63,11 @@ public class SimpleSensorServer extends AbstractSensorServer {
         int index;
         index = statusString.indexOf(' ') + 1;
         if (statusString.contains("INACTIVE")) {
-            if (log.isDebugEnabled()) {
-                log.debug("Setting Sensor INACTIVE");
-            }
+            log.debug("Setting Sensor INACTIVE");
             initSensor(statusString.substring(index, statusString.indexOf(' ' , index + 1)));
             setSensorInactive(statusString.substring(index, statusString.indexOf(' ', index + 1)));
         } else if (statusString.contains("ACTIVE")) {
-            if (log.isDebugEnabled()) {
-                log.debug("Setting Sensor ACTIVE");
-            }
+            log.debug("Setting Sensor ACTIVE");
             initSensor(statusString.substring(index, statusString.indexOf(' ', index + 1)));
             setSensorActive(statusString.substring(index, statusString.indexOf(' ', index + 1)));
         } else {
@@ -87,7 +85,7 @@ public class SimpleSensorServer extends AbstractSensorServer {
                 Sensor sensor = InstanceManager.getDefault(SensorManager.class).provideSensor(sensorName);
                 sendStatus(sensorName, sensor.getKnownState());
             } catch (IllegalArgumentException ex) {
-                log.warn("Failed to provide Sensor \"{}\" in sendStatus", sensorName);
+                log.warn("Failed to provide Sensor \"{}\" in sendStatus {}", sensorName, ex.getMessage());
             }
         }
     }
@@ -99,5 +97,5 @@ public class SimpleSensorServer extends AbstractSensorServer {
             this.connection.sendMessage(message);
         }
     }
-    private static final Logger log = LoggerFactory.getLogger(SimpleSensorServer.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SimpleSensorServer.class);
 }

@@ -26,7 +26,8 @@
 
         <h4>C/MRI</h4>
             <ul>
-                <li></li>
+                <li>Fix the Update button on the sensor table 
+                    for C/MRI sensors.</li>
             </ul>
 
         <h4>DCC++ and DCC-EX</h4>
@@ -101,7 +102,11 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>Added support for Track Power control</li>
+                <li>Added support for throttle control  - speed, direction, and functions</li>
+                <li>Added support for Command Station consists</li>
+                <li>Fixed bug that stopped retained MQTT messages from being received on start up.</li>
+                <li>Clear Last Will and Testament on startup</li>
             </ul>
 
         <h4>MRC</h4>
@@ -122,6 +127,7 @@
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
                 <li>The presentation of the "Send Frame" tool was improved.</li>
+                <li>Fixed some subtle bugs when pasting CDI panes.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -221,7 +227,7 @@
 
         <h4>ESU</h4>
             <ul>
-                <li></li>
+                <li>The LokPilot Basic 1.0 decoder definition is now product-ID specific.</li>
             </ul>
 
         <h4>Hornby</h4>
@@ -286,7 +292,7 @@
 
         <h4>Public Domain and DIY decoders</h4>
             <ul>
-                <li></li>
+                <li>Updated to support FREDi v2.2</li>
             </ul>
 
         <h4>QSI</h4>
@@ -372,7 +378,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Added ability to identify Dietz decoder models with CV128</li>
+            <li>Moved an excessive warning message to being a debug message<li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -402,7 +409,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+	        <li>Labels and icons on a panel can now have one or more classes. This is useful if the label/icon is controlled by LogixNG.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -419,7 +426,10 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>The <strong>Icon/Label by class on panel</strong> action is added.
+              It allows LogixNG to control all icons/labels of a class.</li>
+          <li>The <strong>Audio</strong> expression has been added. It lets
+              LogixNG listen on an Audio and take appropriate action.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -437,13 +447,13 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>Labels and icons on a panel can now have one or more classes. This is useful if the label/icon is controlled by LogixNG.</li>
         </ul>
 
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>Labels and icons on a panel can now have one or more classes. This is useful if the label/icon is controlled by LogixNG.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -459,7 +469,10 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>Custom default.lcf Logging Control Files will cease to take effect.
+            <br>To create a custom default_lcf.xml in the new Logging Configuration format, see 
+            <a href="https://www.jmri.org/help/en/html/apps/Debug.shtml">JMRI Debugging and Logging</a>
+            </li>
         </ul>
 
     <h3>Resources</h3>
@@ -483,6 +496,9 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
+            <li>Scripts that output Logging statements with log4jv1.x ( org.apache.log4j ) imports will stop working 
+            and should be updated to use SLF4J logging.
+            <br>See <a href="https://github.com/JMRI/JMRI/pull/12237/files">here</a> for some examples on how to do this.</li>
             <li>TurnoutStatePersistence.py was not correctly updated to use SLF4J in 5.5.3, fixed in 5.5.4</li>
         </ul>
 
@@ -493,7 +509,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>The aspects in the FS-1987 signal system were updated.</li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -529,7 +545,8 @@
    <h3>Switchboard Editor</h3>
         <a id="SW" name="SW"></a>
         <ul>
-            <li></li>
+            <li>Some improvements to how text is sized that will make 
+                the display occupy space a little better.</li>
         </ul>
 
     <h3>Throttle</h3>
@@ -553,13 +570,13 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Memory Usernames for IMCURRENTTIME and IMRATEFACTOR can now be loaded from xml file.</li>
         </ul>
 
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>Fixed problems that were causing Learn Warrant to fail</li>
         </ul>
 
    <h3>Web Access</h3>
@@ -598,11 +615,20 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>Logging Configuration Files have moved to the xml format, eg.
+            <a href="https://github.com/JMRI/JMRI/blob/master/default_lcf.xml">default_lcf.xml</a>
+            <br><strong>Custom default.lcf Logging Control Files will cease to take effect.</strong>
+            <br>To create a custom default_lcf.xml in the new format, see 
+            <a href="https://www.jmri.org/help/en/html/apps/Debug.shtml">JMRI Debugging and Logging</a>
+            </li>
             <li>Logging levels ( eg. INFO, DEBUG ) can be changed for the current session in
-            <a href="https://www.jmri.org/en/package/apps/jmrit/log/Log4JTreePane.shtml">Display / Edit Log Categories</a></li>
+            <a href="https://www.jmri.org/help/en/package/apps/jmrit/log/Log4JTreePane.shtml">Display / Edit Log Categories</a></li>
+            <li>Logging Libraries have been fully updated to Log4J 2.20</li>
+            <li>The Rolling Log files have been renamd from messages.log.1 and messages.log.2 to messages.1.log and messages.2.log</li>
             <li>The way data is entered in memory icons, block icons
                 and global variable icons have been improved.</li>
             <li>You can now set the preferences to open the RailCom table at startup.</li>
             <li>The analog fast clock now shows when the fast clock has been stopped.</li>
+            <li>Updated batik-transcoder 1.14 to 1.17, resolving a security issue</li>
         </ul>
 

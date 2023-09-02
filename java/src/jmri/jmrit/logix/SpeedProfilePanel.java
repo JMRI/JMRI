@@ -32,7 +32,6 @@ import org.slf4j.LoggerFactory;
  * the end of a session.  Locos running warrants have had their speeds measured
  * and this new data may or may not be merged into any existing SpeedProfiles
  * in the Roster.
- * <p>
  *
  * @author Pete cressman Copyright (C) 2017
  */

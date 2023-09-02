@@ -3,7 +3,7 @@
 <head>
   <title>JMRI: Display / Edit Log Categories</title>
   <meta name="author" content="Steve Young">
-  <meta name="keywords" content="JMRI help display edit update log logging category categories log4j log4j2 slf4j">
+  <meta name="keywords" content="JMRI help display view edit update debug log logging category categories log4j log4j2 slf4j">
   <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
@@ -61,8 +61,8 @@
       
       <p>The TRACE debug level may produce a LOT of output, expect system freezes if this is set for the Default Logging Level.</p>
       
-      <p>To make permanent changes to the logging levels, see <a href="../../../../html/doc/Technical/Logging.shtml">JMRI Logging</a>
-      which discusses the Logging Control File, ( .lcf ) options.</p>
+      <p>To make permanent changes to the logging levels, see <a href="../../../../html/apps/Debug.shtml">JMRI Debugging and Logging</a>
+      which discusses the Logging Configuration File, ( default_lcf.xml ) options.</p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div>

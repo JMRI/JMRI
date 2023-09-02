@@ -28,8 +28,6 @@ import org.slf4j.LoggerFactory;
  * Default implementation of a SignalSystemManager.
  * <p>
  * This loads automatically the first time used.
- * <p>
- *
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */

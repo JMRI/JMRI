@@ -6,8 +6,7 @@ import jmri.util.prefs.JmriPreferencesActionFactory;
 import jmri.web.server.WebServer;
 import jmri.web.server.WebServerPreferences;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.core.config.Configurator;
 
 import apps.util.Log4JUtil;
 
@@ -63,18 +62,16 @@ public class SampleMinimalProgram {
      * a non-minimal program, invoke jmri.util.Log4JUtil.initLogging
      */
     static protected void initLog4J() {
-        // initialize log4j - from logging control file (lcf) only
+        // initialize log4j2 - from logging configuration file (lcf) only
         // if can find it!
-        String logFile = "default.lcf";
+        String configFile = "default_lcf.xml";
         try {
-            if (new java.io.File(logFile).canRead()) {
-                org.apache.log4j.PropertyConfigurator.configure(logFile);
-            } else {
-                org.apache.log4j.BasicConfigurator.configure();
-                org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.ERROR);
-            }
-        } catch (java.lang.NoSuchMethodError e) {
-            log.error("Exception starting logging", e);
+            Configurator.initialize(null, configFile);
+            log.debug("Logging initialised with {}", configFile);
+        } catch ( Exception ex ) {
+            Configurator.reconfigure();
+            Configurator.setRootLevel(org.apache.logging.log4j.Level.WARN);
+            log.error("Unable to load Logging Configuration with file {}", configFile, ex);
         }
         // install default exception handler
         Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
@@ -134,5 +131,6 @@ public class SampleMinimalProgram {
         log.info("Up!");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SampleMinimalProgram.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SampleMinimalProgram.class);
+
 }

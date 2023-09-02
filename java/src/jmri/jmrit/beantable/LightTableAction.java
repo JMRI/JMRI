@@ -19,9 +19,7 @@ import jmri.NamedBean.DisplayOptions;
 import jmri.swing.ManagerComboBox;
 import jmri.swing.SystemNameValidator;
 import jmri.util.JmriJFrame;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Swing action to create and register a LightTable GUI.
@@ -429,10 +427,10 @@ public class LightTableAction extends AbstractTableAction<Light> {
             // Address (number) is already used as a Turnout
             log.warn("Requested Light {} uses same address as Turnout {}", suName, testT);
             if (!noWarn) {
-                int selectedValue = JOptionPane.showOptionDialog(addFrame,
+                int selectedValue = JmriJOptionPane.showOptionDialog(addFrame,
                         Bundle.getMessage("LightWarn5", suName, testSN),
                         Bundle.getMessage("WarningTitle"),
-                        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                        JmriJOptionPane.YES_NO_CANCEL_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null,
                         new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonYesPlus"),
                                 Bundle.getMessage("ButtonNo")}, Bundle.getMessage("ButtonNo")); // default choice = No
                 if (selectedValue == 1) {
@@ -512,8 +510,8 @@ public class LightTableAction extends AbstractTableAction<Light> {
         status1.setText(ex.getLocalizedMessage());
         String err = Bundle.getMessage("ErrorBeanCreateFailed",
             InstanceManager.getDefault(LightManager.class).getBeanTypeHandled(),sysName);
-        JOptionPane.showMessageDialog(addFrame, err + "\n" + ex.getLocalizedMessage(),
-                err, JOptionPane.ERROR_MESSAGE);
+        JmriJOptionPane.showMessageDialog(addFrame, err + "\n" + ex.getLocalizedMessage(),
+                err, JmriJOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -617,9 +615,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
         if (t == null) {
             //There is no turnout corresponding to this name
             if (inOpenPane != null) {
-                JOptionPane.showMessageDialog(inOpenPane,
+                JmriJOptionPane.showMessageDialog(inOpenPane,
                         java.text.MessageFormat.format(Bundle.getMessage("LightWarn2"), inTurnoutName),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             }
             return false;
         }
@@ -643,6 +641,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
         return LightTableAction.class.getName();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LightTableAction.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LightTableAction.class);
 
 }

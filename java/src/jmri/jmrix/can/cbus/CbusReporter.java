@@ -56,7 +56,7 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
 
     /**
      * Create a new CbusReporter.
-     * <p>
+     *
      *
      * @param address Reporter address, currently in String number format. No system prefix or type letter.
      * @param memo System connection.
@@ -73,7 +73,7 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
 
     /**
      * Set the CbusReporter State.
-     * <p>
+     *
      * May also provide / update a CBUS Sensor State, depending on property.
      * {@inheritDoc}
      */

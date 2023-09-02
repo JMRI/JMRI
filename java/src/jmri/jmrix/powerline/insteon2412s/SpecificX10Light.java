@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Keeps track of the controller's "dim count", and if not certain forces it to
  * zero to be sure.
- * <p>
  *
  *
  * @author Dave Duchamp Copyright (C) 2004

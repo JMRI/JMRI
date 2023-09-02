@@ -21,7 +21,6 @@ import jmri.jmrix.can.adapters.gridconnect.GridConnectReply;
  * {@code <11 bit SID><0><1><0>< 18 bit EID>}
  * N or R indicates a normal or remote frame, in position 6 or 10 d0 - d7 are
  * the (up to) 8 data bytes
- * <p>
  *
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008

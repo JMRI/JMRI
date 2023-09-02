@@ -31,7 +31,6 @@ import jmri.jmrit.logixng.tools.swing.TableEditor;
  <p>
  * Most of the text used in this GUI is in BeanTableBundle.properties, accessed
  * via Bundle.getMessage().
- * <p>
  *
  * @author Dave Duchamp Copyright (C) 2007 (LogixTableAction)
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011 (LogixTableAction)
@@ -116,9 +115,9 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         if (_typeExternalTable.isSelected()) {
             String fileName = _csvFileName.getText();
             if (fileName == null || fileName.isEmpty()) {
-                JOptionPane.showMessageDialog(addLogixNGFrame,
+                jmri.util.swing.JmriJOptionPane.showMessageDialog(addLogixNGFrame,
                         Bundle.getMessage("LogixNGError2"), Bundle.getMessage("ErrorTitle"), // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
+                        jmri.util.swing.JmriJOptionPane.ERROR_MESSAGE);
                 return null;
             }
             if (_csvTabbed.isSelected()) {

@@ -9,8 +9,6 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.Route;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract interface between the a JMRI route and a network connection
@@ -21,7 +19,6 @@ import org.slf4j.LoggerFactory;
 abstract public class AbstractRouteServer {
 
     private final HashMap<String, RouteListener> routes;
-    private final static Logger log = LoggerFactory.getLogger(AbstractRouteServer.class);
 
     public AbstractRouteServer() {
         routes = new HashMap<>();
@@ -64,10 +61,11 @@ abstract public class AbstractRouteServer {
     }
 
     public void setRoute(String routeName) throws IOException {
-        try {
-            InstanceManager.getDefault(jmri.RouteManager.class).getRoute(routeName).setRoute();
+        Route route = InstanceManager.getDefault(jmri.RouteManager.class).getRoute(routeName);
+        if ( route != null ) {
+            route.setRoute();
             addRouteToList(routeName);
-        } catch (NullPointerException ex) {
+        } else {
             sendErrorStatus(routeName);
         }
     }
@@ -104,7 +102,7 @@ abstract public class AbstractRouteServer {
             // If the Commanded State changes, show transition state as "<inconsistent>"
             if (e.getPropertyName().equals("KnownState")) {
                 try {
-                    sendStatus(name, ((Integer) e.getNewValue()).intValue());
+                    sendStatus(name, ((Integer) e.getNewValue()));
                 } catch (IOException ie) {
                     log.debug("Error Sending Status");
                     // if we get an error, de-register
@@ -114,4 +112,7 @@ abstract public class AbstractRouteServer {
             }
         }
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractRouteServer.class);
+
 }

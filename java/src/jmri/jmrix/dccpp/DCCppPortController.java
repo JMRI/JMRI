@@ -2,7 +2,6 @@ package jmri.jmrix.dccpp;
 
 /**
  * interface for DCCppPortController objects.
- * <p>
  *
  * @author Paul Bender Copyright (C) 2010
  * @author      Mark Underwood Copyright (C) 2015

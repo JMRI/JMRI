@@ -14,7 +14,7 @@
     <!--#include virtual="/Header.shtml" -->
 
     <div id="mBody">
-        <!--#include virtual="Sidebar.shtml" --> <!-- choose from local ("Sidebar.shtml") or global ("/Sidebar.shtml") -->
+        <!--#include virtual="Sidebar.shtml" --> 
     <div id="mainContent">
 
 	    <div id="teaser"> <!-- Optional -->
@@ -31,7 +31,7 @@
 		        write scripts that are critical to your railroad's operation using Python 3.
 		    <p>
 		        Please note that Python 3 support is currently only available for macOS and Linux
-		        computers.  Some of the components it requires are not year available for Windows.
+		        computers.  Some of the components it requires are not yet available for Windows.
 		        We'll update to use them and make Windows support available as soon as those
 		        components are updated.
 		    </p>
@@ -87,9 +87,23 @@
             <p>
             To do that, follow
             <a href="https://www.graalvm.org/docs/getting-started/#install-graalvm">the GraalVM install instructions</a>
-            to install a Java 11 version.
+            to install a Java 17 or later version. The Java 17 version is recommended.
+            Note that using Java 17 will cause
+            some problems for other JMRI functions, see the
+            <a href="../../doc/Technical/JVMCapabilities.shtml#jdk17">description of those</a>.
+            <p>Next, check that "python" has been installed in your GraalVM using the command
+    <code class="block">
+    gu list
+    </code>
+            If the <code>gu</code> command is not available, it's likely that your GraalVM installation
+            didn't go correctly.  If that command doesn't show "python" installed, you have 
+            to install it:
+    <code class="block">
+    gu install python
+    </code>
+            then check again with the <code>gu list</code> command. 
             <p>
-            Once you do that and start JMRI, a "Python 3" choice should appear in the
+            Once you do all that and start JMRI, a "Python 3" choice should appear in the
             language selector in the Script Input Window, and the file choosers for
             running scripts should give you a similar choice.
             <p>
@@ -100,36 +114,37 @@
 		<div class="section">
 		    <h2>Issues and differences from Jython (Python 2.7)</h2>
 
+            In addition to the syntax differences between the Python 2.7 and Python 3 languages,
+            such as print statements need to have their value enclosed in parentheses
+    <code class="block">
+    print (123)
+    </code>
+            there are some scripting-related differences:
+            
             <ul>
             <li>Scripts should start with
-                <pre><code class="block">
+    <code class="block">
     import jmri as jmri
     import java
     exec( open("jython/jmri_bindings.py3").read() )
-            </code></pre>
+    </code>
                 The third line is the Py3 syntax to read and execute another script file.
                 In this case, it reads and executes the file that defines a number of
                 symbols like `THROWN``, `turnouts`, etc.
             <li>
                 The syntax for getting a class reference has changed.  The only
                 place you're likely to see that is in InstanceManager calls.  They become:
-                <pre><code class="block">
+    <code class="block">
     manager = jmri.InstanceManager.getNullableDefault('jmri.MyManager')
-                </code></pre>
+     </code>
                 (note quotes).  More generally, if you need access to a Java type
                 object for other purposes, you can get it with
-                <pre><code class="block">
+    <code class="block">
     java.type('jmri.MyManager')
-                </code></pre>
+    </code>
                 but we've provided a new version of InstanceManager.getDefault and
                 InstanceManager.getNullableDefault that takes the class name as
                 a parameter to make those common operations simpler.
-
-            <li>
-                Print statements need to have their value enclosed in parentheses:
-                <pre><code class="block">
-    print (123)
-            </code></pre>
 
             <li>
                 Constants are not inherited:
@@ -141,29 +156,32 @@
 
             <li>
                 You can inherit a Python class from a Java class, i.e.
-                <pre><code class="block">
+<code class="block">
 class Automat(AbstractAutomaton) :
     def init(self) :
         print ("init in Python 3")
     def handle(self) :
         print ("handle in Python 3")
         return False
-                </code></pre>
+</code>
+<!-- The following was fixed in Java 17 Graal, which we recommend above:
+
                 but when you're doing that you can't add any additional
                 methods to the new class.  This might require rethinking
                 how to connect Java class code to your own scripting code;
                 we hope to have some recommendations soon.
-
-            <li>There's a problem with the various
-                <code>wait</code> calls in <code>AbstractAutomaton</code>,
-                e.g. <code>waitMsec(..)</code> and similar,
-                that can result in JMRI locking up. We don't currently
-                have a workaround for this.
+ -->
 
             <li>The "syntax error" message doesn't tell you where the
                 error was found.  This is a real pain.
 
           </ul>
+          
+          For the most up-to-date information on these, see
+          the 
+          <a href="https://github.com/JMRI/JMRI/blob/master/java/graalvm/DIFFERENCES.md">Differences.md file</a> 
+          and the
+          <a href="http://jmri.org/jython/test/Python3Test.py3">jython/test/Python3Test.py3 demo file</a>.
 		</div>
 
         <!--#include virtual="/Footer.shtml" -->

@@ -124,6 +124,9 @@
       </dl>
 
       <hr>
+
+      <p>Also see <a href="../Debug.shtml">Debugging and System Logging</a></p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
