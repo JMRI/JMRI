@@ -24,11 +24,11 @@ import org.slf4j.LoggerFactory;
 public interface Sensor extends DigitalIO {
 
     // states are parameters; both closed and thrown is possible!
-    int ACTIVE = DigitalIO.ON;
-    int INACTIVE = DigitalIO.OFF;
+    static final int ACTIVE = DigitalIO.ON;
+    static final int INACTIVE = DigitalIO.OFF;
 
-    // MAx value for Debounce Parameter
-    Long MAX_DEBOUNCE = 9999999L;
+    // Max value for Debounce Parameter
+    static final Long MAX_DEBOUNCE = 9999999L;
 
 
     /** {@inheritDoc} */
@@ -242,6 +242,6 @@ public interface Sensor extends DigitalIO {
     PullResistance getPullResistance();
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_LOGGER_SHOULD_BE_PRIVATE",justification="Private not available in interface")
-    Logger log = LoggerFactory.getLogger(Sensor.class);
+    static final Logger log = LoggerFactory.getLogger(Sensor.class);
     
 }
