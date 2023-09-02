@@ -28,6 +28,10 @@ Method <jmri\.UserPreferencesManager\.getWindowLocation\(java\.lang\.String\)> h
 Method <jmri\.UserPreferencesManager\.getWindowSize\(java\.lang\.String\)> has return type <java\.awt\.Dimension>.*
 Method <jmri\.UserPreferencesManager\.setWindowLocation\(java\.lang\.String, java\.awt\.Point\)> has parameter of type <java\.awt\.Point>.*
 Method <jmri\.UserPreferencesManager\.setWindowSize\(java\.lang\.String, java\.awt\.Dimension\)> has parameter of type <java\.awt\.Dimension>.*
+Method <jmri\.UserPreferencesManager\.showErrorMessage\(java\.awt\.Component, java\.lang\.String, java\.lang\.String, java\.lang\.String, java\.lang\.String, boolean, boolean\)> has parameter of type <java\.awt\.Component>.*
+Method <jmri\.UserPreferencesManager\.showInfoMessage\(java\.awt\.Component, java\.lang.String, java\.lang\.String, java\.lang\.String, java\.lang\.String\)> has parameter of type <java.awt.Component>.*
+Method <jmri\.UserPreferencesManager\.showInfoMessage\(java\.awt\.Component, java\.lang.String, java\.lang\.String, java\.lang\.String, java\.lang\.String, boolean, boolean\)> has parameter of type <java.awt.Component>.*
+Method <jmri\.UserPreferencesManager\.showWarningMessage\(java\.awt\.Component, java\.lang.String, java\.lang\.String, java\.lang\.String, java\.lang\.String, boolean, boolean\)> has parameter of type <java.awt.Component>.*
 
 # For checkJmriPackageJmrix
 
