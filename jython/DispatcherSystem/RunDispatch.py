@@ -775,9 +775,9 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 self.button_sensors_to_watch = copy.copy(self.button_sensors)
         elif modify_station_direction_sensor.getKnownState() == ACTIVE:
             if self.modify_individual_station_direction(sensor_changed, button_sensor_name, button_station_name):
-                # The traininfo files for the express routes need to be regenerated
+                # The self.trainInfo files for the express routes need to be regenerated
                 # so that the express routes are the shortest path allowed
-                ResetButtonMaster().regenerate_traininfo_files("Regenerated TrainInfo Files")
+                ResetButtonMaster().regenerate_self.trainInfo_files("Regenerated TrainInfo Files")
                 sensor_changed.setKnownState(INACTIVE)
             else:
                 #cancelled: reset all buttons so we check all of them
@@ -879,7 +879,6 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 button_station_name = last_station
                 location = LocationManager.newLocation(button_station_name)
                 routeLocation = route.addLocation(location)
-                routeLocation.setComment("qwerty")
                 loc = route.getLastLocationByName(button_station_name)
                 stop_mode = None
             elif s == opt2:

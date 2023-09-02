@@ -68,35 +68,34 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
 
     def __init__(self):
+        self.result = "Success"    #value is returned in __str__ and set to "Failure" in self.tryme()
         self.define_DisplayProgress_global()
         if self.perform_initial_checks():
-            self.waitMsec(5000)
             self.show_progress(0)
-            #self.saveForwardStoppingSensors()
-            self.removeIconsAndLabels()
-            self.removeLogix()
-            self.removeTransits()
-            self.removeSML()            # do before removeSections in case direction sensors have been added to the SML
-            self.removeSections()
+            self.tryme(self.saveForwardStoppingSensors, "Cannot save Forward Stopping Sensors: Contact Developer")
+            self.tryme(self.removeIconsAndLabels, "Cannot remove Icons And Labels: Contact Developer")
+            self.tryme(self.removeLogix, "Cannot remove startup Logix: Contact Developer")
+            self.tryme(self.removeTransits, "Cannot remove Transits: Contact Developer")
+            self.tryme(self.removeSML, "Cannot remove SML: Contact Developer")            # do before removeSections in case direction sensors have been added to the SML
+            self.tryme(self.removeSections, "Cannot remove Sections: Contact Developer")
             self.show_progress(20)
-            self.removeSensors()
+            self.tryme(self.removeSensors, "Cannot generate startup Logix: Contact Developer")
             self.show_progress(40)
-            self.updatePanels()
-            # self.waitMsec(5000)
-            self.get_list_of_stopping_points()
+            self.tryme(self.updatePanels, "Cannot update Panels: Contact Developer")
+            self.tryme(self.get_list_of_stopping_points, "Cannot get list of stopping points, Contact Developer")
             self.addSensors()
-            self.generateSML()
+            self.tryme(self.generateSML, "Cannot generate Signal Mast Logic: Signal Masts not set up correctly. Needs to be fixed before using Dispatcher System.")
             self.show_progress(60)
-            self.generateSections()
+            self.tryme(self.generateSections, "Cannot generate Sections: Signal Masts not set up correctly. Needs to be fixed before using Dispatcher System.")
             self.show_progress(80)
-            self.addLogix()
+            self.tryme(self.addLogix, "Cannot generate startup Logix: Contact Developer")
             self.addIcons()
-            self.retrieveForwardStoppingSensors()
+            self.tryme(self.retrieveForwardStoppingSensors, "Cannot retrieve Stopping Sensors: Contact Developer")
             self.stop_all_threads()
             self.end_show_progress()
 
-            # msg = 'The JMRI tables and panels have been updated to support the Dispatcher System\nA store is recommended.'
-            # JOptionPane.showMessageDialog(None, msg, 'Message', JOptionPane.WARNING_MESSAGE)
+    def __str__(self):
+        return self.result      # allow return value from calling processPanels()
 
     def stop_all_threads(self):
         summary = jmri.jmrit.automat.AutomatSummary.instance()
@@ -106,6 +105,15 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
         for automat in automatsList:
             automat.stop()
+
+    def tryme(self, func, failure_message):
+        try:
+            func()
+        except:
+            title = "Error in Routine"
+            Query().displayMessage(failure_message,title)
+            self.result = "Failure"
+        pass
 
     def define_DisplayProgress_global(self):
         global dpg
@@ -873,6 +881,22 @@ class Query:
                                          None,
                                          options,
                                          options[0])
+        if s == JOptionPane.CLOSED_OPTION:
+            self.CLOSED_OPTION = True
+            return
+        return s
+
+    def displayMessage(self, msg, title = ""):
+        self.CLOSED_OPTION = False
+        s = JOptionPane.showOptionDialog(None,
+                                         msg,
+                                         title,
+                                         JOptionPane.YES_NO_OPTION,
+                                         JOptionPane.PLAIN_MESSAGE,
+                                         None,
+                                         ["OK"],
+                                         None)
+        #JOptionPane.showMessageDialog(None, msg, 'Message', JOptionPane.WARNING_MESSAGE)
         if s == JOptionPane.CLOSED_OPTION:
             self.CLOSED_OPTION = True
             return
