@@ -1,13 +1,14 @@
 package jmri.jmrit.beantable.routetable;
 
-import jmri.InstanceManager;
-import jmri.Route;
-import jmri.RouteManager;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.*;
+
+import jmri.InstanceManager;
+import jmri.Route;
+import jmri.RouteManager;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Add frame for the Route Table.
@@ -161,11 +162,11 @@ public class RouteAddFrame extends AbstractRouteAddEditFrame {
 
         try {
             var icon = new ImageIcon(jmri.util.FileUtil.getProgramPath() + jmri.Application.getLogo());
-            var choice = JOptionPane.showInputDialog(
-                    null,
+            var choice = JmriJOptionPane.showInputDialog(
+                    this,
                     Bundle.getMessage("LabelCopyRoute"),
                     Bundle.getMessage("TitleCopyRoute"),
-                    JOptionPane.QUESTION_MESSAGE,
+                    JmriJOptionPane.QUESTION_MESSAGE,
                     icon,
                     routeArray,
                     null);

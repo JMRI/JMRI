@@ -408,8 +408,8 @@ public class SignalHeadTableModel extends jmri.jmrit.beantable.BeanTableDataMode
             } else {
                 log.error("Attempt to edit two signal heads at the same time-{}-and-{}-", editFrame.getSignalHead(), head.getSystemName());
                 String msg = Bundle.getMessage("WarningEdit", editFrame.getSignalHead(), head.getSystemName());
-                JOptionPane.showMessageDialog(editFrame, msg,
-                        Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+                jmri.util.swing.JmriJOptionPane.showMessageDialog(editFrame, msg,
+                        Bundle.getMessage("WarningTitle"), jmri.util.swing.JmriJOptionPane.ERROR_MESSAGE);
                 editFrame.setVisible(true);
             }
         }

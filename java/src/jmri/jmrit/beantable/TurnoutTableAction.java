@@ -16,11 +16,7 @@ import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
 import jmri.swing.ManagerComboBox;
 import jmri.swing.SystemNameValidator;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.JComboBoxUtil;
-import jmri.util.swing.TriStateJCheckBox;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.*;
 
 /**
  * Swing action to create and register a TurnoutTable GUI.
@@ -269,13 +265,13 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         closed.setAlignmentX(Component.LEFT_ALIGNMENT);
         speedspanel.add(closed);
 
-        int retval = JOptionPane.showConfirmDialog(_who,
+        int retval = JmriJOptionPane.showConfirmDialog(_who,
                 speedspanel,
                 title,
-                JOptionPane.OK_CANCEL_OPTION,
-                JOptionPane.INFORMATION_MESSAGE);
+                JmriJOptionPane.OK_CANCEL_OPTION,
+                JmriJOptionPane.INFORMATION_MESSAGE);
         log.debug("Retval = {}", retval);
-        if (retval != JOptionPane.OK_OPTION) { // OK button not clicked
+        if (retval != JmriJOptionPane.OK_OPTION) { // OK button not clicked
             return;
         }
         String closedValue = (String) closedCombo.getSelectedItem();
@@ -286,14 +282,14 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             assert thrownValue != null;
             turnoutManager.setDefaultThrownSpeed(thrownValue);
         } catch (jmri.JmriException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + thrownValue);
+            JmriJOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + thrownValue);
         }
 
         try {
             assert closedValue != null;
             turnoutManager.setDefaultClosedSpeed(closedValue);
         } catch (jmri.JmriException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + closedValue);
+            JmriJOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + closedValue);
         }
     }
 
@@ -463,13 +459,12 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         if (rangeBox.isSelected()) {
             numberOfTurnouts = (Integer) numberToAddSpinner.getValue();
         }
-        if (numberOfTurnouts >= 65) { // limited by JSpinnerModel to 100
-            if (JOptionPane.showConfirmDialog(addFrame,
-                    Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("Turnouts"), numberOfTurnouts),
-                    Bundle.getMessage("WarningTitle"),
-                    JOptionPane.YES_NO_OPTION) == 1) {
-                return;
-            }
+        if (numberOfTurnouts >= 65 // limited by JSpinnerModel to 100
+            && JmriJOptionPane.showConfirmDialog(addFrame,
+                Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("Turnouts"), numberOfTurnouts),
+                Bundle.getMessage("WarningTitle"),
+                JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION ) {
+            return;
         }
 
         String sName;
@@ -520,33 +515,33 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 // Address (number part) is already used as a Light
                 log.warn("Requested Turnout {} uses same address as Light {}", sName, testSN);
                 if (!noWarn) {
-                    int selectedValue = JOptionPane.showOptionDialog(addFrame,
+                    int selectedValue = JmriJOptionPane.showOptionDialog(addFrame,
                             Bundle.getMessage("TurnoutWarn1", sName, testSN)
                             + ".\n" + Bundle.getMessage("TurnoutWarn3"), Bundle.getMessage("WarningTitle"),
-                            JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                            JmriJOptionPane.YES_NO_CANCEL_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null,
                             new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
                                 Bundle.getMessage("ButtonYesPlus")}, Bundle.getMessage("ButtonNo")); // default choice = No
-                    if (selectedValue == 1) {
+                    if (selectedValue == 1) { // ButtonNo
                         // Show error message in statusBarLabel
                         statusBarLabel.setText(Bundle.getMessage("WarningOverlappingAddress", sName));
                         statusBarLabel.setForeground(Color.gray);
                         return;   // return without creating if "No" response
                     }
-                    if (selectedValue == 2) {
+                    if (selectedValue == 2) { // ButtonYesPlus
                         // Suppress future warnings, and continue
                         noWarn = true;
                     }
                 }
             }
 
-            // Ask about two bit turnout control if appropriate (eg. MERG)
+            // Ask about two bit turnout control if appropriate
             if (!useLastBit) {
                 iNum = InstanceManager.getDefault(TurnoutManager.class).askNumControlBits(sName);
                 if ((InstanceManager.getDefault(TurnoutManager.class).isNumControlBitsSupported(sName)) && (rangeBox.isSelected())) {
                     // Add a pop up here asking if the user wishes to use the same value for all
-                    if (JOptionPane.showConfirmDialog(addFrame,
+                    if (JmriJOptionPane.showConfirmDialog(addFrame,
                             Bundle.getMessage("UseForAllTurnouts"), Bundle.getMessage("UseSetting"),
-                            JOptionPane.YES_NO_OPTION) == 0) {
+                            JmriJOptionPane.YES_NO_OPTION) == 0) {
                         useLastBit = true;
                     }
                 } else {
@@ -586,9 +581,9 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 if (!useLastType) {
                     iType = InstanceManager.getDefault(TurnoutManager.class).askControlType(sName);
                     if ((InstanceManager.getDefault(TurnoutManager.class).isControlTypeSupported(sName)) && (rangeBox.isSelected())) {
-                        if (JOptionPane.showConfirmDialog(addFrame,
+                        if (JmriJOptionPane.showConfirmDialog(addFrame,
                                 Bundle.getMessage("UseForAllTurnouts"), Bundle.getMessage("UseSetting"),
-                                JOptionPane.YES_NO_OPTION) == 0) // Add a pop up here asking if the uName wishes to use the same value for all
+                                JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION ) // Add a pop up here asking if the uName wishes to use the same value for all
                         {
                             useLastType = true;
                         }
@@ -672,16 +667,16 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             InstanceManager.getDefault(TurnoutManager.class).getBeanTypeHandled(),sysName);
         if (ex.getMessage() != null) {
             statusBarLabel.setText(ex.getLocalizedMessage());
-            JOptionPane.showMessageDialog(addFrame,
+            JmriJOptionPane.showMessageDialog(addFrame,
                     ex.getLocalizedMessage(),
                     err,
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
         } else {
             statusBarLabel.setText(Bundle.getMessage("WarningInvalidRange"));
-            JOptionPane.showMessageDialog(addFrame,
+            JmriJOptionPane.showMessageDialog(addFrame,
                     err + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                     err,
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
         }
         statusBarLabel.setForeground(Color.red);
     }
@@ -714,6 +709,6 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         return Bundle.getMessage("TitleTurnoutTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutTableAction.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutTableAction.class);
 
 }
