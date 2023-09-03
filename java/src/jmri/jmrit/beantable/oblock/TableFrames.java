@@ -360,15 +360,15 @@ public class TableFrames implements InternalFrameListener {
         // don't return an element if there are no Blocks to include
         if (blkList.isEmpty()) {
             log.warn("no Blocks to convert"); // NOI18N
-            JOptionPane.showMessageDialog(desktopframe, Bundle.getMessage("ImportNoBlocks"),
-                    Bundle.getMessage("InfoTitle"), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(desktopframe, Bundle.getMessage("ImportNoBlocks"),
+                    Bundle.getMessage("InfoTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
             return;
         } else {
             if (_showWarnings) {
-                int reply = JOptionPane.showOptionDialog(null,
+                int reply = JmriJOptionPane.showOptionDialog(null,
                         Bundle.getMessage("ImportBlockConfirm", oblockPrefix(), blkList.size()),
                         Bundle.getMessage("QuestionTitle"),
-                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                        JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null,
                         new Object[]{Bundle.getMessage("ButtonYes"),
                                 Bundle.getMessage("ButtonCancel")},
                         Bundle.getMessage("ButtonYes")); // standard JOptionPane can't be found in Jemmy log4J

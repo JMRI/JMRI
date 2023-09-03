@@ -11,8 +11,7 @@ import jmri.*;
 import jmri.jmrit.beantable.RowComboBoxPanel;
 import jmri.jmrit.logix.OPath;
 import jmri.util.gui.GuiLafPreferencesManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * GUI to define Path-Turnout combos for OBlocks.
@@ -184,16 +183,16 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
                 } else if (tempRow[STATE_COL].equals(SET_THROWN)) {
                     s = Turnout.THROWN;
                 } else {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("TurnoutMustBeSet", SET_CLOSED, SET_THROWN),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("TurnoutMustBeSet", SET_CLOSED, SET_THROWN),
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.WARNING_MESSAGE);
                     return;
                 }
                 BeanSetting bs = new BeanSetting(t, tempRow[TURNOUT_NAME_COL], s);
                 _path.addSetting(bs);
                 fireTableRowsUpdated(row, row);
             } else {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchTurnout", tempRow[TURNOUT_NAME_COL]),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchTurnout", tempRow[TURNOUT_NAME_COL]),
+                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 return;
             }
             if (!_tabbed) {
@@ -213,8 +212,8 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
                         _path.addSetting(new BeanSetting(t, (String) value, bs.getSetting()));
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchTurnout", (String) value),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchTurnout", (String) value),
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.WARNING_MESSAGE);
                     return;
                 }
                 fireTableDataChanged();
@@ -228,8 +227,8 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
                     //bs.setSetting(Turnout.THROWN); 
                     _path.getSettings().set(row, new BeanSetting(bs.getBean(), bs.getBeanName(), Turnout.THROWN));
                 } else {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("TurnoutMustBeSet", SET_CLOSED, SET_THROWN),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("TurnoutMustBeSet", SET_CLOSED, SET_THROWN),
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.WARNING_MESSAGE);
                     return;
                 }
                 fireTableRowsUpdated(row, row);
@@ -237,8 +236,8 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
             case DELETE_COL:
                 if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("DeleteTurnoutConfirm"),
                         Bundle.getMessage("WarningTitle"),
-                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
-                        == JOptionPane.YES_OPTION) {
+                        JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.QUESTION_MESSAGE)
+                        == JmriJOptionPane.YES_OPTION) {
                     _path.removeSetting(bs);
                     fireTableDataChanged();
                 }
@@ -377,6 +376,6 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
         InstanceManager.turnoutManagerInstance().removePropertyChangeListener(this);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PathTurnoutTableModel.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PathTurnoutTableModel.class);
 
 }
