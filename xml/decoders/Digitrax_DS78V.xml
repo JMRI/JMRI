@@ -28,6 +28,8 @@
             <label>Board Address</label>
           </variable>
 
+           <!-- CV7 is the product ID. Should be 0x7c (124 decimal) -->
+           
            <variable CV="11" item="Output Type" default="0"
                 tooltip="OpSw1-4" mask="XXXXVVVV">
             <enumVal>

@@ -28,6 +28,8 @@
             <label>Board Address</label>
           </variable>
 
+           <!-- CV7 is the product ID. Should be 0x4a, 74 decimal -->
+           
            <variable CV="11" item="DS1 mode" default="0"
                 tooltip="OpSw1" mask="XXXXXXXV"><!-- opsw 1 -->
             <enumVal>
