@@ -5,9 +5,10 @@ import jmri.util.startup.StartupModel;
 import jmri.util.startup.StartupActionsManager;
 import java.awt.Component;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.RouteManager;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -49,10 +50,10 @@ public class TriggerRouteModelFactory implements StartupModelFactory {
                 }
             });
             userNames.sort(null);
-            String name = (String) JOptionPane.showInputDialog(parent,
+            String name = (String) JmriJOptionPane.showInputDialog(parent,
                     Bundle.getMessage("TriggerRouteModelFactory.editModel.message"), // NOI18N
                     this.getDescription(),
-                    JOptionPane.PLAIN_MESSAGE,
+                    JmriJOptionPane.PLAIN_MESSAGE,
                     null,
                     userNames.toArray(new String[userNames.size()]),
                     model.getName());
