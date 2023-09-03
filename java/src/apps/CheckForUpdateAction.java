@@ -125,8 +125,9 @@ public class CheckForUpdateAction extends jmri.util.swing.JmriAbstractAction {
 
     @Nonnull
     String getNumber(@Nonnull BufferedReader reader) throws java.io.IOException {
-        log.debug("skipping line {}", reader.readLine()); // skip a line
-        String line = reader.readLine();
+        String line = reader.readLine();  // skip a line
+        log.debug("intentionally skipping line {}", line );
+        line = reader.readLine();
         if (line == null) return "";
         return line.substring(0, line.length() - 1);  // drop trailing :
     }
