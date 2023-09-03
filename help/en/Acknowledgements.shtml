@@ -74,6 +74,9 @@
 
         <li>Cees Baarda, who expanded the DigiRails DR4018/DR4024 decoder definitions</li>
 
+        <li>John Baldwin, <!-- jbnx42 -->
+         who provided better user.css documentation.</li>
+
         <li>Harald Barth, <!-- habazut -->
          who improved the SRCP implementation and the DCC++ implementation.</li>
 
