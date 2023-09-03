@@ -395,4 +395,3 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         section = transit_section.getSection()
         forward_stopping_sensor = section.getForwardStoppingSensor()
         return forward_stopping_sensor
-    
