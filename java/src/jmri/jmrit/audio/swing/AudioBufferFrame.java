@@ -1,22 +1,22 @@
 package jmri.jmrit.audio.swing;
 
-//import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.io.File;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
@@ -24,8 +24,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.audio.AudioBuffer;
 import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
 import jmri.util.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Defines a GUI to edit AudioBuffer objects.
@@ -243,9 +242,9 @@ public class AudioBufferFrame extends AbstractAudioFrame {
                 url.setText(fileName);
 //                try {
 //                    WaveFileReader wfr = new WaveFileReader(FileUtil.getExternalFilename(fileName));
-//                    JOptionPane.showMessageDialog(null, wfr.toString(), wfr.toString(), JOptionPane.INFORMATION_MESSAGE);
+//                    JmriJOptionPane.showMessageDialog(null, wfr.toString(), wfr.toString(), JmriJOptionPane.INFORMATION_MESSAGE);
 //                } catch (AudioException ex) {
-//                    JOptionPane.showMessageDialog(null, ex.getMessage(), rba.getString("TitleReadError"), JOptionPane.ERROR_MESSAGE);
+//                    JmriJOptionPane.showMessageDialog(this, ex.getMessage(), rba.getString("TitleReadError"), JmriJOptionPane.ERROR_MESSAGE);
 //                }
             }
         }
@@ -296,7 +295,8 @@ public class AudioBufferFrame extends AbstractAudioFrame {
             // Notify changes
             model.fireTableDataChanged();
         } catch (AudioException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("AudioCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, ex.getMessage(), 
+                Bundle.getMessage("AudioCreateErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -308,6 +308,6 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         counter--;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AudioBufferFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AudioBufferFrame.class);
 
 }
