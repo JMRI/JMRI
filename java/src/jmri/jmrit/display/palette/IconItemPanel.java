@@ -301,7 +301,7 @@ public class IconItemPanel extends ItemPanel {
 
     private void renameIcon() {
         if (_selectedIcon != null) {
-            String name = (String)JmriJOptionPane.showInputDialog(_frame, Bundle.getMessage("NoIconName"),
+            String name = JmriJOptionPane.showInputDialog(_frame, Bundle.getMessage("NoIconName"),
                 Bundle.getMessage("QuestionTitle"), JmriJOptionPane.QUESTION_MESSAGE);
             if (name != null) {
                 _currentIconMap.remove(_selectedIcon._key);

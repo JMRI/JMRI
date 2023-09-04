@@ -286,7 +286,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                 } else {
                     fr = this;
                 }
-                mapFamily = (String)JmriJOptionPane.showInputDialog(fr, Bundle.getMessage("EnterFamilyName"), 
+                mapFamily = JmriJOptionPane.showInputDialog(fr, Bundle.getMessage("EnterFamilyName"), 
                     Bundle.getMessage("createNewFamily"), JmriJOptionPane.QUESTION_MESSAGE );
                 if (mapFamily == null) { // user quit
                     return null;
@@ -719,7 +719,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _cntlDown = false;
             return true;
         }
-        String family = (String)JmriJOptionPane.showInputDialog(_frame, Bundle.getMessage("EnterFamilyName"),
+        String family = JmriJOptionPane.showInputDialog(_frame, Bundle.getMessage("EnterFamilyName"),
             Bundle.getMessage("createNewFamily"), JmriJOptionPane.QUESTION_MESSAGE );
         if (family == null) {
             return false;
