@@ -1,7 +1,6 @@
 package jmri;
 
-import java.awt.Dimension;
-import java.awt.Point;
+import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -214,6 +213,21 @@ public interface UserPreferencesManager {
     void showInfoMessage(String title, String message, String classString, String item);
 
     /**
+     * Show an info message ("don't forget ...") with a given dialog title and
+     * user message.
+     * Use a given preference name to determine whether to show it in the future.
+     * The combination of the classString and item parameters should form a unique value.
+     *
+     * @param parentComponent Used to improve Dialog display, can be null.
+     * @param title       message Box title
+     * @param message     message to be displayed
+     * @param classString name of the calling class
+     * @param item        name of the specific item this is used for
+     */
+    void showInfoMessage(@CheckForNull Component parentComponent, String title,
+        String message, String classString, String item);
+    
+    /**
      * Show an error message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
      * in the future. added flag to indicate that the message should be
@@ -229,7 +243,28 @@ public interface UserPreferencesManager {
      * @param alwaysRemember Means that the suppression of the message will be
      *                       saved
      */
-    void showErrorMessage(String title, String message, String classString, String item, boolean sessionOnly, boolean alwaysRemember);
+    void showErrorMessage(String title, String message, String classString,
+        String item, boolean sessionOnly, boolean alwaysRemember);
+
+    /**
+     * Show an error message ("don't forget ...") with a given dialog title and
+     * user message.
+     * Use a given preference name to determine whether to show it in the future.
+     * Flag to indicate that the message should be suppressed JMRI session only.
+     * The classString and item parameters should form a unique value.
+     *
+     * @param parentComponent Used to improve Dialog display, can be null.
+     * @param title          Message Box title
+     * @param message        Message to be displayed
+     * @param classString    String value of the calling class
+     * @param item           String value of the specific item this is used for
+     * @param sessionOnly    Means this message will be suppressed in this JMRI
+     *                       session and not be remembered
+     * @param alwaysRemember Means that the suppression of the message will be
+     *                       saved
+     */
+    void showErrorMessage(@CheckForNull Component parentComponent, String title,
+        String message, String classString, String item, boolean sessionOnly, boolean alwaysRemember);
 
     /**
      * Show an info message ("don't forget ...") with a given dialog title and
@@ -250,6 +285,26 @@ public interface UserPreferencesManager {
     void showInfoMessage(String title, String message, String classString, String item, boolean sessionOnly, boolean alwaysRemember);
 
     /**
+     * Show an info message ("don't forget ...") with a given dialog title and
+     * user message.
+     * Use a given preference name to determine whether to show it in the future.
+     * Flag to indicate that the message should be suppressed JMRI session only.
+     * The classString and item parameters should form a unique value.
+     *
+     * @param parentComponent Used to improve Dialog display, can be null.
+     * @param title          Message Box title
+     * @param message        Message to be displayed
+     * @param classString    String value of the calling class
+     * @param item           String value of the specific item this is used for
+     * @param sessionOnly    Means this message will be suppressed in this JMRI
+     *                       session and not be remembered
+     * @param alwaysRemember Means that the suppression of the message will be
+     *                       saved
+     */
+    void showInfoMessage(@CheckForNull Component parentComponent, String title,
+        String message, String classString, String item, boolean sessionOnly, boolean alwaysRemember);
+
+    /**
      * Show a warning message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
      * in the future. added flag to indicate that the message should be
@@ -265,7 +320,28 @@ public interface UserPreferencesManager {
      * @param alwaysRemember Means that the suppression of the message will be
      *                       saved
      */
-    void showWarningMessage(String title, String message, String classString, String item, boolean sessionOnly, boolean alwaysRemember);
+    void showWarningMessage(String title, String message, String classString,
+        String item, boolean sessionOnly, boolean alwaysRemember);
+
+    /**
+     * Show a warning message ("don't forget ...") with a given dialog title and
+     * user message.
+     * Use a given preference name to determine whether to show it in the future.
+     * Flag to indicate that the message should be suppressed JMRI session only.
+     * The classString and item parameters should form a unique value.
+     *
+     * @param parentComponent Used to improve Dialog display, can be null.
+     * @param title          Message Box title
+     * @param message        Message to be displayed
+     * @param classString    String value of the calling class
+     * @param item           String value of the specific item this is used for
+     * @param sessionOnly    Means this message will be suppressed in this JMRI
+     *                       session and not be remembered
+     * @param alwaysRemember Means that the suppression of the message will be
+     *                       saved
+     */
+    void showWarningMessage(@CheckForNull Component parentComponent, String title,
+        String message, String classString, String item, boolean sessionOnly, boolean alwaysRemember);
 
     /**
      * The last selected value in a given combo box.
