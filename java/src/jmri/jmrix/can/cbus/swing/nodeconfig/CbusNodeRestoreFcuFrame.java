@@ -24,6 +24,7 @@ import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.jmrix.can.cbus.node.*;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.DOMException;
@@ -279,8 +280,8 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         if ( obj == null ) {
             return null;
         }
-        int _targetnodenum =  StringUtil.getFirstIntFromString(obj);
-        return nodeModel.getNodeByNodeNum(_targetnodenum);
+        int targetnodenum =  StringUtil.getFirstIntFromString(obj);
+        return nodeModel.getNodeByNodeNum(targetnodenum);
     }
 
     private void updateTabs() {
@@ -333,11 +334,15 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
 
     private static JFileChooser chooser;
 
-    private void selectInputFile(ActionEvent e){
-
+    private static void initChooser(){
         if (chooser == null) {
             chooser = jmri.jmrit.XmlFile.userFileChooser("XML Files", "xml", "XML");
         }
+    }
+
+    private void selectInputFile(ActionEvent e){
+
+        initChooser();
         chooser.rescanCurrentDirectory();
         int retVal = chooser.showOpenDialog(this);
         if (retVal != JFileChooser.APPROVE_OPTION) {
@@ -347,8 +352,8 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         File testForXml = chooser.getSelectedFile();
 
         if (!testForXml.getPath().toUpperCase().endsWith("XML")) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("ImportNotXml"),
-                Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ImportNotXml"),
+                Bundle.getMessage("WarningTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -364,6 +369,9 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         try {
             cbusNodeFcuDataModel.resetData();
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            // disable DOCTYPE declaration & setXIncludeAware to reduce Sonar security warnings
+            dbFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            dbFactory.setXIncludeAware(false);
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(inputFile);
             doc.getDocumentElement().normalize();
@@ -374,8 +382,8 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         }
         catch (NumberFormatException | DOMException | IOException | ParserConfigurationException | SAXException e) {
             log.warn("Error importing xml file. Valid xml?", e);
-            JOptionPane.showMessageDialog(this, (Bundle.getMessage("ImportError") + " Valid XML?"),
-                Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, (Bundle.getMessage("ImportError") + " Valid XML?"),
+                Bundle.getMessage("WarningTitle"), JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 
