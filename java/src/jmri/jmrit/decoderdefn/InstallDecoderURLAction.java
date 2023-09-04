@@ -48,13 +48,15 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
     URL pickURL(JPanel who) {
         // show input dialog
         String urlname = JmriJOptionPane.showInputDialog(who, Bundle.getMessage("InputURL"),"");
+        if ( urlname == null || urlname.isBlank() ){
+            JmriJOptionPane.showMessageDialog(who, Bundle.getMessage("NoURL"));
+            return null;
+        }
         try {
-            URL url = new URL(urlname);
-            return url;
+            return new URL(urlname);
         } catch (java.net.MalformedURLException e) {
             JmriJOptionPane.showMessageDialog(who, Bundle.getMessage("MalformedURL"));
         }
-
         return null;
     }
 
