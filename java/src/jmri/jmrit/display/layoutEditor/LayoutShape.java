@@ -16,6 +16,7 @@ import javax.swing.*;
 
 import jmri.util.*;
 import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
 
 /**
@@ -447,10 +448,10 @@ public class LayoutShape {
                     setName(newValue);
                     layoutEditor.repaint();
                 } else {
-                    JOptionPane.showMessageDialog(null,
+                    JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("CanNotRename", Bundle.getMessage("Shape")),
                         Bundle.getMessage("AlreadyExist", Bundle.getMessage("Shape")),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
 
                 }
             });
