@@ -172,6 +172,24 @@ public class JmriJOptionPane {
     }
 
     /**
+     * Displays a String input dialog.
+     * @param parentComponent       The parent component relative to which the dialog is displayed.
+     * @param message               The message to be displayed in the dialog.
+     * @param title                 The dialog Title.
+     * @param messageType           The type of message to be displayed (e.g., {@link #QUESTION_MESSAGE} ).
+     * @return The user's String input value, or {@code null} if the dialog is closed or the input value is uninitialized.
+     * @throws HeadlessException   if the current environment is headless (no GUI available).
+     */
+    @CheckForNull
+    public static String showInputDialog(@CheckForNull Component parentComponent,
+        String message, String title, int messageType ){
+        return (String)showInputDialog(parentComponent, message,
+            UIManager.getString("OptionPane.inputDialogTitle",
+            Locale.getDefault()), messageType, null, null,
+            "");
+    }
+
+    /**
      * Displays an Object input dialog.
      * @param parentComponent       The parent component relative to which the dialog is displayed.
      * @param message               The message to be displayed in the dialog.
