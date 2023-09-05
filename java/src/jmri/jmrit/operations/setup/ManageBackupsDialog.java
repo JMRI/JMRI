@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -15,12 +16,13 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import jmri.util.swing.JmriJOptionPane;
 
 public class ManageBackupsDialog extends JDialog {
 
@@ -203,10 +205,10 @@ public class ManageBackupsDialog extends JDialog {
 
         if (selectedSets.size() > 0) {
             // Make sure OK to delete backups
-            int result = JOptionPane.showConfirmDialog(this, String.format(Bundle.getMessage("ManageBackupsDialog.aboutToDelete"), selectedSets.size()), 
-                    Bundle.getMessage("ManageBackupsDialog.deletingBackupSets"), JOptionPane.OK_CANCEL_OPTION);
+            int result = JmriJOptionPane.showConfirmDialog(this, String.format(Bundle.getMessage("ManageBackupsDialog.aboutToDelete"), selectedSets.size()), 
+                    Bundle.getMessage("ManageBackupsDialog.deletingBackupSets"), JmriJOptionPane.OK_CANCEL_OPTION);
 
-            if (result == JOptionPane.OK_OPTION) {
+            if (result == JmriJOptionPane.OK_OPTION) {
                 for (BackupSet set : selectedSets) {
                     model.removeElement(set);
 
