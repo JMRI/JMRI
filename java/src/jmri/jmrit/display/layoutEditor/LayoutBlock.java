@@ -19,6 +19,7 @@ import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
 import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.SplitButtonColorChooserPanel;
 
 import org.slf4j.MDC;
@@ -321,10 +322,10 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         Sensor s = InstanceManager.sensorManagerInstance().getSensor(sensorName);
         if (s == null) {
             // There is no sensor corresponding to this name
-            JOptionPane.showMessageDialog(openFrame,
+            JmriJOptionPane.showMessageDialog(openFrame,
                     java.text.MessageFormat.format(Bundle.getMessage("Error7"),
                             new Object[]{sensorName}),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return null;
         }
 
@@ -339,10 +340,10 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 if (b.getUseCount() > 0) {
                     // new sensor is not unique, return to the old one
                     occupancyNamedSensor = savedNamedSensor;
-                    JOptionPane.showMessageDialog(openFrame,
+                    JmriJOptionPane.showMessageDialog(openFrame,
                             java.text.MessageFormat.format(Bundle.getMessage("Error6"),
                                     new Object[]{sensorName, b.getId()}),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                     return null;
                 } else {
                     // the user is assigning a sensor which is already assigned to
@@ -380,10 +381,10 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         Memory m = InstanceManager.memoryManagerInstance().getMemory(memName);
         if (m == null) {
             // There is no memory corresponding to this name
-            JOptionPane.showMessageDialog(openFrame,
+            JmriJOptionPane.showMessageDialog(openFrame,
                     java.text.MessageFormat.format(Bundle.getMessage("Error16"),
                             new Object[]{memName}),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return null;
         }
         memoryName = memName;
@@ -396,14 +397,14 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 for (MemoryIcon memIcon : panel.getMemoryLabelList()) {
                     if (memIcon.getLayoutBlock() == this) {
                         if (!updateall && !found) {
-                            int n = JOptionPane.showConfirmDialog(
+                            int n = JmriJOptionPane.showConfirmDialog(
                                     openFrame,
                                     "Would you like to update all memory icons on the panel linked to the block to use the new one?",
                                     "Update Memory Icons",
-                                    JOptionPane.YES_NO_OPTION);
+                                    JmriJOptionPane.YES_NO_OPTION);
                             // TODO I18N in Bundle.properties
                             found = true;
-                            if (n == 0) {
+                            if (n == JmriJOptionPane.YES_OPTION ) {
                                 updateall = true;
                             }
                         }
@@ -695,14 +696,15 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                                 LayoutBlockManager.class).warn()
                                 && (!compareConnectivity(c, tPanel.getLEAuxTools().getConnectivityList(this)))) {
                             // send user an error message
-                            int response = JOptionPane.showOptionDialog(null,
-                                    java.text.MessageFormat.format(Bundle.getMessage("Warn1"),
-                                            new Object[]{getUserName(), tPanel.getLayoutName(),
-                                                panel.getLayoutName()}), Bundle.getMessage("WarningTitle"),
-                                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-                                    null, new Object[]{Bundle.getMessage("ButtonOK"),
-                                        Bundle.getMessage("ButtonOKPlus")}, Bundle.getMessage("ButtonOK"));
-                            if (response != 0) {    // user elected to disable messages
+                            int response = JmriJOptionPane.showOptionDialog(null,
+                                java.text.MessageFormat.format(Bundle.getMessage("Warn1"),
+                                    new Object[]{getUserName(), tPanel.getLayoutName(), panel.getLayoutName()}),
+                                    Bundle.getMessage("WarningTitle"),
+                                    JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE,
+                                    null,
+                                    new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonOKPlus")},
+                                    Bundle.getMessage("ButtonOK"));
+                            if (response == 1 ) { // ButtokOKPlus pressed, user elected to disable messages
                                 InstanceManager.getDefault(
                                         LayoutBlockManager.class).turnOffWarning();
                             }
@@ -1015,9 +1017,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                         Bundle.getMessage("BlockAssignReporter"),
                         new Object[]{s.getDisplayName(),
                             reporter.getDisplayName()});
-                if (JOptionPane.showConfirmDialog(editLayoutBlockFrame,
+                if (JmriJOptionPane.showConfirmDialog(editLayoutBlockFrame,
                         msg, Bundle.getMessage("BlockAssignReporterTitle"),
-                        JOptionPane.YES_NO_OPTION) == 0) {
+                        JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION ) {
                     block.setReporter(reporter);
                 }
             }
@@ -1484,14 +1486,15 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                                     warn() && (!compareConnectivity(c, tPanel.getLEAuxTools().getConnectivityList(this)))) {
 
                         // send user an error message
-                        int response = JOptionPane.showOptionDialog(null,
+                        int response = JmriJOptionPane.showOptionDialog(null,
                                 java.text.MessageFormat.format(Bundle.getMessage("Warn1"),
                                         new Object[]{getUserName(), tPanel.getLayoutName(),
                                             panel.getLayoutName()}), Bundle.getMessage("WarningTitle"),
-                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-                                null, new Object[]{Bundle.getMessage("ButtonOK"),
-                                    Bundle.getMessage("ButtonOKPlus")}, Bundle.getMessage("ButtonOK"));
-                        if (response != 0) {    // user elected to disable messages
+                                JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE,
+                                null,
+                                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonOKPlus")},
+                                Bundle.getMessage("ButtonOK"));
+                        if (response == 1) { // array position 1 ButtonOKPlus pressed, user elected to disable messages
                             InstanceManager.getDefault(LayoutBlockManager.class).turnOffWarning();
                         }
                     }
@@ -2404,15 +2407,15 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                             warn() && (!compareConnectivity(c,
                                     tPanel.getLEAuxTools().getConnectivityList(this)))) {
                         // send user an error message
-                        int response = JOptionPane.showOptionDialog(null,
+                        int response = JmriJOptionPane.showOptionDialog(null,
                                 java.text.MessageFormat.format(Bundle.getMessage("Warn1"),
                                         new Object[]{getUserName(), tPanel.getLayoutName(),
                                             panel.getLayoutName()}), Bundle.getMessage("WarningTitle"),
-                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-                                null, new Object[]{Bundle.getMessage("ButtonOK"),
-                                    Bundle.getMessage("ButtonOKPlus")}, Bundle.getMessage("ButtonOK"));
-                        if (response != 0) // user elected to disable messages
-                        {
+                                JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE,
+                                null,
+                                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonOKPlus")},
+                                Bundle.getMessage("ButtonOK"));
+                        if (response == 1 ) { // array position 1 ButtonOKPlus pressed, user elected to disable messages
                             InstanceManager.getDefault(LayoutBlockManager.class).turnOffWarning();
                         }
                     }
