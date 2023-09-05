@@ -23,6 +23,7 @@ import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -387,10 +388,10 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 if (p != null) {
                     // LogixNG with this user name already exists
                     log.error("Failure to update LogixNG with Duplicate User Name: {}", uName); // NOI18N
-                    JOptionPane.showMessageDialog(_editLogixNGFrame,
+                    JmriJOptionPane.showMessageDialog(_editLogixNGFrame,
                             Bundle.getMessage("Error_UserNameInUse"),
                             Bundle.getMessage("ErrorTitle"), // NOI18N
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
@@ -694,10 +695,10 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     private boolean checkEditConditionalNG() {
         if (_inEditConditionalNGMode) {
             // Already editing a ConditionalNG, ask for completion of that edit
-            JOptionPane.showMessageDialog(_editConditionalNGFrame,
+            JmriJOptionPane.showMessageDialog(_editConditionalNGFrame,
                     Bundle.getMessage("Error_ConditionalNGInEditMode", _curConditionalNG.getSystemName()), // NOI18N
                     Bundle.getMessage("ErrorTitle"), // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             _editConditionalNGFrame.setVisible(true);
             return true;
         }
@@ -711,10 +712,10 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 if (uName.equals(p.getUserName())) {
                     // ConditionalNG with this user name already exists
                     log.error("Failure to update ConditionalNG with Duplicate User Name: {}", uName); // NOI18N
-                    JOptionPane.showMessageDialog(_editConditionalNGFrame,
+                    JmriJOptionPane.showMessageDialog(_editConditionalNGFrame,
                             Bundle.getMessage("Error10"),    // NOI18N
                             Bundle.getMessage("ErrorTitle"), // NOI18N
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                     return false;
                 }
             }
@@ -1048,10 +1049,10 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
      * @param svName proposed name that duplicates an existing name
      */
     void messageDuplicateConditionalNGUserName(String svName) {
-        JOptionPane.showMessageDialog(null,
+        JmriJOptionPane.showMessageDialog(null,
                 Bundle.getMessage("Error30", svName),
                 Bundle.getMessage("ErrorTitle"), // NOI18N
-                JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.ERROR_MESSAGE);
     }
 
     private String getClassName() {
@@ -1237,9 +1238,9 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
                     log.warn("Do not Delete {}, {}", _conditionalNG, e.getMessage());
                     message.append(Bundle.getMessage("VetoDeleteBean", _conditionalNG.getBeanType(), _conditionalNG.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME), e.getMessage()));
-                    JOptionPane.showMessageDialog(null, message.toString(),
+                    JmriJOptionPane.showMessageDialog(null, message.toString(),
                             Bundle.getMessage("WarningTitle"),
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                     return null;
                 }
                 message.append(e.getMessage());
