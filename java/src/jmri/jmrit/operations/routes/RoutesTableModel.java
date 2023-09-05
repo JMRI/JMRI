@@ -6,14 +6,10 @@ import java.text.MessageFormat;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -21,6 +17,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -227,8 +224,8 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
                                     new Object[]{train.getName(), route.getName()}));
                 }
             }
-            JOptionPane.showMessageDialog(null, buf.toString(), Bundle.getMessage("TrainBuilt"),
-                    JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(null, buf.toString(), Bundle.getMessage("TrainBuilt"),
+                    JmriJOptionPane.WARNING_MESSAGE);
         }
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(() -> {
@@ -279,5 +276,5 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         removePropertyChangeRoutes();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RoutesTableModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RoutesTableModel.class);
 }
