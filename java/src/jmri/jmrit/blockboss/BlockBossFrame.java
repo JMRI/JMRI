@@ -17,9 +17,7 @@ import jmri.SignalHeadManager;
 import jmri.Turnout;
 import jmri.NamedBean.DisplayOptions;
 import jmri.swing.NamedBeanComboBox;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Provide a GUI for configuring "Simple Signal Logic" (BlockBossLogic) objects.
@@ -873,10 +871,10 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
             cancel.setText(Bundle.getMessage("ButtonClose")); // when Apply has been clicked at least once, this is not Cancel
         } catch (IllegalArgumentException e) {
             statusBar.setText(Bundle.getMessage("ApplyErrorDialog"));
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("ApplyErrorDialog"),
                     Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -1169,6 +1167,6 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         inComboBox.setSelectedIndex(-1);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(BlockBossFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockBossFrame.class);
 
 }

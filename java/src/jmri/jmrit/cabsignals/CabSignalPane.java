@@ -11,12 +11,14 @@ import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import javax.swing.text.DefaultFormatter;
+
 import jmri.LocoAddress;
 import jmri.CabSignalListListener;
 import jmri.CabSignalManager;
@@ -26,12 +28,10 @@ import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.swing.StayOpenCheckBoxItem;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import jmri.util.table.JTableWithColumnToolTips;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Pane for sending Cab Signal data via block lookup
@@ -315,12 +315,12 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
         
         ActionListener rowHeightMenuListener = ae -> {
             JSpinner delaySpinner = getNewRowHeightSpinner();
-            int option = JOptionPane.showOptionDialog(this, 
+            int option = JmriJOptionPane.showOptionDialog(this, 
                 delaySpinner, 
                 Bundle.getMessage("RowHeightOption"), 
-                JOptionPane.OK_CANCEL_OPTION, 
-                JOptionPane.QUESTION_MESSAGE, null, null, null);
-            if (option == JOptionPane.OK_OPTION) {
+                JmriJOptionPane.OK_CANCEL_OPTION, 
+                JmriJOptionPane.QUESTION_MESSAGE, null, null, null);
+            if (option == JmriJOptionPane.OK_OPTION) {
                 _defaultRowHeight = (Integer) delaySpinner.getValue();
             }
             else {
@@ -423,6 +423,6 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
         slotModel.fireTableDataChanged();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(CabSignalPane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CabSignalPane.class);
 
 }
