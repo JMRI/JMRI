@@ -5,13 +5,13 @@ import java.awt.FlowLayout;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Abstract class for the editing frames of CircuitBulder
@@ -99,8 +99,8 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
             sb.append(msg);
         }
         if (!_canEdit) {
-            JOptionPane.showMessageDialog(this, sb.toString(),
-                    Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, sb.toString(),
+                    Bundle.getMessage("incompleteCircuit"), JmriJOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -123,13 +123,13 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
     protected boolean closingEvent(boolean close, String msg) {
         if (msg != null && msg.length() > 0) {
             if (close) {
-                JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("editCiruit"), JOptionPane.INFORMATION_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, msg, Bundle.getMessage("editCiruit"), JmriJOptionPane.INFORMATION_MESSAGE);
             } else {
                 StringBuilder sb = new StringBuilder(msg);
                 sb.append(Bundle.getMessage("exitQuestion"));
-                int answer = JOptionPane.showConfirmDialog(this, sb.toString(), Bundle.getMessage("continue"),
-                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (answer == JOptionPane.NO_OPTION) {
+                int answer = JmriJOptionPane.showConfirmDialog(this, sb.toString(), Bundle.getMessage("continue"),
+                        JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.QUESTION_MESSAGE);
+                if (answer != JmriJOptionPane.YES_OPTION ) {
                     return false;
                 }
             }
