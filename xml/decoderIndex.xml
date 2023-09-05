@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.5.2plus+jake+20230804T1827Z+Re46d2cd2ef on Fri Aug 04 14:28:40 EDT 2023-->
-  <decoderIndex version="39">
+  <!--Written by JMRI version 5.5.3plus+jake+20230902T1654Z+Rb3fe09d632 on Sat Sep 02 12:54:49 EDT 2023-->
+  <decoderIndex version="41">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -2038,6 +2038,9 @@
       </family>
       <family name="Series 7 Boards" mfg="Digitrax" file="Digitrax_DS74.xml">
         <model model="DS74" />
+      </family>
+      <family name="Series 7 Boards" mfg="Digitrax" file="Digitrax_DS78V.xml">
+        <model model="DS78V" />
       </family>
       <family name="Economy Series 3 with FX3, silent" mfg="Digitrax" lowVersionID="35" highVersionID="36" file="Digitrax_Economy.xml">
         <model model="DH123" numOuts="2" numFns="5" lowVersionID="35" highVersionID="36">
@@ -6281,10 +6284,10 @@
         </soundlabels>
       </family>
       <family name="ESU LokPilot Basic 1.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255" file="ESU_LokPilotBasic1.0.xml">
-        <model model="LokPilot Basic 1.0" numOuts="5" numFns="5">
+        <model model="LokPilot Basic 1.0" numOuts="5" numFns="5" productID="52690">
           <output name="1" label="Front|light" />
           <output name="2" label="Rear|light" />
-          <output name="3" label="   AUX1    " />
+          <output name="3" label="AUX1" />
           <output name="4" label="Shunting|gear" />
           <output name="5" label="Acceleration|brake delay" />
         </model>
