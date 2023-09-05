@@ -13,13 +13,11 @@ import javax.swing.table.*;
 
 import jmri.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.jmrit.conditional.ConditionalEditBase.SelectionMode;
 import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -316,10 +314,10 @@ public class ConditionalCopyFrame extends ConditionalFrame {
         Conditional.ItemType itemType = action.getType().getItemType();
         if (_referenceByMemory) {
             if (itemType == Conditional.ItemType.MEMORY) {
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("Warn6"),
                         Bundle.getMessage("WarningTitle"), // NOI18N
-                        JOptionPane.WARNING_MESSAGE);
+                        JmriJOptionPane.WARNING_MESSAGE);
                 return false;                
             }
         } else {
@@ -654,5 +652,5 @@ public class ConditionalCopyFrame extends ConditionalFrame {
         }        
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConditionalCopyFrame.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConditionalCopyFrame.class);
 }
