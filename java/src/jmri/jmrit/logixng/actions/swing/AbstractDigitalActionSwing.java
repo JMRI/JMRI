@@ -2,13 +2,13 @@ package jmri.jmrit.logixng.actions.swing;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.swing.AbstractSwingConfigurator;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Abstract class for SwingConfiguratorInterface
@@ -41,10 +41,10 @@ public abstract class AbstractDigitalActionSwing extends AbstractSwingConfigurat
                 conditionalNG.setSymbolTable(symbolTable);
                 ((DigitalAction)object).execute();
                 jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
-                    JOptionPane.showMessageDialog(null,
+                    JmriJOptionPane.showMessageDialog(null,
                             Bundle.getMessage("ExecuteEvaluate_ActionCompleted"),
                             Bundle.getMessage("ExecuteEvaluate_Title"),
-                            JOptionPane.PLAIN_MESSAGE);
+                            JmriJOptionPane.PLAIN_MESSAGE);
                 });
             } catch (JmriException | RuntimeException e) {
     //                LoggingUtil.warnOnce(log, "ConditionalNG {} got an exception during execute: {}",
