@@ -20,8 +20,8 @@ import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.ImageIndexEditor;
@@ -31,11 +31,10 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LinkingLabel;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.util.swing.ImagePanel;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseAdapter;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * ItemPanel for plain Icons and Backgrounds.
@@ -269,8 +268,8 @@ public class IconItemPanel extends ItemPanel {
      */
     protected void deleteIcon() {
         if (_selectedIcon == null) {
-            JOptionPane.showMessageDialog(_frame, Bundle.getMessage("ToSelectIcon"),
-                    Bundle.getMessage("ReminderTitle"), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(_frame, Bundle.getMessage("ToSelectIcon"),
+                    Bundle.getMessage("ReminderTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
             return;
         }
         log.debug("deleteIcon {}", _selectedIcon._key);
@@ -302,8 +301,8 @@ public class IconItemPanel extends ItemPanel {
 
     private void renameIcon() {
         if (_selectedIcon != null) {
-            String name = JOptionPane.showInputDialog(_frame, Bundle.getMessage("NoIconName"),
-                    Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE);
+            String name = JmriJOptionPane.showInputDialog(_frame, Bundle.getMessage("NoIconName"),
+                Bundle.getMessage("QuestionTitle"), JmriJOptionPane.QUESTION_MESSAGE);
             if (name != null) {
                 _currentIconMap.remove(_selectedIcon._key);
                 putIcon(name, _selectedIcon._icon);
@@ -311,8 +310,8 @@ public class IconItemPanel extends ItemPanel {
                 deselectIcon();
             }
         } else {
-            JOptionPane.showMessageDialog(_frame, Bundle.getMessage("ToSelectIcon"),
-                    Bundle.getMessage("ReminderTitle"), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(_frame, Bundle.getMessage("ToSelectIcon"),
+                    Bundle.getMessage("ReminderTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -336,16 +335,16 @@ public class IconItemPanel extends ItemPanel {
     }
 
     protected String setIconName(String name) {
-        name = JOptionPane.showInputDialog(this,
+        name = JmriJOptionPane.showInputDialog(this,
                 Bundle.getMessage("NoIconName"), name);
         if (name == null || name.trim().length() == 0) {
             return null;
         }
         while (_currentIconMap.get(name) != null) {
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("DuplicateIconName", name),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            name = JOptionPane.showInputDialog(this,
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
+            name = JmriJOptionPane.showInputDialog(this,
                     Bundle.getMessage("NoIconName"), name);
             if (name == null || name.trim().length() == 0) {
                 return null;
@@ -562,6 +561,6 @@ public class IconItemPanel extends ItemPanel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IconItemPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IconItemPanel.class);
 
 }

@@ -6,13 +6,14 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map.Entry;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
+
 import jmri.SignalHead;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
@@ -20,8 +21,7 @@ import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SignalHeadIcon;
 import jmri.jmrit.picker.PickListModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
 
@@ -106,9 +106,9 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
 
     protected HashMap<String, NamedIcon> getFilteredIconMap(HashMap<String, NamedIcon> allIconsMap) {
         if (allIconsMap == null) {
-            JOptionPane.showMessageDialog(_frame,
+            JmriJOptionPane.showMessageDialog(_frame,
                     Bundle.getMessage("FamilyNotFound", _itemType, _family),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             return null;
         }
         if (_table == null || _table.getSelectedRow() < 0) {
@@ -162,8 +162,8 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
         protected boolean okToDrag() {
             SignalHead bean = getDeviceNamedBean();
             if (bean == null) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 return false;
             }
             return true;
@@ -196,5 +196,6 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalHeadItemPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalHeadItemPanel.class);
+
 }

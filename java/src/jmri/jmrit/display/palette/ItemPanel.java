@@ -15,7 +15,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -25,9 +24,7 @@ import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.PreviewPanel;
 import jmri.jmrit.display.controlPanelEditor.PortalIcon;
 import jmri.util.swing.ImagePanel;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * JPanels for the various item types that can be added to a Panel - e.g. Sensors,
@@ -462,13 +459,13 @@ public abstract class ItemPanel extends JPanel  {
      * @return the name and map to discard
      */
     private String queryWhichToDelete(String key1, String key2) {
-        int result = JOptionPane.showOptionDialog(this, Bundle.getMessage("DuplicateMap", key1, key2),
-                Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION, 
-                JOptionPane.QUESTION_MESSAGE, null,
+        int result = JmriJOptionPane.showOptionDialog(this, Bundle.getMessage("DuplicateMap", key1, key2),
+                Bundle.getMessage("QuestionTitle"), JmriJOptionPane.DEFAULT_OPTION, 
+                JmriJOptionPane.QUESTION_MESSAGE, null,
                 new Object[] {key1, key2}, key1);
-        if (result == JOptionPane.YES_OPTION) {
+        if ( result == 0 ) { // position 0 in array, keep key1, return key2
             return key2;
-        } else if (result == JOptionPane.NO_OPTION) {
+        } else if ( result == 1 ) { // position 1 in array, keep key1, return key2
             return key1;
         }
         return key2;
@@ -520,6 +517,6 @@ public abstract class ItemPanel extends JPanel  {
         return c;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ItemPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ItemPanel.class);
 
 }
