@@ -694,14 +694,18 @@ public class Car extends RollingStock {
     @Override
     public String checkDestination(Location destination, Track track) {
         String status = super.checkDestination(destination, track);
-        if (!status.equals(Track.OKAY)) {
+        if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
             return status;
         }
         // now check to see if the track has a schedule
         if (track == null) {
             return status;
         }
-        return track.checkSchedule(this);
+        String statusSchedule = track.checkSchedule(this);
+        if (status.startsWith(Track.LENGTH) && statusSchedule.equals(Track.OKAY)) {
+            return status;
+        }
+        return statusSchedule;
     }
 
     /**
