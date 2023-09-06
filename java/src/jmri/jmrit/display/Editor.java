@@ -39,6 +39,7 @@ import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 import jmri.util.DnDStringImportHandler;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseListener;
 import jmri.util.swing.JmriMouseMotionListener;
@@ -1409,10 +1410,10 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
     private boolean checkEditConditionalNG() {
         if (_inEditInlineLogixNGMode) {
             // Already editing a LogixNG, ask for completion of that edit
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("Error_InlineLogixNGInEditMode"), // NOI18N
                     Bundle.getMessage("ErrorTitle"), // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             _inlineLogixNGEdit.bringToFront();
             return true;
         }
@@ -1703,8 +1704,8 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
             if ((nameID != null) && !(nameID.trim().equals(""))) {
                 addLocoIcon(nameID.trim());
             } else {
-                JOptionPane.showMessageDialog(locoFrame, Bundle.getMessage("ErrorEnterLocoID"),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(locoFrame, Bundle.getMessage("ErrorEnterLocoID"),
+                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             }
         });
         locoFrame.getContentPane().add(okay);
@@ -2885,14 +2886,14 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
     public boolean deletePanel() {
         log.debug("deletePanel");
         // verify deletion
-        int selectedValue = JOptionPane.showOptionDialog(_targetPanel,
+        int selectedValue = JmriJOptionPane.showOptionDialog(_targetPanel,
                 Bundle.getMessage("QuestionA") + "\n" + Bundle.getMessage("QuestionA2", Bundle.getMessage("FileMenuItemStore")),
-                Bundle.getMessage("DeleteVerifyTitle"), JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE, null,
+                Bundle.getMessage("DeleteVerifyTitle"), JmriJOptionPane.DEFAULT_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE, null,
                 new Object[]{Bundle.getMessage("ButtonYesDelete"), Bundle.getMessage("ButtonCancel")},
                 Bundle.getMessage("ButtonCancel"));
-        // return without deleting if "No" response
-        return (selectedValue == JOptionPane.YES_OPTION);
+        // return without deleting if "Cancel" or Cancel Dialog response
+        return (selectedValue == 0 ); // array position 0 = Yes, Delete.
     }
 
     /**

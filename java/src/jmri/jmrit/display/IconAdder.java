@@ -39,8 +39,7 @@ import jmri.CatalogTreeNode;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.picker.PickListModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Provides a simple editor for selecting N NamedIcons. Class for Icon Editors
@@ -430,8 +429,8 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             int nextWidth = but.getIcon().getIconWidth();
             int nextHeight = but.getIcon().getIconHeight();
             if ((Math.abs(lastWidth - nextWidth) > 3 || Math.abs(lastHeight - nextHeight) > 3)) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("IconSizeDiff"),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("IconSizeDiff"),
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 return;
             }
             lastWidth = nextWidth;
@@ -632,10 +631,10 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                     _pickTablePane.getVerticalScrollBar().setValue(setRow * ROW_HEIGHT);
                 }
             } catch (IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(this.getParent(),
+                JmriJOptionPane.showMessageDialog(this.getParent(),
                      ex.getLocalizedMessage(),
                     Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
             }
         }
         _sysNameText.setText("");
@@ -816,6 +815,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IconAdder.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IconAdder.class);
 
 }
