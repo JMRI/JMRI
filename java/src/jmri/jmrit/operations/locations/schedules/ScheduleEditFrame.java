@@ -6,9 +6,6 @@ import java.text.MessageFormat;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -20,6 +17,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.swing.JTablePersistenceManager;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user edit of a schedule
@@ -231,11 +229,11 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         }
         if (ae.getSource() == deleteScheduleButton) {
             log.debug("schedule delete button activated");
-            if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
+            if (JmriJOptionPane.showConfirmDialog(this, MessageFormat.format(
                     Bundle.getMessage("DoYouWantToDeleteSchedule"),
                     new Object[]{scheduleNameTextField.getText()}), Bundle
                             .getMessage("DeleteSchedule?"),
-                    JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                    JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                 return;
             }
             Schedule schedule = manager.getScheduleByName(scheduleNameTextField.getText());
@@ -332,7 +330,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
             // check for errors, ignore no schedule items error when creating a new schedule
             String status = _track.checkScheduleValid();
             if (_schedule.getItemsBySequenceList().size() != 0 && !status.equals(Schedule.SCHEDULE_OKAY)) {
-                JOptionPane.showMessageDialog(this, status, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, status, Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             }
         }
 
@@ -359,11 +357,11 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         }
         if (scheduleNameTextField.getText().length() > MAX_NAME_LENGTH) {
             log.error("Schedule name must be less than 26 charaters");
-            JOptionPane.showMessageDialog(this, MessageFormat.format(
+            JmriJOptionPane.showMessageDialog(this, MessageFormat.format(
                     Bundle.getMessage("ScheduleNameLengthMax"),
                     new Object[]{Integer.toString(MAX_NAME_LENGTH + 1)}), MessageFormat.format(
                             Bundle.getMessage("CanNotSchedule"), new Object[]{s}),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -371,9 +369,9 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 
     private void reportScheduleExists(String s) {
         log.info("Can not {}, schedule already exists", s);
-        JOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"),
+        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"),
                 MessageFormat.format(Bundle.getMessage("CanNotSchedule"), new Object[]{s}),
-                JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.ERROR_MESSAGE);
     }
 
     private void enableButtons(boolean enabled) {
@@ -414,6 +412,6 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ScheduleEditFrame.class
-            .getName());
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ScheduleEditFrame.class);
+
 }
