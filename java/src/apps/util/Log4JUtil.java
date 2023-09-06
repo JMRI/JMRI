@@ -159,7 +159,13 @@ public class Log4JUtil {
         Map<String, Appender  > appenderMap = ((org.apache.logging.log4j.core.Logger) logger).getAppenders();
         appenderMap.forEach((key, a) -> {
             if (a instanceof RollingFileAppender) {
-                log.info("This log is appended to file: {}", ((RollingFileAppender) a).getFileName());
+                RollingFileAppender rf = (RollingFileAppender)a;
+                String fileName = rf.getFileName();
+                if ( fileName.equals(rf.getFilePattern()) ) {
+                    log.info("This log is stored in file: {}", fileName);
+                } else {
+                    log.info("This log is appended to file: {}", fileName);
+                }
             } else if (a instanceof FileAppender) {
                 log.info("This log is stored in file: {}", ((FileAppender) a).getFileName());
             }

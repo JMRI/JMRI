@@ -82,7 +82,9 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Added a DecoderPro definition for the DS78V. This required
+                    code changes, so this definition will not work with earlier
+                    versions of JMRI.</li>
             </ul>
 
         <h4>Maple</h4>

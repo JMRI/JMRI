@@ -6,10 +6,8 @@ import java.awt.event.ActionListener;
 import java.util.Map;
 
 import javax.swing.AbstractAction;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
-import javax.swing.JTextField;
 
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
@@ -18,10 +16,8 @@ import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logixng.GlobalVariable;
 import jmri.jmrit.logixng.GlobalVariableManager;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display a status of a GlobalVariable.
@@ -464,7 +460,7 @@ public class GlobalVariableIcon extends MemoryOrGVIcon implements java.beans.Pro
 
     protected void editGlobalVariableValue() {
     
-        String reval = JOptionPane.showInputDialog(this,
+        String reval = (String)JmriJOptionPane.showInputDialog(this,
                                      Bundle.getMessage("EditCurrentGlobalVariableValue", namedGlobalVariable.getName()),
                                      getGlobalVariable().getValue());
     
@@ -483,6 +479,6 @@ public class GlobalVariableIcon extends MemoryOrGVIcon implements java.beans.Pro
         getGlobalVariable().setValue(val);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(GlobalVariableIcon.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(GlobalVariableIcon.class);
 
 }

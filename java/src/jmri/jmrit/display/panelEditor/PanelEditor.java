@@ -33,11 +33,9 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 import jmri.CatalogTreeManager;
 import jmri.ConfigureManager;
@@ -51,14 +49,12 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.ToolTip;
 import jmri.util.JmriJFrame;
-import jmri.util.SystemType;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides a simple editor for adding jmri.jmrit.display items to a captive
@@ -211,13 +207,13 @@ public class PanelEditor extends Editor implements ItemListener {
                         oldName = ((JFrame) ancestor).getTitle();
                     }
                     // prompt for name
-                    String newName = JOptionPane.showInputDialog(null, Bundle.getMessage("PromptNewName"), oldName);
+                    String newName = JmriJOptionPane.showInputDialog(null, Bundle.getMessage("PromptNewName"), oldName);
                     if ((newName == null) || (oldName.equals(newName))) {
                         return;  // cancelled
                     }
                     if (InstanceManager.getDefault(EditorManager.class).contains(newName)) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("CanNotRename"), Bundle.getMessage("PanelExist"),
-                                JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("CanNotRename"), Bundle.getMessage("PanelExist"),
+                                JmriJOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     if (ancestor instanceof JFrame) {
@@ -1257,6 +1253,6 @@ public class PanelEditor extends Editor implements ItemListener {
         popup.add(edit);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PanelEditor.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PanelEditor.class);
 
 }

@@ -20,15 +20,11 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -52,6 +48,7 @@ import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.picker.PickListModel;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  *
@@ -313,9 +310,9 @@ public class EditSignalFrame extends EditFrame {
                             sb.append("\n");
                             sb.append(Bundle.getMessage("saveChanges"));
 //                        }
-                        int answer = JOptionPane.showConfirmDialog(_frame, sb.toString(), Bundle.getMessage("configureSignal"),
-                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                        if (answer == JOptionPane.YES_OPTION) {
+                        int answer = JmriJOptionPane.showConfirmDialog(_frame, sb.toString(), Bundle.getMessage("configureSignal"),
+                                JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.QUESTION_MESSAGE);
+                        if (answer == JmriJOptionPane.YES_OPTION) {
                             if (bean != null) {
                                 addMast(_currentPortal, bean);                            
 //                            } else {
@@ -419,9 +416,9 @@ public class EditSignalFrame extends EditFrame {
             sb.append(Bundle.getMessage("attachMast", mastName, homeName, homePortal.getName()));
         }
         if (sb.length() > 0) {
-            int answer = JOptionPane.showConfirmDialog(this,  sb.toString(),
-                    Bundle.getMessage("configureSignal"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (answer != JOptionPane.YES_OPTION) {
+            int answer = JmriJOptionPane.showConfirmDialog(this,  sb.toString(),
+                    Bundle.getMessage("configureSignal"), JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.QUESTION_MESSAGE);
+            if (answer != JmriJOptionPane.YES_OPTION) {
                 return false;   // Skip the rest
             }
         }
@@ -482,8 +479,8 @@ public class EditSignalFrame extends EditFrame {
             msg = Bundle.getMessage("selectPortalProtection", _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME));
         }
         if (msg != null) {
-            JOptionPane.showMessageDialog(this, msg,
-                    Bundle.getMessage("configureSignal"), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, msg,
+                    Bundle.getMessage("configureSignal"), JmriJOptionPane.INFORMATION_MESSAGE);
             return false;
         }
         return true;
@@ -522,8 +519,8 @@ public class EditSignalFrame extends EditFrame {
             msg = Bundle.getMessage("selectPortalProtection", _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME));
         }
         if (msg != null) {
-            JOptionPane.showMessageDialog(this, msg,
-                    Bundle.getMessage("configureSignal"), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, msg,
+                    Bundle.getMessage("configureSignal"), JmriJOptionPane.INFORMATION_MESSAGE);
         }
     }*/
 
@@ -541,10 +538,10 @@ public class EditSignalFrame extends EditFrame {
             portal.setProtectSignal(null, 0, _homeBlock);
             _parent.putSignalPortal(oldMast, null);
         } else {
-            JOptionPane.showMessageDialog(this, 
+            JmriJOptionPane.showMessageDialog(this, 
                     Bundle.getMessage("noPortalProtection", _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME),
                             portal.getName()),
-                    Bundle.getMessage("configureSignal"), JOptionPane.INFORMATION_MESSAGE);
+                    Bundle.getMessage("configureSignal"), JmriJOptionPane.INFORMATION_MESSAGE);
         }
         _mastName.setText(null);
     }
@@ -799,8 +796,8 @@ public class EditSignalFrame extends EditFrame {
                 }
             }
             if (msg.length() > 0) {
-                JOptionPane.showMessageDialog(this, msg,
-                        Bundle.getMessage("configureSignal"), JOptionPane.INFORMATION_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, msg,
+                        Bundle.getMessage("configureSignal"), JmriJOptionPane.INFORMATION_MESSAGE);
                 return false;
             }
             return true;
@@ -844,6 +841,6 @@ public class EditSignalFrame extends EditFrame {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EditSignalFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EditSignalFrame.class);
 
 }

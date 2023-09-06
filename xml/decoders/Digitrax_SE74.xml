@@ -27,6 +27,8 @@
             <label>Board Address</label>
           </variable>
 
+           <!-- CV7 is the product ID. Should be 0x70, decimal 112 -->
+           
           <variable CV="11" item="Turnout Type" default="0"
                 tooltip="OpSw01" mask="XXXXXXXV">
             <enumVal>
