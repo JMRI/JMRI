@@ -174,7 +174,7 @@ public abstract class Action extends PropertyChangeSupport {
      *                buttons, the second button becomes the default
      * @param success true if action succeeded
      * @param message the text to be displayed
-     * @return array number for which button was pressed, NO_MESSAGE_SENT, CLOSED, -1 if Dialog cancelled
+     * @return array number for which button was pressed, NO_MESSAGE_SENT, CLOSED
      */
     public int sendMessage(String message, Object[] buttons, boolean success) {
         int response = NO_MESSAGE_SENT;
