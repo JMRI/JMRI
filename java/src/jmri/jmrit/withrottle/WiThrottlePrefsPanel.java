@@ -17,7 +17,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
@@ -27,6 +26,7 @@ import jmri.InstanceManager;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.zeroconf.ZeroConfPreferences;
 import jmri.util.zeroconf.ZeroConfServiceManager;
 
@@ -138,10 +138,10 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
             portNum = 0;
         }
         if ((portNum < 1) || (portNum > 65535)) { //  Invalid port value
-            javax.swing.JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("WarningInvalidPort"),
                     Bundle.getMessage("TitlePortWarningDialog"),
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
             didSet = false;
         } else {
             localPrefs.setPort((int) port.getValue());

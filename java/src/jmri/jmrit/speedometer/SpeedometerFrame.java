@@ -8,9 +8,9 @@ import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 import jmri.Application;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
@@ -21,12 +21,12 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.SensorIcon;
 import jmri.util.FileUtil;
 import jmri.util.IntlUtilities;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.ProcessingInstruction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame providing access to a speedometer.
@@ -530,11 +530,11 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
             // couldn't locate the sensor, that's an error
             log.error("Start sensor invalid: {}", startSensor.getText());
             if (warn) {
-                JOptionPane.showMessageDialog(
+                JmriJOptionPane.showMessageDialog(
                         this,
                         Bundle.getMessage("ErrorStartSensor"),
                         Bundle.getMessage("TitleError"),
-                        JOptionPane.WARNING_MESSAGE);
+                        JmriJOptionPane.WARNING_MESSAGE);
             }
             return verify;
         }
@@ -550,11 +550,11 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
             // couldn't locate the sensor, that's an error
             log.error("Stop 1 sensor invalid : {}", stopSensor1.getText());
             if (warn) {
-                JOptionPane.showMessageDialog(
+                JmriJOptionPane.showMessageDialog(
                         this,
                         Bundle.getMessage("ErrorStopSensor1"),
                         Bundle.getMessage("TitleError"),
-                        JOptionPane.WARNING_MESSAGE);
+                        JmriJOptionPane.WARNING_MESSAGE);
             }
             return verify;
         }
@@ -563,11 +563,11 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         if (distance1.getText().equals("")) {
             log.error("Distance 1 has not been defined");
             if (warn) {
-                JOptionPane.showMessageDialog(
+                JmriJOptionPane.showMessageDialog(
                         this,
                         Bundle.getMessage("ErrorDistance1"),
                         Bundle.getMessage("TitleError"),
-                        JOptionPane.WARNING_MESSAGE);
+                        JmriJOptionPane.WARNING_MESSAGE);
             }
             return verify;
         }
@@ -587,11 +587,11 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                 // couldn't locate the sensor, that's an error
                 log.error("Stop 2 sensor invalid: {}", stopSensor2.getText());
                 if (warn) {
-                    JOptionPane.showMessageDialog(
+                    JmriJOptionPane.showMessageDialog(
                             this,
                             Bundle.getMessage("ErrorStopSensor2"),
                             Bundle.getMessage("TitleError"),
-                            JOptionPane.WARNING_MESSAGE);
+                            JmriJOptionPane.WARNING_MESSAGE);
                 }
                 return 0;
             }
@@ -601,11 +601,11 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                 log.error("Distance 2 has not been defined");
                 enableConfiguration(true);
                 if (warn) {
-                    JOptionPane.showMessageDialog(
+                    JmriJOptionPane.showMessageDialog(
                             this,
                             Bundle.getMessage("ErrorDistance2"),
                             Bundle.getMessage("TitleError"),
-                            JOptionPane.WARNING_MESSAGE);
+                            JmriJOptionPane.WARNING_MESSAGE);
                 }
                 return 0;
             }
@@ -620,12 +620,12 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         log.debug("Check if there's anything to store");
         int verify = verifyInputs(false);
         if (verify == 0) {
-            if (JOptionPane.showConfirmDialog(
+            if (JmriJOptionPane.showConfirmDialog(
                     this,
                     Bundle.getMessage("QuestionNothingToStore"),
                     Bundle.getMessage("TitleStoreQuestion"),
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION) {
+                    JmriJOptionPane.YES_NO_OPTION,
+                    JmriJOptionPane.QUESTION_MESSAGE) != JmriJOptionPane.NO_OPTION) {
                 return;
             }
         }
@@ -849,5 +849,5 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
     }
 
-    private static final Logger log = LoggerFactory.getLogger(SpeedometerFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SpeedometerFrame.class);
 }
