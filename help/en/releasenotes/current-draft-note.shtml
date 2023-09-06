@@ -85,6 +85,11 @@
                 <li>Added a DecoderPro definition for the DS78V. This required
                     code changes, so this definition will not work with earlier
                     versions of JMRI.</li>
+                <li>The jython/loconet/LnEditEvolutionRoutesAndOpSw.py script has been updated
+                    to version 2.0.
+                    This script allows you to configure the OpSw and routes in the new Digitrax
+                    Series 7 boards.
+                </li>
             </ul>
 
         <h4>Maple</h4>
