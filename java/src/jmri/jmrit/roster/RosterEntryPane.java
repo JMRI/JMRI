@@ -10,16 +10,13 @@ import java.util.List;
 
 import javax.swing.*;
 
-import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Display and enable editing a RosterEntry panel to display on first tab "Roster Entry".
@@ -147,7 +144,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
             @Override
             public void focusLost(FocusEvent e) {
                 if (checkDuplicate()) {
-                    JOptionPane.showMessageDialog(pane, Bundle.getMessage("ErrorDuplicateID"));
+                    JmriJOptionPane.showMessageDialog(pane, Bundle.getMessage("ErrorDuplicateID"));
                 }
             }
         });
@@ -470,6 +467,6 @@ public class RosterEntryPane extends javax.swing.JPanel {
         log.debug("dispose");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RosterEntryPane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RosterEntryPane.class);
 
 }
