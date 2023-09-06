@@ -4,9 +4,6 @@ import java.text.MessageFormat;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.tools.LocationsByCarTypeFrame;
@@ -16,6 +13,7 @@ import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.tools.TrainsByCarTypeFrame;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for editing a car attribute.
@@ -88,28 +86,29 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
         if (_attribute.equals(TYPE)) {
             InstanceManager.getDefault(CarTypes.class).addName(addItem);
             if (showDialogBox) {
-                int results = JOptionPane.showOptionDialog(this, Bundle.getMessage("AddNewCarType"),
-                        Bundle.getMessage("ModifyLocations"), JOptionPane.YES_NO_CANCEL_OPTION,
-                        JOptionPane.QUESTION_MESSAGE, null, new Object[] { Bundle.getMessage("ButtonYes"),
+                int results = JmriJOptionPane.showOptionDialog(this, Bundle.getMessage("AddNewCarType"),
+                        Bundle.getMessage("ModifyLocations"), JmriJOptionPane.DEFAULT_OPTION,
+                        JmriJOptionPane.QUESTION_MESSAGE, null,
+                        new Object[] { Bundle.getMessage("ButtonYes"),
                                 Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonDontShow") },
                         Bundle.getMessage("ButtonNo"));
-                if (results == JOptionPane.YES_OPTION) {
+                if (results == 0 ) { // array position 0, ButtonYes
                     LocationsByCarTypeFrame lf = new LocationsByCarTypeFrame();
                     lf.initComponents(addItem);
                 }
-                if (results == JOptionPane.CANCEL_OPTION) {
+                if (results == 2 ) { // array position 2, ButtonDontShow
                     showDialogBox = false;
                 }
-                results = JOptionPane.showOptionDialog(this, Bundle.getMessage("AddNewCarType"),
-                        Bundle.getMessage("ModifyTrains"), JOptionPane.YES_NO_CANCEL_OPTION,
-                        JOptionPane.QUESTION_MESSAGE, null, new Object[] { Bundle.getMessage("ButtonYes"),
+                results = JmriJOptionPane.showOptionDialog(this, Bundle.getMessage("AddNewCarType"),
+                        Bundle.getMessage("ModifyTrains"), JmriJOptionPane.DEFAULT_OPTION,
+                        JmriJOptionPane.QUESTION_MESSAGE, null, new Object[] { Bundle.getMessage("ButtonYes"),
                                 Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonDontShow") },
                         Bundle.getMessage("ButtonNo"));
-                if (results == JOptionPane.YES_OPTION) {
+                if (results == 0 ) { // array position 0, ButtonYes
                     TrainsByCarTypeFrame lf = new TrainsByCarTypeFrame();
                     lf.initComponents(addItem);
                 }
-                if (results == JOptionPane.CANCEL_OPTION) {
+                if (results == 2 ) { // array position 2, ButtonDontShow
                     showDialogBox = false;
                 }
             }
@@ -271,5 +270,5 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
         super.propertyChange(e);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarAttributeEditFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CarAttributeEditFrame.class);
 }
