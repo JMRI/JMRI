@@ -632,5 +632,6 @@
             <li>You can now set the preferences to open the RailCom table at startup.</li>
             <li>The analog fast clock now shows when the fast clock has been stopped.</li>
             <li>Updated batik-transcoder 1.14 to 1.17, resolving a security issue</li>
+            <li>Improvements to Dialog boxes when displayed with &quot;Always On Top&quot; window frames present.</li>
         </ul>
 
