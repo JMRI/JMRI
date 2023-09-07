@@ -20,6 +20,7 @@ public class DecoderIndexBuilder {
         // logging needed for code invoked from here
         String configFile = "default_lcf.xml";
         apps.util.Log4JUtil.initLogging(configFile);
+        Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
 
         // log the location where the result is stored
         System.out.println(jmri.util.FileUtil.getUserFilesPath() + "decoderIndex.xml"); // command line
