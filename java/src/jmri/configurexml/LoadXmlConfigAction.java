@@ -1,12 +1,9 @@
 package jmri.configurexml;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;

@@ -7,14 +7,12 @@ import java.util.*;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.FileUtil;
 import jmri.util.swing.FontComboUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user edit of manifest and switch list print options
@@ -22,8 +20,6 @@ import jmri.util.swing.FontComboUtil;
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2013
  */
 public class PrintOptionPanel extends OperationsPreferencesPanel implements java.beans.PropertyChangeListener {
-
-    private static final Logger log = LoggerFactory.getLogger(PrintOptionPanel.class);
 
     private String ADD = "+";
     private String DELETE = "-";
@@ -483,8 +479,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
             }
         }
         if (ae.getSource() == truncateCheckBox && truncateCheckBox.isSelected()) {
-            if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("EnableTruncateWarning"),
-                    Bundle.getMessage("TruncateManifests?"), JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+            if (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("EnableTruncateWarning"),
+                    Bundle.getMessage("TruncateManifests?"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.NO_OPTION) {
                 truncateCheckBox.setSelected(false);
             }
         }
@@ -969,4 +965,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
             trackSummaryCheckBox.setEnabled(Setup.isSwitchListRealTime());
         }
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PrintOptionPanel.class);
+
 }

@@ -8,9 +8,6 @@ import java.util.List;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -20,6 +17,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame to display which locations service certain car types
@@ -177,10 +175,10 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
      */
     private void save() {
         if (copyCheckBox.isSelected() &&
-                JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("CopyCarType"),
+                JmriJOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("CopyCarType"),
                         new Object[]{typeComboBox.getSelectedItem(), copyComboBox.getSelectedItem()}),
                         Bundle.getMessage("CopyCarTypeTitle"),
-                        JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                        JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
             return;
         }
         log.debug("save {} locations", locationCheckBoxList.size());
@@ -352,5 +350,5 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationsByCarTypeFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LocationsByCarTypeFrame.class);
 }

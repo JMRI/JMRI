@@ -14,6 +14,7 @@ import javax.swing.*;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Reference;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Helper class for deleting a bean
@@ -58,9 +59,9 @@ public class DeleteBean<E extends NamedBean> {
             if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
                 log.warn("{} : Do Not Delete", e.getMessage());
                 message.append(Bundle.getMessage("VetoDeleteBean", x.getBeanType(), x.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME), e.getMessage()));
-                JOptionPane.showMessageDialog(null, message.toString(),
+                JmriJOptionPane.showMessageDialog(null, message.toString(),
                         Bundle.getMessage("QuestionTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
             message.append(e.getMessage());

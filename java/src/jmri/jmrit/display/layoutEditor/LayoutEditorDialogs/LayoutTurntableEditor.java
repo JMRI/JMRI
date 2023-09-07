@@ -16,6 +16,7 @@ import jmri.*;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * MVC Editor component for PositionablePoint objects.
@@ -204,9 +205,9 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
          // check if a block exists to edit
          LayoutBlock blockToEdit = layoutTurntable.getLayoutBlock();
          if (blockToEdit == null) {
-             JOptionPane.showMessageDialog(editLayoutTurntableFrame,
+             JmriJOptionPane.showMessageDialog(editLayoutTurntableFrame,
                      Bundle.getMessage("Error1"), // NOI18N
-                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);  // NOI18N
+                     Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
              return;
          }
          blockToEdit.editLayoutBlock(editLayoutTurntableFrame);
@@ -249,9 +250,9 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
         try {
             ang = Float.parseFloat(editLayoutTurntableAngleTextField.getText());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("EntryError") + ": " // NOI18N
-                    + e + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"), // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("EntryError") + ": "
+                    + e + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"),
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         layoutTurntable.addRay(ang);
@@ -282,9 +283,9 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             try {
                 rad = Float.parseFloat(str);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("EntryError") + ": " // NOI18N
+                JmriJOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("EntryError") + ": " // NOI18N
                         + e + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"), // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
             layoutTurntable.setRadius(rad);
@@ -355,9 +356,9 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
                     try {
                         Float.parseFloat(rayAngleTextField.getText());
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("EntryError") + ": " // NOI18N
+                        JmriJOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("EntryError") + ": " // NOI18N
                                 + ex + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"), // NOI18N
-                                JOptionPane.ERROR_MESSAGE);
+                                JmriJOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
@@ -418,11 +419,11 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
         }
 
         private void delete() {
-            int n = JOptionPane.showConfirmDialog(null,
+            int n = JmriJOptionPane.showConfirmDialog(null,
                     Bundle.getMessage("Question7"), // NOI18N
                     Bundle.getMessage("WarningTitle"), // NOI18N
-                    JOptionPane.YES_NO_OPTION);
-            if (n == JOptionPane.YES_OPTION) {
+                    JmriJOptionPane.YES_NO_OPTION);
+            if (n == JmriJOptionPane.YES_OPTION) {
                 layoutTurntable.deleteRay(rayTrack);
             }
         }

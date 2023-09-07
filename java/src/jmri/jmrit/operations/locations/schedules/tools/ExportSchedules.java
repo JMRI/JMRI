@@ -9,13 +9,12 @@ import javax.swing.JOptionPane;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.locations.schedules.*;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Exports the Operation Schedules into a comma delimited file (CSV).
@@ -98,18 +97,18 @@ public class ExportSchedules extends XmlFile {
             fileOut.flush();
             fileOut.close();
             log.info("Exported {} schedules to file {}", schedules.size(), defaultOperationsFilename());
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     MessageFormat.format(Bundle.getMessage("ExportedSchedulesToFile"), new Object[]{
                 schedules.size(), defaultOperationsFilename()}),
                     Bundle.getMessage("ExportComplete"),
-                    JOptionPane.INFORMATION_MESSAGE);
+                    JmriJOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
             log.error("Can not open export schedules CSV file: {}", file.getName());
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     MessageFormat.format(Bundle.getMessage("ExportedSchedulesToFile"), new Object[]{
                 0, defaultOperationsFilename()}),
                     Bundle.getMessage("ExportFailed"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -131,6 +130,6 @@ public class ExportSchedules extends XmlFile {
 
     private static String operationsFileName = "ExportOperationsSchedules.csv"; // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(ExportSchedules.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExportSchedules.class);
 
 }

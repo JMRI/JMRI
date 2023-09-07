@@ -6,10 +6,8 @@ import java.text.MessageFormat;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -24,6 +22,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for copying a track for operations.
@@ -192,30 +191,30 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
             }
             if (trackBox.getSelectedItem() == null || trackBox.getSelectedItem().equals(Location.NONE) || _destination == null) {
                 // tell user that they need to select a track to copy
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationAndTrack"), Bundle
-                        .getMessage("SelectTrackToCopy"), JOptionPane.INFORMATION_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationAndTrack"), Bundle
+                        .getMessage("SelectTrackToCopy"), JmriJOptionPane.INFORMATION_MESSAGE);
                 return;
             }
             Track fromTrack = (Track) trackBox.getSelectedItem();
             if (moveRollingStockCheckBox.isSelected() && fromTrack.getPickupRS() > 0) {
-                JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("FoundRollingStockPickUp"),
+                JmriJOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("FoundRollingStockPickUp"),
                         new Object[]{fromTrack.getPickupRS()}), MessageFormat.format(Bundle
                                 .getMessage("TrainsServicingTrack"), new Object[]{fromTrack.getName()}),
-                        JOptionPane.WARNING_MESSAGE);
+                        JmriJOptionPane.WARNING_MESSAGE);
                 return; // failed
             }
             if (moveRollingStockCheckBox.isSelected() && fromTrack.getDropRS() > 0) {
-                JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("FoundRollingStockDrop"),
+                JmriJOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("FoundRollingStockDrop"),
                         new Object[]{fromTrack.getDropRS()}), MessageFormat.format(Bundle
                                 .getMessage("TrainsServicingTrack"), new Object[]{fromTrack.getName()}),
-                        JOptionPane.WARNING_MESSAGE);
+                        JmriJOptionPane.WARNING_MESSAGE);
                 return; // failed
             }
             // only copy tracks that are okay with the location
             if (fromTrack.isStaging() ^ _destination.isStaging()) {
-                JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackTypeWrong"),
+                JmriJOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackTypeWrong"),
                         new Object[]{fromTrack.getTrackType(), _destination.getName()}), MessageFormat.format(Bundle
-                                .getMessage("CanNotCopy"), new Object[]{fromTrack.getName()}), JOptionPane.ERROR_MESSAGE);
+                                .getMessage("CanNotCopy"), new Object[]{fromTrack.getName()}), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
             Track toTrack = fromTrack.copyTrack(trackNameTextField.getText(), _destination);
@@ -262,14 +261,14 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
      */
     protected boolean checkName() {
         if (trackNameTextField.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
-                    .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
+                    .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (TrainCommon.splitString(trackNameTextField.getText()).length() > Control.max_len_string_track_name) {
-            JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackNameLengthMax"),
+            JmriJOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackNameLengthMax"),
                     new Object[]{Integer.toString(Control.max_len_string_track_name + 1)}), MessageFormat.format(Bundle
-                            .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
+                            .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         // check to see if track already exists
@@ -278,8 +277,8 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
         }
         Track check = _destination.getTrackByName(trackNameTextField.getText(), null);
         if (check != null) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("TrackAlreadyExists"), MessageFormat.format(Bundle
-                    .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("TrackAlreadyExists"), MessageFormat.format(Bundle
+                    .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -324,5 +323,5 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackCopyFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackCopyFrame.class);
 }

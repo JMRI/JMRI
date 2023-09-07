@@ -14,6 +14,7 @@ import javax.swing.table.*;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.util.swing.JComboBoxUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Table model for inline LogixNGs.
@@ -155,9 +156,9 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
             if (otherLogixNG != null) {
                 log.error("User name is not unique {}", value);
                 String msg = Bundle.getMessage("WarningUserName", "" + value);
-                JOptionPane.showMessageDialog(null, msg,
+                JmriJOptionPane.showMessageDialog(null, msg,
                         Bundle.getMessage("WarningTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -166,10 +167,10 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
             logixNG.setUserName((String) value);
             if (nbMan.inUse(logixNG.getSystemName(), logixNG)) {
                 String msg = Bundle.getMessage("UpdateToUserName", logixNG.getBeanType(), value, logixNG.getSystemName());
-                int optionPane = JOptionPane.showConfirmDialog(null,
+                int optionPane = JmriJOptionPane.showConfirmDialog(null,
                         msg, Bundle.getMessage("UpdateToUserNameTitle"),
-                        JOptionPane.YES_NO_OPTION);
-                if (optionPane == JOptionPane.YES_OPTION) {
+                        JmriJOptionPane.YES_NO_OPTION);
+                if (optionPane == JmriJOptionPane.YES_OPTION) {
                     //This will update the bean reference from the systemName to the userName
                     try {
                         nbMan.updateBeanFromSystemToUser(logixNG);
@@ -354,10 +355,10 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
         private boolean checkEditConditionalNG() {
             if (_tableModel._inEditLogixNGMode) {
                 // Already editing a LogixNG, ask for completion of that edit
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("Error_InlineLogixNGInEditMode"), // NOI18N
                         Bundle.getMessage("ErrorTitle"), // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 _tableModel._logixNGEditor.bringToFront();
                 return true;
             }
@@ -396,11 +397,11 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
 
             if (_tableModel._inEditLogixNGMode) {
                 // Already editing a bean, ask for completion of that edit
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("Error_InlineLogixNGInEditMode",
                                 logixNG.getSystemName()),
                         Bundle.getMessage("ErrorTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 if (_tableModel._logixNGEditor != null) {
                     _tableModel._logixNGEditor.bringToFront();
                 }

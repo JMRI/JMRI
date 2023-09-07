@@ -6,14 +6,12 @@ import java.text.MessageFormat;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.setup.Control;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for copying a schedule for operations.
@@ -90,8 +88,8 @@ public class ScheduleCopyFrame extends OperationsFrame implements java.beans.Pro
             }
 
             if (scheduleBox.getSelectedItem() == null) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectScheduleToCopy"), MessageFormat.format(Bundle
-                        .getMessage("CanNotSchedule"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("SelectScheduleToCopy"), MessageFormat.format(Bundle
+                        .getMessage("CanNotSchedule"), new Object[]{Bundle.getMessage("ButtonCopy")}), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -113,20 +111,20 @@ public class ScheduleCopyFrame extends OperationsFrame implements java.beans.Pro
      */
     protected boolean checkName() {
         if (scheduleNameTextField.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
-                    .getMessage("CanNotSchedule"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
+                    .getMessage("CanNotSchedule"), new Object[]{Bundle.getMessage("ButtonCopy")}), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (scheduleNameTextField.getText().length() > Control.max_len_string_location_name) {
-            JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("ScheduleNameLengthMax"),
+            JmriJOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("ScheduleNameLengthMax"),
                     new Object[]{Integer.toString(Control.max_len_string_location_name + 1)}), MessageFormat.format(Bundle
-                            .getMessage("CanNotSchedule"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
+                            .getMessage("CanNotSchedule"), new Object[]{Bundle.getMessage("ButtonCopy")}), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         Schedule check = scheduleManager.getScheduleByName(scheduleNameTextField.getText());
         if (check != null) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("ScheduleAlreadyExists"), MessageFormat.format(Bundle
-                    .getMessage("CanNotSchedule"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ScheduleAlreadyExists"), MessageFormat.format(Bundle
+                    .getMessage("CanNotSchedule"), new Object[]{Bundle.getMessage("ButtonCopy")}), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -146,5 +144,5 @@ public class ScheduleCopyFrame extends OperationsFrame implements java.beans.Pro
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ScheduleCopyFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ScheduleCopyFrame.class);
 }

@@ -1,16 +1,14 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user to place a group of cars on the layout
@@ -138,9 +136,9 @@ public class CarsSetFrame extends CarSetFrame {
             return false;
         } else if (cars.get(0) != _car) {
             log.debug("Default car isn't the first one selected");
-            if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
+            if (JmriJOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
                     .getMessage("doYouWantToChange"), new Object[]{cars.get(0).toString()}), Bundle
-                    .getMessage("changeDefaultCar"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    .getMessage("changeDefaultCar"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                 super.load(cars.get(0)); // new default car
                 return false; // done, don't modify any of the cars selected
             }
@@ -172,9 +170,9 @@ public class CarsSetFrame extends CarSetFrame {
     }
     
     private void showMessageDialogWarning() {
-        JOptionPane.showMessageDialog(this, Bundle.getMessage("selectCars"), Bundle
-                .getMessage("carNoneSelected"), JOptionPane.WARNING_MESSAGE);
+        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("selectCars"), Bundle
+                .getMessage("carNoneSelected"), JmriJOptionPane.WARNING_MESSAGE);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarsSetFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CarsSetFrame.class);
 }
