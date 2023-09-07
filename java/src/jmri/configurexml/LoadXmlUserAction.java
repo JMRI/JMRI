@@ -3,9 +3,8 @@ package jmri.configurexml;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Load configuration information from an XML file.
@@ -45,11 +44,11 @@ public class LoadXmlUserAction extends LoadXmlConfigAction {
             setCurrentFile(userFileChooser.getSelectedFile());
         } else {
             log.debug("load failed");
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("LoadHasErrors") + "\n"
                     + Bundle.getMessage("CheckPreferences") + "\n"
                     + Bundle.getMessage("ConsoleWindowHasInfo"),
-                    Bundle.getMessage("LoadError"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("LoadError"), JmriJOptionPane.ERROR_MESSAGE);
             setCurrentFile(null);
         }
     }
@@ -69,7 +68,6 @@ public class LoadXmlUserAction extends LoadXmlConfigAction {
         currentFile = arg;
     }
 
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LoadXmlUserAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LoadXmlUserAction.class);
 
 }
