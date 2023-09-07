@@ -625,7 +625,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                     Bundle.getMessage("QuestionNothingToStore"),
                     Bundle.getMessage("TitleStoreQuestion"),
                     JmriJOptionPane.YES_NO_OPTION,
-                    JmriJOptionPane.QUESTION_MESSAGE) != JmriJOptionPane.NO_OPTION) {
+                    JmriJOptionPane.QUESTION_MESSAGE) != JmriJOptionPane.YES_OPTION) {
                 return;
             }
         }
