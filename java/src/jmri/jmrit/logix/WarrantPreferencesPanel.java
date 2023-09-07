@@ -10,6 +10,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map.Entry;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -18,7 +19,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -28,12 +28,13 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
+
 import jmri.implementation.SignalSpeedMap;
 import jmri.swing.PreferencesPanel;
 import jmri.util.swing.JComboBoxUtil;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.openide.util.lookup.ServiceProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Pete Cressman Copyright (C) 2015
@@ -99,8 +100,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
                     showdialog = true;
                 }
                 if (showdialog) {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("rampIncrWarning", text),
-                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(leftPanel, Bundle.getMessage("rampIncrWarning", text),
+                            Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 }
             }
         });
@@ -169,8 +170,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
                 boolean ok = false;
                 while (!ok) {
                     float scale = 0.0f;
-                    String str = JOptionPane.showInputDialog(this, Bundle.getMessage("customInput"),
-                            Bundle.getMessage("customTitle"), JOptionPane.QUESTION_MESSAGE);
+                    String str = JmriJOptionPane.showInputDialog(this, Bundle.getMessage("customInput"),
+                            Bundle.getMessage("customTitle"), JmriJOptionPane.QUESTION_MESSAGE);
                     try {
                         if (str == null) {
                             sd.scale = 0.0f;
@@ -187,8 +188,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
                             ok = true;
                         }
                     } catch (NumberFormatException nfe) {
-                        JOptionPane.showMessageDialog(this, Bundle.getMessage("customError", str),
-                                Bundle.getMessage("customTitle"), JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("customError", str),
+                                Bundle.getMessage("customTitle"), JmriJOptionPane.ERROR_MESSAGE);
                     }
                 }
             } else {
@@ -455,8 +456,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     private void insertSpeedNameRow() {
         int row = _speedNameTable.getSelectedRow();
         if (row < 0) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("selectRow"),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("selectRow"),
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             return;
         }
         _speedNameMap.add(row, new DataPair<>("", 0f));
@@ -466,8 +467,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     private void deleteSpeedNameRow() {
         int row = _speedNameTable.getSelectedRow();
         if (row < 0) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("selectRow"),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("selectRow"),
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             return;
         }
         _speedNameMap.remove(row);
@@ -562,8 +563,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             _rampIncre.setText(NumberFormat.getNumberInstance().format(preferences.getThrottleIncrement()*100));
         }
         if (scale < 0.5f || scale > 25f) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("rampIncrWarning", _rampIncre.getText()),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("rampIncrWarning", _rampIncre.getText()),
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             _rampIncre.setText(NumberFormat.getNumberInstance().format(WarrantPreferences.getDefault().getThrottleIncrement()*100));
         } else {
             scale /= 100;
@@ -835,8 +836,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
                     }
                 }
                 if (msg != null) {
-                    JOptionPane.showMessageDialog(null, msg,
-                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(null, msg,
+                            Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 } else {
                     fireTableRowsUpdated(row, row);
                 }
@@ -919,8 +920,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
                     data.setValue((String) value);
                 }
                 if (msg != null) {
-                    JOptionPane.showMessageDialog(null, msg,
-                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(null, msg,
+                            Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 } else {
                     fireTableRowsUpdated(row, row);
                 }
@@ -1012,8 +1013,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
                     }
                 }
                 if (msg != null) {
-                    JOptionPane.showMessageDialog(null, msg,
-                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(null, msg,
+                            Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 } else {
                     fireTableRowsUpdated(row, row);
                 }
@@ -1021,6 +1022,6 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantPreferencesPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WarrantPreferencesPanel.class);
 
 }

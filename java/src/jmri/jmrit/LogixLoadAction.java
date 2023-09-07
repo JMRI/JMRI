@@ -1,12 +1,12 @@
 package jmri.jmrit;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 import jmri.InstanceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Provide an action to allow Logixs to be loaded disabled when panel file is
@@ -30,10 +30,10 @@ public class LogixLoadAction extends AbstractAction {
         Object[] options = {"Disable",
             "Enable"}; // TODO I18N
 
-        int retval = JOptionPane.showOptionDialog(_who, Bundle.getMessage("LogixDisabledMessage"), Bundle.getMessage("DebugOption"),
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-        if (retval != 0) {
+        int retval = JmriJOptionPane.showOptionDialog(_who, Bundle.getMessage("LogixDisabledMessage"), Bundle.getMessage("DebugOption"),
+                JmriJOptionPane.DEFAULT_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        if (retval != 0) { // not array position 0 for Disable or Dialog closed
             InstanceManager.getDefault(jmri.LogixManager.class).setLoadDisabled(false);
             log.info("Requested load Logixs enabled via Debug menu.");
         } else {
@@ -43,6 +43,6 @@ public class LogixLoadAction extends AbstractAction {
 
     }
 
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LogixLoadAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixLoadAction.class);
+
 }
