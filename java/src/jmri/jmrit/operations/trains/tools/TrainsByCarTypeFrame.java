@@ -8,9 +8,6 @@ import java.util.List;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -19,6 +16,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame to display which trains service certain car types
@@ -145,10 +143,10 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
      */
     private void save() {
         if (copyCheckBox.isSelected() &&
-                JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("CopyCarType"),
+                JmriJOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("CopyCarType"),
                         new Object[]{typeComboBox.getSelectedItem(), copyComboBox.getSelectedItem()}),
                         Bundle.getMessage("CopyCarTypeTitle"),
-                        JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                        JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
             return;
         }
         log.debug("Save {} trains", trainList.size());
@@ -257,5 +255,5 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainsByCarTypeFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrainsByCarTypeFrame.class);
 }
