@@ -90,6 +90,8 @@
                     This script allows you to configure the OpSw and routes in the new Digitrax
                     Series 7 boards.
                 </li>
+                <li>The jython/loconet/PGM_DS74_GEN.py can be used to program DS74 boards
+                    from a configuration held in a text file.</li>
             </ul>
 
         <h4>Maple</h4>
