@@ -8,10 +8,10 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -19,10 +19,12 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
+
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Display Speed Profile.
@@ -172,9 +174,9 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
             SpeedTableModel model = (SpeedTableModel)table.getModel();
             Map.Entry<Integer, SpeedStep> entry = model.speedArray.get(row);
             int step = Math.round((float)(entry.getKey()*126)/1000);
-            if ( JOptionPane.YES_OPTION  == JOptionPane.showConfirmDialog(null, 
+            if ( JmriJOptionPane.YES_OPTION  == JmriJOptionPane.showConfirmDialog(table, 
                     Bundle.getMessage("DeleteRow", step), Bundle.getMessage("SpeedTable", rosterId),
-                    JOptionPane.YES_NO_OPTION)) {
+                    JmriJOptionPane.YES_NO_OPTION)) {
                 model.speedArray.remove(entry);
                 speedProfile.deleteStep(entry.getKey());
                 model.fireTableDataChanged();
