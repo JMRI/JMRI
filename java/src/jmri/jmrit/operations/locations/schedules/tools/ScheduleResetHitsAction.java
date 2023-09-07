@@ -1,7 +1,10 @@
-package jmri.jmrit.operations.locations.schedules;
+package jmri.jmrit.operations.locations.schedules.tools;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+
+import jmri.jmrit.operations.locations.schedules.Schedule;
 
 /**
  * Action to reset the all of the schedule item hit counts for this schedule

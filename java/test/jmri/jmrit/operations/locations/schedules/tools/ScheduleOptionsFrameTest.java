@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.locations.schedules;
+package jmri.jmrit.operations.locations.schedules.tools;
 
 import java.awt.GraphicsEnvironment;
 
@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.locations.schedules.*;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 

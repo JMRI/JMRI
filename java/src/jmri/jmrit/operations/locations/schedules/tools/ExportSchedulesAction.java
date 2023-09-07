@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.locations.schedules;
+package jmri.jmrit.operations.locations.schedules.tools;
 
 import java.awt.event.ActionEvent;
 

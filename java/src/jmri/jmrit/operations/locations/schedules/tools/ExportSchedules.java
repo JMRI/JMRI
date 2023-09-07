@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.locations.schedules;
+package jmri.jmrit.operations.locations.schedules.tools;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.locations.schedules.*;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 
 /**

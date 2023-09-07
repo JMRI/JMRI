@@ -1,7 +1,10 @@
-package jmri.jmrit.operations.locations.schedules;
+package jmri.jmrit.operations.locations.schedules.tools;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+
+import jmri.jmrit.operations.locations.schedules.ScheduleEditFrame;
 
 /**
  * Action to launch schedule options.

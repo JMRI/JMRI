@@ -1118,7 +1118,7 @@ public class Track extends PropertyChangeSupport {
         } else if (getShipLoadOption().equals(Track.EXCLUDE_LOADS)) {
             s = Bundle.getMessage("Exclude") + " " + getShipLoadNames().length + " " + Bundle.getMessage("Loads");
         } else {
-            s = Bundle.getMessage("ShipAll");
+            s = Bundle.getMessage("ShipsAllLoads");
         }
         return s;
     }
@@ -1978,11 +1978,13 @@ public class Track extends PropertyChangeSupport {
      * @param enable when true, swap generic car load state
      */
     public void setLoadSwapEnabled(boolean enable) {
+        boolean old = isLoadSwapEnabled();
         if (enable) {
             _loadOptions = _loadOptions | SWAP_GENERIC_LOADS;
         } else {
             _loadOptions = _loadOptions & 0xFFFF - SWAP_GENERIC_LOADS;
         }
+        setDirtyAndFirePropertyChange(LOAD_OPTIONS_CHANGED_PROPERTY, old, enable);
     }
 
     public boolean isLoadSwapEnabled() {
@@ -1996,11 +1998,13 @@ public class Track extends PropertyChangeSupport {
      * @param enable when true, set generic car load to empty
      */
     public void setLoadEmptyEnabled(boolean enable) {
+        boolean old = isLoadEmptyEnabled();
         if (enable) {
             _loadOptions = _loadOptions | EMPTY_GENERIC_LOADS;
         } else {
             _loadOptions = _loadOptions & 0xFFFF - EMPTY_GENERIC_LOADS;
         }
+        setDirtyAndFirePropertyChange(LOAD_OPTIONS_CHANGED_PROPERTY, old, enable);
     }
 
     public boolean isLoadEmptyEnabled() {
@@ -2013,11 +2017,13 @@ public class Track extends PropertyChangeSupport {
      * @param enable when true, remove Scheduled loads from cars
      */
     public void setRemoveCustomLoadsEnabled(boolean enable) {
+        boolean old = isRemoveCustomLoadsEnabled();
         if (enable) {
             _loadOptions = _loadOptions | EMPTY_CUSTOM_LOADS;
         } else {
             _loadOptions = _loadOptions & 0xFFFF - EMPTY_CUSTOM_LOADS;
         }
+        setDirtyAndFirePropertyChange(LOAD_OPTIONS_CHANGED_PROPERTY, old, enable);
     }
 
     public boolean isRemoveCustomLoadsEnabled() {

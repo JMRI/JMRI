@@ -12,10 +12,8 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.LocationManagerXml;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.locations.schedules.tools.*;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -38,7 +36,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
     Schedule _schedule = null;
     ScheduleItem _scheduleItem = null;
     Location _location = null;
-    Track _track = null;
+    public Track _track = null;
 
     // labels
     // major buttons
@@ -195,6 +193,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         toolMenu.add(new ScheduleOptionsAction(this));
         toolMenu.add(new ScheduleResetHitsAction(schedule));
         toolMenu.add(new SchedulesByLoadAction());
+        toolMenu.add(new SchedulesAndStagingAction());
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_Schedules", true); // NOI18N
 

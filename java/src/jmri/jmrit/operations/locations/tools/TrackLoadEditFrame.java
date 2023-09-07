@@ -64,7 +64,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
     JRadioButton loadNameInclude = new JRadioButton(Bundle.getMessage("AcceptOnly"));
     JRadioButton loadNameExclude = new JRadioButton(Bundle.getMessage("Exclude"));
 
-    JRadioButton shipLoadNameAll = new JRadioButton(Bundle.getMessage("ShipAll"));
+    JRadioButton shipLoadNameAll = new JRadioButton(Bundle.getMessage("ShipsAllLoads"));
     JRadioButton shipLoadNameInclude = new JRadioButton(Bundle.getMessage("ShipOnly"));
     JRadioButton shipLoadNameExclude = new JRadioButton(Bundle.getMessage("Exclude"));
 

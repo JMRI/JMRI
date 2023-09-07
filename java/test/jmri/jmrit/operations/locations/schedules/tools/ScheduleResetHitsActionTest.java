@@ -1,8 +1,10 @@
-package jmri.jmrit.operations.locations.schedules;
+package jmri.jmrit.operations.locations.schedules.tools;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import jmri.jmrit.operations.locations.schedules.Schedule;
 
 /**
  *

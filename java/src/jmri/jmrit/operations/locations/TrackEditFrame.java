@@ -55,7 +55,7 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
 
     // Alternate tool buttons
     JButton loadOptionButton = new JButton(Bundle.getMessage("AcceptsAllLoads"));
-    JButton shipLoadOptionButton = new JButton(Bundle.getMessage("ShipAll"));
+    JButton shipLoadOptionButton = new JButton(Bundle.getMessage("ShipsAllLoads"));
     JButton roadOptionButton = new JButton(Bundle.getMessage("AcceptsAllRoads"));
     JButton destinationOptionButton = new JButton();
 
