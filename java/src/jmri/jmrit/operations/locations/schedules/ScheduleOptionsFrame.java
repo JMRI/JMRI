@@ -6,17 +6,16 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame used to edit alternate track selection and percentage of loads from
@@ -87,13 +86,13 @@ class ScheduleOptionsFrame extends OperationsFrame implements java.beans.Propert
             try {
                 int factor = Integer.parseInt(factorTextField.getText());
                 if (factor < 0 || factor > 1000) {
-                    JOptionPane.showMessageDialog(this, Bundle.getMessage("FactorMustBeNumber"),
-                            Bundle.getMessage("ErrorFactor"), JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("FactorMustBeNumber"),
+                            Bundle.getMessage("ErrorFactor"), JmriJOptionPane.ERROR_MESSAGE);
                     return;
                 }
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("FactorMustBeNumber"),
-                        Bundle.getMessage("ErrorFactor"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("FactorMustBeNumber"),
+                        Bundle.getMessage("ErrorFactor"), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
             _track.setReservationFactor(Integer.parseInt(factorTextField.getText()));
@@ -126,5 +125,6 @@ class ScheduleOptionsFrame extends OperationsFrame implements java.beans.Propert
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ScheduleOptionsFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ScheduleOptionsFrame.class);
+
 }

@@ -4,15 +4,12 @@ import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
 
 import javax.swing.AbstractAction;
-import javax.swing.JOptionPane;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarsTableFrame;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * This routine will delete all cars from the operation database, or delete all
@@ -42,8 +39,8 @@ public class DeleteCarRosterAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (_carsTableFrame.carsTableModel.trackName == null && _carsTableFrame.carsTableModel.locationName == null) {
-            if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("carSureDelete"),
-                    Bundle.getMessage("carDeleteAll"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+            if (JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("carSureDelete"),
+                    Bundle.getMessage("carDeleteAll"), JmriJOptionPane.OK_CANCEL_OPTION) == JmriJOptionPane.OK_OPTION) {
                 log.debug("removing all cars from roster");
                 InstanceManager.getDefault(CarManager.class).deleteAll();
             }
@@ -55,8 +52,8 @@ public class DeleteCarRosterAction extends AbstractAction {
                 message = MessageFormat.format(Bundle.getMessage("carDeleteCarsLocation"),
                         new Object[] { _carsTableFrame.carsTableModel.locationName });
             }
-            if (JOptionPane.showConfirmDialog(null, message,
-                    Bundle.getMessage("carDeleteAll"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+            if (JmriJOptionPane.showConfirmDialog(null, message,
+                    Bundle.getMessage("carDeleteAll"), JmriJOptionPane.OK_CANCEL_OPTION) == JmriJOptionPane.OK_OPTION) {
                 for (Car car : _carsTableFrame.carsTableModel.getSelectedCarList()) {
                     InstanceManager.getDefault(CarManager.class).deregister(car);
                 }
@@ -64,5 +61,5 @@ public class DeleteCarRosterAction extends AbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DeleteCarRosterAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DeleteCarRosterAction.class);
 }

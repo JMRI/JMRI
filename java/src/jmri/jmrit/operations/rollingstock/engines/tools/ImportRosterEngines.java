@@ -5,11 +5,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -19,6 +15,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterGroupComboBox;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Import engines from the jmri Roster
@@ -52,7 +49,7 @@ public class ImportRosterEngines extends Thread {
         // create dialog with roster group comboBox
         RosterGroupComboBox comboBox = new RosterGroupComboBox();
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
-        JOptionPane.showMessageDialog(null, comboBox, rb.getString("SelectRosterGroup"), JOptionPane.QUESTION_MESSAGE);
+        JmriJOptionPane.showMessageDialog(null, comboBox, rb.getString("SelectRosterGroup"), JmriJOptionPane.QUESTION_MESSAGE);
         String groupName = comboBox.getSelectedItem();
         log.debug("User selected roster group: {}", groupName);
 
@@ -116,15 +113,15 @@ public class ImportRosterEngines extends Thread {
         fstatus.dispose();
 
         if (enginesAdded > 0) {
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     MessageFormat.format(Bundle.getMessage("ImportEnginesAdded"), new Object[] { enginesAdded }),
-                    Bundle.getMessage("SuccessfulImport"), JOptionPane.INFORMATION_MESSAGE);
+                    Bundle.getMessage("SuccessfulImport"), JmriJOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     MessageFormat.format(Bundle.getMessage("ImportEnginesAdded"), new Object[] { enginesAdded }),
-                    Bundle.getMessage("ImportFailed"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ImportFailed"), JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ImportRosterEngines.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImportRosterEngines.class);
 }

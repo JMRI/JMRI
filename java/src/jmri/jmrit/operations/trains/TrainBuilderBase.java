@@ -4,11 +4,6 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-import javax.swing.JOptionPane;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.Version;
 import jmri.jmrit.operations.locations.*;
@@ -22,6 +17,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Methods to support the TrainBuilder class.
@@ -603,9 +599,9 @@ public class TrainBuilderBase extends TrainCommon {
                 tracks[i] = validTracks.get(i);
             }
 
-            Track selected = (Track) JOptionPane.showInputDialog(null,
+            Track selected = (Track) JmriJOptionPane.showInputDialog(null,
                     Bundle.getMessage("TrainDepartingStaging", _train.getName(), _departLocation.getName()),
-                    Bundle.getMessage("SelectDepartureTrack"), JOptionPane.QUESTION_MESSAGE, null, tracks, null);
+                    Bundle.getMessage("SelectDepartureTrack"), JmriJOptionPane.QUESTION_MESSAGE, null, tracks, null);
             if (selected != null) {
                 addLine(_buildReport, FIVE, Bundle.getMessage("buildUserSelectedDeparture", selected.getName(),
                         selected.getLocation().getName()));
@@ -641,9 +637,9 @@ public class TrainBuilderBase extends TrainCommon {
                 tracks[i] = validTracks.get(i);
             }
 
-            Track selected = (Track) JOptionPane.showInputDialog(null,
+            Track selected = (Track) JmriJOptionPane.showInputDialog(null,
                     Bundle.getMessage("TrainTerminatingStaging", _train.getName(), _terminateLocation.getName()),
-                    Bundle.getMessage("SelectArrivalTrack"), JOptionPane.QUESTION_MESSAGE, null, tracks, null);
+                    Bundle.getMessage("SelectArrivalTrack"), JmriJOptionPane.QUESTION_MESSAGE, null, tracks, null);
             if (selected != null) {
                 addLine(_buildReport, FIVE, Bundle.getMessage("buildUserSelectedArrival", selected.getName(),
                         selected.getLocation().getName()));
@@ -3392,6 +3388,6 @@ public class TrainBuilderBase extends TrainCommon {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainBuilderBase.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrainBuilderBase.class);
 
 }

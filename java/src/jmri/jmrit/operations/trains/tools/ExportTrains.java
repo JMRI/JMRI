@@ -6,12 +6,8 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javax.swing.JOptionPane;
-
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
@@ -19,6 +15,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Exports the train roster into a comma delimited file (CSV). Only trains that
@@ -182,16 +179,16 @@ public class ExportTrains extends XmlFile {
             fileOut.flush();
             fileOut.close();
             log.info("Exported {} trains to file {}", count, defaultOperationsFilename());
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     MessageFormat.format(Bundle.getMessage("ExportedTrainsToFile"),
                             new Object[] { count, defaultOperationsFilename() }),
-                    Bundle.getMessage("ExportComplete"), JOptionPane.INFORMATION_MESSAGE);
+                    Bundle.getMessage("ExportComplete"), JmriJOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
             log.error("Can not open export trains CSV file: {}", file.getName());
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     MessageFormat.format(Bundle.getMessage("ExportedTrainsToFile"),
                             new Object[] { 0, defaultOperationsFilename() }),
-                    Bundle.getMessage("ExportFailed"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ExportFailed"), JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -308,6 +305,6 @@ public class ExportTrains extends XmlFile {
 
     private static String operationsFileName = "ExportOperationsTrainRoster.csv"; // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(ExportTrains.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExportTrains.class);
 
 }

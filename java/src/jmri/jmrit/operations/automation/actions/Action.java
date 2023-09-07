@@ -2,13 +2,14 @@ package jmri.jmrit.operations.automation.actions;
 
 import java.text.MessageFormat;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
+
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.automation.Automation;
 import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
+import jmri.util.swing.JmriJOptionPane;
 
 public abstract class Action extends PropertyChangeSupport {
 
@@ -19,7 +20,7 @@ public abstract class Action extends PropertyChangeSupport {
 
     public static final int HALT = 0; // halt is the first button
     public static final int OKAY = 1;
-    public static final int CLOSED = JOptionPane.CLOSED_OPTION; // -1
+    public static final int CLOSED = JmriJOptionPane.CLOSED_OPTION; // -1
     public static final int NO_MESSAGE_SENT = -2;
     public static final int FINISH_FAILED = -3;
 
@@ -173,7 +174,7 @@ public abstract class Action extends PropertyChangeSupport {
      *                buttons, the second button becomes the default
      * @param success true if action succeeded
      * @param message the text to be displayed
-     * @return which button was pressed, NO_MESSAGE_SENT, CLOSED
+     * @return array number for which button was pressed, NO_MESSAGE_SENT, CLOSED
      */
     public int sendMessage(String message, Object[] buttons, boolean success) {
         int response = NO_MESSAGE_SENT;
@@ -184,8 +185,8 @@ public abstract class Action extends PropertyChangeSupport {
             if (buttons.length > 1 && success) {
                 intialValue = buttons[1]; // normally OK
             }
-            response = JOptionPane.showOptionDialog(null, getFormatedMessage(message), title,
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, buttons,
+            response = JmriJOptionPane.showOptionDialog(null, getFormatedMessage(message), title,
+                    JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.INFORMATION_MESSAGE, null, buttons,
                     intialValue);
         }
         return response;

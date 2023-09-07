@@ -7,9 +7,6 @@ import java.util.ResourceBundle;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -17,6 +14,7 @@ import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
 import jmri.jmrit.operations.rollingstock.RollingStockEditFrame;
 import jmri.jmrit.operations.rollingstock.engines.tools.EngineAttributeEditFrame;
 import jmri.jmrit.operations.setup.Control;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user edit of engine
@@ -130,8 +128,8 @@ public class EngineEditFrame extends RollingStockEditFrame {
         if (!engineModels.containsName(engine.getModel())) {
             String msg = MessageFormat.format(Bundle.getMessage("modelNameNotExist"),
                     new Object[] { engine.getModel() });
-            if (JOptionPane.showConfirmDialog(this, msg, Bundle.getMessage("engineAddModel"),
-                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            if (JmriJOptionPane.showConfirmDialog(this, msg, Bundle.getMessage("engineAddModel"),
+                    JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                 engineModels.addName(engine.getModel());
             }
         }
@@ -173,8 +171,8 @@ public class EngineEditFrame extends RollingStockEditFrame {
                 roadNumberTextField.getText());
         if (existingEngine != null) {
             if (engine == null || !existingEngine.getId().equals(engine.getId())) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("engineExists"),
-                        Bundle.getMessage("engineCanNotUpdate"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("engineExists"),
+                        Bundle.getMessage("engineCanNotUpdate"), JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -211,8 +209,8 @@ public class EngineEditFrame extends RollingStockEditFrame {
                 Integer.parseInt(hpTextField.getText());
                 engine.setHp(hpTextField.getText());
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("engineHorsepower"),
-                        Bundle.getMessage("engineCanNotHp"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("engineHorsepower"),
+                        Bundle.getMessage("engineCanNotHp"), JmriJOptionPane.ERROR_MESSAGE);
             }
         }
         
@@ -222,12 +220,12 @@ public class EngineEditFrame extends RollingStockEditFrame {
             for (Engine cEngine : engines) {
                 if (cEngine != engine) {
                     if (cEngine.getLocation() != engine.getLocation() || cEngine.getTrack() != engine.getTrack()) {
-                        int results = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
+                        int results = JmriJOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
                                 .getMessage("engineInConsistLocation"),
                                 new Object[]{engine.toString(), engine.getLocationName(), engine.getTrackName()}),
                                 Bundle.getMessage("enginePartConsist"),
-                                JOptionPane.YES_NO_OPTION);
-                        if (results == JOptionPane.YES_OPTION) {
+                                JmriJOptionPane.YES_NO_OPTION);
+                        if (results == JmriJOptionPane.YES_OPTION) {
                             // change the location for all engines in consist
                             for (Engine cEngine2 : engines) {
                                 if (cEngine2 != engine) {
@@ -358,6 +356,6 @@ public class EngineEditFrame extends RollingStockEditFrame {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EngineEditFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EngineEditFrame.class);
 
 }
