@@ -3,12 +3,12 @@ package jmri.jmrit.vsdecoder;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.io.File;
+
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Load VSDecoder Profiles from XML.
@@ -82,8 +82,8 @@ public class LoadVSDFileAction extends AbstractAction {
         if (!file.exists()) {
             log.error("Cannot locate VSD File {}", fp_external);
             if (!GraphicsEnvironment.isHeadless()) {
-                JOptionPane.showMessageDialog(null, "Cannot locate VSD File",
-                        Bundle.getMessage("VSDFileError"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(null, "Cannot locate VSD File",
+                        Bundle.getMessage("VSDFileError"), JmriJOptionPane.ERROR_MESSAGE);
             }
             return false;
         }
@@ -101,8 +101,8 @@ public class LoadVSDFileAction extends AbstractAction {
             vsdfile.close();
 
             if (!vsdfile.isInitialized() && !GraphicsEnvironment.isHeadless()) {
-                JOptionPane.showMessageDialog(null, vsdfile.getStatusMessage(),
-                        Bundle.getMessage("VSDFileError"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(null, vsdfile.getStatusMessage(),
+                        Bundle.getMessage("VSDFileError"), JmriJOptionPane.ERROR_MESSAGE);
             }
 
             return vsdfile.isInitialized();
@@ -116,6 +116,6 @@ public class LoadVSDFileAction extends AbstractAction {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(LoadVSDFileAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LoadVSDFileAction.class);
 
 }
