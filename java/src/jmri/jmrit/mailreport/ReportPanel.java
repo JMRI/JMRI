@@ -20,7 +20,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -29,11 +28,9 @@ import jmri.InstanceManager;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.MultipartMessage;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.javaworld.GridLayout2;
 import jmri.util.problemreport.LogProblemReportProvider;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * User interface for sending a problem report via email.
@@ -261,11 +258,13 @@ public class ReportPanel extends JPanel {
             }
 
             if (checkResponse) {
-                JOptionPane.showMessageDialog(null, rb.getString("InfoMessage"), rb.getString("InfoTitle"), JOptionPane.INFORMATION_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, rb.getString("InfoMessage"),
+                    rb.getString("InfoTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
                 // close containing Frame
                 getTopLevelAncestor().setVisible(false);
             } else {
-                JOptionPane.showMessageDialog(null, rb.getString("ErrMessage"), rb.getString("ErrTitle"), JOptionPane.ERROR_MESSAGE); // TODO add Bundle to folder and use ErrorTitle key in NamedBeanBundle props
+                JmriJOptionPane.showMessageDialog(this, rb.getString("ErrMessage"),
+                    rb.getString("ErrTitle"), JmriJOptionPane.ERROR_MESSAGE); // TODO add Bundle to folder and use ErrorTitle key in NamedBeanBundle props
                 sendButton.setEnabled(true);
             }
 
@@ -274,7 +273,8 @@ public class ReportPanel extends JPanel {
             sendButton.setEnabled(true);
         } catch (AddressException ex) {
             log.error("Invalid email address", ex);
-            JOptionPane.showMessageDialog(null, rb.getString("ErrAddress"), rb.getString("ErrTitle"), JOptionPane.ERROR_MESSAGE); // TODO add Bundle to folder and use ErrorTitle key in NamedBeanBundle props
+            JmriJOptionPane.showMessageDialog(this, rb.getString("ErrAddress"),
+                rb.getString("ErrTitle"), JmriJOptionPane.ERROR_MESSAGE); // TODO add Bundle to folder and use ErrorTitle key in NamedBeanBundle props
             sendButton.setEnabled(true);
         }
     }
@@ -337,5 +337,6 @@ public class ReportPanel extends JPanel {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ReportPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ReportPanel.class);
+
 }

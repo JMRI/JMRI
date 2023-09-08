@@ -184,8 +184,7 @@ public class JmriJOptionPane {
     public static String showInputDialog(@CheckForNull Component parentComponent,
         String message, String title, int messageType ){
         return (String)showInputDialog(parentComponent, message,
-            UIManager.getString("OptionPane.inputDialogTitle",
-            Locale.getDefault()), messageType, null, null,
+            title, messageType, null, null,
             "");
     }
 
