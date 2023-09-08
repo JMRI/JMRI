@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.locations.schedules;
+package jmri.jmrit.operations.locations.schedules.tools;
 
 import java.awt.event.ActionEvent;
 
@@ -9,12 +9,12 @@ import javax.swing.AbstractAction;
  *
  * @author Daniel Boudreau Copyright (C) 2012
  */
-public class SchedulesByLoadAction extends AbstractAction {
+public class SchedulesAndStagingAction extends AbstractAction {
 
-    private SchedulesByLoadFrame _slf;
+    private SchedulesAndStagingFrame _slf;
 
-    public SchedulesByLoadAction() {
-        super(Bundle.getMessage("MenuItemShowSchedulesByLoad"));
+    public SchedulesAndStagingAction() {
+        super(Bundle.getMessage("MenuItemStagingSchedules"));
     }
 
     @Override
@@ -22,6 +22,6 @@ public class SchedulesByLoadAction extends AbstractAction {
         if (_slf != null) {
             _slf.dispose();
         }
-        _slf = new SchedulesByLoadFrame();
+        _slf = new SchedulesAndStagingFrame();
     }
 }

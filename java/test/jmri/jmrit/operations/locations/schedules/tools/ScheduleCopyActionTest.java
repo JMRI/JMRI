@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.locations.schedules;
+package jmri.jmrit.operations.locations.schedules.tools;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
@@ -15,27 +15,27 @@ import jmri.util.JmriJFrame;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class SchedulesByLoadActionTest extends OperationsTestCase {
+public class ScheduleCopyActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        SchedulesByLoadAction t = new SchedulesByLoadAction();
+        ScheduleCopyAction t = new ScheduleCopyAction();
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SchedulesByLoadAction a = new SchedulesByLoadAction();
+        ScheduleCopyAction a = new ScheduleCopyAction();
         Assert.assertNotNull("exists", a);
         
         a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
         
-        JmriJFrame f = JmriJFrame.getFrame(Bundle.getMessage("MenuItemShowSchedulesByLoad"));
-        Assert.assertNotNull("exists", f);
+        JmriJFrame f = JmriJFrame.getFrame(Bundle.getMessage("MenuItemCopySchedule"));
+        Assert.assertNotNull("frame exists", f);
         JUnitUtil.dispose(f);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SchedulesByLoadActionTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(ScheduleCopyActionTest.class);
 
 }

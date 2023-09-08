@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.locations.schedules.tools.*;
 import jmri.jmrit.operations.locations.tools.PrintLocationsAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.swing.JTablePersistenceManager;
@@ -82,6 +83,7 @@ public class SchedulesTableFrame extends OperationsFrame {
         toolMenu.add(new ExportSchedulesAction());
         toolMenu.addSeparator();
         toolMenu.add(new SchedulesByLoadAction());
+        toolMenu.add(new SchedulesAndStagingAction());
         toolMenu.addSeparator();
         toolMenu.add(new PrintLocationsAction(false));
         toolMenu.add(new PrintLocationsAction(true));       

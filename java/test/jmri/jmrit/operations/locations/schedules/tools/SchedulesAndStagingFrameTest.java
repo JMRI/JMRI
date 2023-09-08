@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.locations.schedules;
+package jmri.jmrit.operations.locations.schedules.tools;
 
 import java.awt.GraphicsEnvironment;
 
@@ -18,55 +18,46 @@ import jmri.util.swing.JemmyUtil;
 /**
  * @author Paul Bender Copyright (C) 2017
  */
-public class SchedulesByLoadFrameTest extends OperationsTestCase {
+public class SchedulesAndStagingFrameTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.util.JUnitOperationsUtil.initOperationsData();
-        SchedulesByLoadFrame t = new SchedulesByLoadFrame();
+        SchedulesAndStagingFrame t = new SchedulesAndStagingFrame();
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
 
     }
 
     @Test
-    public void testSchedulesByLoadFrame() {
+    public void testSchedulesAndStagingFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // add schedules to a location
         JUnitOperationsUtil.initOperationsData();
         JUnitOperationsUtil.createSchedules();
 
-        SchedulesByLoadFrame f = new SchedulesByLoadFrame();
+        SchedulesAndStagingFrame f = new SchedulesAndStagingFrame();
         Assert.assertNotNull(f);
         
-        JemmyUtil.enterClickAndLeave(f.allTypesCheckBox);
-        JemmyUtil.enterClickAndLeave(f.allLoadsCheckBox);
-        
-        // update car loads for Boxcar to eliminate warning
+        // check loads
+        Assert.assertEquals("Number of loads", 2, f.loadsComboBox.getItemCount());
         CarLoads carLoads = InstanceManager.getDefault(CarLoads.class);
         carLoads.addName("Boxcar", "Empty");
-        carLoads.addName("Boxcar", "Metal");
-        carLoads.addName("Flat", "Metal");
-        carLoads.addName("Flat", "Junk");
-        
-        // modify schedule
-        ScheduleManager scheduleManager = InstanceManager.getDefault(ScheduleManager.class);
-        Schedule schedule = scheduleManager.getScheduleByName("Test Schedule");
-        schedule.addItem("Boxcar");
-        JemmyUtil.enterClickAndLeave(f.allLoadsCheckBox);
-        
-        // don't allow the "E" load
-        Location location = InstanceManager.getDefault(LocationManager.class).getLocationByName("North Industries");
-        Track track = location.getTrackByName("Test Spur 2", null);
-        track.addLoadName("E");
-        track.setLoadOption(Track.EXCLUDE_LOADS);
+        Assert.assertEquals("Number of loads", 3, f.loadsComboBox.getItemCount());
         
         // Add a car type
         Assert.assertEquals("Number of types", 3, f.typesComboBox.getItemCount());
         CarTypes carTypes = InstanceManager.getDefault(CarTypes.class);
         carTypes.addName("NEWBOXCAR");
         Assert.assertEquals("Number of types", 4, f.typesComboBox.getItemCount());
+        
+        // enable custom load generation out of staging
+        Location location = InstanceManager.getDefault(LocationManager.class).getLocationByName("North End Staging");
+        Track staging = location.getTrackByName("North End 2", null);
+        staging.setAddCustomLoadsAnySpurEnabled(true);
+        
+        JemmyUtil.enterClickAndLeave(f.allLoadsCheckBox);
         
         // TODO improve test
         JUnitUtil.dispose(f);

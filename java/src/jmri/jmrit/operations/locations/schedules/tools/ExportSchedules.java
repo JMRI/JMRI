@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.locations.schedules;
+package jmri.jmrit.operations.locations.schedules.tools;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -12,6 +12,7 @@ import org.apache.commons.csv.CSVPrinter;
 
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.locations.schedules.*;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.util.swing.JmriJOptionPane;
 

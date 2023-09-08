@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.locations.schedules;
+package jmri.jmrit.operations.locations.schedules.tools;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.schedules.Schedule;
+import jmri.jmrit.operations.locations.schedules.ScheduleEditFrame;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 
