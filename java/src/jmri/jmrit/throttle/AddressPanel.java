@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.annotation.CheckForNull;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -860,7 +862,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 
     /**
      * @return the current consist address if any
-     */ 
+     */
+    @CheckForNull
     public DccLocoAddress getConsistAddress() {
         return consistAddress;
     }
@@ -871,9 +874,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
      * @param consistAddress the consist address to use
      */ 
     public void setConsistAddress(DccLocoAddress consistAddress) {
-        if (log.isDebugEnabled()) {
-            log.debug("Setting Consist Address to {}", consistAddress);
-        }
+        log.debug("Setting Consist Address to {}", consistAddress);
         this.consistAddress = consistAddress;
         changeOfConsistAddress();
     }
