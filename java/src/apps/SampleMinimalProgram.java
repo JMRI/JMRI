@@ -6,8 +6,6 @@ import jmri.util.prefs.JmriPreferencesActionFactory;
 import jmri.web.server.WebServer;
 import jmri.web.server.WebServerPreferences;
 
-import org.apache.logging.log4j.core.config.Configurator;
-
 import apps.util.Log4JUtil;
 
 /**
@@ -65,14 +63,7 @@ public class SampleMinimalProgram {
         // initialize log4j2 - from logging configuration file (lcf) only
         // if can find it!
         String configFile = "default_lcf.xml";
-        try {
-            Configurator.initialize(null, configFile);
-            log.debug("Logging initialised with {}", configFile);
-        } catch ( Exception ex ) {
-            Configurator.reconfigure();
-            Configurator.setRootLevel(org.apache.logging.log4j.Level.WARN);
-            log.error("Unable to load Logging Configuration with file {}", configFile, ex);
-        }
+        apps.util.Log4JUtil.initLogging(configFile);
         // install default exception handler
         Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
     }
