@@ -135,6 +135,9 @@
             <ul>
                 <li>The presentation of the "Send Frame" tool was improved.</li>
                 <li>Fixed some subtle bugs when pasting CDI panes.</li>
+                <li>Improved how 
+                    <a href="https://nbviewer.org/github/openlcb/documents/blob/master/drafts/ConfigurationDescriptionInformationTN.pdf">tab numbering is done</a>
+                    when creating a CDI display.</li>
             </ul>
 
         <h4>Powerline</h4>
