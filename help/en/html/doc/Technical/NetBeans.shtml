@@ -536,6 +536,10 @@
         "https://sourceforge.net/projects/nsis/">the NSIS project website</a> on
         SourceForge.</p>
 
+        <p>After installing the main Files, be sure to also install ( extract ) the 
+        &quot;Large strings&quot; build available from
+        <a href="https://nsis.sourceforge.io/Special_Builds">NSIS Special Builds<a>.
+
         <p>Once NSIS is installed on the computer, it is necessary to create a file called
         local.properties in the same directory as JMRI's build.xml file. This file is
         specifically <em>not</em> checked in via GitHub, so that your machine-specific tool
