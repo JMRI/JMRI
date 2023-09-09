@@ -536,7 +536,8 @@
         "https://sourceforge.net/projects/nsis/">the NSIS project website</a> on
         SourceForge.</p>
 
-        <p>After installing the main Files, be sure to also install ( extract ) the 
+        <p>Comments in <a href="https://github.com/JMRI/JMRI/blob/master/scripts/WinInstallFiles/LaunchJMRI.nsi#L21"
+        >LaunchJMRI.nsi</a> suggest that it is also necessary to install ( extract ) the 
         &quot;Large strings&quot; build available from
         <a href="https://nsis.sourceforge.io/Special_Builds">NSIS Special Builds<a>.
 
