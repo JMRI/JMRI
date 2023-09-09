@@ -45,8 +45,8 @@ class InitializeTurnoutsSensors(jmri.jmrit.automat.AbstractAutomaton):
     log = LoggerFactory.getLogger("jmri.jmrit.jython.exec.script.InitializeTurnoutsSensors");
     #    All messages written to self.log.info( "text" ) are
     #        visible in the JMRI System console window at runtime and 
-    #        are appended to file: preference:systemfiles\messages.log
-    #        are stored in file: preference:systemfiles\session.log
+    #        are appended to file: settings:log\messages.log
+    #        are stored in file: settings:log\session.log
     #   # NOTE: to enable logging, see https://www.jmri.org/help/en/html/apps/Debug.shtml
     #        Add the Logger Category name "jmri.jmrit.jython.exec" at TRACE Level.
 
