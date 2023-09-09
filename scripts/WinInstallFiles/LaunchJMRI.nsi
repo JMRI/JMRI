@@ -607,7 +607,7 @@ Section "Main"
       StrCpy $OPTIONS `$OPTIONS -Djmri.prefsdir="$JMRIPREFS"`
 
   PathOptions:
-  ; -- set paths for Jython and message log
+  ; -- set path for Jython
   ; -- Creates the necessary directory if not existing
   ; -- User Profile is only valid for Win2K and later
   ; -- so skip on earlier versions
@@ -616,8 +616,7 @@ Section "Main"
       CreateDirectory "$JMRIPREFS\systemfiles"
     SetPaths:
     StrCpy $OPTIONS '$OPTIONS -Dpython.home="$JMRIPREFS\systemfiles"'
-    StrCpy $OPTIONS '$OPTIONS -Djmri.log.path="$JMRIPREFS\systemfiles\\"'
-    ; -- jmri.log.path needs a double trailing backslash to ensure a valid command-line
+
   OptionsDone:
   DetailPrint "Options: $OPTIONS"
 
