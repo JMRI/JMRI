@@ -25,6 +25,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.28.1
+; - Do not set the jmri.log.path System property.
+; -------------------------------------------------------------------------
 ; - Version 0.1.28.0
 ; - Check default version of installed java before looking anywhere else
 ; - If environment variable JMRI_JAVA_HOME is present use that
@@ -167,7 +170,7 @@
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
 !define COPYRIGHT  "(C) 1997-2023 JMRI Community" ; Copyright string
-!define VER        "0.1.28.0"                     ; Launcher version
+!define VER        "0.1.28.1"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
