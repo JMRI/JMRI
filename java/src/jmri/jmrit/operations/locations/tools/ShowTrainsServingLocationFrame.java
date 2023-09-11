@@ -41,7 +41,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
     JCheckBox showAllTrainsCheckBox = new JCheckBox(Bundle.getMessage("ShowAllTrains"));
 
     // make show all trains consistent during a session
-    private static boolean isShowAllTrains = true;
+    private static boolean isShowAllTrains = false;
 
     public ShowTrainsServingLocationFrame() {
         super(Bundle.getMessage("TitleShowTrains"));
