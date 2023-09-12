@@ -1,6 +1,9 @@
 package jmri.util;
 
 import java.util.Arrays;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -290,8 +293,7 @@ public class StringUtil {
      * @return hex value of single digit
      */
     public static int getHexDigit(int index, @Nonnull String byteString) {
-        int b = 0;
-        b = byteString.charAt(index);
+        int b = byteString.charAt(index);
         if ((b >= '0') && (b <= '9')) {
             b = b - '0';
         } else if ((b >= 'A') && (b <= 'F')) {
@@ -709,6 +711,20 @@ public class StringUtil {
             log.debug("\nCombined String:\n\"{}\"\n", result);
         }
         return result;
+    }
+
+    /**
+     * Removes HTML tags from a String.
+     * Replaces HTML line breaks with newline characters from a given input string.
+     *
+     * @param originalText The input string that may contain HTML tags.
+     * @return A cleaned string with HTML tags removed.
+     */
+    public static String stripHtmlTags( final String originalText) {
+        String replaced = originalText.replace("<br>", System.lineSeparator());
+        String regex = "<[^>]+>";
+        Matcher matcher = Pattern.compile(regex).matcher(replaced);
+        return matcher.replaceAll("");
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringUtil.class);

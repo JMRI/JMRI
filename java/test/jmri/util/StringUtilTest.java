@@ -509,6 +509,13 @@ public class StringUtilTest {
         Assertions.assertEquals("11111111",StringUtil.to8Bits(0b11111111, false));
     }
 
+    @Test
+    public void testStripHtmlTags() {
+        Assertions.assertEquals("My String",StringUtil.stripHtmlTags("<html>My String</html>"));
+        Assertions.assertEquals("Line1"+System.lineSeparator()+"Line2",StringUtil.stripHtmlTags("<html>Line1<br>Line2</html>"));
+        Assertions.assertEquals("NoTags",StringUtil.stripHtmlTags("NoTags"));
+    }
+
     @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
