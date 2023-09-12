@@ -152,7 +152,7 @@ public class ExceptionContext {
      * Get a String form of this Context for use in pasting to Clipboard.
      * @param includeSysInfo true to include System Information,
      *                       false for just the Exception details.
-     * @return 
+     * @return String for use in Clipboard text.
      */
     public String getClipboardString(boolean includeSysInfo){
         StringBuilder sb = new StringBuilder();
