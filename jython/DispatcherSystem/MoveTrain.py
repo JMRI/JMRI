@@ -86,9 +86,9 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             print "end of move between ", station_from_name, station_to_name
             return
 
-        if self.logLevel > 0: print "graph", graph
-        if self.logLevel > 0: print "paths", paths
-        if self.logLevel > 0: print "returned from shortest path"
+        if self.logLevel > 1: print "graph", graph
+        if self.logLevel > 1: print "paths", paths
+        if self.logLevel > 1: print "returned from shortest path"
         if self.logLevel > 0: print "in move_between_stations trains = ", trains, "train_name = ", train_name
 
         if train_name in trains:
@@ -553,7 +553,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             else:
                 print "ERROR incorrect value for stop mode"
         else:
-            print "forward_stopping_sensor_exists not!"
+            if self.logLevel > 0: print "forward_stopping_sensor does not exist"
 
     def forward_stopping_sensor_exists(self, traininfo):
         transit_name = traininfo.getTransitId()
