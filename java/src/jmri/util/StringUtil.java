@@ -721,9 +721,11 @@ public class StringUtil {
      * @return A cleaned string with HTML tags removed.
      */
     public static String stripHtmlTags( final String originalText) {
-        String replaced = originalText.replace("<br>", System.lineSeparator());
-        String regex = "<[^>]+>";
-        Matcher matcher = Pattern.compile(regex).matcher(replaced);
+        String replaceA = originalText.replace("<br>", System.lineSeparator());
+        String replaceB = replaceA.replace("<br/>", System.lineSeparator());
+        String replaceC = replaceB.replace("<br />", System.lineSeparator());
+        String regex = "<[^>]*>";
+        Matcher matcher = Pattern.compile(regex).matcher(replaceC);
         return matcher.replaceAll("");
     }
 
