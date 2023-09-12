@@ -210,6 +210,45 @@
         <pathelement location="${libdir}/batik-svggen-1.14.jar"/>
         <pathelement location="${libdir}/xml-apis-ext-1.3.04.jar"/>
         <pathelement location="${libdir}/xmlgraphics-commons-2.6.jar"/>
+		<!-- //Mey+ BiDiB client library -->
+		<!-- 2.0-SNAPSHOT - ->
+        <pathelement location="${libdir}/jbidibc-core-2.0-SNAPSHOT.jar"/>
+        <pathelement location="${libdir}/jbidibc-messages-2.0-SNAPSHOT.jar"/>
+        <pathelement location="${libdir}/jbidibc-net-serial-over-tcp-2.0-SNAPSHOT.jar"/>
+        <pathelement location="${libdir}/jbidibc-purejavacomm-2.0-SNAPSHOT.jar"/>
+        <pathelement location="${libdir}/jbidibc-serial-2.0-SNAPSHOT.jar"/>
+        <pathelement location="${libdir}/jbidibc-simulation-2.0-SNAPSHOT.jar"/>
+		-->
+		<!-- Release -->
+        <pathelement location="${libdir}/jbidibc-core-2.0.13.jar"/>
+        <pathelement location="${libdir}/jbidibc-messages-2.0.13.jar"/>
+        <pathelement location="${libdir}/jbidibc-net-serial-over-tcp-2.0.13.jar"/>
+        <pathelement location="${libdir}/jbidibc-purejavacomm-2.0.13.jar"/>
+        <pathelement location="${libdir}/jbidibc-serial-2.0.13.jar"/>
+        <pathelement location="${libdir}/jbidibc-simulation-2.0.13.jar"/>
+		<!-- 2.0-SNAPSHOT - ->
+        <pathelement location="${libdir}/bidibwizard-common-2.0-SNAPSHOT.jar"/>
+        <pathelement location="${libdir}/bidibwizard-model-2.0-SNAPSHOT.jar"/>
+        <pathelement location="${libdir}/bidibwizard-simulation-2.0-SNAPSHOT.jar"/>
+		-->
+		<!-- Release -->
+        <pathelement location="${libdir}/bidibwizard-common-2.0.13.jar"/>
+        <pathelement location="${libdir}/bidibwizard-model-2.0.13.jar"/>
+        <pathelement location="${libdir}/bidibwizard-simulation-2.0.13.jar"/>
+		<!-- BiDiB dependencies -->
+		<pathelement location="${libdir}/commons-collections4-4.4.jar"/>
+        <pathelement location="${libdir}/eventbus-1.4.jar"/>
+		<!-- <pathelement location="${libdir}/istack-commons-runtime-3.0.12.jar"/> -->
+		<pathelement location="${libdir}/javax.activation-api-1.2.0.jar"/>
+		<pathelement location="${libdir}/jaxb-api-2.3.1.jar"/>
+        <pathelement location="${libdir}/jaxb-core-2.3.0.1.jar"/>
+        <pathelement location="${libdir}/jaxb-impl-2.3.2.jar"/>
+        <pathelement location="${libdir}/jgoodies-binding-2.13.0.jar"/>
+        <pathelement location="${libdir}/jgoodies-common-1.8.1.jar"/>
+		<!--
+        <pathelement location="${libdir}/activation-1.1.1.jar"/>
+		-->
+		<!-- //Mey- BiDiB -->
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
 

@@ -108,6 +108,11 @@
                     </li>
                       
                     <li>
+                        <a href="html/hardware/bidib/index.shtml">BiDiB </a>
+                        <ul></ul>
+                    </li>
+
+                    <li>
                         <a href="html/hardware/can/index.shtml">CAN Bus Overview </a>
                         <ul></ul>
                     </li>

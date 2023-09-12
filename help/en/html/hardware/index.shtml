@@ -240,6 +240,10 @@
           <em style="padding-left: 1em;"><a href="#networks">Networks and Protocols:</a></em>
           <ul>
             <li>
+              <a href="bidib/index.shtml">BiDiB</a>
+            </li>
+
+            <li>
               <a href="can/index.shtml">CAN Bus Networks</a>
             </li>
 
