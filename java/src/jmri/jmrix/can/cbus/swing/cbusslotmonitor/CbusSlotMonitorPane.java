@@ -6,9 +6,11 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import javax.swing.*;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
+
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.throttle.LargePowerManagerButton;
@@ -21,9 +23,6 @@ import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import jmri.util.table.JTableWithColumnToolTips;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
-
 /**
  * Pane for monitoring and configuring a MERG CBUS Command Station.
  *
@@ -32,13 +31,8 @@ import jmri.util.table.JTableWithColumnToolTips;
  */
 public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
 
-    private JScrollPane scrolltablefeedback;
-    private JSplitPane split;
-    private final double _splitratio = 0.95;
-    private JScrollPane slotScroll;
-    
     protected CbusSlotMonitorDataModel slotModel;
-    private JTable _slotTable;
+    private JTable slotTable;
     private final XTableColumnModel tcm = new XTableColumnModel();
     private final JMenu colMenu = new JMenu((Bundle.getMessage("SessCol")));
     
@@ -51,32 +45,32 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
-        slotModel = new CbusSlotMonitorDataModel(memo);
-        _slotTable = new JTableWithColumnToolTips(slotModel,CbusSlotMonitorDataModel.CBUSSLOTMONTOOLTIPS);
+        slotModel = memo.get(CbusSlotMonitorDataModel.class);
+        slotTable = new JTableWithColumnToolTips(slotModel,CbusSlotMonitorDataModel.CBUSSLOTMONTOOLTIPS);
         init();
     }
 
     public void init() {
         
         // Use XTableColumnModel so we can control which columns are visible
-        _slotTable.setColumnModel(tcm);
+        slotTable.setColumnModel(tcm);
         
         setupColumnsMenuLinks();
         
         final TableRowSorter<CbusSlotMonitorDataModel> sorter = new TableRowSorter<>(slotModel);
-        _slotTable.setRowSorter(sorter);
+        slotTable.setRowSorter(sorter);
         
         TableColumn estopColumn = tcm.getColumnByModelIndex(CbusSlotMonitorDataModel.ESTOP_COLUMN);                
         estopColumn.setMinWidth(60);
         estopColumn.setCellRenderer( new ButtonRenderer() );
         estopColumn.setCellEditor( new ButtonEditor( new JButton() ) );    
 
-        slotScroll = new JScrollPane(_slotTable);
+        JScrollPane slotScroll = new JScrollPane(slotTable);
         slotScroll.setPreferredSize(new Dimension(400, 200));
         
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        scrolltablefeedback = new JScrollPane (slotModel.tablefeedback());
+        JScrollPane scrolltablefeedback = new JScrollPane (slotModel.tablefeedback());
         scrolltablefeedback.setMinimumSize(new Dimension(150, 20));
         
         JPanel toppanelcontainer = new JPanel();
@@ -84,9 +78,9 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
         toppanelcontainer.add(getStopButton());
         toppanelcontainer.add(new LargePowerManagerButton(true));
         
-        split = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+        JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
             slotScroll, scrolltablefeedback);
-        split.setResizeWeight(_splitratio);
+        split.setResizeWeight(0.95d);
         split.setContinuousLayout(true);
 
         JPanel p1 = new JPanel();
@@ -104,16 +98,14 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
         JButton estopButton = new JButton("Stop All");
         estopButton.setIcon(new NamedIcon("resources/icons/throttles/estop.png", "resources/icons/throttles/estop.png"));
         estopButton.setToolTipText(Bundle.getMessage("ThrottleToolBarStopAllToolTip"));
-        estopButton.addActionListener((ActionEvent e) -> {
-            slotModel.sendcbusestop();
-        });
+        estopButton.addActionListener((ActionEvent e) -> slotModel.sendcbusestop() );
         return estopButton;
     }
     
     private void setupColumnsMenuLinks() {
         
         // configure items for GUI
-        CbusCommonSwing.configureTable(_slotTable);
+        CbusCommonSwing.configureTable(slotTable);
         
         StayOpenCheckBoxItem[] cbArray = new StayOpenCheckBoxItem[slotModel.getColumnCount()];
         
@@ -122,9 +114,8 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
             StayOpenCheckBoxItem cbi = new StayOpenCheckBoxItem(slotModel.getColumnName(i));
             cbArray[i] = cbi;
             TableColumn column  = tcm.getColumnByModelIndex(i);
-            cbi.addActionListener((ActionEvent e) -> {
-                tcm.setColumnVisible(column, cbi.isSelected());
-            });
+            cbi.addActionListener((ActionEvent e) ->
+                tcm.setColumnVisible(column, cbi.isSelected()));
             final int ii = i;
             tcm.setColumnVisible(tcm.getColumnByModelIndex(i),
                 Arrays.stream(CbusSlotMonitorDataModel.CBUSSLOTMONINITIALCOLS).anyMatch(j -> j == ii)
@@ -132,9 +123,8 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
             
         }
         
-        InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((tpm) -> {
-            tpm.persist(_slotTable, true);
-        });
+        InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent( tpm ->
+            tpm.persist(slotTable, true));
         
         
         for (int i = 0; i < slotModel.getColumnCount(); i++) {
@@ -177,10 +167,9 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
     @Override
     public void dispose() {
         InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((tpm) -> {
-            tpm.stopPersisting(_slotTable);
+            tpm.stopPersisting(slotTable);
         });
-        _slotTable = null;
-        slotModel.dispose();
+        slotTable = null;
         super.dispose();
     }
 
@@ -197,6 +186,6 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
         }
     }
 
-    // private static final Logger log = LoggerFactory.getLogger(CbusSlotMonitorPane.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusSlotMonitorPane.class);
 
 }

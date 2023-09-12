@@ -100,7 +100,7 @@ public class CbusSlotMonitorSessionTest {
             Assert.assertTrue( t.getFunctionString().contains(Integer.toString(i) ) );
         }
         Assert.assertEquals("Full function string",
-            "0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 ",
+            "0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28",
             t.getFunctionString()
         );
 
@@ -109,7 +109,7 @@ public class CbusSlotMonitorSessionTest {
         t.setFunction(22,false);
         
         Assert.assertEquals("Partial function string",
-            "0 1 2 3 5 6 7 8 9 10 11 12 13 14 15 16 17 18 20 21 23 24 25 26 27 28 ",
+            "0 1 2 3 5 6 7 8 9 10 11 12 13 14 15 16 17 18 20 21 23 24 25 26 27 28",
             t.getFunctionString()
         );
         
@@ -119,7 +119,29 @@ public class CbusSlotMonitorSessionTest {
         Assert.assertTrue( t.getFunctionString().isEmpty() );
 
     }
-    
+
+    @Test
+    public void testLargeFunctionNumbers() {
+        CbusSlotMonitorSession t = new CbusSlotMonitorSession( new DccLocoAddress (1234,true) );
+        t.setFunction(3, true);
+        Assertions.assertEquals("3", t.getFunctionString());
+        
+        t.setFunction(27, true);
+        Assertions.assertEquals("3 27", t.getFunctionString());
+        
+        t.setFunction(28, true);
+        Assertions.assertEquals("3 27 28", t.getFunctionString());
+        
+        t.setFunction(29, true);
+        Assertions.assertEquals("3 27 28 29", t.getFunctionString());
+        
+        t.setFunction(30, true);
+        Assertions.assertEquals("3 27 28 29 30", t.getFunctionString());
+        
+        t.setFunction(31, true);
+        Assertions.assertEquals("3 27 28 29 30 31", t.getFunctionString());
+    }
+
     @Test
     public void testFlags() {
         
@@ -181,8 +203,7 @@ public class CbusSlotMonitorSessionTest {
         Assert.assertTrue("flags 3",t.getFlagString().contains("Direction:1"));
         
     }
-    
-    
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
