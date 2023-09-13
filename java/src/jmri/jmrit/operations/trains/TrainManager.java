@@ -4,22 +4,14 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 
 import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.InstanceManagerAutoInitialize;
+import jmri.*;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -33,6 +25,7 @@ import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.ColorUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Manages trains.
@@ -493,18 +486,18 @@ public class TrainManager extends PropertyChangeSupport
      *         destination.
      */
     public Train getTrainForCar(Car car, PrintWriter buildReport) {
-        return getTrainForCar(car, null, buildReport);
+        return getTrainForCar(car, new ArrayList<>(), buildReport);
     }
 
     /**
      *
      * @param car          The car looking for a train.
-     * @param excludeTrain The only train not to try.
+     * @param excludeTrains The trains not to try.
      * @param buildReport  The build report for logging.
      * @return Train that can service car from its current location to the its
      *         destination.
      */
-    public Train getTrainForCar(Car car, Train excludeTrain, PrintWriter buildReport) {
+    public Train getTrainForCar(Car car, List<Train> excludeTrains, PrintWriter buildReport) {
 //        log.debug("Find train for car ({}) location ({}, {}) destination ({}, {})", car.toString(),
 //                car.getLocationName(), car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName()); // NOI18N
         if (Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED)) {
@@ -515,7 +508,7 @@ public class TrainManager extends PropertyChangeSupport
                                     car.getDestinationName(), car.getDestinationTrackName() }));
         }
         for (Train train : getTrainsByIdList()) {
-            if (train == excludeTrain) {
+            if (excludeTrains.contains(train)) {
                 continue;
             }
             if (Setup.isOnlyActiveTrainsEnabled() && !train.isBuildEnabled()) {
@@ -975,10 +968,10 @@ public class TrainManager extends PropertyChangeSupport
                         continue;
                     }
                     if (isBuildMessagesEnabled() && train.isBuildEnabled() && !train.isBuilt()) {
-                        if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("ContinueBuilding"),
+                        if (JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("ContinueBuilding"),
                                 MessageFormat.format(Bundle.getMessage("buildFailedMsg"),
                                         new Object[] { train.getName(), }),
-                                JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+                                JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.NO_OPTION) {
                             break;
                         }
                     }
@@ -999,7 +992,7 @@ public class TrainManager extends PropertyChangeSupport
                 }
                 status = false; // failed to print all selected trains
                 if (isBuildMessagesEnabled()) {
-                    int response = JOptionPane.showConfirmDialog(null,
+                    int response = JmriJOptionPane.showConfirmDialog(null,
                             MessageFormat.format(Bundle.getMessage("NeedToBuildBeforePrinting"),
                                     new Object[] { train.getName(),
                                             (isPrintPreviewEnabled() ? Bundle.getMessage("preview")
@@ -1007,8 +1000,8 @@ public class TrainManager extends PropertyChangeSupport
                             MessageFormat.format(Bundle.getMessage("CanNotPrintManifest"),
                                     new Object[] { isPrintPreviewEnabled() ? Bundle.getMessage("preview")
                                             : Bundle.getMessage("print") }),
-                            JOptionPane.OK_CANCEL_OPTION);
-                    if (response == JOptionPane.CLOSED_OPTION || response == JOptionPane.CANCEL_OPTION) {
+                            JmriJOptionPane.OK_CANCEL_OPTION);
+                    if (response != JmriJOptionPane.OK_OPTION ) {
                         break;
                     }
                 }
@@ -1025,16 +1018,16 @@ public class TrainManager extends PropertyChangeSupport
                     train.terminate();
                 } else {
                     status = false;
-                    int response = JOptionPane.showConfirmDialog(null,
+                    int response = JmriJOptionPane.showConfirmDialog(null,
                             Bundle.getMessage("WarningTrainManifestNotPrinted"),
                             MessageFormat.format(Bundle.getMessage("TerminateTrain"),
                                     new Object[] { train.getName(), train.getDescription() }),
-                            JOptionPane.YES_NO_CANCEL_OPTION);
-                    if (response == JOptionPane.YES_OPTION) {
+                            JmriJOptionPane.YES_NO_CANCEL_OPTION);
+                    if (response == JmriJOptionPane.YES_OPTION) {
                         train.terminate();
                     }
-                    // Quit?
-                    if (response == JOptionPane.CLOSED_OPTION || response == JOptionPane.CANCEL_OPTION) {
+                    // else Quit?
+                    if (response == JmriJOptionPane.CLOSED_OPTION || response == JmriJOptionPane.CANCEL_OPTION) {
                         break;
                     }
                 }
@@ -1219,7 +1212,7 @@ public class TrainManager extends PropertyChangeSupport
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrainManager.class);
 
     @Override
     public void initialize() {

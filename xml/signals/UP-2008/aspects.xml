@@ -102,7 +102,7 @@
       <rule>Rule 9.2.7</rule>
       <indication>Proceed prepared to pass next signal at restricted speed.</indication>
       <speed>Normal</speed>
-      <speed2>Restricting</speed2>
+      <speed2>Restricted</speed2>
       <route>Normal</route>
       <dccAspect>16</dccAspect>
     </aspect>

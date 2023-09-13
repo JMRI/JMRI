@@ -26,7 +26,7 @@ public class QsiSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     public QsiSystemConnectionMemo(QsiTrafficController st) {
         super("Q", "Quantum Programmer");
         this.st = st;
-        InstanceManager.store(this, QsiSystemConnectionMemo.class); // also register as specific type
+        InstanceManager.store(QsiSystemConnectionMemo.this, QsiSystemConnectionMemo.class); // also register as specific type
         InstanceManager.store(cf = new jmri.jmrix.qsi.swing.QsiComponentFactory(this),
         jmri.jmrix.swing.ComponentFactory.class);
     }
@@ -34,7 +34,7 @@ public class QsiSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     public QsiSystemConnectionMemo() {
         super("Q", "Quantum Programmer"); // "Quantum Programmer"
         register(); // registers general type
-        InstanceManager.store(this, QsiSystemConnectionMemo.class); // also register as specific type
+        InstanceManager.store(QsiSystemConnectionMemo.this, QsiSystemConnectionMemo.class); // also register as specific type
 
         InstanceManager.store(cf = new jmri.jmrix.qsi.swing.QsiComponentFactory(this),
         jmri.jmrix.swing.ComponentFactory.class);
@@ -67,6 +67,7 @@ public class QsiSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
      * Configure the common managers for Qsi connections. This puts the common
      * manager config in one place.
      */
+    @Override
     public void configureManagers() {
         store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);

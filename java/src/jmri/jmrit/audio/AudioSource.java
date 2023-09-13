@@ -37,12 +37,12 @@ public interface AudioSource extends Audio {
     /**
      * Constant to define that this source should loop continously when played
      */
-    public static final int LOOP_CONTINUOUS = -1;
+    static final int LOOP_CONTINUOUS = -1;
 
     /**
      * Constant to define that this source should not loop when played
      */
-    public static final int LOOP_NONE = 0;
+    static final int LOOP_NONE = 0;
 
     /**
      * Sets the position of this AudioSource object
@@ -55,7 +55,7 @@ public interface AudioSource extends Audio {
      *
      * @param pos 3d position vector
      */
-    public void setPosition(Vector3f pos);
+    void setPosition(Vector3f pos);
 
     /**
      * Sets the position of this AudioSource object in x, y and z planes
@@ -70,7 +70,7 @@ public interface AudioSource extends Audio {
      * @param y y-coordinate
      * @param z z-coordinate
      */
-    public void setPosition(float x, float y, float z);
+    void setPosition(float x, float y, float z);
 
     /**
      * Sets the position of this AudioSource object in x and y planes with z
@@ -87,7 +87,7 @@ public interface AudioSource extends Audio {
      * @param x x-coordinate
      * @param y y-coordinate
      */
-    public void setPosition(float x, float y);
+    void setPosition(float x, float y);
 
     /**
      * Returns the position of this AudioSource object as a 3-dimensional
@@ -101,7 +101,7 @@ public interface AudioSource extends Audio {
      *
      * @return 3d position vector
      */
-    public Vector3f getPosition();
+    Vector3f getPosition();
 
     /**
      * Returns the current position of this AudioSource object as a
@@ -115,7 +115,7 @@ public interface AudioSource extends Audio {
      *
      * @return 3d position vector
      */
-    public Vector3f getCurrentPosition();
+    Vector3f getCurrentPosition();
 
     /**
      * Method to reset the current position of this AudioSource object to the
@@ -127,7 +127,7 @@ public interface AudioSource extends Audio {
      * <li>Source
      * </ul>
      */
-    public void resetCurrentPosition();
+    void resetCurrentPosition();
 
     /**
      * Sets the position of this AudioSource object to be relative to the
@@ -140,7 +140,7 @@ public interface AudioSource extends Audio {
      *
      * @param relative position relative or absolute
      */
-    public void setPositionRelative(boolean relative);
+    void setPositionRelative(boolean relative);
 
     /**
      * Returns a boolean value that determines if the position of this
@@ -154,7 +154,7 @@ public interface AudioSource extends Audio {
      *
      * @return boolean position relative
      */
-    public boolean isPositionRelative();
+    boolean isPositionRelative();
 
     /**
      * Sets the velocity of this AudioSource object
@@ -167,7 +167,7 @@ public interface AudioSource extends Audio {
      *
      * @param vel 3d velocity vector
      */
-    public void setVelocity(Vector3f vel);
+    void setVelocity(Vector3f vel);
 
     /**
      * Returns the velocity of this AudioSource object
@@ -180,7 +180,7 @@ public interface AudioSource extends Audio {
      *
      * @return 3d velocity vector
      */
-    public Vector3f getVelocity();
+    Vector3f getVelocity();
 
     /**
      * Returns linked AudioBuffer object
@@ -192,7 +192,7 @@ public interface AudioSource extends Audio {
      *
      * @return AudioBuffer the AudioBuffer object bound to this AudioSource
      */
-    public AudioBuffer getAssignedBuffer();
+    AudioBuffer getAssignedBuffer();
 
     /**
      * Return system name of linked AudioBuffer object
@@ -205,7 +205,7 @@ public interface AudioSource extends Audio {
      * @return sysName the SystemName of the AudioBuffer bound to this
      *         AudioSource
      */
-    public String getAssignedBufferName();
+    String getAssignedBufferName();
 
     /**
      * Sets the linked AudioBuffer object
@@ -217,7 +217,7 @@ public interface AudioSource extends Audio {
      *
      * @param audioBuffer the AudioBuffer object to bind to this AudioSource
      */
-    public void setAssignedBuffer(AudioBuffer audioBuffer);
+    void setAssignedBuffer(AudioBuffer audioBuffer);
 
     /**
      * Sets the system name of the linked AudioBuffer object
@@ -230,7 +230,7 @@ public interface AudioSource extends Audio {
      * @param sysName the SystemName of the AudioBuffer (i.e. IAB1) to bind to
      *                this AudioSource
      */
-    public void setAssignedBuffer(String sysName);
+    void setAssignedBuffer(String sysName);
 
     /**
      * Queues the linked AudioBuffer object to this Source's buffer queue
@@ -243,15 +243,15 @@ public interface AudioSource extends Audio {
      * @param audioBuffers the AudioBuffer object to enqueue to this AudioSource
      * @return true if successfully queued audioBuffers; false otherwise
      */
-    public boolean queueBuffers(Queue<AudioBuffer> audioBuffers);
+    boolean queueBuffers(Queue<AudioBuffer> audioBuffers);
 
-    public boolean queueBuffer(AudioBuffer audioBuffer);
+    boolean queueBuffer(AudioBuffer audioBuffer);
 
-    public boolean unqueueBuffers();
+    boolean unqueueBuffers();
 
-    public int numQueuedBuffers();
+    int numQueuedBuffers();
 
-    public int numProcessedBuffers();
+    int numProcessedBuffers();
 
     /**
      * Method to return if this AudioSource has been bound to an AudioBuffer
@@ -263,7 +263,7 @@ public interface AudioSource extends Audio {
      *
      * @return True if bound to an AudioBuffer
      */
-    public boolean isBound();
+    boolean isBound();
 
     /**
      * Method to return if this AudioSource has AudioBuffers queued to it
@@ -275,7 +275,7 @@ public interface AudioSource extends Audio {
      *
      * @return True if AudioBuffers are queued.
      */
-    public boolean isQueued();
+    boolean isQueued();
 
     /**
      * Return the currently stored gain setting
@@ -290,7 +290,7 @@ public interface AudioSource extends Audio {
      *
      * @return gain setting of this AudioSource
      */
-    public float getGain();
+    float getGain();
 
     /**
      * Set the gain of this AudioSource object
@@ -305,7 +305,7 @@ public interface AudioSource extends Audio {
      *
      * @param gain the gain of this AudioSource
      */
-    public void setGain(float gain);
+    void setGain(float gain);
 
     /**
      * Return the current pitch setting
@@ -321,7 +321,7 @@ public interface AudioSource extends Audio {
      *
      * @return pitch of this AudioSource
      */
-    public float getPitch();
+    float getPitch();
 
     /**
      * Set the pitch of this AudioSource object
@@ -337,7 +337,7 @@ public interface AudioSource extends Audio {
      *
      * @param pitch the pitch of this AudioSource
      */
-    public void setPitch(float pitch);
+    void setPitch(float pitch);
 
     /**
      * Return the current reference distance setting
@@ -351,7 +351,7 @@ public interface AudioSource extends Audio {
      *
      * @return Reference Distance of this AudioSource
      */
-    public float getReferenceDistance();
+    float getReferenceDistance();
 
     /**
      * Set the reference distance of this AudioSource object.
@@ -372,7 +372,7 @@ public interface AudioSource extends Audio {
      *
      * @param referenceDistance the Reference Distance for this AudioSource
      */
-    public void setReferenceDistance(float referenceDistance);
+    void setReferenceDistance(float referenceDistance);
 
     /**
      * Set the offset in which to start playback of this AudioSource.
@@ -389,7 +389,7 @@ public interface AudioSource extends Audio {
      * @param offset the offset in samples marking the point to commence
      *               playback
      */
-    public void setOffset(long offset);
+    void setOffset(long offset);
 
     /**
      * Return the offset in which to start playback of this AudioSource.
@@ -403,7 +403,7 @@ public interface AudioSource extends Audio {
      *
      * @return the offset in samples marking the point to commence playback
      */
-    public long getOffset();
+    long getOffset();
 
     /**
      * Return the current maximum distance setting.
@@ -419,7 +419,7 @@ public interface AudioSource extends Audio {
      * </ul>
      * @return the maximum distance
      */
-    public float getMaximumDistance();
+    float getMaximumDistance();
 
     /**
      * Set the current maximum distance setting.
@@ -436,7 +436,7 @@ public interface AudioSource extends Audio {
      *
      * @param maximumDistance maximum distance of this source
      */
-    public void setMaximumDistance(float maximumDistance);
+    void setMaximumDistance(float maximumDistance);
 
     /**
      * Set the roll-off factor of this AudioSource object.
@@ -450,7 +450,7 @@ public interface AudioSource extends Audio {
      *
      * @param rollOffFactor roll-off factor
      */
-    public void setRollOffFactor(float rollOffFactor);
+    void setRollOffFactor(float rollOffFactor);
 
     /**
      * Get the roll-off factor of this AudioSource object.
@@ -463,7 +463,7 @@ public interface AudioSource extends Audio {
      * </ul>
      * @return the roll-off factor
      */
-    public float getRollOffFactor();
+    float getRollOffFactor();
 
     /**
      * Check if this AudioSource object will loop or not.
@@ -475,7 +475,7 @@ public interface AudioSource extends Audio {
      *
      * @return boolean loop
      */
-    public boolean isLooped();
+    boolean isLooped();
 
     /**
      * Sets this AudioSource object to loop infinitely or not.
@@ -489,7 +489,7 @@ public interface AudioSource extends Audio {
      *
      * @param loop infinite loop setting
      */
-    public void setLooped(boolean loop);
+    void setLooped(boolean loop);
 
     /**
      * Returns the minimum number of times that this AudioSource will loop, or
@@ -504,7 +504,7 @@ public interface AudioSource extends Audio {
      *
      * @return number of loops
      */
-    public int getMinLoops();
+    int getMinLoops();
 
     /**
      * The minimum number of times that this AudioSource should loop.
@@ -523,7 +523,7 @@ public interface AudioSource extends Audio {
      *
      * @param loops minimum number of loops
      */
-    public void setMinLoops(int loops);
+    void setMinLoops(int loops);
 
     /**
      * Returns the maximum number of times that this AudioSource will loop, or
@@ -538,7 +538,7 @@ public interface AudioSource extends Audio {
      *
      * @return maximum number of loops
      */
-    public int getMaxLoops();
+    int getMaxLoops();
 
     /**
      * The maximum number of times that this AudioSource should loop.
@@ -557,7 +557,7 @@ public interface AudioSource extends Audio {
      *
      * @param loops maximum number of loops
      */
-    public void setMaxLoops(int loops);
+    void setMaxLoops(int loops);
 
     /**
      * The number of times that this AudioSource should loop, or LOOP_CONTINUOUS
@@ -577,7 +577,7 @@ public interface AudioSource extends Audio {
      *
      * @return number of loops
      */
-    public int getNumLoops();
+    int getNumLoops();
 
 //    /**
 //     * Set the minimum length of time in milliseconds to wait before
@@ -593,7 +593,7 @@ public interface AudioSource extends Audio {
 //     * </ul>
 //     * @param loopDelay minimum time in milliseconds to wait
 //     */
-//    public void setMinLoopDelay(int loopDelay);
+//    void setMinLoopDelay(int loopDelay);
 //
 //    /**
 //     * Retrieve the minimum length of time in milliseconds to wait before
@@ -609,7 +609,7 @@ public interface AudioSource extends Audio {
 //     * </ul>
 //     * @return minimum time in milliseconds to wait
 //     */
-//    public int getMinLoopDelay();
+//    int getMinLoopDelay();
 //
 //    /**
 //     * Set the maximum length of time in milliseconds to wait before
@@ -625,7 +625,7 @@ public interface AudioSource extends Audio {
 //     * </ul>
 //     * @param loopDelay maximum time in milliseconds to wait
 //     */
-//    public void setMaxLoopDelay(int loopDelay);
+//    void setMaxLoopDelay(int loopDelay);
 //
 //    /**
 //     * Set the maximum length of time in milliseconds to wait before
@@ -641,7 +641,7 @@ public interface AudioSource extends Audio {
 //     * </ul>
 //     * @return maximum time in milliseconds to wait
 //     */
-//    public int getMaxLoopDelay();
+//    int getMaxLoopDelay();
 //
 //    /**
 //     * The length of time in milliseconds that this source should wait
@@ -663,7 +663,7 @@ public interface AudioSource extends Audio {
 //     * </ul>
 //     * @return time in milliseconds to wait
 //     */
-//    public int getLoopDelay();
+//    int getLoopDelay();
     /**
      * Set the length of time in milliseconds to fade this source in
      * <p>
@@ -676,7 +676,7 @@ public interface AudioSource extends Audio {
      *
      * @param fadeInTime fade-in time in milliseconds
      */
-    public void setFadeIn(int fadeInTime);
+    void setFadeIn(int fadeInTime);
 
     /**
      * Retrieve the length of time in milliseconds to fade this source in
@@ -690,7 +690,7 @@ public interface AudioSource extends Audio {
      *
      * @return fade-in time in milliseconds
      */
-    public int getFadeIn();
+    int getFadeIn();
 
     /**
      * Set the length of time in milliseconds to fade this source in
@@ -704,7 +704,7 @@ public interface AudioSource extends Audio {
      *
      * @param fadeOutTime fade-out time in milliseconds
      */
-    public void setFadeOut(int fadeOutTime);
+    void setFadeOut(int fadeOutTime);
 
     /**
      * Retrieve the length of time in milliseconds to fade this source in
@@ -718,7 +718,7 @@ public interface AudioSource extends Audio {
      *
      * @return fade-in time in milliseconds
      */
-    public int getFadeOut();
+    int getFadeOut();
 
     /**
      * Method to start playing this AudioSource Object
@@ -730,7 +730,7 @@ public interface AudioSource extends Audio {
      * <li>Source
      * </ul>
      */
-    public void play();
+    void play();
 
     /**
      * Method to stop playing this AudioSource Object
@@ -740,7 +740,7 @@ public interface AudioSource extends Audio {
      * <li>Source
      * </ul>
      */
-    public void stop();
+    void stop();
 
     /**
      * Method to toggle playback of this AudioSource Object reseting position
@@ -750,7 +750,7 @@ public interface AudioSource extends Audio {
      * <li>Source
      * </ul>
      */
-    public void togglePlay();
+    void togglePlay();
 
     /**
      * Method to pause playing this AudioSource Object
@@ -760,7 +760,7 @@ public interface AudioSource extends Audio {
      * <li>Source
      * </ul>
      */
-    public void pause();
+    void pause();
 
     /**
      * Method to resume playing this AudioSource Object
@@ -770,7 +770,7 @@ public interface AudioSource extends Audio {
      * <li>Source
      * </ul>
      */
-    public void resume();
+    void resume();
 
     /**
      * Method to toggle playback of this AudioSource Object retaining postition
@@ -780,7 +780,7 @@ public interface AudioSource extends Audio {
      * <li>Source
      * </ul>
      */
-    public void togglePause();
+    void togglePause();
 
     /**
      * Method to rewind this AudioSource Object
@@ -790,7 +790,7 @@ public interface AudioSource extends Audio {
      * <li>Source
      * </ul>
      */
-    public void rewind();
+    void rewind();
 
     /**
      * Method to fade in and then play this AudioSource Object
@@ -800,7 +800,7 @@ public interface AudioSource extends Audio {
      * <li>Source
      * </ul>
      */
-    public void fadeIn();
+    void fadeIn();
 
     /**
      * Method to fade out and then stop this AudioSource Object only when it is
@@ -813,7 +813,7 @@ public interface AudioSource extends Audio {
      * <li>Source
      * </ul>
      */
-    public void fadeOut();
+    void fadeOut();
 
     /**
      * Get debug info about this audio source.
@@ -821,7 +821,7 @@ public interface AudioSource extends Audio {
      * previously the method toString().
      * @return a string with debug info or the result of the method toString()
      */
-    default public String getDebugString() {
+    default String getDebugString() {
         return toString();
     }
 

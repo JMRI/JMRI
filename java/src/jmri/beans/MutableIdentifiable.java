@@ -15,5 +15,5 @@ public interface MutableIdentifiable extends Identifiable {
      *
      * @param id the new identity
      */
-    public abstract void setId(@Nonnull String id);
+    void setId(@Nonnull String id);
 }

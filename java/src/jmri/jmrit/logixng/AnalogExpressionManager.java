@@ -20,14 +20,14 @@ public interface AnalogExpressionManager extends BaseManager<MaleAnalogExpressio
      * @return the male socket for this expression
      * @throws IllegalArgumentException if the expression has an invalid system name
      */
-    public MaleAnalogExpressionSocket registerExpression(@Nonnull AnalogExpressionBean expression)
+    MaleAnalogExpressionSocket registerExpression(@Nonnull AnalogExpressionBean expression)
             throws IllegalArgumentException;
     
     /**
      * Create a new system name for an Expression.
      * @return a new system name
      */
-    public String getAutoSystemName();
+    String getAutoSystemName();
 
     /**
      * Create a female socket for analog expressions
@@ -36,7 +36,7 @@ public interface AnalogExpressionManager extends BaseManager<MaleAnalogExpressio
      * @param socketName the name of the new socket
      * @return the new female socket
      */
-    public FemaleAnalogExpressionSocket createFemaleSocket(
+    FemaleAnalogExpressionSocket createFemaleSocket(
             Base parent, FemaleSocketListener listener, String socketName);
     
     /**
@@ -44,7 +44,7 @@ public interface AnalogExpressionManager extends BaseManager<MaleAnalogExpressio
      * 
      * @return a set of entries with category and class
      */
-    public Map<Category, List<Class<? extends Base>>> getExpressionClasses();
+    Map<Category, List<Class<? extends Base>>> getExpressionClasses();
 
     /*.*
      * Add an Expression.
@@ -75,7 +75,7 @@ public interface AnalogExpressionManager extends BaseManager<MaleAnalogExpressio
      * {@link #getSystemNamePrefix() } and "AE";
      */
     @Override
-    public default String getSubSystemNamePrefix() {
+    default String getSubSystemNamePrefix() {
         return getSystemNamePrefix() + "AE";
     }
 
@@ -85,6 +85,6 @@ public interface AnalogExpressionManager extends BaseManager<MaleAnalogExpressio
      *
      * @param x the Expression to delete
      */
-    public void deleteAnalogExpression(MaleAnalogExpressionSocket x);
+    void deleteAnalogExpression(MaleAnalogExpressionSocket x);
 
 }

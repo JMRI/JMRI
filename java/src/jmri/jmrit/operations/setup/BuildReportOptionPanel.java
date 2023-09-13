@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 import jmri.InstanceManager;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user edit of the build report options
@@ -126,8 +127,9 @@ public class BuildReportOptionPanel extends OperationsPreferencesPanel {
     public void buttonActionPerformed(ActionEvent ae) {
         if (ae.getSource() == saveButton) {
             this.savePreferences();
-            if (Setup.isCloseWindowOnSaveEnabled()) {
-                dispose();
+            var topLevelAncestor = getTopLevelAncestor();
+            if (Setup.isCloseWindowOnSaveEnabled() && topLevelAncestor instanceof BuildReportOptionFrame) {
+                ((BuildReportOptionFrame) topLevelAncestor).dispose();
             }
         }
     }
@@ -204,8 +206,8 @@ public class BuildReportOptionPanel extends OperationsPreferencesPanel {
         }
 
         if (!oldReportLevel.equals(Setup.getRouterBuildReportLevel())) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("buildReportRouter"), Bundle
-                    .getMessage("buildReportRouterTitle"), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("buildReportRouter"), Bundle
+                    .getMessage("buildReportRouterTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
         }
 
         Setup.setBuildReportEditorEnabled(buildReportCheckBox.isSelected());

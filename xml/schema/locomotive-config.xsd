@@ -32,7 +32,7 @@
         >
 
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/general.xsd"/>
-  
+
   <xs:element name="locomotive-config">
     <xs:annotation>
         <xs:documentation>
@@ -48,7 +48,7 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  
+
     <xs:complexType name="LocomotiveType">
       <xs:sequence>
         <xs:element name="dateUpdated" minOccurs="0" maxOccurs="1">
@@ -58,15 +58,15 @@
                 </xs:documentation>
             </xs:annotation>
         </xs:element>
-        
+
         <xs:element name="decoder" type="DecoderType" minOccurs="1" maxOccurs="1" />
-        
+
         <xs:element name="locoaddress" type="LocoAddressType" minOccurs="0" maxOccurs="1" />
-        
+
         <xs:element name="functionlabels" type="FunctionLabelType" minOccurs="0" maxOccurs="1" />
-        
+
         <xs:element name="soundlabels" type="SoundLabelType" minOccurs="0" maxOccurs="1" />
-        
+
         <xs:element name="attributepairs" type="AttributePairsType" minOccurs="0" maxOccurs="unbounded" />
 
         <xs:element name="speedprofile" type="SpeedProfileType" minOccurs="0" maxOccurs="1" />
@@ -121,7 +121,7 @@
           </xs:complexType>
         </xs:element>
       </xs:sequence>
-      
+
         <xs:attribute name="id" type="xs:string" use="required"/>
         <xs:attribute name="dccAddress" type="xs:string"/> <!-- deprecated -->
         <xs:attribute name="fileName" type="xs:string"/>
@@ -133,6 +133,9 @@
         <xs:attribute name="roadName" type="xs:string"/>
         <xs:attribute name="roadNumber" type="xs:string"/>
         <xs:attribute name="mfg" type="xs:string"/>
+        <xs:attribute name="manufacturerID" type="xs:string"/>
+        <xs:attribute name="productID" type="xs:string"/>
+        <xs:attribute name="developerID" type="xs:string"/>
         <xs:attribute name="owner" type="xs:string"/>
         <xs:attribute name="model" type="xs:string"/>
         <xs:attribute name="comment" type="xs:string"/>
@@ -141,9 +144,9 @@
             maximum speed as a fraction from 0 to 1.0
         </xs:documentation></xs:annotation>
         </xs:attribute>
-          
+
     </xs:complexType>
-    
+
     <xs:complexType name="LocoAddressType"><xs:sequence>
       <xs:element name="dcclocoaddress" minOccurs="1" maxOccurs="1">
         <xs:complexType>
@@ -166,7 +169,7 @@
           </xs:simpleType>
         </xs:element>
     </xs:sequence></xs:complexType>
-    
+
   <xs:complexType name="AttributePairsType"><xs:sequence>
       <xs:element name="keyvaluepair" minOccurs="0" maxOccurs="unbounded">
         <xs:complexType><xs:sequence>
@@ -175,14 +178,14 @@
         </xs:sequence></xs:complexType>
       </xs:element>
   </xs:sequence></xs:complexType>
-  
+
   <xs:complexType name="DecoderType">
     <xs:attribute name="family" type="xs:string" use="required"/>
     <xs:attribute name="model" type="xs:string" use="required"/>
     <xs:attribute name="comment" type="xs:string"/>
     <xs:attribute name="maxFnNum" type="xs:int"/>
   </xs:complexType>
-  
+
 
   <xs:complexType name="FunctionLabelType">
     <xs:sequence>

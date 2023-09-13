@@ -113,15 +113,18 @@ public class CbusNodeEventTablePane extends jmri.jmrix.can.swing.CanPanel {
                 tcm.getColumn(i).setCellRenderer(getRenderer());
             }
         }
-        
-        TableColumn delBColumn = tcm.getColumn(CbusNodeEventTableDataModel.NODE_EDIT_BUTTON_COLUMN);
-        
+
         if ( hideEditButton ) {
-            
+            TableColumn delBColumn = tcm.getColumn(CbusNodeEventTableDataModel.NODE_EDIT_BUTTON_COLUMN);
             delBColumn.setMinWidth(0);
             delBColumn.setMaxWidth(0);
             delBColumn.setWidth(0);
             
+            // if not editable, index column also invalid
+            delBColumn = tcm.getColumn(CbusNodeEventTableDataModel.EV_INDEX_COLUMN);
+            delBColumn.setMinWidth(0);
+            delBColumn.setMaxWidth(0);
+            delBColumn.setWidth(0);
         }
     
     }

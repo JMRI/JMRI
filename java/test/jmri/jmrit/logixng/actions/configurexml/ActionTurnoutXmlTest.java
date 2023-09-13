@@ -9,7 +9,7 @@ import org.junit.Test;
 
 /**
  * Test ActionTurnoutXml
- * 
+ *
  * @author Daniel Bergqvist 2019
  */
 public class ActionTurnoutXmlTest {
@@ -19,7 +19,7 @@ public class ActionTurnoutXmlTest {
         ActionTurnoutXml b = new ActionTurnoutXml();
         Assert.assertNotNull("exists", b);
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -35,7 +35,8 @@ public class ActionTurnoutXmlTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }

@@ -127,11 +127,11 @@ public class TrainCsvManifest extends TrainCsvCommon {
                     }
                 }
                 // car holds
-                List<Car> rsByLocation = carManager.getByLocationList();
+                List<Car> carsByLocation = carManager.getByLocationList();
                 List<Car> cList = new ArrayList<>();
-                for (Car rs : rsByLocation) {
-                    if (rs.getLocation() == rl.getLocation() && rs.getRouteLocation() == null && rs.getTrack() != null) {
-                        cList.add(rs);
+                for (Car car : carsByLocation) {
+                    if (car.getLocation() == rl.getLocation() && car.getRouteLocation() == null && car.getTrack() != null) {
+                        cList.add(car);
                     }
                 }
                 clearUtilityCarTypes(); // list utility cars by quantity

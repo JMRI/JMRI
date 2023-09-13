@@ -290,6 +290,9 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
         InstanceManager.getDefault(TurnoutManager.class).newTurnout("IT2", "Turnout 2");
         Assert.assertFalse("evaluate returns false",expressionReference.evaluate());
         Assert.assertEquals("Reference {IM1} is not Turnout", expressionReference.getLongDescription());
+        
+        // Potentially no Audio Device installed
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("Error initialising JOAL");
     }
 
     @Test

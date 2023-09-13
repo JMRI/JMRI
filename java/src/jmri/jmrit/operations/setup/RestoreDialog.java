@@ -14,20 +14,17 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.util.swing.ExceptionContext;
 import jmri.util.swing.ExceptionDisplayFrame;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.UnexpectedExceptionContext;
 
 public class RestoreDialog extends JDialog {
 
-    private final static Logger log = LoggerFactory.getLogger(RestoreDialog.class
-            .getName());
+    
 
     private JPanel mainPanel;
     private JPanel contentPanel;
@@ -193,8 +190,8 @@ public class RestoreDialog extends JDialog {
 
         // check to see if files are dirty
         if (OperationsXml.areFilesDirty()) {
-            if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("OperationsFilesModified"),
-                    Bundle.getMessage("SaveOperationFiles"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            if (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("OperationsFilesModified"),
+                    Bundle.getMessage("SaveOperationFiles"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                 OperationsXml.save();
             }
         }
@@ -218,8 +215,8 @@ public class RestoreDialog extends JDialog {
             // otherwise it is normal to not have the task running
             InstanceManager.getDefault(OperationsManager.class).setShutDownTask(null);
 
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("YouMustRestartAfterRestore"),
-                    Bundle.getMessage("RestoreSuccessful"), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("YouMustRestartAfterRestore"),
+                    Bundle.getMessage("RestoreSuccessful"), JmriJOptionPane.INFORMATION_MESSAGE);
             dispose();
 
             try {
@@ -272,5 +269,7 @@ public class RestoreDialog extends JDialog {
             comboBox.setSelectedIndex(model.getSize() - 1);
         }
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RestoreDialog.class);
 
 }

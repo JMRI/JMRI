@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Ronald</firstname>
+        <surname>Kuhn</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2023-07-24</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>Creation for DH21B/DH22B</revremark>
+    </revision>
+  </revhistory>
+  <!-- Function tables for outputs 9-10  -->
+  <variable item="F4 controls output 9" CV="98" default="10" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+  </variable>
+  <!--variable item="FL(f) controls output 9" CV="98" mask="XXXXXXXV" minOut="1" minFn="1" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>FL(f) controls output 9</label>
+  </variable>
+  <variable item="FL(r) controls output 9" CV="98" mask="XXXXXXXV" minOut="2" minFn="1" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>FL(r) controls output 9</label>
+  </variable>
+  <variable item="F1 controls output 9" CV="98" mask="XXXXXXVX" minOut="3" minFn="1" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F1 controls output 9</label>
+  </variable>
+  <variable item="F2 controls output 9" CV="98" mask="XXXXXVXX" minOut="4" minFn="1" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F2 controls output 9</label>
+  </variable>
+  <variable item="F3 controls output 9" CV="98" mask="XXXXVXXX" minOut="5" minFn="1" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F3 controls output 9</label>
+  </variable>
+  <variable item="F4 controls output 9" CV="98" mask="XXXVXXXX" minOut="6" minFn="1" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F4 controls output 9</label>
+  </variable>
+  <variable item="F5 controls output 9" CV="98" mask="XXVXXXXX" minOut="7" minFn="1" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F5 controls output 9</label>
+  </variable>
+  <variable item="F6 controls output 9" CV="98" mask="XVXXXXXX" minOut="8" minFn="1" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F6 controls output 9</label>
+  </variable>
+  <variable item="F7 controls output 9" CV="98" mask="VXXXXXXX" minOut="9" minFn="1" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F7 controls output 9</label>
+  </variable>
+  <variable item="F8 controls output 9" CV="98" mask="VXXXXXXX" minOut="10" minFn="1" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F8 controls output 9</label>
+  </variable>
+  <variable item="F9 controls output 9" CV="98" mask="VXXXXXXX" minOut="11" minFn="1" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F9 controls output 9</label>
+  </variable>
+  <variable item="F10 controls output 9" CV="98" mask="VXXXXXXX" minOut="12" minFn="1" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F10 controls output 9</label>
+  </variable>
+  <variable item="F11 controls output 9" CV="98" mask="VXXXXXXX" minOut="13" minFn="1" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F11 controls output 9</label>
+  </variable>
+  <variable item="F12 controls output 9" CV="98" mask="VXXXXXXX" minOut="14" minFn="1" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F12 controls output 9</label>
+  </variable-->
+
+  <variable item="F4 controls output 10" CV="99" default="11" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+  </variable>
+  <!--variable item="FL(f) controls output 10" CV="99" mask="XXXXXXXV" minOut="1" minFn="2" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>FL(f) controls output 10</label>
+  </variable>
+  <variable item="FL(r) controls output 10" CV="99" mask="XXXXXXXV" minOut="1" minFn="2" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>FL(r) controls output 10</label>
+  </variable>
+  <variable item="F1 controls output 10" CV="99" mask="XXXXXXVX" minOut="3" minFn="2" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F1 controls output 10</label>
+  </variable>
+  <variable item="F2 controls output 10" CV="99" mask="XXXXXVXX" minOut="4" minFn="2" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F2 controls output 10</label>
+  </variable>
+  <variable item="F3 controls output 10" CV="99" mask="XXXXVXXX" minOut="5" minFn="2" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F3 controls output 10</label>
+  </variable>
+  <variable item="F4 controls output 10" CV="99" mask="XXXVXXXX" minOut="6" minFn="2" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F4 controls output 10</label>
+  </variable>
+  <variable item="F5 controls output 10" CV="99" mask="XXVXXXXX" minOut="7" minFn="2" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F5 controls output 10</label>
+  </variable>
+  <variable item="F6 controls output 10" CV="99" mask="XVXXXXXX" minOut="8" minFn="2" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F6 controls output 10</label>
+  </variable>
+  <variable item="F7 controls output 10" CV="99" mask="VXXXXXXX" minOut="9" minFn="2" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F7 controls output 10</label>
+  </variable>
+  <variable item="F8 controls output 10" CV="99" mask="VXXXXXXX" minOut="10" minFn="2" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F8 controls output 10</label>
+  </variable>
+  <variable item="F9 controls output 10" CV="99" mask="VXXXXXXX" minOut="11" minFn="2" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F9 controls output 10</label>
+  </variable>
+  <variable item="F10 controls output 10" CV="99" mask="VXXXXXXX" minOut="12" minFn="2" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F10 controls output 10</label>
+  </variable>
+  <variable item="F11 controls output 10" CV="99" mask="VXXXXXXX" minOut="13" minFn="2" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F11 controls output 10</label>
+  </variable>
+  <variable item="F12 controls output 10" CV="99" mask="VXXXXXXX" minOut="14" minFn="2" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F12 controls output 10</label>
+  </variable-->
+
+  <variable item="Condition AUX7" CV="158" default="0" minOut="8" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <decVal max="161"/>
+    <label>Condition AUX7</label>
+    <label xml:lang="de">Bedingung AUX7</label>
+    <label xml:lang="ca">Condició  AUX7</label>
+  </variable>
+  <!-- Older form deprecated -->
+  <variable item="Condition AUX7 enum" CV="158" default="0" minOut="8" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum.xml"/>
+    <label>Condition AUX7</label>
+    <label xml:lang="de">Bedingung AUX7</label>
+    <label xml:lang="ca">Condició  AUX7</label>
+  </variable>
+  <!-- New form: split in 4 different sub-CVs / enums -->
+  <variable item="Condition AUX7 A" CV="158" mask="1" default="0" minOut="8" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_A.xml"/>
+  </variable>
+  <variable item="Condition AUX7 B" CV="158" mask="3" default="0" minOut="8" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_B.xml"/>
+  </variable>
+  <variable item="Condition AUX7 C" CV="158" mask="9" default="0" minOut="8" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_C.xml"/>
+  </variable>
+  <variable item="Condition AUX7 D" CV="158" mask="27" default="0" minOut="8" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_D.xml"/>
+  </variable>
+
+  <variable item="Condition AUX8" CV="159" default="0" minOut="8" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <decVal max="161"/>
+    <label>Condition AUX8</label>
+    <label xml:lang="de">Bedingung AUX8</label>
+    <label xml:lang="ca">Condició  AUX8</label>
+  </variable>
+  <!-- Older form deprecated -->
+  <variable item="Condition AUX8 enum" CV="159" default="0" minOut="8" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum.xml"/>
+    <label>Condition AUX8</label>
+    <label xml:lang="de">Bedingung AUX8</label>
+    <label xml:lang="ca">Condició  AUX8</label>
+  </variable>
+  <!-- New form: split in 4 different sub-CVs / enums -->
+  <variable item="Condition AUX8 A" CV="159" mask="1" default="0" minOut="8" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_A.xml"/>
+  </variable>
+  <variable item="Condition AUX8 B" CV="159" mask="3" default="0" minOut="8" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_B.xml"/>
+  </variable>
+  <variable item="Condition AUX8 C" CV="159" mask="9" default="0" minOut="8" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_C.xml"/>
+  </variable>
+  <variable item="Condition AUX8 D" CV="159" mask="27" default="0" minOut="8" include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_D.xml"/>
+  </variable>
+
+</variables>

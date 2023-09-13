@@ -158,7 +158,7 @@ public abstract class TurnoutOperation extends PropertyChangeSupport implements 
     /**
      *
      * @param other another TurnoutOperation
-     * @return true iff the two operations are equivalent, i.e. same subclass
+     * @return true if the two operations are equivalent, i.e. same subclass
      *         and same parameters
      */
     public abstract boolean equivalentTo(TurnoutOperation other);
@@ -249,8 +249,10 @@ public abstract class TurnoutOperation extends PropertyChangeSupport implements 
     }
 
     /**
-     * Nonce support. A nonce is a TurnoutOperation created specifically for one
-     * turnout, which can't be directly referred to by name. It does have a
+     * Nonce support.
+     * A nonce is a TurnoutOperation created specifically for one
+     * turnout, which can't be directly referred to by name.
+     * It does have a
      * name, which is the turnout it was created for, prefixed by "*"
      *
      * @return true if this object is a nonce
@@ -277,6 +279,14 @@ public abstract class TurnoutOperation extends PropertyChangeSupport implements 
      */
     public boolean matchFeedbackMode(int mode) {
         return (mode & feedbackModes) != 0;
+    }
+
+    /**
+     * Get the ToolTip for the Turnout Operator.
+     * @return String or null.
+     */
+    public String getToolTip(){
+        return null;
     }
 
 }

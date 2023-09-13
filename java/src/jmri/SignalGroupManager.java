@@ -26,17 +26,17 @@ public interface SignalGroupManager extends Manager<SignalGroup> {
      * @return null if no match found
      */
     @CheckForNull
-    public SignalGroup getSignalGroup(@Nonnull String name);
+    SignalGroup getSignalGroup(@Nonnull String name);
 
     /** {@inheritDoc} */
     @CheckForNull
     @Override
-    public SignalGroup getBySystemName(@Nonnull String name);
+    SignalGroup getBySystemName(@Nonnull String name);
 
     /** {@inheritDoc} */
     @CheckForNull
     @Override
-    public SignalGroup getByUserName(@Nonnull String name);
+    SignalGroup getByUserName(@Nonnull String name);
 
     /**
      * Create a new Signal group if the group does not exist.
@@ -50,7 +50,7 @@ public interface SignalGroupManager extends Manager<SignalGroup> {
      * @throws IllegalArgumentException if there is trouble creating a new Group
      */
     @Nonnull
-    public SignalGroup newSignalGroupWithUserName(@Nonnull String userName) throws IllegalArgumentException;
+    SignalGroup newSignalGroupWithUserName(@Nonnull String userName) throws IllegalArgumentException;
 
     /**
      * Create a new SignalGroup if the group does not exist.
@@ -62,7 +62,7 @@ public interface SignalGroupManager extends Manager<SignalGroup> {
      * @throws IllegalArgumentException if there is trouble creating a new Group.
      */
     @Nonnull
-    public SignalGroup provideSignalGroup(@Nonnull String systemName, String userName) throws IllegalArgumentException;
+    SignalGroup provideSignalGroup(@Nonnull String systemName, String userName) throws IllegalArgumentException;
 
     /**
      * Delete Group by removing it from the manager. The Group must first be

@@ -5,11 +5,11 @@ package jmri.jmrix.ieee802154.xbee;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
  */
-public interface XBeeListener extends jmri.jmrix.AbstractMRListener {
+interface XBeeListener extends jmri.jmrix.AbstractMRListener {
 
-    public void message(XBeeMessage m);
+    void message(XBeeMessage m);
 
-    public void reply(XBeeReply m);
+    void reply(XBeeReply m);
 }
 
 

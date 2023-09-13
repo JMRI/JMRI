@@ -23,6 +23,6 @@ public interface MaleAnalogExpressionSocket
      * infinity or positive infinity
      */
     @Override
-    public double evaluate() throws JmriException;
+    double evaluate() throws JmriException;
     
 }

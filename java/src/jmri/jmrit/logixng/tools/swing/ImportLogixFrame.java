@@ -5,7 +5,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +13,7 @@ import javax.swing.*;
 import jmri.*;
 import jmri.jmrit.logixng.tools.ImportLogix;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.swing.JTitledSeparator;
 
 /**
@@ -231,10 +231,12 @@ public final class ImportLogixFrame extends JmriJFrame {
                     throw new RuntimeException("Unexpected error: "+e.getMessage(), e);
                 }
             }
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("LogixsAreImported"), Bundle.getMessage("TitleLogixsImportSuccess"), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("LogixsAreImported"),
+                Bundle.getMessage("TitleLogixsImportSuccess"), JmriJOptionPane.INFORMATION_MESSAGE);
         } else {
             errorMessage.append("</table></html>");
-            JOptionPane.showMessageDialog(this, errorMessage.toString(), Bundle.getMessage("TitleLogixImportError"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, errorMessage.toString(),
+                Bundle.getMessage("TitleLogixImportError"), JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 

@@ -7,13 +7,7 @@
 
   <style>
     .dp-center {text-align: center;}
-    .dp-middle {text-align: middle;}
     .dp-right {text-align: right;}
-    .dp-none {list-style-type: none;}
-    .dp-square {list-style-type: square;}
-    .dp-upper-alpha {ist-style-type: upper-alpha;}
-    .dp-lower-alpha {list-style-type: lower-alpha;}
-    .dp-border-2 {border: 2px solid;}
   </style>
 </head>
 <body>
@@ -54,25 +48,23 @@
 
       <p>There are four buttons near the bottom, the first one which is:</p>
 
-      <p><strong><input name="button" id="button" value=
-      "Service Mode (Programming Track) Programmer" type="submit"> <a href=
-      "Programmer_ServiceMode.shtml">Service Mode</a> (programming track) Programmer</strong> -We
+      <p><span class="textbutton">Service Mode (Programming Track) Programmer</span> <a id="ServiceMode" href=
+      "Programmer_ServiceMode.shtml">Service Mode</a> (programming track) Programmer - We
       will start with this button to program your locomotive on the dedicated programming track.
-      <strong>Note:</strong> not all systems may support this option.</p>
+      and the Service Mode Programmer (Programming Track) Programmer Setup window opens.</p>
+      <p><strong>Note:</strong> not all systems may support this option.</p>
 
-      <p><strong><input name="button2" id="button2" value="Operations Mode(Main Track) Programmer"
-      type="submit"> <a href="Programmer_OpsMode.shtml">Operations Mode</a> (Main Track)
-      Programmer</strong> - or <strong>Programming on the main(POM)</strong>. This lets you program
+      <p><span class="textbutton">Operations Mode(Main Track) Programmer</span>
+      <a href="Programmer_OpsMode.shtml">Operations Mode</a> (Main Track)
+      Programmer - or Programming on the main(POM). This lets you program
       a specific decoder on the layout, even while it is operating.</p>
 
-      <p><input name="button3" id="button3" value="Help" type="submit"> - Accesses the help
-      files</p>
+      <p><span class="textbutton">Help</span> - Accesses the help files</p>
 
-      <p><input name="button4" id="button4" value="Quit" type="submit"> - Exits the program.</p>
+      <p><span class="textbutton">Quit</span> - Exits the program.</p>
 
-      <p><a id="ServiceMode"></a>Click on <strong><input name="button5" id="button5" value=
-      "Service Mode (Programming Track) Programmer" type="submit"></strong> and the <strong>Service
-      Mode Programmer (Programming Track)Programmer Setup</strong> window opens</p>
+      <p><a ></a>Click on <span class="textbutton">Service Mode (Programming Track)
+      Programmer</span></p>
 
       <blockquote>
         <blockquote>
@@ -100,8 +92,8 @@
 
       <p>Since we want to know what type of decoder is in the locomotive, we can either look up
       what was listed when it was entered in the roster stored in this computer, or we can ask it
-      what it's manufacturer and firmware version are. The first is method is <strong><input name=
-      "button6" id="button6" value="Ident" type="button"> ,</strong></p>
+      what it's manufacturer and firmware version are. The first is method is <span class="textbutton"
+      >Ident</span>.</p>
 
       <p style="text-align: center;"><img style="width: 518px; height: 452px;" alt="ident" src=
       "images/Basic_Ident.png"><br>
@@ -114,21 +106,21 @@
       <p><strong>IDENT</strong> is used to identify a locomotive that is already stored in your
       computer's roster file. You can use the drop down arrow to display a listing of locomotives
       in your roster, and then select the desired locomotive from the list. An alternative is to be
-      lazy and click the <strong><input name="Ident" id="Ident" value="Ident" type=
-      "button"></strong> . The program will then query the locomotive to get it's address which is
+      lazy and click the <span class="textbutton">Ident</span> button.
+      The program will then query the locomotive to get it's address which is
       linked to the roster entry. The DecoderPro roster entry includes the decoder type used when
       it programmed the locomotive. If it gets a valid address, but there is no roster entry with
       that address, then you will get an error message.</p>
 
-      <p>and the other is <strong><input name="button7" id="button7" value="Read type from decoder"
-      type="button"> .</strong> You can use one or the other, but they are mutually exclusive.</p>
+      <p>The other is <span class="textbutton">Read type from decoder</span> .
+      You can use one or the other, but they are mutually exclusive.</p>
 
       <p style="text-align: center;"><img style="width: 518px; height: 495px;" alt="read type" src=
       "images/Basic_ReadType.png"><br>
       </p>
 
       <p><strong>READ TYPE</strong> is the other method located in the center of the page. If you
-      click on <input name="button8" id="button8" value="Read type from decoder" type="button"> ,
+      click on <span class="textbutton">Read type from decoder</span> ,
       the system will query the decoder to get the manufacturer and firmware version number. From
       this information it will highlight all the decoders which are known to match. There may be
       several, usually with differences in the physical shape and size to fit in a particular
@@ -160,7 +152,7 @@
       make mistakes. We'll get into the other programmers later on.</p>
 
       <p>Once you have selected a decoder, or DecoderPro has done it for you, the
-      <strong><input name="button9" id="button9" value="Open Programmer" type="button"></strong>
+      <span class="textbutton">Open Programmer</span> button
       will become activated and you'll be able to move on with Service Mode Programming.</p>
 
       <p>When you are on the <strong>Setup Pane</strong> and click on the <strong>Open

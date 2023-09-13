@@ -49,7 +49,7 @@ public class LocoNetSlot {
     /**
      * Create a slot based solely on a slot number.  The remainder of the slot is
      * left un-initialized.
-     * <p>
+     *
      * @param slotNum - slot number to be assigned to the new LocoNetSlot object
      * @param inLoconetProtocol - can be 0 = unknown, 1 = version 1.1, 2 = Expandedslot
      */
@@ -66,7 +66,7 @@ public class LocoNetSlot {
 
     /**
      * Create a slot , initialize slotnum, protocol and slot type
-     * <p>
+     *
      * @param slotNum - slot number to be assigned to the new LocoNetSlot object
      * @param inLoconetProtocol - can be 0 = unknown, 1 = version 1.1, 2 = Expandedslot
      * @param inSlotType - SLotType enum
@@ -85,7 +85,7 @@ public class LocoNetSlot {
     /**
      * Creates a slot object based on the contents of a LocoNet message.
      * The slot number is assumed to be found in byte 2 of the message if message is 0xE6 or bytes 2 and 3 for 0xE7
-     * <p>
+     * 
      * @param l  a LocoNet message
      * @throws LocoNetException if the slot does not have an easily-found
      * slot number
@@ -1516,7 +1516,6 @@ public class LocoNetSlot {
     /**
      * For fast-clock slot, set a "CLK_CNTRL" bit On. This method logs an error
      * if invoked for a slot other than the fast-clock slot.
-     * <p>
      *
      * @param val is the new "CLK_CNTRL" bit value to turn On
      */
@@ -1532,7 +1531,6 @@ public class LocoNetSlot {
     /**
      * For fast-clock slot, set a "CLK_CNTRL" bit Off. This method logs an error
      * if invoked for a slot other than the fast-clock slot.
-     * <p>
      *
      * @param val is the new "CLK_CNTRL" bit value to turn Off
      */
@@ -1707,7 +1705,6 @@ public class LocoNetSlot {
      * Note 2: DT40x &amp; DT500 throttles ignore this value, and set only the whole minutes.
      * <p>
      * This method logs an error if invoked for a slot other than the fast-clock slot.
-     * <p>
      * @param val is the new fast-clock "fractional minutes" including the base, and bit shifted if required.
      */
     public void setFcFracMins(int val) {

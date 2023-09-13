@@ -19,5 +19,5 @@ public interface ListCellEditor<E> extends CellEditor {
             int index);
 
     @Override
-    public E getCellEditorValue();
+    E getCellEditorValue();
 }

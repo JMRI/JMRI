@@ -16,6 +16,6 @@ public interface AnalogAction extends Base {
      * that this value is not Double.NaN or an infinite value.
      * @throws JmriException when an exception occurs
      */
-    public void setValue(double value) throws JmriException;
+    void setValue(double value) throws JmriException;
     
 }

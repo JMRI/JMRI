@@ -21,7 +21,7 @@ public interface DccThrottle extends Throttle {
 
     // to handle quantized speed. Note this can change! Valued returned is
     // always positive.
-    public float getSpeedIncrement();
+    float getSpeedIncrement();
 
     /**
      * Set the speed step value. Default should be 128 speed step mode in most
@@ -29,14 +29,14 @@ public interface DccThrottle extends Throttle {
      *
      * @param Mode the current speed step mode
      */
-    public void setSpeedStepMode(SpeedStepMode Mode);
+    void setSpeedStepMode(SpeedStepMode Mode);
 
     /**
      * Get the current speed step value.
      *
      * @return the current speed step mode
      */
-    public SpeedStepMode getSpeedStepMode();
+    SpeedStepMode getSpeedStepMode();
 
     // information on consisting  (how do we set consisting?)
     // register for notification

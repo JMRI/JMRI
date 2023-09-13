@@ -3,14 +3,12 @@ package jmri.jmrit.operations.locations.tools;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationEditFrame;
-import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.*;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
@@ -62,8 +60,19 @@ public class ChangeTracksFrameTest extends OperationsTestCase {
         
         JUnitUtil.dispose(ctf);
         JUnitUtil.dispose(lef);
-
     }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitOperationsUtil.initOperationsData();
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        Location loc = lmanager.getLocationByName("North Industries");
+        LocationEditFrame lef = new LocationEditFrame(loc);
+        ChangeTracksFrame f = new ChangeTracksFrame(lef);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
+    }
+
 
     // private final static Logger log = LoggerFactory.getLogger(ChangeTracksFrameTest.class);
 }

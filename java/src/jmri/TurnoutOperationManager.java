@@ -9,8 +9,6 @@ import java.util.Objects;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import javax.annotation.Nonnull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * class to look after the collection of TurnoutOperation subclasses Unlike the
@@ -90,9 +88,9 @@ public class TurnoutOperationManager implements InstanceManagerAutoDefault {
     }
 
     /**
-     * find a TurnoutOperation by its name
+     * Find a TurnoutOperation by its name.
      *
-     * @param name name of {@link TurnoutOperation} to retrieve
+     * @param name name of {@link TurnoutOperation} to retrieve.
      * @return the operation
      */
     public TurnoutOperation getOperation(@Nonnull String name) {
@@ -171,7 +169,7 @@ public class TurnoutOperationManager implements InstanceManagerAutoDefault {
      * The mode is passed separately so the caller can transform it
      *
      * @param t            turnout
-     * @param apparentMode mode(s) to be used when finding a matching operation
+     * @param apparentMode Turnout Feedback mode(s) to be used when finding a matching operation
      * @return the turnout operation
      */
     public TurnoutOperation getMatchingOperationAlways(@Nonnull Turnout t, int apparentMode) {
@@ -197,8 +195,8 @@ public class TurnoutOperationManager implements InstanceManagerAutoDefault {
     }
 
     /**
-     * find the correct operation for this turnout. If operations are globally
-     * disabled, return nothing
+     * Find the correct operation for this turnout.
+     * If operations are globally disabled, return null.
      *
      * @param t            turnout
      * @param apparentMode mode(s) to be used when finding a matching operation
@@ -216,14 +214,19 @@ public class TurnoutOperationManager implements InstanceManagerAutoDefault {
         return getMatchingOperationAlways(t, t.getFeedbackMode());
     }
 
-    /*
-     * get/change status of whether operations are in use
+    /**
+     * Get ( potentially update ) status of whether operations are in use.
+     * @return true if in use, else false.
      */
     public boolean getDoOperations() {
         initialize();
         return doOperations;
     }
 
+    /**
+     * Set that Turnout Operations are in use.
+     * @param b true to use, else false to disable.
+     */
     public void setDoOperations(boolean b) {
         initialize();
         boolean oldValue = doOperations;
@@ -237,7 +240,7 @@ public class TurnoutOperationManager implements InstanceManagerAutoDefault {
      * ensuring that NoFeedback - which matches anything - comes at the end if
      * it is present at all.
      *
-     * @param types list of types possibly containing dupliactes
+     * @param types list of types possibly containing duplicates
      * @return list reduced as described above
      */
     static public String[] concatenateTypeLists(@Nonnull String[] types) {
@@ -258,8 +261,8 @@ public class TurnoutOperationManager implements InstanceManagerAutoDefault {
         return outTypes.toArray(new String[0]);
     }
 
-    /*
-     * Property change support
+    /**
+     * Property change support.
      */
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
@@ -275,5 +278,29 @@ public class TurnoutOperationManager implements InstanceManagerAutoDefault {
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutOperationManager.class);
+    /**
+     * Get a ToolTip or descriptive comment for the Operator.
+     * @param operatorName name of the Turnout Operator
+     * @param t The Turnout that the Operator would operate
+     * @return Descriptive String, or null.
+     */
+    public String getTooltipForOperator(String operatorName, Turnout t){
+        if (operatorName == null){
+            return null;
+        }
+        if ( operatorName.equals(Bundle.getMessage("TurnoutOperationOff"))) {
+            return Bundle.getMessage("TurnoutOperationOffTip");
+        }
+        if ( t != null && operatorName.equals(Bundle.getMessage("TurnoutOperationDefault"))) {
+            return Bundle.getMessage("UseGlobal", getMatchingOperationAlways(t).getName());
+        }
+        for ( TurnoutOperation to : getTurnoutOperations() ) {
+            if (operatorName.equals(to.getName())) {
+                return to.getToolTip();
+            }
+        }
+        return null;
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutOperationManager.class);
 }

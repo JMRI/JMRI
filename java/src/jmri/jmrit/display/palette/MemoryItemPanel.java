@@ -8,7 +8,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -27,9 +26,7 @@ import jmri.jmrit.display.MemoryInputIcon;
 import jmri.jmrit.display.MemorySpinnerIcon;
 import jmri.jmrit.display.PreviewPanel;
 import jmri.jmrit.picker.PickListModel;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeListener {
 
@@ -245,8 +242,8 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
         protected boolean okToDrag() {
             Memory bean = getDeviceNamedBean();
             if (bean == null) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 return false;
             }
             return true;
@@ -313,6 +310,6 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MemoryItemPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MemoryItemPanel.class);
 
 }

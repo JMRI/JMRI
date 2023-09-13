@@ -38,7 +38,7 @@ public interface Memory extends NamedBean {
      *
      * @return the stored value
      */
-    public Object getValue();
+    Object getValue();
 
     /**
      * Set the value. Any type of Object can be stored, but various utilities
@@ -46,6 +46,6 @@ public interface Memory extends NamedBean {
      *
      * @param value the value to store
      */
-    public void setValue(Object value);
+    void setValue(Object value);
 
 }

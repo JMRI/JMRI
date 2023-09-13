@@ -73,7 +73,7 @@ final public class LayoutBlockConnectivityTools {
      * <p>
      * Search all of the layout editor panels to find the facing and protecting
      * layout blocks for each bean.  Call the 3 block+list version of checkValidDest() to finish the checks.
-     * <p>
+     *
      * @param sourceBean The source bean.
      * @param destBean   The destination bean.
      * @param pathMethod Indicates the type of path:  Signal head, signal mast or sensor.
@@ -132,7 +132,6 @@ final public class LayoutBlockConnectivityTools {
      * layout block. By specifying the sourceLayoutBlock and
      * protectingLayoutBlock or sourceLayoutBlock+1, a direction of travel can
      * then be determined, eg east to west, south to north etc.
-     * <p>
      * @param sourceBean    The source bean (SignalHead, SignalMast or Sensor)
      *                     assigned to a block boundary that we are starting
      *                     from.
@@ -232,7 +231,6 @@ final public class LayoutBlockConnectivityTools {
      * </ul>
      * Convert the destination protected block to an array list.
      * Call the 3 block+list version of checkValidDest() to finish the checks.
-     * <p>
      * @param currentBlock The facing layout block for the source signal or sensor.
      * @param nextBlock    The protected layout block for the source signal or sensor.
      * @param destBlock    The facing layout block for the destination signal mast or sensor.
@@ -269,7 +267,6 @@ final public class LayoutBlockConnectivityTools {
      * <p>
      * Note: This version is internally called by other versions that
      * pre-process external calls.
-     * <p>
      * @param currentBlock The facing layout block for the source signal or
      *                     sensor.
      * @param nextBlock    The protected layout block for the source signal or
@@ -423,7 +420,7 @@ final public class LayoutBlockConnectivityTools {
      * layout block. By specifying the sourceLayoutBlock and
      * protectingLayoutBlock or sourceLayoutBlock+1, a direction of travel can
      * then be determined, eg east to west, south to north etc.
-     * <p>
+     *
      * @param sourceLayoutBlock      The layout block that we are starting from,
      *                               can also be considered as the block facing
      *                               a signal.

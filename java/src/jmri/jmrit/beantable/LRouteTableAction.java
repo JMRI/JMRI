@@ -18,6 +18,7 @@ import jmri.implementation.DefaultConditionalAction;
 import jmri.script.swing.ScriptFileChooser;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Swing action to create and register groups of Logix Condtionals to perform a
@@ -65,7 +66,8 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
 
     class LBeanTableDataModel extends BeanTableDataModel<Logix> {
 
-        // overlay the state column with the edit column
+        // overlay the value column with the enable column
+        // overlay the delete column with the edit column
         static public final int ENABLECOL = VALUECOL;
         static public final int EDITCOL = DELETECOL;
         protected String enabledString = Bundle.getMessage("ColumnHeadEnabled");
@@ -556,10 +558,10 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                         soundFile.setText(action.getActionString());
                         continue;
                     default:
-                        JOptionPane.showMessageDialog(
+                        JmriJOptionPane.showMessageDialog(
                                 _addFrame, java.text.MessageFormat.format(rbx.getString("TypeWarn"),
                                         new Object[]{action.toString(), c.getSystemName()}),
-                                rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
+                                rbx.getString("EditDiff"), JmriJOptionPane.WARNING_MESSAGE);
                         continue;
                 }
                 String name = action.getDeviceName();
@@ -569,10 +571,10 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                     elt = _outputMap.get(key);
                 }
                 if (elt == null) {
-                    JOptionPane.showMessageDialog(
+                    JmriJOptionPane.showMessageDialog(
                             _addFrame, java.text.MessageFormat.format(rbx.getString("TypeWarn"),
                                     new Object[]{action.toString(), c.getSystemName()}),
-                            rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
+                            rbx.getString("EditDiff"), JmriJOptionPane.WARNING_MESSAGE);
                 } else {
                     elt.setIncluded(true);
                     elt.setState(action.getActionData());
@@ -580,10 +582,10 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                     if (k == 0) {
                         onChange = change;
                     } else if (change != onChange) {
-                        JOptionPane.showMessageDialog(
+                        JmriJOptionPane.showMessageDialog(
                                 _addFrame, java.text.MessageFormat.format(rbx.getString("OnChangeWarn"),
                                         new Object[]{action.toString(), c.getSystemName()}),
-                                rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
+                                rbx.getString("EditDiff"), JmriJOptionPane.WARNING_MESSAGE);
                     }
                 }
             }
@@ -631,10 +633,10 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                         break;
                     default:
                         if (!getLogixInitializer().equals(variable.getName())) {
-                            JOptionPane.showMessageDialog(
+                            JmriJOptionPane.showMessageDialog(
                                     _addFrame, java.text.MessageFormat.format(rbx.getString("TypeWarnVar"),
                                             new Object[]{variable.toString(), c.getSystemName()}),
-                                    rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
+                                    rbx.getString("EditDiff"), JmriJOptionPane.WARNING_MESSAGE);
                         }
                         continue;
                 }
@@ -654,10 +656,10 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 }
                 if (elt == null) {
                     if (!getLogixInitializer().equals(name)) {
-                        JOptionPane.showMessageDialog(
+                        JmriJOptionPane.showMessageDialog(
                                 _addFrame, java.text.MessageFormat.format(rbx.getString("TypeWarnVar"),
                                         new Object[]{variable.toString(), c.getSystemName()}),
-                                rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
+                                rbx.getString("EditDiff"), JmriJOptionPane.WARNING_MESSAGE);
                     }
                 } else {
                     elt.setIncluded(true);
@@ -680,10 +682,10 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             for (int k = 0; k < actionList.size(); k++) {
                 ConditionalAction action = actionList.get(k);
                 if (action.getType() != Conditional.Action.SET_SENSOR) {
-                    JOptionPane.showMessageDialog(
+                    JmriJOptionPane.showMessageDialog(
                             _addFrame, java.text.MessageFormat.format(rbx.getString("AlignWarn1"),
                                     new Object[]{action.toString(), c.getSystemName()}),
-                            rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
+                            rbx.getString("EditDiff"), JmriJOptionPane.WARNING_MESSAGE);
                 } else {
                     String name = action.getDeviceName();
                     String key = SENSOR_TYPE + name;
@@ -692,16 +694,16 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                         element = _alignMap.get(key);
                     }
                     if (element == null) {
-                        JOptionPane.showMessageDialog(
+                        JmriJOptionPane.showMessageDialog(
                                 _addFrame, java.text.MessageFormat.format(rbx.getString("TypeWarn"),
                                         new Object[]{action.toString(), c.getSystemName()}),
-                                rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
+                                rbx.getString("EditDiff"), JmriJOptionPane.WARNING_MESSAGE);
 
                     } else if (!name.equals(action.getDeviceName())) {
-                        JOptionPane.showMessageDialog(
+                        JmriJOptionPane.showMessageDialog(
                                 _addFrame, java.text.MessageFormat.format(rbx.getString("AlignWarn2"),
                                         new Object[]{action.toString(), action.getDeviceName(), c.getSystemName()}),
-                                rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
+                                rbx.getString("EditDiff"), JmriJOptionPane.WARNING_MESSAGE);
 
                     } else {
                         element.setIncluded(true);
@@ -742,10 +744,10 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                         break;
                     default:
                         if (!getLogixInitializer().equals(variable.getName())) {
-                            JOptionPane.showMessageDialog(
+                            JmriJOptionPane.showMessageDialog(
                                     _addFrame, java.text.MessageFormat.format(rbx.getString("TypeWarnVar"),
                                             new Object[]{variable.toString(), c.getSystemName()}),
-                                    rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
+                                    rbx.getString("EditDiff"), JmriJOptionPane.WARNING_MESSAGE);
                         }
                         continue;
                 }
@@ -776,19 +778,19 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             ArrayList<RouteOutputElement> tList = makeTurnoutLockList();
             List<ConditionalAction> actionList = c.getCopyOfActions();
             if (actionList.size() != tList.size()) {
-                JOptionPane.showMessageDialog(
+                JmriJOptionPane.showMessageDialog(
                         _addFrame, java.text.MessageFormat.format(rbx.getString("LockWarn1"),
                                 new Object[]{Integer.toString(tList.size()), c.getSystemName(),
                                     Integer.toString(actionList.size())}),
-                        rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
+                        rbx.getString("EditDiff"), JmriJOptionPane.WARNING_MESSAGE);
             }
             for (int k = 0; k < actionList.size(); k++) {
                 ConditionalAction action = actionList.get(k);
                 if (action.getType() != Conditional.Action.LOCK_TURNOUT) {
-                    JOptionPane.showMessageDialog(
+                    JmriJOptionPane.showMessageDialog(
                             _addFrame, java.text.MessageFormat.format(rbx.getString("LockWarn2"),
                                     new Object[]{action.getDeviceName(), c.getSystemName()}),
-                            rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
+                            rbx.getString("EditDiff"), JmriJOptionPane.WARNING_MESSAGE);
                 } else {
                     String name = action.getDeviceName();
                     boolean found = false;
@@ -801,10 +803,10 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                         }
                     }
                     if (!found) {
-                        JOptionPane.showMessageDialog(
+                        JmriJOptionPane.showMessageDialog(
                                 _addFrame, java.text.MessageFormat.format(rbx.getString("LockWarn3"),
                                         new Object[]{name, c.getSystemName()}),
-                                rbx.getString("EditDiff"), JOptionPane.WARNING_MESSAGE);
+                                rbx.getString("EditDiff"), JmriJOptionPane.WARNING_MESSAGE);
                     }
                 }
             }
@@ -1236,9 +1238,9 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
 
     void showMessage(String msg) {
 
-        JOptionPane.showMessageDialog(
+        JmriJOptionPane.showMessageDialog(
                 _addFrame, rbx.getString(msg), Bundle.getMessage("WarningTitle"),
-                JOptionPane.WARNING_MESSAGE);
+                JmriJOptionPane.WARNING_MESSAGE);
     }
 
     boolean checkNewNamesOK() {
@@ -1310,7 +1312,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
      */
     void setSoundPressed() {
         if (soundChooser == null) {
-            soundChooser = new JFileChooser(FileUtil.getUserFilesPath());
+            soundChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
             soundChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());
         }
         soundChooser.rescanCurrentDirectory();
@@ -1500,9 +1502,9 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 }
             }
             if (actionList.isEmpty()) {
-                JOptionPane.showMessageDialog(
+                JmriJOptionPane.showMessageDialog(
                         _addFrame, rbx.getString("noAction"),
-                        rbx.getString("addErr"), JOptionPane.ERROR_MESSAGE);
+                        rbx.getString("addErr"), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
         } else {
@@ -1565,9 +1567,9 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             }
         }
         if (numConds == 1) {
-            JOptionPane.showMessageDialog(
+            JmriJOptionPane.showMessageDialog(
                     _addFrame, rbx.getString("noVars"),
-                    rbx.getString("addErr"), JOptionPane.ERROR_MESSAGE);
+                    rbx.getString("addErr"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -1704,10 +1706,10 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             if (vList.size() > 0) {
                 numConds = makeAlignConditional(numConds, aList, vList, logix, sName, uName);
             } else {
-                JOptionPane.showMessageDialog(
+                JmriJOptionPane.showMessageDialog(
                         _addFrame, java.text.MessageFormat.format(rbx.getString("NoAlign"),
                                 new Object[]{name, sensor.getAlignType()}),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             }
         }
         ///////////////// Make Lock Conditional //////////////////////////
@@ -1849,10 +1851,10 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
     }
 
     void handleCreateException(String sysName) {
-        JOptionPane.showMessageDialog(_addFrame,
+        JmriJOptionPane.showMessageDialog(_addFrame,
                 Bundle.getMessage("ErrorLRouteAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.ERROR_MESSAGE);
     }
 
     /**

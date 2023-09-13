@@ -192,7 +192,7 @@ public class JsonRosterHttpService extends JsonHttpService {
                 ? new StdDateFormat().format(entry.getDateModified())
                 : null);
         ArrayNode labels = data.putArray(FUNCTION_KEYS);
-        for (int i = 0; i <= entry.getMAXFNNUM(); i++) {
+        for (int i = 0; i <= entry.getMaxFnNumAsInt(); i++) {
             ObjectNode label = mapper.createObjectNode();
             label.put(NAME, F + i);
             label.put(LABEL, entry.getFunctionLabel(i));

@@ -9,13 +9,7 @@
 
   <style>
     .dp-center {text-align: center;}
-    .dp-middle {text-align: middle;}
     .dp-right {text-align: right;}
-    .dp-none {list-style-type: none;}
-    .dp-square {list-style-type: square;}
-    .dp-upper-alpha {ist-style-type: upper-alpha;}
-    .dp-lower-alpha {list-style-type: lower-alpha;}
-    .dp-border-2 {border: 2px solid;}
   </style>
 </head>
 <body>
@@ -50,7 +44,7 @@
       can leave at the initial or "default" settings until you find a need to change things to suit
       your fancy.</p>
 
-      <p><strong>Most importantly, you must click <input id="button9" value="Save" type="button">
+      <p><strong>Most importantly, you must click <span class="textbutton">Save</span>
       to finalize your settings and then re-start the program to have them take effect.</strong>
       </p>
 
@@ -242,7 +236,7 @@
             debugging/advanced users)</li>
           </ul>
 
-          <p><input name="button2" id="button2" value="Disable Connection" type="submit"> will
+          <p>The <span class="textbutton">Disable Connection</span> button will
           disable all the connection settings.</p>
 
           <p><strong><a href="#Top">Top</a></strong>
@@ -451,8 +445,8 @@
           <p><strong><a href="#Top">Top</a></strong>
           </p>
 
-          <h2 class="dp-center">Before you exit the preferences, Click on <input name="button8" id=
-          "button8" value="Save" type="submit"> button to save all your selections.</h2>
+          <h2 class="dp-center">Before you exit the preferences, Click on the <span class="textbutton">Save</span>
+          button to save all your selections.</h2>
 
           <h2 class="dp-center">You must restart DecoderPro for preferences to take effect</h2>
 

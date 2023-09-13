@@ -8,9 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
@@ -116,5 +114,16 @@ public class EngineSetFrameTest extends OperationsTestCase {
         JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
         JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        EngineManager eManager = InstanceManager.getDefault(EngineManager.class);
+        Engine e3 = eManager.newRS("DB", "03");
+        EngineSetFrame f = new EngineSetFrame();
+        f.initComponents();
+        f.load(e3);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 }

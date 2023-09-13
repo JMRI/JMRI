@@ -8,9 +8,9 @@ package jmri.jmrix.marklin;
  */
 public interface MarklinInterface {
 
-    public void addMarklinListener(MarklinListener l);
+    void addMarklinListener(MarklinListener l);
 
-    public void removeMarklinListener(MarklinListener l);
+    void removeMarklinListener(MarklinListener l);
 
     /**
      * Test operational status of interface.

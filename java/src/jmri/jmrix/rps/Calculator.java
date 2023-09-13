@@ -13,10 +13,10 @@ import javax.vecmath.Point3d;
  */
 public interface Calculator {
 
-    public Measurement convert(Reading r);
+    Measurement convert(Reading r);
 
-    public Measurement convert(Reading r, Point3d guess);
+    Measurement convert(Reading r, Point3d guess);
 
-    public Measurement convert(Reading r, Measurement last);
+    Measurement convert(Reading r, Measurement last);
 
 }

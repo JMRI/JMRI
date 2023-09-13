@@ -46,8 +46,8 @@
               checked.</p>
 
               <p>Select the Locations and Tracks you want to service - or deselect the ones you
-              don't want to service - and press <input name="button" id="button" value="Save" type=
-              "button"> to modify your Locations and Tracks.</p>
+              don't want to service - and press <span class="textbutton">Save</span>
+              to modify your Locations and Tracks.</p>
 
               <p>You can also <input name="checkbox" id="checkbox" type="checkbox">
               <strong>Copy</strong> how all cars of an existing Car Type are to be serviced by your
@@ -60,7 +60,7 @@
               checkbox.</p>
               <img src="images/Ops_copyLocationbyCarType413.png" width="327" height="250" alt="">
               <p>Now select the Car Types you want to apply these settings to and press
-              <input name="button2" id="button2" value="Save" type="button"> to have both Car Types
+              <span class="textbutton">Save</span> to have both Car Types
               serviced by the same Locations and Tracks.</p>
             </td>
           </tr>

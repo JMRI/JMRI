@@ -15,7 +15,7 @@
 <!-- Version 1 - Include file for Piko SmartDecoder 4.1 and XP5.1 (11/2022) -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 	<enumChoice choice="ohne Effekt">
-		<choice> 0:ohne Effekt</choice>
+		<choice> 0: ohne Effekt</choice>
 	</enumChoice>
 	<enumChoice choice="Blinken 1">
 		<choice> 1: Blinken 1</choice>

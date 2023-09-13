@@ -9,9 +9,6 @@ import java.util.List;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -23,6 +20,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user edit of a train's build options
@@ -800,14 +798,14 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     private boolean checkInput() {
         if ((!none1.isSelected() && routePickup1Box.getSelectedItem() == null) ||
                 (!none2.isSelected() && routePickup2Box.getSelectedItem() == null)) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationEngChange"), Bundle
-                    .getMessage("CanNotSave"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationEngChange"), Bundle
+                    .getMessage("CanNotSave"), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         if ((helper1Service.isSelected() && routeDrop1Box.getSelectedItem() == null) ||
                 (helper2Service.isSelected() && routeDrop2Box.getSelectedItem() == null)) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationEndHelper"), Bundle
-                    .getMessage("CanNotSave"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationEndHelper"), Bundle
+                    .getMessage("CanNotSave"), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         try {
@@ -818,8 +816,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
                 Integer.parseInt(builtBeforeTextField.getText().trim());
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("EnterFourDigitYear"), Bundle
-                    .getMessage("CanNotSave"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("EnterFourDigitYear"), Bundle
+                    .getMessage("CanNotSave"), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -963,10 +961,10 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
      * (numberEngines.equals("0") || model.equals("")) return true; String type
      * = InstanceManager.getDefault(EngineModels.class).getModelType(model);
      * if(_train.acceptsTypeName(type)) return true;
-     * JOptionPane.showMessageDialog(this,
+     * JmriJOptionPane.showMessageDialog(this,
      * MessageFormat.format(Bundle.getMessage("TrainModelService"), new Object[]
      * {model, type}), MessageFormat.format(Bundle.getMessage("CanNot"), new
-     * Object[] {Bundle.getMessage("save")}), JOptionPane.ERROR_MESSAGE); return
+     * Object[] {Bundle.getMessage("save")}), JmriJOptionPane.ERROR_MESSAGE); return
      * false; }
      */
     @Override
@@ -1003,5 +1001,5 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainEditBuildOptionsFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrainEditBuildOptionsFrame.class);
 }

@@ -171,8 +171,9 @@ public class MatrixSignalMast extends AbstractSignalMast {
         }
         super.setLit(newLit);
         if (newLit) {
-            if (getAspect() != null) {
-                setAspect(getAspect());
+            String litAspect = getAspect();
+            if (litAspect != null) {
+                setAspect(litAspect);
             }
             // if true, activate prior aspect
         } else {
@@ -543,11 +544,6 @@ public class MatrixSignalMast extends AbstractSignalMast {
      */
     public int getMatrixMastCommandDelay() {
         return mDelay;
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
     }
 
     private final static Logger log = LoggerFactory.getLogger(MatrixSignalMast.class);

@@ -16,7 +16,7 @@ public interface JmriMouseListener extends java.util.EventListener {
      * @param listener the JmriMouseListener
      * @return the MouseListener
      */
-    public static java.awt.event.MouseListener adapt(JmriMouseListener listener) {
+    static java.awt.event.MouseListener adapt(JmriMouseListener listener) {
         return new java.awt.event.MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -50,30 +50,30 @@ public interface JmriMouseListener extends java.util.EventListener {
      * and released) on a component.
      * @param e the event to be processed
      */
-    public void mouseClicked(JmriMouseEvent e);
+    void mouseClicked(JmriMouseEvent e);
 
     /**
      * Invoked when a mouse button has been pressed on a component.
      * @param e the event to be processed
      */
-    public void mousePressed(JmriMouseEvent e);
+    void mousePressed(JmriMouseEvent e);
 
     /**
      * Invoked when a mouse button has been released on a component.
      * @param e the event to be processed
      */
-    public void mouseReleased(JmriMouseEvent e);
+    void mouseReleased(JmriMouseEvent e);
 
     /**
      * Invoked when the mouse enters a component.
      * @param e the event to be processed
      */
-    public void mouseEntered(JmriMouseEvent e);
+    void mouseEntered(JmriMouseEvent e);
 
     /**
      * Invoked when the mouse exits a component.
      * @param e the event to be processed
      */
-    public void mouseExited(JmriMouseEvent e);
+    void mouseExited(JmriMouseEvent e);
 
 }

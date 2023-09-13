@@ -14,7 +14,7 @@ public interface AnalogIO extends NamedBean {
      * In both cases, AnalogIO.getMin() and AnalogIO.getMax() tells the
      * limits of the value.
      */
-    public enum AbsoluteOrRelative {
+    enum AbsoluteOrRelative {
         
         ABSOLUTE(Bundle.getMessage("AnalogIO_Absolute")),
         RELATIVE(Bundle.getMessage("AnalogIO_Relative"));
@@ -38,7 +38,7 @@ public interface AnalogIO extends NamedBean {
      * @return true if the analog value is stable
      */
     @CheckReturnValue
-    default public boolean isConsistentValue() {
+    default boolean isConsistentValue() {
         return true;
     }
     
@@ -55,7 +55,7 @@ public interface AnalogIO extends NamedBean {
      *                                  Double.NEGATIVE_INFINITY or
      *                                  Double.POSITIVE_INFINITY
      */
-    public void setCommandedAnalogValue(double value) throws JmriException;
+    void setCommandedAnalogValue(double value) throws JmriException;
 
     /**
      * Query the commanded value. This is a bound parameter, so you can also
@@ -66,7 +66,7 @@ public interface AnalogIO extends NamedBean {
      * @return the analog value
      */
     @CheckReturnValue
-    public double getCommandedAnalogValue();
+    double getCommandedAnalogValue();
     
     /**
      * Query the known analog value. This is a bound parameter, so you can also
@@ -79,7 +79,7 @@ public interface AnalogIO extends NamedBean {
      * @return the known analog value
      */
     @CheckReturnValue
-    default public double getKnownAnalogValue() {
+    default double getKnownAnalogValue() {
         return getCommandedAnalogValue();
     }
     
@@ -94,7 +94,7 @@ public interface AnalogIO extends NamedBean {
      * @throws JmriException general error when setting the state fails
      */
     @InvokeOnLayoutThread
-    public void setState(double value) throws JmriException;
+    void setState(double value) throws JmriException;
 
     /**
      * Provide generic access to internal state.
@@ -108,41 +108,41 @@ public interface AnalogIO extends NamedBean {
      * @return the state
      */
     @CheckReturnValue
-    public double getState(double v);
+    double getState(double v);
 
     /**
      * Get the minimum value of this AnalogIO.
      * @return minimum value.
      */
     @CheckReturnValue
-    public double getMin();
+    double getMin();
     
     /**
      * Get the maximum value of this AnalogIO.
      * @return maximum value.
      */
     @CheckReturnValue
-    public double getMax();
+    double getMax();
     
     /**
      * Get the resolution of this AnalogIO.
      * @return analog resolution.
      */
     @CheckReturnValue
-    public double getResolution();
+    double getResolution();
 
     /**
      * Is this AnalogIO absolute or relative?
      * @return if absolute or relative.
      */
     @CheckReturnValue
-    public AbsoluteOrRelative getAbsoluteOrRelative();
+    AbsoluteOrRelative getAbsoluteOrRelative();
 
     /**
      * Request an update from the layout soft/hardware. May not even happen, and
      * if it does it will happen later; listen for the result.
      */
-    default public void requestUpdateFromLayout() {
+    default void requestUpdateFromLayout() {
     }
 
 }

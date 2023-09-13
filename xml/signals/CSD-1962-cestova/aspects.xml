@@ -18,7 +18,7 @@
     <author>
         <personname><firstname>Petr</firstname><surname>Šídlo</surname></personname>
         <email>sidlo64@hotmail.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -27,23 +27,23 @@
         <date>2016-11-21</date>
         <authorinitials>PŠ</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>2</revnumber>
         <date>2018-09-21</date>
         <authorinitials>PŠ</authorinitials>
         <revremark>Panel indicators</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>3</revnumber>
         <date>2020-08-25</date>
         <authorinitials>PŠ</authorinitials>
         <revremark>Panel indicators JOP, Speed names</revremark>
-    </revision>    
+    </revision>
   </revhistory>
 
   <aspects>
-  
+
     <aspect>
       <name>Stůj</name>
       <title>Stop</title>
@@ -160,7 +160,7 @@
       <route>Diverging</route>
       <dccAspect>8</dccAspect>
     </aspect>
- 
+
     <aspect>
       <name>Rychlost 80 a opakovaná volno</name>
       <title>Slowly 80 km/h proceed clear repeated</title>
@@ -173,7 +173,7 @@
       <route>Diverging</route>
       <dccAspect>9</dccAspect>
     </aspect>
-    
+
     <aspect>
       <name>Rychlost 40 a opakovaná výstraha</name>
       <title>Slowly 40 km/h proceed caution repeated</title>
@@ -441,7 +441,7 @@
       <description>One white flashing light with red light</description>
       <reference>Aspect 31</reference>
       <comment>Opatrně na přivolávací návěst</comment>
-      <speed>Slowly</speed>
+      <speed>Slow</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
       <dccAspect>31</dccAspect>
@@ -451,21 +451,21 @@
 
   <imagetypes>
 	<imagetype type="prototype"/>
-	
+
 	<imagetype type="AŽD zb"/>
 	<imagetype type="AŽD zbz"/>
 	<imagetype type="AŽD žzb"/>
 	<imagetype type="AŽD žzbz"/>
 	<imagetype type="AŽD žb"/>
 	<imagetype type="AŽD žbz"/>
-	
+
 	<imagetype type="ESP zb"/>
 	<imagetype type="ESP zbz"/>
 	<imagetype type="ESP žzb"/>
 	<imagetype type="ESP žzbz"/>
 	<imagetype type="ESP žb"/>
 	<imagetype type="ESP žbz"/>
-		
+
 	<imagetype type="JOP hlavní"/>
 	<imagetype type="JOP seřaďovací"/>
 

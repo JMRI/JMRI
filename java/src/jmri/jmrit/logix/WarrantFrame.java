@@ -26,9 +26,7 @@ import jmri.util.ThreadingUtil;
 import jmri.jmrit.logix.ThrottleSetting.Command;
 import jmri.jmrit.logix.ThrottleSetting.CommandValue;
 import jmri.jmrit.logix.ThrottleSetting.ValueType;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * WarrantFame creates and edits Warrants <br>
@@ -125,10 +123,10 @@ public class WarrantFrame extends WarrantRoute {
                 tf.setVisible(true);
                 boolean includeAllCmds = tf.askStopQuestion(startW.getLastOrder().getBlock().getDisplayName());
                 /*
-                if (JOptionPane.showConfirmDialog(f, Bundle.getMessage("stopAtBlock",
+                if (JmriJOptionPane.showConfirmDialog(f, Bundle.getMessage("stopAtBlock",
                         startW.getLastOrder().getBlock().getDisplayName()),
-                        Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                        Bundle.getMessage("QuestionTitle"), JmriJOptionPane.YES_NO_OPTION,
+                        JmriJOptionPane.QUESTION_MESSAGE) == JmriJOptionPane.YES_OPTION) {
                     includeAllCmds = true;
                 }*/
                 float entranceSpeed = setup(startW, !includeAllCmds);
@@ -304,9 +302,9 @@ public class WarrantFrame extends WarrantRoute {
         if (_dirty) {
             // if runMode != MODE_NONE, this is probably a panic shutdown. Don't
             // halt it.
-            if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("saveOrClose", _warrant.getDisplayName()),
-                    Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+            if (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("saveOrClose", _warrant.getDisplayName()),
+                    Bundle.getMessage("QuestionTitle"), JmriJOptionPane.YES_NO_OPTION,
+                    JmriJOptionPane.QUESTION_MESSAGE) == JmriJOptionPane.YES_OPTION) {
                 if (!isRunning()) {
                     save();
                 }
@@ -958,13 +956,13 @@ public class WarrantFrame extends WarrantRoute {
         }
         int runMode = _warrant.getRunMode();
         if (runMode == Warrant.MODE_NONE) {
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("NotRunning", _warrant.getDisplayName()),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
         } else if (runMode == Warrant.MODE_LEARN && cmd != Warrant.ABORT) {
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("LearnInvalidControl", _warrant.getDisplayName()),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
         } else {
             _warrant.controlRunTrain(cmd);
         }
@@ -1162,17 +1160,17 @@ public class WarrantFrame extends WarrantRoute {
         toFront();
 
         if (msg != null) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("LearnError", msg),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("LearnError", msg),
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             _warrant.deAllocate();
             setStatus(msg, Color.red);
             return;
         }
 
         if (!_throttleCommands.isEmpty()) {
-            if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("deleteCommand"),
-                    Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION) {
+            if (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("deleteCommand"),
+                    Bundle.getMessage("QuestionTitle"), JmriJOptionPane.YES_NO_OPTION,
+                    JmriJOptionPane.QUESTION_MESSAGE) != JmriJOptionPane.YES_OPTION ) {
                 return;
             }
             _throttleCommands = new ArrayList<>();
@@ -1183,15 +1181,15 @@ public class WarrantFrame extends WarrantRoute {
         if (msg != null) {
             if (msg.equals("warnStart")) {
                 msg = Bundle.getMessage("warnStart", getTrainName(), _warrant.getCurrentBlockName());
-                JOptionPane.showMessageDialog(this, msg,
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, msg,
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 setStatus(msg, Color.red);
                 return;
             } else if (msg.equals("BlockDark")) {
                 msg = Bundle.getMessage("BlockDark", _warrant.getCurrentBlockName(), getTrainName());
-                if (JOptionPane.NO_OPTION == JOptionPane.showConfirmDialog(this,
+                if (JmriJOptionPane.YES_OPTION != JmriJOptionPane.showConfirmDialog(this,
                         Bundle.getMessage("OkToRun", msg), Bundle.getMessage("QuestionTitle"),
-                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
+                        JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.WARNING_MESSAGE)) {
                     stopRunTrain(true);
                     setStatus(msg, Color.red);
                     return;
@@ -1216,8 +1214,8 @@ public class WarrantFrame extends WarrantRoute {
                 _throttleCommands, _runETOnlyBox.isSelected());
         if (msg != null) {
             stopRunTrain(true);
-            JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("WarningTitle"),
-                    JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, msg, Bundle.getMessage("WarningTitle"),
+                    JmriJOptionPane.WARNING_MESSAGE);
             setStatus(msg, Color.red);
         }
     }
@@ -1260,8 +1258,8 @@ public class WarrantFrame extends WarrantRoute {
         }
 //        toFront();
         if (msg != null) {
-            JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("WarningTitle"),
-                    JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, msg, Bundle.getMessage("WarningTitle"),
+                    JmriJOptionPane.WARNING_MESSAGE);
 //            _warrant.deAllocate();
             setStatus(msg, Color.black);
             return;
@@ -1275,8 +1273,8 @@ public class WarrantFrame extends WarrantRoute {
                 _throttleCommands, _runETOnlyBox.isSelected());
         if (msg != null) {
             clearWarrant();
-            JOptionPane.showMessageDialog(this, msg,
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, msg,
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             setStatus(msg, Color.red);
             return;
         }
@@ -1288,9 +1286,9 @@ public class WarrantFrame extends WarrantRoute {
             } else if (msg.equals("BlockDark")) {
                 msg = Bundle.getMessage("BlockDark", _warrant.getCurrentBlockName(), _warrant.getTrainName());
             }
-            if (JOptionPane.NO_OPTION == JOptionPane.showConfirmDialog(this,
+            if (JmriJOptionPane.YES_OPTION != JmriJOptionPane.showConfirmDialog(this,
                     Bundle.getMessage("OkToRun", msg), Bundle.getMessage("QuestionTitle"),
-                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
+                    JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.WARNING_MESSAGE)) {
                 clearWarrant();
                 setStatus(msg, Color.red);
             } else {
@@ -1324,9 +1322,9 @@ public class WarrantFrame extends WarrantRoute {
                             setThrottleCommand("NoOp", Bundle.getMessage("Mark"), lastBlock.getDisplayName());
                             setStatus(Bundle.getMessage("LearningStop"), myGreen);
                         } else if (!aborted) {
-                            JOptionPane.showMessageDialog(this, Bundle.getMessage("IncompleteScript", lastBlock),
+                            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("IncompleteScript", lastBlock),
                                     Bundle.getMessage("WarningTitle"),
-                                    JOptionPane.WARNING_MESSAGE);
+                                    JmriJOptionPane.WARNING_MESSAGE);
                         }
                     } else {
                         setStatus(Bundle.getMessage("LearningStop"), myGreen);
@@ -1478,8 +1476,8 @@ public class WarrantFrame extends WarrantRoute {
                                 _warrant.getTrainName(), _warrant.getDisplayName(),
                                 _warrant.getCurrentBlockName());
                         if (_warrant.getState() == Warrant.HALT) {
-                            JOptionPane.showMessageDialog(this, _warrant.getRunningMessage(),
-                                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                            JmriJOptionPane.showMessageDialog(this, _warrant.getRunningMessage(),
+                                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                         }
                     } else if (e.getPropertyName().equals("controlChange")) {
                         int newCntrl = ((Integer) e.getNewValue());
@@ -1632,14 +1630,14 @@ public class WarrantFrame extends WarrantRoute {
         }
         if (msg != null) {
             if (fatal) {
-                JOptionPane.showMessageDialog(this, msg,
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, msg,
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 return false;
             }
-            int result = JOptionPane.showConfirmDialog(this, Bundle.getMessage("SaveQuestion", msg),
+            int result = JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("SaveQuestion", msg),
                     Bundle.getMessage("QuestionTitle"),
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (result == JOptionPane.NO_OPTION) {
+                    JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.QUESTION_MESSAGE);
+            if (result != JmriJOptionPane.YES_OPTION ) {
                 if (_warrant != null) {
                     mgr.deregister(_warrant);
                 }
@@ -2260,5 +2258,6 @@ public class WarrantFrame extends WarrantRoute {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WarrantFrame.class);
+
 }

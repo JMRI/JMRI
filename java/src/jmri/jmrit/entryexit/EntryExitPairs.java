@@ -13,7 +13,6 @@ import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import jmri.*;
@@ -24,9 +23,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Implements an Entry Exit based method of setting turnouts, setting up signal
@@ -727,7 +724,6 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
      * 1) Build a list of affected NX pairs.
      * 2) Check for Conditional references.
      * 3) If no references, do the delete process with user approval.
-     * <p>
      * @since 4.11.2
      * @param sensor The sensor whose pairs should be deleted.
      * @return true if the delete was successful. False if prevented by
@@ -823,10 +819,10 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
         for (String ref : conditionalReferences) {
             msg.append("\n    " + ref);  // NOI18N
         }
-        JOptionPane.showMessageDialog(null,
+        JmriJOptionPane.showMessageDialog(null,
                 msg.toString(),
                 Bundle.getMessage("WarningTitle"),  // NOI18N
-                JOptionPane.WARNING_MESSAGE);
+                JmriJOptionPane.WARNING_MESSAGE);
 
         return false;
     }
@@ -837,20 +833,20 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
      * @return true if deletion confirmation is Yes.
      */
     private boolean confirmDeletePairs() {
-        if (deletePairList.size() > 0) {
+        if (!deletePairList.isEmpty()) {
             StringBuilder msg = new StringBuilder(Bundle.getMessage("DeletePairs"));  // NOI18N
             for (DeletePair dPair : deletePairList) {
                 if (dPair.dp != null) {
-                    msg.append("\n    " + dPair.dp.getDisplayName());  // NOI18N
+                    msg.append("\n    ").append(dPair.dp.getDisplayName());  // NOI18N
                 }
             }
-            msg.append("\n" + Bundle.getMessage("DeleteContinue"));  // NOI18N
-            int resp = JOptionPane.showConfirmDialog(null,
+            msg.append("\n").append(Bundle.getMessage("DeleteContinue"));  // NOI18N
+            int resp = JmriJOptionPane.showConfirmDialog(null,
                     msg.toString(),
                     Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE);
-            if (resp != 0) {
+                    JmriJOptionPane.YES_NO_OPTION,
+                    JmriJOptionPane.QUESTION_MESSAGE);
+            if (resp != JmriJOptionPane.YES_OPTION ) {
                 return false;
             }
         }
@@ -919,7 +915,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
      * Rebuild the delete pair list based on the supplied sensor.
      * Find all of the NX pairs that use this sensor as either a source or
      * destination.  They will be candidates for deletion.
-     * <p>
+     *
      * @since 4.11.2
      * @param sensor The sensor being deleted,
      */
@@ -1392,7 +1388,6 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
 
     final List<ManagerDataListener<DestinationPoints>> listeners = new ArrayList<>();
 
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(EntryExitPairs.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EntryExitPairs.class);
 
 }

@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2014</year>
     <holder>JMRI</holder>
@@ -21,6 +21,12 @@
       <personname>
         <firstname>Pierre</firstname>
         <surname>Billon</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Ronald</firstname>
+        <surname>Kuhn</surname>
       </personname>
     </author>
   </authorgroup>
@@ -38,8 +44,16 @@
       <authorinitials>EF</authorinitials>
       <revremark>Italian translation 2014</revremark>
     </revision>
+    <revision>
+      <revnumber>3</revnumber>
+      <date>2023-07-17</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>disable analog mode for DH06A and PD05A</revremark>
+    </revision>
   </revhistory>
   <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
+    <!-- Dif. Default for DH06A -->
+    <defaultItem default="2" include="60,131,DH06A,DH06A_3.03,DH06A_3.04,DH06A_2014.10,DH06A_2014.11,DH06A_2015.01,60"/>
     <enumVal>
       <enumChoice choice="NMRA Digital only">
         <choice>NMRA Digital only</choice>
@@ -48,7 +62,7 @@
         <choice xml:lang="ca">NMRA Digital only (ca)</choice>
         <choice xml:lang="de">Nur Digital nach NMRA</choice>
       </enumChoice>
-      <enumChoice choice="DC conversion enabled">
+      <enumChoice choice="DC conversion enabled" exclude="60,131">
         <choice>DC conversion enabled</choice>
         <choice xml:lang="it">Conversione Analogica Abilitata</choice>
         <choice xml:lang="fr">Mode analogique activé</choice>

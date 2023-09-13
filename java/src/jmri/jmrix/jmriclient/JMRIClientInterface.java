@@ -7,9 +7,9 @@ package jmri.jmrix.jmriclient;
  */
 public interface JMRIClientInterface {
 
-    public void addJMRIClientListener(JMRIClientListener l);
+    void addJMRIClientListener(JMRIClientListener l);
 
-    public void removeJMRIClientListener(JMRIClientListener l);
+    void removeJMRIClientListener(JMRIClientListener l);
 
     boolean status();   // true if the implementation is operational
 

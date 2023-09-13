@@ -6,10 +6,8 @@ import java.text.MessageFormat;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -17,6 +15,7 @@ import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for editing a rolling stock attribute.
@@ -126,9 +125,9 @@ public abstract class RollingStockAttributeEditFrame extends OperationsFrame imp
             }
             String newItem = addTextBox.getText().trim();
             String oldItem = (String) comboBox.getSelectedItem();
-            if (JOptionPane.showConfirmDialog(this,
+            if (JmriJOptionPane.showConfirmDialog(this,
                     MessageFormat.format(Bundle.getMessage("replaceMsg"), new Object[] { oldItem, newItem }),
-                    Bundle.getMessage("replaceAll"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                    Bundle.getMessage("replaceAll"), JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                 return;
             }
             if (newItem.equals(oldItem)) {
@@ -153,8 +152,8 @@ public abstract class RollingStockAttributeEditFrame extends OperationsFrame imp
         if (itemName.contains(TrainCommon.HYPHEN)) {
             String[] s = itemName.split(TrainCommon.HYPHEN);
             if (s.length == 0) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("HyphenFeature"),
-                        MessageFormat.format(errorMessage, new Object[] { _attribute }), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("HyphenFeature"),
+                        MessageFormat.format(errorMessage, new Object[] { _attribute }), JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -165,9 +164,9 @@ public abstract class RollingStockAttributeEditFrame extends OperationsFrame imp
         }
         if (_attribute.equals(ROAD)) {
             if (!OperationsXml.checkFileName(itemName)) { // NOI18N
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("NameResChar") + NEW_LINE + Bundle.getMessage("ReservedChar"),
-                        MessageFormat.format(errorMessage, new Object[] { _attribute }), JOptionPane.ERROR_MESSAGE);
+                        MessageFormat.format(errorMessage, new Object[] { _attribute }), JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -175,19 +174,19 @@ public abstract class RollingStockAttributeEditFrame extends OperationsFrame imp
         if (_attribute.equals(TYPE)) {
             // can't have the " & " as part of the type name
             if (itemName.contains(CarLoad.SPLIT_CHAR)) {
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         MessageFormat.format(Bundle.getMessage("carNameNoAndChar"),
                                 new Object[] { CarLoad.SPLIT_CHAR }),
-                        MessageFormat.format(errorMessage, new Object[] { _attribute }), JOptionPane.ERROR_MESSAGE);
+                        MessageFormat.format(errorMessage, new Object[] { _attribute }), JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
             item = itemName.split(TrainCommon.HYPHEN);
         }
         if (item[0].length() > Control.max_len_string_attibute) {
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     MessageFormat.format(Bundle.getMessage("rsAttributeName"),
                             new Object[] { Control.max_len_string_attibute }),
-                    MessageFormat.format(errorMessage, new Object[] { _attribute }), JOptionPane.ERROR_MESSAGE);
+                    MessageFormat.format(errorMessage, new Object[] { _attribute }), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -244,8 +243,8 @@ public abstract class RollingStockAttributeEditFrame extends OperationsFrame imp
                 int feet = (int) (inches * Setup.getScaleRatio() / 12);
                 addItem = Integer.toString(feet);
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertFeet"),
-                        Bundle.getMessage("ErrorRsLength"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertFeet"),
+                        Bundle.getMessage("ErrorRsLength"), JmriJOptionPane.ERROR_MESSAGE);
                 return FAILED;
             }
             addTextBox.setText(addItem);
@@ -257,8 +256,8 @@ public abstract class RollingStockAttributeEditFrame extends OperationsFrame imp
                 int meter = (int) (cm * Setup.getScaleRatio() / 100);
                 addItem = Integer.toString(meter);
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertMeter"),
-                        Bundle.getMessage("ErrorRsLength"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertMeter"),
+                        Bundle.getMessage("ErrorRsLength"), JmriJOptionPane.ERROR_MESSAGE);
                 return FAILED;
             }
             addTextBox.setText(addItem);
@@ -268,24 +267,24 @@ public abstract class RollingStockAttributeEditFrame extends OperationsFrame imp
             int length = Integer.parseInt(addItem);
             if (length < 0) {
                 log.error("length ({}) has to be a positive number", addItem);
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorRsLength"),
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorRsLength"),
                         MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[] { _attribute }),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return FAILED;
             }
             if (addItem.length() > Control.max_len_string_length_name) {
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         MessageFormat.format(Bundle.getMessage("RsAttribute"),
                                 new Object[] { Control.max_len_string_length_name }),
                         MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[] { _attribute }),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return FAILED;
             }
         } catch (NumberFormatException e) {
             log.error("length ({}) is not an integer", addItem);
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorRsLength"),
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorRsLength"),
                     MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[] { _attribute }),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return FAILED;
         }
         return addItem;
@@ -323,17 +322,17 @@ public abstract class RollingStockAttributeEditFrame extends OperationsFrame imp
     
     protected void confirmDelete(String item) {
         if (!cancel) {
-            int results = JOptionPane.showOptionDialog(this,
+            int results = JmriJOptionPane.showOptionDialog(this,
                     MessageFormat
                             .format(Bundle.getMessage("ConfirmDeleteAttribute"), new Object[] { _attribute, item }),
-                    Bundle.getMessage("DeleteAttribute?"), JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE, null, new Object[] { Bundle.getMessage("ButtonYes"),
+                    Bundle.getMessage("DeleteAttribute?"), JmriJOptionPane.DEFAULT_OPTION,
+                    JmriJOptionPane.QUESTION_MESSAGE, null, new Object[] { Bundle.getMessage("ButtonYes"),
                             Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonCancel") },
                     Bundle.getMessage("ButtonYes"));
-            if (results == JOptionPane.YES_OPTION) {
+            if (results == 0 ) { // array position 0
                 deleteAttributeName((String) comboBox.getSelectedItem());
             }
-            if (results == JOptionPane.CANCEL_OPTION || results == JOptionPane.CLOSED_OPTION) {
+            if (results == 2 || results == JmriJOptionPane.CLOSED_OPTION) { // array position 2 or Dialog closed
                 cancel = true;
             }
         }
@@ -360,5 +359,5 @@ public abstract class RollingStockAttributeEditFrame extends OperationsFrame imp
         comboBox.setSelectedItem(addTextBox.getText().trim()); // has to be the last line for propertyChange
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RollingStockAttributeEditFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RollingStockAttributeEditFrame.class);
 }

@@ -20,5 +20,5 @@ public interface LogProblemReportProvider {
      * @return the logs to append
      */
     @Nonnull
-    public File[] getFiles();
+    File[] getFiles();
 }

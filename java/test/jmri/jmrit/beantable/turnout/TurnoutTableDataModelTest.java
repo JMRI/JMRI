@@ -36,9 +36,9 @@ public class TurnoutTableDataModelTest extends jmri.jmrit.beantable.AbstractBean
             t.getColumnName(TurnoutTableDataModel.KNOWNCOL));
         assertEquals("Column9 - MODECOL",Bundle.getMessage("ModeLabel"),
             t.getColumnName(TurnoutTableDataModel.MODECOL));
-        assertEquals("Column10 - SENSOR1COL",Bundle.getMessage("BlockSensor") + "1",
+        assertEquals("Column10 - SENSOR1COL",Bundle.getMessage("BlockSensor") + " 1",
             t.getColumnName(TurnoutTableDataModel.SENSOR1COL));
-        assertEquals("Column11 - SENSOR2COL",Bundle.getMessage("BlockSensor") + "2",
+        assertEquals("Column11 - SENSOR2COL",Bundle.getMessage("BlockSensor") + " 2",
             t.getColumnName(TurnoutTableDataModel.SENSOR2COL));
         assertEquals("Column12 - OPSONOFFCOL",Bundle.getMessage("TurnoutAutomationMenu"),
             t.getColumnName(TurnoutTableDataModel.OPSONOFFCOL));

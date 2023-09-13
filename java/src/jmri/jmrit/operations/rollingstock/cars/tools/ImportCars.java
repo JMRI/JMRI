@@ -3,11 +3,6 @@ package jmri.jmrit.operations.rollingstock.cars.tools;
 import java.io.*;
 import java.text.MessageFormat;
 
-import javax.swing.JOptionPane;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.*;
@@ -16,6 +11,8 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * This routine will import cars into the operation database. Each field is
@@ -29,7 +26,7 @@ public class ImportCars extends ImportRollingStock {
 
     CarManager carManager = InstanceManager.getDefault(CarManager.class);
 
-    private int weightResults = JOptionPane.NO_OPTION;
+    private int weightResults = JmriJOptionPane.NO_OPTION;
     private boolean autoCalculate = true;
     private boolean askAutoCreateTypes = true;
     private boolean askAutoCreateLocations = true;
@@ -198,54 +195,54 @@ public class ImportCars extends ImportRollingStock {
 
                 if (carNumber.isEmpty()) {
                     log.info("Import line {} missing car number", lineNum);
-                    JOptionPane.showMessageDialog(null, MessageFormat.format(
+                    JmriJOptionPane.showMessageDialog(null, MessageFormat.format(
                             Bundle.getMessage("RoadNumberNotSpecified"), new Object[]{lineNum}),
-                            Bundle.getMessage("RoadNumberMissing"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("RoadNumberMissing"), JmriJOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 if (carRoad.isEmpty()) {
                     log.info("Import line {} missing car road", lineNum);
-                    JOptionPane.showMessageDialog(null, MessageFormat.format(
+                    JmriJOptionPane.showMessageDialog(null, MessageFormat.format(
                             Bundle.getMessage("RoadNameNotSpecified"), new Object[]{lineNum}),
-                            Bundle.getMessage("RoadNameMissing"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("RoadNameMissing"), JmriJOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 if (carType.isEmpty()) {
                     log.info("Import line {} missing car type", lineNum);
-                    JOptionPane.showMessageDialog(null, MessageFormat.format(
+                    JmriJOptionPane.showMessageDialog(null, MessageFormat.format(
                             Bundle.getMessage("CarTypeNotSpecified"), new Object[]{carRoad, carNumber, lineNum}),
-                            Bundle.getMessage("CarTypeMissing"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("CarTypeMissing"), JmriJOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 if (carLength.isEmpty()) {
                     log.info("Import line {} missing car length", lineNum);
-                    JOptionPane.showMessageDialog(null, MessageFormat.format(
+                    JmriJOptionPane.showMessageDialog(null, MessageFormat.format(
                             Bundle.getMessage("CarLengthNotSpecified"), new Object[]{carRoad, carNumber, lineNum}),
-                            Bundle.getMessage("CarLengthMissing"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("CarLengthMissing"), JmriJOptionPane.ERROR_MESSAGE);
                     break;
                 }
-                if (carNumber.length() > Control.max_len_string_road_number) {
-                    JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("CarRoadNumberTooLong"),
+                if (TrainCommon.splitString(carNumber).length() > Control.max_len_string_road_number) {
+                    JmriJOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("CarRoadNumberTooLong"),
                             new Object[]{carRoad, carNumber, carNumber}),
                             MessageFormat.format(Bundle.getMessage("RoadNumMustBeLess"),
                                     new Object[]{Control.max_len_string_road_number + 1}),
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 if (carRoad.length() > Control.max_len_string_attibute) {
-                    JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("CarRoadNameTooLong"),
+                    JmriJOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("CarRoadNameTooLong"),
                             new Object[]{carRoad, carNumber, carRoad}),
                             MessageFormat.format(Bundle.getMessage("carAttribute"),
                                     new Object[]{Control.max_len_string_attibute}),
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                     break;
                 }
-                if (carType.length() > Control.max_len_string_attibute) {
-                    JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("CarTypeNameTooLong"),
+                if (TrainCommon.splitString(carType).length() > Control.max_len_string_attibute) {
+                    JmriJOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("CarTypeNameTooLong"),
                             new Object[]{carRoad, carNumber, carType}),
                             MessageFormat.format(Bundle.getMessage("carAttribute"),
                                     new Object[]{Control.max_len_string_attibute}),
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 if (!InstanceManager.getDefault(CarTypes.class).containsName(carType)) {
@@ -253,7 +250,7 @@ public class ImportCars extends ImportRollingStock {
                         log.debug("Adding car type ({})", carType);
                         InstanceManager.getDefault(CarTypes.class).addName(carType);
                     } else {
-                        int results = JOptionPane.showConfirmDialog(null, Bundle.getMessage("Car") +
+                        int results = JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("Car") +
                                 " (" +
                                 carRoad +
                                 " " +
@@ -261,55 +258,55 @@ public class ImportCars extends ImportRollingStock {
                                 ")" +
                                 NEW_LINE +
                                 MessageFormat.format(Bundle.getMessage("typeNameNotExist"), new Object[]{carType}),
-                                Bundle.getMessage("carAddType"), JOptionPane.YES_NO_CANCEL_OPTION);
-                        if (results == JOptionPane.YES_OPTION) {
+                                Bundle.getMessage("carAddType"), JmriJOptionPane.YES_NO_CANCEL_OPTION);
+                        if (results == JmriJOptionPane.YES_OPTION) {
                             InstanceManager.getDefault(CarTypes.class).addName(carType);
                             if (askAutoCreateTypes) {
-                                results = JOptionPane.showConfirmDialog(null,
+                                results = JmriJOptionPane.showConfirmDialog(null,
                                         Bundle.getMessage("DoYouWantToAutoAddCarTypes"),
                                         Bundle.getMessage("OnlyAskedOnce"),
-                                        JOptionPane.YES_NO_OPTION);
-                                if (results == JOptionPane.YES_OPTION) {
+                                        JmriJOptionPane.YES_NO_OPTION);
+                                if (results == JmriJOptionPane.YES_OPTION) {
                                     autoCreateTypes = true;
                                 }
                             }
                             askAutoCreateTypes = false;
-                        } else if (results == JOptionPane.CANCEL_OPTION) {
+                        } else if (results == JmriJOptionPane.CANCEL_OPTION) {
                             break;
                         }
                     }
                 }
                 if (carLength.length() > Control.max_len_string_length_name) {
-                    JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("CarLengthNameTooLong"),
+                    JmriJOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("CarLengthNameTooLong"),
                             new Object[]{carRoad, carNumber, carLength}),
                             MessageFormat.format(Bundle.getMessage("carAttribute"),
                                     new Object[]{Control.max_len_string_length_name}),
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 try {
                     Integer.parseInt(carLength);
                 } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(
+                    JmriJOptionPane.showMessageDialog(
                             null, MessageFormat.format(Bundle.getMessage("CarLengthNameNotNumber"),
                                     new Object[]{carRoad, carNumber, carLength}),
-                            Bundle.getMessage("CarLengthMissing"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("CarLengthMissing"), JmriJOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 if (carWeight.length() > Control.max_len_string_weight_name) {
-                    JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("CarWeightNameTooLong"),
+                    JmriJOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("CarWeightNameTooLong"),
                             new Object[]{carRoad, carNumber, carWeight}),
                             MessageFormat.format(Bundle.getMessage("carAttribute"),
                                     new Object[]{Control.max_len_string_weight_name}),
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 if (carColor.length() > Control.max_len_string_attibute) {
-                    JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("CarColorNameTooLong"),
+                    JmriJOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("CarColorNameTooLong"),
                             new Object[]{carRoad, carNumber, carColor}),
                             MessageFormat.format(Bundle.getMessage("carAttribute"),
                                     new Object[]{Control.max_len_string_attibute}),
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 // calculate car weight if "0"
@@ -317,8 +314,8 @@ public class ImportCars extends ImportRollingStock {
                     try {
                         carWeight = CarManager.calculateCarWeight(carLength); // ounces.
                     } catch (NumberFormatException e) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("carLengthMustBe"), Bundle
-                                .getMessage("carWeigthCanNot"), JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("carLengthMustBe"), Bundle
+                                .getMessage("carWeigthCanNot"), JmriJOptionPane.ERROR_MESSAGE);
                     }
                 }
                 Car existingCar = carManager.getByRoadAndNumber(carRoad, carNumber);
@@ -328,24 +325,24 @@ public class ImportCars extends ImportRollingStock {
                     if (inputLine.length > base + CAR_OWNER) {
                         carOwner = inputLine[base + CAR_OWNER].trim();
                         if (carOwner.length() > Control.max_len_string_attibute) {
-                            JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
+                            JmriJOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                     .getMessage("CarOwnerNameTooLong"),
                                     new Object[]{carRoad, carNumber, carOwner}),
                                     MessageFormat.format(Bundle.getMessage("carAttribute"),
                                             new Object[]{Control.max_len_string_attibute}),
-                                    JOptionPane.ERROR_MESSAGE);
+                                    JmriJOptionPane.ERROR_MESSAGE);
                             break;
                         }
                     }
                     if (inputLine.length > base + CAR_BUILT) {
                         carBuilt = inputLine[base + CAR_BUILT].trim();
                         if (carBuilt.length() > Control.max_len_string_built_name) {
-                            JOptionPane.showMessageDialog(
+                            JmriJOptionPane.showMessageDialog(
                                     null, MessageFormat.format(Bundle.getMessage("CarBuiltNameTooLong"),
                                             new Object[]{carRoad, carNumber, carBuilt}),
                                     MessageFormat.format(Bundle.getMessage("carAttribute"),
                                             new Object[]{Control.max_len_string_built_name}),
-                                    JOptionPane.ERROR_MESSAGE);
+                                    JmriJOptionPane.ERROR_MESSAGE);
                             break;
                         }
                     }
@@ -413,21 +410,21 @@ public class ImportCars extends ImportRollingStock {
                     }
 
                     if (carLocationName.length() > Control.max_len_string_location_name) {
-                        JOptionPane.showMessageDialog(
+                        JmriJOptionPane.showMessageDialog(
                                 null, MessageFormat.format(Bundle.getMessage("CarLocationNameTooLong"),
                                         new Object[]{carRoad, carNumber, carLocationName}),
                                 MessageFormat.format(Bundle.getMessage("carAttribute"),
                                         new Object[]{Control.max_len_string_location_name}),
-                                JOptionPane.ERROR_MESSAGE);
+                                JmriJOptionPane.ERROR_MESSAGE);
                         break;
                     }
                     if (carTrackName.length() > Control.max_len_string_track_name) {
-                        JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
+                        JmriJOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                 .getMessage("CarTrackNameTooLong"),
                                 new Object[]{carRoad, carNumber, carTrackName}),
                                 MessageFormat.format(Bundle.getMessage("carAttribute"),
                                         new Object[]{Control.max_len_string_track_name}),
-                                JOptionPane.ERROR_MESSAGE);
+                                JmriJOptionPane.ERROR_MESSAGE);
                         break;
                     }
                     Location location =
@@ -438,23 +435,23 @@ public class ImportCars extends ImportRollingStock {
                             log.debug("Create location ({})", carLocationName);
                             location = InstanceManager.getDefault(LocationManager.class).newLocation(carLocationName);
                         } else {
-                            JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
+                            JmriJOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                     .getMessage("CarLocationDoesNotExist"),
                                     new Object[]{carRoad, carNumber, carLocationName}),
-                                    Bundle.getMessage("carLocation"), JOptionPane.ERROR_MESSAGE);
-                            int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
+                                    Bundle.getMessage("carLocation"), JmriJOptionPane.ERROR_MESSAGE);
+                            int results = JmriJOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
                                     .getMessage("DoYouWantToCreateLoc"), new Object[]{carLocationName}), Bundle
                                             .getMessage("carLocation"),
-                                    JOptionPane.YES_NO_OPTION);
-                            if (results == JOptionPane.YES_OPTION) {
+                                    JmriJOptionPane.YES_NO_OPTION);
+                            if (results == JmriJOptionPane.YES_OPTION) {
                                 log.debug("Create location ({})", carLocationName);
                                 location =
                                         InstanceManager.getDefault(LocationManager.class).newLocation(carLocationName);
                                 if (askAutoCreateLocations) {
-                                    results = JOptionPane.showConfirmDialog(null, Bundle
+                                    results = JmriJOptionPane.showConfirmDialog(null, Bundle
                                             .getMessage("DoYouWantToAutoCreateLoc"),
-                                            Bundle.getMessage("OnlyAskedOnce"), JOptionPane.YES_NO_OPTION);
-                                    if (results == JOptionPane.YES_OPTION) {
+                                            Bundle.getMessage("OnlyAskedOnce"), JmriJOptionPane.YES_NO_OPTION);
+                                    if (results == JmriJOptionPane.YES_OPTION) {
                                         autoCreateLocations = true;
                                     }
                                 }
@@ -477,15 +474,15 @@ public class ImportCars extends ImportRollingStock {
                                 }
                                 track.setLength(1000);
                             } else {
-                                JOptionPane.showMessageDialog(
+                                JmriJOptionPane.showMessageDialog(
                                         null, MessageFormat.format(Bundle.getMessage("CarTrackDoesNotExist"),
                                                 new Object[]{carRoad, carNumber, carTrackName, carLocationName}),
-                                        Bundle.getMessage("carTrack"), JOptionPane.ERROR_MESSAGE);
-                                int results = JOptionPane.showConfirmDialog(null,
+                                        Bundle.getMessage("carTrack"), JmriJOptionPane.ERROR_MESSAGE);
+                                int results = JmriJOptionPane.showConfirmDialog(null,
                                         MessageFormat.format(Bundle.getMessage("DoYouWantToCreateTrack"),
                                                 new Object[]{carTrackName, carLocationName}),
-                                        Bundle.getMessage("carTrack"), JOptionPane.YES_NO_OPTION);
-                                if (results == JOptionPane.YES_OPTION) {
+                                        Bundle.getMessage("carTrack"), JmriJOptionPane.YES_NO_OPTION);
+                                if (results == JmriJOptionPane.YES_OPTION) {
                                     if (!location.isStaging()) {
                                         log.debug("Create 1000 foot yard track ({})", carTrackName);
                                         track = location.addTrack(carTrackName, Track.YARD);
@@ -495,11 +492,11 @@ public class ImportCars extends ImportRollingStock {
                                     }
                                     track.setLength(1000);
                                     if (askAutoCreateTracks) {
-                                        results = JOptionPane.showConfirmDialog(null,
+                                        results = JmriJOptionPane.showConfirmDialog(null,
                                                 Bundle.getMessage("DoYouWantToAutoCreateTrack"),
                                                 Bundle.getMessage("OnlyAskedOnce"),
-                                                JOptionPane.YES_NO_OPTION);
-                                        if (results == JOptionPane.YES_OPTION) {
+                                                JmriJOptionPane.YES_NO_OPTION);
+                                        if (results == JmriJOptionPane.YES_OPTION) {
                                             autoCreateTracks = true;
                                         }
                                         askAutoCreateTracks = false;
@@ -600,21 +597,23 @@ public class ImportCars extends ImportRollingStock {
 
                     if (car.getWeight().isEmpty()) {
                         log.debug("Car ({}) weight not specified", car.toString());
-                        if (weightResults != JOptionPane.CANCEL_OPTION) {
-                            weightResults = JOptionPane.showOptionDialog(null,
+                        if (weightResults != JmriJOptionPane.CANCEL_OPTION) {
+                            weightResults = JmriJOptionPane.showOptionDialog(null,
                                     MessageFormat.format(Bundle.getMessage("CarWeightNotFound"),
                                             new Object[]{car.toString()}),
-                                    Bundle.getMessage("CarWeightMissing"), JOptionPane.YES_NO_CANCEL_OPTION,
-                                    JOptionPane.INFORMATION_MESSAGE, null, new Object[]{
+                                    Bundle.getMessage("CarWeightMissing"),
+                                    JmriJOptionPane.DEFAULT_OPTION, // custom buttons
+                                    JmriJOptionPane.INFORMATION_MESSAGE, null,
+                                    new Object[]{
                                             Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
                                             Bundle.getMessage("ButtonDontShow")},
                                     autoCalculate ? Bundle.getMessage("ButtonYes") : Bundle.getMessage("ButtonNo"));
                         }
-                        if (weightResults == JOptionPane.NO_OPTION) {
+                        if (weightResults == 1 ) { // array position 1, ButtonNo
                             autoCalculate = false;
                         }
-                        if (weightResults == JOptionPane.YES_OPTION ||
-                                autoCalculate == true && weightResults == JOptionPane.CANCEL_OPTION) {
+                        if (weightResults == 0 || // array position 0, ButtonYes
+                                autoCalculate == true && weightResults == 2) { // array position 2 ButtonDontShow
                             autoCalculate = true;
                             try {
                                 carWeight = CarManager.calculateCarWeight(carLength);
@@ -626,8 +625,8 @@ public class ImportCars extends ImportRollingStock {
                                 }
                                 car.setWeightTons(Integer.toString(tons));
                             } catch (NumberFormatException e) {
-                                JOptionPane.showMessageDialog(null, Bundle.getMessage("carLengthMustBe"), Bundle
-                                        .getMessage("carWeigthCanNot"), JOptionPane.ERROR_MESSAGE);
+                                JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("carLengthMustBe"), Bundle
+                                        .getMessage("carWeigthCanNot"), JmriJOptionPane.ERROR_MESSAGE);
                             }
                         }
                     }
@@ -641,27 +640,27 @@ public class ImportCars extends ImportRollingStock {
                                     track.addTypeName(carType);
                                     status = car.setLocation(location, track);
                                 } else {
-                                    JOptionPane.showMessageDialog(
+                                    JmriJOptionPane.showMessageDialog(
                                             null, MessageFormat.format(Bundle.getMessage("CanNotSetCarAtLocation"),
                                                     new Object[]{car.toString(), carType, carLocationName, carTrackName,
                                                             status}),
-                                            Bundle.getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
-                                    int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
+                                            Bundle.getMessage("rsCanNotLoc"), JmriJOptionPane.ERROR_MESSAGE);
+                                    int results = JmriJOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
                                             .getMessage("DoYouWantToAllowService"),
                                             new Object[]{carLocationName,
                                                     carTrackName, car.toString(), carType}),
                                             Bundle.getMessage("ServiceCarType"),
-                                            JOptionPane.YES_NO_OPTION);
-                                    if (results == JOptionPane.YES_OPTION) {
+                                            JmriJOptionPane.YES_NO_OPTION);
+                                    if (results == JmriJOptionPane.YES_OPTION) {
                                         location.addTypeName(carType);
                                         track.addTypeName(carType);
                                         status = car.setLocation(location, track);
                                         log.debug("Set car's location status: {}", status);
                                         if (askAutoLocationType) {
-                                            results = JOptionPane.showConfirmDialog(null,
+                                            results = JmriJOptionPane.showConfirmDialog(null,
                                                     Bundle.getMessage("DoYouWantToAutoAdjustLocations"),
-                                                    Bundle.getMessage("OnlyAskedOnce"), JOptionPane.YES_NO_OPTION);
-                                            if (results == JOptionPane.YES_OPTION) {
+                                                    Bundle.getMessage("OnlyAskedOnce"), JmriJOptionPane.YES_NO_OPTION);
+                                            if (results == JmriJOptionPane.YES_OPTION) {
                                                 autoAdjustLocationType = true;
                                             }
                                             askAutoLocationType = false;
@@ -677,26 +676,26 @@ public class ImportCars extends ImportRollingStock {
                                     status = car.setLocation(location, track);
                                     log.debug("Set track length status: {}", status);
                                 } else {
-                                    JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
+                                    JmriJOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                             .getMessage("CanNotSetCarAtLocation"),
                                             new Object[]{
                                                     car.toString(), carType, carLocationName, carTrackName,
                                                     status}),
-                                            Bundle.getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
-                                    int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
+                                            Bundle.getMessage("rsCanNotLoc"), JmriJOptionPane.ERROR_MESSAGE);
+                                    int results = JmriJOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
                                             .getMessage("DoYouWantIncreaseLength"), new Object[]{carTrackName}), Bundle
                                                     .getMessage("TrackLength"),
-                                            JOptionPane.YES_NO_OPTION);
-                                    if (results == JOptionPane.YES_OPTION) {
+                                            JmriJOptionPane.YES_NO_OPTION);
+                                    if (results == JmriJOptionPane.YES_OPTION) {
                                         track.setLength(track.getLength() + 1000);
                                         status = car.setLocation(location, track);
                                         log.debug("Set track length status: {}", status);
                                         if (askAutoIncreaseTrackLength) {
-                                            results = JOptionPane.showConfirmDialog(null, Bundle
+                                            results = JmriJOptionPane.showConfirmDialog(null, Bundle
                                                     .getMessage("DoYouWantToAutoAdjustTrackLength"),
                                                     Bundle.getMessage("OnlyAskedOnce"),
-                                                    JOptionPane.YES_NO_OPTION);
-                                            if (results == JOptionPane.YES_OPTION) {
+                                                    JmriJOptionPane.YES_NO_OPTION);
+                                            if (results == JmriJOptionPane.YES_OPTION) {
                                                 autoAdjustTrackLength = true;
                                             }
                                             askAutoIncreaseTrackLength = false;
@@ -709,29 +708,27 @@ public class ImportCars extends ImportRollingStock {
                             if (!status.equals(Track.OKAY)) {
                                 if (autoForceCar) {
                                     car.setLocation(location, track, RollingStock.FORCE); // force
-                                                                                          // car
                                 } else {
-                                    JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
+                                    JmriJOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                             .getMessage("CanNotSetCarAtLocation"),
                                             new Object[]{
                                                     car.toString(), carType, carLocationName, carTrackName,
                                                     status}),
-                                            Bundle.getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
-                                    int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
+                                            Bundle.getMessage("rsCanNotLoc"), JmriJOptionPane.ERROR_MESSAGE);
+                                    int results = JmriJOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
                                             .getMessage("DoYouWantToForceCar"),
                                             new Object[]{
                                                     car.toString(), carLocationName, carTrackName}),
                                             Bundle.getMessage("OverRide"),
-                                            JOptionPane.YES_NO_OPTION);
-                                    if (results == JOptionPane.YES_OPTION) {
-                                        car.setLocation(location, track, true); // force
-                                                                                // car
+                                            JmriJOptionPane.YES_NO_OPTION);
+                                    if (results == JmriJOptionPane.YES_OPTION) {
+                                        car.setLocation(location, track, RollingStock.FORCE); // force
                                         if (askAutoForceCar) {
-                                            results = JOptionPane.showConfirmDialog(null, Bundle
+                                            results = JmriJOptionPane.showConfirmDialog(null, Bundle
                                                     .getMessage("DoYouWantToAutoForceCar"),
                                                     Bundle.getMessage("OnlyAskedOnce"),
-                                                    JOptionPane.YES_NO_OPTION);
-                                            if (results == JOptionPane.YES_OPTION) {
+                                                    JmriJOptionPane.YES_NO_OPTION);
+                                            if (results == JmriJOptionPane.YES_OPTION) {
                                                 autoForceCar = true;
                                             }
                                             askAutoForceCar = false;
@@ -762,14 +759,14 @@ public class ImportCars extends ImportRollingStock {
                 }
             } else if (!line.isEmpty()) {
                 log.info("Car import line {} missing attributes: {}", lineNum, line);
-                JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportMissingAttributes"),
+                JmriJOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportMissingAttributes"),
                         new Object[]{lineNum}) +
                         NEW_LINE +
                         line +
                         NEW_LINE +
                         Bundle.getMessage("ImportMissingAttributes2"),
                         Bundle.getMessage("CarAttributeMissing"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 break;
             }
         }
@@ -779,18 +776,18 @@ public class ImportCars extends ImportRollingStock {
         }
 
         if (importOkay) {
-            JOptionPane
+            JmriJOptionPane
                     .showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportCarsAdded"),
                             new Object[]{carsAdded}), Bundle.getMessage("SuccessfulImport"),
-                            JOptionPane.INFORMATION_MESSAGE);
+                            JmriJOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportCarsAdded"),
-                    new Object[]{carsAdded}), Bundle.getMessage("ImportFailed"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportCarsAdded"),
+                    new Object[]{carsAdded}), Bundle.getMessage("ImportFailed"), JmriJOptionPane.ERROR_MESSAGE);
         }
 
         // kill status panel
         fstatus.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ImportCars.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImportCars.class);
 }

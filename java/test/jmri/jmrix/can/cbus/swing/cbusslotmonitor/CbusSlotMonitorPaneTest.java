@@ -111,6 +111,7 @@ public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
+        memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.MERGCBUS);
         panel = new CbusSlotMonitorPane();
         title = Bundle.getMessage("MenuItemCbusSlotMonitor");
         helpTarget = "package.jmri.jmrix.can.cbus.swing.cbusslotmonitor.CbusSlotMonitorPane";

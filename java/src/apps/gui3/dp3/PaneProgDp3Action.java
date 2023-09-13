@@ -24,7 +24,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
@@ -64,13 +63,9 @@ import jmri.util.BusyGlassPane;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.jdom.LocaleSelector;
-import jmri.util.swing.JmriAbstractAction;
-import jmri.util.swing.JmriPanel;
-import jmri.util.swing.WindowInterface;
+import jmri.util.swing.*;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a frame for selecting the information
@@ -581,13 +576,13 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
         log.debug("saveRosterEntry");
         if (rosterIdField.getText().equals(SymbolicProgBundle.getMessage("LabelNewDecoder"))) { // NOI18N
             synchronized (this) {
-                JOptionPane.showMessageDialog(progPane, SymbolicProgBundle.getMessage("PromptFillInID")); // NOI18N
+                JmriJOptionPane.showMessageDialog(progPane, SymbolicProgBundle.getMessage("PromptFillInID")); // NOI18N
             }
             throw new JmriException("No Roster ID"); // NOI18N
         }
         if (checkDuplicate()) {
             synchronized (this) {
-                JOptionPane.showMessageDialog(progPane, SymbolicProgBundle.getMessage("ErrorDuplicateID")); // NOI18N
+                JmriJOptionPane.showMessageDialog(progPane, SymbolicProgBundle.getMessage("ErrorDuplicateID")); // NOI18N
             }
             throw new JmriException("Duplicate ID"); // NOI18N
         }
@@ -744,6 +739,6 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PaneProgDp3Action.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PaneProgDp3Action.class);
 
 }

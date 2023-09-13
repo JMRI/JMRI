@@ -1,5 +1,7 @@
 package jmri;
 
+import javax.annotation.Nonnull;
+
 /**
  * Represent a single signal head. (Try saying that ten times fast!) A signal
  * may have more than one of these (e.g. a signal mast consisting of several
@@ -52,73 +54,96 @@ package jmri;
  */
 public interface SignalHead extends Signal {
 
-    public static final int DARK = 0x00;
-    public static final int RED = 0x01;
-    public static final int FLASHRED = 0x02;
-    public static final int YELLOW = 0x04;
-    public static final int FLASHYELLOW = 0x08;
-    public static final int GREEN = 0x10;
-    public static final int FLASHGREEN = 0x20;
-    public static final int LUNAR = 0x40;
-    public static final int FLASHLUNAR = 0x80;
-    public static final int HELD = 0x100;
+    int DARK = 0x00;
+    int RED = 0x01;
+    int FLASHRED = 0x02;
+    int YELLOW = 0x04;
+    int FLASHYELLOW = 0x08;
+    int GREEN = 0x10;
+    int FLASHGREEN = 0x20;
+    int LUNAR = 0x40;
+    int FLASHLUNAR = 0x80;
+    int HELD = 0x100;
 
     /**
      * Get the Signal Head Appearance.
      * Changes in this value can be listened to using the
      * {@literal Appearance} property.
      *
-     * @return the appearance
+     * @return the appearance, e.g. SignalHead.YELLOW
      */
-    public int getAppearance();
+    int getAppearance();
 
     /**
      * Set the Signal Head Appearance.
      *
      * @param newAppearance integer representing a valid Appearance for this head
      */
-    public void setAppearance(int newAppearance);
+    void setAppearance(int newAppearance);
 
-    public String getAppearanceKey();
-
-    public String getAppearanceKey(int appearance);
-
-    public String getAppearanceName();
-
-    public String getAppearanceName(int appearance);
+    
+    /**
+     * Get the current Signal Head Appearance Key.
+     * @return Key, or empty String if no valid appearance set.
+     */
+    @Nonnull
+    String getAppearanceKey();
 
     /**
-     * Get whether the signal head is lit or dark. Changes to this value can be
-     * listened to using the {@literal Lit} property.
-     *
-     * @return true if lit; false if dark
+     * Get the Appearance Key for a particular Appearance.
+     * @param appearance id for the key, e.g. SignalHead.GREEN
+     * @return the Appearance Key, e.g. "Green" or empty String if unknown.
+     * The key can be used as a Bundle String, e.g.
+     * Bundle.getMessage(getAppearanceKey(SignalHead.RED))
      */
-    @Override
-    public boolean getLit();
-
-    @Override
-    public void setLit(boolean newLit);
+    @Nonnull
+    String getAppearanceKey(int appearance);
 
     /**
-     * Get whether the signal head is held. Changes to this value can be listened to
-     * using the {@literal Held} property. It controls what mechanisms can
-     * control the head's appearance. The actual semantics are defined by those
-     * external mechanisms.
-     *
-     * @return true if held; false otherwise
+     * Get the current appearance name.
+     * @return Name of the Appearance, e.g. "Dark" or "Flashing Red"
+     */
+    @Nonnull
+    String getAppearanceName();
+
+    /**
+     * Get the Appearance Name for a particular Appearance.
+     * @param appearance id for the Name.
+     * @return the Appearance Name, or empty String if unknown.
+     */
+    @Nonnull
+    String getAppearanceName(int appearance);
+
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public boolean getHeld();
+    boolean getLit();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setHeld(boolean newHeld);
+    void setLit(boolean newLit);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    boolean getHeld();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    void setHeld(boolean newHeld);
 
     /**
      * Get an array of appearance indexes valid for the mast type.
      *
      * @return array of appearance state values available on this mast type
      */
-    public int[] getValidStates();
+    int[] getValidStates();
 
     /**
      * Get an array of non-localized appearance keys valid for the mast type.
@@ -126,7 +151,7 @@ public interface SignalHead extends Signal {
      *
      * @return array of translated appearance names available on this mast type
      */
-    public String[] getValidStateKeys();
+    String[] getValidStateKeys();
 
     /**
      * Get an array of localized appearance descriptions valid for the mast type.
@@ -134,6 +159,6 @@ public interface SignalHead extends Signal {
      *
      * @return array of translated appearance names
      */
-    public String[] getValidStateNames();
+    String[] getValidStateNames();
 
 }

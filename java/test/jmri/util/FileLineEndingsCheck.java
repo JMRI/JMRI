@@ -50,7 +50,6 @@ public class FileLineEndingsCheck {
                     "**/*.json",
                     "**/*.jsp",
                     "**/*.jspf",
-                    "**/*.lcf",
                     "**/*.md",
                     "**/*.php",
                     "**/*.pl",

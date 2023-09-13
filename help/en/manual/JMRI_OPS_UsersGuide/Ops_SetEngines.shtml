@@ -90,7 +90,7 @@
                 </option>
               </select> optionally set the Train.</p>
 
-              <p><input name="button17" id="button17" value="Save" type="submit"> press to save the
+              <p>Press <span class="textbutton">Save</span> to save the
               Locomotive Locations that you have set.</p>
 
               <p>Close the window when completed.</p>

@@ -1,8 +1,6 @@
 package jmri.jmrit.operations.locations.tools;
 
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -15,21 +13,15 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.locations.schedules.Schedule;
-import jmri.jmrit.operations.locations.schedules.ScheduleItem;
-import jmri.jmrit.operations.locations.schedules.ScheduleManager;
+import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.locations.schedules.*;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCommon;
-import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.*;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
@@ -521,7 +513,7 @@ public class PrintLocationsAction extends AbstractAction {
                     new Object[] { numberOfCars, type, totalTrackLength, Setup.getLengthUnit().toLowerCase() }) +
                     NEW_LINE);
             // don't bother reporting when the number of cars for a given type
-            // is zero
+            // is zero. Round up percentage used by a car type.
             if (numberOfCars > 0) {
                 // spurs
                 writer.write(SPACE +
@@ -531,36 +523,36 @@ public class PrintLocationsAction extends AbstractAction {
                 if (trackLength > 0) {
                     writer.write(SPACE +
                             MessageFormat.format(Bundle.getMessage("TotalLengthSpur"),
-                                    new Object[] { type, trackLength, Setup.getLengthUnit().toLowerCase(),
-                                            100 * totalTrackLength / trackLength }) +
+                                    new Object[]{type, trackLength, Setup.getLengthUnit().toLowerCase(),
+                                            Math.ceil((double) 100 * totalTrackLength / trackLength)}) +
                             NEW_LINE);
                 } else {
                     writer.write(SPACE + Bundle.getMessage("None") + NEW_LINE);
                 }
                 // yards
                 writer.write(SPACE +
-                        MessageFormat.format(Bundle.getMessage("YardTrackThatAccept"), new Object[] { type }) +
+                        MessageFormat.format(Bundle.getMessage("YardTrackThatAccept"), new Object[]{type}) +
                         NEW_LINE);
                 trackLength = getTrackLengthAcceptType(locations, type, Track.YARD);
                 if (trackLength > 0) {
                     writer.write(SPACE +
                             MessageFormat.format(Bundle.getMessage("TotalLengthYard"),
-                                    new Object[] { type, trackLength, Setup.getLengthUnit().toLowerCase(),
-                                            100 * totalTrackLength / trackLength }) +
+                                    new Object[]{type, trackLength, Setup.getLengthUnit().toLowerCase(),
+                                            Math.ceil((double) 100 * totalTrackLength / trackLength)}) +
                             NEW_LINE);
                 } else {
                     writer.write(SPACE + Bundle.getMessage("None") + NEW_LINE);
                 }
                 // interchanges
                 writer.write(SPACE +
-                        MessageFormat.format(Bundle.getMessage("InterchangesThatAccept"), new Object[] { type }) +
+                        MessageFormat.format(Bundle.getMessage("InterchangesThatAccept"), new Object[]{type}) +
                         NEW_LINE);
                 trackLength = getTrackLengthAcceptType(locations, type, Track.INTERCHANGE);
                 if (trackLength > 0) {
                     writer.write(SPACE +
                             MessageFormat.format(Bundle.getMessage("TotalLengthInterchange"),
-                                    new Object[] { type, trackLength, Setup.getLengthUnit().toLowerCase(),
-                                            100 * totalTrackLength / trackLength }) +
+                                    new Object[]{type, trackLength, Setup.getLengthUnit().toLowerCase(),
+                                            Math.ceil((double) 100 * totalTrackLength / trackLength)}) +
                             NEW_LINE);
                 } else {
                     writer.write(SPACE + Bundle.getMessage("None") + NEW_LINE);
@@ -574,8 +566,8 @@ public class PrintLocationsAction extends AbstractAction {
                     if (trackLength > 0) {
                         writer.write(SPACE +
                                 MessageFormat.format(Bundle.getMessage("TotalLengthStage"),
-                                        new Object[] { type, trackLength, Setup.getLengthUnit().toLowerCase(),
-                                                100 * totalTrackLength / trackLength }) +
+                                        new Object[]{type, trackLength, Setup.getLengthUnit().toLowerCase(),
+                                                Math.ceil((double) 100 * totalTrackLength / trackLength)}) +
                                 NEW_LINE);
                     } else {
                         writer.write(SPACE + Bundle.getMessage("None") + NEW_LINE);

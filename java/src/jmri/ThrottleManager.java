@@ -70,7 +70,6 @@ public interface ThrottleManager {
      * This is a convenience version of the call, which uses system-specific
      * logic to tell whether the address is a short or long form,
      * and assumes that the hardware makes and steal / share decisions.
-     * <p>
      * @param canHandleDecisions true if the ThrottleListener has a mechanism for dealing with
      *        Share / Steal decisions, else false
      * @param address desired decoder address
@@ -394,7 +393,7 @@ public interface ThrottleManager {
      * <p>
      * The PropertyChangeListener will be notified if it has been attached to a
      * loco address or not, via a PropertyChange notification.
-     * <p>
+     *
      * @param la LocoAddress of the loco we wish to monitor
      * @param p  PropertyChangeListener to attach to the throttle
      */

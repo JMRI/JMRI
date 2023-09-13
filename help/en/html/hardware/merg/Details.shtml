@@ -161,11 +161,11 @@
       <p>Methods using this option include:</p>
 
       <ul>
+        <li><a href="../../../package/jmri/jmrix/can/cbus/swing/hubpane/CbusHubPane.shtml">CBUS Hub Control</a></li>
         <li>CANPiCAP - The canpi service has to be active to accept connections.</li>
-
         <li>CANether</li>
-
-        <li>CBUS Server</li>
+        <li><a href="https://github.com/phillipsnj/mergCbusServer">CBUS Server</a> ( Node.js )</li>
+        <li>CANGC1e</li>
       </ul>
 
       <p>IP Address/Host Name : (none) - enter an IP address for fully manual configuration.<br>

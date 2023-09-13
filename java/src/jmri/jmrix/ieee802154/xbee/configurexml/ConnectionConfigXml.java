@@ -101,7 +101,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             }
         } catch (java.lang.NullPointerException npe2) {
             // no nodes defined.
-            return;
         }
     }
 
@@ -229,8 +228,11 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                     // fallback for connections created with a script
                     node.connectPortController(connectedController);
                 }
-                log.info("loaded {} onto node {}", node.getConnectionConfig(), node);
-                log.info("manuf {} userName {} ", node.getConnectionConfig().getManufacturer(), node.getConnectionConfig().name());
+                if(node.getConnectionConfig() != null) {
+                    // connection config is optional. don't assume it loaded from the file.
+                    log.info("loaded {} onto node {}", node.getConnectionConfig(), node);
+                    log.info("manuf {} userName {} ", node.getConnectionConfig().getManufacturer(), node.getConnectionConfig().name());
+                }
             } catch (TimeoutException toe) {
                 log.error("Timeout adding node {} from configuration file.",
                         remoteDevice);

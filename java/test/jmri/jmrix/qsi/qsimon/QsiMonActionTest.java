@@ -5,8 +5,9 @@ import jmri.jmrix.qsi.QsiTrafficControlScaffold;
 import jmri.jmrix.qsi.QsiTrafficController;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  *
@@ -19,7 +20,26 @@ public class QsiMonActionTest {
         QsiTrafficController tc = new QsiTrafficControlScaffold();
         QsiSystemConnectionMemo memo = new QsiSystemConnectionMemo(tc);
         QsiMonAction t = new QsiMonAction(memo);
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "exists");
+        memo.dispose();
+    }
+
+    @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    public void testQsiMonActionPerformed() {
+        QsiTrafficController tc = new QsiTrafficControlScaffold();
+        QsiSystemConnectionMemo memo = new QsiSystemConnectionMemo(tc);
+        QsiMonAction t = new QsiMonAction(memo);
+        Assertions.assertNotNull(t, "exists");
+        
+        jmri.util.ThreadingUtil.runOnGUI(() -> t.actionPerformed(null));
+        
+        JFrameOperator jfo = new JFrameOperator("QSI Command Monitor");
+        Assertions.assertNotNull(jfo);
+        jfo.requestClose();
+        jfo.waitClosed();
+        
+        memo.dispose();
     }
 
     @BeforeEach
@@ -31,7 +51,5 @@ public class QsiMonActionTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
-    // private final static Logger log = LoggerFactory.getLogger(QsiMonActionTest.class);
 
 }

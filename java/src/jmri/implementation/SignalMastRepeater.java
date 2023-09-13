@@ -126,8 +126,9 @@ public class SignalMastRepeater {
         if (log.isDebugEnabled()) {
             log.debug("Updating from mast {}:{} to mast {}", mastFrom.getDisplayName(), mastFrom.getAspect(), mastTo.getDisplayName());
         }
-        if (mastFrom.getAspect() != null) {
-            mastTo.setAspect(mastFrom.getAspect());
+        String aspect = mastFrom.getAspect();
+        if ( aspect != null) {
+            mastTo.setAspect(aspect);
         }
     }
 

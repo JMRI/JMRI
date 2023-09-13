@@ -18,7 +18,6 @@ import org.jdom2.Element;
 
 /**
  * Provides the functionality for configuring ConditionalNGManagers
- * <P>
  *
  * @author Dave Duchamp     Copyright (c) 2007
  * @author Daniel Bergqvist Copyright (c) 2018

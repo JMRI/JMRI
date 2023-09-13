@@ -29,11 +29,11 @@ public interface CommandStation {
      *
      * @return {@code true} if the operation succeeds, {@code false} otherwise.
      */
-    public boolean sendPacket(@Nonnull byte[] packet, int repeats);
+    boolean sendPacket(@Nonnull byte[] packet, int repeats);
 
-    public String getUserName();
+    String getUserName();
 
     @Nonnull
-    public String getSystemPrefix();
+    String getSystemPrefix();
 
 }

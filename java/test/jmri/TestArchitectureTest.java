@@ -76,4 +76,16 @@ public class TestArchitectureTest {
         .doNotHaveFullyQualifiedName("jmri.jmrit.display.logixng.ActionPositionableTest").and()
         .resideOutsideOfPackage("jmri.jmrit.logixng..")
         .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.After");
+
+    /**
+     * jmri should not reference org.apache.log4j to allow jmri
+     * to be used as library in applications that choose not to use Log4J.
+     */
+    @ArchTest
+    public static final ArchRule noLog4JinJmriTestsRule = noClasses()
+        .that().doNotHaveFullyQualifiedName("jmri.util.JUnitAppender")
+        .and().doNotHaveFullyQualifiedName("jmri.util.TestingLoggerConfiguration")
+        .and().doNotHaveFullyQualifiedName("apps.jmrit.log.Log4JTreePaneTest")
+        .should().dependOnClassesThat().resideInAPackage("org.apache.logging.log4j");
+
 }

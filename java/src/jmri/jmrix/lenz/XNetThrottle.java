@@ -17,6 +17,7 @@ import javax.annotation.concurrent.GuardedBy;
  * connection.
  *
  * @author Paul Bender (C) 2002-2019
+ * @author Bob Jacobsen (C) 2023
  */
 public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
@@ -41,16 +42,24 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
     protected int address;
 
+    // Get the number of valid functions from the software version number.
+    // Declared static private so it can be called as an argument to super(..)
+    static private int numberOfFuns(XNetTrafficController controller) {
+        int version = (int) controller.getCommandStation().getCommandStationSoftwareVersionBCD();
+        if (version < 0x40) return 29;  // 0 - 28
+        return 69;                      // 0 - 68
+    }
     /**
      * Constructor
      * @param memo system connection.
      * @param controller system connection traffic controller.
      */
     public XNetThrottle(XNetSystemConnectionMemo memo, XNetTrafficController controller) {
-        super(memo);
+        super(memo, numberOfFuns(controller));
         tc = controller;
         requestList = new LinkedBlockingQueue<>();
-        log.debug("XNetThrottle constructor");
+
+        log.info("Throttle created with no address and version {}", controller.getCommandStation().getCommandStationSoftwareVersionBCD());
     }
 
     /**
@@ -60,7 +69,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      * @param controller system connection traffic controller.
      */
     public XNetThrottle(XNetSystemConnectionMemo memo, LocoAddress address, XNetTrafficController controller) {
-        super(memo);
+        super(memo, numberOfFuns(controller));
         this.tc = controller;
         this.setDccAddress(address.getNumber());
         this.speedStepMode = jmri.SpeedStepMode.NMRA_DCC_128;
@@ -68,7 +77,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
         requestList = new LinkedBlockingQueue<>();
         sendStatusInformationRequest();
-        log.debug("XNetThrottle constructor called for address {}", address);
+        log.info("Throttle created for address {} with version {}",
+            address, controller.getCommandStation().getCommandStationSoftwareVersionBCD());
     }
 
     /*
@@ -76,6 +86,24 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      */
     public synchronized void setXNetTrafficController(XNetTrafficController controller) {
         tc = controller;
+    }
+
+    protected synchronized boolean csVersionSupportFn13to28() {
+        if (tc.getCommandStation().getCommandStationSoftwareVersionBCD() < 0x36) {
+            log.info("Functions F13-F28 unavailable in CS software version {}",
+                    tc.getCommandStation().getCommandStationSoftwareVersion());
+            return false;
+        }
+        return true;
+    }
+
+    protected synchronized boolean csVersionSupportFn29to68() {
+        if (tc.getCommandStation().getCommandStationSoftwareVersionBCD() < 0x40) {
+            log.info("Functions F29-68 unavailable in CS software version {}",
+                    tc.getCommandStation().getCommandStationSoftwareVersion());
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -113,22 +141,13 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         queueMessage(msg, THROTTLEFUNCSENT);
     }
 
-    protected boolean csVersionSupportsHighFunctions() {
-        if (tc.getCommandStation().getCommandStationSoftwareVersionBCD() < 0x36) {
-            log.info("Functions F13-F28 unavailable in CS software version {}",
-                    tc.getCommandStation().getCommandStationSoftwareVersion());
-            return false;
-        }
-        return true;
-    }
-
     /**
      * Send the XpressNet message to set the state of functions F13, F14, F15,
      * F16, F17, F18, F19, F20.
      */
     @Override
     protected void sendFunctionGroup4() {
-        if (csVersionSupportsHighFunctions()) {
+        if (csVersionSupportFn13to28()) {
             XNetMessage msg = XNetMessage.getFunctionGroup4OpsMsg(this.getDccAddress(),
                     getFunction(13), getFunction(14), getFunction(15), getFunction(16),
                     getFunction(17), getFunction(18), getFunction(19), getFunction(20));
@@ -143,10 +162,85 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      */
     @Override
     protected void sendFunctionGroup5() {
-        if (csVersionSupportsHighFunctions()) {
+        if (csVersionSupportFn13to28()) {
             XNetMessage msg = XNetMessage.getFunctionGroup5OpsMsg(this.getDccAddress(),
                     getFunction(21), getFunction(22), getFunction(23), getFunction(24),
                     getFunction(25), getFunction(26), getFunction(27), getFunction(28));
+            // now, queue the message for sending to the command station
+            queueMessage(msg, THROTTLEFUNCSENT);
+        }
+    }
+
+    /**
+     * Send the XpressNet message to set the state of functions F29-36
+     */
+    @Override
+    protected void sendFunctionGroup6() {
+        if (csVersionSupportFn29to68()) {
+            int i = 29;
+            XNetMessage msg = XNetMessage.getFunctionGroup6OpsMsg(this.getDccAddress(),
+                    getFunction(i), getFunction(i+1), getFunction(i+2), getFunction(i+3),
+                    getFunction(i+4), getFunction(i+5), getFunction(i+6), getFunction(i+7));
+            // now, queue the message for sending to the command station
+            queueMessage(msg, THROTTLEFUNCSENT);
+        }
+    }
+
+    /**
+     * Send the XpressNet message to set the state of functions F37-44
+     */
+    @Override
+    protected void sendFunctionGroup7() {
+        if (csVersionSupportFn29to68()) {
+            int i = 37;
+            XNetMessage msg = XNetMessage.getFunctionGroup7OpsMsg(this.getDccAddress(),
+                    getFunction(i), getFunction(i+1), getFunction(i+2), getFunction(i+3),
+                    getFunction(i+4), getFunction(i+5), getFunction(i+6), getFunction(i+7));
+            // now, queue the message for sending to the command station
+            queueMessage(msg, THROTTLEFUNCSENT);
+        }
+    }
+
+    /**
+     * Send the XpressNet message to set the state of functions F45-52
+     */
+    @Override
+    protected void sendFunctionGroup8() {
+        if (csVersionSupportFn29to68()) {
+            int i = 45;
+            XNetMessage msg = XNetMessage.getFunctionGroup8OpsMsg(this.getDccAddress(),
+                    getFunction(i), getFunction(i+1), getFunction(i+2), getFunction(i+3),
+                    getFunction(i+4), getFunction(i+5), getFunction(i+6), getFunction(i+7));
+            // now, queue the message for sending to the command station
+            queueMessage(msg, THROTTLEFUNCSENT);
+        }
+    }
+
+    /**
+     * Send the XpressNet message to set the state of functions F53-60
+     */
+    @Override
+    protected void sendFunctionGroup9() {
+        if (csVersionSupportFn29to68()) {
+            int i = 53;
+            XNetMessage msg = XNetMessage.getFunctionGroup9OpsMsg(this.getDccAddress(),
+                    getFunction(i), getFunction(i+1), getFunction(i+2), getFunction(i+3),
+                    getFunction(i+4), getFunction(i+5), getFunction(i+6), getFunction(i+7));
+            // now, queue the message for sending to the command station
+            queueMessage(msg, THROTTLEFUNCSENT);
+        }
+    }
+
+    /**
+     * Send the XpressNet message to set the state of functions F61-68
+     */
+    @Override
+    protected void sendFunctionGroup10() {
+        if (csVersionSupportFn29to68()) {
+            int i = 61;
+            XNetMessage msg = XNetMessage.getFunctionGroup10OpsMsg(this.getDccAddress(),
+                    getFunction(i), getFunction(i+1), getFunction(i+2), getFunction(i+3),
+                    getFunction(i+4), getFunction(i+5), getFunction(i+6), getFunction(i+7));
             // now, queue the message for sending to the command station
             queueMessage(msg, THROTTLEFUNCSENT);
         }
@@ -197,12 +291,12 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      */
     @Override
     protected void sendMomentaryFunctionGroup4() {
-        if (csVersionSupportsHighFunctions()) {
+        if (csVersionSupportFn13to28()) {
             XNetMessage msg = XNetMessage.getFunctionGroup4SetMomMsg(this.getDccAddress(),
-           getFunctionMomentary(13), getFunctionMomentary(14),
-           getFunctionMomentary(15), getFunctionMomentary(16),
-           getFunctionMomentary(17), getFunctionMomentary(18),
-           getFunctionMomentary(19), getFunctionMomentary(20));
+               getFunctionMomentary(13), getFunctionMomentary(14),
+               getFunctionMomentary(15), getFunctionMomentary(16),
+               getFunctionMomentary(17), getFunctionMomentary(18),
+               getFunctionMomentary(19), getFunctionMomentary(20));
             // now, queue the message for sending to the command station
             queueMessage(msg, THROTTLEFUNCSENT);
         }
@@ -214,11 +308,91 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      */
     @Override
     protected void sendMomentaryFunctionGroup5() {
-        if (csVersionSupportsHighFunctions()) {
+        if (csVersionSupportFn13to28()) {
             XNetMessage msg = XNetMessage.getFunctionGroup5SetMomMsg(this.getDccAddress(),
                 getFunctionMomentary(21), getFunctionMomentary(22), getFunctionMomentary(23),
                 getFunctionMomentary(24), getFunctionMomentary(25), getFunctionMomentary(26),
                 getFunctionMomentary(27), getFunctionMomentary(28));
+            // now, queue the message for sending to the command station
+            queueMessage(msg, THROTTLEFUNCSENT);
+        }
+    }
+
+    /**
+     * Send the XpressNet message to set the momentary state of functions F29-36
+     */
+    @Override
+    protected void sendMomentaryFunctionGroup6() {
+        if (csVersionSupportFn29to68()) {
+            int i = 29;
+            XNetMessage msg = XNetMessage.getFunctionGroup6SetMomMsg(this.getDccAddress(),
+                getFunctionMomentary(i), getFunctionMomentary(i+1), getFunctionMomentary(i+2),
+                getFunctionMomentary(i+3), getFunctionMomentary(i+4), getFunctionMomentary(i+5),
+                getFunctionMomentary(i+6), getFunctionMomentary(i+7));
+            // now, queue the message for sending to the command station
+            queueMessage(msg, THROTTLEFUNCSENT);
+        }
+    }
+
+    /**
+     * Send the XpressNet message to set the momentary state of functions F37-44
+     */
+    @Override
+    protected void sendMomentaryFunctionGroup7() {
+        if (csVersionSupportFn29to68()) {
+            int i = 37;
+            XNetMessage msg = XNetMessage.getFunctionGroup7SetMomMsg(this.getDccAddress(),
+                getFunctionMomentary(i), getFunctionMomentary(i+1), getFunctionMomentary(i+2),
+                getFunctionMomentary(i+3), getFunctionMomentary(i+4), getFunctionMomentary(i+5),
+                getFunctionMomentary(i+6), getFunctionMomentary(i+7));
+            // now, queue the message for sending to the command station
+            queueMessage(msg, THROTTLEFUNCSENT);
+        }
+    }
+
+    /**
+     * Send the XpressNet message to set the momentary state of functions F45-52
+     */
+    @Override
+    protected void sendMomentaryFunctionGroup8() {
+        if (csVersionSupportFn29to68()) {
+            int i = 45;
+            XNetMessage msg = XNetMessage.getFunctionGroup8SetMomMsg(this.getDccAddress(),
+                getFunctionMomentary(i), getFunctionMomentary(i+1), getFunctionMomentary(i+2),
+                getFunctionMomentary(i+3), getFunctionMomentary(i+4), getFunctionMomentary(i+5),
+                getFunctionMomentary(i+6), getFunctionMomentary(i+7));
+            // now, queue the message for sending to the command station
+            queueMessage(msg, THROTTLEFUNCSENT);
+        }
+    }
+
+    /**
+     * Send the XpressNet message to set the momentary state of functions F53-60
+     */
+    @Override
+    protected void sendMomentaryFunctionGroup9() {
+        if (csVersionSupportFn29to68()) {
+            int i = 53;
+            XNetMessage msg = XNetMessage.getFunctionGroup9SetMomMsg(this.getDccAddress(),
+                getFunctionMomentary(i), getFunctionMomentary(i+1), getFunctionMomentary(i+2),
+                getFunctionMomentary(i+3), getFunctionMomentary(i+4), getFunctionMomentary(i+5),
+                getFunctionMomentary(i+6), getFunctionMomentary(i+7));
+            // now, queue the message for sending to the command station
+            queueMessage(msg, THROTTLEFUNCSENT);
+        }
+    }
+
+    /**
+     * Send the XpressNet message to set the momentary state of functions F61-68
+     */
+    @Override
+    protected void sendMomentaryFunctionGroup10() {
+        if (csVersionSupportFn29to68()) {
+            int i = 61;
+            XNetMessage msg = XNetMessage.getFunctionGroup10SetMomMsg(this.getDccAddress(),
+                getFunctionMomentary(i), getFunctionMomentary(i+1), getFunctionMomentary(i+2),
+                getFunctionMomentary(i+3), getFunctionMomentary(i+4), getFunctionMomentary(i+5),
+                getFunctionMomentary(i+6), getFunctionMomentary(i+7));
             // now, queue the message for sending to the command station
             queueMessage(msg, THROTTLEFUNCSENT);
         }
@@ -345,7 +519,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      * command station.
      */
     protected synchronized void sendFunctionHighInformationRequest() {
-        if (csVersionSupportsHighFunctions()) {
+        if (csVersionSupportFn13to28()) {
             log.debug("Throttle {} sending request for high function momentary status.", address);
             /* Send the request for Function status */
             XNetMessage msg = XNetMessage.getLocomotiveFunctionHighOnStatusMsg(this.address);
@@ -358,7 +532,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      * Send a request to get the status of functions from the command station.
      */
     protected synchronized void sendFunctionHighMomentaryStatusRequest() {
-        if (csVersionSupportsHighFunctions()) {
+        if (csVersionSupportFn13to28()) {
             log.debug("Throttle {} sending request for function momentary status.", address);
             /* Send the request for Function status */
             XNetMessage msg = XNetMessage.getLocomotiveFunctionHighMomStatusMsg(this.address);

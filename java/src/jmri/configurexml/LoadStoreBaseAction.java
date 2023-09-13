@@ -41,7 +41,7 @@ abstract public class LoadStoreBaseAction extends AbstractAction {
     static private JFileChooser userFileChooser = null;
 
     static private JFileChooser getXmlFileChooser(String path) {
-        JFileChooser chooser = new JFileChooser(path);
+        JFileChooser chooser = new jmri.util.swing.JmriJFileChooser(path);
         chooser.setFileFilter(new FileNameExtensionFilter("XML files", "xml")); // NOI18N
         return chooser;
     }

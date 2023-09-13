@@ -1,5 +1,6 @@
 package jmri.jmrit.decoderdefn;
 
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -11,11 +12,15 @@ import java.util.List;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JProgressBar;
+import javax.swing.JOptionPane;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
+import jmri.util.ThreadingUtil;
 import org.jdom2.Attribute;
 import org.jdom2.Comment;
 import org.jdom2.Document;
@@ -309,7 +314,7 @@ public class DecoderIndexFile extends XmlFile {
      * @throws org.jdom2.JDOMException if unable to parse decoder index
      * @throws java.io.IOException     if unable to read decoder index
      */
-    static boolean updateIndexIfNeeded() throws org.jdom2.JDOMException, java.io.IOException {
+    public static boolean updateIndexIfNeeded() throws org.jdom2.JDOMException, java.io.IOException {
         switch (FileUtil.findFiles(defaultDecoderIndexFilename(), ".").size()) {
             case 0:
                 log.debug("creating decoder index");
@@ -362,7 +367,6 @@ public class DecoderIndexFile extends XmlFile {
         forceCreationOfNewIndex();
         // and force it to be used
         return true;
-
     }
 
     /**
@@ -422,7 +426,7 @@ public class DecoderIndexFile extends XmlFile {
                 }
             }
         } else {
-            log.error("Could not access decoder definition directory {}{}", XmlFile.xmlDir(),DecoderFile.fileLocation);
+            log.error("Could not access decoder definition directory {}{}", XmlFile.xmlDir(), DecoderFile.fileLocation);
         }
         // copy the decoder entries to the final array
         String[] sbox = al.toArray(new String[al.size()]);
@@ -442,12 +446,52 @@ public class DecoderIndexFile extends XmlFile {
             index.fileVersion = InstanceManager.getDefault(DecoderIndexFile.class).fileVersion;
         }
 
-        // write it out
-        try {
-            index.writeFile(DECODER_INDEX_FILE_NAME, InstanceManager.getDefault(DecoderIndexFile.class), sbox);
-        } catch (java.io.IOException ex) {
-            log.error("Error writing new decoder index file: {}", ex.getMessage());
+        // If not many entries, or headless, just recreate index without updating the UI
+        // Also block if not on the GUI (event dispatch) thread
+        if (sbox.length < 30 || GraphicsEnvironment.isHeadless() || !ThreadingUtil.isGUIThread()) {
+            try {
+                index.writeFile(DECODER_INDEX_FILE_NAME,
+                            InstanceManager.getDefault(DecoderIndexFile.class), sbox, null, null);
+            } catch (java.io.IOException ex) {
+                log.error("Error writing new decoder index file: {}", ex.getMessage());
+            }
+            return;
         }
+
+        // Create a dialog with a progress bar and a cancel button
+        String message = Bundle.getMessage("DecoderProgressMessage", "..."); // NOI18N
+        String title = Bundle.getMessage("DecoderProgressMessage", "");
+        String cancel = Bundle.getMessage("ButtonCancel"); // NOI18N
+        // HACK: add long blank space to message to make dialog wider.
+        JOptionPane pane = new JOptionPane(message + "                            \t",
+                JOptionPane.PLAIN_MESSAGE,
+                JOptionPane.OK_CANCEL_OPTION,
+                null,
+                new String[]{cancel});
+        JProgressBar pb = new JProgressBar(0, sbox.length);
+        pb.setValue(0);
+        pane.add(pb, 1);
+        JDialog dialog = pane.createDialog(null, title);
+
+        ThreadingUtil.newThread(() -> {
+            try {
+                index.writeFile(DECODER_INDEX_FILE_NAME,
+                            InstanceManager.getDefault(DecoderIndexFile.class), sbox, pane, pb);
+            // catch all exceptions, so progress dialog will close
+            } catch (Exception e) {
+                // TODO: show message in progress dialog?
+                log.error("Error writing new decoder index file: {}", e.getMessage());
+            }
+            dialog.setVisible(false);
+            dialog.dispose();
+        }, "decoderIndexer").start();
+
+        // improve visibility if any always on top frames present
+        dialog.setAlwaysOnTop(true);
+        dialog.toFront();
+        // this will block until the thread completes, either by
+        // finishing or by being cancelled
+        dialog.setVisible(true);
     }
 
     /**
@@ -459,9 +503,7 @@ public class DecoderIndexFile extends XmlFile {
      * @throws java.io.IOException     if unable to read decoder index file
      */
     void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("readFile {}",name);
-        }
+        log.debug("readFile {}", name);
 
         // read file, find root
         Element root = rootFromName(name);
@@ -641,10 +683,25 @@ public class DecoderIndexFile extends XmlFile {
         return bracketedInString.contains(bracketedFindString);
     }
 
-    public void writeFile(String name, DecoderIndexFile oldIndex, String[] files) throws java.io.IOException {
+    /**
+     * Build and write the decoder index file, based on a set of decoder files.
+     *
+     * This creates the full DOM object for the decoder index based on reading the
+     * supplied decoder xml files. It then saves the decoder index out to a new file.
+     *
+     * @param name name of the new index file
+     * @param oldIndex old decoder index file
+     * @param files array of files to read for new index
+     * @param pane optional JOptionPane to check for cancellation
+     * @param pb optional JProgressBar to update during operations
+     * @throws java.io.IOException for errors writing the decoder index file
+     */
+    public void writeFile(String name, DecoderIndexFile oldIndex,
+                          String[] files, JOptionPane pane, JProgressBar pb) throws java.io.IOException {
         if (log.isDebugEnabled()) {
             log.debug("writeFile {}",name);
         }
+
         // This is taken in large part from "Java and XML" page 368
         File file = new File(FileUtil.getUserFilesPath() + name);
 
@@ -704,7 +761,16 @@ public class DecoderIndexFile extends XmlFile {
 
         // add family list by scanning files
         Element familyList = new Element("familyList");
+        int fileNum = 0;
         for (String fileName : files) {
+            // update progress monitor, if passed in
+            if (pb != null) {
+                pb.setValue(fileNum++);
+            }
+            if (pane != null && pane.getValue() != JOptionPane.UNINITIALIZED_VALUE) {
+                log.info("Decoder index recreation cancelled");
+                return;
+            }
             DecoderFile d = new DecoderFile();
             try {
                 // get <family> element and add the file name
@@ -713,13 +779,32 @@ public class DecoderIndexFile extends XmlFile {
                 family.setAttribute("file", fileName);
 
                 // drop the decoder implementation content
-                family.removeChildren("outputs");
+                family.removeAttribute("comment");
+                // don't remove "outputs" due to use by ESU function map pane
                 family.removeChildren("output");
                 family.removeChildren("functionlabels");
-                family.removeChildren("versionCV");
+
                 // and drop content of model elements
-                for (Element element : family.getChildren()) {
-                    element.removeContent();
+                for (Element element : family.getChildren()) { // model elements
+                    element.removeAttribute("maxInputVolts");
+                    element.removeAttribute("maxMotorCurrent");
+                    element.removeAttribute("maxTotalCurrent");
+                    element.removeAttribute("formFactor");
+                    element.removeAttribute("connector");
+                    element.removeAttribute("comment");
+                    element.removeAttribute("nmraWarrant");
+                    element.removeAttribute("nmraWarrantStart");
+
+                    // element.removeContent();
+                    element.removeChildren("size");
+                    // don't remove "output" due to use by ESU function map pane
+                    element.removeChildren("functionlabels");
+
+                    for (Element output : element.getChildren()) {
+                        output.removeAttribute("connection");
+                        output.removeAttribute("maxcurrent");
+                        output.removeChildren("label");
+                    }
                 }
 
                 // and store to output
@@ -740,6 +825,7 @@ public class DecoderIndexFile extends XmlFile {
         index.addContent(mfgList);
         index.addContent(familyList);
 
+        log.debug("Writing decoderIndex");
         writeXML(file, doc);
 
         // force a read of the new file next time
@@ -767,6 +853,7 @@ public class DecoderIndexFile extends XmlFile {
     public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
+        @Nonnull
         public <T> Object getDefault(Class<T> type) {
             if (type.equals(DecoderIndexFile.class)) {
                 // create and load
@@ -797,10 +884,12 @@ public class DecoderIndexFile extends XmlFile {
         }
 
         @Override
+        @Nonnull
         public Set<Class<?>> getInitalizes() {
             Set<Class<?>> set = super.getInitalizes();
             set.add(DecoderIndexFile.class);
             return set;
         }
     }
+
 }

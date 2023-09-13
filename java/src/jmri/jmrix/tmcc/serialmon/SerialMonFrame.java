@@ -42,9 +42,8 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         if (l.getNumDataElements() < 3) {
             nextLine("Truncated message of length " + l.getNumDataElements() + "\n",
                     l.toString());
-            return;
         } else {
-            nextLine("Cmd: " + parse(l.getAsWord()) + "\n", l.toString());
+            nextLine("Cmd: " + parse(l.getOpCode(), l.getAsWord()) + "\n", l.toString());
         }
     }
 
@@ -54,13 +53,16 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         if (l.getNumDataElements() < 2) {
             nextLine("Truncated reply of length " + l.getNumDataElements() + ": \"" + l.toString() + "\"\n",
                     l.toString());
-            return;
         } else {
-            nextLine("Rep: " + parse(l.getAsWord()) + "\n", l.toString());
+            nextLine("Rep: " + parse(l.getOpCode(), l.getAsWord()) + "\n", l.toString());
         }
     }
 
-    String parse(int val) {
+    String parse(int opCode, int val) {
+        if (opCode != 0xFE) {
+            // TMCC 2 parsing
+            return "TMCC 2 msg 0x"+Integer.toHexString(opCode)+" 0x"+Integer.toHexString(val);
+        }
         if ((val & 0xC000) == 0x4000) {
             // switch command
             int A = (val / 128) & 0x7F;

@@ -9,7 +9,7 @@ package jmri.jmrix.rfid;
  */
 public interface RfidListener extends jmri.jmrix.AbstractMRListener {
 
-    public void message(RfidMessage m);
+    void message(RfidMessage m);
 
-    public void reply(RfidReply m);
+    void reply(RfidReply m);
 }

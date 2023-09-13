@@ -13,14 +13,14 @@ import org.slf4j.LoggerFactory;
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
@@ -47,7 +47,6 @@ public class EngineSound extends VSDSound {
 
     public EngineSound(String name) {
         super(name);
-        is_playing = false;
         engine_started = false;
         initialized = init();
     }
@@ -72,7 +71,6 @@ public class EngineSound extends VSDSound {
     @Override
     public void stop() {
         log.info("Emergency Stop called!");
-        is_playing = false;
     }
 
     @Override

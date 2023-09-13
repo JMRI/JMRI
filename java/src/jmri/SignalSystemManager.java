@@ -31,15 +31,15 @@ public interface SignalSystemManager extends Manager<SignalSystem> {
      * @return SignalSystem or null if no system found.
      */
     @CheckForNull
-    public SignalSystem getSystem(String name);
+    SignalSystem getSystem(String name);
 
     /** {@inheritDoc} */
     @Override
     @CheckForNull
-    public SignalSystem getBySystemName(String name);
+    SignalSystem getBySystemName(String name);
 
     /** {@inheritDoc} */
     @Override
     @CheckForNull
-    public SignalSystem getByUserName(String name);
+    SignalSystem getByUserName(String name);
 }

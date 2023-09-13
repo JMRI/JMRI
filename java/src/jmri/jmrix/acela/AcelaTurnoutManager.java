@@ -103,7 +103,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
 
     /**
      * Public method to convert system name to its alternate format.
-     * <p>
+     *
      * @param systemName system name to convert
      * @return a normalized system name if system name is valid and has a valid
      * alternate representation, else return ""

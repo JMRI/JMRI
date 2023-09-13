@@ -49,7 +49,7 @@ public interface SectionManager extends Manager<Section> {
      *         Section.
      */
     @Nonnull
-    public Section createNewSection(@Nonnull String systemName, String userName) throws IllegalArgumentException;
+    Section createNewSection(@Nonnull String systemName, String userName) throws IllegalArgumentException;
 
     /**
      * Create a New Section with Auto System Name.
@@ -59,14 +59,14 @@ public interface SectionManager extends Manager<Section> {
      *          unable to create a new Section.
      */
     @Nonnull
-    public Section createNewSection(String userName) throws IllegalArgumentException;
+    Section createNewSection(String userName) throws IllegalArgumentException;
 
     /**
      * Remove an existing Section.
      *
      * @param y the section to remove
      */
-    public void deleteSection(Section y);
+    void deleteSection(Section y);
 
     /**
      * Get an existing Section. First look up assuming that name is a User
@@ -76,37 +76,37 @@ public interface SectionManager extends Manager<Section> {
      *             followed by system names
      * @return the found section of null if no matching Section found
      */
-    public Section getSection(String name);
+    Section getSection(String name);
 
     /**
      * Validate all Sections.
      *
      * @return number or validation errors; -2 is returned if there are no sections
      */
-    public int validateAllSections();
+    int validateAllSections();
 
     /**
      * Check direction sensors in SSL for signals.
      *
      * @return the number or errors; 0 if no errors; -1 if the panel is null; -2 if there are no sections
      */
-    public int setupDirectionSensors();
+    int setupDirectionSensors();
 
     /**
      * Remove direction sensors from SSL for all signals.
      *
      * @return the number or errors; 0 if no errors; -1 if the panel is null; -2 if there are no sections
      */
-    public int removeDirectionSensorsFromSSL();
+    int removeDirectionSensorsFromSSL();
 
     /**
      * Initialize all blocking sensors that exist - set them to 'ACTIVE'.
      */
-    public void initializeBlockingSensors();
+    void initializeBlockingSensors();
 
     /**
      * Generate Block Sections in stubs/sidings. Called after generating signal logic.
      */
-    public void generateBlockSections();
+    void generateBlockSections();
 
 }

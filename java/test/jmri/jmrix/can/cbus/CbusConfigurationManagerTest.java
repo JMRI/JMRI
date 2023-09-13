@@ -9,6 +9,7 @@ import jmri.jmrix.can.*;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.jmrix.can.cbus.simulator.CbusSimulator;
+import jmri.jmrix.can.cbus.swing.cbusslotmonitor.CbusSlotMonitorDataModel;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -70,6 +71,8 @@ public class CbusConfigurationManagerTest {
         assertTrue( t.provides(CabSignalManager.class) );
         assertTrue( t.provides(ConsistManager.class) );
         assertTrue( t.provides(ClockControl.class) );
+        assertTrue( t.provides(CbusSimulator.class)); // created by default
+        assertTrue( t.provides(CbusSlotMonitorDataModel.class)); // created by default
         
         assertFalse( t.provides(CbusNodeTableDataModel.class) ); // not created by default
         assertFalse( t.provides(CbusEventTableDataModel.class) ); // not created by default
@@ -141,9 +144,9 @@ public class CbusConfigurationManagerTest {
     public void testNodeEventManagerDispose(){
         assertEquals(0, tcis.numListeners(),"no tcis listeners after memo creation");
         ((CbusNodeTableDataModel)t.provide(CbusNodeTableDataModel.class)).setBackgroundAllocateListener(false);
-        assertEquals(1, tcis.numListeners(),"1 tcis listeners");
-        ((CbusEventTableDataModel)t.provide(CbusEventTableDataModel.class)).skipSaveOnDispose();
         assertEquals(2, tcis.numListeners(),"2 tcis listeners");
+        ((CbusEventTableDataModel)t.provide(CbusEventTableDataModel.class)).skipSaveOnDispose();
+        assertEquals(3, tcis.numListeners(),"3 tcis listeners");
         memo.dispose();
         assertEquals(0, tcis.numListeners(),"All listeners removed " + tcis.getListeners());
     }
@@ -154,7 +157,7 @@ public class CbusConfigurationManagerTest {
         ((CbusNodeTableDataModel)t.provide(CbusNodeTableDataModel.class)).setBackgroundAllocateListener(false);
         ((CbusEventTableDataModel)t.provide(CbusEventTableDataModel.class)).skipSaveOnDispose();
 
-        assertEquals(2, tcis.numListeners(),"2 tcis listeners");
+        assertEquals(3, tcis.numListeners(),"3 tcis listeners");
     
         memo.configureManagers();
 
@@ -180,6 +183,7 @@ public class CbusConfigurationManagerTest {
         toReturn.add(CabSignalManager.class);
         toReturn.add(CbusPredefinedMeters.class);
         toReturn.add(CbusSimulator.class);
+        toReturn.add(CbusSlotMonitorDataModel.class);
         return toReturn;
     }
     
@@ -214,6 +218,22 @@ public class CbusConfigurationManagerTest {
         t.disposeOf(sim, CbusSimulator.class);
         simA = memo.getFromMap(CbusSimulator.class);
         assertNull(simA);
+    }
+
+    @Test
+    public void testGetDisposeSlotMonitor() {
+        
+        CbusSlotMonitorDataModel smdm = memo.getFromMap(CbusSlotMonitorDataModel.class);
+        assertNull(smdm);
+        CbusSlotMonitorDataModel smdm2 = memo.get(CbusSlotMonitorDataModel.class);
+        assertNotNull(smdm2);
+        smdm = memo.getFromMap(CbusSlotMonitorDataModel.class);
+        assertNotNull(smdm);
+        assertTrue(smdm2 == smdm);
+        
+        t.disposeOf(smdm2, CbusSlotMonitorDataModel.class);
+        smdm = memo.getFromMap(CbusSlotMonitorDataModel.class);
+        assertNull(smdm);
     }
 
     private CanSystemConnectionMemo memo;
@@ -253,7 +273,7 @@ public class CbusConfigurationManagerTest {
         t = null;
         tcis = null;
         memo = null;
-        
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
 
     }

@@ -39,7 +39,6 @@ public abstract class UnboundBean implements BeanInterface {
      * If <i>null</i> is a valid (or expected) value for <i>key</i>, you might
      * want to use {@link Bean#hasProperty(java.lang.String)} to test that the
      * property exists.
-     * <p>
      *
      * @return value of key or null.
      * @see BeanInterface#getProperty(java.lang.String)

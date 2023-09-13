@@ -7,8 +7,6 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractNode;
 import jmri.jmrix.cmri.serial.serialmon.SerialFilterFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Models a serial C/MRI node, consisting of a (S)USIC and attached cards.
@@ -167,6 +165,7 @@ public class SerialNode extends AbstractNode {
         }
         // initialize other operational instance variables
         setMustSend();
+        setOptNet_AUTOPOLL(1);  // always start with polling enabled
         hasActiveSensors = false;
         // register this node
         tc.registerNode(this);
@@ -495,7 +494,7 @@ public class SerialNode extends AbstractNode {
     /**
      * Get CMRInet options.
      * @param optionbit option index.
-     * @return option value.
+     * @return option value: meaning depends on option
      */
     public int getCMRInetOpts(int optionbit) { return (cmrinetOptions[optionbit]); }
     public void setCMRInetOpts(int optionbit,int val) { cmrinetOptions[optionbit] = (byte)val; }
@@ -504,13 +503,13 @@ public class SerialNode extends AbstractNode {
     /**
      * Get cpNode options.
      * @param optionbit option index.
-     * @return option value.
+     * @return option value: meaning depends on option
      */
     public int getcpnodeOpts(int optionbit) { return (cpnodeOptions[optionbit]); }
     public void setcpnodeOpts(int optionbit,int val) { cpnodeOptions[optionbit] = (byte)val; }
     public boolean iscpnodeBit(int optionbit) { return (cpnodeOptions[optionbit] == 1); }
 
-    /**
+    /*
      * get and set specific option bits.
      * Network Option Bits
      */
@@ -519,13 +518,26 @@ public class SerialNode extends AbstractNode {
      * Get if Autopoll bit set.
      * @return true if set, else false.
      */
-    public boolean getOptNet_AUTOPOLL() { return (cmrinetOptions[optbitNet_AUTOPOLL] == 1); }
+    public boolean getOptNet_AUTOPOLL() {
+        var retval = cmrinetOptions[optbitNet_AUTOPOLL] == 1;
+        log.trace("getOptNet_AUTOPOLL() is {}", retval);
+        return (retval);
+    }
+
     public boolean getOptNet_USECMRIX() { return (cmrinetOptions[optbitNet_USECMRIX] == 1); }
     public boolean getOptNet_USEBCC()     { return (cmrinetOptions[optbitNet_USEBCC] == 1); }
     public boolean getOptNet_BIT8()     { return (cmrinetOptions[optbitNet_BIT8] == 1); }
     public boolean getOptNet_BIT15()    { return (cmrinetOptions[optbitNet_BIT15] == 1); }
 
-    public void setOptNet_AUTOPOLL(int val) { cmrinetOptions[optbitNet_AUTOPOLL] = (byte)val; }
+    /**
+     * update Autopoll bit
+     * @param val 1 sets autopoll on, 0 sets it off
+     */
+    public void setOptNet_AUTOPOLL(int val) {
+        log.trace("setOptNet_AUTOPOLL({})", val);
+        cmrinetOptions[optbitNet_AUTOPOLL] = (byte)val;
+    }
+
     public void setOptNet_USECMRIX(int val) { cmrinetOptions[optbitNet_USECMRIX] = (byte)val; }
     public void setOptNet_USEBCC(int val)     { cmrinetOptions[optbitNet_USEBCC] = (byte)val; }
     public void setOptNet_BIT8(int val)     { cmrinetOptions[optbitNet_BIT8] = (byte)val; }
@@ -534,7 +546,7 @@ public class SerialNode extends AbstractNode {
     public int getOptNet_byte0() {return cmrinetOptions[0];}
     public int getOptNet_byte1() {return cmrinetOptions[1];}
 
-    /**
+    /*
      * Node Option Bits.
      */
 
@@ -1158,8 +1170,12 @@ public class SerialNode extends AbstractNode {
         // Count the number of DLE's to be inserted
         int nOutBytes = numOutputCards() * (bitsPerCard / 8);
         int nDLE = 0;
+        byte[] oA; // current values of the output bits for this node
+        
+        oA = outputArray.clone();
+
         for (int i = 0; i < nOutBytes; i++) {
-            if ((outputArray[i] == 2) || (outputArray[i] == 3) || (outputArray[i] == 16)) {
+            if ((oA[i] == 2) || (oA[i] == 3) || (oA[i] == 16)) {
                 nDLE++;
             }
         }
@@ -1171,17 +1187,16 @@ public class SerialNode extends AbstractNode {
         int k = 2;
         for (int i = 0; i < nOutBytes; i++) {
             // perform C/MRI required DLE processing
-            if ((outputArray[i] == 2) || (outputArray[i] == 3) || (outputArray[i] == 16)) {
+            if ((oA[i] == 2) || (oA[i] == 3) || (oA[i] == 16)) {
                 m.setElement(k, 16);  // DLE
                 k++;
             }
             // add output byte
-            m.setElement(k, outputArray[i]);
+            m.setElement(k, oA[i]);
             k++;
         }
         return m;
     }
-
     boolean warned = false;
 
     void warn(String s) {
@@ -1225,6 +1240,7 @@ public class SerialNode extends AbstractNode {
                     }
                     // save for next time
                     sensorTempSetting[i] = Sensor.ACTIVE;
+                    ((SerialSensor)sensorArray[i]).lastStateFromLayout = Sensor.ACTIVE;
                 } else {
                     // considered INACTIVE
                     if (((sensorTempSetting[i] == Sensor.INACTIVE)
@@ -1236,6 +1252,7 @@ public class SerialNode extends AbstractNode {
                     }
                     // save for next time
                     sensorTempSetting[i] = Sensor.INACTIVE;
+                    ((SerialSensor)sensorArray[i]).lastStateFromLayout = Sensor.INACTIVE;
                 }
             }
         } catch (JmriException e) {
@@ -1326,5 +1343,5 @@ public class SerialNode extends AbstractNode {
         timeout = 0;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialNode.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialNode.class);
 }

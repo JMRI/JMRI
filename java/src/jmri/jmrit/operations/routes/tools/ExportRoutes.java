@@ -4,19 +4,14 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 
-import javax.swing.JOptionPane;
-
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Export Routes to CSV file
@@ -67,40 +62,45 @@ public class ExportRoutes extends XmlFile {
             for (Route route : InstanceManager.getDefault(RouteManager.class).getRoutesByNameList()) {
                 count++;
                 fileOut.printRecord(route.getName(),
-                        "", // NOI18N
+                        "",
                         route.getComment());
                 for (RouteLocation rl : route.getLocationsBySequenceList()) {
-                    fileOut.printRecord("", // NOI18N
-                            rl.getLocation().getName(),
-                            rl.getTrainDirectionString(),
-                            rl.getMaxCarMoves(),
-                            rl.getRandomControl(),
-                            rl.isPickUpAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"),
-                            rl.isDropAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"),
-                            rl.getWait(),
-                            rl.getFormatedDepartureTime(),
-                            rl.getMaxTrainLength(),
-                            rl.getGrade(),
-                            rl.getTrainIconX(),
-                            rl.getTrainIconY(),
-                            rl.getComment().replace("\n", "<LF>"),
-                            rl.getCommentTextColor());
+                    if (rl.getLocation() != null) {
+                        fileOut.printRecord("",
+                                rl.getLocation().getName(),
+                                rl.getTrainDirectionString(),
+                                rl.getMaxCarMoves(),
+                                rl.getRandomControl(),
+                                rl.isPickUpAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"),
+                                rl.isDropAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"),
+                                rl.getWait(),
+                                rl.getFormatedDepartureTime(),
+                                rl.getMaxTrainLength(),
+                                rl.getGrade(),
+                                rl.getTrainIconX(),
+                                rl.getTrainIconY(),
+                                rl.getComment().replace("\n", "<LF>"),
+                                rl.getCommentTextColor());
+                    } else {
+                        fileOut.printRecord("",
+                                Bundle.getMessage("ErrorTitle"));
+                    }
                 }
             }
 
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     MessageFormat.format(Bundle.getMessage("ExportedRoutesToFile"),
                             new Object[]{count, defaultOperationsFilename()}),
-                    Bundle.getMessage("ExportComplete"), JOptionPane.INFORMATION_MESSAGE);
+                    Bundle.getMessage("ExportComplete"), JmriJOptionPane.INFORMATION_MESSAGE);
 
             fileOut.flush();
             fileOut.close();
         } catch (IOException e) {
             log.error("Can not open export Routes CSV file: {}", file.getName());
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     MessageFormat.format(Bundle.getMessage("ExportedRoutesToFile"),
                             new Object[]{0, defaultOperationsFilename()}),
-                    Bundle.getMessage("ExportFailed"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ExportFailed"), JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -144,6 +144,6 @@ public class ExportRoutes extends XmlFile {
 
     private static String operationsFileName = "ExportOperationsRoutes.csv"; // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(ExportRoutes.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExportRoutes.class);
 
 }

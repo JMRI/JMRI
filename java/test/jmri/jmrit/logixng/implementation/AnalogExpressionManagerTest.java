@@ -97,6 +97,7 @@ public class AnalogExpressionManagerTest extends AbstractManagerTestBase {
         _m = null;
         _manager = null;
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

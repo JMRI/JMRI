@@ -82,6 +82,11 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
     static final ProgrammingMode LOCONETCSOPSWMODE = new ProgrammingMode("LOCONETCSOPSWMODE", Bundle.getMessage("LOCONETCSOPSWMODE"));
 
     /**
+     * Programming via LocoNet messages for Series 7* op switches
+     */
+    static final ProgrammingMode LOCONETBD7OPSWMODE = new ProgrammingMode("LOCONETBD7OPSWMODE", Bundle.getMessage("LOCONETBD7OPSWMODE"));
+
+    /**
      * Types implemented here.
      */
     @Override
@@ -89,6 +94,7 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
     public List<ProgrammingMode> getDefaultModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(ProgrammingMode.OPSBYTEMODE);
+        ret.add(LOCONETBD7OPSWMODE);
         ret.add(LOCONETOPSBOARD);
         ret.add(LOCONETSV2MODE);
         ret.add(LOCONETSV1MODE); // they show in the interface in the order listed here

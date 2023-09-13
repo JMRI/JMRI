@@ -12,11 +12,9 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.routes.RouteManager;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
+import jmri.jmrit.operations.routes.*;
+import jmri.jmrit.operations.setup.Setup;
+import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
 
 /**
@@ -136,6 +134,25 @@ public class SetTrainIconPositionFrameTest extends OperationsTestCase {
         Assert.assertEquals("spinner value", 0, f.spinTrainIconSouthX.getValue());  
 
         JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitOperationsUtil.initOperationsData();
+        SetTrainIconPositionFrame f = new SetTrainIconPositionFrame();
+        // select location
+        f.locationBox.setSelectedIndex(1);
+        // now close window with save button
+        Setup.setCloseWindowOnSaveEnabled(true);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
+        Location loc = InstanceManager.getDefault(LocationManager.class).getLocationByName("North End Staging");
+        // confirm dialog should appear
+        JemmyUtil.pressDialogButton(f,
+                MessageFormat.format(Bundle.getMessage("UpdateTrainIcon"), new Object[]{loc.getName()}),
+                Bundle.getMessage("ButtonYes"));
+        JmriJFrame frame = JmriJFrame.getFrame(f.getTitle());
+        Assert.assertNull("does not exist", frame);
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SetTrainIconPositionFrameTest.class);

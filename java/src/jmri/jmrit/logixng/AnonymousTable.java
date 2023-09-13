@@ -10,12 +10,12 @@ package jmri.jmrit.logixng;
  */
 public interface AnonymousTable extends Table {
     
-    public void insertColumn(int col);
+    void insertColumn(int col);
     
-    public void deleteColumn(int col);
+    void deleteColumn(int col);
     
-    public void insertRow(int row);
+    void insertRow(int row);
     
-    public void deleteRow(int row);
+    void deleteRow(int row);
     
 }

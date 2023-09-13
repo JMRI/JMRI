@@ -70,12 +70,11 @@ public class EngineTest extends OperationsTestCase {
         e.setAttribute("comment", "Test Comment");
 
         // set the engine specific attributes
-        try {
+        Assertions.assertDoesNotThrow( () ->  {
             Engine e1 = new Engine(e);
             Assert.assertNotNull("Xml Element Constructor", e1);
-        } catch (java.lang.NullPointerException npe) {
-            Assert.fail("Null Pointer Exception while executing Xml Element Constructor");
-        }
+        }, "Exception while executing Xml Element Constructor");
+
     }
 
     // test Engine Class

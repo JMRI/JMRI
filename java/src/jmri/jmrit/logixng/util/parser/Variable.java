@@ -8,10 +8,10 @@ import jmri.jmrit.logixng.SymbolTable;
  */
 public interface Variable {
 
-    public String getName();
+    String getName();
     
-    public Object getValue(SymbolTable symbolTable) throws JmriException;
+    Object getValue(SymbolTable symbolTable) throws JmriException;
     
-    public void setValue(SymbolTable symbolTable, Object value) throws JmriException;
+    void setValue(SymbolTable symbolTable, Object value) throws JmriException;
     
 }

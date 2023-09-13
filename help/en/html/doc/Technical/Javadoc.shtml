@@ -179,9 +179,7 @@ public void methodName() {
       warnings exceeds 2300 (as of 2017-10-01, down from 3975 on 2017-02-20; progress!). Once the
       number of these warnings is reduced to a managable level, we will stop suppressing them.</p>
 
-      <p>For a summary of current Javadoc errors in the code, see <a href=
-      "https://builds.jmri.org/jenkins/job/Development/job/builds/lastCompletedBuild/jmri-javadoc-warnings/">Builds
-      Jenkins job</a>.</p>
+      <p>CI may fail if invalid JavaDoc is uploaded.</p>
 
       <h2>UML and UmlGraph for Developers</h2>
       <p>UML is a broad and deep language for describing the structure, design and behavior of
@@ -190,7 +188,7 @@ public void methodName() {
       "https://www.visual-paradigm.com/guide/uml-unified-modeling-language/uml-class-diagram-tutorial/">UML
       Class Diagram Tutorial</a>. For more detail, please see <a href=
       "http://web.archive.org/web/20110704185440/http://atlas.kennesaw.edu/~dbraun/csis4650/A&amp;D/UML_tutorial/class.htm">
-      Atlas UML course</a> or <a href="https://edn.embarcadero.com/article/31863">Embarcadero
+      Atlas UML course</a> or <a href="http://web.archive.org/web/20110903065325/http://edn.embarcadero.com:80/article/31863">Embarcadero
       Software introduction</a>.</p>
       <p>Our Ant Javadoc processing makes basic UML class diagrams automatically. For an example,
       see the class diagram embedded in <a href="https://www.jmri.org/JavaDoc/doc/jmri/Sensor.html">Sensor 

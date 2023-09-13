@@ -10,5 +10,5 @@ public interface SprogSlotListener extends java.util.EventListener {
 
     // This and the LocoNet equivalent should probably be re-factored
     // to a higher place in the hierarchy
-    public void notifyChangedSlot(SprogSlot s);
+    void notifyChangedSlot(SprogSlot s);
 }

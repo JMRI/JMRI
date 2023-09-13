@@ -95,7 +95,6 @@ public class CbusBasicNodeWithManagers extends CbusBasicNode {
     
     /**
      * Get the CbusNodeXml for Node Backup Details and operations
-     * <p>
      * @return the CbusNodeXml instance for the node
      */
     @Nonnull
@@ -105,7 +104,7 @@ public class CbusBasicNodeWithManagers extends CbusBasicNode {
     
     /**
      * Get Node Statistics
-     * <p>
+     *
      * @return the CbusNodeXml instance for the node
      */
     @Nonnull

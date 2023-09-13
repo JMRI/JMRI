@@ -18,7 +18,6 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -31,9 +30,9 @@ import jmri.swing.PreferencesPanel;
 import jmri.swing.PreferencesSubPanel;
 import jmri.util.FileUtil;
 import jmri.util.ThreadingUtil;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to preferences via a tabbed pane.
@@ -379,12 +378,12 @@ public class TabbedPreferences extends AppConfigBase {
         if (!this.isPreferencesValid() && !sdm.isShuttingDown()) {
             for (PreferencesPanel panel : this.getPreferencesPanels().values()) {
                 if (!panel.isPreferencesValid()) {
-                    switch (JOptionPane.showConfirmDialog(this,
+                    switch (JmriJOptionPane.showConfirmDialog(this,
                             Bundle.getMessage("InvalidPreferencesMessage", panel.getTabbedPreferencesTitle()),
                             Bundle.getMessage("InvalidPreferencesTitle"),
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.ERROR_MESSAGE)) {
-                        case JOptionPane.YES_OPTION:
+                            JmriJOptionPane.YES_NO_OPTION,
+                            JmriJOptionPane.ERROR_MESSAGE)) {
+                        case JmriJOptionPane.YES_OPTION:
                             // abort save and return to broken preferences
                             this.gotoPreferenceItem(panel.getPreferencesItem(), panel.getTabbedPreferencesTitle());
                             return;
@@ -582,6 +581,6 @@ public class TabbedPreferences extends AppConfigBase {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TabbedPreferences.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TabbedPreferences.class);
 
 }

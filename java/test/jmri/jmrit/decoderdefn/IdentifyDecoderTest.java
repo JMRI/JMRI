@@ -17,7 +17,7 @@ import org.junit.Assert;
  */
 public class IdentifyDecoderTest {
 
-    static int cvRead = -1;
+    private int cvRead = -1;
     private ProgDebugger p;
 
     /**
@@ -480,6 +480,50 @@ public class IdentifyDecoderTest {
     }
 
     /**
+     * Test Dietz decoder with productID in CV128.
+     */
+    @Test
+    public void testIdentifyDietz() {
+        // create our test object
+        IdentifyDecoder i = new IdentifyDecoder(p) {
+            @Override
+            public void done(int mfgID, int modelID, int productID) {
+            }
+
+            @Override
+            public void message(String m) {
+            }
+
+            @Override
+            public void error() {
+            }
+        };
+
+        i.start();
+        Assert.assertEquals("step 1 reads CV ", 8, cvRead);
+        Assert.assertEquals("running after 1 ", true, i.isRunning());
+
+        // simulate CV read complete on CV8 with 115
+        i.programmingOpReply(115, 0);
+        Assert.assertEquals("step 2 reads CV ", 7, cvRead);
+        Assert.assertEquals("running after 2 ", true, i.isRunning());
+
+        // simulate CV read complete on CV7 with 88
+        i.programmingOpReply(88, 0);
+        Assert.assertEquals("step 3 reads CV ", 128, cvRead);
+        Assert.assertEquals("running after 3 ", true, i.isRunning());
+
+        // simulate CV read complete on CV128 with 123
+        i.programmingOpReply(123, 0);
+        Assert.assertEquals("running after 4 ", false, i.isRunning());
+
+        Assert.assertEquals("found mfg ID ", 115, i.mfgID);
+        Assert.assertEquals("found model ID ", 88, i.modelID);
+        Assert.assertEquals("found product ID ", 123, i.productID);
+    }
+
+
+    /**
      * Test TCS decoder with 4-digit productID.
      * Should pass
      */
@@ -646,7 +690,7 @@ public class IdentifyDecoderTest {
         JUnitUtil.setUp();
         p = new ProgDebugger() {
             @Override
-            public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+            public void readCV(String CV, jmri.ProgListener p) throws ProgrammerException {
                 cvRead = Integer.parseInt(CV);
             }
         };

@@ -12,7 +12,8 @@ import jmri.jmrix.qsi.QsiSystemConnectionMemo;
  */
 public class QsiMonFrame extends jmri.jmrix.AbstractMonFrame implements QsiListener {
 
-    private QsiSystemConnectionMemo _memo = null;
+    private final QsiSystemConnectionMemo _memo;
+
     public QsiMonFrame(QsiSystemConnectionMemo memo) {
         super();
         _memo = memo;
@@ -38,7 +39,7 @@ public class QsiMonFrame extends jmri.jmrix.AbstractMonFrame implements QsiListe
     @Override
     public synchronized void message(QsiMessage l) {  // receive a message and log it
         int opcode = l.getElement(0);
-        String text = null;
+        String text;
         if (l.getNumDataElements() == 1) {
             // special case - assume this is a reply ack
             text = "Ack of message for function " + l.getElement(0);
@@ -54,7 +55,7 @@ public class QsiMonFrame extends jmri.jmrix.AbstractMonFrame implements QsiListe
                     text = "OP_REQ_CLEAR_ERROR_STATUS";
                     break;
                 default:
-                    text = "Unrecognized message with code " + opcode + ": " + l.toString(_memo.getQsiTrafficController());
+                    text = "Untranslated message with code " + opcode + ": " + l.toString(_memo.getQsiTrafficController());
                     break;
             }
         }
@@ -81,7 +82,7 @@ public class QsiMonFrame extends jmri.jmrix.AbstractMonFrame implements QsiListe
             }
 
         } else {
-            text = "U: Unrecognized reply: " + l.toString(_memo.getQsiTrafficController());
+            text = "U: Untranslated reply: " + l.toString(_memo.getQsiTrafficController());
         }
         nextLine(text + "\n", l.toString(_memo.getQsiTrafficController()));
     }

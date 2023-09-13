@@ -3,10 +3,11 @@ package jmri.jmrit.operations.setup;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
@@ -113,6 +114,14 @@ public class OptionFrameTest extends OperationsTestCase {
 
         // done
         JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        OptionFrame f = new OptionFrame();
+        f.initComponents();
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
     // private final static Logger log = LoggerFactory.getLogger(OptionFrameTest.class);

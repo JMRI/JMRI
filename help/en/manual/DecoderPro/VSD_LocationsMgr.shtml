@@ -7,13 +7,7 @@
 
   <style>
     .dp-center {text-align: center;}
-    .dp-middle {text-align: middle;}
     .dp-right {text-align: right;}
-    .dp-none {list-style-type: none;}
-    .dp-square {list-style-type: square;}
-    .dp-upper-alpha {ist-style-type: upper-alpha;}
-    .dp-lower-alpha {list-style-type: lower-alpha;}
-    .dp-border-2 {border: 2px solid;}
   </style>
 </head>
 <body>
@@ -394,9 +388,9 @@
 
       <p>You might also enrich the logging information, by adding the line</p>
 
-      <pre>   log4j.category.jmri.jmrit.vsdecoder.VSDGeoFile=DEBUG</pre>
-      <p>to the file <strong>default.lcf</strong> as the last line. This file is located in your
-      "Settings Location" (JMRI).</p>
+      <p>You might also enrich the logging information ( see <a 
+       href="../../apps/Debug.shtml">Debugging and System Logging</a> ), by adding the Logger Category Name
+      <br><code>jmri.jmrit.vsdecoder.VSDGeoFile</code> at DEBUG level.</p>
 
       <p>Once you have a working setup, you can activate an option in your VSD configuration file
       to print the calculated position points describing the route of your locomotive. Please see

@@ -122,7 +122,7 @@ public interface Programmer extends jmri.Disposable {
      * @param startVal  a hint of what the current value might be, or 0
      * @throws jmri.ProgrammerException if unable to communicate
      */
-    public default void readCV(String CV, ProgListener p, int startVal) throws ProgrammerException {
+    default void readCV(String CV, ProgListener p, int startVal) throws ProgrammerException {
         readCV(CV, p);
     }
 

@@ -11,7 +11,7 @@ package jmri.jmrix.pricom.pockettester;
  */
 public interface DataListener {
 
-    public void asciiFormattedMessage(String m);
+    void asciiFormattedMessage(String m);
 
     // public void rawMessage(String m);
 }

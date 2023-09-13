@@ -9,6 +9,6 @@ import java.util.EventObject;
  */
 public interface PreferencesHandler {
 
-    abstract public void handlePreferences(EventObject eo);
+    void handlePreferences(EventObject eo);
 
 }

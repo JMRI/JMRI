@@ -15,16 +15,16 @@ public interface RosterGroupSelector {
     /**
      * Key for the property "selectedRosterGroup"
      */
-    public final static String SELECTED_ROSTER_GROUP = "selectedRosterGroup";
+    String SELECTED_ROSTER_GROUP = "selectedRosterGroup";
 
-    public String getSelectedRosterGroup();
+    String getSelectedRosterGroup();
 
-    public void addPropertyChangeListener(PropertyChangeListener listener);
+    void addPropertyChangeListener(PropertyChangeListener listener);
 
-    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener);
+    void addPropertyChangeListener(String propertyName, PropertyChangeListener listener);
 
-    public void removePropertyChangeListener(PropertyChangeListener listener);
+    void removePropertyChangeListener(PropertyChangeListener listener);
 
-    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener);
+    void removePropertyChangeListener(String propertyName, PropertyChangeListener listener);
 
 }

@@ -55,13 +55,14 @@ public class PortTest {
 
     @BeforeEach
     public void setUp() {
-        t = new Port();
         JUnitUtil.setUp();
+        t = new Port();
     }
 
     @AfterEach
     public void tearDown() {
         t.dispose(); // closes the CanSystemConnectionMemo created by the Port
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

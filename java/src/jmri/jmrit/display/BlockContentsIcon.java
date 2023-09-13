@@ -6,10 +6,8 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
-import javax.swing.JTextField;
 
 import jmri.Block;
 import jmri.InstanceManager;
@@ -18,10 +16,8 @@ import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display the value contained within a Block.
@@ -300,20 +296,12 @@ public class BlockContentsIcon extends MemoryIcon {
     }
 
     protected void editBlockValue() {
-        JTextField newBlock = new JTextField(20);
-        if (getBlock().getValue() != null) {
-            newBlock.setText(getBlock().getValue().toString());
-        }
-        Object[] options = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), newBlock};
-        int retval = JOptionPane.showOptionDialog(this,
-                Bundle.getMessage("EditCurrentBlockValue"), namedBlock.getName(),
-                0, JOptionPane.INFORMATION_MESSAGE, null,
-                options, options[1]);
-
-        if (retval != 1) {
-            return;
-        }
-        setValue(newBlock.getText());
+    
+        String reval = (String)JmriJOptionPane.showInputDialog(this,
+                                     Bundle.getMessage("EditCurrentBlockValue", namedBlock.getName()),
+                                     getBlock().getValue());
+    
+        setValue(reval);
         updateSize();
     }
 
@@ -330,6 +318,6 @@ public class BlockContentsIcon extends MemoryIcon {
         getBlock().setValue(val);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockContentsIcon.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockContentsIcon.class);
 
 }

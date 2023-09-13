@@ -40,11 +40,11 @@ public interface SensorManager extends ProvidingManager<Sensor>, NameIncrementin
      *                                  be parsed.
      */
     @Nonnull
-    public Sensor provideSensor(@Nonnull String name) throws IllegalArgumentException;
+    Sensor provideSensor(@Nonnull String name) throws IllegalArgumentException;
 
     /** {@inheritDoc} */
     @Override
-    default public Sensor provide(@Nonnull String name) throws IllegalArgumentException { return provideSensor(name); }
+    default Sensor provide(@Nonnull String name) throws IllegalArgumentException { return provideSensor(name); }
 
     /**
      * Get an existing Sensor or return null if it doesn't exist.
@@ -56,11 +56,11 @@ public interface SensorManager extends ProvidingManager<Sensor>, NameIncrementin
      */
     @CheckReturnValue
     @CheckForNull
-    public Sensor getSensor(@Nonnull String name);
+    Sensor getSensor(@Nonnull String name);
 
     // to free resources when no longer used
     @Override
-    public void dispose();
+    void dispose();
 
     /**
      * Return a Sensor with the specified user or system name.
@@ -95,7 +95,7 @@ public interface SensorManager extends ProvidingManager<Sensor>, NameIncrementin
      *                                  parsed.
      */
     @Nonnull
-    public Sensor newSensor(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
+    Sensor newSensor(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
     /**
      * Get an existing Sensor or return null if it doesn't exist.
@@ -108,7 +108,7 @@ public interface SensorManager extends ProvidingManager<Sensor>, NameIncrementin
     @CheckReturnValue
     @CheckForNull
     @Override
-    public Sensor getByUserName(@Nonnull String name);
+    Sensor getByUserName(@Nonnull String name);
 
     /**
      * Get an existing Sensor or return null if it doesn't exist.
@@ -121,7 +121,7 @@ public interface SensorManager extends ProvidingManager<Sensor>, NameIncrementin
     @CheckReturnValue
     @CheckForNull
     @Override
-    public Sensor getBySystemName(@Nonnull String name);
+    Sensor getBySystemName(@Nonnull String name);
 
     /**
      * Requests status of all layout sensors under this Sensor Manager. This
@@ -132,7 +132,7 @@ public interface SensorManager extends ProvidingManager<Sensor>, NameIncrementin
      * system-specific Sensor Managers where readout of sensor status from the
      * layout is possible.
      */
-    public void updateAll();
+    void updateAll();
 
     /**
      * Get a system name for a given hardware address and system prefix.
@@ -146,17 +146,17 @@ public interface SensorManager extends ProvidingManager<Sensor>, NameIncrementin
      *                            format
      */
     @Nonnull
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
+    String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
     @CheckReturnValue
-    public long getDefaultSensorDebounceGoingActive();
+    long getDefaultSensorDebounceGoingActive();
 
     @CheckReturnValue
-    public long getDefaultSensorDebounceGoingInActive();
+    long getDefaultSensorDebounceGoingInActive();
 
-    public void setDefaultSensorDebounceGoingActive(long timer);
+    void setDefaultSensorDebounceGoingActive(long timer);
 
-    public void setDefaultSensorDebounceGoingInActive(long timer);
+    void setDefaultSensorDebounceGoingInActive(long timer);
 
     /**
      * Do the sensor objects provided by this manager support configuring
@@ -164,12 +164,12 @@ public interface SensorManager extends ProvidingManager<Sensor>, NameIncrementin
      *
      * @return true if pull up/pull down configuration is supported.
      */
-    public boolean isPullResistanceConfigurable();
+    boolean isPullResistanceConfigurable();
 
     /**
      * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     @Override
-    public String getEntryToolTip();
+    String getEntryToolTip();
 
 }

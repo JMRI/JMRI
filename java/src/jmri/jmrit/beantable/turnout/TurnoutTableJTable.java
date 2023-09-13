@@ -8,6 +8,8 @@ import java.util.EventObject;
 import java.util.Hashtable;
 
 import javax.annotation.Nonnull;
+import javax.swing.border.Border;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JTable;
 import javax.swing.table.*;
@@ -168,9 +170,13 @@ public class TurnoutTableJTable extends JTable {
 
     static class BeanBoxRenderer extends NamedBeanComboBox<Sensor> implements TableCellRenderer {
 
+        private final Border existingBorder;
+        private final Border errorBorder = BorderFactory.createLineBorder(java.awt.Color.RED);
+
         public BeanBoxRenderer() {
             super(InstanceManager.getDefault(SensorManager.class));
             setAllowNull(true);
+            existingBorder = this.getBorder();
         }
 
         @Override
@@ -185,10 +191,33 @@ public class TurnoutTableJTable extends JTable {
                     setBackground(table.getBackground());
                 }
             }
+            
+            column = table.convertColumnIndexToModel(column);
+            
+            Turnout t = (Turnout)table.getModel().getValueAt(row, TurnoutTableDataModel.SYSNAMECOL);
+            if ( t == null ) {
+                return this;
+            }
             if (value instanceof Sensor) {
                 setSelectedItem(value);
+                if (( column == TurnoutTableDataModel.SENSOR1COL ) && 
+                    (t.getFeedbackMode() != Turnout.ONESENSOR && t.getFeedbackMode() != Turnout.TWOSENSOR )) {
+                    setBorder(errorBorder);
+                } else if ( column == TurnoutTableDataModel.SENSOR2COL && t.getFeedbackMode() != Turnout.TWOSENSOR ) {
+                    setBorder(errorBorder);
+                } else {
+                    setBorder(existingBorder);
+                }
             } else {
                 setSelectedItem(null);
+                if (( column == TurnoutTableDataModel.SENSOR1COL ) && 
+                        (t.getFeedbackMode() == Turnout.ONESENSOR || t.getFeedbackMode() == Turnout.TWOSENSOR )) {
+                    setBorder(errorBorder);
+                } else if ( column == TurnoutTableDataModel.SENSOR2COL && t.getFeedbackMode() == Turnout.TWOSENSOR ) {
+                    setBorder(errorBorder);
+                } else {
+                    setBorder(existingBorder);
+                }
             }
             return this;
         }

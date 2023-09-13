@@ -142,4 +142,12 @@ public class TrainsScheduleTableFrameTest extends OperationsTestCase {
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        TrainsScheduleTableFrame f = new TrainsScheduleTableFrame();
+        f.initComponents();
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
+    }
 }

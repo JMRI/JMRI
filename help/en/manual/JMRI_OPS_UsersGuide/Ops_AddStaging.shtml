@@ -69,25 +69,24 @@
       Location can support multiple directions then select the ones that are appropriate.</p>
 
       <p>Using <strong>Select the rolling stock serviced by this location</strong> you can control
-      the rolling stock that a location can service. Push <input name="button7" id="button7" value=
-      "Clear All" type="submit"> to deselect all types, or <input name="button8" id="button8"
-      value="Select All" type="submit"> to select all types, then select or deselect the rolling
-      stock you wish the location to accept.</p>
+      the rolling stock that a location can service. Push <span class="textbutton">Clear All</span>
+      to deselect all types, or <span class="textbutton">Select All</span> to select all types,
+      then select or deselect the rolling stock you wish the location to accept.</p>
 
       <p>Since we selected <strong>Operations (Tracks) at this location</strong> as <input name=
       "radio2" id="radio2" value="radio2" checked="checked" type="radio"> <strong>Staging
-      Only</strong>, the <input name="button4" id="button4" value="Add Staging Track" type=
-      "submit"> is now enabled near the bottom of the window.</p>
+      Only</strong>, the <span class="textbutton">Add Staging Track</span>
+      is now enabled near the bottom of the window.</p>
 
-      <p>We also have the option to <input name="button5" id="button5" value="Delete Location"
-      type="submit"> or <input name="button6" id="button6" value="Save Location" type="submit"></p>
+      <p>We also have the option to <span class="textbutton">Delete Location</span> or 
+      <span class="textbutton">Save Location</span> .</p>
 
       <h3>Adding the Staging Tracks</h3>
 
       <p>A Staging Only area may contain one or more Tracks that must be defined next.</p>
 
-      <p>After you click on <input name="button9" id="button9" value="Add Staging Track" type=
-      "submit"> the <strong>Add Staging Track</strong> window is displayed, so that you can detail
+      <p>After you click on <span class="textbutton">Add Staging Track</span> the 
+      <strong>Add Staging Track</strong> window is displayed, so that you can detail
       the staging one Track at a time.</p>
 
       <table>
@@ -106,8 +105,8 @@
               "6&quot;" size="5" type="text"> and the program will convert to the scale feet that
               you select during setup.</p>
 
-              <p>Press <input name="button10" id="button10" value="Add Staging Track" type=
-              "submit"> the Staging Track is added and the greyed out features are activated.</p>
+              <p>Press <span class="textbutton">Add Staging Track</span> , the Staging Track
+              is added and the greyed out features are activated.</p>
             </td>
           </tr>
         </tbody>
@@ -233,13 +232,12 @@
         </tbody>
       </table>
 
-      <p>Now press <input name="button11" id="button11" value="Add Staging Track" type="submit"> to
-      add the new Track to this Location or press <input name="button12" id="button12" value=
-      "Delete Staging Track" type="submit"> if you do not want to store the Track.</p>
+      <p>Now press <span class="textbutton">Add Staging Track</span> to add the new Track to 
+      this Location or press <span class="textbutton">Delete Staging Track</span>
+      if you do not want to store the Track.</p>
 
       <p>If you want to add another Track to this Staging Only Location, enter new data and press
-      <input name="button13" id="button13" value="Save Staging Track" type="submit"> to add another
-      Track.</p>
+      <span class="textbutton">Save Staging Track</span> to add another Track.</p>
 
       <p>Note: if you are running a Train to and from the same Staging Location, you must define
       two Staging Tracks in OperationsPro, one to depart and one to return on. Physically, the
@@ -256,9 +254,8 @@
 
       <h3>Changing a Staging Only Track</h3>
 
-      <p>If you want to change information for any Track entry, press <input name="button14" id=
-      "button14" value="Edit" type="submit"> and the <strong>Edit Staging Track</strong> panel will
-      open.</p>
+      <p>If you want to change information for any Track entry, press <span class="textbutton">Edit</span>
+      and the <strong>Edit Staging Track</strong> panel will open.</p>
 
       <table>
         <tbody>
@@ -270,20 +267,18 @@
               <p>Note that it is identical to the Add Interchange and Yard Track panes except for
               the title.</p>
 
-              <p>Change any of the entries that you want to edit and then click <input name=
-              "button15" id="button15" value="Save Staging Track" type="submit"> to save the
-              changes.</p>
+              <p>Change any of the entries that you want to edit and then click
+              <span class="textbutton">Save Staging Track</span> to save the changes.</p>
 
-              <p>You may also <input name="button16" id="button16" value="Delete Staging Track"
-              type="submit"> from your database.</p>
+              <p>You may also <span class="textbutton">Delete Staging Track</span> from your database.</p>
             </td>
           </tr>
         </tbody>
       </table>
 
       <p>When done with editing close the <strong>Add Staging Track</strong> pane.<br>
-      If you did not yet save your new Staging Location, select <input name="button17" id=
-      "button17" value="Save Location" type="submit"> in the <strong><a href=
+      If you did not yet save your new Staging Location, select <span 
+      class="textbutton">Save Location</span> in the <strong><a href=
       "Ops_AddLocations.shtml">Add Location</a></strong> pane before you close that too.</p>
 
       <p>You may add as many Locations and Tracks as needed to complete the description of your

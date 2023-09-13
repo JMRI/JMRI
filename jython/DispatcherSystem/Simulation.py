@@ -257,10 +257,9 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
             if self.logLevel > 0: print "finished", "end position" , self.end_position, "len(block_list)-1", len(block_list)-1
             ret = "Finished"
         else:
-            #if self.activeTrain.getStatus() == self.activeTrain.RUNNING
             at_last_block_in_section = self.at_last_block_in_section()
             if self.logLevel > 0: print "*******"
-            if self.signal_ahead_clear() or not at_last_block_in_section:
+            if (self.signal_ahead_clear() or not at_last_block_in_section) and self.activeTrain.getStatus() == self.activeTrain.RUNNING:
                 self.end_position +=1
                 if self.logLevel > 0: print "end pos incremented", self.end_position
                 block_list[self.end_position].getSensor().setState(ACTIVE)
@@ -283,19 +282,31 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
 
     def current_section(self):
         allocatedSectionList = self.activeTrain.getAllocatedSectionList()
-        current_section_list = [ allocatedSection.getSection() for allocatedSection in allocatedSectionList \
+        current_section_list = [allocatedSection.getSection() for allocatedSection in allocatedSectionList \
                                  if self.block_list[self.end_position] in allocatedSection.getSection().getBlockList()]
+        if current_section_list == []:
+            print "******* current_section list is empty in Simulate Instance +++****"
+            print "active train", self.activeTrain
+            print "allocatedSectionList", allocatedSectionList
+            print "allocatedSectionList", [allocatedSection.getSection().getUserName() for allocatedSection in allocatedSectionList]
+            print "current_section_list", [section.getUserName() for section in current_section_list]
+            print "self.block_list[self.end_position]", self.block_list[self.end_position].getUserName()
+            print "******* current_section ****"
+            return
         current_section = current_section_list[0]
         return current_section
 
     def last_block_name_in_current_section(self):
-        blocks_in_section = self.current_section().getBlockList()
-        last_block = blocks_in_section[-1]
-        last_block_name = last_block.getUserName()
-        return last_block_name
+        if self.current_section() != None:
+            blocks_in_section = self.current_section().getBlockList()
+            last_block = blocks_in_section[-1]
+            last_block_name = last_block.getUserName()
+            return last_block_name
 
     def next_signal_mast(self):
         SignalMastManager = jmri.InstanceManager.getDefault(jmri.SignalMastManager)
+        if self.current_section() == None:
+            return None
         current_section_name = self.current_section().getUserName()
         if ":" in current_section_name:
             next_signal_mast_name = current_section_name.split(":")[1]
@@ -342,13 +353,18 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
 
     def signal_ahead_clear(self):
         signal_mast = self.next_signal_mast()
-        if self.logLevel > 0: print "signal_mast" , signal_mast.getUserName()
-        if self.logLevel > 0: print "signal_mast.isCleared()", signal_mast.isCleared()
-        if signal_mast.isCleared():
-            if self.logLevel > 0: print "clear True"
+        if signal_mast != None:
+            if self.logLevel > 0: print "signal_mast" , signal_mast.getUserName()
+            if self.logLevel > 0: print "signal_mast.isCleared()", signal_mast.isCleared()
+            if signal_mast.isCleared():
+                if self.logLevel > 0: print "clear True"
+            else:
+                if self.logLevel > 0: print "clear False"
+            return signal_mast.isCleared()
         else:
-            if self.logLevel > 0: print "clear False"
-        return signal_mast.isCleared()
+            # print
+            return False
+
 
     def getPrintStatus(self, status):
         if status == self.activeTrain.RUNNING:

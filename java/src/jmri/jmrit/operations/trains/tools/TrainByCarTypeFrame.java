@@ -194,7 +194,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
             if (_car != null && _car.getTrack() != null && !_car.getTrack().isDestinationAccepted(location)) {
                 JLabel locText = new JLabel();
                 locText.setText(MessageFormat.format(Bundle.getMessage("CarOnTrackDestinationRestriction"),
-                        new Object[] { _car.toString(), _car.getTrackName(), locationName }));
+                        new Object[] { _car.toString(), _car.getLocationName(), _car.getTrackName(), locationName }));
                 addItemWidth(pRoute, locText, 2, 1, y++);
                 if (_car.getLocation() != location)
                     continue;
@@ -312,6 +312,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                         _car.getTrack() != track &&
                         _car.getLocation() == track.getLocation() &&
                         _car.getFinalDestination() == null &&
+                        _car.getDivision() == null &&
                         (_car.getLoadName().equals(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName()) ||
                                 _car.getLoadName()
                                         .equals(InstanceManager.getDefault(CarLoads.class).getDefaultLoadName()))) {
@@ -322,7 +323,8 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                         _car != null &&
                         _car.getTrack() != track &&
                         _car.getLocation() == track.getLocation() &&
-                        (_car.getFinalDestination() != null ||
+                        (_car.getDivision() != null ||
+                                _car.getFinalDestination() != null ||
                                 !_car.getLoadName()
                                         .equals(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName()) &&
                                         !_car.getLoadName().equals(

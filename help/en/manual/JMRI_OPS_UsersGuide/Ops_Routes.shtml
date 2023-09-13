@@ -72,7 +72,7 @@
       "radio"> Name <input name="radio2" id="radio2" value="radio2" type="radio"> Id</strong>
       establishes the sort order of the Routes in the list.</p>
 
-      <p><input name="button2" id="button2" value="Add" type="submit"> opens the <a href=
+      <p><span class="textbutton">Add</span> opens the <a href=
       "Ops_AddRoutes.shtml"><strong>Add Route</strong></a> window allowing you to add Routes to
       your Operations database.</p>
 

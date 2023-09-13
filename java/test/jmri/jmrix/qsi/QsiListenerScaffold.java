@@ -1,8 +1,7 @@
 package jmri.jmrix.qsi;
 
-
 /**
- * Stands in for the QsiTrafficController class
+ * Stands in for a QsiListener class
  *
  * @author Bob Jacobsen
  */

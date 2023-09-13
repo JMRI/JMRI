@@ -7,9 +7,6 @@ import java.util.ResourceBundle;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
@@ -21,6 +18,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user to place RollingStock on the layout
@@ -124,6 +122,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
         pLocation.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LocationAndTrack")));
         addItemLeft(pLocation, ignoreLocationCheckBox, 0, 1);
         addItem(pLocation, locationBox, 1, 1);
+        trackLocationBox.setName("trackLocationBox");
         addItem(pLocation, trackLocationBox, 2, 1);
         addItem(pLocation, autoTrackCheckBox, 3, 1);
         pPanel.add(pLocation);
@@ -252,11 +251,11 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                 log.debug("rs ({}) has a destination ({})", _rs.toString(), _rs.getRouteDestination().getName());
             }
             if (getClass() == CarsSetFrame.class) {
-                JOptionPane.showMessageDialog(this, getRb().getString("rsPressChangeWill"), getRb().getString(
-                        "rsInRoute"), JOptionPane.WARNING_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, getRb().getString("rsPressChangeWill"), getRb().getString(
+                        "rsInRoute"), JmriJOptionPane.WARNING_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(this, getRb().getString("rsPressSaveWill"), getRb().getString(
-                        "rsInRoute"), JOptionPane.WARNING_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, getRb().getString("rsPressSaveWill"), getRb().getString(
+                        "rsInRoute"), JmriJOptionPane.WARNING_MESSAGE);
             }
         }
         _rs.addPropertyChangeListener(this);
@@ -266,8 +265,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == saveButton) {
-            save();
-            if (Setup.isCloseWindowOnSaveEnabled()) {
+            if (save() && Setup.isCloseWindowOnSaveEnabled()) {
                 dispose();
             }
         }
@@ -303,8 +301,8 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
         }
         // check to see if rolling stock is in staging and out of service (also location unknown)
         if (outOfServiceCheckBox.isSelected() && rs.getTrack() != null && rs.getTrack().isStaging()) {
-            JOptionPane.showMessageDialog(this, getRb().getString("rsNeedToRemoveStaging"), getRb()
-                    .getString("rsInStaging"), JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, getRb().getString("rsNeedToRemoveStaging"), getRb()
+                    .getString("rsInStaging"), JmriJOptionPane.WARNING_MESSAGE);
             // clear the rolling stock's location
             rs.setLocation(null, null);
         }
@@ -324,40 +322,40 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
             if (train != null) {
                 // determine if train services this rs's type
                 if (!train.isTypeNameAccepted(rs.getTypeName())) {
-                    JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
+                    JmriJOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                             "rsTrainNotServType"), new Object[]{rs.getTypeName(), train.getName()}), getRb()
                                     .getString("rsNotMove"),
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                     // prevent rs from being picked up and delivered
                     setRouteLocationAndDestination(rs, train, null, null);
                     return false;
                 }
                 // determine if train services this rs's road
                 if (rs.getClass() == Car.class && !train.isCarRoadNameAccepted(rs.getRoadName())) {
-                    JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
+                    JmriJOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                             "rsTrainNotServRoad"), new Object[]{rs.getRoadName(), train.getName()}), getRb()
                                     .getString("rsNotMove"),
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                     // prevent rs from being picked up and delivered
                     setRouteLocationAndDestination(rs, train, null, null);
                     return false;
                 }
                 // determine if train services this rs's built date
                 if (!train.isBuiltDateAccepted(rs.getBuilt())) {
-                    JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
+                    JmriJOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                             "rsTrainNotServBuilt"), new Object[]{rs.getBuilt(), train.getName()}), getRb()
                                     .getString("rsNotMove"),
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                     // prevent rs from being picked up and delivered
                     setRouteLocationAndDestination(rs, train, null, null);
                     return false;
                 }
                 // determine if train services this rs's owner
                 if (!train.isOwnerNameAccepted(rs.getOwnerName())) {
-                    JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
+                    JmriJOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                             "rsTrainNotServOwner"), new Object[]{rs.getOwnerName(), train.getName()}), getRb()
                                     .getString("rsNotMove"),
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                     // prevent rs from being picked up and delivered
                     setRouteLocationAndDestination(rs, train, null, null);
                     return false;
@@ -373,17 +371,17 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                         rd = route.getLastLocationByName(rs.getDestinationName());
                     }
                     if (rl == null) {
-                        JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
+                        JmriJOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                                 "rsLocNotServ"), new Object[]{rs.getLocationName(), train.getName()}),
-                                getRb().getString("rsNotMove"), JOptionPane.ERROR_MESSAGE);
+                                getRb().getString("rsNotMove"), JmriJOptionPane.ERROR_MESSAGE);
                         // prevent rs from being picked up and delivered
                         setRouteLocationAndDestination(rs, train, null, null);
                         return false;
                     }
                     if (rd == null && !rs.getDestinationName().equals(RollingStock.NONE)) {
-                        JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
+                        JmriJOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                                 "rsDestNotServ"), new Object[]{rs.getDestinationName(), train.getName()}),
-                                getRb().getString("rsNotMove"), JOptionPane.ERROR_MESSAGE);
+                                getRb().getString("rsNotMove"), JmriJOptionPane.ERROR_MESSAGE);
                         // prevent rs from being picked up and delivered
                         setRouteLocationAndDestination(rs, train, null, null);
                         return false;
@@ -417,23 +415,23 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                             }
                         }
                         if (!foundLoc) {
-                            JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
+                            JmriJOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                                     "rsTrainEnRoute"),
                                     new Object[]{rs.toString(), train.getName(),
                                             rs.getLocationName()}),
                                     getRb().getString("rsNotMove"),
-                                    JOptionPane.ERROR_MESSAGE);
+                                    JmriJOptionPane.ERROR_MESSAGE);
                             // prevent rs from being picked up and delivered
                             setRouteLocationAndDestination(rs, train, null, null);
                             return false;
                         }
                         if (!foundDes) {
-                            JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
+                            JmriJOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                                     "rsLocOrder"),
                                     new Object[]{rs.getDestinationName(),
                                             rs.getLocationName(), train.getName()}),
                                     getRb().getString("rsNotMove"),
-                                    JOptionPane.ERROR_MESSAGE);
+                                    JmriJOptionPane.ERROR_MESSAGE);
                             // prevent rs from being picked up and delivered
                             setRouteLocationAndDestination(rs, train, null, null);
                             return false;
@@ -451,8 +449,8 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                 rs.setLocation(null, null);
             } else {
                 if (trackLocationBox.getSelectedItem() == null) {
-                    JOptionPane.showMessageDialog(this, getRb().getString("rsFullySelect"), getRb()
-                            .getString("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(this, getRb().getString("rsFullySelect"), getRb()
+                            .getString("rsCanNotLoc"), JmriJOptionPane.ERROR_MESSAGE);
                     return false;
                 }
                 // update location only if it has changed
@@ -465,19 +463,19 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                     rs.setLastRouteId(RollingStock.NONE); // clear last route id
                     if (!status.equals(Track.OKAY)) {
                         log.debug("Can't set rs's location because of {}", status);
-                        JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
+                        JmriJOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                                 "rsCanNotLocMsg"), new Object[]{rs.toString(), status}), getRb()
                                         .getString("rsCanNotLoc"),
-                                JOptionPane.ERROR_MESSAGE);
+                                JmriJOptionPane.ERROR_MESSAGE);
                         // does the user want to force the rolling stock to this track?
-                        int results = JOptionPane.showOptionDialog(this, MessageFormat.format(getRb()
+                        int results = JmriJOptionPane.showOptionDialog(this, MessageFormat.format(getRb()
                                 .getString("rsForce"),
                                 new Object[]{rs.toString(),
                                         (Track) trackLocationBox.getSelectedItem()}),
                                 MessageFormat.format(getRb()
                                         .getString("rsOverride"), new Object[]{status}),
-                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-                        if (results == JOptionPane.YES_OPTION) {
+                                JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null, null, null);
+                        if (results == JmriJOptionPane.YES_OPTION) {
                             log.debug("Force rolling stock to track");
                             rs.setLocation((Location) locationBox.getSelectedItem(), (Track) trackLocationBox
                                     .getSelectedItem(), RollingStock.FORCE);
@@ -526,8 +524,8 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                         destTrack.isStaging() &&
                         (rs.getTrain() == null || !rs.getTrain().isBuilt())) {
                     log.debug("Destination track ({}) is staging", destTrack.getName());
-                    JOptionPane.showMessageDialog(this, getRb().getString("rsDoNotSelectStaging"), getRb()
-                            .getString("rsCanNotDest"), JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(this, getRb().getString("rsDoNotSelectStaging"), getRb()
+                            .getString("rsCanNotDest"), JmriJOptionPane.ERROR_MESSAGE);
                     return false;
                 }
                 // determine is user changed the destination track and is part of train
@@ -543,10 +541,10 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                 String status = rs.setDestination((Location) destinationBox.getSelectedItem(), destTrack);
                 if (!status.equals(Track.OKAY)) {
                     log.debug("Can't set rs's destination because of {}", status);
-                    JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
+                    JmriJOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                             "rsCanNotDestMsg"), new Object[]{rs.toString(), status}), getRb().getString(
                                     "rsCanNotDest"),
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                     return false;
                 }
             }
@@ -573,10 +571,10 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                 setRouteLocationAndDestination(rs, train, null, null);
             }
             if (rs.getRouteLocation() != null || rs.getRouteDestination() != null) {
-                if (JOptionPane.showConfirmDialog(this, MessageFormat.format(getRb().getString(
+                if (JmriJOptionPane.showConfirmDialog(this, MessageFormat.format(getRb().getString(
                         "rsRemoveRsFromTrain"), new Object[]{rs.toString(), train.getName()}), getRb()
                                 .getString("rsInRoute"),
-                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                     // prevent rs from being picked up and delivered
                     setRouteLocationAndDestination(rs, train, null, null);
                 }
@@ -584,14 +582,14 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                 if (rs.getDestinationTrack().getLocation().isStaging() &&
                         !rs.getDestinationTrack().equals(train.getTerminationTrack())) {
                     log.debug("Rolling stock destination track is staging and not the same as train");
-                    JOptionPane.showMessageDialog(this, MessageFormat.format(
+                    JmriJOptionPane.showMessageDialog(this, MessageFormat.format(
                             Bundle.getMessage("rsMustSelectSameTrack"), new Object[]{train.getTerminationTrack()
                                     .getName()}),
-                            Bundle.getMessage("rsStagingTrackError"), JOptionPane.ERROR_MESSAGE);
-                } else if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
+                            Bundle.getMessage("rsStagingTrackError"), JmriJOptionPane.ERROR_MESSAGE);
+                } else if (JmriJOptionPane.showConfirmDialog(this, MessageFormat.format(
                         getRb().getString("rsAddRsToTrain"), new Object[]{rs.toString(), train.getName()}),
                         getRb().getString("rsAddManuallyToTrain"),
-                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                     // set new pick up and set out locations
                     setRouteLocationAndDestination(rs, train, rl, rd);
                     log.debug("Add rolling stock ({}) to train ({}) route pick up {} drop {}", rs.toString(), train
@@ -839,5 +837,5 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RollingStockSetFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RollingStockSetFrame.class);
 }

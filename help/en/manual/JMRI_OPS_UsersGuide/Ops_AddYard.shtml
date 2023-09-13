@@ -46,8 +46,7 @@
 
       <p>Select <strong>Operations (Tracks) at this location</strong> <input name="radio" id=
       "radio" value="radio" checked="checked" type="radio"> <strong>Yards</strong>, then press the
-      <input name="button" id="button" value="Add Location" type="submit"> at the bottom of the
-      window.</p>
+      <span class="textbutton">Add Location</span> button at the bottom of the window.</p>
 
       <p><img src="images/Ops_addLocationYard03.png" alt="add Yard" height="640" width="772">
       </p>
@@ -96,7 +95,7 @@
               "text"> and the program will convert to the scale feet that you select during
               setup.</p>
 
-              <p>Press <input name="button10" id="button10" value="Add Yard Track" type="submit">
+              <p>Press <span class="textbutton">Add Yard Track</span> ,
               the siding track is added and the greyed out features are activated.</p>
             </td>
           </tr>
@@ -169,13 +168,12 @@
               <p>You may enter a <strong>Comment</strong> <input name="textfield5" id="textfield5"
               type="text"> for the Track.</p>
 
-              <p>You may now press <input name="button11" id="button11" value="Save Yard Track"
-              type="submit"> to add to the Location or press <input name="button12" id="button12"
-              value="Delete Yard Track" type="submit"> if you do not want to store the Track.</p>
+              <p>You may now press <span class="textbutton">Save Yard Track</span> to add to the
+              Location or press <span class="textbutton">Delete Yard Track</span>
+              if you do not want to store the Track.</p>
 
               <p>If you want to add another track to this Yard Location, enter new data and Press
-              <input name="button13" id="button13" value="Save Yard Track" type="submit"> to add
-              the Track.</p>
+              <span class="textbutton">Save Yard Track</span> to add the Track.</p>
 
               <p>Close the window when done with this Location.</p>
             </td>
@@ -193,9 +191,8 @@
       <p><img src="images/Ops_AddSidingTrack04.png" alt="add track" height="408" width="772">
       </p>
 
-      <p>If you want to change information for any track entry, press <input name="button14" id=
-      "button14" value="Edit" type="submit"> and the <strong>Edit Siding Track</strong> window will
-      open</p>
+      <p>If you want to change information for any track entry, press <span class="textbutton">Edit</span>
+      and the <strong>Edit Siding Track</strong> window will open.</p>
 
       <table>
         <tbody>
@@ -206,12 +203,10 @@
             <td>
               <p>Note that it is identical to the Add Yard Track except for the title.</p>
 
-              <p>Change any of the entries that you want to edit and then press the <input name=
-              "button15" id="button15" value="Save Yard Track" type="button"> to save the
-              changes.</p>
+              <p>Change any of the entries that you want to edit and then press
+              <span class="textbutton">Save Yard Track</span> to save the changes.</p>
 
-              <p>You may also <input name="button16" id="button16" value="Delete Yard Track" type=
-              "button"> from your database.</p>
+              <p>You may also <span class="textbutton">Delete Yard Track</span> from your database.</p>
 
               <p>When done with editing close the window.</p>
             </td>

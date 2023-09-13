@@ -50,107 +50,146 @@
       <variable item="Vstart" CV="2" default="4" comment="Range 0-127">
         <decVal min="1" max="127"/>
         <label>Vstart</label>
+        <label xml:lang="cs">Rozjezdová rychlost</label>
+        <tooltip>Range 0-127</tooltip>
+        <tooltip xml:lang="cs">Meze 0 – 127</tooltip>        
       </variable>
       <variable CV="3" default="7" item="Accel" comment="Acceleration Rate 0=Fastest acceleration">
         <decVal min="0" max="63"/>
         <label>Acceleration</label>
+        <label xml:lang="cs">Zrychlení</label>
+        <tooltip>Acceleration Rate 0=Fastest acceleration</tooltip>
+        <tooltip xml:lang="cs">Míra zrychlení, 0 = nejrychlejší zrychlení</tooltip>
       </variable>
       <variable CV="4" default="5" item="Decel" comment="Deceleration Rate 0=Fastest deceleration">
         <decVal min="0" max="63"/>
         <label>Deceleration</label>
+        <label xml:lang="cs">Zpomalení</label>
+        <tooltip>Deceleration Rate 0=Fastest deceleration</tooltip>
+        <tooltip xml:lang="cs">Míra zpomalení, 0 = nejrychlejší zpomalení</tooltip>
       </variable>
       <variable item="Vhigh" CV="5" default="60" comment="Vhigh Range 1-127">
         <decVal min="1" max="127"/>
         <label>Vhigh</label>
+        <label xml:lang="cs">Maximální rychlost</label>
+        <tooltip>Vhigh Range 1-127</tooltip>
+        <tooltip xml:lang="cs">Meze 0 – 127</tooltip>
       </variable>
       <variable item="Vmid" CV="6" default="30" comment="Vmid, recommended value = [25%-75%] Vhigh">
         <decVal min="0" max="127"/>
         <label>Vmid</label>
+        <label xml:lang="cs">Střední rychlost</label>
+        <tooltip>Vmid, recommended value = [25%-75%] Vhigh</tooltip>
+        <tooltip xml:lang="cs">Doporučená hodnota = [25 % – 75 %] Maximální rychlosti</tooltip>
       </variable>
       <variable CV="7" item="Decoder Version" readOnly="yes" default="1">
         <decVal/>
-        <label>Decoder Version</label>
+        <label>Version</label>
+        <label xml:lang="cs">Verze</label>
       </variable>
       <variable CV="8" item="Manufacturer" default="78">
         <decVal/>
         <label>Manufacturer ID</label>
+        <label xml:lang="cs">ID výrobce</label>
       </variable>
       <variable CV="9" default="3" item="Load Control" comment="Motor Control Algorithm, 0-8 User defined = 9 (see CV60)">
         <decVal min="0" max="9"/>
         <label>CV9 Motor Control Algorithm</label>
+        <label xml:lang="cs">CV9 Algoritmus řízení motoru</label>
+        <tooltip>Motor Control Algorithm, 0-8 User defined = 9 (see CV60)</tooltip>
+        <tooltip xml:lang="cs">0 – 8, Uživatelem definováno = 9 (viz CV60)</tooltip>
       </variable>
 
 <!-- CV13/14 - Analog Mode -->
      <variable item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F1</label>
+        <label xml:lang="cs">Analogový režim Stav funkce – F1</label>
       </variable>
       <variable item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F2</label>
+        <label xml:lang="cs">Analogový režim Stav funkce – F2</label>
       </variable>
       <variable item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F3</label>
+        <label xml:lang="cs">Analogový režim Stav funkce – F3</label>
       </variable>
       <variable item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F4</label>
+        <label xml:lang="cs">Analogový režim Stav funkce – F4</label>
       </variable>
       <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F5</label>
+        <label xml:lang="cs">Analogový režim Stav funkce – F5</label>
       </variable>
       <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F6</label>
+        <label xml:lang="cs">Analogový režim Stav funkce – F6</label>
       </variable>
       <variable item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F7</label>
+        <label xml:lang="cs">Analogový režim Stav funkce – F7</label>
       </variable>
       <variable item="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F8</label>
+        <label xml:lang="cs">Analogový režim Stav funkce – F8</label>
       </variable>
 
       <variable item="Analog Mode Function Status - FL in forward" CV="14" default="1" mask="XXXXXXXV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - FL in forward</label>
+        <label xml:lang="cs">Analogový režim Stav funkce – F0 světla vpřed</label>
       </variable>
       <variable item="Analog Mode Function Status - FL in reverse" CV="14" default="1" mask="XXXXXXVX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - FL in reverse</label>
+        <label xml:lang="cs">Analogový režim Stav funkce – F0 světla vzad</label>
       </variable>
       <variable item="Analog Mode Function Status - F9" CV="14" mask="XXXXXVXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F9</label>
+        <label xml:lang="cs">Analogový režim Stav funkce – F9</label>
       </variable>
       <variable item="Analog Mode Function Status - F10" CV="14" mask="XXXXVXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F10</label>
+        <label xml:lang="cs">Analogový režim Stav funkce – F10</label>
       </variable>
       <variable item="Analog Mode Function Status - F11" CV="14" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F11</label>
+        <label xml:lang="cs">Analogový režim Stav funkce – F11</label>
       </variable>
       <variable item="Analog Mode Function Status - F12" CV="14" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F12</label>
+        <label xml:lang="cs">Analogový režim Stav funkce – F12</label>
       </variable>
       <variable item="Analog Mode Function Status - F13" CV="14" mask="XVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F13</label>
+        <label xml:lang="cs">Analogový režim Stav funkce – F13</label>
       </variable>
       <variable item="Analog Mode Function Status - F14" CV="14" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F14</label>
+        <label xml:lang="cs">Analogový režim Stav funkce – F14</label>
       </variable>
 
 
-      <variable CV="15" item="Programming Key CV15" tooltip="Need to equal to Decoder Lock ID number to allow programming the decoder.">
+      <variable CV="15" item="Programming Key CV15" >
         <decVal min="0" max="7" />
         <label>Programming Key CV15</label>
+        <label xml:lang="cs">Klíč programování CV15</label>
+        <tooltip>Need to equal to Decoder Lock ID number to allow programming the decoder.</tooltip>
+        <tooltip xml:lang="cs">Pro povolení programování se musí rovnat číslu ID zámku dekodéru</tooltip>
       </variable>
 
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
@@ -160,92 +199,114 @@
       <variable item="Consist Address Active For F1" CV="21" mask="XXXXXXXV" default="0" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F1</label>
+        <label xml:lang="cs">Adresa soupravy aktivní na F1</label>
       </variable>
       <variable item="Consist Address Active For F2" CV="21" mask="XXXXXXVX" default="0" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F2</label>
+        <label xml:lang="cs">Adresa soupravy aktivní na F2</label>
       </variable>
       <variable item="Consist Address Active For F3" CV="21" mask="XXXXXVXX" default="0" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F3</label>
+        <label xml:lang="cs">Adresa soupravy aktivní na F3</label>
       </variable>
       <variable item="Consist Address Active For F4" CV="21" mask="XXXXVXXX" default="0" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F4</label>
+        <label xml:lang="cs">Adresa soupravy aktivní na F4</label>
       </variable>
       <variable item="Consist Address Active For F5" CV="21" mask="XXXVXXXX" default="0" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F5</label>
+        <label xml:lang="cs">Adresa soupravy aktivní na F5</label>
       </variable>
       <variable item="Consist Address Active For F6" CV="21" mask="XXVXXXXX" default="0" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F6</label>
+        <label xml:lang="cs">Adresa soupravy aktivní na F6</label>
       </variable>
       <variable item="Consist Address Active For F7" CV="21" mask="XVXXXXXX" default="0" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F7</label>
+        <label xml:lang="cs">Adresa soupravy aktivní na F7</label>
       </variable>
       <variable item="Consist Address Active For F8" CV="21" mask="VXXXXXXX" default="0" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F8</label>
+        <label xml:lang="cs">Adresa soupravy aktivní na F8</label>
       </variable>
       <variable item="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For FL Forward</label>
+        <label xml:lang="cs">Adresa soupravy aktivní na F0 Vpřed</label>
       </variable>
       <variable item="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For FL Reverse</label>
+        <label xml:lang="cs">Adresa soupravy aktivní na F0 Vzad</label>
       </variable>
       <variable item="Consist Address Active For F9" CV="22" mask="XXXXXVXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F9</label>
+        <label xml:lang="cs">Adresa soupravy aktivní na F9</label>
       </variable>
       <variable item="Consist Address Active For F10" CV="22" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F10</label>
+        <label xml:lang="cs">Adresa soupravy aktivní na F10</label>
       </variable>
       <variable item="Consist Address Active For F11" CV="22" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F11</label>
+        <label xml:lang="cs">Adresa soupravy aktivní na F11</label>
       </variable>
       <variable item="Consist Address Active For F12" CV="22" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F12</label>
+        <label xml:lang="cs">Adresa soupravy aktivní na F12</label>
       </variable>
 
 <!-- CV26 - tOm sub version -->
       <variable CV="26" readOnly="yes" item="Decoder Subversion">
         <decVal/>
-        <label>Decoder Subversion</label>
+        <label></label>
+        <tooltip>Decoder Subversion</tooltip>
+        <tooltip xml:lang="cs">Podverze dekodéru</tooltip>
       </variable>
 
 <!-- Decoder automatic stopping configuration -->
       <variable CV="27" mask="XXXXXXXV" item="ASC right" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Constant Braking Distance on right rail</label>
+        <label xml:lang="cs">Konstantní brzdná dráha na pravé kolejnici</label>
       </variable>
       <variable CV="27" mask="XXXXXXVX" item="ASC left" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Constant Braking Distance on left rail</label>
+        <label xml:lang="cs">Konstantní brzdná dráha na levé kolejnici</label>
       </variable>      
       <variable CV="27" mask="XXXXXVXX" item="ASC DC" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>DC Braking</label>
+        <label xml:lang="cs">DC brždění (stejnosměrné)</label>
       </variable>
       <variable CV="27" mask="XVXXXXXX" item="ASC STOP" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>STOP/Zero Speed Braking</label>
+        <label xml:lang="cs">STOP/Nulová brzdná rychlost</label>
       </variable>
 
 <!-- CV28 -->
       <variable CV="28" mask="XXXXXXXV" item="RailCom Address" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Ch. 1 for Address</label>
+        <label xml:lang="cs">Kanál 1 pro Adresu</label>
       </variable>
       <variable CV="28" mask="XXXXXXVX" item="RailCom Data" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Ch. 2 for Data</label>
+        <label xml:lang="cs">Kanál 2 pro Data</label>
       </variable>
 
 
@@ -257,43 +318,54 @@
 
       <variable item="Error CV" CV="30" readOnly="yes" default="0">
         <decVal/>
-        <label>Read out "1" when an overcurrent has occurred since last reset.</label>
+        <label>Error information</label>
+        <label xml:lang="cs">Chybová informace</label>
+        <tooltip>Read out "1" when an overcurrent has occurred since last reset.</tooltip>
+        <tooltip xml:lang="cs">Přečte "1" pokud se od posledního resetu vyskytlo proudové přetížení (zkrat).</tooltip>
       </variable>      
 
 <!-- F0 Forward -->
       <variable item="F0(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" minFn="0" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F0(f) controls output 1</label>
+        <label xml:lang="cs">F0(vpřed) řídí výstup 1</label>
       </variable>
       <variable item="F0(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F0(f) controls output 2</label>
+        <label xml:lang="cs">F0(vpřed) řídí výstup 2</label>
       </variable>
       <variable item="F0(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F0(f) controls output 3</label>
+        <label xml:lang="cs">F0(vpřed) řídí výstup 3</label>
       </variable>
       <variable item="F0(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F0(f) controls output 4</label>
+        <label xml:lang="cs">F0(vpřed) řídí výstup 4</label>
       </variable>
 
 <!-- F0 Reverse -->
       <variable item="F0(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F0(r) controls output 1</label>
+        <label xml:lang="cs">F0(vzad) řídí výstup 1</label>
       </variable>
       <variable item="F0(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" minFn="0" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F0(r) controls output 2</label>
+        <label xml:lang="cs">F0(vzad) řídí výstup 2</label>
       </variable>
       <variable item="F0(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F0(r) controls output 3</label>
+        <label xml:lang="cs">F0(vzad) řídí výstup 3</label>
       </variable>
       <variable item="F0(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F0(r) controls output 4</label>
+        <label xml:lang="cs">F0(vzad) řídí výstup 4</label>
       </variable>
 
 
@@ -301,18 +373,22 @@
       <variable item="F1(f) controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1(f) controls output 1</label>
+        <label xml:lang="cs">F1(vpřed) řídí výstup 1</label>
       </variable>
       <variable item="F1(f) controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1(f) controls output 2</label>
+        <label xml:lang="cs">F1(vpřed) řídí výstup 2</label>
       </variable>
       <variable item="F1(f) controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="0" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1(f) controls output 3</label>
+        <label xml:lang="cs">F1(vpřed) řídí výstup 3</label>
       </variable>
       <variable item="F1(f) controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1(f) controls output 4</label>
+        <label xml:lang="cs">F1(vpřed) řídí výstup 4</label>
       </variable>
 
 
@@ -320,259 +396,318 @@
       <variable item="F1(r) controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1(r) controls output 1</label>
+        <label xml:lang="cs">F1(vzad) řídí výstup 1</label>
       </variable>
       <variable item="F1(r) controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1(r) controls output 2</label>
+        <label xml:lang="cs">F1(vzad) řídí výstup 2</label>
       </variable>
       <variable item="F1(r) controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="0" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1(r) controls output 3</label>
+        <label xml:lang="cs">F1(vzad) řídí výstup 3</label>
       </variable>
       <variable item="F1(r) controls output 4" CV="36" mask="XXXXVXXX" minOut="4" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1(r) controls output 4</label>
+        <label xml:lang="cs">F1(vzad) řídí výstup 4</label>
       </variable>
     
 <!-- F2 -->
       <variable item="F2 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 1</label>
+        <label xml:lang="cs">F2 řídí výstup 1</label>
       </variable>
       <variable item="F2 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 2</label>
+        <label xml:lang="cs">F2 řídí výstup 2</label>
       </variable>
       <variable item="F2 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 3</label>
+        <label xml:lang="cs">F2 řídí výstup 3</label>
       </variable>
       <variable item="F2 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 4</label>
+        <label xml:lang="cs">F2 řídí výstup 4</label>
       </variable>
 
 <!-- F3 -->
       <variable item="F3 controls output 1" CV="38" mask="XXXXXXXV" minOut="1" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 1</label>
+        <label xml:lang="cs">F3 řídí výstup 1</label>
       </variable>
       <variable item="F3 controls output 2" CV="38" mask="XXXXXXVX" minOut="2" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 2</label>
+        <label xml:lang="cs">F3 řídí výstup 2</label>
       </variable>
       <variable item="F3 controls output 3" CV="38" mask="XXXXXVXX" minOut="3" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 3</label>
+        <label xml:lang="cs">F3 řídí výstup 3</label>
       </variable>
       <variable item="F3 controls output 4" CV="38" mask="XXXXVXXX" minOut="4" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 4</label>
+        <label xml:lang="cs">F3 řídí výstup 4</label>
       </variable>
 
 <!-- F4 -->
       <variable item="F4 controls output 1" CV="39" mask="XXXXXXXV" minOut="1" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output 1</label>
+        <label xml:lang="cs">F4 řídí výstup 1</label>
       </variable>
       <variable item="F4 controls output 2" CV="39" mask="XXXXXXVX" minOut="2" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output 2</label>
+        <label xml:lang="cs">F4 řídí výstup 2</label>
       </variable>
       <variable item="F4 controls output 3" CV="39" mask="XXXXXVXX" minOut="3" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output 3</label>
+        <label xml:lang="cs">F4 řídí výstup 3</label>
       </variable>
       <variable item="F4 controls output 4" CV="39" mask="XXXXVXXX" minOut="4" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output 4</label>
+        <label xml:lang="cs">F4 řídí výstup 4</label>
       </variable>
 
 <!-- F5 -->
       <variable item="F5 controls output 1" CV="40" mask="XXXXXXXV" minOut="1" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output 1</label>
+        <label xml:lang="cs">F5 řídí výstup 1</label>
       </variable>
       <variable item="F5 controls output 2" CV="40" mask="XXXXXXVX" minOut="2" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output 2</label>
+        <label xml:lang="cs">F5 řídí výstup 2</label>
       </variable>
       <variable item="F5 controls output 3" CV="40" mask="XXXXXVXX" minOut="3" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output 3</label>
+        <label xml:lang="cs">F5 řídí výstup 3</label>
       </variable>
       <variable item="F5 controls output 4" CV="40" mask="XXXXVXXX" minOut="4" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output 4</label>
+        <label xml:lang="cs">F5 řídí výstup 4</label>
       </variable>
 
 <!-- F6 -->
       <variable item="F6 controls output 1" CV="41" mask="XXXXXXXV" minOut="1" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output 1</label>
+        <label xml:lang="cs">F6 řídí výstup 1</label>
       </variable>
       <variable item="F6 controls output 2" CV="41" mask="XXXXXXVX" minOut="2" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output 2</label>
+        <label xml:lang="cs">F6 řídí výstup 2</label>
       </variable>
       <variable item="F6 controls output 3" CV="41" mask="XXXXXVXX" minOut="3" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output 3</label>
+        <label xml:lang="cs">F6 řídí výstup 3</label>
       </variable>
       <variable item="F6 controls output 4" CV="41" mask="XXXXVXXX" minOut="4" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output 4</label>
+        <label xml:lang="cs">F6 řídí výstup 4</label>
       </variable>
 
 <!-- F7 -->
       <variable item="F7 controls output 1" CV="42" mask="XXXXXXXV" minOut="1" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output 1</label>
+        <label xml:lang="cs">F7 řídí výstup 1</label>
       </variable>
       <variable item="F7 controls output 2" CV="42" mask="XXXXXXVX" minOut="2" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output 2</label>
+        <label xml:lang="cs">F7 řídí výstup 2</label>
       </variable>
       <variable item="F7 controls output 3" CV="42" mask="XXXXXVXX" minOut="3" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output 3</label>
+        <label xml:lang="cs">F7 řídí výstup 3</label>
       </variable>
       <variable item="F7 controls output 4" CV="42" mask="XXXXVXXX" minOut="4" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output 4</label>
+        <label xml:lang="cs">F7 řídí výstup 4</label>
       </variable>
 
 <!-- F8 -->
       <variable item="F8 controls output 1" CV="43" mask="XXXXXXXV" minOut="1" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output 1</label>
+        <label xml:lang="cs">F8 řídí výstup 1</label>
       </variable>
       <variable item="F8 controls output 2" CV="43" mask="XXXXXXVX" minOut="2" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output 2</label>
+        <label xml:lang="cs">F8 řídí výstup 2</label>
       </variable>
       <variable item="F8 controls output 3" CV="43" mask="XXXXXVXX" minOut="3" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output 3</label>
+        <label xml:lang="cs">F8 řídí výstup 3</label>
       </variable>
       <variable item="F8 controls output 4" CV="43" mask="XXXXVXXX" minOut="4" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output 4</label>
+        <label xml:lang="cs">F8 řídí výstup 4</label>
       </variable>
 
 <!-- F9 -->
       <variable item="F9 controls output 1" CV="44" mask="XXXXXXXV" minOut="1" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F9 controls output 1</label>
+        <label xml:lang="cs">F9 řídí výstup 1</label>
       </variable>
       <variable item="F9 controls output 2" CV="44" mask="XXXXXXVX" minOut="2" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F9 controls output 2</label>
+        <label xml:lang="cs">F9 řídí výstup 2</label>
       </variable>
       <variable item="F9 controls output 3" CV="44" mask="XXXXXVXX" minOut="3" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F9 controls output 3</label>
+        <label xml:lang="cs">F9 řídí výstup 3</label>
       </variable>
       <variable item="F9 controls output 4" CV="44" mask="XXXXVXXX" minOut="4" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F9 controls output 4</label>
+        <label xml:lang="cs">F9 řídí výstup 4</label>
       </variable>
 
 <!-- F10 -->
       <variable item="F10 controls output 1" CV="45" mask="XXXXXXXV" minOut="1" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F10 controls output 1</label>
+        <label xml:lang="cs">F10 řídí výstup 1</label>
       </variable>
       <variable item="F10 controls output 2" CV="45" mask="XXXXXXVX" minOut="2" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F10 controls output 2</label>
+        <label xml:lang="cs">F10 řídí výstup 2</label>
       </variable>
       <variable item="F10 controls output 3" CV="45" mask="XXXXXVXX" minOut="3" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F10 controls output 3</label>
+        <label xml:lang="cs">F10 řídí výstup 3</label>
       </variable>
       <variable item="F10 controls output 4" CV="45" mask="XXXXVXXX" minOut="4" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F10 controls output 4</label>
+        <label xml:lang="cs">F10 řídí výstup 4</label>
       </variable>
 
 <!-- F11 -->
       <variable item="F11 controls output 1" CV="46" mask="XXXXXXXV" minOut="1" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F11 controls output 1</label>
+        <label xml:lang="cs">F11 řídí výstup 1</label>
       </variable>
       <variable item="F11 controls output 2" CV="46" mask="XXXXXXVX" minOut="2" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F11 controls output 2</label>
+        <label xml:lang="cs">F11 řídí výstup 2</label>
       </variable>
       <variable item="F11 controls output 3" CV="46" mask="XXXXXVXX" minOut="3" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F11 controls output 3</label>
+        <label xml:lang="cs">F11 řídí výstup 3</label>
       </variable>
       <variable item="F11 controls output 4" CV="46" mask="XXXXVXXX" minOut="4" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F11 controls output 4</label>
+        <label xml:lang="cs">F11 řídí výstup 4</label>
       </variable>
 
 <!-- F12 -->
       <variable item="F12 controls output 1" CV="47" mask="XXXXXXXV" minOut="1" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output 1</label>
+        <label xml:lang="cs">F12 řídí výstup 1</label>
       </variable>
       <variable item="F12 controls output 2" CV="47" mask="XXXXXXVX" minOut="2" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output 2</label>
+        <label xml:lang="cs">F12 řídí výstup 2</label>
       </variable>
       <variable item="F12 controls output 3" CV="47" mask="XXXXXVXX" minOut="3" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output 3</label>
+        <label xml:lang="cs">F12 řídí výstup 3</label>
       </variable>
       <variable item="F12 controls output 4" CV="47" mask="XXXXVXXX" minOut="4" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output 4</label>
+        <label xml:lang="cs">F12 řídí výstup 4</label>
       </variable>
 
      <variable item="Out 1 Light intensity" CV="48" default="255">
         <decVal min="0" max="255" />
-        <label>Out 1 Light intensity</label>
+        <label>Output 1</label>
+        <label xml:lang="cs">Výstup 1</label>
       </variable>
       <variable item="Out 2 Light intensity" CV="49" default="255">
         <decVal min="0" max="255" />
-        <label>Out 2 Light intensity</label>
+        <label>Output 2</label>
+        <label xml:lang="cs">Výstup 2</label>
       </variable>
       <variable item="Out 3 Light intensity" CV="50" default="255">
         <decVal min="0" max="255" />
-        <label>Out 3 Light intensity</label>
+        <label>Output 3</label>
+        <label xml:lang="cs">Výstup 3</label>
       </variable>
       <variable item="Out 4 Light intensity" CV="51" default="255">
         <decVal min="0" max="255" />
-        <label>Out 4 Light intensity</label>
+        <label>Output 4</label>
+        <label xml:lang="cs">Výstup 4</label>
       </variable>
  
       <variable item="Function State" CV="56" default="0" comment="Save last Function state if CV value = 1">
         <decVal min="0" max="1" />
         <label>Save Function State</label>
+        <label xml:lang="cs">Uložit stav funkce</label>
+        <tooltip>Save last Function state if CV value = 1</tooltip>
+        <tooltip xml:lang="cs">Uloží poslední stav funkce pokud hodnota CV = 1</tooltip>
       </variable>
 
 <!--CV60-CV63 - Motor control -->
       <variable item="EMF Option 1" CV="60" default="3" comment="Motor, Back EMF measurement Delay">
         <decVal min="0" max="135" />
         <label>Motor, Back EMF measurement delay</label>
+        <label xml:lang="cs">Motor, BEMF zpoždění měření</label>
       </variable>
 
       <variable item="EMF Option 2" CV="61" default="80" comment="PID P constant">
         <decVal min="0" max="255" />
         <label>PID P constant</label>
+        <label xml:lang="cs">PID konstanta P</label>
       </variable>
 
       <variable item="EMF Option 3" CV="62" default="120" comment="PID I constant">
         <decVal min="0" max="255" />
         <label>PID I constant</label>
+        <label xml:lang="cs">PID konstanta I</label>
       </variable>
 
       <variable item="EMF Option 4" CV="63" default="40" comment="PID D constant">
         <decVal min="0" max="255" />
         <label>PID D constant</label>
+        <label xml:lang="cs">PID konstanta D</label>
       </variable>
 
 <!-- CV67-CV94 - Speed table -->
@@ -581,54 +716,70 @@
       <variable CV="105" item="User Id #1">
         <decVal/>
         <label>User Private ID #1</label>
+        <label xml:lang="cs">Uživatel ID 1</label>
       </variable>
       <variable CV="106" item="User Id #2">
         <decVal/>
         <label>User Private ID #2</label>
+        <label xml:lang="cs">Uživatel ID 2</label>
       </variable>
 
       <variable item="FadeOn" CV="112" default="15" comment="Fade ON effects on outputs, ex.:1=8ms, 15=120ms 125=1000ms">
         <decVal min="0" max="127" />
         <label>Fade ON effect</label>
+        <label xml:lang="cs">Efekt stmívání ZAP</label>
+        <tooltip>Fade ON effects on outputs, ex.:1=8ms, 15=120ms 125=1000ms</tooltip>
+        <tooltip xml:lang="cs">Efekt stmívání ZAP na výstupu, např.: 1 = 8 ms, 15 = 120 ms, 125 = 1000 ms</tooltip>
       </variable>
 
       <variable item="FadeOFF" CV="113" default="3" comment="Fade OFF effect on outputs, ex.:1=8ms, 15=120ms 125=1000ms">
         <decVal min="0" max="127" />
         <label>Fade OFF effect</label>
+        <label xml:lang="cs">Efekt stmívání VYP</label>
+        <tooltip>Fade OFF effects on outputs, ex.:1=8ms, 15=120ms 125=1000ms</tooltip>
+        <tooltip xml:lang="cs">Efekt stmívání VYP na výstupu, např.: 1 = 8 ms, 15 = 120 ms, 125 = 1000 ms</tooltip>
       </variable>
 
 <!-- CV114 -->
       <variable item="Shunting Speed Active For F1" CV="114" mask="XXXXXXXV" default="0" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Shunting Speed Active For F1</label>
+        <label xml:lang="cs">Posunovací rychlost aktivní na F1</label>
       </variable>
       <variable item="Shunting Speed Active For F2" CV="114" mask="XXXXXXVX" default="0" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Shunting Speed Active For F2</label>
+        <label xml:lang="cs">Posunovací rychlost aktivní na F2</label>
       </variable>
       <variable item="Shunting Speed Active For F3" CV="114" mask="XXXXXVXX" default="1" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Shunting Speed Active For F3</label>
+        <label xml:lang="cs">Posunovací rychlost aktivní na F3</label>
       </variable>
       <variable item="Shunting Speed Active For F4" CV="114" mask="XXXXVXXX" default="0" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Shunting Speed Active For F4</label>
+        <label xml:lang="cs">Posunovací rychlost aktivní na F4</label>
       </variable>
       <variable item="Shunting Speed Active For F5" CV="114" mask="XXXVXXXX" default="0" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Shunting Speed Active For F5</label>
+        <label xml:lang="cs">Posunovací rychlost aktivní na F5</label>
       </variable>
       <variable item="Shunting Speed Active For F6" CV="114" mask="XXVXXXXX" default="0" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Shunting Speed Active For F6</label>
+        <label xml:lang="cs">Posunovací rychlost aktivní na F6</label>
       </variable>
       <variable item="Shunting Speed Active For F7" CV="114" mask="XVXXXXXX" default="0" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Shunting Speed Active For F7</label>
+        <label xml:lang="cs">Posunovací rychlost aktivní na F7</label>
       </variable>
       <variable item="Shunting Speed Active For F8" CV="114" mask="VXXXXXXX" default="0" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Shunting Speed Active For F8</label>
+        <label xml:lang="cs">Posunovací rychlost aktivní na F8</label>
       </variable>
 
 
@@ -636,86 +787,114 @@
       <variable item="Switch Off Acceleration Deceleration For F1" CV="115" mask="XXXXXXXV" default="0" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Switch Off Acceleration Deceleration For F1</label>
+        <label xml:lang="cs">Vypnutí Zrychlení Zpomalení na F1</label>
       </variable>
       <variable item="Switch Off Acceleration Deceleration For F2" CV="115" mask="XXXXXXVX" default="0" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Switch Off Acceleration Deceleration For F2</label>
+        <label xml:lang="cs">Vypnutí Zrychlení Zpomalení na F2</label>
       </variable>
       <variable item="Switch Off Acceleration Deceleration For F3" CV="115" mask="XXXXXVXX" default="0" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Switch Off Acceleration Deceleration For F3</label>
+        <label xml:lang="cs">Vypnutí Zrychlení Zpomalení na F3</label>
       </variable>
       <variable item="Switch Off Acceleration Deceleration For F4" CV="115" mask="XXXXVXXX" default="1" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Switch Off Acceleration Deceleration For F4</label>
+        <label xml:lang="cs">Vypnutí Zrychlení Zpomalení na F4</label>
       </variable>
       <variable item="Switch Off Acceleration Deceleration For F5" CV="115" mask="XXXVXXXX" default="0" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Switch Off Acceleration Deceleration For F5</label>
+        <label xml:lang="cs">Vypnutí Zrychlení Zpomalení na F5</label>
       </variable>
       <variable item="Switch Off Acceleration Deceleration For F6" CV="115" mask="XXVXXXXX" default="0" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Switch Off Acceleration Deceleration For F6</label>
+        <label xml:lang="cs">Vypnutí Zrychlení Zpomalení na F6</label>
       </variable>
       <variable item="Switch Off Acceleration Deceleration For F7" CV="115" mask="XVXXXXXX" default="0" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Switch Off Acceleration Deceleration For F7</label>
+        <label xml:lang="cs">Vypnutí Zrychlení Zpomalení na F7</label>
       </variable>
       <variable item="Switch Off Acceleration Deceleration For F8" CV="115" mask="VXXXXXXX" default="0" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Switch Off Acceleration Deceleration For F8</label>
+        <label xml:lang="cs">Vypnutí Zrychlení Zpomalení na F8</label>
       </variable>
 
 <!-- CV116 -->
       <variable item="Disable Constant Braking Distance For F1" CV="116" mask="XXXXXXXV" default="0" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Disable Constant Braking Distance For F1</label>
+        <label xml:lang="cs">Zakázat Konstantní brzdnou dráhu na F1</label>
       </variable>
       <variable item="Disable Constant Braking Distance For F2" CV="116" mask="XXXXXXVX" default="0" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Disable Constant Braking Distance For F2</label>
+        <label xml:lang="cs">Zakázat Konstantní brzdnou dráhu na F2</label>
       </variable>
       <variable item="Disable Constant Braking Distance For F3" CV="116" mask="XXXXXVXX" default="0" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Disable Constant Braking Distance For F3</label>
+        <label xml:lang="cs">Zakázat Konstantní brzdnou dráhu na F3</label>
       </variable>
       <variable item="Disable Constant Braking Distance For F4" CV="116" mask="XXXXVXXX" default="0" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Disable Constant Braking Distance For F4</label>
+        <label xml:lang="cs">Zakázat Konstantní brzdnou dráhu na F4</label>
       </variable>
       <variable item="Disable Constant Braking Distance For F5" CV="116" mask="XXXVXXXX" default="1" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Disable Constant Braking Distance For F5</label>
+        <label xml:lang="cs">Zakázat Konstantní brzdnou dráhu na F5</label>
       </variable>
       <variable item="Disable Constant Braking Distance For F6" CV="116" mask="XXVXXXXX" default="0" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Disable Constant Braking Distance For F6</label>
+        <label xml:lang="cs">Zakázat Konstantní brzdnou dráhu na F6</label>
       </variable>
       <variable item="Disable Constant Braking Distance For F7" CV="116" mask="XVXXXXXX" default="0" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Disable Constant Braking Distance For F7</label>
+        <label xml:lang="cs">Zakázat Konstantní brzdnou dráhu na F7</label>
       </variable>
       <variable item="Disable Constant Braking Distance For F8" CV="116" mask="VXXXXXXX" default="0" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Disable Constant Braking Distance For F8</label>
+        <label xml:lang="cs">Zakázat Konstantní brzdnou dráhu na F8</label>
       </variable>
 
 <!-- CV117 -->
       <variable item="Output 1 dim/fade" CV="117" mask="XXXXXXXV" minOut="1" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Out1 could be dimmed and faded</label>
+        <label>Dim/Fade</label>
+        <label xml:lang="cs"> Zeslabení/Pohasínání</label>
+        <tooltip>Out1 could be dimmed and faded</tooltip>
+        <tooltip xml:lang="cs">Výstup 1 nemůže být zeslabený a pohasínaný</tooltip>
       </variable>
       <variable item="Output 2 dim/fade" CV="117" mask="XXXXXXVX" minOut="2" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Out2 could be dimmed and faded</label>
+        <label>Dim/Fade</label>
+        <label xml:lang="cs"> Zeslabení/Pohasínání</label>
+        <tooltip>Out2 could be dimmed and faded</tooltip>
+        <tooltip xml:lang="cs">Výstup 2 nemůže být zeslabený a pohasínaný</tooltip>
       </variable>
       <variable item="Output 3 dim/fade" CV="117" mask="XXXXXVXX" minOut="3" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Out3 could be dimmed and faded</label>
+        <label>Dim/Fade</label>
+        <label xml:lang="cs"> Zeslabení/Pohasínání</label>
+        <tooltip>Out3 could be dimmed and faded</tooltip>
+        <tooltip xml:lang="cs">Výstup 3 nemůže být zeslabený a pohasínaný</tooltip>
       </variable>
       <variable item="Output 4 dim/fade" CV="117" mask="XXXXVXXX" minOut="4" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Out4 could be dimmed and faded</label>
+        <label>Dim/Fade</label>
+        <label xml:lang="cs"> Zeslabení/Pohasínání</label>
+        <tooltip>Out4 could be dimmed and faded</tooltip>
+        <tooltip xml:lang="cs">Výstup 4 nemůže být zeslabený a pohasínaný</tooltip>
       </variable>
 
 <!-- CV118 -->
@@ -723,59 +902,75 @@
         <enumVal>
           <enumChoice choice="None" value="0">
             <choice>None</choice>
+            <choice xml:lang="cs">Nic</choice>
           </enumChoice>
           <enumChoice choice="Output 1" value="1">
             <choice>Output 1</choice>
+            <choice xml:lang="cs">Výstup 1</choice>
           </enumChoice>
           <enumChoice choice="Output 2" value="2">
             <choice>Output 2</choice>
+            <choice xml:lang="cs">Výstup 2</choice>
           </enumChoice>
           <enumChoice choice="Output 3" value="3">
             <choice>Output 3</choice>
+            <choice xml:lang="cs">Výstup 3</choice>
           </enumChoice>
           <enumChoice choice="Output 4" value="4">
             <choice>Output 4</choice>
+            <choice xml:lang="cs">Výstup 4</choice>
           </enumChoice>
         </enumVal>
-        <label>Electrical Coupler Output mappng</label>
-        <comment>Electrical Coupler Output mapping for the 1-4 outputs. Only one of the outputs can be configured as ECoupler Output</comment>
+        <label>Output mapping</label>
+        <label xml:lang="cs">Mapování výstupu</label>
+        <tooltip>Electrical Coupler Output mapping for the 1-4 outputs. Only one of the outputs can be configured as ECoupler Output</tooltip>
+        <tooltip xml:lang="cs">Elektrické spřáhlo mapování výstupu na 1–4. Pouze jeden výstup může být konfigurován jako Výstup pro Elektrické spřáhlo</tooltip>
       </variable>
 
 <!-- CV119 -->
       <variable item="Electrical Coupler, kick time" CV="119" default="50">
         <decVal min="0" max="255" />
         <label>Electrical coupler, kick time</label>
-        <comment>Electrical Coupler, Kick_time = Val*8ms, ex: 400ms=50*8ms</comment>
+        <label xml:lang="cs">Elektrické spřáhlo, doba natlačení</label>
+        <tooltip>Electrical Coupler, Kick_time = Val*8ms, ex: 400ms=50*8ms</tooltip>
+        <tooltip xml:lang="cs">Elektrické spřáhlo, Doba natlačení = Hodnota × 8 ms, např.: 400 ms = 50 × 8 ms</tooltip>
       </variable>
 
 <!-- CV120 -->
       <variable item="Decoupling, Locomotive move Time" CV="120" default="50">
         <decVal min="0" max="255" />
         <label>Decoupling, Locomotive move Time</label>
-        <comment>Decoupling, Locomotive move Time=Val*8ms, ex: 400ms=50*8ms</comment>
+        <label xml:lang="cs">Rozpojení, Doba odjetí lokomotivy</label>
+        <tooltip>Decoupling, Locomotive move Time=Val*8ms, ex: 400ms=50*8ms</tooltip>
+        <tooltip xml:lang="cs">Rozpojení, Doba odjetí lokomotivy = Hodnota × 8 ms, např.: 400 ms = 50 × 8 ms</tooltip>
       </variable>
 
 <!-- CV121 -->
       <variable item="Decoupling, Locomotive moving speed" CV="121" default="50">
         <decVal min="0" max="255" />
         <label>Decoupling, Locomotive moving speed</label>
+        <label xml:lang="cs">Rozpojení, Rychlost odjetí lokomotivy</label>
       </variable>
 
 <!-- CV122 -->
       <variable item="SUSI interface" CV="122" mask="XXXXXXXV" minOut="1" minFn="0" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>SUSI interface enabled</label>
+        <label xml:lang="cs">Rozhraní SUSI povoleno</label>
       </variable>
       <variable item="Push Pull Operation" CV="122" mask="XXXXXXVX" minOut="2" minFn="0" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Push Pull Operation enabled</label>
+        <label xml:lang="cs">Provoz vratné soupravy povolen</label>
       </variable>
 
 <!-- CV123 -->
       <variable item="SPP Timeout" CV="123" default="255">
         <decVal min="0" max="255" />
-        <label>SPP (Smart Power Pack) Timeout</label>
-        <comment>SPP (Smart Power Pack) Timeout=16ms*Value Ex: =16ms*255=~4s</comment>
+        <label>Timeout</label>
+        <label xml:lang="cs">Časový limit</label>
+        <tooltip>SPP (Smart Power Pack) Timeout=16ms*Value Ex: =16ms*255=~4s</tooltip>
+        <tooltip xml:lang="cs">SPP (Smart Power Pack), Časový limit = Hodnota × 16 ms, např.: 4,08 s = 255 × 16 ms</tooltip>
       </variable>
 
 <!-- CV124 -->
@@ -783,12 +978,15 @@
         <enumVal>
           <enumChoice choice="PWM Output" value="0">
             <choice>PWM Output</choice>
+            <choice xml:lang="cs">Výstup PWM</choice>
           </enumChoice>
           <enumChoice choice="Full Output" value="1">
             <choice>Full Output</choice>
+            <choice xml:lang="cs">Výstup plný</choice>
           </enumChoice>
         </enumVal>
-        <label>Electrical Coupler Mode</label>
+        <label>Coupler Mode</label>
+        <label xml:lang="cs">Režim spřáhla</label>
       </variable>
 
 <!-- SUSI -->
@@ -796,36 +994,48 @@
       <variable CV="126" item="SUSI Indicator" default="102" comment="Range 0-255">
         <decVal min="0" max="255"/>
         <label>CV indicator for SUSI, offset 800</label>
+        <label xml:lang="cs">CV indikátor pro SUSI, ofset 800</label>
+        <tooltip>Range 0-255</tooltip>
+        <tooltip xml:lang="cs">Meze 0 – 255</tooltip>
       </variable>
       <variable CV="127" item="SUSI transport" default="0" comment="Range 0-255">
         <decVal min="0" max="255"/>
         <label>CV transport device for SUSI</label>
+        <label xml:lang="cs">CV transportní zařízení pro SUSI</label>
+        <tooltip>Range 0-255</tooltip>
+        <tooltip xml:lang="cs">Meze 0 – 255</tooltip>
       </variable>
 
 <!-- CV131 -->
       <variable item="Chip Temperature" CV="131"  readOnly="yes">
         <decVal/>
         <label>Chip Temperature</label>
-        <comment>Chip temperature read out (the value is expressed in degrees Celsius. The precision of the readout is +/- 2 degrees). Prior to the readout the F5 function must be switched On and Off</comment>
+        <label xml:lang="cs">Teplota čipu</label>
+        <tooltip>Chip temperature read out (the value is expressed in degrees Celsius. The precision of the readout is +/- 2 degrees). Prior to the readout the F5 function must be switched On and Off</tooltip>
+        <tooltip xml:lang="cs">Přečte teplotu čipu (hodnota je vyjádřena ve stupních Celsia. Přesnost čtení je ± 2°). Před odečtením teploty musí být Zapnuta a Vypnuta funkce F5.</tooltip>
       </variable>
 
 <!-- CV132 -->
       <variable item="Temperature Limit" CV="132" default="100">
         <decVal min="60" max="120" />
         <label>Temperature Limit for the temperature protection</label>
-        <comment>Temperature Limit for the temperature protection (value in degrees Celsius)</comment>
+        <label xml:lang="cs">Limit teploty pro tepelnou ochranu</label>
+        <tooltip>Temperature Limit for the temperature protection (value in degrees Celsius)</tooltip>
+        <tooltip xml:lang="cs">Limit teploty pro tepelnou ochranu (hodnota je ve stupních Celsia).</tooltip>
       </variable>
 
 <!-- CV133 -->
       <variable item="Penduling / Push-Pull Wait Time" CV="133" default="10">
         <decVal min="0" max="255" />
         <label>Penduling / Push-Pull Wait Time</label>
+        <label xml:lang="cs">Kyvadlová doprava / Vratná souprava Čas čekání</label>
       </variable>
 
 <!-- CV134 -->
       <variable item="ABC Breaking Sensitivity" CV="134" default="15">
         <decVal min="0" max="31" />
         <label>ABC Breaking Sensitivity</label>
+        <label xml:lang="cs">ABC brždění citlivost</label>
       </variable>
 
 <!-- Brake configuration -->
@@ -833,58 +1043,70 @@
       <variable item="Brake Distance configuration" CV="137" default="3">
         <decVal min="0" max="15" />
         <label>Brake Distance configuration</label>
-        <comment>Brake Distance configuration, 0-No brake, 1-15 Braking rate, the CV value influences the Constant Braking Distance, CV137=1 means the Shortest Braking Distance from maximum Speed to STOP. Increase the CV value to increase the braking distance. Distance=Value * Shortest Breaking Distance</comment>
+        <label xml:lang="cs">Konfigurace Brzdné dráhy</label>
+        <tooltip>Brake Distance configuration, 0-No brake, 1-15 Braking rate, the CV value influences the Constant Braking Distance, CV137=1 means the Shortest Braking Distance from maximum Speed to STOP. Increase the CV value to increase the braking distance. Distance=Value * Shortest Breaking Distance</tooltip>
+        <tooltip xml:lang="cs">Konfigurace Brzdné dráhy, 0–Bez brždění, 1–15 Míra brždění, hodnota CV ovlivňuje Konstantní brzdnou dráhu, CV137=1 znamená Nejkratší brzdnou dráhu zmaximální rychlosti do zastavení. Zvýšení hodnoty CV prodlužuje brzdnou dráhu. Dráha = Hodnota × Nejkratší brzdná dráha</tooltip>
       </variable>
 
       <variable item="Brake Delay Configuration" CV="138" default="25">
         <decVal min="0" max="255" />
         <label>Brake Delay Configuration</label>
-        <comment>CV138= 0 means no Brake Delay. To increase breaking distance above the value configured in CV138, increase in small amounts the value of CV65, which will delay the start of the braking, resulting in a longer braking path. Brake Delay = CV138 Value * 8ms (ms) Extra Distance = MaxSpeed * BrakeDelay Ex: 200ms(delay)=8(ms)*25(CV value)</comment>
+        <label xml:lang="cs">Konfigurace Zpoždění brždění</label>
+        <tooltip>CV138= 0 means no Brake Delay. To increase breaking distance above the value configured in CV138, increase in small amounts the value of CV65, which will delay the start of the braking, resulting in a longer braking path. Brake Delay = CV138 Value * 8ms (ms) Extra Distance = MaxSpeed * BrakeDelay Ex: 200ms(delay)=8(ms)*25(CV value)</tooltip>
+        <tooltip xml:lang="cs">CV138=0 znamená Bez zpoždění brždění. Pro prodloužení brzdné dráhy nad hodnotu konfigurovanou v CV138, zvyšte o malou hodnotu hodnotu v CV65, která bude zpoždění začátku brždění, výsledkem je delší brzdná dráha. Zpoždění brždění = Hodnota CV138 × 8 ms, Přidaná dráha = MaxRychlost × ZpožděníBrždění, Např.: 200 ms (zpoždění) = 8 ms × 25 (hodnota CV)</tooltip>
       </variable>
 
 <!-- CV508,509,510 ProductID -->
       <variable item="Product Number" CV="508,509,510" readOnly="yes">
         <splitVal highCV="508"/>
+        <label>Product number</label>
+        <label xml:lang="cs">Číslo výrobku</label>
       </variable>
 
     </variables>
 
     <resets>
-      <factReset label="HARD RESET all CVs reset to default values" CV="8" default="78"/>
+      <factReset CV="8" default="78">
+          <label>HARD RESET all CVs reset to default values</label>
+          <label xml:lang="cs">HARD RESET nastaví všechny CV na výchozí hodnoty</label>
+      </factReset>
     </resets>
 
   </decoder>
 
   <pane>
     <name>Lights</name>
+    <name xml:lang="cs">Osvětlení</name>
     <column>
       <label>
         <text>Output Light Intensity</text>
+        <text xml:lang="cs">Intenzita výstupu osvětlení</text>
       </label>
       <row>
-        <display item="Out 1 Light intensity" label="Output 1" />
+        <display item="Out 1 Light intensity" />
         <display item="Out 1 Light intensity" label="" format="hslider" />
-        <display item="Output 1 dim/fade" label="Dim/Fade" />
+        <display item="Output 1 dim/fade" />
       </row>
       <row>
-        <display item="Out 2 Light intensity" label="Output 2" />
+        <display item="Out 2 Light intensity" />
         <display item="Out 2 Light intensity" label=""  format="hslider" />
-        <display item="Output 2 dim/fade" label="Dim/Fade" />
+        <display item="Output 2 dim/fade" />
       </row>
       <row>
-        <display item="Out 3 Light intensity" label="Output 3" />
+        <display item="Out 3 Light intensity" />
         <display item="Out 3 Light intensity" label=""  format="hslider" />
-        <display item="Output 3 dim/fade" label="Dim/Fade" />
+        <display item="Output 3 dim/fade" />
       </row>
       <row>
-        <display item="Out 4 Light intensity" label="Output 4" />
+        <display item="Out 4 Light intensity" />
         <display item="Out 4 Light intensity" label=""  format="hslider" />
-        <display item="Output 4 dim/fade" label="Dim/Fade" />
+        <display item="Output 4 dim/fade" />
       </row>
     </column>
     <column>
       <label>
         <text>Output Effects</text>
+        <text xml:lang="cs">Efekty výstupu</text>
       </label>
       <display item="FadeOn" />
       <display item="FadeOFF" />
@@ -894,6 +1116,7 @@
 
   <pane>
     <name>tOm Function Map</name>
+    <name xml:lang="cs">tOm mapování funkcí</name>
     <column>
       <separator/>
       <label>
@@ -901,9 +1124,11 @@
       </label>
       <label>
         <text>Select which function</text>
+        <text xml:lang="cs">Vyberte která funkce</text>
       </label>
       <label>
         <text>enables Shunting Speed</text>
+        <text xml:lang="cs">povolí posunovací rychlost</text>
       </label>
       <label>
         <text> </text>
@@ -925,9 +1150,11 @@
       </label>
       <label>
         <text>Select which function</text>
+        <text xml:lang="cs">Vyberte která funkce</text>
       </label>
       <label>
         <text>switches off Acceleration, Deceleration</text>
+        <text xml:lang="cs">vypne Zrychlení a Zpomalení</text>
       </label>
       <label>
         <text> </text>
@@ -949,9 +1176,11 @@
       </label>
       <label>
         <text>Select which function</text>
+        <text xml:lang="cs">Vyberte která funkce</text>
       </label>
       <label>
         <text>disables Constant Braking Distance</text>
+        <text xml:lang="cs">zakáže Konstantní brzdnou vzdálenost</text>
       </label>
       <label>
         <text> </text>
@@ -971,18 +1200,20 @@
 
   <pane>
     <name>Advanced</name>
+    <name xml:lang="cs">Pokročilé</name>
     <column>
       <separator/>
       <label>
         <text>Electrical coupler</text>
+        <text xml:lang="cs">Elektrické spřáhlo</text>
       </label>
 
       <label>
         <text> </text>
       </label>
 
-      <display item="Electrical Coupler Output mapping" label="Output mapping" />
-      <display item="ECoupler Mode" label="Coupler mode" />
+      <display item="Electrical Coupler Output mapping" />
+      <display item="ECoupler Mode" />
       <display item="Electrical Coupler, kick time" />
       <display item="Decoupling, Locomotive move Time" />
       <display item="Decoupling, Locomotive moving speed" />
@@ -999,8 +1230,8 @@
         <text> </text>
       </label>
       <row>
-        <display item="SPP Timeout" label="Timeout" tooltip="16ms*Value Ex: =16ms*255=~4s"/>
-        <display item="SPP Timeout" format="hslider" label="" tooltip="16ms*Value Ex: =16ms*255=~4s"/>
+        <display item="SPP Timeout" />
+        <display item="SPP Timeout" format="hslider" label="" />
       </row>
 
       <label>
@@ -1015,7 +1246,7 @@
       <label>
         <text> </text>
       </label>
-      <display item="SUSI interface" format="checkbox" label="SUSI interface enabled" />
+      <display item="SUSI interface" format="checkbox" />
       <display item="SUSI Indicator" />
       <display item="SUSI transport"  />
     </column>
@@ -1024,6 +1255,7 @@
       <separator/>
       <label>
         <text>Memory Settings</text>
+        <text xml:lang="cs">Nastavení paměti</text>
       </label>
       <label>
         <text> </text>
@@ -1036,6 +1268,7 @@
       <separator/>
       <label>
         <text>RailCom Settings</text>
+        <text xml:lang="cs">Nastavení RailCom</text>
       </label>
       <label>
         <text> </text>
@@ -1050,6 +1283,7 @@
       <separator/>
       <label>
         <text>Braking Configuration</text>
+        <text xml:lang="cs">Konfigurace brždění</text>
       </label>
       <label>
         <text> </text>
@@ -1079,16 +1313,20 @@
       </label>
       <label>
         <text>Train-O-Matic (tOm) decoders support a decoder locking feature</text>
+        <text xml:lang="cs">Train-O-Matic (tOm) dekodéry podporují funkci zamykání dekodéru,</text>
       </label>
       <label>
         <text>useful when several decoders are used in one loco</text>
+        <text xml:lang="cs">která je užitečná, když je v jedné lokomotivě na stejné adrese</text>
       </label>
       <label>
         <text>on the same address, e.g. for adding sound</text>
+        <text xml:lang="cs">použito více dekodérů, např. pro přidání zvuku.</text>
       </label>
       <display item="Decoder Lock ID number"/>
       <label>
         <text>Set CV15 equal to this number to unlock the decoder for programming</text>
+        <text xml:lang="cs">Nastavte CV15 na toto číslo, abyste odemkli dekodér pro programování</text>
       </label>
       <display item="Programming Key CV15" />
 
@@ -1098,17 +1336,20 @@
       <separator/>
       <label>
         <text>Decoder protection </text>
+        <text xml:lang="cs">Ochrany dekodéru</text>
       </label>
       <label>
         <text> </text>
       </label>
-      <display item="Error CV" label="Error information"/>
+      <display item="Error CV" />
      
       <label>
         <text>Errors: 0-No error, 1-Motor Short Protection, </text>
+        <text xml:lang="cs">Chyby: 0 – bez chyby, 1 – ochrana motoru proti zkratu,</text>
       </label>
       <label>
         <text>2-Aux Output Short Protection, 4-Overtemperature</text>
+        <text xml:lang="cs">2 – ochrana výstupu proti zkratu, 4 – překročení teploty</text>
       </label>  
       <label>
         <text> </text>
@@ -1122,12 +1363,13 @@
       <separator/>
       <label>
         <text>Decoder firmware</text>
+        <text xml:lang="cs">Firmware dekodéru</text>
       </label>
       <label>
         <text> </text>
       </label>
       <row>
-        <display item="Decoder Version" label="Version" />
+        <display item="Decoder Version" />
         <display item="Decoder Subversion" label="" />
       </row>
       <display item="Product Number"/>

@@ -8,7 +8,6 @@ import java.util.ListIterator;
 
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.Nonnull;
-import javax.swing.JOptionPane;
 
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
@@ -16,6 +15,7 @@ import jmri.util.ThreadingUtil;
 import jmri.jmrit.logix.ThrottleSetting.Command;
 import jmri.jmrit.logix.ThrottleSetting.CommandValue;
 import jmri.jmrit.logix.ThrottleSetting.ValueType;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * An Warrant contains the operating permissions and directives needed for a
@@ -47,7 +47,7 @@ import jmri.jmrit.logix.ThrottleSetting.ValueType;
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean implements ThrottleListener, java.beans.PropertyChangeListener {
 
-    public static final String Stop = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getNamedSpeed(0.0f); // aspect name
+    public static final String Stop = InstanceManager.getDefault(SignalSpeedMap.class).getNamedSpeed(0.0f); // aspect name
     public static final String EStop = Bundle.getMessage("EStop");
     public static final String Normal ="Normal";    // Cannot determine which SignalSystem(s) and their name(s) for "Clear"
 
@@ -713,7 +713,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     private String getSpeedMessage(String speedType) {
         float speed = 0;
         String units;
-        SignalSpeedMap speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
+        SignalSpeedMap speedMap = InstanceManager.getDefault(SignalSpeedMap.class);
         switch (speedMap.getInterpretation()) {
             case SignalSpeedMap.PERCENT_NORMAL:
                 speed = _engineer.getSpeedSetting() * 100;
@@ -789,7 +789,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         return Bundle.getMessage("WaitForClear", blockName, which, where);
     }
 
-    @jmri.InvokeOnLayoutThread
+    @InvokeOnLayoutThread
     private void startTracker() {
         ThreadingUtil.runOnGUIEventually(() -> {
             new Tracker(getCurrentBlockOrder().getBlock(), _trainName,
@@ -822,7 +822,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 }
                 final Runnable killer = new Killer(engineer, abort, functionFlag);
                 synchronized (killer) {
-                    Thread hit = jmri.util.ThreadingUtil.newThread(killer,
+                    Thread hit = ThreadingUtil.newThread(killer,
                             getDisplayName()+" Killer");
                     hit.start();
                 }
@@ -1056,7 +1056,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * {@inheritDoc}
      */
     @Override
-    public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
+    public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
     }
 
     protected void releaseThrottle(DccThrottle throttle) {
@@ -1259,10 +1259,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
     private boolean askResumeQuestion(OBlock block, String reason) {
         String msg = Bundle.getMessage("ResumeQuestion", reason);
-            boolean ret = jmri.util.ThreadingUtil.runOnGUIwithReturn(() -> {
-                int result = JOptionPane.showConfirmDialog(WarrantTableFrame.getDefault(), msg, Bundle.getMessage("ResumeTitle"),
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (result==JOptionPane.YES_OPTION) {
+            boolean ret = ThreadingUtil.runOnGUIwithReturn(() -> {
+                int result = JmriJOptionPane.showConfirmDialog(WarrantTableFrame.getDefault(), msg, Bundle.getMessage("ResumeTitle"),
+                    JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.QUESTION_MESSAGE);
+                if (result==JmriJOptionPane.YES_OPTION) {
                     return true;
                 }
             return false;
@@ -1615,9 +1615,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * @return error message, if any
      */
     public String checkStartBlock() {
-        if (log.isDebugEnabled()) {
-            log.debug("{}: checkStartBlock.", getDisplayName());
-        }
+        log.debug("{}: checkStartBlock.", getDisplayName());
         BlockOrder bo = _orders.get(0);
         OBlock block = bo.getBlock();
         String msg = block.allocate(this);
@@ -1649,10 +1647,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * @return String
      */
     public String checkRoute() {
-        if (log.isDebugEnabled()) {
-            log.debug("{}: checkRoute.", getDisplayName());
-        }
-        if (_orders==null || _orders.size() == 0) {
+        log.debug("{}: checkRoute.", getDisplayName());
+        if (_orders==null || _orders.isEmpty()) {
             return Bundle.getMessage("noBlockOrders");
         }
         OBlock startBlock = _orders.get(0).getBlock();
@@ -1719,12 +1715,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
     } //end propertyChange
 
-    private String getSignalSpeedType(NamedBean signal) {
+    private String getSignalSpeedType(@Nonnull NamedBean signal) {
         String speedType;
         if (signal instanceof SignalHead) {
             SignalHead head = (SignalHead) signal;
             int appearance = head.getAppearance();
-            speedType = jmri.InstanceManager.getDefault(SignalSpeedMap.class)
+            speedType = InstanceManager.getDefault(SignalSpeedMap.class)
                     .getAppearanceSpeed(head.getAppearanceName(appearance));
             if (log.isDebugEnabled()) {
                 log.debug("{}: SignalHead {} sets appearance speed to {}",
@@ -1733,8 +1729,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         } else {
             SignalMast mast = (SignalMast) signal;
             String aspect = mast.getAspect();
-            speedType = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getAspectSpeed(aspect,
-                    mast.getSignalSystem());
+            speedType = InstanceManager.getDefault(SignalSpeedMap.class).getAspectSpeed(
+                    (aspect== null ? "" : aspect), mast.getSignalSystem());
             if (log.isDebugEnabled()) {
                 log.debug("{}: SignalMast {} sets aspect speed to {}",
                       getDisplayName(), signal.getDisplayName(), speedType);
@@ -1743,7 +1739,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         return speedType;
     }
 
-    /*
+    /**
      * _protectSignal made an aspect change
      */
     @SuppressFBWarnings(value="SLF4J_FORMAT_SHOULD_BE_CONST", justification="False assumption")
@@ -1913,7 +1909,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
     private String okToRun() {
         boolean cannot = false;
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         if (_waitForSignal) {
             sb.append(Bundle.getMessage("Signal"));
             cannot = true;
@@ -2220,7 +2216,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      *
      * @param block Block in the route is going active.
      */
-    @jmri.InvokeOnLayoutThread
+    @InvokeOnLayoutThread
     @SuppressFBWarnings(value="SLF4J_FORMAT_SHOULD_BE_CONST", justification="False assumption")
     protected void goingActive(OBlock block) {
         if (log.isDebugEnabled()) {
@@ -2352,7 +2348,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     /**
      * @param block Block in the route is going Inactive
      */
-    @jmri.InvokeOnLayoutThread
+    @InvokeOnLayoutThread
     @SuppressFBWarnings(value="SLF4J_FORMAT_SHOULD_BE_CONST", justification="False assumption")
     protected void goingInactive(OBlock block) {
         if (log.isDebugEnabled()) {
@@ -2706,7 +2702,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             if (_speedUtil.secondGreaterThanFirst(entrySpeedType, currentSpeedType)) {
                 // signal or block speed entrySpeedType is less than currentSpeedType.
                 // Speed for this block is violated so set end speed immediately
-                jmri.NamedBean signal = curBlkOrder.getSignal();
+                NamedBean signal = curBlkOrder.getSignal();
                 if (signal != null) {
                     log.info("Train {} moved past required {} speed for signal \"{}\" at block \"{}\" on warrant {}!",
                             getTrainName(), entrySpeedType, signal.getDisplayName(), curBlock.getDisplayName(), getDisplayName());
@@ -3025,7 +3021,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (cmd.equals(Command.NOOP) && beginTrackSpeed > 0) {
             accumTime = (availDist - changeDist) / beginTrackSpeed;
         } else {
-            float timeRatio = 1; // time adjustment for current speed type
+            float timeRatio; // time adjustment for current speed type
             if (curTrackSpeed > _speedUtil.getRampThrottleIncrement()) {
                 timeRatio = _speedUtil.getTrackSpeed(scriptSpeed) / curTrackSpeed;
             } else {
@@ -3175,7 +3171,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         OBlock curBlock = curBlkOrder.getBlock();
         String name = null;
         if (_waitForSignal) {
-            jmri.NamedBean signal = curBlkOrder.getSignal();
+            NamedBean signal = curBlkOrder.getSignal();
             if (signal!=null) {
                 name = signal.getDisplayName();
             } else {

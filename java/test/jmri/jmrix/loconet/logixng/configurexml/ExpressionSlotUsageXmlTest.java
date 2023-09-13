@@ -35,6 +35,7 @@ public class ExpressionSlotUsageXmlTest {
     
     @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
     

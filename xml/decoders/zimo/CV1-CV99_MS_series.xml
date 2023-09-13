@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 
-<!-- version 1.0 24 Nov 2022  Nigel Cliffe - Merging various MX-series and MS-series files covering CVs 1-99 into single file.   --> 
+<!-- version 1.0 24 Nov 2022  Nigel Cliffe - Merging various MX-series and MS-series files covering CVs 1-99 into single file.   -->
 <!--            Removed CV10, (not in MS series manuals),  -->
+<!-- version 1.1 25 May 2023  Ronald Kuhn - added some german translation and exclude MS490, MS500, MS560, MS590, MN170, MN180 and MN300 from mfx.   -->
+<!-- version 1.2 26 May 2023  Ronald Kuhn - added values specific for MS- an MN-series.   -->
+<!-- version 1.3 22 June 2023  Ronald Kuhn - added german translation.   -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
@@ -36,28 +39,58 @@
     <label xml:lang="de">Motoransteuerungsperiode bzw. – frequenz und EMK-Abtastrate</label>
   </variable>
 
+  <variable item="Motorola Subsequent addresses" CV="10" default="0">
+    <enumVal>
+      <enumChoice choice="No Subsequent address">
+        <choice>No Subsequent address</choice>
+        <choice xml:lang="de">keine Folgeadresse</choice>
+      </enumChoice>
+      <enumChoice choice="One Subsequent address for F5-F8">
+        <choice>One Subsequent address for F5-F8</choice>
+        <choice xml:lang="de">Eine Folgeadresse für F5-F8</choice>
+      </enumChoice>
+      <enumChoice choice="Two Subsequent addresses for F5-F12">
+        <choice>Two Subsequent addresses for F5-F12</choice>
+        <choice xml:lang="de">Zwei Folgeadressen für F5-F12</choice>
+      </enumChoice>
+      <enumChoice choice="Three Subsequent addresses for F5-F16">
+        <choice>Three Subsequent addresses for F5-F16</choice>
+        <choice xml:lang="de">Drei Folgeadressen für F5-F16</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Motorola Subsequent addresses</label>
+    <label xml:lang="de">Motorola Folgeadressen</label>
+    <tooltip>Range 0-3</tooltip>
+    <tooltip xml:lang="de">0 = keine Folgeadresse, 1 = Eine Folgeadresse für F5-F8, 2 = Zwei Folgeadressen für F5-F12, 3 = Drei Folgeadressen für F5-F16.</tooltip>
+  </variable>
+
   <variable item="Decoder Operating Mode" CV="12" default="117"/>
   <variable item="Operating Mode DC Analogue" CV="12" mask="XXXXXXXV" default="1">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Decoder Operating Mode DC Analogue</label>
+      <label xml:lang="de">DC Analogbetrieb</label>
   </variable>
   <variable item="Operating Mode DCC" CV="12"  readOnly="yes" mask="XXXXXVXX" default="1">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Decoder Operating Mode DCC</label>
+      <label xml:lang="de">DCC Betrieb</label>
   </variable>
   <variable item="Operating Mode AC Analogue" CV="12" mask="XXXVXXXX" default="1">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Decoder Operating Mode AC Analogue</label>
-  </variable>  
+      <label xml:lang="de">AC Analogbetrieb</label>
+  </variable>
     <variable item="Operating Mode MM" CV="12" mask="XXVXXXXX" default="1">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Decoder Operating Mode MM</label>
+      <label xml:lang="de">MM Betrieb</label>
   </variable>
-    <variable item="Operating Mode MFX" CV="12" mask="XVXXXXXX" default="1">
+    <variable item="Operating Mode MFX" CV="12" mask="XVXXXXXX" default="1" exclude="1,3,8,10,124,125,127">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Decoder Operating Mode MFX</label>
+      <label xml:lang="de">mfx Betrieb</label>
   </variable>
-  
+
   <variable item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Analog Mode Function Status - F1</label>
@@ -211,8 +244,23 @@
     <label xml:lang="de">Motorregelung aktiv</label>
   </variable>
 
+  <variable item="Decoder Lock 1" CV="15" default="0">
+    <decVal/>
+      <label>Decoder Lock 1</label>
+      <label xml:lang="de">Decoder Sperre 1</label>
+      <tooltip>The decoder lock is used to access the CVs of several decoders with identical address separately.</tooltip>
+      <tooltip xml:lang="de">Die Decoder-Sperre dient dazu, auf die CVs mehrerer Decoder mit identischer Adresse getrennt zuzugreifen.</tooltip>
+  </variable>
+  <variable item="Decoder Lock 2" CV="16" default="0">
+    <decVal/>
+      <label>Decoder Lock 2</label>
+      <label xml:lang="de">Decoder Sperre 2</label>
+      <tooltip>The decoder lock is used to access the CVs of several decoders with identical address separately.</tooltip>
+      <tooltip xml:lang="de">Die Decoder-Sperre dient dazu, auf die CVs mehrerer Decoder mit identischer Adresse getrennt zuzugreifen.</tooltip>
+  </variable>
+
   <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddr.xml"/>
-  
+
   <variable CV="20" item="Extended Consist Address">
     <decVal max="102"/>
     <label>Extended Consist Address</label>
@@ -320,7 +368,7 @@
     <label xml:lang="cs">Adresa soupravy aktivní pro F12</label>
     <label xml:lang="de">im Verbundbetrieb aktiv F12</label>
   </variable>
-  
+
   <variable CV="22" item="Auto Consist" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <!--xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/-->
@@ -367,7 +415,7 @@
     <label xml:lang="cs">Znaménko korekce zpomalení</label>
     <label xml:lang="de">Bremszeitvariation verwenden</label>
   </variable>
-  
+
 
   <variable item="Direction Dependent stops with asymmetrical DCC" CV="27" mask="XXXXVVVV">
     <enumVal>
@@ -406,6 +454,7 @@
    <variable item="Asymmetric DCC shuttle" CV="27" mask="XVXXXXXX">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Asymmetric DCC Shuttle</label>
+      <label xml:lang="de">Asymmetrisches DCC-Signal</label>
   </variable>
   <variable CV="27" item="Activate Residence Time" default="0" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -445,7 +494,7 @@
     <label>Railcom voltage signal</label>
     <label xml:lang="de">Railcom-Spannungsmeldung</label>
     <label xml:lang="cs">RailCom signál napětí</label>
-  </variable> 
+  </variable>
   <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
  <!--group exclude="253"-->
   <variable item="FL(f) controls output 1" CV="33" default="1" mask="XXXXXXXV" minOut="1">
@@ -1744,8 +1793,8 @@
     <tooltip> </tooltip>
     <tooltip xml:lang="de">Zykluszeit (Zehner-), Aus-Verlängerung (Einerstelle)</tooltip>
   </variable>
-  <variable item="Global lighting option 4" CV="64" default="5" exclude="228,226,232,235,247,MX689_v30">
-    <decVal min="0" max="9"/>
+  <variable item="Global lighting option 4" CV="64" default="5">
+    <decVal min="0" max="15"/>
     <label>Ditch Light Off Time</label>
     <label xml:lang="it">Tempo di Off luci Ditch</label>
     <label xml:lang="cs">Čas zhasínání návěstních světel</label>
@@ -1771,7 +1820,7 @@
   </variable>
   <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
-  
+
   <variable CV="97" item="Consist Option 1" default="0">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
     <label>Consist-Key</label>
@@ -1781,5 +1830,5 @@
       <tooltip xml:lang="de">Taste zum Umschalten zwischen Hauptadresse und Consistadresse.</tooltip>
       <tooltip xml:lang="cs">Tlačítko které přepíná mezi výchozí adresou a adresou soupravy.</tooltip>
   </variable>
-  
+
 </variables>

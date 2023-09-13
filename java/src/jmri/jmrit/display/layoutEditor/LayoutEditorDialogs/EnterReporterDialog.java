@@ -6,17 +6,18 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
 import java.text.MessageFormat;
 import javax.annotation.Nonnull;
 import javax.swing.*;
+
 import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.Reporter;
 import jmri.ReporterManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Layout Editor Dialogs implements some dialogs for the Layout Editor
@@ -137,10 +138,10 @@ public class EnterReporterDialog {
 
         if ((xx <= 0) || (xx > layoutEditor.gContext.getLayoutWidth())) {
             log.error("invalid x: {}, LayoutWidth: {}", xx, layoutEditor.gContext.getLayoutWidth());
-            JOptionPane.showMessageDialog(enterReporterFrame,
+            JmriJOptionPane.showMessageDialog(enterReporterFrame,
                     MessageFormat.format(Bundle.getMessage("Error2a"), String.format(" %s ", xx)),
                     Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
 
             return;
         }
@@ -158,10 +159,10 @@ public class EnterReporterDialog {
 
         if ((yy <= 0) || (yy > layoutEditor.gContext.getLayoutHeight())) {
             log.error("invalid y: {}, LayoutWidth: {}", yy, layoutEditor.gContext.getLayoutHeight());
-            JOptionPane.showMessageDialog(enterReporterFrame,
+            JmriJOptionPane.showMessageDialog(enterReporterFrame,
                     MessageFormat.format(Bundle.getMessage("Error2a"), String.format(" %s ", yy)),
                     Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
 
             return;
         }
@@ -174,15 +175,15 @@ public class EnterReporterDialog {
             try {
                 reporter = InstanceManager.getDefault(ReporterManager.class).provideReporter(rName);
             } catch (IllegalArgumentException e) {
-                JOptionPane.showMessageDialog(enterReporterFrame,
+                JmriJOptionPane.showMessageDialog(enterReporterFrame,
                         MessageFormat.format(Bundle.getMessage("Error18"), rName), Bundle.getMessage("ErrorTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
         } else {
-            JOptionPane.showMessageDialog(enterReporterFrame,
+            JmriJOptionPane.showMessageDialog(enterReporterFrame,
                     Bundle.getMessage("Error17"), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
 
             return;
         }
@@ -215,13 +216,13 @@ public class EnterReporterDialog {
      *                        the appropriate format.
      */
     private void showEntryErrorDialog(Component parentComponent, NumberFormatException e) {
-        JOptionPane.showMessageDialog(parentComponent,
+        JmriJOptionPane.showMessageDialog(parentComponent,
                 String.format("%s: %s %s", Bundle.getMessage("EntryError"),
                         e, Bundle.getMessage("TryAgain")),
                 Bundle.getMessage("ErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.ERROR_MESSAGE);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(
-            EnterReporterDialog.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EnterReporterDialog.class);
+
 }

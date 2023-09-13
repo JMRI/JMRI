@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -20,6 +19,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import jmri.NamedBean;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Tabbed Container for holding pick list tables
@@ -109,10 +109,10 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
             try {
                 bean = model.addBean(sysname, uname);
             } catch (IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("PickAddFailed", ex.getMessage()),  // NOI18N
                     Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
             }
             if (bean != null) {
                 int setRow = model.getIndexOf(bean);

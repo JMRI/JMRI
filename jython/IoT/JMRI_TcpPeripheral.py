@@ -43,8 +43,8 @@
 # Devices GPIOs will be defined as INPUT or OUTPUT from a remote machine.
 # Hardware protect (using resistors) each GPIO implemented as INPUT because a remote machine (JMRI) may set it as OUTPUT.
 #
-# To show debug messages, add the following line (without quotes) to the file 'default.lcf'
-# located in the JMRI program directory: 'log4j.category.jmri.jmrit.jython.exec=DEBUG'
+# NOTE: to enable logging, see https://www.jmri.org/help/en/html/apps/Debug.shtml
+# Add the Logger Category name "jmri.jmrit.jython.exec" at DEBUG Level.
 #
 # Author: Oscar Moutinho (oscar.moutinho@gmail.com), 2016 - for JMRI
 ##################################################################################
@@ -57,10 +57,10 @@ import java.beans
 import socket
 import threading
 import time
-from org.apache.log4j import Logger
+from org.slf4j import LoggerFactory
 import jmri
 
-TcpPeripheral_log = Logger.getLogger("jmri.jmrit.jython.exec.TcpPeripheral")
+TcpPeripheral_log = LoggerFactory.getLogger("jmri.jmrit.jython.exec.TcpPeripheral")
 
 CONN_TIMEOUT = 3.0 # timeout (seconds)
 MAX_HEARTBEAT_FAIL = 5 # multiply by CONN_TIMEOUT for maximum time interval (send heartbeat after CONN_TIMEOUT * (MAX_HEARTBEAT_FAIL / 2))

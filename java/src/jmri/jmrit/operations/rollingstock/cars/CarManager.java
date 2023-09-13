@@ -458,6 +458,20 @@ public class CarManager extends RollingStockManager<Car>
         nf.setMaximumFractionDigits(1);
         return nf.format(doubleCarWeight); // car weight in ounces.
     }
+    
+    /**
+     * Used to determine if any car has been assigned a division
+     * 
+     * @return true if any car has been assigned a division, otherwise false
+     */
+    public boolean isThereDivisions() {
+        for (Car car : getList()) {
+            if (car.getDivision() != null) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public void load(Element root) {
         if (root.getChild(Xml.CARS) != null) {

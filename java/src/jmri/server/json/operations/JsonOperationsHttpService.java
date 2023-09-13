@@ -35,12 +35,17 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Randall Wood (C) 2016, 2018, 2019, 2020
  */
 public class JsonOperationsHttpService extends JsonHttpService {
 
     private final JsonUtil utilities;
+
+    private static final Logger log = LoggerFactory.getLogger(JsonOperationsHttpService.class);    
 
     public JsonOperationsHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -49,6 +54,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     @Override
     public JsonNode doGet(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
+        log.debug("doGet(type='{}', name='{}', data='{}')", type, name, data);
         Locale locale = request.locale;
         int id = request.id;
         ObjectNode result;
@@ -93,6 +99,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
+        log.debug("doPost(type='{}', name='{}', data='{}')", type, name, data);
         Locale locale = request.locale;
         int id = request.id;
         String newName = name;
@@ -134,6 +141,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
     @Override
     public JsonNode doPut(String type, String name, JsonNode data, JsonRequest request)
             throws JsonException {
+        log.debug("doPut(type='{}', name='{}', data='{}')", type, name, data);
         Locale locale = request.locale;
         int id = request.id;
         switch (type) {
@@ -234,6 +242,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     @Override
     public JsonNode doGetList(String type, JsonNode data, JsonRequest request) throws JsonException {
+        log.debug("doGetList(type='{}', data='{}')", type, data);
         Locale locale = request.locale;
         int id = request.id;
         switch (type) {
@@ -263,6 +272,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     @Override
     public void doDelete(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
+        log.debug("doDelete(type='{}', name='{}', data='{}')", type, name, data);
         Locale locale = request.locale;
         int id = request.id;
         String token = data.path(FORCE_DELETE).asText();
@@ -565,30 +575,73 @@ public class JsonOperationsHttpService extends JsonHttpService {
      */
     public ObjectNode postRollingStock(@Nonnull RollingStock rs, JsonNode data, Locale locale, int id)
             throws JsonException {
-        String name = rs.getId();
         // make changes that can throw an exception first
-        JsonNode node = data.path(LOCATION);
+        String name = rs.getId();
+        //handle removal (only) from Train
+        JsonNode node = data.path(TRAIN_ID);
         if (!node.isMissingNode()) {
-            Location location = locationManager().getLocationById(node.path(NAME).asText());
-            if (location != null) {
-                String trackId = node.path(TRACK).path(NAME).asText();
-                Track track = location.getTrackById(trackId);
-                if (trackId.isEmpty() || track != null) {
-                    if (!rs.setLocation(location, track).equals(Track.OKAY)) {
-                        throw new JsonException(HttpServletResponse.SC_CONFLICT,
-                                Bundle.getMessage(locale, "ErrorMovingCar",
-                                        rs.getId(), LOCATION, location.getId(), trackId),
-                                id);
+            //new value must be null, adding or changing train not supported here
+            if (node.isNull()) {
+                if (rs.getTrain() != null) {
+                    rs.setTrain(null);
+                    rs.setDestination(null, null);
+                    rs.setRouteLocation(null);
+                    rs.setRouteDestination(null);
+                }
+            } else {
+                throw new JsonException(HttpServletResponse.SC_CONFLICT,
+                        Bundle.getMessage(locale, "ErrorRemovingTrain", rs.getId()), id);                 
+            }
+        }
+        //handle change in Location
+        node = data.path(LOCATION);
+        if (!node.isMissingNode()) {
+            //can't move a car that is on a train
+            if (rs.getTrain() != null) {
+                throw new JsonException(HttpServletResponse.SC_CONFLICT,
+                        Bundle.getMessage(locale, "ErrorIsOnTrain", rs.getId(), rs.getTrainName()), id);                 
+            }
+            if (!node.isNull()) {
+                //move car to new location and track
+                Location location = locationManager().getLocationById(node.path(NAME).asText());
+                if (location != null) {
+                    String trackId = node.path(TRACK).path(NAME).asText();
+                    Track track = location.getTrackById(trackId);
+                    if (trackId.isEmpty() || track != null) {
+                        if (!rs.setLocation(location, track).equals(Track.OKAY)) {
+                            throw new JsonException(HttpServletResponse.SC_CONFLICT,
+                                    Bundle.getMessage(locale, "ErrorMovingCar",
+                                            rs.getId(), LOCATION, location.getId(), trackId), id);
+                        }
+                    } else {
+                        throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+                                Bundle.getMessage(locale, "ErrorNotFound", TRACK, trackId), id);
                     }
                 } else {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                            Bundle.getMessage(locale, "ErrorNotFound", TRACK, trackId), id);
+                            Bundle.getMessage(locale, "ErrorNotFound", LOCATION, node.path(NAME).asText()), id);
                 }
-            } else {
-                throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                        Bundle.getMessage(locale, "ErrorNotFound", LOCATION, node.path(NAME).asText()), id);
+            } else { 
+                //if new location is null, remove car from current location
+                if (!rs.setLocation(null, null).equals(Track.OKAY)) {
+                    throw new JsonException(HttpServletResponse.SC_CONFLICT,
+                            Bundle.getMessage(locale, "ErrorMovingCar",
+                                    rs.getId(), LOCATION, null, null), id);
+                }                
             }
         }
+        //handle change in LocationUnknown
+        node = data.path(LOCATION_UNKNOWN);
+        if (!node.isMissingNode()) {
+            //can't move a car that is on a train
+            if (rs.getTrain() != null) {
+                throw new JsonException(HttpServletResponse.SC_CONFLICT,
+                        Bundle.getMessage(locale, "ErrorIsOnTrain", rs.getId(), rs.getTrainName()), id);                 
+            }            
+            //set LocationUnknown flag to new value
+            rs.setLocationUnknown(data.path(LOCATION_UNKNOWN).asBoolean()); 
+        }
+        //handle change in DESTINATION
         node = data.path(DESTINATION);
         if (!node.isMissingNode()) {
             Location location = locationManager().getLocationById(node.path(NAME).asText());

@@ -15,54 +15,54 @@ import jmri.jmrit.logixng.SymbolTable.VariableData;
  */
 public interface Module extends Base, NamedBean {
     
-//    public void setRootSocketType(FemaleSocketManager.SocketType socketType);
+//    void setRootSocketType(FemaleSocketManager.SocketType socketType);
     
-    public FemaleSocketManager.SocketType getRootSocketType();
+    FemaleSocketManager.SocketType getRootSocketType();
     
-    public FemaleSocket getRootSocket();
+    FemaleSocket getRootSocket();
     
-    public void setCurrentConditionalNG(ConditionalNG conditionalNG);
+    void setCurrentConditionalNG(ConditionalNG conditionalNG);
     
-    public void addParameter(String name, boolean isInput, boolean isOutput);
+    void addParameter(String name, boolean isInput, boolean isOutput);
     
-    public void addParameter(Parameter parameter);
+    void addParameter(Parameter parameter);
     
 //    public void removeParameter(String name);
     
-    public void addLocalVariable(
+    void addLocalVariable(
             String name,
             SymbolTable.InitialValueType initialValueType,
             String initialValueData);
     
 //    public void removeLocalVariable(String name);
     
-    public Collection<Parameter> getParameters();
+    Collection<Parameter> getParameters();
     
-    public Collection<VariableData> getLocalVariables();
+    Collection<VariableData> getLocalVariables();
     
     
     /**
      * The definition of a parameter.
      */
-    public interface Parameter {
+    interface Parameter {
         
         /**
          * The name of the parameter
          * @return the name
          */
-        public String getName();
+        String getName();
         
         /**
          * Answer whenether or not the parameter is input to the module.
          * @return true if the parameter is input, false otherwise
          */
-        public boolean isInput();
+        boolean isInput();
         
         /**
          * Answer whenether or not the parameter is output to the module.
          * @return true if the parameter is output, false otherwise
          */
-        public boolean isOutput();
+        boolean isOutput();
         
     }
     
@@ -108,7 +108,7 @@ public interface Module extends Base, NamedBean {
     /**
      * An enum that defines the types of initial value.
      */
-    public enum ReturnValueType {
+    enum ReturnValueType {
         
         None(Bundle.getMessage("ReturnValueType_None")),
         LocalVariable(Bundle.getMessage("ReturnValueType_LocalVariable")),

@@ -17,21 +17,21 @@ public interface Debugable extends Base {
      * 
      * @param config the new configuration or null to turn off debugging
      */
-    public void setDebugConfig(DebugConfig config);
+    void setDebugConfig(DebugConfig config);
 
     /**
      * Get the debug configuration for this male socket.
      * 
      * @return the configuration or null if debugging is turned off for this male socket
      */
-    public DebugConfig getDebugConfig();
+    DebugConfig getDebugConfig();
 
     /**
      * Create a debug configuration for this male socket.
      * 
      * @return the new configuration
      */
-    public DebugConfig createDebugConfig();
+    DebugConfig createDebugConfig();
 
     /**
      * Debug configuration for this male socket.
@@ -42,9 +42,9 @@ public interface Debugable extends Base {
      * LogixNG without affecting turnouts on the layout while testing the
      * LogixNG.
      */
-    public interface DebugConfig {
+    interface DebugConfig {
         
-        public DebugConfig getCopy();
+        DebugConfig getCopy();
         
     }
     

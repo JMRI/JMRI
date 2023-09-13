@@ -7,13 +7,7 @@
 
   <style>
     .dp-center {text-align: center;}
-    .dp-middle {text-align: middle;}
     .dp-right {text-align: right;}
-    .dp-none {list-style-type: none;}
-    .dp-square {list-style-type: square;}
-    .dp-upper-alpha {ist-style-type: upper-alpha;}
-    .dp-lower-alpha {list-style-type: lower-alpha;}
-    .dp-border-2 {border: 2px solid;}
   </style>
 </head>
 <body>
@@ -247,7 +241,7 @@
       <p>The VSDecoder Preferences pane allows the user to change various preferences in how the
       VSDecoder works.</p>
 
-      <p><img src="images/VSD_Preferences.png" alt="Preferences window" width="773" height="248">
+      <p><img src="images/VSD_Preferences.png" alt="Preferences window" width="613" height="203">
       </p>
 
       <h5>Auto Start Engine</h5>
@@ -329,10 +323,10 @@
       <h5>Default VSD File Path</h5>
 
       <p>This path is the default path for the "Load VSD File" chooser box.</p>
-
-      <h5>Default VSD File Name</h5>
-
-      <p>Was required for the first version of Auto-Load. Is no longer used.</p>
+      <p>Since JMRI Test Release 5.5.4:
+      <a href="../../doc/Technical/FileNames.shtml">Portable File Access</a>
+      is supported, e.g. "settings:VSDFiles".
+      </p>
 
       <h5>Cancel / Apply / Save Buttons</h5>
 

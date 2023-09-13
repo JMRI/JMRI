@@ -217,7 +217,8 @@ public class SerialDriverAdapter extends SprogPortController {
         // connect to the traffic controller
         this.getSystemConnectionMemo().getSprogTrafficController().connectPort(this);
 
-        this.getSystemConnectionMemo().configureCommandStation(numSlots);
+        log.debug("Configure command station");
+        this.getSystemConnectionMemo().configureCommandStation(numSlots, getOptionState("TrackPowerState"));
         this.getSystemConnectionMemo().configureManagers();
 
         if (getOptionState("TrackPowerState") != null && getOptionState("TrackPowerState").equals(Bundle.getMessage("PowerStateOn"))) {

@@ -1,25 +1,20 @@
 package jmri.jmrit.operations.locations.tools;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
+import java.awt.*;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.cars.CarLoad;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user edit of track loads
@@ -48,7 +43,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
     JScrollPane paneShipLoads = new JScrollPane(panelShipLoads);
 
     // major buttons
-    JButton saveTrackButton = new JButton(Bundle.getMessage("SaveTrack"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     JButton addLoadButton = new JButton(Bundle.getMessage("AddLoad"));
     JButton deleteLoadButton = new JButton(Bundle.getMessage("DeleteLoad"));
@@ -61,14 +56,14 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
     // check boxes
     JCheckBox loadAndTypeCheckBox = new JCheckBox(Bundle.getMessage("TypeAndLoad"));
     JCheckBox shipLoadAndTypeCheckBox = new JCheckBox(Bundle.getMessage("TypeAndLoad"));
-    JCheckBox holdCars = new JCheckBox();
+    JCheckBox holdCars = new JCheckBox(Bundle.getMessage("HoldCarsWithCustomLoads"));
 
     // radio buttons
     JRadioButton loadNameAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
     JRadioButton loadNameInclude = new JRadioButton(Bundle.getMessage("AcceptOnly"));
     JRadioButton loadNameExclude = new JRadioButton(Bundle.getMessage("Exclude"));
 
-    JRadioButton shipLoadNameAll = new JRadioButton(Bundle.getMessage("ShipAll"));
+    JRadioButton shipLoadNameAll = new JRadioButton(Bundle.getMessage("ShipsAllLoads"));
     JRadioButton shipLoadNameInclude = new JRadioButton(Bundle.getMessage("ShipOnly"));
     JRadioButton shipLoadNameExclude = new JRadioButton(Bundle.getMessage("Exclude"));
 
@@ -202,7 +197,6 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         pOptions.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
         pOptions.setMaximumSize(new Dimension(2000, 400));
         addItem(pOptions, holdCars, 0, 0);
-        holdCars.setText(Bundle.getMessage("HoldCarsWithCustomLoads"));
         holdCars.setToolTipText(Bundle.getMessage("HoldCarsWithCustomLoadsTip"));
 
         // row 12
@@ -212,7 +206,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         panelButtons.setMaximumSize(new Dimension(2000, 200));
 
         // row 13
-        addItem(panelButtons, saveTrackButton, 0, 0);
+        addItem(panelButtons, saveButton, 0, 0);
 
         getContentPane().add(p1);
         getContentPane().add(pane3);
@@ -223,7 +217,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         getContentPane().add(panelButtons);
 
         // setup buttons
-        addButtonAction(saveTrackButton);
+        addButtonAction(saveButton);
 
         addButtonAction(deleteLoadButton);
         addButtonAction(deleteAllLoadsButton);
@@ -288,7 +282,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         if (_track == null) {
             return;
         }
-        if (ae.getSource() == saveTrackButton) {
+        if (ae.getSource() == saveButton) {
             log.debug("track save button activated");
             save();
             if (Setup.isCloseWindowOnSaveEnabled()) {
@@ -347,7 +341,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
     }
 
     protected void updateButtons(boolean enabled) {
-        saveTrackButton.setEnabled(enabled);
+        saveButton.setEnabled(enabled);
 
         loadNameAll.setEnabled(enabled);
         loadNameInclude.setEnabled(enabled);
@@ -518,8 +512,8 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
     private void checkForErrors() {
         if (_track.getLoadOption().equals(Track.INCLUDE_LOADS) && _track.getLoadNames().length == 0
                 || _track.getShipLoadOption().equals(Track.INCLUDE_LOADS) && _track.getShipLoadNames().length == 0) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNeedLoads"), Bundle.getMessage("ErrorNoLoads"),
-                    JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNeedLoads"), Bundle.getMessage("ErrorNoLoads"),
+                    JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -562,5 +556,5 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackLoadEditFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackLoadEditFrame.class);
 }

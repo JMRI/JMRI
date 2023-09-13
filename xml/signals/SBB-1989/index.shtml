@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: SBB-CFF-FFS - Swiss State Railways Signaling Definition</title>
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
+      <h1>JMRI: SBB-CFF-FFS - Swiss State Railways Signaling Definition</h1>
+
+<p>
+This directory contains signaling definitions corresponding to the Swiss Railways 
+(SBB in German, CFF in French and FFS in Italian) 1989 rules.
+</p>
+<p>Wikipedia: <a href="https://de.wikipedia.org/wiki/Eisenbahnsignale_in_der_Schweiz">link</a></p>
+<p>See the <a href="aspects.xml">aspect page</a>.</p>
+<p>Signal Mast definitions:</p>
+<ul>
+  <li><a href="appearance-SBBroundhead.xml">Round head signal without speed limit</a></li>
+  <li><a href="appearance-SBBroundheadspeed.xml">Round head signal with speed limit</a></li>
+  <li><a href="appearance-SBBsquaredhead.xml">Squared head signal without speed limit</a></li>
+  <li><a href="appearance-SBBsquaredheadspeed.xml">Squared head signal with speed limit</a></li>
+  <li><a href="appearance-SBBdwarfsignal.xml">Dwarf signal</a></li>
+</ul>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

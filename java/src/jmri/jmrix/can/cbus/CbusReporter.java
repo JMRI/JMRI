@@ -39,8 +39,24 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
     private final CanSystemConnectionMemo _memo;
 
     /**
-     * Create a new CbusReporter.
+     * Should all CbusReporters clear themselves after a timeout?
      * <p>
+     * Default behavior is to not timeout; this is public access
+     * so it can be updated from a script
+     */
+    public static boolean eraseOnTimeoutAll = false;
+
+    /**
+     * Should this CbusReporter clear itself after a timeout?
+     * <p>
+     * Default behavior is to not timeout; this is public access
+     * so it can be updated from a script
+     */
+    public boolean eraseOnTimeoutThisReporter = false;
+
+    /**
+     * Create a new CbusReporter.
+     *
      *
      * @param address Reporter address, currently in String number format. No system prefix or type letter.
      * @param memo System connection.
@@ -57,7 +73,7 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
 
     /**
      * Set the CbusReporter State.
-     * <p>
+     *
      * May also provide / update a CBUS Sensor State, depending on property.
      * {@inheritDoc}
      */
@@ -177,6 +193,9 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
 
     // delay can be set to non-null memo when older constructor fully deprecated.
     private void startTimeout(IdTag tag){
+        // only timeout when enabled
+        if (! eraseOnTimeoutAll && ! eraseOnTimeoutThisReporter) return;
+
         int delay = (_memo==null ? 2000 : ((CbusReporterManager)_memo.get(jmri.ReporterManager.class)).getTimeout() );
         ThreadingUtil.runOnLayoutDelayed( () -> {
             if (!disposed && getCurrentReport() == tag) {

@@ -1118,7 +1118,7 @@ public class Track extends PropertyChangeSupport {
         } else if (getShipLoadOption().equals(Track.EXCLUDE_LOADS)) {
             s = Bundle.getMessage("Exclude") + " " + getShipLoadNames().length + " " + Bundle.getMessage("Loads");
         } else {
-            s = Bundle.getMessage("ShipAll");
+            s = Bundle.getMessage("ShipsAllLoads");
         }
         return s;
     }
@@ -1318,10 +1318,6 @@ public class Track extends PropertyChangeSupport {
         if (getDropOption().equals(ANY)) {
             return true;
         }
-        // yard tracks accept all trains
-        if (isYard()) {
-            return true;
-        }
         if (getDropOption().equals(TRAINS)) {
             return containsDropId(train.getId());
         }
@@ -1335,10 +1331,6 @@ public class Track extends PropertyChangeSupport {
 
     public boolean isDropRouteAccepted(Route route) {
         if (getDropOption().equals(ANY) || getDropOption().equals(TRAINS) || getDropOption().equals(EXCLUDE_TRAINS)) {
-            return true;
-        }
-        // yard tracks accept all routes
-        if (isYard()) {
             return true;
         }
         if (getDropOption().equals(EXCLUDE_ROUTES)) {
@@ -1393,17 +1385,13 @@ public class Track extends PropertyChangeSupport {
      * @return true if the train can pick up cars from this track.
      */
     public boolean isPickupTrainAccepted(Train train) {
-        if (_pickupOption.equals(ANY)) {
+        if (getPickupOption().equals(ANY)) {
             return true;
         }
-        // yard tracks accept all trains
-        if (isYard()) {
-            return true;
-        }
-        if (_pickupOption.equals(TRAINS)) {
+        if (getPickupOption().equals(TRAINS)) {
             return containsPickupId(train.getId());
         }
-        if (_pickupOption.equals(EXCLUDE_TRAINS)) {
+        if (getPickupOption().equals(EXCLUDE_TRAINS)) {
             return !containsPickupId(train.getId());
         } else if (train.getRoute() == null) {
             return false;
@@ -1412,14 +1400,10 @@ public class Track extends PropertyChangeSupport {
     }
 
     public boolean isPickupRouteAccepted(Route route) {
-        if (_pickupOption.equals(ANY) || _pickupOption.equals(TRAINS) || _pickupOption.equals(EXCLUDE_TRAINS)) {
+        if (getPickupOption().equals(ANY) || getPickupOption().equals(TRAINS) || getPickupOption().equals(EXCLUDE_TRAINS)) {
             return true;
         }
-        // yard tracks accept all routes
-        if (isYard()) {
-            return true;
-        }
-        if (_pickupOption.equals(EXCLUDE_ROUTES)) {
+        if (getPickupOption().equals(EXCLUDE_ROUTES)) {
             return !containsPickupId(route.getId());
         }
         return containsPickupId(route.getId());
@@ -1554,7 +1538,7 @@ public class Track extends PropertyChangeSupport {
                     getLocation().getName(), getName()); // NOI18N
 
             return MessageFormat.format(Bundle.getMessage("lengthIssue"),
-                    new Object[] { LENGTH, length, Setup.getLengthUnit().toLowerCase(), getAvailableTrackSpace() });
+                    new Object[] { LENGTH, length, Setup.getLengthUnit().toLowerCase(), getAvailableTrackSpace(), getLength() });
         }
         return OKAY;
     }
@@ -1635,13 +1619,13 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Get the service order for this track. Only yards and interchange have this
-     * feature.
+     * Get the service order for this track. Yards and interchange have this
+     * feature for cars.  Staging has this feature for trains.
      *
      * @return Service order: Track.NORMAL, Track.FIFO, Track.LIFO
      */
     public String getServiceOrder() {
-        if (isSpur() || isStaging()) {
+        if (isSpur() || (isStaging() && getPool() == null)) {
             return NORMAL;
         }
         return _order;
@@ -1994,11 +1978,13 @@ public class Track extends PropertyChangeSupport {
      * @param enable when true, swap generic car load state
      */
     public void setLoadSwapEnabled(boolean enable) {
+        boolean old = isLoadSwapEnabled();
         if (enable) {
             _loadOptions = _loadOptions | SWAP_GENERIC_LOADS;
         } else {
             _loadOptions = _loadOptions & 0xFFFF - SWAP_GENERIC_LOADS;
         }
+        setDirtyAndFirePropertyChange(LOAD_OPTIONS_CHANGED_PROPERTY, old, enable);
     }
 
     public boolean isLoadSwapEnabled() {
@@ -2012,11 +1998,13 @@ public class Track extends PropertyChangeSupport {
      * @param enable when true, set generic car load to empty
      */
     public void setLoadEmptyEnabled(boolean enable) {
+        boolean old = isLoadEmptyEnabled();
         if (enable) {
             _loadOptions = _loadOptions | EMPTY_GENERIC_LOADS;
         } else {
             _loadOptions = _loadOptions & 0xFFFF - EMPTY_GENERIC_LOADS;
         }
+        setDirtyAndFirePropertyChange(LOAD_OPTIONS_CHANGED_PROPERTY, old, enable);
     }
 
     public boolean isLoadEmptyEnabled() {
@@ -2029,11 +2017,13 @@ public class Track extends PropertyChangeSupport {
      * @param enable when true, remove Scheduled loads from cars
      */
     public void setRemoveCustomLoadsEnabled(boolean enable) {
+        boolean old = isRemoveCustomLoadsEnabled();
         if (enable) {
             _loadOptions = _loadOptions | EMPTY_CUSTOM_LOADS;
         } else {
             _loadOptions = _loadOptions & 0xFFFF - EMPTY_CUSTOM_LOADS;
         }
+        setDirtyAndFirePropertyChange(LOAD_OPTIONS_CHANGED_PROPERTY, old, enable);
     }
 
     public boolean isRemoveCustomLoadsEnabled() {

@@ -101,13 +101,24 @@
         <p>CBUS tools are accessed from the menu for your chosen system connection.The example
         shows a connection to MERG hardware. The available tools may vary with the system
         connection</p>
-        <img src="images/swing/merg-menu-206x145.png" alt="MERG menu" class="floatRight" width=
-        "206" height="145">
+        <img src="images/swing/merg-cbus-menu-205x259.png" alt="MERG menu" class="floatRight" width=
+        "205" height="259">
         <ul>
           <li>
             <a href=
             "../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console</a>
             - Tool for viewing and sending CAN frames / events.
+          </li>
+
+          <li>
+            <a href="../../../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Send
+            Frame</a> - Send CAN frames or CBUS events
+          </li>
+
+          <li>
+            <a href=
+            "../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Event
+            Capture Tool</a> - Capture CBUS events
           </li>
 
           <li>
@@ -128,16 +139,7 @@
             Command Station Monitor</a> - Loco session monitoring and Command Station Tools.
           </li>
 
-          <li>
-            <a href="../../../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Send
-            Frame</a> - Send CAN frames or CBUS events
-          </li>
-
-          <li>
-            <a href=
-            "../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Event
-            Capture Tool</a> - Capture CBUS events
-          </li>
+          
 
           <li>
             <a href=
@@ -148,13 +150,19 @@
           <li>
             <a href=
             "../../../../package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml">Network
-            Item simulation</a> - Simulates Cbus Command stations and responds to event requests
+            Item simulation</a> - Simulates CBUS Command stations and responds to event requests
           </li>
 
           <li>
             <a href=
             "../../../../package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml">Firmware
             update</a> - to update CBUS module firmware
+          </li>
+
+          <li>
+            <a href=
+            "../../../../package/jmri/jmrix/can/cbus/swing/hubpane/CbusHubPane.shtml">Hub Control</a>
+            - to share the CBUS connection locally and onto a LAN
           </li>
 
           <li>
@@ -608,11 +616,10 @@
             <a href="https://groups.io/g/jmriusers/">JMRI Users at Groups.io</a>
           </li>
 
-          <li>For extra logging while debugging, locate and edit the default.lcf file in the root
-          of the JMRI install, see the pattern at the end of the file.<br>
-          General CBUS logging - log4j.category.jmri.jmrix.can.cbus=DEBUG<br>
-          Connection logging - log4j.category.jmri.jmrix.can.adapters.gridconnect=DEBUG<br>
-          The extra logging will appear in the JMRI console, also the JMRI error logs.</li>
+          <li>To enable extra logging while debugging CBUS, see
+          <a href="../../../apps/Debug.shtml">JMRI Debugging</a> and add the Logger Category names
+          <br><code>jmri.jmrix.can.cbus</code> and <code>jmri.jmrix.can.adapters</code> .
+          </li>
 
           <li>
             <a href=

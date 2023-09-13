@@ -43,6 +43,10 @@
             </li>
 
             <li>
+              <a href="#digital_expression_linux">Linux <span class="since">since 5.3.4</span></a>
+            </li>
+
+            <li>
               <a href="#digital_expression_other">Other</a>
             </li>
           </ul>
@@ -138,22 +142,14 @@
           These are explained in the <a href="chapter9.shtml">Formula</a> chapter.
         </dd>
 
-        <dd>
-        </dd>
-
         <dt>Cancel</dt>
 
         <dd>Close the dialog without applying any changes.</dd>
-
-        <dd>
-        </dd>
 
         <dt>Create/OK</dt>
 
         <dd>Save the new expression or the changes to an existing expression.</dd>
 
-        <dd>
-        </dd>
       </dl>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -164,6 +160,24 @@
         <a href="images/chapter6/digital_expression_item.png"><img class="image-border" src=
         "images/chapter6/digital_expression_item.png" alt="Chapter 6 expression item list"></a>
       </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h5>Audio<span class="since">since 5.5.4</span></h5>
+
+      <p>Returns true if the selected audio object has the indicated state.  The drop-down list
+      contains the defined audio listeners, audio buffers and audio sources.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/digital_expression_audio.png"><img src=
+        "images/chapter6/digital_expression_audio.png" alt="Chapter 6 expression audio item"></a>
+      </div>
+
+      <p>The <strong>Check only on change</strong> option is used to change the logic of the
+      expression evaluation.  When the option is not enabled, the normal evaluation occurs:
+      <strong><em>Does the current state match the indicated state</em></strong>.  When the option
+      is enabled, the evaluation becomes:  <strong><em>Has the current state changed to the indicated
+      state since the last check</em></strong>.
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -498,6 +512,21 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h5>Section<span class="since">since 5.3.5</span></h5>
+
+      <ul>
+        <li><strong>Free:</strong> Evaluate to true if the state of the selected section is
+        not being used by a transit.</li>
+
+        <li><strong>Forward:</strong> Evaluate to true if the selected section is being used by
+        a transit and is set for the forward direction.</li>
+
+        <li><strong>Reverse:</strong> Evaluate to true if the selected section is being used by
+        a transit and is set for the reverse direction.</li>
+      </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Sensor</h5>
 
       <ul>
@@ -579,6 +608,18 @@
 
         <li><strong>is not permissive sml disabled:</strong> Evaluate to true if the specified
         signal does not have permissive sml disabled.</li>
+      </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h5>Transit<span class="since">since 5.3.5</span></h5>
+
+      <ul>
+        <li><strong>Idle:</strong> Evaluate to true if the state of the selected transit is
+        idle.  This indicates that the transit is not been assigned to an active train.</li>
+
+        <li><strong>Assigned:</strong> Evaluate to true if the selected transit is assigned to an
+        active train by the Dispatcher tool.</li>
       </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -712,6 +753,34 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h3 id="digital_expression_linux">Digital expression :: Linux</h3>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter6/digital_expression_linux.png"><img src=
+        "images/chapter6/digital_expression_linux.png" alt="Chapter 6 digital expression linux"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h5>Linux Line Power<span class="since">since 5.3.4</span></h5>
+
+      <p>The Linux <strong>upower</strong> command line tool is used to determine if external power
+      is active. For example, if the external power is removed, then this tool can be used to do a
+      graceful shutdown before the battery dies.</p>
+
+      <p>The expression runs the <strong>upower</strong> command line tool every five seconds.  If
+      it detects a change, it triggers the execution of the ConditionalNG.</p>
+
+      <p>When the expression is added, the <strong>upower</strong> command is checked to make sure
+      it is present and working.  A warning message will be displayed if there is an issue.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter6/linux_line_power.png"><img src=
+        "images/chapter6/linux_line_power.png" alt="Chapter 6 linux line power"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h3 id="digital_expression_other">Digital expression :: Other</h3>
 
       <div style="margin-left: 2em;">
@@ -753,6 +822,59 @@
         <a href="images/chapter6/connection_expression.png"><img src=
         "images/chapter6/connection_expression.png" alt="Chapter 6 connection expression"></a>
       </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h5 id="fileasflag">File as flag<span class="since">since 5.5.2</span></h5>
+
+      <p>The <strong>File as flag</strong> expression checks for the existence of a file.  If the
+      file exists, the expression returns <strong>true</strong>, otherwise it returns <strong>false
+      </strong>.  When the file is found, it can be kept or deleted.  Normally the file will be
+      created by some process that needs to notify JMRI about an event.  For Linux and macOS,
+      <strong><code>touch <em>filename</em></code></strong> works from the command line or a script.
+      The are several options for Windows, such as
+      <strong><code>copy nul <em>filename</em></code></strong>,
+      <strong><code>type nul > <em>filename</em></code></strong>, or
+      <strong><code>echo > <em>filename</em></code></strong>.</p>
+
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/file_as_flag.png"><img src=
+        "images/chapter6/file_as_flag.png" alt="Chapter 6 file as flag expression"></a>
+      </div>
+
+      <p>The file selector is used to create the path to the file and file name.  The
+      default path is the <strong>user files location</strong>.  If the file does not
+      currently exist, select a different file and then replace the file name with the
+      planned file name before creating the expression.</p>
+
+      <p>The default file action when the file is found is <strong>Keep file</strong>.  The
+      <strong>Delete file</strong> action can be selected which would be useful for
+      repetitive external events.</p>
+
+      <p><strong><u>Example</u></strong></p>
+
+      <p>The LogixNG <a href="chapter5.shtml#timeraction">Timer</a> action is used to
+      run the <strong>File as flag</strong> expresson every 5 seconds.  When the file
+      exists, an internal sensor is set <strong>Active</strong>.  The file is deleted and
+      the timer loop resumes running <strong>File as flag</strong>.  The sensor is used
+      to trigger another process which handles the event.  For simple actions,
+      <strong>Then</strong> could be used to do the work.</p>
+
+      <p>Configure the Timer action.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/file_as_flag_ex_timer.png"><img src=
+        "images/chapter6/file_as_flag_ex_timer.png" alt="Chapter 6 file as flag timer"></a>
+      </div>
+
+      <p>Create the LogixNG.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/file_as_flag_ex_lng.png"><img src=
+        "images/chapter6/file_as_flag_ex_lng.png" alt="Chapter 6 file as flag example"></a>
+      </div>
+
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 

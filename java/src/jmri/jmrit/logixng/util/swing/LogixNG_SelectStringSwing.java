@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.util.swing;
 
+import java.awt.event.ActionEvent;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
@@ -11,7 +12,9 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.LogixNG_SelectString;
 import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.util.FileUtil;
 import jmri.util.swing.BeanSelectPanel;
+import jmri.util.swing.JmriJFileChooser;
 
 /**
  * Swing class for jmri.jmrit.logixng.util.LogixNG_SelectString.
@@ -46,17 +49,60 @@ public class LogixNG_SelectStringSwing {
     }
 
     public JPanel createPanel(@CheckForNull LogixNG_SelectString selectStr) {
+        _panelDirect = new javax.swing.JPanel();
+
+        _valueTextField = new JTextField(30);
+        _panelDirect.add(_valueTextField);
+
+        return internalCreatePanel(selectStr);
+    }
+
+    public JPanel createFilenamePanel(@CheckForNull LogixNG_SelectString selectStr, String path) {
+        _panelDirect = new javax.swing.JPanel();
+
+        JButton selectFileButton = new JButton("..."); // "File" replaced by ...
+        selectFileButton.setMaximumSize(selectFileButton.getPreferredSize());
+        selectFileButton.setToolTipText(Bundle.getMessage("FileButtonHint"));  // NOI18N
+        selectFileButton.addActionListener((ActionEvent e) -> {
+            JmriJFileChooser fileChooser = new JmriJFileChooser(path);
+            fileChooser.rescanCurrentDirectory();
+            int retVal = fileChooser.showOpenDialog(null);
+            // handle selection or cancel
+            if (retVal == JFileChooser.APPROVE_OPTION) {
+                // set selected file location
+                try {
+                    _valueTextField.setText(FileUtil.getPortableFilename(fileChooser.getSelectedFile().getCanonicalPath()));
+                } catch (java.io.IOException ex) {
+                    log.error("exception setting file location", ex);  // NOI18N
+                    _valueTextField.setText("");
+                }
+            }
+        });
+        _valueTextField = new JTextField(30);
+        _panelDirect.add(_valueTextField);
+        _panelDirect.add(selectFileButton);
+
+        return internalCreatePanel(selectStr);
+    }
+
+    private JPanel internalCreatePanel(@CheckForNull LogixNG_SelectString selectStr) {
 
         JPanel panel = new JPanel();
 
         _tabbedPane = new JTabbedPane();
-        _panelDirect = new javax.swing.JPanel();
         _panelReference = new javax.swing.JPanel();
         _panelMemory = new JPanel();
         _panelLocalVariable = new javax.swing.JPanel();
         _panelFormula = new javax.swing.JPanel();
         if (selectStr != null) {
             _panelTable = _selectTableSwing.createPanel(selectStr.getSelectTable());
+            if (selectStr.isOnlyDirectAddressingAllowed()) {
+                _tabbedPane.setEnabled(false);
+                _panelReference.setEnabled(false);
+                _panelMemory.setEnabled(false);
+                _panelLocalVariable.setEnabled(false);
+                _panelFormula.setEnabled(false);
+            }
         } else {
             _panelTable = _selectTableSwing.createPanel(null);
         }
@@ -74,9 +120,6 @@ public class LogixNG_SelectStringSwing {
         _tabbedPane.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelLocalVariable);
         _tabbedPane.addTab(NamedBeanAddressing.Formula.toString(), _panelFormula);
         _tabbedPane.addTab(NamedBeanAddressing.Table.toString(), _panelTable);
-
-        _valueTextField = new JTextField(30);
-        _panelDirect.add(_valueTextField);
 
         _referenceTextField = new JTextField();
         _referenceTextField.setColumns(30);
@@ -195,4 +238,5 @@ public class LogixNG_SelectStringSwing {
         _selectTableSwing.dispose();
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_SelectStringSwing.class);
 }
