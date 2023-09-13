@@ -595,6 +595,10 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>JMRI now has a "Software Bill of Materials" (SBOM) distributed with it.
+                Although this won't matter to most users, it allows people to determine
+                via the standardized SPDX mechanism the libraries that JMRI contains and
+                the versions being used. Providing this is a small step toward more automated
+                distribution.</li>
         </ul>
 
