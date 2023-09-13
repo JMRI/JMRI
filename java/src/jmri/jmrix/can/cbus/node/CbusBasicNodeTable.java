@@ -233,7 +233,7 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
                     log.info("No xml, or no programmer found for node {}", title);
                     JmriJOptionPane.showMessageDialog(null,
                         "<html><h3>No programmer or no decoder file</h3><p>Use Node Variables tab</p></html>",
-                        "No xml, or no programmer for " + title, JOptionPane.INFORMATION_MESSAGE);
+                        "No xml, or no programmer for " + title, JmriJOptionPane.INFORMATION_MESSAGE);
                 }
                 break;
             default:
