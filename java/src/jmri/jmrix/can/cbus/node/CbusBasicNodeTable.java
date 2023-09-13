@@ -16,9 +16,7 @@ import jmri.jmrit.symbolicprog.tabbedframe.PaneServiceProgFrame;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.*;
 import jmri.util.ThreadingUtil;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Table data model for display of CBUS Nodes
@@ -233,12 +231,9 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
                     p.setVisible(true);
                 } else {
                     log.info("No xml, or no programmer found for node {}", title);
-                    JOptionPane pane = new JOptionPane("<html><h3>No programmer or no decoder file" +
-                        "</h3><p>Use Node Variables tab</p></html>");
-                    pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-                    JDialog dialog = pane.createDialog("Node Search Complete");
-                    dialog.setModal(false);
-                    dialog.setVisible(true);
+                    JmriJOptionPane.showMessageDialog(null,
+                        "<html><h3>No programmer or no decoder file</h3><p>Use Node Variables tab</p></html>",
+                        "No xml, or no programmer for " + title, JOptionPane.INFORMATION_MESSAGE);
                 }
                 break;
             default:
@@ -269,6 +264,7 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
         null
 
     }; // Length = number of items in array should (at least) match number of columns
-    
-    private final static Logger log = LoggerFactory.getLogger(CbusBasicNodeTable.class);
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusBasicNodeTable.class);
+
 }
