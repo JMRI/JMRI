@@ -274,7 +274,8 @@
         have been changed since the last PanelPro store occurred.  This provides an opportunity to
         do a final store before shutdown.</p>
 
-        <p>The check process uses two shutdown preferences.</p>
+        <p>The check process uses two shutdown preferences and options for ignoring special cases
+        that can result in unnecessary store requests.</p>
 
         <div style="margin-left: 2em">
           <a href="images/PrefsShutdown.png"><img src="images/PrefsShutdown.png" alt="shutdown preferences"></a>
@@ -297,6 +298,20 @@
         <p>The default is to show the store request dialog and if <strong>Yes</strong> is selected,
         the actual store dialog will be displayed.  The <strong>Skip</strong> option can be selected
         to go directly to the store dialog.</p>
+
+        <h4>Ignore Options<span class="since">since 5.5.5</span></h4>
+
+        <dl>
+          <dt>Fast clock changes</dt>
+          <dd>Some fast clock changes are meant to be temporary, or come from external sources.  If
+          it is not necessary to retain the changes, this option will ignore the changes.</dd>
+
+          <dt>Sensor icon text color changes</dt>
+          <dd>When sensor icons have been changed to text labels, sensor state changes can change
+          the text and/or background colors.  These <strong><em>appear</em></strong> to be permanent
+          changes that should be stored but they are actually temporary changes until next sensor
+          state change.</dd>
+        </dl>
 
       </div>
 
@@ -539,7 +554,7 @@
 
               <li>Turnout Creation - Select whether mobile devices can create turnouts.</li>
 
-              <li>Consists - If selected, mobile devices can build & break "Advanced Consists".
+              <li>Consists - If selected, mobile devices can build &amp; break "Advanced Consists".
                 <ul>
                   <li>NMRA Format - These consists may perform better for building and controlling
                   with WiFi devices.</li>
