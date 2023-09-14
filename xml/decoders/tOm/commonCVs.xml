@@ -862,6 +862,11 @@
         <tooltip xml:lang="cs">Meze 0-255</tooltip>
       </variable>
       <variable CV="127" item="SUSI transport" default="0" comment="Range 0-255">
+        <qualifier>
+            <variableref>SUSI interface</variableref>
+            <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
         <decVal min="0" max="255"/>
         <label>CV transport device for SUSI</label>
         <label xml:lang="cs">CV transportního zařízení pro SUSI</label>
