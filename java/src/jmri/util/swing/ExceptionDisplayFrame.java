@@ -1,239 +1,124 @@
 package jmri.util.swing;
 
 import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.Window;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
-import java.util.Objects;
+
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 /**
- * Dialog to display the details of an Exception. The Exception and additional
- * details about what was happening when the exception occurred are passed in
- * using an ExceptionContext object.
+ * Static methods to display an Exception Dialog.
  * <p>
- * This is a preliminary version that is incomplete, but works. Copy to the
- * clipboard needs to be added.
- *
+ * The Exception and additional details about what was happening when the
+ * exception occurred can be passed in using an ExceptionContext object.
+ * <p>
+ * The Dialog has buttons for pasting Exception and System details to Clipboard.
  * @author Gregory Madsen Copyright (C) 2012
- *
+ * @author Steve Young Copyright (C) 2023
  */
-public class ExceptionDisplayFrame extends JDialog {
+public class ExceptionDisplayFrame {
 
-    private final transient ExceptionContext context;
+    private ExceptionDisplayFrame(){}
 
-    // This needs MAJOR clean-up to better organize the controls and their
-    // hierarchy.
-    private JPanel contentPane;
-    JTextArea stackTraceTextArea;
-    private JPanel buttonPanel;
-    private JButton copyButton;
-    private JButton closeButton;
-
-    private JLabel stackTraceLabel;
-    private JButton showDetailsButton;
-    private JPanel panel;
-    private JPanel panel_2;
-    private JLabel lblNewLabel;
-    private JLabel lblNewLabel_2;
-
-    // New stuff
-    private JTextArea operationTextArea;
-    private JTextArea messageTextArea;
-    private JTextArea hintTextArea;
-    private JPanel summaryPanel;
-    private JPanel panel_4;
-    private JLabel lblNewLabel_3;
-    private JLabel lblNewLabel_4;
-    private JTextArea summaryTextArea2;
-
-    private JPanel panel_5;
-    private JLabel lblNewLabel_5;
-    private JTextArea typeTextArea;
-
-    private JPanel panel_6;
-    private JLabel lblNewLabel_6;
-    private JTextArea toStringTextArea;
-
-    private JPanel panel_7;
-    private JLabel lblNewLabel_7;
-    private JTextArea causeTextArea;
-
-    private JPanel detailsPanel;
-    private JLabel lblNewLabel_1;
+    private static final EmptyBorder border = new EmptyBorder(10, 20, 10, 20);
 
     /**
-     * Create the frame.
+     * Display an ExceptionDisplayFrame.
      *
-     * @param context the ExceptionContext
-     * @param owner   the associated window, or none if null
-     *
+     * @param context the ExceptionContext to display details for.
+     * @param owner   the associated Component, can be null.
      */
-    public ExceptionDisplayFrame(ExceptionContext context, @CheckForNull Window owner) {
-        super(owner, context.getTitle(), ModalityType.DOCUMENT_MODAL);
-        Objects.requireNonNull(context, "ExceptionContext argument passed to ErrorDisplayFrame constructor cannot be null."); // NOI18N
-        this.context = context;
-
-        initComponents();
+    public static void displayExceptionDisplayFrame(@CheckForNull final Component owner, @Nonnull final ExceptionContext context) {
+        JmriJOptionPane.showMessageDialog(owner, 
+            initComponents(context), 
+            context.getTitle(), 
+            JmriJOptionPane.ERROR_MESSAGE);
     }
 
     /**
-     * Constructor that takes just an Exception and defaults everything else.
+     * Display an ExceptionDisplayFrame.
      *
-     * @param ex    the Exception
-     * @param owner the associated window, or none if null
+     * @param ex    the Exception to display details for.
+     * @param owner the associated Component, can be null.
      *
      */
-    public ExceptionDisplayFrame(Exception ex, @CheckForNull Window owner) {
-        this(new ExceptionContext(ex, 
-             Bundle.getMessage("ExceptionDisplayDefaultOperation"), 
-             Bundle.getMessage("ExceptionDisplayDefaultHint")), owner);
+    public static void displayExceptionDisplayFrame(@CheckForNull Component owner, @Nonnull Exception ex) {
+        displayExceptionDisplayFrame( owner, new ExceptionContext( ex, "", "") );
     }
 
-    private void initComponents() {
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
+    @Nonnull
+    private static JPanel initComponents(@Nonnull ExceptionContext context) {
+        JPanel contentPane = new JPanel();
+        contentPane.setBorder(border);
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        setContentPane(contentPane);
 
-        lblNewLabel_1 = new JLabel(Bundle.getMessage("ExceptionDisplayWarning"));
-        lblNewLabel_1.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JPanel titlePanel = new JPanel();
+        titlePanel.add(new JLabel("<html><h2>" + context.getPreface() + "</h2></html>"));
+        contentPane.add(titlePanel);
 
-        contentPane.add(lblNewLabel_1);
-
-        summaryPanel = new JPanel();
-        contentPane.add(summaryPanel);
-
-        lblNewLabel_3 = new JLabel(Bundle.getMessage("ExceptionDisplaySummary"));
-        summaryPanel.add(lblNewLabel_3);
-
-        summaryTextArea2 = new JTextArea();
-        summaryPanel.add(summaryTextArea2);
-
-        showDetailsButton = new JButton(Bundle.getMessage("ExceptionDisplayDetailsButton"));
-        showDetailsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        showDetailsButton.addActionListener((ActionEvent arg0) -> {
-            detailsPanel.setVisible(true);
-            pack();
-        });
-        contentPane.add(showDetailsButton);
-
-        detailsPanel = new JPanel();
-        detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.Y_AXIS));
-        detailsPanel.setVisible(false);
-        contentPane.add(detailsPanel);
-
-        stackTraceTextArea = new JTextArea();
-        stackTraceTextArea
-                .setToolTipText(Bundle.getMessage("ExceptionDisplayStackTraceToolTip"));
-
-        stackTraceLabel = new JLabel(Bundle.getMessage("ExceptionDisplayStackTraceLabel"));
-        stackTraceLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        stackTraceLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        detailsPanel.add(stackTraceLabel);
-        detailsPanel.add(stackTraceTextArea);
-
-        panel = new JPanel();
-        detailsPanel.add(panel);
-
-        lblNewLabel = new JLabel(Bundle.getMessage("ExceptionDisplayOperationLabel"));
-        panel.add(lblNewLabel);
-
-        operationTextArea = new JTextArea();
-        panel.add(operationTextArea);
-
-        panel_4 = new JPanel();
-        detailsPanel.add(panel_4);
-
-        lblNewLabel_4 = new JLabel(Bundle.getMessage("ExceptionDisplayMessageLabel"));
-        panel_4.add(lblNewLabel_4);
-
-        messageTextArea = new JTextArea();
-        panel_4.add(messageTextArea);
-
-        panel_2 = new JPanel();
-        detailsPanel.add(panel_2);
-
-        lblNewLabel_2 = new JLabel(Bundle.getMessage("ExceptionDisplayHintLabel"));
-        panel_2.add(lblNewLabel_2);
-
-        hintTextArea = new JTextArea();
-        panel_2.add(hintTextArea);
-
-        panel_5 = new JPanel();
-        detailsPanel.add(panel_5);
-
-        lblNewLabel_5 = new JLabel(Bundle.getMessage("ExceptionDisplayExceptionTypeLabel"));
-        panel_5.add(lblNewLabel_5);
-
-        typeTextArea = new JTextArea();
-        panel_5.add(typeTextArea);
-
-        panel_6 = new JPanel();
-        detailsPanel.add(panel_6);
-
-        lblNewLabel_6 = new JLabel(Bundle.getMessage("ExceptionDisplayToStringLabel"));
-        panel_6.add(lblNewLabel_6);
-
-        toStringTextArea = new JTextArea();
-        panel_6.add(toStringTextArea);
-
-        panel_7 = new JPanel();
-        detailsPanel.add(panel_7);
-
-        lblNewLabel_7 = new JLabel(Bundle.getMessage("ExceptionDisplayCauseLabel"));
-        panel_7.add(lblNewLabel_7);
-
-        causeTextArea = new JTextArea();
-        panel_7.add(causeTextArea);
-
-        buttonPanel = new JPanel();
-        buttonPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        contentPane.add(buttonPanel);
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
-
-        copyButton = new JButton(Bundle.getMessage("ExceptionDisplayCopyButton"));
-        copyButton.setEnabled(false);
-        buttonPanel.add(copyButton);
-
-        closeButton = new JButton(Bundle.getMessage("ButtonClose"));
-        closeButton.addActionListener((ActionEvent arg0) -> {
-            dispose();
-        });
-        buttonPanel.add(closeButton);
-
-        // Now fill in the controls...
-        stackTraceTextArea.setText(context.getStackTraceAsString(10));
-
-        // New controls
-        operationTextArea.setText(context.getOperation());
-        messageTextArea.setText(context.getException().getMessage());
-        hintTextArea.setText(context.getHint());
-        summaryTextArea2.setText(context.getSummary());
-        typeTextArea.setText(context.getException().getClass().getName());
-
-        toStringTextArea.setText(context.getException().toString());
-
-        Throwable cause = context.getException().getCause();
-
-        if (cause != null) {
-            causeTextArea.setText(cause.toString());
-        } else {
-            causeTextArea.setText("null"); // NOI18N
+        if ( !context.getHint().isBlank() ) {
+            JPanel hintPanel = new JPanel();
+            hintPanel.add(new JLabel("<html><h3>" + context.getHint() + "</h3></html>"));
+            contentPane.add(hintPanel);
         }
 
-        pack();
-
-        setModal(true);
-        setLocationRelativeTo(getOwner());
+        contentPane.add(getSummaryPanel(context));
+        contentPane.add(getButtonPanel(context));
+        contentPane.add(getStrackTracePanel(context));
+        return contentPane;
     }
+
+    @Nonnull
+    private static JPanel getSummaryPanel(@Nonnull ExceptionContext context){
+        JPanel summaryPanel = new JPanel();
+        JTextArea jta = new JTextArea(context.getSummary());
+        jta.setBorder(border);
+        summaryPanel.add(jta);
+        return summaryPanel;
+    }
+
+    @Nonnull
+    private static JPanel getStrackTracePanel(@Nonnull ExceptionContext context){
+        JPanel strackTracePanel = new JPanel();
+        JTextArea ta = new JTextArea(context.getStackTraceAsString(10));
+        ta.setToolTipText(Bundle.getMessage("ExceptionDisplayStackTraceToolTip"));
+        ta.setBorder(border);
+        strackTracePanel.add(ta);
+        return strackTracePanel;
+    }
+
+    @Nonnull
+    private static JPanel getButtonPanel(@Nonnull ExceptionContext context){
+
+        Clipboard systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+
+        JButton exCopyButton = new JButton(Bundle.getMessage("ExceptionDisplayCopyButton"));
+        exCopyButton.addActionListener((ActionEvent e) ->
+            systemClipboard.setContents(new StringSelection(context.getClipboardString(false)), null));
+
+        JButton systemCopyButton = new JButton(Bundle.getMessage("ExceptionSystemCopyButton"));
+        systemCopyButton.addActionListener((ActionEvent e) ->
+            systemClipboard.setContents(new StringSelection(context.getClipboardString(true)), null));
+
+        JPanel b1 = new JPanel();
+        JPanel b2 = new JPanel();
+        b1.add(exCopyButton);
+        b2.add(systemCopyButton);
+
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+        p.add(b1);
+        p.add(b2);
+        return p;
+    }
+
 }

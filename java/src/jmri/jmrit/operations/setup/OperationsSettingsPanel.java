@@ -461,7 +461,7 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
             } catch (IOException ex) {
                 UnexpectedExceptionContext context = new UnexpectedExceptionContext(ex,
                         "Auto backup before changing Car types"); // NOI18N
-                new ExceptionDisplayFrame(context, null).setVisible(true);
+                ExceptionDisplayFrame.displayExceptionDisplayFrame(this, context);
             }
 
             if (typeDesc.isSelected()) {
