@@ -211,7 +211,7 @@ public class BackupDialog extends JDialog {
                     ex,
                     Bundle.getMessage("BackupDialog.BackingUp") + " " + setName,
                     Bundle.getMessage("BackupDialog.Ensure"));
-            new ExceptionDisplayFrame(context, this).setVisible(true);
+            ExceptionDisplayFrame.displayExceptionDisplayFrame(this, context);
 
         } catch (RuntimeException ex) {
             log.error("Doing backup...", ex);
@@ -219,14 +219,14 @@ public class BackupDialog extends JDialog {
             UnexpectedExceptionContext context = new UnexpectedExceptionContext(
                     ex, Bundle.getMessage("BackupDialog.BackingUp") + " " + setName);
 
-            new ExceptionDisplayFrame(context, this).setVisible(true);
+            ExceptionDisplayFrame.displayExceptionDisplayFrame(this, context);
         } catch (Exception ex) {
             log.error("Doing backup...", ex);
 
             UnexpectedExceptionContext context = new UnexpectedExceptionContext(
                     ex, Bundle.getMessage("BackupDialog.BackingUp") + " " + setName);
 
-            new ExceptionDisplayFrame(context, this).setVisible(true);
+            ExceptionDisplayFrame.displayExceptionDisplayFrame(this, context);
         }
     }
 

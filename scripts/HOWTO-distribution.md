@@ -265,9 +265,16 @@ For each, if it doesn't have the right milestone set, add the current milestone.
 ```
         sed -i .bak s/release.build=3/release.build=4/g release.properties
         git commit -m"5.5.4 until next release" release.properties
-        git push github
 ```
  - Check that both those edits left 5.5.4 defined in the two files
+ 
+ - Recreate the Software BOM. For instructions on how to install `spdx-sbom-generator` see the [project page](https://github.com/opensbom-generator/spdx-sbom-generator). Note that a large number of changes from the previous version of the `lib/bom-Java-Maven.spdx` file are expected:  The bill of materials is processed in parallel, and the output order depends on which Maven repository respond quickest.
+```
+        spdx-sbom-generator -o lib
+        git commit -m"SBOM update for 5.5.4" lib/bom-Java-Maven.spdx
+        
+        git push github
+```
 
 ================================================================================
 ## Create the Release Branch
