@@ -346,19 +346,19 @@ public class StoreAndCompare extends AbstractAction {
 
         // Find the next non color attribute.  "justification" is always present."
         var index = 0;
-        if (line.indexOf("margin=") > 0) {
+        if (line.indexOf("margin=") != -1) {
             index = line.indexOf("margin=");
-        } else if (line.indexOf("borderSize=") > 0) {
+        } else if (line.indexOf("borderSize=") != -1) {
             index = line.indexOf("borderSize=");
-        } else if (line.indexOf("redBorder=") > 0) {
+        } else if (line.indexOf("redBorder=") != -1) {
             index = line.indexOf("redBorder=");
-        } else if (line.indexOf("greenBorder=") > 0) {
+        } else if (line.indexOf("greenBorder=") != -1) {
             index = line.indexOf("greenBorder=");
-        } else if (line.indexOf("blueBorder=") > 0) {
+        } else if (line.indexOf("blueBorder=") != -1) {
             index = line.indexOf("blueBorder=");
-        } else if (line.indexOf("fixedWidth=") > 0) {
+        } else if (line.indexOf("fixedWidth=") != -1) {
             index = line.indexOf("fixedWidth=");
-        } else if (line.indexOf("fixedHeight=") > 0) {
+        } else if (line.indexOf("fixedHeight=") != -1) {
             index = line.indexOf("fixedHeight=");
         } else {
             index = line.indexOf("justification=");
