@@ -1074,7 +1074,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                 if (JmriJOptionPane.showConfirmDialog(null,
                         Bundle.getMessage("DIALOG_ConfirmUpdate", id, getRosterText(nceConsistRosterEntry)),
                         Bundle.getMessage("DIALOG_NceUpdate"),
-                        JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
+                        JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.NO_OPTION ) {
                     // update consist if command was to clear
                     if (consistNumber.equals(Bundle.getMessage("CLEARED"))) {
                         nceConsistRosterEntry.setConsistNumber(consistNumber);
