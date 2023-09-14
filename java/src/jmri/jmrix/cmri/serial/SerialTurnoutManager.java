@@ -3,14 +3,11 @@ package jmri.jmrix.cmri.serial;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
-import javax.swing.JOptionPane;
 
 import jmri.*;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.managers.AbstractTurnoutManager;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Implement turnout manager for CMRI serial systems.
@@ -106,7 +103,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
         // ask user how many bits should control the turnout - 1 or 2
         int iNum = selectNumberOfControlBits();
-        if (iNum == JOptionPane.CLOSED_OPTION) {
+        if (iNum == JmriJOptionPane.CLOSED_OPTION) {
             /* user cancelled without selecting an option */
             iNum = 1;
             log.warn("User cancelled without selecting number of output bits. Defaulting to 1.");
@@ -153,7 +150,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         // ask if user wants 'steady state' output (stall motors, e.g., Tortoises) or
         // 'pulsed' output (some turnout controllers).
         int iType = selectOutputType();
-        if (iType == JOptionPane.CLOSED_OPTION) {
+        if (iType == JmriJOptionPane.CLOSED_OPTION) {
             /* user cancelled without selecting an output type */
             iType = 0;
             log.warn("User cancelled without selecting output type. Defaulting to 'steady state'.");
@@ -166,13 +163,15 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * Public method to allow user to specify one or two output bits for turnout
      * control.
      *
-     * @return 1 or 2 if the user selected, or 0 if the user cancelled without selecting.
+     * @return  JmriJOptionPane.CLOSED_OPTION if the user cancelled without selecting.
+     *          0 if the user selected BitOption1,
+     *          1 if the user selected BitOption2.
      */
     public int selectNumberOfControlBits() {
-        return JOptionPane.showOptionDialog(null,
+        return JmriJOptionPane.showOptionDialog(null,
                 Bundle.getMessage("QuestionBitsDialog"),
-                Bundle.getMessage("CmriTurnoutTitle"), JOptionPane.DEFAULT_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
+                Bundle.getMessage("CmriTurnoutTitle"), JmriJOptionPane.DEFAULT_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE,
                 null, new String[]{Bundle.getMessage("BitOption1"), Bundle.getMessage("BitOption2")}, Bundle.getMessage("BitOption1"));
     }
 
@@ -180,14 +179,15 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * Public method to allow user to specify pulsed or steady state for two
      * output bits for turnout control.
      *
-     * @return 1 for steady state or 2 for pulsed if the user selected,
-     * or 0 if the user cancelled without selecting.
+     * @return  JmriJOptionPane.CLOSED_OPTION if the user cancelled without selecting.
+     *          0 if the user selected PulsedOptionSteady,
+     *          1 if the user selected PulsedOptionPulsed.
      */
     public int selectOutputType() {
-        return JOptionPane.showOptionDialog(null,
+        return JmriJOptionPane.showOptionDialog(null,
                 Bundle.getMessage("QuestionPulsedDialog"),
-                Bundle.getMessage("CmriBitsTitle"), JOptionPane.DEFAULT_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
+                Bundle.getMessage("CmriBitsTitle"), JmriJOptionPane.DEFAULT_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE,
                 null, new String[]{Bundle.getMessage("PulsedOptionSteady"), Bundle.getMessage("PulsedOptionPulsed")},
                 Bundle.getMessage("PulsedOptionSteady"));
     }
@@ -199,10 +199,10 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * @param bitNum conflict bit number.
      */
     public void notifySecondBitConflict(String conflict, int bitNum) {
-        JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorAssign2Dialog", bitNum, conflict) + "\n" +
+        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorAssign2Dialog", bitNum, conflict) + "\n" +
                 Bundle.getMessage("ErrorAssignLine2X", Bundle.getMessage("BeanNameTurnout")),
                 Bundle.getMessage("ErrorAssignTitle"),
-                JOptionPane.INFORMATION_MESSAGE, null);
+                JmriJOptionPane.INFORMATION_MESSAGE );
     }
 
     /**
@@ -304,6 +304,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialTurnoutManager.class);
 
 }
