@@ -15,14 +15,20 @@
 
 <!-- Comments by Author: Lolke Bijlsma (lbijlsma@pobox.com)                                                      -->
 <!-- Based on decoder manual 0.5.05 (v5 & v6). With support of Train-O-Matic.                                    -->
-<!-- Covers all the known versions of the Lokommander II decoder at this time                                    -->
+<!-- Covers all the known versions of the Lokommander II decoder with firmware versions 5 & 6 at this time       -->
 
   <version author="lbijlsma@pobox.com" version="1" lastUpdated="20230913"/>
   <decoder>
     <family name="Lokommander 2 v6" mfg="Tehnologistic (train-O-matic)">
       <model model="Lokommander 2 Micro" numOuts="6" numFns="15" lowVersionID="5" highVersionID="6" connector="Wires/NEM651" productID="2010220,2010221,2010222,2010223,2010227">
-        <output name="1"  label="FL" />
-        <output name="2"  label="RL" />
+        <output name="1" >
+            <label>FL</label>
+            <label xml:lang="cs">Světla|vpřed</label>
+        </output>
+        <output name="2" >
+            <label>RL</label>
+            <label xml:lang="cs">Světla|vzad</label>
+        </output>
         <output name="3"  label="Aux1" />
         <output name="4"  label="Aux2" />
         <output name="5"  label="Aux3" />
@@ -30,8 +36,14 @@
         <size length="12.9" width="9.2" height="3.3" units="mm"/>
       </model>
       <model model="Lokommander 2 Micro N18" numOuts="8" numFns="15" lowVersionID="5" highVersionID="6" connector="Next18" productID="2010216">
-        <output name="1"  label="FL" />
-        <output name="2"  label="RL" />
+        <output name="1" >
+            <label>FL</label>
+            <label xml:lang="cs">Světla|vpřed</label>
+        </output>
+        <output name="2" >
+            <label>RL</label>
+            <label xml:lang="cs">Světla|vzad</label>
+        </output>
         <output name="3"  label="Aux1" />
         <output name="4"  label="Aux2" />
         <output name="5"  label="Aux3" />
@@ -41,8 +53,14 @@
         <size length="14.2" width="9.2" height="3.3" units="mm"/>
       </model>
       <model model="Lokommander 2 Mini" numOuts="6" numFns="15" lowVersionID="5" highVersionID="6" connector="Wires/NEM651/NEM652" productID="2010210,2010211,2010207,2010212">
-        <output name="1"  label="FL" />
-        <output name="2"  label="RL" />
+        <output name="1" >
+            <label>FL</label>
+            <label xml:lang="cs">Světla|vpřed</label>
+        </output>
+        <output name="2" >
+            <label>RL</label>
+            <label xml:lang="cs">Světla|vzad</label>
+        </output>
         <output name="3"  label="Aux1" />
         <output name="4"  label="Aux2" />
         <output name="5"  label="Aux3" />
@@ -52,8 +70,14 @@
         <size length="19.5" width="11" height="3.3" units="mm"/>
       </model>
       <model model="Lokommander 2 Mini M21" numOuts="8" numFns="15" lowVersionID="5" highVersionID="6" connector="21MTC" productID="2010208,2010209,2010228">
-        <output name="1"  label="FL" />
-        <output name="2"  label="RL" />
+        <output name="1" >
+            <label>FL</label>
+            <label xml:lang="cs">Světla|vpřed</label>
+        </output>
+        <output name="2" >
+            <label>RL</label>
+            <label xml:lang="cs">Světla|vzad</label>
+        </output>
         <output name="3"  label="Aux1" />
         <output name="4"  label="Aux2" />
         <output name="5"  label="Aux3" />
@@ -73,7 +97,14 @@
     </variables>
 
     <resets>
-      <factReset label="HARD RESET all CVs reset to default values" CV="8" default="78"/>
+      <factReset CV="8" default="78">
+          <label>HARD RESET all CVs reset to default values</label>
+          <label xml:lang="cs">HARD RESET všechny CV se resetují na výchozí hodnoty</label>
+      </factReset>
+      <factReset CV="30" default="0">
+          <label>RESET Error information</label>
+          <label xml:lang="cs">RESET Informace o chybě</label>
+      </factReset>
     </resets>
 
   </decoder>
