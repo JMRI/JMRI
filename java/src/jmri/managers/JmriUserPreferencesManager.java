@@ -2,6 +2,7 @@ package jmri.managers;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -21,7 +22,6 @@ import javax.annotation.CheckForNull;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import jmri.ConfigureManager;
 import jmri.InstanceInitializer;
@@ -39,12 +39,11 @@ import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.jdom.JDOMUtil;
 import jmri.util.node.NodeIdentity;
+import jmri.util.swing.JmriJOptionPane;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.openide.util.lookup.ServiceProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of {@link UserPreferencesManager} that saves user interface
@@ -72,7 +71,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     private static final String SETTINGS_ELEMENT = "settings"; // NOI18N
     private static final String WINDOWS_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/window-details-4-3-5.xsd"; // NOI18N
     private static final String WINDOWS_ELEMENT = "windowDetails"; // NOI18N
-    private static final Logger log = LoggerFactory.getLogger(JmriUserPreferencesManager.class);
+
     private static final String REMINDER = "reminder";
     private static final String JMRI_UTIL_JMRI_JFRAME = "jmri.util.JmriJFrame";
     private static final String CLASS = "class";
@@ -268,7 +267,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * should start with the package name (package.Class) for the primary using
      * class.
      *
-     * @param name A unique identifer for preference.
+     * @param name A unique identifier for preference.
      */
     @Override
     public void setSessionPreferenceState(String name, boolean state) {
@@ -281,21 +280,16 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getSessionPreferenceState(String name) {
         return sessionPreferenceList.contains(name);
     }
 
     /**
-     * Show an info message ("don't forget ...") with a given dialog title and
-     * user message. Use a given preference name to determine whether to show it
-     * in the future. The combination of the classString and item parameters
-     * should form a unique value.
-     *
-     * @param title    message Box title
-     * @param message  message to be displayed
-     * @param strClass name of the calling class
-     * @param item     name of the specific item this is used for
+     * {@inheritDoc}
      */
     @Override
     public void showInfoMessage(String title, String message, String strClass, String item) {
@@ -303,69 +297,63 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     /**
-     * Show an info message ("don't forget ...") with a given dialog title and
-     * user message. Use a given preference name to determine whether to show it
-     * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString and item
-     * parameters should form a unique value
-     *
-     * @param title          Message Box title
-     * @param message        Message to be displayed
-     * @param strClass       String value of the calling class
-     * @param item           String value of the specific item this is used for
-     * @param sessionOnly    Means this message will be suppressed in this JMRI
-     *                       session and not be remembered
-     * @param alwaysRemember Means that the suppression of the message will be
-     *                       saved
+     * {@inheritDoc}
+     */
+    @Override
+    public void showInfoMessage(@CheckForNull Component parentComponent, String title, String message, String strClass, String item) {
+        showInfoMessage(parentComponent, title, message, strClass, item, false, true);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void showErrorMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember) {
-        this.showMessage(title, message, strClass, item, sessionOnly, alwaysRemember, JOptionPane.ERROR_MESSAGE);
+        this.showMessage(null, title, message, strClass, item, sessionOnly, alwaysRemember, JmriJOptionPane.ERROR_MESSAGE);
     }
 
     /**
-     * Show an info message ("don't forget ...") with a given dialog title and
-     * user message. Use a given preference name to determine whether to show it
-     * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString and item
-     * parameters should form a unique value
-     *
-     * @param title          Message Box title
-     * @param message        Message to be displayed
-     * @param strClass       String value of the calling class
-     * @param item           String value of the specific item this is used for
-     * @param sessionOnly    Means this message will be suppressed in this JMRI
-     *                       session and not be remembered
-     * @param alwaysRemember Means that the suppression of the message will be
-     *                       saved
+     * {@inheritDoc}
+     */
+    @Override
+    public void showErrorMessage(@CheckForNull Component parentComponent, String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember) {
+        this.showMessage(parentComponent, title, message, strClass, item, sessionOnly, alwaysRemember, JmriJOptionPane.ERROR_MESSAGE);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void showInfoMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember) {
-        this.showMessage(title, message, strClass, item, sessionOnly, alwaysRemember, JOptionPane.INFORMATION_MESSAGE);
+        this.showMessage(null, title, message, strClass, item, sessionOnly, alwaysRemember, JmriJOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
-     * Show an info message ("don't forget ...") with a given dialog title and
-     * user message. Use a given preference name to determine whether to show it
-     * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString and item
-     * parameters should form a unique value
-     *
-     * @param title          Message Box title
-     * @param message        Message to be displayed
-     * @param strClass       String value of the calling class
-     * @param item           String value of the specific item this is used for
-     * @param sessionOnly    Means this message will be suppressed in this JMRI
-     *                       session and not be remembered
-     * @param alwaysRemember Means that the suppression of the message will be
-     *                       saved
+     * {@inheritDoc}
+     */
+    @Override
+    public void showInfoMessage(@CheckForNull Component parentComponent, String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember) {
+        this.showMessage(parentComponent, title, message, strClass, item, sessionOnly, alwaysRemember, JmriJOptionPane.INFORMATION_MESSAGE);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void showWarningMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember) {
-        this.showMessage(title, message, strClass, item, sessionOnly, alwaysRemember, JOptionPane.WARNING_MESSAGE);
+        this.showMessage(null, title, message, strClass, item, sessionOnly, alwaysRemember, JmriJOptionPane.WARNING_MESSAGE);
     }
 
-    protected void showMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember, int type) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showWarningMessage(@CheckForNull Component parentComponent, String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember) {
+        this.showMessage(parentComponent, title, message, strClass, item, sessionOnly, alwaysRemember, JmriJOptionPane.WARNING_MESSAGE);
+    }
+
+    protected void showMessage(@CheckForNull Component parentComponent, String title, String message, final String strClass,
+        final String item, final boolean sessionOnly, final boolean alwaysRemember, int type) {
         final String preference = strClass + "." + item;
 
         if (this.getSessionPreferenceState(preference)) {
@@ -387,7 +375,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 remember.setFont(remember.getFont().deriveFont(10f));
                 container.add(remember);
             }
-            JOptionPane.showMessageDialog(null, // center over parent component
+            JmriJOptionPane.showMessageDialog(parentComponent, // center over parent component if present
                     container,
                     title,
                     type);
@@ -1416,4 +1404,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
             return set;
         }
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriUserPreferencesManager.class);
+
 }

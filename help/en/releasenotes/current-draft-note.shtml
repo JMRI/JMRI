@@ -121,7 +121,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>The presentation of the "Send Frame" tool was improved.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -483,7 +483,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>TurnoutStatePersistence.py was not correctly updated to use SLF4J in 5.5.3, fixed in 5.5.4</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -565,7 +565,7 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li>panel.js - add data-panel-name attribute to support panel-specific css</li>
+            <li></li>
         </ul>
 
     <h3>Where Used</h3>
@@ -589,20 +589,17 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>Removed deprecated method isPlaying - use Audio.STATE_PLAYING.</li>
-            <li>Added optional portable file access in VSD. To be used in Roster Media (VSDecoder_Path)
-                and VSD Preferences (Default VSD File Path). For Portable File Access see
-                <a href="https://www.jmri.org/help/en/html/doc/Technical/FileNames.shtml">here</a>.</li>
+            <li></li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Logging levels ( eg. INFO, DEBUG ) can be changed for the current session in
-            <a href="https://www.jmri.org/en/package/apps/jmrit/log/Log4JTreePane.shtml">Display / Edit Log Categories</a></li>
-            <li>The way data is entered in memory icons, block icons
-                and global variable icons have been improved.</li>
-            <li>You can now set the preferences to open the RailCom table at startup.</li>
-            <li>The analog fast clock now shows when the fast clock has been stopped.</li>
+            <li>Improved Unrecoverable Error Dialog.</li>
+            <li>JMRI now has a "Software Bill of Materials" (SBOM) distributed with it.
+                Although this won't matter to most users, it allows people to determine
+                via the standardized SPDX mechanism the libraries that JMRI contains and
+                the versions being used. Providing this is a small step toward more automated
+                distribution.</li>
         </ul>
 

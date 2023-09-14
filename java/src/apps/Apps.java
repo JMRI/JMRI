@@ -32,9 +32,7 @@ import jmri.script.JmriScriptEngineManager;
 import jmri.util.*;
 import jmri.util.iharder.dnd.URIDrop;
 import jmri.util.prefs.JmriPreferencesActionFactory;
-import jmri.util.swing.JFrameInterface;
-import jmri.util.swing.JmriMouseEvent;
-import jmri.util.swing.WindowInterface;
+import jmri.util.swing.*;
 
 /**
  * Base class for JMRI applications.
@@ -99,16 +97,16 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 if (ProfileManager.getDefault().migrateToProfiles(configFilename)) { // migration or first use
                     // notify user of change only if migration occurred
                     // TODO: a real migration message
-                    JOptionPane.showMessageDialog(sp,
+                    JmriJOptionPane.showMessageDialog(sp,
                             Bundle.getMessage("ConfigMigratedToProfile"),
                             jmri.Application.getApplicationName(),
-                            JOptionPane.INFORMATION_MESSAGE);
+                            JmriJOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (IOException | IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(sp,
+                JmriJOptionPane.showMessageDialog(sp,
                         ex.getLocalizedMessage(),
                         jmri.Application.getApplicationName(),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 log.error("Exception migrating configuration to profiles: {}",ex.getMessage());
             }
         }
@@ -280,10 +278,10 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             log.info("New preferences format will be used after JMRI is restarted.");
             if (!GraphicsEnvironment.isHeadless()) {
                 Profile profile = ProfileManager.getDefault().getActiveProfile();
-                JOptionPane.showMessageDialog(sp,
+                JmriJOptionPane.showMessageDialog(sp,
                         Bundle.getMessage("SingleConfigMigratedToSharedConfig", profile),
                         jmri.Application.getApplicationName(),
-                        JOptionPane.INFORMATION_MESSAGE);
+                        JmriJOptionPane.INFORMATION_MESSAGE);
             }
         }
 
@@ -620,11 +618,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     @Override
     public void windowClosing(WindowEvent e) {
         if (!InstanceManager.getDefault(ShutDownManager.class).isShuttingDown()
-                && JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(
+                && JmriJOptionPane.YES_OPTION == JmriJOptionPane.showConfirmDialog(
                         null,
                         Bundle.getMessage("MessageLongCloseWarning"),
                         Bundle.getMessage("MessageShortCloseWarning"),
-                        JOptionPane.YES_NO_OPTION)) {
+                        JmriJOptionPane.YES_NO_OPTION)) {
             handleQuit();
         }
         // if get here, didn't quit, so don't close window
@@ -752,11 +750,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         Object[] options = {"Disable", "Enable"};
 
-        int retval = JOptionPane.showOptionDialog(null,
+        int retval = JmriJOptionPane.showOptionDialog(null,
                 Bundle.getMessage("StartJMRIwithLogixEnabledDisabled"),
                 Bundle.getMessage("StartJMRIwithLogixEnabledDisabledTitle"),
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                JmriJOptionPane.DEFAULT_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
         if (retval != 0) {
             debugmsg = false;

@@ -3,6 +3,7 @@ package jmri.jmrit.display.palette;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.ArrayList;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -10,15 +11,16 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OPath;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.picker.PickPanel;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Panel for Occupancy and Error detection.
@@ -255,9 +257,9 @@ public class DetectionPanel extends JPanel {
            } else {
                 Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(name);
                 if (sensor == null) {
-                    JOptionPane.showMessageDialog(_parent._frame,
+                    JmriJOptionPane.showMessageDialog(_parent._frame,
                             Bundle.getMessage("InvalidOccDetector", name),
-                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                            Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                     _occDetectorName.setText(null);
                 }
                 showPanels(false);

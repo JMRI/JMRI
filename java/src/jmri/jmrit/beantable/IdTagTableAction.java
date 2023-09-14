@@ -8,7 +8,6 @@ import java.beans.PropertyChangeListener;
 import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import jmri.IdTag;
@@ -18,8 +17,7 @@ import jmri.Manager;
 import jmri.managers.DefaultRailComManager;
 import jmri.managers.ProxyIdTagManager;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Swing action to create and register a IdTagTable GUI.
@@ -137,11 +135,11 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> implements Prop
     //private boolean noWarn = false;
 
     void handleCreateException(String sysName, IllegalArgumentException ex) {
-        JOptionPane.showMessageDialog(addFrame,
+        JmriJOptionPane.showMessageDialog(addFrame,
                 Bundle.getMessage("ErrorIdTagAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck")
                 + "\n" + ex.getLocalizedMessage() ,
                 Bundle.getMessage("ErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.ERROR_MESSAGE);
     }
 
     @Override
@@ -208,6 +206,6 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> implements Prop
         super.dispose();
     }
     
-    private static final Logger log = LoggerFactory.getLogger(IdTagTableAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IdTagTableAction.class);
 
 }

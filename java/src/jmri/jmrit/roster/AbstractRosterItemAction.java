@@ -7,13 +7,12 @@ import java.util.Objects;
 import javax.swing.Icon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+
 import jmri.beans.BeanUtil;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.WindowInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Base class for Actions to copy, export and import RosterEntry objects.
@@ -95,12 +94,12 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
             group = (String) BeanUtil.getProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP);
         }
         JComboBox<?> selections = new RosterEntryComboBox(group);
-        int retval = JOptionPane.showOptionDialog(mParent,
+        int retval = JmriJOptionPane.showOptionDialog(mParent,
                 Bundle.getMessage("CopyEntrySelectDialog"), Bundle.getMessage("CopyEntrySelectDialogTitle"),
-                0, JOptionPane.INFORMATION_MESSAGE, null,
+                JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.INFORMATION_MESSAGE, null,
                 new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), selections}, null);
         log.debug("Dialog value {} selected {}:\"{}\"", retval, selections.getSelectedIndex(), selections.getSelectedItem());
-        if (retval != 1) {
+        if (retval != 1) { // if not array position 1, ButtonOK
             return false;  // user didn't select
         }
         // find the file for the selected entry to copy
@@ -124,14 +123,14 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
     boolean selectNewToEntryID() {
         do {
             // prompt for the new ID
-            mToID = JOptionPane.showInputDialog(mParent, Bundle.getMessage("NewEntryDialog"));
+            mToID = JmriJOptionPane.showInputDialog(mParent, Bundle.getMessage("NewEntryDialog"),"");
             if (mToID == null) {
                 return false;
             }
 
             // check for empty
             if (mToID.isEmpty()) {
-                JOptionPane.showMessageDialog(mParent, Bundle.getMessage("NewEntryEmptyWarn"));
+                JmriJOptionPane.showMessageDialog(mParent, Bundle.getMessage("NewEntryEmptyWarn"));
                 // ask again
                 continue;
             }
@@ -143,7 +142,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
             }
 
             // here it is a duplicate, reprompt
-            JOptionPane.showMessageDialog(mParent, Bundle.getMessage("NewEntryDuplicateWarn"));
+            JmriJOptionPane.showMessageDialog(mParent, Bundle.getMessage("NewEntryDuplicateWarn"));
 
         } while (true);
         return true;
@@ -203,6 +202,6 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(AbstractRosterItemAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractRosterItemAction.class);
 
 }

@@ -11,7 +11,6 @@ import static jmri.util.StringUtil.twoHexFromInt;
  * extended), Normal and RTR frames and a data field.
  * <p>
  * "header" refers to the full 11 or 29 bit header; which mode is separately set via the "extended" parameter
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2009, 2010
  */

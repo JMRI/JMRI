@@ -3589,8 +3589,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       If you already have a list of cars in a database, you can import the cars into the program.
       The import function requires an ACSII text file, with one line for each car. The car import
       requires four attributes and the order is car number, road (reporting mark), type, and length.
-      All four car attributes are required for the import to work correctly. The following shows two
-      examples of the correct format:
+      All four car attributes are required for the import to work correctly. The program requires
+      each car to have a unique road and number. Use the
+      <a href="#CarRoadNumber">hyphen</a> feature if you have cars with the same road and number.
+      The following shows two examples of the correct format:
       <p>
         336 GCR Flat 40<br> 655578 UP Boxcar 40
       </p>
@@ -3646,7 +3648,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>To improve the speed of the car import, you can close the cars window. It takes
         significantly more processor cycles to update the cars window than to actually import the
-        cars.</p>
+        cars. The program will report to the system console information and warnings during the
+        import. You can access the system console from any menu bar under "Help"</p>
 
       <p>
         After importing your cars, you must save them if you want to keep them as part of your
@@ -3679,7 +3682,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         road names. The program will drop the hyphen and the following characters when printing a
         Manifest or switch list.</p>
 
-      <h4>Road Number</h4>
+      <h4 id="CarRoadNumber">Road Number</h4>
 
       <p>Enter the car's road number in the text box. The program requires a unique road and
         number for each car. If you have cars with identical roads and numbers, simply add a -1, -2,
@@ -3855,6 +3858,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4>Delete Button</h4>
       To delete a car attribute name, select the name you want to delete in the menu box and press
       the "Delete" button.
+      
       <h4>Replace Button</h4>
       If you need to change a specific car attribute name (road, type, color, etc) in your entire
       car roster, you can use the "Replace" button found at the bottom right of the edit car
@@ -3887,6 +3891,18 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
           href="#EditCarAttributes">Car Edit Attributes</a> section, the edit car loads window
         allows you to set the load's type, priority, is hazardous, pick up and set out messages.
       </p>
+
+      <h4>Add Car Load Name</h4>
+      Enter in the text box the custom load name you want to add, then press the "Add" button. After
+      creating the new custom load name you can change the load's type, priority, is hazardous, and
+      optional messages. Press the "Save" button after making the changes.
+      
+      <h4>Delete Car Load Name</h4>
+      Select the load name you want to delete, then press the "Delete" button.
+
+      <h4>Replace Car Load Name</h4>
+      Select the load name you want to replace. Enter in the text box the new load name, then press
+      the "Replace" button.
 
       <h4 id="LoadType">Load Type</h4>
       A load type of "Load" means the program will consider the car as being loaded and the car's

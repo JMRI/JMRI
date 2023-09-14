@@ -21,8 +21,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JmriJFrame;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.swing.JComboBoxUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Swing action to create and register a SectionTable GUI.
@@ -315,9 +314,9 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         if ((blockManager.getNamedBeanSet().size()) > 0) {
             addEditPressed();
         } else {
-            JOptionPane.showMessageDialog(null, rbx
+            JmriJOptionPane.showMessageDialog(null, rbx
                     .getString("Message1"), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -672,11 +671,11 @@ public class SectionTableAction extends AbstractTableAction<Section> {
     }
 
     void handleCreateException(String sysName, Exception ex) {
-        JOptionPane.showMessageDialog(addFrame,
+        JmriJOptionPane.showMessageDialog(addFrame,
                 Bundle.getMessage("ErrorSectionAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck")
                 + "\n" + ex.getLocalizedMessage(),
                 Bundle.getMessage("ErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.ERROR_MESSAGE);
     }
 
     void cancelPressed(ActionEvent e) {
@@ -699,10 +698,10 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             // check that new user name is unique
             Section tSection = sectionManager.getByUserName(uName);
             if (tSection != null) {
-                JOptionPane.showMessageDialog(addFrame,
+                JmriJOptionPane.showMessageDialog(addFrame,
                         rbx.getString("Message2"),
                         Bundle.getMessage("ErrorTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
@@ -718,9 +717,9 @@ public class SectionTableAction extends AbstractTableAction<Section> {
 
     private boolean checkSectionInformation() {
         if (blockList.isEmpty()) {
-            JOptionPane.showMessageDialog(addFrame, rbx
+            JmriJOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message6"), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         // check entry points
@@ -731,9 +730,9 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             }
         }
         if (unknownPresent) {
-            JOptionPane.showMessageDialog(addFrame, rbx
+            JmriJOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message10"), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -741,9 +740,9 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         fSensor = forwardSensorBox.getSelectedItem();
         rSensor = reverseSensorBox.getSelectedItem();
         if ((fSensor != null) && (fSensor.equals(rSensor))) {
-            JOptionPane.showMessageDialog(addFrame, rbx
+            JmriJOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message9"), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -763,9 +762,9 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         curSection.removeAllBlocksFromSection();
         for (int i = 0; i < blockList.size(); i++) {
             if (!curSection.addBlock(blockList.get(i))) {
-                JOptionPane.showMessageDialog(addFrame, rbx
+                JmriJOptionPane.showMessageDialog(addFrame, rbx
                         .getString("Message4"), Bundle.getMessage("ErrorTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
             }
         }
         curSection.setForwardBlockingSensorName(forwardSensorBox.getSelectedItemDisplayName());
@@ -796,9 +795,9 @@ public class SectionTableAction extends AbstractTableAction<Section> {
 
     void addBlockPressed(ActionEvent e) {
         if (blockBox.getItemCount() == 0) {
-            JOptionPane.showMessageDialog(addFrame, rbx
+            JmriJOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message5"), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         Block b = blockBox.getSelectedItem();
@@ -1091,15 +1090,15 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             if (sectionManager != null) {
                 int n = sectionManager.validateAllSections();
                 if (n > 0) {
-                    JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(
+                    JmriJOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(
                             rbx.getString("Message14"), new Object[]{"" + n}),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 } else if (n == -2) {
-                    JOptionPane.showMessageDialog(frame, rbx.getString("Message16"),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(frame, rbx.getString("Message16"),
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 } else if (n == 0) {
-                    JOptionPane.showMessageDialog(frame, rbx.getString("Message15"),
-                            Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(frame, rbx.getString("Message15"),
+                            Bundle.getMessage("MessageTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
@@ -1109,14 +1108,14 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             if (sectionManager != null) {
                 int n = sectionManager.setupDirectionSensors();
                 if (n > 0) {
-                    JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(
+                    JmriJOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(
                             rbx.getString("Message27"), new Object[]{"" + n}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 } else if (n == -2) {
-                    JOptionPane.showMessageDialog(frame, rbx.getString("Message30"),
+                    JmriJOptionPane.showMessageDialog(frame, rbx.getString("Message30"),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 } else if (n == 0) {
-                    JOptionPane.showMessageDialog(frame, rbx.getString("Message28"),
+                    JmriJOptionPane.showMessageDialog(frame, rbx.getString("Message28"),
                             Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
                 }
             }
@@ -1127,14 +1126,14 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             if (sectionManager != null) {
                 int n = sectionManager.removeDirectionSensorsFromSSL();
                 if (n > 0) {
-                    JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(
+                    JmriJOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(
                             rbx.getString("Message33"), new Object[]{"" + n}),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 } else if (n == -2) {
-                    JOptionPane.showMessageDialog(frame, rbx.getString("Message32"),
+                    JmriJOptionPane.showMessageDialog(frame, rbx.getString("Message32"),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 } else if (n == 0) {
-                    JOptionPane.showMessageDialog(frame, rbx.getString("Message31"),
+                    JmriJOptionPane.showMessageDialog(frame, rbx.getString("Message31"),
                             Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
                 }
             }
@@ -1375,6 +1374,6 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         return Bundle.getMessage("TitleSectionTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SectionTableAction.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SectionTableAction.class);
 
 }

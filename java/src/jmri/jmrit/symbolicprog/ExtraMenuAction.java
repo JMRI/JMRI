@@ -1,12 +1,11 @@
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
+
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Action to create a dialog so that the user can select an extra menu item to
@@ -37,11 +36,11 @@ public class ExtraMenuAction extends AbstractAction {
         for (int i = 0; i < rModel.getRowCount(); i++) {
             options[i] = (rModel.getValueAt(i, 0));
         }
-        String s = (String) JOptionPane.showInputDialog(
+        String s = (String) JmriJOptionPane.showInputDialog(
                 mParent,
                 Bundle.getMessage("ExtraMessageActionLabel", name), // label over JComboBox
                 Bundle.getMessage("ExtraMessageActionTitle", name), // Dialog box title
-                JOptionPane.WARNING_MESSAGE,
+                JmriJOptionPane.WARNING_MESSAGE,
                 null,
                 options,
                 null);
@@ -57,5 +56,5 @@ public class ExtraMenuAction extends AbstractAction {
         }
 
     }
-    private final static Logger log = LoggerFactory.getLogger(ExtraMenuAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExtraMenuAction.class);
 }

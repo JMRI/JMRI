@@ -2,6 +2,7 @@ package jmri.managers;
 
 import apps.AppConfigBase;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
@@ -29,8 +30,6 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.Assume;
 import org.junit.jupiter.api.io.TempDir;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.managers.JmriUserPreferencesManager class.
@@ -40,7 +39,6 @@ import org.slf4j.LoggerFactory;
  */
 public class JmriUserPreferencesManagerTest {
 
-    private final static Logger log = LoggerFactory.getLogger(JmriUserPreferencesManagerTest.class);
     private final String strClass = JmriUserPreferencesManagerTest.class.getName();
 
     @Test
@@ -386,14 +384,14 @@ public class JmriUserPreferencesManagerTest {
         Assert.assertNull(m.alwaysRemember);
         Assert.assertNull(m.sessionOnly);
         Assert.assertEquals(-1, m.type);
-        m.showMessage("title1", "message1", strClass, "item1", true, true, JOptionPane.INFORMATION_MESSAGE);
+        m.showMessage(null, "title1", "message1", strClass, "item1", true, true, JOptionPane.INFORMATION_MESSAGE);
         Assert.assertEquals("title1", m.title);
         Assert.assertEquals("message1", m.message);
         Assert.assertEquals(strClass, m.strClass);
         Assert.assertEquals("item1", m.item);
         Assert.assertTrue(m.alwaysRemember);
         Assert.assertTrue(m.sessionOnly);
-        m.showMessage("title2", "message2", strClass, "item2", false, false, JOptionPane.INFORMATION_MESSAGE);
+        m.showMessage(null, "title2", "message2", strClass, "item2", false, false, JOptionPane.INFORMATION_MESSAGE);
         Assert.assertEquals("title2", m.title);
         Assert.assertEquals("message2", m.message);
         Assert.assertEquals(strClass, m.strClass);
@@ -930,9 +928,9 @@ public class JmriUserPreferencesManagerTest {
         JmriUserPreferencesManager m2 = new JmriUserPreferencesManager();
         m2.readUserPreferences();
         Assert.assertEquals("value1", m2.getProperty(strClass, "test1"));
-        Assert.assertEquals(42, m2.getProperty(strClass, "intTest"));
-        Assert.assertEquals(Math.PI, m2.getProperty(strClass, "doubleTest"));
-        Assert.assertEquals(true, m2.getProperty(strClass, "booleanTest"));
+        Assert.assertEquals(42, (int)m2.getProperty(strClass, "intTest"));
+        Assert.assertEquals(Math.PI, (double)m2.getProperty(strClass, "doubleTest"), 0.001);
+        Assert.assertEquals(true, (boolean)m2.getProperty(strClass, "booleanTest"));
         Assert.assertEquals(location, m2.getWindowLocation(strClass));
         Assert.assertEquals(windowSize, m2.getWindowSize(strClass));
         Assert.assertEquals(true, m2.getPreferenceState(strClass, "test2"));
@@ -972,9 +970,9 @@ public class JmriUserPreferencesManagerTest {
         JmriUserPreferencesManager m2 = new JmriUserPreferencesManager();
         m2.readUserPreferences();
         Assert.assertEquals("value1", m2.getProperty(strClass, "test1"));
-        Assert.assertEquals(42, m2.getProperty(strClass, "intTest"));
-        Assert.assertEquals(Math.PI, m2.getProperty(strClass, "doubleTest"));
-        Assert.assertEquals(true, m2.getProperty(strClass, "booleanTest"));
+        Assert.assertEquals(42, (int)m2.getProperty(strClass, "intTest"));
+        Assert.assertEquals(Math.PI, (double)m2.getProperty(strClass, "doubleTest"), 0.001);
+        Assert.assertEquals(true, (boolean)m2.getProperty(strClass, "booleanTest"));
         Assert.assertEquals(location, m2.getWindowLocation(strClass));
         Assert.assertEquals(windowSize, m2.getWindowSize(strClass));
         Assert.assertEquals(true, m2.getPreferenceState(strClass, "test2"));
@@ -1013,7 +1011,8 @@ public class JmriUserPreferencesManagerTest {
         }
 
         @Override
-        protected void showMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember, int type) {
+        protected void showMessage(@javax.annotation.CheckForNull Component parent, String title,
+            String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember, int type) {
             this.title = title;
             this.message = message;
             this.strClass = strClass;
@@ -1055,4 +1054,7 @@ public class JmriUserPreferencesManagerTest {
             this.event = evt;
         }
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriUserPreferencesManagerTest.class);
+
 }

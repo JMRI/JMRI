@@ -4,10 +4,8 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -16,6 +14,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user edit of track loads
@@ -64,7 +63,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
     JRadioButton loadNameInclude = new JRadioButton(Bundle.getMessage("AcceptOnly"));
     JRadioButton loadNameExclude = new JRadioButton(Bundle.getMessage("Exclude"));
 
-    JRadioButton shipLoadNameAll = new JRadioButton(Bundle.getMessage("ShipAll"));
+    JRadioButton shipLoadNameAll = new JRadioButton(Bundle.getMessage("ShipsAllLoads"));
     JRadioButton shipLoadNameInclude = new JRadioButton(Bundle.getMessage("ShipOnly"));
     JRadioButton shipLoadNameExclude = new JRadioButton(Bundle.getMessage("Exclude"));
 
@@ -513,8 +512,8 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
     private void checkForErrors() {
         if (_track.getLoadOption().equals(Track.INCLUDE_LOADS) && _track.getLoadNames().length == 0
                 || _track.getShipLoadOption().equals(Track.INCLUDE_LOADS) && _track.getShipLoadNames().length == 0) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNeedLoads"), Bundle.getMessage("ErrorNoLoads"),
-                    JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNeedLoads"), Bundle.getMessage("ErrorNoLoads"),
+                    JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -557,5 +556,5 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackLoadEditFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackLoadEditFrame.class);
 }

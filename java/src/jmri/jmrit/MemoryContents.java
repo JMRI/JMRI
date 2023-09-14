@@ -1231,7 +1231,6 @@ public class MemoryContents {
      * Since the key/value metadata is typically presented at the beginning of a
      * firmware file, the method would typically be invoked before invocation of
      * the writeHex method.
-     * <p>
      * @param writer Writer to which the character stream is sent
      * @throws IOException if problems writing data to file
      */

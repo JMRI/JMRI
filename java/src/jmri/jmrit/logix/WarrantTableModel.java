@@ -7,17 +7,14 @@ import java.util.Iterator;
 import javax.annotation.Nonnull;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.ThreadingUtil;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Table Model for the Warrant List
@@ -569,9 +566,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
 
     private void showMessageDialog(String msg) {
         ThreadingUtil.runOnGUIEventually(() -> {
-            JOptionPane.showMessageDialog(_frame, msg,
+            JmriJOptionPane.showMessageDialog(_frame, msg,
                     Bundle.getMessage("WarningTitle"),
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
         });
     }
 
@@ -800,6 +797,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantTableModel.class
-            .getName());
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WarrantTableModel.class);
+
 }

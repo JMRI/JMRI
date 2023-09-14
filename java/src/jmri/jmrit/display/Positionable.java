@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.Set;
 
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
@@ -54,9 +55,33 @@ public interface Positionable extends Cloneable, InlineLogixNG {
 
     /**
      * Gets the Id of this Positionable
-     * @return id the id or null if no id
+     * @return the id or null if no id
      */
     String getId();
+
+    /**
+     * Add a class name to this Positionable
+     * @param className the class name
+     * @throws IllegalArgumentException className is null or has a comma
+     */
+    public void addClass(String className);
+
+    /**
+     * Remove a class name to this Positionable
+     * @param className the class name
+     */
+    public void removeClass(String className);
+
+    /**
+     * Remove a class name to this Positionable
+     */
+    public void removeAllClasses();
+
+    /**
+     * Gets the class names of this Positionable
+     * @return the classes
+     */
+    Set<String> getClasses();
 
     void setPositionable(boolean enabled);
 

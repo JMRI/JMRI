@@ -3,9 +3,11 @@ package jmri.jmrit.throttle;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
+
 import jmri.Throttle;
 import jmri.util.FileUtil;
 import jmri.util.swing.EditableResizableImagePanel;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * A very specific dialog for editing the properties of a FunctionButton object.
@@ -265,8 +267,8 @@ public final class FunctionButtonPropertyEditor extends JDialog {
         }        
 
         if (errorNumber > 0) {
-            JOptionPane.showMessageDialog(this, errors,
-                Bundle.getMessage("ErrorOnPage"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, errors,
+                Bundle.getMessage("ErrorOnPage"), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;

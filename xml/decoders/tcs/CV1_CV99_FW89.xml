@@ -168,12 +168,12 @@
   <variable item="F2 controls output 1" CV="33" mask="XXXXVXXX" minOut="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2 controls output 1</label>
-     <label xml:lang="it">F2 controlla uscita 1</label>
+    <label xml:lang="it">F2 controlla uscita 1</label>
   </variable>
   <variable item="F3 controls output 1" CV="33" mask="XXXVXXXX" minOut="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3 controls output 1</label>
-     <label xml:lang="it">F3 controlla uscita 1</label>
+    <label xml:lang="it">F3 controlla uscita 1</label>
   </variable>
   <variable item="F4 controls output 1" CV="33" mask="XXVXXXXX" minOut="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -472,7 +472,7 @@
     <label xml:lang="it">F9 controlla uscita 5</label>
   </variable>
   <variable item="F10 controls output 5" CV="41" mask="XXVXXXXX" minOut="5">
-     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10 controls output 5</label>
     <label xml:lang="it">F10 controlla uscita 5</label>
   </variable>
@@ -659,37 +659,43 @@
   <variable CV="49" mask="XVXXXXXX" item="Output 1 options" default="0">
     <enumVal>
       <enumChoice choice="Group 0">
-          <choice xml:lang="it">Gruppo 0</choice>
+        <choice xml:lang="it">Gruppo 0</choice>
       </enumChoice>
       <enumChoice choice="Group 1">
-          <choice xml:lang="it">Gruppo 1</choice>
+        <choice xml:lang="it">Gruppo 1</choice>
       </enumChoice>
     </enumVal>
     <label>White Wire Effect Group</label>
     <label xml:lang="it">Gruppo Effetti filo Bianco</label>
   </variable>
   <variable CV="49" mask="XXXXVVVV" item="Output 1 effect generated">
-        <qualifier>
+    <qualifier>
       <variableref>White Wire Effect Group</variableref>
       <relation>eq</relation>
       <value>1</value>
     </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/><label>White Wire Effect 1</label><label xml:lang="it">Gruppo Effetti filo Bianco 1</label></variable>
+    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/>
+    <label>White Wire Effect 1</label>
+    <label xml:lang="it">Gruppo Effetti filo Bianco 1</label>
+  </variable>
   <variable CV="49" mask="XXXXVVVV" item="Output 1 behavior">
-        <qualifier>
+    <qualifier>
       <variableref>White Wire Effect Group</variableref>
       <relation>eq</relation>
       <value>0</value>
     </qualifier>
-        <enumVal>
+    <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
-</enumVal><label>White Wire Effect 0</label><label xml:lang="it">Effetti 0 filo Bianco</label></variable>
+      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
+    </enumVal>
+    <label>White Wire Effect 0</label>
+    <label xml:lang="it">Effetti 0 filo Bianco</label>
+  </variable>
   <variable CV="49" mask="XXVVXXXX" item="Output 1 option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
     <label>White Wire Timing</label>
@@ -698,37 +704,43 @@
   <variable CV="50" mask="XVXXXXXX" item="Output 2 options" default="0">
     <enumVal>
       <enumChoice choice="Group 0">
-          <choice xml:lang="it">Gruppo 0</choice>
+        <choice xml:lang="it">Gruppo 0</choice>
       </enumChoice>
       <enumChoice choice="Group 1">
-          <choice xml:lang="it">Gruppo 1</choice>
+        <choice xml:lang="it">Gruppo 1</choice>
       </enumChoice>
     </enumVal>
     <label>Yellow Wire Effect Group</label>
     <label xml:lang="it">Yellow Wire Effect Group</label>
   </variable>
   <variable CV="50" mask="XXXXVVVV" item="Output 2 effect generated">
-        <qualifier>
+    <qualifier>
       <variableref>Yellow Wire Effect Group</variableref>
       <relation>eq</relation>
       <value>1</value>
     </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/><label>Yellow Wire Effect 1</label><label xml:lang="it">Gruppo 1 Effetti filo Giallo</label></variable>
+    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/>
+    <label>Yellow Wire Effect 1</label>
+    <label xml:lang="it">Gruppo 1 Effetti filo Giallo</label>
+  </variable>
   <variable CV="50" mask="XXXXVVVV" item="Output 2 behavior">
-        <qualifier>
+    <qualifier>
       <variableref>Yellow Wire Effect Group</variableref>
       <relation>eq</relation>
       <value>0</value>
     </qualifier>
-        <enumVal>
+    <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
-</enumVal><label>Yellow Wire Effect 0</label><label xml:lang="it">Gruppo 0 Effetti filo Giallo</label></variable>
+      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
+    </enumVal>
+    <label>Yellow Wire Effect 0</label>
+    <label xml:lang="it">Gruppo 0 Effetti filo Giallo</label>
+  </variable>
   <variable CV="50" mask="XXVVXXXX" default="1" item="Output 2 option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
     <label>Yellow Wire Timing</label>
@@ -737,22 +749,25 @@
   <variable CV="51" mask="XVXXXXXX" minOut="3" item="Output 3 options" default="0">
     <enumVal>
       <enumChoice choice="Group 0">
-          <choice xml:lang="it">Gruppo 0</choice>
+        <choice xml:lang="it">Gruppo 0</choice>
       </enumChoice>
       <enumChoice choice="Group 1">
-          <choice xml:lang="it">Gruppo 1</choice>
+        <choice xml:lang="it">Gruppo 1</choice>
       </enumChoice>
     </enumVal>
     <label>Green Wire Effect Group</label>
     <label xml:lang="it">Gruppo Effetti filo Verde</label>
   </variable>
   <variable CV="51" mask="XXXXVVVV" minOut="3" item="Output 3 effect generated">
-        <qualifier>
+    <qualifier>
       <variableref>Green Wire Effect Group</variableref>
       <relation>eq</relation>
       <value>1</value>
     </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/><label>Green Wire Effect 1</label><label xml:lang="it">Gruppo 1 Effetti filo Verde</label></variable>
+    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/>
+    <label>Green Wire Effect 1</label>
+    <label xml:lang="it">Gruppo 1 Effetti filo Verde</label>
+  </variable>
   <variable CV="51" mask="XXXXVVVV" minOut="3" item="Output 3 behavior">
     <qualifier>
       <variableref>Green Wire Effect Group</variableref>
@@ -768,7 +783,8 @@
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
     </enumVal>
-    <label>Green Wire Effect 0</label><label xml:lang="it">Gruppo 0 Effetti filo Verde</label>
+    <label>Green Wire Effect 0</label>
+    <label xml:lang="it">Gruppo 0 Effetti filo Verde</label>
   </variable>
   <variable CV="51" mask="XXVVXXXX" minOut="3" default="2" item="Output 3 option 1">
     <defaultItem default="1" include="46"/>
@@ -779,10 +795,10 @@
   <variable CV="52" mask="XVXXXXXX" minOut="4" item="Output 4 options" default="0">
     <enumVal>
       <enumChoice choice="Group 0">
-          <choice xml:lang="it">Gruppo 0</choice>
+        <choice xml:lang="it">Gruppo 0</choice>
       </enumChoice>
       <enumChoice choice="Group 1">
-          <choice xml:lang="it">Gruppo 1</choice>
+        <choice xml:lang="it">Gruppo 1</choice>
       </enumChoice>
     </enumVal>
     <label>Purple Wire Effect Group</label>
@@ -825,37 +841,43 @@
   <variable CV="53" mask="XVXXXXXX" minOut="5" item="Output 5 options" default="0">
     <enumVal>
       <enumChoice choice="Group 0">
-          <choice xml:lang="it">Gruppo 0</choice>
+        <choice xml:lang="it">Gruppo 0</choice>
       </enumChoice>
       <enumChoice choice="Group 1">
-          <choice xml:lang="it">Gruppo 1</choice>
+        <choice xml:lang="it">Gruppo 1</choice>
       </enumChoice>
     </enumVal>
     <label>Brown Wire Effect Group</label>
     <label xml:lang="it">Gruppo Effetti filo Marrone</label>
   </variable>
   <variable CV="53" mask="XXXXVVVV" minOut="5" item="Output 5 effect generated">
-        <qualifier>
+    <qualifier>
       <variableref>Brown Wire Effect Group</variableref>
       <relation>eq</relation>
       <value>1</value>
     </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/><label>Brown Wire Effect 1</label><label xml:lang="it">Gruppo 1 Effetti filo Marrone</label></variable>
+    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/>
+    <label>Brown Wire Effect 1</label>
+    <label xml:lang="it">Gruppo 1 Effetti filo Marrone</label>
+  </variable>
   <variable CV="53" mask="XXXXVVVV" minOut="5" item="Output 5 behavior">
-        <qualifier>
+    <qualifier>
       <variableref>Brown Wire Effect Group</variableref>
       <relation>eq</relation>
       <value>0</value>
     </qualifier>
-        <enumVal>
+    <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
-</enumVal><label>Brown Wire Effect 0</label><label xml:lang="it">Gruppo 0 Effetti filo Marrone</label></variable>
+      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
+    </enumVal>
+    <label>Brown Wire Effect 0</label>
+    <label xml:lang="it">Gruppo 0 Effetti filo Marrone</label>
+  </variable>
   <variable CV="53" mask="XXVVXXXX" minOut="5" default="2" item="Output 5 option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
     <label>Brown Wire Timing</label>
@@ -864,37 +886,43 @@
   <variable CV="54" mask="XVXXXXXX" minOut="6" item="Output 6 options" default="0">
     <enumVal>
       <enumChoice choice="Group 0">
-          <choice xml:lang="it">Gruppo 0</choice>
+        <choice xml:lang="it">Gruppo 0</choice>
       </enumChoice>
       <enumChoice choice="Group 1">
-          <choice xml:lang="it">Gruppo 1</choice>
+        <choice xml:lang="it">Gruppo 1</choice>
       </enumChoice>
     </enumVal>
     <label>Pink Wire Effect Group</label>
     <label xml:lang="it">Gruppo Effetti filo Rosa</label>
   </variable>
   <variable CV="54" mask="XXXXVVVV" minOut="6" item="Output 6 effect generated">
-        <qualifier>
+    <qualifier>
       <variableref>Pink Wire Effect Group</variableref>
       <relation>eq</relation>
       <value>1</value>
     </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/><label>Pink Wire Effect 1</label><label xml:lang="it">Gruppo 1 Effetti filo Rosa</label></variable>
+    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/>
+    <label>Pink Wire Effect 1</label>
+    <label xml:lang="it">Gruppo 1 Effetti filo Rosa</label>
+  </variable>
   <variable CV="54" mask="XXXXVVVV" minOut="6" item="Output 6 behavior">
-        <qualifier>
+    <qualifier>
       <variableref>Pink Wire Effect Group</variableref>
       <relation>eq</relation>
       <value>0</value>
     </qualifier>
-        <enumVal>
+    <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
-</enumVal><label>Pink Wire Effect 0</label><label xml:lang="it">Gruppo 0 Effetti filo Rosa</label></variable>
+      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
+    </enumVal>
+    <label>Pink Wire Effect 0</label>
+    <label xml:lang="it">Gruppo 0 Effetti filo Rosa</label>
+  </variable>
   <variable CV="54" mask="XXVVXXXX" minOut="6" default="2" item="Output 6 option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
     <label>Pink Wire Timing</label>
@@ -903,37 +931,43 @@
   <variable CV="55" mask="XVXXXXXX" minOut="7" item="Output 7 options" default="0">
     <enumVal>
       <enumChoice choice="Group 0">
-          <choice xml:lang="it">Gruppo 0</choice>
+        <choice xml:lang="it">Gruppo 0</choice>
       </enumChoice>
       <enumChoice choice="Group 1">
-          <choice xml:lang="it">Gruppo 1</choice>
+        <choice xml:lang="it">Gruppo 1</choice>
       </enumChoice>
     </enumVal>
     <label>Pink/Purple Wire Effect Group</label>
     <label xml:lang="it">Gruppo Effetti filo Rosa/Porpora</label>
   </variable>
   <variable CV="55" mask="XXXXVVVV" minOut="7" item="Output 7 effect generated">
-        <qualifier>
+    <qualifier>
       <variableref>Pink/Purple Wire Effect Group</variableref>
       <relation>eq</relation>
       <value>1</value>
     </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/><label>Pink/Purple Wire Effect 1</label><label xml:lang="it">Gruppo 1 Effetti filo Rosa/Porpora</label></variable>
+    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/>
+    <label>Pink/Purple Wire Effect 1</label>
+    <label xml:lang="it">Gruppo 1 Effetti filo Rosa/Porpora</label>
+  </variable>
   <variable CV="55" mask="XXXXVVVV" minOut="7" item="Output 7 behavior">
-        <qualifier>
+    <qualifier>
       <variableref>Pink/Purple Wire Effect Group</variableref>
       <relation>eq</relation>
       <value>0</value>
     </qualifier>
-        <enumVal>
+    <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
-</enumVal><label>Pink/Purple Wire Effect 0</label><label xml:lang="it">Gruppo 0 Effetti filo Rosa/Porpora</label></variable>
+      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
+    </enumVal>
+    <label>Pink/Purple Wire Effect 0</label>
+    <label xml:lang="it">Gruppo 0 Effetti filo Rosa/Porpora</label>
+  </variable>
   <variable CV="55" mask="XXVVXXXX" minOut="7" default="2" item="Output 7 option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
     <label>Pink/Purple Wire Timing</label>
@@ -954,37 +988,43 @@
   <variable CV="58" mask="XVXXXXXX" minOut="8" item="Output 8 options" default="0">
     <enumVal>
       <enumChoice choice="Group 0">
-          <choice xml:lang="it">Gruppo 0</choice>
+        <choice xml:lang="it">Gruppo 0</choice>
       </enumChoice>
       <enumChoice choice="Group 1">
-          <choice xml:lang="it">Gruppo 1</choice>
+        <choice xml:lang="it">Gruppo 1</choice>
       </enumChoice>
     </enumVal>
     <label>Green/Brown Wire Effect Group</label>
     <label xml:lang="it">Gruppo Effetti filo Verde/Marrone</label>
   </variable>
   <variable CV="58" mask="XXXXVVVV" minOut="8" item="Output 8 effect generated">
-        <qualifier>
+    <qualifier>
       <variableref>Green/Brown Wire Effect Group</variableref>
       <relation>eq</relation>
       <value>1</value>
     </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/><label>Green/Brown Wire Effect 1</label><label xml:lang="it">Gruppo 1 Effetti filo Verde/Marrone</label></variable>
+    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/>
+    <label>Green/Brown Wire Effect 1</label>
+    <label xml:lang="it">Gruppo 1 Effetti filo Verde/Marrone</label>
+  </variable>
   <variable CV="58" mask="XXXXVVVV" minOut="8" item="Output 8 behavior">
-        <qualifier>
+    <qualifier>
       <variableref>Green/Brown Wire Effect Group</variableref>
       <relation>eq</relation>
       <value>0</value>
     </qualifier>
-        <enumVal>
+    <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
-</enumVal><label>Green/Brown Wire Effect 0</label><label xml:lang="it">Gruppo 0 Effetti filo Verde/Marrone</label></variable>
+      <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
+    </enumVal>
+    <label>Green/Brown Wire Effect 0</label>
+    <label xml:lang="it">Gruppo 0 Effetti filo Verde/Marrone</label>
+  </variable>
   <variable CV="58" mask="XXVVXXXX" minOut="8" default="2" item="Output 8 option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
     <label>Green/Brown Wire Timing</label>
@@ -1005,7 +1045,7 @@
   <variable CV="61" mask="XXXXVXXX" item="Motor Option 4" tooltip="Disable(default)/Enable button control of Brake">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Enable Brake Button Control</label>
-    <label xml:lang="it">Abilita pulsante controllo Freni</label> 
+    <label xml:lang="it">Abilita pulsante controllo Freni</label>
     <tooltip xml:lang="it">Disabilita(default)/Abilita controllo Freni da pulsante</tooltip>
   </variable>
   <variable CV="61" mask="XXXVXXXX" item="Directional Headlights">
@@ -1016,7 +1056,7 @@
   <variable CV="61" mask="VXXXXXXX" default="0" item="Function 5 effect generated" tooltip="Disable(default)/Enable button control of Brake Light (Trolley)">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Button Control of Brake Light</label>
-	    <label xml:lang="it">Abilita pulsante di controllo della luce Freno</label>
+    <label xml:lang="it">Abilita pulsante di controllo della luce Freno</label>
     <tooltip xml:lang="it">Disabilitare (default) / Abilita controllo pulsante di luce Freno (Trolley)</tooltip>
   </variable>
   <variable CV="61" mask="XXVXXXXX" item="Global lighting option 1">
@@ -1027,12 +1067,12 @@
   <variable CV="61" mask="XVXXXXXX" item="Motor Option 1" tooltip="Motor controlled by Function button">
     <enumVal>
       <enumChoice choice="Disabled">
-         <choice xml:lang="fr">Désactivé</choice>
-            <choice xml:lang="it">Disabilitato</choice>
-            <choice xml:lang="de">Deaktiviert</choice>
+        <choice xml:lang="fr">Désactivé</choice>
+        <choice xml:lang="it">Disabilitato</choice>
+        <choice xml:lang="de">Deaktiviert</choice>
       </enumChoice>
       <enumChoice choice="Button control of motor">
-         <choice xml:lang="it">Pulsante controllo Motore</choice>
+        <choice xml:lang="it">Pulsante controllo Motore</choice>
       </enumChoice>
     </enumVal>
     <label>Motor Button Control</label>
@@ -1045,7 +1085,7 @@
         <choice xml:lang="it">Manuale: F2-avanti, F3-retro</choice>
       </enumChoice>
       <enumChoice choice="Auto F2 for/rev">
-         <choice xml:lang="it">Automatico: F2-avanti/retro</choice>
+        <choice xml:lang="it">Automatico: F2-avanti/retro</choice>
       </enumChoice>
     </enumVal>
     <label>Button Control Direction</label>

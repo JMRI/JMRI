@@ -11,9 +11,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
@@ -25,6 +22,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.*;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Common elements for the Conductor and Yardmaster Frames.
@@ -265,9 +263,9 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     }
 
     private void addCarToTrain() {
-        if (JOptionPane.showConfirmDialog(this,
+        if (JmriJOptionPane.showConfirmDialog(this,
                 MessageFormat.format(Bundle.getMessage("WantAddCarsToTrain?"), new Object[] { _train.getName() }),
-                Bundle.getMessage("AddCarsToTrain?"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                Bundle.getMessage("AddCarsToTrain?"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
             new CarsTableFrame(false, _train.getCurrentRouteLocation().getName(), null);
         }
     }
@@ -817,5 +815,5 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 e.getNewValue()); // NOI18N
     }
 
-    private static final Logger log = LoggerFactory.getLogger(CommonConductorYardmasterPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CommonConductorYardmasterPanel.class);
 }

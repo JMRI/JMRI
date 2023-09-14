@@ -33,17 +33,9 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.swing.JTablePersistenceManager;
 import jmri.util.davidflanagan.HardcopyWriter;
-import jmri.util.swing.ComboBoxToolTipRenderer;
-import jmri.util.swing.JmriMouseAdapter;
-import jmri.util.swing.JmriMouseEvent;
-import jmri.util.swing.JmriMouseListener;
-import jmri.util.swing.StayOpenCheckBoxItem;
-import jmri.util.swing.XTableColumnModel;
+import jmri.util.swing.*;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract Table data model for display of NamedBean manager contents.
@@ -400,9 +392,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                     if (nB != null) {
                         log.error("User name is not unique {}", value);
                         String msg = Bundle.getMessage("WarningUserName", "" + value);
-                        JOptionPane.showMessageDialog(null, msg,
+                        JmriJOptionPane.showMessageDialog(null, msg,
                                 Bundle.getMessage("WarningTitle"),
-                                JOptionPane.ERROR_MESSAGE);
+                                JmriJOptionPane.ERROR_MESSAGE);
                         return;
                     }
                 }
@@ -410,10 +402,10 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 nBean.setUserName((String) value);
                 if (nbMan.inUse(sysNameList.get(row), nBean)) {
                     String msg = Bundle.getMessage("UpdateToUserName", getBeanType(), value, sysNameList.get(row));
-                    int optionPane = JOptionPane.showConfirmDialog(null,
+                    int optionPane = JmriJOptionPane.showConfirmDialog(null,
                             msg, Bundle.getMessage("UpdateToUserNameTitle"),
-                            JOptionPane.YES_NO_OPTION);
-                    if (optionPane == JOptionPane.YES_OPTION) {
+                            JmriJOptionPane.YES_NO_OPTION);
+                    if (optionPane == JmriJOptionPane.YES_OPTION) {
                         //This will update the bean reference from the systemName to the userName
                         try {
                             nbMan.updateBeanFromSystemToUser(nBean);
@@ -436,7 +428,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             case DELETECOL:
                 // button fired, delete Bean
                 deleteBean(row, col);
-                break;
+                return; // manager will update rows if a delete occurs
             default:
                 NamedBeanPropertyDescriptor<?> desc = getPropertyColumnDescriptor(col);
                 if (desc == null) {
@@ -453,8 +445,14 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     }
 
     protected void deleteBean(int row, int col) {
-        DeleteBeanWorker worker = new DeleteBeanWorker(getBySystemName(sysNameList.get(row)));
-        worker.execute();
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
+            try {
+                var worker = new DeleteBeanWorker(getBySystemName(sysNameList.get(row)));
+                log.debug("Delete Bean {}", worker.toString());
+            } catch (Exception e ){
+                log.error("Exception while deleting bean", e);
+            }
+        });
     }
 
     /**
@@ -849,7 +847,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     public void renameBean(int row, int column) {
         T nBean = getBySystemName(sysNameList.get(row));
         String oldName = (nBean.getUserName() == null ? "" : nBean.getUserName());
-        String newName = JOptionPane.showInputDialog(null,
+        String newName = JmriJOptionPane.showInputDialog(null,
                 Bundle.getMessage("RenameFrom", getBeanType(), "\"" +oldName+"\""), oldName);
         if (newName == null || newName.equals(nBean.getUserName())) {
             // name not changed
@@ -859,9 +857,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             if (nB != null) {
                 log.error("User name is not unique {}", newName);
                 String msg = Bundle.getMessage("WarningUserName", "" + newName);
-                JOptionPane.showMessageDialog(null, msg,
+                JmriJOptionPane.showMessageDialog(null, msg,
                         Bundle.getMessage("WarningTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
@@ -873,9 +871,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         try {
             nBean.setUserName(newName);
         } catch (NamedBean.BadSystemNameException | NamedBean.BadUserNameException ex) {
-            JOptionPane.showMessageDialog(null, ex.getLocalizedMessage(),
+            JmriJOptionPane.showMessageDialog(null, ex.getLocalizedMessage(),
                     Bundle.getMessage("ErrorTitle"), // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -886,10 +884,10 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                     return;
                 }
                 String msg = Bundle.getMessage("UpdateToUserName", getBeanType(), newName, sysNameList.get(row));
-                int optionPane = JOptionPane.showConfirmDialog(null,
+                int optionPane = JmriJOptionPane.showConfirmDialog(null,
                         msg, Bundle.getMessage("UpdateToUserNameTitle"),
-                        JOptionPane.YES_NO_OPTION);
-                if (optionPane == JOptionPane.YES_OPTION) {
+                        JmriJOptionPane.YES_NO_OPTION);
+                if (optionPane == JmriJOptionPane.YES_OPTION) {
                     //This will update the bean reference from the systemName to the userName
                     try {
                         nbMan.updateBeanFromSystemToUser(nBean);
@@ -912,10 +910,10 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         T nBean = getBySystemName(sysNameList.get(row));
         if (!allowBlockNameChange("Remove", nBean, "")) return;  // NOI18N
         String msg = Bundle.getMessage("UpdateToSystemName", getBeanType());
-        int optionPane = JOptionPane.showConfirmDialog(null,
+        int optionPane = JmriJOptionPane.showConfirmDialog(null,
                 msg, Bundle.getMessage("UpdateToSystemNameTitle"),
-                JOptionPane.YES_NO_OPTION);
-        if (optionPane == JOptionPane.YES_OPTION) {
+                JmriJOptionPane.YES_NO_OPTION);
+        if (optionPane == JmriJOptionPane.YES_OPTION) {
             nbMan.updateBeanFromUserToSystem(nBean);
         }
         nBean.setUserName(null);
@@ -945,19 +943,19 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         // Remove is not allowed if there is a layout block
         if (changeType.equals("Remove")) {
             log.warn("Cannot remove user name for block {}", oldName);  // NOI18N
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("BlockRemoveUserNameWarning", oldName),  // NOI18N
                         Bundle.getMessage("WarningTitle"),  // NOI18N
-                        JOptionPane.WARNING_MESSAGE);
+                        JmriJOptionPane.WARNING_MESSAGE);
             return false;
         }
 
         // Confirmation dialog
-        int optionPane = JOptionPane.showConfirmDialog(null,
+        int optionPane = JmriJOptionPane.showConfirmDialog(null,
                 Bundle.getMessage("BlockChangeUserName", oldName, newName),  // NOI18N
                 Bundle.getMessage("QuestionTitle"),  // NOI18N
-                JOptionPane.YES_NO_OPTION);
-        return optionPane == JOptionPane.YES_OPTION;
+                JmriJOptionPane.YES_NO_OPTION);
+        return optionPane == JmriJOptionPane.YES_OPTION;
     }
 
     public void moveBean(int row, int column) {
@@ -966,7 +964,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         T oldNameBean = getBySystemName(sysNameList.get(row));
 
         if ((currentName == null) || currentName.isEmpty()) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("MoveDialogErrorMessage"));
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("MoveDialogErrorMessage"));
             return;
         }
 
@@ -979,10 +977,10 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             }
         });
 
-        int retval = JOptionPane.showOptionDialog(null,
+        int retval = JmriJOptionPane.showOptionDialog(null,
                 Bundle.getMessage("MoveDialog", getBeanType(), currentName, oldNameBean.getSystemName()),
                 Bundle.getMessage("MoveDialogTitle"),
-                JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.INFORMATION_MESSAGE, null,
                 new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), box}, null);
         log.debug("Dialog value {} selected {}:{}", retval, box.getSelectedIndex(), box.getSelectedItem());
         if (retval != 1) {
@@ -997,8 +995,8 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             InstanceManager.getDefault(NamedBeanHandleManager.class).moveBean(oldNameBean, newNameBean, currentName);
             if (nbMan.inUse(newNameBean.getSystemName(), newNameBean)) {
                 String msg = Bundle.getMessage("UpdateToUserName", getBeanType(), currentName, sysNameList.get(row));
-                int optionPane = JOptionPane.showConfirmDialog(null, msg, Bundle.getMessage("UpdateToUserNameTitle"), JOptionPane.YES_NO_OPTION);
-                if (optionPane == JOptionPane.YES_OPTION) {
+                int optionPane = JmriJOptionPane.showConfirmDialog(null, msg, Bundle.getMessage("UpdateToUserNameTitle"), JmriJOptionPane.YES_NO_OPTION);
+                if (optionPane == JmriJOptionPane.YES_OPTION) {
                     try {
                         nbMan.updateBeanFromSystemToUser(newNameBean);
                     } catch (JmriException ex) {
@@ -1021,9 +1019,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         JScrollPane commentFieldScroller = new JScrollPane(commentField);
         commentField.setText(nBean.getComment());
         Object[] editCommentOption = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonUpdate")};
-        int retval = JOptionPane.showOptionDialog(null,
+        int retval = JmriJOptionPane.showOptionDialog(null,
                 commentFieldScroller, Bundle.getMessage("EditComment"),
-                JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.INFORMATION_MESSAGE, null,
                 editCommentOption, editCommentOption[1]);
         if (retval != 1) {
             return;
@@ -1035,7 +1033,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * Display the comment text for the current row as a tool tip.
      *
      * Most of the bean tables use the standard model with comments in column 3.
-     * <p>
+     *
      * @param table The current table.
      * @param row The current row.
      * @param col The current column.
@@ -1213,52 +1211,40 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         }
     }
 
-    class DeleteBeanWorker extends SwingWorker<Void, Void> {
+    class DeleteBeanWorker  {
 
-        private final T t;
+        public DeleteBeanWorker(final T bean) {
 
-        public DeleteBeanWorker(T bean) {
-            t = bean;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Void doInBackground() {
             StringBuilder message = new StringBuilder();
             try {
-                getManager().deleteBean(t, "CanDelete");  // NOI18N
+                getManager().deleteBean(bean, "CanDelete");  // NOI18N
             } catch (PropertyVetoException e) {
                 if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
-                    log.warn("Should not delete {}, {}", t.getDisplayName((DisplayOptions.USERNAME_SYSTEMNAME)), e.getMessage());
-                    message.append(Bundle.getMessage("VetoDeleteBean", t.getBeanType(), t.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME), e.getMessage()));
-                    JOptionPane.showMessageDialog(null, message.toString(),
+                    log.warn("Should not delete {}, {}", bean.getDisplayName((DisplayOptions.USERNAME_SYSTEMNAME)), e.getMessage());
+                    message.append(Bundle.getMessage("VetoDeleteBean", bean.getBeanType(), bean.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME), e.getMessage()));
+                    JmriJOptionPane.showMessageDialog(null, message.toString(),
                             Bundle.getMessage("WarningTitle"),
-                            JOptionPane.ERROR_MESSAGE);
-                    return null;
+                            JmriJOptionPane.ERROR_MESSAGE);
+                    return;
                 }
                 message.append(e.getMessage());
             }
-            int count = t.getListenerRefs().size();
+            int count = bean.getListenerRefs().size();
             log.debug("Delete with {}", count);
             if (getDisplayDeleteMsg() == 0x02 && message.toString().isEmpty()) {
-                doDelete(t);
+                doDelete(bean);
             } else {
-                final JDialog dialog = new JDialog();
-                dialog.setTitle(Bundle.getMessage("WarningTitle"));
-                dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 JPanel container = new JPanel();
                 container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
                 if (count > 0) { // warn of listeners attached before delete
 
-                    JLabel question = new JLabel(Bundle.getMessage("DeletePrompt", t.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));
+                    JLabel question = new JLabel(Bundle.getMessage("DeletePrompt", bean.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
                     container.add(question);
 
-                    ArrayList<String> listenerRefs = t.getListenerRefs();
-                    if (listenerRefs.size() > 0) {
+                    ArrayList<String> listenerRefs = bean.getListenerRefs();
+                    if (!listenerRefs.isEmpty()) {
                         ArrayList<String> listeners = new ArrayList<>();
                         for (String listenerRef : listenerRefs) {
                             if (!listeners.contains(listenerRef)) {
@@ -1285,7 +1271,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                     }
                 } else {
                     String msg = MessageFormat.format(
-                            Bundle.getMessage("DeletePrompt"), t.getSystemName());
+                            Bundle.getMessage("DeletePrompt"), bean.getSystemName());
                     JLabel question = new JLabel(msg);
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
                     container.add(question);
@@ -1295,56 +1281,21 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 remember.setFont(remember.getFont().deriveFont(10f));
                 remember.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-                JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));
-                JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));
-                JPanel button = new JPanel();
-                button.setAlignmentX(Component.CENTER_ALIGNMENT);
-                button.add(yesButton);
-                button.add(noButton);
-                container.add(button);
-
-                noButton.addActionListener((ActionEvent e) -> {
-                    //there is no point in remembering this the user will never be
-                    //able to delete a bean!
-                    dialog.dispose();
-                });
-
-                yesButton.addActionListener((ActionEvent e) -> {
-                    if (remember.isSelected()) {
-                        setDisplayDeleteMsg(0x02);
-                    }
-                    doDelete(t);
-                    dialog.dispose();
-                });
                 container.add(remember);
                 container.setAlignmentX(Component.CENTER_ALIGNMENT);
                 container.setAlignmentY(Component.CENTER_ALIGNMENT);
-                dialog.getContentPane().add(container);
-                dialog.pack();
+                String[] options = new String[]{JmriJOptionPane.YES_STRING, JmriJOptionPane.NO_STRING};
+                int result = JmriJOptionPane.showOptionDialog(null, container, Bundle.getMessage("WarningTitle"), 
+                    JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.WARNING_MESSAGE, null, 
+                    options, JmriJOptionPane.NO_STRING);
 
-                dialog.getRootPane().setDefaultButton(noButton);
-                noButton.requestFocusInWindow(); // set default keyboard focus, after pack() before setVisible(true)
-                dialog.getRootPane().registerKeyboardAction(e -> { // escape to exit
-                        dialog.setVisible(false);
-                        dialog.dispose(); },
-                    KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
+                if ( result == 0 ){ // first item in Array is Yes
+                    if (remember.isSelected()) {
+                        setDisplayDeleteMsg(0x02);
+                    }
+                    doDelete(bean);
+                }
 
-                dialog.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width) / 2 - dialog.getWidth() / 2, (Toolkit.getDefaultToolkit().getScreenSize().height) / 2 - dialog.getHeight() / 2);
-                dialog.setModal(true);
-                dialog.setVisible(true);
-            }
-            return null;
-        }
-
-        /**
-         * {@inheritDoc} Minimal implementation to catch and log errors
-         */
-        @Override
-        protected void done() {
-            try {
-                get();  // called to get errors
-            } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
-                log.error("Exception while deleting bean", e);
             }
         }
     }
@@ -1373,23 +1324,6 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             if (e.isPopupTrigger()) {
                 showPopup(e);
             }
-        }
-    }
-
-    class PopupMenuRemoveName implements ActionListener {
-
-        private final int row;
-
-        PopupMenuRemoveName(int row) {
-            this.row = row;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            deleteBean(row, 0);
         }
     }
 
@@ -1522,6 +1456,6 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BeanTableDataModel.class);
 
 }

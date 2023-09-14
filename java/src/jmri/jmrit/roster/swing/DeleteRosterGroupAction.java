@@ -2,12 +2,14 @@ package jmri.jmrit.roster.swing;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+
 import javax.swing.Icon;
-import javax.swing.JOptionPane;
+
 import jmri.beans.BeanUtil;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.WindowInterface;
 
 /**
@@ -64,10 +66,10 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
         // null might be valid output from getting the selectedRosterGroup,
         // so we have to check for null again.
         if (group == null) {
-            group = (String) JOptionPane.showInputDialog(_who,
+            group = (String) JmriJOptionPane.showInputDialog(_who,
                     Bundle.getMessage("DeleteRosterGroupDialog"),
                     Bundle.getMessage("DeleteRosterGroupTitle", ""),
-                    JOptionPane.INFORMATION_MESSAGE,
+                    JmriJOptionPane.INFORMATION_MESSAGE,
                     null,
                     Roster.getDefault().getRosterGroupList().toArray(),
                     null);
@@ -97,11 +99,12 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
         String[] titles = {Bundle.getMessage("ButtonDelete"), Bundle.getMessage("ButtonCancel")};
         // TODO: replace "Are you sure..." string with JPanel containing string
         //       and checkbox silencing this message in the future
-        return (JOptionPane.YES_OPTION == JOptionPane.showOptionDialog(_who,
+        return ( 0 == // array position 0, ButtonDelete 
+                JmriJOptionPane.showOptionDialog(_who,
                 Bundle.getMessage("DeleteRosterGroupSure", entry),
                 Bundle.getMessage("DeleteRosterGroupTitle", entry),
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
+                JmriJOptionPane.DEFAULT_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE,
                 null,
                 titles,
                 null));

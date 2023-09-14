@@ -4,12 +4,12 @@ import java.awt.FlowLayout;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
+
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 import jmri.jmrit.catalog.NamedIcon;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  *
@@ -98,8 +98,8 @@ public class IndicatorTOIconDialog extends IconDialog {
              log.debug("doDoneAction: {} for {} family= {}", (_parent._update?"Update":""), _type, _family);
          }
          if (_family == null || _family.isEmpty()) {
-             JOptionPane.showMessageDialog(this, Bundle.getMessage("NoFamilyName"),
-                     Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+             JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("NoFamilyName"),
+                     Bundle.getMessage("MessageTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
              return false;
          }
          IndicatorTOItemPanel p = (IndicatorTOItemPanel)_parent;
@@ -150,15 +150,15 @@ public class IndicatorTOIconDialog extends IconDialog {
         }
         if (!options.isEmpty()) {
             Object[] selections = options.keySet().toArray();
-            String key = (String) JOptionPane.showInputDialog(this,
-                    Bundle.getMessage("PickStatus"), Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE, null,
+            String key = (String) JmriJOptionPane.showInputDialog(this,
+                    Bundle.getMessage("PickStatus"), Bundle.getMessage("QuestionTitle"), JmriJOptionPane.QUESTION_MESSAGE, null,
                     selections, selections[0]);
             if (key != null) {
                 addStatus(options.get(key));
             }
         } else {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("AllStatus"),
-                    Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("AllStatus"),
+                    Bundle.getMessage("MessageTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -166,8 +166,9 @@ public class IndicatorTOIconDialog extends IconDialog {
      * NOT add a new family. Create a status family
      */
     private void addStatusSet() {
-        String status = JOptionPane.showInputDialog(this, Bundle.getMessage("StatusName"),
-                Bundle.getMessage("createNewFamily"), JOptionPane.QUESTION_MESSAGE);
+        String status = JmriJOptionPane.showInputDialog(this,
+            Bundle.getMessage("StatusName"), Bundle.getMessage("createNewFamily"),
+            JmriJOptionPane.QUESTION_MESSAGE );
         if (status != null) {
             addStatus(status);
         }
@@ -183,8 +184,8 @@ public class IndicatorTOIconDialog extends IconDialog {
             options.put(ItemPalette.convertText(status), status);
         }
         Object[] selections = options.keySet().toArray();
-        String key = (String) JOptionPane.showInputDialog(this,
-                Bundle.getMessage("PickDelete"), Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE, null,
+        String key = (String) JmriJOptionPane.showInputDialog(this,
+                Bundle.getMessage("PickDelete"), Bundle.getMessage("QuestionTitle"), JmriJOptionPane.QUESTION_MESSAGE, null,
                 selections, selections[0]);
         if (key != null) {
             _iconGroupsMap.remove(options.get(key));
@@ -208,6 +209,6 @@ public class IndicatorTOIconDialog extends IconDialog {
         pack();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IndicatorTOIconDialog.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IndicatorTOIconDialog.class);
 
 }

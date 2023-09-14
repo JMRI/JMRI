@@ -3,18 +3,17 @@ package jmri.jmrit.symbolicprog;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
 import javax.swing.AbstractAction;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.util.swing.JmriJOptionPane;
 
 import org.openlcb.OlcbInterface;
 import org.openlcb.NodeID;
-import org.openlcb.cdi.CdiRep;
 import org.openlcb.cdi.impl.ConfigRepresentation;
 
 /**
@@ -72,7 +71,7 @@ public class TcsDownloadAction extends AbstractAction implements PropertyChangeL
         var nodeStore = getSystemConnectionMemo().get(org.openlcb.MimicNodeStore.class);
         var nodeMemo = nodeStore.findNode(nodeID);
         if (nodeMemo == null) {
-            JOptionPane.showMessageDialog(frame, "Entry "+addr+" not found in CS-105, canceling");
+            JmriJOptionPane.showMessageDialog(frame, "Entry "+addr+" not found in CS-105, canceling");
             return;
         }
 
@@ -149,7 +148,7 @@ public class TcsDownloadAction extends AbstractAction implements PropertyChangeL
                 // is this the last entry?
                 if (e.key.startsWith("Train.Delete From Roster")) {
                     // TODO: This is firing much too soon
-                    JOptionPane.showMessageDialog(frame, "Download complete.");
+                    JmriJOptionPane.showMessageDialog(frame, "Download complete.");
                 } else if (e.key.startsWith("Train.Functions")) {
                     int index = getNumberField(e.key);
                     if (index == -1) {

@@ -23,7 +23,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.KeyStroke;
@@ -33,8 +32,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.util.swing.ImagePanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * ItemPanel general implementation for placement of CPE items having sets of
@@ -231,10 +229,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
         if (_isUnstoredMap) {
             _unstoredMap = iconMap;
-            int result = JOptionPane.showConfirmDialog(_frame.getEditor(), Bundle.getMessage("UnkownFamilyName", family),
-                    Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE);
-            if (result == JOptionPane.YES_OPTION) {
+            int result = JmriJOptionPane.showConfirmDialog(_frame.getEditor(), Bundle.getMessage("UnkownFamilyName", family),
+                    Bundle.getMessage("QuestionTitle"), JmriJOptionPane.YES_NO_OPTION,
+                    JmriJOptionPane.QUESTION_MESSAGE);
+            if (result == JmriJOptionPane.YES_OPTION) {
                 ItemPalette.addFamily(_itemType, family, iconMap);
             }
             _family = family;
@@ -288,8 +286,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
                 } else {
                     fr = this;
                 }
-                mapFamily = JOptionPane.showInputDialog(fr, Bundle.getMessage("EnterFamilyName"),
-                        Bundle.getMessage("createNewFamily"), JOptionPane.QUESTION_MESSAGE);
+                mapFamily = JmriJOptionPane.showInputDialog(fr, Bundle.getMessage("EnterFamilyName"), 
+                    Bundle.getMessage("createNewFamily"), JmriJOptionPane.QUESTION_MESSAGE );
                 if (mapFamily == null) { // user quit
                     return null;
                 }
@@ -301,7 +299,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
                 if (mapFamily.equals(fam)) {
                     if (_update) {
                         String thisType = NAME_MAP.get(_itemType);
-                        JOptionPane.showMessageDialog(_frame, Bundle.getMessage("DuplicateFamilyName", mapFamily, Bundle.getMessage(thisType), Bundle.getMessage("UseAnotherName")), Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(_frame,
+                            Bundle.getMessage("DuplicateFamilyName", mapFamily, Bundle.getMessage(thisType),
+                            Bundle.getMessage("UseAnotherName")), Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                         mapFamily = null;
                         nameOK = false;
                         break;
@@ -680,9 +680,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
      * Action item for deletion of an icon family.
      */
     protected void deleteFamilySet() {
-        if (JOptionPane.showConfirmDialog(_frame, Bundle.getMessage("confirmDelete", _family),
-                Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+        if (JmriJOptionPane.showConfirmDialog(_frame, Bundle.getMessage("confirmDelete", _family),
+                Bundle.getMessage("QuestionTitle"), JmriJOptionPane.YES_NO_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE) == JmriJOptionPane.YES_OPTION) {
             ItemPalette.removeIconMap(_itemType, _family);
             _family = null;
             _currentIconMap = null;
@@ -719,8 +719,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _cntlDown = false;
             return true;
         }
-        String family = JOptionPane.showInputDialog(_frame, Bundle.getMessage("EnterFamilyName"),
-                Bundle.getMessage("createNewFamily"), JOptionPane.QUESTION_MESSAGE);
+        String family = JmriJOptionPane.showInputDialog(_frame, Bundle.getMessage("EnterFamilyName"),
+            Bundle.getMessage("createNewFamily"), JmriJOptionPane.QUESTION_MESSAGE );
         if (family == null) {
             return false;
         }
@@ -885,6 +885,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
         return _family;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(FamilyItemPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FamilyItemPanel.class);
 
 }

@@ -1,7 +1,8 @@
 package jmri.jmrit.roster.swing.speedprofile;
 
 import java.awt.BorderLayout;
-import javax.swing.JOptionPane;
+
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame Entry Exit Frames
@@ -41,9 +42,9 @@ public class SpeedProfileFrame extends jmri.util.JmriJFrame {
     public void windowClosingEvent() {
         spPanel.cancelButton();
         if (spPanel.save) {
-            if (JOptionPane.showConfirmDialog(this,  Bundle.getMessage("SaveProfile"), 
-                    Bundle.getMessage("SpeedProfile"), JOptionPane.YES_NO_OPTION, 
-                    JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+            if (JmriJOptionPane.showConfirmDialog(this,  Bundle.getMessage("SaveProfile"), 
+                    Bundle.getMessage("SpeedProfile"), JmriJOptionPane.YES_NO_OPTION, 
+                    JmriJOptionPane.QUESTION_MESSAGE) == JmriJOptionPane.YES_OPTION) {
                 spPanel.updateSpeedProfileWithResults();            
             }
         }

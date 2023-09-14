@@ -74,6 +74,9 @@
 
         <li>Cees Baarda, who expanded the DigiRails DR4018/DR4024 decoder definitions</li>
 
+        <li>John Baldwin, <!-- jbnx42 -->
+         who provided better user.css documentation.</li>
+
         <li>Harald Barth, <!-- habazut -->
          who improved the SRCP implementation and the DCC++ implementation.</li>
 
@@ -283,6 +286,9 @@
 
         <li>Joe Comuzzi <!-- jcomuzzi -->
          added new icon tests and added a definition for CNJ 1974 signals</li>
+
+        <li>Dean Cording <!-- DeanCording -->
+         who extended the MQTT support to power and throttles, and fixed some key bugs</li>
 
         <li>John Crellin contributed numerous new and improved decoder definitions for MRC decoders
         and the Kato FL11.</li>

@@ -3,13 +3,12 @@ package jmri.jmrit.operations.trains.excel;
 import java.io.File;
 import java.text.MessageFormat;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Setup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user edit of the file name of an Excel program used to generate
@@ -47,14 +46,14 @@ public class SetupExcelProgramSwitchListFrame extends SetupExcelProgramFrame {
 
         if (ae.getSource() == testButton) {
             if (InstanceManager.getDefault(TrainCustomSwitchList.class).excelFileExists()) {
-                JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("DirectoryNameFileName"),
+                JmriJOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("DirectoryNameFileName"),
                         new Object[]{InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryName(), InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName()}),
-                        Bundle.getMessage("ManifestCreatorFound"), JOptionPane.INFORMATION_MESSAGE);
+                        Bundle.getMessage("ManifestCreatorFound"), JmriJOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(this, MessageFormat.format(
+                JmriJOptionPane.showMessageDialog(this, MessageFormat.format(
                         Bundle.getMessage("LoadDirectoryNameFileName"), new Object[]{
                             InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryName(), InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName()}), Bundle
-                        .getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
+                        .getMessage("ManifestCreatorNotFound"), JmriJOptionPane.ERROR_MESSAGE);
             }
         }
         if (ae.getSource() == saveButton) {
@@ -67,5 +66,5 @@ public class SetupExcelProgramSwitchListFrame extends SetupExcelProgramFrame {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SetupExcelProgramSwitchListFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SetupExcelProgramSwitchListFrame.class);
 }

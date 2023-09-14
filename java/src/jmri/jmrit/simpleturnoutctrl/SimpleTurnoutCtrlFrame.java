@@ -7,8 +7,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
 import jmri.Turnout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame to control a single turnout.
@@ -382,7 +380,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 
     void invalidTurnout(String name, Exception ex) {
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class)
-                .showErrorMessage(Bundle.getMessage("ErrorTitle"),
+                .showErrorMessage(this, Bundle.getMessage("ErrorTitle"),
                         (Bundle.getMessage("ErrorConvertHW", name)),
                         ex.toString(), "", true, false);
     }
@@ -390,6 +388,6 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
     Turnout turnout = null;
     String newState = "";
 
-    private final static Logger log = LoggerFactory.getLogger(SimpleTurnoutCtrlFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SimpleTurnoutCtrlFrame.class);
 
 }

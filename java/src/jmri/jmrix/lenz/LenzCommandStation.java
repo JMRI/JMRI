@@ -106,7 +106,7 @@ public class LenzCommandStation implements jmri.CommandStation {
 
     /**
      * XpressNet command station does provide Ops Mode.
-     * <p>
+     *
      * @return true if CS type 1 or 2, else false.
      */
     public boolean isOpsModePossible() {

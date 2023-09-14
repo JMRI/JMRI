@@ -8,15 +8,13 @@ import java.util.List;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.routes.*;
 import jmri.util.swing.ExceptionDisplayFrame;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.UnexpectedExceptionContext;
 import jmri.web.server.WebServerPreferences;
 
@@ -26,8 +24,6 @@ import jmri.web.server.WebServerPreferences;
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012
  */
 public class OperationsSettingsPanel extends OperationsPreferencesPanel implements PropertyChangeListener {
-
-    private final static Logger log = LoggerFactory.getLogger(OperationsSettingsPanel.class);
 
     // labels
     private final JLabel textIconNorth = new JLabel(Bundle.getMessage("IconNorth"));
@@ -394,50 +390,50 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
         try {
             maxTrainLength = Integer.parseInt(maxLengthTextField.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("MaxLength"), Bundle.getMessage("CanNotAcceptNumber"),
-                    JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("MaxLength"), Bundle.getMessage("CanNotAcceptNumber"),
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         // warn about train length being too short
         if (maxTrainLength != Setup.getMaxTrainLength()) {
             if (maxTrainLength < 500 && Setup.getLengthUnit().equals(Setup.FEET) ||
                     maxTrainLength < 160 && Setup.getLengthUnit().equals(Setup.METER)) {
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         MessageFormat.format(Bundle.getMessage("LimitTrainLength"),
                                 new Object[] { maxTrainLength, Setup.getLengthUnit().toLowerCase() }),
-                        Bundle.getMessage("WarningTooShort"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTooShort"), JmriJOptionPane.WARNING_MESSAGE);
             }
         }
 
         try {
             Integer.parseInt(maxEngineSizeTextField.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("MaxEngine"), Bundle.getMessage("CanNotAcceptNumber"),
-                    JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("MaxEngine"), Bundle.getMessage("CanNotAcceptNumber"),
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
 
         try {
             Integer.parseInt(hptTextField.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("HPT"), Bundle.getMessage("CanNotAcceptNumber"),
-                    JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("HPT"), Bundle.getMessage("CanNotAcceptNumber"),
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
 
         try {
             Integer.parseInt(switchTimeTextField.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("MoveTime"), Bundle.getMessage("CanNotAcceptNumber"),
-                    JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("MoveTime"), Bundle.getMessage("CanNotAcceptNumber"),
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
 
         try {
             Integer.parseInt(travelTimeTextField.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("TravelTime"),
-                    Bundle.getMessage("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("TravelTime"),
+                    Bundle.getMessage("CanNotAcceptNumber"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -446,8 +442,8 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
                 Integer.parseInt(yearTextField.getText().trim());
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("BorderLayoutYearModeled"),
-                    Bundle.getMessage("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("BorderLayoutYearModeled"),
+                    Bundle.getMessage("CanNotAcceptNumber"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -465,7 +461,7 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
             } catch (IOException ex) {
                 UnexpectedExceptionContext context = new UnexpectedExceptionContext(ex,
                         "Auto backup before changing Car types"); // NOI18N
-                new ExceptionDisplayFrame(context, null).setVisible(true);
+                ExceptionDisplayFrame.displayExceptionDisplayFrame(this, context);
             }
 
             if (typeDesc.isSelected()) {
@@ -520,12 +516,12 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
         if (!railroadNameTextField.getText()
                 .equals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName())) {
             Setup.setRailroadName(railroadNameTextField.getText());
-            int results = JOptionPane.showConfirmDialog(this,
+            int results = JmriJOptionPane.showConfirmDialog(this,
                     MessageFormat.format(Bundle.getMessage("ChangeRailroadName"),
                             new Object[] { InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(),
                                     Setup.getRailroadName() }),
-                    Bundle.getMessage("ChangeJMRIRailroadName"), JOptionPane.YES_NO_OPTION);
-            if (results == JOptionPane.YES_OPTION) {
+                    Bundle.getMessage("ChangeJMRIRailroadName"), JmriJOptionPane.YES_NO_OPTION);
+            if (results == JmriJOptionPane.YES_OPTION) {
                 InstanceManager.getDefault(WebServerPreferences.class).setRailroadName(Setup.getRailroadName());
                 InstanceManager.getDefault(WebServerPreferences.class).save();
             }
@@ -553,10 +549,10 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
     private void checkRoutes() {
         int maxLength = Integer.parseInt(maxLengthTextField.getText());
         if (maxLength > Setup.getMaxTrainLength()) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("RouteLengthNotModified"),
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("RouteLengthNotModified"),
                     MessageFormat.format(Bundle.getMessage("MaxTrainLengthIncreased"),
                             new Object[] { maxLength, Setup.getLengthUnit().toLowerCase() }),
-                    JOptionPane.INFORMATION_MESSAGE);
+                    JmriJOptionPane.INFORMATION_MESSAGE);
         }
         if (maxLength < Setup.getMaxTrainLength()) {
             StringBuilder sb = new StringBuilder();
@@ -580,12 +576,12 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
                 }
             }
             if (sb.length() > 0) {
-                JOptionPane.showMessageDialog(this, sb.toString(), Bundle.getMessage("YouNeedToAdjustRoutes"),
-                        JOptionPane.WARNING_MESSAGE);
-                if (JOptionPane.showConfirmDialog(this,
+                JmriJOptionPane.showMessageDialog(this, sb.toString(), Bundle.getMessage("YouNeedToAdjustRoutes"),
+                        JmriJOptionPane.WARNING_MESSAGE);
+                if (JmriJOptionPane.showConfirmDialog(this,
                         MessageFormat.format(Bundle.getMessage("ChangeMaximumTrainDepartureLength"),
                                 new Object[] { maxLength }),
-                        Bundle.getMessage("ModifyAllRoutes"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        Bundle.getMessage("ModifyAllRoutes"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                     routes.stream().forEach((route) -> {
                         route.getLocationsBySequenceList().stream().filter((rl) -> (rl.getMaxTrainLength() > maxLength))
                                 .map((rl) -> {
@@ -819,4 +815,7 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
                 !Setup.getRailroadName().equals(this.railroadNameTextField.getText()) ||
                 !Setup.getLengthUnit().equals(lengthUnit));
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OperationsSettingsPanel.class);
+
 }

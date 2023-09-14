@@ -2,16 +2,14 @@ package jmri.jmrit.logixng.expressions.configurexml;
 
 import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
-import javax.swing.JOptionPane;
 
 import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
-import jmri.Block;
-import jmri.BlockManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionBlock;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.util.swing.JmriJOptionPane;
 
 import org.jdom2.Element;
 
@@ -138,10 +136,10 @@ public class ExpressionBlockXml extends jmri.managers.configurexml.AbstractNamed
                 String memoryName = elem.getTextTrim();
                 h.setBlockValue(">>> " + elem.getTextTrim() + " <<<");
                 if (!GraphicsEnvironment.isHeadless() && !Boolean.getBoolean("jmri.test.no-dialogs")) {
-                    JOptionPane.showMessageDialog(null,
+                    JmriJOptionPane.showMessageDialog(null,
                             rb.getString("ActionBlock_MemoryChange"),
                             rb.getString("ActionBlock_MemoryTitle") + " " + memoryName,
-                            JOptionPane.WARNING_MESSAGE);
+                            JmriJOptionPane.WARNING_MESSAGE);
                 }
             }
 

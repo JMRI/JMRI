@@ -800,7 +800,6 @@ public class PaneProgPane extends javax.swing.JPanel
      * Each invocation of this method reads one variable or CV; completion of
      * that request will cause it to happen again, reading the next one, until
      * there's nothing left to read.
-     * <p>
      * @return true is a read has been started, false if the pane is complete.
      */
     boolean nextRead() {

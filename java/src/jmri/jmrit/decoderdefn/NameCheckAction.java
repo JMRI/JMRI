@@ -5,19 +5,20 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
+
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.NameFile;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.filter.ElementFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Check the names in an XML decoder file against the names.xml definitions
@@ -93,13 +94,13 @@ public class NameCheckAction extends AbstractAction {
                 }
 
                 if (warnings.length()!=0) {
-                    JOptionPane.showMessageDialog(_who, warnings);
+                    JmriJOptionPane.showMessageDialog(_who, warnings);
                 } else {
-                    JOptionPane.showMessageDialog(_who, "No mismatched items found"); // TODO I18N
+                    JmriJOptionPane.showMessageDialog(_who, "No mismatched items found"); // TODO I18N
                 }
 
             } catch (HeadlessException | IOException | JDOMException ex) {
-                JOptionPane.showMessageDialog(_who, "Error parsing decoder file: " + ex); // TODO I18N
+                JmriJOptionPane.showMessageDialog(_who, "Error parsing decoder file: " + ex); // TODO I18N
             }
 
         } else {
@@ -123,7 +124,6 @@ public class NameCheckAction extends AbstractAction {
 
     }
 
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(NameCheckAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NameCheckAction.class);
 
 }

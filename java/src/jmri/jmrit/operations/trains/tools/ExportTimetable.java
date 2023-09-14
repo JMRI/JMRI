@@ -9,12 +9,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
@@ -28,6 +24,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.ColorUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Provides an export to the Timetable feature.
@@ -138,19 +135,19 @@ public class ExportTimetable extends XmlFile {
             loadSchedule(fileOut);
             loadTrains(fileOut);
 
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     MessageFormat.format(Bundle.getMessage("ExportedTimetableToFile"),
                             new Object[]{defaultOperationsFilename()}),
-                    Bundle.getMessage("ExportComplete"), JOptionPane.INFORMATION_MESSAGE);
+                    Bundle.getMessage("ExportComplete"), JmriJOptionPane.INFORMATION_MESSAGE);
 
             fileOut.flush();
             fileOut.close();
         } catch (IOException e) {
             log.error("Can not open export timetable CSV file: {}", file.getName());
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     MessageFormat.format(Bundle.getMessage("ExportedTimetableToFile"),
                             new Object[]{defaultOperationsFilename()}),
-                    Bundle.getMessage("ExportFailed"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ExportFailed"), JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -317,6 +314,6 @@ public class ExportTimetable extends XmlFile {
 
     private static String operationsFileName = "ExportOperationsTimetable.csv"; // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(ExportTimetable.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExportTimetable.class);
 
 }

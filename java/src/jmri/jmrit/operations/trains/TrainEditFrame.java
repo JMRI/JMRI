@@ -7,9 +7,6 @@ import java.util.List;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.*;
 import jmri.jmrit.operations.locations.Location;
@@ -21,6 +18,7 @@ import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.tools.*;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user edit of a train
@@ -425,15 +423,15 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                 return;
             }
             if (!_train.reset()) {
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         MessageFormat.format(Bundle.getMessage("TrainIsInRoute"),
                                 new Object[] { train.getTrainTerminatesName() }),
-                        Bundle.getMessage("CanNotDeleteTrain"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("CanNotDeleteTrain"), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
-            if (JOptionPane.showConfirmDialog(this,
+            if (JmriJOptionPane.showConfirmDialog(this,
                     MessageFormat.format(Bundle.getMessage("deleteMsg"), new Object[] { train.getName() }),
-                    Bundle.getMessage("deleteTrain"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                    Bundle.getMessage("deleteTrain"), JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                 return;
             }
             routeBox.setSelectedItem(null);
@@ -465,10 +463,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         if (ae.getSource() == resetButton) {
             if (_train != null) {
                 if (!_train.reset()) {
-                    JOptionPane.showMessageDialog(this,
+                    JmriJOptionPane.showMessageDialog(this,
                             MessageFormat.format(Bundle.getMessage("TrainIsInRoute"),
                                     new Object[] { _train.getTrainTerminatesName() }),
-                            Bundle.getMessage("CanNotResetTrain"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("CanNotResetTrain"), JmriJOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -550,22 +548,22 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         String trainName = trainNameTextField.getText().trim();
         if (trainName.isEmpty()) {
             log.debug("Must enter a train name");
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"),
-                    MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] { s }), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"),
+                    MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] { s }), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (trainName.length() > Control.max_len_string_train_name) {
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     MessageFormat.format(Bundle.getMessage("TrainNameLess"),
                             new Object[] { Control.max_len_string_train_name + 1 }),
-                    MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] { s }), JOptionPane.ERROR_MESSAGE);
+                    MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] { s }), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (!OperationsXml.checkFileName(trainName)) { // NOI18N
             log.error("Train name must not contain reserved characters");
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("NameResChar") + NEW_LINE + Bundle.getMessage("ReservedChar"),
-                    MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] { s }), JOptionPane.ERROR_MESSAGE);
+                    MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] { s }), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -579,18 +577,18 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
         String type = InstanceManager.getDefault(EngineModels.class).getModelType(model);
         if (!_train.isTypeNameAccepted(type)) {
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     MessageFormat.format(Bundle.getMessage("TrainModelService"), new Object[] { model, type }),
                     MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] { Bundle.getMessage("save") }),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (roadEngineBox.getItemCount() == 1) {
             log.debug("No locos available that match the model selected!");
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     MessageFormat.format(Bundle.getMessage("NoLocosModel"), new Object[] { model }),
                     MessageFormat.format(Bundle.getMessage("TrainWillNotBuild"), new Object[] { _train.getName() }),
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
         }
         return true;
     }
@@ -601,10 +599,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             return true;
         }
         if (!road.equals(NONE) && !_train.isLocoRoadNameAccepted(road)) {
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     MessageFormat.format(Bundle.getMessage("TrainNotThisRoad"), new Object[] { _train.getName(), road }),
                     MessageFormat.format(Bundle.getMessage("TrainWillNotBuild"), new Object[] { _train.getName() }),
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
             return false;
         }
         for (RollingStock rs : InstanceManager.getDefault(EngineManager.class).getList()) {
@@ -615,17 +613,17 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                 return true;
             }
         }
-        JOptionPane.showMessageDialog(this,
+        JmriJOptionPane.showMessageDialog(this,
                 MessageFormat.format(Bundle.getMessage("NoLocoRoad"), new Object[] { road }),
                 MessageFormat.format(Bundle.getMessage("TrainWillNotBuild"), new Object[] { _train.getName() }),
-                JOptionPane.WARNING_MESSAGE);
+                JmriJOptionPane.WARNING_MESSAGE);
         return false; // couldn't find a loco with the selected road
     }
 
     private boolean checkRoute() {
         if (_train.getRoute() == null) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNeedsRoute"), Bundle.getMessage("TrainNoRoute"),
-                    JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNeedsRoute"), Bundle.getMessage("TrainNoRoute"),
+                    JmriJOptionPane.WARNING_MESSAGE);
             return false;
         }
         return true;
@@ -634,8 +632,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
     private void reportTrainExists(String s) {
         log.debug("Can not {}, train already exists", s);
-        JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNameExists"),
-                MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] { s }), JOptionPane.ERROR_MESSAGE);
+        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNameExists"),
+                MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] { s }), JmriJOptionPane.ERROR_MESSAGE);
     }
 
     private void enableButtons(boolean enabled) {
@@ -737,11 +735,11 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         } else {
             // check to see if skipped location is staging
             if (_train.getRoute().getLocationById(id).getLocation().isStaging()) {
-                int result = JOptionPane.showConfirmDialog(this,
+                int result = JmriJOptionPane.showConfirmDialog(this,
                         MessageFormat.format(Bundle.getMessage("TrainRouteStaging"),
                                 new Object[] { _train.getName(), _train.getRoute().getLocationById(id).getName() }),
-                        Bundle.getMessage("TrainRouteNotStaging"), JOptionPane.OK_CANCEL_OPTION);
-                if (result == JOptionPane.CANCEL_OPTION) {
+                        Bundle.getMessage("TrainRouteNotStaging"), JmriJOptionPane.OK_CANCEL_OPTION);
+                if (result != JmriJOptionPane.OK_OPTION ) {
                     b.setSelected(true);
                     return; // don't skip staging
                 }
@@ -979,8 +977,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                                     new Object[] { train.getName(), route.getName() }));
                 }
             }
-            JOptionPane.showMessageDialog(this, buf.toString(), Bundle.getMessage("BuiltTrain"),
-                    JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, buf.toString(), Bundle.getMessage("BuiltTrain"),
+                    JmriJOptionPane.WARNING_MESSAGE);
         }
         ref.initComponents(route, _train);
     }
@@ -1121,5 +1119,5 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainEditFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrainEditFrame.class);
 }

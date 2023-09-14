@@ -57,7 +57,7 @@ public interface IdTag extends NamedBean {
      * Constant representing an "unseen" state, indicating that the ID tag has
      * not yet been seen.
      */
-    int UNSEEN = 0x02;
+    static final int UNSEEN = 0x02;
 
     /**
      * Constant representing a "seen" state, indicating that the tag has been
@@ -72,7 +72,7 @@ public interface IdTag extends NamedBean {
      * <li>{@link #getWhenLastSeen()}
      * </ul>
      */
-    int SEEN = 0x03;
+    static final int SEEN = 0x03;
 
     /**
      * Retrieve a string representation of this tag ID

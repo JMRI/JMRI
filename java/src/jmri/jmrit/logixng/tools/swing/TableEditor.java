@@ -23,6 +23,7 @@ import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.*;
 import jmri.jmrit.logixng.util.ReferenceUtil;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.JmriJFrame;
 
 /**
@@ -328,10 +329,10 @@ import jmri.util.JmriJFrame;
                 if (p != null) {
                     // NamedTable with this user name already exists
                     log.error("Failure to update NamedTable with Duplicate User Name: {}", uName); // NOI18N
-                    JOptionPane.showMessageDialog(_editLogixNGFrame,
+                    JmriJOptionPane.showMessageDialog(_editLogixNGFrame,
                             Bundle.getMessage("Error6"),
                             Bundle.getMessage("ErrorTitle"), // NOI18N
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
@@ -352,24 +353,24 @@ import jmri.util.JmriJFrame;
                         null, csvFileName, false, ((DefaultCsvNamedTable) _curTable).getCsvType());
             } catch (java.nio.file.NoSuchFileException ex) {
                 log.error("Cannot load table due since the file is not found", ex);
-                JOptionPane.showMessageDialog(_editLogixNGFrame,
+                JmriJOptionPane.showMessageDialog(_editLogixNGFrame,
                         Bundle.getMessage("TableEditor_Error_FileNotFound", csvFileName),
                         Bundle.getMessage("ErrorTitle"), // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return;
             } catch (IOException ex) {
                 log.error("Cannot load table due to I/O error", ex);
-                JOptionPane.showMessageDialog(_editLogixNGFrame,
+                JmriJOptionPane.showMessageDialog(_editLogixNGFrame,
                         ex.getLocalizedMessage(),
                         Bundle.getMessage("ErrorTitle"), // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return;
             } catch (RuntimeException ex) {
                 log.error("Cannot load table due to an error", ex);
-                JOptionPane.showMessageDialog(_editLogixNGFrame,
+                JmriJOptionPane.showMessageDialog(_editLogixNGFrame,
                         ex.getLocalizedMessage(),
                         Bundle.getMessage("ErrorTitle"), // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
 

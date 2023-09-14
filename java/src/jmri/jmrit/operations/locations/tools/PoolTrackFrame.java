@@ -6,14 +6,12 @@ import java.util.List;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  *
@@ -283,8 +281,8 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
             try {
                 _track.setMinimumLength(Integer.parseInt(trackMinLengthTextField.getText()));
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("TrackMustBeNumber"), Bundle
-                        .getMessage("ErrorTrackLength"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("TrackMustBeNumber"), Bundle
+                        .getMessage("ErrorTrackLength"), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -375,5 +373,5 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PoolTrackFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PoolTrackFrame.class);
 }

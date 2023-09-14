@@ -2,14 +2,11 @@ package jmri.jmrit.conditional;
 
 import java.util.TreeSet;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import jmri.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Basis for ConditionalListEdit and ConditionalListCopy
@@ -91,10 +88,10 @@ abstract public class ConditionalList extends ConditionalEditBase {
             _curConditional.setUserName(uName);
         }
         if (_conditionalFrame._variableList.size() <= 0 && !_suppressReminder) {
-            JOptionPane.showMessageDialog(_editLogixFrame,
+            JmriJOptionPane.showMessageDialog(_editLogixFrame,
                     Bundle.getMessage("Warn5", _curConditional.getUserName(), _curConditional.getSystemName()),
                     Bundle.getMessage("WarningTitle"), // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
         }
         // complete update
         _curConditional.setStateVariables(_conditionalFrame._variableList);
@@ -128,10 +125,10 @@ abstract public class ConditionalList extends ConditionalEditBase {
             logix.activateLogix();
         } catch (NumberFormatException nfe) {
             log.debug("NumberFormatException on activation of Logix ", nfe);  // NOI18N
-            JOptionPane.showMessageDialog(_editLogixFrame,
+            JmriJOptionPane.showMessageDialog(_editLogixFrame,
                     Bundle.getMessage("Error4") + nfe.toString() + Bundle.getMessage("Error7"), // NOI18N
                     Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);  // NOI18N
+                    JmriJOptionPane.ERROR_MESSAGE);  // NOI18N
         }
         if (_pickTables != null) {
             _pickTables.dispose();
@@ -154,5 +151,6 @@ abstract public class ConditionalList extends ConditionalEditBase {
         return ConditionalListEdit.class.getName();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConditionalList.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConditionalList.class);
+
 }
