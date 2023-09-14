@@ -1,14 +1,14 @@
 package jmri.jmrix.ecos;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.HeadlessException;
-import javax.swing.JOptionPane;
+
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * An implementation of DccThrottle with code specific to an ECoS connection.
@@ -447,9 +447,9 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
             int val = 0;
             if (p.getForceControlFromEcos() == 0x00) {
                 try {
-                    val = javax.swing.JOptionPane.showConfirmDialog(null, "UnableToGainDialog",
+                    val = JmriJOptionPane.showConfirmDialog(null, "UnableToGainDialog",
                             Bundle.getMessage("WarningTitle"),
-                            JOptionPane.YES_NO_OPTION, javax.swing.JOptionPane.QUESTION_MESSAGE);
+                            JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.QUESTION_MESSAGE);
                 } catch (HeadlessException he) {
                     val = 1;
                 }
@@ -497,7 +497,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         }
     }
 
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(EcosDccThrottle.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EcosDccThrottle.class);
 
 }
