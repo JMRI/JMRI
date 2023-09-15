@@ -74,7 +74,7 @@
         <output name="14" label="Out 14" />
         <size length="236" width="11" height="3" units="mm" />
       </model>
-      <model model="NMJ B7-Series DCC Lighting" lowVersionID="3" highVersionID="255" numOuts="16" numFns="19" productID="2070315">
+      <model model="NMJ B7-Series DCC Lighting" lowVersionID="3" highVersionID="255" numOuts="16" numFns="19" productID="2070314">
         <output name="1" label="Out 1" />
         <output name="2" label="Out 2" />
         <output name="3" label="Out 3" />
