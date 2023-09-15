@@ -7,11 +7,13 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.util.Arrays;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.text.DefaultFormatter;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
@@ -19,9 +21,7 @@ import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.jmrix.can.cbus.node.CbusNodeSingleEventTableDataModel;
 import jmri.jmrix.can.cbus.CbusNameService;
 import jmri.util.JmriJFrame;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame to control an instance of CBUS highlighter to highlight events.
@@ -209,15 +209,14 @@ public class CbusNodeEditEventFrame extends JmriJFrame
             if (_node == null ){
                 return;
             }
-            int response = JOptionPane.showConfirmDialog(
+            int response = JmriJOptionPane.showConfirmDialog(
                 this,
-                ( Bundle.getMessage("NdDelEvConfrm",
-                    new CbusNameService(_memo).getEventNodeString(_ndEv.getNn(), _ndEv.getEn() ),
-                    _node ) ),
-                (Bundle.getMessage("DelEvPopTitle")), 
-                JOptionPane.YES_NO_OPTION,         
-                JOptionPane.ERROR_MESSAGE);
-            if (response == JOptionPane.YES_OPTION) {
+                Bundle.getMessage("NdDelEvConfrm",
+                    new CbusNameService(_memo).getEventNodeString(_ndEv.getNn(), _ndEv.getEn() ), _node ),
+                Bundle.getMessage("DelEvPopTitle"), 
+                JmriJOptionPane.YES_NO_OPTION,         
+                JmriJOptionPane.ERROR_MESSAGE);
+            if (response == JmriJOptionPane.YES_OPTION) {
             
                 busy_dialog = new jmri.util.swing.BusyDialog(this, "Deleting Event", false);
                 busy_dialog.start();
@@ -267,9 +266,9 @@ public class CbusNodeEditEventFrame extends JmriJFrame
         busy_dialog = null;
         
         if (!message.isEmpty() ) {
-            JOptionPane.showMessageDialog( this, 
+            JmriJOptionPane.showMessageDialog( this, 
             Bundle.getMessage("NdEvVarWriteError"), Bundle.getMessage("WarningTitle"),
-            JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -278,9 +277,9 @@ public class CbusNodeEditEventFrame extends JmriJFrame
         busy_dialog = null;
         updateButtons();
         if (!message.isEmpty()) {
-            JOptionPane.showMessageDialog( this, 
+            JmriJOptionPane.showMessageDialog( this, 
             message, Bundle.getMessage("WarningTitle"),
-            JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.ERROR_MESSAGE);
         }
         this.dispose();
     }
@@ -422,5 +421,6 @@ public class CbusNodeEditEventFrame extends JmriJFrame
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusNodeEditEventFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusNodeEditEventFrame.class);
+
 }

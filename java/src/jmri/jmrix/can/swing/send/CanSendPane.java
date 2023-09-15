@@ -4,18 +4,19 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.GridLayout;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -24,8 +25,7 @@ import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusAddress;
 import jmri.util.StringUtil;
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * User interface for sending CAN frames to exercise the system
@@ -177,9 +177,9 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
                 tc.sendCanReply(mr, null);
             }
         } catch (StringIndexOutOfBoundsException | IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(null, 
+            JmriJOptionPane.showMessageDialog(this, 
             (Bundle.getMessage("NoMakeFrame",ex.getMessage())), Bundle.getMessage("WarningTitle"),
-                JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -229,8 +229,8 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
         if (!ok) {
             mRunButton.setSelected(false);
             mRunButton.setText(Bundle.getMessage("ButtonStart"));
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSelectionDialog"),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("NoSelectionDialog"),
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         // start the operation
@@ -294,9 +294,9 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
                 }
                 startSequenceDelay();
             } catch (StringIndexOutOfBoundsException | IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(null, 
+                JmriJOptionPane.showMessageDialog(this, 
                 (Bundle.getMessage("NoMakeFrame", ex.getMessage())), Bundle.getMessage("WarningTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
                 mRunButton.setSelected(false);
                 mRunButton.setText(Bundle.getMessage("ButtonStart"));
             }
@@ -371,6 +371,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
                     jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
         }
     }
-    // private final static Logger log = LoggerFactory.getLogger(CanSendPane.class);
+
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CanSendPane.class);
 
 }
