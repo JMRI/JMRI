@@ -33,7 +33,6 @@ public final class MenuItemsService {
 
     /**
      * Method for getting the SPI service "singleton"
-     * <p>
      * @return the singleton instance of this class
      */
     public static synchronized MenuItemsService getInstance() {

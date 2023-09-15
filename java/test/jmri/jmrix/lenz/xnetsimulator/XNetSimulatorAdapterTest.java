@@ -18,7 +18,7 @@ import org.junit.jupiter.api.*;
 public class XNetSimulatorAdapterTest {
 
     private XNetSimulatorAdapter a = null;
- 
+
     @Test
     public void testCtor() {
         Assert.assertNotNull(a);
@@ -42,7 +42,7 @@ public class XNetSimulatorAdapterTest {
     @Test
     public void testGenerateCSVersionReply(){
         XNetReply r = getReplyForMessage(new XNetMessage("21 21 00"));
-        Assert.assertEquals("CS Version Reply",new XNetReply("63 21 36 00 74"),r);
+        Assert.assertEquals("CS Version Reply",new XNetReply("63 21 40 00 02"),r);  // version 4.0
     }
 
     @Test

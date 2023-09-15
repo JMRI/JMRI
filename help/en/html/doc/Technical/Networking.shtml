@@ -47,17 +47,10 @@
         <li>LocoNet systems
           <ul>
             <li>
-              <a href="../../hardware/loconet/LocoNetServer.shtml">LocoNet RMI client server
-              connection</a>
-              <p>This uses Java RMI to provide client-server access to the LocoNet message stream
-              on another JMRI instance.</p>
-            </li>
-
-            <li>
               <a href="../../hardware/loconet/LbServer.shtml">LocoNet over TCP</a>
-              <p>This uses <a href="http://loconetovertcp.sourceforge.net/">LocoNet over TCP</a> to
+              <p>This uses <a href="https://loconetovertcp.sourceforge.net/">LocoNet over TCP</a> to
               provide client-server access to the LocoNet message stream from <a href=
-              "http://loconetovertcp.sourceforge.net/Server/index.html">various servers</a>.</p>
+              "https://loconetovertcp.sourceforge.net/Server/index.html">various servers</a>.</p>
             </li>
           </ul>
         </li>
@@ -70,14 +63,19 @@
           </ul>
         </li>
 
+        <li>CAN via GridConnect Network Interface
+          <ul>
+            <li>This network interface can be used for the <a href=
+            "../../../package/jmri/jmrix/openlcb/swing/hub/HubPane.shtml">OpenLCB Hub Control</a>
+            </li>
+          </ul>
+        </li>
+
         <li>CAN via MERG Network Interface
           <ul>
-            <li>The network interface can be used for the CANEther, CANGC1e, CANPi and CBUS&reg;
-            Server.</li>
-
-            <li>CBUS Server is a <a href="https://nodejs.org/en/">Node.js</a> program to allow
-            multiple network connections to a MERG CANUSB4. <a href=
-            "https://github.com/phillipsnj/mergCbusServer">CBUS Server</a>
+            <li>The network interface can be used for the CANEther, CANGC1e, CANPi, <a href=
+            "https://github.com/phillipsnj/mergCbusServer">CBUS&reg; Server</a>, or <a href=
+            "../../../package/jmri/jmrix/can/cbus/swing/hubpane/CbusHubPane.shtml">CBUS&reg; Hub Control</a></li>
             </li>
           </ul>
         </li>
@@ -143,14 +141,14 @@
 
       <ul>
         <li>Built-in <a href="../../web/index.shtml">web server</a> (<a href=
-        "https://jmri.org/JavaDoc/doc/jmri/web/server/package-summary.html">code</a>)
+        "https://www.jmri.org/JavaDoc/doc/jmri/web/server/package-summary.html">code</a>)
           <p>This is advertised on Bonjour/Zeroconf as a "_http._tcp.local." service. In
           particular, this contains the <a href=
-          "https://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html">JMRI JSON
+          "https://www.jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html">JMRI JSON
           protocol</a>, which allows web browsers to monitor and control a layout by accessing a
-          <a href="https://jmri.org/JavaDoc/doc/jmri/web/servlet/json/JsonServlet.html">JMRI JSON
+          <a href="https://www.jmri.org/JavaDoc/doc/jmri/web/servlet/json/JsonServlet.html">JMRI JSON
           Servlet</a>. It also includes facilities for displaying and clicking on any <a href=
-          "https://jmri.org/JavaDoc/doc/jmri/web/servlet/frameimage/package-summary.html">open JMRI
+          "https://www.jmri.org/JavaDoc/doc/jmri/web/servlet/frameimage/package-summary.html">open JMRI
           window</a>.</p>
         </li>
 
@@ -158,9 +156,9 @@
 
         <li>For <a href="../../../package/jmri/jmrit/withrottle/UserInterface.shtml">remote
         throttles</a> such as the iPhone or Android. (<a href=
-        "https://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">code</a>)
-        (<a href="http://withrottle.com">WiThrottle product website</a>) (<a href=
-        "https://enginedriver.mstevetodd.com">Android Engine
+        "https://www.jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">code</a>)
+        (<a href="https://www.withrottle.com/">WiThrottle product website</a>) (<a href=
+        "https://enginedriver.mstevetodd.com/">Android Engine
         Driver page</a>)
           <p>This is advertised on Bonjour/Zeroconf as a "_withrottle._tcp.local." service.</p>
         </li>
@@ -170,18 +168,13 @@
         Java Bean</a>
         </li>
 
-        <li>Via providing a <a href="../../hardware/loconet/LocoNetServer.shtml">LocoNet RMI
-        server</a>.
-          <p>This is advertised on Bonjour/Zeroconf as a "_jmri-locormi._tcp.local." service.</p>
-        </li>
-
-        <li>Via providing a <a href="http://loconetovertcp.sourceforge.net/">LocoNet over TCP</a>
+        <li>Via providing a <a href="https://loconetovertcp.sourceforge.net/">LocoNet over TCP</a>
         implementation.
           <p>This is advertised on Bonjour/Zeroconf as a "_loconetovertcpserver._tcp.local."
           service. (Name pending approval from the original protocol developers)</p>
         </li>
 
-        <li>Via providing an <a href="http://srcpd.sourceforge.net/">SRCP</a> server
+        <li>Via providing an <a href="https://srcpd.sourceforge.net/">SRCP</a> server
         implementation.
           <p>This is advertised on Bonjour/Zeroconf as a "_srcp._tcp.local." service.</p>
         </li>
@@ -189,6 +182,16 @@
         <li>Via providing a <a href="../../hardware/jmriclient/index.shtml">JMRI Simple Server</a>
         implementation.
         </li>
+
+        <li>Via providing an <a href="../../../package/jmri/jmrix/openlcb/swing/hub/HubPane.shtml">OpenLCB Hub</a> implementation.
+          <p>This is advertised on Bonjour/Zeroconf as a "_openlcb-can._tcp.local." service.</p>
+        </li>
+
+        <li>Via providing a <a href="../../../package/jmri/jmrix/can/cbus/swing/hubpane/CbusHubPane.shtml">CBUS Hub</a>
+        implementation.
+          <p>This is advertised on Bonjour/Zeroconf as a "_cbus-can._tcp.local." service.</p>
+        </li>
+
       </ul>
 
       <p>See also the <a href="http://www.dns-sd.org">DNS-SD</a> page for more information on

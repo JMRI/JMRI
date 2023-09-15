@@ -30,9 +30,8 @@ import org.slf4j.LoggerFactory
 log = org.slf4j.LoggerFactory.getLogger(
         "jmri.jmrit.jython.exec.script.Turnouts Master Slave"
     )
-# see   https://www.jmri.org/help/en/html/doc/Technical/Logging.shtml
-# and in particular reference to "default.lcf" if you need to see DEBUG output in the log files
-# or the "JMRI System Console" window.
+# NOTE: to enable logging, see https://www.jmri.org/help/en/html/apps/Debug.shtml
+# Add the Logger Category name "jmri.jmrit.jython.exec" at DEBUG Level.
 
 '''
 MasterIdentiferPrefix and SlaveIdentierPrefix values are

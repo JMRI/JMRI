@@ -167,28 +167,24 @@ public final class JSON {
     public static final String RAILROAD = "railroad"; // NOI18N
     /**
      * {@value #NODE}
-     * <p>
      * 
      * @since 1.1
      */
     public static final String NODE = "node"; // NOI18N
     /**
      * {@value #ACTIVE_PROFILE}
-     * <p>
      * 
      * @since 3.0
      */
     public static final String ACTIVE_PROFILE = "activeProfile"; // NOI18N
     /**
      * {@value #FORMER_NODES}
-     * <p>
      * 
      * @since 1.1
      */
     public static final String FORMER_NODES = "formerNodes"; // NOI18N
     /**
      * {@value #LOCALE}
-     * <p>
      * 
      * @since 1.1
      */

@@ -16,9 +16,6 @@ import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusNameService;
 import jmri.jmrix.can.cbus.CbusOpCodes;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
-
 /**
  * Panel for CBUS Console Options.
  * <p>
@@ -67,7 +64,7 @@ public class CbusConsoleDecodeOptionsPane extends javax.swing.JPanel implements 
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         makePane();
         df = new SimpleDateFormat("HH:mm:ss.SSS");
-        addTc(_mainPane.tc);
+        _mainPane.tc.addCanConsoleListener(CbusConsoleDecodeOptionsPane.this);
         
         nameService = new CbusNameService(_mainPane.getMemo());
     }
@@ -294,5 +291,5 @@ public class CbusConsoleDecodeOptionsPane extends javax.swing.JPanel implements 
         p.setSimplePreferenceState(getClass().getName() + SHOWRTR_CB, showRtrCheckBox.isSelected());
     }
     
-    // private final static Logger log = LoggerFactory.getLogger(CbusConsoleDecodeOptionsPane.class);
+    // private final static org.slf4j.Logger log = LoggerFactory.getLogger(CbusConsoleDecodeOptionsPane.class);
 }

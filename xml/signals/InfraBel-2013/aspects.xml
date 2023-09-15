@@ -47,8 +47,8 @@
     <aspect>
       <name>Restricting</name>
       <indication>Proceed with caution</indication>
-      <speed>Restricting</speed>
-      <speed2>Restricting</speed2>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
       <route>Normal</route>
       <dccAspect>3</dccAspect>
     </aspect>

@@ -27,7 +27,7 @@ public class ConditionalListCopyTest {
 
     @Test
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    public void CopyConditionalChangeNameTest() {
+    public void testCopyConditionalChangeName() {
 
         Logix x3 = InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX103", "Copy for IX102");  // NOI18N
         Assert.assertNotNull(x3);
@@ -41,7 +41,7 @@ public class ConditionalListCopyTest {
         // test no selection
         Thread t1 = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("ReminderTitle"), "OK");
         new JButtonOperator(copyFrame, Bundle.getMessage("CopyConditionalButton")).push();  // NOI18N
-        JUnitUtil.waitFor(() -> {return !t1.isAlive();});
+        JUnitUtil.waitFor(() -> {return !t1.isAlive();},"Reminder OK Dialogue did not complete");
 
         Conditional cond1 = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName("IX102C1");
         Assert.assertNotNull(cond1);
@@ -62,7 +62,7 @@ public class ConditionalListCopyTest {
 
     @Test
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    public void CopyConditionalFullEditTest() {
+    public void testCopyConditionalFullEdit() {
 
         Logix x3 = InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX103", "Copy for IX102");  // NOI18N
         Assert.assertNotNull(x3);
@@ -98,8 +98,8 @@ public class ConditionalListCopyTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
 
-        jmri.util.JUnitUtil.initLogixManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initLogixManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
         jmri.jmrit.conditional.CreateTestObjects.createTestObjects();
     }
 

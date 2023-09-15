@@ -14,8 +14,9 @@ public class UnexpectedExceptionContext extends ExceptionContext {
         return Bundle.getMessage("UnexpectedExceptionOperationTitle",super.getTitle());
     }
 
-    public UnexpectedExceptionContext(Exception ex, String operation) {
+    public UnexpectedExceptionContext(@javax.annotation.Nonnull Throwable ex, String operation) {
         super(ex, operation, Bundle.getMessage("UnexpectedExceptionOperationHint"));
-        this._preface = Bundle.getMessage("UnexpectedExceptionOperationPreface");
+        this.prefaceString = Bundle.getMessage("UnexpectedExceptionOperationPreface");
     }
+
 }

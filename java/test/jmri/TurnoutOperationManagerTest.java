@@ -23,6 +23,14 @@ public class TurnoutOperationManagerTest {
         Assert.assertNotNull("exists",t);
     }
 
+    @Test
+    public void testToolTips() {
+        TurnoutOperationManager t = new TurnoutOperationManager();
+        Assertions.assertNull(t.getTooltipForOperator("Not an operator", null));
+        Assertions.assertNull(t.getTooltipForOperator(null, null));
+        Assertions.assertNotNull(t.getTooltipForOperator(Bundle.getMessage("TurnoutOperationOff"), null));
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

@@ -20,16 +20,16 @@ public interface AnalogActionManager extends BaseManager<MaleAnalogActionSocket>
      * @return the male socket for this action
      * @throws IllegalArgumentException if the action has an invalid system name
      */
-    public MaleAnalogActionSocket registerAction(@Nonnull AnalogActionBean action)
+    MaleAnalogActionSocket registerAction(@Nonnull AnalogActionBean action)
             throws IllegalArgumentException;
     
     /**
      * Create a new system name for an AnalogActionBean.
      * @return a new system name
      */
-    public String getAutoSystemName();
+    String getAutoSystemName();
 
-    public FemaleAnalogActionSocket createFemaleSocket(
+    FemaleAnalogActionSocket createFemaleSocket(
             Base parent, FemaleSocketListener listener, String socketName);
 
     /**
@@ -37,7 +37,7 @@ public interface AnalogActionManager extends BaseManager<MaleAnalogActionSocket>
      * 
      * @return a set of entries with category and class
      */
-    public Map<Category, List<Class<? extends Base>>> getActionClasses();
+    Map<Category, List<Class<? extends Base>>> getActionClasses();
 
     /*.*
      * Add an Action.
@@ -68,7 +68,7 @@ public interface AnalogActionManager extends BaseManager<MaleAnalogActionSocket>
      * {@link #getSystemNamePrefix() } and "AA";
      */
     @Override
-    public default String getSubSystemNamePrefix() {
+    default String getSubSystemNamePrefix() {
         return getSystemNamePrefix() + "AA";
     }
 
@@ -78,6 +78,6 @@ public interface AnalogActionManager extends BaseManager<MaleAnalogActionSocket>
      *
      * @param x the Action to delete
      */
-    public void deleteAnalogAction(MaleAnalogActionSocket x);
+    void deleteAnalogAction(MaleAnalogActionSocket x);
     
 }

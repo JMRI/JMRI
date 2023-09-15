@@ -11,14 +11,14 @@ import org.jdom2.Element;
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
@@ -36,7 +36,6 @@ abstract public class VSDSound {
 
     Timer t;
 
-    boolean is_playing;
     boolean is_tunnel;
     String name;
     float gain;  // this is the (fixed) gain relative to the other sounds in this Profile
@@ -47,16 +46,6 @@ abstract public class VSDSound {
     public VSDSound(String name) {
         this.name = name;
         gain = default_gain;
-    }
-
-    /**
-     * Get the audio playing state.
-     * @return the playing state
-     * @deprecated As of 4.99.6, use {Audio.STATE_PLAYING} instead
-     */
-    @Deprecated(since="4.99.6")
-    public boolean isPlaying() {
-        return is_playing;
     }
 
     protected Timer newTimer(int time, boolean repeat, ActionListener al) {
@@ -139,5 +128,4 @@ abstract public class VSDSound {
         // Default: do nothing
     }
 
-    //private static final Logger log = LoggerFactory.getLogger(VSDSound.class);
 }

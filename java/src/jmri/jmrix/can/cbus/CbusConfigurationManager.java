@@ -10,9 +10,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
-
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+import jmri.jmrix.can.cbus.swing.cbusslotmonitor.CbusSlotMonitorDataModel;
 
 /**
  * Does configuration for MERG CBUS CAN-based communications implementations.
@@ -116,6 +114,8 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return true;
         } else if (type.equals(CbusSimulator.class)) {
             return true;
+        } else if (type.equals(CbusSlotMonitorDataModel.class)) {
+            return true;
         } else {
             return DEFAULT_CLASSES.contains(type);
         }
@@ -138,6 +138,8 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         } else if (T.equals(ConsistManager.class)) {
             return (T) getConsistManager();
         } else if (T.equals(CbusSimulator.class)) {
+            return provide(T);
+        } else if (T.equals(CbusSlotMonitorDataModel.class)) {
             return provide(T);
         } else if ( DEFAULT_CLASSES.contains(T) ) {
             return provide(T);
@@ -245,6 +247,9 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         else if (T.equals(CbusSimulator.class)) {
             storeToMemoAndInstance(new CbusSimulator(adapterMemo), CbusSimulator.class);
         }
+        else if (T.equals(CbusSlotMonitorDataModel.class)) {
+            storeToMemoAndInstance(new CbusSlotMonitorDataModel(adapterMemo), CbusSlotMonitorDataModel.class);
+        }
         return adapterMemo.getFromMap(T); // if class not in map, class not provided.
     }
 
@@ -292,6 +297,6 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         return ResourceBundle.getBundle("jmri.jmrix.can.CanActionListBundle");
     }
 
-    // private static final Logger log = LoggerFactory.getLogger(CbusConfigurationManager.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusConfigurationManager.class);
 
 }

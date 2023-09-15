@@ -16,6 +16,8 @@ import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017
@@ -939,7 +941,266 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         
         instance.removePropertyChangeListener(l);
     }
-    
+
+    @Test
+    public void testFloatSpeed128(){
+
+        /*
+            CBUS DSPD - Translated - Throttle
+            0 - Speed 0 - Throttle 0%
+            1 - E Stop - Throttle 0%
+            2 - Speed 1 -Throttle 1/126 %
+            3 - Speed 2 - Throttle 2/126 %
+            4 - Speed 3 - Throttle 3/126 %
+            ..
+            125 - Speed 124 - Throttle 124/126 %
+            126 - Speed 125 - Throttle 125/126 %
+            127 - Speed 126 - Throttle 100 %
+        */
+
+        assertEquals(SpeedStepMode.NMRA_DCC_128, instance.getSpeedStepMode(),"starts in 128 ss");
+
+        assertEquals( 0f, ((CbusThrottle)instance).floatSpeed(0),0.0001,"min 0");
+        assertEquals( -1f, ((CbusThrottle)instance).floatSpeed(1),0.0001,"estop -1");
+        assertEquals( 1/126f, ((CbusThrottle)instance).floatSpeed(2),0.0001,"increment from 0 at 1st proper >0");
+
+        assertEquals( 0x30/126f, ((CbusThrottle)instance).floatSpeed(0x31),0.0001);
+
+        assertEquals( 1.00f, ((CbusThrottle)instance).floatSpeed(0x7F),0.0001,"full speed at cbus max spd 127");
+
+    }
+
+    @Test
+    public void testFloatSpeed28(){
+        /*
+            CBUS DSPD - Translated - Throttle
+            0 - Speed 0 Encoding 1 - Throttle 0%
+            1 - Speed 0 Encoding 2 - Throttle 0%
+            2 - E Stop Encoding 1 - Throttle 0%
+            3 - E Stop Encoding 2 - Throttle 0%
+            4 - Speed 1 -Throttle 1/28 %
+            5 - Speed 2 - Throttle 2/28 %
+            ..
+            28 - Speed 25 - Throttle 25/28 %
+            29 - Speed 26 - Throttle 26/28 %
+            30 - Speed 27 - Throttle 27/28 %
+            31 - Speed 28 - Throttle 100 %
+        */
+
+        instance.setSpeedStepMode(SpeedStepMode.NMRA_DCC_28);
+        assertEquals(SpeedStepMode.NMRA_DCC_28, instance.getSpeedStepMode());
+
+        assertEquals( 0f, ((CbusThrottle)instance).floatSpeed(0),0.001,"min 0 encoding 1");
+        assertEquals( 0f, ((CbusThrottle)instance).floatSpeed(1),0.001,"min 0 encoding 2");
+        assertEquals( -1f, ((CbusThrottle)instance).floatSpeed(2),0.001,"estop encoding 1");
+        assertEquals( -1f, ((CbusThrottle)instance).floatSpeed(3),0.001,"estop encoding 2");
+
+        assertEquals( 1/28f, ((CbusThrottle)instance).floatSpeed(4),0.001,"increment from 0 at 1st proper >0");
+
+        assertEquals(27/28f, ((CbusThrottle)instance).floatSpeed(30),0.001,"not quite full speed");
+
+        assertEquals(1.00f, ((CbusThrottle)instance).floatSpeed(31),0.001,"full speed at cbus max spd");
+
+    }
+
+    @Test
+    public void testFloatSpeed14(){
+        /*
+            CBUS DSPD - Translated - Throttle
+            0 - Speed 0 - Throttle 0%
+            1 - E Stop - Throttle 0%
+            2 - Speed 1 -Throttle 1/14 %
+            3 - Speed 2 - Throttle 2/14 %
+            ..
+            14 - Speed 13 - Throttle 13/14 %
+            15 - Speed 14 - Throttle 100 %
+        */
+
+        instance.setSpeedStepMode(SpeedStepMode.NMRA_DCC_14);
+        assertEquals(SpeedStepMode.NMRA_DCC_14, instance.getSpeedStepMode());
+
+        assertEquals( 0f, ((CbusThrottle)instance).floatSpeed(0),0.001,"min 0");
+        assertEquals( -1f, ((CbusThrottle)instance).floatSpeed(1),0.001,"estop -1");
+        assertEquals( 1/14f, ((CbusThrottle)instance).floatSpeed(2),0.001,"increment from 0 at 1st proper >0");
+
+        assertEquals( 6/14f,((CbusThrottle)instance).floatSpeed(7),0.001);
+
+        assertEquals(1.00f,((CbusThrottle)instance).floatSpeed(15),0.001,"full speed at cbus max spd");
+
+    }
+
+    @Test
+    public void testSpeedsSentToLayout128Step() {
+
+        int sentMsgs = 1;
+
+        assertEquals(SpeedStepMode.NMRA_DCC_128, instance.getSpeedStepMode(),"starts in 128 ss");
+        assertEquals(true,instance.getIsForward());
+        instance.setSpeedSetting(0.66f);
+        assertEquals(sentMsgs++, tc.outbound.size());
+        assertEquals("[78] 47 64 D4", tc.outbound.elementAt(tc.outbound.size()-1).getToString());
+        // 47 - change spd dir, 64 - session 100, D4 - speed 212 = 84 forwards
+
+        instance.setIsForward(false);
+        assertEquals(sentMsgs++, tc.outbound.size());
+        assertEquals("[78] 47 64 54", tc.outbound.elementAt(tc.outbound.size()-1).getToString());
+        // 47 - change spd dir, 64 - session 100, 54 - speed 84 backwards
+
+        instance.setSpeedSetting(1f);
+        assertEquals(sentMsgs++, tc.outbound.size());
+        assertEquals("[78] 47 64 7F", tc.outbound.elementAt(tc.outbound.size()-1).getToString());
+        // 47 - change spd dir, 64 - session 100, 7F - speed 126 backwards
+
+        instance.setIsForward(true);
+        assertEquals(sentMsgs++, tc.outbound.size());
+        assertEquals("[78] 47 64 FF", tc.outbound.elementAt(tc.outbound.size()-1).getToString());
+        // 47 - change spd dir, 64 - session 100, FF - speed 126 forwards
+
+        instance.setSpeedSetting(0f);
+        assertEquals(sentMsgs++, tc.outbound.size());
+        assertEquals("[78] 47 64 80", tc.outbound.elementAt(tc.outbound.size()-1).getToString());
+        // 47 - change spd dir, 64 - session 100, 80 - speed 0 forwards
+
+        instance.setSpeedSetting(-1f);
+        assertEquals(sentMsgs++, tc.outbound.size());
+        assertEquals("[78] 47 64 81", tc.outbound.elementAt(tc.outbound.size()-1).getToString());
+        // 47 - change spd dir, 64 - session 100, 81 - speed 1 (estop) forwards
+
+        instance.setIsForward(false);
+        assertEquals(sentMsgs++, tc.outbound.size());
+        assertEquals("[78] 47 64 01", tc.outbound.elementAt(tc.outbound.size()-1).getToString());
+        // 47 - change spd dir, 64 - session 100, 01 - speed 1 (estop) backwards
+
+        instance.setSpeedSetting(0f);
+        assertEquals(sentMsgs++, tc.outbound.size());
+        assertEquals("[78] 47 64 00", tc.outbound.elementAt(tc.outbound.size()-1).getToString());
+        // 47 - change spd dir, 64 - session 100, 00 - speed 0 backwards
+
+        instance.setSpeedSetting(1/126f);
+        assertEquals(sentMsgs++, tc.outbound.size());
+        assertEquals("[78] 47 64 02", tc.outbound.elementAt(tc.outbound.size()-1).getToString());
+        // 47 - change spd dir, 64 - session 100, 00 - speed 2 backwards
+        
+        instance.setSpeedSetting(125/126f);
+        assertEquals(sentMsgs++, tc.outbound.size());
+        assertEquals("[78] 47 64 7E", tc.outbound.elementAt(tc.outbound.size()-1).getToString());
+        // 47 - change spd dir, 64 - session 100, 00 - speed 126 backwards
+        
+        instance.setSpeedSetting(1f);
+        assertEquals(sentMsgs++, tc.outbound.size());
+        assertEquals("[78] 47 64 7F", tc.outbound.elementAt(tc.outbound.size()-1).getToString());
+        // 47 - change spd dir, 64 - session 100, 00 - speed 127 backwards
+    }
+
+    @Test
+    public void testSpeedsSentToLayout28step() {
+
+        assertTrue(instance.getIsForward());
+
+        instance.setSpeedStepMode(SpeedStepMode.NMRA_DCC_28);
+        int outFrames = 1;
+        assertEquals( SpeedStepMode.NMRA_DCC_28, instance.getSpeedStepMode(), "28 SS");
+        assertEquals(outFrames, tc.outbound.size(), "msg sent" +tc.outbound );
+        assertEquals("[78] 44 64 03", tc.outbound.elementAt(tc.outbound.size()-1).getToString(), "ss 28: 44 64 03");
+        // 44 - set speed steps,  64 - session 100, 03 - 28ss
+
+        instance.setSpeedSetting(-1f);
+        outFrames++;
+        assertEquals(outFrames, tc.outbound.size());
+        assertEquals("[78] 47 64 81", tc.outbound.elementAt(tc.outbound.size()-1).getToString(), "forwards estop");
+        // 47 - change spd dir, 64 - session 100, 81 - speed forwards estop
+
+        instance.setSpeedSetting(0f);
+        outFrames++;
+        assertEquals(outFrames, tc.outbound.size());
+        assertEquals("[78] 47 64 80", tc.outbound.elementAt(tc.outbound.size()-1).getToString(),"forwards 0");
+        // 47 - change spd dir, 64 - session 100, 80 - speed forwards 0
+
+        instance.setIsForward(false);
+        outFrames++;
+        assertEquals(outFrames, tc.outbound.size(), "msg sent" +tc.outbound );
+        assertEquals("[78] 47 64 00", tc.outbound.elementAt(tc.outbound.size()-1).getToString(),"backwards 0");
+        // 47 - change spd dir, 64 - session 100, 00 - speed backwards 0
+
+        instance.setSpeedSetting(1/28f);
+        outFrames++;
+        assertEquals(outFrames, tc.outbound.size(), "msg sent" +tc.outbound );
+        assertEquals("[78] 47 64 04", tc.outbound.elementAt(tc.outbound.size()-1).getToString(),"backwards 4");
+        // 47 - change spd dir, 64 - session 100, 04 - speed backwards 4
+        
+        instance.setSpeedSetting(1f);
+        outFrames++;
+        assertEquals(outFrames, tc.outbound.size(), "msg sent" +tc.outbound );
+        assertEquals("[78] 47 64 1F", tc.outbound.elementAt(tc.outbound.size()-1).getToString(),"backwards 28");
+        // 47 - change spd dir, 64 - session 100, 1F - speed backwards 28
+    }
+
+    @Test
+    public void testSpeedsSentToLayout14step() {
+
+        assertTrue(instance.getIsForward());
+
+        instance.setIsForward(false);
+        int outFrames = 1;
+        assertEquals(outFrames, tc.outbound.size(), "msg sent" +tc.outbound );
+
+        instance.setSpeedStepMode(SpeedStepMode.NMRA_DCC_14);
+        outFrames++;
+        assertEquals( SpeedStepMode.NMRA_DCC_14, instance.getSpeedStepMode(), "14 SS");
+        assertEquals(outFrames, tc.outbound.size(), "msg sent" +tc.outbound );
+        assertEquals("[78] 44 64 01", tc.outbound.elementAt(tc.outbound.size()-1).getToString(), "ss 14: 44 64 01");
+        // 44 - set speed steps,  64 - session 100, 01 - 14ss
+
+        instance.setSpeedSetting(-1f);
+        outFrames++;
+        assertEquals(outFrames, tc.outbound.size());
+        assertEquals("[78] 47 64 01", tc.outbound.elementAt(tc.outbound.size()-1).getToString(), "reverse estop");
+        // 47 - change spd dir, 64 - session 100, 81 - speed forwards estop
+
+        instance.setSpeedSetting(0f);
+        outFrames++;
+        assertEquals(outFrames, tc.outbound.size());
+        assertEquals("[78] 47 64 00", tc.outbound.elementAt(tc.outbound.size()-1).getToString(),"reverse 0");
+        // 47 - change spd dir, 64 - session 100, 80 - speed reverse 0
+
+        instance.setSpeedSetting( 1/14f );
+        outFrames++;
+        assertEquals(outFrames, tc.outbound.size());
+        assertEquals("[78] 47 64 02", tc.outbound.elementAt(tc.outbound.size()-1).getToString(),"reverse 1");
+        // 47 - change spd dir, 64 - session 100, 02 - speed reverse 1
+
+        instance.setSpeedSetting( 4/14f );
+        outFrames++;
+        assertEquals(outFrames, tc.outbound.size());
+        assertEquals("[78] 47 64 05", tc.outbound.elementAt(tc.outbound.size()-1).getToString(),"reverse 4");
+        // 47 - change spd dir, 64 - session 100, 05 - speed reverse 4
+
+        instance.setSpeedSetting( 7/14f );
+        outFrames++;
+        assertEquals(outFrames, tc.outbound.size());
+        assertEquals("[78] 47 64 08", tc.outbound.elementAt(tc.outbound.size()-1).getToString(),"reverse 7");
+        // 47 - change spd dir, 64 - session 100, 08 - speed reverse 7
+
+        instance.setSpeedSetting( 10/14f );
+        outFrames++;
+        assertEquals(outFrames, tc.outbound.size());
+        assertEquals("[78] 47 64 0B", tc.outbound.elementAt(tc.outbound.size()-1).getToString(),"reverse 10");
+        // 47 - change spd dir, 64 - session 100, 0B - speed reverse 10
+
+        instance.setSpeedSetting( 13/14f );
+        outFrames++;
+        assertEquals(outFrames, tc.outbound.size());
+        assertEquals("[78] 47 64 0E", tc.outbound.elementAt(tc.outbound.size()-1).getToString(),"reverse 13");
+        // 47 - change spd dir, 64 - session 100, 0E - speed reverse 13
+
+        instance.setSpeedSetting(1f);
+        outFrames++;
+        assertEquals(outFrames, tc.outbound.size());
+        assertEquals("[78] 47 64 0F", tc.outbound.elementAt(tc.outbound.size()-1).getToString(), "reverse max");
+        // 47 - change spd dir, 64 - session 100, 0F - speed reverse 14
+
+    }
+
     private TrafficControllerScaffold tc;
     private CanSystemConnectionMemo memo;
 
@@ -989,6 +1250,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         memo = null;
         tc.terminateThreads();
         tc = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
 
     }

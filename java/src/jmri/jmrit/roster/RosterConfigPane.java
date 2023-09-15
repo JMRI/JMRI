@@ -10,15 +10,17 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
+
 import jmri.InstanceManager;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -35,7 +37,7 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
     JFileChooser fc;
 
     public RosterConfigPane() {
-        fc = new JFileChooser(FileUtil.getUserFilesPath());
+        fc = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
         // filter to only show the roster.xml file
         FileFilter filt = new FileFilter() {
             @Override
@@ -73,10 +75,10 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // prompt with instructions
-                if (JOptionPane.OK_OPTION != JOptionPane.showConfirmDialog(RosterConfigPane.this.getTopLevelAncestor(),
+                if (JmriJOptionPane.OK_OPTION != JmriJOptionPane.showConfirmDialog(RosterConfigPane.this.getTopLevelAncestor(),
                         Bundle.getMessage("DialogMsgMoveWarning"),
                         Bundle.getMessage("DialogMsgMoveQuestion"),
-                        JOptionPane.OK_CANCEL_OPTION
+                        JmriJOptionPane.OK_CANCEL_OPTION
                 )) {
                     return;
                 }

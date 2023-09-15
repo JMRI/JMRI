@@ -89,6 +89,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         Map<Category, List<Class<? extends Base>>> map = new HashMap<>();
 
         List<Class<? extends Base>> classes = new ArrayList<>();
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionAudio.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionBlock.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionClock.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionConditional.class);
@@ -102,10 +103,12 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         classes.add(jmri.jmrit.logixng.expressions.ExpressionReference.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionReporter.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionScript.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionSection.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionSensor.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionSensorEdge.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionSignalHead.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionSignalMast.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionTransit.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionTurnout.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionWarrant.class);
         map.put(Category.ITEM, classes);
@@ -125,6 +128,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.expressions.ConnectionName.class);
         classes.add(jmri.jmrit.logixng.expressions.False.class);
+        classes.add(jmri.jmrit.logixng.expressions.FileAsFlag.class);
         classes.add(jmri.jmrit.logixng.expressions.Hold.class);
         classes.add(jmri.jmrit.logixng.expressions.LastResultOfDigitalExpression.class);
         classes.add(jmri.jmrit.logixng.expressions.LogData.class);

@@ -18,9 +18,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.profile.*;
 import jmri.util.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Base class for GUI3 JMRI applications.
@@ -262,16 +260,16 @@ public abstract class Apps3 extends AppsBase {
                 if (ProfileManager.getDefault().migrateToProfiles(getConfigFileName())) { // migration or first use
                     // notify user of change only if migration occurred
                     // TODO: a real migration message
-                    JOptionPane.showMessageDialog(sp,
+                    JmriJOptionPane.showMessageDialog(sp,
                             Bundle.getMessage("ConfigMigratedToProfile"),
                             jmri.Application.getApplicationName(),
-                            JOptionPane.INFORMATION_MESSAGE);
+                            JmriJOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (IOException | IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(sp,
+                JmriJOptionPane.showMessageDialog(sp,
                         ex.getLocalizedMessage(),
                         jmri.Application.getApplicationName(),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 log.error("Exception: ", ex);
             }
         }
@@ -310,14 +308,14 @@ public abstract class Apps3 extends AppsBase {
             // this was logged in the super method
             String name = ProfileManager.getDefault().getActiveProfileName();
             if (!GraphicsEnvironment.isHeadless()) {
-                JOptionPane.showMessageDialog(sp,
+                JmriJOptionPane.showMessageDialog(sp,
                         Bundle.getMessage("SingleConfigMigratedToSharedConfig", name),
                         jmri.Application.getApplicationName(),
-                        JOptionPane.INFORMATION_MESSAGE);
+                        JmriJOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Apps3.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Apps3.class);
 
 }

@@ -69,11 +69,69 @@
       INACTIVE shortly after. This can be used for events that indicate momentary things on the
       layout like "it's noon".</p>
 
+      <p>When "Show System-specific columns" is checked in the table, there are two additional
+      columns shown that are specific to OpenLCB Sensors:
+      <dl>
+        <dt>Authoritative</dt><dd>Normally checked, this means that the JMRI Sensor
+                                  will report its state when a query comes from another
+                                  OpenLCB node.  That will then allow that other node
+                                  to adjust its own state to be consistent.
+                                  <p>
+                                  When not checked, JMRI will report the state of the
+                                  Sensor as "unknown".  This will allow some other
+                                  user of these events to be the authoritative
+                                  source.
+                                  </dd>
+        <dt>Always listen</dt><dd>When checked, all state reports will update local Sensor state.
+                                  When unchecked, state reports will update local Sensor state
+                                  only if the local state is UNKNOWN. State change messages (Event
+                                  Reports) always change local state.
+                                  Might be helpful to uncheck this if the Sensor state flip-flops
+                                  multiple times after a query, which means that the
+                                  Sensor does not have a consistent distributed state.
+                                  <p>
+                                  Typically when Authoritative is checked,
+                                  then this is better unchecked.
+                                  <p>
+                                  If there is only one authoritative source
+                                  for state, then having this checked is good,
+                                  because it will make JMRI converge to the correct state
+                                  irrespective of how long JMRI has been running.
+                                  This is particularly important if the authoritative
+                                  producer / consumer of the event does not save its
+                                  state between reboots.
+                                  <p>
+                                  There's also the case where you have two momentary pushbuttons
+                                  for setting the Sensor (or more usually, for setting a Turnout),
+                                  and those input lines believe that
+                                  they are authoritative. This can confuse JMRI (because
+                                  typically both are invalid). In this case,
+                                  "Always Listen" needs to be unchecked.
+      </dl>
+
       <h4>Turnouts</h4>
 
       <p>The scheme for Turnouts is similar to Sensors above, except JMRI is emitting the OpenLCB
       frames instead of receiving them, and the type letter is "T" instead of "S", e.g.
       "<code>MT1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9</code>".</p>
+
+      <p>Turnouts have Authoritative and Always Listen checkboxes that work the same as the
+      checkboxes on Sensors.
+
+      <p>As a special case, DCC turnouts connected via a bridge to an OpenLCB network
+      can be addressed as e.g. MTT123. Note the 2nd T for "Turnout addressing". JMRI will
+      then automatically generate the correct events to throw/close the corresponding
+      DCC turnout.
+
+      <h4>Lights</h4>
+
+      <p>The scheme for Lights is similar to Sensors above, except JMRI is emitting the OpenLCB
+      frames instead of receiving them, and the type letter is "L" instead of "S", e.g.
+      "<code>ML1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9</code>".</p>
+
+      <p>Lights have Authoritative and Always Listen checkboxes that work the same as the
+      checkboxes on Sensors.
+
 
       <h4>Signals</h4>
 

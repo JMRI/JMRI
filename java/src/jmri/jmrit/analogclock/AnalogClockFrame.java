@@ -246,7 +246,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
             // use the NamedIcon as a source for the sizes
             int logoScaleWidth = faceSize / 6;
             int logoScaleHeight = (int) ((float) logoScaleWidth * (float) jmriIcon.getIconHeight() / jmriIcon.getIconWidth());
-            scaledLogo = logo.getScaledInstance(logoScaleWidth, logoScaleHeight, Image.SCALE_SMOOTH);
+            scaledLogo = logo.getScaledInstance(Math.max(1, logoScaleWidth), Math.max(1, logoScaleHeight), Image.SCALE_SMOOTH);
             scaledIcon.setImage(scaledLogo);
             logoWidth = scaledIcon.getIconWidth();
             logoHeight = scaledIcon.getIconHeight();
@@ -275,26 +275,31 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
         minuteAngle = minutes * 6.;
         hourAngle = hours * 30. + 30. * minuteAngle / 360.;
         if (hours < 12) {
-            amPm = "AM ";
+            amPm = Bundle.getMessage("ClockAM");
         } else {
-            amPm = "PM ";
+            amPm = Bundle.getMessage("ClockPM");
         }
         if (hours == 12 && minutes == 0) {
-            amPm = "Noon";
+            amPm = Bundle.getMessage("ClockNoon");
         }
         if (hours == 0 && minutes == 0) {
-            amPm = "Midnight";
+            amPm = Bundle.getMessage("ClockMidnight");
         }
 
-        String rate = ""+(int)clock.userGetRate();
-        if (Math.floor(clock.userGetRate()) != clock.userGetRate()) {
-            var format = new java.text.DecimalFormat("0.###");  // no trailing zeros
-            rate = format.format(clock.userGetRate());
+        // show either "Stopped" or rate, depending on state
+        if (! clock.getRun()) {
+            amPm = amPm + " "+Bundle.getMessage("ClockStopped");
+        } else {
+            // running, display rate
+            String rate = ""+(int)clock.userGetRate();
+            if (Math.floor(clock.userGetRate()) != clock.userGetRate()) {
+                var format = new java.text.DecimalFormat("0.###");  // no trailing zeros
+                rate = format.format(clock.userGetRate());
+            }
+
+            // add rate to amPm string for display
+            amPm = amPm + " " + rate + ":1";
         }
-
-        // add rate to amPm string for display
-        amPm = amPm + " " + rate + ":1";
-
         repaint();
     }
 
@@ -307,7 +312,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
         updateButtonText();
 
         // paint the clock too
-        repaint();
+        update();
     }
 
     /**

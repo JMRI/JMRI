@@ -15,7 +15,7 @@ import org.junit.Test;
 
 /**
  * Test HoldSwing
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public class HoldSwingTest {
@@ -23,30 +23,30 @@ public class HoldSwingTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         HoldSwing t = new HoldSwing();
         Assert.assertNotNull("exists",t);
     }
-    
+
     @Test
     public void testPanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         HoldSwing t = new HoldSwing();
         JPanel panel = t.getConfigPanel(new JPanel());
         Assert.assertNotNull("exists",panel);
     }
-    
+
     @Test
     public void testCreatePanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         Assert.assertTrue("panel is not null",
             null != new HoldSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
             null != new HoldSwing().getConfigPanel(new Hold("IQDE1", null), new JPanel()));
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -60,7 +60,8 @@ public class HoldSwingTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }

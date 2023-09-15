@@ -20,11 +20,7 @@ import javax.swing.table.TableModel;
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.beantable.*;
-import jmri.util.swing.JComboBoxUtil;
-import jmri.util.swing.XTableColumnModel;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.*;
 
 /**
  * Data model for a Turnout Table.
@@ -136,9 +132,9 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
             case MODECOL:
                 return Bundle.getMessage("ModeLabel");
             case SENSOR1COL:
-                return Bundle.getMessage("BlockSensor") + "1";
+                return Bundle.getMessage("BlockSensor") + " 1";
             case SENSOR2COL:
-                return Bundle.getMessage("BlockSensor") + "2";
+                return Bundle.getMessage("BlockSensor") + " 2";
             case OPSONOFFCOL:
                 return Bundle.getMessage("TurnoutAutomationMenu");
             case OPSEDITCOL:
@@ -159,6 +155,27 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
                 return "";
             default:
                 return super.getColumnName(col);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected String getHeaderTooltip(int col) {
+        switch (col) {
+            case SENSOR1COL:
+                return Bundle.getMessage("Sensor1Tip", turnoutManager.getThrownText());
+            case SENSOR2COL:
+                return Bundle.getMessage("Sensor2Tip", turnoutManager.getClosedText());
+            case OPSONOFFCOL:
+                return Bundle.getMessage("TurnoutAutomationTip");
+            case KNOWNCOL:
+                return Bundle.getMessage("FeedbackTip");
+            case MODECOL:
+                return Bundle.getMessage("FeedbackModeTip");
+            default:
+                return super.getHeaderTooltip(col);
         }
     }
 
@@ -399,14 +416,14 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
                 Sensor sensor = (Sensor) value;
                 t.provideFirstFeedbackSensor(sensor != null ? sensor.getDisplayName() : null);
             } catch (jmri.JmriException e) {
-                JOptionPane.showMessageDialog(null, e.toString());
+                JmriJOptionPane.showMessageDialog(null, e.toString());
             }
         } else if (col == SENSOR2COL) {
             try {
                 Sensor sensor = (Sensor) value;
                 t.provideSecondFeedbackSensor(sensor != null ? sensor.getDisplayName() : null);
             } catch (jmri.JmriException e) {
-                JOptionPane.showMessageDialog(null, e.toString());
+                JmriJOptionPane.showMessageDialog(null, e.toString());
             }
         } else if (col == OPSONOFFCOL) {
             // do nothing as this is handled by the combo box listener
@@ -450,7 +467,7 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
             try {
                 t.setStraightSpeed(speed);
             } catch (jmri.JmriException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
+                JmriJOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
                 return;
             }
             if ((!speedListClosed.contains(speed))) {
@@ -466,7 +483,7 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
             try {
                 t.setDivergingSpeed(speed);
             } catch (jmri.JmriException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
+                JmriJOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
                 return;
             }
             if ((!speedListThrown.contains(speed))) {
@@ -684,6 +701,12 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
                 case QUERYCOL:
                     column.setIdentifier("QueryState");
                     break;
+                case SENSOR1COL:
+                    column.setIdentifier("Sensor1");
+                    break;
+                case SENSOR2COL:
+                    column.setIdentifier("Sensor2");
+                    break;
                 default:
                 // use existing value
             }
@@ -715,8 +738,8 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
                 TurnoutOperationEditorDialog dialog = new TurnoutOperationEditorDialog(op, t, box);
                 dialog.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(box, Bundle.getMessage("TurnoutOperationErrorDialog"),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(box, Bundle.getMessage("TurnoutOperationErrorDialog"),
+                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -960,6 +983,6 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
 
     protected static java.util.concurrent.atomic.AtomicBoolean editingOps = new java.util.concurrent.atomic.AtomicBoolean(false);
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutTableDataModel.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutTableDataModel.class);
 
 }

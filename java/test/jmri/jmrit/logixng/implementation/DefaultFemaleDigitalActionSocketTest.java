@@ -141,6 +141,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.display.logixng.ActionLayoutTurnout.class);
         classes.add(jmri.jmrit.display.logixng.ActionPositionable.class);
+        classes.add(jmri.jmrit.display.logixng.ActionPositionableByClass.class);
         map.put(CategoryDisplay.DISPLAY, classes);
 
         classes = new ArrayList<>();
@@ -158,6 +159,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.ShutdownComputer.class);
         classes.add(jmri.jmrit.logixng.actions.SimulateTurnoutFeedback.class);
         classes.add(jmri.jmrit.logixng.actions.WebBrowser.class);
+        classes.add(jmri.jmrit.logixng.actions.WebRequest.class);
         map.put(Category.OTHER, classes);
 
         Assert.assertTrue("maps are equal",

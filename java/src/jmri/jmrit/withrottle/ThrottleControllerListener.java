@@ -9,9 +9,9 @@ import jmri.DccLocoAddress;
 
 public interface ThrottleControllerListener extends EventListener {
 
-    public void notifyControllerAddressFound(ThrottleController TC);
+    void notifyControllerAddressFound(ThrottleController TC);
 
-    public void notifyControllerAddressReleased(ThrottleController TC);
+    void notifyControllerAddressReleased(ThrottleController TC);
     
-    public void notifyControllerAddressDeclined(ThrottleController tc, DccLocoAddress address, String reason);
+    void notifyControllerAddressDeclined(ThrottleController tc, DccLocoAddress address, String reason);
 }

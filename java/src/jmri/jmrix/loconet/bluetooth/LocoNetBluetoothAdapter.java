@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Vector;
+
+import javax.annotation.Nonnull;
 import javax.bluetooth.BluetoothStateException;
 import javax.bluetooth.DeviceClass;
 import javax.bluetooth.DiscoveryAgent;
@@ -42,22 +44,9 @@ public class LocoNetBluetoothAdapter extends LnPortController {
                 new String[]{Bundle.getMessage("HandleNormal"), Bundle.getMessage("HandleSpread"), Bundle.getMessage("HandleOneOnly"), Bundle.getMessage("HandleBoth")})); // I18N
     }
 
-    Vector<String> portNameVector = null;
-
     @Override
     public Vector<String> getPortNames() {
-        portNameVector = new Vector<>();
-        try {
-            RemoteDevice[] devices = LocalDevice.getLocalDevice().getDiscoveryAgent().retrieveDevices(DiscoveryAgent.PREKNOWN);
-            if (devices != null) {
-                for (RemoteDevice device : devices) {
-                    portNameVector.add(device.getFriendlyName(false));
-                }
-            }
-        } catch (IOException ex) {
-            log.error("Unable to use bluetooth device", ex);
-        }
-        return portNameVector;
+        return LocoNetBluetoothAdapter.discoverPortNames();
     }
 
     @Override
@@ -244,6 +233,22 @@ public class LocoNetBluetoothAdapter extends LnPortController {
     @Override
     public int[] validBaudNumbers() {
         return new int[]{};
+    }
+
+    @Nonnull
+    protected static Vector<String> discoverPortNames() {
+        Vector<String> portNameVector = new Vector<>();
+        try {
+            RemoteDevice[] devices = LocalDevice.getLocalDevice().getDiscoveryAgent().retrieveDevices(DiscoveryAgent.PREKNOWN);
+            if (devices != null) {
+                for (RemoteDevice device : devices) {
+                    portNameVector.add(device.getFriendlyName(false));
+                }
+            }
+        } catch (IOException ex) {
+            log.error("Unable to use bluetooth device", ex);
+        }
+        return portNameVector;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LocoNetBluetoothAdapter.class);

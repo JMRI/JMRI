@@ -14,7 +14,7 @@ import org.junit.jupiter.api.*;
 public class SerialDriverAdapterTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testDccppSerialAdapterConstructor(){
       Assert.assertNotNull("SerialDriverAdapter constructor",new SerialDriverAdapter());
    }
 

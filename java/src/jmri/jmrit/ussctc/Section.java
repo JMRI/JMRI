@@ -19,8 +19,8 @@ public interface Section<To extends Enum<To>, From extends Enum<From>>
      * Does not include name of associated Station.
      * @return section name without station.
     */
-    public String getName();
+    String getName();
 
-    public Station<To, From> getStation();
+    Station<To, From> getStation();
 
 }

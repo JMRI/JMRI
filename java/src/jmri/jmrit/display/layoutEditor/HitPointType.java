@@ -299,10 +299,10 @@ public enum HitPointType {
     protected int turntableTrackIndex() {
         int result = this.ordinal() - HitPointType.TURNTABLE_RAY_0.ordinal();
         if (result < 0) {
-            throw new IllegalArgumentException(this.toString() + "is not a valid TURNTABLE_RAY");
+            throw new IllegalArgumentException(this.toString() + " is not a valid TURNTABLE_RAY");
         }
         if (result > 63) {
-            throw new IllegalArgumentException(this.toString() + "is not a valid TURNTABLE_RAY");
+            throw new IllegalArgumentException(this.toString() + " is not a valid TURNTABLE_RAY");
         }
         return result;
     }
@@ -320,7 +320,7 @@ public enum HitPointType {
      */
     protected static HitPointType turntableTrackIndexedValue(int i) {
         if (i < 0 || i > 63) {
-            throw new IllegalArgumentException(i + "is not a valid TURNTABLE_RAY index");
+            throw new IllegalArgumentException(i + " is not a valid TURNTABLE_RAY index");
         }
         return HitPointType.values()[(TURNTABLE_RAY_0.ordinal() + i)];
     }
@@ -351,10 +351,10 @@ public enum HitPointType {
     protected int shapePointIndex() {
         int result = this.ordinal() - HitPointType.SHAPE_POINT_0.ordinal();
         if (result < 0) {
-            throw new IllegalArgumentException(this.toString() + "is not a valid SHAPE_POINT");
+            throw new IllegalArgumentException(this.toString() + " is not a valid SHAPE_POINT");
         }
         if (result > 9) {
-            throw new IllegalArgumentException(this.toString() + "is not a valid SHAPE_POINT");
+            throw new IllegalArgumentException(this.toString() + " is not a valid SHAPE_POINT");
         }
         return result;
     }
@@ -372,7 +372,7 @@ public enum HitPointType {
      */
     protected static HitPointType shapePointIndexedValue(int i) {
         if (i < 0 || i > 9) {
-            throw new IllegalArgumentException(i + "is not a valid SHAPE_POINT index");
+            throw new IllegalArgumentException(i + " is not a valid SHAPE_POINT index");
         }
         return HitPointType.values()[(SHAPE_POINT_0.ordinal() + i)];
     }
@@ -409,10 +409,10 @@ public enum HitPointType {
     protected int bezierPointIndex() {
         int result = this.ordinal() - HitPointType.BEZIER_CONTROL_POINT_0.ordinal();
         if (result < 0) {
-            throw new IllegalArgumentException(this.toString() + "is not a valid BEZIER_CONTROL_POINT");
+            throw new IllegalArgumentException(this.toString() + " is not a valid BEZIER_CONTROL_POINT");
         }
         if (result > 8) {
-            throw new IllegalArgumentException(this.toString() + "is not a valid BEZIER_CONTROL_POINT");
+            throw new IllegalArgumentException(this.toString() + " is not a valid BEZIER_CONTROL_POINT");
         }
         return result;
     }
@@ -430,7 +430,7 @@ public enum HitPointType {
      */
     protected static HitPointType bezierPointIndexedValue(int i) {
         if (i < 0 || i > 8) {
-            throw new IllegalArgumentException(i + "is not a valid BEZIER_CONTROL_POINT index");
+            throw new IllegalArgumentException(i + " is not a valid BEZIER_CONTROL_POINT index");
         }
         return HitPointType.values()[(BEZIER_CONTROL_POINT_0.ordinal() + i)];
     }

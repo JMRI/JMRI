@@ -12,6 +12,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.schedules.SchedulesTableAction;
 import jmri.jmrit.operations.locations.tools.*;
+import jmri.jmrit.operations.routes.tools.ShowRoutesServingLocationAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.swing.JTablePersistenceManager;
@@ -70,6 +71,9 @@ public class LocationsTableFrame extends OperationsFrame {
         // setup buttons
         addButtonAction(addButton);
 
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(sortByName);
+        buttonGroup.add(sortById);
         addRadioButtonAction(sortByName);
         addRadioButtonAction(sortById);
         
@@ -84,14 +88,15 @@ public class LocationsTableFrame extends OperationsFrame {
         toolMenu.add(new SchedulesTableAction());
         toolMenu.add(new ModifyLocationsAction());
         toolMenu.add(new ModifyLocationsCarLoadsAction());
-        toolMenu.add(new ShowCarsByLocationAction(false, null, null));
         toolMenu.add(new ExportLocationsRosterAction());
         toolMenu.add(new ImportLocationsRosterAction() );
         if (Setup.isVsdPhysicalLocationEnabled()) {
             toolMenu.add(new SetPhysicalLocationAction(null));
         }
         toolMenu.addSeparator();
+        toolMenu.add(new ShowCarsByLocationAction(false, null, null));
         toolMenu.add(new ShowTrainsServingLocationAction(null, null));
+        toolMenu.add(new ShowRoutesServingLocationAction(null));
         toolMenu.addSeparator();
         toolMenu.add(new PrintLocationsAction(false));
         toolMenu.add(new PrintLocationsAction(true));
@@ -116,13 +121,10 @@ public class LocationsTableFrame extends OperationsFrame {
         // clear any sorts by column
         clearTableSort(locationsTable);
         if (ae.getSource() == sortByName) {
-            sortByName.setSelected(true);
-            sortById.setSelected(false);
             locationsModel.setSort(locationsModel.SORTBYNAME);
         }
         if (ae.getSource() == sortById) {
-            sortByName.setSelected(false);
-            sortById.setSelected(true);
+            InstanceManager.getDefault(LocationManager.class).setShowIdEnabled(true);
             locationsModel.setSort(locationsModel.SORTBYID);
         }
     }
@@ -130,7 +132,6 @@ public class LocationsTableFrame extends OperationsFrame {
     // add button
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-//  log.debug("location button activated");
         if (ae.getSource() == addButton) {
             LocationEditFrame f = new LocationEditFrame(null);
             f.setTitle(Bundle.getMessage("TitleLocationAdd"));

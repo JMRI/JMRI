@@ -10,12 +10,12 @@ public interface DigitalIO extends NamedBean {
     /**
      * State value indicating output is on.
      */
-    public static final int ON = 0x02;
+    static final int ON = 0x02;
 
     /**
      * State value indicating output is off.
      */
-    public static final int OFF = 0x04;
+    static final int OFF = 0x04;
 
     /**
      * Show whether state is stable.
@@ -25,7 +25,7 @@ public interface DigitalIO extends NamedBean {
      *
      * @return true if state is valid and the known state is the same as commanded
      */
-    public boolean isConsistentState();
+    boolean isConsistentState();
 
     /**
      * Change the commanded state, which results in the relevant command(s)
@@ -35,7 +35,7 @@ public interface DigitalIO extends NamedBean {
      * @param s the desired state
      */
     @InvokeOnLayoutThread
-    public void setCommandedState(int s);
+    void setCommandedState(int s);
 
     /**
      * Query the commanded state. This is a bound parameter, so you can also
@@ -43,7 +43,7 @@ public interface DigitalIO extends NamedBean {
      *
      * @return the commanded state
      */
-    public int getCommandedState();
+    int getCommandedState();
     
     /**
      * Query the known state. This is a bound parameter, so you can also
@@ -53,13 +53,13 @@ public interface DigitalIO extends NamedBean {
      *
      * @return the known state
      */
-    public int getKnownState();
+    int getKnownState();
 
     /**
      * Request an update from the layout soft/hardware. May not even happen, and
      * if it does it will happen later; listen for the result.
      */
     @InvokeOnLayoutThread
-    public void requestUpdateFromLayout();
+    void requestUpdateFromLayout();
     
 }

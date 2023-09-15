@@ -1,8 +1,8 @@
 package jmri.jmrit.beantable;
 
-import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.SignalHead;
@@ -10,9 +10,10 @@ import jmri.implementation.DoubleTurnoutSignalHead;
 import jmri.implementation.QuadOutputSignalHead;
 import jmri.implementation.SE8cSignalHead;
 import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -33,8 +34,8 @@ public class SignalHeadTableActionTest extends AbstractTableActionBase<SignalHea
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testAddAndInvoke() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // add a few signals and see if they exist
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DoubleTurnoutSignalHead("IH2", "double example 1-2",
@@ -89,9 +90,9 @@ public class SignalHeadTableActionTest extends AbstractTableActionBase<SignalHea
 
     @Test
     @Override
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testAddThroughDialog() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeTrue(a.includeAddButton());
+        Assertions.assertTrue(a.includeAddButton());
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
@@ -115,9 +116,8 @@ public class SignalHeadTableActionTest extends AbstractTableActionBase<SignalHea
 
     @Test
     @Override
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testEditButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeTrue(a.includeAddButton());
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
         JFrameOperator jfo = new JFrameOperator(f);
@@ -160,7 +160,7 @@ public class SignalHeadTableActionTest extends AbstractTableActionBase<SignalHea
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSignalHeadManager();

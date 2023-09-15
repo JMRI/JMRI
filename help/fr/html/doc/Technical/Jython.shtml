@@ -184,10 +184,10 @@ JMRI utilise largement le syst&#232;me LogJ pour des informations de rapport
 pendant l'ex&#233;cution du programme. Pour configurer, lors de l'ex&#233;cution avec 
 Jython, vous devez faire:
 <PRE>
-  import org
-  org.apache.log4j.PropertyConfigurator.configure("default.lcf")
+  import org.apache.logging.log4j.core.config.Configurator
+  Configurator.initialize(null, "default_lcf.xml");
 </PRE>
-avant de commencer l'une des classes JMRI. Le "default.lcf"
+avant de commencer l'une des classes JMRI. Le "default_lcf.xml"
 est le nom du fichier de contr&#244;le connect&#233; qui sera utilis&#233;, il peut
 &#234;tre omis.
 <p>

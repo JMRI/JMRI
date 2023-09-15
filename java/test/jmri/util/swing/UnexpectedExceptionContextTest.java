@@ -20,7 +20,7 @@ public class UnexpectedExceptionContextTest extends ExceptionContextTest {
     @Test
     @Override
     public void testGetTitle() {
-        Assert.assertEquals("Title",Bundle.getMessage("UnexpectedExceptionOperationTitle",Exception.class.getSimpleName()),ec.getTitle());
+        Assertions.assertEquals(Bundle.getMessage("UnexpectedExceptionOperationTitle","Test"),ec.getTitle());
     }
 
     @BeforeEach

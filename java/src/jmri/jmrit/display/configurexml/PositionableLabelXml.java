@@ -14,9 +14,7 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.ToolTip;
-import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.MaleSocket;
 
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
@@ -162,11 +160,28 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
     public void storeCommonAttributes(Positionable p, Element element) {
 
         if (p.getId() != null) element.setAttribute("id", p.getId());
+
+        var classes = p.getClasses();
+        if (!classes.isEmpty()) {
+            StringBuilder classNames = new StringBuilder();
+            for (String className : classes) {
+                if (className.contains(",")) {
+                    throw new UnsupportedOperationException("Comma is not allowed in class names");
+                }
+                if (classNames.length() > 0) classNames.append(",");
+                classNames.append(className);
+            }
+            element.setAttribute("classes", classNames.toString());
+        }
+
         element.setAttribute("x", "" + p.getX());
         element.setAttribute("y", "" + p.getY());
         element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
         element.setAttribute("forcecontroloff", !p.isControlling() ? "true" : "false");
         element.setAttribute("hidden", p.isHidden() ? "yes" : "no");
+        if (p.isEmptyHidden()) {
+            element.setAttribute("emptyHidden", "yes");
+        }
         element.setAttribute("positionable", p.isPositionable() ? "true" : "false");
         element.setAttribute("showtooltip", p.showToolTip() ? "true" : "false");
         element.setAttribute("editable", p.isEditable() ? "true" : "false");
@@ -468,6 +483,16 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                 throw new JmriConfigureXmlException("Positionable id is not unique", e);
             }
         }
+
+        if (element.getAttribute("classes") != null) {
+            String classes = element.getAttribute("classes").getValue();
+            for (String className : classes.split(",")) {
+                if (!className.isBlank()) {
+                    l.addClass(className);
+                }
+            }
+        }
+
         try {
             l.setControlling(!element.getAttribute("forcecontroloff").getBooleanValue());
         } catch (DataConversionException e1) {
@@ -506,6 +531,16 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         } catch (NullPointerException e) {
             // considered normal if the attribute not present
         }
+
+        try {
+            boolean value = element.getAttribute("emptyHidden").getBooleanValue();
+            l.setEmptyHidden(value);
+        } catch (DataConversionException e) {
+            log.warn("unable to convert positionable label emptyHidden attribute");
+        } catch (NullPointerException e) {
+            // considered normal if the attribute not present
+        }
+
         try {
             l.setPositionable(element.getAttribute("positionable").getBooleanValue());
         } catch (DataConversionException e) {

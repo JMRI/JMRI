@@ -46,7 +46,7 @@ import jmri.util.prefs.*;
 import jmri.util.zeroconf.MockZeroConfServiceManager;
 import jmri.util.zeroconf.ZeroConfServiceManager;
 
-import org.apache.log4j.Level;
+import org.slf4j.event.Level;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.netbeans.jemmy.*;
@@ -208,13 +208,13 @@ public class JUnitUtil {
         if (!isLoggingInitialized) {
             // init logging if needed
             isLoggingInitialized = true;
-            String filename = System.getProperty("jmri.log4jconfigfilename", "tests.lcf");
+            String filename = System.getProperty("jmri.log4jconfigfilename", "tests_lcf.xml");
             TestingLoggerConfiguration.initLogging(filename);
         }
 
         // need to do this each time
         try {
-            JUnitAppender.start();
+            JUnitAppender.startLogging();
 
             // reset warn _only_ once logic to make tests repeatable
             JUnitLoggingUtil.restartWarnOnce();
@@ -997,6 +997,9 @@ public class JUnitUtil {
         }
         InstanceManager.setDefault(StringExpressionManager.class, m9);
 
+        jmri.jmrit.logixng.actions.NamedBeanType.reset();
+        jmri.jmrit.logixng.actions.CommonManager.reset();
+
         if (activate) m1.activateAllLogixNGs(false, false);
     }
 
@@ -1476,6 +1479,7 @@ public class JUnitUtil {
                  || name.startsWith("Image Animator ")
                  || name.startsWith("JmDNS(")
                  || name.startsWith("JmmDNS pool")
+                 || name.startsWith("JNA Cleaner")
                  || name.startsWith("ForkJoinPool.commonPool-worker")
                  || name.startsWith("SocketListener(")
                  || name.startsWith("Libgraal")
@@ -1509,7 +1513,7 @@ public class JUnitUtil {
                                 // empirically. jemmy leaves anonymous threads
                                 String details = traces[7].getClassName() + "." + traces[7].getMethodName()
                                     +" [" + traces[7].getFileName() + "." + traces[7].getLineNumber() + "]";
-                                        
+
                                 log.warn("Jemmy remnant thread running {}", details );
                                 if ( failRemnantThreads ) {
                                     Assertions.fail("Jemmy remnant thread running " + details);

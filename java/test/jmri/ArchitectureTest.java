@@ -1,11 +1,15 @@
 package jmri;
 
+import java.io.File;
+
 import org.junit.jupiter.api.*;
 
 import com.tngtech.archunit.lang.*;
 import com.tngtech.archunit.junit.*;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
+
+import jmri.util.FileUtil;
 
 /**
  * Check the architecture of the JMRI library
@@ -269,8 +273,7 @@ public class ArchitectureTest {
     @ArchTest
     public static final ArchRule noLog4JinJmri = noClasses()
             .that().resideInAPackage("jmri..")
-            .and().areNotAnnotatedWith(Deprecated.class)
-            .should().dependOnClassesThat().resideInAPackage("org.apache.log4j");
+            .should().dependOnClassesThat().resideInAPackage("org.apache.logging.log4j");
 
     /**
      * Confine JDOM to configurexml packages.
@@ -389,4 +392,48 @@ public class ArchitectureTest {
             .should()
             .dependOnClassesThat().haveFullyQualifiedName("jmri.util.swing.BeanSelectPanel");
 */
+
+    @Test
+    public void testHelpFileNamesUseShtml(){
+        String path = FileUtil.getExternalFilename(FileUtil.PROGRAM + "help");
+
+        // allow
+        // local/index.html
+        // local/stub_template.html
+        // /local/stub/
+
+        String[] allowList = {"local"+File.separator+ "index.html",
+            "local"+File.separator+ "stub_template.html",
+            File.separator + "local" + File.separator + "stub" + File.separator };
+        recursivelyCheckFiles(new File(path), allowList, ".html");
+    }
+
+    private void recursivelyCheckFiles(File directory, String[] allowList, String deniedsuffix) {
+        File[] files = directory.listFiles();
+        if (files == null) {
+            Assertions.fail("Failed to list files in the directory: " + directory.getAbsolutePath());
+            return;
+        }
+        for (File file : files) {
+            if (file.isDirectory()) {
+                recursivelyCheckFiles(file, allowList, deniedsuffix);
+            } else {
+                String fname = file.getAbsolutePath();
+                if (fname.endsWith(deniedsuffix) && notOnAllowList(fname,allowList)) {
+                    // System.out.println("Incorrect fileType: "+fname);
+                    Assertions.fail("filename " +fname+ " should not end with "+deniedsuffix);
+                }
+            }
+        }
+    }
+
+    private boolean notOnAllowList(@javax.annotation.Nonnull String filePath, String[] allowList) {
+        for (String allowed : allowList) {
+            if ( filePath.contains(allowed) ) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

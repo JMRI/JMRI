@@ -486,9 +486,6 @@
             when disconnected from a layout</a>.</p>
 
             <p class="dl">Configure: Remote connection to a LocoNet via <a href=
-            "loconet/LocoNetServer.shtml">JMRI LocoNet Server</a>.</p>
-
-            <p class="dl">Configure: Remote connection to a LocoNet via <a href=
             "loconet/LbServer.shtml">LbServer</a>. More information on <a href=
             "loconet/LocoNetworking.shtml">connecting multiple computers to a single
             LocoNet</a></p>
@@ -718,9 +715,6 @@
             when disconnected from a layout</a>.</p>
 
             <p class="dl">Configure: Remote connection to a LocoNet via <a href=
-            "loconet/LocoNetServer.shtml">JMRI LocoNet Server</a>.</p>
-
-            <p class="dl">Configure: Remote connection to a LocoNet via <a href=
             "loconet/LbServer.shtml">LbServer</a>. More information on <a href=
             "loconet/LocoNetworking.shtml">connecting multiple computers to a single
             LocoNet</a></p>
@@ -824,14 +818,19 @@
           </dt>
 
           <dt>
-            <a href="marklin/index.shtml">M&auml;rklin</a>
+            <a href="marklin/index.shtml#cs2">M&auml;rklin CS2</a>
           </dt>
-
           <dd>
             <p class="dl">Configure connection to <a href="marklin/index.shtml">CS2</a> Command
             Station 2.</p>
-            <a href="ecos/index.shtml">CS</a> Command Station - see ESU ECoS
-            <p>&nbsp;</p>
+          </dd>
+
+          <dt>
+            <a href="marklin/index.shtml#cdb">M&auml;rklin CdB CC-Schnitte</a>
+          </dt>
+          <dd>
+            <p class="dl">Configure connection to <a href="marklin/index.shtml">CdB CC-Schnitte</a> Command
+            Station 2.</p>
           </dd>
 
           <dt class="im">
@@ -1142,9 +1141,6 @@
 
             <p class="dl">Configure: <a href="loconet/LocoNetSim.shtml">LocoNet Simulator for use
             when disconnected from a layout</a>.</p>
-
-            <p class="dl">Configure: Remote connection to a LocoNet via <a href=
-            "loconet/LocoNetServer.shtml">JMRI LocoNet Server</a>.</p>
 
             <p class="dl">Configure: Remote connection to a LocoNet via <a href=
             "loconet/LbServer.shtml">LbServer</a>. More information on <a href=

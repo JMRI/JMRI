@@ -66,7 +66,8 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService<SignalMa
                 if (signalMast.getHeld()) {
                     signalMast.setHeld(false);
                 }
-                if (signalMast.getAspect() == null || !signalMast.getAspect().equals(aspect)) {
+                String thisAspect = signalMast.getAspect();
+                if (thisAspect == null || !thisAspect.equals(aspect)) {
                     signalMast.setAspect(aspect);
                 }
             } else {

@@ -1,6 +1,6 @@
 package apps;
 
-import javax.swing.JOptionPane;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Check Java version during startup and complain if not current enough
@@ -43,7 +43,7 @@ public class JavaVersionCheckWindow {
         Compatibility result = checkJavaVersion();
         if (result == Compatibility.INCOMPATIBLE) {
             System.err.println("JMRI cannot run on Java version "+System.getProperty("java.version"));
-            JOptionPane.showMessageDialog(null, "JMRI cannot run on Java version "+System.getProperty("java.version"), "Alert", JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(null, "JMRI cannot run on Java version "+System.getProperty("java.version"), "Alert", JmriJOptionPane.ERROR_MESSAGE);
             System.exit(-1);
         }
     }

@@ -70,7 +70,7 @@ public class XmlLoadTest extends OperationsTestCase {
 
         InstanceManager.getDefault(OperationsSetupXml.class);
         OperationsSetupXml.setOperationsDirectoryName(directory.substring(0, directory.length() - 1));
-        try {
+        Assertions.assertDoesNotThrow( () ->  {
             // use readFile, because load wraps readFile with a try catch.
             InstanceManager.getDefault(OperationsSetupXml.class)
                     .readFile(OperationsSetupXml.getOperationsDirectoryName() +
@@ -96,10 +96,8 @@ public class XmlLoadTest extends OperationsTestCase {
                     .readFile(OperationsSetupXml.getOperationsDirectoryName() +
                             "/" +
                             InstanceManager.getDefault(EngineManagerXml.class).getOperationsFileName());
-        } catch (Exception e) {
-            Assert.fail("Exception reading operations files");
-            return;
-        }
+        },"Exception reading operations files");
+
         // spot check to make sure the correct number of items were created.
         Assert.assertEquals("Number of Locations", locs,
                 InstanceManager.getDefault(LocationManager.class).getList().size());

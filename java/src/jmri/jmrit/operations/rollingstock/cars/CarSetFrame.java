@@ -8,9 +8,6 @@ import java.util.ResourceBundle;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsXml;
@@ -23,6 +20,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.tools.TrainByCarTypeFrame;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user to place car on the layout
@@ -74,9 +72,16 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
     private static boolean autoReturnWhenLoadedTrackCheckBoxSelected = false;
 
     private static boolean enableDestination = false;
+    
+    private String _help = "package.jmri.jmrit.operations.Operations_CarsSet";
 
     public CarSetFrame() {
         super(Bundle.getMessage("TitleCarSet"));
+    }
+    
+    public void initComponents(String help) {
+        _help = help;
+        initComponents();
     }
 
     @Override
@@ -89,7 +94,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         toolMenu.add(new EnableDestinationAction(this));
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
-        addHelpMenu("package.jmri.jmrit.operations.Operations_CarsSet", true); // NOI18N
+        addHelpMenu(_help, true); // NOI18N
 
         // initial caps for some languages i.e. German
         editLoadButton.setToolTipText(
@@ -107,6 +112,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         pLoad.setLayout(new GridBagLayout());
         pLoad.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Load")));
         addItemLeft(pLoad, ignoreLoadCheckBox, 1, 0);
+        loadComboBox.setName("loadComboBox");
         addItem(pLoad, loadComboBox, 2, 0);
         addItem(pLoad, editLoadButton, 3, 0);
         pOptional.add(pLoad);
@@ -389,10 +395,10 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         if (askKernelChange && car.getKernel() != null) {
             List<Car> list = car.getKernel().getCars();
             if (list.size() > 1) {
-                if (JOptionPane.showConfirmDialog(this,
+                if (JmriJOptionPane.showConfirmDialog(this,
                         MessageFormat.format(Bundle.getMessage("carInKernel"), car.toString()),
                         MessageFormat.format(Bundle.getMessage("carPartKernel"), car.getKernelName()),
-                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                     if (!updateGroup(list)) {
                         return false;
                     }
@@ -410,11 +416,13 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
             if (!car.getLoadName().equals(load)) {
                 if (carLoads.containsName(car.getTypeName(), load)) {
                     car.setLoadName(load);
+                    car.setWait(0); // car could be at spur with schedule
+                    car.setScheduleItemId(Car.NONE);
                     updateComboBoxesLoadChange();
                 } else {
-                    JOptionPane.showMessageDialog(this,
+                    JmriJOptionPane.showMessageDialog(this,
                             MessageFormat.format(Bundle.getMessage("carLoadNotValid"), load, car.getTypeName()),
-                            Bundle.getMessage("carCanNotChangeLoad"), JOptionPane.WARNING_MESSAGE);
+                            Bundle.getMessage("carCanNotChangeLoad"), JmriJOptionPane.WARNING_MESSAGE);
                 }
             }
         }
@@ -434,8 +442,8 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                         car.getFinalDestinationTrack() != finalDestTrack &&
                         finalDestTrack.isStaging()) {
                     log.debug("Destination track ({}) is staging", finalDestTrack.getName());
-                    JOptionPane.showMessageDialog(this, Bundle.getMessage("rsDoNotSelectStaging"),
-                            Bundle.getMessage("rsCanNotFinal"), JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("rsDoNotSelectStaging"),
+                            Bundle.getMessage("rsCanNotFinal"), JmriJOptionPane.ERROR_MESSAGE);
                     return false;
                 }
                 car.setFinalDestination((Location) finalDestinationBox.getSelectedItem());
@@ -443,20 +451,22 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                 String status = getTestCar(car, car.getLoadName())
                         .checkDestination((Location) finalDestinationBox.getSelectedItem(), finalDestTrack);
                 if (!status.equals(Track.OKAY)) {
-                    JOptionPane.showMessageDialog(this,
+                    JmriJOptionPane.showMessageDialog(this,
                             MessageFormat.format(Bundle.getMessage("rsCanNotFinalMsg"), car.toString(), status),
-                            Bundle.getMessage("rsCanNotFinal"), JOptionPane.WARNING_MESSAGE);
+                            Bundle.getMessage("rsCanNotFinal"), JmriJOptionPane.WARNING_MESSAGE);
+                    return false;
                 } else {
                     // check to see if car can be routed to final destination
                     Router router = InstanceManager.getDefault(Router.class);
                     if (!router.isCarRouteable(car, null, (Location) finalDestinationBox.getSelectedItem(),
                                     finalDestTrack, null)) {
-                        JOptionPane.showMessageDialog(this,
+                        JmriJOptionPane.showMessageDialog(this,
                                 MessageFormat.format(Bundle.getMessage("rsCanNotRouteMsg"), car.toString(),
                                         car.getLocationName(), car.getTrackName(),
                                         finalDestinationBox.getSelectedItem(),
                                         finalDestTrack == null ? "" : finalDestTrack.getName()),
-                                Bundle.getMessage("rsCanNotFinal"), JOptionPane.WARNING_MESSAGE);
+                                Bundle.getMessage("rsCanNotFinal"), JmriJOptionPane.WARNING_MESSAGE);
+                        return false;
                     }
                 }
             }
@@ -487,10 +497,10 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
             } else {
                 log.debug("Car ({}) type ({}) doesn't support RWE load ({})", car, car.getTypeName(),
                         loadReturnWhenEmptyBox.getSelectedItem());
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         MessageFormat.format(Bundle.getMessage("carLoadNotValid"),
                                 loadReturnWhenEmptyBox.getSelectedItem(), car.getTypeName()),
-                        Bundle.getMessage("carCanNotChangeRweLoad"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("carCanNotChangeRweLoad"), JmriJOptionPane.WARNING_MESSAGE);
             }
             if (destReturnWhenEmptyBox.getSelectedItem() == null) {
                 car.setReturnWhenEmptyDestination(null);
@@ -502,18 +512,18 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                     // warn user if they selected a staging track
                     if (trackRWE != null && trackRWE.isStaging()) {
                         log.debug("Return when empty track ({}) is staging", trackRWE.getName());
-                        JOptionPane.showMessageDialog(this, Bundle.getMessage("rsDoNotSelectStaging"),
-                                Bundle.getMessage("carCanNotRWE"), JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("rsDoNotSelectStaging"),
+                                Bundle.getMessage("carCanNotRWE"), JmriJOptionPane.ERROR_MESSAGE);
                         return false;
                     }
                     // use a test car with a load of "RWE" and no length
                     String status = getTestCar(car, car.getReturnWhenEmptyLoadName()).checkDestination(locationRWE,
                             trackRWE);
                     if (!status.equals(Track.OKAY)) {
-                        JOptionPane.showMessageDialog(this,
+                        JmriJOptionPane.showMessageDialog(this,
                                 MessageFormat.format(Bundle.getMessage("carCanNotRWEMsg"), car.toString(), locationRWE,
                                         trackRWE, status),
-                                Bundle.getMessage("carCanNotRWE"), JOptionPane.WARNING_MESSAGE);
+                                Bundle.getMessage("carCanNotRWE"), JmriJOptionPane.WARNING_MESSAGE);
                     }
                     car.setReturnWhenEmptyDestTrack(trackRWE);
                 } else {
@@ -533,10 +543,10 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
             } else {
                 log.debug("Car ({}) type ({}) doesn't support RWL load ({})", car, car.getTypeName(),
                         loadReturnWhenLoadedBox.getSelectedItem());
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         MessageFormat.format(Bundle.getMessage("carLoadNotValid"),
                                 loadReturnWhenEmptyBox.getSelectedItem(), car.getTypeName()),
-                        Bundle.getMessage("carCanNotChangeRwlLoad"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("carCanNotChangeRwlLoad"), JmriJOptionPane.WARNING_MESSAGE);
             }
             if (destReturnWhenLoadedBox.getSelectedItem() == null) {
                 car.setReturnWhenLoadedDestination(null);
@@ -548,18 +558,18 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                     // warn user if they selected a staging track
                     if (trackRWL != null && trackRWL.isStaging()) {
                         log.debug("Return when loaded track ({}) is staging", trackRWL.getName());
-                        JOptionPane.showMessageDialog(this, Bundle.getMessage("rsDoNotSelectStaging"),
-                                Bundle.getMessage("carCanNotRWL"), JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("rsDoNotSelectStaging"),
+                                Bundle.getMessage("carCanNotRWL"), JmriJOptionPane.ERROR_MESSAGE);
                         return false;
                     }
                     // use a test car with a load of "RWL" and no length
                     String status = getTestCar(car, car.getReturnWhenLoadedLoadName()).checkDestination(locationRWL,
                             trackRWL);
                     if (!status.equals(Track.OKAY)) {
-                        JOptionPane.showMessageDialog(this,
+                        JmriJOptionPane.showMessageDialog(this,
                                 MessageFormat.format(Bundle.getMessage("carCanNotRWLMsg"), car.toString(), locationRWL,
                                         trackRWL, status),
-                                Bundle.getMessage("carCanNotRWL"), JOptionPane.WARNING_MESSAGE);
+                                Bundle.getMessage("carCanNotRWL"), JmriJOptionPane.WARNING_MESSAGE);
                     }
                     car.setReturnWhenLoadedDestTrack(trackRWL);
                 } else {
@@ -577,17 +587,17 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                 saveTrack != trackLocationBox.getSelectedItem()) {
             Track track = (Track) trackLocationBox.getSelectedItem();
             if (track.getSchedule() != null) {
-                if (JOptionPane
+                if (JmriJOptionPane
                         .showConfirmDialog(this,
                                 MessageFormat.format(Bundle.getMessage("rsDoYouWantSchedule"), car.toString()),
                                 MessageFormat.format(Bundle.getMessage("rsSpurHasSchedule"), track.getName(),
                                         track.getScheduleName()),
-                                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                                JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                     String results = track.checkSchedule(car);
                     if (!results.equals(Track.OKAY)) {
-                        JOptionPane.showMessageDialog(this,
+                        JmriJOptionPane.showMessageDialog(this,
                                 MessageFormat.format(Bundle.getMessage("rsNotAbleToApplySchedule"), results),
-                                Bundle.getMessage("rsApplyingScheduleFailed"), JOptionPane.ERROR_MESSAGE);
+                                Bundle.getMessage("rsApplyingScheduleFailed"), JmriJOptionPane.ERROR_MESSAGE);
                         // restore previous location and track so we'll ask to test schedule again
                         if (saveTrack != null) {
                             car.setLocation(saveTrack.getLocation(), saveTrack);
@@ -609,8 +619,8 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         if (car.getTrain() != null) {
             Train train = car.getTrain();
             if (!train.isLoadNameAccepted(car.getLoadName(), car.getTypeName())) {
-                JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carTrainNotServLoad"),
-                        car.getLoadName(), train.getName()), Bundle.getMessage("rsNotMove"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carTrainNotServLoad"),
+                        car.getLoadName(), train.getName()), Bundle.getMessage("rsNotMove"), JmriJOptionPane.ERROR_MESSAGE);
                 // prevent rs from being picked up and delivered
                 setRouteLocationAndDestination(car, train, null, null);
                 return false;
@@ -625,9 +635,9 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         if (car.getTrain() != null) {
             Train train = car.getTrain();
             if (car.getLocation() != null && car.getDestination() != null && !train.isServiceable(car)) {
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         MessageFormat.format(Bundle.getMessage("carTrainNotService"), car.toString(), train.getName()),
-                        Bundle.getMessage("rsNotMove"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("rsNotMove"), JmriJOptionPane.ERROR_MESSAGE);
                 // show the train's route and car location
                 if (tctf != null) {
                     tctf.dispose();
@@ -679,6 +689,8 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
             // update car load
             if (!ignoreLoadCheckBox.isSelected() && carLoads.containsName(car.getTypeName(), _car.getLoadName())) {
                 car.setLoadName(_car.getLoadName());
+                car.setWait(0); // car could be at spur with schedule
+                car.setScheduleItemId(Car.NONE);
             }
             // update kernel
             if (!ignoreKernelCheckBox.isSelected()) {
@@ -940,5 +952,5 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(CarSetFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CarSetFrame.class);
 }

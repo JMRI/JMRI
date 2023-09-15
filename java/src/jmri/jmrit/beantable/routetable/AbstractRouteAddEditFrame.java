@@ -704,7 +704,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
      */
     private void setSoundPressed() {
         if (soundChooser == null) {
-            soundChooser = new JFileChooser(FileUtil.getUserFilesPath());
+            soundChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
             soundChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());
         }
         soundChooser.rescanCurrentDirectory();

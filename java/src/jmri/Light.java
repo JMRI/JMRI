@@ -67,43 +67,43 @@ public interface Light extends DigitalIO {
      * State value indicating output intensity is less than maxIntensity and
      * more than minIntensity, and no transition is in progress
      */
-    public static final int INTERMEDIATE = 0x08;
+    static final int INTERMEDIATE = 0x08;
 
     /**
      * State value indicating output intensity is currently changing toward
      * higher intensity, and will continue until full ON is reached
      */
-    public static final int TRANSITIONINGTOFULLON = 0x310;
+    static final int TRANSITIONINGTOFULLON = 0x310;
 
     /**
      * State value indicating output intensity is currently changing toward
      * higher intensity. The current transition will stop before full ON is
      * reached.
      */
-    public static final int TRANSITIONINGHIGHER = 0x210;
+    static final int TRANSITIONINGHIGHER = 0x210;
 
     /**
      * State value indicating output intensity is currently changing toward
      * lower intensity. The current transition will stop before full OFF is
      * reached.
      */
-    public static final int TRANSITIONINGLOWER = 0x110;
+    static final int TRANSITIONINGLOWER = 0x110;
 
     /**
      * State value indicating output intensity is currently changing toward
      * lower intensity, and will continue until full OFF is reached
      */
-    public static final int TRANSITIONINGTOFULLOFF = 0x010;
+    static final int TRANSITIONINGTOFULLOFF = 0x010;
 
     /**
      * State value mask representing status where output is changing due to a
      * request to transition.
      */
-    public static final int TRANSITIONING = 0x010;
+    static final int TRANSITIONING = 0x010;
     
     /** {@inheritDoc} */
     @Override
-    default public boolean isConsistentState() {
+    default boolean isConsistentState() {
         return (getState() == DigitalIO.ON)
                 || (getState() == DigitalIO.OFF);
     }
@@ -111,26 +111,26 @@ public interface Light extends DigitalIO {
     /** {@inheritDoc} */
     @Override
     @InvokeOnLayoutThread
-    default public void setCommandedState(int s) {
+    default void setCommandedState(int s) {
         setState(s);
     }
     
     /** {@inheritDoc} */
     @Override
-    default public int getCommandedState() {
+    default int getCommandedState() {
         return getState();
     }
     
     /** {@inheritDoc} */
     @Override
-    default public int getKnownState() {
+    default int getKnownState() {
         return getState();
     }
     
     /** {@inheritDoc} */
     @Override
     @InvokeOnLayoutThread
-    default public void requestUpdateFromLayout() {
+    default void requestUpdateFromLayout() {
         // Do nothing
     }
 
@@ -143,34 +143,34 @@ public interface Light extends DigitalIO {
      * <p>
      * Note that the state may have other values, such as INTERMEDIATE or a form
      * of transitioning, but that these may not be directly set.
-     * <p>
+     *
      * @param newState the new desired state
      * @throws IllegalArgumentException if invalid newState provided
      */
     @Override
     @InvokeOnLayoutThread
-    public void setState(int newState);
+    void setState(int newState);
 
     /**
      * Get the current state of the Light's output.
      */
     @Override
-    public int getState();
+    int getState();
 
     // control types - types defined
-    public static final int NO_CONTROL = 0x00;
-    public static final int SENSOR_CONTROL = 0x01;
-    public static final int FAST_CLOCK_CONTROL = 0x02;
-    public static final int TURNOUT_STATUS_CONTROL = 0x03;
-    public static final int TIMED_ON_CONTROL = 0x04;
-    public static final int TWO_SENSOR_CONTROL = 0x05;
+    int NO_CONTROL = 0x00;
+    int SENSOR_CONTROL = 0x01;
+    int FAST_CLOCK_CONTROL = 0x02;
+    int TURNOUT_STATUS_CONTROL = 0x03;
+    int TIMED_ON_CONTROL = 0x04;
+    int TWO_SENSOR_CONTROL = 0x05;
 
     // LightControl information management methods
      
     /**
      * Clears (removes) all LightControl objects for this light
      */
-    public void clearLightControls();
+    void clearLightControls();
 
     /** 
      * Add a LightControl to this Light.
@@ -178,13 +178,13 @@ public interface Light extends DigitalIO {
      * Duplicates are considered the same, hence not added
      * @param c the light control to add.
      */
-    public void addLightControl(@Nonnull LightControl c);
+    void addLightControl(@Nonnull LightControl c);
 
     /**
      * @return a list of all LightControls
      */
     @Nonnull
-    public List<LightControl> getLightControlList();
+    List<LightControl> getLightControlList();
 
     /**
      * Set the Enabled property, which determines whether the control logic
@@ -194,7 +194,7 @@ public interface Light extends DigitalIO {
      * @param state true if control logic is enabled; false otherwise
      */
     @InvokeOnLayoutThread
-    public void setEnabled(boolean state);
+    void setEnabled(boolean state);
 
     /**
      * Get the Enabled property, which determines whether the control logic
@@ -202,19 +202,19 @@ public interface Light extends DigitalIO {
      *
      * @return true if control logic is enabled; false otherwise
      */
-    public boolean getEnabled();
+    boolean getEnabled();
 
     /**
      * Activates a Light. This method activates each LightControl, setting up a
      * control mechanism, appropriate to its control type.
      */
     @InvokeOnLayoutThread
-    public void activateLight();
+    void activateLight();
 
     /**
      * Deactivates a Light. This method deactivates each LightControl, shutting
      * down its control mechanism.
      */
     @InvokeOnLayoutThread
-    public void deactivateLight();
+    void deactivateLight();
 }

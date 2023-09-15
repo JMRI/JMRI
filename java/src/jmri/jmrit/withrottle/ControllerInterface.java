@@ -9,10 +9,10 @@ package jmri.jmrit.withrottle;
  */
 public interface ControllerInterface {
 
-    public void sendPacketToDevice(String message);
+    void sendPacketToDevice(String message);
 
-    public void sendAlertMessage(String message);
+    void sendAlertMessage(String message);
 
-    public void sendInfoMessage(String message);
+    void sendInfoMessage(String message);
 
 }

@@ -48,13 +48,20 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * This ctor takes an int value for the 16 bit data content
+     * This ctor takes an int value for the 16 bit data content, with an
+     * optional leading byte.  If the value is greater than 0xFFFF,
+     * i.e. the upper byte of three is non-zero, the upper byte is
+     * used as the op code, otherwise 0xFE (TMCC 1) will be used.
      *
      * @param value The value stored in the content of the packet
      */
     public SerialMessage(int value) {
         super(3);
-        setOpCode(0xFE);
+        if ( (value & 0xFF0000) != 0) {
+            setOpCode((value >> 16 ) & 0xFF);
+        } else {
+            setOpCode(0xFE);
+        }
         putAsWord(value);
         setTimeout(100);
     }

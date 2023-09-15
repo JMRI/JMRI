@@ -38,7 +38,7 @@ public interface CatalogTreeManager extends Manager<CatalogTree> {
      * @return null if no match found
      */
     @CheckForNull
-    public CatalogTree getCatalogTree(@Nonnull String name);
+    CatalogTree getCatalogTree(@Nonnull String name);
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
@@ -49,7 +49,7 @@ public interface CatalogTreeManager extends Manager<CatalogTree> {
      */
     @Override
     @CheckForNull
-    public CatalogTree getBySystemName(@Nonnull String systemName);
+    CatalogTree getBySystemName(@Nonnull String systemName);
 
     /**
      * Locate an instance based on a user name. Returns null if no instance
@@ -60,7 +60,7 @@ public interface CatalogTreeManager extends Manager<CatalogTree> {
      */
     @Override
     @CheckForNull
-    public CatalogTree getByUserName(@Nonnull String userName);
+    CatalogTree getByUserName(@Nonnull String userName);
 
     /**
      * Get a CatalogTree instance with the specified system and user names.
@@ -90,28 +90,28 @@ public interface CatalogTreeManager extends Manager<CatalogTree> {
      * @throws IllegalArgumentException if unable to create.
      */
     @Nonnull
-    public CatalogTree newCatalogTree(@Nonnull String systemName, String userName) throws IllegalArgumentException;
+    CatalogTree newCatalogTree(@Nonnull String systemName, String userName) throws IllegalArgumentException;
 
-    public void storeImageIndex();
+    void storeImageIndex();
 
-    public void loadImageIndex();
+    void loadImageIndex();
 
-    public boolean isIndexChanged();
+    boolean isIndexChanged();
 
-    public boolean isIndexLoaded();
+    boolean isIndexLoaded();
 
-    public void indexChanged(boolean changed);
+    void indexChanged(boolean changed);
 
     @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY",
             justification = "with existing code structure, just have to accept these exposed arrays. Someday...")
-    static final String[] IMAGE_FILTER = {"gif", "jpg", "jpeg", "png"};
+    String[] IMAGE_FILTER = {"gif", "jpg", "jpeg", "png"};
 
     @SuppressFBWarnings(value = "MS_OOI_PKGPROTECT",
             justification = "with existing code structure, just have to accept these exposed arrays. Someday...")
-    static final String[] SOUND_FILTER = {"wav"};
+    String[] SOUND_FILTER = {"wav"};
 
     @SuppressFBWarnings(value = "MS_OOI_PKGPROTECT",
             justification = "with existing code structure, just have to accept these exposed arrays. Someday...")
-    static final String[] SCRIPT_FILTER = {"py", "scpt"};
+    String[] SCRIPT_FILTER = {"py", "scpt"};
 
 }

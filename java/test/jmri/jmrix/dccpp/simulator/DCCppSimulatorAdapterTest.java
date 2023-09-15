@@ -38,10 +38,9 @@ public class DCCppSimulatorAdapterTest {
         try {
            r = (DCCppReply) generateReplyMethod.invoke(a,m);
         } catch(java.lang.IllegalAccessException ite){
-             Assert.fail("could not access method generateReply in DCCppSimulatoradapter class");
+             Assertions.fail("could not access method generateReply in DCCppSimulatoradapter class ", ite);
         } catch(java.lang.reflect.InvocationTargetException ite){
-             Throwable cause = ite.getCause();
-             Assert.fail("generateReply execution failed reason: " + cause.getMessage());
+             Assertions.fail("generateReply execution failed reason: ", ite);
         }
         return r;
     }
@@ -50,11 +49,11 @@ public class DCCppSimulatorAdapterTest {
     @Test
     public void testThrottleReplies() {
         DCCppReply r = getReplyForMessage(new DCCppMessage("t 1 1234 22 1"));
-        Assert.assertEquals(r.toMonitorString(), "Throttle Reply: Register: 1, Speed: 22, Direction: Forward");
+        Assertions.assertEquals( "Throttle Reply: Register: 1, Speed: 22, Direction: Forward", r.toMonitorString());
         r = getReplyForMessage(new DCCppMessage("t 1234 22 1")); //<t locoId speed dir>
-        Assert.assertEquals("Loco State: LocoId:1234 Dir:Forward Speed:22 F0-28:00000000000000000000000000000", r.toMonitorString());
+        Assertions.assertEquals("Loco State: LocoId:1234 Dir:Forward Speed:22 F0-28:00000000000000000000000000000", r.toMonitorString());
         r = getReplyForMessage(new DCCppMessage("t 1234 44 0"));
-        Assert.assertEquals("Loco State: LocoId:1234 Dir:Reverse Speed:44 F0-28:00000000000000000000000000000", r.toMonitorString());
+        Assertions.assertEquals("Loco State: LocoId:1234 Dir:Reverse Speed:44 F0-28:00000000000000000000000000000", r.toMonitorString());
     }
 
     @Test

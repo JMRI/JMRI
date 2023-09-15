@@ -30,6 +30,7 @@ public class LogixNG_SelectString implements VetoableChangeListener {
     private final PropertyChangeListener _listener;
     private boolean _listenToMemory;
     private boolean _listenersAreRegistered;
+    private boolean _onlyDirectAddressingAllowed;
 
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
     private String _value;
@@ -40,13 +41,29 @@ public class LogixNG_SelectString implements VetoableChangeListener {
     private ExpressionNode _expressionNode;
 
 
-    public LogixNG_SelectString(AbstractBase base, PropertyChangeListener listener) {
+    public LogixNG_SelectString(AbstractBase base, InUse inUse, PropertyChangeListener listener) {
         _base = base;
-        _inUse = () -> true;
+        _inUse = inUse;
         _selectTable = new LogixNG_SelectTable(_base, _inUse);
         _listener = listener;
     }
 
+    public LogixNG_SelectString(AbstractBase base, PropertyChangeListener listener) {
+        this(base, () -> true, listener);
+    }
+
+    public LogixNG_SelectString(AbstractBase base, String defaultValue, PropertyChangeListener listener) {
+        this(base, listener);
+        _value = defaultValue;
+    }
+
+    public void setOnlyDirectAddressingAllowed() {
+        _onlyDirectAddressingAllowed = true;
+    }
+
+    public boolean isOnlyDirectAddressingAllowed() {
+        return _onlyDirectAddressingAllowed;
+    }
 
     public void copy(LogixNG_SelectString copy) throws ParserException {
         copy.setAddressing(_addressing);
@@ -60,6 +77,9 @@ public class LogixNG_SelectString implements VetoableChangeListener {
     }
 
     public void setAddressing(@Nonnull NamedBeanAddressing addressing) throws ParserException {
+        if (_onlyDirectAddressingAllowed && (addressing != NamedBeanAddressing.Direct)) {
+            throw new IllegalArgumentException("Addressing must be Direct");
+        }
         this._addressing = addressing;
         parseFormula();
     }

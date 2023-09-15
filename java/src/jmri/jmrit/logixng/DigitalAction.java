@@ -14,6 +14,6 @@ public interface DigitalAction extends Base {
      * 
      * @throws JmriException when an exception occurs
      */
-    public void execute() throws JmriException;
+    void execute() throws JmriException;
     
 }

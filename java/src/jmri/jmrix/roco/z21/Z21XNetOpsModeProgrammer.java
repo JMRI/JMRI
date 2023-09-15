@@ -22,6 +22,8 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
     private int _cv;
     private LnTrafficController lnTC;
 
+    static public int operationDelay = 50; // public for script acccess
+
     public Z21XNetOpsModeProgrammer(int pAddress, XNetTrafficController controller) {
         this(pAddress,controller,null);
     }
@@ -37,7 +39,7 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Send an ops-mode write request to the Xpressnet.
@@ -48,7 +50,7 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
         XNetMessage msg = XNetMessage.getWriteOpsModeCVMsg(mAddressHigh, mAddressLow, CV, val);
         msg.setBroadcastReply(); // reply comes through a loconet message.
         tc.sendXNetMessage(msg, this);
-        /* we need to save the programer and value so we can send messages 
+        /* we need to save the programer and value so we can send messages
          back to the screen when the programming screen when we receive
          something from the command station */
         progListener = p;
@@ -58,7 +60,7 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
         restartTimer(msg.getTimeout());
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -75,7 +77,7 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
         restartTimer(msg.getTimeout());
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -92,23 +94,24 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
         restartTimer(msg.getTimeout());
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
     synchronized public void message(XNetReply l) {
         if (progState == NOTPROGRAMMING) {
-            // We really don't care about any messages unless we send a 
+            // We really don't care about any messages unless we send a
             // request, so just ignore anything that comes in
         } else if (progState == REQUESTSENT) {
             if (l.isOkMessage()) {
-                // Before we set the programmer state to not programming, 
-                // delay for a short time to give the decoder a chance to 
+                // Before we set the programmer state to not programming,
+                // delay for a short time to give the decoder a chance to
                 // process the request.
-                new jmri.util.WaitHandler(this,250);
-                progState = NOTPROGRAMMING;
                 stopTimer();
-                notifyProgListenerEnd(progListener, value, jmri.ProgListener.OK);
+                jmri.util.ThreadingUtil.runOnLayoutDelayed (() -> {
+                    progState = NOTPROGRAMMING;
+                    notifyProgListenerEnd(progListener, value, jmri.ProgListener.OK);
+                }, operationDelay);
             } else if (l.getElement(0) == Z21Constants.LAN_X_CV_RESULT_XHEADER
                     && l.getElement(1) == Z21Constants.LAN_X_CV_RESULT_DB0) {
                 // valid operation response, but does it belong to us?
@@ -117,11 +120,13 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
                     return; // not for us.
                 }
                 value = l.getElement(4);
-                progState = NOTPROGRAMMING;
                 stopTimer();
-                // if this was a read, we cached the value earlier.  If its a
-                // write, we're to return the original write value
-                notifyProgListenerEnd(progListener, value, jmri.ProgListener.OK);
+                jmri.util.ThreadingUtil.runOnLayoutDelayed (() -> {
+                    progState = NOTPROGRAMMING;
+                    // if this was a read, we cached the value earlier.  If its a
+                    // write, we're to return the original write value
+                    notifyProgListenerEnd(progListener, value, jmri.ProgListener.OK);
+                }, operationDelay);
             } else {
                 /* this is an error */
                 if (l.isRetransmittableErrorMsg()) {
@@ -153,7 +158,7 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
      */
     @Override
     synchronized public void message(LocoNetMessage m){
-      // the Roco Z21 responds to Operations mode write requests with a 
+      // the Roco Z21 responds to Operations mode write requests with a
       // LocoNet message.
         log.debug("LocoNet message received: {}", m);
 
@@ -164,7 +169,7 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
             // so let's see if it is for us.
             log.debug("Right message slot and programming");
 
-            // the following 8 lines and assignment of val were copied 
+            // the following 8 lines and assignment of val were copied
             // from the loconet monitor.
             int hopsa = m.getElement(5); // Ops mode - 7 high address bits
             // of loco to program
@@ -176,7 +181,7 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
             int cvNumber = (((((cvh & LnConstants.CVH_CV8_CV9) >> 3) | (cvh & LnConstants.CVH_CV7)) * 128) + (cvl & 0x7f)) + 1;
             int address =  hopsa * 128 + lopsa;
 
-            // if we attempt to verify the cvNumber, this fails for 
+            // if we attempt to verify the cvNumber, this fails for
             // multiple writes from the Symbolic Programmer.
             if(address!=mAddress || cvNumber != _cv ){
                log.debug("message for address {} expecting {}; cv {} expecting {}",
@@ -184,24 +189,34 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
                return; // not for us
             }
 
-            int val = -1;
+            int val;
 
             if ((m.getElement(2) & 0x20) != 0) {
                val = (((cvh & LnConstants.CVH_D7) << 6) | (data7 & 0x7f));
+            } else {
+                val = -1;
             }
-  
+
             log.debug("received value {} for cv {} on address {}",val,cvNumber,address);
 
             // successful read if LACK return status is not 0x7F
-            int code = ProgListener.OK;
+            int code;
             if ((m.getElement(2) == 0x7f)) {
                code = ProgListener.UnknownError;
+            } else {
+                code = ProgListener.OK;
             }
 
             progState = NOTPROGRAMMING;
             stopTimer();
-            log.debug("sending code {} val {} to programmer",code,val);
-            notifyProgListenerEnd(progListener, val, code);
+            log.debug("delay to sending code {} val {} to programmer",code,val);
+            jmri.util.ThreadingUtil.runOnLayoutDelayed (() -> {
+                progState = NOTPROGRAMMING;
+                // if this was a read, we cached the value earlier.  If its a
+                // write, we're to return the original write value
+                log.debug("now ending code {} val {} to programmer",code,val);
+                notifyProgListenerEnd(progListener, val, code);
+            }, operationDelay);
         }
     }
 

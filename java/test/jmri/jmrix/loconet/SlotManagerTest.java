@@ -323,6 +323,78 @@ public class SlotManagerTest {
     }
 
     @Test
+    public void testReadCVFromBoardOnDCS240andDT602() throws jmri.ProgrammerException {
+        // test with extra 0x7F reply
+        log.debug(".... start testReadCVFromBoardOnDCS240andDT602 ...");
+
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis, slotmanager);
+        LnProgrammerManager t = new LnProgrammerManager(memo);
+        var programmer = t.getAddressedProgrammer(true, 11010);
+
+        String CV1 = "2";
+        programmer.setMode(LnProgrammerManager.LOCONETOPSBOARD);
+        programmer.readCV(CV1, lstn);
+        Assert.assertEquals("read message",
+                "EF 0E 7C 2F 00 56 02 00 00 01 00 7F 7F 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("initial status", -999, status);
+
+        // LACKs received back (DCS240 + DT6 sequence)
+        log.debug("send 1st LACK back");
+        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x7F, 0x5B}));
+
+        log.debug("send 2nd LACK back");
+        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x01, 0x25}));
+
+        // read received back (DCS240 sequence)
+        value = 0;
+        log.debug("send E7 reply back with value 35");
+        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7C, 0x2B, 0x00, 0x00, 0x02, 0x47, 0x00, 0x1C, 0x23, 0x7F, 0x7F, 0x3B}));
+        JUnitUtil.waitFor(()->{return value == 35;},"value == 35 not set");
+        log.debug("checking..");
+        Assert.assertEquals("reply status", 0, status);
+        Assert.assertEquals("reply value", 35, value);
+
+        log.debug(".... end testReadCVFromBoardOnDCS240andDT602 ...");
+    }
+
+    @Test
+    public void testReadCVFromBoardOnDCS100() throws jmri.ProgrammerException {
+        // test with only 0x7F reply
+        log.debug(".... start testReadCVFromBoardOnDCS100 ...");
+
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis, slotmanager);
+        LnProgrammerManager t = new LnProgrammerManager(memo);
+        var programmer = t.getAddressedProgrammer(true, 11010);
+
+        String CV1 = "2";
+        // programmer.setMode(LnProgrammerManager.LOCONETOPSBOARD);
+        programmer.setMode(LnProgrammerManager.LOCONETOPSBOARD);
+        programmer.readCV(CV1, lstn);
+
+        Assert.assertEquals("read message",
+                "EF 0E 7C 2F 00 56 02 00 00 01 00 7F 7F 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("initial status", -999, status);
+
+        log.debug("send 1st LACK back");
+        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x7F, 0x5B}));
+
+        // read received back (DCS100 sequence)
+        value = 0;
+        log.debug("send E7 reply back with value 35");
+        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7C, 0x2B, 0x00, 0x00, 0x02, 0x47, 0x00, 0x1C, 0x23, 0x7F, 0x7F, 0x3B}));
+        JUnitUtil.waitFor(()->{return value == 35;},"value == 35 not set");
+        log.debug("checking..");
+        Assert.assertEquals("reply status", 0, status);
+        Assert.assertEquals("reply value", 35, value);
+
+        log.debug(".... end testReadCVFromBoardOnDCS100 ...");
+    }
+
+    @Test
     public void testReadCVOpsModeLong() throws jmri.ProgrammerException {
         String CV1 = "12";
         ProgListener p2 = null;

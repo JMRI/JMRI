@@ -143,7 +143,7 @@ public class LayoutShapeXml extends AbstractXmlAdapter {
         if (pointsElement != null) {
             List<Element> elementList = pointsElement.getChildren("point");
             if (elementList != null) {
-                if (elementList.size() > 0) {
+                if (!elementList.isEmpty()) {
                     for (int i = 0; i < elementList.size(); i++) {
                         Element relem = elementList.get(i);
 
@@ -170,6 +170,7 @@ public class LayoutShapeXml extends AbstractXmlAdapter {
             log.error("Layout Shape points element not found.");
         }
         p.getLayoutShapes().add(s);
+        p.unionToPanelBounds(s.getBounds());
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutShapeXml.class);

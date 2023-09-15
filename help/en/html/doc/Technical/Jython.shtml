@@ -55,10 +55,11 @@
       configure that when running with Jython, you should do:
 
       <pre>
-  import org
-  org.apache.log4j.PropertyConfigurator.configure("default.lcf")
-</pre>before starting any of the JMRI classes. The "default.lcf" is the name of the logging control
-file to be used; it can be omitted.
+  import org.apache.logging.log4j.core.config.Configurator
+  Configurator.initialize(null, "default_lcf.xml");
+</pre>before starting any of the JMRI classes.
+
+      The &quot;default.lcf&quot; is the name of the logging control file to be used.
       <p>To make JMRI classes available, you have to do:</p>
 
       <pre>

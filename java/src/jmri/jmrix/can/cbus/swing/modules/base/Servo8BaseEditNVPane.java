@@ -16,14 +16,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Node Variable edit frame for a basic 8 channel servo module
+ * Node Variable edit frame for a basic 8 channel servo module.
  * 
- * SBUS Servo modules behave differently in that they need to be in learn mode to
- * write NVs. NVs are written in "real time" as the user interacts withthe GUI.
- * This allows the servo positions to be observed during setup. The NVs will be
- * stored by the module when it is taken out of learn mode. The entry/exit to/from
- * learn mode is handled in CbusNodeNVEditGuiPane when changing the displayed
- * node.
+ * NVs can be written in "real time" as the user interacts with the GUI.
+ * This allows the servo positions to be observed during setup.
+ * CBUS Servo modules behave differently in that they need to be in learn mode
+ * to write NVs.
+ * The NVs will be stored by the module when it is taken out of learn mode.
+ * The entry/exit to/from learn mode is handled by the call to CbusSend.nVSET
  *
  * @author Andrew Crosland Copyright (C) 2021
  */
@@ -274,8 +274,8 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
         
         protected JButton testOn;
         protected JButton testOff;
-        protected JRadioButton cutoff;
-        protected JRadioButton seq;
+        protected JCheckBox cutoff;
+        protected JCheckBox seq;
         protected TitledSlider onPosSlider;
         protected TitledSlider offPosSlider;
         protected TitledSpinner onSpdSpinner;
@@ -297,8 +297,8 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
 
             testOn = new JButton(Bundle.getMessage("TestOn"));
             testOff = new JButton(Bundle.getMessage("TestOff"));
-            cutoff = new JRadioButton(Bundle.getMessage("Cutoff"));
-            seq = new JRadioButton(Bundle.getMessage("SequentialOp"));
+            cutoff = new JCheckBox(Bundle.getMessage("Cutoff"));
+            seq = new JCheckBox(Bundle.getMessage("SequentialOp"));
             
             testOn.setToolTipText(Bundle.getMessage("TestOnTt"));
             testOff.setToolTipText(Bundle.getMessage("TestOffTt"));

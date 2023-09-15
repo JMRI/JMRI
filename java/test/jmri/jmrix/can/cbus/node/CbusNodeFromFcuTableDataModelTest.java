@@ -23,8 +23,6 @@ public class CbusNodeFromFcuTableDataModelTest {
         Assert.assertNotNull("exists",t);
         
         Assertions.assertEquals(0, tcis.outbound.size(),"no can frames sent by fcu model");
-
-        t.dispose();
         
     }
     
@@ -66,8 +64,6 @@ public class CbusNodeFromFcuTableDataModelTest {
         
         Assertions.assertEquals(0, tcis.outbound.size(),"no can frames sent by fcu model");
 
-        t.dispose();
-
     }
 
     @Test
@@ -103,8 +99,6 @@ public class CbusNodeFromFcuTableDataModelTest {
         Assert.assertTrue("setValueAt does nothing",(Integer)t.getValueAt(0,CbusNodeFromFcuTableDataModel.NODE_NV_TOTAL_COLUMN)== 3 );
         
         Assertions.assertEquals(0, tcis.outbound.size(),"no can frames sent by fcu model");
-
-        t.dispose();
         
     }
 

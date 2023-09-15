@@ -29,7 +29,7 @@ public class SoundBiteTest {
     public void testCreateSimple() {
         SoundBite uut = new SoundBite("unitUnderTest"); // QUEUE_MODE
         Assert.assertEquals("sound name", "unitUnderTest", uut.getName());
-        Assert.assertFalse("is playing", uut.isPlaying());
+        Assert.assertFalse("is playing", uut.getSource().getState() == jmri.Audio.STATE_PLAYING);
     }
 
     String filename = "java/test/jmri/jmrit/vsdecoder/test.wav";
@@ -42,7 +42,7 @@ public class SoundBiteTest {
         Assert.assertEquals("system name", "sysname", uut.getSystemName());
         Assert.assertEquals("user name", "uname", uut.getUserName());
         Assert.assertTrue("initialized", uut.isInitialized());
-        Assert.assertFalse("is playing", uut.isPlaying());
+        Assert.assertFalse("is playing", uut.getSource().getState() == jmri.Audio.STATE_PLAYING);
     }
 
     @Test

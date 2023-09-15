@@ -9,9 +9,7 @@ import org.junit.jupiter.api.Test;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
+import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
 
 /**
@@ -57,5 +55,13 @@ public class RouteBlockingOrderEditFrameTest extends OperationsTestCase {
             Assert.assertEquals("blocking order after reset", i++, rl.getBlockingOrder());
         }
         JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Route r = JUnitOperationsUtil.createThreeLocationTurnRoute();
+        RouteBlockingOrderEditFrame f = new RouteBlockingOrderEditFrame(r);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 }

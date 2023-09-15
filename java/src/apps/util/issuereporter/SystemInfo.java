@@ -30,7 +30,6 @@ import purejavacomm.CommPortIdentifier;
 
 /**
  * Provide the JMRI context info.
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2009
  * @author Matt Harris Copyright (C) 2008, 2009
@@ -109,7 +108,7 @@ public class SystemInfo {
         if (!GraphicsEnvironment.isHeadless()) {
             addLine(list, "FileSystemView#getDefaultDirectory()", FileSystemView.getFileSystemView().getDefaultDirectory().getPath());
             addLine(list, "FileSystemView#getHomeDirectory()", FileSystemView.getFileSystemView().getHomeDirectory().getPath());
-            addLine(list, "Default JFileChooser()", new JFileChooser().getCurrentDirectory().getPath());
+            addLine(list, "Default JFileChooser()", new jmri.util.swing.JmriJFileChooser().getCurrentDirectory().getPath());
         }
         addDisplayDimensions(list);
 

@@ -7,9 +7,6 @@ import java.util.List;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.*;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -24,6 +21,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.*;
 import jmri.swing.NamedBeanComboBox;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user edit of tracks. Base for edit of all track types.
@@ -55,7 +53,7 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
 
     // Alternate tool buttons
     JButton loadOptionButton = new JButton(Bundle.getMessage("AcceptsAllLoads"));
-    JButton shipLoadOptionButton = new JButton(Bundle.getMessage("ShipAll"));
+    JButton shipLoadOptionButton = new JButton(Bundle.getMessage("ShipsAllLoads"));
     JButton roadOptionButton = new JButton(Bundle.getMessage("AcceptsAllRoads"));
     JButton destinationOptionButton = new JButton();
 
@@ -215,7 +213,7 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
 
         pDestinationOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Destinations")));
         pDestinationOption.add(destinationOptionButton);
-        destinationOptionButton.addActionListener(new TrackDestinationEditAction(_track));
+        destinationOptionButton.addActionListener(new TrackDestinationEditAction(this));
 
         panelRoadAndLoadStatus.add(pRoadOption);
         panelRoadAndLoadStatus.add(pLoadOption);
@@ -421,10 +419,10 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
             Route route = train.getRoute();
             id = train.getId();
             if (!checkRoute(route)) {
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         MessageFormat.format(Bundle.getMessage("TrackNotByTrain"),
                                 new Object[] { train.getName() }),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
             selectNextItemComboBox(comboBoxDropTrains);
@@ -435,10 +433,10 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
             Route route = ((Route) comboBoxDropRoutes.getSelectedItem());
             id = route.getId();
             if (!checkRoute(route)) {
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         MessageFormat.format(Bundle.getMessage("TrackNotByRoute"),
                                 new Object[] { route.getName() }),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
             selectNextItemComboBox(comboBoxDropRoutes);
@@ -474,10 +472,10 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
             Route route = train.getRoute();
             id = train.getId();
             if (!checkRoute(route)) {
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         MessageFormat.format(Bundle.getMessage("TrackNotByTrain"),
                                 new Object[] { train.getName() }),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
             selectNextItemComboBox(comboBoxPickupTrains);
@@ -488,10 +486,10 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
             Route route = ((Route) comboBoxPickupRoutes.getSelectedItem());
             id = route.getId();
             if (!checkRoute(route)) {
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         MessageFormat.format(Bundle.getMessage("TrackNotByRoute"),
                                 new Object[] { route.getName() }),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
             selectNextItemComboBox(comboBoxPickupRoutes);
@@ -561,9 +559,9 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         if (_track != null) {
             int rs = _track.getNumberRS();
             if (rs > 0) {
-                if (JOptionPane.showConfirmDialog(this,
+                if (JmriJOptionPane.showConfirmDialog(this,
                         MessageFormat.format(Bundle.getMessage("ThereAreCars"), new Object[] { Integer.toString(rs) }),
-                        Bundle.getMessage("deleteTrack?"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                        Bundle.getMessage("deleteTrack?"), JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                     return;
                 }
             }
@@ -656,25 +654,25 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         String trackName = trackNameTextField.getText().trim();
         if (trackName.isEmpty()) {
             log.debug("Must enter a track name");
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"),
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"),
                     MessageFormat.format(Bundle.getMessage("CanNotTrack"), new Object[] { s }),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         String[] check = trackName.split(TrainCommon.HYPHEN);
         if (check.length == 0) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("HyphenFeature"),
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("HyphenFeature"),
                     MessageFormat.format(Bundle.getMessage("CanNotTrack"), new Object[] { s }),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
 
             return false;
         }
         if (TrainCommon.splitString(trackName).length() > MAX_NAME_LENGTH) {
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     MessageFormat.format(Bundle.getMessage("TrackNameLengthMax"),
                             new Object[] { Integer.toString(MAX_NAME_LENGTH + 1) }),
                     MessageFormat.format(Bundle.getMessage("CanNotTrack"), new Object[] { s }),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -690,8 +688,8 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
                 int feet = (int) (inches * Setup.getScaleRatio() / 12);
                 length = Integer.toString(feet);
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertFeet"),
-                        Bundle.getMessage("ErrorTrackLength"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertFeet"),
+                        Bundle.getMessage("ErrorTrackLength"), JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -703,8 +701,8 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
                 length = Integer.toString(meter);
             } catch (NumberFormatException e) {
                 // log.error("Can not convert from cm to meters");
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertMeter"),
-                        Bundle.getMessage("ErrorTrackLength"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertMeter"),
+                        Bundle.getMessage("ErrorTrackLength"), JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -713,29 +711,29 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         try {
             trackLength = Integer.parseInt(length);
             if (length.length() > Control.max_len_string_track_length_name) {
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         MessageFormat.format(Bundle.getMessage("TrackMustBeLessThan"),
                                 new Object[] { Math.pow(10, Control.max_len_string_track_length_name),
                                         Setup.getLengthUnit().toLowerCase() }),
-                        Bundle.getMessage("ErrorTrackLength"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTrackLength"), JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
         } catch (NumberFormatException e) {
             // log.error("Track length not an integer");
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("TrackMustBeNumber"),
-                    Bundle.getMessage("ErrorTrackLength"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("TrackMustBeNumber"),
+                    Bundle.getMessage("ErrorTrackLength"), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         // track length can not be less than than the sum of used and reserved length
         if (trackLength != track.getLength() && trackLength < track.getUsedLength() + track.getReserved()) {
             // log.warn("Track length should not be less than used and reserved");
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("TrackMustBeGreater"),
-                    Bundle.getMessage("ErrorTrackLength"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("TrackMustBeGreater"),
+                    Bundle.getMessage("ErrorTrackLength"), JmriJOptionPane.ERROR_MESSAGE);
             // does the user want to force the track length?
-            if (JOptionPane.showConfirmDialog(this,
+            if (JmriJOptionPane.showConfirmDialog(this,
                     MessageFormat.format(Bundle.getMessage("TrackForceLength"),
                             new Object[] { track.getLength(), trackLength, Setup.getLengthUnit().toLowerCase() }),
-                    Bundle.getMessage("ErrorTrackLength"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                    Bundle.getMessage("ErrorTrackLength"), JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                 return false;
             }
         }
@@ -748,14 +746,14 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         // check train and route restrictions
         if ((trainDrop.isSelected() || routeDrop.isSelected()) && track.getDropIds().length == 0) {
             log.debug("Must enter trains or routes for this track");
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("UseAddTrainsOrRoutes"),
-                    Bundle.getMessage("SetOutDisabled"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("UseAddTrainsOrRoutes"),
+                    Bundle.getMessage("SetOutDisabled"), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         if ((trainPickup.isSelected() || routePickup.isSelected()) && track.getPickupIds().length == 0) {
             log.debug("Must enter trains or routes for this track");
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("UseAddTrainsOrRoutes"),
-                    Bundle.getMessage("PickUpsDisabled"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("UseAddTrainsOrRoutes"),
+                    Bundle.getMessage("PickUpsDisabled"), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -765,8 +763,8 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         // check to see if all car types can be pulled from this track
         String status = track.checkPickups();
         if (!status.equals(Track.PICKUP_OKAY) && !track.getPickupOption().equals(Track.ANY)) {
-            JOptionPane.showMessageDialog(this, status, Bundle.getMessage("ErrorStrandedCar"),
-                    JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, status, Bundle.getMessage("ErrorStrandedCar"),
+                    JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -774,8 +772,8 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
 
     private void reportTrackExists(String s) {
         log.info("Can not {}, track already exists", s);
-        JOptionPane.showMessageDialog(this, Bundle.getMessage("TrackAlreadyExists"),
-                MessageFormat.format(Bundle.getMessage("CanNotTrack"), new Object[] { s }), JOptionPane.ERROR_MESSAGE);
+        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("TrackAlreadyExists"),
+                MessageFormat.format(Bundle.getMessage("CanNotTrack"), new Object[] { s }), JmriJOptionPane.ERROR_MESSAGE);
     }
 
     protected void enableButtons(boolean enabled) {
@@ -1086,9 +1084,14 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         // log.debug("Update all checkboxes");
         checkBoxes.clear();
         panelCheckBoxes.removeAll();
+        numberOfCheckBoxes = getNumberOfCheckboxesPerLine();
         x = 0;
         y = 0; // vertical position in panel
         loadTypes(InstanceManager.getDefault(CarTypes.class).getNames());
+        
+        // add space between car and loco types
+        checkNewLine();
+ 
         loadTypes(InstanceManager.getDefault(EngineTypes.class).getNames());
         enableCheckboxes(_track != null);
 
@@ -1108,22 +1111,27 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
     int y = 0; // vertical position in panel
 
     private void loadTypes(String[] types) {
-        int numberOfCheckboxes = getNumberOfCheckboxesPerLine();
         for (String type : types) {
             if (_location.acceptsTypeName(type)) {
                 JCheckBox checkBox = new JCheckBox();
                 checkBoxes.add(checkBox);
                 checkBox.setText(type);
                 addCheckBoxAction(checkBox);
-                addItemLeft(panelCheckBoxes, checkBox, x++, y);
+                addItemLeft(panelCheckBoxes, checkBox, x, y);
                 if (_track != null && _track.isTypeNameAccepted(type)) {
                     checkBox.setSelected(true);
                 }
+                checkNewLine();
             }
-            if (x > numberOfCheckboxes) {
-                y++;
-                x = 0;
-            }
+        }
+    }
+    
+    int numberOfCheckBoxes;
+    
+    private void checkNewLine() {
+        if (++x > numberOfCheckBoxes) {
+            y++;
+            x = 0;
         }
     }
 
@@ -1275,5 +1283,5 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackEditFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackEditFrame.class);
 }

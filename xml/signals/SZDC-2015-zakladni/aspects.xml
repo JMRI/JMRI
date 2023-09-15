@@ -7,7 +7,7 @@
 >
   <name>SŽDC 2015 základní návěstidla</name>
   <date>2015</date>
-  
+
   <reference>Správa železniční dopravní cesty; D1 Dopravní a návěstní předpis; SŽDC 2013, změna č. 3 2015</reference>
   <reference>The Railway Infrastructure Administration; D1 Traffic and Signal Aspects Rules; SŽDC 2013, amendment no. 3 2015</reference>
 
@@ -19,7 +19,7 @@
     <author>
         <personname><firstname>Petr</firstname><surname>Šídlo</surname></personname>
         <email>sidlo64@hotmail.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -28,29 +28,29 @@
         <date>2016-12-26</date>
         <authorinitials>PŠ</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>2</revnumber>
         <date>2018-09-22</date>
         <authorinitials>PŠ</authorinitials>
         <revremark>Panel indicators</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>3</revnumber>
         <date>2019-02-19</date>
         <authorinitials>PŠ</authorinitials>
         <revremark>Aspect 25 Unlit</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>4</revnumber>
         <date>2020-05-12</date>
         <authorinitials>PŠ</authorinitials>
         <revremark>Speed names</revremark>
-    </revision>    
+    </revision>
   </revhistory>
 
   <aspects>
-  
+
     <aspect>
       <name>Stůj</name>
       <title>Stop</title>
@@ -358,7 +358,7 @@
       <reference>Aspect 841</reference>
       <comment>Jízda vlaku dovolena</comment>
       <speed>Normal</speed>
-      <speed2>Either</speed2>
+      <speed2>Normal</speed2>
       <route>Either</route>
       <dccAspect>26</dccAspect>
     </aspect>
@@ -409,7 +409,7 @@
       <description>One white flashing light</description>
       <reference>Aspect 971</reference>
       <comment>Přivolávací návěst</comment>
-      <speed>Slowly</speed>
+      <speed>Slow</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
       <dccAspect>30</dccAspect>
@@ -422,7 +422,7 @@
       <description>One white flashing light with red light</description>
       <reference>Aspect 970</reference>
       <comment>Přivolávací návěst</comment>
-      <speed>Slowly</speed>
+      <speed>Slow</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
       <dccAspect>31</dccAspect>
@@ -432,7 +432,7 @@
 
   <imagetypes>
 	<imagetype type="prototype"/>
-	
+
         <imagetype type="AŽD z"/>
 	<imagetype type="AŽD zč"/>
 	<imagetype type="AŽD zb"/>
@@ -445,7 +445,7 @@
 	<imagetype type="AŽD žčb"/>
 	<imagetype type="AŽD žb"/>
 	<imagetype type="AŽD žbz"/>
-	
+
         <imagetype type="ESP z"/>
 	<imagetype type="ESP zč"/>
 	<imagetype type="ESP zb"/>
@@ -458,10 +458,10 @@
 	<imagetype type="ESP žčb"/>
 	<imagetype type="ESP žb"/>
 	<imagetype type="ESP žbz"/>
-	
+
 	<imagetype type="JOP hlavní"/>
 	<imagetype type="JOP seřaďovací"/>
-        
+
   </imagetypes>
 
   <appearancefiles>
@@ -476,9 +476,9 @@
 
     <appearancefile href="appearance-block.xml"/>
     <appearancefile href="appearance-block_distant.xml"/>
-    
+
     <appearancefile href="appearance-abs.xml"/>
-    
+
     <appearancefile href="appearance-shunting.xml"/>
 
     <appearancefile href="appearance-test.xml"/>

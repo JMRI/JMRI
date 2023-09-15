@@ -82,29 +82,29 @@ public interface Section extends NamedBean {
     /**
      * The value of {@link #getState()} if section is available for allocation.
      */
-    public static final int FREE = 0x02;
+    int FREE = 0x02;
 
     /**
      * The value of {@link #getState()} if section is allocated for travel in
      * the forward direction.
      */
-    public static final int FORWARD = 0x04;
+    int FORWARD = 0x04;
 
     /**
      * The value of {@link #getState()} if section is allocated for travel in
      * the reverse direction.
      */
-    public static final int REVERSE = 0X08;
+    int REVERSE = 0X08;
 
     /**
      * Value representing an occupied section.
      */
-    public static final int OCCUPIED = Block.OCCUPIED;
+    int OCCUPIED = Block.OCCUPIED;
 
     /**
      * Value representing an unoccupied section.
      */
-    public static final int UNOCCUPIED = Block.UNOCCUPIED;
+    int UNOCCUPIED = Block.UNOCCUPIED;
 
     /**
      * Provide generic access to internal state.
@@ -118,7 +118,7 @@ public interface Section extends NamedBean {
      * @param newState the state
      */
     @Override
-    public void setState(int newState);
+    void setState(int newState);
 
     /**
      * Get the occupancy of a Section.
@@ -126,44 +126,44 @@ public interface Section extends NamedBean {
      * @return {@link #OCCUPIED}, {@link #UNOCCUPIED}, or the state of the first
      *         block that is neither occupied or unoccupied
      */
-    public int getOccupancy();
+    int getOccupancy();
 
-    public String getForwardBlockingSensorName();
+    String getForwardBlockingSensorName();
 
-    public Sensor getForwardBlockingSensor();
+    Sensor getForwardBlockingSensor();
 
-    public Sensor setForwardBlockingSensorName(String forwardSensor);
+    Sensor setForwardBlockingSensorName(String forwardSensor);
 
-    public void delayedSetForwardBlockingSensorName(String forwardSensor);
+    void delayedSetForwardBlockingSensorName(String forwardSensor);
 
-    public String getReverseBlockingSensorName();
+    String getReverseBlockingSensorName();
 
-    public Sensor setReverseBlockingSensorName(String reverseSensor);
+    Sensor setReverseBlockingSensorName(String reverseSensor);
 
-    public void delayedSetReverseBlockingSensorName(String reverseSensor);
+    void delayedSetReverseBlockingSensorName(String reverseSensor);
 
-    public Sensor getReverseBlockingSensor();
+    Sensor getReverseBlockingSensor();
 
-    public Block getLastBlock();
+    Block getLastBlock();
 
-    public String getForwardStoppingSensorName();
-
-    @CheckForNull
-    public Sensor getForwardStoppingSensor();
-
-    public Sensor setForwardStoppingSensorName(String forwardSensor);
-
-    public void delayedSetForwardStoppingSensorName(String forwardSensor);
-
-    public String getReverseStoppingSensorName();
+    String getForwardStoppingSensorName();
 
     @CheckForNull
-    public Sensor setReverseStoppingSensorName(String reverseSensor);
+    Sensor getForwardStoppingSensor();
 
-    public void delayedSetReverseStoppingSensorName(String reverseSensor);
+    Sensor setForwardStoppingSensorName(String forwardSensor);
+
+    void delayedSetForwardStoppingSensorName(String forwardSensor);
+
+    String getReverseStoppingSensorName();
 
     @CheckForNull
-    public Sensor getReverseStoppingSensor();
+    Sensor setReverseStoppingSensorName(String reverseSensor);
+
+    void delayedSetReverseStoppingSensorName(String reverseSensor);
+
+    @CheckForNull
+    Sensor getReverseStoppingSensor();
 
     /**
      * Add a Block to the Section. Block and sequence number must be unique
@@ -174,9 +174,9 @@ public interface Section extends NamedBean {
      * @return true if Block was added or false if Block does not connect to the
      *         current Block, or the Block is not unique.
      */
-    public boolean addBlock(Block b);
+    boolean addBlock(Block b);
 
-    public void delayedAddBlock(String blockName);
+    void delayedAddBlock(String blockName);
 
     /**
      * Get a list of blocks in this section
@@ -184,14 +184,14 @@ public interface Section extends NamedBean {
      * @return a list of blocks
      */
     @Nonnull
-    public List<Block> getBlockList();
+    List<Block> getBlockList();
 
     /**
      * Gets the number of Blocks in this Section
      *
      * @return the number of blocks
      */
-    public int getNumBlocks();
+    int getNumBlocks();
 
     /**
      * Get the scale length of Section. Length of the Section is calculated by
@@ -202,16 +202,16 @@ public interface Section extends NamedBean {
      * @param scale  the scale; one of {@link jmri.Scale}
      * @return the scale length
      */
-    public float getLengthF(boolean meters, Scale scale);
+    float getLengthF(boolean meters, Scale scale);
 
-    public int getLengthI(boolean meters, Scale scale);
+    int getLengthI(boolean meters, Scale scale);
 
     /**
      * Gets the actual length of the Section without any scaling
      *
      * @return the real length in millimeters
      */
-    public int getActualLength();
+    int getActualLength();
 
     /**
      * Get Block by its Sequence number in the Section.
@@ -220,7 +220,7 @@ public interface Section extends NamedBean {
      * @return the block or null if the sequence number is invalid
      */
     @CheckForNull
-    public Block getBlockBySequenceNumber(int seqNumber);
+    Block getBlockBySequenceNumber(int seqNumber);
 
     /**
      * Get the sequence number of a Block.
@@ -228,45 +228,45 @@ public interface Section extends NamedBean {
      * @param b the block to get the sequence of
      * @return the sequence number of b or -1 if b is not in the Section
      */
-    public int getBlockSequenceNumber(Block b);
+    int getBlockSequenceNumber(Block b);
 
     /**
      * Remove all Blocks, Block Listeners, and Entry Points
      */
-    public void removeAllBlocksFromSection();
+    void removeAllBlocksFromSection();
 
     @CheckForNull
-    public Block getEntryBlock();
+    Block getEntryBlock();
 
     @CheckForNull
-    public Block getNextBlock();
+    Block getNextBlock();
 
     @CheckForNull
-    public Block getExitBlock();
+    Block getExitBlock();
 
-    public boolean containsBlock(Block b);
+    boolean containsBlock(Block b);
 
-    public boolean connectsToBlock(Block b);
+    boolean connectsToBlock(Block b);
 
-    public String getBeginBlockName();
+    String getBeginBlockName();
 
-    public String getEndBlockName();
+    String getEndBlockName();
 
-    public void addToForwardList(EntryPoint ep);
+    void addToForwardList(EntryPoint ep);
 
-    public void addToReverseList(EntryPoint ep);
+    void addToReverseList(EntryPoint ep);
 
-    public void removeEntryPoint(EntryPoint ep);
+    void removeEntryPoint(EntryPoint ep);
 
-    public List<EntryPoint> getForwardEntryPointList();
+    List<EntryPoint> getForwardEntryPointList();
 
-    public List<EntryPoint> getReverseEntryPointList();
+    List<EntryPoint> getReverseEntryPointList();
 
-    public List<EntryPoint> getEntryPointList();
+    List<EntryPoint> getEntryPointList();
 
-    public boolean isForwardEntryPoint(EntryPoint ep);
+    boolean isForwardEntryPoint(EntryPoint ep);
 
-    public boolean isReverseEntryPoint(EntryPoint ep);
+    boolean isReverseEntryPoint(EntryPoint ep);
 
     /**
      * Get the EntryPoint for entry from the specified Section for travel in
@@ -278,7 +278,7 @@ public interface Section extends NamedBean {
      * @return the entry point or null if not found
      */
     @CheckForNull
-    public EntryPoint getEntryPointFromSection(Section s, int dir);
+    EntryPoint getEntryPointFromSection(Section s, int dir);
 
     /**
      * Get the EntryPoint for exit to specified Section for travel in the
@@ -290,7 +290,7 @@ public interface Section extends NamedBean {
      * @return the entry point or null if not found
      */
     @CheckForNull
-    public EntryPoint getExitPointToSection(Section s, int dir);
+    EntryPoint getExitPointToSection(Section s, int dir);
 
     /**
      * Get the EntryPoint for entry from the specified Block for travel in the
@@ -302,7 +302,7 @@ public interface Section extends NamedBean {
      * @return the entry point or null if not found
      */
     @CheckForNull
-    public EntryPoint getEntryPointFromBlock(Block b, int dir);
+    EntryPoint getEntryPointFromBlock(Block b, int dir);
 
     /**
      * Get the EntryPoint for exit to the specified Block for travel in the
@@ -314,7 +314,7 @@ public interface Section extends NamedBean {
      * @return the entry point or null if not found
      */
     @CheckForNull
-    public EntryPoint getExitPointToBlock(Block b, int dir);
+    EntryPoint getExitPointToBlock(Block b, int dir);
 
     /**
      * Place direction sensors in SSL for all Signal Heads in this Section if
@@ -332,7 +332,7 @@ public interface Section extends NamedBean {
      * @return the number or errors placing sensors; 1 is returned if no
      *         direction sensor is defined for this section
      */
-    public int placeDirectionSensors();
+    int placeDirectionSensors();
 
     /**
      * Validate the Section. This checks block connectivity, warns of redundant
@@ -342,7 +342,7 @@ public interface Section extends NamedBean {
      *
      * @return an error description or empty string if there are no errors
      */
-    public String validate();
+    String validate();
 
     /**
      * Set/reset the display to use alternate color for unoccupied blocks in
@@ -351,7 +351,7 @@ public interface Section extends NamedBean {
      *
      * @param set true to use alternate unoccupied color; false otherwise
      */
-    public void setAlternateColor(boolean set);
+    void setAlternateColor(boolean set);
 
     /**
      * Set/reset the display to use alternate color for unoccupied blocks in
@@ -363,28 +363,28 @@ public interface Section extends NamedBean {
      *
      * @param set true to use alternate unoccupied color; false otherwise
      */
-    public void setAlternateColorFromActiveBlock(boolean set);
+    void setAlternateColorFromActiveBlock(boolean set);
 
     /**
      * Set the block values for blocks in this Section.
      *
      * @param name the value to set all blocks to
      */
-    public void setNameInBlocks(String name);
+    void setNameInBlocks(String name);
 
     /**
      * Set the block values for blocks in this Section.
      *
      * @param value the name to set block values to
      */
-    public void setNameInBlocks(Object value);
+    void setNameInBlocks(Object value);
 
-    public void setNameFromActiveBlock(Object value);
+    void setNameFromActiveBlock(Object value);
 
     /**
      * Clear the block values for blocks in this Section.
      */
-    public void clearNameInUnoccupiedBlocks();
+    void clearNameInUnoccupiedBlocks();
 
     /**
      * Suppress the update of a memory variable when a block goes to unoccupied,
@@ -392,16 +392,16 @@ public interface Section extends NamedBean {
      *
      * @param set true to suppress the update; false otherwise
      */
-    public void suppressNameUpdate(boolean set);
+    void suppressNameUpdate(boolean set);
 
     enum SectionType {
         DYNAMICADHOC,   // Created on an as required basis, not to be saved.
         USERDEFINED,    // Default Save all the information
         SIGNALMASTLOGIC // Save only the name, blocks will be added by the signalmast logic
     }
-    final public static SectionType USERDEFINED     = SectionType.USERDEFINED;
-    final public static SectionType SIGNALMASTLOGIC = SectionType.SIGNALMASTLOGIC;
-    final public static SectionType DYNAMICADHOC    = SectionType.DYNAMICADHOC;
+    SectionType USERDEFINED     = SectionType.USERDEFINED;
+    SectionType SIGNALMASTLOGIC = SectionType.SIGNALMASTLOGIC;
+    SectionType DYNAMICADHOC    = SectionType.DYNAMICADHOC;
 
     /**
      * Set Section Type.
@@ -412,13 +412,13 @@ public interface Section extends NamedBean {
      * </ul>
      * @param type constant of section type.
      */
-    public void setSectionType(SectionType type);
+    void setSectionType(SectionType type);
 
     /**
      * Get Section Type.
      * Defaults to USERDEFINED.
      * @return constant of section type.
      */
-    public SectionType getSectionType();
+    SectionType getSectionType();
 
 }

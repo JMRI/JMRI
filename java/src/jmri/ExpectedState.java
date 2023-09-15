@@ -19,7 +19,7 @@ public interface ExpectedState<T extends Object, S extends Object> {
      * Constant for the property name when {@link #setExpectedState(java.lang.Object)} fires
      * a {@link java.beans.PropertyChangeEvent}.
      */
-    public final static String EXPECTED_STATE = "expectedState";
+    String EXPECTED_STATE = "expectedState";
 
     /**
      * Get the expected state. This state should not change as the state of the
@@ -27,7 +27,7 @@ public interface ExpectedState<T extends Object, S extends Object> {
      *
      * @return the expected state
      */
-    public S getExpectedState();
+    S getExpectedState();
 
     /**
      * Set the expected state.
@@ -40,7 +40,7 @@ public interface ExpectedState<T extends Object, S extends Object> {
      * @throws UnsupportedOperationException if the implementing class does not
      *                                       allow states to be set
      */
-    public void setExpectedState(S state) throws UnsupportedOperationException;
+    void setExpectedState(S state) throws UnsupportedOperationException;
 
     /**
      * Get the Object this records the expected state for.
@@ -48,5 +48,5 @@ public interface ExpectedState<T extends Object, S extends Object> {
      * @return the associated object
      */
     @Nonnull
-    public T getObject();
+    T getObject();
 }

@@ -133,9 +133,6 @@
       <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Help
       page</a>.</p>
 
-      <p>View debug information for the Command station Monitor by adding
-      log4j.category.jmri.jmrix.can.cbus.swing.cbusslotmonitor=DEBUG to your default.lcf file.</p>
-
       <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>

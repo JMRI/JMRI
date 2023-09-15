@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2023 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2023</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname><firstname>Andrew</firstname><surname>Crosland</surname></personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber><date>2002?</date><authorinitials>BJ</authorinitials>
+      <revremark>New File</revremark>
+    </revision>
+  </revhistory>
+  <decoder>
+    <family name="CBUS" mfg="MERG" comment="CANSOL is a CBUS module for solenoids.">
+      <model model="CANSOL" lowVersionID="10" highVersionID="10"/>
+    </family>
+    <programming direct="yes" ops="yes" paged="yes" register="yes">
+    </programming>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/cbus/VarSol8.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/cbus/VarSolSetup.xml"/>
+    </variables>
+  </decoder>
+  <xi:include href="http://jmri.org/xml/decoders/cbus/PaneSol8.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/cbus/PaneSolSetup.xml"/>
+</decoder-config>

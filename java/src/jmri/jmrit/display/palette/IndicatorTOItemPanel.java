@@ -1,6 +1,8 @@
 package jmri.jmrit.display.palette;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;import java.awt.Component;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -16,8 +18,8 @@ import java.util.Map.Entry;
 import javax.annotation.Nonnull;
 import javax.swing.Box;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.jmrit.catalog.DragJLabel;
@@ -27,8 +29,7 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.IndicatorTurnoutIcon;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.swing.ImagePanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * JPanel for IndicatorTurnout items.
@@ -90,10 +91,10 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
         String family = getValidFamily(_family, iconMaps);
         if (_isUnstoredMap) {
             _unstoredMaps = iconMaps;
-            int result = JOptionPane.showConfirmDialog(_frame.getEditor(), Bundle.getMessage("UnkownFamilyName", family),
-                    Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE);
-            if (result == JOptionPane.YES_OPTION) {
+            int result = JmriJOptionPane.showConfirmDialog(_frame.getEditor(), Bundle.getMessage("UnkownFamilyName", family),
+                    Bundle.getMessage("QuestionTitle"), JmriJOptionPane.YES_NO_OPTION,
+                    JmriJOptionPane.QUESTION_MESSAGE);
+            if (result == JmriJOptionPane.YES_OPTION) {
                 ItemPalette.addLevel4Family(_itemType, family, iconMaps);
             }
             _family = family;
@@ -137,8 +138,8 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
             if (mapFamily == null || mapFamily.isEmpty()) {
                 Component fr;
                 if (_dialog != null) fr = _dialog; else fr = this;
-                mapFamily = JOptionPane.showInputDialog(fr, Bundle.getMessage("EnterFamilyName"),
-                        Bundle.getMessage("createNewFamily"), JOptionPane.QUESTION_MESSAGE);
+                mapFamily = JmriJOptionPane.showInputDialog(fr, Bundle.getMessage("EnterFamilyName"),
+                        Bundle.getMessage("createNewFamily"), JmriJOptionPane.QUESTION_MESSAGE);
                 if (mapFamily == null || mapFamily.isEmpty()) {   // user quit
                     return null;
                 }
@@ -148,9 +149,9 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
                 String fam = iter.next();
                 log.debug("check names. fam={} family={} mapFamily={}", fam, family, mapFamily);
                 if (mapFamily.equals(fam)) {   // family cannot be null
-                    JOptionPane.showMessageDialog(_frame,
+                    JmriJOptionPane.showMessageDialog(_frame,
                             Bundle.getMessage("DuplicateFamilyName", mapFamily, _itemType, Bundle.getMessage("UseAnotherName")),
-                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                            Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                     mapFamily = null;
                     nameOK = false;
                     break;
@@ -363,9 +364,9 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
      */
     @Override
     protected void deleteFamilySet() {
-        if (JOptionPane.showConfirmDialog(_frame, Bundle.getMessage("confirmDelete", _family),
-                Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
-                == JOptionPane.YES_OPTION) {
+        if (JmriJOptionPane.showConfirmDialog(_frame, Bundle.getMessage("confirmDelete", _family),
+                Bundle.getMessage("QuestionTitle"), JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.QUESTION_MESSAGE)
+                == JmriJOptionPane.YES_OPTION) {
             ItemPalette.removeLevel4IconMap(_itemType, _family, null);
             _family = null;
             _tablePanel.setVisible(true);
@@ -513,8 +514,8 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
         protected boolean okToDrag() {
             NamedBean bean = getDeviceNamedBean();
             if (bean == null) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 return false;
             }
             return true;
@@ -560,6 +561,6 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IndicatorTOItemPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IndicatorTOItemPanel.class);
 
 }

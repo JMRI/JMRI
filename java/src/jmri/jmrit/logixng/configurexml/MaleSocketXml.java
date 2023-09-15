@@ -11,6 +11,6 @@ import org.jdom2.Element;
  */
 public interface MaleSocketXml {
 
-    public boolean load(Element maleSocketElement, MaleSocket maleSocket);
+    boolean load(Element maleSocketElement, MaleSocket maleSocket);
     
 }

@@ -6,14 +6,13 @@ import java.awt.GridBagLayout;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.TrackEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Planned Pick ups.
@@ -37,12 +36,12 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
 
     protected Track _track;
 
-    public IgnoreUsedTrackFrame(Track track) {
+    public IgnoreUsedTrackFrame(TrackEditFrame tef) {
         super();
 
         setTitle(Bundle.getMessage("MenuItemPlannedPickups"));
 
-        _track = track;
+        _track = tef._track;
         if (_track == null) {
             log.debug("track is null!");
             return;
@@ -60,13 +59,13 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
         JPanel pTrackName = new JPanel();
         pTrackName.setLayout(new GridBagLayout());
         pTrackName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Track")));
-        addItem(pTrackName, new JLabel(track.getName()), 0, 0);
+        addItem(pTrackName, new JLabel(_track.getName()), 0, 0);
 
         // row 1b
         JPanel pLocationName = new JPanel();
         pLocationName.setLayout(new GridBagLayout());
         pLocationName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Location")));
-        addItem(pLocationName, new JLabel(track.getLocation().getName()), 0, 0);
+        addItem(pLocationName, new JLabel(_track.getLocation().getName()), 0, 0);
 
         p1.add(pTrackName);
         p1.add(pLocationName);
@@ -134,9 +133,9 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
             if (_track != null) {
                 _track.setIgnoreUsedLengthPercentage(percentage);
                 if (_track.getAlternateTrack() != null && percentage > 0) {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("PPWarningAlternate"),
+                    JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("PPWarningAlternate"),
                             Bundle.getMessage("PPWarningConfiguration"),
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                 }
             }
             // save location file
@@ -147,5 +146,5 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IgnoreUsedTrackFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IgnoreUsedTrackFrame.class);
 }

@@ -6,12 +6,9 @@ import java.io.IOException;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.operations.OperationsXml;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Swing action to backup operation files to a directory selected by the user.
@@ -20,8 +17,6 @@ import jmri.jmrit.operations.OperationsXml;
  * @author Gregory Madsen Copyright (C) 2012
  */
 public class BackupFilesAction extends AbstractAction {
-
-    private final static Logger log = LoggerFactory.getLogger(BackupFilesAction.class);
 
     public BackupFilesAction() {
         super(Bundle.getMessage("Backup"));
@@ -35,17 +30,17 @@ public class BackupFilesAction extends AbstractAction {
     private void backUp() {
         // check to see if files are dirty
         if (OperationsXml.areFilesDirty()) {
-            if (JOptionPane.showConfirmDialog(null,
+            if (JmriJOptionPane.showConfirmDialog(null,
                     Bundle.getMessage("OperationsFilesModified"),
                     Bundle.getMessage("SaveOperationFiles"),
-                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                 OperationsXml.save();
             }
         }
         BackupBase backup = new DefaultBackup();
 
         // get directory to write to
-        JFileChooser fc = new JFileChooser(backup.getBackupRoot());
+        JFileChooser fc = new jmri.util.swing.JmriJFileChooser(backup.getBackupRoot());
         fc.addChoosableFileFilter(new FileFilter());
 
         File fs = new File(backup.suggestBackupSetName());
@@ -81,6 +76,8 @@ public class BackupFilesAction extends AbstractAction {
             return Bundle.getMessage("BackupFolders");
         }
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BackupFilesAction.class);
 
 }
 

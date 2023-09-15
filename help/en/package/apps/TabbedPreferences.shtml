@@ -334,6 +334,10 @@
             <ul>
               <li>Font size &mdash; The font size of the GUI.</li>
 
+              <li>File Chooser Dialog file view &mdash; Select the file view when using the file
+              dialogs.  The options are the <strong>Default</strong> view, the file name <strong>List
+              </strong> view and the file <strong>Detail</strong> view.</li>
+
               <li>Use non-standard release event for mouse click? &mdash; Provide alternate mouse
               behavior for specific hardware.</li>
 

@@ -46,14 +46,14 @@ class SoundOnF8(Jynstrument, PropertyChangeListener, AddressListener, MouseListe
 
     def switch(self):      # actually do function value change
         if self.throttle != None :
-            self.throttle.setF8( not self.throttle.getF8() )   # HERE!
+            self.throttle.setFunction(8, not self.throttle.getFunction(8) )   # HERE!
         self.setIcon()
 
     def setIcon(self):     # update appearance
         cl = self.getLayout()
         if self.throttle == None :
             cl.show(self, "off")
-        elif self.throttle.getF8() :
+        elif self.throttle.getFunction(8) :
             cl.show(self, "on")
         else :
             cl.show(self, "off")

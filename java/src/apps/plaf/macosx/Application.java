@@ -17,7 +17,6 @@ import jmri.util.SystemType;
  * </code></pre> A Try-Catch block will need to catch
  * {@link java.lang.NoClassDefFoundError} Failure to use one of these methods
  * will result in crashes.
- * <p>
  *
  * @author Randall Wood (c) 2011, 2016
  * @see Jdk9Application

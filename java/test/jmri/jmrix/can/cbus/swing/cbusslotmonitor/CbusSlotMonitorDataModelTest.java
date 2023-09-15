@@ -111,7 +111,7 @@ public class CbusSlotMonitorDataModelTest {
         String spdStepb = (String) t.getValueAt(2,CbusSlotMonitorDataModel.SPEED_STEP_COLUMN);
         Assert.assertEquals("reply ploc 4 cell val speedstep","128",spdStepb );
         String funcb = (String) t.getValueAt(2,CbusSlotMonitorDataModel.FUNCTION_LIST);
-        Assert.assertEquals("reply ploc 4 cell val funcs","2 5 6 8 ",funcb );
+        Assert.assertEquals("reply ploc 4 cell val funcs","2 5 6 8",funcb );
         String locoSpd = (String) t.getValueAt(2,CbusSlotMonitorDataModel.LOCO_COMMANDED_SPEED_COLUMN);
         Assert.assertEquals("reply ploc 4 cell val speed","38",locoSpd );
         String dirb = (String) t.getValueAt(2,CbusSlotMonitorDataModel.LOCO_DIRECTION_COLUMN);
@@ -157,11 +157,11 @@ public class CbusSlotMonitorDataModelTest {
     
     @Test
     public void testCanListenAndRemove() {
-        Assert.assertTrue("table listening",1 == tcis.numListeners());
+        int startListeners = tcis.numListeners();
         t.dispose();
-        Assert.assertEquals("no listener after didpose",0,tcis.numListeners());
+        Assertions.assertEquals(startListeners-1, tcis.numListeners(),"no listener after dispose");
         t = new CbusSlotMonitorDataModel(memo);
-        Assert.assertTrue("table listening again",1 == tcis.numListeners());     
+        Assertions.assertEquals( startListeners, tcis.numListeners(),"table listening again");     
     }
     
     @Test
@@ -277,14 +277,14 @@ public class CbusSlotMonitorDataModelTest {
         Assert.assertTrue(((String)t.getValueAt(0,CbusSlotMonitorDataModel.FUNCTION_LIST)).contains("5 "));
         Assert.assertTrue(((String)t.getValueAt(0,CbusSlotMonitorDataModel.FUNCTION_LIST)).contains("6 "));
         Assert.assertTrue(((String)t.getValueAt(0,CbusSlotMonitorDataModel.FUNCTION_LIST)).contains("7 "));
-        Assert.assertTrue(((String)t.getValueAt(0,CbusSlotMonitorDataModel.FUNCTION_LIST)).contains("8 "));
+        Assert.assertTrue(((String)t.getValueAt(0,CbusSlotMonitorDataModel.FUNCTION_LIST)).contains("8"));
         
         r.setElement(3, 0x00);
         t.reply(r);
         Assert.assertFalse(((String)t.getValueAt(0,CbusSlotMonitorDataModel.FUNCTION_LIST)).contains("5 "));
         Assert.assertFalse(((String)t.getValueAt(0,CbusSlotMonitorDataModel.FUNCTION_LIST)).contains("6 "));
         Assert.assertFalse(((String)t.getValueAt(0,CbusSlotMonitorDataModel.FUNCTION_LIST)).contains("7 "));
-        Assert.assertFalse(((String)t.getValueAt(0,CbusSlotMonitorDataModel.FUNCTION_LIST)).contains("8 "));
+        Assert.assertFalse(((String)t.getValueAt(0,CbusSlotMonitorDataModel.FUNCTION_LIST)).contains("8"));
         
         // make sure that CanMessages also acted on
         CanMessage m = new CanMessage( tcis.getCanid() );
@@ -530,6 +530,8 @@ public class CbusSlotMonitorDataModelTest {
         tcis = new jmri.jmrix.can.TrafficControllerScaffold();
         memo = new jmri.jmrix.can.CanSystemConnectionMemo();
         memo.setTrafficController(tcis);
+        memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.MERGCBUS);
+        memo.configureManagers();
         t = new CbusSlotMonitorDataModel(memo);
     }
 
@@ -541,6 +543,7 @@ public class CbusSlotMonitorDataModelTest {
         memo=null;
         tcis.terminateThreads();
         tcis=null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();    
     }
 

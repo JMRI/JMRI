@@ -120,10 +120,4 @@ public class ArchitectureCheck extends ArchitectureTest {
             .should().dependOnClassesThat().resideInAPackage("jmri.jmrit..")
         );
 
-    /**
-     * jmri (but not apps) should not reference org.apache.log4j to allow jmri
-     * to be used as library in applications that choose not to use Log4J.
-     */
-    @ArchTest
-    public static final ArchRule checkLog4J = FreezingArchRule.freeze(ArchitectureTest.noLog4JinJmri);
 }

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
@@ -171,5 +172,16 @@ public class TrainLoadOptionsFrameTest extends OperationsTestCase {
         Assert.assertEquals("Confirm new load added", "Aload", f.comboBoxLoads.getItemAt(0));
         
         JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        Train train = tmanager.newTrain("Test");
+        TrainEditFrame trainEditFrame = new TrainEditFrame(train);
+        TrainLoadOptionsFrame f = new TrainLoadOptionsFrame();
+        f.initComponents(trainEditFrame);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 }

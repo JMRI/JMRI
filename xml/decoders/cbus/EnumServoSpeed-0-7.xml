@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?><!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <enumChoiceGroup>
+        <enumChoice choice="0" value="0" />
+        <enumChoice choice="1" value="1" />
+        <enumChoice choice="2" value="2" />
+        <enumChoice choice="3" value="3" />
+        <enumChoice choice="4" value="4" />
+        <enumChoice choice="5" value="5" />
+        <enumChoice choice="6" value="6" />
+        <enumChoice choice="7" value="7" />
+    </enumChoiceGroup>
+</enumVal>

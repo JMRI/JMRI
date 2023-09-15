@@ -295,6 +295,7 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
         JUnitAppender.suppressErrorMessage("tableHandle is null");
         _logixNG.setEnabled(false);
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
         _category = null;
         _logixNG = null;

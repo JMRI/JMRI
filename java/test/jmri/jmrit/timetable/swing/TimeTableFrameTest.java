@@ -46,6 +46,7 @@ public class TimeTableFrameTest {
 
         menuTests();
         addTests();
+        duplicateTests();
         deleteTests();
         addTests();
         deleteLayout();
@@ -311,6 +312,11 @@ public class TimeTableFrameTest {
             jmri.ScaleManager.getScale("UK-N").setScaleRatio(150.0);
         } catch (PropertyVetoException ex) {
         }
+    }
+
+    void duplicateTests() {
+        _jto.clickOnPath(_jto.findPath(new String[]{"Test"}));  // NOI18N
+        new JButtonOperator(_jfo, Bundle.getMessage("DuplicateLayoutButtonText")).doClick();  // NOI18N
     }
 
     void timeRangeTests() {

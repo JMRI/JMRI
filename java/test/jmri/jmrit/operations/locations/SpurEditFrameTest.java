@@ -15,9 +15,7 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
+import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
 
 /**
@@ -296,6 +294,15 @@ public class SpurEditFrameTest extends OperationsTestCase {
         JemmyUtil.waitFor(f);
         // kill all frames
         JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Track t = l.addTrack("Test Close", Track.SPUR);
+        SpurEditFrame f = new SpurEditFrame();
+        f.initComponents(l, t);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
     // Ensure minimal setup for log4J

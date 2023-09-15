@@ -16,6 +16,6 @@ public interface StringAction extends Base {
      * @param value the value.
      * @throws JmriException when an exception occurs
      */
-    public void setValue(@Nonnull String value) throws JmriException;
+    void setValue(@Nonnull String value) throws JmriException;
     
 }

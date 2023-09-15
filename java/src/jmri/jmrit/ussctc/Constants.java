@@ -13,11 +13,11 @@ package jmri.jmrit.ussctc;
  */
 public interface Constants {
 
-    final static String nameDivider = ":";
-    final static String pkgPrefix = "USS CTC";
+    String nameDivider = ":";
+    String pkgPrefix = "USS CTC";
 
-    final static String commonNamePrefix = pkgPrefix + nameDivider;
-    final static String commonNameSuffix = nameDivider + "1" + nameDivider;
+    String commonNamePrefix = pkgPrefix + nameDivider;
+    String commonNameSuffix = nameDivider + "1" + nameDivider;
     // the "1" is a placeholder for later, in case more that one machine/code line 
     // is needed
 

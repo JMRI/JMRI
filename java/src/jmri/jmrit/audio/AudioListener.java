@@ -45,7 +45,7 @@ public interface AudioListener extends Audio {
      *
      * @param pos 3d position vector
      */
-    public void setPosition(Vector3f pos);
+    void setPosition(Vector3f pos);
 
     /**
      * Sets the position of this AudioListener object in x, y and z planes
@@ -60,7 +60,7 @@ public interface AudioListener extends Audio {
      * @param y y-coordinate
      * @param z z-coordinate
      */
-    public void setPosition(float x, float y, float z);
+    void setPosition(float x, float y, float z);
 
     /**
      * Sets the position of this AudioListener object in x and y planes with z
@@ -77,7 +77,7 @@ public interface AudioListener extends Audio {
      * @param x x-coordinate
      * @param y y-coordinate
      */
-    public void setPosition(float x, float y);
+    void setPosition(float x, float y);
 
     /**
      * Returns the position of this AudioListener object as a 3-dimensional
@@ -91,7 +91,7 @@ public interface AudioListener extends Audio {
      *
      * @return 3d position vector
      */
-    public Vector3f getPosition();
+    Vector3f getPosition();
 
     /**
      * Returns the current position of this AudioListener object as a
@@ -105,7 +105,7 @@ public interface AudioListener extends Audio {
      *
      * @return 3d position vector
      */
-    public Vector3f getCurrentPosition();
+    Vector3f getCurrentPosition();
 
     /**
      * Method to reset the current position of this AudioListener object to the
@@ -117,7 +117,7 @@ public interface AudioListener extends Audio {
      * <li>Source
      * </ul>
      */
-    public void resetCurrentPosition();
+    void resetCurrentPosition();
 
     /**
      * Sets the velocity of this AudioListener object
@@ -130,7 +130,7 @@ public interface AudioListener extends Audio {
      *
      * @param vel 3d velocity vector
      */
-    public void setVelocity(Vector3f vel);
+    void setVelocity(Vector3f vel);
 
     /**
      * Returns the velocity of this AudioListener object
@@ -139,7 +139,7 @@ public interface AudioListener extends Audio {
      *
      * @return 3d velocity vector
      */
-    public Vector3f getVelocity();
+    Vector3f getVelocity();
 
     /**
      * Set the orientation of this AudioListener object
@@ -152,7 +152,7 @@ public interface AudioListener extends Audio {
      * @param at 3d vector representing the position
      * @param up 3d vector representing the look-at point
      */
-    public void setOrientation(Vector3f at, Vector3f up);
+    void setOrientation(Vector3f at, Vector3f up);
 
     /**
      * Return the orientation of this AudioListener object
@@ -166,7 +166,7 @@ public interface AudioListener extends Audio {
      *              look-at point
      * @return vector representing the chosen orientation vector
      */
-    public Vector3f getOrientation(int which);
+    Vector3f getOrientation(int which);
 
     /**
      * Return the current orientation of this AudioListener object
@@ -180,7 +180,7 @@ public interface AudioListener extends Audio {
      *              look-at point
      * @return vector representing the chosen orientation vector
      */
-    public Vector3f getCurrentOrientation(int which);
+    Vector3f getCurrentOrientation(int which);
 
     /**
      * Return the current gain setting
@@ -193,7 +193,7 @@ public interface AudioListener extends Audio {
      *
      * @return float gain
      */
-    public float getGain();
+    float getGain();
 
     /**
      * Set the gain of this AudioListener object
@@ -211,7 +211,7 @@ public interface AudioListener extends Audio {
      *
      * @param gain new gain value - range 0.0f to 1.0f
      */
-    public void setGain(float gain);
+    void setGain(float gain);
 
     /**
      * Method to set the Meters per unit ratio for all distance calculations.
@@ -231,7 +231,7 @@ public interface AudioListener extends Audio {
      *
      * @param metersPerUnit Meters per unit ratio
      */
-    public void setMetersPerUnit(float metersPerUnit);
+    void setMetersPerUnit(float metersPerUnit);
 
     /**
      * Retrieve the current Meters per unit ratio to use for all distance
@@ -252,6 +252,6 @@ public interface AudioListener extends Audio {
      *
      * @return Meters per unit ratio
      */
-    public float getMetersPerUnit();
+    float getMetersPerUnit();
 
 }

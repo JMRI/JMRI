@@ -33,7 +33,7 @@
 #  java.awt.headless        Tests won't attempt to use screen
 #  jmri.skipschematests     Skip tests of XML schema if true
 #  jmri.skipscripttests     Skip tests of Jython scripts if true
-#  jmri.log4jconfigfilename Specify replacement for details tests.lcf file (tests only)
+#  jmri.log4jconfigfilename Specify replacement for details tests_lcf.xml file (tests only)
 #
 # E.g.:
 # setenv JMRI_OPTIONS -Djmri.skipschematests=true

@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.*;
@@ -28,6 +29,7 @@ import jmri.jmrit.timetable.*;
 import jmri.jmrit.timetable.configurexml.TimeTableXml;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.SplitButtonColorChooserPanel;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Create and maintain timetables.
@@ -155,11 +157,13 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     // ------------ Button bar components ------------
     JPanel _leftButtonBar;
     JPanel _addButtonPanel;
+    JPanel _duplicateButtonPanel;
     JPanel _copyButtonPanel;
     JPanel _deleteButtonPanel;
     JPanel _moveButtonPanel;
     JPanel _graphButtonPanel;
     JButton _addButton = new JButton();
+    JButton _duplicateButton = new JButton();
     JButton _copyButton = new JButton();
     JButton _deleteButton = new JButton();
     JButton _displayButton = new JButton();
@@ -231,6 +235,19 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         _addButtonPanel = new JPanel();
         _addButtonPanel.add(_addButton);
         _leftButtonBar.add(_addButtonPanel);
+
+        // ------------ Duplicate Button ------------
+        _duplicateButton = new JButton(Bundle.getMessage("DuplicateLayoutButtonText"));    // NOI18N
+        _duplicateButton.setToolTipText(Bundle.getMessage("HintDuplicateButton"));       // NOI18N
+        _duplicateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                duplicatePressed();
+            }
+        });
+        _duplicateButtonPanel = new JPanel();
+        _duplicateButtonPanel.add(_duplicateButton);
+        _leftButtonBar.add(_duplicateButtonPanel);
 
         // ------------ Copy Button ------------
         _copyButton = new JButton(Bundle.getMessage("CopyStopsButton"));    // NOI18N
@@ -363,6 +380,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         pack();
         _addButtonPanel.setVisible(false);
+        _duplicateButtonPanel.setVisible(false);
         _copyButtonPanel.setVisible(false);
         _deleteButtonPanel.setVisible(false);
         _graphButtonPanel.setVisible(false);
@@ -582,9 +600,9 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 if (_editScale.hasFocus()) {
                     Scale scale = (Scale) _editScale.getSelectedItem();
                     if (scale.getScaleName().equals("CUSTOM")) {  // NOI18N
-                        String ans = JOptionPane.showInputDialog(
+                        String ans = JmriJOptionPane.showInputDialog( _editScale,
                                 Bundle.getMessage("ScaleRatioChange"),  // NOI18N
-                                scale.getScaleRatio()
+                                String.valueOf(scale.getScaleRatio())
                                 );
                         if (ans != null) {
                             try {
@@ -593,10 +611,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                             } catch (java.lang.IllegalArgumentException
                                     | java.beans.PropertyVetoException ex) {
                                 log.warn("Unable to change custom ratio: {}", ex.getMessage());  // NOI18N
-                                JOptionPane.showMessageDialog(null,
+                                JmriJOptionPane.showMessageDialog( _editScale,
                                         Bundle.getMessage("NumberFormatError", ans, "Custom ratio"),  // NOI18N
                                         Bundle.getMessage("WarningTitle"),  // NOI18N
-                                        JOptionPane.WARNING_MESSAGE);
+                                        JmriJOptionPane.WARNING_MESSAGE);
                                 Layout layout = _dataMgr.getLayout(_curNodeId);
                                 _editScale.setSelectedItem(layout.getScale());
                             }
@@ -1015,6 +1033,268 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     }
 
     /**
+     * Duplicate selected item.
+     */
+    void duplicatePressed() {
+        _dataMgr.setLockCalculate(true);
+        switch (_curNodeType) {
+            case "Layout":     // NOI18N
+                duplicateLayout(_curNodeId);
+                break;
+
+            case "TrainType": // NOI18N
+                duplicateTrainType(0, _curNodeId, (TimeTableTreeNode) _curNode.getParent());
+                break;
+
+            case "Segment":    // NOI18N
+                duplicateSegment(0, _curNodeId,  (TimeTableTreeNode) _curNode.getParent());
+                break;
+
+            case "Station":    // NOI18N
+                duplicateStation(0, _curNodeId, (TimeTableTreeNode) _curNode.getParent());
+                break;
+
+            case "Schedule":  // NOI18N
+                duplicateSchedule(0, _curNodeId, (TimeTableTreeNode) _curNode.getParent());
+                break;
+
+            case "Train":   // NOI18N
+                duplicateTrain(0, _curNodeId, 0, (TimeTableTreeNode) _curNode.getParent());
+                break;
+
+            case "Stop":      // NOI18N
+                duplicateStop(0, _curNodeId, 0, 0, (TimeTableTreeNode) _curNode.getParent());
+                break;
+
+            default:
+                log.error("Duplicate called for unsupported node type: '{}'", _curNodeType);  // NOI18N
+        }
+        _dataMgr.setLockCalculate(false);
+    }
+
+    // Trains have references to train types and stops have references to stations.
+    // When a layout is copied, the references have to be changed to the copied element.
+    private HashMap<Integer, Integer> typeMap = new HashMap<>();      // THe key is the source train type, the value is the destination train type.
+    private HashMap<Integer, Integer> stationMap = new HashMap<>();   // THe key is the source layout stations, the value is the destination stations.
+
+    private boolean dupLayout = false;
+
+    /**
+     * Create a copy of a layout.
+     * @param layoutId The id of the layout to be duplicated.
+     */
+    void duplicateLayout(int layoutId) {
+        dupLayout = true;
+        Layout layout = _dataMgr.getLayout(layoutId);
+        Layout newLayout = layout.getCopy();
+        setShowReminder(true);
+
+        // Build tree components
+        _curNode = new TimeTableTreeNode(newLayout.getLayoutName(), "Layout", newLayout.getLayoutId(), 0);    // NOI18N
+        _timetableRoot.add(_curNode);
+
+        _leafNode = new TimeTableTreeNode(buildNodeText("TrainTypes", null, 0), "TrainTypes", 0, 0);    // NOI18N
+        _curNode.add(_leafNode);
+        var typesNode = _leafNode;
+
+        _leafNode = new TimeTableTreeNode(buildNodeText("Segments", null, 0), "Segments", 0, 0);    // NOI18N
+        _curNode.add(_leafNode);
+        var segmentsNode = _leafNode;
+
+        _leafNode = new TimeTableTreeNode(buildNodeText("Schedules", null, 0), "Schedules", 0, 0);    // NOI18N
+        _curNode.add(_leafNode);
+        var schedlulesNode = _leafNode;
+
+        _timetableModel.nodeStructureChanged(_timetableRoot);
+
+
+        // Copy train types
+        typeMap.clear();
+        for (var type : _dataMgr.getTrainTypes(layoutId, true)) {
+            duplicateTrainType(newLayout.getLayoutId(), type.getTypeId(), typesNode);
+        }
+
+        // Copy segments
+        stationMap.clear();
+        for (var segment : _dataMgr.getSegments(layoutId, true)) {
+            duplicateSegment(newLayout.getLayoutId(), segment.getSegmentId(), segmentsNode);
+        }
+
+        // schedules
+        for (var schedule : _dataMgr.getSchedules(layoutId, true)) {
+            duplicateSchedule(newLayout.getLayoutId(), schedule.getScheduleId(), schedlulesNode);
+        }
+
+        // Switch to new node
+        _timetableTree.setSelectionPath(new TreePath(_curNode.getPath()));
+
+        dupLayout = false;
+    }
+
+    /**
+     * Create a copy of a train type.
+     * @param layoutId The id for the parent layout.  Zero if within the same layout.
+     * @param typeId The id of the train type to be duplicated.
+     * @param typesNode The types node which will be parent for the new train type.
+     */
+    void duplicateTrainType(int layoutId, int typeId, TimeTableTreeNode typesNode) {
+        TrainType type = _dataMgr.getTrainType(typeId);
+        TrainType newType = type.getCopy(layoutId);
+        setShowReminder(true);
+
+        // If part of duplicating a layout, create a type map entry.
+        if (dupLayout) {
+            typeMap.put(type.getTypeId(), newType.getTypeId());
+        }
+
+        // Build tree components
+        _leafNode = new TimeTableTreeNode(newType.getTypeName(), "TrainType", newType.getTypeId(), 0);    // NOI18N
+        typesNode.add(_leafNode);
+        _timetableModel.nodeStructureChanged(typesNode);
+
+        // Switch to new node
+        _timetableTree.setSelectionPath(new TreePath(_leafNode.getPath()));
+    }
+
+    /**
+     * Create a copy of a segment.
+     * @param layoutId The id for the parent layout.  Zero if within the same layout.
+     * @param segmentId The id of the segment to be duplicated.
+     * @param segmentsNode The segments node which will be parent for the new segment.
+     */
+    void duplicateSegment(int layoutId, int segmentId, TimeTableTreeNode segmentsNode) {
+        Segment segment = _dataMgr.getSegment(segmentId);
+        Segment newSegment = segment.getCopy(layoutId);
+        setShowReminder(true);
+
+        // Build tree components
+        _leafNode = new TimeTableTreeNode(newSegment.getSegmentName(), "Segment", newSegment.getSegmentId(), 0);    // NOI18N
+        segmentsNode.add(_leafNode);
+        _timetableModel.nodeStructureChanged(segmentsNode);
+
+        // Duplicate the stations using the stations from the orignal segment
+        var segmentNode = _leafNode;
+        for (var station : _dataMgr.getStations(segmentId, true)) {
+            duplicateStation(newSegment.getSegmentId(), station.getStationId(), segmentNode);
+        }
+
+        // Switch to new node
+        _timetableTree.setSelectionPath(new TreePath(_leafNode.getPath()));
+    }
+
+    /**
+     * Create a copy of a station.
+     * @param segmentId The id for the parent segment.  Zero if within the same segment.
+     * @param stationId The id of the station to be duplicated.
+     * @param segmentNode The segment node which will be parent for the new station.
+     */
+    void duplicateStation(int segmentId, int stationId, TimeTableTreeNode segmentNode) {
+        Station station = _dataMgr.getStation(stationId);
+        Station newStation = station.getCopy(segmentId);
+        setShowReminder(true);
+
+        // If part of duplicating a layout, create a station map entry.
+        if (dupLayout) {
+            stationMap.put(station.getStationId(), newStation.getStationId());
+        }
+
+        // Build tree components
+        _leafNode = new TimeTableTreeNode(newStation.getStationName(), "Station", newStation.getStationId(), 0);    // NOI18N
+        segmentNode.add(_leafNode);
+        _timetableModel.nodeStructureChanged(segmentNode);
+
+        // Switch to new node
+        _timetableTree.setSelectionPath(new TreePath(_leafNode.getPath()));
+    }
+
+    /**
+     * Create a copy of a schedule.
+     * @param layoutId The id for the parent layout.  Zero if within the same layout.
+     * @param scheduleId The id of the schedule to be duplicated.
+     * @param schedulesNode The schedules node which will be parent for the new schedule.
+     */
+    void duplicateSchedule(int layoutId, int scheduleId, TimeTableTreeNode schedulesNode) {
+        Schedule schedule = _dataMgr.getSchedule(scheduleId);
+        Schedule newSchedule = schedule.getCopy(layoutId);
+        setShowReminder(true);
+
+        // Build tree components
+        _leafNode = new TimeTableTreeNode(buildNodeText("Schedule", newSchedule, 0), "Schedule", newSchedule.getScheduleId(), 0);    // NOI18N
+        schedulesNode.add(_leafNode);
+        _timetableModel.nodeStructureChanged(schedulesNode);
+
+        // Duplicate the trains using the trains from the orignal schedule
+        TimeTableTreeNode scheduleNode = _leafNode;
+        for (Train train : _dataMgr.getTrains(scheduleId, 0, true)) {
+            duplicateTrain(newSchedule.getScheduleId(), train.getTrainId(), 0, scheduleNode);
+        }
+
+        // Switch to new node
+        _timetableTree.setSelectionPath(new TreePath(_leafNode.getPath()));
+    }
+
+    /**
+     * Create a copy of a train.
+     * @param schedId The id for the parent schedule.  Zero if within the same schedule.
+     * @param trainId The id of the train to be duplicated.
+     * @param typeId The id of the train type.  If zero use the source train type.
+     * @param schedNode The schedule node which will be parent for the new train.
+     */
+    void duplicateTrain(int schedId, int trainId, int typeId, TimeTableTreeNode schedNode ) {
+        Train train = _dataMgr.getTrain(trainId);
+        if (typeMap != null && typeMap.containsKey(train.getTypeId())) typeId = typeMap.get(train.getTypeId());
+        Train newTrain = train.getCopy(schedId, typeId);
+        setShowReminder(true);
+
+        // If part of duplicating a layout, update the type reference.
+        if (dupLayout && typeMap.containsKey(train.getTypeId())) {
+            newTrain.setTypeId(typeMap.get(train.getTypeId()));
+        }
+
+        // Build tree components
+        _leafNode = new TimeTableTreeNode(newTrain.toString(), "Train", newTrain.getTrainId(), 0);    // NOI18N
+        schedNode.add(_leafNode);
+        _timetableModel.nodeStructureChanged(schedNode);
+
+        // Duplicate the stops using the stops from the orignal train
+        TimeTableTreeNode trainNode = _leafNode;
+        for (Stop stop : _dataMgr.getStops(trainId, 0, true)) {
+            duplicateStop(newTrain.getTrainId(), stop.getStopId(), 0, stop.getSeq(), trainNode);
+        }
+
+        // Switch to new node
+        _timetableTree.setSelectionPath(new TreePath(_leafNode.getPath()));
+    }
+
+    /**
+     * Create a copy of a stop.
+     * @param trainId The id for the parent train.  Zero if within the same train.
+     * @param stopId The id of the stop to be duplicated.
+     * @param stationId The id of the station.  If zero use the source station.
+     * @param seq The sequence for the new stop.  If zero calculate the next sequence number.
+     * @param trainNode The train node which will be parent for the new stop.
+     */
+    void duplicateStop(int trainId, int stopId, int stationId, int seq, TimeTableTreeNode trainNode) {
+        Stop stop = _dataMgr.getStop(stopId);
+        if (seq == 0) seq = _dataMgr.getStops(stop.getTrainId(), 0, false).size() + 1;
+        Stop newStop = stop.getCopy(trainId, stationId, seq);
+        setShowReminder(true);
+
+        // If part of duplicating a layout, update the station reference.
+        if (dupLayout && stationMap.containsKey(stop.getStationId())) {
+            newStop.setStationId(stationMap.get(stop.getStationId()));
+        }
+
+        // Build tree components
+        _leafNode = new TimeTableTreeNode(buildNodeText("Stop", newStop, 0), "Stop", newStop.getStopId(), seq);    // NOI18N
+        trainNode.add(_leafNode);
+        _timetableModel.nodeStructureChanged(trainNode);
+
+        // Switch to new node
+        _timetableTree.setSelectionPath(new TreePath(_leafNode.getPath()));
+    }
+
+    /**
      * Copy the stops from an existing train.
      */
     void copyPressed() {
@@ -1055,11 +1335,11 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         try {
             var icon = new ImageIcon(jmri.util.FileUtil.getProgramPath() + jmri.Application.getLogo());
-            var choice = JOptionPane.showInputDialog(
+            var choice = JmriJOptionPane.showInputDialog(
                     null,
                     Bundle.getMessage("LabelCopyStops"),  // NOI18N
                     Bundle.getMessage("TitleCopyStops"),  // NOI18N
-                    JOptionPane.QUESTION_MESSAGE,
+                    JmriJOptionPane.QUESTION_MESSAGE,
                     icon,
                     trainArray,
                     null);
@@ -1378,10 +1658,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                     }
                 }
             }
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     msg.toString(),
                     Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -1442,10 +1722,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             newDistance = NumberFormat.getNumberInstance().parse(_editDistance.getText()).floatValue();
         } catch (NumberFormatException | ParseException ex) {
             log.warn("'{}' is not a valid number for {}", _editDistance.getText(), "station distance");  // NOI18N
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("NumberFormatError", _editDistance.getText(), "station distance"),  // NOI18N
                     Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
             newDistance = station.getDistance();
         }
         boolean newDoubleTrack =_editDoubleTrack.isSelected();
@@ -1518,10 +1798,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                     }
                 }
             }
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     msg.toString(),
                     Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -1597,10 +1877,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                     msg.append(String.format("%n%s", Bundle.getMessage(keyWord)));
                 }
             }
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     msg.toString(),
                     Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -1712,10 +1992,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                     msg.append(String.format("%n%s", Bundle.getMessage(keyWord)));
                 }
             }
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     msg.toString(),
                     Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -1798,10 +2078,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                     msg.append(String.format("%n%s", Bundle.getMessage(keyWord)));
                 }
             }
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     msg.toString(),
                     Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -1817,10 +2097,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             return Integer.parseInt(text);
         } catch (NumberFormatException ex) {
             log.warn("'{}' is not a valid number for {}", text, fieldName);  // NOI18N
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(textField,
                     Bundle.getMessage("NumberFormatError", text, fieldName),  // NOI18N
                     Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
             return -1;
         }
     }
@@ -1868,15 +2148,17 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
      */
     void deleteLayout() {
         Object[] options = {Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonYes")};  // NOI18N
-        int selectedOption = JOptionPane.showOptionDialog(null,
+        int selectedOption = JmriJOptionPane.showOptionDialog(this,
                 Bundle.getMessage("LayoutCascade"), // NOI18N
                 Bundle.getMessage("QuestionTitle"),   // NOI18N
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
+                JmriJOptionPane.DEFAULT_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE,
                 null, options, options[0]);
-        if (selectedOption == 0) {
+        if (selectedOption != 1) { // return if option is not array position 1, YES
             return;
         }
+
+        _dataMgr.setLockCalculate(true);
 
         // Delete the components
         for (Schedule schedule : _dataMgr.getSchedules(_curNodeId, false)) {
@@ -1911,6 +2193,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         _curNode = null;
         _timetableModel.nodeStructureChanged(parentNode);
 //         _timetableTree.setSelectionPath(parentPath);
+        _dataMgr.setLockCalculate(false);
     }
 
     /**
@@ -1927,10 +2210,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             for (String trainName : typeReference) {
                 msg.append("\n    " + trainName);  // NOI18N
             }
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     msg.toString(),
                     Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
             return;
         }
         _dataMgr.deleteTrainType(_curNodeId);
@@ -1967,21 +2250,21 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 for (Station activeStation : activeList) {
                     msg.append("\n    " + activeStation.getStationName());  // NOI18N
                 }
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(this,
                         msg.toString(),
                         Bundle.getMessage("WarningTitle"),  // NOI18N
-                        JOptionPane.WARNING_MESSAGE);
+                        JmriJOptionPane.WARNING_MESSAGE);
                 return;
             }
             // Present the option to delete the stations and the segment
             Object[] options = {Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonYes")};  // NOI18N
-            int selectedOption = JOptionPane.showOptionDialog(null,
+            int selectedOption = JmriJOptionPane.showOptionDialog(this,
                     Bundle.getMessage("SegmentCascade"), // NOI18N
                     Bundle.getMessage("QuestionTitle"),   // NOI18N
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
+                    JmriJOptionPane.DEFAULT_OPTION,
+                    JmriJOptionPane.QUESTION_MESSAGE,
                     null, options, options[0]);
-            if (selectedOption == 0) {
+            if (selectedOption != 1) {  // return if option is not array position 1, YES
                 return;
             }
             for (Station delStation : stationList) {
@@ -2017,10 +2300,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             for (String stopTrainSeq : stopReference) {
                 msg.append("\n    " + stopTrainSeq);  // NOI18N
             }
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     msg.toString(),
                     Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
             return;
         }
         _dataMgr.deleteStation(_curNodeId);
@@ -2046,13 +2329,13 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             // The schedule still has trains.
             // Present the option to delete the stops, trains and the schedule
             Object[] options = {Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonYes")};  // NOI18N
-            int selectedOption = JOptionPane.showOptionDialog(null,
+            int selectedOption = JmriJOptionPane.showOptionDialog(this,
                     Bundle.getMessage("ScheduleCascade"), // NOI18N
                     Bundle.getMessage("QuestionTitle"),   // NOI18N
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
+                    JmriJOptionPane.DEFAULT_OPTION,
+                    JmriJOptionPane.QUESTION_MESSAGE,
                     null, options, options[0]);
-            if (selectedOption == 0) {
+            if (selectedOption != 1) { // return if option is not array position 1, YES
                 return;
             }
             for (Train train : trainList) {
@@ -2086,13 +2369,13 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             // The trains still has stops.
             // Present the option to delete the stops and the train
             Object[] options = {Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonYes")};  // NOI18N
-            int selectedOption = JOptionPane.showOptionDialog(null,
+            int selectedOption = JmriJOptionPane.showOptionDialog(this,
                     Bundle.getMessage("TrainCascade"), // NOI18N
                     Bundle.getMessage("QuestionTitle"),   // NOI18N
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
+                    JmriJOptionPane.DEFAULT_OPTION,
+                    JmriJOptionPane.QUESTION_MESSAGE,
                     null, options, options[0]);
-            if (selectedOption == 0) {
+            if (selectedOption != 1) { // return if option is not array position 1, YES
                 return;
             }
             for (Stop stop : stopList) {
@@ -2269,11 +2552,11 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 // do selection dialog
                 Schedule[] schedArr = new Schedule[schedules.size()];
                 schedArr = schedules.toArray(schedArr);
-                Schedule schedSelected = (Schedule) JOptionPane.showInputDialog(
+                Schedule schedSelected = (Schedule) JmriJOptionPane.showInputDialog(
                         null,
                         Bundle.getMessage("GraphScheduleMessage"),  // NOI18N
                         Bundle.getMessage("QuestionTitle"),  // NOI18N
-                        JOptionPane.QUESTION_MESSAGE,
+                        JmriJOptionPane.QUESTION_MESSAGE,
                         null,
                         schedArr,
                         schedArr[0]
@@ -2313,23 +2596,23 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 new TimeTableImport().importSgn(_dataMgr, file);
             } catch (IOException ex) {
                 log.error("Import exception", ex);  // NOI18N
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ImportFailed", "SGN"),  // NOI18N
                         Bundle.getMessage("ErrorTitle"),  // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
             savePressed();
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("ImportCompleted", "SGN"),  // NOI18N
                     Bundle.getMessage("MessageTitle"),  // NOI18N
-                    JOptionPane.INFORMATION_MESSAGE);
+                    JmriJOptionPane.INFORMATION_MESSAGE);
         }
     }
 
     List<String> feedbackList;
     void importCsvPressed() {
-        fileChooser = new JFileChooser(jmri.util.FileUtil.getUserFilesPath());
+        fileChooser = new jmri.util.swing.JmriJFileChooser(jmri.util.FileUtil.getUserFilesPath());
         fileChooser.setFileFilter(new FileNameExtensionFilter("Import File", "csv"));
         int retVal = fileChooser.showOpenDialog(null);
         if (retVal == JFileChooser.APPROVE_OPTION) {
@@ -2343,10 +2626,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             feedbackList = new TimeTableCsvImport().importCsv(file);
         } catch (IOException ex) {
             log.error("Import exception", ex); // NOI18N
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("ImportCsvFailed", "CVS"), // NOI18N
                     Bundle.getMessage("ErrorTitle"), // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         if (feedbackList.size() > 0) {
@@ -2354,17 +2637,17 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             for (String feedback : feedbackList) {
                 msg.append(feedback + "\n");
             }
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     msg.toString(),
                     Bundle.getMessage("ErrorTitle"), // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         savePressed();
-        JOptionPane.showMessageDialog(null,
+        JmriJOptionPane.showMessageDialog(this,
                 Bundle.getMessage("ImportCompleted", "CSV"), // NOI18N
                 Bundle.getMessage("MessageTitle"), // NOI18N
-                JOptionPane.INFORMATION_MESSAGE);
+                JmriJOptionPane.INFORMATION_MESSAGE);
     }
 
     void importFromOperationsPressed() {
@@ -2377,19 +2660,19 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         // Select layout
         List<Layout> layouts = _dataMgr.getLayouts(true);
         if (layouts.size() == 0) {
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("ExportLayoutError"),  // NOI18N
                     Bundle.getMessage("ErrorTitle"),  // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         int layoutId = layouts.get(0).getLayoutId();
         if (layouts.size() > 1) {
-            Layout layout = (Layout) JOptionPane.showInputDialog(
-                    null,
+            Layout layout = (Layout) JmriJOptionPane.showInputDialog(
+                    this,
                     Bundle.getMessage("ExportSelectLayout"),  // NOI18N
                     Bundle.getMessage("QuestionTitle"),  // NOI18N
-                    JOptionPane.PLAIN_MESSAGE,
+                    JmriJOptionPane.PLAIN_MESSAGE,
                     null,
                     layouts.toArray(),
                     null);
@@ -2400,19 +2683,19 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         // Select segment
         List<Segment> segments = _dataMgr.getSegments(layoutId, true);
         if (segments.size() == 0) {
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("ExportSegmentError"),  // NOI18N
                     Bundle.getMessage("ErrorTitle"),  // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         int segmentId = segments.get(0).getSegmentId();
         if (segments.size() > 1) {
-            Segment segment = (Segment) JOptionPane.showInputDialog(
-                    null,
+            Segment segment = (Segment) JmriJOptionPane.showInputDialog(
+                    this,
                     Bundle.getMessage("ExportSelectSegment"),  // NOI18N
                     Bundle.getMessage("QuestionTitle"),  // NOI18N
-                    JOptionPane.PLAIN_MESSAGE,
+                    JmriJOptionPane.PLAIN_MESSAGE,
                     null,
                     segments.toArray(),
                     null);
@@ -2423,19 +2706,19 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         // Select schedule
         List<Schedule> schedules = _dataMgr.getSchedules(layoutId, true);
         if (schedules.size() == 0) {
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("ExportScheduleError"),  // NOI18N
                     Bundle.getMessage("ErrorTitle"),  // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         int scheduleId = schedules.get(0).getScheduleId();
         if (schedules.size() > 1) {
-            Schedule schedule = (Schedule) JOptionPane.showInputDialog(
-                    null,
+            Schedule schedule = (Schedule) JmriJOptionPane.showInputDialog(
+                    this,
                     Bundle.getMessage("ExportSelectSchedule"),  // NOI18N
                     Bundle.getMessage("QuestionTitle"),  // NOI18N
-                    JOptionPane.PLAIN_MESSAGE,
+                    JmriJOptionPane.PLAIN_MESSAGE,
                     null,
                     schedules.toArray(),
                     null);
@@ -2443,7 +2726,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             scheduleId = schedule.getScheduleId();
         }
 
-        fileChooser = new JFileChooser(jmri.util.FileUtil.getUserFilesPath());
+        fileChooser = new jmri.util.swing.JmriJFileChooser(jmri.util.FileUtil.getUserFilesPath());
         fileChooser.setFileFilter(new FileNameExtensionFilter("Export as CSV File", "csv"));  // NOI18N
         int retVal = fileChooser.showSaveDialog(null);
         if (retVal == JFileChooser.APPROVE_OPTION) {
@@ -2455,11 +2738,11 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 file = new File(fileName);
             }
             if (file.exists()) {
-                if (JOptionPane.showConfirmDialog(null,
+                if (JmriJOptionPane.showConfirmDialog(this,
                         Bundle.getMessage("FileOverwriteWarning", file.getName()),  // NOI18N
                         Bundle.getMessage("QuestionTitle"),  // NOI18N
-                        JOptionPane.OK_CANCEL_OPTION,
-                        JOptionPane.QUESTION_MESSAGE) != JOptionPane.OK_OPTION) {
+                        JmriJOptionPane.OK_CANCEL_OPTION,
+                        JmriJOptionPane.QUESTION_MESSAGE) != JmriJOptionPane.OK_OPTION) {
                     return;
                 }
             }
@@ -2470,23 +2753,23 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 hasErrors = new TimeTableCsvExport().exportCsv(file, layoutId, segmentId, scheduleId);
             } catch (IOException ex) {
                 log.error("Export exception", ex);  // NOI18N
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ExportFailed"),  // NOI18N
                         Bundle.getMessage("ErrorTitle"),  // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             if (hasErrors) {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ExportFailed"),  // NOI18N
                         Bundle.getMessage("ErrorTitle"),  // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ExportCompleted", file),  // NOI18N
                         Bundle.getMessage("MessageTitle"),  // NOI18N
-                        JOptionPane.INFORMATION_MESSAGE);
+                        JmriJOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
@@ -2505,11 +2788,11 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     void donePressed() {
         if (_isDirty) {
             Object[] options = {Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonYes")};  // NOI18N
-            int selectedOption = JOptionPane.showOptionDialog(null,
+            int selectedOption = JmriJOptionPane.showOptionDialog(this,
                     Bundle.getMessage("DirtyDataWarning"), // NOI18N
                     Bundle.getMessage("WarningTitle"),   // NOI18N
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.WARNING_MESSAGE,
+                    JmriJOptionPane.DEFAULT_OPTION,
+                    JmriJOptionPane.WARNING_MESSAGE,
                     null, options, options[0]);
             if (selectedOption == 0) {
                 return;
@@ -2661,6 +2944,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         // Reset button bar
         _addButtonPanel.setVisible(false);
+        _duplicateButtonPanel.setVisible(false);
         _copyButtonPanel.setVisible(false);
         _deleteButtonPanel.setVisible(false);
         _moveButtonPanel.setVisible(false);
@@ -2670,6 +2954,8 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             case "Layout":     // NOI18N
                 _addButton.setText(Bundle.getMessage("AddLayoutButtonText"));  // NOI18N
                 _addButtonPanel.setVisible(true);
+                _duplicateButton.setText(Bundle.getMessage("DuplicateLayoutButtonText"));  // NOI18N
+                _duplicateButtonPanel.setVisible(true);
                 _deleteButton.setText(Bundle.getMessage("DeleteLayoutButtonText"));  // NOI18N
                 _deleteButtonPanel.setVisible(true);
                 editPressed();
@@ -2682,6 +2968,8 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 break;
 
             case "TrainType":     // NOI18N
+                _duplicateButton.setText(Bundle.getMessage("DuplicateTrainTypeButtonText"));  // NOI18N
+                _duplicateButtonPanel.setVisible(true);
                 _deleteButton.setText(Bundle.getMessage("DeleteTrainTypeButtonText"));  // NOI18N
                 _deleteButtonPanel.setVisible(true);
                 editPressed();
@@ -2696,6 +2984,8 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             case "Segment":     // NOI18N
                 _addButton.setText(Bundle.getMessage("AddStationButtonText"));  // NOI18N
                 _addButtonPanel.setVisible(true);
+                _duplicateButton.setText(Bundle.getMessage("DuplicateSegmentButtonText"));  // NOI18N
+                _duplicateButtonPanel.setVisible(true);
                 _deleteButton.setText(Bundle.getMessage("DeleteSegmentButtonText"));  // NOI18N
                 _deleteButtonPanel.setVisible(true);
                 _graphButtonPanel.setVisible(true);
@@ -2703,6 +2993,8 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 break;
 
             case "Station":     // NOI18N
+                _duplicateButton.setText(Bundle.getMessage("DuplicateStationButtonText"));  // NOI18N
+                _duplicateButtonPanel.setVisible(true);
                 _deleteButton.setText(Bundle.getMessage("DeleteStationButtonText"));  // NOI18N
                 _deleteButtonPanel.setVisible(true);
                 editPressed();
@@ -2717,6 +3009,8 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             case "Schedule":     // NOI18N
                 _addButton.setText(Bundle.getMessage("AddTrainButtonText"));  // NOI18N
                 _addButtonPanel.setVisible(true);
+                _duplicateButton.setText(Bundle.getMessage("DuplicateScheduleButtonText"));  // NOI18N
+                _duplicateButtonPanel.setVisible(true);
                 _deleteButton.setText(Bundle.getMessage("DeleteScheduleButtonText"));  // NOI18N
                 _deleteButtonPanel.setVisible(true);
                 editPressed();
@@ -2731,12 +3025,16 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                     _copyButtonPanel.setVisible(true);
                 }
 
+                _duplicateButton.setText(Bundle.getMessage("DuplicateTrainButtonText"));  // NOI18N
+                _duplicateButtonPanel.setVisible(true);
                 _deleteButton.setText(Bundle.getMessage("DeleteTrainButtonText"));  // NOI18N
                 _deleteButtonPanel.setVisible(true);
                 editPressed();
                 break;
 
             case "Stop":     // NOI18N
+                _duplicateButton.setText(Bundle.getMessage("DuplicateStopButtonText"));  // NOI18N
+                _duplicateButtonPanel.setVisible(true);
                 _deleteButton.setText(Bundle.getMessage("DeleteStopButtonText"));  // NOI18N
                 _deleteButtonPanel.setVisible(true);
                 editPressed();
@@ -2753,7 +3051,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     void showNodeEditMessage() {
         if (InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class) != null) {
             InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showInfoMessage(Bundle.getMessage("NodeEditTitle"), // NOI18N
+                    showInfoMessage( this, Bundle.getMessage("NodeEditTitle"), // NOI18N
                             Bundle.getMessage("NodeEditText"), // NOI18N
                             getClassName(),
                             "SkipTimeTableEditMessage"); // NOI18N

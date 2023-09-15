@@ -6,9 +6,6 @@ import java.util.List;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -20,6 +17,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.script.JmriScriptEngineManager;
 import jmri.script.swing.ScriptFileChooser;
 import jmri.util.FileUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user edit of a train's script options. Allows the user to execute
@@ -381,8 +379,8 @@ public class TrainScriptFrame extends OperationsFrame {
             if (file.exists()) {
                 JmriScriptEngineManager.getDefault().runScript(file);
             } else {
-                JOptionPane.showMessageDialog(this, script, Bundle.getMessage("ScriptFileNotFound"),
-                        JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, script, Bundle.getMessage("ScriptFileNotFound"),
+                        JmriJOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -417,5 +415,5 @@ public class TrainScriptFrame extends OperationsFrame {
         saveTrainButton.setEnabled(enabled);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainScriptFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrainScriptFrame.class);
 }

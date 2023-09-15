@@ -38,31 +38,16 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-      <revnumber>1</revnumber>
-      <date>2014-02-20</date>
-      <authorinitials>PB</authorinitials>
-      <revremark>
-        This file containts only variables that are common to ALL normal D&amp;H decoders,
-		Low current DH06A has different default values.
-      </revremark>
-    </revision>
-    <revision>
-      <revnumber>2</revnumber>
-      <date>2014-10-13</date>
-      <authorinitials>PB</authorinitials>
-      <revremark>CV49 exclude for combo sound decoders</revremark>
-    </revision>
-    <revision>
-      <revnumber>3</revnumber>
-      <date>2015-03-06</date>
-      <authorinitials>PB</authorinitials>
-      <revremark>Spelling change CV 61to match new DH def pane for start and brake options</revremark>
-    </revision>
-    <revision>
-      <revnumber>4</revnumber>
-      <date>2020-05-02</date>
+      <revnumber>7</revnumber>
+      <date>2023-07-22</date>
       <authorinitials>RK</authorinitials>
-      <revremark>disable CV49 for Sound Decoder</revremark>
+      <revremark>Exclude Sound Decoders 2022, correction for FH-series</revremark>
+    </revision>
+    <revision>
+      <revnumber>6</revnumber>
+      <date>2021-10-08</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Added specific defaults for DH06A with latest firmware (no need for separate file Vars_common_pwr_low.xml anymore)</revremark>
     </revision>
     <revision>
       <revnumber>5</revnumber>
@@ -71,16 +56,37 @@
       <revremark>Excluded similar CV9xx for Sound Decoder 2020</revremark>
     </revision>
     <revision>
-      <revnumber>6</revnumber>
-      <date>2021-10-08</date>
+      <revnumber>4</revnumber>
+      <date>2020-05-02</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>disable CV49 for Sound Decoder</revremark>
+    </revision>
+    <revision>
+      <revnumber>3</revnumber>
+      <date>2015-03-06</date>
       <authorinitials>PB</authorinitials>
-      <revremark>Added specific defaults for DH06A with latest firmware (no need for separate file Vars_common_pwr_low.xml anymore)</revremark>
+      <revremark>Spelling change CV 61to match new DH def pane for start and brake options</revremark>
+    </revision>
+    <revision>
+      <revnumber>2</revnumber>
+      <date>2014-10-13</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>CV49 exclude for combo sound decoders</revremark>
+    </revision>
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-02-20</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>
+        This file containts only variables that are common to ALL normal D&amp;H decoders,
+        Low current DH06A has different default values.
+      </revremark>
     </revision>
   </revhistory>
   <!-- MOTOR SETTINGS -->
   <variable item="Vhigh" CV="5" default="92">
     <!-- Dif. Default for DH06A -->
-    <defaultItem default="46" include="DH06A,DH06A_3.03,DH06A_3.04,DH06A_2014.10,DH06A_2014.11,DH06A_2015.01,60"/>
+    <defaultItem default="46" include="60,DH06A,DH06A_3.03,DH06A_3.04,DH06A_2014.10,DH06A_2014.11,DH06A_2015.01,60"/>
     <decVal min="0" max="127"/>
     <label>Vhigh</label>
     <label xml:lang="it">Volt Massimi</label>
@@ -88,9 +94,9 @@
     <label xml:lang="de">Höchstgeschwindigkeit</label>
     <label xml:lang="ca">Voltatge Màxim</label>
   </variable>
-  <variable CV="49" default="1" item="Motor Option 2" tooltip="0=1ms, 1=2ms, 2=4ms, 3=8ms" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2018),Sound Decoders (2020)">
+  <variable CV="49" default="1" item="Motor Option 2" tooltip="0=1ms, 1=2ms, 2=4ms, 3=8ms" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2018),Sound Decoders (2020),Sound Decoders (2022),Function Decoders (2023)">
     <!-- Dif. Default for DH06A -->
-    <defaultItem default="0" include="DH06A,DH06A_3.03,DH06A_3.04,DH06A_2014.10,DH06A_2014.11,DH06A_2015.01,60"/>
+    <defaultItem default="0" include="60,DH06A,DH06A_3.03,DH06A_3.04,DH06A_2014.10,DH06A_2014.11,DH06A_2015.01,60"/>
     <decVal min="0" max="3"/>
     <label>Impulse width</label>
     <label xml:lang="it">Largh.Impulsi</label>
@@ -100,7 +106,7 @@
   </variable>
   <variable CV="61" default="63" item="Speed in shunting mode" tooltip="CV61 (0-127)">
     <!-- Dif. Default for DH06A -->
-    <defaultItem default="31" include="DH06A,DH06A_3.03,DH06A_3.04,DH06A_2014.10,DH06A_2014.11,DH06A_2015.01,60"/>
+    <defaultItem default="31" include="60,DH06A,DH06A_3.03,DH06A_3.04,DH06A_2014.10,DH06A_2014.11,DH06A_2015.01,60"/>
     <decVal min="0" max="127"/>
     <label>Speed in shunting mode</label>
     <label xml:lang="it">Velocità in Manovra</label>

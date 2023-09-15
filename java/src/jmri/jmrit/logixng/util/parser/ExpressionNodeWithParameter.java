@@ -11,7 +11,7 @@ public interface ExpressionNodeWithParameter extends ExpressionNode {
 
     /** {@inheritDoc} */
     @Override
-    public default Object calculate(SymbolTable symbolTable) throws JmriException {
+    default Object calculate(SymbolTable symbolTable) throws JmriException {
         throw new UnsupportedOperationException("Not implemented. Use calculate(parameter, symbolTable) instead");
     }
     
@@ -22,7 +22,7 @@ public interface ExpressionNodeWithParameter extends ExpressionNode {
      * @return the result
      * @throws JmriException if an error occurs
      */
-    public Object calculate(Object parameter, SymbolTable symbolTable) throws JmriException;
+    Object calculate(Object parameter, SymbolTable symbolTable) throws JmriException;
     
     /**
      * Assign a value to this expression from a parameter.
@@ -31,7 +31,7 @@ public interface ExpressionNodeWithParameter extends ExpressionNode {
      * @param value the value to assign
      * @throws jmri.JmriException if an error occurs
      */
-    public default void assignValue(Object parameter, SymbolTable symbolTable, Object value) throws JmriException {
+    default void assignValue(Object parameter, SymbolTable symbolTable, Object value) throws JmriException {
         throw new UnsupportedOperationException("This expression can't be assigned");
     }
     

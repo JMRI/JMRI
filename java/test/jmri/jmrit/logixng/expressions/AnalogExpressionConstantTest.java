@@ -259,6 +259,7 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
 //        JUnitAppender.clearBacklog();
         _base.dispose();
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

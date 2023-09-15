@@ -22,6 +22,6 @@ public interface LocoNetListener extends java.util.EventListener {
      *            be presented to multiple users. It should not be modified
      *            here.
      */
-    public void message(LocoNetMessage msg);
+    void message(LocoNetMessage msg);
 
 }

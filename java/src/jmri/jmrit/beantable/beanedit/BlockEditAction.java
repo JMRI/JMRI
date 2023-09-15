@@ -148,7 +148,7 @@ public class BlockEditAction extends BeanEditAction<Block> {
                 try {
                     bean.setBlockSpeed(speed);
                 } catch (JmriException ex) {
-                    JOptionPane.showMessageDialog(f, ex.getMessage() + "\n" + speed);
+                    jmri.util.swing.JmriJOptionPane.showMessageDialog(f, ex.getMessage() + "\n" + speed);
                     return;
                 }
                 if (!speedList.contains(speed) && !speed.contains("Global")) {

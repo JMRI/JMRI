@@ -74,6 +74,11 @@
                 <li></li>
             </ul>
 
+        <h4>Lenz XPressNet</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>LocoNet</h4>
             <ul>
                 <li></li>
@@ -114,15 +119,9 @@
                 <li></li>
             </ul>
 
-        <h4><a href="https://openlcb.org/">OpenLCB</a> / LCC</h4>
+        <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Hub Control - UI Update, line termination characters optional for incoming feeds.</li>
-                <li>When downloading firmware to multiple boards, it can be a pain to have to select the file over and over.
-                    This was changed to make the selected file (hence directory, etc) persistent from one download frame
-                    to the next.
-                <li>Show more information in the node selector when doing firmware downloads.</li>
-                <li>Updated the default filename when doing backups to contain more identification info.</li>
-                <li>The OpenLCB library was updated to the current contents as of PR #214</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -212,8 +211,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li>Added SE74 usage information to the Digitrax/LocoNet hardware help page,
-                    including specific guidance for configuring JMRI's signaling.</li>
+                <li></li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -289,11 +287,6 @@
         <h4>Public Domain and DIY decoders</h4>
             <ul>
                 <li></li>
-            </ul>
-
-	    <h4>Piko decoders</h4>
-            <ul>
-                <li>Bug fixes, improvements and functional enhancements</li>
             </ul>
 
         <h4>QSI</h4>
@@ -379,11 +372,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>The decoder index is being written in a more compact form to improve the
-                time spent reading it at startup.</li>
-            <li>Two new decoder-index attributes
-                suppressFunctionLabels and suppressRosterMedia
-                can be used to suppress those panes in the DecoderPro GUI.</li>
+            <li></li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -430,8 +419,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The expression <i>Linux Line Power</i> has been added.</li>
-
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -443,8 +431,7 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Improved passenger car blocking when using kernels, caboose, or car with FRED</li>
-            <li>Fix Java exception when using the Set Car window and a final destination.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -496,8 +483,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Add a PanelControlsContents.py script which lets you
-                set a panel to controlling the layout or not.</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -507,8 +493,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>Updated AAR-1946 aspect mappings.</li>
-                <li>Updated the appearances in the Reading-1954 system.</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -610,10 +595,11 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Updated the plantuml library to version 1.2023.1.  This is used to
-                create program documentation.</li>
-            <li>When downloading firmware to multiple boards, it can be a pain to have to select the file over and over.
-                This was changed to make the selected file (hence directory, etc) persistent from one download frame
-                to the next.
+            <li>Improved Unrecoverable Error Dialog.</li>
+            <li>JMRI now has a "Software Bill of Materials" (SBOM) distributed with it.
+                Although this won't matter to most users, it allows people to determine
+                via the standardized SPDX mechanism the libraries that JMRI contains and
+                the versions being used. Providing this is a small step toward more automated
+                distribution.</li>
         </ul>
 

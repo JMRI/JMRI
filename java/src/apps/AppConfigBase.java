@@ -19,8 +19,7 @@ import jmri.jmrix.JmrixConfigPane;
 import jmri.swing.ManagingPreferencesPanel;
 import jmri.swing.PreferencesPanel;
 import jmri.util.swing.JmriPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Basic configuration infrastructure, to be used by specific GUI
@@ -38,8 +37,6 @@ public class AppConfigBase extends JmriPanel {
     protected HashMap<String, PreferencesPanel> preferencesPanels = new HashMap<>();
 
     protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
-
-    private static final Logger log = LoggerFactory.getLogger(AppConfigBase.class);
 
     /**
      * Construct a configuration panel for inclusion in a preferences or
@@ -104,12 +101,12 @@ public class AppConfigBase extends JmriPanel {
         for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class).getConnections()) {
             String port = connection.getInfo();
             if (port.equals(JmrixConfigPane.NONE_SELECTED) || port.equals(JmrixConfigPane.NO_PORTS_FOUND)) {
-                if (JOptionPane.YES_OPTION != JOptionPane.showConfirmDialog(
+                if (JmriJOptionPane.YES_OPTION != JmriJOptionPane.showConfirmDialog(
                         null,
                         MessageFormat.format(rb.getString("MessageSerialPortWarning"), new Object[]{port, connection.getConnectionName()}),
                         rb.getString("MessageSerialPortNotValid"),
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.ERROR_MESSAGE)) {
+                        JmriJOptionPane.YES_NO_OPTION,
+                        JmriJOptionPane.ERROR_MESSAGE)) {
                     return false;
                 }
             }
@@ -167,7 +164,8 @@ public class AppConfigBase extends JmriPanel {
         }
         // true if there arn't any duplicates
         if (!checkDups()) {
-            if (!(JOptionPane.showConfirmDialog(null, rb.getString("MessageLongDupsWarning"), rb.getString("MessageShortDupsWarning"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)) {
+            if (!(JmriJOptionPane.showConfirmDialog(null, rb.getString("MessageLongDupsWarning"),
+                rb.getString("MessageShortDupsWarning"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION)) {
                 return;
             }
         }
@@ -178,11 +176,11 @@ public class AppConfigBase extends JmriPanel {
         if (restartRequired && !InstanceManager.getDefault(ShutDownManager.class).isShuttingDown()) {
             JLabel question = new JLabel(MessageFormat.format(rb.getString("MessageLongQuitWarning"), Application.getApplicationName()));
             Object[] options = {rb.getString("RestartNow"), rb.getString("RestartLater")};
-            int retVal = JOptionPane.showOptionDialog(this,
+            int retVal = JmriJOptionPane.showOptionDialog(this,
                     question,
                     MessageFormat.format(rb.getString("MessageShortQuitWarning"), Application.getApplicationName()),
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
+                    JmriJOptionPane.DEFAULT_OPTION,
+                    JmriJOptionPane.QUESTION_MESSAGE,
                     null,
                     options,
                     null);
@@ -217,5 +215,7 @@ public class AppConfigBase extends JmriPanel {
     public HashMap<String, PreferencesPanel> getPreferencesPanels() {
         return preferencesPanels;
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AppConfigBase.class);
 
 }

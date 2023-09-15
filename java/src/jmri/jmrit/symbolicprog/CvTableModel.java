@@ -4,8 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.Vector;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -353,6 +356,27 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         return false;
     }
 
+    /**
+     * Register a VariableValue in a common store mapping CV numbers to
+     * variable names. This is for use by e.g. a CVTable to show tooltips
+     * efficiently.
+     * @param cv specific CV number that the variable references
+     * @param variableName from the variable being defined
+     */
+    public void registerCvToVariableMapping(String cv, String variableName) {
+        // is there already a Set for these?
+        if ( ! cvToVarMap.containsKey(cv)) {
+            // no, create one
+            cvToVarMap.put(cv, Collections.newSetFromMap(new HashMap<String, Boolean>()));
+        }
+        // add the String
+        cvToVarMap.get(cv).add(variableName);
+    }
+
+    public Set<String> getCvToVariableMapping(String cv) { return cvToVarMap.get(cv); }
+
+    private HashMap<String, Set<String>> cvToVarMap = new HashMap<>();
+
     public void dispose() {
         if (log.isDebugEnabled()) {
             log.debug("dispose");
@@ -375,6 +399,8 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         }
 
         // null references, so that they can be gc'd even if this isn't.
+        cvToVarMap = null;
+
         _cvDisplayVector.removeAllElements();
         _cvDisplayVector = null;
 
@@ -392,6 +418,17 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 
         _status = null;
 
+    }
+
+    int holdsAddress() {
+        int shortAddr = getCvByNumber("1").getValue();
+        int longAddr = ((getCvByNumber("17").getValue()-192)<<8)+getCvByNumber("18").getValue();
+        int addr = holdsLongAddress() ? longAddr : shortAddr;
+        return addr;
+    }
+
+    boolean holdsLongAddress() {
+        return (getCvByNumber("29").getValue() & 0x20) != 0;
     }
 
     private final static Logger log = LoggerFactory.getLogger(CvTableModel.class);

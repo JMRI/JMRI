@@ -87,6 +87,7 @@ abstract public class AbstractConsistManagerTestBase {
     @Test
     public void testGetConsistListEmpty(){
         // by default, there should be no consists
+        Assert.assertNotNull("consist exists",cm);
         Assert.assertNotNull("list exists",cm.getConsistList());
         Assert.assertTrue("empty list",cm.getConsistList().isEmpty());
     }
@@ -117,7 +118,7 @@ abstract public class AbstractConsistManagerTestBase {
     public void testShouldRequestUpdateFromLayout(){
        Assume.assumeTrue(cm instanceof AbstractConsistManager);
        // default is true, override if necessary
-       Assert.assertTrue("Sould Request Update From Layout",((AbstractConsistManager)cm).shouldRequestUpdateFromLayout());
+       Assert.assertTrue("Should Request Update From Layout",((AbstractConsistManager)cm).shouldRequestUpdateFromLayout());
     }
 
     @Test

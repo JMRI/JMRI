@@ -10,9 +10,8 @@ import org.junit.Assume;
 import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
+import jmri.util.*;
+import jmri.util.swing.JemmyUtil;
 
 /**
  *
@@ -28,8 +27,18 @@ public class CarsSetFrameActionTest extends OperationsTestCase {
         CarsSetFrameAction a = new CarsSetFrameAction(ctm);
         Assert.assertNotNull("exists", a);
         
-        a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
+        // should cause dialog no car selected to appear
+        Thread action = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
+            }
+        });
+        action.setName("cars set frame"); // NOI18N
+        action.start();
         
+        JemmyUtil.pressDialogButton(Bundle.getMessage("carNoneSelected"), Bundle.getMessage("ButtonOK"));
+       
         JmriJFrame f = JmriJFrame.getFrame(Bundle.getMessage("TitleSetCars"));
         Assert.assertNotNull("frame exists", f);
         JUnitUtil.dispose(f);

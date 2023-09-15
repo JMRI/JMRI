@@ -40,16 +40,16 @@ public interface LightManager extends ProvidingManager<Light>, NameIncrementingM
      * @return Never null under normal circumstances
      */
     @Nonnull
-    public Light provideLight(@Nonnull String name) throws IllegalArgumentException;
+    Light provideLight(@Nonnull String name) throws IllegalArgumentException;
 
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    default public Light provide(@Nonnull String name) throws IllegalArgumentException { return provideLight(name); }
+    default Light provide(@Nonnull String name) throws IllegalArgumentException { return provideLight(name); }
 
     /** {@inheritDoc} */
     @Override
-    public void dispose();
+    void dispose();
 
     /**
      * Get an existing Light or return null if it doesn't exist.
@@ -61,7 +61,7 @@ public interface LightManager extends ProvidingManager<Light>, NameIncrementingM
      */
     @CheckReturnValue
     @CheckForNull
-    public Light getLight(@Nonnull String name);
+    Light getLight(@Nonnull String name);
 
     /**
      * Return a Light with the specified user or system name.
@@ -95,7 +95,7 @@ public interface LightManager extends ProvidingManager<Light>, NameIncrementingM
      *                                  parsed.
      */
     @Nonnull
-    public Light newLight(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
+    Light newLight(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
     /**
      * Locate a Light by its user name.
@@ -106,7 +106,7 @@ public interface LightManager extends ProvidingManager<Light>, NameIncrementingM
     @CheckReturnValue
     @CheckForNull
     @Override
-    public Light getByUserName(@Nonnull String s);
+    Light getByUserName(@Nonnull String s);
 
     /**
      * Locate a Light by its system name.
@@ -117,7 +117,7 @@ public interface LightManager extends ProvidingManager<Light>, NameIncrementingM
     @CheckReturnValue
     @CheckForNull
     @Override
-    public Light getBySystemName(@Nonnull String s);
+    Light getBySystemName(@Nonnull String s);
 
     /**
      * Test if parameter is a valid system name for current configuration.
@@ -126,7 +126,7 @@ public interface LightManager extends ProvidingManager<Light>, NameIncrementingM
      * @return true if valid; false otherwise
      */
     @CheckReturnValue
-    public default boolean validSystemNameConfig(@Nonnull String systemName){
+    default boolean validSystemNameConfig(@Nonnull String systemName){
         try {
             validateSystemNameFormat(systemName);
             return true;
@@ -150,7 +150,7 @@ public interface LightManager extends ProvidingManager<Light>, NameIncrementingM
      */
     @CheckReturnValue
     @Nonnull
-    public String convertSystemNameToAlternate(@Nonnull String systemName);
+    String convertSystemNameToAlternate(@Nonnull String systemName);
 
     /**
      * Activate the control mechanism for each Light controlled by this
@@ -158,7 +158,7 @@ public interface LightManager extends ProvidingManager<Light>, NameIncrementingM
      * activateLight method in AbstractLight.java determines what needs to be
      * done for each Light.
      */
-    public void activateAllLights();
+    void activateAllLights();
 
     /**
      * Test if system in the given name can support a variable light.
@@ -167,7 +167,7 @@ public interface LightManager extends ProvidingManager<Light>, NameIncrementingM
      * @return true if variable lights are supported; false otherwise
      */
     @CheckReturnValue
-    public boolean supportsVariableLights(@Nonnull String systemName);
+    boolean supportsVariableLights(@Nonnull String systemName);
 
     /**
      * Get a system name for a given hardware address and system prefix.
@@ -181,6 +181,6 @@ public interface LightManager extends ProvidingManager<Light>, NameIncrementingM
      *                            format
      */
     @Nonnull
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
+    String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
 }

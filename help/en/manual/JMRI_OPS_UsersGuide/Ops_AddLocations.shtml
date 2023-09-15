@@ -46,7 +46,7 @@
       <strong>Boston-1</strong> and <strong>Boston-2</strong> will both print as
       <strong>Boston</strong>. The program will remove the hyphen and number when printing
       Manifests and Switch Lists.</p>
-      Press <input name="button2" id="button2" value="Add Location" type="submit"> at the bottom of
+      Press <span class="textbutton">Add Location</span> at the bottom of
       the panel. The various fields that were disabled should now be enabled.
       <p style="text-align: center;"><img src="images/Ops_AddLocation01.png" alt="Add Location"
       height="585" width="772">
@@ -91,9 +91,8 @@
       Track" button at the bottom of the panel to add a new track to the list and activate the
       disabled fields.</p>
 
-      <p>The <input name="button3" id="button3" value="Add [...] Track" type="submit"> button at
-      the bottom of the window will change to match the option you chose as "Tracks at this
-      Location".<br></p>
+      <p>The <span class="textbutton">Add [...] Track</span> button at the bottom of the window
+      will change to match the option you chose as &quot;Tracks at this Location&quot;.<br></p>
 
       <h4 id="addtracks">Add Spurs, Yards, Classification/Interchange, or Staging Only
       (corresponding to the present task)</h4>
@@ -101,25 +100,23 @@
       <p>To add a Location, press the "Add [location]" button, which shows one of the following
       types</p>
 
-      <p><a href="Ops_AddSiding.shtml"><input name="button4" id="button4" value="Add Spur Track"
-      type="button"></a> <a href="Ops_AddSiding.shtml">Add Spur Track</a></p>
+      <p><span class="textbutton"><a href="Ops_AddSiding.shtml">Add Spur Track</a></span>
+      <a href="Ops_AddSiding.shtml">Add Spur Track</a></p>
 
-      <p><a href="Ops_AddYard.shtml"><input name="button5" id="button5" value="Add Yard Track"
-      type="button"></a> <a href="Ops_AddYard.shtml">Add Yard Track</a></p>
+      <p><span class="textbutton"><a href="Ops_AddYard.shtml">Add Yard Track</a></span>
+      <a href="Ops_AddYard.shtml">Add Yard Track</a></p>
 
-      <p><a href="Ops_AddInterchange.shtml"><input name="button6" id="button6" value=
-      "Add C/I Track" type="button"></a> <a href="Ops_AddInterchange.shtml">Add
-      Classification/Interchange Track</a></p>
+      <p><span class="textbutton"><a href="Ops_AddInterchange.shtml">Add C/I Track</a></span>
+      <a href="Ops_AddInterchange.shtml">Add Classification/Interchange Track</a></p>
 
-      <p><a href="Ops_AddStaging.shtml"><input name="button7" id="button7" value=
-      "Add Staging Only Track" type="button"></a> <a href="Ops_AddStaging.shtml">Add Staging Only
-      Track</a></p>
+      <p><span class="textbutton"><a href="Ops_AddStaging.shtml"> Add Staging Only Track</a></span>
+      <a href="Ops_AddStaging.shtml">Add Staging Only Track</a></p>
 
       <p>Each of these buttons opens a corresponding dialog to describe its function.</p>
 
       <h4>Save [...] Track</h4>
 
-      <p>Press the <input name="button8" id="button8" value="Save Location" type="submit"> to save
+      <p>Press the <span class="textbutton">Save Location</span> button to save
       your work. The program will create a file (OperationsLocationRoster.xml) in your JMRI
       directory in a folder called "operations". The program will also create a backup file
       containing the last settings for all of your locations. <a id="Sidings"></a></p>

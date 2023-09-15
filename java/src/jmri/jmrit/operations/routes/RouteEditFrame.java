@@ -7,22 +7,17 @@ import java.util.List;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.routes.tools.PrintRouteAction;
-import jmri.jmrit.operations.routes.tools.RouteBlockingOrderEditFrameAction;
-import jmri.jmrit.operations.routes.tools.RouteCopyAction;
-import jmri.jmrit.operations.routes.tools.SetTrainIconRouteAction;
+import jmri.jmrit.operations.routes.tools.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.swing.JTablePersistenceManager;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user edit of route
@@ -233,24 +228,23 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
             log.debug("route save button activated");
             Route route = routeManager.getRouteByName(routeNameTextField.getText());
             if (_route == null && route == null) {
-                saveNewRoute();
+                saveNewRoute(); // can't happen, save button is disabled
             } else {
                 if (route != null && route != _route) {
                     reportRouteExists(Bundle.getMessage("save"));
                     return;
                 }
-                saveRoute();
-            }
-            if (Setup.isCloseWindowOnSaveEnabled()) {
-                dispose();
+                if (saveRoute() && Setup.isCloseWindowOnSaveEnabled()) {
+                    dispose();
+                }
             }
         }
         if (ae.getSource() == deleteRouteButton) {
             log.debug("route delete button activated");
-            if (JOptionPane.showConfirmDialog(this,
+            if (JmriJOptionPane.showConfirmDialog(this,
                     MessageFormat.format(Bundle.getMessage("AreYouSure?"),
                             new Object[] { routeNameTextField.getText() }),
-                    Bundle.getMessage("DeleteRoute?"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                    Bundle.getMessage("DeleteRoute?"), JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                 return;
             }
             Route route = routeManager.getRouteByName(routeNameTextField.getText());
@@ -336,20 +330,21 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         loadToolMenu();
     }
 
-    private void saveRoute() {
-        if (!checkName(Bundle.getMessage("save"))) {
-            return;
-        }
-        _route.setName(routeNameTextField.getText());
-        _route.setComment(commentTextField.getText());
-
+    private boolean saveRoute() {
         if (routeTable.isEditing()) {
             log.debug("route table edit true");
             routeTable.getCellEditor().stopCellEditing();
         }
-        checkTrainDirections();
+        
+        if (!checkName(Bundle.getMessage("save")) || !checkTrainDirections()) {
+            return false;
+        }
+        _route.setName(routeNameTextField.getText());
+        _route.setComment(commentTextField.getText());
+
         // save route file
         OperationsXml.save();
+        return true;
     }
 
     /**
@@ -359,17 +354,17 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
     private boolean checkName(String s) {
         if (routeNameTextField.getText().trim().isEmpty()) {
             log.debug("Must enter a name for the route");
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"),
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"),
                     MessageFormat.format(Bundle.getMessage("CanNotRoute"), new Object[] { s }),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (routeNameTextField.getText().length() > Control.max_len_string_route_name) {
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     MessageFormat.format(Bundle.getMessage("RouteNameLess"),
                             new Object[] { Control.max_len_string_route_name + 1 }),
                     MessageFormat.format(Bundle.getMessage("CanNotRoute"), new Object[] { s }),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -378,25 +373,26 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
     /*
      * Checks to see if user has disabled the saved train directions for this route.
      */
-    private void checkTrainDirections() {
+    private boolean checkTrainDirections() {
         // get the valid train directions
         List<String> directions = Setup.getTrainDirectionList();
         for (RouteLocation rl : _route.getLocationsBySequenceList()) {
             if (!directions.contains(rl.getTrainDirectionString())) {
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         MessageFormat.format(Bundle.getMessage("RouteDirection"), new Object[] { rl.getId() }),
                         MessageFormat.format(Bundle.getMessage("RouteDirectionError"),
                                 new Object[] { rl.getTrainDirectionString() }),
-                        JOptionPane.ERROR_MESSAGE);
-                return;
+                        JmriJOptionPane.ERROR_MESSAGE);
+                return false;
             }
         }
+        return true;
     }
 
     private void reportRouteExists(String s) {
         log.info("Can not {}, route already exists", s);
-        JOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"),
-                MessageFormat.format(Bundle.getMessage("CanNotRoute"), new Object[] { s }), JOptionPane.ERROR_MESSAGE);
+        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"),
+                MessageFormat.format(Bundle.getMessage("CanNotRoute"), new Object[] { s }), JmriJOptionPane.ERROR_MESSAGE);
     }
 
     private void enableButtons(boolean enabled) {
@@ -459,5 +455,5 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RouteEditFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RouteEditFrame.class);
 }

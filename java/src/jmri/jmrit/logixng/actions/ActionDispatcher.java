@@ -418,7 +418,7 @@ public class ActionDispatcher extends AbstractDigitalAction
                             Bundle.getMessage("ActionDispatcher_Long_Disable"));
                 case TerminateWhenDoneOption:
                     return getLongDataDescription(locale, "ActionDispatcher_Long_TerminateOption",
-                            fileName, getResetOption() ? Bundle.getMessage("ActionDispatcher_Long_Enable") :
+                            fileName, getTerminateOption() ? Bundle.getMessage("ActionDispatcher_Long_Enable") :
                             Bundle.getMessage("ActionDispatcher_Long_Disable"));
                 default:
                     throw new IllegalArgumentException("invalid enum: " + _selectEnum.getEnum().name());

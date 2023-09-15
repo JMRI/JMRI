@@ -12,7 +12,12 @@
     <!--#include virtual="../SidebarUp.shtml" -->
 
     <div id="mainContent">
-      <h1>Hardware Support: M&auml;rklin Command Station 2 (CS2)</h1>
+      <h1>Hardware Support: M&auml;rklin </h1>
+      JMRI supports two M&auml;rklin command stations:
+      the <a href="#cs2">Command Station 2 (CS2)</a> and
+      the <a href="#cdb">CdB CC-Schnitte 2</a>.
+
+      <h2 id="cs2">Command Station 2 (CS2)</h2>
 
       <p>JMRI can connect to a M&auml;rklin Command Station 2 using the built in Ethernet interface.<br>
       It is possible for multiple PCs to connect to a CS2 using IP/UDP.</p>
@@ -27,12 +32,12 @@
       <p>Support for the M&auml;rklin CS2 was first available in <a href=
       "https://www.jmri.org/releasenotes/jmri3.1.1.shtml">JMRI 3.1.1</a>.</p>
 
-      <h2 id="limitations">Limitations</h2>
+      <h3 id="limitations">Limitations</h3>
       <strong>This interface is still under development; if you find any issues then please raise a
       issue on the <a href="https://groups.io/g/jmriusers">JMRI users</a> mailing list.</strong>
       <p>Consisting, and Programming are not yet supported.</p>
 
-      <h2 id="connecting">Connecting</h2>
+      <h3 id="connecting">Connecting</h3>
 
       <p>To configure the connection:</p>
 
@@ -54,7 +59,7 @@
       <img src="images/MarklinMenu416.png" width="251" height="74" class="floatRight" alt=
       "Menu"></p>
 
-      <h2 id="tools">JMRI Tools</h2>
+      <h3 id="tools">JMRI Tools</h3>
 
       <h4>Monitor Marklin Commands</h4>
       <img src="images/MarklinCommandMonitor.png" width="410" height="88" alt=
@@ -63,7 +68,42 @@
       <img src="images/MarklinCS2SendCommand.png" width="348" height="128" alt=
       "Send Packet Tool"><br>
       Enter a message as a hex string, starting with the prefix 0x e.g. <code>0x4467</code>. Press
-      [Send] and wait for a reply from the CS2 connection to appear in the Reply field. 
+      [Send] and wait for a reply from the CS2 connection to appear in the Reply field.
+
+
+      <h2 id="cdb">CdB CC-Schnitte 2</h2>
+
+      <p><span class="since">Since <a href="jmri5.3.5.shtml">JMRI 5.3.5</a></span>
+      JMRI can connect using a CC-Schnitte USB interface.</p>
+
+      <p>The CC-Schnitte is a third party USB interface for the Marklin CAN Bus.
+      It is usually directly attached to the 60113 Digital Connector Box,
+      with the MobileStation 2 attached to the second port.
+      In the Marklin system, the Connector Box receives commands from devices attached to the CAN Bus.
+      It acts as a mini booster, but also translates them into a proper DCC/mm2/mfx signal.
+      CC-Schnitte combines with the Connector Box in a fashion similar as the
+      already supported CentralStation 2.
+
+
+      <h3 id="limitations">Limitations</h3>
+      <strong>This interface is still under development; if you find any issues then please raise a
+      issue on the <a href="https://groups.io/g/jmriusers">JMRI users</a> mailing list.</strong>
+
+      <h3 id="connecting">Connecting</h3>
+
+      <p>To configure the connection:</p>
+
+      <ul>
+        <li>Open the JMRI "Preferences" under the "Edit" menu,</li>
+
+        <li>Select "MARKLIN" as the manufacturer, and "CC-Schnitte 2.1" as the Connection
+        type,</li>
+
+        <li>Select the proper USB connection name.</li>
+
+        <li>Click "Save".</li>
+      </ul>
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

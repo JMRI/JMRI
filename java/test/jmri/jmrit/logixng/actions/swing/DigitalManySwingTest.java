@@ -15,7 +15,7 @@ import org.junit.Test;
 
 /**
  * Test ManySwing
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public class DigitalManySwingTest {
@@ -23,21 +23,21 @@ public class DigitalManySwingTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         DigitalManySwing t = new DigitalManySwing();
         Assert.assertNotNull("exists",t);
     }
-    
+
     @Test
     public void testCreatePanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         Assert.assertTrue("panel is not null",
             null != new DigitalManySwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
             null != new DigitalManySwing().getConfigPanel(new DigitalMany("IQDA1", null), new JPanel()));
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -54,7 +54,8 @@ public class DigitalManySwingTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }

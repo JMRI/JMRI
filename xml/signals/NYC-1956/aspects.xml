@@ -16,7 +16,7 @@
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>John</firstname><surname>Lang</surname></personname>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -27,20 +27,20 @@
         <revremark>Initial version</revremark>
     </revision>
     <revision>
-    
+
         <revnumber>2</revnumber>
         <date>2013-07-07</date>
         <authorinitials>JDL</authorinitials>
         <revremark>aspect mapping revisions</revremark>
     </revision>
-    
+
     <revision>
         <revnumber>2.1</revnumber>
         <date>2013-12-30</date>
         <authorinitials>JDL</authorinitials>
         <revremark>fixed aspect name reference in appearence files. tweaked aspect mappings</revremark>
     </revision>
-    
+
   </revhistory>
 
   <aspects>
@@ -54,7 +54,7 @@
       <speed2>Normal</speed2>
       <route>Normal</route>
     </aspect>
-    
+
     <aspect>
       <name>Advance Approach Medium</name>
       <rule>Rule 281A</rule>
@@ -64,7 +64,7 @@
       <speed2>Limited</speed2>
       <route>Normal</route>
     </aspect>
- 
+
     <aspect>
       <name>Approach Limited</name>
       <rule>Rule 281B</rule>
@@ -114,7 +114,7 @@
       <speed2>Medium</speed2>
       <route>Either</route>
     </aspect>
-    
+
     <aspect>
       <name>Medium Clear</name>
       <rule>Rule 283</rule>
@@ -123,7 +123,7 @@
       <speed>Medium</speed>
       <speed2>Normal</speed2>
       <route>Diverging</route>
-    </aspect>   
+    </aspect>
 
     <aspect>
       <name>Medium-Advance Approach</name>
@@ -143,15 +143,15 @@
       <speed>Medium</speed>
       <speed2>Slow</speed2>
       <route>Either</route>
-    </aspect>   
-    
+    </aspect>
+
     <aspect>
       <name>Approach Slow</name>
       <rule>Rule 284</rule>
       <indication>Proceed approaching next signal at slow speed Train exceeding medium speed must at once reduce to that speed</indication>
       <reference>Page 94</reference>
       <speed>Medium</speed>
-      <speed2>slow</speed2>
+      <speed2>Slow</speed2>
       <route>Normal</route>
     </aspect>
 
@@ -164,7 +164,7 @@
       <speed2>Stop</speed2>
       <route>Normal</route>
     </aspect>
- 
+
     <aspect>
       <name>Medium-Approach</name>
       <rule>Rule 286</rule>
@@ -173,8 +173,8 @@
       <speed>Medium</speed>
       <speed2>Stop</speed2>
       <route>Diverging</route>
-    </aspect>  
-  
+    </aspect>
+
     <aspect>
       <name>Slow-Clear</name>
       <rule>Rule 287</rule>
@@ -184,7 +184,7 @@
       <speed2>Normal</speed2>
       <route>Diverging</route>
     </aspect>
- 
+
     <aspect>
       <name>Slow-Approach</name>
       <rule>Rule 288</rule>
@@ -224,7 +224,7 @@
       <route>Either</route>
     </aspect>
 
-    <aspect>  
+    <aspect>
       <name>Held</name>
       <rule>Rule 292</rule>
       <indication>Stop.</indication>
@@ -232,8 +232,8 @@
       <speed>Stop</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
-    </aspect>  
-    
+    </aspect>
+
   </aspects>
 
   <appearancefiles>
@@ -243,6 +243,6 @@
     <appearancefile href="appearance-SL-2-high-per.xml"/>
     <appearancefile href="appearance-SL-3-high.xml"/>
   </appearancefiles>
-  
+
 </aspecttable>
-  
+

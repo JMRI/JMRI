@@ -94,16 +94,12 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     @Override
     public void testMaleSocketIsActive() {
         super.testMaleSocketIsActive();
-        JUnitAppender.assertErrorMessage("Shutdown failed");
-        JUnitAppender.assertErrorMessage("Shutdown failed");
     }
 
     @Test
     @Override
     public void testIsActive() {
         super.testIsActive();
-        JUnitAppender.assertErrorMessage("Shutdown failed");
-        JUnitAppender.assertErrorMessage("Shutdown failed");
     }
 
     @Test
@@ -113,22 +109,18 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         action.getSelectEnum().setEnum(ShutdownComputer.Operation.ShutdownComputer);
         action.execute();
         Assert.assertEquals(MockShutDownManager.Result.SHUTDOWN_OS, mockShutDownManager.result);
-        JUnitAppender.assertErrorMessage("Shutdown failed");
 
         action.getSelectEnum().setEnum(ShutdownComputer.Operation.RebootComputer);
         action.execute();
         Assert.assertEquals(MockShutDownManager.Result.RESTART_OS, mockShutDownManager.result);
-        JUnitAppender.assertErrorMessage("Shutdown failed");
 
         action.getSelectEnum().setEnum(ShutdownComputer.Operation.ShutdownJMRI);
         action.execute();
         Assert.assertEquals(MockShutDownManager.Result.SHUTDOWN_JMRI, mockShutDownManager.result);
-        JUnitAppender.assertErrorMessage("Shutdown failed");
 
         action.getSelectEnum().setEnum(ShutdownComputer.Operation.RebootJMRI);
         action.execute();
         Assert.assertEquals(MockShutDownManager.Result.RESTART_JMRI, mockShutDownManager.result);
-        JUnitAppender.assertErrorMessage("Shutdown failed");
     }
 
     // The minimal setup for log4J
@@ -168,7 +160,6 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
 
     @After
     public void tearDown() {
-        JUnitAppender.assertErrorMessage("Shutdown failed");
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }

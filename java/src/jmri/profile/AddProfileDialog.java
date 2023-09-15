@@ -266,7 +266,7 @@ public class AddProfileDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_profileNameActionPerformed
 
     private void btnBrowseActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnBrowseActionPerformed
-        JFileChooser chooser = new JFileChooser(this.profileLocation.getText());
+        JFileChooser chooser = new jmri.util.swing.JmriJFileChooser(this.profileLocation.getText());
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         // TODO: Use NetBeans OpenDialog if its availble
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {

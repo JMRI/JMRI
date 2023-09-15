@@ -11,7 +11,7 @@ public interface FunctionListener extends java.util.EventListener {
      * @param functionNumber The id of the function
      * @param isOn           True if the function is activated, false otherwise.
      */
-    public void notifyFunctionStateChanged(int functionNumber, boolean isOn);
+    void notifyFunctionStateChanged(int functionNumber, boolean isOn);
 
     /**
      * Get notification that a function's lockable status has changed.
@@ -20,5 +20,5 @@ public interface FunctionListener extends java.util.EventListener {
      * @param isLockable     True if the function is now Lockable (continuously
      *                       active).
      */
-    public void notifyFunctionLockableChanged(int functionNumber, boolean isLockable);
+    void notifyFunctionLockableChanged(int functionNumber, boolean isLockable);
 }

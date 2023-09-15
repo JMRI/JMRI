@@ -440,7 +440,7 @@ public class DefaultConditionalActionTest {
         // Test invalid data
         Assert.assertTrue("getActionDataString() returns correct value",
                 "".equals(DefaultConditionalAction.getActionDataString(Conditional.Action.CONTROL_AUDIO, 0)));
-        jmri.util.JUnitAppender.assertWarnMessage("Unhandled Audio operation command: 0");
+        jmri.util.JUnitAppender.assertErrorMessage("Unhandled Audio operation command: 0");
         
         Assert.assertTrue("getActionDataString() returns correct value",
                 "Slow to Halt".equals(DefaultConditionalAction.getActionDataString(Conditional.Action.CONTROL_TRAIN, Warrant.HALT)));

@@ -36,13 +36,13 @@
 
         <li>Operations Locations Tab: Set locations for JMRI Operations Locations</li>
 
-        <li>Listeners Tab: Set location and orientation of the Listener</li>
+        <li>Listener Tab: Set location and orientation of the Listener</li>
       </ul>
 
       <h2>Notes</h2>
 
       <ul>
-        <li>Listeners attributes are saved to VSDecoder Preferences (VSDecoderPreferences.xml).<br>
+        <li>Listener attributes are saved to VSDecoder Preferences (VSDecoderPreferences.xml).<br>
         Operations locations are saved to the folder operations in your current JMRI Profile
         (OperationsLocationRoster.xml).<br>
         Both are loaded automatically at VSD start respectively JMRI start.</li>
@@ -65,9 +65,6 @@
 
         <li>The Reporters and Blocks tables have an additional column "User Name". If a "User Name"
         doesn't exist, the "System Name" is displayed.</li>
-
-        <li>The Listeners attribute "Listener Mode" is not supported and will be removed at a later
-        time.</li>
       </ul>
 
       <p>See the <a href="../../../../../html/tools/vsd/index.shtml">

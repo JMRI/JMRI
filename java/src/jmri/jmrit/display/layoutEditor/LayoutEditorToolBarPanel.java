@@ -22,6 +22,7 @@ import jmri.jmrit.logixng.GlobalVariable;
 import jmri.jmrit.logixng.GlobalVariableManager;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.MathUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -555,8 +556,8 @@ public class LayoutEditorToolBarPanel extends JPanel {
                 iconFrame.setVisible(true);
             } else {
                 //explain to the user why nothing happens
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("ChangeIconNotApplied"),
-                        Bundle.getMessage("ChangeIcons"), JOptionPane.INFORMATION_MESSAGE);
+                JmriJOptionPane.showMessageDialog(changeIconsButton, Bundle.getMessage("ChangeIconNotApplied"),
+                        Bundle.getMessage("ChangeIcons"), JmriJOptionPane.INFORMATION_MESSAGE);
             }
         });
 

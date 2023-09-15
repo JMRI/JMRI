@@ -238,8 +238,9 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
         }
         if (ae.getSource() == saveButton) {
             this.savePreferences();
-            if (Setup.isCloseWindowOnSaveEnabled()) {
-                dispose();
+            var topLevelAncestor = getTopLevelAncestor();
+            if (Setup.isCloseWindowOnSaveEnabled() && topLevelAncestor instanceof EditSwitchListTextFrame) {
+                ((EditSwitchListTextFrame) topLevelAncestor).dispose();
             }
         }
     }

@@ -252,7 +252,7 @@
       <p>The message shown in the LocoNet Monitor window will typically look something like
       this:</p>
 
-      <pre>Sensor LS514 () is High.  (BDL16 # 33, DS2; DS54/DS64 # 65, SwiA/S1).</pre>
+      <pre>Sensor LS514 is High</pre>
       <p>This message is interpreted to mean that The sensor with "System Name" of "LS514" and an
       undefined (empty) "user name" is currently "High". In this particular case, the sensor is
       being used to report block occupancy detection, and "High" means that the block is

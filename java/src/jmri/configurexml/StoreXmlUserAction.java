@@ -1,12 +1,12 @@
 package jmri.configurexml;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Store the JMRI user-level information as XML.
@@ -51,15 +51,14 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
             boolean results = cm.storeUser(file);
             log.debug("store {}", results ? "was successful" : "failed");  // NOI18N
             if (!results) {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("StoreHasErrors") + "\n"  // NOI18N
                         + Bundle.getMessage("StoreIncomplete") + "\n"  // NOI18N
                         + Bundle.getMessage("ConsoleWindowHasInfo"),  // NOI18N
-                        Bundle.getMessage("StoreError"), JOptionPane.ERROR_MESSAGE);  // NOI18N
+                        Bundle.getMessage("StoreError"), JmriJOptionPane.ERROR_MESSAGE);  // NOI18N
             }
         }
     }
 
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(StoreXmlUserAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StoreXmlUserAction.class);
 }

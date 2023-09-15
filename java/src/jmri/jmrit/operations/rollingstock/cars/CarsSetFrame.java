@@ -1,21 +1,19 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user to place a group of cars on the layout
  *
- * @author Dan Boudreau Copyright (C) 2011, 2013
+ * @author Dan Boudreau Copyright (C) 2011, 2013, 2023
  */
 public class CarsSetFrame extends CarSetFrame {
 
@@ -27,25 +25,24 @@ public class CarsSetFrame extends CarSetFrame {
     }
 
     // Ignore checkbox states
-    private static boolean ignoreStatusCheckBoxSelected = false;
-    private static boolean ignoreLocationCheckBoxSelected = false;
-    private static boolean ignoreDivisionCheckBoxSelected = false;
-    private static boolean ignoreRWECheckBoxSelected = false;
-    private static boolean ignoreRWLCheckBoxSelected = false;
-    private static boolean ignoreLoadCheckBoxSelected = false;
-    private static boolean ignoreKernelCheckBoxSelected = false;
-    private static boolean ignoreDestinationCheckBoxSelected = false;
-    private static boolean ignoreFinalDestinationCheckBoxSelected = false;
-    private static boolean ignoreTrainCheckBoxSelected = false;
+    private static boolean ignoreStatusCheckBoxSelected = true;
+    private static boolean ignoreLocationCheckBoxSelected = true;
+    private static boolean ignoreDivisionCheckBoxSelected = true;
+    private static boolean ignoreRWECheckBoxSelected = true;
+    private static boolean ignoreRWLCheckBoxSelected = true;
+    private static boolean ignoreLoadCheckBoxSelected = true;
+    private static boolean ignoreKernelCheckBoxSelected = true;
+    private static boolean ignoreDestinationCheckBoxSelected = true;
+    private static boolean ignoreFinalDestinationCheckBoxSelected = true;
+    private static boolean ignoreTrainCheckBoxSelected = true;
 
     public void initComponents(JTable carsTable) {
         _carsTable = carsTable;
         _carsTableModel = (CarsTableModel) carsTable.getModel();
 
-        super.initComponents();
+        super.initComponents("package.jmri.jmrit.operations.Operations_SetCars");
 
         setTitle(Bundle.getMessage("TitleSetCars"));
-        addHelpMenu("package.jmri.jmrit.operations.Operations_SetCars", true); // NOI18N
         // modify Save button text to "Apply";
         saveButton.setText(Bundle.getMessage("ButtonApply"));
         // disable edit load button if no cars selected
@@ -80,6 +77,9 @@ public class CarsSetFrame extends CarSetFrame {
         if (rows.length > 0) {
             Car car = _carsTableModel.getCarAtIndex(_carsTable.convertRowIndexToModel(rows[0]));
             super.load(car);
+        } else {
+            enableComponents(true);
+            showMessageDialogWarning();
         }
     }
 
@@ -91,7 +91,7 @@ public class CarsSetFrame extends CarSetFrame {
         }
     }
 
-    boolean toggle = true;
+    boolean toggle = false;
 
     protected void ignoreAll(boolean b) {
         ignoreStatusCheckBox.setSelected(!locationUnknownCheckBox.isSelected() & b);
@@ -132,30 +132,47 @@ public class CarsSetFrame extends CarSetFrame {
             cars.add(car);
         }
         if (rows.length == 0) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("selectCars"), Bundle
-                    .getMessage("carNoneSelected"), JOptionPane.WARNING_MESSAGE);
+            showMessageDialogWarning();
             return false;
         } else if (cars.get(0) != _car) {
             log.debug("Default car isn't the first one selected");
-            if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
+            if (JmriJOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
                     .getMessage("doYouWantToChange"), new Object[]{cars.get(0).toString()}), Bundle
-                    .getMessage("changeDefaultCar"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    .getMessage("changeDefaultCar"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                 super.load(cars.get(0)); // new default car
                 return false; // done, don't modify any of the cars selected
             }
         }
 
-        askKernelChange = true;
+        // don't ask for to change cars in a kernel when giving a selected group of cars a new kernel name
+        askKernelChange = false;
+        
+        // determine if all cars in every kernel are selected
+        for (Car car : cars) {
+            if (car.getKernel() != null) {
+                for (Car c : car.getKernel().getCars()) {
+                    if (!cars.contains(c)) {
+                        askKernelChange = true; // not all selected
+                        break;
+                    }
+                }
+            }
+        }
 
         for (Car car : cars) {
             if (!super.change(car)) {
                 return false;
             } else if (car.getKernel() != null && !ignoreKernelCheckBox.isSelected()) {
-                askKernelChange = false;
+                askKernelChange = false; // changing kernel name
             }
         }
-        return true;
+        return false; // all good, but don't close window
+    }
+    
+    private void showMessageDialogWarning() {
+        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("selectCars"), Bundle
+                .getMessage("carNoneSelected"), JmriJOptionPane.WARNING_MESSAGE);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarsSetFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CarsSetFrame.class);
 }

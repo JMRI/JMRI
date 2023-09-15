@@ -23,8 +23,6 @@ public class AutomationCopyFrameTest extends OperationsTestCase {
         AutomationCopyFrame f = new AutomationCopyFrame(null);
         Assert.assertNotNull("test creation", f);
 
-        f.setVisible(true);
-
         JemmyUtil.enterClickAndLeaveThreadSafe(f.copyButton);
         // dialog window requesting name for automation should appear
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotCopyAutomation"), Bundle.getMessage("ButtonOK"));
@@ -54,8 +52,6 @@ public class AutomationCopyFrameTest extends OperationsTestCase {
 
         AutomationCopyFrame copyFrame = new AutomationCopyFrame(null);
         Assert.assertNotNull("test creation", copyFrame);
-
-        copyFrame.setVisible(true);
 
         JemmyUtil.enterClickAndLeaveThreadSafe(copyFrame.copyButton);
         // dialog window requesting name for automation should appear

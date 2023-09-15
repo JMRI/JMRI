@@ -23,7 +23,7 @@ public interface WebManifest {
      *         be in the navigation menu
      */
     @Nonnull
-    public Set<WebMenuItem> getNavigationMenuItems();
+    Set<WebMenuItem> getNavigationMenuItems();
 
     /**
      * Get any scripts the servlet associated with the manifest requires in the
@@ -33,7 +33,7 @@ public interface WebManifest {
      *         scripts
      */
     @Nonnull
-    public List<String> getScripts();
+    List<String> getScripts();
 
     /**
      * Get any CSS style sheets the servlet associated with the manifest
@@ -43,7 +43,7 @@ public interface WebManifest {
      *         no style sheets
      */
     @Nonnull
-    public List<String> getStyles();
+    List<String> getStyles();
 
     /**
      * Get the Angular dependencies required by the servlet associated with the
@@ -52,7 +52,7 @@ public interface WebManifest {
      * @return an ordered list of angular dependencies
      */
     @Nonnull
-    public List<String> getAngularDependencies();
+    List<String> getAngularDependencies();
 
     /**
      * Get the Angular routes supported by the servlet associated with the
@@ -61,7 +61,7 @@ public interface WebManifest {
      * @return a map of angular path to angular routing instructions
      */
     @Nonnull
-    public Set<AngularRoute> getAngularRoutes();
+    Set<AngularRoute> getAngularRoutes();
 
     /**
      * Get the sources for the Angular module components required by the servlet
@@ -70,7 +70,7 @@ public interface WebManifest {
      * @return a list of sources to include in the web app
      */
     @Nonnull
-    public List<URL> getAngularSources();
+    List<URL> getAngularSources();
 
     /**
      * Get the paths for JSON translation dictionaries to pre-load. If
@@ -81,5 +81,5 @@ public interface WebManifest {
      * @param locale the requested locale for the translations
      * @return a list of translation sources
      */
-    public Set<URI> getPreloadedTranslations(Locale locale);
+    Set<URI> getPreloadedTranslations(Locale locale);
 }

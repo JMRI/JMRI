@@ -37,7 +37,7 @@ public abstract class ImportRollingStock extends Thread {
 
     // Get file to read from
     protected File getFile() {
-        JFileChooser fc = new JFileChooser(jmri.jmrit.operations.OperationsXml.getFileLocation());
+        JFileChooser fc = new jmri.util.swing.JmriJFileChooser(jmri.jmrit.operations.OperationsXml.getFileLocation());
         fc.setFileFilter(new FileNameExtensionFilter(Bundle.getMessage("Text&CSV"), "txt", "csv")); // NOI18N
         int retVal = fc.showOpenDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) {

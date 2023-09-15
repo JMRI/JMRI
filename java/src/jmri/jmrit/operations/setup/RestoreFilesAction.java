@@ -6,15 +6,13 @@ import java.io.IOException;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.util.swing.ExceptionContext;
 import jmri.util.swing.ExceptionDisplayFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Swing action to backup operation files to a directory selected by the user.
@@ -23,8 +21,6 @@ import org.slf4j.LoggerFactory;
  * @author Gregory Madsen Copyright (C) 2012
  */
 public class RestoreFilesAction extends AbstractAction {
-
-//    private final static Logger log = LoggerFactory.getLogger(RestoreFilesAction.class);
 
     public RestoreFilesAction() {
         super(Bundle.getMessage("Restore"));
@@ -41,12 +37,12 @@ public class RestoreFilesAction extends AbstractAction {
 
         // check to see if files are dirty
         if (OperationsXml.areFilesDirty()) {
-            if (JOptionPane
+            if (JmriJOptionPane
                     .showConfirmDialog(
                             null,
                             Bundle.getMessage("OperationsFilesModified"),
                             Bundle.getMessage("SaveOperationFiles"),
-                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                            JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                 OperationsXml.save();
             }
         }
@@ -55,7 +51,7 @@ public class RestoreFilesAction extends AbstractAction {
         BackupBase backup = new DefaultBackup();
 
         // get file to write to
-        JFileChooser fc = new JFileChooser(backup.getBackupRoot());
+        JFileChooser fc = new jmri.util.swing.JmriJFileChooser(backup.getBackupRoot());
         fc.addChoosableFileFilter(new FileFilter());
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
@@ -79,9 +75,9 @@ public class RestoreFilesAction extends AbstractAction {
 
             backup.restoreFilesFromDirectory(directory);
 
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("YouMustRestartAfterRestore"),
-                    Bundle.getMessage("RestoreSuccessful"), JOptionPane.INFORMATION_MESSAGE);
+                    Bundle.getMessage("RestoreSuccessful"), JmriJOptionPane.INFORMATION_MESSAGE);
 
             // now deregister shut down task
             // If Trains window was opened, then task is active
@@ -98,7 +94,7 @@ public class RestoreFilesAction extends AbstractAction {
             ExceptionContext context = new ExceptionContext(ex,
                     Bundle.getMessage("RestoreDialog.restore.files"),
                     Bundle.getMessage("RestoreDialog.makeSure"));
-            new ExceptionDisplayFrame(context, null).setVisible(true);
+            ExceptionDisplayFrame.displayExceptionDisplayFrame(null, context);
         }
     }
 
@@ -124,7 +120,7 @@ public class RestoreFilesAction extends AbstractAction {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(RestoreFilesAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RestoreFilesAction.class);
 }
 
 

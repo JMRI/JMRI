@@ -19,6 +19,12 @@
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
       <personname>
+        <firstname>Ronald</firstname>
+        <surname>Kuhn</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
         <firstname>Pierre</firstname>
         <surname>Billon</surname>
       </personname>
@@ -31,6 +37,12 @@
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>4</revnumber>
+      <date>2023-07-25</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>disable CV29 Bit3 for FH-series</revremark>
+    </revision>
     <revision>
       <revnumber>3</revnumber>
       <date>2019-07-28</date>
@@ -50,7 +62,7 @@
       <revremark>Grouped Railcom (feedback) CVs here.</revremark>
     </revision>
   </revhistory>
-  <variable item="Feedback (RailCom)" CV="29" mask="XXXXVXXX" tooltip="CV29 Bit 3">
+  <variable item="Feedback (RailCom)" CV="29" mask="XXXXVXXX" tooltip="CV29 Bit 3" default="1" exclude="41,150,170,192">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Feedback (RailCom) enabled</label>
     <label xml:lang="fr">Retour d'info (Railcom) activé</label>

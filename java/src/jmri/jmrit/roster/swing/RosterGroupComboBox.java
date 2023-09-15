@@ -80,7 +80,6 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
 
     /**
      * Update the combo box and select given String.
-     * <p>
      * @param selection the selection to update to
      */
     public final void update(String selection) {

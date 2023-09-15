@@ -5,8 +5,6 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.ThreadingUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Class to represent a Processing of CAN Frames for a CbusNode.
@@ -23,7 +21,7 @@ public class CbusNodeEventManager {
     private ArrayList<CbusNodeEvent> eventsToTeachArray;
     private int nextEvVar;
     protected boolean TEACH_OUTSTANDING_EVS;
-    
+
     /**
      * Create a new CbusNodeNVManager
      *
@@ -37,7 +35,7 @@ public class CbusNodeEventManager {
         _eventIndexValid = false;
         TEACH_OUTSTANDING_EVS = false;
     }
-    
+
     /**
      * Returns total number of node events,
      * including those with outstanding event variables.
@@ -50,7 +48,7 @@ public class CbusNodeEventManager {
         }
         return _nodeEvents.size();
     }
-    
+
     /**
      * Returns number of fully loaded events, ie no outstanding event variables.
      *
@@ -68,7 +66,7 @@ public class CbusNodeEventManager {
         }
         return count;
     }
-    
+
     /**
      * Returns outstanding events from initial event fetch.
      *
@@ -77,7 +75,7 @@ public class CbusNodeEventManager {
     public int getOutstandingIndexNodeEvents(){
         return getTotalNodeEvents() - getLoadedNodeEvents();
     }
-    
+
     /**
      * Add an event to the node, will not overwrite an existing event.
      * Resets Event Index as Invalid for All Node Events
@@ -123,7 +121,7 @@ public class CbusNodeEventManager {
         }
         return null;
     }
-    
+
     /**
      * Provide a Node event from its Event and Node number combination
      * <p>
@@ -150,8 +148,8 @@ public class CbusNodeEventManager {
         }
         setEvIndexValid(false); // Also produces Property Change Event
         return newev;
-    }    
-    
+    }
+
     /**
      * Update node with new Node Event.
      * 
@@ -166,7 +164,7 @@ public class CbusNodeEventManager {
         _node.notifyPropertyChangeListener("ALLEVUPDATE",null,null);
         
     }
-    
+
     /**
      * Get a Node event from its Index Field
      * <p>
@@ -188,7 +186,7 @@ public class CbusNodeEventManager {
         }
         return null;
     }
-    
+
     /**
      * Get the Node event Array index from its Index Field
      *
@@ -214,7 +212,7 @@ public class CbusNodeEventManager {
     public CbusNodeEvent getNodeEventByArrayID(int index) {
         return _nodeEvents.get(index);
     }
-    
+
     /**
      * Get the Node event ArrayList
      *
@@ -224,7 +222,7 @@ public class CbusNodeEventManager {
     public ArrayList<CbusNodeEvent> getEventArray(){
         return _nodeEvents;
     }
-    
+
     /**
      * Get the Number of Outstanding Event Variables
      * <p>
@@ -244,7 +242,7 @@ public class CbusNodeEventManager {
         }
         return count;
     }
-    
+
     /**
      * The last message from the node CMDERR5 indicates that all remaining event variables
      * for a particular event are not required.
@@ -266,7 +264,7 @@ public class CbusNodeEventManager {
             }
         }
     }
-    
+
     /**
      * Send a request for the next unknown Event Variable to the Physical Node
      * <p>
@@ -314,7 +312,7 @@ public class CbusNodeEventManager {
             }
         }
     }
-    
+
     /**
      * Used in CBUS_NEVAL response from Node.
      * Set the value of an event variable by event Index and event Variable Index
@@ -329,7 +327,7 @@ public class CbusNodeEventManager {
             _node.notifyPropertyChangeListener("SINGLEEVUPDATE",null,getEventRowFromIndex(eventIndex));
         }
     }
-    
+
     /**
      * Used to process a CBUS_ENRSP response from node
      *
@@ -368,16 +366,15 @@ public class CbusNodeEventManager {
         log.error("Issue setting node event, index {} not valid",index);
         _nodeEvents = null;
     }
-    
-        /**
-     * Get if the Node event index is valid
-     * 
+
+    /**
+     * Get if the Node event index is valid.
      * @return true if event index is valid, else false if invalid or no events on node.
      */
     protected boolean isEventIndexValid(){
         return _eventIndexValid;
     }
-    
+
     /**
      * Set the Node event index flag as valid or invalid.
      * <p>
@@ -393,7 +390,7 @@ public class CbusNodeEventManager {
         }
         _node.notifyPropertyChangeListener("ALLEVUPDATE",null,null);
     }
-    
+
     /**
      * Send and teach updated Events to this node
      *
@@ -435,7 +432,7 @@ public class CbusNodeEventManager {
         }, 50 );
         
     }
-    
+
     /**
      * Send a message to delete an event stored on this node
      *
@@ -464,7 +461,7 @@ public class CbusNodeEventManager {
             _node.notifyPropertyChangeListener("DELETEEVCOMPLETE", null, null);
         }, 100 );
     }
-    
+
     private void teachEventsComplete(){
     
         TEACH_OUTSTANDING_EVS = false;
@@ -502,9 +499,20 @@ public class CbusNodeEventManager {
             teachEventsComplete();
             return;
         }
-        
+
         CbusNodeEvent wholeEvent = eventsToTeachArray.get(nextEvInArray);
-        
+        log.debug("event variable array length: {}", wholeEvent.getEvVarArray().length);
+        log.debug("Number of event vars from node parameters: {}",_node.getNodeParamManager().getParameter(CbusNodeConstants.EV_PER_EN_IDX) );
+        if (wholeEvent.getEvVarArray().length < nextEvVar ){
+            log.warn("Incorrect number of event variables ({}) for {}",
+                wholeEvent.getEvVarArray().length ,wholeEvent );
+            _node.getNodeTimerManager().sendEvErrorCount++;
+            nextEvVar = 1;
+            nextEvInArray++;
+            teachNewEvLoop();
+            return;
+        }
+
         log.debug("teach event var {}  val {} ",nextEvVar,wholeEvent.getEvVar(nextEvVar));
         CbusNodeEvent existingEvent = getNodeEvent( wholeEvent.getNn(), wholeEvent.getEn() );
         
@@ -521,9 +529,8 @@ public class CbusNodeEventManager {
         _node.getNodeTimerManager().setsendEditEvTimeout();
         _node.send.nodeTeachEventLearnMode(wholeEvent.getNn(),wholeEvent.getEn(),nextEvVar,wholeEvent.getEvVar(nextEvVar));
         nextEvVar++;
-        
     }
-    
+
     /**
      * Resets Node Events with null array.
      * For when a CbusNode is reset to unknown events.
@@ -532,7 +539,7 @@ public class CbusNodeEventManager {
         _nodeEvents = null;
         _node.notifyPropertyChangeListener("ALLEVUPDATE",null,null);
     }
-    
+
     /**
      * Resets Node Events with zero length array.
      * For when a CbusNode is reset to 0 events
@@ -543,7 +550,7 @@ public class CbusNodeEventManager {
         _nodeEvents = new ArrayList<>();
         _node.notifyPropertyChangeListener("ALLEVUPDATE",null,null);
     }
-    
+
     /**
      * the next event index for a CbusDummyNode NODE to allocate, 
      * NOT a software tool.
@@ -560,7 +567,7 @@ public class CbusNodeEventManager {
         log.debug("dummy node sets index {}",newIndex);
         return newIndex;
     }
-    
+
     /**
      * @return descriptive string
      */
@@ -568,7 +575,7 @@ public class CbusNodeEventManager {
     public String toString() {
         return "Node Events";
     }
-    
-    private static final Logger log = LoggerFactory.getLogger(CbusNodeEventManager.class);
-    
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusNodeEventManager.class);
+
 }

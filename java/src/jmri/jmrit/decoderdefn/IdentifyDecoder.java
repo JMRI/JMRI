@@ -36,6 +36,7 @@ import org.slf4j.LoggerFactory;
  * low byte, CV50 is the lowest byte; (CV47 == 1) is reserved for the Czech
  * Republic</li>
  * <li>Doehler &amp; Haass: (mfgID == 97) CV261 is ID from 2020 firmwares</li>
+ * <li>Dietz (mfgID == 115) CV128 is ID</li>
  * <li>Train-O-Matic: (mfgID == 78) CV508 lowest byte,
  * CV509 low byte and CV510 high byte</li>
  * </ul>
@@ -149,6 +150,10 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read productID #1 CV 510");
             readCV("510");
             return false;
+        } else if (mfgID == 115) {  // Dietz
+            statusUpdate("Read productID CV 128");
+            readCV("128");
+            return false;
         }
         return true;
     }
@@ -216,6 +221,9 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read productID #2 CV 509");
             readCV("509");
             return false;
+        } else if (mfgID == 115) {  // Dietz
+            productID = value;
+            return true;
         }
         log.error("unexpected step 4 reached with value: {}", value);
         return true;

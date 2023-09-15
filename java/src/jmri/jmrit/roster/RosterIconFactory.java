@@ -1,7 +1,13 @@
 package jmri.jmrit.roster;
 
+import java.awt.Graphics;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
+
 import javax.swing.ImageIcon;
+
 import jmri.InstanceManagerAutoDefault;
 
 /**
@@ -44,6 +50,17 @@ public class RosterIconFactory implements InstanceManagerAutoDefault {
         }
         return getIcon(re);
     }
+    
+    public ImageIcon getReversedIcon(String id) {
+        if (id == null) {
+            return null;
+        }
+        RosterEntry re = Roster.getDefault().entryFromTitle(id);
+        if (re == null) {
+            return null;
+        }
+        return getReversedIcon(re);
+    }
 
     public ImageIcon getIcon(RosterEntry re) {
         if ((re == null) || (re.getIconPath() == null)) {
@@ -61,5 +78,31 @@ public class RosterIconFactory implements InstanceManagerAutoDefault {
             icons.put(re.getIconPath(), icon);
         }
         return icon;
+    }
+    
+    public ImageIcon getReversedIcon(RosterEntry re) {
+        if ((re == null) || (re.getIconPath() == null)) {
+            return null;
+        }
+
+        ImageIcon revicon = icons.get("rev_"+re.getIconPath());
+        if (revicon == null) {
+            ImageIcon icon = getIcon(re);
+            if (icon==null) {
+                return null;
+            }
+            // Flip the image horizontally
+            AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+            tx.translate(-icon.getImage().getWidth(null), 0);
+            AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+            BufferedImage bi = new BufferedImage( icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+            Graphics g = bi.createGraphics();
+            icon.paintIcon(null, g, 0,0);
+            g.dispose();            
+            revicon = new ImageIcon();
+            revicon.setImage(op.filter( bi, null).getScaledInstance(-1, iconHeight, java.awt.Image.SCALE_FAST));
+            icons.put("rev_"+re.getIconPath(), revicon);
+        }
+        return revicon;
     }
 }

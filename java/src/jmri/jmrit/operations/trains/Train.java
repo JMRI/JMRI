@@ -6,11 +6,7 @@ import java.io.*;
 import java.text.MessageFormat;
 import java.util.*;
 
-import javax.swing.JOptionPane;
-
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.beans.Identifiable;
@@ -29,6 +25,7 @@ import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Represents a train on the layout
@@ -760,6 +757,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
     public Track getDepartureTrack() {
         return _departureTrack;
+    }
+    
+    public boolean isDepartingStaging() {
+        return getDepartureTrack() != null;
     }
 
     public void setTerminationTrack(Track track) {
@@ -1790,7 +1791,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     }
                 }
                 // restriction to only carry cars to terminal?
+                // ignore send to terminal if a local move
                 if (isSendCarsToTerminalEnabled() &&
+                        !car.isLocalMove() &&
                         !TrainCommon.splitString(car.getLocationName())
                                 .equals(TrainCommon.splitString(getTrainDepartsName())) &&
                         !TrainCommon.splitString(car.getDestinationName())
@@ -1798,16 +1801,11 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     if (debugFlag) {
                         log.debug("option send cars to terminal is enabled");
                     }
-                    // check to see if local move allowed
-                    if (!isAllowLocalMovesEnabled() ||
-                            isAllowLocalMovesEnabled() &&
-                                    !TrainCommon.splitString(car.getLocationName())
-                                            .equals(TrainCommon.splitString(car.getDestinationName())))
-                        addLine(buildReport,
-                                MessageFormat.format(Bundle.getMessage("trainCanNotCarryCarOption"),
-                                        new Object[] { getName(), car.toString(), car.getLocationName(),
-                                                car.getTrackName(), car.getDestinationName(),
-                                                car.getDestinationTrackName() }));
+                    addLine(buildReport,
+                            MessageFormat.format(Bundle.getMessage("trainCanNotCarryCarOption"),
+                                    new Object[]{getName(), car.toString(), car.getLocationName(),
+                                            car.getTrackName(), car.getDestinationName(),
+                                            car.getDestinationTrackName()}));
                     continue;
                 }
                 // don't allow local move when car is in staging
@@ -1833,8 +1831,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                         !car.isCaboose() &&
                         !car.hasFred() &&
                         !car.isPassenger() &&
-                        TrainCommon.splitString(car.getLocationName())
-                                .equals(TrainCommon.splitString(car.getDestinationName()))) {
+                        car.isLocalMove()) {
                     if (debugFlag) {
                         log.debug("Local move not allowed");
                     }
@@ -3122,11 +3119,11 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         InstanceManager.getDefault(TrainCustomManifest.class).addCsvFile(file);
         if (!InstanceManager.getDefault(TrainCustomManifest.class).process()) {
             if (!InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists()) {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         MessageFormat.format(Bundle.getMessage("LoadDirectoryNameFileName"),
                                 new Object[] { InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(),
                                         InstanceManager.getDefault(TrainCustomManifest.class).getFileName() }),
-                        Bundle.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ManifestCreatorNotFound"), JmriJOptionPane.ERROR_MESSAGE);
             }
             return false;
         }
@@ -4273,6 +4270,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Train.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Train.class);
 
 }

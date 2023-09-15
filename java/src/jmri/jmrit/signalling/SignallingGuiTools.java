@@ -1,9 +1,9 @@
 package jmri.jmrit.signalling;
 
-import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.SignalMast;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * @author Kevin Dickerson Copyright (C) 2011
@@ -23,18 +23,17 @@ public class SignallingGuiTools {
      * @param newMast new main signal mast (object) to attach to SML
      */
     static public void updateSignalMastLogic(JmriJFrame frame, SignalMast oldMast, SignalMast newMast) {
-        Object[] options = {Bundle.getMessage("ButtonUpdate"),  // NOI18N
-            Bundle.getMessage("LeaveButton")};  // NOI18N
-        int n = JOptionPane.showOptionDialog(frame,
+        Object[] options = {Bundle.getMessage("ButtonUpdate"), Bundle.getMessage("LeaveButton")};
+        int n = JmriJOptionPane.showOptionDialog(frame,
                 java.text.MessageFormat.format(Bundle.getMessage("UpdateLogic"),  // NOI18N
                         new Object[]{oldMast.getDisplayName(), newMast.getDisplayName()}),
                 Bundle.getMessage("UpdateLogicTitle"),
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
+                JmriJOptionPane.DEFAULT_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE,
                 null,
                 options,
                 options[0]);
-        if (n == 0) {
+        if (n == 0) { // array position 0, ButtonUpdate 
             InstanceManager.getDefault(jmri.SignalMastLogicManager.class).replaceSignalMast(oldMast, newMast);
         }
     }
@@ -48,18 +47,17 @@ public class SignallingGuiTools {
      * @param newMast signal mast (object) #2
      */
     static public void swapSignalMastLogic(JmriJFrame frame, SignalMast oldMast, SignalMast newMast) {
-        Object[] options = {Bundle.getMessage("ButtonUpdate"),  // NOI18N
-            Bundle.getMessage("LeaveButton")};  // NOI18N
-        int n = JOptionPane.showOptionDialog(frame,
+        Object[] options = {Bundle.getMessage("ButtonUpdate"), Bundle.getMessage("LeaveButton")};
+        int n = JmriJOptionPane.showOptionDialog(frame,
                 java.text.MessageFormat.format(Bundle.getMessage("SwapLogic"),  // NOI18N
                         new Object[]{oldMast.getDisplayName(), newMast.getDisplayName()}),
                 Bundle.getMessage("UpdateLogicTitle"),  // NOI18N
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
+                JmriJOptionPane.DEFAULT_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE,
                 null,
                 options,
                 options[0]);
-        if (n == 0) {
+        if (n == 0) { // array position 0, ButtonUpdate
             InstanceManager.getDefault(jmri.SignalMastLogicManager.class).swapSignalMasts(oldMast, newMast);
         }
     }
@@ -73,18 +71,17 @@ public class SignallingGuiTools {
      * @return true if user confirmed delete request
      */
     static public boolean removeSignalMastLogic(JmriJFrame frame, SignalMast mast) {
-        Object[] options = {Bundle.getMessage("RemoveButton"),  // NOI18N
-            Bundle.getMessage("LeaveButton")};  // NOI18N
-        int n = JOptionPane.showOptionDialog(frame,
+        Object[] options = {Bundle.getMessage("RemoveButton"), Bundle.getMessage("LeaveButton")};
+        int n = JmriJOptionPane.showOptionDialog(frame,
                 java.text.MessageFormat.format(Bundle.getMessage("RemoveLogic"),  // NOI18N
                         new Object[]{mast.getDisplayName()}),
                 Bundle.getMessage("RemoveLogicTitle"),  // NOI18N
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
+                JmriJOptionPane.DEFAULT_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE,
                 null,
                 options,
                 options[0]);
-        if (n == 0) {
+        if (n == 0) { // array position 0, RemoveButton
             InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removeSignalMast(mast);
             return true;
         }
@@ -103,16 +100,16 @@ public class SignallingGuiTools {
     static public void removeAlreadyAssignedSignalMastLogic(JmriJFrame frame, SignalMast mast) {
         Object[] options = {Bundle.getMessage("RemoveButton"),  // NOI18N
             Bundle.getMessage("LeaveButton")};  // NOI18N
-        int n = JOptionPane.showOptionDialog(frame,
+        int n = JmriJOptionPane.showOptionDialog(frame,
                 java.text.MessageFormat.format(Bundle.getMessage("RemoveAlreadyAssignedLogic"),  // NOI18N
                         new Object[]{mast.getDisplayName()}),
                 Bundle.getMessage("RemoveLogicTitle"),  // NOI18N
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
+                JmriJOptionPane.DEFAULT_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE,
                 null,
                 options,
                 options[0]);
-        if (n == 0) {
+        if (n == 0) { // array position 0, RemoveButton
             InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removeSignalMast(mast);
         }
     }

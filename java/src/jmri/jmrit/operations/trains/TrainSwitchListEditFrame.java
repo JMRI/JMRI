@@ -12,9 +12,6 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsPanel;
@@ -25,6 +22,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.excel.SetupExcelProgramSwitchListFrameAction;
 import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user selection of switch lists
@@ -246,8 +244,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     private void reset() {
         // Confirm that user really wants to delete all terminated and reset trains from
         // the switch lists
-        if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("DoYouReallyWantDeleteSwitchListData"),
-                Bundle.getMessage("ResetSwitchLists"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+        if (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("DoYouReallyWantDeleteSwitchListData"),
+                Bundle.getMessage("ResetSwitchLists"), JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
             return;
         }
 
@@ -443,11 +441,11 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
             log.warn("Manifest creator file not found!, directory name: {}, file name: {}",
                     InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryName(),
                     InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName());
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     MessageFormat.format(Bundle.getMessage("LoadDirectoryNameFileName"),
                             new Object[] { InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryName(),
                                     InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName() }),
-                    Bundle.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ManifestCreatorNotFound"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         // Now run the user specified custom Switch List processor program
@@ -471,7 +469,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
     private File selectFile() {
         if (fc == null) {
-            fc = new JFileChooser(
+            fc = new jmri.util.swing.JmriJFileChooser(
                     InstanceManager.getDefault(TrainManagerXml.class).getDefaultCsvSwitchListDirectoryName());
             fc.setFileFilter(new FileNameExtensionFilter("Comma Separated Values", "csv")); // NOI18N
             fc.setDialogTitle(Bundle.getMessage("TitleSwitchLists"));
@@ -671,5 +669,5 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainSwitchListEditFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrainSwitchListEditFrame.class);
 }

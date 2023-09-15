@@ -180,20 +180,20 @@ class WiimoteThrottle2(Jynstrument, PropertyChangeListener, AddressListener, Wii
             # Home : F0            
             if ( evt.wasReleased(WRButtonEvent.HOME) ):  # LIGHTS
                 if not ((self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "0", False, self.throttle) != None)):
-                   self.throttle.setF0( not self.throttle.getF0() )
+                   self.throttle.setFunction(0, not self.throttle.getFunction(0) )
             # Wiimote 1 & 2 buttons
             if (evt.isPressed(WRButtonEvent.ONE)):
                 if not ((self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "1", True, self.throttle) != None)):
                     pass # default F1 not momentary (switch only on Release, do nothing here)
             if (evt.wasReleased(WRButtonEvent.ONE)):
                 if not ((self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "1", False, self.throttle) != None)):
-                    self.throttle.setF1( not self.throttle.getF1() )  # default F1 not momentary              
+                    self.throttle.setFunction(1, not self.throttle.getFunction(1) )  # default F1 not momentary              
             if (evt.isPressed(WRButtonEvent.TWO)):
                 if not ((self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "2", True, self.throttle) != None)):
-                    self.throttle.setF2( True )  # default F2 momentary
+                    self.throttle.setFunction(2, True )  # default F2 momentary
             if (evt.wasReleased(WRButtonEvent.TWO)):
                 if not ((self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "2", False, self.throttle) != None)):
-                    self.throttle.setF2( False )
+                    self.throttle.setFunction(2, False )
 
     def disconnected(self):
         self.wiiDevice = None

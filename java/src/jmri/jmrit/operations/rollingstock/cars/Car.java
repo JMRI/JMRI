@@ -568,20 +568,21 @@ public class Car extends RollingStock {
     }
 
     /**
-     * Used to determine if car needs to perform a local move. A local move is
-     * when a car is moved to a different track at the same location.
+     * Used to determine if car is performing a local move. A local move is when
+     * a car is moved to a different track at the same location. Car has to be
+     * assigned to a train.
      * 
      * @return true if local move
      */
     public boolean isLocalMove() {
+        if (getTrain() == null && getLocation() != null) {
+            return TrainCommon.splitString(getLocationName()).equals(TrainCommon.splitString(getDestinationName()));
+        }
         if (getRouteLocation() == null || getRouteDestination() == null) {
             return false;
         }
         if (getRouteLocation().equals(getRouteDestination()) && getTrack() != null) {
             return true;
-        }
-        if (getTrain() == null) {
-            return false;
         }
         if (getTrain().isLocalSwitcher() &&
                 TrainCommon.splitString(getRouteLocation().getName())
@@ -693,14 +694,18 @@ public class Car extends RollingStock {
     @Override
     public String checkDestination(Location destination, Track track) {
         String status = super.checkDestination(destination, track);
-        if (!status.equals(Track.OKAY)) {
+        if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
             return status;
         }
         // now check to see if the track has a schedule
         if (track == null) {
             return status;
         }
-        return track.checkSchedule(this);
+        String statusSchedule = track.checkSchedule(this);
+        if (status.startsWith(Track.LENGTH) && statusSchedule.equals(Track.OKAY)) {
+            return status;
+        }
+        return statusSchedule;
     }
 
     /**

@@ -51,8 +51,7 @@
 
       <p>Select <strong>Operations at this location</strong> <input name="radio" id="radio" value=
       "radio" checked="checked" type="radio"> <strong>Classification/ Interchange</strong>, then
-      press <input name="button" id="button" value="Add Location" type="submit"> at the bottom of
-      the pane.</p>
+      press <span class="textbutton">Add Location</span> at the bottom of the pane.</p>
 
       <p>This opens the <strong>Add Location</strong> window with all the options enabled. Now you
       can add Tracks to the Classification/Interchange.</p>
@@ -72,23 +71,20 @@
       switching for a given Location.</p>
 
       <p>Next <strong>Select the rolling stock serviced by this location</strong>, you can control
-      the rolling stock a Location can service. Push <input name="button7" id="button7" value=
-      "Clear All" type="submit"> the to deselect all Types, or <input name="button8" id="button8"
-      value="Select All" type="submit"> to select all types, then select or deselect the rolling
+      the rolling stock a Location can service. Push <span class="textbutton">Clear All</span> to deselect all Types,
+      or <span class="textbutton">Select All</span> to select all types, then select or deselect the rolling
       stock you wish the Location to accept.</p>
 
       <p>Since the <strong>Operations at this location</strong> is of type <input name="radio2" id=
       "radio2" value="radio2" checked="checked" type="radio">
-      <strong>Classification/Interchange</strong> the <input name="button4" id="button4" value=
-      "Add Classification/Interchange Track" type="submit"> is now enabled near the bottom of the
-      pane.</p>
+      <strong>Classification/Interchange</strong> the <span class="textbutton">Add Classification/Interchange
+      Track</span> button is now enabled near the bottom of the pane.</p>
 
-      <p>You also have the option to <input name="button5" id="button5" value="Delete Location"
-      type="submit"> or <input name="button6" id="button6" value="Save Location" type="submit"></p>
+      <p>You also have the option to <span class="textbutton">Delete Location</span>
+      or <span class="textbutton">Save Location</span> .</p>
 
-      <p>Press <input name="button9" id="button9" value="Add Classification/Interchange Track"
-      type="submit"> to display the <strong>Add Classification/Interchange Track</strong> pane,
-      where you can detail the Siding:</p>
+      <p>Press <span class="textbutton">Add Classification/Interchange Track</span> to display the
+      <strong>Add Classification/Interchange Track</strong> pane, where you can detail the Siding:</p>
 
       <table>
         <tbody>
@@ -107,9 +103,8 @@
               type="text"> and the program will convert to the scale feet that you select in your
               Preferences.</p>
 
-              <p>Press <input name="button10" id="button10" value=
-              "Add Classification/Interchange Track" type="submit"> so the siding track is added to
-              the Location and the greyed out features are activated.</p>
+              <p>Press <span class="textbutton">Add Classification/Interchange Track</span> so the
+              siding track is added to the Location and the greyed out features are activated.</p>
             </td>
           </tr>
         </tbody>
@@ -254,14 +249,13 @@
               <p>You may enter a <strong>Comment</strong> <input name="textfield5" id="textfield5"
               type="text"> for the Track.</p>
 
-              <p>You may now press <input name="button11" id="button11" value=
-              "Add Classification/Interchange Track" type="submit"> to add to the Location or press
-              <input name="button12" id="button12" value="Delete Track" type="submit"> if you do
+              <p>You may now press <span class="textbutton">Add Classification/Interchange Track</span>
+              to add to the Location or press <span class="textbutton">Delete Track</span> if you do
               not want to store the Track.</p>
 
               <p>If you want to add another Track to this Interchange Location, then enter new data
-              and press <input name="button13" id="button13" value=
-              "Save Classification/Interchange Track" type="submit"> to add the next Track.</p>
+              and press <span class="textbutton">Save Classification/Interchange Track</span> to add
+              the next Track.</p>
 
               <p>Close the window when done with this Location.</p>
             </td>
@@ -277,9 +271,8 @@
 
       <p>You may add as many tracks as required for the Interchange.</p>
 
-      <p>If you want to change information for any track entry, press the <input name="button14"
-      id="button14" value="Edit" type="submit"> and the <strong>Edit Interchange Track</strong>
-      window will open.</p>
+      <p>If you want to change information for any track entry, press the <span class="textbutton">Edit</span>
+      button and the <strong>Edit Interchange Track</strong> window will open.</p>
 
       <table>
         <tbody>
@@ -291,12 +284,10 @@
               <p>Note that it is identical to the Add Classification/Interchange Track except for
               the title.</p>
 
-              <p>Change any of the entries that you want to edit and then press the <input name=
-              "button15" id="button15" value="Save Classification/Interchange Track" type="submit">
-              to save the changes.</p>
+              <p>Change any of the entries that you want to edit and then press the <span class="textbutton">Save
+              Classification/Interchange Track</span> button to save the changes.</p>
 
-              <p>You may also <input name="button16" id="button16" value="Delete Track" type=
-              "submit"> from your database.</p>
+              <p>You may also <span class="textbutton">Delete Track</span> from your database.</p>
 
               <p>When done with editing close the <strong>Add Classification/Interchange
               Track</strong> window.</p>
@@ -307,8 +298,8 @@
 
       <p>The Locations window shows all the Locations in your OperationsPro database.</p>
 
-      <p>You may edit any one of them by clicking on <input name="button17" id="button17" value=
-      "Edit" type="submit">, which opens the <strong>Edit Location</strong> window, which is the
+      <p>You may edit any one of them by clicking on <span class="textbutton">Edit</span> ,
+      which opens the <strong>Edit Location</strong> window, which is the
       same as the <a href="Ops_Locations.shtml"><strong>Add Location</strong></a> window except it
       already contains the info for the Location you are editing.</p>
 

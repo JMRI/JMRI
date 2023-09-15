@@ -42,6 +42,12 @@
 			<date>2023-01-08</date>
 			<authorinitials>UG</authorinitials>
 			<revremark>Added "Tillig 0423x" decoder</revremark>
+		</revision>
+		<revision>
+			<revnumber>4</revnumber>
+			<date>2023-005-10</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Changes on default values for "Tillig 0423x" decoder</revremark>
 		</revision>			
 		<!-- Used in Uhlenbrock advanced decoders,
            such as 36320, 36360 (IS3), 36520, 36560 (IS4) 73xx5 (ID2) Piko Sound 4.1 (non exhaustive list) -->
@@ -90,7 +96,13 @@
 		<label xml:lang="de">Funktionsausgang Vorwärts Aus - A1</label>
 		<label xml:lang="nl">Functieuitgang Vooruit Uit - A1</label>
 	</variable>
-	<variable item="Function 1 check 4" CV="114" mask="XXXXXXVX" include="73105,73145,73405,73415,73235,74120,PIKO41RH2400,Tillig 0423x">
+	<variable item="Function 1 check 4" CV="114" mask="XXXXXXVX" include="73105,73145,73405,73415,73235,74120,PIKO41RH2400">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Function output Reverse Off - A1</label>
+		<label xml:lang="de">Funktionsausgang Rückwärts Aus - A1</label>
+		<label xml:lang="nl">Functieuitgang Achteruit Uit - A1</label>
+	</variable>
+	<variable item="Function 1 check 4" CV="114" default="1" mask="XXXXXXVX" include="Tillig 0423x">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Function output Reverse Off - A1</label>
 		<label xml:lang="de">Funktionsausgang Rückwärts Aus - A1</label>
@@ -108,7 +120,13 @@
 		<label xml:lang="de">Blinkgenerator Phase 2 - A2</label>
 		<label xml:lang="nl">Knippergenerator Fase 2 - A2</label>
 	</variable>
-	<variable item="Function 2 check 3" CV="113" mask="XXXXXVXX" include="73105,73145,73405,73415,73235,74120,PIKO41RH2400,Tillig 0423x">
+	<variable item="Function 2 check 3" CV="113" mask="XXXXXVXX" include="73105,73145,73405,73415,73235,74120,PIKO41RH2400">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Function output Forward Off - A2</label>
+		<label xml:lang="de">Funktionsausgang Vorwärts Aus - A2</label>
+		<label xml:lang="nl">Functieuitgang Vooruit Uit - A2</label>
+	</variable>
+	<variable item="Function 2 check 3" CV="113" default="1" mask="XXXXXVXX" include="Tillig 0423x">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Function output Forward Off - A2</label>
 		<label xml:lang="de">Funktionsausgang Vorwärts Aus - A2</label>

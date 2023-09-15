@@ -23,6 +23,10 @@ public class SerialSensor extends AbstractSensor {
         _knownState = UNKNOWN;
     }
 
+    // preserve the last state seen when polling the layout
+    // Filled from SerialNode.markChanges in response to a poll reply
+    int lastStateFromLayout = UNKNOWN;
+    
     /**
      * Request an update on status.
      * <p>
@@ -32,6 +36,12 @@ public class SerialSensor extends AbstractSensor {
      */
     @Override
     public void requestUpdateFromLayout() {
+        try {
+            setKnownState(lastStateFromLayout);
+        } catch (jmri.JmriException e) {
+            // should not happen, so log as error
+            log.error("Exception while setting state", e);
+        }
     }
 
     /**
@@ -45,4 +55,5 @@ public class SerialSensor extends AbstractSensor {
         return CMRISystemConnectionMemo.compareSystemNameSuffix(suffix1, suffix2);
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialSensor.class);
 }

@@ -3,7 +3,6 @@ package jmri.jmrix.dcc4pc.serialdriver.configurexml;
 import jmri.util.*;
 
 import org.junit.jupiter.api.*;
-import org.jdom2.Element;
 
 import jmri.jmrix.dcc4pc.serialdriver.ConnectionConfig;
 
@@ -28,8 +27,16 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
     @Override
     public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
         super.loadTest();
-        JUnitAppender.assertErrorMessageStartsWith("Serial port (none selected) not found");
-        JUnitAppender.assertErrorMessageStartsWith("Load Error: Serial port (none selected) not found");
+        JUnitAppender.suppressErrorMessageStartsWith("No usable ports returned");
+        JUnitAppender.suppressErrorMessageStartsWith("Serial port (none selected) not found");
+        JUnitAppender.suppressErrorMessageStartsWith("Load Error: Serial port (none selected) not found");
+    }
+
+    @Test
+    @Override
+    public void storeTest() {
+        super.storeTest();
+        JUnitAppender.suppressErrorMessageStartsWith("No usable ports returned");
     }
 
     @AfterEach

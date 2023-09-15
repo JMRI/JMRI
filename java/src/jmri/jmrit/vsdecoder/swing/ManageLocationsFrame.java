@@ -1,6 +1,7 @@
 package jmri.jmrit.vsdecoder.swing;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -10,18 +11,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.Reporter;
@@ -32,10 +31,8 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
-import jmri.util.JmriJFrame;
 import jmri.util.PhysicalLocation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * GUI to manage Reporters, Blocks, Locations and Listener attributes.
@@ -55,14 +52,12 @@ import org.slf4j.LoggerFactory;
  *
  * @author Mark Underwood Copyright (C) 2011
  */
-public class ManageLocationsFrame extends JmriJFrame {
+public class ManageLocationsFrame extends jmri.util.JmriJFrame {
 
     // Map of Mnemonic KeyEvent values to GUI Components
     private static final Map<String, Integer> Mnemonics = new HashMap<>();
 
     static {
-        Mnemonics.put("RoomMode", KeyEvent.VK_R); // NOI18N
-        Mnemonics.put("HeadphoneMode", KeyEvent.VK_H); // NOI18N
         Mnemonics.put("ReporterTab", KeyEvent.VK_E); // NOI18N
         Mnemonics.put("OpsTab", KeyEvent.VK_P); // NOI18N
         Mnemonics.put("ListenerTab", KeyEvent.VK_L); // NOI18N
@@ -100,7 +95,7 @@ public class ManageLocationsFrame extends JmriJFrame {
             Object[][] reporters,
             Object[][] ops,
             Object[][] blocks) {
-        super(false, false);
+        super(true, true);
         reporterData = reporters;
         opsData = ops;
         listenerLoc = listener;
@@ -115,36 +110,6 @@ public class ManageLocationsFrame extends JmriJFrame {
         // Panel for managing listeners
         listenerPanel = new JPanel();
         listenerPanel.setLayout(new BoxLayout(listenerPanel, BoxLayout.Y_AXIS));
-
-        // Audio Mode Buttons
-        JRadioButton b1 = new JRadioButton(Bundle.getMessage("ButtonAudioModeRoom"));
-        b1.setToolTipText(Bundle.getMessage("ToolTipButtonAudioModeRoom"));
-        b1.setMnemonic(Mnemonics.get("RoomMode")); // NOI18N
-        b1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                modeRadioButtonPressed(e);
-            }
-        });
-        JRadioButton b2 = new JRadioButton(Bundle.getMessage("ButtonAudioModeHeadphone"));
-        b2.setMnemonic(Mnemonics.get("HeadphoneMode")); // NOI18N
-        b2.setToolTipText(Bundle.getMessage("ToolTipButtonAudioModeHeadphone"));
-        b2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                modeRadioButtonPressed(e);
-            }
-        });
-        b2.setEnabled(false);
-        ButtonGroup bg = new ButtonGroup();
-        bg.add(b1);
-        bg.add(b2);
-        b1.setSelected(true);
-        JPanel modePanel = new JPanel();
-        modePanel.setLayout(new BoxLayout(modePanel, BoxLayout.LINE_AXIS));
-        modePanel.add(new JLabel(Bundle.getMessage("FieldAudioMode")));
-        modePanel.add(b1);
-        modePanel.add(b2);
 
         // Build Listener Locations Table
         locData = new Object[1][7];
@@ -171,7 +136,6 @@ public class ManageLocationsFrame extends JmriJFrame {
         locTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
         locScrollPanel.getViewport().add(locTable);
 
-        listenerPanel.add(modePanel);
         listenerPanel.add(locScrollPanel);
 
         reporterPanel = new JPanel();
@@ -260,10 +224,10 @@ public class ManageLocationsFrame extends JmriJFrame {
     }
 
     private void saveButtonPressed(ActionEvent e) {
-        int value = JOptionPane.showConfirmDialog(null, Bundle.getMessage("FieldMLFSaveDialogConfirmMessage"),
+        int value = JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("FieldMLFSaveDialogConfirmMessage"),
                 Bundle.getMessage("FieldMLFSaveDialogTitle"),
-                JOptionPane.YES_NO_OPTION);
-        if (value == JOptionPane.YES_OPTION) {
+                JmriJOptionPane.YES_NO_OPTION);
+        if (value == JmriJOptionPane.YES_OPTION) {
             saveTableValues();
             OperationsXml.save();
         }
@@ -279,7 +243,7 @@ public class ManageLocationsFrame extends JmriJFrame {
             if ((Double) locModel.getValueAt(0, ManageLocationsTableModel.AZIMUTHCOL) != null
                     && ((Double) locModel.getValueAt(0, ManageLocationsTableModel.AZIMUTHCOL) == 90.0d
                     || (Double) locModel.getValueAt(0, ManageLocationsTableModel.AZIMUTHCOL) == -90.0d)) {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("FieldTableAzimuthInvalidValue"));
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("FieldTableAzimuthInvalidValue"));
             } else {
                 listenerLoc.setLocation((Double) locModel.getValueAt(0, ManageLocationsTableModel.XCOL),
                         (Double) locModel.getValueAt(0, ManageLocationsTableModel.YCOL),
@@ -320,13 +284,10 @@ public class ManageLocationsFrame extends JmriJFrame {
         }
     }
 
-    private void modeRadioButtonPressed(ActionEvent e) {
-    }
-
     private void closeButtonPressed(ActionEvent e) {
         dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ManageLocationsFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ManageLocationsFrame.class);
 
 }
