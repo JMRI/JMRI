@@ -24,7 +24,7 @@ public class CarLoadEditFrameAction extends AbstractAction {
         if (f == null || !f.isVisible()) {
             f = new CarLoadEditFrame();
         }
-        f.initComponents(CarAttributeEditFrame.TYPE, null);
+        f.initComponents(null, null);
         f.setExtendedState(Frame.NORMAL);
         f.setVisible(true); // this also brings the frame into focus
     }
