@@ -15,6 +15,7 @@ import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.tools.CarLoadEditFrameAction;
 import jmri.jmrit.operations.rollingstock.cars.tools.PrintCarLoadsAction;
 import jmri.jmrit.operations.setup.Control;
 
@@ -89,6 +90,7 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
+        toolMenu.add(new CarLoadEditFrameAction());
         toolMenu.add(new PrintCarLoadsAction(true));
         toolMenu.add(new PrintCarLoadsAction(false));
         menuBar.add(toolMenu);
