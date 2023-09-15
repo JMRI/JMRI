@@ -591,7 +591,8 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Take actual speed instead of nominal speed for the distance calculation
+            (impact for steam1).</li>
         </ul>
 
     <h3>Miscellaneous</h3>
