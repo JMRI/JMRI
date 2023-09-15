@@ -14,7 +14,7 @@
 
 <!-- Version 1 - Lolke H Bijlsma - Introduction Lokommander II              -->
 <!-- Version 2 - Petr Sidlo - 2022-08-14 - small fix                        -->
-<!-- Version 3 - Lolke H Bijlsma - 2023-09-15 -- SUSI and Motor frequency fix -->
+<!-- Version 3 - Lolke H Bijlsma - 2023-09-15  SUSI and Motor frequency fix -->
 
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
