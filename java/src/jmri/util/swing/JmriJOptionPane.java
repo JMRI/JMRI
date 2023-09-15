@@ -77,6 +77,30 @@ public class JmriJOptionPane {
     }
 
     /**
+     * Displays a Non-Modal message dialog with an OK button.
+     * @param parentComponent The parent component relative to which the dialog is displayed.
+     * @param message         The message to be displayed in the dialog.
+     * @param title           The title of the dialog.
+     * @param messageType     The type of message to be displayed (e.g., {@link #WARNING_MESSAGE}).
+     * @param callback        Code to run when the Dialog is closed. Can be null.
+     * @throws HeadlessException if the current environment is headless (no GUI available).
+     */
+    public static void showMessageDialogNonModal(@CheckForNull Component parentComponent,
+        Object message, String title, int messageType, @CheckForNull final Runnable callback ) {
+
+        JOptionPane pane = new JOptionPane(message, messageType);
+        JDialog dialog = pane.createDialog(parentComponent, title);
+        if ( callback !=null ) {
+            pane.addPropertyChangeListener(JOptionPane.VALUE_PROPERTY, unused -> callback.run());
+        }
+        setDialogLocation(parentComponent, dialog);
+        dialog.setModal(false);
+        dialog.setAlwaysOnTop(true);
+        dialog.toFront();
+        dialog.setVisible(true);
+    }
+
+    /**
      * Displays a confirmation dialog with a message and title.
      * The dialog includes options for the user to confirm or cancel an action.
      *
