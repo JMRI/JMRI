@@ -180,11 +180,14 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
                     && ! getOptionState("LastWillMessage").isEmpty())) {
                 mqttClient.connect(getMqttConnectionOptions());
 
-                publish(getOptionState("LastWillTopic"), "");
-
             } else {
                 mqttClient.connect();
             }
+
+            if ( ! getOptionState("LastWillTopic").isEmpty()) {
+                publish(getOptionState("LastWillTopic"), "");
+            }
+
             mqttClient.setCallback(this);
 
         } catch (MqttException ex) {
@@ -290,12 +293,19 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     private void tryToReconnect(boolean showLogMessages) {
         if (showLogMessages) log.warn("Try to reconnect");
         try {
-            if ( getOptionState(MQTT_USERNAME_OPTION) != null
-                    && ! getOptionState(MQTT_USERNAME_OPTION).isEmpty()) {
+             if ((getOptionState(MQTT_USERNAME_OPTION) != null
+                    && ! getOptionState(MQTT_USERNAME_OPTION).isEmpty())
+                    || ( ! getOptionState("LastWillTopic").isEmpty()
+                    && ! getOptionState("LastWillMessage").isEmpty())) {
                 mqttClient.connect(getMqttConnectionOptions());
             } else {
                 mqttClient.connect();
             }
+
+            if (! getOptionState("LastWillTopic").isEmpty()) {
+                publish(getOptionState("LastWillTopic"), "");
+            }
+
             log.warn("Succeeded to reconnect");
 
             mqttClient.setCallback(this);
