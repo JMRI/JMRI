@@ -1,13 +1,11 @@
 package jmri.jmrix.nce.ncemon;
 
-import javax.swing.JOptionPane;
 import jmri.jmrix.nce.NceListener;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.swing.NcePanelInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Swing action to create and register a MonFrame object
@@ -73,10 +71,10 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
             memo.getNceTrafficController().addNceListener(this);
         } catch (java.lang.NullPointerException e) {
             log.error("Unable to start the NCE Command monitor"); // NOI18N
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("DialogMonError"),
                     Bundle.getMessage("DialogMonErrorTitle"),
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -111,6 +109,6 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceMonPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceMonPanel.class);
 
 }
