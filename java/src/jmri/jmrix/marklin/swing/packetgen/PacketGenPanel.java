@@ -4,19 +4,19 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.Objects;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 import jmri.jmrix.marklin.MarklinListener;
 import jmri.jmrix.marklin.MarklinMessage;
 import jmri.jmrix.marklin.MarklinReply;
 import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user input of Marklin messages
@@ -129,8 +129,8 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
                 }
             } else {
                 log.error("Only hex commands are supported");
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("HexOnlyDialog"),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("HexOnlyDialog"),
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -159,5 +159,5 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PacketGenPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PacketGenPanel.class);
 }
