@@ -347,7 +347,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
                         mel.notifyMqttMessage(topic, mm.toString());
                     }
                     catch (Exception exception) {
-                        log.error("MqttEventListener exception: {}", exception);
+                        log.error("MqttEventListener exception: ", exception);
                     }
                 });
             }
