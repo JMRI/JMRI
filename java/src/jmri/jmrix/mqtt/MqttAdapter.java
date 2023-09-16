@@ -333,7 +333,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     @Override
     @API(status=API.Status.INTERNAL)
     public void messageArrived(String topic, MqttMessage mm) throws Exception {
-        log.debug("Message received, topic : {}", topic);
+        log.debug("Message received, topic : {} - '{}'", topic, mm);
 
         boolean found = false;
         Map<String,ArrayList<MqttEventListener>> tempMap
@@ -343,7 +343,12 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             if (MqttTopic.isMatched(e.getKey(), topic) ) {
                 found = true;
                 e.getValue().forEach((mel) -> {
-                    mel.notifyMqttMessage(topic, mm.toString());
+                    try {
+                        mel.notifyMqttMessage(topic, mm.toString());
+                    }
+                    catch (Exception exception) {
+                        log.error("MqttEventListener exception: {}", exception);
+                    }
                 });
             }
         }
