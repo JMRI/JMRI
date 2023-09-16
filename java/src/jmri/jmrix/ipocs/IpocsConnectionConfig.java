@@ -1,7 +1,6 @@
 package jmri.jmrix.ipocs;
 
 import jmri.jmrix.AbstractConnectionConfig;
-import jmri.jmrix.PortAdapter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,9 +8,10 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * @author Fredrik Elestedt Copyright (C) 2020
@@ -75,7 +75,7 @@ public class IpocsConnectionConfig extends AbstractConnectionConfig {
     @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
       if (!getAdapter().getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-        JOptionPane.showMessageDialog(null, Bundle.getMessage(Bundle.UNABLE_PREFIX));
+        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage(Bundle.UNABLE_PREFIX));
         systemPrefixField.setText(getAdapter().getSystemConnectionMemo().getSystemPrefix());
       }
     }
@@ -84,7 +84,7 @@ public class IpocsConnectionConfig extends AbstractConnectionConfig {
     @Override
     public void focusLost(java.awt.event.FocusEvent e) {
       if (!getAdapter().getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-        JOptionPane.showMessageDialog(null, Bundle.getMessage(Bundle.UNABLE_PREFIX));
+        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage(Bundle.UNABLE_PREFIX));
         systemPrefixField.setText(getAdapter().getSystemConnectionMemo().getSystemPrefix());
       }
     }
@@ -98,7 +98,7 @@ public class IpocsConnectionConfig extends AbstractConnectionConfig {
     @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
       if (!getAdapter().getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-        JOptionPane.showMessageDialog(null, Bundle.getMessage(Bundle.UNABLE_CONNNAME));
+        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage(Bundle.UNABLE_CONNNAME));
         connectionNameField.setText(getAdapter().getSystemConnectionMemo().getUserName());
       }
     }
@@ -107,7 +107,7 @@ public class IpocsConnectionConfig extends AbstractConnectionConfig {
     @Override
     public void focusLost(java.awt.event.FocusEvent e) {
       if (!getAdapter().getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-        JOptionPane.showMessageDialog(null, Bundle.getMessage(Bundle.UNABLE_CONNNAME));
+        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage(Bundle.UNABLE_CONNNAME));
         connectionNameField.setText(getAdapter().getSystemConnectionMemo().getUserName());
       }
     }
@@ -123,7 +123,7 @@ public class IpocsConnectionConfig extends AbstractConnectionConfig {
       try {
         getAdapter().setPort(Short.parseShort(portField.getText()));
       } catch (java.lang.NumberFormatException ex) {
-        JOptionPane.showMessageDialog(null, Bundle.getMessage(Bundle.UNABLE_PORT));
+        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage(Bundle.UNABLE_PORT));
       }
     }
   }
@@ -133,7 +133,7 @@ public class IpocsConnectionConfig extends AbstractConnectionConfig {
       try {
         getAdapter().setPort(Short.parseShort(portField.getText()));
       } catch (java.lang.NumberFormatException ex) {
-        JOptionPane.showMessageDialog(null, Bundle.getMessage(Bundle.UNABLE_PORT));
+        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage(Bundle.UNABLE_PORT));
       }
     }
 

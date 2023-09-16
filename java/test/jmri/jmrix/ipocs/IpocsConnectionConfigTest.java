@@ -7,9 +7,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
 
-import javax.swing.JOptionPane;
-
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 import org.junit.jupiter.api.*;
 import org.mockito.MockedStatic;
@@ -81,7 +80,7 @@ public class IpocsConnectionConfigTest {
     when(memo.setSystemPrefix(any())).thenReturn(false);
     cc.loadDetails(new javax.swing.JPanel());
     // Test action listeners
-    try (MockedStatic<JOptionPane> theMock = mockStatic(JOptionPane.class)) {
+    try (MockedStatic<JmriJOptionPane> theMock = mockStatic(JmriJOptionPane.class)) {
       cc.new SystemPrefixFieldActionListener().actionPerformed(null);
       cc.new SystemPrefixFieldFocusListener().focusLost(null);
       cc.new SystemPrefixFieldFocusListener().focusGained(null);
