@@ -16,7 +16,6 @@
 <!-- Version 2 - Petr Sidlo - 2022-08-14 - small fix                        -->
 <!-- Version 3 - Lolke H Bijlsma - 2023-09-15  SUSI and Motor frequency fix -->
 
-
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
@@ -521,130 +520,24 @@
       </variable>
 
 <!-- CV114 -->
-      <variable item="Shunting Speed Active For F1" CV="114" mask="XXXXXXXV" default="0" minFn="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Shunting Speed Active For F1</label>
-        <label xml:lang="cs">Posunvací rychlost aktivuje F1</label>
+      <variable item="Shunting Speed Active Function" CV="114" default="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
+        <label>Shunting Speed Active Function</label>
+        <label xml:lang="cs">Posunvací rychlost aktivuje</label>
       </variable>
-      <variable item="Shunting Speed Active For F2" CV="114" mask="XXXXXXVX" default="0" minFn="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Shunting Speed Active For F2</label>
-        <label xml:lang="cs">Posunvací rychlost aktivuje F2</label>
-      </variable>
-      <variable item="Shunting Speed Active For F3" CV="114" mask="XXXXXVXX" default="1" minFn="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Shunting Speed Active For F3</label>
-        <label xml:lang="cs">Posunvací rychlost aktivuje F3</label>
-      </variable>
-      <variable item="Shunting Speed Active For F4" CV="114" mask="XXXXVXXX" default="0" minFn="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Shunting Speed Active For F4</label>
-        <label xml:lang="cs">Posunvací rychlost aktivuje F4</label>
-      </variable>
-      <variable item="Shunting Speed Active For F5" CV="114" mask="XXXVXXXX" default="0" minFn="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Shunting Speed Active For F5</label>
-        <label xml:lang="cs">Posunvací rychlost aktivuje F5</label>
-      </variable>
-      <variable item="Shunting Speed Active For F6" CV="114" mask="XXVXXXXX" default="0" minFn="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Shunting Speed Active For F6</label>
-        <label xml:lang="cs">Posunvací rychlost aktivuje F6</label>
-      </variable>
-      <variable item="Shunting Speed Active For F7" CV="114" mask="XVXXXXXX" default="0" minFn="7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Shunting Speed Active For F7</label>
-        <label xml:lang="cs">Posunvací rychlost aktivuje F7</label>
-      </variable>
-      <variable item="Shunting Speed Active For F8" CV="114" mask="VXXXXXXX" default="0" minFn="8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Shunting Speed Active For F8</label>
-        <label xml:lang="cs">Posunvací rychlost aktivuje F8</label>
-      </variable>
-
-
+      
 <!-- CV115 -->
-      <variable item="Switch Off Acceleration Deceleration For F1" CV="115" mask="XXXXXXXV" default="0" minFn="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Switch Off Acceleration Deceleration For F1</label>
-        <label xml:lang="cs">Zrychlení zpomalení vypne F1</label>
+      <variable item="Switch Off Acceleration Deceleration Function" CV="115" default="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
+        <label>Switch Off Acceleration Deceleration Function</label>
+        <label xml:lang="cs">Zrychlení zpomalení vypne</label>
       </variable>
-      <variable item="Switch Off Acceleration Deceleration For F2" CV="115" mask="XXXXXXVX" default="0" minFn="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Switch Off Acceleration Deceleration For F2</label>
-        <label xml:lang="cs">Zrychlení zpomalení vypne F2</label>
-      </variable>
-      <variable item="Switch Off Acceleration Deceleration For F3" CV="115" mask="XXXXXVXX" default="0" minFn="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Switch Off Acceleration Deceleration For F3</label>
-        <label xml:lang="cs">Zrychlení zpomalení vypne F3</label>
-      </variable>
-      <variable item="Switch Off Acceleration Deceleration For F4" CV="115" mask="XXXXVXXX" default="1" minFn="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Switch Off Acceleration Deceleration For F4</label>
-        <label xml:lang="cs">Zrychlení zpomalení vypne F4</label>
-      </variable>
-      <variable item="Switch Off Acceleration Deceleration For F5" CV="115" mask="XXXVXXXX" default="0" minFn="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Switch Off Acceleration Deceleration For F5</label>
-        <label xml:lang="cs">Zrychlení zpomalení vypne F5</label>
-      </variable>
-      <variable item="Switch Off Acceleration Deceleration For F6" CV="115" mask="XXVXXXXX" default="0" minFn="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Switch Off Acceleration Deceleration For F6</label>
-        <label xml:lang="cs">Zrychlení zpomalení vypne F6</label>
-      </variable>
-      <variable item="Switch Off Acceleration Deceleration For F7" CV="115" mask="XVXXXXXX" default="0" minFn="7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Switch Off Acceleration Deceleration For F7</label>
-        <label xml:lang="cs">Zrychlení zpomalení vypne F7</label>
-      </variable>
-      <variable item="Switch Off Acceleration Deceleration For F8" CV="115" mask="VXXXXXXX" default="0" minFn="8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Switch Off Acceleration Deceleration For F8</label>
-        <label xml:lang="cs">Zrychlení zpomalení vypne F8</label>
-      </variable>
-
+      
 <!-- CV116 -->
-      <variable item="Disable Constant Braking Distance For F1" CV="116" mask="XXXXXXXV" default="0" minFn="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Disable Constant Braking Distance For F1</label>
-        <label xml:lang="cs">Konstantní brzdnou dráhu vypne F1</label>
-      </variable>
-      <variable item="Disable Constant Braking Distance For F2" CV="116" mask="XXXXXXVX" default="0" minFn="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Disable Constant Braking Distance For F2</label>
-        <label xml:lang="cs">Konstantní brzdnou dráhu vypne F2</label>
-      </variable>
-      <variable item="Disable Constant Braking Distance For F3" CV="116" mask="XXXXXVXX" default="0" minFn="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Disable Constant Braking Distance For F3</label>
-        <label xml:lang="cs">Konstantní brzdnou dráhu vypne F3</label>
-      </variable>
-      <variable item="Disable Constant Braking Distance For F4" CV="116" mask="XXXXVXXX" default="0" minFn="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Disable Constant Braking Distance For F4</label>
-        <label xml:lang="cs">Konstantní brzdnou dráhu vypne F4</label>
-      </variable>
-      <variable item="Disable Constant Braking Distance For F5" CV="116" mask="XXXVXXXX" default="1" minFn="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Disable Constant Braking Distance For F5</label>
-        <label xml:lang="cs">Konstantní brzdnou dráhu vypne F5</label>
-      </variable>
-      <variable item="Disable Constant Braking Distance For F6" CV="116" mask="XXVXXXXX" default="0" minFn="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Disable Constant Braking Distance For F6</label>
-        <label xml:lang="cs">Konstantní brzdnou dráhu vypne F6</label>
-      </variable>
-      <variable item="Disable Constant Braking Distance For F7" CV="116" mask="XVXXXXXX" default="0" minFn="7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Disable Constant Braking Distance For F7</label>
-        <label xml:lang="cs">Konstantní brzdnou dráhu vypne F7</label>
-      </variable>
-      <variable item="Disable Constant Braking Distance For F8" CV="116" mask="VXXXXXXX" default="0" minFn="8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
-        <label>Disable Constant Braking Distance For F8</label>
-        <label xml:lang="cs">Konstantní brzdnou dráhu vypne F8</label>
+      <variable item="Disable Constant Braking Distance Function" CV="116" default="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
+        <label>Disable Constant Braking Distance Function</label>
+        <label xml:lang="cs">Konstantní brzdnou dráhu vypne</label>
       </variable>
 
 <!-- CV117 -->
