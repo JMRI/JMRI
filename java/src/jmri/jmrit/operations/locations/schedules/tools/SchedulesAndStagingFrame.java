@@ -95,7 +95,7 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
         toolMenu.add(new PrintCarLoadsAction(false));
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
-        addHelpMenu("package.jmri.jmrit.operations.Operations_ShowSchedulesByCarTypeAndLoad", true); // NOI18N
+        addHelpMenu("package.jmri.jmrit.operations.Operations_ShowStagingAndSchedulesByCarTypeAndLoad", true); // NOI18N
 
         // select first item to load contents
         typesComboBox.setSelectedIndex(0);
