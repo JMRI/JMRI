@@ -130,11 +130,20 @@ import jmri.ThrottleListener;
             log.debug("sent address {} direction {}", address, "STOP");
         }
 
-        String intSpeed = String.valueOf(Math.round(speed * 100));
+        int intSpeed = Math.round(speed * 100);
+        
+        // ensure non-zero input will result in non-zero output
+        if (speed > 0 && intSpeed == 0)
+        {
+            intSpeed = 1;
+        }
 
+        final String stringSpeed = String.valueOf(intSpeed);
+        
         // Send MQTT message
         jmri.util.ThreadingUtil.runOnLayout(() -> {
-            mqttAdapter.publish(this.sendThrottleTopic.replaceFirst("\\{0\\}", String.valueOf(address)), intSpeed);
+
+            mqttAdapter.publish(this.sendThrottleTopic.replaceFirst("\\{0\\}", String.valueOf(address)), stringSpeed);
         });
         log.debug("sent address {} speed {}", address, intSpeed);
 
