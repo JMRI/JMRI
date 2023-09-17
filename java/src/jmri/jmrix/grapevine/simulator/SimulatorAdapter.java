@@ -5,16 +5,16 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+
 import javax.annotation.Nonnull;
-import javax.swing.JOptionPane;
+
 import jmri.jmrix.grapevine.SerialMessage;
 import jmri.jmrix.grapevine.SerialPortController; // no special xSimulatorController
 import jmri.jmrix.grapevine.SerialReply;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.jmrix.grapevine.SerialTrafficController;
 import jmri.util.ImmediatePipedOutputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Provide access to a simulated Grapevine system.
@@ -336,10 +336,10 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
 
             default:
                 if (bank == 0x6) { // this is the rename command, with element 2 = new node number
-                    JOptionPane.showMessageDialog(null,
+                    JmriJOptionPane.showMessageDialog(null,
                             Bundle.getMessage("RenumberSupport"),
                             Bundle.getMessage("MessageTitle"),
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                     log.debug("rename command not supported, old address: {}, new address: {}, bank: {}",
                             nodeaddr, b2, bank);
                 } else {
@@ -513,6 +513,6 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
     private DataOutputStream outpipe = null; // feed pin
     private DataInputStream inpipe = null; // feed pout
 
-    private final static Logger log = LoggerFactory.getLogger(SimulatorAdapter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SimulatorAdapter.class);
 
 }

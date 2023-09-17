@@ -159,6 +159,8 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         addComboBoxAction(loadComboBox);
 
         updateCarCommentFields();
+        
+        enableButtons();
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
@@ -301,6 +303,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         if (ae.getSource() == typeComboBox) {
             _type = (String) typeComboBox.getSelectedItem();
             updateLoadComboBox();
+            enableButtons();
         }
         updateCarQuanity();
         updateLoadType();
@@ -385,6 +388,13 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
     private void updateCarCommentFields() {
         pickupCommentTextField.setText(carLoads.getPickupComment(_type, (String) loadComboBox.getSelectedItem()));
         dropCommentTextField.setText(carLoads.getDropComment(_type, (String) loadComboBox.getSelectedItem()));
+    }
+    
+    private void enableButtons() {
+        addButton.setEnabled(_type != null);
+        deleteButton.setEnabled(_type != null);
+        replaceButton.setEnabled(_type != null);
+        saveButton.setEnabled(_type != null);
     }
 
     @Override

@@ -1,11 +1,13 @@
 package jmri.jmrix.tams.swing.packetgen;
 
 import java.awt.Dimension;
+
 import javax.swing.BoxLayout;
-import javax.swing.JOptionPane;
+
 import jmri.jmrix.tams.TamsConstants;
 import jmri.jmrix.tams.TamsMessage;
 import jmri.util.StringUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user input of Tams messages Based on work by Bob Jacobsen and Kevin Dickerson
@@ -76,9 +78,9 @@ public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel {
         if (checkBoxBinCmd.isSelected()) {//Binary TamsMessage to be sent
             m = createPacket(input);
             if (m == null) {
-                JOptionPane.showMessageDialog(PacketGenPanel.this,
+                JmriJOptionPane.showMessageDialog(this,
                         "Enter hexadecimal numbers only", "Tams Binary Command",
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
             //Set replyType to unknown just in case
