@@ -101,7 +101,9 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>Fixed issue with invalid throttle speed message causing MQTT to disconnect</li>
+                <li>Improved robustness of MQTT Event Listener exception handling</li>
+                <li>Fixed issue with MQTT LWT messages</li>
             </ul>
 
         <h4>MRC</h4>

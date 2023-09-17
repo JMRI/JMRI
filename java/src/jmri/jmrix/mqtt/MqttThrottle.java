@@ -259,7 +259,20 @@ import jmri.ThrottleListener;
     public void notifyMqttMessage(String receivedTopic, String message) {
 
         if (receivedTopic.endsWith(this.rcvThrottleTopic.replaceFirst("\\$address", String.valueOf(address)))) {
-            super.setSpeedSetting(Math.max(0.0f,Math.min(Float.parseFloat(message)/100.0f,1.0f)));
+
+            Float speed ;
+
+            try {
+                speed = Math.max(0.0f,Math.min(Float.parseFloat(message)/100.0f,1.0f));
+            }
+            catch (Exception e){
+                if (message.length() != 0) {
+                    log.error("Invalid throttle speed: '{}'", message);
+                }
+                speed = -1.0f;
+            }
+
+            super.setSpeedSetting(speed);
 
         } else if (receivedTopic.endsWith(this.rcvDirectionTopic.replaceFirst("\\$address",
                     String.valueOf(address)))) {
@@ -271,6 +284,7 @@ import jmri.ThrottleListener;
                     super.setIsForward(false);
                     break;
                 case "STOP":
+                case "":
                     super.setSpeedSetting(-1);
                     break;
                 default:
