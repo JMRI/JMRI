@@ -18,9 +18,11 @@
 <!-- Decoder manual used: SKD224_replacement board with integrated dcc decoder assembly guide v 0.1.6.pdf        -->
 <!-- Version 2 - Incorporated the other decoders from the same family after info from tOm                        -->
 <!-- Version 3 - Based on information from tOm, correct version information and added productID                  -->
+<!-- Version 4 - Some updates and actually added productID                                                       -->
 
   <version author="lbijlsma@pobox.com" version="2" lastUpdated="20160403"/>
   <version author="lbijlsma@pobox.com" version="3" lastUpdated="20220730"/>
+  <version author="lbijlsma@pobox.com" version="4" lastUpdated="20230914"/>
   <decoder>
     <family name="Lokommander" mfg="Tehnologistic (train-O-matic)">
       <model model="Lokommander Mini" numOuts="4" lowVersionID="23" highVersionID="255">
@@ -35,7 +37,7 @@
         <output name="3" label="Out3" />
         <output name="4" label="Out4" />
       </model>
-      <model model="NMJ Skd 224" numOuts="4" lowVersionID="1" highVersionID="255">
+      <model model="NMJ Skd 224" numOuts="4" lowVersionID="1" highVersionID="255" productID="2010213">
         <output name="1" label="Out1" />
         <output name="2" label="Out2" />
         <output name="3" label="Out3" />
