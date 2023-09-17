@@ -171,7 +171,10 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
 
-        int value = (int) ((127 - 1) * this.speedSetting);     // -1 for rescale to avoid estop
+        int value = Math.round((127 - 1) * this.speedSetting);     // -1 for rescale to avoid estop
+        if (this.speedSetting > 0 && value == 0) {
+            value = 1;          // ensure non-zero input results in non-zero output
+        }
         if (value > 0) {
             value = value + 1;  // skip estop
         }
@@ -250,6 +253,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         } else if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_128) {
             return ((lSpeed - 1) / 126.f);
         } else {
+            // pretty sure this is wrong, it's definitely never going to be < 1.
             return (int) (lSpeed * 27.f + 0.5) + 1;
         }
     }
