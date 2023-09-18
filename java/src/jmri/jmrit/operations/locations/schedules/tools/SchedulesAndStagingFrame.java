@@ -136,7 +136,8 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("ShipLoadOption")), 3, 0);
         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Load")), 4, 0);
         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("destinationTrack")), 5, 0);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Schedule")), 6, 0);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("LoadOption")), 6, 0);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Schedule")), 7, 0);
 
         x = 1;
         for (Location location : locationManager.getLocationsByNameList()) {
@@ -233,10 +234,10 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
                             (si.getReceiveLoadName().equals(load) ||
                                     (si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
                                             spur.isLoadNameAccepted(load)))) {
-
                         addItemLeft(locationsPanel, new JLabel(load), 4, x);
                         addItemLeft(locationsPanel, new JLabel(location.getName() + " (" + spur.getName() + ")"), 5, x);
-                        addItemLeft(locationsPanel, new JLabel(sch.getName() + " " + si.getId()), 6, x++);
+                        addItemLeft(locationsPanel, new JLabel(spur.getLoadOptionString()), 6, x);
+                        addItemLeft(locationsPanel, new JLabel(sch.getName() + " " + si.getId()), 7, x++);
                     }
                 }
             }
