@@ -265,10 +265,10 @@ public class NceThrottle extends AbstractThrottle {
                 locoAddr += 0xC000;
             }
             value = Math.round((127 - 1) * speed);     // -1 for rescale to avoid estop
-            if (this.speedSetting > 0 && value == 0) {
+            if (speed > 0 && value == 0) {
                 value = 1;          // ensure non-zero input results in non-zero output
             }
-            if (this.speedSetting < 0) {
+            if (speed < 0) {
                 value = -1;         // ensure small negative speeds don't get caught by Math.round above
             }
             if (value > 126) {
@@ -302,7 +302,7 @@ public class NceThrottle extends AbstractThrottle {
 
             if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_128) {
                 value = Math.round((127 - 1) * speed);     // -1 for rescale to avoid estop
-                if (this.speedSetting > 0 && value == 0) {
+                if (speed > 0 && value == 0) {
                     value = 1;          // ensure non-zero input results in non-zero output
                 }
                 if (value > 0) {
@@ -311,7 +311,7 @@ public class NceThrottle extends AbstractThrottle {
                 if (value > 127) {
                     value = 127;    // max possible speed
                 }
-                if (this.speedSetting < 0) {
+                if (speed < 0) {
                     value = 1;      // emergency stop
                                     // ensure small negative speeds don't get caught by Math.round above
                 }
@@ -338,7 +338,7 @@ public class NceThrottle extends AbstractThrottle {
                  *     address.isLongAddress(), value, isForward);
                  */
                 value = Math.round((28-1) * speed); // -1 for rescale to avoid estop
-                if (this.speedSetting > 0 && value == 0) {
+                if (speed > 0 && value == 0) {
                     value = 1;          // ensure non-zero input results in non-zero output
                 }
                 if (value > 0) {
@@ -347,7 +347,7 @@ public class NceThrottle extends AbstractThrottle {
                 if (value > 28) {
                     value = 28; // max possible speed
                 }
-                if (this.speedSetting < 0) {
+                if (speed < 0) {
                     value = 1;      // emergency stop
                                     // ensure small negative speeds don't get caught by Math.round above
                 }
