@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.rollingstock.cars;
+package jmri.jmrit.operations.rollingstock.cars.tools;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
@@ -10,6 +10,7 @@ import org.junit.Assume;
 import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.rollingstock.cars.CarsTableFrame;
 import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
 
