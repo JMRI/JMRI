@@ -13,7 +13,7 @@
     <div id="mainContent" class="no-sidebar">
       <h1>JMRI: Display / Edit Log Categories</h1>
       
-      <p>This tool can be opened via Debug &rarr; Display / Edit Log Categories</p>
+      <p>This tool can be opened via Debug <strong>&rArr;</strong> Display / Edit Log Categories</p>
 
       <p>This screen displays a list of the current Logging Categories in use by JMRI.</p>
       <p>Clicking the <span class="textbutton">Refresh Categories</span> button updates the 
