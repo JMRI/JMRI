@@ -16,7 +16,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -40,11 +39,9 @@ import jmri.jmrix.ecos.EcosMessage;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import jmri.jmrix.ecos.utilities.EcosLocoToRoster;
 import jmri.jmrix.ecos.utilities.RemoveObjectFromEcos;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.XTableColumnModel;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class EcosLocoTableAction extends AbstractTableAction<NamedBean> {
 
@@ -193,7 +190,7 @@ public class EcosLocoTableAction extends AbstractTableAction<NamedBean> {
                     } else if (value instanceof RosterEntry) {
                         re = (RosterEntry) value;
                         if ((re.getAttribute(getRosterAttribute()) != null && !re.getAttribute(getRosterAttribute()).equals(""))) {
-                            JOptionPane.showMessageDialog(f,
+                            JmriJOptionPane.showMessageDialog(f,
                                     Bundle.getMessage("EcosEditAssignedDialog", ecosObjectNo));
                             log.error("{} This roster entry already has an ECoS loco assigned to it", ecosObjectNo);
                             return;
@@ -696,6 +693,6 @@ public class EcosLocoTableAction extends AbstractTableAction<NamedBean> {
         return EcosLocoTableAction.class.getName();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosLocoTableAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EcosLocoTableAction.class);
 
 }

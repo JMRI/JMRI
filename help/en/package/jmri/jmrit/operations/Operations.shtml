@@ -210,6 +210,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
                 <li><a href="#ShowSchedulesByCarTypeAndLoad">Show Schedules by Car Type and
                     Load</a></li>
+                <li><a href="#ShowStagingAndSchedulesByCarTypeAndLoad">Show Staging and Schedules by Car Type and
+                    Load</a></li>
 
                 <li><a href="#AlternateTrack">Alternate Track</a></li>
               </ul></li>
@@ -853,7 +855,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>
         If you decide to use schedules, the <a href="#ShowSchedulesByCarTypeAndLoad">Show
           Schedules by Car Type and Load</a> tool can show you which car types and loads will be
-        serviced by your spurs.
+        serviced by your spurs.  You can also see which loads will be generated out of staging
+        to your spurs by using the <a href="#ShowStagingAndSchedulesByCarTypeAndLoad">Show
+        Staging and Schedules by Car Type and Load</a> tool.
       </p>
 
       <p>OperationsPro&trade; will send messages to the system console when there are errors or
@@ -2837,8 +2841,56 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         and shipped.</p>
 
       <p>If you want a list of custom car loads for each of your car types, you can use the
-        "Print Car Loads" or "Preview Car Loads" found under the "Tools" menu in the "Show schedules
-        by car type and load" window.</p>
+        "Print Car Loads" or "Preview Car Loads" found under the "Tools" menu in the "Show Schedules
+        by Car Type and Load" window. You can create or edit any car load using the "Edit Car Loads"
+        tool.</p>
+
+      <h3 id="ShowStagingAndSchedulesByCarTypeAndLoad">Show Staging and Schedules by Car Type
+        and Load</h3>
+      <img src="images/ShowStagingAndSchedulesByCarTypeAndLoad.png" alt="">
+      <p>This tool allows you to see which loads your staging tracks will generate for a type of
+        car, and which spurs with schedules will receive them. You can access this tool from the
+        Schedules and schedule windows. The Schedules window can be found under "Tools" in the
+        Locations window. The tool allows you to select a car type, and then any load that you've
+        created for the that type of car. The window then shows which spurs and schedules are
+        receiving that specific car load from staging. Selecting the "All Loads" checkbox will show
+        you every schedule for the car type selected.</p>
+
+      <p>
+        The tool also show which <a href="#StagingAndCarLoads">car load options</a> have been
+        selected for the staging tracks. The abbreviations are listed below:
+      </p>
+
+      <table>
+        <tr>
+          <td>SWP</td>
+          <td>Swap default loads and empties</td>
+        </tr>
+        <tr>
+          <td>EDL</td>
+          <td>Empty cars with default loads</td>
+        </tr>
+        <tr>
+          <td>ECL</td>
+          <td>Empty cars with custom loads</td>
+        </tr>
+        <tr>
+          <td>GEN</td>
+          <td>Generate custom loads for spurs serviced by this train</td>
+        </tr>
+        <tr>
+          <td>ANY</td>
+          <td>Generate custom loads for any spur (multiple trains)</td>
+        </tr>
+        <tr>
+          <td>STG</td>
+          <td>Generate custom loads for any staging track</td>
+        </tr>
+      </table>
+
+      <p>If you want a list of custom car loads for each of your car types, you can use the
+        "Print Car Loads" or "Preview Car Loads" found under the "Tools" menu. You can create or
+        edit any car load using the "Edit Car Loads" tool.</p>
 
       <h3 id="Interchange">Classification/Interchange Tracks</h3>
       The easiest way to create the exchange of cars between trains is to use a
@@ -3104,6 +3156,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>
         You can control which destinations are valid out of staging by using the <a
           href="#TrackDestinations">Track Destinations</a> window found under "Tools".
+      </p>
+
+      <p>
+        There's also a tool <a href="#ShowStagingAndSchedulesByCarTypeAndLoad">Show Staging and
+          Schedules by Car Type and Load</a> that allows you to review your staging load generation
+        selections and which spurs and schedules will receive the car loads.
       </p>
 
       <h3 id="BlockingCarsFromStaging">Blocking Cars from Staging</h3>

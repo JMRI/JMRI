@@ -231,10 +231,6 @@ public class TrainBuilder extends TrainBuilderCars {
                 }
             } else {
                 for (Track track : stagingTracks) {
-                    addLine(_buildReport, THREE,
-                            Bundle.getMessage("buildStagingHas", track.getName(),
-                                    Integer.toString(track.getNumberEngines()),
-                                    Integer.toString(track.getNumberCars())));
                     // is the departure track available?
                     if (!checkDepartureStagingTrack(track)) {
                         addLine(_buildReport, SEVEN,

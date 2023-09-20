@@ -199,24 +199,28 @@ public class StagingEditFrameTest extends OperationsTestCase {
         Route routeD = routeManager.newRoute("New Route D");
         routeD.addLocation(locB);
         
-        JemmyUtil.enterClickAndLeave(f.autoDropCheckBox);
-        JemmyUtil.enterClickAndLeave(f.autoPickupCheckBox);
-        
-        // confirm 
-        Assert.assertEquals("Route combobox updated", 4, f.comboBoxDropRoutes.getItemCount());
-        Assert.assertEquals("Route combobox updated", 4, f.comboBoxPickupRoutes.getItemCount());
+        // confirm default
+        Assert.assertTrue(f.autoDropCheckBox.isSelected());
+        Assert.assertTrue(f.autoPickupCheckBox.isSelected());
         
         JemmyUtil.enterClickAndLeave(f.autoDropCheckBox);
-        
-        // confirm 
-        Assert.assertEquals("Route combobox updated", 6, f.comboBoxDropRoutes.getItemCount());
-        Assert.assertEquals("Route combobox updated", 4, f.comboBoxPickupRoutes.getItemCount());
-
         JemmyUtil.enterClickAndLeave(f.autoPickupCheckBox);
         
         // confirm 
         Assert.assertEquals("Route combobox updated", 6, f.comboBoxDropRoutes.getItemCount());
         Assert.assertEquals("Route combobox updated", 6, f.comboBoxPickupRoutes.getItemCount());
+        
+        JemmyUtil.enterClickAndLeave(f.autoDropCheckBox);
+        
+        // confirm 
+        Assert.assertEquals("Route combobox updated", 4, f.comboBoxDropRoutes.getItemCount());
+        Assert.assertEquals("Route combobox updated", 6, f.comboBoxPickupRoutes.getItemCount());
+
+        JemmyUtil.enterClickAndLeave(f.autoPickupCheckBox);
+        
+        // confirm 
+        Assert.assertEquals("Route combobox updated", 4, f.comboBoxDropRoutes.getItemCount());
+        Assert.assertEquals("Route combobox updated", 4, f.comboBoxPickupRoutes.getItemCount());
         
         JUnitUtil.dispose(f);
     }
@@ -268,24 +272,28 @@ public class StagingEditFrameTest extends OperationsTestCase {
         Train trainD = trainManager.newTrain("New Test Train D");
         trainD.setRoute(routeD);
         
-        JemmyUtil.enterClickAndLeave(f.autoDropCheckBox);
-        JemmyUtil.enterClickAndLeave(f.autoPickupCheckBox);
-        
-        // confirm 
-        Assert.assertEquals("Train combobox updated", 4, f.comboBoxDropTrains.getItemCount());
-        Assert.assertEquals("Train combobox updated", 4, f.comboBoxPickupTrains.getItemCount());
+        // confirm default
+        Assert.assertTrue(f.autoDropCheckBox.isSelected());
+        Assert.assertTrue(f.autoPickupCheckBox.isSelected());
         
         JemmyUtil.enterClickAndLeave(f.autoDropCheckBox);
-        
-        // confirm 
-        Assert.assertEquals("Train combobox updated", 6, f.comboBoxDropTrains.getItemCount());
-        Assert.assertEquals("Train combobox updated", 4, f.comboBoxPickupTrains.getItemCount());
-
         JemmyUtil.enterClickAndLeave(f.autoPickupCheckBox);
         
         // confirm 
         Assert.assertEquals("Train combobox updated", 6, f.comboBoxDropTrains.getItemCount());
         Assert.assertEquals("Train combobox updated", 6, f.comboBoxPickupTrains.getItemCount());
+        
+        JemmyUtil.enterClickAndLeave(f.autoDropCheckBox);
+        
+        // confirm 
+        Assert.assertEquals("Train combobox updated", 4, f.comboBoxDropTrains.getItemCount());
+        Assert.assertEquals("Train combobox updated", 6, f.comboBoxPickupTrains.getItemCount());
+
+        JemmyUtil.enterClickAndLeave(f.autoPickupCheckBox);
+        
+        // confirm 
+        Assert.assertEquals("Train combobox updated", 4, f.comboBoxDropTrains.getItemCount());
+        Assert.assertEquals("Train combobox updated", 4, f.comboBoxPickupTrains.getItemCount());
         
         JUnitUtil.dispose(f);
     }
