@@ -256,10 +256,10 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
         jf.requestClose();
         jf.waitClosed();
 
-        // Open Speed pane to test Speed menu, which displays a JOptionPane
+        // Open Speed pane to test Speed menu, which displays a JmriJOptionPane
 
         // Use GUI menu to open Speeds pane:
-        //This is a modal JOptionPane, so create a thread to dismiss it.
+        //This is a modal JmriJOptionPane, so create a thread to dismiss it.
         Thread t = new Thread(() -> {
             try {
                 JemmyUtil.confirmJOptionPane(main, Bundle.getMessage("BlockSpeedLabel"), "", "OK");
