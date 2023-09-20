@@ -975,7 +975,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         list_items = RouteManager.getRoutesByNameList()
         while s == opt1:
             title = "choose route"
-            d = int(min(500, max(len(list_items)+1,1)*20*0.81))   #get a nice size for the list box
+            d = int(min(500, max(len(list_items),1)*20*0.81))   #get a nice size for the list box
             [l,s] = self.od.ListOptions(list_items,title,[opt2,opt1], Dimension(50, d))
             if self.od.CLOSED_OPTION == True:
                 return

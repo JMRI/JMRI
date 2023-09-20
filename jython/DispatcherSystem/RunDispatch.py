@@ -110,13 +110,10 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
     def List(self, title, list_items, preferred_size = "default"):
         list = JList(list_items)
         list.setSelectedIndex(0)
+        # list.setPreferredSize(1000, 1000)
         scrollPane = JScrollPane(list);
         if preferred_size != "default":
             scrollPane.setPreferredSize(preferred_size)     # preferred_size should be set to Dimension(300, 500) say
-        else:
-            d = int(min(500, max(len(list_items)+1,1)*20*0.81))
-            w = list.getFixedCellWidth()
-            scrollPane.setPreferredSize(Dimension(w, d))
         i = []
         self.CLOSED_OPTION = False
         options = ["OK"]
@@ -146,10 +143,6 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
         scrollPane = JScrollPane(list);
         if preferred_size != "default":
             scrollPane.setPreferredSize(preferred_size)   # preferred_size should be set to Dimension(300, 500) say
-        else:
-            d = int(min(500, max(len(list_items)+1,1)*20*0.81))
-            w = list.getFixedCellWidth()
-            scrollPane.setPreferredSize(Dimension(w, d))
         self.CLOSED_OPTION = False
         s = JOptionPane.showOptionDialog(None,
             scrollPane,
