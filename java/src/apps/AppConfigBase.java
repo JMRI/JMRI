@@ -185,11 +185,9 @@ public class AppConfigBase extends JmriPanel {
                     options,
                     null);
             switch (retVal) {
-                case JOptionPane.YES_OPTION:
+                case 0: // array position 0, restart Now
                     dispose();
                     Apps.handleRestart();
-                    break;
-                case JOptionPane.NO_OPTION:
                     break;
                 default:
                     break;
