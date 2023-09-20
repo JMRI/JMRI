@@ -4,6 +4,7 @@ import jmri.jmrix.dcc4pc.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.*;
 
@@ -37,6 +38,7 @@ public class BoardListPanelTest {
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testDisplayTable() {
 
         Dcc4PcTrafficController tc = new Dcc4PcTrafficController(){
