@@ -1731,9 +1731,9 @@ public class LayoutTurnoutView extends LayoutTrackView {
                     while (entering) {
                         // prompt for rotation angle
                         error = false;
-                        newAngle = JOptionPane.showInputDialog(layoutEditor,
-                                Bundle.getMessage("MakeLabel", Bundle.getMessage("EnterRotation")));
-                        if (newAngle.isEmpty()) {
+                        newAngle = JmriJOptionPane.showInputDialog(layoutEditor,
+                                Bundle.getMessage("MakeLabel", Bundle.getMessage("EnterRotation")),"");
+                        if (newAngle==null || newAngle.isEmpty()) {
                             return;  // cancelled
                         }
                         double rot = 0.0;

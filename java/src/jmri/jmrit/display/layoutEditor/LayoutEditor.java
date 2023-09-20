@@ -5979,11 +5979,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                             Bundle.getMessage("ButtonYesPlus")},
                         Bundle.getMessage("ButtonNo"));
 
-                if (selectedValue == JOptionPane.NO_OPTION) {
+                // array position 1, ButtonNo , or Dialog Closed.
+                if (selectedValue == 1 || selectedValue == JmriJOptionPane.CLOSED_OPTION ) { 
                     return false; // return without creating if "No" response
                 }
 
-                if (selectedValue == JOptionPane.CANCEL_OPTION) {
+                if (selectedValue == 2) { // array position 2, ButtonYesPlus
                     // Suppress future warnings, and continue
                     noWarnPositionablePoint = true;
                 }
@@ -6212,9 +6213,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         // First verify with the user that this is really wanted
         if (!noWarnSlip) {
-            int selectedValue = JOptionPane.showOptionDialog(this,
+            int selectedValue = JmriJOptionPane.showOptionDialog(this,
                     Bundle.getMessage("Question5r"), Bundle.getMessage("WarningTitle"),
-                    JmriJOptionPane.YES_NO_CANCEL_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null,
+                    JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null,
                     new Object[]{Bundle.getMessage("ButtonYes"),
                         Bundle.getMessage("ButtonNo"),
                         Bundle.getMessage("ButtonYesPlus")},

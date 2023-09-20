@@ -1360,7 +1360,7 @@ public class CircuitBuilder {
                             block.getDisplayName(), editBlock.getDisplayName()),
                             Bundle.getMessage("whichCircuit"), JmriJOptionPane.YES_NO_OPTION,
                             JmriJOptionPane.QUESTION_MESSAGE);
-                    if (result == JOptionPane.YES_OPTION) {
+                    if (result == JmriJOptionPane.YES_OPTION) {
                         // move icon from block to editBlock
                         getCircuitIcons(block).remove(pos);
                         ((IndicatorTrack) pos).setOccBlockHandle(
@@ -1551,8 +1551,8 @@ public class CircuitBuilder {
                 while (iter.hasNext()) {
                     selects[i++] = iter.next().getNameString();
                 }
-                Object select = JOptionPane.showInputDialog(_editor, Bundle.getMessage("multipleSelections"),
-                        Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE,
+                Object select = JmriJOptionPane.showInputDialog(_editor, Bundle.getMessage("multipleSelections"),
+                        Bundle.getMessage("QuestionTitle"), JmriJOptionPane.QUESTION_MESSAGE,
                         null, selects, null);
                 if (select != null) {
                     iter = tracks.iterator();

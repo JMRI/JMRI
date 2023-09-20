@@ -1942,7 +1942,7 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
      * Add a label to the target.
      */
     protected void addTextEditor() {
-        String newLabel = JOptionPane.showInputDialog(this, Bundle.getMessage("PromptNewLabel"));
+        String newLabel = JmriJOptionPane.showInputDialog(this, Bundle.getMessage("PromptNewLabel"),"");
         if (newLabel == null) {
             return;  // canceled
         }
