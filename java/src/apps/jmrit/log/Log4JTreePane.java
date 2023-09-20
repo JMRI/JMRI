@@ -76,7 +76,7 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
 
     /**
      * Set up the bottom part of the dialog where the user can change logging levels.
-     * @return 
+     * @return The JPanel, ready to use.
      */
     private JPanel getEditLoggingLevelPanel() {
 
