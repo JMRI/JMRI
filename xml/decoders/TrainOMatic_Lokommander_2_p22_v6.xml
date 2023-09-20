@@ -72,6 +72,7 @@
       <xi:include href="http://jmri.org/xml/decoders/tOm/commonCVs.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tOm/cv33.47_p22.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tOm/brakeCVs.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/tOm/functionOutputsCVs.xml"/>
 
     </variables>
 
@@ -89,7 +90,7 @@
   </decoder>
 
   <xi:include href="http://jmri.org/xml/decoders/tOm/lightsPane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/tOm/functionsPane.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/tOm/functionsPane_v6.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tOm/brakePane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tOm/advancedPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tOm/tOmPane.xml"/>

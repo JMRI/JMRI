@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- Version 1 - Lolke H Bijlsma - Introduction Lokommander II              -->
+<!-- Version 2 - Lolke H Bijlsma (2023-09-15) - Function selection updated  -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+   <name>tOm Function Map</name>
+   <name xml:lang="cs">tOm Mapování funkcí</name>
+   <column>
+      <separator />
+      <label>
+         <text>Function Output Settings</text>
+      </label>
+      <label>
+          <text> </text>
+      </label>
+      <grid ipadx="10" ipady="10" gridx="NEXT" gridy="CURRENT">
+         <!-- default padding for all grid items -->
+         <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+            <!-- gridheight for full-depth row heading, weightx for right-justified row -->
+            <label>
+               <text>Turn on delay</text>
+            </label>
+         </griditem>
+         <griditem>
+            <label>
+               <text>Turn off delay</text>
+            </label>
+         </griditem>
+         <griditem>
+            <label>
+               <text>F0 condition</text>
+            </label>
+         </griditem>
+         <griditem>
+            <label>
+               <text>Inhibit forward</text>
+            </label>
+         </griditem>
+         <griditem>
+            <label>
+               <text>Inhibit reverse</text>
+            </label>
+         </griditem>
+         <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+            <display item="Turn on delay output 1" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Turn off delay output 1" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="F0 condition output 1" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Inhibit mask forward output 1" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Inhibit mask reverse output 1" label="" format="checkbox" />
+         </griditem>
+         <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+            <display item="Turn on delay output 2" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Turn off delay output 2" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="F0 condition output 2" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Inhibit mask forward output 2" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Inhibit mask reverse output 2" label="" format="checkbox" />
+         </griditem>
+         <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+            <display item="Turn on delay output 3" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Turn off delay output 3" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="F0 condition output 3" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Inhibit mask forward output 3" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Inhibit mask reverse output 3" label="" format="checkbox" />
+         </griditem>
+         <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+            <display item="Turn on delay output 4" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Turn off delay output 4" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="F0 condition output 4" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Inhibit mask forward output 4" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Inhibit mask reverse output 4" label="" format="checkbox" />
+         </griditem>
+         <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+            <display item="Turn on delay output 5" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Turn off delay output 5" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="F0 condition output 5" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Inhibit mask forward output 5" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Inhibit mask reverse output 5" label="" format="checkbox" />
+         </griditem>
+         <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+            <display item="Turn on delay output 6" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Turn off delay output 6" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="F0 condition output 6" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Inhibit mask forward output 6" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Inhibit mask reverse output 6" label="" format="checkbox" />
+         </griditem>
+         <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+            <display item="Turn on delay output 7" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Turn off delay output 7" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="F0 condition output 7" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Inhibit mask forward output 7" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Inhibit mask reverse output 7" label="" format="checkbox" />
+         </griditem>
+         <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+            <display item="Turn on delay output 8" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Turn off delay output 8" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="F0 condition output 8" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Inhibit mask forward output 8" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Inhibit mask reverse output 8" label="" format="checkbox" />
+         </griditem>
+         <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+            <display item="Turn on delay output 9" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Turn off delay output 9" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="F0 condition output 9" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Inhibit mask forward output 9" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Inhibit mask reverse output 9" label="" format="checkbox" />
+         </griditem>
+         <griditem gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+            <display item="Turn on delay output 10" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Turn off delay output 10" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="F0 condition output 10" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Inhibit mask forward output 10" label="" format="checkbox" />
+         </griditem>
+         <griditem>
+            <display item="Inhibit mask reverse output 10" label="" format="checkbox" />
+         </griditem>
+      </grid>
+   </column>
+   <column>
+      <separator />
+      <label>
+         <text>Delay settings (in 8ms increment steps)</text>
+      </label>
+      <label>
+          <text> </text>
+      </label>
+      <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+         <griditem>
+            <display item="Outputs switch on delay" />
+            <display item="Outputs switch on delay" format="hslider" label="" />
+         </griditem>
+         <griditem>
+            <display item="Outputs switch off delay" />
+            <display item="Outputs switch off delay" format="hslider" label="" />
+         </griditem>
+      </grid>
+   </column>
+</pane>

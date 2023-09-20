@@ -14,8 +14,31 @@
 <!-- Version 1 - Lolke H Bijlsma - Introduction Lokommander II v5           -->
 
   <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
-    <name>Brake</name>
+    <name>Brake/Stop</name>
     <column>
+          
+      <separator/>
+      <label>
+          <text>
+             Brake/Stop related function mapping 
+          </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+        <griditem>
+           <display item="Shunting Speed Active Function" />
+        </griditem>
+        <griditem>
+           <display item="Switch Off Acceleration Deceleration Function" />
+        </griditem>
+        <griditem>
+           <display item="Disable Constant Braking Distance Function" />
+        </griditem>
+      </grid>
+    
+        
       <separator/>
       <label>
         <text>Brake functions</text>
