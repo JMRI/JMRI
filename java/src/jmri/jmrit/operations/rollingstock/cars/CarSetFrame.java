@@ -38,7 +38,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
     CarManager carManager = InstanceManager.getDefault(CarManager.class);
     CarLoads carLoads = InstanceManager.getDefault(CarLoads.class);
 
-    protected Car _car;
+    public Car _car;
 
     // combo boxes
     protected JComboBox<Division> divisionComboBox = InstanceManager.getDefault(DivisionManager.class).getComboBox();
@@ -92,6 +92,8 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new EnableDestinationAction(this));
+        toolMenu.add(new CarRoutingReportAction(this, true)); // preview
+        toolMenu.add(new CarRoutingReportAction(this, false)); // print
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         addHelpMenu(_help, true); // NOI18N
@@ -449,7 +451,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                 car.setFinalDestination((Location) finalDestinationBox.getSelectedItem());
                 car.setFinalDestinationTrack(finalDestTrack);
                 String status = getTestCar(car, car.getLoadName())
-                        .checkDestination((Location) finalDestinationBox.getSelectedItem(), finalDestTrack);
+                        .checkDestination(car.getFinalDestination(), finalDestTrack);
                 if (!status.equals(Track.OKAY)) {
                     JmriJOptionPane.showMessageDialog(this,
                             MessageFormat.format(Bundle.getMessage("rsCanNotFinalMsg"), car.toString(), status),
@@ -458,13 +460,11 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                 } else {
                     // check to see if car can be routed to final destination
                     Router router = InstanceManager.getDefault(Router.class);
-                    if (!router.isCarRouteable(car, null, (Location) finalDestinationBox.getSelectedItem(),
-                                    finalDestTrack, null)) {
+                    if (!router.isCarRouteable(car, null, car.getFinalDestination(), finalDestTrack, null)) {
                         JmriJOptionPane.showMessageDialog(this,
-                                MessageFormat.format(Bundle.getMessage("rsCanNotRouteMsg"), car.toString(),
-                                        car.getLocationName(), car.getTrackName(),
-                                        finalDestinationBox.getSelectedItem(),
-                                        finalDestTrack == null ? "" : finalDestTrack.getName()),
+                                Bundle.getMessage("rsCanNotRouteMsg", car.toString(),
+                                        car.getLocationName(), car.getTrackName(), car.getFinalDestinationName(),
+                                        car.getFinalDestinationTrackName()),
                                 Bundle.getMessage("rsCanNotFinal"), JmriJOptionPane.WARNING_MESSAGE);
                         return false;
                     }

@@ -24,7 +24,12 @@ import jmri.jmrit.operations.setup.Setup;
  * @author Daniel Boudreau Copyright (C) 2008
  */
 public class CarManagerXml extends OperationsXml implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
-
+    
+    // the directories under operations
+    static final String CAR_ROUTER_REPORTS = "carRouterReports"; // NOI18N
+    // sub directory under CAR_ROUTER_REPORTS
+    static final String CAR_ROUTER_REPORTS_RAW = "carRouterReports";
+    
     public CarManagerXml() {
     }
 
@@ -109,6 +114,52 @@ public class CarManagerXml extends OperationsXml implements InstanceManagerAutoD
     }
 
     private String operationsFileName = "OperationsCarRoster.xml"; // NOI18N
+    
+    public File createCarRouterReportFile(String name) {
+        return createFile(defaultCarRouterReportFileName(name), false); // don't backup
+    }
+
+    public File getCarRouterReportFile(String name) {
+        File file = new File(defaultCarRouterReportFileName(name));
+        return file;
+    }
+
+    public String defaultCarRouterReportFileName(String name) {
+        return OperationsXml.getFileLocation()
+                + OperationsXml.getOperationsDirectoryName()
+                + File.separator
+                + CAR_ROUTER_REPORTS
+                + File.separator
+                + Bundle.getMessage("RoutingReportCar", name);
+    }
+    
+    public File createRawCarRouterReportFile(String name) {
+        // must create 1st level directory first
+        createFile(OperationsXml.getFileLocation()
+                + OperationsXml.getOperationsDirectoryName()
+                + File.separator
+                + CAR_ROUTER_REPORTS
+                + File.separator
+                + " ", false);
+        return createFile(defaultRawCarRouterReportFileName(name), false); // don't backup
+    }
+
+    public File getRawCarRouterReportFile(String name) {
+        File file = new File(defaultRawCarRouterReportFileName(name));
+        return file;
+    }
+
+    public String defaultRawCarRouterReportFileName(String name) {
+        return OperationsXml.getFileLocation()
+                + OperationsXml.getOperationsDirectoryName()
+                + File.separator
+                + CAR_ROUTER_REPORTS
+                + File.separator
+                + CAR_ROUTER_REPORTS_RAW
+                + File.separator
+                + Bundle.getMessage("RoutingReportCar", name);
+    }
+
 
     public void dispose() {
     }
