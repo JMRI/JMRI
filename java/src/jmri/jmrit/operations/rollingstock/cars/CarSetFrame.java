@@ -354,6 +354,12 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         autoReturnWhenEmptyTrackCheckBoxSelected = autoReturnWhenEmptyTrackCheckBox.isSelected();
         autoReturnWhenLoadedTrackCheckBoxSelected = autoReturnWhenLoadedTrackCheckBox.isSelected();
 
+        // save car's track in case there's a schedule
+        Track saveTrack = car.getTrack();
+        // update location
+        if (!changeLocation(car)) {
+            return false;
+        }
         // car load
         setCarLoad(car);
         // set final destination fields before destination in case there's a schedule at
@@ -367,8 +373,6 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         }
         // kernel
         setCarKernel(car);
-        // save car's track in case there's a schedule
-        Track saveTrack = car.getTrack();
         if (!super.change(car)) {
             return false;
         }
