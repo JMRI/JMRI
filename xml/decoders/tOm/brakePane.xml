@@ -12,6 +12,8 @@
 <!-- for more details.                                                      -->
 
 <!-- Version 1 - Lolke H Bijlsma - Introduction Lokommander II v5           -->
+<!-- Version 2 - Lolke H Bijlsma - V6 firmware update                       -->
+<!-- Combing all the brake/controlled stop functionality on a single pane.  -->
 
   <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
     <name>Brake/Stop</name>
@@ -69,5 +71,34 @@
           <display item="Brake3 Speed" label="" format="hslider" />
         </griditem>
       </grid>
+      
+      
+      <separator/>
+      <label>
+        <text>Controlled Stops</text>
+        <text xml:lang="cs">Řízené zastavení</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+
+      <display item="ASC right" format="checkbox"/>
+      <display item="ASC left" format="checkbox"/>
+      <display item="ASC DC reverse" format="checkbox"/>
+      <display item="ASC DC forward" format="checkbox"/>
+      <display item="ASC STOP" format="checkbox"/>
+      <display item="Push Pull Operation"/>
+
+      <display item="Penduling / Push-Pull Wait Time" />
+      <display item="ABC Sensitivity" />
+      <display item="ABC Sensitivity off" />
+      <display item="ABC on delay" />
+      <display item="ABC off delay" />
+      <display item="Brake Distance configuration" />
+      <display item="Brake Delay Configuration" />    
+      
+      
     </column>
+      
+     
   </pane>
