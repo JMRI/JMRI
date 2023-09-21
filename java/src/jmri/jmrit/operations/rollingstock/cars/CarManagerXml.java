@@ -135,12 +135,7 @@ public class CarManagerXml extends OperationsXml implements InstanceManagerAutoD
     
     public File createRawCarRouterReportFile(String name) {
         // must create 1st level directory first
-        createFile(OperationsXml.getFileLocation()
-                + OperationsXml.getOperationsDirectoryName()
-                + File.separator
-                + CAR_ROUTER_REPORTS
-                + File.separator
-                + " ", false);
+        createFile(defaultCarRouterReportFileName(name), false);
         return createFile(defaultRawCarRouterReportFileName(name), false); // don't backup
     }
 
