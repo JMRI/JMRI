@@ -39,7 +39,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux2 blocked by F0 (forward)</label>
       </variable>
-      <variable item="Aux3 blocked by F0 (forward)" CV="166" mask="XXXVXXXX" default="1" minOut="5">
+      <variable item="Aux3 blocked by F0 (forward)" CV="166" mask="XXXVXXXX" default="0" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux3 blocked by F0 (forward)</label>
       </variable>
@@ -73,7 +73,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux2 blocked by F0 (reverse)</label>
       </variable>
-      <variable item="Aux3 blocked by F0 (reverse)" CV="167" mask="XXXVXXXX" default="1" minOut="5">
+      <variable item="Aux3 blocked by F0 (reverse)" CV="167" mask="XXXVXXXX" default="0" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux3 blocked by F0 (reverse)</label>
       </variable>
@@ -107,7 +107,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux2 blocked by F1 (forward)</label>
       </variable>
-      <variable item="Aux3 blocked by F1 (forward)" CV="168" mask="XXXVXXXX" default="1" minOut="5">
+      <variable item="Aux3 blocked by F1 (forward)" CV="168" mask="XXXVXXXX" default="0" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux3 blocked by F1 (forward)</label>
       </variable>
@@ -141,7 +141,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux2 blocked by F2</label>
       </variable>
-      <variable item="Aux3 blocked by F2" CV="169" mask="XXXVXXXX" default="1" minOut="5">
+      <variable item="Aux3 blocked by F2" CV="169" mask="XXXVXXXX" default="0" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux3 blocked by F2</label>
       </variable>
@@ -175,7 +175,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux2 blocked by F3</label>
       </variable>
-      <variable item="Aux3 blocked by F3" CV="170" mask="XXXVXXXX" default="1" minOut="5">
+      <variable item="Aux3 blocked by F3" CV="170" mask="XXXVXXXX" default="0" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux3 blocked by F3</label>
       </variable>
@@ -209,7 +209,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux2 blocked by F4</label>
       </variable>
-      <variable item="Aux3 blocked by F4" CV="171" mask="XXXVXXXX" default="1" minOut="5">
+      <variable item="Aux3 blocked by F4" CV="171" mask="XXXVXXXX" default="0" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux3 blocked by F4</label>
       </variable>
@@ -243,7 +243,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux2 blocked by F5</label>
       </variable>
-      <variable item="Aux3 blocked by F5" CV="172" mask="XXXVXXXX" default="1" minOut="5">
+      <variable item="Aux3 blocked by F5" CV="172" mask="XXXVXXXX" default="0" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux3 blocked by F5</label>
       </variable>
@@ -277,7 +277,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux2 blocked by F6</label>
       </variable>
-      <variable item="Aux3 blocked by F6" CV="173" mask="XXXVXXXX" default="1" minOut="5">
+      <variable item="Aux3 blocked by F6" CV="173" mask="XXXVXXXX" default="0" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux3 blocked by F6</label>
       </variable>
@@ -311,7 +311,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux2 blocked by F7</label>
       </variable>
-      <variable item="Aux3 blocked by F7" CV="174" mask="XXXVXXXX" default="1" minOut="5">
+      <variable item="Aux3 blocked by F7" CV="174" mask="XXXVXXXX" default="0" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux3 blocked by F7</label>
       </variable>
@@ -345,7 +345,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux2 blocked by F8</label>
       </variable>
-      <variable item="Aux3 blocked by F8" CV="175" mask="XXXVXXXX" default="1" minOut="5">
+      <variable item="Aux3 blocked by F8" CV="175" mask="XXXVXXXX" default="0" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux3 blocked by F8</label>
       </variable>
@@ -379,7 +379,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux2 blocked by F9</label>
       </variable>
-      <variable item="Aux3 blocked by F9" CV="176" mask="XXXVXXXX" default="1" minOut="5">
+      <variable item="Aux3 blocked by F9" CV="176" mask="XXXVXXXX" default="0" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux3 blocked by F9</label>
       </variable>
@@ -413,7 +413,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux2 blocked by F10</label>
       </variable>
-      <variable item="Aux3 blocked by F10" CV="177" mask="XXXVXXXX" default="1" minOut="5">
+      <variable item="Aux3 blocked by F10" CV="177" mask="XXXVXXXX" default="0" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux3 blocked by F10</label>
       </variable>
@@ -447,7 +447,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux2 blocked by F11</label>
       </variable>
-      <variable item="Aux3 blocked by F11" CV="178" mask="XXXVXXXX" default="1" minOut="5">
+      <variable item="Aux3 blocked by F11" CV="178" mask="XXXVXXXX" default="0" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux3 blocked by F11</label>
       </variable>
@@ -481,7 +481,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux2 blocked by F12</label>
       </variable>
-      <variable item="Aux3 blocked by F12" CV="179" mask="XXXVXXXX" default="1" minOut="5">
+      <variable item="Aux3 blocked by F12" CV="179" mask="XXXVXXXX" default="0" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux3 blocked by F12</label>
       </variable>
@@ -515,7 +515,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux2 blocked by F1 (reverse)</label>
       </variable>
-      <variable item="Aux3 blocked by F1 (reverse)" CV="180" mask="XXXVXXXX" default="1" minOut="5">
+      <variable item="Aux3 blocked by F1 (reverse)" CV="180" mask="XXXVXXXX" default="0" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Aux3 blocked by F1 (reverse)</label>
       </variable>

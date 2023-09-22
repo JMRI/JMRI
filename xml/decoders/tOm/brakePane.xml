@@ -12,7 +12,7 @@
 <!-- for more details.                                                      -->
 
 <!-- Version 1 - Lolke H Bijlsma - Introduction Lokommander II v5           -->
-<!-- Version 2 - Lolke H Bijlsma - V6 firmware update                       -->
+<!-- Version 2 - Lolke H Bijlsma - 2023-09-21 - V6 firmware update          -->
 <!-- Combing all the brake/controlled stop functionality on a single pane.  -->
 
   <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">

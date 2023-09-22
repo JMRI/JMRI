@@ -113,6 +113,7 @@
 
   <xi:include href="http://jmri.org/xml/decoders/tOm/lightsPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tOm/functionsPane_v6.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/tOm/inhibitFunctionPane_v6.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tOm/brakePane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tOm/advancedPane_v6.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tOm/tOmPane.xml"/>
