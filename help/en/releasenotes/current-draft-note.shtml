@@ -331,7 +331,8 @@
 
         <h4>Technologistic (train-O-matic)</h4>
             <ul>
-                <li></li>
+                <li>Support for the latest v6 firmware version of the Lokommander II decoders.</li>
+                <li>productID support for all train-O-matic decoders, allows for automatic decoder detection.</li>
             </ul>
 
         <h4>Trix Modelleisenbahn</h4>
