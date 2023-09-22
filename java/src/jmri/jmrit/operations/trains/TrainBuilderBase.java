@@ -2551,6 +2551,7 @@ public class TrainBuilderBase extends TrainCommon {
             if (!car.getTrack().isLoadNameAndCarTypeShipped(load, car.getTypeName()) ||
                     !stageTrack.isLoadNameAndCarTypeAccepted(load, car.getTypeName()) ||
                     !_train.isLoadNameAccepted(load, car.getTypeName())) {
+                // report why the load was rejected and remove it from consideration
                 if (!car.getTrack().isLoadNameAndCarTypeShipped(load, car.getTypeName())) {
                     addLine(_buildReport, SEVEN,
                             Bundle.getMessage("buildTrackNotNewLoad", car.getTrackName(), load,

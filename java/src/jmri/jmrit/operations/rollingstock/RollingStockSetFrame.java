@@ -443,7 +443,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
         return true;
     }
 
-    private boolean changeLocation(RollingStock rs) {
+    protected boolean changeLocation(RollingStock rs) {
         if (!ignoreLocationCheckBox.isSelected()) {
             if (locationBox.getSelectedItem() == null) {
                 rs.setLocation(null, null);
