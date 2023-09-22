@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import javax.swing.*;
+
 import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.CanFrame;
 import jmri.jmrix.can.CanListener;
@@ -16,10 +17,7 @@ import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.swing.console.CbusConsolePane;
 import jmri.jmrix.can.cbus.swing.CbusEventHighlightFrame;
 import jmri.jmrix.can.cbus.swing.CbusFilterFrame;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Pane for user creation of Sensor, Turnouts and Lights that are linked to CBUS
@@ -114,9 +112,9 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
                     memo.get(jmri.SensorManager.class).provideSensor(name);
                 }
                 catch (IllegalArgumentException ex) {
-                    JOptionPane.showMessageDialog(this,
-                        (ex.getMessage()), Bundle.getMessage("WarningTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(this,
+                        ex.getMessage(), Bundle.getMessage("WarningTitle"),
+                        JmriJOptionPane.ERROR_MESSAGE);
                 }
             }
         };
@@ -131,9 +129,9 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
                     memo.get(jmri.TurnoutManager.class).provideTurnout(name);
                 }
                 catch (IllegalArgumentException ex) {
-                    JOptionPane.showMessageDialog(this,
-                        (ex.getMessage()), Bundle.getMessage("WarningTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(this,
+                        ex.getMessage(), Bundle.getMessage("WarningTitle"),
+                        JmriJOptionPane.ERROR_MESSAGE);
                 }
             }
         };
@@ -148,9 +146,9 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
                     memo.get(jmri.LightManager.class).provideLight(name);
                 }
                 catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this,
-                        (ex.getMessage()), Bundle.getMessage("WarningTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(this,
+                        ex.getMessage(), Bundle.getMessage("WarningTitle"),
+                        JmriJOptionPane.ERROR_MESSAGE);
                 }
             }
         };
@@ -466,6 +464,6 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ConfigToolPane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConfigToolPane.class);
 
 }

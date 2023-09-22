@@ -4,9 +4,9 @@ import apps.AppConfigBase;
 
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.Toolkit;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -14,8 +14,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-
-import javax.swing.JOptionPane;
 
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
@@ -25,10 +23,11 @@ import jmri.profile.ProfileManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.node.NodeIdentity;
+import jmri.util.swing.JmriJOptionPane;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
@@ -80,8 +79,8 @@ public class JmriUserPreferencesManagerTest {
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testGetScreen() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertEquals(Toolkit.getDefaultToolkit().getScreenSize(), (new JmriUserPreferencesManager()).getScreen());
     }
 
@@ -282,7 +281,7 @@ public class JmriUserPreferencesManagerTest {
         Assert.assertEquals("item1", m.item);
         Assert.assertTrue(m.alwaysRemember);
         Assert.assertFalse(m.sessionOnly);
-        Assert.assertEquals(JOptionPane.INFORMATION_MESSAGE, m.type);
+        Assert.assertEquals(JmriJOptionPane.INFORMATION_MESSAGE, m.type);
     }
 
     @Test
@@ -303,7 +302,7 @@ public class JmriUserPreferencesManagerTest {
         Assert.assertEquals("item1", m.item);
         Assert.assertTrue(m.alwaysRemember);
         Assert.assertTrue(m.sessionOnly);
-        Assert.assertEquals(JOptionPane.ERROR_MESSAGE, m.type);
+        Assert.assertEquals(JmriJOptionPane.ERROR_MESSAGE, m.type);
         m.showErrorMessage("title2", "message2", strClass, "item2", false, false);
         Assert.assertEquals("title2", m.title);
         Assert.assertEquals("message2", m.message);
@@ -311,7 +310,7 @@ public class JmriUserPreferencesManagerTest {
         Assert.assertEquals("item2", m.item);
         Assert.assertFalse(m.alwaysRemember);
         Assert.assertFalse(m.sessionOnly);
-        Assert.assertEquals(JOptionPane.ERROR_MESSAGE, m.type);
+        Assert.assertEquals(JmriJOptionPane.ERROR_MESSAGE, m.type);
     }
 
     @Test
@@ -332,7 +331,7 @@ public class JmriUserPreferencesManagerTest {
         Assert.assertEquals("item1", m.item);
         Assert.assertTrue(m.alwaysRemember);
         Assert.assertTrue(m.sessionOnly);
-        Assert.assertEquals(JOptionPane.INFORMATION_MESSAGE, m.type);
+        Assert.assertEquals(JmriJOptionPane.INFORMATION_MESSAGE, m.type);
         m.showInfoMessage("title2", "message2", strClass, "item2", false, false);
         Assert.assertEquals("title2", m.title);
         Assert.assertEquals("message2", m.message);
@@ -340,7 +339,7 @@ public class JmriUserPreferencesManagerTest {
         Assert.assertEquals("item2", m.item);
         Assert.assertFalse(m.alwaysRemember);
         Assert.assertFalse(m.sessionOnly);
-        Assert.assertEquals(JOptionPane.INFORMATION_MESSAGE, m.type);
+        Assert.assertEquals(JmriJOptionPane.INFORMATION_MESSAGE, m.type);
     }
 
     @Test
@@ -361,7 +360,7 @@ public class JmriUserPreferencesManagerTest {
         Assert.assertEquals("item1", m.item);
         Assert.assertTrue(m.alwaysRemember);
         Assert.assertTrue(m.sessionOnly);
-        Assert.assertEquals(JOptionPane.WARNING_MESSAGE, m.type);
+        Assert.assertEquals(JmriJOptionPane.WARNING_MESSAGE, m.type);
         m.showWarningMessage("title2", "message2", strClass, "item2", false, false);
         Assert.assertEquals("title2", m.title);
         Assert.assertEquals("message2", m.message);
@@ -369,7 +368,7 @@ public class JmriUserPreferencesManagerTest {
         Assert.assertEquals("item2", m.item);
         Assert.assertFalse(m.alwaysRemember);
         Assert.assertFalse(m.sessionOnly);
-        Assert.assertEquals(JOptionPane.WARNING_MESSAGE, m.type);
+        Assert.assertEquals(JmriJOptionPane.WARNING_MESSAGE, m.type);
     }
 
     @Test
@@ -384,14 +383,14 @@ public class JmriUserPreferencesManagerTest {
         Assert.assertNull(m.alwaysRemember);
         Assert.assertNull(m.sessionOnly);
         Assert.assertEquals(-1, m.type);
-        m.showMessage(null, "title1", "message1", strClass, "item1", true, true, JOptionPane.INFORMATION_MESSAGE);
+        m.showMessage(null, "title1", "message1", strClass, "item1", true, true, JmriJOptionPane.INFORMATION_MESSAGE);
         Assert.assertEquals("title1", m.title);
         Assert.assertEquals("message1", m.message);
         Assert.assertEquals(strClass, m.strClass);
         Assert.assertEquals("item1", m.item);
         Assert.assertTrue(m.alwaysRemember);
         Assert.assertTrue(m.sessionOnly);
-        m.showMessage(null, "title2", "message2", strClass, "item2", false, false, JOptionPane.INFORMATION_MESSAGE);
+        m.showMessage(null, "title2", "message2", strClass, "item2", false, false, JmriJOptionPane.INFORMATION_MESSAGE);
         Assert.assertEquals("title2", m.title);
         Assert.assertEquals("message2", m.message);
         Assert.assertEquals(strClass, m.strClass);
@@ -549,7 +548,7 @@ public class JmriUserPreferencesManagerTest {
         Assert.assertEquals("reminder", m.item);
         Assert.assertTrue(m.alwaysRemember);
         Assert.assertFalse(m.sessionOnly);
-        Assert.assertEquals(JOptionPane.INFORMATION_MESSAGE, m.type);
+        Assert.assertEquals(JmriJOptionPane.INFORMATION_MESSAGE, m.type);
     }
 
     @Test

@@ -12,8 +12,6 @@ import jmri.AudioException;
 import jmri.jmrit.audio.AudioBuffer;
 import jmri.util.PhysicalLocation;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Steam Sound version 1 (adapted from Diesel3Sound).
@@ -32,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2017-2021
+ * @author Klaus Killinger Copyright (C) 2017-2021, 2023
  */
 class Steam1Sound extends EngineSound {
 
@@ -47,7 +45,6 @@ class Steam1Sound extends EngineSound {
     int top_speed_reverse;
     private float driver_diameter_float;
     private int num_cylinders;
-    private float exponent;
     private int accel_rate;
     private int decel_rate;
     private int brake_time;
@@ -102,11 +99,6 @@ class Steam1Sound extends EngineSound {
         }
     }
 
-    @Override
-    double speedCurve(float t) {
-        return Math.pow(t, exponent);
-    }
-
     private S1Notch getNotch(int n) {
         return notch_sounds.get(n);
     }
@@ -158,9 +150,9 @@ class Steam1Sound extends EngineSound {
         }
     }
 
-    @Override
     // Called when deleting a VSDecoder or closing the VSDecoder Manager
     // There is one thread for every VSDecoder
+    @Override
     public void shutdown() {
         for (VSDSound vs : trigger_sounds.values()) {
             log.debug(" Stopping trigger sound: {}", vs.getName());
@@ -239,12 +231,7 @@ class Steam1Sound extends EngineSound {
         log.debug("Number of cylinders defined: {}", num_cylinders);
 
         // Allows to adjust speed
-        n = e.getChildText("exponent"); // Optional value
-        if ((n != null) && !(n.isEmpty())) {
-            exponent = Float.parseFloat(n);
-        } else {
-            exponent = 1.0f; // Default
-        }
+        exponent = setXMLExponent(e);
         log.debug("exponent: {}", exponent);
 
         // Acceleration and deceleration rate
@@ -488,7 +475,7 @@ class Steam1Sound extends EngineSound {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(Steam1Sound.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Steam1Sound.class);
 
     private static class S1Notch {
 
@@ -607,7 +594,7 @@ class Steam1Sound extends EngineSound {
             }
         }
 
-        private static final Logger log = LoggerFactory.getLogger(S1Notch.class);
+        private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(S1Notch.class);
 
     }
 
@@ -823,12 +810,12 @@ class Steam1Sound extends EngineSound {
             dec_time = calcAccDecTime(_parent.decel_rate);
 
             // Handle throttle forward and reverse action
-            // nothing to do if loco is not running or just in ramp-up-mode
+            // nothing to do when loco is not running or just in ramp-up-mode
             if (getRpm() > 0 && getRpmNominal() > 0 && _parent.isEngineStarted() && !is_in_rampup_mode) {
                 rpm_dirfn = getRpm(); // save rpm for ramp-up
                 log.debug("ramp-up mode - rpm {} saved, rpm nominal: {}", rpm_dirfn, getRpmNominal());
-                is_in_rampup_mode = true; // set a flag for the ramp-up
-                setRpmNominal(0);
+                is_in_rampup_mode = true;
+                setRpmNominal(0); // force a stop
                 _parent.startAccDecTimer();
             }
         }
@@ -901,6 +888,7 @@ class Steam1Sound extends EngineSound {
             dynamic_volume = 1.0f;
             _sound.setReferenceDistance(_parent.engine_rd);
             setRpm(0);
+            _parent.setActualSpeed(0.0f);
             setRpmNominal(0);
             helper_index = -1; // Prepare helper buffer start. Index will be incremented before first use
             setWait(0);
@@ -924,6 +912,7 @@ class Steam1Sound extends EngineSound {
             _throttle = 0.0f; // Clear it, just in case the engine was stopped at speed > 0
             _parent.engine_pane.setThrottle(1); // Set EnginePane (DieselPane) notch
             setRpm(0);
+            _parent.setActualSpeed(0.0f);
         }
 
         private int calcAccDecTime(int accdec_rate) {
@@ -936,7 +925,6 @@ class Steam1Sound extends EngineSound {
         private void startIdling() {
             is_idling = true;
             if (_parent.trigger_sounds.containsKey("idle")) {
-                _parent.trigger_sounds.get("idle").setLooped(true);
                 _parent.trigger_sounds.get("idle").play();
             }
             log.debug("start idling ...");
@@ -1051,6 +1039,7 @@ class Steam1Sound extends EngineSound {
                 }
                 log.debug("accel - nominal RPM: {}, actual RPM: {}", getRpmNominal(), getRpm());
             } else if (getRpmNominal() < getRpm()) {
+                // deceleration
                 setRpm(getRpm() - 1);
                 if (getRpm() < 0) {
                     setRpm(0);
@@ -1063,6 +1052,11 @@ class Steam1Sound extends EngineSound {
             } else {
                 _parent.stopAccDecTimer(); // Speed is unchanged, nothing to do
             }
+
+            // calculate actual speed from actual RPM and based on topspeed
+            _parent.setActualSpeed(getRpm() / (topspeed * 1056 / ((float) Math.PI * _driver_diameter_float)));
+            log.debug("nominal RPM: {}, actual RPM: {}, actual speed: {}, t: {}, speedcurve(t): {}",
+                    getRpmNominal(), getRpm(), _parent.getActualSpeed(), _throttle, _parent.speedCurve(_throttle));
 
             // Start or Stop the LOOP-PLAYER
             checkState();
@@ -1106,8 +1100,8 @@ class Steam1Sound extends EngineSound {
 
                 // Handle a throttle forward or reverse change
                 if (is_in_rampup_mode && getRpm() == 0) {
-                    log.debug("now ramp-up to rpm {}", rpm_dirfn);
                     setRpmNominal(rpm_dirfn);
+                    _parent.accdectime = acc_time;
                     _parent.startAccDecTimer();
                     is_in_rampup_mode = false;
                 }
@@ -1317,7 +1311,7 @@ class Steam1Sound extends EngineSound {
             }
         }
 
-        private static final Logger log = LoggerFactory.getLogger(S1LoopThread.class);
+        private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(S1LoopThread.class);
 
     }
 }

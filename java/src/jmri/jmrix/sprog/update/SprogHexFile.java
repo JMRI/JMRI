@@ -1,6 +1,7 @@
 package jmri.jmrix.sprog.update;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -8,9 +9,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
-import javax.swing.JOptionPane;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Class to encapsulate an intel format hex file and methods to manipulate it.
@@ -170,8 +170,8 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
                 return new int[]{-1};
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("IoErrorReadingHexFile"),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("IoErrorReadingHexFile"),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             if (log.isDebugEnabled()) {
                 log.debug("I/O Error reading hex file!{}", e.toString());
             }
@@ -238,14 +238,14 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
             } else if ((b >= 'a') && (b <= 'f')) {
                 b = b - 'a' + 10;
             } else {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("InvalidHexDigitAtLine", lineNo),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("InvalidHexDigitAtLine", lineNo),
+                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 log.error("Format Error! Invalid hex digit at line {}", lineNo);
                 b = 16;
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("IoErrorReadingHexFile"),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("IoErrorReadingHexFile"),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             log.error("I/O Error reading hex file!{}", e.toString());
         }
         return (byte) b;
@@ -418,7 +418,6 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
         }
     }
 
-    private final static Logger log = LoggerFactory
-            .getLogger(SprogHexFile.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SprogHexFile.class);
 
 }

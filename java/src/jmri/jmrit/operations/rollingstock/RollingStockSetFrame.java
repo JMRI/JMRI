@@ -12,7 +12,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarsSetFrame;
+import jmri.jmrit.operations.rollingstock.cars.tools.CarsSetFrame;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
@@ -443,7 +443,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
         return true;
     }
 
-    private boolean changeLocation(RollingStock rs) {
+    protected boolean changeLocation(RollingStock rs) {
         if (!ignoreLocationCheckBox.isSelected()) {
             if (locationBox.getSelectedItem() == null) {
                 rs.setLocation(null, null);

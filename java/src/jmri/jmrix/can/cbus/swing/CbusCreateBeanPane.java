@@ -12,6 +12,7 @@ import jmri.jmrix.can.cbus.CbusAddress;
 import jmri.jmrix.can.swing.CanPanel;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusNameService;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Panel to Create Turnouts, Sensor and Lights from CBUS event via drop action.
@@ -206,8 +207,8 @@ public class CbusCreateBeanPane extends JPanel {
         if (showReminder && !checkEnabled) {
             JCheckBox checkbox = new JCheckBox(Bundle.getMessage("HideFurtherDialog"));
             Object[] params = {Bundle.getMessage("SavePanelReminder"), checkbox};
-            JOptionPane.showMessageDialog (_mainPane, params,
-          Bundle.getMessage("ReminderTitle"), JOptionPane.INFORMATION_MESSAGE); // NOI18N
+            JmriJOptionPane.showMessageDialog (_mainPane, params,
+          Bundle.getMessage("ReminderTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
             showReminder=!checkbox.isSelected();
         }
     }

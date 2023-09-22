@@ -24,8 +24,6 @@ import jmri.util.PhysicalLocation;
 import javax.annotation.*;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implements a software "decoder" that responds to throttle inputs and
@@ -45,7 +43,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2018-2022
+ * @author Klaus Killinger Copyright (C) 2018-2023
  */
 public class VSDecoder implements PropertyChangeListener {
 
@@ -57,7 +55,6 @@ public class VSDecoder implements PropertyChangeListener {
 
     // For use in VSDecoderManager
     int dirfn = 1;
-    float currentspeed = 0.0f; // result of speedCurve(T)
     PhysicalLocation posToSet;
     PhysicalLocation lastPos;
     PhysicalLocation startPos;
@@ -299,10 +296,6 @@ public class VSDecoder implements PropertyChangeListener {
         // Iterate through the list of sound events, forwarding the propertyChange event.
         for (SoundEvent t : event_list.values()) {
             t.propertyChange(event);
-        }
-
-        if (eventName.equals(Throttle.SPEEDSETTING)) {
-            currentspeed = (float) this.getEngineSound().speedCurve((float) event.getNewValue());
         }
 
         if (eventName.equals(Throttle.ISFORWARD)) {
@@ -653,7 +646,6 @@ public class VSDecoder implements PropertyChangeListener {
      * @param vf (VSDFile) : VSD File to pull the XML from
      * @param pn (String) : Parameter Name to find within the VSD File.
      */
-    @SuppressWarnings("cast")
     public void setXml(VSDFile vf, String pn) {
         Iterator<Element> itr;
         Element e = null;
@@ -729,7 +721,7 @@ public class VSDecoder implements PropertyChangeListener {
         log.debug("VSDecoder {}, prefix: {}", this.getId(), prefix);
         itr = (e.getChildren("sound")).iterator();
         while (itr.hasNext()) {
-            el = (Element) itr.next();
+            el = itr.next();
             if (el.getAttributeValue("type") == null) {
                 // Empty sound. Skip.
                 log.debug("Skipping empty Sound.");
@@ -768,7 +760,7 @@ public class VSDecoder implements PropertyChangeListener {
                 sound_list.put(el.getAttributeValue("name"), es);
                 topspeed = es.top_speed;
                 topspeed_rev = es.top_speed_reverse;
-            } else {
+            //} else {
                 // TODO: Some type other than configurable sound. Handle appropriately
             }
         }
@@ -778,7 +770,7 @@ public class VSDecoder implements PropertyChangeListener {
         // expect to be able to look it up.
         itr = (e.getChildren("sound-event")).iterator();
         while (itr.hasNext()) {
-            el = (Element) itr.next();
+            el = itr.next();
             switch (SoundEvent.ButtonType.valueOf(el.getAttributeValue("buttontype").toUpperCase())) {
                 case MOMENTARY:
                     se = new MomentarySoundEvent(el.getAttributeValue("name"));
@@ -904,6 +896,6 @@ public class VSDecoder implements PropertyChangeListener {
         } while (result);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(VSDecoder.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VSDecoder.class);
 
 }

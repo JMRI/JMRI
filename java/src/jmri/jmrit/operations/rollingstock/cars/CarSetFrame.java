@@ -38,7 +38,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
     CarManager carManager = InstanceManager.getDefault(CarManager.class);
     CarLoads carLoads = InstanceManager.getDefault(CarLoads.class);
 
-    Car _car;
+    public Car _car;
 
     // combo boxes
     protected JComboBox<Division> divisionComboBox = InstanceManager.getDefault(DivisionManager.class).getComboBox();
@@ -55,17 +55,17 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
 
     // buttons
     JButton editDivisionButton = new JButton(Bundle.getMessage("ButtonEdit"));
-    JButton editLoadButton = new JButton(Bundle.getMessage("ButtonEdit"));
+    protected JButton editLoadButton = new JButton(Bundle.getMessage("ButtonEdit"));
     JButton editKernelButton = new JButton(Bundle.getMessage("ButtonEdit"));
 
     // check boxes
-    protected JCheckBox ignoreDivisionCheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
-    protected JCheckBox ignoreRWECheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
+    public JCheckBox ignoreDivisionCheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
+    public JCheckBox ignoreRWECheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
     protected JCheckBox autoReturnWhenEmptyTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
-    protected JCheckBox ignoreRWLCheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
+    public JCheckBox ignoreRWLCheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
     protected JCheckBox autoReturnWhenLoadedTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
-    protected JCheckBox ignoreLoadCheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
-    protected JCheckBox ignoreKernelCheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
+    public JCheckBox ignoreLoadCheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
+    public JCheckBox ignoreKernelCheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
 
     // Auto checkbox state
     private static boolean autoReturnWhenEmptyTrackCheckBoxSelected = false;
@@ -92,6 +92,8 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new EnableDestinationAction(this));
+        toolMenu.add(new CarRoutingReportAction(this, true)); // preview
+        toolMenu.add(new CarRoutingReportAction(this, false)); // print
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         addHelpMenu(_help, true); // NOI18N
@@ -352,6 +354,12 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         autoReturnWhenEmptyTrackCheckBoxSelected = autoReturnWhenEmptyTrackCheckBox.isSelected();
         autoReturnWhenLoadedTrackCheckBoxSelected = autoReturnWhenLoadedTrackCheckBox.isSelected();
 
+        // save car's track in case there's a schedule
+        Track saveTrack = car.getTrack();
+        // update location
+        if (!changeLocation(car)) {
+            return false;
+        }
         // car load
         setCarLoad(car);
         // set final destination fields before destination in case there's a schedule at
@@ -365,8 +373,6 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         }
         // kernel
         setCarKernel(car);
-        // save car's track in case there's a schedule
-        Track saveTrack = car.getTrack();
         if (!super.change(car)) {
             return false;
         }
@@ -449,7 +455,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                 car.setFinalDestination((Location) finalDestinationBox.getSelectedItem());
                 car.setFinalDestinationTrack(finalDestTrack);
                 String status = getTestCar(car, car.getLoadName())
-                        .checkDestination((Location) finalDestinationBox.getSelectedItem(), finalDestTrack);
+                        .checkDestination(car.getFinalDestination(), finalDestTrack);
                 if (!status.equals(Track.OKAY)) {
                     JmriJOptionPane.showMessageDialog(this,
                             MessageFormat.format(Bundle.getMessage("rsCanNotFinalMsg"), car.toString(), status),
@@ -458,13 +464,11 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                 } else {
                     // check to see if car can be routed to final destination
                     Router router = InstanceManager.getDefault(Router.class);
-                    if (!router.isCarRouteable(car, null, (Location) finalDestinationBox.getSelectedItem(),
-                                    finalDestTrack, null)) {
+                    if (!router.isCarRouteable(car, null, car.getFinalDestination(), finalDestTrack, null)) {
                         JmriJOptionPane.showMessageDialog(this,
-                                MessageFormat.format(Bundle.getMessage("rsCanNotRouteMsg"), car.toString(),
-                                        car.getLocationName(), car.getTrackName(),
-                                        finalDestinationBox.getSelectedItem(),
-                                        finalDestTrack == null ? "" : finalDestTrack.getName()),
+                                Bundle.getMessage("rsCanNotRouteMsg", car.toString(),
+                                        car.getLocationName(), car.getTrackName(), car.getFinalDestinationName(),
+                                        car.getFinalDestinationTrackName()),
                                 Bundle.getMessage("rsCanNotFinal"), JmriJOptionPane.WARNING_MESSAGE);
                         return false;
                     }

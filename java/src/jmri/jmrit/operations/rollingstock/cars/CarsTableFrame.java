@@ -30,7 +30,7 @@ import jmri.util.swing.JmriJOptionPane;
 public class CarsTableFrame extends OperationsFrame implements TableModelListener {
 
     public CarsTableModel carsTableModel;
-    JTable carsTable;
+    public JTable carsTable;
     boolean showAllCars;
     String locationName;
     String trackName;

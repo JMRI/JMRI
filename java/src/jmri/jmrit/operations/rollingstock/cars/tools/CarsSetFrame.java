@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.rollingstock.cars;
+package jmri.jmrit.operations.rollingstock.cars.tools;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.swing.JTable;
 
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
