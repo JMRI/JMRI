@@ -1337,7 +1337,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                     log.warn("skipping creation of signal head, '{}' does not start with GxH", inputsysname);
                     String msg = Bundle.getMessage("GrapevineSkippingCreation", inputsysname);
                     JmriJOptionPane.showMessageDialog(this, msg,
-                            Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("WarningTitle"), JmriJOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if (checkSysNameOkBeforeCreating(inputsysname)) {
