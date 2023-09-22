@@ -606,5 +606,8 @@
                 via the standardized SPDX mechanism the libraries that JMRI contains and
                 the versions being used. Providing this is a small step toward more automated
                 distribution.</li>
+            <li>UI improvements for the
+                <a href="https://www.jmri.org/help/en/package/apps/jmrit/log/Log4JTreePane.shtml">
+                Display / Edit Log Categories</a> dialog.</li>
         </ul>
 
