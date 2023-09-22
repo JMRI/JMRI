@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 public class LokProgImportAction extends GenericImportAction {
 
     public LokProgImportAction(String actionName, CvTableModel pModel, JFrame pParent, JLabel pStatus) {
-        super(actionName, pModel, pParent, pStatus, "LokProgrammer CV list files", null, null);
+        super(actionName, pModel, pParent, pStatus, "LokProgrammer CV list files", "txt", null);
     }
 
     @Override
