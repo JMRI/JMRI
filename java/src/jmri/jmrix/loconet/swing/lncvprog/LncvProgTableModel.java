@@ -1,5 +1,14 @@
 package jmri.jmrix.loconet.swing.lncvprog;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+
 import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
@@ -11,17 +20,7 @@ import jmri.jmrix.ProgrammingTool;
 import jmri.jmrix.loconet.LncvDevicesManager;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.uhlenbrock.LncvDevice;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nonnull;
-import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.List;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Table model for the programmed LNCV Modules table.
@@ -92,7 +91,7 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
            case VALUE_COLUMN:
                return Integer.class;
            case OPENPRGMRBUTTONCOLUMN:
-               return JButton.class;
+               return javax.swing.JButton.class;
            case DEVICENAMECOLUMN:
            case ROSTERENTRYCOLUMN:
            default:
@@ -230,44 +229,44 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
             case SUCCESS_PROGRAMMER_OPENED:
                 return;
             case FAIL_NO_SUCH_DEVICE:
-                JOptionPane.showMessageDialog(parent,
+                JmriJOptionPane.showMessageDialog(parent,
                         Bundle.getMessage("FAIL_NO_SUCH_DEVICE"),
-                        Bundle.getMessage("TitleOpenRosterEntry"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("TitleOpenRosterEntry"), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             case FAIL_NO_APPROPRIATE_PROGRAMMER:
-                JOptionPane.showMessageDialog(parent,
+                JmriJOptionPane.showMessageDialog(parent,
                         Bundle.getMessage("FAIL_NO_APPROPRIATE_PROGRAMMER"),
-                        Bundle.getMessage("TitleOpenRosterEntry"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("TitleOpenRosterEntry"), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             case FAIL_NO_MATCHING_ROSTER_ENTRY:
-                JOptionPane.showMessageDialog(parent,
+                JmriJOptionPane.showMessageDialog(parent,
                         Bundle.getMessage("FAIL_NO_MATCHING_ROSTER_ENTRY"),
-                        Bundle.getMessage("TitleOpenRosterEntry"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("TitleOpenRosterEntry"), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             case FAIL_DESTINATION_ADDRESS_IS_ZERO:
-                JOptionPane.showMessageDialog(parent,
+                JmriJOptionPane.showMessageDialog(parent,
                         Bundle.getMessage("FAIL_DESTINATION_ADDRESS_IS_ZERO"),
-                        Bundle.getMessage("TitleOpenRosterEntry"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("TitleOpenRosterEntry"), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             case FAIL_MULTIPLE_DEVICES_SAME_DESTINATION_ADDRESS:
-                JOptionPane.showMessageDialog(parent,
+                JmriJOptionPane.showMessageDialog(parent,
                         Bundle.getMessage("FAIL_MULTIPLE_DEVICES_SAME_DESTINATION_ADDRESS", dev.getDestAddr()),
-                        Bundle.getMessage("TitleOpenRosterEntry"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("TitleOpenRosterEntry"), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             case FAIL_NO_ADDRESSED_PROGRAMMER:
-                JOptionPane.showMessageDialog(parent,
+                JmriJOptionPane.showMessageDialog(parent,
                         Bundle.getMessage("FAIL_NO_ADDRESSED_PROGRAMMER"),
-                        Bundle.getMessage("TitleOpenRosterEntry"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("TitleOpenRosterEntry"), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             case FAIL_NO_LNCV_PROGRAMMER:
-                JOptionPane.showMessageDialog(parent,
+                JmriJOptionPane.showMessageDialog(parent,
                         Bundle.getMessage("FAIL_NO_LNCV_PROGRAMMER"),
-                        Bundle.getMessage("TitleOpenRosterEntry"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("TitleOpenRosterEntry"), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             default:
-                JOptionPane.showMessageDialog(parent,
+                JmriJOptionPane.showMessageDialog(parent,
                         Bundle.getMessage("FAIL_UNKNOWN"),
-                        Bundle.getMessage("TitleOpenRosterEntry"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("TitleOpenRosterEntry"), JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -292,15 +291,15 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
 
     private void createRosterEntry(LncvDevice dev) {
         if (dev.getDestAddr() == 0) {
-            JOptionPane.showMessageDialog(parent,
+            JmriJOptionPane.showMessageDialog(parent,
                     Bundle.getMessage("FAIL_ADD_ENTRY_0"),
-                    Bundle.getMessage("ButtonCreateEntry"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ButtonCreateEntry"), JmriJOptionPane.ERROR_MESSAGE);
         } else {
             String s = null;
             while (s == null) {
-                s = JOptionPane.showInputDialog(parent,
+                s = JmriJOptionPane.showInputDialog(parent,
                         Bundle.getMessage("DialogEnterEntryName"),
-                        Bundle.getMessage("EnterEntryNameTitle"),JOptionPane.QUESTION_MESSAGE);
+                        Bundle.getMessage("EnterEntryNameTitle"),JmriJOptionPane.QUESTION_MESSAGE);
                 if (s == null) {
                     // Cancel button hit
                     return;
@@ -322,12 +321,12 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
         Object[] dialogBoxButtonOptions = {
                 Bundle.getMessage("ButtonRecreateIndex"),
                 Bundle.getMessage("ButtonCancel")};
-        int userReply = JOptionPane.showOptionDialog(parent,
+        int userReply = JmriJOptionPane.showOptionDialog(parent,
                 Bundle.getMessage("DialogWarnRecreate"),
                 Bundle.getMessage("TitleOpenRosterEntry"),
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE,
                 null, dialogBoxButtonOptions, dialogBoxButtonOptions[0]);
-        if (userReply == 0) {
+        if (userReply == 0) { // array position 0
             DecoderIndexFile.forceCreationOfNewIndex(false); // faster
         }
     }
@@ -355,6 +354,6 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LncvProgTableModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LncvProgTableModel.class);
 
 }

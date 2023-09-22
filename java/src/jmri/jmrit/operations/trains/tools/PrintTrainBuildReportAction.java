@@ -1,8 +1,6 @@
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.event.ActionEvent;
-import java.text.MessageFormat;
-
 import javax.swing.AbstractAction;
 
 import jmri.jmrit.operations.trains.Train;
@@ -16,7 +14,8 @@ import jmri.util.swing.JmriJOptionPane;
 public class PrintTrainBuildReportAction extends AbstractAction {
 
     public PrintTrainBuildReportAction(boolean isPreview, Train train) {
-        super(isPreview ? Bundle.getMessage("MenuItemPreviewBuildReport") : Bundle.getMessage("MenuItemPrintBuildReport"));
+        super(isPreview ? Bundle.getMessage("MenuItemPreviewBuildReport")
+                : Bundle.getMessage("MenuItemPrintBuildReport"));
         _isPreview = isPreview;
         _train = train;
         setEnabled(train != null);
@@ -38,23 +37,18 @@ public class PrintTrainBuildReportAction extends AbstractAction {
             if (_isPreview) {
                 printOrPreview = Bundle.getMessage("preview");
             }
-            String string = MessageFormat.format(Bundle.getMessage("DoYouWantToPrintPreviousBuildReport"),
-                    new Object[]{printOrPreview, _train.getName()});
-            int results = JmriJOptionPane.showConfirmDialog(null, string, MessageFormat.format(
-                    Bundle.getMessage("PrintPreviousBuildReport"), new Object[]{printOrPreview}),
-                    JmriJOptionPane.YES_NO_OPTION);
+            String string = Bundle.getMessage("DoYouWantToPrintPreviousBuildReport", printOrPreview, _train.getName());
+            int results = JmriJOptionPane.showConfirmDialog(null, string,
+                    Bundle.getMessage("PrintPreviousBuildReport", printOrPreview), JmriJOptionPane.YES_NO_OPTION);
             if (results != JmriJOptionPane.YES_OPTION) {
                 return;
             }
         }
         if (!_train.printBuildReport(_isPreview)) {
-            String string = MessageFormat.format(Bundle.getMessage("NeedToBuildTrainBeforePrinting"),
-                    new Object[]{_train.getName()});
+            String string = Bundle.getMessage("NeedToBuildTrainBeforePrinting", _train.getName());
             JmriJOptionPane.showMessageDialog(null, string, Bundle.getMessage("CanNotPrintBuildReport"),
                     JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
     }
-
-//    private final static Logger log = LoggerFactory.getLogger(PrintTrainBuildReportAction.class);
 }

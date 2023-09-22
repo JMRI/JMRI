@@ -251,11 +251,24 @@ public class TrainPrintUtilities {
         // make a new file with the build report levels removed
         File buildReport = InstanceManager.getDefault(TrainManagerXml.class)
                 .createTrainBuildReportFile(Bundle.getMessage("Report") + " " + name);
+        editReport(file, buildReport);
+        // open the file
+        TrainUtilities.openDesktop(buildReport);
+    }
+    
+    /**
+     * Creates a new build report file with the print detail numbers replaced by
+     * indentations.
+     * 
+     * @param file Raw file with detail level numbers
+     * @param fileOut Formated file with indentations
+     */
+    public static void editReport(File file, File fileOut) {
 
         try (BufferedReader in = new BufferedReader(new InputStreamReader(
                 new FileInputStream(file), StandardCharsets.UTF_8));
                 PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-                        new FileOutputStream(buildReport), StandardCharsets.UTF_8)), true);) {
+                        new FileOutputStream(fileOut), StandardCharsets.UTF_8)), true);) {
 
             String line;
             while (true) {
@@ -281,8 +294,6 @@ public class TrainPrintUtilities {
                 log.debug("Close failed");
             }
             out.close();
-            // open the file
-            TrainUtilities.openDesktop(buildReport);
         } catch (FileNotFoundException e) {
             log.error("Build file doesn't exist", e);
         } catch (IOException e) {
