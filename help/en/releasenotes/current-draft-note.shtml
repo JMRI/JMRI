@@ -101,7 +101,9 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>Fixed issue with invalid throttle speed message causing MQTT to disconnect</li>
+                <li>Improved robustness of MQTT Event Listener exception handling</li>
+                <li>Fixed issue with MQTT LWT messages</li>
             </ul>
 
         <h4>MRC</h4>
@@ -121,7 +123,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Added the invert option to OpenLCB/LCC Turnouts.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -459,7 +461,9 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>The <strong>Shutdown</strong> preference has two options for ignoring special kinds
+            of changes.  The first is to ignore fast clock changes, the second ignores the text and
+            background color changes for sensors that have been changed to panel labels.</li>
         </ul>
 
     <h3>Resources</h3>
@@ -589,7 +593,8 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Take actual speed instead of nominal speed for the distance calculation
+            (impact for steam1).</li>
         </ul>
 
     <h3>Miscellaneous</h3>
@@ -601,5 +606,8 @@
                 via the standardized SPDX mechanism the libraries that JMRI contains and
                 the versions being used. Providing this is a small step toward more automated
                 distribution.</li>
+            <li>UI improvements for the
+                <a href="https://www.jmri.org/help/en/package/apps/jmrit/log/Log4JTreePane.shtml">
+                Display / Edit Log Categories</a> dialog.</li>
         </ul>
 

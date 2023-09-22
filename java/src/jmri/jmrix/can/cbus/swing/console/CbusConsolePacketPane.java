@@ -1,14 +1,12 @@
 package jmri.jmrix.can.cbus.swing.console;
 
 import javax.swing.*;
-import jmri.jmrix.can.CanMessage;
 
+import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.cbus.CbusMessage;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.ValidationNotifications;
-
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 
 /**
  * Frame for CBUS Console
@@ -231,8 +229,8 @@ public class CbusConsolePacketPane extends JPanel {
         // Does the number of data match the opcode?
         // Subtract one as loop variable will have incremented
         if ((j - 1) != (opcToSend >> 5)) {
-            JOptionPane.showMessageDialog(_mainPane, Bundle.getMessage("OpcCountErrorDialog", (opcToSend >> 5)),
-                    Bundle.getMessage("CbusConsoleTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(_mainPane, Bundle.getMessage("OpcCountErrorDialog", (opcToSend >> 5)),
+                    Bundle.getMessage("CbusConsoleTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         m.setNumDataElements(j);
@@ -258,8 +256,8 @@ public class CbusConsolePacketPane extends JPanel {
                 }
             } else {
                 if (j == 0) {
-                    JOptionPane.showMessageDialog(_mainPane, Bundle.getMessage("OpcErrorDialog"),
-                        Bundle.getMessage("CbusConsoleTitle"), JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(_mainPane, Bundle.getMessage("OpcErrorDialog"),
+                        Bundle.getMessage("CbusConsoleTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 }
                 return j;
             }
@@ -276,5 +274,5 @@ public class CbusConsolePacketPane extends JPanel {
         }
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusConsolePacketPane.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusConsolePacketPane.class);
 }

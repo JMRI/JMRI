@@ -244,9 +244,38 @@ public class JmriJOptionPaneTest {
         Assertions.assertEquals(1, result, "enter pressed, array position 1 returned");
     }
 
+    @Test
+    public void testCanBeFoundInTestsWithNoTitle(){
+        Thread t = JemmyUtil.createModalDialogOperatorThread(
+            "", Bundle.getMessage("ButtonOK"));
+        JmriJOptionPane.showMessageDialog(null, "Message", "", JmriJOptionPane.WARNING_MESSAGE);
+        JUnitUtil.waitFor(() -> !t.isAlive(), "dialog with empty title string found and clicked OK");
+    }
+
+    private boolean calledBack;
+
+    @Test
+    public void testNonModalFoundWithModalOperator(){
+        Thread t = JemmyUtil.createModalDialogOperatorThread(
+            "Non Modal Modal Title", Bundle.getMessage("ButtonOK"));
+        JmriJOptionPane.showMessageDialogNonModal(null, "Message",
+            "Non Modal Modal Title", 0, () -> calledBack=true);
+        JUnitUtil.waitFor(() -> calledBack, "Dialog calledback");
+        JUnitUtil.waitFor(() -> !t.isAlive(), "testNonModalFoundWithModalOperator Thread Complete");
+    }
+
+    @Test
+    public void testNonModalFoundWithJemmyUtil(){
+        JmriJOptionPane.showMessageDialogNonModal(null, "Message",
+            "Non Modal Title", 0, () -> calledBack=true);
+        JemmyUtil.pressDialogButton("Non Modal Title", Bundle.getMessage("ButtonOK"));
+        JUnitUtil.waitFor(() -> calledBack, "testNonModalFoundWithTest calledback");
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        calledBack = false;
     }
 
     @AfterEach

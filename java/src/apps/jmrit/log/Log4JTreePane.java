@@ -2,6 +2,7 @@ package apps.jmrit.log;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 
 import java.util.*;
@@ -27,7 +28,7 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
     private JScrollPane scroll;
     private JComboBox<Level> levelSelectionComboBox;
     private JComboBox<String> categoryComboBox;
-    private final static String ROOT_LEVEL_STRING = Bundle.getMessage("RootLoggingLevel");
+    private final static String ROOT_LEVEL_STRING = Bundle.getMessage("DataItemRootLoggingLevel");
     private final static Level[] SELECTABLE_LEVELS = new Level[]{ Level.TRACE, Level.DEBUG, Level.INFO, Level.WARN, Level.ERROR, Level.OFF};
 
     /**
@@ -44,6 +45,8 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
 
     /**
      * 2nd stage of initialization, invoked after the constructor is complete.
+     * 
+     * Sets up the entire dialog box
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -52,6 +55,7 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
         add(getEditLoggingLevelPanel(), BorderLayout.SOUTH);
 
         text = new JTextArea();
+        text.setEditable(false);
         scroll = new JScrollPane(text);
         updateTextAreaAndCategorySelect();
 
@@ -61,7 +65,7 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
         JButton refreshButton = new JButton(Bundle.getMessage("ButtonRefreshCategories"));
         refreshButton.addActionListener(this::refreshButtonPressed);
         topP.add(refreshButton);
-        topP.add(new JLabel(Bundle.getMessage("LogConfiguredInherited")));
+        topP.add(new JLabel(Bundle.getMessage("FieldLogConfiguredInherited")));
         add(topP,BorderLayout.NORTH);
         
         // start scrolled to top
@@ -70,35 +74,53 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
         b.setValue(b.getMaximum());
     }
 
-    private JPanel getEditLoggingLevelPanel(){
+    /**
+     * Set up the bottom part of the dialog where the user can change logging levels.
+     * @return The JPanel, ready to use.
+     */
+    private JPanel getEditLoggingLevelPanel() {
 
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 
+        // Create a label explaining the combobox.
+        JPanel categoryLabelPanel = new JPanel(new FlowLayout());
+        categoryLabelPanel.add(new JLabel(Bundle.getMessage("LabelCategoryToChange")));
+
         // Create a JComboBox and populate it with logger names
         categoryComboBox = new JComboBox<>();
         jmri.util.swing.JComboBoxUtil.setupComboBoxMaxRows(categoryComboBox);
-        categoryComboBox.setToolTipText(Bundle.getMessage("EditLoggingLevelToolTip"));
+        categoryComboBox.setToolTipText(Bundle.getMessage("ToolTipSelectLoggingLevel"));
         categoryComboBox.setEditable(true);
 
-        JPanel topPanel = new JPanel(new FlowLayout());
-        topPanel.add(categoryComboBox);
-
-        JButton editLevelButton = new JButton(Bundle.getMessage("ButtonEditLoggingLevel"));
-        editLevelButton.setToolTipText(Bundle.getMessage("EditLoggingLevelToolTip"));
-        editLevelButton.addActionListener(this::editButtonPressed);
+        JPanel catergoryComboboxPanel = new JPanel(new FlowLayout());
+        catergoryComboboxPanel.add(categoryComboBox);
 
         levelSelectionComboBox = new JComboBox<>(SELECTABLE_LEVELS);
         jmri.util.swing.JComboBoxUtil.setupComboBoxMaxRows(levelSelectionComboBox);
         levelSelectionComboBox.setSelectedItem(Level.DEBUG);
-        levelSelectionComboBox.setToolTipText(Bundle.getMessage("EditLoggingLevelToolTip"));
 
-        JPanel bottomPanel = new JPanel(new FlowLayout());
-        bottomPanel.add(levelSelectionComboBox);
-        bottomPanel.add(editLevelButton);
+        // Expand the button slightly to avoid elipsis
+        Dimension preferredSize = levelSelectionComboBox.getPreferredSize();
+        preferredSize.width = (int) (preferredSize.width * 1.2);
+        levelSelectionComboBox.setPreferredSize(preferredSize);
+        levelSelectionComboBox.setToolTipText(Bundle.getMessage("ToolTipSelectLoggingLevelValue"));
 
-        p.add(topPanel);
-        p.add(bottomPanel);
+        JPanel levelSelectPanel = new JPanel(new FlowLayout());
+        levelSelectPanel.add(new JLabel(Bundle.getMessage("LabelNewLevelForAboveCategory")));
+        levelSelectPanel.add(levelSelectionComboBox);
+
+        JButton setLevelButton = new JButton(Bundle.getMessage("ButtonEditLoggingLevel"));
+        setLevelButton.setToolTipText(Bundle.getMessage("ToolTipEditLoggingLevel"));
+        setLevelButton.addActionListener(this::editButtonPressed);
+
+        JPanel setButtonPanel = new JPanel(new FlowLayout());
+        setButtonPanel.add(setLevelButton);
+
+        p.add(categoryLabelPanel);
+        p.add(catergoryComboboxPanel);
+        p.add(levelSelectPanel);
+        p.add(setButtonPanel);
         return p;
     }
 

@@ -10,9 +10,7 @@ import javax.swing.text.DefaultFormatter;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeTimerManager;
 import jmri.util.ThreadingUtil;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  *
@@ -138,12 +136,12 @@ public class CbusNodeSetupPane extends CbusNodeConfigTab {
         removeListener = ae -> {
             JCheckBox checkbox = new JCheckBox(("Remove node xml File"));
             int oldRow = Math.max(0, getNodeRow()-1);
-            int option = JOptionPane.showOptionDialog(null, 
+            int option = JmriJOptionPane.showConfirmDialog(this, 
                 new Object[]{("Remove Node from Manager?"), checkbox}, 
                 "Please Confirm", 
-                JOptionPane.OK_CANCEL_OPTION, 
-                JOptionPane.QUESTION_MESSAGE, null, null, null);
-            if (option == JOptionPane.OK_OPTION) { getMainPane().getNodeModel().
+                JmriJOptionPane.OK_CANCEL_OPTION);
+            if ( option == JmriJOptionPane.OK_OPTION ) {
+                getMainPane().getNodeModel().
                 removeRow( getMainPane().getNodeModel().getNodeRowFromNodeNum(nodeOfInterest.getNodeNumber())
                 ,checkbox.isSelected() );
                 if (getMainPane().nodeTable.getRowCount() > 0 ) {
@@ -173,12 +171,11 @@ public class CbusNodeSetupPane extends CbusNodeConfigTab {
         
 
         clearAllEventsListener = ae -> {
-            int option = JOptionPane.showOptionDialog(null, 
+            int option = JmriJOptionPane.showConfirmDialog(this, 
                 "Delete All Events from Node?", 
                 "Please Confirm", 
-                JOptionPane.OK_CANCEL_OPTION, 
-                JOptionPane.QUESTION_MESSAGE, null, null, null);
-            if (option == JOptionPane.OK_OPTION) {
+                JmriJOptionPane.OK_CANCEL_OPTION);
+            if ( option == JmriJOptionPane.OK_OPTION ) {
 
                 // check for existing nodes in learn mode
                 if ( getMainPane().getNodeModel().getAnyNodeInLearnMode() > -1 ) {
@@ -267,14 +264,13 @@ public class CbusNodeSetupPane extends CbusNodeConfigTab {
         // forces a value between 1-99
         updateSpinnerFeedback( Math.min(99,(Math.max(1,nodeOfInterest.getNodeCanId()))) );
         
-        int option = JOptionPane.showOptionDialog(null, 
+        int option = JmriJOptionPane.showConfirmDialog(this, 
             rqNNpane, 
             popuplabel, 
-            JOptionPane.OK_CANCEL_OPTION, 
-            JOptionPane.QUESTION_MESSAGE, null, null, null);
-        if (option == JOptionPane.CANCEL_OPTION) {
+            JmriJOptionPane.OK_CANCEL_OPTION);
+        if ( option == JmriJOptionPane.CANCEL_OPTION || option == JmriJOptionPane.CLOSED_OPTION ) {
             CANID_DIALOGUE_OPEN=false;
-        } else if (option == JOptionPane.OK_OPTION) {
+        } else if ( option == JmriJOptionPane.OK_OPTION ) {
             int newval = (Integer) rqnnSpinner.getValue();
            // baseNodeNum = newval;
             
@@ -305,7 +301,7 @@ public class CbusNodeSetupPane extends CbusNodeConfigTab {
             rqNNspinnerlabel.setText("In Use by " + getMainPane().getNodeModel().getNodeNameFromCanId(newval) );
         }
     }
-    
-    private final static Logger log = LoggerFactory.getLogger(CbusNodeSetupPane.class);
-    
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusNodeSetupPane.class);
+
 }

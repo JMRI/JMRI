@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import jmri.util.PhysicalLocation;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Steam Sound initial version.
@@ -72,7 +70,9 @@ class SteamSound extends EngineSound {
         }
 
         public void stopChuff() {
-            t.stop();
+            if (t.isRunning()) {
+                t.stop();
+            }
         }
     }
 
@@ -82,7 +82,6 @@ class SteamSound extends EngineSound {
     private int driver_diameter;
     private int num_cylinders;
     RPMSound current_rpm_sound;
-    private float exponent;
 
     public SteamSound(String name) {
         super(name);
@@ -119,6 +118,8 @@ class SteamSound extends EngineSound {
                     engine_pane.setThrottle(i);
                 }
                 return rps;
+            } else if (rpm > rpm_sounds.get(rpm_sounds.size() - 1).max_rpm) {
+                return rpm_sounds.get(rpm_sounds.size() - 1);
             }
             i++;
         }
@@ -130,13 +131,9 @@ class SteamSound extends EngineSound {
         // Speed = % of top_speed (mph)
         // RPM = speed * ((inches/mile) / (minutes/hour)) / (pi * driver_diameter)
         double rpm_f = speedCurve(t) * top_speed * 1056 / (Math.PI * driver_diameter);
-        log.debug("RPM Calculated: {}, (int) {}", rpm_f, (int) Math.round(rpm_f));
+        setActualSpeed((float) speedCurve(t));
+        log.debug("RPM Calculated: {}, rounded: {}, actual speed: {}, speedCurve(t): {}", rpm_f, (int) Math.round(rpm_f), getActualSpeed(), speedCurve(t));
         return (int) Math.round(rpm_f);
-    }
-
-    @Override
-    double speedCurve(float t) {
-        return Math.pow(t, exponent) / 1.0;
     }
 
     private int calcChuffInterval(int rpm) {
@@ -150,6 +147,7 @@ class SteamSound extends EngineSound {
             if (t < 0.0f) {
                 // DO something to shut down
                 //t = 0.0f;
+                setActualSpeed(0.0f);
                 current_rpm_sound.sound.fadeOut();
                 if (current_rpm_sound.use_chuff) {
                     current_rpm_sound.stopChuff();
@@ -183,7 +181,7 @@ class SteamSound extends EngineSound {
                         }
                     }
                 } else {
-                    log.warn("No adequate sound file found for RPM = {}", calcRPM(t));
+                    log.warn("No adequate sound file found for {}, RPM = {}", this, calcRPM(t));
                 }
                 log.debug("RPS: {}, RPM: {}, current_RPM: {}", rps, calcRPM(t), current_rpm_sound);
             }
@@ -296,6 +294,6 @@ class SteamSound extends EngineSound {
         autoStartCheck();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(SteamSound.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SteamSound.class);
 
 }

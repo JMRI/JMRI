@@ -2,20 +2,20 @@ package jmri.jmrix.grapevine.packetgen;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JTextField;
+
 import jmri.jmrix.grapevine.SerialMessage;
 import jmri.jmrix.grapevine.SerialReply;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user input of serial messages.
@@ -144,10 +144,10 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         byte b[] = StringUtil.bytesFromHexString(s);
         if (b.length != 4) {
             log.warn("Grapevine createPacket not 4 bytes");
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("ErrorInvalidMessageLength"),
                     Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return null; // no such thing as message with other than 4 bytes
         }
         SerialMessage m = new SerialMessage();
@@ -171,6 +171,6 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     public void reply(SerialReply r) {
     } // ignore replies
 
-    private final static Logger log = LoggerFactory.getLogger(SerialPacketGenFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialPacketGenFrame.class);
 
 }

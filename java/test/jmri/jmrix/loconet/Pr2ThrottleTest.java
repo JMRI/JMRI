@@ -52,16 +52,30 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testGetSpeed_float() {
         // set speed step mode to 28 (PR2Throttle does not support 128?)
         instance.setSpeedStepMode(jmri.SpeedStepMode.NMRA_DCC_28);
+        Assert.assertEquals("Idle", 0, ((Pr2Throttle)instance).intSpeed(0.0F));
+        Assert.assertEquals("Emergency", 1, ((Pr2Throttle)instance).intSpeed(-1.0F));
+        Assert.assertEquals("Emergency", 1, ((Pr2Throttle)instance).intSpeed(-0.001F));
         Assert.assertEquals("Full Speed", 124, ((Pr2Throttle)instance).intSpeed(1.0F)); // 124 from class source
+
         float incre = 1.F/111F;
         float speed = incre;
-        // Shouldn't be able to get get speeedStep 1., but this class code allows it.
         for ( int i=1; i < 112; i++ ) {
-            int result = ((Pr2Throttle)instance).intSpeed(speed) -12 ; // -12 from class source
+            int result = ((Pr2Throttle)instance).intSpeed(speed);
             // System.out.println("speed="+speed+" step="+result+" i="+i);
-            Assert.assertEquals("speed step from "+speed, i, result);
+            Assert.assertNotSame(speed + "(28 steps) should not idle", 0, result);
+            Assert.assertNotSame(speed + "(28 steps) should not eStop", 1, result);
+            Assert.assertTrue(speed + " should be 16 or larger ", result >= 16);
+            if(i>4)
+            {
+                Assert.assertEquals("loconet speed from " + speed, i+12, result);
+            }
+            else
+            {
+                Assert.assertEquals("loconet speed from " + speed, 16, result);
+            }
             speed += incre;
         }
+
     }
 
     /**

@@ -4,9 +4,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
@@ -14,8 +14,7 @@ import jmri.jmrix.sprog.SprogReply;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.util.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for SPROG firmware update utility.
@@ -282,8 +281,8 @@ abstract public class SprogUpdateFrame
                 log.debug("hex file chosen: {}", hexFile.getName());
             }
             if ((!hexFile.getName().contains("sprog"))) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("HexFileSelectDialogString"),
-                        Bundle.getMessage("HexFileSelectTitle"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("HexFileSelectDialogString"),
+                        Bundle.getMessage("HexFileSelectTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 hexFile = null;
             } else {
                 hexFile.openRd();
@@ -318,16 +317,16 @@ abstract public class SprogUpdateFrame
             requestBoot();
         } else if (bootState == BootState.VERREQSENT) {
             log.error("timeout in VERREQSENT!");
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorConnectingDialogString"),
-                    Bundle.getMessage("FatalErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorConnectingDialogString"),
+                    Bundle.getMessage("FatalErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             statusBar.setText(Bundle.getMessage("ErrorConnectingStatus"));
             bootState = BootState.IDLE;
             tc.setSprogState(SprogState.NORMAL);
         } else if (bootState == BootState.WRITESENT) {
             log.error("timeout in WRITESENT!");
             // This is fatal!
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorTimeoutDialogString"),
-                    Bundle.getMessage("FatalErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorTimeoutDialogString"),
+                    Bundle.getMessage("FatalErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             statusBar.setText(Bundle.getMessage("ErrorTimeoutStatus"));
             bootState = BootState.IDLE;
             tc.setSprogState(SprogState.NORMAL);
@@ -394,6 +393,5 @@ abstract public class SprogUpdateFrame
         timer.start();
     }
 
-    private final static Logger log = LoggerFactory
-            .getLogger(SprogUpdateFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SprogUpdateFrame.class);
 }

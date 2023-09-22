@@ -38,7 +38,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
     CarManager carManager = InstanceManager.getDefault(CarManager.class);
     CarLoads carLoads = InstanceManager.getDefault(CarLoads.class);
 
-    Car _car;
+    protected Car _car;
 
     // combo boxes
     protected JComboBox<Division> divisionComboBox = InstanceManager.getDefault(DivisionManager.class).getComboBox();
@@ -55,17 +55,17 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
 
     // buttons
     JButton editDivisionButton = new JButton(Bundle.getMessage("ButtonEdit"));
-    JButton editLoadButton = new JButton(Bundle.getMessage("ButtonEdit"));
+    protected JButton editLoadButton = new JButton(Bundle.getMessage("ButtonEdit"));
     JButton editKernelButton = new JButton(Bundle.getMessage("ButtonEdit"));
 
     // check boxes
-    protected JCheckBox ignoreDivisionCheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
-    protected JCheckBox ignoreRWECheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
+    public JCheckBox ignoreDivisionCheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
+    public JCheckBox ignoreRWECheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
     protected JCheckBox autoReturnWhenEmptyTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
-    protected JCheckBox ignoreRWLCheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
+    public JCheckBox ignoreRWLCheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
     protected JCheckBox autoReturnWhenLoadedTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
-    protected JCheckBox ignoreLoadCheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
-    protected JCheckBox ignoreKernelCheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
+    public JCheckBox ignoreLoadCheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
+    public JCheckBox ignoreKernelCheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
 
     // Auto checkbox state
     private static boolean autoReturnWhenEmptyTrackCheckBoxSelected = false;
