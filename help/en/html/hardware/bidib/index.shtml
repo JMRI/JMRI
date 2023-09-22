@@ -1,30 +1,21 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI Hardware Support - BiDiB</title><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - BiDiB</title><!--#include virtual="/Style.shtml" -->
+  <meta name="author" content="Eckart Meyer">
+  <meta name="keywords" content="BiDiB java model railroad JMRI install">
 </head>
-
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
       <h1>Hardware Support: BiDiB</h1>
       
-		(german version <a href="index_de.shtml">here</a>)<br/>
+      (german version <a href="index_de.shtml">here</a>)<br/>
 
       
       <ul>
@@ -42,6 +33,8 @@
 
         <li><a href="#documentation">Documentation</a></li>
       </ul>
+      
+      <img src="images/bidib_logo.png" class="floatRight" alt="BiDiB logo" height="48">
       
       <a name="summary" id="summary"></a>
       <h2>Summary</h2>
@@ -111,6 +104,8 @@
       <p>A BiDiB simulator is provided. This connection type has field for a XML file with the simulated configuration. The location for this file is the profile directory.</p>
       
       <h3>Settings</h3>
+      
+      <img src="images/BiDiB_Connection.png" alt="BiDiB Connection" height="480">
       
       <h4>BiDiB Naming</h4>
       <p>JMRI System Names generally consist of a system connection prefix Xn where X is the system connection letter and n is either empty or a number for multi-connections, followed by the type letter ("T" for turnout, "L" for lights, "S" for sensors and "R" for reporters (loco address feedback) and the system address.
@@ -256,12 +251,12 @@
           <td>turnout at DCC address 5 of CS node (interface node) 0d68001234</td>
         </tr>
         <tr>
-          <td>BT22</td>
+          <td>BTN201:22</td>
           <td>Turnout</td>
-          <td>22</td>
-          <td>0d68008888</td>
+          <td>N201:22</td>
+          <td>0d68006789</td>
           <td>a22 - accessory address 22</td>
-          <td>turnout at BiDiB accessory address 22 of non-CS node 0d68008888</td>
+          <td>turnout at BiDiB accessory address 22 of non-CS node 0d68006789 named "N201"</td>
         </tr>
         <tr>
           <td>B1LLC6:8L</td>
@@ -272,12 +267,12 @@
           <td>Light at output port 8 (type based address model) of node 0d68004321 named "LC6" on second BiDiB connection (B1)</td>
         </tr>
         <tr>
-          <td>BLMyLC:15</td>
+          <td>BLN201:15</td>
           <td>Light</td>
-          <td>MyLC:15</td>
+          <td>N201:15</td>
           <td>0d68006789</td>
           <td>p15L - port 15</td>
-          <td>Light at output port 15 (flat address model) of node 0d68006789 named "MyLC", port has to be configured as LIGHT</td>
+          <td>Light at output port 15 (flat address model) of node 0d68006789 named "N201", port has to be configured as LIGHT</td>
         </tr>
         <tr>
           <td>BSX0d68006789:3</td>
@@ -318,7 +313,7 @@
           In this case the port type is part of the port address and the port type letter is required in the BiDiB address. See the examples above.</p>
       
       <h4>BiDiB Signal Masts</h4>
-      A Signal Mast type for BiDiB Accessories is provided, where a JMRI ascpect can be directly mapped to a BiDiB accessory aspect. Aspect appearence can be programmed
+      A <a href="BiDiB-SignalMast.shtml">Signal Mast type for BiDiB Accessories</a> is provided, where a JMRI ascpect can be directly mapped to a BiDiB accessory aspect. Aspect appearence can be programmed
       into the BiDiB Node with macros using the BiDiB-Wizard.
       Other Signal Mast types (e.g. the Matrix type) may map to turnouts.
       
@@ -369,9 +364,11 @@
       <h4>BiDiB Manufacturers</h4>
       <p>The developers of BiDiB sell modules in the <a href="https://fichtelbahn.de">Fichtelbahn</a> shop (german only).</p>
       <p>There are some other manufacturers - see <a href="http://www.bidib.org/vendors_e.html">www.bidib.org/vendors_e.html</a></p>
-      
-      <!--#include virtual="/Footer" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>
