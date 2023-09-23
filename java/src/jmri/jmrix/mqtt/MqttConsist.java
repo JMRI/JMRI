@@ -17,7 +17,7 @@ public class MqttConsist extends jmri.implementation.DccConsist {
 
     private final MqttAdapter mqttAdapter;
     @Nonnull
-    public String sendTopicPrefix = "cab/$address/consist";
+    public String sendTopicPrefix = "cab/{0}/consist";
     private boolean active = false;
 
     // Initialize a consist for the specific address.
@@ -216,7 +216,7 @@ public class MqttConsist extends jmri.implementation.DccConsist {
         active = false;
         // Clear MQTT message
         jmri.util.ThreadingUtil.runOnLayoutEventually(() -> {
-            mqttAdapter.publish(this.sendTopicPrefix.replaceFirst("\\$address", String.valueOf(consistAddress.getNumber())), "");
+            mqttAdapter.publish(this.sendTopicPrefix.replaceFirst("\\{0\\}", String.valueOf(consistAddress.getNumber())), "");
         });
 
     }
@@ -240,7 +240,7 @@ public class MqttConsist extends jmri.implementation.DccConsist {
     private void publish(){
            // Send MQTT message
             jmri.util.ThreadingUtil.runOnLayout(() -> {
-                mqttAdapter.publish(this.sendTopicPrefix.replaceFirst("\\$address", String.valueOf(consistAddress.getNumber())), getConsistMakeup());
+                mqttAdapter.publish(this.sendTopicPrefix.replaceFirst("\\{0\\}", String.valueOf(consistAddress.getNumber())), getConsistMakeup());
             });
 
     }
