@@ -25,6 +25,57 @@ import org.junit.Assert;
  */
 public class WhereUsedTest {
 
+    private static final String NEW_LINE = System.getProperty("line.separator");
+
+    private static final String EXPECTED_RESULT =
+            "LogixNG: A new logixng for test" + NEW_LINE +
+            "   ConditionalNG: IQC1" + NEW_LINE +
+            "      ! A" + NEW_LINE +
+            "         Set sensor IS1 to state Active   <<====" + NEW_LINE +
+            "            ! E" + NEW_LINE +
+            "               Set sensor IS1 to state Active   <<====" + NEW_LINE +
+            "                  ! E" + NEW_LINE +
+            "                     Set sensor IS1 to state Active   <<====" + NEW_LINE +
+            "                        ! E" + NEW_LINE +
+            "                           If Then Else. Execute on change" + NEW_LINE +
+            "                              ? If" + NEW_LINE +
+            "                                 Or. Evaluate All" + NEW_LINE +
+            "                                    ? E1" + NEW_LINE +
+            "                                       Or. Evaluate All" + NEW_LINE +
+            "                                          ? E1" + NEW_LINE +
+            "                                             Sensor IS1 is Active   <<====" + NEW_LINE +
+            "" + NEW_LINE +
+            "LogixNG: Another logixng for test" + NEW_LINE +
+            "   ConditionalNG: A conditionalNG" + NEW_LINE +
+            "      ! A" + NEW_LINE +
+            "         If Then Else. Execute on change" + NEW_LINE +
+            "            ? If" + NEW_LINE +
+            "               Sensor IS1 is Active   <<====" + NEW_LINE +
+            "" + NEW_LINE +
+            "Module: A new module for test" + NEW_LINE +
+            "   ! Root" + NEW_LINE +
+            "      Set sensor IS1 to state Active   <<====" + NEW_LINE +
+            "         ! E" + NEW_LINE +
+            "            If Then Else. Execute on change" + NEW_LINE +
+            "               ? If" + NEW_LINE +
+            "                  Sensor IS1 is Active   <<====" + NEW_LINE +
+            "" + NEW_LINE +
+            "Clipboard" + NEW_LINE +
+            "   * A" + NEW_LINE +
+            "      Many" + NEW_LINE +
+            "         * X2" + NEW_LINE +
+            "            Set sensor IS1 to state Active   <<====" + NEW_LINE +
+            "               ! E" + NEW_LINE +
+            "                  If Then Else. Execute on change" + NEW_LINE +
+            "                     ? If" + NEW_LINE +
+            "                        Sensor IS1 is Active   <<====" + NEW_LINE +
+            "         * X1" + NEW_LINE +
+            "            Set sensor IS1 to state Active   <<====" + NEW_LINE +
+            "               ! E" + NEW_LINE +
+            "                  If Then Else. Execute on change" + NEW_LINE +
+            "                     ? If" + NEW_LINE +
+            "                        Sensor IS1 is Active   <<====" + NEW_LINE;
+
     public void setUpLogixNG() throws SocketAlreadyConnectedException {
 
         Sensor sensor = InstanceManager.getDefault(SensorManager.class).provide("IS1");
@@ -235,18 +286,17 @@ public class WhereUsedTest {
         setUpLogixNG();
 
 
-        org.apache.commons.lang3.mutable.MutableInt lineNumber = new org.apache.commons.lang3.mutable.MutableInt();
-        java.io.PrintWriter writer = new java.io.PrintWriter(System.out);
-        InstanceManager.getDefault(LogixNG_Manager.class).printTree(writer, "   ", lineNumber);
-        writer.flush();
+//        org.apache.commons.lang3.mutable.MutableInt lineNumber = new org.apache.commons.lang3.mutable.MutableInt();
+//        java.io.PrintWriter writer = new java.io.PrintWriter(System.out);
+//        InstanceManager.getDefault(LogixNG_Manager.class).printTree(writer, "   ", lineNumber);
+//        writer.flush();
 
 
 //        Turnout t1 = InstanceManager.getDefault(TurnoutManager.class).provide("Turnout1");
         Sensor s1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         String result = WhereUsed.whereUsed(s1);
-        System.out.format("%n%n---------------%nResult:%n%s-----------------------%n%n", result);
-//        ReferenceUtil t = new ReferenceUtil();
-//        Assert.assertNotNull("not null", t);
+//        System.out.format("%n%n---------------%nResult:%n%s-----------------------%n%n", result);
+        Assert.assertEquals(EXPECTED_RESULT, result);
     }
 
     // The minimal setup for log4J
