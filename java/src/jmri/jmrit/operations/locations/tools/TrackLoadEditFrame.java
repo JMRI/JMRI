@@ -558,6 +558,9 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         if (_track != null && e.getPropertyName().equals(Track.HOLD_CARS_CHANGED_PROPERTY)) {
             holdCars.setSelected(_track.isHoldCarsWithCustomLoadsEnabled());
         }
+        if (_track != null && e.getPropertyName().equals(Track.LOAD_OPTIONS_CHANGED_PROPERTY)) {
+            disableloadChange.setSelected(_track.isDisableLoadChangeEnabled());
+        }
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackLoadEditFrame.class);

@@ -248,6 +248,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                   <ul>
                     <li><a href="#SpurOption">Hold cars with custom loads when spurs are
                         full</a></li>
+                    <li><a href="#DisableLoadChange">Disable Load Change</a></li>
                   </ul></li>
 
                 <li><a href="#RoadOptions">Road Options</a></li>
@@ -3299,6 +3300,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         feature described above by selecting the <a href="#SendCustomToStaging">Send cars with
           custom load to staging</a> option for a train.
       </p>
+
+      <h5 id="DisableLoadChange">Spur Option (Disable Load Change)</h5>
+      <p>If you don't want a car's load to change when delivered to a spur, select the checkbox.
+        Useful for Repair In Place (RIP) tracks.</p>
 
       <h4 id="RoadOptions">Road Options</h4>
 

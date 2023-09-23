@@ -2101,7 +2101,7 @@ public class Track extends PropertyChangeSupport {
     }
     
     public void setDisableLoadChangeEnabled(boolean enable) {
-        boolean old = isAddCustomLoadsAnyStagingTrackEnabled();
+        boolean old = isDisableLoadChangeEnabled();
         if (enable) {
             _loadOptions = _loadOptions | DISABLE_LOAD_CHANGE;
         } else {
