@@ -17,6 +17,8 @@ import jmri.jmrit.logixng.*;
 public class WhereUsed {
 
 
+    private static final String NEW_LINE = System.getProperty("line.separator");
+
     private static final String PAD = "   ";
 
 
@@ -37,12 +39,12 @@ public class WhereUsed {
                 if (s != null) {
                     sb.append(PAD);
                     sb.append(conditionalNG.getLongDescription());
-                    sb.append(String.format("%n"));
+                    sb.append(NEW_LINE);
                     sb.append(s);
                 }
             }
             if (sb.length() > 0) {
-                String str = logixNG.getLongDescription() + String.format("%n") + sb.toString() + String.format("%n");
+                String str = logixNG.getLongDescription() + NEW_LINE + sb.toString() + NEW_LINE;
                 if (ref.get() != null) ref.set(ref.get() + str);
                 else ref.set(str);
             }
@@ -52,7 +54,7 @@ public class WhereUsed {
         InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet().forEach((module) -> {
             String s = checkFemaleSocket(module.getRootSocket(), bean, null, PAD);
             if (s != null) {
-                String str = module.getLongDescription() + String.format("%n") + s + String.format("%n");
+                String str = module.getLongDescription() + NEW_LINE + s + NEW_LINE;
                 if (ref.get() != null) ref.set(ref.get() + str);
                 else ref.set(str);
             }
@@ -63,7 +65,7 @@ public class WhereUsed {
         // Iterate the Clipboard
         String s = checkFemaleSocket(InstanceManager.getDefault(LogixNG_Manager.class).getClipboard().getFemaleSocket(), bean, null, PAD);
         if (s != null) {
-            String str = Bundle.getMessage("Clipboard") + String.format("%n") + s;
+            String str = Bundle.getMessage("Clipboard") + NEW_LINE + s;
             if (result != null) result += str;
             else result = str;
         }
@@ -90,8 +92,8 @@ public class WhereUsed {
 
         String s = null;
         if (!report.isEmpty()) {
-            s = pad + femaleSocket.getLongDescription() + String.format("%n");
-            s += pad + PAD + b.getLongDescription() + String.format("   <<====%n");
+            s = pad + femaleSocket.getLongDescription() + NEW_LINE;
+            s += pad + PAD + b.getLongDescription() + "   <<====" + NEW_LINE;
             pad += PAD;
         }
 
@@ -102,8 +104,8 @@ public class WhereUsed {
             String temp = checkFemaleSocket(b.getChild(i), bean, conditionalNG, padding);
             if (temp != null) {
                 if (s == null) {
-                    s = pad + femaleSocket.getLongDescription() + String.format("%n");
-                    s += pad + PAD + b.getLongDescription() + String.format("%n");
+                    s = pad + femaleSocket.getLongDescription() + NEW_LINE;
+                    s += pad + PAD + b.getLongDescription() + NEW_LINE;
                     pad += PAD;
                 }
                 s += temp;
