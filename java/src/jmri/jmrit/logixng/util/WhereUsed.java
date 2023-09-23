@@ -90,29 +90,29 @@ public class WhereUsed {
         List<NamedBeanUsageReport> report = new ArrayList<>();
         b.getUsageDetail(0, bean, report, conditionalNG);
 
-        String s = null;
+        StringBuilder sb = new StringBuilder();
         if (!report.isEmpty()) {
-            s = pad + femaleSocket.getLongDescription() + NEW_LINE;
-            s += pad + PAD + b.getLongDescription() + "   <<====" + NEW_LINE;
+            sb.append(pad).append(femaleSocket.getLongDescription()).append(NEW_LINE);
+            sb.append(pad).append(PAD).append(b.getLongDescription()).append("   <<====").append(NEW_LINE);
             pad += PAD;
         }
 
 
-        String padding = s != null ? pad+PAD : pad+PAD+PAD;
+        String padding = sb.length() > 0 ? pad+PAD : pad+PAD+PAD;
 
         for (int i=0; i < b.getChildCount(); i++) {
             String temp = checkFemaleSocket(b.getChild(i), bean, conditionalNG, padding);
             if (temp != null) {
-                if (s == null) {
-                    s = pad + femaleSocket.getLongDescription() + NEW_LINE;
-                    s += pad + PAD + b.getLongDescription() + NEW_LINE;
+                if (sb.length() == 0) {
+                    sb.append(pad).append(femaleSocket.getLongDescription()).append(NEW_LINE);
+                    sb.append(pad).append(PAD).append(b.getLongDescription()).append(NEW_LINE);
                     pad += PAD;
                 }
-                s += temp;
+                sb.append(temp);
             }
         }
 
-        return s;
+        return sb.toString();
     }
 
 }
