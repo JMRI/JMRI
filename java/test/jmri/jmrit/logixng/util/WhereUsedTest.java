@@ -325,11 +325,16 @@ public class WhereUsedTest {
 //        writer.flush();
 
 
-//        Turnout t1 = InstanceManager.getDefault(TurnoutManager.class).provide("Turnout1");
         Sensor s1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         String result = WhereUsed.whereUsed(s1);
 //        System.out.format("%n%n---------------%nResult:%n%s-----------------------%n%n", result);
         Assert.assertEquals(EXPECTED_RESULT, result);
+
+
+        Turnout t1 = InstanceManager.getDefault(TurnoutManager.class).provide("Turnout1");
+        result = WhereUsed.whereUsed(t1);
+//        System.out.format("%n%n---------------%nResult:%n%s-----------------------%n%n", result);
+        Assert.assertEquals("", result);    // Turnout Turnout1 is not used so empty string is expected
     }
 
     // The minimal setup for log4J
