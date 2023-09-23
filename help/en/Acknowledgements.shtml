@@ -564,7 +564,8 @@
         <li>Jay Janzen, who debugged a RobotThrottle problem, and provided improvements for
         Dispatcher, including a fix to allow dispatcher to allocate to the end block.</li>
 
-        <li>Lionel Jeanson, who added images to the roster, updated the throttle to add preferences
+        <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3ALionel642+">Lionel Jeanson</a>, <!-- Lionel642 -->
+        who added images to the roster, updated the throttle to add preferences
         for displaying them, cleaned up some code problems in the throttle, and created
         Jynstruments for improving the GUI</li>
 
@@ -605,7 +606,7 @@
         <li>Tony Koester, who helped with signaling</li>
 
         <li>W.D. Kok <!-- Re465 -->
-         created and maintained some Umelec decoder definitions and updated the Fleischman
+        created and maintained some Umelec decoder definitions and updated the Fleischman
         definitions</li>
 
         <li>James Koretsky, who contributed the Burlington Northern 1989 signal definition</li>
@@ -693,7 +694,7 @@
         <li>Peter Mansvelder, who contributed Fleischmann decoder definitions</li>
 
         <li>Francesc Pinyol Margalef, <!-- cescp -->
-         who provided a fix for the Digikeijs DR4018 (accessory DCC decoder) definition and helped
+        who provided a fix for the Digikeijs DR4018 (accessory DCC decoder) definition and helped
         with the Z21XpressNet interface.</li>
 
         <li>Mark Marowicz, who provided the CT Elektronik SL 51 decoder definition</li>
