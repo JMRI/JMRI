@@ -112,7 +112,11 @@ public class WhereUsed {
             }
         }
 
-        return sb.toString();
+        if (sb.length() > 0) {
+            return sb.toString();
+        } else {
+            return null;
+        }
     }
 
 }

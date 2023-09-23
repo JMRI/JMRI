@@ -46,7 +46,7 @@ public class WhereUsedTest {
             "                                             Sensor IS1 is Active   <<====" + NEW_LINE +
             "" + NEW_LINE +
             "LogixNG: Another logixng for test" + NEW_LINE +
-            "   ConditionalNG: A conditionalNG" + NEW_LINE +
+            "   ConditionalNG: IQC2" + NEW_LINE +
             "      ! A" + NEW_LINE +
             "         If Then Else. Execute on change" + NEW_LINE +
             "            ? If" + NEW_LINE +
@@ -138,7 +138,7 @@ public class WhereUsedTest {
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
 
         expressionSensor.getSelectNamedBean().setNamedBean(sensor);
-        sensor.setCommandedState(Sensor.ACTIVE);
+        expressionSensor.setBeanState(ExpressionSensor.SensorState.Active);
 
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.activate();
@@ -171,7 +171,40 @@ public class WhereUsedTest {
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
 
         expressionSensor.getSelectNamedBean().setNamedBean(sensor);
-        sensor.setCommandedState(Sensor.ACTIVE);
+        expressionSensor.setBeanState(ExpressionSensor.SensorState.Active);
+
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        logixNG.activate();
+        logixNG.setEnabled(true);
+
+
+        // Create a third LogixNG that doesn't have the sensor
+
+        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A third logixng for test");  // NOI18N
+        conditionalNG = new DefaultConditionalNGScaffold("IQC3", "A conditionalNG");  // NOI18N;
+        InstanceManager.getDefault(ConditionalNG_Manager.class).register(conditionalNG);
+        conditionalNG.setRunDelayed(false);
+        conditionalNG.setEnabled(true);
+
+        logixNG.addConditionalNG(conditionalNG);
+
+        ifThenElse = new IfThenElse("IQDA322", null);
+        maleSocket =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
+        conditionalNG.getChild(0).connect(maleSocket);
+
+        expressionSensor = new ExpressionSensor("IQDE321", null);
+        maleSocket2 =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionSensor);
+        ifThenElse.getChild(0).connect(maleSocket2);
+
+        atomicBoolean = new AtomicBoolean(false);
+        actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
+        socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
+        ifThenElse.getChild(1).connect(socketAtomicBoolean);
+
+//        expressionSensor.getSelectNamedBean().setNamedBean(sensor);
+        expressionSensor.setBeanState(ExpressionSensor.SensorState.Active);
 
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.activate();
