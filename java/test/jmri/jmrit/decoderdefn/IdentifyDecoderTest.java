@@ -255,6 +255,58 @@ public class IdentifyDecoderTest {
     }
 
     /**
+     * Test Hornby HN7000 decoder with CV7=254, then reads 47/48/49
+     */
+    @Test
+    public void testIdentifyHornby7000() {
+        // create our test object
+        IdentifyDecoder i = new IdentifyDecoder(p) {
+            @Override
+            public void done(int mfgID, int modelID, int productID) {
+            }
+
+            @Override
+            public void message(String m) {
+            }
+
+            @Override
+            public void error() {
+            }
+        };
+
+        i.start();
+        Assert.assertEquals("step 1 reads CV ", 8, cvRead);
+        Assert.assertEquals("running after 1 ", true, i.isRunning());
+
+        // simulate CV read complete on CV8, start 7
+        i.programmingOpReply(48, 0);
+        Assert.assertEquals("step 2 reads CV ", 7, cvRead);
+        Assert.assertEquals("running after 2 ", true, i.isRunning());
+
+        // simulate CV read complete on CV7, start 159
+        i.programmingOpReply(254, 0);
+        Assert.assertEquals("step 3 reads CV ", 47, cvRead);
+        Assert.assertEquals("running after 3 ", true, i.isRunning());
+
+        // simulate CV read complete on CV47, does CV48 and ends
+        i.programmingOpReply(1, 0);
+        Assert.assertEquals("step 4 reads CV ", 48, cvRead);
+        Assert.assertEquals("running after 4 ", true, i.isRunning());
+
+        // simulate CV read complete on 48, reads 49
+        i.programmingOpReply(2, 0);
+        Assert.assertEquals("step 5 reads CV ", 49, cvRead);
+        Assert.assertEquals("running after 5 ", true, i.isRunning());
+
+        i.programmingOpReply(3, 0);
+        Assert.assertEquals("running after 6 ", false, i.isRunning());
+
+        Assert.assertEquals("found mfg ID ", 48, i.mfgID);
+        Assert.assertEquals("found model ID ", 254, i.modelID);
+        Assert.assertEquals("found product ID ", 1*256*256 + 2*256 + 3, i.productID);
+    }
+
+    /**
      * Test Hornby decoder with CV159 &lt; 143, hence productID in CV159.
      */
     @Test
