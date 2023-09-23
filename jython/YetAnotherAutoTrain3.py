@@ -58,7 +58,7 @@ except IOError:
     with open(yaatLocation + 'config.txt', 'w') as file:
         file.write("logLevel = 0                # 0 for no output, 4 for the most detail\n")
         file.write("saveYAATcompiles = False    # Load/Save compiled trains\n")
-        file.write("masterSensor = ''           # Optional sensor to stop all theads\n")
+        file.write("masterSensor = ''           # Optional sensor to stop all threads\n")
         file.write("statusSensor = ''           # Optional sensor to notify JMRI if any threads are active\n")
         file.write("yaatMemory = ''             # Optional memory variable that contains a filename for starting a train\n")
 
