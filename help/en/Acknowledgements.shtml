@@ -121,7 +121,8 @@
 
         <li>Leo Bicknell, who updated the LocoNet monitor</li>
 
-        <li>Lolke Bijlsma provided a decoder definition for the Shine Plus decoder series from
+        <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Albijlsma+">Lolke Bijlsma</a>, <!-- lbijlsma  -->
+        who provided a decoder definition for the Shine Plus decoder series from
         Train-O-Rama.</li>
 
         <li>Pierre Billon, <!-- PierreMc -->
