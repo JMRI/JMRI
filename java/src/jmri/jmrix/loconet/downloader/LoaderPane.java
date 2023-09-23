@@ -4,21 +4,21 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+
 import jmri.jmrit.MemoryContents;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Pane for downloading .hex files and .dmf files to those LocoNet devices which
@@ -460,10 +460,10 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             try {
                 this.setOptionsRadiobuttons(text);
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ErrorInvalidOptionInFile", text, "Options"), // NOI18N
                         Bundle.getMessage("ErrorTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 this.disableDownloadVerifyButtons();
                 log.warn("Invalid dmf file 'Options' value {}",text);
                 return;
@@ -495,10 +495,10 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             
             if (interpretationProblem == true) {
                 log.warn("Invalid dmf file 'Erase Blk Size' value {}",text);
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ErrorInvalidEraseBlkSize", text, "Erase Blk Size"), // NOI18N
                         Bundle.getMessage("ErrorTitle"), // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 this.disableDownloadVerifyButtons();
                 // clear out the firmware image to ensure that the user won't 
                 // write it to the device
@@ -1140,6 +1140,6 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         log.info("ActionListener");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LoaderPane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LoaderPane.class);
 
 }

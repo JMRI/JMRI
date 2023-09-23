@@ -1110,13 +1110,13 @@ public class SectionTableAction extends AbstractTableAction<Section> {
                 if (n > 0) {
                     JmriJOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(
                             rbx.getString("Message27"), new Object[]{"" + n}),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 } else if (n == -2) {
                     JmriJOptionPane.showMessageDialog(frame, rbx.getString("Message30"),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 } else if (n == 0) {
                     JmriJOptionPane.showMessageDialog(frame, rbx.getString("Message28"),
-                            Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+                            Bundle.getMessage("MessageTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
@@ -1128,13 +1128,13 @@ public class SectionTableAction extends AbstractTableAction<Section> {
                 if (n > 0) {
                     JmriJOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(
                             rbx.getString("Message33"), new Object[]{"" + n}),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 } else if (n == -2) {
                     JmriJOptionPane.showMessageDialog(frame, rbx.getString("Message32"),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 } else if (n == 0) {
                     JmriJOptionPane.showMessageDialog(frame, rbx.getString("Message31"),
-                            Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+                            Bundle.getMessage("MessageTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
