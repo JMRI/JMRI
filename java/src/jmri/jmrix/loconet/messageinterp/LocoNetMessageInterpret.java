@@ -4192,9 +4192,8 @@ public class LocoNetMessageInterpret {
                                     */
                                     log.warn("CV # {}, Verify Byte: {}", cvnum, packetInt[4]);
                                     log.warn("CV # {}, Write Byte: {}", cvnum, packetInt[4]);
-                                    return "Extended Accessory Decoder CV 'Verify': Address "
-                                            + addr +  " CV " + cvnum + ", check if it is " +
-                                            packetInt[4] + ".\n";
+                                    return Bundle.getMessage("LN_MSG_EXTEND_ACCY_CV_VERIFY",
+                                            addr, cvnum, packetInt[4] );
                                 case 0x08:
                                     // GG=10 Bit manipulation
                                     /*
@@ -4251,8 +4250,8 @@ public class LocoNetMessageInterpret {
                                      * configuration variable access acknowledgment.
                                      */
                                     log.warn("CV # {}, Write Byte: {}", cvnum, packetInt[4]);
-                                    return "Extended Accessory Decoder CV Write: Address "
-                                            + addr +  " CV " + cvnum + " with " + packetInt[4] + ".\n";
+                                    return Bundle.getMessage("LN_MSG_EXTEND_ACCY_CV_WRITE",
+                                            addr, cvnum, packetInt[4] );
                                 case 0x0:
                                 default:
                                     // GG=00 Reserved for future use
