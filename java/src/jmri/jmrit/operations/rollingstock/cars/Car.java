@@ -835,11 +835,14 @@ public class Car extends RollingStock {
 
     /**
      * Updates a car's load when placed at a spur. Load change delayed if wait
-     * count is greater than zero.
+     * count is greater than zero. 
      * 
      * @param track The spur the car is sitting on
      */
     public void updateLoad(Track track) {
+        if (track.isDisableLoadChangeEnabled()) {
+            return;
+        }
         if (getWait() > 0) {
             return; // change load name when wait count reaches 0
         }

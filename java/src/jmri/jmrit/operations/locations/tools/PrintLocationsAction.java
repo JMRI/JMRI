@@ -681,8 +681,10 @@ public class PrintLocationsAction extends AbstractAction {
                 writer.write(getSetOutTrains(track));
                 writer.write(getPickUpTrains(track));
                 writer.write(getDestinations(track));
+                writer.write(getSpurInfo(track));
                 writer.write(getSchedule(track));
                 writer.write(getStagingInfo(track));
+                writer.write(NEW_LINE);
             } catch (IOException we) {
                 log.error("Error printing PrintLocationAction", we);
             }
@@ -1055,6 +1057,22 @@ public class PrintLocationsAction extends AbstractAction {
         }
         return buf.toString();
     }
+    
+    private String getSpurInfo(Track track) {
+        if (!track.isSpur()) {
+            return "";
+        }
+
+        StringBuffer buf = new StringBuffer();
+
+        if (track.isHoldCarsWithCustomLoadsEnabled()) {
+            buf.append(TAB + TAB + Bundle.getMessage("HoldCarsWithCustomLoads") + NEW_LINE);
+        }
+        if (track.isDisableLoadChangeEnabled()) {
+            buf.append(TAB + TAB + Bundle.getMessage("DisableLoadChange") + NEW_LINE);
+        }
+        return buf.toString();
+    }
 
     private String getStagingInfo(Track track) {
         if (!track.isStaging()) {
@@ -1096,8 +1114,6 @@ public class PrintLocationsAction extends AbstractAction {
             buf.append(TAB + SPACE + Bundle.getMessage("OptionalBlocking") + NEW_LINE);
             buf.append(TAB + TAB + Bundle.getMessage("BlockCars") + NEW_LINE);
         }
-
-        buf.append(NEW_LINE);
         return buf.toString();
     }
 

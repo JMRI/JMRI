@@ -108,6 +108,9 @@ public class Track extends PropertyChangeSupport {
     private static final int GENERATE_CUSTOM_LOADS_ANY_SPUR = 8;
     private static final int EMPTY_GENERIC_LOADS = 16;
     private static final int GENERATE_CUSTOM_LOADS_ANY_STAGING_TRACK = 32;
+    
+    // load option for spur
+    private static final int DISABLE_LOAD_CHANGE = 64;
 
     // block options
     protected int _blockOptions = 0;
@@ -2096,6 +2099,20 @@ public class Track extends PropertyChangeSupport {
                 isAddCustomLoadsAnyStagingTrackEnabled() ||
                 isAddCustomLoadsEnabled();
     }
+    
+    public void setDisableLoadChangeEnabled(boolean enable) {
+        boolean old = isDisableLoadChangeEnabled();
+        if (enable) {
+            _loadOptions = _loadOptions | DISABLE_LOAD_CHANGE;
+        } else {
+            _loadOptions = _loadOptions & 0xFFFF - DISABLE_LOAD_CHANGE;
+        }
+        setDirtyAndFirePropertyChange(LOAD_OPTIONS_CHANGED_PROPERTY, old, enable);
+    }
+
+    public boolean isDisableLoadChangeEnabled() {
+        return (0 != (_loadOptions & DISABLE_LOAD_CHANGE));
+    }
 
     public void setBlockCarsEnabled(boolean enable) {
         if (enable) {
@@ -2697,7 +2714,7 @@ public class Track extends PropertyChangeSupport {
         if (getAlternateTrack() != null) {
             e.setAttribute(Xml.ALTERNATIVE, getAlternateTrack().getId());
         }
-        if (isStaging() && _loadOptions != 0) {
+        if (_loadOptions != 0) {
             e.setAttribute(Xml.LOAD_OPTIONS, Integer.toString(_loadOptions));
         }
         if (isBlockCarsEnabled()) {

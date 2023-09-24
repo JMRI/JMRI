@@ -434,10 +434,15 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+          <li>New tools "Preview and Print Car routing report" in the "Set Car" window that provides
+            the train routing for a car that has a final destination.</li>
+          <li>New tool "Show Staging and Schedules by Car Type and Load" in the "Schedules" window that
+            shows which car types and loads are shipped from staging.</li>
+          <li>New feature for spurs, the ability to prevent a car's load change. Useful when the
+            spur/schedule is used for a RIP track.</li>
         </ul>
 
-   <h3>Panel Editor</h3>
+<h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
             <li></li>
