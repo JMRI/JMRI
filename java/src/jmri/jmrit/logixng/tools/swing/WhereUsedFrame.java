@@ -65,7 +65,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
 
         // Build an empty where used listing
         JScrollPane scrollPane;
-//        buildWhereUsedListing(ItemType.NONE, null);
+        buildWhereUsedListing(ItemType.NONE, null);
         scrollPane = new JScrollPane(_scrolltext);
         contentPane.add(scrollPane);
 
@@ -122,7 +122,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
      */
     void setItemNameBox(ItemType itemType) {
         _createButton.setEnabled(false);
-//        buildWhereUsedListing(ItemType.NONE, null);
+        buildWhereUsedListing(ItemType.NONE, null);
         NamedBeanComboBox<?> newNameBox = createNameBox(itemType);
         if (newNameBox == null) {
             _itemNameBox.setSelectedIndex(-1);
@@ -155,7 +155,11 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
      * @param bean The bean being examined
      */
     void buildWhereUsedListing(ItemType type, NamedBean bean) {
-        _textArea.setText(WhereUsed.whereUsed(bean));
+        if (type != ItemType.NONE && bean != null) {
+            _textArea.setText(WhereUsed.whereUsed(bean));
+        } else {
+            _textArea.setText("");
+        }
         _textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
         _textArea.setTabSize(4);
         _textArea.setEditable(false);
