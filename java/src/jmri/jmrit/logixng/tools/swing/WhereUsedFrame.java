@@ -156,7 +156,11 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
      */
     void buildWhereUsedListing(ItemType type, NamedBean bean) {
         if (type != ItemType.NONE && bean != null) {
-            _textArea.setText(WhereUsed.whereUsed(bean));
+            String str = WhereUsed.whereUsed(bean);
+            if (str.isEmpty()) {
+                str = Bundle.getMessage("WhereUsed_NotInUse");
+            }
+            _textArea.setText(str);
         } else {
             _textArea.setText("");
         }
