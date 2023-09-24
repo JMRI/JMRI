@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.tools.swing;
 
 import javax.swing.JMenu;
+import javax.swing.JSeparator;
 
 /**
  * Create a "LogixNG" menu
@@ -21,6 +22,7 @@ public class LogixNGMenu extends JMenu {
 
         add(new StartStopAllLogixNGsAction(Bundle.getMessage("MenuStartLogixNG"), true));
         add(new StartStopAllLogixNGsAction(Bundle.getMessage("MenuStopLogixNG"), false));
+        add(new JSeparator());
         add(new LogixNGInitializationTableAction());
         add(new ImportLogixAction());
         add(new InlineLogixNGsAction());
