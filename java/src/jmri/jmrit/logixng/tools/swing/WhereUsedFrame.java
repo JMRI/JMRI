@@ -25,8 +25,8 @@ import jmri.util.swing.JmriJOptionPane;
  * where a bean is used by LogixNG. On the other hand, it shows where in the LogixNG
  * tree the bean is used.
  *
- * @author Dave Sand Copyright (C) 2020
- * @author Dave Sand Copyright (C) 20203
+ * @author Dave Sand         Copyright (C) 2020
+ * @author Daniel Bergqvist  Copyright (C) 2023
  */
 public class WhereUsedFrame extends jmri.util.JmriJFrame {
     ItemType _itemType = ItemType.NONE;
