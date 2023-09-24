@@ -4194,7 +4194,7 @@ public class LocoNetMessageInterpret {
                                     log.warn("CV # {}, Write Byte: {}", cvnum, packetInt[4]);
                                     return "Extended Accessory Decoder CV 'Verify': Address "
                                             + addr +  " CV " + cvnum + ", check if it is " +
-                                            packetInt[4] + ".";
+                                            packetInt[4] + ".\n";
                                 case 0x08:
                                     // GG=10 Bit manipulation
                                     /*
@@ -4228,12 +4228,13 @@ public class LocoNetMessageInterpret {
                                             (packetInt[4] >>4) & 0x1);
                                     return "Extended Accessory Decoder CV Bit " +
                                             ((packetInt[4] & 0x10) == 0x10 ? "Write bit" : "Verify bit") +
-                                            " Address CV # " + 
+                                            " Address CV " + 
                                             cvnum + 
                                             ", " +
                                             (packetInt[4] & 0x7) +
                                             "(of bits 0-7) with " +
-                                            ((packetInt[4] >>4) & 0x1);
+                                            ((packetInt[4] >>4) & 0x1) +
+                                            ".\n";
                                 case 0x0c:
                                     // GG=11 Write byte
                                     /*
@@ -4251,7 +4252,7 @@ public class LocoNetMessageInterpret {
                                      */
                                     log.warn("CV # {}, Write Byte: {}", cvnum, packetInt[4]);
                                     return "Extended Accessory Decoder CV Write: Address "
-                                            + addr +  " CV " + cvnum + " with " + packetInt[4] + ".";
+                                            + addr +  " CV " + cvnum + " with " + packetInt[4] + ".\n";
                                 case 0x0:
                                 default:
                                     // GG=00 Reserved for future use
