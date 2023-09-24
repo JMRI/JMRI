@@ -2764,7 +2764,7 @@ public class TrainBuilderBase extends TrainCommon {
      * Lists cars that couldn't be routed.
      */
     protected void showCarsNotRoutable() {
-        // any cars not able to route?
+        // any cars unable to route?
         if (_notRoutable.size() > 0) {
             addLine(_buildReport, ONE, BLANK_LINE);
             addLine(_buildReport, ONE, Bundle.getMessage("buildCarsNotRoutable"));

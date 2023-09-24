@@ -56,7 +56,7 @@ public class SpurEditFrame extends TrackEditFrame {
         _toolMenu.insert(new AlternateTrackAction(this), TOOL_MENU_OFFSET);
         _toolMenu.insert(new IgnoreUsedTrackAction(this), TOOL_MENU_OFFSET + 1);
         _toolMenu.insert(new ChangeTrackTypeAction(this), TOOL_MENU_OFFSET + 2);
-        addHelpMenu("package.jmri.jmrit.operations.Operations_Sidings", true); // NOI18N
+        addHelpMenu("package.jmri.jmrit.operations.Operations_Spurs", true); // NOI18N
 
         // override text strings for tracks
         panelTrainDir.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainSpur")));
