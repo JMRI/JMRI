@@ -275,6 +275,10 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.initComponents(l, t);
         
+        // confirm default
+        Assert.assertTrue(f.autoPickupCheckBox.isSelected());
+        JemmyUtil.enterClickAndLeave(f.autoPickupCheckBox);
+        
         // create a route not serviced by this location
         Location locB = lManager.getLocationByName("Test Loc B"); 
         RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
@@ -297,6 +301,10 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.initComponents(l, t);
         
+        // confirm default
+        Assert.assertTrue(f.autoDropCheckBox.isSelected());
+        JemmyUtil.enterClickAndLeave(f.autoDropCheckBox);
+        
         // create a route not serviced by this location
         Location locB = lManager.getLocationByName("Test Loc B"); 
         RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
@@ -318,6 +326,10 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         Track t = l.addTrack("Test Yard Pickup Error", Track.INTERCHANGE);
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.initComponents(l, t);
+        
+        // confirm default
+        Assert.assertTrue(f.autoPickupCheckBox.isSelected());
+        JemmyUtil.enterClickAndLeave(f.autoPickupCheckBox);
         
         // create a route not serviced by this location
         Location locB = lManager.getLocationByName("Test Loc B"); 
@@ -344,6 +356,10 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         Track t = l.addTrack("Test Yard Drop Error", Track.INTERCHANGE);
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.initComponents(l, t);
+        
+        // confirm default
+        Assert.assertTrue(f.autoDropCheckBox.isSelected());
+        JemmyUtil.enterClickAndLeave(f.autoDropCheckBox);
         
         // create a route not serviced by this location
         Location locB = lManager.getLocationByName("Test Loc B"); 

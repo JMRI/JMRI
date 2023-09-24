@@ -298,6 +298,22 @@ public class StoreAndCompare extends AbstractAction {
                 line2 = filterLineUsingRegEx(line2, fontname_regexe);
             }
 
+            // Check if timebase is ignored
+            if (!match && line1.startsWith("  <timebase") && line2.startsWith("  <timebase")) {
+                if (_preferences.isIgnoreTimebaseEnabled()) {
+                    match = true;
+                }
+            }
+
+            // Check if sensor icon label colors are ignored
+            if (!match
+                    && line1.startsWith("    <sensoricon") && line2.startsWith("    <sensoricon")
+                    && line1.contains("icon=\"no\"") && line2.contains("icon=\"no\"")
+                    && _preferences.isIgnoreSensorColorsEnabled()) {
+                line1 = removeSensorColors(line1);
+                line2 = removeSensorColors(line2);
+            }
+
             if (!match && !line1.equals(line2)) {
                 log.info("Match failed in StoreAndCompare:");
                 log.info("    file1:line {}: \"{}\"", lineNumber1, line1);
@@ -325,8 +341,32 @@ public class StoreAndCompare extends AbstractAction {
         return line;
     }
 
+    private static String removeSensorColors(String line) {
+        var leftSide = line.substring(0, line.indexOf(" red="));
+
+        // Find the next non color attribute.  "justification" is always present."
+        var index = 0;
+        if (line.indexOf("margin=") != -1) {
+            index = line.indexOf("margin=");
+        } else if (line.indexOf("borderSize=") != -1) {
+            index = line.indexOf("borderSize=");
+        } else if (line.indexOf("redBorder=") != -1) {
+            index = line.indexOf("redBorder=");
+        } else if (line.indexOf("greenBorder=") != -1) {
+            index = line.indexOf("greenBorder=");
+        } else if (line.indexOf("blueBorder=") != -1) {
+            index = line.indexOf("blueBorder=");
+        } else if (line.indexOf("fixedWidth=") != -1) {
+            index = line.indexOf("fixedWidth=");
+        } else if (line.indexOf("fixedHeight=") != -1) {
+            index = line.indexOf("fixedHeight=");
+        } else {
+            index = line.indexOf("justification=");
+        }
+
+        var rightSide = line.substring(index - 1, line.length());
+        return leftSide + rightSide;
+    }
+
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StoreAndCompare.class);
 }
-
-
-

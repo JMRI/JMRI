@@ -13,20 +13,17 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
-import jmri.jmrit.logix.ThrottleSetting.Command;
-import jmri.jmrit.logix.ThrottleSetting.ValueType;
 import jmri.JmriException;
 import jmri.SpeedStepMode;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrit.logix.ThrottleSetting.Command;
+import jmri.jmrit.logix.ThrottleSetting.ValueType;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for defining and launching an entry/exit warrant. An NX warrant is a
@@ -238,8 +235,8 @@ public class NXFrame extends WarrantRoute {
             getDistance(_originDist, _orders.get(0));
             getDistance(_destDist, _orders.get(_orders.size()-1));
         } catch (JmriException je) {
-            JOptionPane.showMessageDialog(null, je.getMessage(),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, je.getMessage(),
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             return;
         }
         if (button.getText().equals(Display.IN.toString())) {
@@ -322,9 +319,9 @@ public class NXFrame extends WarrantRoute {
                         name = Bundle.getMessage("Unknown");
                     }
                 }
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("maxSpeedLimit", 
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("maxSpeedLimit", 
                         name, formatter.format(maxNum), _speedUnits.getText()),
-                        Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+                        Bundle.getMessage("MessageTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
                 _maxSpeedBox.setText(formatter.format(maxNum));
                 _maxThrottleBox.setText(formatter.format(100));
                 return;
@@ -414,8 +411,8 @@ public class NXFrame extends WarrantRoute {
                     showdialog = true;
                 }
                 if (showdialog) {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("rampIncrWarning", text),
-                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("rampIncrWarning", text),
+                            Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 }
             });
         ButtonGroup bg = new ButtonGroup();
@@ -521,8 +518,8 @@ public class NXFrame extends WarrantRoute {
             msg = checkLocoAddress();
         }
         if (msg != null) {
-            JOptionPane.showMessageDialog(this, msg,
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, msg,
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             return;
         }
         // There is a dccAddress so a throttle can be acquired
@@ -559,8 +556,8 @@ public class NXFrame extends WarrantRoute {
             }
         }
         if (msg != null) {
-            JOptionPane.showMessageDialog(this, msg,
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, msg,
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
         } else {
             WarrantTableAction.getDefault().closeNXFrame();
         }
@@ -675,10 +672,10 @@ public class NXFrame extends WarrantRoute {
         if (len <= 0) {
             len = bo.getPathLength();
             if ( len <= 0) {
-                String sLen = JOptionPane.showInputDialog(this, 
+                String sLen = JmriJOptionPane.showInputDialog(this, 
                         Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName())
                         + Bundle.getMessage("getPathLength", bo.getPathName(), bo.getBlock().getDisplayName()),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 try {
                     len = NumberFormat.getNumberInstance().parse(sLen).floatValue();                    
                 } catch (java.text.ParseException | java.lang.NullPointerException pe) {
@@ -1102,5 +1099,6 @@ public class NXFrame extends WarrantRoute {
         return null;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(NXFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NXFrame.class);
+
 }

@@ -26,8 +26,7 @@
 
         <h4>C/MRI</h4>
             <ul>
-                <li>Fix the Update button on the sensor table 
-                    for C/MRI sensors.</li>
+                <li></li>
             </ul>
 
         <h4>DCC++ and DCC-EX</h4>
@@ -52,7 +51,7 @@
 
         <h4>Hornby</h4>
             <ul>
-                <li></li>
+                <li>DecoderPro can now identify products in the HN7000 decoder family.</li>
             </ul>
 
         <h4>Internal</h4>
@@ -102,11 +101,11 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>Added support for Track Power control</li>
-                <li>Added support for throttle control  - speed, direction, and functions</li>
-                <li>Added support for Command Station consists</li>
-                <li>Fixed bug that stopped retained MQTT messages from being received on start up.</li>
-                <li>Clear Last Will and Testament on startup</li>
+                <li>Fixed issue with invalid throttle speed message causing MQTT to disconnect</li>
+                <li>Improved robustness of MQTT Event Listener exception handling</li>
+                <li>Fixed issue with MQTT LWT messages</li>
+                <li>Changed throttle loco address placeholder in MQTT topics to {0} for consistency with other objects</li>
+                <li>Changed throttle function placeholder in MQTT topics to {1} for consistency with other objects</li>
             </ul>
 
         <h4>MRC</h4>
@@ -126,8 +125,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>The presentation of the "Send Frame" tool was improved.</li>
-                <li>Fixed some subtle bugs when pasting CDI panes.</li>
+                <li>Added the invert option to OpenLCB/LCC Turnouts.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -227,7 +225,7 @@
 
         <h4>ESU</h4>
             <ul>
-                <li>The LokPilot Basic 1.0 decoder definition is now product-ID specific.</li>
+                <li></li>
             </ul>
 
         <h4>Hornby</h4>
@@ -292,7 +290,7 @@
 
         <h4>Public Domain and DIY decoders</h4>
             <ul>
-                <li>Updated to support FREDi v2.2</li>
+                <li></li>
             </ul>
 
         <h4>QSI</h4>
@@ -337,7 +335,8 @@
 
         <h4>Technologistic (train-O-matic)</h4>
             <ul>
-                <li></li>
+                <li>Support for the latest v6 firmware version of the Lokommander II decoders.</li>
+                <li>productID support for all train-O-matic decoders, allows for automatic decoder detection.</li>
             </ul>
 
         <h4>Trix Modelleisenbahn</h4>
@@ -378,8 +377,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Added ability to identify Dietz decoder models with CV128</li>
-            <li>Moved an excessive warning message to being a debug message<li>
+            <li>Now looks for .txt extension on files being
+                imported from the LokProgrammer.</li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -409,7 +408,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li>Labels and icons on a panel can now have one or more classes. This is useful if the label/icon is controlled by LogixNG.</li>
+	        <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -426,10 +425,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The <strong>Icon/Label by class on panel</strong> action is added.
-              It allows LogixNG to control all icons/labels of a class.</li>
-          <li>The <strong>Audio</strong> expression has been added. It lets
-              LogixNG listen on an Audio and take appropriate action.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -441,19 +437,24 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+          <li>New tools "Preview and Print Car routing report" in the "Set Car" window that provides
+            the train routing for a car that has a final destination.</li>
+          <li>New tool "Show Staging and Schedules by Car Type and Load" in the "Schedules" window that
+            shows which car types and loads are shipped from staging.</li>
+          <li>New feature for spurs, the ability to prevent a car's load change. Useful when the
+            spur/schedule is used for a RIP track.</li>
         </ul>
 
-   <h3>Panel Editor</h3>
+<h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li>Labels and icons on a panel can now have one or more classes. This is useful if the label/icon is controlled by LogixNG.</li>
+            <li></li>
         </ul>
 
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li>Labels and icons on a panel can now have one or more classes. This is useful if the label/icon is controlled by LogixNG.</li>
+            <li></li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -469,10 +470,9 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li>Custom default.lcf Logging Control Files will cease to take effect.
-            <br>To create a custom default_lcf.xml in the new Logging Configuration format, see 
-            <a href="https://www.jmri.org/help/en/html/apps/Debug.shtml">JMRI Debugging and Logging</a>
-            </li>
+            <li>The <strong>Shutdown</strong> preference has two options for ignoring special kinds
+            of changes.  The first is to ignore fast clock changes, the second ignores the text and
+            background color changes for sensors that have been changed to panel labels.</li>
         </ul>
 
     <h3>Resources</h3>
@@ -496,10 +496,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Scripts that output Logging statements with log4jv1.x ( org.apache.log4j ) imports will stop working 
-            and should be updated to use SLF4J logging.
-            <br>See <a href="https://github.com/JMRI/JMRI/pull/12237/files">here</a> for some examples on how to do this.</li>
-            <li>TurnoutStatePersistence.py was not correctly updated to use SLF4J in 5.5.3, fixed in 5.5.4</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -509,7 +506,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>The aspects in the FS-1987 signal system were updated.</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -545,8 +542,7 @@
    <h3>Switchboard Editor</h3>
         <a id="SW" name="SW"></a>
         <ul>
-            <li>Some improvements to how text is sized that will make 
-                the display occupy space a little better.</li>
+            <li></li>
         </ul>
 
     <h3>Throttle</h3>
@@ -570,19 +566,19 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>Memory Usernames for IMCURRENTTIME and IMRATEFACTOR can now be loaded from xml file.</li>
+            <li></li>
         </ul>
 
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li>Fixed problems that were causing Learn Warrant to fail</li>
+            <li></li>
         </ul>
 
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li>panel.js - add data-panel-name attribute to support panel-specific css</li>
+            <li></li>
         </ul>
 
     <h3>Where Used</h3>
@@ -606,28 +602,21 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>Removed deprecated method isPlaying - use Audio.STATE_PLAYING.</li>
-            <li>Added optional portable file access in VSD. To be used in Roster Media (VSDecoder_Path)
-                and VSD Preferences (Default VSD File Path). For Portable File Access see
-                <a href="https://www.jmri.org/help/en/html/doc/Technical/FileNames.shtml">here</a>.</li>
+            <li>Take actual speed instead of nominal speed for the distance calculation
+            (impact for steam1).</li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Logging Configuration Files have moved to the xml format, eg.
-            <a href="https://github.com/JMRI/JMRI/blob/master/default_lcf.xml">default_lcf.xml</a>
-            <br><strong>Custom default.lcf Logging Control Files will cease to take effect.</strong>
-            <br>To create a custom default_lcf.xml in the new format, see 
-            <a href="https://www.jmri.org/help/en/html/apps/Debug.shtml">JMRI Debugging and Logging</a>
-            </li>
-            <li>Logging levels ( eg. INFO, DEBUG ) can be changed for the current session in
-            <a href="https://www.jmri.org/help/en/package/apps/jmrit/log/Log4JTreePane.shtml">Display / Edit Log Categories</a></li>
-            <li>Logging Libraries have been fully updated to Log4J 2.20</li>
-            <li>The way data is entered in memory icons, block icons
-                and global variable icons have been improved.</li>
-            <li>You can now set the preferences to open the RailCom table at startup.</li>
-            <li>The analog fast clock now shows when the fast clock has been stopped.</li>
-            <li>Updated batik-transcoder 1.14 to 1.17, resolving a security issue</li>
+            <li>Improved Unrecoverable Error Dialog.</li>
+            <li>JMRI now has a "Software Bill of Materials" (SBOM) distributed with it.
+                Although this won't matter to most users, it allows people to determine
+                via the standardized SPDX mechanism the libraries that JMRI contains and
+                the versions being used. Providing this is a small step toward more automated
+                distribution.</li>
+            <li>UI improvements for the
+                <a href="https://www.jmri.org/help/en/package/apps/jmrit/log/Log4JTreePane.shtml">
+                Display / Edit Log Categories</a> dialog.</li>
         </ul>
 

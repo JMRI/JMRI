@@ -40,69 +40,69 @@ public interface ProgListener extends java.util.EventListener {
      * Constant denoting that the request completed correctly. Note this is a
      * specific value; all others are bitwise combinations
      */
-    int OK = 0;
+    static final int OK = 0;
 
     /**
      * Constant denoting the request failed, but no specific reason is known
      */
-    int UnknownError = 1;
+    static final int UnknownError = 1;
 
     /**
      * Constant denoting that no decoder was detected on the programming track
      */
-    int NoLocoDetected = 2;
+    static final int NoLocoDetected = 2;
 
     /**
      * Constant denoting that the request failed because the decoding hardware
      * was already busy
      */
-    int ProgrammerBusy = 4;
+    static final int ProgrammerBusy = 4;
 
     /**
      * Constant denoting that the request failed because it requested some
      * unimplemented capability. Note that this can also result in an exception
      * during the original request; which happens is implementation dependent
      */
-    int NotImplemented = 8;
+    static final int NotImplemented = 8;
 
     /**
      * Constant denoting that the user (human or software) aborted the request
      * before completion
      */
-    int UserAborted = 0x10;
+    static final int UserAborted = 0x10;
 
     /**
      * Constant denoting there was no acknowledge from the locomotive, so the CV
      * may or may not have been written on a write. No value was read.
      */
-    int NoAck = 0x20;
+    static final int NoAck = 0x20;
 
     /**
      * Constant denoting that confirm failed, likely due to another value being
      * present
      */
-    int ConfirmFailed = 0x40;
+    static final int ConfirmFailed = 0x40;
 
     /**
      * Constant denoting that the programming operation timed out
      */
-    int FailedTimeout = 0x80;
+    static final int FailedTimeout = 0x80;
 
     /**
      * Constant denoting that a short circuit occurred while programming
      */
-    int ProgrammingShort = 0x100;
+    static final int ProgrammingShort = 0x100;
 
     /**
      * Constant denoting that there was an error with the programming sequence
      * (such as early exit)
      */
-    int SequenceError = 0x200;
+    static final int SequenceError = 0x200;
 
     /**
      * Constant denoting that a communications error occurred between the command
      * station and the PC during programming
      */
-    int CommError = 0x400;
+    static final int CommError = 0x400;
 
 }

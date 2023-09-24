@@ -47,17 +47,18 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
     protected static final int SCHEDULE_COLUMN = 10;
     protected static final int ROAD_COLUMN = 11;
     protected static final int LOAD_COLUMN = 12;
-    protected static final int SHIP_COLUMN = 13;
-    protected static final int RESTRICTION_COLUMN = 14;
-    protected static final int DESTINATION_COLUMN = 15;
-    protected static final int ROUTED_COLUMN = 16;
-    protected static final int HOLD_COLUMN = 17;
-    protected static final int POOL_COLUMN = 18;
-    protected static final int PLANPICKUP_COLUMN = 19;
-    protected static final int ALT_TRACK_COLUMN = 20;
-    protected static final int ORDER_COLUMN = 21;
-    protected static final int REPORTER_COLUMN = 22;
-    protected static final int EDIT_COLUMN = 23;
+    protected static final int DISABLE_LOAD_CHANGE_COLUMN = 13;
+    protected static final int SHIP_COLUMN = 14;
+    protected static final int RESTRICTION_COLUMN = 15;
+    protected static final int DESTINATION_COLUMN = 16;
+    protected static final int ROUTED_COLUMN = 17;
+    protected static final int HOLD_COLUMN = 18;
+    protected static final int POOL_COLUMN = 19;
+    protected static final int PLANPICKUP_COLUMN = 20;
+    protected static final int ALT_TRACK_COLUMN = 21;
+    protected static final int ORDER_COLUMN = 22;
+    protected static final int REPORTER_COLUMN = 23;
+    protected static final int EDIT_COLUMN = 24;
 
     protected static final int HIGHESTCOLUMN = EDIT_COLUMN + 1;
 
@@ -116,6 +117,7 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
                 Math.max(90, new JLabel(getColumnName(SCHEDULE_COLUMN)).getPreferredSize().width + 10));
         tcm.getColumn(RESTRICTION_COLUMN).setPreferredWidth(90);
         tcm.getColumn(LOAD_COLUMN).setPreferredWidth(50);
+        tcm.getColumn(DISABLE_LOAD_CHANGE_COLUMN).setPreferredWidth(50);
         tcm.getColumn(SHIP_COLUMN).setPreferredWidth(50);
         tcm.getColumn(ROAD_COLUMN).setPreferredWidth(50);
         tcm.getColumn(DESTINATION_COLUMN).setPreferredWidth(50);
@@ -146,6 +148,8 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
                 _location.hasSchedules() && _trackType.equals(Track.SPUR));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RESTRICTION_COLUMN), _location.hasServiceRestrictions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), _location.hasLoadRestrictions());
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(DISABLE_LOAD_CHANGE_COLUMN),
+                _location.hasDisableLoadChange() && _trackType.equals(Track.SPUR));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(SHIP_COLUMN), _location.hasShipLoadRestrictions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ROAD_COLUMN), _location.hasRoadRestrictions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), _location.hasDestinationRestrictions());
@@ -163,12 +167,13 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
     }
 
     /*
-     * Persisting using JmriJTablePersistenceManager doesn't quite work since the
-     * same table name is used for each track type; spur, yard, interchange, and
-     * staging. Plus multiple edit locations can be open at the same time, again
-     * using the same table name. The goal is to have a single change affect every
-     * table for all edit locations. Therefore any changes to column width or
-     * position is saved when the edit location window is closed.
+     * Persisting using JmriJTablePersistenceManager doesn't quite work since
+     * the same table name is used for each track type; spur, yard, interchange,
+     * and staging. Plus multiple edit locations can be open at the same time,
+     * again using the same table name. The goal is to have a single change
+     * affect every table for all edit locations. Therefore any changes to
+     * column width or position is saved when the edit location window is
+     * closed.
      */
     private void addTableColumnListeners() {
         Enumeration<TableColumn> e = _table.getColumnModel().getColumns();
@@ -231,6 +236,8 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
                 return Bundle.getMessage("Restrictions");
             case LOAD_COLUMN:
                 return Bundle.getMessage("Load");
+            case DISABLE_LOAD_CHANGE_COLUMN:
+                return Bundle.getMessage("DisableLoadChange");
             case SHIP_COLUMN:
                 return Bundle.getMessage("Ship");
             case ROAD_COLUMN:
@@ -287,6 +294,7 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
                 return Integer.class;
             case EDIT_COLUMN:
                 return JButton.class;
+            case DISABLE_LOAD_CHANGE_COLUMN:
             case ROUTED_COLUMN:
             case HOLD_COLUMN:
                 return Boolean.class;
@@ -301,6 +309,7 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
             case ROUTED_COLUMN:
                 Track track = _tracksList.get(row);
                 return !track.isModifyLoadsEnabled();
+            case DISABLE_LOAD_CHANGE_COLUMN:
             case HOLD_COLUMN:
             case EDIT_COLUMN:
             case MOVES_COLUMN:
@@ -347,6 +356,8 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
             case LOAD_COLUMN:
                 return getModifiedString(track.getLoadNames().length, track.getLoadOption().equals(Track.ALL_LOADS),
                         track.getLoadOption().equals(Track.INCLUDE_LOADS));
+            case DISABLE_LOAD_CHANGE_COLUMN:
+                return track.isDisableLoadChangeEnabled();
             case SHIP_COLUMN:
                 return getModifiedString(track.getShipLoadNames().length,
                         track.getShipLoadOption().equals(Track.ALL_LOADS),
@@ -426,6 +437,9 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
     @Override
     public void setValueAt(Object value, int row, int col) {
         switch (col) {
+            case DISABLE_LOAD_CHANGE_COLUMN:
+                setDisableLoadChange(row, value);
+                break;
             case ROUTED_COLUMN:
                 setRouted(row, value);
                 break;
@@ -446,12 +460,17 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
     TrackEditFrame tef = null;
 
     abstract protected void editTrack(int row);
-    
+
+    private void setDisableLoadChange(int row, Object value) {
+        Track track = _tracksList.get(row);
+        track.setDisableLoadChangeEnabled(((Boolean) value).booleanValue());
+    }
+
     private void setRouted(int row, Object value) {
         Track track = _tracksList.get(row);
         track.setOnlyCarsWithFinalDestinationEnabled(((Boolean) value).booleanValue());
     }
-    
+
     private void setHold(int row, Object value) {
         Track track = _tracksList.get(row);
         track.setHoldCarsWithCustomLoadsEnabled(((Boolean) value).booleanValue());
@@ -500,8 +519,8 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
             updateList();
             fireTableDataChanged();
         }
-        if (e.getPropertyName().equals(Setup.SHOW_TRACK_MOVES_PROPERTY_CHANGE)
-                || e.getPropertyName().equals(Setup.ROUTING_STAGING_PROPERTY_CHANGE)) {
+        if (e.getPropertyName().equals(Setup.SHOW_TRACK_MOVES_PROPERTY_CHANGE) ||
+                e.getPropertyName().equals(Setup.ROUTING_STAGING_PROPERTY_CHANGE)) {
             setColumnsVisible();
         }
         if (e.getSource().getClass().equals(Track.class) &&
@@ -515,6 +534,7 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
                         e.getPropertyName().equals(Track.PLANNED_PICKUPS_CHANGED_PROPERTY) ||
                         e.getPropertyName().equals(Track.ALTERNATE_TRACK_CHANGED_PROPERTY) ||
                         e.getPropertyName().equals(Track.SERVICE_ORDER_CHANGED_PROPERTY) ||
+                        e.getPropertyName().equals(Track.LOAD_OPTIONS_CHANGED_PROPERTY) ||
                         e.getPropertyName().equals(Track.TRACK_REPORTER_CHANGED_PROPERTY))) {
             setColumnsVisible();
         }

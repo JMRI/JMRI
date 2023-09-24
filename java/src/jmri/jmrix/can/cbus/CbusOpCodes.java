@@ -18,9 +18,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Methods to decode CBUS opcodes
  *
@@ -30,7 +27,9 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusOpCodes {
 
-    private final static Logger log = LoggerFactory.getLogger(CbusOpCodes.class);
+    private CbusOpCodes() {
+        throw new IllegalStateException("Utility class");
+    }
 
     /**
      * Return a string representation of a decoded CBUS Message
@@ -189,7 +188,7 @@ public class CbusOpCodes {
         return sb.toString();
     }
 
-        /**
+    /**
      * Get loco speed from byte value.
      * @param speed byte value 0-255 of speed containing direction flag.
      * @return interpreted String, maybe with EStop localised text.
@@ -527,6 +526,9 @@ public class CbusOpCodes {
         Map<Integer, CbusOpc> result = new HashMap<>(150); // 134 as of April 2022
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            // disable DOCTYPE declaration & setXIncludeAware to reduce Sonar security warnings
+            factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            factory.setXIncludeAware(false);
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = builder.parse(FileUtil.getFile("program:xml/cbus/CbusOpcData.xml"));
             document.getDocumentElement().normalize();
@@ -612,5 +614,7 @@ public class CbusOpCodes {
             return EnumSet.copyOf(_filterMap);
         }
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusOpCodes.class);
 
 }

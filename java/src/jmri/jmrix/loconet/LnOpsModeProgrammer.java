@@ -131,12 +131,28 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             doingWrite = true;
             // Board programming mode
             log.debug("write CV \"{}\" to {} addr:{}", CV, val, mAddress);
+            
+            // get prefix if any
+            String[] parts = CV.split("\\.");
+            int offset = 0;
+            int cv = 0;
+            switch (parts.length) {
+                case 1: // plain CV number
+                    cv = Integer.parseInt(parts[0])-1;
+                    break;
+                case 2:  //  offset.CV format
+                    offset = Integer.parseInt(parts[0]);
+                    cv = Integer.parseInt(parts[1])-1;
+                    break;
+                default:
+                    log.error("unexpected number of parts in CV {}", CV);
+            }
 
-            int address6th = ((mAddress-1) >> 2) & 0x3F;
-            int upper3 = ~(((mAddress-1) >> 8) & 0x07);
-            int lower2 = (mAddress-1) & 0x03;
+            int address6th = ((mAddress-1+offset) >> 2) & 0x3F;
+            int upper3 = ~(((mAddress-1+offset) >> 8) & 0x07);
+            int lower2 = (mAddress-1+offset) & 0x03;
             int address7th = ((upper3 << 4) & 0x70) | (lower2 << 1) | 0x08;
-            int cv = Integer.parseInt(CV)-1;
+            
             // make message - send immediate packet with custom content
             m = new LocoNetMessage(11);
             m.setOpCode(0xED);
@@ -288,11 +304,27 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             // Board programming mode
             log.debug("read CV \"{}\" addr:{}", CV, mAddress);
 
-            int address6th = ((mAddress-1) >> 2) & 0x3F;
-            int upper3 = ~(((mAddress-1) >> 8) & 0x07);
-            int lower2 = (mAddress-1) & 0x03;
+            // get prefix if any
+            parts = CV.split("\\.");
+            int offset = 0;
+            int cv = 0;
+            switch (parts.length) {
+                case 1: // plain CV number
+                    cv = Integer.parseInt(parts[0])-1;
+                    break;
+                case 2:  //  offset.CV format
+                    offset = Integer.parseInt(parts[0]);
+                    cv = Integer.parseInt(parts[1])-1;
+                    break;
+                default:
+                    log.error("unexpected number of parts in CV {}", CV);
+            }
+
+            int address6th = ((mAddress-1+offset) >> 2) & 0x3F;
+            int upper3 = ~(((mAddress-1+offset) >> 8) & 0x07);
+            int lower2 = (mAddress-1+offset) & 0x03;
             int address7th = ((upper3 << 4) & 0x70) | (lower2 << 1) | 0x08;
-            int cv = Integer.parseInt(CV)-1;
+            
             // make message - send immediate packet with custom content
             m = new LocoNetMessage(11);
             m.setOpCode(0xED);

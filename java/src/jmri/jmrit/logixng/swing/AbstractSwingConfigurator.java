@@ -2,10 +2,10 @@ package jmri.jmrit.logixng.swing;
 
 import javax.annotation.Nonnull;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Abstract class for SwingConfiguratorInterface
@@ -40,10 +40,10 @@ public abstract class AbstractSwingConfigurator implements SwingConfiguratorInte
         try {
             getSymbols(object.getParent(), symbolTable);
         } catch (JmriException e) {
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     e.getLocalizedMessage(),
                     "Error",
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
         }
     }
     

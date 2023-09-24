@@ -4,15 +4,14 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import javax.swing.Icon;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
+
 import jmri.beans.BeanUtil;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.util.FileUtil;
 import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.WindowInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Remove a locomotive from the roster.
@@ -125,15 +124,15 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
         RosterEntry[] entries = new RosterEntry[1];
         // create a dialog to select the roster entry
         JComboBox<?> selections = new RosterEntryComboBox(rosterGroup);
-        int retval = JOptionPane.showOptionDialog(_who,
+        int retval = JmriJOptionPane.showOptionDialog(_who,
                 Bundle.getMessage("CopyEntrySelectDialog"),
                 Bundle.getMessage("DeleteEntryTitle roster entry"),
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.INFORMATION_MESSAGE,
+                JmriJOptionPane.DEFAULT_OPTION,
+                JmriJOptionPane.INFORMATION_MESSAGE,
                 null,
                 new Object[] {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), selections}, null);
         log.debug("Dialog value {} selected {}:{}", retval, selections.getSelectedIndex(), selections.getSelectedItem()); // NOI18N
-        if (retval != 1) {
+        if (retval != 1 ) { // array position 1 ButtonOK
             return entries; // empty
         }
         entries[0] = (RosterEntry) selections.getSelectedItem();
@@ -150,10 +149,10 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
      * @return true if user says to continue
      */
     boolean userOK(String entry, String filename, String fullFileName) {
-        return (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(_who,
+        return (JmriJOptionPane.YES_OPTION == JmriJOptionPane.showConfirmDialog(_who,
                 Bundle.getMessage("DeletePrompt", entry, fullFileName),
                 Bundle.getMessage("DeleteTitle", entry),
-                JOptionPane.YES_NO_OPTION));
+                JmriJOptionPane.YES_NO_OPTION));
     }
 
     // never invoked, because we overrode actionPerformed above
@@ -163,6 +162,6 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(DeleteRosterItemAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DeleteRosterItemAction.class);
 
 }

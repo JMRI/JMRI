@@ -79,94 +79,94 @@ public interface Turnout extends DigitalIO, VariableControlSpanBean {
      * commanded state. Note that it's possible to be both CLOSED and THROWN at
      * the same time on some systems, which should be called INCONSISTENT
      */
-    int CLOSED = DigitalIO.ON;
+    static final int CLOSED = DigitalIO.ON;
 
     /**
      * Constant representing a "thrown" state, either in readback or as a
      * commanded state. Note that it's possible to be both CLOSED and THROWN at
      * the same time on some systems, which should be called INCONSISTENT
      */
-    int THROWN = DigitalIO.OFF;
+    static final int THROWN = DigitalIO.OFF;
 
     /**
      * Constant representing "direct feedback method". In this case, the
      * commanded state is provided when the known state is requested. The two
      * states never differ. This mode is always possible!
      */
-    int DIRECT = 1;
+    static final int DIRECT = 1;
 
     /**
      * Constant representing "exact feedback method". In this case, the layout
      * hardware can sense both positions of the turnout, which is used to set
      * the known state.
      */
-    int EXACT = 2;
+    static final int EXACT = 2;
 
     /**
      * Constant representing "indirect feedback". In this case, the layout
      * hardware can only sense one setting of the turnout. The known state is
      * inferred from that info.
      */
-    int INDIRECT = 4;  // only one side directly sensed
+    static final int INDIRECT = 4;  // only one side directly sensed
 
     /**
      * Constant representing "feedback by monitoring sent commands". In this
      * case, the known state tracks commands seen on the rails or bus.
      */
-    int MONITORING = 8;
+    static final int MONITORING = 8;
 
     /**
      * Constant representing "feedback by monitoring one sensor". The sensor
      * sets the state CLOSED when INACTIVE and THROWN when ACTIVE
      */
-    int ONESENSOR = 16;
+    static final int ONESENSOR = 16;
 
     /**
      * Constant representing "feedback by monitoring two sensors". The first
      * sensor sets the state THROWN when ACTIVE; the second sensor sets the
      * state CLOSED when ACTIVE.
      */
-    int TWOSENSOR = 32;
+    static final int TWOSENSOR = 32;
 
     /**
      * Constant representing "feedback for signals" . This is DIRECT feedback,
      * with minimal delay (for use with systems that wait for responses returned
      * by from the command station).
      */
-    int SIGNAL = 64;
+    static final int SIGNAL = 64;
 
     /**
      * Constant representing "automatic delayed feedback" . This is DIRECT feedback
      * with a fixed delay before the feedback (known state) takes effect.
      */
-    int DELAYED = 128;
+    static final int DELAYED = 128;
 
     /**
      * Constant representing "loconet alternate feedback method". In this case, the layout
      * hardware can sense both positions of the turnout, which is used to set
      * the known state. Hardware use OPS_SW_REP alternate message.
      */
-    int LNALTERNATE = 256;
+    static final int LNALTERNATE = 256;
 
     /**
      * Constant representing turnout lockout cab commands
      */
-    int CABLOCKOUT = 1;
+    static final int CABLOCKOUT = 1;
 
     /**
      * Constant representing turnout lockout pushbuttons
      */
-    int PUSHBUTTONLOCKOUT = 2;
+    static final int PUSHBUTTONLOCKOUT = 2;
 
     /**
      * Constant representing a unlocked turnout
      */
-    int UNLOCKED = 0;
+    static final int UNLOCKED = 0;
 
     /**
      * Constant representing a locked turnout
      */
-    int LOCKED = 1;
+    static final int LOCKED = 1;
 
     /**
      * Get a list of valid feedback types. The valid types depend on the

@@ -108,6 +108,9 @@ public class Track extends PropertyChangeSupport {
     private static final int GENERATE_CUSTOM_LOADS_ANY_SPUR = 8;
     private static final int EMPTY_GENERIC_LOADS = 16;
     private static final int GENERATE_CUSTOM_LOADS_ANY_STAGING_TRACK = 32;
+    
+    // load option for spur
+    private static final int DISABLE_LOAD_CHANGE = 64;
 
     // block options
     protected int _blockOptions = 0;
@@ -1118,7 +1121,7 @@ public class Track extends PropertyChangeSupport {
         } else if (getShipLoadOption().equals(Track.EXCLUDE_LOADS)) {
             s = Bundle.getMessage("Exclude") + " " + getShipLoadNames().length + " " + Bundle.getMessage("Loads");
         } else {
-            s = Bundle.getMessage("ShipAll");
+            s = Bundle.getMessage("ShipsAllLoads");
         }
         return s;
     }
@@ -1978,11 +1981,13 @@ public class Track extends PropertyChangeSupport {
      * @param enable when true, swap generic car load state
      */
     public void setLoadSwapEnabled(boolean enable) {
+        boolean old = isLoadSwapEnabled();
         if (enable) {
             _loadOptions = _loadOptions | SWAP_GENERIC_LOADS;
         } else {
             _loadOptions = _loadOptions & 0xFFFF - SWAP_GENERIC_LOADS;
         }
+        setDirtyAndFirePropertyChange(LOAD_OPTIONS_CHANGED_PROPERTY, old, enable);
     }
 
     public boolean isLoadSwapEnabled() {
@@ -1996,11 +2001,13 @@ public class Track extends PropertyChangeSupport {
      * @param enable when true, set generic car load to empty
      */
     public void setLoadEmptyEnabled(boolean enable) {
+        boolean old = isLoadEmptyEnabled();
         if (enable) {
             _loadOptions = _loadOptions | EMPTY_GENERIC_LOADS;
         } else {
             _loadOptions = _loadOptions & 0xFFFF - EMPTY_GENERIC_LOADS;
         }
+        setDirtyAndFirePropertyChange(LOAD_OPTIONS_CHANGED_PROPERTY, old, enable);
     }
 
     public boolean isLoadEmptyEnabled() {
@@ -2013,11 +2020,13 @@ public class Track extends PropertyChangeSupport {
      * @param enable when true, remove Scheduled loads from cars
      */
     public void setRemoveCustomLoadsEnabled(boolean enable) {
+        boolean old = isRemoveCustomLoadsEnabled();
         if (enable) {
             _loadOptions = _loadOptions | EMPTY_CUSTOM_LOADS;
         } else {
             _loadOptions = _loadOptions & 0xFFFF - EMPTY_CUSTOM_LOADS;
         }
+        setDirtyAndFirePropertyChange(LOAD_OPTIONS_CHANGED_PROPERTY, old, enable);
     }
 
     public boolean isRemoveCustomLoadsEnabled() {
@@ -2089,6 +2098,20 @@ public class Track extends PropertyChangeSupport {
                 isAddCustomLoadsAnySpurEnabled() ||
                 isAddCustomLoadsAnyStagingTrackEnabled() ||
                 isAddCustomLoadsEnabled();
+    }
+    
+    public void setDisableLoadChangeEnabled(boolean enable) {
+        boolean old = isDisableLoadChangeEnabled();
+        if (enable) {
+            _loadOptions = _loadOptions | DISABLE_LOAD_CHANGE;
+        } else {
+            _loadOptions = _loadOptions & 0xFFFF - DISABLE_LOAD_CHANGE;
+        }
+        setDirtyAndFirePropertyChange(LOAD_OPTIONS_CHANGED_PROPERTY, old, enable);
+    }
+
+    public boolean isDisableLoadChangeEnabled() {
+        return (0 != (_loadOptions & DISABLE_LOAD_CHANGE));
     }
 
     public void setBlockCarsEnabled(boolean enable) {
@@ -2691,7 +2714,7 @@ public class Track extends PropertyChangeSupport {
         if (getAlternateTrack() != null) {
             e.setAttribute(Xml.ALTERNATIVE, getAlternateTrack().getId());
         }
-        if (isStaging() && _loadOptions != 0) {
+        if (_loadOptions != 0) {
             e.setAttribute(Xml.LOAD_OPTIONS, Integer.toString(_loadOptions));
         }
         if (isBlockCarsEnabled()) {

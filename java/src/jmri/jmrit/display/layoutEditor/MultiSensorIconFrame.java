@@ -4,16 +4,18 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
+
 import jmri.jmrit.display.MultiSensorIcon;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Provides a simple editor for creating a MultiSensorIcon object
@@ -131,9 +133,9 @@ public class MultiSensorIconFrame extends JmriJFrame {
         for (int i = 0; i < content.getComponentCount(); i++) {
             Entry e = (Entry) content.getComponent(i);
             if (e.sensor.getSelectedItem() == null) {
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("Error19", i+1),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 isEmpty = 1;
                 return; // Keep Panel open to edit entry
             }

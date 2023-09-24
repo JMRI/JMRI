@@ -17,8 +17,7 @@ import jmri.InstanceManager;
 import jmri.Timebase;
 import jmri.TimebaseRateException;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user configuration of Simple Timebase.
@@ -434,21 +433,21 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
             }
             rate = Double.parseDouble(fieldEntry);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, (Bundle.getMessage("ParseRateError") + "\n" + e),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, (Bundle.getMessage("ParseRateError") + "\n" + e),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             log.error("Exception when parsing user-entered rate", e);
             return null;
         }
         if (rate < 0.0) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("NegativeRateError"),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("NegativeRateError"),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return null;
         }
         if (InstanceManager.getDefault(jmri.ClockControl.class).requiresIntegerRate() && !clock.getInternalMaster()) {
             double frac = rate - (int) rate;
             if (frac > 0.001) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("NonIntegerError"),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("NonIntegerError"),
+                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 return null;
             }
         }
@@ -468,8 +467,8 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         try {
             clock.userSetRate(parsedRate);
         } catch (TimebaseRateException e) {
-            JOptionPane.showMessageDialog(this, (Bundle.getMessage("SetRateError") + "\n" + e.getLocalizedMessage()),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, (Bundle.getMessage("SetRateError") + "\n" + e.getLocalizedMessage()),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             // log.error is already called by clock.userSetRate
         }
         changed = true;
@@ -499,8 +498,8 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
                 double rate = clock.userGetRate();
                 double frac = rate - (int) rate;
                 if (frac > 0.001) {
-                    JOptionPane.showMessageDialog(this, Bundle.getMessage("NonIntegerErrorCantChangeSource"),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("NonIntegerErrorCantChangeSource"),
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                     timeSourceBox.setSelectedIndex(internalSourceIndex);
                     return;
                 }
@@ -545,28 +544,28 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         try {
             hours = Integer.parseInt(hoursField.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, (Bundle.getMessage("HoursError") + "\n" + e),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, (Bundle.getMessage("HoursError") + "\n" + e),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             log.error("Exception when parsing hours Field", e);
             return;
         }
         if ((hours < 0) || (hours > 23)) {
-            JOptionPane.showMessageDialog(this, (Bundle.getMessage("HoursRangeError")),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, (Bundle.getMessage("HoursRangeError")),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         // get minutes, reporting errors if any
         try {
             minutes = Integer.parseInt(minutesField.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, (Bundle.getMessage("MinutesError") + "\n" + e),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, (Bundle.getMessage("MinutesError") + "\n" + e),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             log.error("Exception when parsing Minutes Field", e);
             return;
         }
         if ((minutes < 0) || (minutes > 59)) {
-            JOptionPane.showMessageDialog(this, (Bundle.getMessage("MinutesRangeError")),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, (Bundle.getMessage("MinutesRangeError")),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         // set time of the fast clock
@@ -620,28 +619,28 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         try {
             hours = Integer.parseInt(startHoursField.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, (Bundle.getMessage("HoursError") + "\n" + e),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, (Bundle.getMessage("HoursError") + "\n" + e),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             log.error("Exception when parsing hours Field", e);
             return;
         }
         if ((hours < 0) || (hours > 23)) {
-            JOptionPane.showMessageDialog(this, (Bundle.getMessage("HoursRangeError")),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, (Bundle.getMessage("HoursRangeError")),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         // get minutes, reporting errors if any
         try {
             minutes = Integer.parseInt(startMinutesField.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, (Bundle.getMessage("MinutesError") + "\n" + e),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, (Bundle.getMessage("MinutesError") + "\n" + e),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             log.error("Exception when parsing Minutes Field", e);
             return;
         }
         if ((minutes < 0) || (minutes > 59)) {
-            JOptionPane.showMessageDialog(this, (Bundle.getMessage("MinutesRangeError")),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, (Bundle.getMessage("MinutesRangeError")),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         // set time of the fast clock
@@ -834,6 +833,6 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SimpleClockFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SimpleClockFrame.class);
 
 }

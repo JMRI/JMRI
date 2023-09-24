@@ -2,12 +2,12 @@ package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
 import jmri.jmrit.logix.OBlock;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * A simple panel to collect lengths with units bring either inches or centimeters
@@ -68,8 +68,8 @@ public class LengthPanel extends JPanel
                 _units.setText("cm");
             }
         } catch (NumberFormatException nfe) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("MustBeFloat", len),
-                    Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("MustBeFloat", len),
+                    Bundle.getMessage("makePath"), JmriJOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -100,8 +100,8 @@ public class LengthPanel extends JPanel
         
         if (_label.equals(PATH_LENGTH) || _label.equals(BLOCK_LENGTH)) {
             if (f < 0.0f) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("MustBeFloat", num),
-                        Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("MustBeFloat", num),
+                        Bundle.getMessage("makePath"), JmriJOptionPane.INFORMATION_MESSAGE);
             } else {
                 if (_units.isSelected()) {
                     _length = f * 25.4f;

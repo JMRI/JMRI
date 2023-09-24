@@ -29,6 +29,7 @@ import jmri.jmrit.timetable.*;
 import jmri.jmrit.timetable.configurexml.TimeTableXml;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.SplitButtonColorChooserPanel;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Create and maintain timetables.
@@ -599,9 +600,9 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 if (_editScale.hasFocus()) {
                     Scale scale = (Scale) _editScale.getSelectedItem();
                     if (scale.getScaleName().equals("CUSTOM")) {  // NOI18N
-                        String ans = JOptionPane.showInputDialog(
+                        String ans = JmriJOptionPane.showInputDialog( _editScale,
                                 Bundle.getMessage("ScaleRatioChange"),  // NOI18N
-                                scale.getScaleRatio()
+                                String.valueOf(scale.getScaleRatio())
                                 );
                         if (ans != null) {
                             try {
@@ -610,10 +611,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                             } catch (java.lang.IllegalArgumentException
                                     | java.beans.PropertyVetoException ex) {
                                 log.warn("Unable to change custom ratio: {}", ex.getMessage());  // NOI18N
-                                JOptionPane.showMessageDialog(null,
+                                JmriJOptionPane.showMessageDialog( _editScale,
                                         Bundle.getMessage("NumberFormatError", ans, "Custom ratio"),  // NOI18N
                                         Bundle.getMessage("WarningTitle"),  // NOI18N
-                                        JOptionPane.WARNING_MESSAGE);
+                                        JmriJOptionPane.WARNING_MESSAGE);
                                 Layout layout = _dataMgr.getLayout(_curNodeId);
                                 _editScale.setSelectedItem(layout.getScale());
                             }
@@ -1334,11 +1335,11 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         try {
             var icon = new ImageIcon(jmri.util.FileUtil.getProgramPath() + jmri.Application.getLogo());
-            var choice = JOptionPane.showInputDialog(
+            var choice = JmriJOptionPane.showInputDialog(
                     null,
                     Bundle.getMessage("LabelCopyStops"),  // NOI18N
                     Bundle.getMessage("TitleCopyStops"),  // NOI18N
-                    JOptionPane.QUESTION_MESSAGE,
+                    JmriJOptionPane.QUESTION_MESSAGE,
                     icon,
                     trainArray,
                     null);
@@ -1657,10 +1658,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                     }
                 }
             }
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     msg.toString(),
                     Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -1721,10 +1722,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             newDistance = NumberFormat.getNumberInstance().parse(_editDistance.getText()).floatValue();
         } catch (NumberFormatException | ParseException ex) {
             log.warn("'{}' is not a valid number for {}", _editDistance.getText(), "station distance");  // NOI18N
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("NumberFormatError", _editDistance.getText(), "station distance"),  // NOI18N
                     Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
             newDistance = station.getDistance();
         }
         boolean newDoubleTrack =_editDoubleTrack.isSelected();
@@ -1797,10 +1798,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                     }
                 }
             }
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     msg.toString(),
                     Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -1876,10 +1877,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                     msg.append(String.format("%n%s", Bundle.getMessage(keyWord)));
                 }
             }
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     msg.toString(),
                     Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -1991,10 +1992,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                     msg.append(String.format("%n%s", Bundle.getMessage(keyWord)));
                 }
             }
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     msg.toString(),
                     Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -2077,10 +2078,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                     msg.append(String.format("%n%s", Bundle.getMessage(keyWord)));
                 }
             }
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     msg.toString(),
                     Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -2096,10 +2097,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             return Integer.parseInt(text);
         } catch (NumberFormatException ex) {
             log.warn("'{}' is not a valid number for {}", text, fieldName);  // NOI18N
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(textField,
                     Bundle.getMessage("NumberFormatError", text, fieldName),  // NOI18N
                     Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
             return -1;
         }
     }
@@ -2147,13 +2148,13 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
      */
     void deleteLayout() {
         Object[] options = {Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonYes")};  // NOI18N
-        int selectedOption = JOptionPane.showOptionDialog(null,
+        int selectedOption = JmriJOptionPane.showOptionDialog(this,
                 Bundle.getMessage("LayoutCascade"), // NOI18N
                 Bundle.getMessage("QuestionTitle"),   // NOI18N
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
+                JmriJOptionPane.DEFAULT_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE,
                 null, options, options[0]);
-        if (selectedOption == 0) {
+        if (selectedOption != 1) { // return if option is not array position 1, YES
             return;
         }
 
@@ -2209,10 +2210,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             for (String trainName : typeReference) {
                 msg.append("\n    " + trainName);  // NOI18N
             }
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     msg.toString(),
                     Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
             return;
         }
         _dataMgr.deleteTrainType(_curNodeId);
@@ -2249,21 +2250,21 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 for (Station activeStation : activeList) {
                     msg.append("\n    " + activeStation.getStationName());  // NOI18N
                 }
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(this,
                         msg.toString(),
                         Bundle.getMessage("WarningTitle"),  // NOI18N
-                        JOptionPane.WARNING_MESSAGE);
+                        JmriJOptionPane.WARNING_MESSAGE);
                 return;
             }
             // Present the option to delete the stations and the segment
             Object[] options = {Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonYes")};  // NOI18N
-            int selectedOption = JOptionPane.showOptionDialog(null,
+            int selectedOption = JmriJOptionPane.showOptionDialog(this,
                     Bundle.getMessage("SegmentCascade"), // NOI18N
                     Bundle.getMessage("QuestionTitle"),   // NOI18N
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
+                    JmriJOptionPane.DEFAULT_OPTION,
+                    JmriJOptionPane.QUESTION_MESSAGE,
                     null, options, options[0]);
-            if (selectedOption == 0) {
+            if (selectedOption != 1) {  // return if option is not array position 1, YES
                 return;
             }
             for (Station delStation : stationList) {
@@ -2299,10 +2300,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             for (String stopTrainSeq : stopReference) {
                 msg.append("\n    " + stopTrainSeq);  // NOI18N
             }
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     msg.toString(),
                     Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
             return;
         }
         _dataMgr.deleteStation(_curNodeId);
@@ -2328,13 +2329,13 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             // The schedule still has trains.
             // Present the option to delete the stops, trains and the schedule
             Object[] options = {Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonYes")};  // NOI18N
-            int selectedOption = JOptionPane.showOptionDialog(null,
+            int selectedOption = JmriJOptionPane.showOptionDialog(this,
                     Bundle.getMessage("ScheduleCascade"), // NOI18N
                     Bundle.getMessage("QuestionTitle"),   // NOI18N
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
+                    JmriJOptionPane.DEFAULT_OPTION,
+                    JmriJOptionPane.QUESTION_MESSAGE,
                     null, options, options[0]);
-            if (selectedOption == 0) {
+            if (selectedOption != 1) { // return if option is not array position 1, YES
                 return;
             }
             for (Train train : trainList) {
@@ -2368,13 +2369,13 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             // The trains still has stops.
             // Present the option to delete the stops and the train
             Object[] options = {Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonYes")};  // NOI18N
-            int selectedOption = JOptionPane.showOptionDialog(null,
+            int selectedOption = JmriJOptionPane.showOptionDialog(this,
                     Bundle.getMessage("TrainCascade"), // NOI18N
                     Bundle.getMessage("QuestionTitle"),   // NOI18N
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
+                    JmriJOptionPane.DEFAULT_OPTION,
+                    JmriJOptionPane.QUESTION_MESSAGE,
                     null, options, options[0]);
-            if (selectedOption == 0) {
+            if (selectedOption != 1) { // return if option is not array position 1, YES
                 return;
             }
             for (Stop stop : stopList) {
@@ -2551,11 +2552,11 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 // do selection dialog
                 Schedule[] schedArr = new Schedule[schedules.size()];
                 schedArr = schedules.toArray(schedArr);
-                Schedule schedSelected = (Schedule) JOptionPane.showInputDialog(
+                Schedule schedSelected = (Schedule) JmriJOptionPane.showInputDialog(
                         null,
                         Bundle.getMessage("GraphScheduleMessage"),  // NOI18N
                         Bundle.getMessage("QuestionTitle"),  // NOI18N
-                        JOptionPane.QUESTION_MESSAGE,
+                        JmriJOptionPane.QUESTION_MESSAGE,
                         null,
                         schedArr,
                         schedArr[0]
@@ -2595,17 +2596,17 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 new TimeTableImport().importSgn(_dataMgr, file);
             } catch (IOException ex) {
                 log.error("Import exception", ex);  // NOI18N
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ImportFailed", "SGN"),  // NOI18N
                         Bundle.getMessage("ErrorTitle"),  // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
             savePressed();
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("ImportCompleted", "SGN"),  // NOI18N
                     Bundle.getMessage("MessageTitle"),  // NOI18N
-                    JOptionPane.INFORMATION_MESSAGE);
+                    JmriJOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -2625,10 +2626,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             feedbackList = new TimeTableCsvImport().importCsv(file);
         } catch (IOException ex) {
             log.error("Import exception", ex); // NOI18N
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("ImportCsvFailed", "CVS"), // NOI18N
                     Bundle.getMessage("ErrorTitle"), // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         if (feedbackList.size() > 0) {
@@ -2636,17 +2637,17 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             for (String feedback : feedbackList) {
                 msg.append(feedback + "\n");
             }
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     msg.toString(),
                     Bundle.getMessage("ErrorTitle"), // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         savePressed();
-        JOptionPane.showMessageDialog(null,
+        JmriJOptionPane.showMessageDialog(this,
                 Bundle.getMessage("ImportCompleted", "CSV"), // NOI18N
                 Bundle.getMessage("MessageTitle"), // NOI18N
-                JOptionPane.INFORMATION_MESSAGE);
+                JmriJOptionPane.INFORMATION_MESSAGE);
     }
 
     void importFromOperationsPressed() {
@@ -2659,19 +2660,19 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         // Select layout
         List<Layout> layouts = _dataMgr.getLayouts(true);
         if (layouts.size() == 0) {
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("ExportLayoutError"),  // NOI18N
                     Bundle.getMessage("ErrorTitle"),  // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         int layoutId = layouts.get(0).getLayoutId();
         if (layouts.size() > 1) {
-            Layout layout = (Layout) JOptionPane.showInputDialog(
-                    null,
+            Layout layout = (Layout) JmriJOptionPane.showInputDialog(
+                    this,
                     Bundle.getMessage("ExportSelectLayout"),  // NOI18N
                     Bundle.getMessage("QuestionTitle"),  // NOI18N
-                    JOptionPane.PLAIN_MESSAGE,
+                    JmriJOptionPane.PLAIN_MESSAGE,
                     null,
                     layouts.toArray(),
                     null);
@@ -2682,19 +2683,19 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         // Select segment
         List<Segment> segments = _dataMgr.getSegments(layoutId, true);
         if (segments.size() == 0) {
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("ExportSegmentError"),  // NOI18N
                     Bundle.getMessage("ErrorTitle"),  // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         int segmentId = segments.get(0).getSegmentId();
         if (segments.size() > 1) {
-            Segment segment = (Segment) JOptionPane.showInputDialog(
-                    null,
+            Segment segment = (Segment) JmriJOptionPane.showInputDialog(
+                    this,
                     Bundle.getMessage("ExportSelectSegment"),  // NOI18N
                     Bundle.getMessage("QuestionTitle"),  // NOI18N
-                    JOptionPane.PLAIN_MESSAGE,
+                    JmriJOptionPane.PLAIN_MESSAGE,
                     null,
                     segments.toArray(),
                     null);
@@ -2705,19 +2706,19 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         // Select schedule
         List<Schedule> schedules = _dataMgr.getSchedules(layoutId, true);
         if (schedules.size() == 0) {
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("ExportScheduleError"),  // NOI18N
                     Bundle.getMessage("ErrorTitle"),  // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         int scheduleId = schedules.get(0).getScheduleId();
         if (schedules.size() > 1) {
-            Schedule schedule = (Schedule) JOptionPane.showInputDialog(
-                    null,
+            Schedule schedule = (Schedule) JmriJOptionPane.showInputDialog(
+                    this,
                     Bundle.getMessage("ExportSelectSchedule"),  // NOI18N
                     Bundle.getMessage("QuestionTitle"),  // NOI18N
-                    JOptionPane.PLAIN_MESSAGE,
+                    JmriJOptionPane.PLAIN_MESSAGE,
                     null,
                     schedules.toArray(),
                     null);
@@ -2737,11 +2738,11 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 file = new File(fileName);
             }
             if (file.exists()) {
-                if (JOptionPane.showConfirmDialog(null,
+                if (JmriJOptionPane.showConfirmDialog(this,
                         Bundle.getMessage("FileOverwriteWarning", file.getName()),  // NOI18N
                         Bundle.getMessage("QuestionTitle"),  // NOI18N
-                        JOptionPane.OK_CANCEL_OPTION,
-                        JOptionPane.QUESTION_MESSAGE) != JOptionPane.OK_OPTION) {
+                        JmriJOptionPane.OK_CANCEL_OPTION,
+                        JmriJOptionPane.QUESTION_MESSAGE) != JmriJOptionPane.OK_OPTION) {
                     return;
                 }
             }
@@ -2752,23 +2753,23 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 hasErrors = new TimeTableCsvExport().exportCsv(file, layoutId, segmentId, scheduleId);
             } catch (IOException ex) {
                 log.error("Export exception", ex);  // NOI18N
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ExportFailed"),  // NOI18N
                         Bundle.getMessage("ErrorTitle"),  // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             if (hasErrors) {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ExportFailed"),  // NOI18N
                         Bundle.getMessage("ErrorTitle"),  // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ExportCompleted", file),  // NOI18N
                         Bundle.getMessage("MessageTitle"),  // NOI18N
-                        JOptionPane.INFORMATION_MESSAGE);
+                        JmriJOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
@@ -2787,11 +2788,11 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     void donePressed() {
         if (_isDirty) {
             Object[] options = {Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonYes")};  // NOI18N
-            int selectedOption = JOptionPane.showOptionDialog(null,
+            int selectedOption = JmriJOptionPane.showOptionDialog(this,
                     Bundle.getMessage("DirtyDataWarning"), // NOI18N
                     Bundle.getMessage("WarningTitle"),   // NOI18N
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.WARNING_MESSAGE,
+                    JmriJOptionPane.DEFAULT_OPTION,
+                    JmriJOptionPane.WARNING_MESSAGE,
                     null, options, options[0]);
             if (selectedOption == 0) {
                 return;
@@ -3050,7 +3051,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     void showNodeEditMessage() {
         if (InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class) != null) {
             InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showInfoMessage(Bundle.getMessage("NodeEditTitle"), // NOI18N
+                    showInfoMessage( this, Bundle.getMessage("NodeEditTitle"), // NOI18N
                             Bundle.getMessage("NodeEditText"), // NOI18N
                             getClassName(),
                             "SkipTimeTableEditMessage"); // NOI18N

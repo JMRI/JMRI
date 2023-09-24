@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
+
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.beans.PropertyChangeProvider;
@@ -31,6 +32,8 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import jmri.util.ThreadingUtil;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -178,10 +181,10 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         } catch (IOException | JDOMException e) {
             log.error("Exception during reading while constructing roster", e);
             try {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("ErrorReadingText") + "\n" + e.getMessage(),
                         Bundle.getMessage("ErrorReadingTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
             } catch (HeadlessException he) {
                 // ignore inability to display dialog
             }
@@ -1065,10 +1068,10 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         } catch (IOException e) {
             log.error("Exception while writing the new roster file, may not be complete", e);
             try {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("ErrorSavingText") + "\n" + e.getMessage(),
                         Bundle.getMessage("ErrorSavingTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
             } catch (HeadlessException he) {
                 // silently ignore failure to display dialog
             }

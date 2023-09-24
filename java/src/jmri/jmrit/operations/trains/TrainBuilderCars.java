@@ -709,7 +709,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         // restore car's load
         car.setLoadName(oldCarLoad);
         car.setScheduleItemId(Car.NONE);
-        addLine(_buildReport, SEVEN, Bundle.getMessage("buildUnableNewLoad", car.toString()));
+        addLine(_buildReport, FIVE, Bundle.getMessage("buildUnableNewLoad", car.toString()));
         return false; // done, no load generated for this car
     }
 

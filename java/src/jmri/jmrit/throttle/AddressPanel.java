@@ -8,11 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.annotation.CheckForNull;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
@@ -34,11 +35,10 @@ import jmri.jmrit.symbolicprog.ProgDefault;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
 import jmri.jmrix.nce.consist.NceConsistRoster;
 import jmri.jmrix.nce.consist.NceConsistRosterEntry;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.WrapLayout;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A JInternalFrame that provides a way for the user to enter a decoder address.
@@ -213,7 +213,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
             boolean requestOK
                     = throttleManager.requestThrottle(currentAddress, this, true);
             if (!requestOK) {
-                JOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("AddressInUse"));
+                JmriJOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("AddressInUse"));
                 requestedAddress = null;
             }
             return;
@@ -602,15 +602,15 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
                 consistAddress = new DccLocoAddress(cA, false);
             } else {
                 log.warn("consist number missing {}", nceConsistRosterEntry.getLoco1DccAddress());
-                JOptionPane.showMessageDialog(mainPanel,
+                JmriJOptionPane.showMessageDialog(mainPanel,
                         Bundle.getMessage("ConsistNumberHasNotBeenAssigned"),
                         Bundle.getMessage("NeedsConsistNumber"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
-            if (JOptionPane.showConfirmDialog(mainPanel,
+            if (JmriJOptionPane.showConfirmDialog(mainPanel,
                     Bundle.getMessage("SendFunctionToLead"), Bundle.getMessage("NCEconsistThrottle"),
-                    JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                    JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                 addrSelector.setAddress(consistAddress);
                 consistAddress = null;
             }
@@ -642,7 +642,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         }
         if (!requestOK) {
             requestedAddress = null;
-            JOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("AddressInUse"));
+            JmriJOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("AddressInUse"));
         }
     }
 
@@ -660,7 +660,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         requestedAddress = consistAddress;
         if (!requestOK) {
             requestedAddress = null;
-            JOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("AddressInUse"));
+            JmriJOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("AddressInUse"));
         }
     }
 
@@ -697,7 +697,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
             int usageCount  = throttleManager.getThrottleUsageCount(throttle.getLocoAddress()) - 1;
 
             if ( usageCount != 0 ) {
-                JOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("CannotDisptach", usageCount));
+                JmriJOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("CannotDisptach", usageCount));
                 return;
             }
             throttleManager.dispatchThrottle(throttle, this);
@@ -862,7 +862,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 
     /**
      * @return the current consist address if any
-     */ 
+     */
+    @CheckForNull
     public DccLocoAddress getConsistAddress() {
         return consistAddress;
     }
@@ -873,9 +874,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
      * @param consistAddress the consist address to use
      */ 
     public void setConsistAddress(DccLocoAddress consistAddress) {
-        if (log.isDebugEnabled()) {
-            log.debug("Setting Consist Address to {}", consistAddress);
-        }
+        log.debug("Setting Consist Address to {}", consistAddress);
         this.consistAddress = consistAddress;
         changeOfConsistAddress();
     }
@@ -907,7 +906,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         // nothing to do, for now
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AddressPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AddressPanel.class);
 
 }
 

@@ -5,16 +5,16 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Display and modify an Digitrax board configuration.
@@ -425,8 +425,8 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
             readAllButton.setSelected(false);
             writeAllButton.setSelected(false);
             status.setText(Bundle.getMessage("STATUS_INPUT_BAD"));
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("STATUS_INVALID_ADDRESS"),
-                    Bundle.getMessage("STATUS_TYPE_ERROR"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("STATUS_INVALID_ADDRESS"),
+                    Bundle.getMessage("STATUS_TYPE_ERROR"), JmriJOptionPane.ERROR_MESSAGE);
             log.error("{}", Bundle.getMessage("ERROR_PARSING_ADDRESS"), e);
             throw e;
         }
@@ -436,8 +436,8 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
             writeAllButton.setSelected(false);
             status.setText(Bundle.getMessage("STATUS_INPUT_BAD"));
             String message = Bundle.getMessage("AbstractBoardProgPanel_ErrorAddressRange", 1, maxValid);
-            JOptionPane.showMessageDialog(this, message,
-                    "Error", JOptionPane.ERROR_MESSAGE); // NOI18N
+            JmriJOptionPane.showMessageDialog(this, message,
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             log.error("Invalid board ID number: {}", Integer.toString(address)); // NOI18N
             throw new jmri.JmriException(Bundle.getMessage("ERROR_INVALID_ADDRESS") + " " + address);
         }
@@ -712,6 +712,6 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     // first attempt to access a given OpSw
     private final int MAX_OPSW_ACCESS_RETRIES = 2;
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractBoardProgPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractBoardProgPanel.class);
 
 }

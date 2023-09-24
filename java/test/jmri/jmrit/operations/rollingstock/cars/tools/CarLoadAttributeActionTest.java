@@ -36,7 +36,7 @@ public class CarLoadAttributeActionTest extends OperationsTestCase {
         a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
         Assert.assertTrue("toggle state", clef.showQuanity);
 
-        JmriJFrame f = JmriJFrame.getFrame("Edit Boxcar Loads");
+        JmriJFrame f = JmriJFrame.getFrame("Edit Car Loads");
         Assert.assertNotNull("frame exists", f);
         JUnitUtil.dispose(f);
     }

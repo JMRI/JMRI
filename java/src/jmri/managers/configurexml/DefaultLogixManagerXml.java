@@ -5,16 +5,14 @@ import java.awt.GraphicsEnvironment;
 import java.util.List;
 import java.util.SortedSet;
 
-import javax.swing.JOptionPane;
-
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;
 import jmri.managers.DefaultLogixManager;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides the functionality for configuring LogixManagers.
@@ -199,10 +197,10 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
             // for notifying users of multiple changes that can be silenced as part of
             // normal operations
             if (!GraphicsEnvironment.isHeadless() && !Boolean.getBoolean("jmri.test.no-dialogs")) {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage(namesChanged > 1 ? "LogixManager.SystemNamesChanged.Message" : "LogixManager.SystemNameChanged.Message", namesChanged),
                         Bundle.getMessage("Manager.SystemNamesChanged.Title", namesChanged, lxm.getBeanTypeHandled(namesChanged > 1)),
-                        JOptionPane.WARNING_MESSAGE);
+                        JmriJOptionPane.WARNING_MESSAGE);
             }
         log.warn("System names for {} Logixs changed; this may have operational impacts.", namesChanged);
         }
@@ -241,6 +239,6 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
         return InstanceManager.getDefault(jmri.LogixManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultLogixManagerXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultLogixManagerXml.class);
 
 }

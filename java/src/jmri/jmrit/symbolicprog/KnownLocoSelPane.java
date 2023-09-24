@@ -6,9 +6,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import jmri.GlobalProgrammerManager;
 import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
@@ -17,6 +17,7 @@ import jmri.jmrit.roster.IdentifyLoco;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Provide GUI controls to select a known loco via the Roster.
@@ -183,10 +184,10 @@ abstract public class KnownLocoSelPane extends LocoSelPane {
             RosterEntry re = locoBox.getSelectedRosterEntries()[0];
             startProgrammer(null, re, (String) programmerBox.getSelectedItem());
         } else {
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("LocoMustSelected"),
                     Bundle.getMessage("NoSelection"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 

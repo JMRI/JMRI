@@ -2,8 +2,6 @@ package apps.jmrit.decoderdefn;
 
 import jmri.jmrit.decoderdefn.DecoderIndexCreateAction;
 
-import org.apache.logging.log4j.core.config.Configurator;
-
 /**
  * Update the decoder index and store as a command-line action.
  * <P>
@@ -21,14 +19,8 @@ public class DecoderIndexBuilder {
     
         // logging needed for code invoked from here
         String configFile = "default_lcf.xml";
-        try {
-            Configurator.initialize(null, configFile);
-        } catch ( Exception ex ) {
-            System.err.println("Could not initialise logging for logging config file "
-                + configFile + " " + ex);
-            Configurator.reconfigure();
-            Configurator.setRootLevel(org.apache.logging.log4j.Level.WARN);
-        }
+        apps.util.Log4JUtil.initLogging(configFile);
+        Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
 
         // log the location where the result is stored
         System.out.println(jmri.util.FileUtil.getUserFilesPath() + "decoderIndex.xml"); // command line

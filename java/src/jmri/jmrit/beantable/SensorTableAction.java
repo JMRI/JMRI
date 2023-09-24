@@ -16,9 +16,7 @@ import jmri.swing.SystemNameValidator;
 import jmri.jmrit.beantable.sensor.SensorTableDataModel;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.TriStateJCheckBox;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Swing action to create and register a SensorTable GUI.
@@ -174,13 +172,12 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         if (rangeBox.isSelected()) {
             numberOfSensors = (Integer) numberToAddSpinner.getValue();
         }
-        if (numberOfSensors >= 65) { // number beyond which to warn and ask permission; limited by JSpinnerModel to 100
-            if (JOptionPane.showConfirmDialog(addFrame,
-                    Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("Sensors"), numberOfSensors),
-                    Bundle.getMessage("WarningTitle"),
-                    JOptionPane.YES_NO_OPTION) == 1) {
-                return;
-            }
+        if (numberOfSensors >= 65 // number beyond which to warn and ask permission; limited by JSpinnerModel to 100
+            && JmriJOptionPane.showConfirmDialog(addFrame,
+                Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("Sensors"), numberOfSensors),
+                Bundle.getMessage("WarningTitle"),
+                JmriJOptionPane.YES_NO_OPTION ) != JmriJOptionPane.YES_OPTION ) {
+            return;
         }
         String sensorPrefix = prefixBox.getSelectedItem().getSystemPrefix();
         String sName;
@@ -300,8 +297,8 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         statusBarLabel.setText(ex.getLocalizedMessage());
         String err = Bundle.getMessage("ErrorBeanCreateFailed",
             InstanceManager.getDefault(SensorManager.class).getBeanTypeHandled(),hwAddress);
-        JOptionPane.showMessageDialog(addFrame, err + "\n" + ex.getLocalizedMessage(),
-                err, JOptionPane.ERROR_MESSAGE);
+        JmriJOptionPane.showMessageDialog(addFrame, err + "\n" + ex.getLocalizedMessage(),
+                err, JmriJOptionPane.ERROR_MESSAGE);
     }
 
     protected void setDefaultDebounce(JFrame _who) {
@@ -368,11 +365,10 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         stateBoxPane.add(stateCombo);
         input.add(stateBoxPane);
 
-        int retval = JOptionPane.showOptionDialog(_who,
+        int retval = JmriJOptionPane.showConfirmDialog(_who,
                 input, Bundle.getMessage("InitialSensorState"),
-                0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
-        if (retval != 0) {
+                JmriJOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        if (retval != JmriJOptionPane.OK_OPTION) {
             return;
         }
         int defaultState = jmri.Sensor.UNKNOWN;
@@ -522,6 +518,6 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         return Bundle.getMessage("TitleSensorTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SensorTableAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SensorTableAction.class);
 
 }
