@@ -425,7 +425,10 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>The action <strong>Audio</strong> and the expression <strong>Audio</strong>
+          no longer let the user select an Audio buffers when edition the action/expression.
+          LogixNG can only act on or listen to Audio sources and the Audio listener so there
+          is no point in selecting an audio buffer for LogixNG.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
