@@ -35,7 +35,7 @@ public class MqttConsistManager extends AbstractConsistManager {
     }
 
     @Nonnull
-    public String sendTopicPrefix = "cab/$address/consist";
+    public String sendTopicPrefix = "cab/{0}/consist";
 
 
     /**
