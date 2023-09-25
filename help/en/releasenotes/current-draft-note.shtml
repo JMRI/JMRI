@@ -425,7 +425,9 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>A new tool <strong>Where Used</strong> has been added to LogixNG.
+          It shows where in the LogixNG tree an item is used. The tool is found
+          on menu item <strong>Tools &rArr; LogixNG &rArr; Where Used</strong>.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
