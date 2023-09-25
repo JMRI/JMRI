@@ -264,7 +264,13 @@ public class NceThrottle extends AbstractThrottle {
             if (address.isLongAddress()) {
                 locoAddr += 0xC000;
             }
-            value = (int) ((127 - 1) * speed);     // -1 for rescale to avoid estop
+            value = Math.round((127 - 1) * speed);     // -1 for rescale to avoid estop
+            if (speed > 0 && value == 0) {
+                value = 1;          // ensure non-zero input results in non-zero output
+            }
+            if (speed < 0) {
+                value = -1;         // ensure small negative speeds don't get caught by Math.round above
+            }
             if (value > 126) {
                 value = 126;    // max possible speed, 127 can crash PowerCab!
             }   // emergency stop?
@@ -295,15 +301,19 @@ public class NceThrottle extends AbstractThrottle {
             int value;
 
             if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_128) {
-                value = (int) ((127 - 1) * speed);     // -1 for rescale to avoid estop
+                value = Math.round((127 - 1) * speed);     // -1 for rescale to avoid estop
+                if (speed > 0 && value == 0) {
+                    value = 1;          // ensure non-zero input results in non-zero output
+                }
                 if (value > 0) {
                     value = value + 1;  // skip estop
                 }
                 if (value > 127) {
                     value = 127;    // max possible speed
                 }
-                if (value < 0) {
-                    value = 1;        // emergency stop
+                if (speed < 0) {
+                    value = 1;      // emergency stop
+                                    // ensure small negative speeds don't get caught by Math.round above
                 }
                 bl = jmri.NmraPacket.speedStep128Packet(address.getNumber(),
                         address.isLongAddress(), value, isForward);
@@ -327,15 +337,19 @@ public class NceThrottle extends AbstractThrottle {
                  *   bl = jmri.NmraPacket.speedStep28Packet(true, address.getNumber(),
                  *     address.isLongAddress(), value, isForward);
                  */
-                value = (int) ((28) * speed); // -1 for rescale to avoid estop
+                value = Math.round((28-1) * speed); // -1 for rescale to avoid estop
+                if (speed > 0 && value == 0) {
+                    value = 1;          // ensure non-zero input results in non-zero output
+                }
                 if (value > 0) {
                     value = value + 1; // skip estop
                 }
                 if (value > 28) {
                     value = 28; // max possible speed
                 }
-                if (value < 0) {
-                    value = 1; // emergency stop
+                if (speed < 0) {
+                    value = 1;      // emergency stop
+                                    // ensure small negative speeds don't get caught by Math.round above
                 }
                 bl = jmri.NmraPacket.speedStep28Packet(address.getNumber(),
                         address.isLongAddress(), value, isForward);

@@ -2509,6 +2509,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             m.myMessage.append(" -1");
         } else {
             int speedVal = java.lang.Math.round(speed * 126);
+            if (speed > 0 && speedVal == 0) {
+                speedVal = 1;           // ensure non-zero input results in non-zero output
+            }
             speedVal = Math.min(speedVal, DCCppConstants.MAX_SPEED);
             m.myMessage.append(" ").append(speedVal);
         }
@@ -2554,6 +2557,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             m.myMessage.append(" -1");
         } else {
             int speedVal = java.lang.Math.round(speed * 126);
+            if (speed > 0 && speedVal == 0) {
+                speedVal = 1;           // ensure non-zero input results in non-zero output
+            }
             speedVal = Math.min(speedVal, DCCppConstants.MAX_SPEED);
             m.myMessage.append(" ").append(speedVal);
         }

@@ -136,14 +136,28 @@ public class SRCPThrottle extends AbstractThrottle {
     void sendUpdate() {
         String msg = "SET " + bus + " GL ";
 
+        int outSpeed;
+        
+        synchronized(this) {
+            outSpeed = Math.round(speedSetting * maxsteps);
+            if (speedSetting > 0 && outSpeed == 0) {
+                outSpeed = 1;       //  ensure non-zero input results in non-zero output
+            }
+        }
+        
         // address
         msg += (address.getNumber());
 
         // direction and speed
-        msg += (isForward ? " 1" : " 0");
         synchronized(this) {
-            msg += " " + ((int) (speedSetting * maxsteps));
+            if (speedSetting >= 0) {
+                msg += (isForward ? " 1" : " 0");
+            }
+            else {
+                msg += " 2";        // handle emergency stop
+            }
         }
+        msg += " " + outSpeed;
         msg += " ";
         msg += maxsteps;
 

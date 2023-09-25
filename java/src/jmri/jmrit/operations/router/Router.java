@@ -404,7 +404,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                             clone.getDestinationName(), clone.getDestinationTrackName()));
             return false; // try 2 or more trains
         }
-        return true; // able to route, but not able to set the car's destination
+        return true; // able to route, but unable to set the car's destination
     }
 
     /**

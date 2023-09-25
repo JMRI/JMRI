@@ -428,6 +428,13 @@ public class AutoActiveTrain implements ThrottleListener {
     private float _savedSpeed = 0.0f;
     private boolean _savedForward = true;
 
+    public void set_useStopSensor(boolean _useStopSensor) {
+        this._useStopSensor = _useStopSensor;
+    }
+
+    private boolean _useStopSensor = true;                    //used by DispatcherSystem to override use of stop sensor
+
+
     protected void saveSpeedAndDirection() {
         _savedSpeed = _autoEngineer.getTargetSpeed();
         _savedForward = _autoEngineer.getIsForward();
@@ -1225,7 +1232,7 @@ public class AutoActiveTrain implements ThrottleListener {
         } else {
             _stopSensor = _currentAllocatedSection.getSection().getReverseStoppingSensor();
         }
-        if (_stopSensor != null) {
+        if (_stopSensor != null && _useStopSensor) {
             if (_stopSensor.getKnownState() == Sensor.ACTIVE) {
                 // stop sensor is already active, stop now
                 setStopNow();
