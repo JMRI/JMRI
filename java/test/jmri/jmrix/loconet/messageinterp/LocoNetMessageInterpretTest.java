@@ -6937,40 +6937,41 @@ public class LocoNetMessageInterpretTest {
             0x07, 0x00, 0x78, 0x68, 0x0B, 0x0f, 0x00} );
         Assert.assertEquals("verify 17: Ext Accy Addr 1 CV 12 bit 7 verify as 1",
                 "Send packet immediate: 5 bytes, repeat count 4(84)\n" +
-                "	DHI=0x07, IM1=0x00, IM2=0x78, IM3=0x68, IM4=0x0B, IM5=0x0F\n" +
-                "	packet: 80 F8 E8 0B 0F .\n",
+                "\tDHI=0x07, IM1=0x00, IM2=0x78, IM3=0x68, IM4=0x0B, IM5=0x0F\n" +
+                "\tpacket: 80 F8 E8 0B 0F .\n",
                 LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
 
         m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
             0x07, 0x00, 0x78, 0x68, 0x0B, 0x37, 0x00} );
         Assert.assertEquals("write 18: Ext Accy Addr 1 CV 12 bit 7 verify as 0",
                "Send packet immediate: 5 bytes, repeat count 4(84)\n" +
-                "	DHI=0x07, IM1=0x00, IM2=0x78, IM3=0x68, IM4=0x0B, IM5=0x37\n" +
-                "	packet: 80 F8 E8 0B 37 .\n",
+                "\tDHI=0x07, IM1=0x00, IM2=0x78, IM3=0x68, IM4=0x0B, IM5=0x37\n" +
+                "\tpacket: 80 F8 E8 0B 37 .\n",
                 LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
         
         m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
             0x07, 0x00, 0x78, 0x68, 0x0B, 0x4f, 0x00} );
         Assert.assertEquals("verify 19: Ext Accy Addr 1 CV 12 bit 7 verify as 1",
                "Send packet immediate: 5 bytes, repeat count 4(84)\n" +
-                "	DHI=0x07, IM1=0x00, IM2=0x78, IM3=0x68, IM4=0x0B, IM5=0x4F\n" +
-                "	packet: 80 F8 E8 0B 4F .\n",
+                "\tDHI=0x07, IM1=0x00, IM2=0x78, IM3=0x68, IM4=0x0B, IM5=0x4F\n" +
+                "\tpacket: 80 F8 E8 0B 4F .\n",
                 LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
 
         m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
             0x07, 0x00, 0x78, 0x68, 0x0B, 0x57, 0x00} );
         Assert.assertEquals("write 20: Ext Accy Addr 1 CV 12 bit 7 verify as 0",
                "Send packet immediate: 5 bytes, repeat count 4(84)\n" +
-                "	DHI=0x07, IM1=0x00, IM2=0x78, IM3=0x68, IM4=0x0B, IM5=0x57\n" +
-                "	packet: 80 F8 E8 0B 57 .\n",
+                "\tDHI=0x07, IM1=0x00, IM2=0x78, IM3=0x68, IM4=0x0B, IM5=0x57\n" +
+                "\tpacket: 80 F8 E8 0B 57 .\n",
                 LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
-        
+
+
         m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
             0x07, 0x00, 0x78, 0x68, 0x0B, 0x6f, 0x00} );
         Assert.assertEquals("verify 21: Ext Accy Addr 1 CV 12 bit 7 verify as 1",
                "Send packet immediate: 5 bytes, repeat count 4(84)\n" +
-                "	DHI=0x07, IM1=0x00, IM2=0x78, IM3=0x68, IM4=0x0B, IM5=0x6F\n" +
-                "	packet: 80 F8 E8 0B 6F .\n",
+                "\tDHI=0x07, IM1=0x00, IM2=0x78, IM3=0x68, IM4=0x0B, IM5=0x6F\n" +
+                "\tpacket: 80 F8 E8 0B 6F .\n",
                 LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
 
     }
