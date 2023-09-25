@@ -4215,18 +4215,21 @@ public class LocoNetMessageInterpret {
                                      * will be generated in response to the second 
                                      * identical WRITE BIT instruction if appropriate.
                                      */
+                                    if ((packetInt[4]& 0xE0) != 0xE0) {
+                                        break;
+                                    }
                                     log.debug("CV # {}, Bit Manipulation: {} {} (of bits 0-7) with {}", 
-                                            cvnum, (packetInt[4] & 0x10) == 0x10 ? "Write bit" : "Verify bit",
+                                            cvnum, (packetInt[4] & 0x10) == 0x10 ? "Write" : "Verify",
                                             (packetInt[4] & 0x7),
-                                            (packetInt[4] >>4) & 0x1);
+                                            (packetInt[4] >> 3) & 0x1);
                                     
                                     // "Extended Accessory Decoder CV Bit {} bit, 
                                     // Address {}, CV {}, bit # {} (of bits 0-7) 
                                     // with value {}.\n"
                                     return Bundle.getMessage("LN_MSG_EXTEND_ACCY_CV_BIT_ACCESS",
-                                            ((packetInt[4] & 0x10) == 0x10 ? "Write bit" : "Verify bit"),
+                                            ((packetInt[4] & 0x10) == 0x10 ? "Write" : "Verify"),
                                             addr, cvnum, (packetInt[4] & 0x7),
-                                            ((packetInt[4] >>4) & 0x1) );
+                                            ((packetInt[4] >>3) & 0x1) );
                                 case 0x0c:
                                     // GG=11 Write byte
                                     /*
