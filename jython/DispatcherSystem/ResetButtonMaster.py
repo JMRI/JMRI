@@ -69,6 +69,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         return True
 
     def handle(self):
+        if self.logLevel > 1: print "in resetbuttonmaster", [ str(sensor.getUserName()) for sensor in self.button_sensors_to_watch if sensor in self.sensors_requiring_use_of_station_buttons]
         global setAllStoppingSensors
         global stopping_sensor_choice
         #wait for a sensor to go active
@@ -206,15 +207,18 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         elif mode == "sensor_off":
             # turn sensor off
+            if self.logLevel > 1: print "turn sensor off", sensor.getUserName()
             sensor.setKnownState(INACTIVE)
             #reset self.sensors_requiring_use_of_station_buttons to full list
             self.get_sensors_requiring_use_of_station_buttons()
-            # inhibit the same sensor being pressed again
-            # self.sensor_active_sensors_requiring_use_of_station_buttons_old = sensor
+            # allow the button to be pressed again    ##### inhibit the same sensor being pressed again
+            self.sensor_active_sensors_requiring_use_of_station_buttons_old = None
+
+            self.get_sensors_requiring_use_of_station_buttons()
 
         else:
             #error
-            print ("!!!!! Error in switch_sensors_requiring_station_buttons: contact developer!!!!!!")
+            if self.logLevel > 1: print ("!!!!! Error in switch_sensors_requiring_station_buttons: contact developer!!!!!!")
 
     def process_button_sensors(self, sensor_changed):
         [sensor.setKnownState(INACTIVE) for sensor in self.button_sensors if sensor != sensor_changed]
@@ -251,12 +255,13 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             #stopping_sensor_choice = None
             #sensors.getSensor("setStoppingDistanceSensor").setKnownState(INACTIVE)
             #sensors.getSensor("setDispatchSensor").setKnownState(INACTIVE)
-            msg = "Press section buttons to set route \nThe route may be used to schedule a train"
+            msg = "Press station buttons to set route \nThe route may be used to schedule a train"
             self.od.displayMessage(msg)
             if self.od.CLOSED_OPTION == True:
                 if self.logLevel > 0: print "closed option"
                 #make so can select RouteSensor again
-                self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
+                self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")#
+                self.get_sensors_requiring_use_of_station_buttons()
                 return
             else:
                 # if self.sensor_active_sensors_requiring_use_of_station_buttons_old == None:
@@ -358,6 +363,80 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                     #self.regenerate_traininfo_files("Regenerated TrainInfo Files")
 
                     self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
+
+        elif sensor_changed == sensors.getSensor("setStopSensor"):
+            #optionbox
+            title = "Station Sensors"
+            msg = "modify station directions?"
+            list_items = self.get_forward_stop_sensors()
+            # list_items = [ "from " + l[1] + " to " + l[0] for l in list_items1]
+            if list_items == []:
+                list_items = ["no stop sensors set up"]
+            opt1 = "Delete Selected Sensor"
+            opt2 = "Set At particular station"
+            options = [opt1, opt2]
+            ss = self.od.ListOptions(list_items, title, options)
+            if self.od.CLOSED_OPTION == True: #check of optionbox was closed prematurely
+                self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
+                return
+            [list,s] = ss
+            if s == opt1:
+                if list != "no stop sensors set up":
+                    while(1):
+                        if list != ["no stop sensors set up"]:
+                            #delete the item
+                            [section_text, stopping_sensor_text] = list
+                            section_name = section_text.split(" ")[1]
+                            stopping_sensor_name = stopping_sensor_text.split(" ")[1]
+                            sections.getSection(section_name).setForwardStoppingSensorName(None)
+                        # redisplay
+                        opt1 = "Delete Selected Sensor"
+                        opt2 = "Cancel"
+                        options = [opt1, opt2]
+                        title = "Select Stop Sensor to be removed"
+                        list_items = self.get_forward_stop_sensors()
+                        if self.logLevel > 1: print "list_items", list_items
+                        if list_items == [] :
+                            list_items = ["no stop sensors set up"]
+                        if self.logLevel > 1: print "list_items", list_items
+                        [list, option]  = self.od.ListOptions(list_items, title, options)
+                        if self.od.CLOSED_OPTION == True or option == "Cancel": #check of optionbox was closed prematurely
+                            self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
+                            return
+
+
+
+                # if self.od.CLOSED_OPTION == True: #check of optionbox was closed prematurely
+                #     self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
+                #     return
+                # if option == option1:
+                #     if list != "no stop sensors set up":
+                #         [section_text, stopping_sensor_text] = list
+                #         section_name = section_text.split(" ")[1]
+                #         stopping_sensor_name = stopping_sensor_text.split(" ")[1]
+                #         sections.getSection(section_name).setForwardStoppingSensorName(None)
+                #         self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
+                #
+                #     else:
+                #         self.od.displayMessage("no stop sensors set up, cannot delete stop sensor")
+                #     return
+            # elif option == option2:
+                self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
+                return
+                #
+                # self.od.displayMessage("Not implemented")
+                # # self.reset_direction_restrictions(sensor_changed)
+            elif s == opt2:
+                #stopping_sensor_choice = "Set At particular station
+                msg = "Press station buttons to select a section in order to\nset stop sensor at a station\n"
+                msg = msg + "secect the second station adjacent to the first to indicate the station where you are stopping"
+                self.od.displayMessage(msg)
+                if self.od.CLOSED_OPTION == True:
+                    self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
+                else:
+                    self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_on")
+
+
         elif sensor_changed == sensors.getSensor("setTransitBlockRestrictionSensor"):
 
             #optionbox
@@ -396,13 +475,19 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             pass
         else:
             if sensor_changed != None:
-                msg = "error" + sensor_changed.getUserName()
+                msg = "error: " + sensor_changed.getUserName()
             else:
                 msg = "error in checking buttons"
             OptionDialog().displayMessage(msg)
 
         #self.sensor_active_setuproute_or_rundispatch_or_stoppinglength_old = None
         #self.button_sensors_to_watch = self.route_run_sensor + self.button_sensors + self.setuproute_or_rundispatch_or_setstoppinglength_sensors
+
+    def get_forward_stop_sensors(self):
+        forward_stop_sensors = \
+            [["section: " + str(section.getUserName()), "stop sensor: " + str(section.getForwardStoppingSensor().getUserName())] \
+                                for section in sections.getNamedBeanSet() if section.getForwardStoppingSensor() != None]
+        return forward_stop_sensors
 
     def reset_direction_restrictions(self, sensor_changed):
         #stopping_sensor_choice = "Reset All"
@@ -810,7 +895,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
     def get_sensors_requiring_use_of_station_buttons(self):
         sensor_list = ["setDispatchSensor", "setRouteSensor", "setStoppingDistanceSensor", \
                        "setStationWaitTimeSensor", "setStationDirectionSensor", "setTransitBlockRestrictionSensor", \
-                       "DummyControlSensor"]
+                       "setStopSensor", "DummyControlSensor"]
         self.sensors_requiring_use_of_station_buttons = \
             [sensors.getSensor(sensorName) for sensorName in sensor_list]
         self.route_dispatch_states = [self.check_sensor_state(rd_sensor) for rd_sensor in self.sensors_requiring_use_of_station_buttons]
@@ -861,15 +946,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         # if self.od.CLOSED_OPTION == True:
         # return
         # if result == "Run Route":
-        RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
-        list_items = RouteManager.getRoutesByNameList()
-        title = "choose route"
-        s = self.od.List(title, list_items)
-        if self.od.CLOSED_OPTION == True:
-            return
-        routeName = str(s)
-        if self.logLevel > 0: print "routeName", routeName
-        route = RouteManager.getRouteByName(routeName)
+
 
         trains_to_choose = self.get_list_of_engines_to_move()
         # msg = "trains_to_choose" + str(trains_to_choose)
@@ -879,8 +956,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             msg = "There are no trains available for dispatch\nTrains dispatched are:\n"+str_trains_dispatched+"\n"
             title = "Cannot move train"
             opt1 = "continue"
-            opt2 = "stop all dispatches" \
-                   ""
+            opt2 = "stop all dispatches"
             result = self.od.customQuestionMessage2str(msg, title, opt1, opt2)
             if result == "stop all dispatches":
                 delete_transits()
@@ -890,6 +966,32 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         if self.od.CLOSED_OPTION == True:
             return
         station_from = self.get_position_of_train(engine)
+        RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
+        opt1a = "show routes starting at train position"
+        opt1b = "show all routes"
+        opt1 = opt1a
+        opt2 = "OK"
+        s = opt1
+        list_items = RouteManager.getRoutesByNameList()
+        while s == opt1:
+            title = "choose route"
+            [l,s] = self.od.ListOptions(list_items,title,[opt2,opt1])
+            if self.od.CLOSED_OPTION == True:
+                return
+            if s == opt1:
+                xx = [str(station_block_name) for station_block_name in g.station_block_list \
+                      if blocks.getBlock(station_block_name).getValue()==engine]
+                if opt1 == opt1a:
+                    station_where_engine_is = [str(station_block_name) for station_block_name in g.station_block_list \
+                                               if blocks.getBlock(station_block_name).getValue()==engine][0]
+                    list_items = [l for l in list_items if str(l.getName()).startswith(str(station_where_engine_is))]
+                    s = opt1 = opt1b
+                else:
+                    list_items = RouteManager.getRoutesByNameList()
+                    s = opt1 = opt1a
+        routeName = str(l)
+        if self.logLevel > 0: print "routeName", routeName
+        route = RouteManager.getRouteByName(routeName)
 
         list_items = ["stop at end of route", "return to start position", "return to start and repeat", "cancel"]
         title = "What do you want to do"
@@ -958,17 +1060,6 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                 if self.logLevel > 0: print "removing" ,train
                 trains_to_choose.remove(train)
                 if self.logLevel > 0: print "trains_to_choose",trains_to_choose
-
-        # # JOptionPane.showMessageDialog(None,msg)
-        # if trains_to_choose == []:
-        #     str_trains_dispatched= (' '.join(trains_dispatched))
-        #     msg = "There are no trains available for dispatch\nTrains dispatched are:\n"+str_trains_dispatched+"\n"
-        #     title = "Cannot move train"
-        #     opt1 = "continue"
-        #     opt2 = "reset all allocations"
-        #     result = self.od.customQuestionMessage2str(msg, title, opt1, opt2)
-        #     if result == "reset all allocations":
-        #         trains_dispatched = []
         return trains_to_choose
 
     def get_position_of_train(self, train_to_move):
