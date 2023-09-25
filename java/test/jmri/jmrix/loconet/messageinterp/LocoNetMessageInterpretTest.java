@@ -6807,8 +6807,174 @@ public class LocoNetMessageInterpretTest {
         Assert.assertEquals("write 4: Ext Accy Addr 1 CV 12 to 0", ""
                 + "Extended Accessory Decoder CV Write: Address 1 CV 12 with 0.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
-        
     }    
+    
+    @Test
+    public void testExpendedAccyBitReadsQQQQ() {
+        // GG=10 Bit manipulation
+        /*
+         * Type = "10" BIT MANIPULATION.
+         *
+         * The bit manipulation instructions use a special 
+         * format for the data byte (DDDDDDDD): 111FDBBB, where 
+         * BBB represents the bit position within the CV, 
+         * D contains the value of the bit to be verified 
+         * or written, and F describes whether the 
+         * operation is a verify bit or a write bit 
+         * operation.
+         * 
+         * F = "1" : WRITE BIT
+         * F = "0" : VERIFY BIT
+         * The VERIFY BIT and WRITE BIT instructions operate 
+         * in a manner similar to the VERIFY BYTE and WRITE 
+         * BYTE instructions (but operates on a single bit). 
+         * Using the same criteria as the VERIFY BYTE 
+         * instruction, an operations mode acknowledgment 
+         * will be generated in response to a VERIFY BIT 
+         * instruction if appropriate. Using the same 
+         * criteria as the WRITE BYTE instruction, a 
+         * configuration variable access acknowledgment 
+         * will be generated in response to the second 
+         * identical WRITE BIT instruction if appropriate.
+         */
+        LocoNetMessage m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x00, 0x78, 0x68, 0x0B, 0xe1, 0x00} );
+        Assert.assertEquals("Verify 1: Ext Accy Addr 1 CV 12 bit 1 verify as 0",
+                "Extended Accessory Decoder CV Bit Verify bit, Address 1, CV 12, bit # 1 (of bits 0-7) with value 0.\n",
+                LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+
+        m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x00, 0x78, 0x68, 0x0B, 0xF9, 0x00} );
+        Assert.assertEquals("write 2: Ext Accy Addr 1 CV 12 bit 1 verify as 1",
+                "Extended Accessory Decoder CV Bit Write bit, Address 1, CV 12, bit # 1 (of bits 0-7) with value 1.\n",
+                LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+        
+        m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x00, 0x78, 0x68, 0x0B, 0xE0, 0x00} );
+        Assert.assertEquals("verify 3: Ext Accy Addr 1 CV 12 bit 0 verify as 0",
+                "Extended Accessory Decoder CV Bit Verify bit, Address 1, CV 12, bit # 0 (of bits 0-7) with value 0.\n",
+                LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+
+        m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x00, 0x78, 0x68, 0x0B, 0xF8, 0x00} );
+        Assert.assertEquals("write 4: Ext Accy Addr 1 CV 12 bit 0 verify as 1",
+                "Extended Accessory Decoder CV Bit Write bit, Address 1, CV 12, bit # 0 (of bits 0-7) with value 1.\n",
+                LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+        
+        m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x00, 0x78, 0x68, 0x0B, 0xE2, 0x00} );
+        Assert.assertEquals("verify 5: Ext Accy Addr 1 CV 12 bit 2 verify as 0",
+                "Extended Accessory Decoder CV Bit Verify bit, Address 1, CV 12, bit # 2 (of bits 0-7) with value 0.\n",
+                LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+
+        m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x00, 0x78, 0x68, 0x0B, 0xFA, 0x00} );
+        Assert.assertEquals("write 6: Ext Accy Addr 1 CV 12 bit 2 verify as 1",
+                "Extended Accessory Decoder CV Bit Write bit, Address 1, CV 12, bit # 2 (of bits 0-7) with value 1.\n",
+                LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+
+        m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x00, 0x78, 0x68, 0x0B, 0xeb, 0x00} );
+        Assert.assertEquals("verify 7: Ext Accy Addr 1 CV 12 bit 3 verify as 1",
+                "Extended Accessory Decoder CV Bit Verify bit, Address 1, CV 12, bit # 3 (of bits 0-7) with value 1.\n",
+                LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+
+        m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x00, 0x78, 0x68, 0x0B, 0xf3, 0x00} );
+        Assert.assertEquals("write 8: Ext Accy Addr 1 CV 12 bit 3 verify as 0",
+                "Extended Accessory Decoder CV Bit Write bit, Address 1, CV 12, bit # 3 (of bits 0-7) with value 0.\n",
+                LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+        
+        m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x00, 0x78, 0x68, 0x0B, 0xe4, 0x00} );
+        Assert.assertEquals("verify 9: Ext Accy Addr 1 CV 12 bit 4 verify as 0",
+                "Extended Accessory Decoder CV Bit Verify bit, Address 1, CV 12, bit # 4 (of bits 0-7) with value 0.\n",
+                LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+
+        m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x00, 0x78, 0x68, 0x0B, 0xf4, 0x00} );
+        Assert.assertEquals("write 10: Ext Accy Addr 1 CV 12 bit 4 verify as 0",
+                "Extended Accessory Decoder CV Bit Write bit, Address 1, CV 12, bit # 4 (of bits 0-7) with value 0.\n",
+                LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+
+        m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x00, 0x78, 0x68, 0x0B, 0xed, 0x00} );
+        Assert.assertEquals("verify 11: Ext Accy Addr 1 CV 12 bit 5 verify as 1",
+                "Extended Accessory Decoder CV Bit Verify bit, Address 1, CV 12, bit # 5 (of bits 0-7) with value 1.\n",
+                LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+
+        m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x00, 0x78, 0x68, 0x0B, 0xfd, 0x00} );
+        Assert.assertEquals("write 10: Ext Accy Addr 1 CV 12 bit 5 verify as 1",
+                "Extended Accessory Decoder CV Bit Write bit, Address 1, CV 12, bit # 5 (of bits 0-7) with value 1.\n",
+                LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+        
+        m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x00, 0x78, 0x68, 0x0B, 0xe6, 0x00} );
+        Assert.assertEquals("verify 13: Ext Accy Addr 1 CV 12 bit 6 verify as 0",
+                "Extended Accessory Decoder CV Bit Verify bit, Address 1, CV 12, bit # 6 (of bits 0-7) with value 0.\n",
+                LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+
+        m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x00, 0x78, 0x68, 0x0B, 0xfe, 0x00} );
+        Assert.assertEquals("write 14: Ext Accy Addr 1 CV 12 bit 6 verify as 1",
+                "Extended Accessory Decoder CV Bit Write bit, Address 1, CV 12, bit # 6 (of bits 0-7) with value 1.\n",
+                LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+        
+        m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x00, 0x78, 0x68, 0x0B, 0xef, 0x00} );
+        Assert.assertEquals("verify 15: Ext Accy Addr 1 CV 12 bit 7 verify as 1",
+                "Extended Accessory Decoder CV Bit Verify bit, Address 1, CV 12, bit # 7 (of bits 0-7) with value 1.\n",
+                LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+
+        m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x00, 0x78, 0x68, 0x0B, 0xf7, 0x00} );
+        Assert.assertEquals("write 16: Ext Accy Addr 1 CV 12 bit 7 verify as 0",
+                "Extended Accessory Decoder CV Bit Write bit, Address 1, CV 12, bit # 7 (of bits 0-7) with value 0.\n",
+                LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+        
+        m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x00, 0x78, 0x68, 0x0B, 0x0f, 0x00} );
+        Assert.assertEquals("verify 17: Ext Accy Addr 1 CV 12 bit 7 verify as 1",
+                "Send packet immediate: 5 bytes, repeat count 4(84)\n" +
+                "	DHI=0x07, IM1=0x00, IM2=0x78, IM3=0x68, IM4=0x0B, IM5=0x0F\n" +
+                "	packet: 80 F8 E8 0B 0F .\n",
+                LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+
+        m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x00, 0x78, 0x68, 0x0B, 0x37, 0x00} );
+        Assert.assertEquals("write 18: Ext Accy Addr 1 CV 12 bit 7 verify as 0",
+               "Send packet immediate: 5 bytes, repeat count 4(84)\n" +
+                "	DHI=0x07, IM1=0x00, IM2=0x78, IM3=0x68, IM4=0x0B, IM5=0x37\n" +
+                "	packet: 80 F8 E8 0B 37 .\n",
+                LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+        
+        m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x00, 0x78, 0x68, 0x0B, 0x4f, 0x00} );
+        Assert.assertEquals("verify 19: Ext Accy Addr 1 CV 12 bit 7 verify as 1",
+               "Send packet immediate: 5 bytes, repeat count 4(84)\n" +
+                "	DHI=0x07, IM1=0x00, IM2=0x78, IM3=0x68, IM4=0x0B, IM5=0x4F\n" +
+                "	packet: 80 F8 E8 0B 4F .\n",
+                LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+
+        m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x00, 0x78, 0x68, 0x0B, 0x57, 0x00} );
+        Assert.assertEquals("write 20: Ext Accy Addr 1 CV 12 bit 7 verify as 0",
+               "Send packet immediate: 5 bytes, repeat count 4(84)\n" +
+                "	DHI=0x07, IM1=0x00, IM2=0x78, IM3=0x68, IM4=0x0B, IM5=0x57\n" +
+                "	packet: 80 F8 E8 0B 57 .\n",
+                LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+        
+        m = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x00, 0x78, 0x68, 0x0B, 0x6f, 0x00} );
+        Assert.assertEquals("verify 21: Ext Accy Addr 1 CV 12 bit 7 verify as 1",
+               "Send packet immediate: 5 bytes, repeat count 4(84)\n" +
+                "	DHI=0x07, IM1=0x00, IM2=0x78, IM3=0x68, IM4=0x0B, IM5=0x6F\n" +
+                "	packet: 80 F8 E8 0B 6F .\n",
+                LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
