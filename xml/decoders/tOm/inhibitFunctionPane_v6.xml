@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (C) JMRI 2023 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- Version 1 - Lolke H Bijlsma - 2023-09-21                               -->
+<!-- Inhibit function mapping, chapter 13 in decoder manual                 -->
+
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+   <name>Inhibit Function Map</name>
+   <column>
+
+        <label>
+            <text>Functions can be configured to inhibit one or more outputs.</text>
+        </label>
+        <label>
+            <text> </text>
+        </label>
+        <grid ipadx="10" ipady="10">
+            <!-- column labels -->
+            <griditem gridx="0" gridy="1">
+                <label>
+                    <text>F0f</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="2">
+                <label>
+                    <text>F0r</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="3">
+                <label>
+                    <text>F1f</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="4">
+                <label>
+                    <text>F1r</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="5">
+                <label>
+                    <text>F2</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="6">
+                <label>
+                    <text>F3</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="7">
+                <label>
+                    <text>F4</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="8">
+                <label>
+                    <text>F5</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="9">
+                <label>
+                    <text>F6</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="10">
+                <label>
+                    <text>F7</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="11">
+                <label>
+                    <text>F8</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="12">
+                <label>
+                    <text>F9</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="13">
+                <label>
+                    <text>F10</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="14">
+                <label>
+                    <text>F11</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="15">
+                <label>
+                    <text>F12</text>
+                </label>
+            </griditem>
+            <!-- row labels -->
+            <griditem gridx="1" gridy="0">
+                <label>
+                    <text>FL</text>
+                </label>
+            </griditem>
+            <griditem gridx="2" gridy="0">
+                <label>
+                    <text>RL</text>
+                </label>
+            </griditem>
+            <griditem gridx="3" gridy="0">
+                <label>
+                    <text>AUX1</text>
+                </label>
+            </griditem>
+            <griditem gridx="4" gridy="0">
+                <label>
+                    <text>AUX2</text>
+                </label>
+            </griditem>
+            <griditem gridx="5" gridy="0">
+                <label>
+                    <text>AUX3</text>
+                </label>
+            </griditem>
+            <griditem gridx="6" gridy="0">
+                <label>
+                    <text>AUX4</text>
+                </label>
+            </griditem>
+            
+            <!-- Only show this for the decoders that have AUX5 and AUX6 -->
+            <group exclude="2010220,2010221,2010222,2010223,2010227">   
+                <griditem gridx="7" gridy="0">
+                    <label>
+                        <text>AUX5</text>
+                    </label>
+                </griditem>
+                <griditem gridx="8" gridy="0">
+                    <label>
+                        <text>AUX6</text>
+                    </label>
+                </griditem>
+            </group>
+
+             <!-- data -->
+            <griditem gridx="1" gridy="1">
+                <display item="FL blocked by F0 (forward)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="1">
+                <display item="FR blocked by F0 (forward)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="1">
+                <display item="Aux1 blocked by F0 (forward)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="1">
+                <display item="Aux2 blocked by F0 (forward)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="1">
+                <display item="Aux3 blocked by F0 (forward)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="1">
+                <display item="Aux4 blocked by F0 (forward)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="1">
+                <display item="Aux5 blocked by F0 (forward)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="1">
+                <display item="Aux6 blocked by F0 (forward)" format="checkbox" label=""/>
+            </griditem>
+            
+            <griditem gridx="1" gridy="2">
+                <display item="FL blocked by F0 (reverse)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="2">
+                <display item="FR blocked by F0 (reverse)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="2">
+                <display item="Aux1 blocked by F0 (reverse)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="2">
+                <display item="Aux2 blocked by F0 (reverse)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="2">
+                <display item="Aux3 blocked by F0 (reverse)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="2">
+                <display item="Aux4 blocked by F0 (reverse)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="2">
+                <display item="Aux5 blocked by F0 (reverse)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="2">
+                <display item="Aux6 blocked by F0 (reverse)" format="checkbox" label=""/>
+            </griditem>
+            
+            <griditem gridx="1" gridy="3">
+                <display item="FL blocked by F1 (forward)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="3">
+                <display item="FR blocked by F1 (forward)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="3">
+                <display item="Aux1 blocked by F1 (forward)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="3">
+                <display item="Aux2 blocked by F1 (forward)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="3">
+                <display item="Aux3 blocked by F1 (forward)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="3">
+                <display item="Aux4 blocked by F1 (forward)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="3">
+                <display item="Aux5 blocked by F1 (forward)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="3">
+                <display item="Aux6 blocked by F1 (forward)" format="checkbox" label=""/>
+            </griditem>
+ 
+            <griditem gridx="1" gridy="4">
+                <display item="FL blocked by F1 (reverse)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="4">
+                <display item="FR blocked by F1 (reverse)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="4">
+                <display item="Aux1 blocked by F1 (reverse)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="4">
+                <display item="Aux2 blocked by F1 (reverse)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="4">
+                <display item="Aux3 blocked by F1 (reverse)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="4">
+                <display item="Aux4 blocked by F1 (reverse)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="4">
+                <display item="Aux5 blocked by F1 (reverse)" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="4">
+                <display item="Aux6 blocked by F1 (reverse)" format="checkbox" label=""/>
+            </griditem>
+
+             <griditem gridx="1" gridy="5">
+                <display item="FL blocked by F2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="5">
+                <display item="FR blocked by F2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="5">
+                <display item="Aux1 blocked by F2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="5">
+                <display item="Aux2 blocked by F2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="5">
+                <display item="Aux3 blocked by F2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="5">
+                <display item="Aux4 blocked by F2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="5">
+                <display item="Aux5 blocked by F2" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="5">
+                <display item="Aux6 blocked by F2" format="checkbox" label=""/>
+            </griditem>
+
+             <griditem gridx="1" gridy="6">
+                <display item="FL blocked by F3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="6">
+                <display item="FR blocked by F3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="6">
+                <display item="Aux1 blocked by F3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="6">
+                <display item="Aux2 blocked by F3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="6">
+                <display item="Aux3 blocked by F3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="6">
+                <display item="Aux4 blocked by F3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="6">
+                <display item="Aux5 blocked by F3" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="6">
+                <display item="Aux6 blocked by F3" format="checkbox" label=""/>
+            </griditem>
+
+             <griditem gridx="1" gridy="7">
+                <display item="FL blocked by F4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="7">
+                <display item="FR blocked by F4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="7">
+                <display item="Aux1 blocked by F4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="7">
+                <display item="Aux2 blocked by F4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="7">
+                <display item="Aux3 blocked by F4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="7">
+                <display item="Aux4 blocked by F4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="7">
+                <display item="Aux5 blocked by F4" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="7">
+                <display item="Aux6 blocked by F4" format="checkbox" label=""/>
+            </griditem>
+
+            <griditem gridx="1" gridy="8">
+                <display item="FL blocked by F5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="8">
+                <display item="FR blocked by F5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="8">
+                <display item="Aux1 blocked by F5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="8">
+                <display item="Aux2 blocked by F5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="8">
+                <display item="Aux3 blocked by F5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="8">
+                <display item="Aux4 blocked by F5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="8">
+                <display item="Aux5 blocked by F5" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="8">
+                <display item="Aux6 blocked by F5" format="checkbox" label=""/>
+            </griditem>
+
+            <griditem gridx="1" gridy="9">
+                <display item="FL blocked by F6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="9">
+                <display item="FR blocked by F6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="9">
+                <display item="Aux1 blocked by F6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="9">
+                <display item="Aux2 blocked by F6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="9">
+                <display item="Aux3 blocked by F6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="9">
+                <display item="Aux4 blocked by F6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="9">
+                <display item="Aux5 blocked by F6" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="9">
+                <display item="Aux6 blocked by F6" format="checkbox" label=""/>
+            </griditem>
+
+            <griditem gridx="1" gridy="10">
+                <display item="FL blocked by F7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="10">
+                <display item="FR blocked by F7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="10">
+                <display item="Aux1 blocked by F7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="10">
+                <display item="Aux2 blocked by F7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="10">
+                <display item="Aux3 blocked by F7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="10">
+                <display item="Aux4 blocked by F7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="10">
+                <display item="Aux5 blocked by F7" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="10">
+                <display item="Aux6 blocked by F7" format="checkbox" label=""/>
+            </griditem>
+
+            <griditem gridx="1" gridy="11">
+                <display item="FL blocked by F8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="11">
+                <display item="FR blocked by F8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="11">
+                <display item="Aux1 blocked by F8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="11">
+                <display item="Aux2 blocked by F8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="11">
+                <display item="Aux3 blocked by F8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="11">
+                <display item="Aux4 blocked by F8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="11">
+                <display item="Aux5 blocked by F8" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="11">
+                <display item="Aux6 blocked by F8" format="checkbox" label=""/>
+            </griditem>
+
+            <griditem gridx="1" gridy="12">
+                <display item="FL blocked by F9" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="12">
+                <display item="FR blocked by F9" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="12">
+                <display item="Aux1 blocked by F9" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="12">
+                <display item="Aux2 blocked by F9" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="12">
+                <display item="Aux3 blocked by F9" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="12">
+                <display item="Aux4 blocked by F9" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="12">
+                <display item="Aux5 blocked by F9" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="12">
+                <display item="Aux6 blocked by F9" format="checkbox" label=""/>
+            </griditem>
+
+            <griditem gridx="1" gridy="13">
+                <display item="FL blocked by F10" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="13">
+                <display item="FR blocked by F10" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="13">
+                <display item="Aux1 blocked by F10" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="13">
+                <display item="Aux2 blocked by F10" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="13">
+                <display item="Aux3 blocked by F10" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="13">
+                <display item="Aux4 blocked by F10" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="13">
+                <display item="Aux5 blocked by F10" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="13">
+                <display item="Aux6 blocked by F10" format="checkbox" label=""/>
+            </griditem>
+
+            <griditem gridx="1" gridy="14">
+                <display item="FL blocked by F11" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="14">
+                <display item="FR blocked by F11" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="14">
+                <display item="Aux1 blocked by F11" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="14">
+                <display item="Aux2 blocked by F11" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="14">
+                <display item="Aux3 blocked by F11" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="14">
+                <display item="Aux4 blocked by F11" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="14">
+                <display item="Aux5 blocked by F11" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="14">
+                <display item="Aux6 blocked by F11" format="checkbox" label=""/>
+            </griditem>
+
+            <griditem gridx="1" gridy="15">
+                <display item="FL blocked by F12" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="15">
+                <display item="FR blocked by F12" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="3" gridy="15">
+                <display item="Aux1 blocked by F12" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="4" gridy="15">
+                <display item="Aux2 blocked by F12" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="5" gridy="15">
+                <display item="Aux3 blocked by F12" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="6" gridy="15">
+                <display item="Aux4 blocked by F12" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="15">
+                <display item="Aux5 blocked by F12" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="15">
+                <display item="Aux6 blocked by F12" format="checkbox" label=""/>
+            </griditem>
+                             
+        </grid>
+   </column>
+</pane>
+

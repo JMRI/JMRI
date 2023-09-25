@@ -236,7 +236,7 @@ public class MqttConsistTest extends jmri.implementation.AbstractConsistTestBase
         memo = new MqttSystemConnectionMemo();
         memo.setMqttAdapter(a);
 
-        c = new MqttConsist(3, memo, "cab/$address/consist");
+        c = new MqttConsist(3, memo, "cab/{0}/consist");
     }
 
     @AfterEach

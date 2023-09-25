@@ -21,6 +21,8 @@
 
   <version author="lbijlsma@pobox.com" version="1" lastUpdated="20230913"/>
   <version author="Petr Šídlo sidlo64@hotmail.com" version="2" lastUpdated="20220814"/> <!-- factReset CV30 -->
+  <version author="lbijlsma@pobox.com" version="3" lastUpdated="20230921"/> <!-- v6 firmware specific panes -->
+
   <decoder>
     <family name="Lokommander 2 v6" mfg="Tehnologistic (train-O-matic)">
        <model model="Lokommander 2 Mini P22" numOuts="12" numFns="15" lowVersionID="5" highVersionID="6" connector="PluX22" productID="2010217">
@@ -72,6 +74,7 @@
       <xi:include href="http://jmri.org/xml/decoders/tOm/commonCVs.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tOm/cv33.47_p22.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tOm/brakeCVs.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/tOm/functionOutputsCVs.xml"/>
 
     </variables>
 
@@ -89,9 +92,10 @@
   </decoder>
 
   <xi:include href="http://jmri.org/xml/decoders/tOm/lightsPane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/tOm/functionsPane.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/tOm/functionsPane_v6.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/tOm/inhibitFunctionPane_v6.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tOm/brakePane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/tOm/advancedPane.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/tOm/advancedPane_v6.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tOm/tOmPane.xml"/>
 
 </decoder-config>
