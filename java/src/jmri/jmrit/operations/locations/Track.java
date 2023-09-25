@@ -49,7 +49,12 @@ public class Track extends PropertyChangeSupport {
     protected int _reservedLengthDrops = 0; // length of track reserved for drops
     protected int _numberCarsEnRoute = 0; // number of cars en route to this track
     protected int _usedLength = 0; // length of track filled by cars and engines
-    protected int _ignoreUsedLengthPercentage = 0; // value between 0 and 100, 100 = ignore 100%
+    protected int _ignoreUsedLengthPercentage = IGNORE_0; // value between 0 and 100, 100 = ignore 100%
+    public static final int IGNORE_0 = 0;
+    public static final int IGNORE_25 = 25;
+    public static final int IGNORE_50 = 50;
+    public static final int IGNORE_75 = 75;
+    public static final int IGNORE_100 = 100;
     protected int _moves = 0; // count of the drops since creation
     protected int _blockingOrder = 0; // defines the order tracks are serviced by trains
     protected String _alternateTrackId = NONE; // the alternate track id
@@ -602,9 +607,6 @@ public class Track extends PropertyChangeSupport {
     }
 
     public int getIgnoreUsedLengthPercentage() {
-        if (isStaging()) {
-            return 0;
-        }
         return _ignoreUsedLengthPercentage;
     }
 
@@ -1556,7 +1558,7 @@ public class Track extends PropertyChangeSupport {
      *         currently consuming track space.
      */
     private boolean checkPlannedPickUps(int length) {
-        if (getIgnoreUsedLengthPercentage() > 0 && getAvailableTrackSpace() >= length) {
+        if (getIgnoreUsedLengthPercentage() > IGNORE_0 && getAvailableTrackSpace() >= length) {
             return true;
         }
         return false;
@@ -1570,10 +1572,11 @@ public class Track extends PropertyChangeSupport {
      */
     public int getAvailableTrackSpace() {
         // calculate the available space
-        int available = getLength() - (getUsedLength() * (100 - getIgnoreUsedLengthPercentage()) / 100 + getReserved());
+        int available = getLength() -
+                (getUsedLength() * (IGNORE_100 - getIgnoreUsedLengthPercentage()) / IGNORE_100 + getReserved());
         // could be less if track is overloaded
         int available3 = getLength() +
-                (getLength() * getIgnoreUsedLengthPercentage() / 100) -
+                (getLength() * getIgnoreUsedLengthPercentage() / IGNORE_100) -
                 getUsedLength() -
                 getReserved();
         if (available3 < available) {
@@ -2727,7 +2730,7 @@ public class Track extends PropertyChangeSupport {
             e.setAttribute(Xml.POOL, getPool().getName());
             e.setAttribute(Xml.MIN_LENGTH, Integer.toString(getMinimumLength()));
         }
-        if (getIgnoreUsedLengthPercentage() > 0) {
+        if (getIgnoreUsedLengthPercentage() > IGNORE_0) {
             e.setAttribute(Xml.IGNORE_USED_PERCENTAGE, Integer.toString(getIgnoreUsedLengthPercentage()));
         }
 

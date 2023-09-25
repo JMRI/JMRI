@@ -443,6 +443,7 @@
             shows which car types and loads are shipped from staging.</li>
           <li>New feature for spurs, the ability to prevent a car's load change. Useful when the
             spur/schedule is used for a RIP track.</li>
+          <li>New feature for staging, planned pickups.</li>
         </ul>
 
 <h3>Panel Editor</h3>

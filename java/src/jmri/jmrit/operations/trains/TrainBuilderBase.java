@@ -1960,7 +1960,17 @@ public class TrainBuilderBase extends TrainCommon {
             addLine(_buildReport, FIVE,
                     Bundle.getMessage("buildStagingTrackOccupied", terminateStageTrack.getName(),
                             terminateStageTrack.getNumberEngines(), terminateStageTrack.getNumberCars()));
-            return false;
+            if (terminateStageTrack.getIgnoreUsedLengthPercentage() == Track.IGNORE_0) {
+                return false;
+            } else {
+                addLine(_buildReport, FIVE,
+                        Bundle.getMessage("buildTrackHasPlannedPickups", terminateStageTrack.getName(),
+                                terminateStageTrack.getIgnoreUsedLengthPercentage(), terminateStageTrack.getLength(),
+                                Setup.getLengthUnit().toLowerCase(), terminateStageTrack.getUsedLength(), terminateStageTrack.getReserved(),
+                                terminateStageTrack.getReservedLengthDrops(),
+                                terminateStageTrack.getReservedLengthDrops() - terminateStageTrack.getReserved(),
+                                terminateStageTrack.getAvailableTrackSpace()));
+            }
         }
         if (terminateStageTrack.getDropRS() != 0) {
             addLine(_buildReport, FIVE, Bundle.getMessage("buildStagingTrackReserved", terminateStageTrack.getName(),
@@ -2261,7 +2271,7 @@ public class TrainBuilderBase extends TrainCommon {
                 continue;
             }
             // report if track has planned pickups
-            if (testTrack.getIgnoreUsedLengthPercentage() > 0) {
+            if (testTrack.getIgnoreUsedLengthPercentage() > Track.IGNORE_0) {
                 addLine(_buildReport, SEVEN,
                         Bundle.getMessage("buildTrackHasPlannedPickups", testTrack.getName(),
                                 testTrack.getIgnoreUsedLengthPercentage(), testTrack.getLength(),
