@@ -76,7 +76,7 @@ class AlternateTrackFrame extends OperationsFrame implements java.beans.Property
         if (ae.getSource() == saveButton) {
             // warn user that planned pickups and alternate track don't work
             // together
-            if (trackBox.getSelectedItem() != null && _track.getIgnoreUsedLengthPercentage() > 0) {
+            if (trackBox.getSelectedItem() != null && _track.getIgnoreUsedLengthPercentage() > Track.IGNORE_0) {
                 JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("PPWarningAlternate"),
                         Bundle.getMessage("PPWarningConfiguration"),
                         JmriJOptionPane.ERROR_MESSAGE);

@@ -25,7 +25,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LocationEditFrame f = new LocationEditFrame(null);
-        TrackCopyFrame t = new TrackCopyFrame(f);
+        TrackCopyFrame t = new TrackCopyFrame(f, null);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(f);
@@ -37,7 +37,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         
         Location acton = JUnitOperationsUtil.createOneNormalLocation("Acton");
         LocationEditFrame f = new LocationEditFrame(acton);
-        TrackCopyFrame tcf = new TrackCopyFrame(f);
+        TrackCopyFrame tcf = new TrackCopyFrame(f, null);
         Assert.assertNotNull("exists",tcf);
         tcf.setVisible(true);
         
@@ -78,7 +78,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.createOneNormalLocation("Acton");
         Location boston = JUnitOperationsUtil.createOneNormalLocation("Boston");
         
-        TrackCopyFrame tcf = new TrackCopyFrame(null);
+        TrackCopyFrame tcf = new TrackCopyFrame(null, null);
         Assert.assertNotNull("exists",tcf);
         tcf.setVisible(true);
         
@@ -125,7 +125,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         
         Location acton = JUnitOperationsUtil.createOneNormalLocation("Acton");
         LocationEditFrame f = new LocationEditFrame(acton);
-        TrackCopyFrame tcf = new TrackCopyFrame(f);
+        TrackCopyFrame tcf = new TrackCopyFrame(f, null);
         Assert.assertNotNull("exists",tcf);
         tcf.setVisible(true);
         
@@ -155,7 +155,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         
         Location acton = JUnitOperationsUtil.createOneNormalLocation("Acton");
         LocationEditFrame f = new LocationEditFrame(acton);
-        TrackCopyFrame tcf = new TrackCopyFrame(f);
+        TrackCopyFrame tcf = new TrackCopyFrame(f, null);
         Assert.assertNotNull("exists",tcf);
         tcf.setVisible(true);
         
@@ -183,7 +183,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         
         Location acton = JUnitOperationsUtil.createOneNormalLocation("Acton");
         LocationEditFrame f = new LocationEditFrame(acton);
-        TrackCopyFrame tcf = new TrackCopyFrame(f);
+        TrackCopyFrame tcf = new TrackCopyFrame(f, null);
         Assert.assertNotNull("exists",tcf);
         tcf.setVisible(true);
         

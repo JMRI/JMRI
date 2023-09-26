@@ -1206,7 +1206,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public boolean hasPlannedPickups() {
         List<Track> tracks = getTracksList();
         for (Track track : tracks) {
-            if (track.getIgnoreUsedLengthPercentage() > 0) {
+            if (track.getIgnoreUsedLengthPercentage() > Track.IGNORE_0) {
                 return true;
             }
         }

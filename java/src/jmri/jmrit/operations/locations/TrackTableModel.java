@@ -146,13 +146,15 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
                 InstanceManager.getDefault(LocationManager.class).isShowIdEnabled());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(SCHEDULE_COLUMN),
                 _location.hasSchedules() && _trackType.equals(Track.SPUR));
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(RESTRICTION_COLUMN), _location.hasServiceRestrictions());
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(RESTRICTION_COLUMN),
+                _location.hasServiceRestrictions() && !_trackType.equals(Track.YARD));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), _location.hasLoadRestrictions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(DISABLE_LOAD_CHANGE_COLUMN),
                 _location.hasDisableLoadChange() && _trackType.equals(Track.SPUR));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(SHIP_COLUMN), _location.hasShipLoadRestrictions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ROAD_COLUMN), _location.hasRoadRestrictions());
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), _location.hasDestinationRestrictions());
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), _location.hasDestinationRestrictions() &&
+                (_trackType.equals(Track.INTERCHANGE) || _trackType.equals(Track.STAGING)));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ROUTED_COLUMN), _trackType.equals(Track.INTERCHANGE) ||
                 (_trackType.equals(Track.STAGING) && Setup.isCarRoutingViaStagingEnabled()));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(HOLD_COLUMN),
@@ -160,7 +162,8 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
         tcm.setColumnVisible(tcm.getColumnByModelIndex(PLANPICKUP_COLUMN), _location.hasPlannedPickups());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(POOL_COLUMN), _location.hasPools());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ALT_TRACK_COLUMN), _location.hasAlternateTracks());
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(ORDER_COLUMN), _location.hasOrderRestrictions());
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(ORDER_COLUMN),
+                _location.hasOrderRestrictions() && !_trackType.equals(Track.SPUR));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(REPORTER_COLUMN),
                 Setup.isRfidEnabled() && _location.hasReporters());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), Setup.isShowTrackMovesEnabled());
@@ -366,12 +369,7 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
                 return getModifiedString(track.getRoadNames().length, track.getRoadOption().equals(Track.ALL_ROADS),
                         track.getRoadOption().equals(Track.INCLUDE_ROADS));
             case DESTINATION_COLUMN: {
-                int size = track.getDestinationListSize();
-                if (track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
-                    size = InstanceManager.getDefault(LocationManager.class).getNumberOfLocations() - size;
-                }
-                return getModifiedString(size, track.getDestinationOption().equals(Track.ALL_DESTINATIONS),
-                        track.getDestinationOption().equals(Track.INCLUDE_DESTINATIONS));
+                return getDestinationString(track);
             }
             case ROUTED_COLUMN:
                 return track.isOnlyCarsWithFinalDestinationEnabled();
@@ -380,7 +378,7 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
             case POOL_COLUMN:
                 return track.getPoolName();
             case PLANPICKUP_COLUMN:
-                if (track.getIgnoreUsedLengthPercentage() > 0) {
+                if (track.getIgnoreUsedLengthPercentage() > Track.IGNORE_0) {
                     return track.getIgnoreUsedLengthPercentage() + "%";
                 }
                 return "";
@@ -432,6 +430,22 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
             return "A " + Integer.toString(number); // NOI18N
         }
         return "E " + Integer.toString(number); // NOI18N
+    }
+    
+    private String getDestinationString(Track track) {
+        int size = track.getDestinationListSize();
+        if (track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
+            size = InstanceManager.getDefault(LocationManager.class).getNumberOfLocations() - size;
+        } else if (size == 1) {
+            // if there's only one destination return the destination name
+            Location loc =
+                    InstanceManager.getDefault(LocationManager.class).getLocationById(track.getDestinationIds()[0]);
+            if (loc != null) {
+                return loc.getName();
+            }
+        }
+        return getModifiedString(size, track.getDestinationOption().equals(Track.ALL_DESTINATIONS),
+                track.getDestinationOption().equals(Track.INCLUDE_DESTINATIONS));
     }
 
     @Override

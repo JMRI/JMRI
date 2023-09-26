@@ -11,10 +11,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationEditFrame;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
@@ -57,7 +54,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
     static boolean moveRollingStock = false;
     static boolean deleteTrack = false;
 
-    public TrackCopyFrame(LocationEditFrame lef) {
+    public TrackCopyFrame(LocationEditFrame lef, TrackEditFrame tef) {
         if (lef != null) {
             _destination = lef._location;
         }
@@ -133,6 +130,12 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
         } else {
             setTitle(Bundle.getMessage("MenuItemCopyTrack"));
             copyButton.setEnabled(false);
+        }
+        
+        if (tef != null) {
+            locationBox.setSelectedItem(tef._location);
+            trackBox.setSelectedItem(tef._track);
+            destinationBox.setSelectedItem(tef._location);
         }
 
         // setup buttons
