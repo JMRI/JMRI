@@ -1314,6 +1314,16 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         }
         return false;
     }
+    
+    public boolean hasTracksWithRestrictedTrainDirections() {
+        int trainDirections = getTrainDirections() & Setup.getTrainDirection();
+        for (Track track : getTracksList()) {
+            if (trainDirections != (track.getTrainDirections() & trainDirections)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public boolean hasReporters() {
         for (Track track : getTracksList()) {
