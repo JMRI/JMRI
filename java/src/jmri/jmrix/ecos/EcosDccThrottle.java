@@ -147,11 +147,14 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
                 return;
             }
         }
-        int value = (int) ((127 - 1) * speed);     // -1 for rescale to avoid estop
-        if (value > 128) {
+        int value = Math.round((127 - 1) * speed);     // -1 for rescale to avoid estop
+        if (value == 0 && speed > 0) {                 // make sure to output non-zero speed for non-zero input speed
+            value = 1;
+        }
+        if (value > 126) {
             value = 126;    // max possible speed
         }
-        if ((value > 0) || (value == 0.0)) {
+        if ((value > 0) || (value == 0)) {
             String message = "set(" + this.objectNumber + ", speed[" + value + "])";
             EcosMessage m = new EcosMessage(message);
             tc.sendEcosMessage(m, this);
