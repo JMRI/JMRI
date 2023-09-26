@@ -244,6 +244,9 @@ public class SprogThrottle extends AbstractThrottle {
             float oldSpeed = this.speedSetting;
             this.speedSetting = speed;
             int value = Math.round((31 - 3) * speed);     // -3 for rescale to avoid estopx2 and stop
+            if (this.speedSetting > 0 && value == 0) {
+                value = 1;          // ensure non-zero input results in non-zero output
+            }
 
             log.debug("Speed: {} value: {}", speed, value);
 
@@ -278,6 +281,9 @@ public class SprogThrottle extends AbstractThrottle {
             float oldSpeed = this.speedSetting;
             this.speedSetting = speed;
             int value = Math.round((127 - 1) * speed);     // -1 for rescale to avoid estop
+            if (this.speedSetting > 0 && value == 0) {
+                value = 1;          // ensure non-zero input results in non-zero output
+            }
             if (value > 0) {
                 value = value + 1;  // skip estop
             }

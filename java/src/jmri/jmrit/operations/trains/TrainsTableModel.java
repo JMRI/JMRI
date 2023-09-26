@@ -484,7 +484,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                     if (result == JmriJOptionPane.YES_OPTION) {
                         train.setModified(true);
                         if (!train.printManifestIfBuilt()) {
-                            log.error("Not able to create manifest for train ({})", train.getName());
+                            log.error("Unable to create manifest for train ({})", train.getName());
                         }
                     }
                 }

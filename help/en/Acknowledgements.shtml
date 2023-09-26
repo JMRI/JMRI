@@ -74,8 +74,8 @@
 
         <li>Cees Baarda, who expanded the DigiRails DR4018/DR4024 decoder definitions</li>
 
-        <li>John Baldwin, <!-- jbnx42 -->
-         who provided better user.css documentation.</li>
+        <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Ajbnx42+">John Baldwin</a>, <!-- jbnx42 -->
+         who provided better user.css documentation and improved the logging controls..</li>
 
         <li>Harald Barth, <!-- habazut -->
          who improved the SRCP implementation and the DCC++ implementation.</li>
@@ -104,8 +104,7 @@
         <li>Taylor Berg, <!-- tman0 -->
          who worked on the DCC++ support.</li>
 
-        <li>
-          <a href="https://github.com/JMRI/JMRI/pulls?q=author%3Adanielb987+">Daniel Bergqvist</a>,
+        <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Adanielb987+">Daniel Bergqvist</a>,
           <!-- danielb987 --> primary author of the <a href=
           "https://www.jmri.org/help/en/html/tools/logixng/LogixNG.shtml">LogixNG tool</a>
           who also does a lot of GitHub administration, particularly of PRs.
@@ -122,7 +121,8 @@
 
         <li>Leo Bicknell, who updated the LocoNet monitor</li>
 
-        <li>Lolke Bijlsma provided a decoder definition for the Shine Plus decoder series from
+        <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Albijlsma+">Lolke Bijlsma</a>, <!-- lbijlsma  -->
+        who provided a decoder definition for the Shine Plus decoder series from
         Train-O-Rama.</li>
 
         <li>Pierre Billon, <!-- PierreMc -->
@@ -152,7 +152,8 @@
 
         <li>Johan Bostrom, who committed the code to support the Bluetooth LocoBridge adapter.</li>
 
-        <li>Dan Boudreau, who added support for the new NCE turnout command and read-back of
+        <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3ADanielBoudreau+">Dan Boudreau</a>, <!-- DanielBoudreau -->
+        who added support for the new NCE turnout command and read-back of
         turnout positions, updated the "send packet" tool to send NCE binary messages, added a tool
         to let NCE users send macro commands, updated the NCE-USB support, fixed a lot of details
         in the NCE support, and improved the support for NCE consists. He worked on improving the
@@ -179,8 +180,7 @@
         behavior</a>, and wrote a scripting example page
         </li>
 
-        <li>
-          <a href="https://github.com/JMRI/JMRI/pulls?q=author%3Asilverailscolo+">Egbert
+        <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Asilverailscolo+">Egbert
           Broerse</a>, <!-- silverailscolo --> who worked on translations, added Switchboards,
           graphic state display in the tables, the Output Matrix signal mast and the Rio Grande
           1965 signal definition, localized hardware connection tools and improved the signaling
@@ -226,7 +226,8 @@
         the JMRI code <a id="C"></a>
         </li>
 
-        <li>Ken Cameron, who wrote the NCE fast clock support, added support for more than two
+        <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3AKenC57+">Ken Cameron</a>, <!-- KenC57 -->
+        who wrote the NCE fast clock support, added support for more than two
         systems to the preferences, added the Light Control, provided sample scripts, improved the
         titling of throttle windows, and created the InstallTest app.</li>
 
@@ -287,14 +288,13 @@
         <li>Joe Comuzzi <!-- jcomuzzi -->
          added new icon tests and added a definition for CNJ 1974 signals</li>
 
-        <li>Dean Cording <!-- DeanCording -->
+        <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3ADeanCording+">Dean Cording</a> <!-- DeanCording -->
          who extended the MQTT support to power and throttles, and fixed some key bugs</li>
 
         <li>John Crellin contributed numerous new and improved decoder definitions for MRC decoders
         and the Kato FL11.</li>
 
-        <li>
-          <a href="https://github.com/JMRI/JMRI/pulls?q=author%3Apetecressman+">Peter Cressman</a>
+        <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Apetecressman+">Peter Cressman</a>
           provided a major improvement to Logix, improved Sensor Groups, fixed some problems in
           Routes, and provided the Warrant system for scripted running
         </li>
@@ -436,8 +436,7 @@
         <li>Simon Ginsburg has helped with advanced consisting, provided some Digitrax definition
         files, and translated much of DecoderPro into German</li>
 
-        <li>
-          <a href="https://github.com">GitHub</a>, who hosts a large part of our development and
+        <li><a href="https://github.com">GitHub</a>, who hosts a large part of our development and
           distribution infrastructure.
         </li>
 
@@ -565,7 +564,8 @@
         <li>Jay Janzen, who debugged a RobotThrottle problem, and provided improvements for
         Dispatcher, including a fix to allow dispatcher to allocate to the end block.</li>
 
-        <li>Lionel Jeanson, who added images to the roster, updated the throttle to add preferences
+        <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3ALionel642+">Lionel Jeanson</a>, <!-- Lionel642 -->
+        who added images to the roster, updated the throttle to add preferences
         for displaying them, cleaned up some code problems in the throttle, and created
         Jynstruments for improving the GUI</li>
 
@@ -606,7 +606,7 @@
         <li>Tony Koester, who helped with signaling</li>
 
         <li>W.D. Kok <!-- Re465 -->
-         created and maintained some Umelec decoder definitions and updated the Fleischman
+        created and maintained some Umelec decoder definitions and updated the Fleischman
         definitions</li>
 
         <li>James Koretsky, who contributed the Burlington Northern 1989 signal definition</li>
@@ -694,7 +694,7 @@
         <li>Peter Mansvelder, who contributed Fleischmann decoder definitions</li>
 
         <li>Francesc Pinyol Margalef, <!-- cescp -->
-         who provided a fix for the Digikeijs DR4018 (accessory DCC decoder) definition and helped
+        who provided a fix for the Digikeijs DR4018 (accessory DCC decoder) definition and helped
         with the Z21XpressNet interface.</li>
 
         <li>Mark Marowicz, who provided the CT Elektronik SL 51 decoder definition</li>
@@ -723,7 +723,7 @@
         Block Occupancy, Transponding and Simple Signal Logic.
         </li>
 
-       <li>Otis McGee, who allowed us to debug many C/MRI and signaling issues on his
+        <li>Otis McGee, who allowed us to debug many C/MRI and signaling issues on his
             beautiful SP Shasta railroad.
 
         <li>David McGowan, who handled many aspects of JMRI legal defense against Matt Katzer</li>
@@ -889,7 +889,7 @@
 
         <li>Wim Ros, who provide help with the direct connection to the Intellibox</li>
 
-        <li>Heiko Rosemann, <!-- newHeiko -->
+        <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3AnewHeiko+">Heiko Rosemann</a>, <!-- newHeiko -->
          who created the Slackware repository version of JMRI and worked on
          WiThrottle protocol issues.</li>
 
@@ -911,8 +911,7 @@
         <li>Bruno Sanches, <!-- bcsanches -->
          who fixed a bug in the DCC++ throttle implementation.</li>
 
-        <li>
-          <a href="https://github.com/JMRI/JMRI/pulls?q=author%3Adsand47+">Dave Sand</a>,
+        <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Adsand47+">Dave Sand</a>,
           <!-- dsand47 -->
            who's worked on Layout Editor, Logix, Entry/Exit signaling and other things.
         </li>
@@ -1041,8 +1040,7 @@
         with web server (particularly client-side panels), updated Dispatcher, and enhanced the
         DCCpp connection to keep up with the DCC++EX rewrite and improvements.</li>
 
-        <li>
-          <a href="https://travis-ci.org">Travis-CI.org</a>, who provide a large part of our
+        <li><a href="https://travis-ci.org">Travis-CI.org</a>, who provide a large part of our
           <a href=
           "https://www.jmri.org/help/en/html/doc/Technical/ContinuousIntegration.shtml">Continuous
           Integration</a> infrastructure.

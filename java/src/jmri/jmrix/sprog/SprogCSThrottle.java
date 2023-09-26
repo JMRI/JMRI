@@ -239,7 +239,10 @@ public class SprogCSThrottle extends AbstractThrottle {
             // stop, estop, stop, estop, 4, 5, ..., 31
             float oldSpeed = this.speedSetting;
             this.speedSetting = speed;
-            int value = (int) ((31 - 3) * speed);     // -1 for rescale to avoid estop
+            int value = Math.round((31 - 3) * speed);     // -3 for rescale to avoid estopx2 and stop
+            if (this.speedSetting > 0 && value == 0) {
+                value = 1;          // ensure non-zero input results in non-zero output
+            }
             if (value > 0) {
                 value = value + 3;  // skip estopx2 and stop
             }
@@ -256,7 +259,10 @@ public class SprogCSThrottle extends AbstractThrottle {
             // stop, estop, 2, 3, ..., 127
             float oldSpeed = this.speedSetting;
             this.speedSetting = speed;
-            int value = (int) ((127 - 1) * speed);     // -1 for rescale to avoid estop
+            int value = Math.round((127 - 1) * speed);     // -1 for rescale to avoid estop
+            if (this.speedSetting > 0 && value == 0) {
+                value = 1;          // ensure non-zero input results in non-zero output
+            }
             if (value > 0) {
                 value = value + 1;  // skip estop
             }

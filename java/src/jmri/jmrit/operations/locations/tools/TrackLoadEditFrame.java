@@ -19,7 +19,7 @@ import jmri.util.swing.JmriJOptionPane;
 /**
  * Frame for user edit of track loads
  *
- * @author Dan Boudreau Copyright (C) 2013, 2014, 2015
+ * @author Dan Boudreau Copyright (C) 2013, 2014, 2015, 2023
  * 
  */
 public class TrackLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -57,6 +57,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
     JCheckBox loadAndTypeCheckBox = new JCheckBox(Bundle.getMessage("TypeAndLoad"));
     JCheckBox shipLoadAndTypeCheckBox = new JCheckBox(Bundle.getMessage("TypeAndLoad"));
     JCheckBox holdCars = new JCheckBox(Bundle.getMessage("HoldCarsWithCustomLoads"));
+    JCheckBox disableloadChange = new JCheckBox(Bundle.getMessage("DisableLoadChange"));
 
     // radio buttons
     JRadioButton loadNameAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
@@ -197,8 +198,10 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         pOptions.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
         pOptions.setMaximumSize(new Dimension(2000, 400));
         addItem(pOptions, holdCars, 0, 0);
+        addItem(pOptions, disableloadChange, 1, 0);
         holdCars.setToolTipText(Bundle.getMessage("HoldCarsWithCustomLoadsTip"));
-
+        disableloadChange.setToolTipText(Bundle.getMessage("DisableLoadChangeTip"));
+        
         // row 12
         JPanel panelButtons = new JPanel();
         panelButtons.setLayout(new GridBagLayout());
@@ -251,6 +254,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
             paneShipLoads.setVisible(_track.isStaging());
             pOptions.setVisible(_track.isSpur());
             holdCars.setSelected(_track.isHoldCarsWithCustomLoadsEnabled());
+            disableloadChange.setSelected(_track.isDisableLoadChangeEnabled());
             updateButtons(true);
         } else {
             updateButtons(false);
@@ -333,6 +337,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
     protected void save() {
         checkForErrors();
         _track.setHoldCarsWithCustomLoadsEnabled(holdCars.isSelected());
+        _track.setDisableLoadChangeEnabled(disableloadChange.isSelected());
         // save the last state of the "Use car type and load" checkbox
         loadAndType = loadAndTypeCheckBox.isSelected();
         shipLoadAndType = shipLoadAndTypeCheckBox.isSelected();
@@ -365,7 +370,6 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 
         comboBoxShipLoads.setEnabled(en);
         comboBoxShipTypes.setEnabled(en);
-
     }
 
     @Override
@@ -553,6 +557,9 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         }
         if (_track != null && e.getPropertyName().equals(Track.HOLD_CARS_CHANGED_PROPERTY)) {
             holdCars.setSelected(_track.isHoldCarsWithCustomLoadsEnabled());
+        }
+        if (_track != null && e.getPropertyName().equals(Track.LOAD_OPTIONS_CHANGED_PROPERTY)) {
+            disableloadChange.setSelected(_track.isDisableLoadChangeEnabled());
         }
     }
 

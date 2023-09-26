@@ -36,7 +36,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       space for a location, and the maximum length the train can be between any two locations in the
       train's route.
       <p>
-        Locations can have <a href="#Sidings">spurs</a>, <a href="#Yards">yards</a>, <a
+        Locations can have <a href="#Spurs">spurs</a>, <a href="#Yards">yards</a>, <a
           href="#Staging">staging</a> and <a href="#Interchange">classification/interchange</a>
         tracks. Spurs are used to service industries, and can optionally have <a href="#Schedules">schedules</a>
         assigned to them which allows for very fine and realistic control over car movement and
@@ -191,7 +191,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#PickUpCarOrder">Pick Up Car Order</a></li>
               </ul></li>
 
-            <li><a href="#Sidings">Spurs</a>
+            <li><a href="#Spurs">Spurs</a>
               <ul>
                 <li><a href="#RestrictingTrackToCertainTrains">Restricting Track to Certain
                     Trains or Routes</a></li>
@@ -248,6 +248,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                   <ul>
                     <li><a href="#SpurOption">Hold cars with custom loads when spurs are
                         full</a></li>
+                    <li><a href="#DisableLoadChange">Disable Load Change</a></li>
                   </ul></li>
 
                 <li><a href="#RoadOptions">Road Options</a></li>
@@ -677,13 +678,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         four <a href="#AddLocation">locations</a> with each location having only two or three
         tracks. You only need to specify tracks that will be worked by your crew. For example you
         might start with tracks that service your industries, this type of track is called a <a
-          href="#Sidings">spur</a>. The spur's length determines how many cars can be spotted there.
+          href="#Spurs">spur</a>. The spur's length determines how many cars can be spotted there.
         For example a 44 foot long spur can hold one 40 foot car. Keep things simple and don't
         modify the location and track defaults by making them restrictive with regards to the type
         of cars or locomotives that they will service. Also, the track and location default is to
         allow a train to service the location and track by trains traveling in any direction. Don't
         change the defaults until you can successfully build trains to your liking. We also
-        recommend that when creating your locations that you first use <a href="#Sidings">spur</a>
+        recommend that when creating your locations that you first use <a href="#Spurs">spur</a>
         and <a href="#Yards">yard</a> tracks, and try <a href="#Staging">staging</a> and <a
           href="#Interchange">classification/interchange</a> tracks when you're more comfortable
         with how the program operates.
@@ -2126,7 +2127,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         that were disabled should now appear.</p>
 
       <p>
-        Each location can have several <a href="#Yards">yard</a>, <a href="#Sidings">spur</a>, <a
+        Each location can have several <a href="#Yards">yard</a>, <a href="#Spurs">spur</a>, <a
           href="#Interchange">classification/interchange</a> or <a href="#Staging">staging</a>
         tracks. Yards are where cars and locomotives are placed for temporary storage. A spur can be
         an industry or any place where a car is loaded or unloaded. A classification/interchange
@@ -2173,8 +2174,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
           href="#HomeDivision">home division</a> will return to the <a href="#Yards">yard</a> or <a
           href="#Staging">staging</a> at their home division when their load state becomes empty. If
         the program can't find a home division yard or staging for the empty car, it will try to
-        send the car directly to an industry (<a href="#Sidings">spur</a>) at the car's home
-        division. Cars with a home division will also return to an industry (<a href="#Sidings">spur</a>)
+        send the car directly to an industry (<a href="#Spurs">spur</a>) at the car's home
+        division. Cars with a home division will also return to an industry (<a href="#Spurs">spur</a>)
         or <a href="#Staging">staging</a> at their home division when loaded from an industry or
         staging outside of their home division. Cars loaded at their home division can travel to any
         industry or staging on the railroad. The program will use <a href="#Interchange">interchange</a>
@@ -2429,7 +2430,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         program will also create a backup file containing the last settings for all of your
         locations.</p>
 
-      <h3 id="Sidings">Spurs</h3>
+      <h3 id="Spurs">Spurs</h3>
       A spur is used to service an industry. To add a spur, select the "Spurs" radio button and then
       press the "Add Spur Track" button in the <a href="#AddLocation">Edit Location</a> window.
       Spurs are very similar to <a href="#Yards">Yards</a> , so see above for more information. When
@@ -2450,19 +2451,17 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <p>
-        A spur needs a <a href="#Schedules">schedule</a> to receive a car with a <a
-          href="#EditCarLoads">custom load</a>, unless the car is shipped from another spur that has
-        a schedule.
+        You can control which loads a spur can receive and <a href="#DisableLoadChange"> disable
+          the load change</a> for a spur. See <a href="#LoadOptions">Load Options</a> for more
+        information.
       </p>
 
-      <p>You can if you want, control which trains or routes can pick up or set out cars to your
-        spurs. If you do restrict which trains or routes can pull cars from a track, you must also
-        restrict the track's car types, loads, and roads to the same ones that your trains can
-        service, otherwise you can have cars stranded on the track.</p>
-
       <p>
-        You can if you wish schedule the order that cars will be delivered to a spur, or demand cars
-        with certain loads. See <a href="#Schedules">Schedules</a> below for more information.
+        A spur needs a <a href="#Schedules">schedule</a> to receive a car with a <a
+          href="#EditCarLoads">custom load</a>, unless the car is shipped from another spur that has
+        a schedule. A schedule also allows you to the order the car types that will be delivered to a spur,
+        or demand cars with certain loads. See <a href="#Schedules">Schedules</a> below for more
+        information.
       </p>
 
       <h4 id="RestrictingTrackToCertainTrains">Restricting Track to Certain Trains or Routes</h4>
@@ -2475,6 +2474,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         certain trains or routes from serving the track select the "Exclude Trains" or "Exclude
         Routes" options. The "Auto" checkbox when selected will only allow you to select trains or
         routes that service this track.</p>
+
+      <p>Note that if you do restrict which trains or routes can pull cars from a track, you
+        must also restrict the track's car types, loads, and roads to the same ones that your trains
+        can service, otherwise you can have cars stranded on the track.</p>
 
       <p>
         If you restrict a track to certain trains or train routes, the table in the <a
@@ -2511,7 +2514,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>
         To create a schedule press the "Add" button next to "Optional Schedule" pull down menu in
-        the <a href="#Sidings">Edit Spur Track</a> window. Pressing the "Add" button should create
+        the <a href="#Spurs">Edit Spur Track</a> window. Pressing the "Add" button should create
         the "Add Schedule" window.
       </p>
 
@@ -2612,7 +2615,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         You can optionally specify the car load shipped. When the "Ship" field is blank, the program
         will place the car's <a href="#ReturnWhenEmpty">Return When Empty</a> or <a
           href="#ReturnWhenLoaded">Return When Loaded</a> if specified, otherwise the program will
-        use the default empty "E" or default load "L". See <a href="#Sidings">Spurs</a> for how the
+        use the default empty "E" or default load "L". See <a href="#Spurs">Spurs</a> for how the
         program deals with the default loads.
       </p>
 
@@ -2853,8 +2856,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         Schedules and schedule windows. The Schedules window can be found under "Tools" in the
         Locations window. The tool allows you to select a car type, and then any load that you've
         created for the that type of car. The window then shows which spurs and schedules are
-        receiving that specific car load from staging. Selecting the "All Loads" checkbox will show
-        you every schedule for the car type selected.</p>
+        receiving that specific car load from staging. The "Generated Loads" checkbox will only list
+        spurs and schedules that will cause the program to generate a custom load out of staging.
+        The program will route a car with a custom load to spurs with schedules demanding the car
+        type with the receive load specified. The program will not create a custom load out of
+        staging to a schedule with the receive load blank (any load accepted). When the "Generated
+        Loads" is unselected, the window will show which schedules will receive the default loads.
+        Note that the program doesn't route the default empty or load out of staging. Selecting the
+        "All Loads" checkbox will show you every schedule for the car type selected.</p>
 
       <p>
         The tool also show which <a href="#StagingAndCarLoads">car load options</a> have been
@@ -3108,6 +3117,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       empty. If you're using custom loads, you can remove the custom load when the cars arrive at
       the staging track. Select the "Empty cars with custom loads" box if you want to replace your
       custom loads with the default empty.
+
       <p>
         OperationsPro&trade; provides three options for placing custom loads into empty cars when
         they depart staging. The first option is called "Generate custom loads for spurs serviced by
@@ -3117,21 +3127,24 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         request, and try to <a href="#CarRouting">route</a> the car with a custom load to that spur.
         For a spur to request a custom load, the spur must have a <a href="#Schedules">schedule</a>.
         The program when determining how many car loads to generate, will consider the value in the
-        <a href="#ControllingCarsToSpur">Percentage of custom loads generated by staging</a>. Also, if the spur
-        is full or becomes full, the program will send cars to the spur's <a href="#AlternateTrack">Alternate
-          Track</a> if there's one specified, and then to any yard tracks at the spur's location.
+        <a href="#ControllingCarsToSpur">Percentage of custom loads generated by staging</a>. Also,
+        if the spur is full or becomes full, the program will send cars to the spur's <a
+          href="#AlternateTrack">Alternate Track</a> if there's one specified, and then to any yard
+        tracks at the spur's location.
       </p>
 
-      <p>Both options work the same with regards to placing custom car loads into empty cars,
+      <p>Both spur options work the same with regards to placing custom car loads into empty cars,
         only the number of spurs considered by the program changes. If a schedule demands a certain
-        car type, and that car type is departing staging, and the car's load is default empty, the
-        program will place the custom load into that car if one of the two options is selected.</p>
+        car type and custom load, and that car type is departing staging, and the car's load is
+        default empty, the program will place the custom load into that car if one of the two
+        options is selected. Note that the program will not create a custom load out of staging to a
+        spur / schedule with the receive load blank (any load accepted).</p>
 
       <p>The third option "Generate custom loads for any staging track" will try and place
         custom loads into your empty cars by searching for destinations that are staging tracks. The
         program will randomly search for a staging track that isn't located at the train's departure
         location. If the program does find a staging track, it will then randomly assign a custom
-        load that is serviced by the train, the train's staging departure track and the car's
+        load that is serviced by the train, the train's staging departure track, and the car's
         destination staging track. Next the program will determine if the car can be routed to
         destination staging track using the assigned custom load. If the staging track is reachable,
         the program will in addition to placing the custom load in the car, set the car's final
@@ -3300,6 +3313,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
           custom load to staging</a> option for a train.
       </p>
 
+      <h5 id="DisableLoadChange">Spur Option (Disable Load Change)</h5>
+      <p>If you don't want a car's load to change when delivered to a spur, select the checkbox.
+        Useful for Repair In Place (RIP) tracks.</p>
+
       <h4 id="RoadOptions">Road Options</h4>
 
       <p>You can also restrict which roads a track can service. Under "Tools" in the menu,
@@ -3395,7 +3412,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       "Off Spot" track for your cars. Once you specify a track as an alternate, only cars destined
       for the spur will be placed on the alternate track. You can also use the same alternate track
       for several spurs. Normally the alternate track is a <a href="#Yards">yard</a> track type, but
-      you can also use an <a href="#Interchange">interchange</a>, or <a href="#Sidings">spur</a>
+      you can also use an <a href="#Interchange">interchange</a>, or <a href="#Spurs">spur</a>
       type track if you want more control over the car's movement or load.
       <p>
         During the train build process in <a href="#BuildOptions">aggressive</a> mode, the program
@@ -3826,7 +3843,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <a href="#EditCarLoads">Edit Car Loads</a> tool to rename the default load names if you wish.
       You can also create your own
       <a href="#EditCarLoads">custom loads</a>, but there are restrictions. Normally
-      <a href="#Sidings">spurs</a> with <a href="#Schedules">schedules</a> are used to load or
+      <a href="#Spurs">spurs</a> with <a href="#Schedules">schedules</a> are used to load or
       unload cars with custom loads that you've created. You can also use
       <a href="#StagingAndCarLoads">staging tracks</a> to load or unload your car with a custom
       load. It is also suggested that you use a format similar to L(commodity) to describe your
@@ -3936,7 +3953,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h3 id="EditCarLoads">Edit Car Loads</h3>
       To add a custom load or edit a car's load, press the Load "Edit" button in the <a
         href="#CarsEdit">Edit Car</a> or <a href="#CarsSet">Set Car</a> windows. Each car type will
-      have it's own set of custom loads. Note that <a href="#Sidings">spurs</a> normally require a <a
+      have it's own set of custom loads. Note that <a href="#Spurs">spurs</a> normally require a <a
         href="#Schedules">schedule</a> to service cars with custom loads. See car <a href="#CarLoad">Load</a>
       and <a href="#SchedulesAndLoads">Purposely Moving Cars Using Schedules and Loads</a> for more
       information.
@@ -5945,7 +5962,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>
         Cars assigned to a <a href="#HomeDivision">division</a> are always routed. Divisional cars
         are assigned a <a href="#FinalDestination">final destination</a> when the program determines
-        that the car is needed by a industry (<a href="#Sidings">spur</a>), or if the car is empty
+        that the car is needed by a industry (<a href="#Spurs">spur</a>), or if the car is empty
         and needs to return to its <a href="#LocationDivision">division's home yard</a>.
       </p>
 
@@ -6035,7 +6052,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>
         If a car has a <a href="#EditCarLoads">custom load</a> without a destination, the program
-        will search for a <a href="#Sidings">spur</a> with a schedule demanding that car type and
+        will search for a <a href="#Spurs">spur</a> with a schedule demanding that car type and
         load, the program will then <a href="#CarRouting">route</a> the car to that destination. The
         program will use up to seven trains to route a car to a destination. The program when
         determining how many cars an industry can serve considers the length of the spur serving the

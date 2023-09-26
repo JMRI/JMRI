@@ -18,11 +18,15 @@ import org.slf4j.LoggerFactory;
  * then CV56 is high byte, write {@literal 5=>CV50}, then CV56 is low byte of
  * ID</li>
  * <li>Harman: (mfgID = 98) CV112 is high byte, CV113 is low byte of ID</li>
- * <li>Hornby: (mfgID == 48) CV159 is usually ID. If (CV159 == 143), CV159 is
- * low byte of ID and CV158 is high byte of ID. C159 is not present in some
- * models, in which case no "productID" can be determined. (This code uses
- * {@link #setOptionalCv(boolean flag) setOptionalCv()} and
- * {@link #isOptionalCv() isOptionalCv()} as documented below.)</li>
+ * <li>Hornby: (mfgID == 48) <ul>
+ *     <li>If CV7 = 254, this is a HN7000 series decoder. The ID is in 
+ *         CV47(MSB), CV48, CV49 (LSB)
+ *     <li>Otherwise CV159 is the ID. If (CV159 == 143), CV159 is
+ *         low byte of ID and CV158 is high byte of ID. C159 is not present in some
+ *         models, in which case no "productID" can be determined. (This code uses
+ *         {@link #setOptionalCv(boolean flag) setOptionalCv()} and
+ *         {@link #isOptionalCv() isOptionalCv()} as documented below.)</li>
+ *      </ul>
  * <li>TCS: (mfgID == 153) CV249 is physical hardware id, V5 and above use
  * CV248, CV110 and CV111 to identify specific sound sets and
  * features. New productID process triggers if (CV249 &gt; 128).</li>
@@ -117,10 +121,16 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             readCV("249");
             return false;
         } else if (mfgID == 48) {  // Hornby
-            statusUpdate("Read optional decoder ID CV 159");
-            setOptionalCv(true);
-            readCV("159");
-            return false;
+            if (modelID == 254) { // HN7000
+                statusUpdate("Read decoder ID CV 47");
+                readCV("47");
+                return false;
+            } else { // other than HN7000
+                statusUpdate("Read optional decoder ID CV 159");
+                setOptionalCv(true);
+                readCV("159");
+                return false;
+            }
         } else if (mfgID == 145) {  // Zimo
             statusUpdate("Read decoder ID CV 250");
             readCV("250");
@@ -176,17 +186,24 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
                 return false;
             }
         } else if (mfgID == 48) {  // Hornby
-            if (isOptionalCv()) {
-                return true;
-            }
-            if (value == 143) {
-                productIDlow = value;
-                statusUpdate("Read Product ID High Byte");
-                readCV("158");
+            if (modelID == 254) { // HN7000
+                productIDhighest = value;
+                statusUpdate("Read decoder ID CV 48");
+                readCV("48");
                 return false;
-            } else {
-                productID = value;
-                return true;
+            } else { // other than HN7000
+                if (isOptionalCv()) {
+                    return true;
+                }
+                if (value == 143) {
+                    productIDlow = value;
+                    statusUpdate("Read Product ID High Byte");
+                    readCV("158");
+                    return false;
+                } else {
+                    productID = value;
+                    return true;
+                }
             }
         } else if (mfgID == 145) {  // Zimo
             productID = value;
@@ -236,9 +253,16 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             readCV("56");
             return false;
         } else if (mfgID == 48) {  // Hornby
-            productIDhigh = value;
-            productID = (productIDhigh << 8) | productIDlow;
-            return true;
+            if (modelID == 254) { // HN7000
+                productIDhigh = value;
+                statusUpdate("Read decoder ID CV 49");
+                readCV("49");
+                return false;
+            } else { // other than HN7000
+                productIDhigh = value;
+                productID = (productIDhigh << 8) | productIDlow;
+                return true;
+            }
         } else if (mfgID == 141 && (modelID >= 70 && modelID <= 72)) {  // SoundTraxx Econami, Tsunami2 and Blunami
             productIDlow = value;
             productID = (productIDhigh << 8) | productIDlow;
@@ -278,6 +302,10 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Set SI for Read Product ID Low Byte");
             writeCV("50", 5);
             return false;
+        } else if (mfgID == 48) {  // Hornby
+            // HN7000 reaches here
+            productID = value + (productIDhigh * 256) + (productIDhighest * 256 * 256);
+            return true;
         } else if (mfgID == 151) {  // ESU
             productID = value;
             statusUpdate("Read productID Byte 2");

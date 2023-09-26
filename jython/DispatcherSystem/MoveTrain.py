@@ -34,12 +34,13 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
     global trains
     global time_last_train
 
-    def __init__(self, station_from_name, station_to_name, train_name, graph):
+    def __init__(self, station_from_name, station_to_name, train_name, graph, stop_mode = None):
         self.logLevel = 0
         self.station_from_name = station_from_name
         self.station_to_name = station_to_name
         self.train_name = train_name
         self.graph = graph
+        self.stop_mode = stop_mode
 
     def setup(self):
         return True
@@ -85,9 +86,9 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             print "end of move between ", station_from_name, station_to_name
             return
 
-        if self.logLevel > 0: print "graph", graph
-        if self.logLevel > 0: print "paths", paths
-        if self.logLevel > 0: print "returned from shortest path"
+        if self.logLevel > 1: print "graph", graph
+        if self.logLevel > 1: print "paths", paths
+        if self.logLevel > 1: print "returned from shortest path"
         if self.logLevel > 0: print "in move_between_stations trains = ", trains, "train_name = ", train_name
 
         if train_name in trains:
@@ -399,7 +400,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             # if we failed to run the transit try again once before letting the operator have a go
             if result == False:
                 self.waitMsec(5000)  # wait 5 secs
-                msg = "Failure to dispatch train " + train + " retrying moving from " + from_name + " to " + to_name
+                msg = "Failure to dispatch train " + train + " retrying moving from " + from_name + " to " + to_name + "."
                 title = ""
                 opt1 = "try again"
                 opt2 = "cancel"
@@ -439,52 +440,34 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def doDispatch(self, traininfoFileName, type, value):
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
-        try:
-            if self.logLevel > 1: print "traininfoFileName",traininfoFileName
-
-            train_name = value
-            train = trains[train_name]
-            trainInfo = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(traininfoFileName)
-            trainInfo_modified = self.modify_trainInfo(trainInfo, train_name)  # sets the speed factor and other train dependent factors
-            #trainInfo_modified = trainInfo
-            result = DF.loadTrainFromTrainInfo(trainInfo_modified, type, value)
-            #result = DF.loadTrainFromTrainInfo(traininfoFileName, type, value)
+        if self.logLevel > 1: print "traininfoFileName",traininfoFileName
+        train_name = value
+        train = trains[train_name]
+        self.trainInfo = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(traininfoFileName)
+        self.modify_trainInfo(train_name)  # sets the speed factor and other train dependent factors
+        result = DF.loadTrainFromTrainInfo(self.trainInfo, type, value)
+        if result == 0:
+            self.set_whether_to_stop_at_sensor(DF)
             train["allocating"] = False   # this flag is used when checking to see whether path for dispatch is clear
-            if result == -1:
-                if self.train_name == "shunter": print "     ",
-                print "error: result from dispatcher frame" , result
-                # delete the transit so can try loading the transit again
-                trainInfo = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(traininfoFileName)
-                transit_name = trainInfo.getTransitName()
-                # if self.train_name == "shunter": print "     ",
-                # print "transit_name", transit_name
-                # TransitManager = jmri.InstanceManager.getDefault(jmri.TransitManager)
-                # transit = TransitManager.getTransit(transit_name)
-                # if transit != None:
-                #     TransitManager.deleteTransit(transit)
-                active_train_list = [active_Train for active_train in DF.getActiveTrainsList() \
-                                if active_train.getTransitName() == transit_name]
-                # print "active_train_list", active_train_list
-                # print "all active trains", DF.getActiveTrainsList()
-                if active_train_list == []:
-                    active_train = None
-                else:
-                    active_train = active_train_list[0]
-                    # print "deleting active train ", active_train
-                    DF.terminateActiveTrain(active_train)
-                    train_name == value
-                    if train_name in trains:
-                        trains.remove(train_name)
-                return False  #No train allocated
+        if result == -1:
+            print "error: result from dispatcher frame" , result
+            # delete the transit so can try loading the transit again
+            self.trainInfo = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(traininfoFileName)
+            transit_name = self.trainInfo.getTransitName()
+            active_train_list = [active_train for active_train in DF.getActiveTrainsList() \
+                            if active_train.getTransitName() == transit_name]
+            if active_train_list == []:
+                active_train = None
             else:
-                if self.train_name == "shunter": print "     ",
-                # print "result from dispatcher frame" , result
-                DF = None
-                return True
-        except:
-            if self.logLevel > 1: print ("FAILURE tried to run dispatcher with file {} type {} value {}".format(traininfoFileName,  type, value))
+                active_train = active_train_list[0]
+                DF.terminateActiveTrain(active_train)
+                train_name == value
+                if train_name in trains:
+                    trains.remove(train_name)
+            return False  #No train allocated
+        else:
             DF = None
-            return False
+            return True
 
     def get_train_length(self, new_train_name):
         EngineManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.engines.EngineManager)
@@ -519,12 +502,10 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             speed_factor = default
         return [engine, speed_factor]
 
-    def modify_trainInfo(self, trainInfo, train_name):
-        # print "in modify_trainInfo"
-        # print "train_name", train_name
+    def modify_trainInfo(self, train_name):
         [engine,current_length] = self.get_train_length(train_name)  #get the engine name
         # print "in modify_trainInfo1a length = ", current_length
-        trainInfo.setMaxTrainLength(float(current_length))
+        self.trainInfo.setMaxTrainLength(float(current_length))
         # print "in modify_trainInfo1 "
         [engine,current_speed_factor] = self.get_train_speed_factor(train_name)
         # print "in modify_trainInfo2 ", current_speed_factor
@@ -535,11 +516,56 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             speedFactor = 1
             msg = "speedFactor set is out of range " + str(current_speed_factor) + "\nSpeed Factor set to 100% " + "for train " + train_name
             OptionDialog().displayMessage(msg)
-        trainInfo.setSpeedFactor(float(speedFactor))
-        # print "in modify_trainInfo2c ", speedFactor
+        self.trainInfo.setSpeedFactor(float(speedFactor))
+        if self.logLevel > 0: print "self.forward_stopping_sensor_exists(self.trainInfo)",self.forward_stopping_sensor_exists(self.trainInfo)
+        print "sensors.getSensor('stopAtStopSensor').getKnownState()", sensors.getSensor("stopAtStopSensor").getKnownState(), ACTIVE
 
-        return trainInfo
+    def set_whether_to_stop_at_sensor(self, DF):
+        transit_name = self.trainInfo.getTransitName()
+        if self.logLevel > 0: print "transit_name", transit_name
+        active_train_list = [active_train for active_train in DF.getActiveTrainsList() \
+                             if active_train.getTransitName() == transit_name]
+        if self.logLevel > 0: print "active_train_list", active_train_list
 
+        active_train = active_train_list[0]
+        if self.logLevel > 0: print "active_train", active_train
+        autoActiveTrain = active_train.getAutoActiveTrain()
+        if self.forward_stopping_sensor_exists(self.trainInfo):
+            if self.logLevel > 0: print "forward_stopping_sensor_exists"
+            # set default
+            if sensors.getSensor("stopAtStopSensor").getKnownState() == ACTIVE:
+                if self.logLevel > 0: print "stop at stop sensor active", sensors.getSensor("stopAtStopSensor").getKnownState(), ACTIVE
+                autoActiveTrain.set_useStopSensor(True)
+            else:
+                if self.logLevel > 0: print "stop at stop sensor inactive", sensors.getSensor("stopAtStopSensor").getKnownState(), INACTIVE
+                if self.logLevel > 0: print "before", self.trainInfo.getStopBySpeedProfile(), self.trainInfo.getUseSpeedProfile()
+                autoActiveTrain.set_useStopSensor(False)
+            # overwrite with set values
+            if self.stop_mode == None:
+                if self.logLevel > 0: print "pass"
+                pass
+            elif self.stop_mode == "Use Stop Sensor":
+                autoActiveTrain.set_useStopSensor(True)
+                if self.logLevel > 0: print "set stop sensor true"
+            elif self.stop_mode == "Stop using Speed Profile":
+                autoActiveTrain.set_useStopSensor(False)
+                if self.logLevel > 0: print "set_useStopSensor false"
+            else:
+                print "ERROR incorrect value for stop mode"
+        else:
+            if self.logLevel > 0: print "forward_stopping_sensor does not exist"
+
+    def forward_stopping_sensor_exists(self, traininfo):
+        transit_name = traininfo.getTransitId()
+        transit = transits.getTransit(transit_name)
+        transit_section_list = transit.getTransitSectionList()
+        section_list = transit.getSectionListBySeq(transit.getMaxSequence())
+        section = section_list[0]
+        forward_stopping_sensor = section.getForwardStoppingSensor()
+        if forward_stopping_sensor != None:
+            return True
+        else:
+            return False
     def set_sensor(self, sensorName, sensorState):
         sensor = sensors.getSensor(sensorName)
         if sensor is None:
@@ -747,14 +773,13 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         return  [transit_name, transit_id]
 
 
+
 class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     # responds to the newTrainSensor, and allocates trains available for dispatching
     # we make the allocated flag global as we will use it in DispatchMaster when we dispatch a train
 
     global trains_allocated
-    logLevel = 0
-    #instanceList = []   # List of file based instances
 
     def init(self):
         self.logLevel = 0
@@ -782,12 +807,16 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         self.waitSensorActive(self.new_train_sensor)
         self.new_train_sensor.setKnownState(INACTIVE)
-
-
         #display the allocated trains
-        action = self.choose_action()
+        title = "Setup trains"
+        msg = "setup one or more trains"
+        opt1 = "1 train"
+        opt2 = "several trains"
+        opt3 = "check/swap train direction"
+        #opt4 = "reset trains"
+        action = self.od.customQuestionMessage3str(msg, title, opt1, opt2, opt3)
         #msg = "choose"
-        #actions = ["setup 1 train","setup several trains", "check train direction", "reset trains"]
+        #actions = ["setup 1 train","setup several trains", "check/swap train direction", "reset trains"]
         #action = self.od.List(msg, actions)
         if action == "1 train":
             # msg = "choose"
@@ -857,7 +886,6 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         elif action == "several trains":
             createandshowGUI(self)
 
-
         elif action == "reset trains":
             msg = self.get_all_trains_msg()
             msg +=  "\nReset all these trains\n"
@@ -869,83 +897,85 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
                 pass
             elif ans == JOptionPane.NO_OPTION:
                 self.reset_allocation1()
-        #elif action == "reset control sensors"
-        else: #"check train direction"
-            all_trains = self.get_all_roster_entries_with_speed_profile()
-            if all_trains == []:
-                msg = "There are no engines with speed profiles, cannot operate without any"
-                JOptionPane.showMessageDialog(None,msg)
+        # elif action == "check/swap train direction" #"check train direction"  Keep in case new code has errors
+        #     all_trains = self.get_all_roster_entries_with_speed_profile()
+        #     if all_trains == []:
+        #         msg = "There are no engines with speed profiles, cannot operate without any"
+        #         JOptionPane.showMessageDialog(None,msg)
+        #     else:
+        #         # msg = self.get_allocated_trains_msg()
+        #         # title = None
+        #         # opt1 = "Select section"
+        #         # s = self.od.customMessage(msg, title, opt1)
+        #         # if self.logLevel > 0: print "station_block_name",station_block_name, "s", s
+        #         # if self.od.CLOSED_OPTION == False:
+        #
+        #         msg = "Select section"
+        #         sections_to_choose = self.get_allocated_trains_sections()
+        #         new_section_name = self.od.List(msg, sections_to_choose)
+        #         if self.od.CLOSED_OPTION == False:
+        #             msg = "Select the train in " + new_section_name
+        #             trains_to_choose = self.get_allocated_trains()
+        #             if trains_to_choose == []:
+        #                 s = OptionDialog().displayMessage("no more trains with speed profiles \nto select")
+        #             else:
+        #                 new_train_name = self.od.List(msg, trains_to_choose)
+        #                 if self.od.CLOSED_OPTION == False:
+        #                     #print "need to find the direction of train", new_train_name
+        #                     self.check_train_direction(new_train_name, new_section_name)
+        elif action == "check/swap train direction":
+            trains_to_choose = self.get_allocated_trains()
+            if trains_to_choose == []:
+                s = OptionDialog().displayMessage("no allocated trains to select")
             else:
-                # msg = self.get_allocated_trains_msg()
-                # title = None
-                # opt1 = "Select section"
-                # s = self.od.customMessage(msg, title, opt1)
-                # if self.logLevel > 0: print "station_block_name",station_block_name, "s", s
-                # if self.od.CLOSED_OPTION == False:
-
-                msg = "Select section"
-                sections_to_choose = self.get_allocated_trains_sections()
-                new_section_name = self.od.List(msg, sections_to_choose)
-                if self.od.CLOSED_OPTION == False:
-                    msg = "Select the train in " + new_section_name
-                    trains_to_choose = self.get_allocated_trains()
-                    if trains_to_choose == []:
-                        s = OptionDialog().displayMessage("no more trains with speed profiles \nto select")
-                    else:
-                        new_train_name = self.od.List(msg, trains_to_choose)
-                        if self.od.CLOSED_OPTION == False:
-                            #print "need to find the direction of train", new_train_name
-                            self.check_train_direction(new_train_name, new_section_name)
-
+                msg = "Select the required train"
+                new_train_name = self.od.List(msg, trains_to_choose)
+                train_block = [block.getUserName() for block in blocks.getNamedBeanSet() if block.getValue() == new_train_name][0]
+                if train_block is not None:
+                    self.check_train_direction(new_train_name, train_block)
         return True
-
-    # def createAndShowGUI(self, super):
-    #     createandshowGUI(self,super)
-
-    def choose_action(self):
-        title = ""
-        msg = "setup one or more trains"
-        opt1 = "1 train"
-        opt2 = "several trains"
-        opt3 = "other actions"
-        reply = self.od.customQuestionMessage3str(msg, title, opt1, opt2, opt3)
-        if self.od.CLOSED_OPTION == True:
-            return "cancel"
-        if reply == opt1:
-            return opt1
-        elif reply == opt2:
-            return opt2
-        else:
-            title = ""
-            msg = "setup one or more trains"
-            opt1 = "check train direction"
-            opt2 = "reset trains"
-            reply = self.od.customQuestionMessage2str(msg, title, opt1, opt2)
-            if reply == opt1:
-                return opt1
-            else:
-                return opt2
 
     def check_train_direction(self, train_name, station_block_name):
         global train
         if train_name in trains:
             train = trains[train_name]
             direction = train["direction"]
-            #print direction
             penultimate_layout_block = self.get_penultimate_layout_block(station_block_name)
 
             saved_state = penultimate_layout_block.getUseExtraColor()
             in_siding = self.in_siding(station_block_name)
-            if not in_siding:
-                # highlight the penultimate block
+
+            closed = False
+            while closed == False:
                 penultimate_layout_block.setUseExtraColor(True)
-                msg = "train travelling " + direction + " away from highlighted block"
-                s = OptionDialog().displayMessage(msg)
-                penultimate_layout_block.setUseExtraColor(saved_state)
-            else:
-                msg = "train travelling " + direction + " away from siding"
-                s = OptionDialog().displayMessage(msg)
-                penultimate_layout_block.setUseExtraColor(saved_state)
+                direction = train["direction"]
+                msg = "train travelling " + self.swap_direction(direction) + " towards highlighted block"
+                title = "swap directions of " +  train_name
+                opt1 = "swap direction"
+                opt2 = "Close"
+                s = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
+                if s == JOptionPane.CLOSED_OPTION:
+                    closed = True
+                if s == opt1:
+                    self.swap_train_direction(train_name)
+                    closed = False
+                if s == opt2:
+                    closed = True
+            penultimate_layout_block.setUseExtraColor(saved_state)
+
+    def swap_train_direction(self, train_name):
+        global train
+        if train_name in trains:
+            train = trains[train_name]
+            direction = train["direction"]
+            train["direction"] = self.swap_direction(direction)
+
+    def swap_direction(self, direction):
+        if direction == "reverse":
+            direction = "forward"
+        else:
+            direction = "reverse"
+        return direction
 
 
     def get_train_length(self, new_train_name):
@@ -2219,4 +2249,5 @@ class MyTableModel (DefaultTableModel):
     def setValueAt(self, value, row, col) :
         self.data[row][col] = value
         self.fireTableCellUpdated(row, col)
+
 

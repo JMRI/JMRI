@@ -245,7 +245,6 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
             case SETOUT_DAY_COLUMN:
             case ROAD_COLUMN:
             case LOAD_COLUMN:
-            case SHIP_COLUMN:
             case DEST_COLUMN:
             case TRACK_COLUMN:
             case PICKUP_DAY_COLUMN:
@@ -256,6 +255,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
             case DOWN_COLUMN:
             case DELETE_COLUMN:
                 return true;
+            case SHIP_COLUMN:
+                return !_track.isDisableLoadChangeEnabled();
             default:
                 return false;
         }
