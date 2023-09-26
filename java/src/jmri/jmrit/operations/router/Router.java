@@ -404,7 +404,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                             clone.getDestinationName(), clone.getDestinationTrackName()));
             return false; // try 2 or more trains
         }
-        return true; // able to route, but not able to set the car's destination
+        return true; // able to route, but unable to set the car's destination
     }
 
     /**
@@ -781,6 +781,10 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         if (!foundRoute) {
             log.debug("Using 6 trains to route car to ({}) was unsuccessful", car.getFinalDestinationName());
             foundRoute = routeUsing7Trains(car);
+        }
+        if (!foundRoute) {
+            addLine(_buildReport, SEVEN, Bundle.getMessage("RouterNotAbleToRoute", car.toString(), car.getLocationName(),
+                    car.getTrackName(), car.getFinalDestinationName(), car.getFinalDestinationTrackName()));
         }
         return foundRoute;
     }

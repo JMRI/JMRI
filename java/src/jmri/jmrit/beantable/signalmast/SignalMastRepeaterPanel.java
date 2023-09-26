@@ -34,10 +34,9 @@ import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriPanel;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for Signal Mast Add / Edit Panel
@@ -113,8 +112,8 @@ public class SignalMastRepeaterPanel extends JmriPanel implements PropertyChange
                 String error = java.text.MessageFormat.format(Bundle.getMessage("MessageAddFailed"),
                     new Object[]{_MasterBox.getSelectedItemDisplayName(), _SlaveBox.getSelectedItemDisplayName()});
                 log.error("Failed to add Repeater. {} {}", error, ex.getMessage());
-                JOptionPane.showMessageDialog(this, error,
-                    Bundle.getMessage("TitleAddFailed"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, error,
+                    Bundle.getMessage("TitleAddFailed"), JmriJOptionPane.ERROR_MESSAGE);
             }
         });
         footer.add(_addRepeater);
@@ -390,6 +389,6 @@ public class SignalMastRepeaterPanel extends JmriPanel implements PropertyChange
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalMastRepeaterPanel.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalMastRepeaterPanel.class);
 
 }

@@ -306,7 +306,7 @@
         received on the "Direction receive topic".  Direction values are "FORWARD" and "REVERSE", and "STOP"
         for an emergency stop.</li>
         <li><strong>Function</strong>: Function states are sent on the "Function send topic" and received
-        on the "Function receive topic".  The string "$function" within each topic is substituted with
+        on the "Function receive topic".  The placeholder "{1}" within each topic is substituted with
         the number of the function.Function state values are "ON" and "OFF".</li>
         <li><strong>Consist</strong>: MQTT supports Command Station Consists in JMRI using the standard
          Consist Tool. All of the loco addresses that make up a consist are listed in the
@@ -314,7 +314,7 @@
         to determine how it controls the individual locos in the consist.</li>
         </ul>
 
-        In the topics listed above, the string "$address" in the topic name is replaced with the loco
+        In the topics listed above, the placeholder "{0}" in the topic name is replaced with the loco
         or consist address that the throttle is controlling.  When the throttle is Released, all of the
         above topics are removed from MQTT. If a throttle is Dispatched, the topics are retained on MQTT -
         this allows for locos to be controlled from a script but be able to be taken over and manually

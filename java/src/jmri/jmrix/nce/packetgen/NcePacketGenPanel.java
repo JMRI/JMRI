@@ -8,6 +8,7 @@ import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
 import jmri.util.StringUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user input of Nce messages.
@@ -127,10 +128,10 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
             NceMessage m = createPacket(input);
             if (m == null) {
-                JOptionPane.showMessageDialog(NcePacketGenPanel.this,
+                JmriJOptionPane.showMessageDialog(NcePacketGenPanel.this,
                         Bundle.getMessage("DialogHexOnly"),
                         Bundle.getMessage("BinaryTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
             m.setBinary(true);

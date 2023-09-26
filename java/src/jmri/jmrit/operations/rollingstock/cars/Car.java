@@ -694,14 +694,18 @@ public class Car extends RollingStock {
     @Override
     public String checkDestination(Location destination, Track track) {
         String status = super.checkDestination(destination, track);
-        if (!status.equals(Track.OKAY)) {
+        if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
             return status;
         }
         // now check to see if the track has a schedule
         if (track == null) {
             return status;
         }
-        return track.checkSchedule(this);
+        String statusSchedule = track.checkSchedule(this);
+        if (status.startsWith(Track.LENGTH) && statusSchedule.equals(Track.OKAY)) {
+            return status;
+        }
+        return statusSchedule;
     }
 
     /**
@@ -831,11 +835,14 @@ public class Car extends RollingStock {
 
     /**
      * Updates a car's load when placed at a spur. Load change delayed if wait
-     * count is greater than zero.
+     * count is greater than zero. 
      * 
      * @param track The spur the car is sitting on
      */
     public void updateLoad(Track track) {
+        if (track.isDisableLoadChangeEnabled()) {
+            return;
+        }
         if (getWait() > 0) {
             return; // change load name when wait count reaches 0
         }

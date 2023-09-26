@@ -17,8 +17,7 @@ import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.PortalManager;
 import jmri.util.IntlUtilities;
 import jmri.util.gui.GuiLafPreferencesManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * GUI to define the Signals within an OBlock.
@@ -448,8 +447,8 @@ public class SignalTableModel extends AbstractTableModel implements PropertyChan
                         _tempLen *= 25.4f;                            
                     }
                 } catch (ParseException e) {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
+                    JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]),
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.WARNING_MESSAGE);                    
                 }
                 return;
             }
@@ -718,8 +717,8 @@ public class SignalTableModel extends AbstractTableModel implements PropertyChan
         }
 
         if (msg != null) {
-            JOptionPane.showMessageDialog(null, msg,
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(null, msg,
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             // doesn't close by clicking OK after DnD as focus lost, only Esc in JMRI 4.21.2 on macOS
         }
     }
@@ -832,6 +831,6 @@ public class SignalTableModel extends AbstractTableModel implements PropertyChan
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalTableModel.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalTableModel.class);
 
 }

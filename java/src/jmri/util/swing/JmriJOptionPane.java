@@ -25,22 +25,26 @@ import javax.swing.*;
  */
 public class JmriJOptionPane {
 
-    public final static int CANCEL_OPTION = JOptionPane.CANCEL_OPTION;
-    public final static int OK_OPTION = JOptionPane.OK_OPTION;
-    public final static int OK_CANCEL_OPTION = JOptionPane.OK_CANCEL_OPTION;
-    public final static int YES_OPTION = JOptionPane.YES_OPTION;
-    public final static int YES_NO_OPTION = JOptionPane.YES_NO_OPTION;
+    public static final int CANCEL_OPTION = JOptionPane.CANCEL_OPTION;
+    public static final int OK_OPTION = JOptionPane.OK_OPTION;
+    public static final int OK_CANCEL_OPTION = JOptionPane.OK_CANCEL_OPTION;
+    public static final int YES_OPTION = JOptionPane.YES_OPTION;
+    public static final int YES_NO_OPTION = JOptionPane.YES_NO_OPTION;
     public static final int YES_NO_CANCEL_OPTION = JOptionPane.YES_NO_CANCEL_OPTION;
-    public final static int NO_OPTION = JOptionPane.NO_OPTION;
+    public static final int NO_OPTION = JOptionPane.NO_OPTION;
 
-    public final static int CLOSED_OPTION = JOptionPane.CLOSED_OPTION;
-    public final static int DEFAULT_OPTION = JOptionPane.DEFAULT_OPTION;
-    public final static Object UNINITIALIZED_VALUE = JOptionPane.UNINITIALIZED_VALUE;
+    public static final int CLOSED_OPTION = JOptionPane.CLOSED_OPTION;
+    public static final int DEFAULT_OPTION = JOptionPane.DEFAULT_OPTION;
+    public static final Object UNINITIALIZED_VALUE = JOptionPane.UNINITIALIZED_VALUE;
 
-    public final static int ERROR_MESSAGE = JOptionPane.ERROR_MESSAGE;
-    public final static int INFORMATION_MESSAGE = JOptionPane.INFORMATION_MESSAGE;
-    public final static int QUESTION_MESSAGE = JOptionPane.QUESTION_MESSAGE;
-    public final static int WARNING_MESSAGE = JOptionPane.WARNING_MESSAGE;
+    public static final int ERROR_MESSAGE = JOptionPane.ERROR_MESSAGE;
+    public static final int INFORMATION_MESSAGE = JOptionPane.INFORMATION_MESSAGE;
+    public static final int PLAIN_MESSAGE = JOptionPane.PLAIN_MESSAGE;
+    public static final int QUESTION_MESSAGE = JOptionPane.QUESTION_MESSAGE;
+    public static final int WARNING_MESSAGE = JOptionPane.WARNING_MESSAGE;
+
+    public static final String YES_STRING = UIManager.getString("OptionPane.yesButtonText", Locale.getDefault());
+    public static final String NO_STRING = UIManager.getString("OptionPane.noButtonText", Locale.getDefault());
 
     // class only supplies static methods
     protected JmriJOptionPane(){}
@@ -70,6 +74,30 @@ public class JmriJOptionPane {
         Object message, String title, int messageType) {
         showOptionDialog(parentComponent, message, title, DEFAULT_OPTION,
             messageType, null, null, null);
+    }
+
+    /**
+     * Displays a Non-Modal message dialog with an OK button.
+     * @param parentComponent The parent component relative to which the dialog is displayed.
+     * @param message         The message to be displayed in the dialog.
+     * @param title           The title of the dialog.
+     * @param messageType     The type of message to be displayed (e.g., {@link #WARNING_MESSAGE}).
+     * @param callback        Code to run when the Dialog is closed. Can be null.
+     * @throws HeadlessException if the current environment is headless (no GUI available).
+     */
+    public static void showMessageDialogNonModal(@CheckForNull Component parentComponent,
+        Object message, String title, int messageType, @CheckForNull final Runnable callback ) {
+
+        JOptionPane pane = new JOptionPane(message, messageType);
+        JDialog dialog = pane.createDialog(parentComponent, title);
+        if ( callback !=null ) {
+            pane.addPropertyChangeListener(JOptionPane.VALUE_PROPERTY, unused -> callback.run());
+        }
+        setDialogLocation(parentComponent, dialog);
+        dialog.setModal(false);
+        dialog.setAlwaysOnTop(true);
+        dialog.toFront();
+        dialog.setVisible(true);
     }
 
     /**
@@ -151,7 +179,41 @@ public class JmriJOptionPane {
     }
 
     /**
-     * Displays an input dialog.
+     * Displays a String input dialog.
+     * @param parentComponent       The parent component relative to which the dialog is displayed.
+     * @param message               The message to be displayed in the dialog.
+     * @param initialSelectionValue The initial value pre-selected in the input dialog.
+     * @return The user's String input value, or {@code null} if the dialog is closed or the input value is uninitialized.
+     * @throws HeadlessException   if the current environment is headless (no GUI available).
+     */
+    @CheckForNull
+    public static String showInputDialog(@CheckForNull Component parentComponent,
+        String message, String initialSelectionValue ){
+        return (String)showInputDialog(parentComponent, message,
+            UIManager.getString("OptionPane.inputDialogTitle",
+            Locale.getDefault()), QUESTION_MESSAGE, null, null,
+            initialSelectionValue);
+    }
+
+    /**
+     * Displays a String input dialog.
+     * @param parentComponent       The parent component relative to which the dialog is displayed.
+     * @param message               The message to be displayed in the dialog.
+     * @param title                 The dialog Title.
+     * @param messageType           The type of message to be displayed (e.g., {@link #QUESTION_MESSAGE} ).
+     * @return The user's String input value, or {@code null} if the dialog is closed or the input value is uninitialized.
+     * @throws HeadlessException   if the current environment is headless (no GUI available).
+     */
+    @CheckForNull
+    public static String showInputDialog(@CheckForNull Component parentComponent,
+        String message, String title, int messageType ){
+        return (String)showInputDialog(parentComponent, message,
+            title, messageType, null, null,
+            "");
+    }
+
+    /**
+     * Displays an Object input dialog.
      * @param parentComponent       The parent component relative to which the dialog is displayed.
      * @param message               The message to be displayed in the dialog.
      * @param initialSelectionValue The initial value pre-selected in the input dialog.
@@ -159,9 +221,9 @@ public class JmriJOptionPane {
      * @throws HeadlessException   if the current environment is headless (no GUI available).
      */
     @CheckForNull
-    public static String showInputDialog(@CheckForNull Component parentComponent,
-        String message, String initialSelectionValue ){
-        return (String)showInputDialog(parentComponent, message,
+    public static Object showInputDialog(@CheckForNull Component parentComponent,
+        String message, Object initialSelectionValue ){
+        return showInputDialog(parentComponent, message,
             UIManager.getString("OptionPane.inputDialogTitle",
             Locale.getDefault()), QUESTION_MESSAGE, null, null,
             initialSelectionValue);
@@ -207,7 +269,9 @@ public class JmriJOptionPane {
             dialog.setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
         }
         setDialogLocation(parentComponent, dialog);
-        dialog.setVisible(true);
+        dialog.setAlwaysOnTop(true);
+        dialog.toFront();
+        dialog.setVisible(true); // and waits for input
         dialog.dispose();
     }
 
@@ -224,7 +288,7 @@ public class JmriJOptionPane {
         int centreWidth;
         int centreHeight;
         Window w = findWindowForComponent(parentComponent);
-        if ( w == null) {
+        if ( w == null || !w.isVisible() ) {
             centreWidth = Toolkit.getDefaultToolkit().getScreenSize().width / 2;
             centreHeight = Toolkit.getDefaultToolkit().getScreenSize().height / 2;
         } else {
@@ -235,7 +299,8 @@ public class JmriJOptionPane {
         }
         int centerX = centreWidth - ( dialog.getWidth() / 2 );
         int centerY = centreHeight - ( dialog.getHeight() / 2 );
-        dialog.setLocation( new Point(centerX, centerY));
+        // set top left of Dialog at least 0px into the screen.
+        dialog.setLocation( new Point(Math.max(0, centerX), Math.max(0, centerY)));
     }
 
     @CheckForNull
@@ -249,6 +314,6 @@ public class JmriJOptionPane {
         return findWindowForComponent(component.getParent());
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriJOptionPane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriJOptionPane.class);
 
 }

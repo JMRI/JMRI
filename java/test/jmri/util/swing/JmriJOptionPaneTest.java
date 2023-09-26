@@ -166,9 +166,116 @@ public class JmriJOptionPaneTest {
         Assertions.assertEquals(1, value,"returns Option B at position 1 in Array");
     }
 
+    @Test
+    public void testShowOptionYesNoDialogueWithInitialValueNo() {
+        Thread t = JemmyUtil.createModalDialogOperatorThread(
+            Bundle.getMessage("WarningTitle"), JmriJOptionPane.NO_STRING);
+        String[] options = new String[] {JmriJOptionPane.YES_STRING, JmriJOptionPane.NO_STRING};
+        int result = JmriJOptionPane.showOptionDialog(null, "My Message", Bundle.getMessage("WarningTitle"), 
+                    JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.WARNING_MESSAGE, null, 
+                    options, options[1]);
+        JUnitUtil.waitFor(()-> !( t.isAlive()), "click no finished");
+        Assertions.assertEquals(1, result, "array position 1 clicked");
+    }
+
+    @Test
+    public void testShowOptionYesNoDialogueWithInitialValueYes() {
+        Thread t = JemmyUtil.createModalDialogOperatorThread(
+            Bundle.getMessage("WarningTitle"), JmriJOptionPane.YES_STRING);
+        String[] options = new String[] {JmriJOptionPane.YES_STRING, JmriJOptionPane.NO_STRING};
+        int result = JmriJOptionPane.showOptionDialog(null, "My Message", Bundle.getMessage("WarningTitle"), 
+                    JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.WARNING_MESSAGE, null, 
+                    options, options[0]);
+        JUnitUtil.waitFor(()-> !( t.isAlive()), "click yes finished");
+        Assertions.assertEquals(0, result, "array position 0 clicked");
+    }
+
+    @Test
+    public void testShowOptionYesNoDialogueEscapeButton() {
+        Thread t = new Thread(() -> {
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("WarningTitle"));
+            jdo.pressKey(java.awt.event.KeyEvent.VK_ESCAPE);
+            jdo.waitClosed();
+        });
+        t.setName("escape button Dialog Thread");
+        t.start();
+        String[] options = new String[] {JmriJOptionPane.YES_STRING, JmriJOptionPane.NO_STRING};
+        int result = JmriJOptionPane.showOptionDialog(null, "My Message", Bundle.getMessage("WarningTitle"), 
+                    JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.WARNING_MESSAGE, null, 
+                    options, options[0]);
+        JUnitUtil.waitFor(()-> !( t.isAlive()), "escape key pressed to close");
+        Assertions.assertEquals(JmriJOptionPane.CLOSED_OPTION, result, "no button clicked, Dialog exited, -1 returned");
+    }
+    
+    @Test
+    public void testShowOptionYesNoMaybeDialogueEnterButton() {
+        Thread t = new Thread(() -> {
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("WarningTitle"));
+            jdo.pressKey(java.awt.event.KeyEvent.VK_ENTER);
+            jdo.waitClosed();
+        });
+        t.setName("enter button Dialog Thread");
+        t.start();
+        String[] options = new String[] {JmriJOptionPane.YES_STRING, JmriJOptionPane.NO_STRING, "Maybe"};
+        int result = JmriJOptionPane.showOptionDialog(null, "My Message", Bundle.getMessage("WarningTitle"), 
+                    JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.WARNING_MESSAGE, null, 
+                    options, "Maybe");
+        JUnitUtil.waitFor(()-> !( t.isAlive()), "enter key pressed to close");
+        Assertions.assertEquals(2, result, "enter pressed, array position 2 returned");
+    }
+    
+    @Test
+    public void testShowOptionABCBDefaultEnterButton() {
+        Thread t = new Thread(() -> {
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("WarningTitle"));
+            jdo.pressKey(java.awt.event.KeyEvent.VK_ENTER);
+            jdo.waitClosed();
+        });
+        t.setName("ABC enter button Dialog Thread");
+        t.start();
+        String[] options = new String[] {"A","B","C"};
+        int result = JmriJOptionPane.showOptionDialog(null, "My Message", Bundle.getMessage("WarningTitle"), 
+                    JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null, 
+                    options, "B");
+        JUnitUtil.waitFor(()-> !( t.isAlive()), "ABC enter key pressed to close");
+        Assertions.assertEquals(1, result, "enter pressed, array position 1 returned");
+    }
+
+    @Test
+    public void testCanBeFoundInTestsWithNoTitle(){
+        Thread t = JemmyUtil.createModalDialogOperatorThread(
+            "", Bundle.getMessage("ButtonOK"));
+        JmriJOptionPane.showMessageDialog(null, "Message", "", JmriJOptionPane.WARNING_MESSAGE);
+        JUnitUtil.waitFor(() -> !t.isAlive(), "dialog with empty title string found and clicked OK");
+    }
+
+    private boolean calledBack;
+
+    @Test
+    public void testNonModalFoundWithModalOperator(){
+        Thread t = JemmyUtil.createModalDialogOperatorThread(
+            "Non Modal Modal Title", Bundle.getMessage("ButtonOK"));
+        JmriJOptionPane.showMessageDialogNonModal(null, "Message",
+            "Non Modal Modal Title", 0, () -> calledBack=true);
+        JUnitUtil.waitFor(() -> calledBack, "Dialog calledback");
+        JUnitUtil.waitFor(() -> !t.isAlive(), "testNonModalFoundWithModalOperator Thread Complete");
+    }
+
+    @Test
+    public void testNonModalFoundWithJemmyUtil(){
+        JmriJOptionPane.showMessageDialogNonModal(null, "Message",
+            "Non Modal Title", 0, () -> calledBack=true);
+        JemmyUtil.pressDialogButton("Non Modal Title", Bundle.getMessage("ButtonOK"));
+        JUnitUtil.waitFor(() -> calledBack, "testNonModalFoundWithTest calledback");
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        calledBack = false;
     }
 
     @AfterEach

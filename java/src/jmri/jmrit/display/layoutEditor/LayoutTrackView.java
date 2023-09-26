@@ -17,6 +17,7 @@ import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.tools.swing.DeleteBean;
 import jmri.jmrit.logixng.tools.swing.LogixNGEditor;
 import jmri.util.*;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
 
 /**
@@ -523,10 +524,10 @@ abstract public class LayoutTrackView implements InlineLogixNG {
     private boolean checkEditConditionalNG() {
         if (_inEditInlineLogixNGMode) {
             // Already editing a LogixNG, ask for completion of that edit
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("Error_InlineLogixNGInEditMode"), // NOI18N
                     Bundle.getMessage("ErrorTitle"), // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             _inlineLogixNGEdit.bringToFront();
             return true;
         }

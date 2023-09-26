@@ -1,17 +1,16 @@
 package jmri.jmrit.beantable.oblock;
 
-import jmri.InstanceManager;
-import jmri.UserPreferencesManager;
-import jmri.jmrit.logix.*;
-import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+
+import jmri.InstanceManager;
+import jmri.UserPreferencesManager;
+import jmri.jmrit.logix.*;
+import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Defines a GUI for editing OBlock - OPath objects in the _tabbed OBlock Table interface.
@@ -68,9 +67,9 @@ public class BlockPathEditFrame extends JmriJFrame {
             if ((path.getBlock() != null) && (path.getBlock() != block)) {
                 // somehow we received a path that part of another block
                 log.error("BlockPathEditFrame for OPath {}, but it is not part of OBlock {}", path.getName(), block.getDisplayName());
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(BlockPathEditFrame.this,
                         Bundle.getMessage("OBlockEditWrongPath", path.getName(), block.getDisplayName()),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 // cancel edit
                 closeFrame();
                 return;
@@ -293,8 +292,8 @@ public class BlockPathEditFrame extends JmriJFrame {
             _path.setLength((float) lengthSpinner.getValue() * (cm.isSelected() ? 10.0f : 25.4f)); // stored in mm
             _block.setMetricUnits(cm.isSelected());
         } catch (IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(),
-                    Bundle.getMessage("PathCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, ex.getMessage(),
+                    Bundle.getMessage("PathCreateErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             status(Bundle.getMessage("AddPathFailed", user), true);
             return;
         }
@@ -412,6 +411,6 @@ public class BlockPathEditFrame extends JmriJFrame {
         });
     }
 
-    private static final Logger log = LoggerFactory.getLogger(BlockPathEditFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockPathEditFrame.class);
 
 }

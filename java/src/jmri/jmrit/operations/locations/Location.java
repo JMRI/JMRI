@@ -1305,6 +1305,15 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public boolean hasWork() {
         return (getDropRS() != 0 || getPickupRS() != 0);
     }
+    
+    public boolean hasDisableLoadChange() {
+        for (Track track : getTracksList()) {
+            if (track.isSpur() && track.isDisableLoadChangeEnabled()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public boolean hasReporters() {
         for (Track track : getTracksList()) {

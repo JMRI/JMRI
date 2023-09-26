@@ -4,9 +4,9 @@ import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
 
 import javax.swing.AbstractAction;
-import javax.swing.JOptionPane;
 
 import jmri.jmrit.operations.trains.Train;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Action to print a train's manifest
@@ -40,19 +40,19 @@ public class PrintTrainManifestAction extends AbstractAction {
             }
             String string = MessageFormat.format(Bundle.getMessage("DoYouWantToPrintPreviousManifest"),
                     new Object[]{printOrPreview, _train.getName()});
-            int results = JOptionPane.showConfirmDialog(null, string, MessageFormat.format(
+            int results = JmriJOptionPane.showConfirmDialog(null, string, MessageFormat.format(
                     Bundle.getMessage("PrintPreviousManifest"), new Object[]{printOrPreview}),
-                    JOptionPane.YES_NO_OPTION);
-            if (results != JOptionPane.YES_OPTION) {
+                    JmriJOptionPane.YES_NO_OPTION);
+            if (results != JmriJOptionPane.YES_OPTION) {
                 return;
             }
         }
         if (!_train.printManifest(_isPreview)) {
             String string = MessageFormat.format(Bundle.getMessage("NeedToBuildTrainBeforePrinting"),
                     new Object[]{_train.getName()});
-            JOptionPane.showMessageDialog(null, string, MessageFormat.format(
+            JmriJOptionPane.showMessageDialog(null, string, MessageFormat.format(
                     Bundle.getMessage("CanNotPrintManifest"), new Object[]{Bundle.getMessage("print")}),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
     }

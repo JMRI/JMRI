@@ -1,16 +1,18 @@
 package jmri.jmrix.nce.consist;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import java.text.MessageFormat;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceCmdStationMemory;
 import jmri.jmrix.nce.NceMessage;
@@ -18,9 +20,8 @@ import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceTrafficController;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.TextFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Backups NCE Consists to a text file format defined by NCE.
@@ -92,10 +93,10 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
             }
         }
         if (f.exists()) {
-            if (JOptionPane.showConfirmDialog(null,
+            if (JmriJOptionPane.showConfirmDialog(null,
                     MessageFormat.format(Bundle.getMessage("FileExists"), f.getName()),
                     Bundle.getMessage("OverwriteFile"),
-                    JOptionPane.OK_CANCEL_OPTION) != JOptionPane.OK_OPTION) {
+                    JmriJOptionPane.OK_CANCEL_OPTION) != JmriJOptionPane.OK_OPTION) {
                 return;
             }
         }
@@ -103,10 +104,10 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
         try (PrintWriter fileOut = new PrintWriter(new BufferedWriter(new FileWriter(f)),
                 true)) {
 
-            if (JOptionPane.showConfirmDialog(null,
+            if (JmriJOptionPane.showConfirmDialog(null,
                     Bundle.getMessage("BackupTakesAwhile"),
                     Bundle.getMessage("NceConsistBackup"),
-                    JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                    JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                 fileOut.close();
                 return;
             }
@@ -169,15 +170,15 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
             fstatus.dispose();
 
             if (fileValid) {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("SuccessfulBackup"),
                         Bundle.getMessage("NceConsistBackup"),
-                        JOptionPane.INFORMATION_MESSAGE);
+                        JmriJOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("BackupFailed"),
                         Bundle.getMessage("NceConsistBackup"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
             }
 
         } catch (IOException e) {
@@ -256,6 +257,6 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceConsistBackup.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceConsistBackup.class);
 
 }

@@ -18,8 +18,7 @@ import jmri.jmrix.acela.*;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.jmrix.grapevine.SerialSignalHead;
 import jmri.util.*;
-import jmri.util.swing.BeanSelectCreatePanel;
-import jmri.util.swing.JComboBoxUtil;
+import jmri.util.swing.*;
 
 /**
  * Frame for creating / editing Signal Heads.
@@ -1257,14 +1256,14 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                 int headnumber;
 
                 if (inputsysname.length() == 0) {
-                    JOptionPane.showMessageDialog(this, Bundle.getMessage("signalHeadEntryWarning"));
+                    JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("signalHeadEntryWarning"));
                     log.warn("must supply a signalhead number (i.e. AH23) using your prefix");
                     return;
                 }
 
                 var acelaMemo = InstanceManager.getNullableDefault(AcelaSystemConnectionMemo.class);
                 if ( acelaMemo == null ){
-                    JOptionPane.showMessageDialog(this, Bundle.getMessage("SystemNotActiveWarning", "Acela"));
+                    JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("SystemNotActiveWarning", "Acela"));
                     log.warn("No active Acela connection to create Signal Head");
                     return;
                 }
@@ -1279,8 +1278,8 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                     } else {
                         log.warn("skipping creation of signal head, '{}' does not start with AxH", inputsysname);
                         String msg = Bundle.getMessage("acelaSkippingCreation", systemNameField.getText());
-                        JOptionPane.showMessageDialog(this, msg,
-                                Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(this, msg,
+                                Bundle.getMessage("WarningTitle"), JmriJOptionPane.ERROR_MESSAGE);
                         return;
                     }
                 } else {
@@ -1289,9 +1288,9 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
 
                 AcelaNode acelaNode = AcelaAddress.getNodeFromSystemName(acelaPrefix + "H" + headnumber, InstanceManager.getDefault(AcelaSystemConnectionMemo.class));
                 if (acelaNode==null) {
-                    JOptionPane.showMessageDialog(this, 
+                    JmriJOptionPane.showMessageDialog(this, 
                         Bundle.getMessage("acelaNoNodeFound",Bundle.getMessage("BeanNameSignalHead"),headnumber),
-                        Bundle.getMessage("ErrorSignalHeadAddFailed",headnumber), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorSignalHeadAddFailed",headnumber), JmriJOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
@@ -1327,7 +1326,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
             } else if (GRAPEVINE.equals(headTypeBox.getSelectedItem())) {
                 // the turnout field must hold a GxH system name (Gx = multichar prefix)
                 if (systemNameField.getText().length() == 0) {
-                    JOptionPane.showMessageDialog(this, Bundle.getMessage("signalHeadEntryWarning"));
+                    JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("signalHeadEntryWarning"));
                     log.warn("must supply a signalhead number (i.e. GH23) using your prefix");
                     return;
                 }
@@ -1337,8 +1336,8 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                 if (!inputsysname.startsWith(grapevinePrefix) || inputsysname.charAt(offset) != 'H') {
                     log.warn("skipping creation of signal head, '{}' does not start with GxH", inputsysname);
                     String msg = Bundle.getMessage("GrapevineSkippingCreation", inputsysname);
-                    JOptionPane.showMessageDialog(this, msg,
-                            Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(this, msg,
+                            Bundle.getMessage("WarningTitle"), JmriJOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if (checkSysNameOkBeforeCreating(inputsysname)) {
@@ -1545,26 +1544,26 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
     private void addTurnoutMessage(String s1, String s2) {
         log.warn("Could not provide turnout {}", s2);
         String msg = Bundle.getMessage("AddNoTurnout", s1, s2);
-        JOptionPane.showMessageDialog(this, msg,
-                Bundle.getMessage("WarningTitle") + " " + s1, JOptionPane.ERROR_MESSAGE);
+        JmriJOptionPane.showMessageDialog(this, msg,
+                Bundle.getMessage("WarningTitle") + " " + s1, JmriJOptionPane.ERROR_MESSAGE);
     }
 
     private void handleCreateException(Exception ex, String sysName) {
         if (ex.getLocalizedMessage() != null) {
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     ex.getLocalizedMessage(),
                     Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
         } else if (ex.getMessage() != null) {
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     ex.getMessage(),
                     Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("ErrorSignalHeadAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                     Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -1608,8 +1607,8 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
             } else {
                 msg = Bundle.getMessage("se8c4SkippingDueToErrorInSecond");
             }
-            JOptionPane.showMessageDialog(this, msg,
-                    Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, msg,
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -1710,8 +1709,8 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                 Integer.valueOf(sysName.substring(sysName.indexOf("$") + 1));
             } catch (NumberFormatException ex) {
                 String msg = Bundle.getMessage("ShouldBeNumber", "Hardware Address");
-                JOptionPane.showMessageDialog(this, msg,
-                        Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, msg,
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
         } else {
@@ -1728,8 +1727,8 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
             }
             if (!ok) {
                 String msg = Bundle.getMessage("InvalidSignalSystemName", sysName);
-                JOptionPane.showMessageDialog(this, msg,
-                        Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, msg,
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -1742,9 +1741,9 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
             if (nB != null) {
                 log.error("System name is not unique {} It already exists as a User name", sysName);
                 String msg = Bundle.getMessage("WarningSystemNameAsUser", ("" + sysName));
-                JOptionPane.showMessageDialog(this, msg,
+                JmriJOptionPane.showMessageDialog(this, msg,
                         Bundle.getMessage("WarningTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
             return true;
@@ -1752,8 +1751,8 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
         // inform the user if signal head already exists, and return false so creation can be bypassed
         log.warn("Attempt to create signal with duplicate system name {}", sysName);
         String msg = Bundle.getMessage("DuplicateSignalSystemName", sysName);
-        JOptionPane.showMessageDialog(this, msg,
-                Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+        JmriJOptionPane.showMessageDialog(this, msg,
+                Bundle.getMessage("WarningTitle"), JmriJOptionPane.ERROR_MESSAGE);
         return false;
     }
 
@@ -1767,10 +1766,10 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
     }
 
     private void handleCreate2TurnoutException(String t1, String t2, String uName) {
-        JOptionPane.showMessageDialog(this,
+        JmriJOptionPane.showMessageDialog(this,
                 Bundle.getMessage("ErrorSe8cAddFailed", uName, t1, t2) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -1831,9 +1830,9 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
             if (nB != null) {
                 log.error("User name is not unique {}", nam);
                 String msg = Bundle.getMessage("WarningUserName", ("" + nam));
-                JOptionPane.showMessageDialog(this, msg,
+                JmriJOptionPane.showMessageDialog(this, msg,
                         Bundle.getMessage("InvalidUserNameAlreadyExists", Bundle.getMessage("BeanNameSignalHead"),nam),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
             //Check to ensure that the username doesn't exist as a systemname.
@@ -1841,9 +1840,9 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
             if (nB != null) {
                 log.error("User name is not unique {} It already exists as a System name", nam);
                 String msg = Bundle.getMessage("WarningUserNameAsSystem", ("" + nam));
-                JOptionPane.showMessageDialog(this, msg,
+                JmriJOptionPane.showMessageDialog(this, msg,
                         Bundle.getMessage("InvalidUserNameAlreadyExists", Bundle.getMessage("BeanNameSignalHead"),nam),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -1853,8 +1852,8 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
     private void noTurnoutMessage(String s1, String s2) {
         log.warn("Could not provide turnout {}", s2);
         String msg = Bundle.getMessage("WarningNoTurnout", s1, s2);
-        JOptionPane.showMessageDialog(this, msg,
-                Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+        JmriJOptionPane.showMessageDialog(this, msg,
+                Bundle.getMessage("WarningTitle"), JmriJOptionPane.ERROR_MESSAGE);
     }
 
     @Override

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.AbstractListModel;
@@ -24,7 +25,6 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
@@ -45,14 +45,13 @@ import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.picker.PickPanel;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseListener;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
 import org.openide.util.lookup.ServiceProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This class displays a table of the occupancy detection trackers. It does
@@ -131,8 +130,8 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
             }
         }
         if (msg != null) {
-            JOptionPane.showMessageDialog(_frame, msg,
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(_frame, msg,
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             return false;
         }
         block.setValue(name);
@@ -707,8 +706,8 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
             if (blockName != null) {
                 OBlock block = InstanceManager.getDefault(OBlockManager.class).getOBlock(blockName);
                 if (block == null) {
-                    JOptionPane.showMessageDialog(this, Bundle.getMessage("BlockNotFound", blockName),
-                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("BlockNotFound", blockName),
+                            Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 } else {
                     retOK = makeTracker(block, _trainNameBox.getText(), null);
                 }
@@ -871,7 +870,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
 
     }
 
-    private static final Logger log = LoggerFactory.getLogger(TrackerTableAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackerTableAction.class);
 
     @ServiceProvider(service = InstanceInitializer.class)
     public static class Initializer extends AbstractInstanceInitializer {

@@ -3,13 +3,12 @@ package jmri.jmrix.can.cbus.swing.nodeconfig;
 import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
-import javax.swing.JOptionPane;
-import jmri.jmrix.can.cbus.node.CbusNode;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+import jmri.jmrix.can.cbus.node.CbusNode;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  *
@@ -140,22 +139,23 @@ abstract public class CbusNodeConfigTab extends jmri.jmrix.can.swing.CanPanel im
     protected boolean getCancelSaveEditDialog(String adviceString){
         setActiveDialog(true);
         resetViewToVeto();
-        int selectedValue = JOptionPane.showOptionDialog(this.getParent(),
+        int selectedValue = JmriJOptionPane.showOptionDialog(this.getParent(),
             "<html>" + adviceString + "<br>" + Bundle.getMessage("ContinueEditQuestion")+"</html>"
             ,Bundle.getMessage("WarningTitle") + " " + nodeOfInterest,
-            JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE, null,
+            JmriJOptionPane.DEFAULT_OPTION,JmriJOptionPane.QUESTION_MESSAGE, null,
             new String[]{Bundle.getMessage("CancelEdit"), Bundle.getMessage("SaveEdit"), Bundle.getMessage("ContinueEdit")},
             Bundle.getMessage("ContinueEdit")); // default choice
         
         setActiveDialog(false);
         switch (selectedValue) {
-            case 0:
+            case -1: // Dialog Closed
+            case 0: // array position 0, CancelEdit
                 cancelOption();
                 return false;
-            case 1:
+            case 1: // array position 1, SaveEdit
                 saveOption();
                 return false;
-            default:
+            default: // array position 2, ContinueEdit
                 return true;
         }
     }
@@ -189,6 +189,6 @@ abstract public class CbusNodeConfigTab extends jmri.jmrix.can.swing.CanPanel im
         super.dispose();
     }
     
-    // private final static Logger log = LoggerFactory.getLogger(CbusNodeConfigTab.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusNodeConfigTab.class);
     
 }

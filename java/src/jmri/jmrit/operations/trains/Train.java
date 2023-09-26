@@ -6,11 +6,7 @@ import java.io.*;
 import java.text.MessageFormat;
 import java.util.*;
 
-import javax.swing.JOptionPane;
-
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.beans.Identifiable;
@@ -29,6 +25,7 @@ import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Represents a train on the layout
@@ -3122,11 +3119,11 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         InstanceManager.getDefault(TrainCustomManifest.class).addCsvFile(file);
         if (!InstanceManager.getDefault(TrainCustomManifest.class).process()) {
             if (!InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists()) {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         MessageFormat.format(Bundle.getMessage("LoadDirectoryNameFileName"),
                                 new Object[] { InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(),
                                         InstanceManager.getDefault(TrainCustomManifest.class).getFileName() }),
-                        Bundle.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ManifestCreatorNotFound"), JmriJOptionPane.ERROR_MESSAGE);
             }
             return false;
         }
@@ -4273,6 +4270,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Train.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Train.class);
 
 }

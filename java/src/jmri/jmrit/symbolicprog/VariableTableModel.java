@@ -16,19 +16,19 @@ import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
+
 import jmri.AddressedProgrammer;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.util.CvUtil;
 import jmri.util.jdom.LocaleSelector;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.jdom2.Attribute;
 import org.jdom2.Content;
 import org.jdom2.Element;
 import org.jdom2.util.IteratorIterable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Table data model for display of variables in symbolic programmer. Also
@@ -900,8 +900,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
         if (!ok) {
             synchronized (this) {
-                JOptionPane.showMessageDialog(new JFrame(), Bundle.getMessage("UnsupportedCharset", charSet, name),
-                        Bundle.getMessage("DecoderDefError"), JOptionPane.ERROR_MESSAGE); // NOI18N
+                JmriJOptionPane.showMessageDialog(new JFrame(), Bundle.getMessage("UnsupportedCharset", charSet, name),
+                        Bundle.getMessage("DecoderDefError"), JmriJOptionPane.ERROR_MESSAGE); // NOI18N
             }
             log.error(Bundle.getMessage("UnsupportedCharset", charSet, name));
         }
@@ -1320,6 +1320,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         _status = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(VariableTableModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VariableTableModel.class);
 
 }

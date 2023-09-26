@@ -10,19 +10,16 @@ import java.util.Hashtable;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -480,14 +477,14 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             } else {
                 if (!train.printManifestIfBuilt()) {
                     log.debug("Manifest file for train ({}) not found", train.getName());
-                    int result = JOptionPane.showConfirmDialog(null,
+                    int result = JmriJOptionPane.showConfirmDialog(null,
                             MessageFormat.format(Bundle.getMessage("TrainManifestFileMissing"),
                                     new Object[] { train.getName() }),
-                            Bundle.getMessage("TrainManifestFileError"), JOptionPane.YES_NO_OPTION);
-                    if (result == JOptionPane.YES_OPTION) {
+                            Bundle.getMessage("TrainManifestFileError"), JmriJOptionPane.YES_NO_OPTION);
+                    if (result == JmriJOptionPane.YES_OPTION) {
                         train.setModified(true);
                         if (!train.printManifestIfBuilt()) {
-                            log.error("Not able to create manifest for train ({})", train.getName());
+                            log.error("Unable to create manifest for train ({})", train.getName());
                         }
                     }
                 }
@@ -510,31 +507,31 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             // check to see if departure track was reused
             if (checkDepartureTrack(train)) {
                 log.debug("Train is departing staging that already has inbound cars");
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         MessageFormat.format(Bundle.getMessage("StagingTrackUsed"),
                                 new Object[] { train.getDepartureTrack().getName() }),
-                        Bundle.getMessage("CanNotResetTrain"), JOptionPane.INFORMATION_MESSAGE);
+                        Bundle.getMessage("CanNotResetTrain"), JmriJOptionPane.INFORMATION_MESSAGE);
             } else if (!train.reset()) {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         MessageFormat.format(Bundle.getMessage("TrainIsInRoute"),
                                 new Object[] { train.getTrainTerminatesName() }),
-                        Bundle.getMessage("CanNotResetTrain"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("CanNotResetTrain"), JmriJOptionPane.ERROR_MESSAGE);
             }
         } else if (!train.isBuilt()) {
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     MessageFormat.format(Bundle.getMessage("TrainNeedsBuild"), new Object[] { train.getName() }),
-                    Bundle.getMessage("CanNotPerformAction"), JOptionPane.INFORMATION_MESSAGE);
+                    Bundle.getMessage("CanNotPerformAction"), JmriJOptionPane.INFORMATION_MESSAGE);
         } else if (train.isBuilt() && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
             log.debug("Move train ({})", train.getName());
             train.move();
         } else if (train.isBuilt() && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.TERMINATE)) {
             log.debug("Terminate train ({})", train.getName());
-            int status = JOptionPane.showConfirmDialog(null,
+            int status = JmriJOptionPane.showConfirmDialog(null,
                     MessageFormat.format(Bundle.getMessage("TerminateTrain"),
                             new Object[] { train.getName(), train.getDescription() }),
                     MessageFormat.format(Bundle.getMessage("DoYouWantToTermiate"), new Object[] { train.getName() }),
-                    JOptionPane.YES_NO_OPTION);
-            if (status == JOptionPane.YES_OPTION) {
+                    JmriJOptionPane.YES_NO_OPTION);
+            if (status == JmriJOptionPane.YES_OPTION) {
                 train.terminate();
             }
         } else if (train.isBuilt() && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.CONDUCTOR)) {
@@ -665,5 +662,5 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainsTableModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrainsTableModel.class);
 }

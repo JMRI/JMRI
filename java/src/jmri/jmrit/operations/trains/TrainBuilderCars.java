@@ -709,7 +709,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         // restore car's load
         car.setLoadName(oldCarLoad);
         car.setScheduleItemId(Car.NONE);
-        addLine(_buildReport, SEVEN, Bundle.getMessage("buildUnableNewLoad", car.toString()));
+        addLine(_buildReport, FIVE, Bundle.getMessage("buildUnableNewLoad", car.toString()));
         return false; // done, no load generated for this car
     }
 
@@ -1338,7 +1338,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             // staging
             if ((!router.getStatus().startsWith(Track.LENGTH) &&
                     !_train.isServiceAllCarsWithFinalDestinationsEnabled()) || (car.getTrack() == _departStageTrack)) {
-                // add car to not able to route list
+                // add car to unable to route list
                 if (!_notRoutable.contains(car)) {
                     _notRoutable.add(car);
                 }

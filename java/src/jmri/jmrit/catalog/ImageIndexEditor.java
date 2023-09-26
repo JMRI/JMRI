@@ -5,12 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.util.Enumeration;
 import java.util.Set;
+
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JSplitPane;
@@ -25,9 +25,9 @@ import jmri.InstanceManager;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.openide.util.lookup.ServiceProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A JFrame for creating and editing an Image Index.
@@ -199,15 +199,15 @@ public final class ImageIndexEditor extends JmriJFrame {
             selectedNode = _index.getSelectedNode();            
         }
         if (selectedNode == null) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("selectAddNode"),
-                    Bundle.getMessage(MESSAGE_TITLE), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("selectAddNode"),
+                    Bundle.getMessage(MESSAGE_TITLE), JmriJOptionPane.INFORMATION_MESSAGE);
         } else {
-            String name = JOptionPane.showInputDialog(this, Bundle.getMessage("nameAddNode"),
-                    Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE);
+            String name = (String)JmriJOptionPane.showInputDialog(this, Bundle.getMessage("nameAddNode"), Bundle.getMessage("QuestionTitle"),
+                    HEIGHT, null, null, "");
             if (name != null) {
                 if (!_index.insertNodeIntoModel(name, selectedNode)) {
-                    JOptionPane.showMessageDialog(this, Bundle.getMessage("duplicateNodeName", name),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("duplicateNodeName", name),
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -219,15 +219,15 @@ public final class ImageIndexEditor extends JmriJFrame {
             selectedNode = _index.getSelectedNode();            
         }
         if (selectedNode == null) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("selectRenameNode"),
-                    Bundle.getMessage(MESSAGE_TITLE), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("selectRenameNode"),
+                    Bundle.getMessage(MESSAGE_TITLE), JmriJOptionPane.INFORMATION_MESSAGE);
         } else {
-            String name = JOptionPane.showInputDialog(this, Bundle.getMessage("newNameNode"),
-                    selectedNode.getUserObject());
+            String name = JmriJOptionPane.showInputDialog(this, Bundle.getMessage("newNameNode"),
+                    selectedNode.getUserObject().toString());
             if (name != null) {
                 if (!_index.renameNode(selectedNode, name)) {
-                    JOptionPane.showMessageDialog(this, Bundle.getMessage("duplicateNodeName", name),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("duplicateNodeName", name),
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 }
 
             }
@@ -240,24 +240,22 @@ public final class ImageIndexEditor extends JmriJFrame {
             selectedNode = _index.getSelectedNode();            
         }
         if (selectedNode == null) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("selectDeleteNode"),
-                    Bundle.getMessage(MESSAGE_TITLE), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("selectDeleteNode"),
+                    Bundle.getMessage(MESSAGE_TITLE), JmriJOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("delete node \"{}\" level= {}.", selectedNode, selectedNode.getLevel());
-        }
+        log.debug("delete node \"{}\" level= {}.", selectedNode, selectedNode.getLevel());
         if (selectedNode.getLevel() <= 1) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("deleteRootNode"),
-                    Bundle.getMessage(MESSAGE_TITLE), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("deleteRootNode"),
+                    Bundle.getMessage(MESSAGE_TITLE), JmriJOptionPane.INFORMATION_MESSAGE);
         } else {
             int numNodes = countSubNodes(selectedNode);
             int numIcons = countIcons(selectedNode);
-            int response = JOptionPane.showConfirmDialog(this,
+            int response = JmriJOptionPane.showConfirmDialog(this,
                     Bundle.getMessage("confirmDeleteNode", selectedNode.getUserObject(), numNodes, numIcons),
-                    Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE);
-            if (response == JOptionPane.YES_OPTION) {
+                    Bundle.getMessage("QuestionTitle"), JmriJOptionPane.YES_NO_OPTION,
+                    JmriJOptionPane.QUESTION_MESSAGE);
+            if (response == JmriJOptionPane.YES_OPTION) {
                 CatalogTreeNode parent = (CatalogTreeNode)selectedNode.getParent();
                 _index.removeNodeFromModel(selectedNode);
                 _index.setSelectedNode(parent);
@@ -307,6 +305,6 @@ public final class ImageIndexEditor extends JmriJFrame {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ImageIndexEditor.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImageIndexEditor.class);
 
 }

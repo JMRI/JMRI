@@ -5,11 +5,13 @@ import jmri.util.startup.StartupModel;
 import jmri.util.startup.StartupActionsManager;
 import java.awt.Component;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+
 import jmri.InstanceManager;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -50,12 +52,12 @@ public class StartupPauseFactory implements StartupModelFactory {
                     600,
                     1);
             JSpinner spinner = new JSpinner(snm);
-            int result = JOptionPane.showConfirmDialog(parent,
+            int result = JmriJOptionPane.showConfirmDialog(parent,
                     this.getDialogMessage(spinner),
                     this.getDescription(),
-                    JOptionPane.OK_CANCEL_OPTION,
-                    JOptionPane.PLAIN_MESSAGE);
-            if (result == JOptionPane.OK_OPTION && delay != snm.getNumber().intValue()) {
+                    JmriJOptionPane.OK_CANCEL_OPTION,
+                    JmriJOptionPane.PLAIN_MESSAGE);
+            if (result == JmriJOptionPane.OK_OPTION && delay != snm.getNumber().intValue()) {
                 ((StartupPauseModel) model).setDelay(snm.getNumber().intValue());
                 InstanceManager.getDefault(StartupActionsManager.class).setRestartRequired();
             }

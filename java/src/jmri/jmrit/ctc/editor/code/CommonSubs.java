@@ -8,15 +8,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Vector;
+
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
+
 import jmri.InstanceManager;
 import jmri.BlockManager;
 import jmri.SensorManager;
@@ -30,6 +31,8 @@ import jmri.jmrit.ctc.NBHTurnout;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
@@ -54,8 +57,8 @@ public class CommonSubs {
 
     public static boolean allowClose(Component parentComponent, boolean dataChanged) {
         if (dataChanged) {
-            return JOptionPane.showConfirmDialog(parentComponent, Bundle.getMessage("CommonSubsDataModified"),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;  // NOI18N
+            return JmriJOptionPane.showConfirmDialog(parentComponent, Bundle.getMessage("CommonSubsDataModified"),
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION;  // NOI18N
         }
         return true;    // NO change, ok to exit
     }
@@ -310,8 +313,8 @@ public class CommonSubs {
         } else {
             stringBuffer.append(Bundle.getMessage("CommonSubsPleaseFix2")); // NOI18N
         }
-        JOptionPane.showMessageDialog(parentComponent, stringBuffer.toString(),
-                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);   // NOI18N
+        JmriJOptionPane.showMessageDialog(parentComponent, stringBuffer.toString(),
+                Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);   // NOI18N
         return true;
     }
 

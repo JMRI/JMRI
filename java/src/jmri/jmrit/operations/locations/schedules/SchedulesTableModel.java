@@ -11,14 +11,12 @@ import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.setup.Control;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -240,10 +238,10 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         LocationTrackPair ltp = getLocationTrackPair(row);
         if (ltp == null) {
             log.debug("Need location track pair");
-            JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("AssignSchedule"),
+            JmriJOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("AssignSchedule"),
                     new Object[]{sch.getName()}), MessageFormat.format(Bundle.getMessage("CanNotSchedule"),
                             new Object[]{Bundle.getMessage("ButtonEdit")}),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         // use invokeLater so new window appears on top
@@ -255,9 +253,9 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     private void deleteSchedule(int row) {
         log.debug("Delete schedule");
         Schedule sch = sysList.get(row);
-        if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("DoYouWantToDeleteSchedule"),
+        if (JmriJOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("DoYouWantToDeleteSchedule"),
                 new Object[]{sch.getName()}), Bundle.getMessage("DeleteSchedule?"),
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
             scheduleManager.deregister(sch);
             OperationsXml.save();
         }
@@ -405,5 +403,5 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SchedulesTableModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SchedulesTableModel.class);
 }

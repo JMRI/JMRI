@@ -56,7 +56,7 @@ public class CbusPicHexFile extends HexFile{
         int pStart = 0;
         int checksum = 0;
         
-        if (r.type == HexRecord.DATA) {
+        if (r.type == HexRecord.TYPE_DATA) {
             // Look for "old" 8-byte paraneter block at 0x810, assuming aligned hex address
             if (r.address == PARAM_OLD_START) {
                 for (int i = 0; i <= PARAM_OLD_LEN; i++) {

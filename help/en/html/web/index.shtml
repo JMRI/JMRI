@@ -227,7 +227,9 @@
 
       <p>Two files <code>web/css/user.css</code> and <code>web/js/user.js</code> are provided for
       convenience to make simple appearance and javascript additions and overrides. These files are
-      automatically included in all JMRI web pages, and include instructions for usage.</p>
+      automatically included in all JMRI web pages and include instructions for usage. JMRI, as of 
+      version 5.5.4, allows the targeting of CSS to a specific panel by name. See user.css, located 
+      in the current JMRI distribution, for details.</p>
 
       <p>The standard web services use templates in the <code>web/servlet</code> directory. Note
       that these templates are tightly linked with JMRI. While modifying these templates is the

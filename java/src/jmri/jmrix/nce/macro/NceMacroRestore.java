@@ -1,24 +1,22 @@
 package jmri.jmrix.nce.macro;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceTrafficController;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.TextFilter;
 
 /**
@@ -149,12 +147,12 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 
                 // macro file found, give the user the choice to continue
                 if (curMacro == CS_MACRO_MEM) {
-                    if (JOptionPane
+                    if (JmriJOptionPane
                             .showConfirmDialog(
                                     null,
                                     Bundle.getMessage("dialogRestoreTime"),
                                     Bundle.getMessage("RestoreTitle"),
-                                    JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                                    JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                         break;
                     }
                 }
@@ -201,15 +199,15 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
             fstatus.dispose();
 
             if (fileValid) {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("dialogRestoreSuccess"),
                         Bundle.getMessage("RestoreTitle"),
-                        JOptionPane.INFORMATION_MESSAGE);
+                        JmriJOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("dialogRestoreFailed"),
                         Bundle.getMessage("RestoreTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
             }
 
         } catch (IOException ignore) {
@@ -277,6 +275,6 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceMacroRestore.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceMacroRestore.class);
 
 }

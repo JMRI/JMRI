@@ -3,11 +3,11 @@ package jmri.jmrit.symbolicprog;
 import java.awt.event.ActionEvent;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Like {@link SplitVariableValue}, except that the string representation is
@@ -141,8 +141,8 @@ public class SplitTextVariableValue extends SplitVariableValue {
         justification="I18N of Error Message")
     void unsupportedCharset() {
         synchronized (this) {
-            JOptionPane.showMessageDialog(new JFrame(), Bundle.getMessage("UnsupportedCharset", charSet, _name),
-                    Bundle.getMessage("DecoderDefError"), JOptionPane.ERROR_MESSAGE); // NOI18N
+            JmriJOptionPane.showMessageDialog(new JFrame(), Bundle.getMessage("UnsupportedCharset", charSet, _name),
+                    Bundle.getMessage("DecoderDefError"), JmriJOptionPane.ERROR_MESSAGE); // NOI18N
         }
         log.error(Bundle.getMessage("UnsupportedCharset", charSet, _name));
     }
@@ -278,8 +278,6 @@ public class SplitTextVariableValue extends SplitVariableValue {
         log.warn("setLongValue doesn't make sense for a split text value: {}", i);
     }
 
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SplitTextVariableValue.class
-            .getName());
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SplitTextVariableValue.class);
 
 }

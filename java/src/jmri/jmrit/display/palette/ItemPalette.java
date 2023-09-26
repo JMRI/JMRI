@@ -17,6 +17,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.tree.TreeNode;
+
 import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
@@ -29,9 +30,9 @@ import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.FileUtil;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -629,17 +630,17 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
      */
     static private boolean familyNameOK(String type, String family, Iterator<String> it) {
         if (family == null || family.length() == 0) {
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("EnterFamilyName"),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             return false;
         }
         while (it.hasNext()) {
             String f = it.next();
             if (family.equals(f)) {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         java.text.MessageFormat.format(Bundle.getMessage("DuplicateFamilyName"), family, type),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 return false;
             }
         }
@@ -800,6 +801,6 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         return cName;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ItemPalette.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ItemPalette.class);
 
 }

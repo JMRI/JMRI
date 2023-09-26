@@ -24,6 +24,8 @@ public class ShutdownPreferencesPanel extends JPanel implements PreferencesPanel
 
     private JCheckBox _enableCheckBox;
     private JComboBox<DialogDisplayOptions> _displayActionComboBox;
+    private JCheckBox _timebase;
+    private JCheckBox _sensorIconColor;
 
     public ShutdownPreferencesPanel() {
         _preferences = InstanceManager.getDefault(ShutdownPreferences.class);
@@ -44,6 +46,8 @@ public class ShutdownPreferencesPanel extends JPanel implements PreferencesPanel
     private boolean setValues() {
         boolean didSet = true;
         _preferences.setEnableStoreCheck(_enableCheckBox.isSelected());
+        _preferences.setIgnoreTimebase(_timebase.isSelected());
+        _preferences.setIgnoreSensorColors(_sensorIconColor.isSelected());
         _preferences.setDisplayDialog((DialogDisplayOptions) _displayActionComboBox.getSelectedItem());
         return didSet;
     }
@@ -51,6 +55,12 @@ public class ShutdownPreferencesPanel extends JPanel implements PreferencesPanel
     private JPanel getPanel() {
         _enableCheckBox = new JCheckBox(Bundle.getMessage("LabelEnableCheckbox"));
         _enableCheckBox.setSelected(_preferences.isStoreCheckEnabled());
+
+        _timebase = new JCheckBox(Bundle.getMessage("IgnoreTimebase"));
+        _timebase.setSelected(_preferences.isIgnoreTimebaseEnabled());
+
+        _sensorIconColor = new JCheckBox(Bundle.getMessage("IgnoreSensorColor"));
+        _sensorIconColor.setSelected(_preferences.isIgnoreSensorColorsEnabled());
 
         _displayActionComboBox = new JComboBox<>();
         for (DialogDisplayOptions opt : DialogDisplayOptions.values()) {
@@ -63,6 +73,10 @@ public class ShutdownPreferencesPanel extends JPanel implements PreferencesPanel
         JPanel gridPanel = new JPanel(new GridLayout(0, 1));
         gridPanel.add(_enableCheckBox);
         gridPanel.add(_displayActionComboBox);
+        gridPanel.add(new JLabel());
+        gridPanel.add(new jmri.swing.JTitledSeparator(Bundle.getMessage("IgnoreSeparator")));
+        gridPanel.add(_timebase);
+        gridPanel.add(_sensorIconColor);
 
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 40, 0));

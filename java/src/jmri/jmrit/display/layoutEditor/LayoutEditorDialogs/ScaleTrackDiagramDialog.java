@@ -9,6 +9,7 @@ import javax.swing.*;
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Layout Editor Dialogs implements some dialogs for the Layout Editor
@@ -233,11 +234,11 @@ public class ScaleTrackDiagramDialog {
      *                        the appropriate format.
      */
     private void showEntryErrorDialog(Component parentComponent, NumberFormatException e) {
-        JOptionPane.showMessageDialog(parentComponent,
+        JmriJOptionPane.showMessageDialog(parentComponent,
                 String.format("%s: %s %s", Bundle.getMessage("EntryError"),
                         e, Bundle.getMessage("TryAgain")),
                 Bundle.getMessage("ErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.ERROR_MESSAGE);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(

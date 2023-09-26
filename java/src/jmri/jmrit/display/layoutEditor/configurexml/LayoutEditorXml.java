@@ -2,9 +2,9 @@ package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.Color;
 import java.util.List;
-import java.util.stream.Collectors;
+
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
@@ -14,9 +14,9 @@ import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.ColorUtil;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.jdom2.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for LayoutEditor panes.
@@ -292,11 +292,11 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             JFrame frame = new JFrame("DialogDemo");
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             log.warn("File contains a panel with the same name ({}) as an existing panel", name);
-            int n = JOptionPane.showConfirmDialog(frame,
+            int n = JmriJOptionPane.showConfirmDialog(frame,
                     Bundle.getMessage("DuplicatePanel", name),
                     Bundle.getMessage("DuplicatePanelTitle"),
-                    JOptionPane.YES_NO_OPTION);
-            if (n == JOptionPane.NO_OPTION) {
+                    JmriJOptionPane.YES_NO_OPTION);
+            if (n != JmriJOptionPane.YES_OPTION ) {
                 return false;
             }
         }
@@ -719,5 +719,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
     public int loadOrder() {
         return jmri.Manager.PANELFILES;
     }
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorXml.class);
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorXml.class);
+
 }

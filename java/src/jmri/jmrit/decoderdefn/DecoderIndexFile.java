@@ -486,6 +486,9 @@ public class DecoderIndexFile extends XmlFile {
             dialog.dispose();
         }, "decoderIndexer").start();
 
+        // improve visibility if any always on top frames present
+        dialog.setAlwaysOnTop(true);
+        dialog.toFront();
         // this will block until the thread completes, either by
         // finishing or by being cancelled
         dialog.setVisible(true);

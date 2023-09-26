@@ -1237,12 +1237,12 @@ public class Maintenance {
                     names[0] = "Unknown Type?";
                 }
                 /*
-                 JOptionPane.showMessageDialog(null,
+                 JmriJOptionPane.showMessageDialog(null,
                  MessageFormat.format(rbm.getString("OrphanName"), (Object[])names)+" has "+numListeners+
                  " listeners installed and only "+referenceCount+
                  " references found.\n"+names[0]+
                  " Tables are listeneners.  Check that the table is closed.",
-                 rbm.getString("infoTitle"), JOptionPane.INFORMATION_MESSAGE);
+                 rbm.getString("infoTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
                  */
                 if (text != null) {
                     text.append(MessageFormat.format(rbm.getString("OrphanName"), (Object[]) names) + " has " + numListeners

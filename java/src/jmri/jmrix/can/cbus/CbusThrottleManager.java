@@ -1,10 +1,8 @@
 package jmri.jmrix.can.cbus;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.awt.GraphicsEnvironment;
-
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 
 import jmri.*;
 import jmri.jmrit.throttle.ThrottlesPreferences;
@@ -12,12 +10,9 @@ import jmri.jmrix.AbstractThrottleManager;
 import jmri.jmrix.can.*;
 import jmri.util.TimerUtil;
 import jmri.util.ThreadingUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 import static jmri.ThrottleListener.DecisionType;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * CBUS implementation of a ThrottleManager.
@@ -429,39 +424,25 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
             case CbusConstants.ERR_CAN_BUS_ERROR:
                 log.error("{}",Bundle.getMessage("ERR_CAN_BUS_ERROR"));
                 if (!GraphicsEnvironment.isHeadless() && !canErrorDialogVisible ) {
-
-                    ThreadingUtil.runOnGUI(() -> {
-                        canErrorDialogVisible = true;
-                        JOptionPane pane = new JOptionPane(Bundle.getMessage("ERR_CAN_BUS_ERROR"));
-                        pane.setMessageType(JOptionPane.ERROR_MESSAGE);
-                        JDialog canErrorDialog = pane.createDialog(null, Bundle.getMessage("CBUS_ERROR"));
-
-                        pane.addPropertyChangeListener(JOptionPane.VALUE_PROPERTY, ignored -> {
-                            canErrorDialog.dispose();
-                            canErrorDialogVisible = false;
-                        });
-
-
-                        canErrorDialog.setModal(false);
-                        canErrorDialog.setVisible(true);
-                    });
+                    canErrorDialogVisible = true;
+                    ThreadingUtil.runOnGUI(() ->
+                        JmriJOptionPane.showMessageDialogNonModal(null, // parent
+                            Bundle.getMessage("ERR_CAN_BUS_ERROR"), // message
+                            Bundle.getMessage("CBUS_ERROR"), // title
+                            JmriJOptionPane.ERROR_MESSAGE, // message type
+                            () -> canErrorDialogVisible = false )); // callback
                 }
                 return;
             case CbusConstants.ERR_INVALID_REQUEST:
                 log.error("{}", Bundle.getMessage("ERR_INVALID_REQUEST"));
                 if (!GraphicsEnvironment.isHeadless() && !invalidErrorDialogVisible){
-                    ThreadingUtil.runOnGUI(() -> {
-                        invalidErrorDialogVisible = true;
-                        JOptionPane pane = new JOptionPane(Bundle.getMessage("ERR_INVALID_REQUEST"));
-                        pane.setMessageType(JOptionPane.ERROR_MESSAGE);
-                        JDialog invalidErrorDialog = pane.createDialog(null, Bundle.getMessage("CBUS_ERROR"));
-                        pane.addPropertyChangeListener(JOptionPane.VALUE_PROPERTY, ignored -> {
-                            invalidErrorDialog.dispose();
-                            invalidErrorDialogVisible = false;
-                        });
-                        invalidErrorDialog.setModal(false);
-                        invalidErrorDialog.setVisible(true);
-                    });
+                    invalidErrorDialogVisible = true;
+                    ThreadingUtil.runOnGUI(() ->
+                        JmriJOptionPane.showMessageDialogNonModal(null, // parent
+                            Bundle.getMessage("ERR_INVALID_REQUEST"), // message
+                            Bundle.getMessage("CBUS_ERROR"), // title
+                            JmriJOptionPane.ERROR_MESSAGE, // message type
+                            () -> invalidErrorDialogVisible = false )); // callback
                 }
                 return;
             case CbusConstants.ERR_SESSION_CANCELLED:
@@ -779,5 +760,6 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
         failedThrottleRequest(address, "Throttle Request " + address + " Cancelled.");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusThrottleManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusThrottleManager.class);
+
 }

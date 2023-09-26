@@ -15,11 +15,11 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
 import javax.swing.DropMode;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -43,6 +43,7 @@ import javax.swing.tree.ExpandVetoException;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
+
 import jmri.jmrit.roster.FullBackupExportAction;
 import jmri.jmrit.roster.FullBackupImportAction;
 import jmri.jmrit.roster.Roster;
@@ -52,9 +53,8 @@ import jmri.util.FileUtil;
 import jmri.util.IterableEnumeration;
 import jmri.util.datatransfer.RosterEntrySelection;
 import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.WindowInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A JPanel that lists Roster Groups
@@ -426,10 +426,10 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
                 } else if (e.getActionCommand().equals("newWindow") && newWindowMenuItemAction != null) {
                     newWindowMenuItemAction.actionPerformed(e);
                 } else {
-                    JOptionPane.showMessageDialog((JComponent) e.getSource(),
+                    JmriJOptionPane.showMessageDialog((JComponent) e.getSource(),
                             ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("NotImplemented"),
                             ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("NotImplemented"),
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -633,6 +633,6 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
             // do nothing - don't paint vertical lines.
         }
     }
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(RosterGroupsPanel.class);
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RosterGroupsPanel.class);
 }

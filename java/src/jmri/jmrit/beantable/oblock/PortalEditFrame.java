@@ -15,9 +15,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Defines a GUI for editing OBlocks - Portal objects in the _tabbed OBlock Table interface.
  * Based on AudioSourceFrame.
@@ -232,7 +229,8 @@ public class PortalEditFrame extends JmriJFrame {
                 _portal.setToBlock(block, true);
             }
         } catch (IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("PortalCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            jmri.util.swing.JmriJOptionPane.showMessageDialog(null, ex.getMessage(),
+                Bundle.getMessage("PortalCreateErrorTitle"), jmri.util.swing.JmriJOptionPane.ERROR_MESSAGE);
             status(Bundle.getMessage("AddPortalFailed", user), true);
             return;
         }
@@ -246,6 +244,6 @@ public class PortalEditFrame extends JmriJFrame {
         statusBar.setForeground(warn ? Color.red : Color.gray);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(PortalEditFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PortalEditFrame.class);
 
 }

@@ -10,10 +10,10 @@ import java.util.*;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.swing.JOptionPane;
 
 import jmri.util.FileUtil;
 import jmri.util.exceptionhandler.UncaughtExceptionHandler;
+import jmri.util.swing.JmriJOptionPane;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
@@ -119,10 +119,10 @@ public class Log4JUtil {
             Configurator.setRootLevel(Level.INFO);
             log.error("Unable to load Configuration {}", logFile);
             if (!GraphicsEnvironment.isHeadless()) {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                     "Could not locate Logging Configuration file " + logFile,
                     "Could not Locate Logging Configuration File",
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             }
         }
         // install default exception handler so uncaught exceptions are logged, not printed
@@ -159,7 +159,13 @@ public class Log4JUtil {
         Map<String, Appender  > appenderMap = ((org.apache.logging.log4j.core.Logger) logger).getAppenders();
         appenderMap.forEach((key, a) -> {
             if (a instanceof RollingFileAppender) {
-                log.info("This log is appended to file: {}", ((RollingFileAppender) a).getFileName());
+                RollingFileAppender rf = (RollingFileAppender)a;
+                String fileName = rf.getFileName();
+                if ( fileName.equals(rf.getFilePattern()) ) {
+                    log.info("This log is stored in file: {}", fileName);
+                } else {
+                    log.info("This log is appended to file: {}", fileName);
+                }
             } else if (a instanceof FileAppender) {
                 log.info("This log is stored in file: {}", ((FileAppender) a).getFileName());
             }
@@ -211,10 +217,10 @@ public class Log4JUtil {
             Configurator.reconfigure();
             Configurator.setRootLevel(Level.INFO);
             if (!GraphicsEnvironment.isHeadless()) {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         "Could not Initialise Logging " + ex.getMessage(),
                         configFile,
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
             }
         }
         if (createLogErr!=null) { // wait until Logging init

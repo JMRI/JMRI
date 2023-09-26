@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.stream.Collectors;
+
 import javax.swing.AbstractListModel;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -16,13 +17,13 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
 import jmri.BeanSetting;
 import jmri.Path;
 import jmri.Sensor;
@@ -33,9 +34,7 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.Portal;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * @author Pete Cressman Copyright: Copyright (c) 2011
@@ -226,9 +225,9 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
             StringBuilder  sb = new StringBuilder (msg);
             sb.append("\n");
             sb.append(Bundle.getMessage("saveChanges"));
-            int answer = JOptionPane.showConfirmDialog(this, sb.toString(), Bundle.getMessage("makePath"),
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (answer == JOptionPane.YES_OPTION) {
+            int answer = JmriJOptionPane.showConfirmDialog(this, sb.toString(), Bundle.getMessage("makePath"),
+                    JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.QUESTION_MESSAGE);
+            if (answer == JmriJOptionPane.YES_OPTION) {
                 addNewPath(false);
             }
         }
@@ -311,16 +310,16 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
                     return true;
                 }
             }
-            JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
+            JmriJOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                     Bundle.getMessage("portalNotInCircuit"), _homeBlock.getDisplayName()),
-                    Bundle.getMessage("badPath"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("badPath"), JmriJOptionPane.WARNING_MESSAGE);
             return false;
         }
         java.util.List<Positionable> icons = _parent.getCircuitIcons(_homeBlock);
         if (!icons.contains(pos)) {
-            JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
+            JmriJOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                     Bundle.getMessage("iconNotInCircuit"), _homeBlock.getDisplayName()),
-                    Bundle.getMessage("badPath"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("badPath"), JmriJOptionPane.WARNING_MESSAGE);
             return false;
         }
         return true;
@@ -380,8 +379,8 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         }
         String name = _pathName.getText();
         if (!_pathGroup.isEmpty() && (name == null || name.length() == 0)) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("needPathName"),
-                    Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("needPathName"),
+                    Bundle.getMessage("makePath"), JmriJOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -478,8 +477,8 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
      */
     private OPath makeOPath(String name, ArrayList<Positionable> pathGp) {
         if (pathGp.isEmpty()) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("noPathIcons", name),
-                    Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("noPathIcons", name),
+                    Bundle.getMessage("makePath"), JmriJOptionPane.INFORMATION_MESSAGE);
             return null;
         }
         Iterator<Positionable> it = pathGp.iterator();
@@ -540,8 +539,8 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
             sb.append(Bundle.getMessage("tooManyPortals"));
         }
         if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb.toString(),
-                    Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, sb.toString(),
+                    Bundle.getMessage("makePath"), JmriJOptionPane.INFORMATION_MESSAGE);
             return null;
         }
 
@@ -561,8 +560,8 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
             log.debug("addPath({}) for path \"{}\"", prompt, name);
         }
         if (name == null || name.trim().length() == 0) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("TooltipPathName"),
-                    Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("TooltipPathName"),
+                    Bundle.getMessage("makePath"), JmriJOptionPane.INFORMATION_MESSAGE);
             return;
         }
         OPath otherPath = null; 
@@ -605,9 +604,9 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
             }
             if (sb.length() > 0 && prompt) {
                 sb.append(Bundle.getMessage("saveChanges"));
-                int result = JOptionPane.showConfirmDialog(this, sb.toString(),
-                        Bundle.getMessage("makePath"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (result == JOptionPane.YES_OPTION) {
+                int result = JmriJOptionPane.showConfirmDialog(this, sb.toString(),
+                        Bundle.getMessage("makePath"), JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.QUESTION_MESSAGE);
+                if (result == JmriJOptionPane.YES_OPTION) {
                     _currentPath = otherPath;
                 }
             } else {
@@ -645,8 +644,8 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
     private void changePathName() {
         String name = _pathName.getText();
         if (name == null || name.trim().length() == 0 || _currentPath == null) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("changePathName", Bundle.getMessage("buttonChangeName")),
-                    Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("changePathName", Bundle.getMessage("buttonChangeName")),
+                    Bundle.getMessage("makePath"), JmriJOptionPane.INFORMATION_MESSAGE);
             return;
         }
         OPath aPath = _homeBlock.getPathByName(name);
@@ -655,9 +654,9 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
                 _pathList.setSelectedValue(aPath, true);
                 return;
             }
-            JOptionPane.showMessageDialog(this, 
+            JmriJOptionPane.showMessageDialog(this, 
                     Bundle.getMessage("duplicatePathName", name, _homeBlock.getDisplayName()),
-                    Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
+                    Bundle.getMessage("makePath"), JmriJOptionPane.INFORMATION_MESSAGE);
             clearPath(false);
             _pathName.setText(null);
             return;
@@ -668,9 +667,9 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
             sb.append(Bundle.getMessage("pathIconsChanged", name));
             sb.append("\n");
             sb.append(Bundle.getMessage("saveIcons"));
-            int result = JOptionPane.showConfirmDialog(this, sb.toString(),
-                    Bundle.getMessage("makePath"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (result == JOptionPane.YES_OPTION) {
+            int result = JmriJOptionPane.showConfirmDialog(this, sb.toString(),
+                    Bundle.getMessage("makePath"), JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.QUESTION_MESSAGE);
+            if (result == JmriJOptionPane.YES_OPTION) {
                 changePathNameInIcons(name, _pathGroup);
                 _savePathGroup = _pathGroup;
             } else {
@@ -763,5 +762,6 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EditCircuitPaths.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EditCircuitPaths.class);
+
 }
