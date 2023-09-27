@@ -1163,7 +1163,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         if (!_status.equals(Track.OKAY)) {
             addLine(_buildReport, SEVEN, Bundle.getMessage("RouterCanNotDeliverCar", car.toString(),
                     track.getLocation().getName(), track.getName(), _status, track.getTrackTypeName()));
-            if (_status.startsWith(Track.LENGTH) && !redirectToAlternate(car)) {
+            if (_status.startsWith(Track.LENGTH) && !redirectToAlternate(car, track)) {
                 return false;
             }
         }
@@ -1171,16 +1171,19 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
     }
     
     /**
-     * Used when the 1st hop interchange or yard is full. Will attempt to use a
+     * Used when the 1st hop interchanges and yards are full. Will attempt to use a
      * spur's alternate track when pulling a car from the spur. This will create
      * a local move. Code checks to see if local move by the train being used is
-     * allowed.
+     * allowed. Will only use the alternate track if all possible 1st hop tracks
+     * were tested.
      * 
      * @param car the car being redirected
      * @return true if car's destination was set to alternate track
      */
-    private boolean redirectToAlternate(Car car) {
-        if (car.getTrack().isSpur() && car.getTrack().getAlternateTrack() != null) {
+    private boolean redirectToAlternate(Car car, Track track) {
+        if (car.getTrack().isSpur() &&
+                car.getTrack().getAlternateTrack() != null &&
+                _nextLocationTracks.indexOf(track) == _nextLocationTracks.size() - 1) {
             // try redirecting car to the alternate track
             Car ts = clone(car);
             ts.setDestinationTrack(car.getTrack().getAlternateTrack());
