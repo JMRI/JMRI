@@ -11,7 +11,10 @@
 #   AnyRail Turnouts must have "Label" names entered with a unique Turnout number.
 #   If desired, you can include a unique "User Name" after the unique number, such as "186 Yard Track 1"
 #     The number will be used for the SystemName, and the trailing text for the UserName
-# Pre-export suggestions: set AnyRail Zoom to 1:6, disable "Show Visible track"  
+# Pre-export suggestions: set AnyRail Zoom to 1:6, disable "Show Visible track"
+#
+# Next steps: Run CreateSectionsFromBlocks.py and AddOccupancyIconsToPanel.py
+#  
 # Thanks to Cliff Anderson's AnyRailBuildSensorList.py and Bill Fitch's CreateSignalLogicAndSections.py
 #   for some of the code and much of the inspiration
 # TODO: handle underscore in AR SectionName
@@ -48,7 +51,7 @@ log.info( "AnyRailExportAdditions.py Create and Assign Sensors to blocks" )
 blocksCreated = 0 #count successes
 blocksSkipped = 0 # and failures
 
-blocksSet = list(blocks.getNamedBeanSet()) # use a copy for the loop
+blocksSet = set(blocks.getNamedBeanSet()) # use a copy for the loop
 for blockBean in blocksSet :
 
 #     if (blocksCreated > -1) : continue #debugging, comment out before committing
@@ -114,7 +117,7 @@ log.info("AnyRailExportAdditions.py Converting Internal Turnouts to Hardware")
 turnoutsCreated = 0 #count successes
 turnoutsSkipped = 0 # and failures
 
-turnoutsSet = list(turnouts.getNamedBeanSet()) # use a copy for the loop
+turnoutsSet = set(turnouts.getNamedBeanSet()) # use a copy for the loop
 for turnoutBean in turnoutsSet :
 
     # if (turnoutsCreated > 5) : continue
