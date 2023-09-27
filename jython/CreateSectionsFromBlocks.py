@@ -72,7 +72,7 @@ log = org.slf4j.LoggerFactory.getLogger("jmri.jmrit.jython.exec.script.CreateSec
 log.info( "CreateSectionsFromBlocks.py started" )
 sectionsCreated = 0 #count successes
 
-blocksSet = list(blocks.getNamedBeanSet()) # use a copy for the loop
+blocksSet = set(blocks.getNamedBeanSet()) # use a copy for the loop
 for blockBean in blocksSet :
     # if (blocksCreated > 5) : continue
     
