@@ -215,9 +215,9 @@
 
         <dt>Set direction to &lt;forward | reverse&gt;</dt>
 
-        <dt>Set function key &lt;0 to 28&gt; &lt;on | off&gt;[, wait &lt;n&gt; seconds]</dt>
+        <dt>Set function key &lt;0 to 68&gt; &lt;on | off&gt;[, wait &lt;n&gt; seconds]</dt>
 
-        <dd>Set the function key on or off. The number can be from 0 to 28. If seconds is greater
+        <dd>Set the function key on or off. The number can be from 0 to 68. If seconds is greater
         than zero, the opposite action will be performed after the number of seconds has
         passed.</dd>
 
@@ -262,9 +262,12 @@
         sequence of actions again. If the Stop action is missing, the script will run forever,
         until the script thread is killed, or JMRI is stopped.</dd>
 
-        <dt>Wait for &lt;n&gt; seconds</dt>
+        <dt>Wait for &lt;n&gt; [to &lt;n&gt;] seconds</dt>
 
         <dd>Wait until the time has expired. Normally used for station stops.</dd>
+
+        <dd>The optional second number is used to provide a random wait time between the two
+        values.<span class="since">since YAAT 3.1</span></dd>
 
         <dt>Wait for block &lt;block name&gt; to become &lt;occupied | unoccupied | reserved |
         free&gt;</dt>
