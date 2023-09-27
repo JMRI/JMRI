@@ -390,7 +390,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>In auto trains, after stopping, or going to manual, resume correctly even if in a section with no signal.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
