@@ -19,6 +19,9 @@
 #   for some of the code and much of the inspiration
 # TODO: handle underscore in AR SectionName
 # TODO: "rename" the Block systemName to match (Block "move" currently causes NPE in JMRI) 
+#
+# NOTE: to enable jython logging, see https://www.jmri.org/help/en/html/apps/Debug.shtml
+# Add the Logger Category name "jmri.jmrit.jython.exec" at DEBUG Level.
 
 import jmri
 import java
