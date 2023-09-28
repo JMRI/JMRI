@@ -43,7 +43,7 @@
           <li><a href="#_Toc144">Automatic table information update</a></li>
           <li><a href="#_Toc148">Further information</a></li>
         </ul>
-        <p class="important">This document is NOT intended to be a guide to using JMRI’s extensive operations
+        <p class="important">This document is NOT intended to be a guide to using JMRI's extensive operations
         capabilities (known collectively as "OperationsPro"), but is focused solely on RFID setup. You do not 
         need to use any other OperationsPro functions to use the RFID functions. See the 
         <a href="../../apps/operationspro/index.shtml">OperationsPro help pages</a>.
