@@ -451,7 +451,9 @@
 <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>A new LogixNG icon has been added to Panel Editor. When the icon is clicked, it will
+            execute the inline LogixNG of that icon. If the inline LogixNG has several ConditionalNGs,
+            the ConditionalNGs will be executed in the order they got created.</li>
         </ul>
 
     <h3>Control Panel Editor</h3>
