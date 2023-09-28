@@ -44,7 +44,7 @@
           <li><a href="#_Toc148">Further information</a></li>
         </ul>
         <p class="important">This document is NOT intended to be a guide to using JMRI’s extensive operations
-        capabilities (known collectively as “OperationsPro”), but is focused solely on RFID setup. You do not 
+        capabilities (known collectively as "OperationsPro"), but is focused solely on RFID setup. You do not 
         need to use any other OperationsPro functions to use the RFID functions. See the 
         <a href="../../apps/operationspro/index.shtml">OperationsPro help pages</a>.
         </p>
@@ -57,7 +57,7 @@
         <ol>
           <li>Attach an RFID Tag to a locomotive</li>
           <li>Set up a JMRI "connection" for your RFID Reader in Connections Preferences (PanelPro main menu: <strong>Edit&rArr;
-          Preferences&rArr;Connections&rArr;”+”</strong>)</li>
+          Preferences&rArr;Connections&rArr;"+"</strong>)</li>
           <li>Run the train so the reader reads the RFID tag. JMRI will automatically create entries in the <i>ID Tags Table</i>
           (for the RFID tag) and the <i>Reporter Table</i> (for the reader).  These can be viewed via the main
           PanelPro menu selection <strong>Tool&rArr;Tables&rArr;[Reporters, ID Tags]</strong></li>
@@ -102,8 +102,8 @@
         <p>There are several ways to tell JMRI about your RFID readers:</p>
         <ul>
           <li>
-            If your readers communicate via direct serial (USB) connection or TCP/IP, set up an “RFID Connection” on
-            the Preferences Connections page (PanelPro main menu <strong>Edit&rArr;Preferences&rArr;Connections&rArr;”+”</strong>
+            If your readers communicate via direct serial (USB) connection or TCP/IP, set up an "RFID Connection" on
+            the Preferences Connections page (PanelPro main menu <strong>Edit&rArr;Preferences&rArr;Connections&rArr;"+"</strong>
             [Select "RFID" as "System Manufacturer")].
             JMRI will then create a <i>Reporter Table</i> entry automatically when a reader sends
             a properly formatted message through the indicated connection.  You will also see a new main menu item for <strong>RFID</strong>
@@ -151,7 +151,7 @@
           depending on the communications protocol you use (see <a href="../../tools/Reporters.shtml">
           Reporters help page</a>). If an entry is not created automatically (or even if it would be), 
           you can create an entry manually. The Reporter Table contents is saved when you do a 
-          <strong>File&rArr;Store ALL…</strong>) from the main PanelPro menu or elsewhere. 
+          <strong>File&rArr;Store ALL...</strong>) from the main PanelPro menu or elsewhere. 
           [<i>ADVANCED:</i> The <a href="../../tools/Reporters.shtml">Reporter Table</a> is also used for
           other kinds of reports from the layout, such as <a href="../loconet/Addressing.shtml#transponding">
           transponder</a> messages and <a href="../rps/index.shtml">real-time positioning system information
@@ -165,7 +165,7 @@
           <i>Block Table</i>: Blocks are defined groups of track on <i>Layout Editor Panels</i>.  An RFID reader
           can be assigned to a Block so that the ID Tag seen by that reader can be displayed on that panel.
           This is known as the "Block Value". Block Table contents is saved when you do a 
-          <strong>File&rArr;Store ALL…</strong>) from the main PanelPro menu or elsewhere. 
+          <strong>File&rArr;Store ALL...</strong>) from the main PanelPro menu or elsewhere. 
           See <a href="../../../package/jmri/jmrit/beantable/BlockTable.shtml"> Block Table help page</a>.
         </p>
         <a href="images/PanelProTablesRel554.jpg"><img src="images/PanelProTablesRel554.jpg"
@@ -194,7 +194,7 @@
           enter a great deal of information about each, it does not currently (as of JMRI Version 5.5.4) have a specific 
           field for RFID tag. However, the Roster can be used to populate the Locomotive Table and RFID tag numbers can 
           be entered there.  The Roster contents is saved when you make changes and do a <strong>File&rArr;Save</strong>
-          or “Save to Roster”. The Roster contents is saved into a separate xml file.
+          or "Save to Roster". The Roster contents is saved into a separate xml file.
         </p>
         </li>
         </ul>
@@ -273,12 +273,12 @@
   <!-- ******************************************************************************************************* -->
         <h2><a id="_Toc141">Setting up the OperationsPro tables for RFID</a></h2>
         <p>To use RFID information with the Locations, Locomotive, and Car Tables, you first
-          enable the assignment of ID Tags. This is done via the OperationsPro “settings” selection.
+          enable the assignment of ID Tags. This is done via the OperationsPro "settings" selection.
           Start on the main PanelPro menu and go to <strong>Tools&rArr;OperationsPro&rArr;Settings&rArr;Tools&rArr;Options&rArr;
-          [scroll to “Options” near the bottom of the page]</strong>. Click the check box for
+          [scroll to "Options" near the bottom of the page]</strong>. Click the check box for
           &quot;Identification Tag Fields&quot;. If you now open the Locations Table, you will
-          see an additional column labeled “Reporters” (for entering RFID Reader
-          names). If you open either the Locomotive or Car Tables, you will see an “RFID” option in a box near the
+          see an additional column labeled "Reporters" (for entering RFID Reader
+          names). If you open either the Locomotive or Car Tables, you will see an "RFID" option in a box near the
           bottom of the window. Clicking on that will display the additional RFID information fields.  Note that this
           box must be re-checked each time the table windows are opened (i.e. it is not "sticky", as of JMRI Version
           5.5.4).
@@ -287,7 +287,7 @@
         height="1158" width="289" alt="Locomotives Table used with RFID"></a>
 
         <p>Operational information related to RFID will be filled into the various tables automatically by JMRI as
-        RFID tags are read around the layout – once you have entered the linking information between tables: 
+        RFID tags are read around the layout -- once you have entered the linking information between tables: 
         <ul>
           <li>RFID Reader names (Reporter names) can be linked to Locations</li> 
           <li>ID Tag names can be linked to Locomotives or Cars</li>
@@ -326,7 +326,7 @@
         <p>
           If you are just getting started in populating the <i>Locomotive Table</i>, JMRI provides a short
           cut. From the <i>Locomotive Table</i> menu, select <strong>Tools&rArr;Locomotive Roster&rArr;Import</strong>
-          from JMRI Roster. Select which Roster Group or “All Entries” in the popup window, and JMRI will 
+          from JMRI Roster. Select which Roster Group or "All Entries" in the popup window, and JMRI will 
           create entries for the listed locomotives. Note that certain fields may be truncated (Owner) and 
           others may need editing (e.g. road name or model), but it is a start.<br> <strong>BE CAREFUL:</strong>
           if you add the wrong roster group, or you add the same one a second time, JMRI will add these 
@@ -347,7 +347,7 @@
         <p>
           <i>ID Tag Table:</i> If the ID Tag has been seen  before, JMRI will update the "When Seen" and "Where Seen"
           columns [see next step] in the corresponding <i>ID Tag Table</i> entry. If the ID tag has not been seen
-          before, JMRI will create an entry, prefixing “ID” to the tag ID to create a "System Name", and will put 
+          before, JMRI will create an entry, prefixing "ID" to the tag ID to create a "System Name", and will put 
           just the tag ID in the "Tag ID" column.
           The "User Name" column will be left blank and you can fill it in (or not) at any time. 
           [A jython script to aid in this process is  available at <a href="https://jmri.org/jython/AssignRFIDTagToRS.py" target="_blank">
