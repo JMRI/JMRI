@@ -22,6 +22,8 @@
 #            Support for inline train definitions has been removed.
 #            Custom extension support has been removed.
 #         Trains can be loaded and started by setting a memory variable to a train file name.
+# v3.1 -- The wait for seconds command has support for random wait times:  Wait for <n> [to <n>] seconds.
+#         The function key limit has been changed to 68.
 #
 # Author:  Dave Sand copyright (c) 2018 - 2023
 
@@ -237,7 +239,7 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
             elif actionKey == 'WaitSpeed':
                 self.doWaitSpeed(action)
             elif actionKey == 'WaitTime':
-                self.waitMsec(action[1])    # Direct execution
+                self.doWaitTime(action)
             else:
                 self.displayMessage('Action, {}, is not valid'.format(actionKey))
         if logLevel > 0: print '{} -  End YAAT Program'.format(self.threadName)
@@ -392,7 +394,6 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
     def doPrint(self, action):
         act, printText = action
         print '{} - {}'.format(self.threadName, printText)
-        #self.waitMsec(1000)
 
     def doReleaseThrottle(self, action):
         if self.throttle is not None:
@@ -658,6 +659,16 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
                     return
             self.waitChange([mast])
 
+    def doWaitTime(self, action):
+        act, time1, time2 = action
+
+        delay = time1
+        if time1 != time2:
+            delay = java.util.Random().nextInt(time2 - time1) + time1
+            if logLevel > 1: print 'Randon time delay = {} :: {} :: {}'.format(delay, time1, time2)
+
+        self.waitMsec(delay)
+
     def setKey(self, keyNum, keyOn):
         if logLevel > 2: print "{} - Function key = {}, On = {}".format(self.threadName, keyNum, keyOn)
         command = 'self.throttle.setF' + str(keyNum)
@@ -767,8 +778,8 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
                 self.compileSignalMast(line)
             elif words[0] == 'Wait' and words[1] == 'while' and words[2] == 'signal':
                 self.compileSignalSpeed(line)
-            elif words[0] == 'Wait' and words[1] == 'for' and (words[3] == 'seconds' or words[3] == 'second'):
-                self.compileWaitTime(words[2])
+            elif words[0] == 'Wait' and words[1] == 'for' and 'second' in line:
+                self.compileWaitTime(line)
             else:
                 self.compileMessages.append('{} - Syntax error at line {}: {}'.format(self.threadName, self.lineNumber, line))
 
@@ -1140,8 +1151,8 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
             self.compileMessages.append('{} - Function key error at line {}: the key value, {}, is not an integer'.format(self.threadName, self.lineNumber, grps[0]))
             return
         else:
-            if keyNum < 0 or keyNum > 28:
-                self.compileMessages.append('{} - Function key error at line {}: the key value, {}, is not in the range 0-28'.format(self.threadName, self.lineNumber, grps[0]))
+            if keyNum < 0 or keyNum > 68:
+                self.compileMessages.append('{} - Function key error at line {}: the key value, {}, is not in the range 0-68'.format(self.threadName, self.lineNumber, grps[0]))
                 return
         keyState = grps[1]
         if flds ==2:
@@ -1365,15 +1376,48 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
             return
         self.actionTokens.append(['WaitSensor', sensorName, sensorState])
 
-    def compileWaitTime(self, timeValue):
-        # Wait for <n> seconds
-        if logLevel > 2: print '  {} - time value = {}'.format(self.threadName, timeValue)
+    def compileWaitTime(self, line):
+        # Wait for <n> [to <n>] seconds
+        if logLevel > 2: print '  {} - {}'.format(self.threadName, line)
+
+        flds = 1
+        regex = '\s*Wait\s+(for)\s+(\S+)'  # Note: capture the word 'for' to force a tuple result
+        if ' to ' in line:
+            regex += '\s+to\s+(\S+)'
+            flds += 1
+        regex += '\s+second'
+        pattern = re.compile(regex)
+        result = re.findall(pattern, line)
+        if logLevel > 3: print '    {} - result = {}'.format(self.threadName, result)
+
+        if len(result) == 0 or len(result[0]) != flds + 1:
+            self.compileMessages.append('{} - Syntax error at line {}: {}'.format(self.threadName, self.lineNumber, line))
+            return
+
+        times = result[0]   # The first tuple entry is 'for', the 2nd and possible third entries are seconds duration numbers
         try:
-            num = float(timeValue)
+            time1 = float(times[1])
         except ValueError:
-            self.compileMessages.append('{} - Wait time error at line {}: the wait time, {}, is not a number'.format(self.threadName, self.lineNumber, timeValue))
+            self.compileMessages.append('{} - Wait time error at line {}: the wait time, {}, is not a number'.format(self.threadName, self.lineNumber, times[1]))
+            return
         else:
-            self.actionTokens.append(['WaitTime', int(num * 1000)])
+            if time1 < 0.0:
+                self.compileMessages.append('{} - Wait time error at line {}: the wait time, {}, is less than zero'.format(self.threadName, self.lineNumber, time1))
+                return
+        time2 = time1
+
+        if flds == 2:
+            try:
+                time2 = float(times[2])
+            except ValueError:
+                self.compileMessages.append('{} - Wait seconds error at line {}: the second time, {}, is not a number'.format(self.threadName, self.lineNumber, times[2]))
+                return
+            else:
+                if not time2 > time1:
+                    self.compileMessages.append('{} - Wait seconds error at line {}: the second time, {}, is not greater than the first seconds'.format(self.threadName, self.lineNumber, time2))
+                    return
+
+        self.actionTokens.append(['WaitTime', int(time1 * 1000), int(time2 * 1000)])
 
     def compileSignalHead(self, line):
         # Wait for signal head <head name> to [not] show <appearance name> [or ...]
@@ -1568,7 +1612,7 @@ def startTrain(fileName):
     if instanceList[idx].setup(trainLines, compileNeeded, pickleName):   # Compile the train actions
         instanceList[idx].start()                       # Compile was successful
 
-print 'YAAT v3.0'
+print 'YAAT v3.1'
 startTime = time()
 
 try:
