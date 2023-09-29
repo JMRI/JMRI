@@ -1,1 +1,2 @@
-The text of the "logixng_icon.png" is Verdana 11 bold.
+The "logixng_icon.gif" is created by the method
+jmri.jmrit.display.LogixNGIcon.createLogixNGIconImage()

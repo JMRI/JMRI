@@ -20,6 +20,9 @@ public class LogixNGIcon extends PositionableLabel {
 
     public LogixNGIcon(@CheckForNull NamedIcon s, @Nonnull Editor editor) {
         super(s, editor);
+
+        // Please retain the line below. It's used to create the resources/icons/logixng/logixng_icon.gif icon
+        // createLogixNGIconImage();
     }
 
     @Override
@@ -69,5 +72,39 @@ public class LogixNGIcon extends PositionableLabel {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SensorIcon.class);
+
+/*
+    // Please retain this commented method. It's used to create the resources/icons/logixng/logixng_icon.gif icon
+
+    private void createLogixNGIconImage() {
+
+        try {
+            int width = 90, height = 39;
+
+            // TYPE_INT_ARGB specifies the image format: 8-bit RGBA packed into integer pixels
+            java.awt.image.BufferedImage bi = new java.awt.image.BufferedImage(width, height, java.awt.image.BufferedImage.TYPE_INT_ARGB);
+
+            java.awt.Graphics2D ig2 = bi.createGraphics();
+
+            ig2.setColor(java.awt.Color.WHITE);
+            ig2.fillRect(0, 0, width-1, height-1);
+            ig2.setColor(java.awt.Color.BLACK);
+            ig2.drawRect(0, 0, width-1, height-1);
+
+            java.awt.Font font = new java.awt.Font("Verdana", java.awt.Font.BOLD, 15);
+            ig2.setFont(font);
+            ig2.setPaint(java.awt.Color.black);
+
+            // Draw string twice to get more bold
+            ig2.drawString("LogixNG", 11, 24);
+            ig2.drawString("LogixNG", 12, 24);
+
+            javax.imageio.ImageIO.write(bi, "gif", new java.io.File(jmri.util.FileUtil.getExternalFilename("resources/icons/logixng/logixng_icon.gif")));
+        } catch (java.io.IOException ie) {
+            throw new RuntimeException(ie);
+        }
+    }
+*/
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGIcon.class);
 }

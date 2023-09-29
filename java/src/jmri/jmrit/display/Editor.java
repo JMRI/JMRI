@@ -2273,7 +2273,7 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
 
     protected void addLogixNGEditor() {
         IconAdder editor = new IconAdder("LogixNG");
-        editor.setIcon(0, "plainIcon", "resources/icons/logixng/logixng_icon.png");
+        editor.setIcon(0, "plainIcon", "resources/icons/logixng/logixng_icon.gif");
         JFrameItem frame = makeAddIconFrame("LogixNG", true, false, editor);
         _iconEditorFrame.put("LogixNG", frame);
 
