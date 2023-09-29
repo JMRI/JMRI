@@ -2493,7 +2493,7 @@ public class TrainBuilderBase extends TrainCommon {
     }
 
     private boolean checkLocalMovesAllowed(Car car, Track track) {
-        if (!_train.isAllowLocalMovesEnabled() &&
+        if (!_train.isLocalSwitcher() && !_train.isAllowLocalMovesEnabled() &&
                 splitString(car.getLocationName()).equals(splitString(track.getLocation().getName()))) {
             addLine(_buildReport, SEVEN,
                     Bundle.getMessage("buildNoLocalMoveToTrack", car.getLocationName(), car.getTrackName(),
@@ -2605,12 +2605,23 @@ public class TrainBuilderBase extends TrainCommon {
                     continue;
                 }
             }
-            // are there trains that can carry the car type and load to the
-            // staging track?
+        }
+        // do we need to test all car loads?
+        boolean loadRestrictions = isLoadRestrictions();
+        // now determine if the loads can be routed to the staging track
+        for (int i = loads.size() - 1; i >= 0; i--) {
+            String load = loads.get(i);
+            car.setLoadName(load);
             if (!router.isCarRouteable(car, _train, stageTrack, _buildReport)) {
                 loads.remove(i); // no remove this load
                 addLine(_buildReport, SEVEN, Bundle.getMessage("buildStagingTrackNotReachable",
                         stageTrack.getLocation().getName(), stageTrack.getName(), load));
+                if (!loadRestrictions) {
+                    loads.clear(); // no loads can be routed
+                    break;
+                }
+            } else if (!loadRestrictions) {
+                break; // done all loads can be routed
             }
         }
         // Use random loads rather that the first one that works to create
@@ -2633,7 +2644,7 @@ public class TrainBuilderBase extends TrainCommon {
                 }
                 car.updateKernel(); // is car part of kernel?
                 addLine(_buildReport, SEVEN,
-                        Bundle.getMessage("buildAddingScheduleLoad", car.getLoadName(), car.toString()));
+                        Bundle.getMessage("buildAddingScheduleLoad", loads.size(), car.getLoadName(), car.toString()));
                 return true;
             }
             addLine(_buildReport, SEVEN, Bundle.getMessage("buildCanNotDropCarBecause", car.toString(),
@@ -2642,6 +2653,38 @@ public class TrainBuilderBase extends TrainCommon {
         car.setLoadName(oldLoad); // restore load and report failure
         addLine(_buildReport, SEVEN, Bundle.getMessage("buildUnableNewLoadStaging", car.toString(), car.getTrackName(),
                 stageTrack.getLocation().getName(), stageTrack.getName()));
+        return false;
+    }
+    
+    /**
+     * Checks to see if there are any load restrictions for trains,
+     * interchanges, and yards if routing through yards is enabled.
+     * 
+     * @return true if there are load restrictions.
+     */
+    private boolean isLoadRestrictions() {
+        boolean restrictions = isLoadRestrictionsTrain() || isLoadRestrictions(Track.INTERCHANGE);
+        if (Setup.isCarRoutingViaYardsEnabled()) {
+            restrictions = restrictions || isLoadRestrictions(Track.YARD);
+        }
+        return restrictions;
+    }
+    
+    private boolean isLoadRestrictions(String type) {
+        for (Track track : locationManager.getTracks(type)) {
+            if (!track.getLoadOption().equals(Track.ALL_LOADS)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private boolean isLoadRestrictionsTrain() {
+        for (Train train : trainManager.getTrainsByIdList()) {
+            if (!train.getLoadOption().equals(Train.ALL_LOADS)) {
+                return true;
+            }
+        }
         return false;
     }
 

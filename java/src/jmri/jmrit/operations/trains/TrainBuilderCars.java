@@ -1272,7 +1272,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                         car.getTrackName(), car.getFinalDestinationName(), car.getFinalDestinationTrackName()));
 
         // no local moves for this train?
-        if (!_train.isAllowLocalMovesEnabled() &&
+        if (!_train.isLocalSwitcher() && !_train.isAllowLocalMovesEnabled() &&
                 splitString(car.getLocationName()).equals(splitString(car.getFinalDestinationName())) &&
                 car.getTrack() != _departStageTrack) {
             addLine(_buildReport, FIVE,
