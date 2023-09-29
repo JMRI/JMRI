@@ -582,7 +582,8 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li></li>
+            <li>Web tables: add click toggle for several additional columns</li>
+            <li>JSON Server: support for updating SignalHead and SignalMast Lit and Held</li>
         </ul>
 
     <h3>Where Used</h3>
