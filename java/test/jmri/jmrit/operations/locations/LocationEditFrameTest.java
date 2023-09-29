@@ -454,7 +454,7 @@ public class LocationEditFrameTest extends OperationsTestCase {
         
         Setup.setCarRoutingViaStagingEnabled(true);
         
-        Assert.assertEquals("Confirm number of columns", 11, tbl.getColumnCount());
+        Assert.assertEquals("Confirm number of columns", 13, tbl.getColumnCount());
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Moves")));
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Hold")));
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Schedule")));
@@ -466,10 +466,14 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("PlanPickUp")));
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Dest")));
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Ship")));
+        
+        // confirm columns unique to staging are visible
+        Assert.assertEquals("Column exists", 9, tbl.findColumn(Bundle.getMessage("LoadDefaultAbv")));
+        Assert.assertEquals("Column exists", 10, tbl.findColumn(Bundle.getMessage("LoadCustomAbv")));
                
         // add track moves column
         Setup.setShowTrackMovesEnabled(true);
-        Assert.assertEquals("Confirm number of columns", 12, tbl.getColumnCount());
+        Assert.assertEquals("Confirm number of columns", 14, tbl.getColumnCount());
         Assert.assertEquals("Column exists", 5, tbl.findColumn(Bundle.getMessage("Moves")));
         
         // test 2nd row
@@ -481,41 +485,41 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("moves", 23, track.getMoves());
         
         // test routed
-        Assert.assertEquals("Column exists", 10, tbl.findColumn(Bundle.getMessage("Routed")));
+        Assert.assertEquals("Column exists", 12, tbl.findColumn(Bundle.getMessage("Routed")));
         Assert.assertFalse("Routed", track.isOnlyCarsWithFinalDestinationEnabled());
         tbl.clickOnCell(1, tbl.findColumn(Bundle.getMessage("Routed")));
         Assert.assertTrue("Routed", track.isOnlyCarsWithFinalDestinationEnabled());
 
         // add road restriction
         track.setRoadOption(Track.EXCLUDE_ROADS);
-        Assert.assertEquals("Confirm number of columns", 13, tbl.getColumnCount());
+        Assert.assertEquals("Confirm number of columns", 15, tbl.getColumnCount());
         Assert.assertEquals("Column exists", 10, tbl.findColumn(Bundle.getMessage("Road")));
 
         // add load restriction
         track.setLoadOption(Track.EXCLUDE_LOADS);
-        Assert.assertEquals("Confirm number of columns", 14, tbl.getColumnCount());
+        Assert.assertEquals("Confirm number of columns", 16, tbl.getColumnCount());
         Assert.assertEquals("Column exists", 11, tbl.findColumn(Bundle.getMessage("Load")));
 
         // add train restriction
         track.setPickupOption(Track.EXCLUDE_TRAINS);
-        Assert.assertEquals("Confirm number of columns", 15, tbl.getColumnCount());
-        Assert.assertEquals("Column exists", 12, tbl.findColumn(Bundle.getMessage("Restrictions")));
+        Assert.assertEquals("Confirm number of columns", 17, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 14, tbl.findColumn(Bundle.getMessage("Restrictions")));
         
         // add pool
         Pool pool = loc.addPool("Pool One");
         track.setPool(pool);
-        Assert.assertEquals("Confirm number of columns", 16, tbl.getColumnCount());
-        Assert.assertEquals("Column exists", 14, tbl.findColumn(Bundle.getMessage("Pool")));
+        Assert.assertEquals("Confirm number of columns", 18, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 16, tbl.findColumn(Bundle.getMessage("Pool")));
         
         // destination restrictions
         track.setDestinationOption(Track.EXCLUDE_DESTINATIONS);
-        Assert.assertEquals("Confirm number of columns", 17, tbl.getColumnCount());
-        Assert.assertEquals("Column exists", 13, tbl.findColumn(Bundle.getMessage("Dest")));
+        Assert.assertEquals("Confirm number of columns", 19, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 15, tbl.findColumn(Bundle.getMessage("Dest")));
         
         // ship load restrictions
         track.setShipLoadOption(Track.INCLUDE_LOADS);
-        Assert.assertEquals("Confirm number of columns", 18, tbl.getColumnCount());
-        Assert.assertEquals("Column exists", 12, tbl.findColumn(Bundle.getMessage("Ship")));
+        Assert.assertEquals("Confirm number of columns", 20, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 14, tbl.findColumn(Bundle.getMessage("Ship")));
         
         // remove routed
         Setup.setCarRoutingViaStagingEnabled(false);

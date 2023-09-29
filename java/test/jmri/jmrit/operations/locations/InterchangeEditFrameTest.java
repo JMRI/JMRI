@@ -159,12 +159,8 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         f.initComponents(l, t);
         
         JemmyUtil.enterClickAndLeave(f.trainDrop);
-        // add does nothing, nothing selected
         JemmyUtil.enterClickAndLeave(f.addDropButton);
         
-        Assert.assertEquals("no drop ids", 0, t.getDropIds().length);
-        f.comboBoxDropTrains.setSelectedIndex(1);
-        JemmyUtil.enterClickAndLeave(f.addDropButton);
         Assert.assertEquals("one drop id", 1, t.getDropIds().length);
         Assert.assertEquals("drop id", "1", t.getDropIds()[0]);
         
@@ -191,8 +187,6 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         // add does nothing, nothing selected
         JemmyUtil.enterClickAndLeave(f.addPickupButton);
         
-        Assert.assertEquals("no pickup ids", 0, t.getPickupIds().length);
-        f.comboBoxPickupTrains.setSelectedIndex(1);
         JemmyUtil.enterClickAndLeave(f.addPickupButton);
         Assert.assertEquals("one pickup id", 1, t.getPickupIds().length);
         Assert.assertEquals("pickup id", "1", t.getPickupIds()[0]);
@@ -217,12 +211,8 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         f.initComponents(l, t);
         
         JemmyUtil.enterClickAndLeave(f.routeDrop);
-        // add does nothing, nothing selected
         JemmyUtil.enterClickAndLeave(f.addDropButton);
-        
-        Assert.assertEquals("no drop ids", 0, t.getDropIds().length);
-        f.comboBoxDropRoutes.setSelectedIndex(1);
-        JemmyUtil.enterClickAndLeave(f.addDropButton);
+
         Assert.assertEquals("one drop id", 1, t.getDropIds().length);
         Assert.assertEquals("drop id", "1", t.getDropIds()[0]);
         
@@ -246,12 +236,8 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         f.initComponents(l, t);
         
         JemmyUtil.enterClickAndLeave(f.routePickup);
-        // add does nothing, nothing selected
         JemmyUtil.enterClickAndLeave(f.addPickupButton);
         
-        Assert.assertEquals("no pickup ids", 0, t.getPickupIds().length);
-        f.comboBoxPickupRoutes.setSelectedIndex(1);
-        JemmyUtil.enterClickAndLeave(f.addPickupButton);
         Assert.assertEquals("one pickup id", 1, t.getPickupIds().length);
         Assert.assertEquals("pickup id", "1", t.getPickupIds()[0]);
         

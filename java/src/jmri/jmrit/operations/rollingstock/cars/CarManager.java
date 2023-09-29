@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import java.beans.PropertyChangeEvent;
 import java.text.NumberFormat;
 import java.util.*;
 
@@ -14,6 +15,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManifestHeaderText;
 
 /**
  * Manages the cars.
@@ -472,6 +474,27 @@ public class CarManager extends RollingStockManager<Car>
         }
         return false;
     }
+    
+    int _commentLength = 0;
+    
+    public int getMaxCommentLength() {
+        if (_commentLength == 0) {
+            _commentLength = TrainManifestHeaderText.getStringHeader_Comment().length();
+            String comment = "";
+            Car carMax = null;
+            for (Car car : getList()) {
+                if (car.getComment().length() > _commentLength) {
+                    _commentLength = car.getComment().length();
+                    comment = car.getComment();
+                    carMax = car;
+                }
+            }
+            if (carMax != null) {
+                log.info("Max car ({}) comment ({}) length {}", carMax.toString(), comment, _commentLength);
+            }
+        }
+        return _commentLength;
+    }
 
     public void load(Element root) {
         if (root.getChild(Xml.CARS) != null) {
@@ -507,6 +530,14 @@ public class CarManager extends RollingStockManager<Car>
         // Set dirty
         InstanceManager.getDefault(CarManagerXml.class).setDirty(true);
         super.firePropertyChange(p, old, n);
+    }
+    
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals(Car.COMMENT_CHANGED_PROPERTY)) {
+            _commentLength = 0;
+        }
+        super.propertyChange(evt);
     }
 
     private final static Logger log = LoggerFactory.getLogger(CarManager.class);

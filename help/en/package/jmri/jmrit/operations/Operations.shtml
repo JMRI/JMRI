@@ -3071,8 +3071,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <p>
-        You can also control the number of cars and the train's length when departing staging. See <a
-          href="#DepartingStagingRoute">Departing Staging Route</a> for more info.
+        You can also control the number of cars and the train's length when departing staging. You
+        can also request an empty track when departing staging. See <a href="#DepartingStagingRoute">Departing
+          Staging Route</a> for more info.
       </p>
 
       <p>You can if you wish, optionally control which staging tracks a train will arrive on and

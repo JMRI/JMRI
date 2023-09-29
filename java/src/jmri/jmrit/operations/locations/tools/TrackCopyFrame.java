@@ -7,7 +7,6 @@ import java.text.MessageFormat;
 import javax.swing.*;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -54,10 +53,11 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
     static boolean moveRollingStock = false;
     static boolean deleteTrack = false;
 
-    public TrackCopyFrame(LocationEditFrame lef, TrackEditFrame tef) {
-        if (lef != null) {
-            _destination = lef._location;
-        }
+    /*
+     * Copies track to destination
+     */
+    public TrackCopyFrame(Track track, Location destination) {
+         _destination = destination;
 
         // general GUI config
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -122,21 +122,12 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 
         pack();
         setMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight400));
-
-        if (_destination != null) {
-            setTitle(MessageFormat.format(Bundle.getMessage("TitleCopyTrack"), new Object[]{_destination.getName()}));
-            pCopyTo.setVisible(false);
-            _destination.addPropertyChangeListener(this);
-        } else {
-            setTitle(Bundle.getMessage("MenuItemCopyTrack"));
-            copyButton.setEnabled(false);
-        }
         
-        if (tef != null) {
-            locationBox.setSelectedItem(tef._location);
-            trackBox.setSelectedItem(tef._track);
-            destinationBox.setSelectedItem(tef._location);
+        if (track != null) {
+            locationBox.setSelectedItem(track.getLocation());
+            trackBox.setSelectedItem(track);
         }
+        destinationBox.setSelectedItem(destination);
 
         // setup buttons
         addButtonAction(copyButton);
@@ -144,6 +135,8 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 
         addCheckBoxAction(sameNameCheckBox);
         addCheckBoxAction(moveRollingStockCheckBox);
+        
+        setTitle(Bundle.getMessage("MenuItemCopyTrack"));
     }
 
     // location combo box

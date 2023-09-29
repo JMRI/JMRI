@@ -178,8 +178,8 @@ public class StagingEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.routeDrop);
         JemmyUtil.enterClickAndLeave(f.routePickup);
         
-        Assert.assertEquals("Route combobox updated", 2, f.comboBoxDropRoutes.getItemCount());
-        Assert.assertEquals("Route combobox updated", 2, f.comboBoxPickupRoutes.getItemCount());
+        Assert.assertEquals("Route combobox updated", 1, f.comboBoxDropRoutes.getItemCount());
+        Assert.assertEquals("Route combobox updated", 1, f.comboBoxPickupRoutes.getItemCount());
         
         // create a new route
         RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
@@ -213,13 +213,13 @@ public class StagingEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.autoDropCheckBox);
         
         // confirm 
-        Assert.assertEquals("Route combobox updated", 4, f.comboBoxDropRoutes.getItemCount());
+        Assert.assertEquals("Route combobox updated", 3, f.comboBoxDropRoutes.getItemCount());
         Assert.assertEquals("Route combobox updated", 6, f.comboBoxPickupRoutes.getItemCount());
 
         JemmyUtil.enterClickAndLeave(f.autoPickupCheckBox);
         
         // confirm 
-        Assert.assertEquals("Route combobox updated", 4, f.comboBoxDropRoutes.getItemCount());
+        Assert.assertEquals("Route combobox updated", 3, f.comboBoxDropRoutes.getItemCount());
         Assert.assertEquals("Route combobox updated", 4, f.comboBoxPickupRoutes.getItemCount());
         
         JUnitUtil.dispose(f);
@@ -240,8 +240,9 @@ public class StagingEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.trainDrop);
         JemmyUtil.enterClickAndLeave(f.trainPickup);
         
-        Assert.assertEquals("Train combobox updated", 2, f.comboBoxDropTrains.getItemCount());
-        Assert.assertEquals("Train combobox updated", 2, f.comboBoxPickupTrains.getItemCount());
+        // "Test Train A" services this staging track.
+        Assert.assertEquals("Train combobox updated", 1, f.comboBoxDropTrains.getItemCount());
+        Assert.assertEquals("Train combobox updated", 1, f.comboBoxPickupTrains.getItemCount());
         
         // create a new route and train
         RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
@@ -286,14 +287,14 @@ public class StagingEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.autoDropCheckBox);
         
         // confirm 
-        Assert.assertEquals("Train combobox updated", 4, f.comboBoxDropTrains.getItemCount());
+        Assert.assertEquals("Train combobox updated", 3, f.comboBoxDropTrains.getItemCount());
         Assert.assertEquals("Train combobox updated", 6, f.comboBoxPickupTrains.getItemCount());
 
         JemmyUtil.enterClickAndLeave(f.autoPickupCheckBox);
         
         // confirm 
-        Assert.assertEquals("Train combobox updated", 4, f.comboBoxDropTrains.getItemCount());
-        Assert.assertEquals("Train combobox updated", 4, f.comboBoxPickupTrains.getItemCount());
+        Assert.assertEquals("Train combobox updated", 3, f.comboBoxDropTrains.getItemCount());
+        Assert.assertEquals("Train combobox updated", 3, f.comboBoxPickupTrains.getItemCount());
         
         JUnitUtil.dispose(f);
     }
