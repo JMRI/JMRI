@@ -201,6 +201,27 @@
       <pre>
       &lt;dynamic-gain&gt;yes&lt;/dynamic-gain&gt;
       </pre>
+
+      <h5 id="chuff_fade_out">Chuff Fade Out</h5>
+
+      <p>Description:<br>
+      This element allows to activate an option for steam1 engine types.<br>
+      If active and when coasting is triggered (by a function key or by a strong deceleration)
+      the chuffs are faded out.<br>
+      This function is limited to 16-bit sounds (e.g. Class64.vsd).<br>
+      For 8-bit sounds (like in Class94.vsd) please consider to resample your sound files.
+      With Audacity, a free audio editor, this can be done by import the 8-bit sound
+      and export as 16-bit sound.<br>
+      The declaration should be made in the tag <strong>sound name="ENGINE"</strong>
+      right after element dynamic-gain.<br>
+      Default value: no<br>
+      <em>Since JMRI 5.5.5</em></p>
+
+      <p>Example:</p>
+      <pre>
+      &lt;chuff-fade-out&gt;yes&lt;/chuff-fade-out&gt;
+      </pre>
+
       <h5>Top Speed Reverse</h5>
 
       <p>Description:<br>
