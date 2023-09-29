@@ -131,6 +131,7 @@
           jmri.jmrit.display.configurexml.PositionableLabelXml#storeTextInfo
         </xs:appinfo>
       </xs:annotation>
+      <xs:attribute name="fontFamily" type="xs:string"></xs:attribute>
       <xs:attribute name="fontname" type="xs:string"></xs:attribute>
       <xs:attribute name="size" type="xs:string"></xs:attribute>
       <xs:attribute name="style" type="xs:string"></xs:attribute>

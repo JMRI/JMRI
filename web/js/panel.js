@@ -1634,8 +1634,8 @@ var $getTextCSSFromObj = function($widget) {
     if (isDefined($widget.size)) {
         $retCSS['font-size'] = $widget.size + "px ";
     }
-    if (isDefined($widget.fontname)) {
-        $retCSS['font-family'] = $widget.fontname;
+    if (isDefined($widget.fontFamily)) {
+        $retCSS['font-family'] = $widget.fontFamily;
     }
     if (isDefined($widget.margin)) {
         $retCSS['padding'] = $widget.margin + "px ";
