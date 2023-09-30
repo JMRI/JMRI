@@ -5,8 +5,8 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import jmri.jmrit.operations.locations.LocationEditFrame;
-import jmri.jmrit.operations.locations.TrackEditFrame;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.Track;
 
 /**
  * Swing action to create and register a TrackCopyFrame object.
@@ -20,25 +20,24 @@ public class TrackCopyAction extends AbstractAction {
         super(Bundle.getMessage("MenuItemCopyTrack"));
     }
     
-    public TrackCopyAction(LocationEditFrame lef) {
+    public TrackCopyAction(Track track, Location destination) {
         this();
-        _lef = lef;
+        _track = track;
+        _destination = destination;
     }
     
-    public TrackCopyAction(TrackEditFrame tef) {
-        this();
-        _tef = tef;
-    }
+    // track to copy
+    Track _track;
+    // copy track to destination
+    Location _destination;
 
-    private LocationEditFrame _lef = null;
-    private TrackEditFrame _tef = null;
     TrackCopyFrame f = null;
 
     @Override
     public void actionPerformed(ActionEvent e) {
         // create a copy track frame
         if (f == null || !f.isVisible()) {
-            f = new TrackCopyFrame(_lef, _tef);
+            f = new TrackCopyFrame(_track, _destination);
         }
         f.setExtendedState(Frame.NORMAL);
         f.setVisible(true); // this also brings the frame into focus

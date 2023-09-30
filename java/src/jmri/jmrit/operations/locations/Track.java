@@ -2120,11 +2120,13 @@ public class Track extends PropertyChangeSupport {
     }
 
     public void setBlockCarsEnabled(boolean enable) {
+        boolean old = isBlockCarsEnabled();
         if (enable) {
             _blockOptions = _blockOptions | BLOCK_CARS;
         } else {
             _blockOptions = _blockOptions & 0xFFFF - BLOCK_CARS;
         }
+        setDirtyAndFirePropertyChange(LOAD_OPTIONS_CHANGED_PROPERTY, old, enable);
     }
 
     /**
