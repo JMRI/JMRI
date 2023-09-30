@@ -607,7 +607,10 @@
         <a id="VSD" name="VSD"></a>
         <ul>
             <li>Take actual speed instead of nominal speed for the distance calculation
-            (impact for steam1).</li>
+                (impact for steam1).</li>
+            <li>New option "chuff-fade-out" for steam1, see the
+                <a href="https://www.jmri.org/help/en/html/tools/vsd/VSDFileAndConfig.shtml#chuff-fade-out">documentation</a>.
+            </li>
         </ul>
 
     <h3>Miscellaneous</h3>
