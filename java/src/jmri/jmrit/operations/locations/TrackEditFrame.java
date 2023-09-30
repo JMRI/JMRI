@@ -9,12 +9,10 @@ import javax.swing.*;
 import jmri.*;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.locations.tools.*;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -30,7 +28,7 @@ import jmri.util.swing.JmriJOptionPane;
 public abstract class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     // where in the tool menu new items are inserted
-    protected static final int TOOL_MENU_OFFSET = 3;
+    protected static final int TOOL_MENU_OFFSET = 4;
 
     // Managers
     TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
@@ -60,6 +58,8 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
     // major buttons
     JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
     JButton setButton = new JButton(Bundle.getMessage("SelectAll"));
+    JButton autoSelectButton = new JButton(Bundle.getMessage("AutoSelect"));
+    
     JButton saveTrackButton = new JButton(Bundle.getMessage("SaveTrack"));
     JButton deleteTrackButton = new JButton(Bundle.getMessage("DeleteTrack"));
     JButton addTrackButton = new JButton(Bundle.getMessage("AddTrack"));
@@ -344,13 +344,15 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
+        _toolMenu.add(new TrackCopyAction(_track, _location));
         _toolMenu.add(new TrackLoadEditAction(this));
         _toolMenu.add(new TrackRoadEditAction(this));
         _toolMenu.add(new PoolTrackAction(this));
+        _toolMenu.add(new IgnoreUsedTrackAction(this));
         // spurs, interchanges, yards, and staging insert menu items here
         _toolMenu.add(new TrackEditCommentsAction(this));
-        _toolMenu.add(new ShowCarsByLocationAction(false, _location, _track));
         _toolMenu.addSeparator();
+        _toolMenu.add(new ShowCarsByLocationAction(false, _location, _track));
         _toolMenu.add(new ShowTrainsServingLocationAction(_location, _track));
 
         menuBar.add(_toolMenu);
@@ -581,12 +583,7 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         if (route == null) {
             return false;
         }
-        RouteLocation rl = null;
-        rl = route.getLastLocationByName(_location.getName());
-        if (rl == null) {
-            return false;
-        }
-        return true;
+        return route.getLastLocationByName(_location.getName()) != null;
     }
 
     protected void saveTrack(Track track) {
@@ -1033,9 +1030,9 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
 
     // filter all trains not serviced by this track
     private void autoTrainComboBox(JComboBox<Train> box) {
-        for (int i = 1; i < box.getItemCount(); i++) {
+        for (int i = 0; i < box.getItemCount(); i++) {
             Train train = box.getItemAt(i);
-            if (!checkRoute(train.getRoute())) {
+            if (train == null || !checkRoute(train.getRoute())) {
                 box.removeItemAt(i--);
             }
         }
@@ -1054,7 +1051,7 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
 
     // filter out all routes not serviced by this track
     private void autoRouteComboBox(JComboBox<Route> box) {
-        for (int i = 1; i < box.getItemCount(); i++) {
+        for (int i = 0; i < box.getItemCount(); i++) {
             Route route = box.getItemAt(i);
             if (!checkRoute(route)) {
                 box.removeItemAt(i--);
@@ -1081,7 +1078,7 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
             }
         }
     }
-
+    
     // car and loco types
     private void updateCheckboxes() {
         // log.debug("Update all checkboxes");
@@ -1101,6 +1098,9 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         JPanel p = new JPanel();
         p.add(clearButton);
         p.add(setButton);
+        if (_track != null && !_track.getScheduleId().equals(Track.NONE)) {
+            p.add(autoSelectButton);
+        }
         GridBagConstraints gc = new GridBagConstraints();
         gc.gridwidth = getNumberOfCheckboxesPerLine() + 1;
         gc.gridy = ++y;
@@ -1230,7 +1230,6 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         InstanceManager.getDefault(CarRoads.class).removePropertyChangeListener(this);
         InstanceManager.getDefault(CarLoads.class).removePropertyChangeListener(this);
         InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
-        InstanceManager.getDefault(ScheduleManager.class).removePropertyChangeListener(this);
         trainManager.removePropertyChangeListener(this);
         routeManager.removePropertyChangeListener(this);
         super.dispose();

@@ -77,6 +77,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
 
     public static final String ERROR_TRACK = "ERROR wrong track for location"; // checks for coding error // NOI18N
 
+    // property changes
     public static final String TRACK_CHANGED_PROPERTY = "rolling stock track location"; // NOI18N
     public static final String DESTINATION_TRACK_CHANGED_PROPERTY = "rolling stock track destination"; // NOI18N
     public static final String TRAIN_CHANGED_PROPERTY = "rolling stock train"; // NOI18N
@@ -84,6 +85,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     public static final String TYPE_CHANGED_PROPERTY = "rolling stock type"; // NOI18N
     public static final String ROUTE_LOCATION_CHANGED_PROPERTY = "rolling stock route location"; // NOI18N
     public static final String ROUTE_DESTINATION_CHANGED_PROPERTY = "rolling stock route destination"; // NOI18N
+    public static final String COMMENT_CHANGED_PROPERTY = "rolling stock comment"; // NOI18N
 
     // the draw bar length must only be calculated once at startup
     public static final int COUPLERS = Setup.getLengthUnit().equals(Setup.FEET)
@@ -1235,7 +1237,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         String old = _comment;
         _comment = comment;
         if (!old.equals(comment)) {
-            setDirtyAndFirePropertyChange("rolling stock comment", old, comment); // NOI18N
+            setDirtyAndFirePropertyChange(COMMENT_CHANGED_PROPERTY, old, comment); // NOI18N
         }
     }
 

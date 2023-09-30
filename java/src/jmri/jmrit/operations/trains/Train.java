@@ -1827,7 +1827,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     return true;
                 }
                 // is this a local move?
-                if (!isAllowLocalMovesEnabled() &&
+                if (!isLocalSwitcher() &&
+                        !isAllowLocalMovesEnabled() &&
                         !car.isCaboose() &&
                         !car.hasFred() &&
                         !car.isPassenger() &&

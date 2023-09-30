@@ -390,7 +390,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>In auto trains, after stopping, or going to manual, resume correctly even if in a section with no signal.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -445,6 +445,7 @@
             shows which car types and loads are shipped from staging.</li>
           <li>New feature for spurs, the ability to prevent a car's load change. Useful when the
             spur/schedule is used for a RIP track.</li>
+          <li>New feature for staging, planned pickups.</li>
         </ul>
 
 <h3>Panel Editor</h3>
@@ -498,7 +499,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>YAAT: Change function number limit from 28 to 68.</li>
+            <li>YAAT: Add a random delay time: <strong>Wait for &lt;n&gt; [to &lt;n&gt;] seconds</strong></li>
         </ul>
 
     <h3>Signals</h3>

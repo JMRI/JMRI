@@ -17,6 +17,7 @@ import javax.swing.table.TableCellEditor;
 
 import jmri.InstanceManager;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.swing.JmriJOptionPane;
@@ -550,6 +551,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 train.getDepartureTrack() != null &&
                 train.getDepartureTrack().isStaging() &&
                 train.getDepartureTrack() != train.getTerminationTrack() &&
+                train.getDepartureTrack().getIgnoreUsedLengthPercentage() == Track.IGNORE_0 &&
                 train.getDepartureTrack().getDropRS() > 0);
     }
 

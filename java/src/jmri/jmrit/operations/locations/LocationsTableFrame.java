@@ -83,11 +83,14 @@ public class LocationsTableFrame extends OperationsFrame {
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        toolMenu.add(new LocationCopyAction());
+        toolMenu.add(new LocationCopyAction(null));
         toolMenu.add(new TrackCopyAction());
+        toolMenu.addSeparator();
         toolMenu.add(new SchedulesTableAction());
+        toolMenu.addSeparator();
         toolMenu.add(new ModifyLocationsAction());
         toolMenu.add(new ModifyLocationsCarLoadsAction());
+        toolMenu.addSeparator();
         toolMenu.add(new ExportLocationsRosterAction());
         toolMenu.add(new ImportLocationsRosterAction() );
         if (Setup.isVsdPhysicalLocationEnabled()) {
