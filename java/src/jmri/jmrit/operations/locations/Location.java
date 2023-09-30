@@ -1206,7 +1206,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public boolean hasPlannedPickups() {
         List<Track> tracks = getTracksList();
         for (Track track : tracks) {
-            if (track.getIgnoreUsedLengthPercentage() > 0) {
+            if (track.getIgnoreUsedLengthPercentage() > Track.IGNORE_0) {
                 return true;
             }
         }
@@ -1309,6 +1309,16 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public boolean hasDisableLoadChange() {
         for (Track track : getTracksList()) {
             if (track.isSpur() && track.isDisableLoadChangeEnabled()) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean hasTracksWithRestrictedTrainDirections() {
+        int trainDirections = getTrainDirections() & Setup.getTrainDirection();
+        for (Track track : getTracksList()) {
+            if (trainDirections != (track.getTrainDirections() & trainDirections)) {
                 return true;
             }
         }

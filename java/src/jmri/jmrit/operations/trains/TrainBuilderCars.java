@@ -637,7 +637,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
             // only use tracks serviced by this train?
             if (car.getTrack().isAddCustomLoadsEnabled() &&
-                    _train.getRoute().getLastLocationByName(track.getLocation().getName()) == null) {
+                    !_train.getRoute().isLocationNameInRoute(track.getLocation().getName())) {
                 continue;
             }
             // only the first match in a schedule is used for a spur
@@ -702,6 +702,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
             addLine(_buildReport, SEVEN, Bundle.getMessage("buildCanNotRouteCar", car.toString(),
                     si.getReceiveLoadName(), track.getLocation().getName(), track.getName()));
+            addLine(_buildReport, SEVEN, BLANK_LINE);
             car.setDestination(null, null);
             car.setFinalDestination(null);
             car.setFinalDestinationTrack(null);
@@ -1133,6 +1134,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 }
             }
         }
+        addLine(_buildReport, SEVEN, BLANK_LINE);
         addLine(_buildReport, SEVEN,
                 Bundle.getMessage("buildSetFinalDestDiv", track.getTrackTypeName(), track.getLocation().getName(),
                         track.getName(), track.getDivisionName(), car.toString(), car.getLoadType().toLowerCase(),
@@ -1272,7 +1274,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                         car.getTrackName(), car.getFinalDestinationName(), car.getFinalDestinationTrackName()));
 
         // no local moves for this train?
-        if (!_train.isAllowLocalMovesEnabled() &&
+        if (!_train.isLocalSwitcher() && !_train.isAllowLocalMovesEnabled() &&
                 splitString(car.getLocationName()).equals(splitString(car.getFinalDestinationName())) &&
                 car.getTrack() != _departStageTrack) {
             addLine(_buildReport, FIVE,

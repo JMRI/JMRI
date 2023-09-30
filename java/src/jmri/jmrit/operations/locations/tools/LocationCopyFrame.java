@@ -47,8 +47,17 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
     // remember state of checkboxes during a session
     static boolean moveRollingStock = false;
     static boolean deleteTrack = false;
+    
+    Location _location;
+    
+    public LocationCopyFrame(Location location) {
+        super(Bundle.getMessage("MenuItemCopyLocation"));
+        _location = location;
+        initComponents();
+    }
 
-    public LocationCopyFrame() {
+    @Override
+    public void initComponents() {
 
         // general GUI config
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -103,8 +112,8 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
         addButtonAction(saveButton);
 
         addCheckBoxAction(moveRollingStockCheckBox);
-
-        setTitle(Bundle.getMessage("MenuItemCopyLocation"));
+        
+        locationBox.setSelectedItem(_location);
     }
 
     @Override

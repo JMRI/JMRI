@@ -8,7 +8,6 @@ import org.junit.Assume;
 import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.LocationEditFrame;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 
@@ -20,11 +19,8 @@ public class TrackCopyActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LocationEditFrame f = new LocationEditFrame(null);
-        TrackCopyAction t = new TrackCopyAction(f);
+        TrackCopyAction t = new TrackCopyAction(null, null);
         Assert.assertNotNull("exists",t);
-        JUnitUtil.dispose(f);
     }
     
     @Test

@@ -4,6 +4,9 @@
 #  It will add a comment to any Sections which need additional manual intervention.
 #  Intended to be run once when creating a new layout Editor panel, such as from AnyRail.
 # Based on Bill Fitch's CreateSignalLogicAndSections.py
+#
+# NOTE: to enable jython logging, see https://www.jmri.org/help/en/html/apps/Debug.shtml
+# Add the Logger Category name "jmri.jmrit.jython.exec" at DEBUG Level.
 
 import jmri
 import java
@@ -72,7 +75,7 @@ log = org.slf4j.LoggerFactory.getLogger("jmri.jmrit.jython.exec.script.CreateSec
 log.info( "CreateSectionsFromBlocks.py started" )
 sectionsCreated = 0 #count successes
 
-blocksSet = list(blocks.getNamedBeanSet()) # use a copy for the loop
+blocksSet = set(blocks.getNamedBeanSet()) # use a copy for the loop
 for blockBean in blocksSet :
     # if (blocksCreated > 5) : continue
     

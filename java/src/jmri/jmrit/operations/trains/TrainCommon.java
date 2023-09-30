@@ -1420,17 +1420,20 @@ public class TrainCommon {
             }
         } else if (attribute.equals(Setup.RWE)) {
             if (!car.getReturnWhenEmptyDestName().equals(Car.NONE)) {
-                return padAndTruncateIfNeeded(
-                        TrainManifestHeaderText.getStringHeader_RWE() +
-                                SPACE +
-                                splitString(car.getReturnWhenEmptyDestinationName()) +
-                                " ," +
-                                splitString(car.getReturnWhenEmptyDestTrackName()),
-                        locationManager.getMaxLocationAndTrackNameLength() +
-                                TrainManifestHeaderText.getStringHeader_RWE().length() +
-                                3);
+                // format RWE destination and track name
+                String rweAndTrackName = splitString(car.getReturnWhenEmptyDestinationName());
+                if (!car.getReturnWhenEmptyDestTrackName().equals(Car.NONE)) {
+                    rweAndTrackName = rweAndTrackName + "," + SPACE +splitString(car.getReturnWhenEmptyDestTrackName());
+                }
+                return Setup.isPrintHeadersEnabled()
+                        ? padAndTruncateIfNeeded(rweAndTrackName, locationManager.getMaxLocationAndTrackNameLength())
+                        : padAndTruncateIfNeeded(
+                                TrainManifestHeaderText.getStringHeader_RWE() + SPACE + rweAndTrackName,
+                                locationManager.getMaxLocationAndTrackNameLength() +
+                                        TrainManifestHeaderText.getStringHeader_RWE().length() +
+                                        3);
             }
-            return "";
+            return padAndTruncateIfNeeded("", locationManager.getMaxLocationAndTrackNameLength());
         } else if (attribute.equals(Setup.FINAL_DEST)) {
             return Setup.isPrintHeadersEnabled()
                     ? padAndTruncateIfNeeded(splitString(car.getFinalDestinationName()),
@@ -1443,24 +1446,17 @@ public class TrainCommon {
                                     TrainManifestText.getStringFinalDestination().length() +
                                     1);
         } else if (attribute.equals(Setup.FINAL_DEST_TRACK)) {
-            if (!car.getFinalDestinationName().equals(Car.NONE)) {
-                return Setup.isPrintHeadersEnabled()
-                        ? padAndTruncateIfNeeded(
-                                splitString(car.getFinalDestinationName()) +
-                                        ", " +
-                                        splitString(car.getFinalDestinationTrackName()),
-                                locationManager.getMaxLocationAndTrackNameLength() + 2)
-                        : padAndTruncateIfNeeded(
-                                TrainManifestText.getStringFinalDestination() +
-                                        SPACE +
-                                        splitString(car.getFinalDestinationName()) +
-                                        ", " +
-                                        splitString(car.getFinalDestinationTrackName()),
-                                locationManager.getMaxLocationAndTrackNameLength() +
-                                        TrainManifestText.getStringFinalDestination().length() +
-                                        3);
+            // format final destination and track name
+            String FDAndTrackName = splitString(car.getFinalDestinationName());
+            if (!car.getFinalDestinationTrackName().equals(Car.NONE)) {
+                FDAndTrackName = FDAndTrackName + "," + SPACE + splitString(car.getFinalDestinationTrackName());
             }
-            return "";
+            return Setup.isPrintHeadersEnabled()
+                    ? padAndTruncateIfNeeded(FDAndTrackName, locationManager.getMaxLocationAndTrackNameLength() + 2)
+                    : padAndTruncateIfNeeded(TrainManifestText.getStringFinalDestination() + SPACE + FDAndTrackName,
+                            locationManager.getMaxLocationAndTrackNameLength() +
+                                    TrainManifestText.getStringFinalDestination().length() +
+                                    3);
         } else if (attribute.equals(Setup.DIVISION)) {
             return padAndTruncateIfNeeded(car.getDivisionName(),
                     InstanceManager.getDefault(DivisionManager.class).getMaxDivisionNameLength());
@@ -1534,15 +1530,12 @@ public class TrainCommon {
                                         TrainManifestText.getStringTo().length() +
                                         1);
             } else if (attribute.equals(Setup.DEST_TRACK)) {
-                return Setup.isPrintHeadersEnabled() ? padAndTruncateIfNeeded(
-                        splitString(rs.getDestinationName()) + ", " + splitString(rs.getDestinationTrackName()),
-                        locationManager.getMaxLocationAndTrackNameLength() + 2)
-                        : padAndTruncateIfNeeded(
-                                TrainManifestText.getStringDest() +
-                                        SPACE +
-                                        splitString(rs.getDestinationName()) +
-                                        ", " +
-                                        splitString(rs.getDestinationTrackName()),
+                // format destination name and destination track name
+                String destAndTrackName = splitString(rs.getDestinationName()) + "," + SPACE + splitString(rs.getDestinationTrackName());
+                return Setup.isPrintHeadersEnabled()
+                        ? padAndTruncateIfNeeded(destAndTrackName,
+                                locationManager.getMaxLocationAndTrackNameLength() + 2)
+                        : padAndTruncateIfNeeded(TrainManifestText.getStringDest() + SPACE + destAndTrackName,
                                 locationManager.getMaxLocationAndTrackNameLength() +
                                         TrainManifestText.getStringDest().length() +
                                         3);
@@ -1550,7 +1543,7 @@ public class TrainCommon {
                 return padAndTruncateIfNeeded(rs.getOwnerName(),
                         InstanceManager.getDefault(CarOwners.class).getMaxNameLength());
             } else if (attribute.equals(Setup.COMMENT)) {
-                return rs.getComment();
+                return padAndTruncateIfNeeded(rs.getComment(), carManager.getMaxCommentLength());
             } // the three utility attributes that don't get printed but need to
               // be tabbed out
             else if (attribute.equals(Setup.NO_NUMBER)) {
@@ -1827,9 +1820,11 @@ public class TrainCommon {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Hazardous(),
                         Setup.getHazardousMsg().length()) + SPACE);
             } else if (attribute.equals(Setup.RWE)) {
-                buf.append(TrainManifestHeaderText.getStringHeader_RWE() + SPACE);
+                buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_RWE(),
+                        locationManager.getMaxLocationAndTrackNameLength()) + SPACE);
             } else if (attribute.equals(Setup.COMMENT)) {
-                buf.append(TrainManifestHeaderText.getStringHeader_Comment() + SPACE);
+                buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Comment(),
+                        carManager.getMaxCommentLength()) + SPACE);
             } else if (attribute.equals(Setup.DROP_COMMENT)) {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Drop_Comment(),
                         InstanceManager.getDefault(CarLoads.class).getMaxLoadCommentLength()) + SPACE);
@@ -2065,7 +2060,7 @@ public class TrainCommon {
         StringBuffer sbuf = new StringBuffer("");
         for (String s : array) {
             if (s != null) {
-                sbuf = sbuf.append(s + ", ");
+                sbuf = sbuf.append(s + "," + SPACE);
             }
         }
         if (sbuf.length() > 2) {

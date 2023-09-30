@@ -12,6 +12,7 @@ import javax.swing.*;
 import jmri.*;
 import jmri.jmrit.operations.*;
 import jmri.jmrit.operations.locations.divisions.*;
+import jmri.jmrit.operations.locations.schedules.tools.SchedulesAndStagingAction;
 import jmri.jmrit.operations.locations.tools.*;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
@@ -347,22 +348,27 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
     private void loadToolMenu() {
         toolMenu.removeAll();
-        toolMenu.add(new TrackCopyAction(this));
+        toolMenu.add(new LocationCopyAction(_location));
+        toolMenu.add(new TrackCopyAction(null, _location));
         toolMenu.add(new ChangeTracksTypeAction(this));
-        toolMenu.add(new ShowTrackMovesAction());
-        toolMenu.add(new ModifyLocationsAction(_location));
-        toolMenu.add(new ModifyLocationsCarLoadsAction(_location));
         if (_location != null && !_location.isStaging()) {
             toolMenu.add(new LocationTrackBlockingOrderAction(_location));
         }
+        toolMenu.add(new ShowTrackMovesAction());
         toolMenu.add(new EditCarTypeAction());
-        toolMenu.add(new ShowCarsByLocationAction(false, _location, null));
         if (Setup.isVsdPhysicalLocationEnabled()) {
             toolMenu.add(new SetPhysicalLocationAction(_location));
         }
         toolMenu.addSeparator();
+        toolMenu.add(new ModifyLocationsAction(_location));
+        toolMenu.add(new ModifyLocationsCarLoadsAction(_location));
+        toolMenu.addSeparator();
+        toolMenu.add(new ShowCarsByLocationAction(false, _location, null));
         toolMenu.add(new ShowTrainsServingLocationAction(_location, null));
         toolMenu.add(new ShowRoutesServingLocationAction(_location));
+        if (_location != null && _location.isStaging()) {
+            toolMenu.add(new SchedulesAndStagingAction());
+        }
         toolMenu.addSeparator();
         toolMenu.add(new PrintLocationsAction(false, _location));
         toolMenu.add(new PrintLocationsAction(true, _location));

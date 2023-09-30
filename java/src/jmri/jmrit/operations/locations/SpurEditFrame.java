@@ -12,11 +12,12 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.schedules.*;
 import jmri.jmrit.operations.locations.tools.*;
 import jmri.jmrit.operations.setup.Control;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user edit of a spur.
  *
- * @author Dan Boudreau Copyright (C) 2008, 2011
+ * @author Dan Boudreau Copyright (C) 2008, 2011, 2023
  */
 public class SpurEditFrame extends TrackEditFrame {
 
@@ -54,8 +55,7 @@ public class SpurEditFrame extends TrackEditFrame {
         super.initComponents(location, track);
 
         _toolMenu.insert(new AlternateTrackAction(this), TOOL_MENU_OFFSET);
-        _toolMenu.insert(new IgnoreUsedTrackAction(this), TOOL_MENU_OFFSET + 1);
-        _toolMenu.insert(new ChangeTrackTypeAction(this), TOOL_MENU_OFFSET + 2);
+        _toolMenu.insert(new ChangeTrackTypeAction(this), TOOL_MENU_OFFSET + 1);
         addHelpMenu("package.jmri.jmrit.operations.Operations_Spurs", true); // NOI18N
 
         // override text strings for tracks
@@ -64,8 +64,12 @@ public class SpurEditFrame extends TrackEditFrame {
         deleteTrackButton.setText(Bundle.getMessage("DeleteSpur"));
         addTrackButton.setText(Bundle.getMessage("AddSpur"));
         saveTrackButton.setText(Bundle.getMessage("SaveSpur"));
+        
+        // tool tips
+        autoSelectButton.setToolTipText(Bundle.getMessage("TipAutoSelectSchedule"));
 
         // setup buttons
+        addButtonAction(autoSelectButton);
         addButtonAction(editScheduleButton);
         addComboBoxAction(comboBoxSchedules);
         
@@ -82,6 +86,9 @@ public class SpurEditFrame extends TrackEditFrame {
 
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+        if (ae.getSource() == autoSelectButton) {
+            autoSelectCheckboxes();
+        }
         if (ae.getSource() == editScheduleButton) {
             editAddSchedule();
         }
@@ -101,6 +108,24 @@ public class SpurEditFrame extends TrackEditFrame {
             editScheduleButton.setText(Bundle.getMessage("ButtonEdit"));
         }
     }
+    
+    private void autoSelectCheckboxes() {
+        if (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("TipAutoSelectSchedule"),
+                Bundle.getMessage("AutoSelect"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
+            for (int i = 0; i < checkBoxes.size(); i++) {
+                JCheckBox checkBox = checkBoxes.get(i);
+                if (_track != null && _track.getSchedule() != null) {
+                    Schedule schedule = _track.getSchedule();
+                    if (schedule.checkScheduleAttribute(Track.TYPE, checkBox.getText(), null)) {
+                        _track.addTypeName(checkBox.getText());
+                    } else {
+                        _track.deleteTypeName(checkBox.getText());
+                    }
+                }
+            }
+        }
+    }
+
 
     ScheduleEditFrame sef = null;
 
@@ -115,6 +140,7 @@ public class SpurEditFrame extends TrackEditFrame {
 
     @Override
     protected void enableButtons(boolean enabled) {
+        autoSelectButton.setEnabled(enabled);
         editScheduleButton.setEnabled(enabled);
         comboBoxSchedules.setEnabled(enabled);
         if (!enabled) {
@@ -164,6 +190,7 @@ public class SpurEditFrame extends TrackEditFrame {
     }
     
     private void removeSchedulePropertyListener() {
+        InstanceManager.getDefault(ScheduleManager.class).removePropertyChangeListener(this);
         if (_track != null) {
             Schedule sch = InstanceManager.getDefault(ScheduleManager.class).getScheduleById(_track.getScheduleId());
             if (sch != null)
