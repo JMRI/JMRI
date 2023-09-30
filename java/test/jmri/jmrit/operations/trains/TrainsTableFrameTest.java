@@ -357,7 +357,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         // improve test coverage by using table colors
         tmanager.setRowColorsManual(false);
         tmanager.setRowColorNameForBuilt("Blue");
-        train.setRowColorNameReset("Yellow");
+        train.setTableRowColorNameReset("Yellow");
 
         TrainsTableAction a = new TrainsTableAction();
         a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
