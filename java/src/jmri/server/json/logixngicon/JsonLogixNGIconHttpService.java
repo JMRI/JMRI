@@ -89,5 +89,5 @@ public class JsonLogixNGIconHttpService extends JsonHttpService {
         throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(request.locale, "GetListNotAllowed", type), request.id);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonLogixNGIconHttpService.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonLogixNGIconHttpService.class);
 }
