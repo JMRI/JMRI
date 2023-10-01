@@ -1360,6 +1360,10 @@ public class TrainCommon {
         return "";
     }
 
+    /*
+     * Can not use String case statement since Setup.MODEL, etc, are not
+     * fixed strings.
+     */
     private String getEngineAttrib(Engine engine, String attribute, boolean isPickup) {
         if (attribute.equals(Setup.MODEL)) {
             return padAndTruncateIfNeeded(splitStringLeftParenthesis(engine.getModel()),
@@ -1373,7 +1377,7 @@ public class TrainCommon {
         }
         return getRollingStockAttribute(engine, attribute, isPickup, false);
     }
-
+    
     /*
      * Gets a car's attribute String. Returns empty if there isn't an attribute
      * and not using the tabular feature. isPickup true when car is being picked
