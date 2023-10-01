@@ -417,10 +417,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#TrainRoadOptions">Train Road Options</a></li>
 
                 <li><a href="#TrainManifestOptions">Train Manifest Options</a></li>
+                
+                <li><a href="#CopyTrain">Copy Train</a></li>
 
                 <li><a href="#EditTrainScripts">Scripts</a></li>
-
-                <li><a href="#CopyTrain">Copy Train</a></li>
 
                 <li><a href="#TrainConductor">Train Conductor</a>
                   <ul>
@@ -445,16 +445,16 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#ModifyTrainsByCarType">Modify Trains by Car Type</a></li>
 
                 <li><a href="#ChangeTrainDepartureTimes">Change Train Departure Times</a></li>
-
-                <li><a href="#TrainsTableColors">Train Row Color</a></li>
-
+                
                 <li><a href="#TrainSchedules">Train Schedules</a></li>
 
-                <li><a href="#Automation">Automation</a></li>
-
+                <li><a href="#TrainsTableColors">Train Row Color</a></li>
+                
                 <li><a href="#TrainsCopyTrain">Copy Train</a></li>
-
+                
                 <li><a href="#TrainScripts">Train Scripts</a></li>
+
+                <li><a href="#Automation">Automation</a></li>
 
                 <li><a href="#PrintSavedTrainManifests">Print or Preview Saved Train
                     Manifests</a></li>
@@ -2279,33 +2279,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         classification/interchange or staging. You can also change the track type for a specific
         track, see <a href="#ChangeTrackType">Change Track Type</a> for a track.
       </p>
-
-      <h4 id="ShowTrackMoves">Show Track Moves</h4>
-
-      <p>The "Show Track Moves" tool adds a column called "Moves" to the "Edit Location" table.
-        The "Moves" column displays the number of times a car or engine was given the destination of
-        this track during a train build. Tracks with lower move counts are checked first by the
-        program when determining which track to select during the train build process. You can
-        modify the "Moves" count for a track by double clicking on the cell in the table and
-        entering a new value. Note that the program will reset all track move counts for a location
-        when a new track is added to that location, and will reset track move counts for all
-        locations when a schedule is added to a spur. To remove the "Moves" column from the table,
-        simply select the "Show Track Moves" tool a second time.</p>
-
-      <h4 id="ModifyLocationByCarType">Modify Location by Car Type</h4>
-
-      <p>
-        The tool "Modify Location by Car Type" allows you to select a car type and decide which
-        tracks will service the car type for a location. See <a href="#ModifyLocationsByCarType">Modify
-          Locations by Car Type</a> for more info.
-      </p>
-
-      <h4 id="ModifyLocationByCarLoad">Modify Location by Car Load</h4>
-
-      <p>The tool "Modify Location by Car Load" allows you to quickly select a car type and
-        decide which tracks will service the car's load. Only tracks that can service the car's type
-        are enabled.</p>
-
+      
       <h4 id="TrackBlockingOrder">Track Blocking Order</h4>
       The program when creating <a href="#PrintingManifests">Manifest</a> and switch lists will
       block the cars in the train by destination (<a href="#RouteBlockingOrder">route blocking
@@ -2331,6 +2305,18 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         enabled.
       </p>
 
+      <h4 id="ShowTrackMoves">Show Track Moves</h4>
+
+      <p>The "Show Track Moves" tool adds a column called "Moves" to the "Edit Location" table.
+        The "Moves" column displays the number of times a car or engine was given the destination of
+        this track during a train build. Tracks with lower move counts are checked first by the
+        program when determining which track to select during the train build process. You can
+        modify the "Moves" count for a track by double clicking on the cell in the table and
+        entering a new value. Note that the program will reset all track move counts for a location
+        when a new track is added to that location, and will reset track move counts for all
+        locations when a schedule is added to a spur. To remove the "Moves" column from the table,
+        simply select the "Show Track Moves" tool a second time.</p>
+        
       <h4 id="EditCarType">Edit Car Type</h4>
 
       <p>
@@ -2338,6 +2324,20 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         replace a car type name. See <a href="#EditCarAttributes">Edit Car Attribute Names</a> for
         more info.
       </p>
+
+      <h4 id="ModifyLocationByCarType">Modify Location by Car Type</h4>
+
+      <p>
+        The tool "Modify Location by Car Type" allows you to select a car type and decide which
+        tracks will service the car type for a location. See <a href="#ModifyLocationsByCarType">Modify
+          Locations by Car Type</a> for more info.
+      </p>
+
+      <h4 id="ModifyLocationByCarLoad">Modify Location by Car Load</h4>
+
+      <p>The tool "Modify Location by Car Load" allows you to quickly select a car type and
+        decide which tracks will service the car's load. Only tracks that can service the car's type
+        are enabled.</p>
 
       <h4 id="ShowCars">Show Cars</h4>
 
@@ -4875,7 +4875,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <img src="images/EditTrainTools.png" alt="Operations Edit Train Tools Menu">
       <p>In the upper left side of each "Edit Train" window is the "Tools" menu for that train.</p>
 
-      <h3 id="TrainBuildOptions">Train Build Options</h3>
+      <h4 id="TrainBuildOptions">Train Build Options</h4>
       In the edit train window menu under "Tools&rArr;Train Build Options" are additional options for
       building a train. You can control which car owners, and built dates the train will service,
       and have up two locomotive and caboose changes in the train's route. You can also add a
@@ -4885,9 +4885,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         <img src="images/TrainBuildOptions.png" alt="">
       </p>
 
-      <h3>Options</h3>
+      <h4>Options</h4>
 
-      <h4>Use normal mode when building this train</h4>
+      <h5>Use normal mode when building this train</h5>
       You can request that the program use normal mode when building the train. This is useful when
       a train departs staging. In normal mode, all of the cars in staging are set out first, where
       in aggressive mode, the cars in staging are set out last. Selecting this option when you have
@@ -4898,11 +4898,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
           href="#TryNormalMode">Try Normal Mode if Build Failure from Staging</a>.
       </p>
 
-      <h4>Send all car pick ups to terminal</h4>
+      <h5>Send all car pick ups to terminal</h5>
       You can also request that all car pick ups along the train's route are sent to the last
       location in the train's route (terminal). Useful if you don't want your cars picked up and set
       out at various locations in your train's route.
-      <h4>Allow cars to return to staging</h4>
+      
+      <h5>Allow cars to return to staging</h5>
       When a train departs and returns to the same staging location, it is regarded as a turn by the
       program. A turn normally takes cars from staging, sets them out on the layout, picks up new
       cars and returns to staging with those cars. Normally the program doesn't allow the same cars
@@ -4913,6 +4914,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       return cars to staging when destinations are not available on the layout. Although not
       recommended, you can also set this option for all turns, see
       <a href="#SettingsOptions">Options</a>.
+      
       <p>Note that when this option is enabled, the program may have difficulties swapping cars
         from staging and the layout as the program must assume that all cars in staging could return
         to staging. When this option is disabled (recommended), the program can ignore the cars in
@@ -4921,7 +4923,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         recommendation is to leave this option disabled unless you need your train to carry cars
         from and to the same staging track.</p>
 
-      <h4 id="TrainLocalMoveOption">Allow local moves when a car has a custom load or FD</h4>
+      <h5 id="TrainLocalMoveOption">Allow local moves when a car has a custom load or FD</h5>
       The program when generating car movement normally doesn't create local moves. A local move is
       a pick up and then a set out of a car at the same location. When you use custom loads, the
       program can create local moves based on the car's custom load. So if you had a car sitting on
@@ -4931,7 +4933,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       don't want your train to perform local moves when a car has a custom load or a local final
       destination, deselect this option.
 
-      <h4>Allow cars to travel from origin to terminal</h4>
+      <h5>Allow cars to travel from origin to terminal</h5>
       Normally the program allows cars to travel from the train's departure location (origin) to its
       last location (terminal). Deselect this option if you don't want the train to carry cars from
       the train's origin to the terminal. For example, say the train departs Boston (origin), and
@@ -4941,7 +4943,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       Worcester or Springfield could go to New York. But through cars from Boston to New York are
       not allowed.
 
-      <h4>Service all cars with a final destination</h4>
+      <h5>Service all cars with a final destination</h5>
       This option when selected tells the program to pull cars with a final destination even if the
       train being built doesn't provide the most efficient route for the car. Useful if you want the
       train being built to move cars "closer" to their final destination, even if other trains could
@@ -4953,7 +4955,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       creates more work for your crew as this option can and will increase the number of trains
       needed to move the car to its final destination.
       <a id="SendCustomToStaging"></a>
-      <h4>Send cars with custom loads to staging</h4>
+      
+      <h5>Send cars with custom loads to staging</h5>
 
       <p>
         When the "Send cars with custom loads to staging" is selected, the program will attempt to
@@ -4966,7 +4969,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         normally hold a car at its current location when all spurs with schedules are full.
       </p>
 
-      <h4 id="BuildlocoConsist">Build loco consist from single locos</h4>
+      <h5 id="BuildlocoConsist">Build loco consist from single locos</h5>
       This option when selected will dynamically build a locomotive consist for you using locos that
       aren't in a consist. For example, say you request a consist of three locomotives in the edit
       train window's
@@ -5005,19 +5008,21 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         your route if you find that the program is consistently adding one or two locos to the
         train, and also exceeding the maximum train lengths.</p>
 
-      <h3>Train Owners</h3>
+      <h4>Train Owners</h4>
       You can decide which rolling stock the train will service by owner name. Select which owners
       names you want the train to carry. The control is similar to
       <a href="#TrainRoadOptions">Train Road Options</a>, see below.
-      <h3>Train Built Dates</h3>
+      
+      <h4>Train Built Dates</h4>
       You can control which rolling stock the train will service by their built date. If you want
       only locomotives and cars built after a certain year, select the "After" radio button and
       enter a four digit year in the text box. If you only want locomotives and cars built before a
       certain year, select the "Before" radio button and enter a four digit year in the text box.
       And if you want to specify a period, select the "Range" radio button and enter the after and
       before years you want the train to service.
-      <h3 id="OptionalTrainRequirements">Optional Train Requirements (Locomotive or Caboose
-        Changes en Route)</h3>
+      
+      <h4 id="OptionalTrainRequirements">Optional Train Requirements (Locomotive or Caboose
+        Changes en Route)</h4>
       You can have up to two locomotive changes while the train is en route. Select "Locomotive
       change" where you want the change to happen in your route, and how many new locomotives should
       be assigned to the train. You can optionally select the new locomotives model and road. At the
@@ -5037,7 +5042,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         service starting at the location you select, and removes the helper service at the second
         location specified by you.</p>
 
-      <h3 id="TrainLoadOptions">Train Load Options</h3>
+      <h4 id="TrainLoadOptions">Train Load Options</h4>
       You can decide which car loads the train will service. Select under the "Edit
       Train&rArr;Tools&rArr;Train Load Options". This will bring up a new window with several options.
       <p>If the train will service any load name, select the "Accept all" radio button. If you
@@ -5050,7 +5055,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         loads from the list. You can also associate a load with a particular car type, select the
         "Use car type and load" checkbox if you want this feature.</p>
 
-      <h3 id="TrainRoadOptions">Train Road Options</h3>
+      <h4 id="TrainRoadOptions">Train Road Options</h4>
       You can control the roads that the train will service. Select under the "Edit
       Train&rArr;Tools&rArr;Train Road Options". This will bring up a new window with several options.
       <p>If the train will service any road, select the "Accept all" radio button. If you want
@@ -5067,18 +5072,18 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         example "SP-special", assign that road name to the caboose, and exclude the road name from
         the other trains. Your Manifest would continue to show the caboose road name as "SP".</p>
 
-      <h3 id="TrainManifestOptions">Train Manifest Options</h3>
+      <h4 id="TrainManifestOptions">Train Manifest Options</h4>
 
       <p>You can optionally have a unique railroad name and logo for each train in your roster.
         You can also decide if your Manifests show the train's arrival and departure times. Use the
         "Edit Train&rArr;Tools&rArr;Manifest Options" to set these options.</p>
 
-      <h3 id="CopyTrain">Copy Train</h3>
+      <h4 id="CopyTrain">Copy Train</h4>
 
       <p>Use this tool to make a copy of an existing train. You will need to enter a name for
         the new train.</p>
 
-      <h3 id="EditTrainScripts">Scripts</h3>
+      <h4 id="EditTrainScripts">Scripts</h4>
       If you want to run a <a
         href="../../../../html/tools/scripting/index.shtml">script</a> when a train is built, moves
       or terminates, select under the "Edit Train&rArr;Tools&rArr;Scripts". This will bring up a new
@@ -5091,13 +5096,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
 
 
-      <h3 id="TrainConductor">Train Conductor</h3>
+      <h4 id="TrainConductor">Train Conductor</h4>
       The train conductor window provides a train manifest for each location that the train visits.
       This real time window allows you to see the work needed at a location for a built train, and
       once the work is completed by selected all of the work checkboxes, allows you to move the
       train to the next location in the train's route.
 
-      <h4 id="ShowCarsInTrain">Show Cars in Train</h4>
+      <h5 id="ShowCarsInTrain">Show Cars in Train</h5>
       There are two tools available in the conductor window, "Show Cars in Train" and "Show full
       hyphened location name". The "Show Cars in Train" is used to see the correct blocking order in
       a train along with set outs and pick ups at each location in the train's route. The "Show full
@@ -5105,7 +5110,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       of the location when using the
       <a href="#AddLocation">hyphen</a> feature.
 
-      <h4 id="ModifyingBuiltTrain">Modifying a built train</h4>
+      <h5 id="ModifyingBuiltTrain">Modifying a built train</h5>
 
       <p>
         You can also modify the train's manifest by pressing the "Modify" button in the Conductor or
@@ -5121,6 +5126,18 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>To remove a car from the train, press the "Set" button, and the "Set Car" window should
         appear. Pressing the set car "Save" button will ask you if you really want to remove the car
         from the train.</p>
+        
+      <h4 id="ShowCarTypesServiced">Show Car Types Serviced</h4>
+
+      <p>
+        See <a href="#TrainShowCarTypesServiced">Show Car Types Serviced</a> train tool below for more
+        information.
+      </p>
+      
+      <h4>Print or Preview</h4>
+      
+      There are many print and preview options available for each train.
+        
 
       <h3 id="TrainsTools">Trains Tools</h3>
       <img src="images/TrainsPaneMenu.png" alt="Operations Trains window Tools Menu">
@@ -5147,31 +5164,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         "Copy Type" menu. Then select the "Copy" checkbox, and press "Save" to have both car types
         serviced by the same trains.</p>
 
-      <h4 id="ShowCarTypesServiced">Show Car Types Serviced</h4>
-
-      <p>
-        See <a href="#TrainShowCarTypesServiced">Show Car Types Serviced</a> train tool for more
-        information.
-      </p>
-
       <h4 id="ChangeTrainDepartureTimes">Change Train Departure Times</h4>
 
       <p>Use this window to change all of your train departure times by certain number of hours.
         It can be found under Trains&rArr;Tools. Useful if you're trying to match the train departure
         times to a real or fast clock. You also have the option to change the departure times in
         your routes.</p>
-
-      <h4 id="TrainsTableColors">Train Row Color</h4>
-
-      <p>
-        OperationsPro&trade; gives you two options for color coding the rows in the "Trains" window.
-        You can manually color code your trains, or you can have the program automatically set a
-        train's row color based on the status of the train. For example you could tell the program
-        you want the row colored red if a train fails to build. You can also when using the "Auto"
-        option define a unique color for each train when they are <a href="#TrainReset">reset</a>.
-        Before switching to "Auto", select the reset row colors for your various trains. You can
-        find this feature under "Tools" in the "Trains" window.
-      </p>
 
       <h4 id="TrainSchedules">Train Schedules</h4>
       The Train Schedules window allows you to define which trains will run on any given day, and
@@ -5211,6 +5209,26 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         becomes "Update Switch Lists" when you deselect the "Real Time" checkbox in the <a
           href="#SwitchList">Switch Lists by Location</a> window.
       </p>
+      
+      <h4 id="TrainsTableColors">Train Row Color</h4>
+
+      <p>
+        OperationsPro&trade; gives you two options for color coding the rows in the "Trains" window.
+        You can manually color code your trains, or you can have the program automatically set a
+        train's row color based on the status of the train. For example you could tell the program
+        you want the row colored red if a train fails to build. You can also when using the "Auto"
+        option define a unique color for each train when they are <a href="#TrainReset">reset</a>.
+        Before switching to "Auto", select the reset row colors for your various trains. You can
+        find this feature under "Tools" in the "Trains" window.
+      </p>
+
+      <h4 id="TrainsCopyTrain">Copy Train</h4>
+      This tool allows you to copy an existing train. Enter a new name for the train you wish to
+      copy, then select the train you want to copy, then press the "Copy" button.
+      
+      <h4 id="TrainScripts">Train Scripts</h4>
+      You can run a script when starting and / or shutting down OperationsPro. Use the "Add Script"
+      buttons to select the scripts you want to run.
 
       <h4 id="Automation">Automation</h4>
       This tool allows you to automate the building, moving, and termination of trains. It can also
@@ -5477,19 +5495,6 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h5>Select Start Automation</h5>
       This tool will allow you to select an automation to run when OperationsPro&trade; starts.
       <p>This is the end of the automation section.</p>
-
-      <h4 id="TrainsCopyTrain">Copy Train</h4>
-      This tool allows you to copy an existing train. Enter a new name for the train you wish to
-      copy, then select the train you want to copy, then press the "Copy" button.
-      <h4 id="TrainScripts">Train Scripts</h4>
-      You can run a script when starting and / or shutting down OperationsPro. Use the "Add Script"
-      buttons to select the scripts you want to run.
-      <h4 id="PrintSavedTrainManifests">Print or Preview Saved Train Manifests</h4>
-
-      <p>
-        If you've selected the <a href="#Options">Save Train Manifests</a> option, you can print or
-        preview a train Manifest that was previously created by the program and saved.
-      </p>
 
       <h4 id="SetupExcelProgram">Setup Excel Program (Manifest Creator)</h4>
       The ability to configure an Excel program to create custom manifests can be found under Trains
@@ -5769,7 +5774,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </table>
 
       <p>FD = Final Destination</p>
+      
+      <h4 id="PrintSavedTrainManifests">Print or Preview Saved Train Manifests</h4>
 
+      <p>
+        If you've selected the <a href="#Options">Save Train Manifests</a> option, you can print or
+        preview a train Manifest that was previously created by the program and saved.
+      </p>
+      <p style="page-break-after: always"><a href="#toc">[Click to go back to TOC]</a></p>
+     
       <h3 id="SwitcherService">Switcher Service (Local)</h3>
       Many operators assign a locomotive to a location to do the local switching. Using the
       location's switch list allows the person assigned to the location to service all trains that
