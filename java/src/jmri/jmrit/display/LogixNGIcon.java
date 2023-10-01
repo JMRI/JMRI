@@ -1,5 +1,8 @@
 package jmri.jmrit.display;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
@@ -14,15 +17,35 @@ import jmri.util.swing.JmriMouseEvent;
  */
 public class LogixNGIcon extends PositionableLabel {
 
+    public static final IdentityManager IDENTITY_MANAGER = new IdentityManager();
+
+    private final int _identity;
+
     public LogixNGIcon(String s, @Nonnull Editor editor) {
         super(s, editor);
+        _identity = IDENTITY_MANAGER.getIdentity(this);
+    }
+
+    public LogixNGIcon(int identity, String s, @Nonnull Editor editor) {
+        super(s, editor);
+        _identity = IDENTITY_MANAGER.getIdentity(identity, this);
     }
 
     public LogixNGIcon(@CheckForNull NamedIcon s, @Nonnull Editor editor) {
         super(s, editor);
+        _identity = IDENTITY_MANAGER.getIdentity(this);
+    }
+
+    public LogixNGIcon(int identity, @CheckForNull NamedIcon s, @Nonnull Editor editor) {
+        super(s, editor);
+        _identity = IDENTITY_MANAGER.getIdentity(identity, this);
 
         // Please retain the line below. It's used to create the resources/icons/logixng/logixng_icon.gif icon
         // createLogixNGIconImage();
+    }
+
+    public int getIdentity() {
+        return _identity;
     }
 
     @Override
@@ -62,7 +85,7 @@ public class LogixNGIcon extends PositionableLabel {
         super.doMouseClicked(e);
     }
 */
-    private void executeLogixNG() {
+    public void executeLogixNG() {
         LogixNG logixNG = getLogixNG();
 
         if (logixNG != null) {
@@ -105,6 +128,40 @@ public class LogixNGIcon extends PositionableLabel {
         }
     }
 */
+
+
+    public static class IdentityManager {
+
+        Map<Integer, LogixNGIcon> _identities = new HashMap<>();
+        int _lastIdentity = -1;
+
+        private IdentityManager() {
+            // Private constructor to keep it as a singleton
+        }
+
+        public int getIdentity(LogixNGIcon logixNGIcon) {
+            _lastIdentity++;
+            _identities.put(_lastIdentity, logixNGIcon);
+            return _lastIdentity;
+        }
+
+        public int getIdentity(int identity, LogixNGIcon logixNGIcon) {
+            if (_identities.containsKey(identity)) {
+                throw new IllegalArgumentException(String.format("Identity %d already exists", identity));
+            }
+            _identities.put(identity, logixNGIcon);
+            if (identity > _lastIdentity) {
+                _lastIdentity = identity;
+            }
+            return identity;
+        }
+
+        public LogixNGIcon getLogixNGIcon(int identity) {
+            return _identities.get(identity);
+        }
+
+    }
+
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGIcon.class);
 }

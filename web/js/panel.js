@@ -294,6 +294,18 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($widget.rotation * 90);
                             $widget['scale'] = $(this).find('icon').attr('scale');
                             break;
+                        case "logixngicon" :
+                            $widget['identity'] = $(this).find('Identity').text();
+                            $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
+                            $widget['rotation'] = $(this).find('icon').find('rotation').text() * 1;
+                            $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($widget.rotation * 90);
+                            $widget['scale'] = $(this).find('icon').attr('scale');
+                            $widget.classes += " " + $widget.jsonType + " clickable"; //make it clickable
+                            if (!$('#' + $widget.id).hasClass('clickable')) {
+                                $('#' + $widget.id).addClass("clickable");
+                                $('#' + $widget.id).bind(UPEVENT, $handleClick);
+                            }
+                            break;
                         case "linkinglabel" :
                             $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
                             $widget['rotation'] = $(this).find('icon').find('rotation').text() * 1;
@@ -1424,6 +1436,10 @@ function $handleClick(e) {
             sendElementChange($widget.jsonType, $widget.turnoutLowerEast, $turnoutWestNewState); // note: same as turnoutEast
         }
         return;
+    } else if (this.className.startsWith('logixngicon ')) {
+        // special handling of logixngicon
+        var $widget = $gWidgets[this.id];
+        jmri.clickLogixNGIcon($widget['identity']);
     } else {
         var $widget = $gWidgets[this.id];
         var $newState = $getNextState($widget); // determine next state from current state
@@ -2264,7 +2280,7 @@ var $preloadWidgetImages = function($widget) {
 // note: not-yet-supported widgets are commented out here so as to return undefined
 var $getWidgetFamily = function($widget, $element) {
 
-    if (($widget.widgetType == "positionablelabel" || $widget.widgetType == "linkinglabel")
+    if (($widget.widgetType == "positionablelabel" || $widget.widgetType == "linkinglabel" || $widget.widgetType == "logixngicon")
             && isDefined($widget.text)) {
         return "text";  //special case to distinguish text vs. icon labels
     }
@@ -2285,6 +2301,7 @@ var $getWidgetFamily = function($widget, $element) {
             return "text";
             break;
         case "positionablelabel" :
+        case "logixngicon" :
         case "linkinglabel" :
         case "turnouticon" :
         case "sensoricon" :

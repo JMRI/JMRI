@@ -32,6 +32,8 @@ public class LogixNGIconXml extends PositionableLabelXml {
         Element element = new Element("logixngicon");
         storeCommonAttributes(p, element);
 
+        element.addContent(new Element("Identity").addContent(Integer.toString(p.getIdentity())));
+
         if (p.isText()) {
             if (p.getUnRotatedText() != null) {
                 element.setAttribute("text", p.getUnRotatedText());
@@ -63,6 +65,8 @@ public class LogixNGIconXml extends PositionableLabelXml {
         // create the objects
         LogixNGIcon l = null;
 
+        int identity = Integer.parseInt(element.getChildText("Identity"));
+
         // get object class and determine editor being used
         Editor editor = (Editor) o;
         if (element.getAttribute("icon") != null) {
@@ -86,7 +90,7 @@ public class LogixNGIconXml extends PositionableLabelXml {
                 log.info("LogixNGIcon icon removed for url= {}", name);
                 return;
             }
-            l = new LogixNGIcon(icon, editor);
+            l = new LogixNGIcon(identity, icon, editor);
             try {
                 Attribute a = element.getAttribute("rotate");
                 if (a != null && icon != null) {
@@ -111,7 +115,7 @@ public class LogixNGIconXml extends PositionableLabelXml {
 
         if (element.getAttribute("text") != null) {
             if (l == null) {
-                l = new LogixNGIcon(element.getAttribute("text").getValue(), editor);
+                l = new LogixNGIcon(identity, element.getAttribute("text").getValue(), editor);
             }
             loadTextInfo(l, element);
 
