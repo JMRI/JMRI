@@ -73,7 +73,11 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
                     elem.addContent(e2);
 
                     elem.setAttribute("enabled", enabled ? "yes" : "no");  // NOI18N
-                    elem.setAttribute("executeAtStartup", executeAtStartup ? "yes" : "no");  // NOI18N
+
+                    // executeAtStartup is by default true so only store it if it's false
+                    if (!executeAtStartup) {
+                        elem.setAttribute("executeAtStartup", executeAtStartup ? "yes" : "no");  // NOI18N
+                    }
 
                     conditionalNGs.addContent(elem);
                 }
