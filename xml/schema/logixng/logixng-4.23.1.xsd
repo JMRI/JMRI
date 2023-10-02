@@ -152,6 +152,7 @@
             </xs:sequence>
 
             <xs:attribute name="enabled" type="yesNoType" />
+            <xs:attribute name="executeAtStartup" type="yesNoType" />
           </xs:complexType>
         </xs:element>
             

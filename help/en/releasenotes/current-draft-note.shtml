@@ -425,6 +425,16 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>A new <strong>LogixNG</strong> icon has been added to Panel Editor.
+          When the icon is clicked, it will execute the inline LogixNG of that icon.
+          If the inline LogixNG has several ConditionalNGs, the ConditionalNGs will
+          be executed in the order they got created.</li>
+          <li>A new option is added to the <strong>ConditionalNG</strong> table when
+          editing a LogixNG. By default, all the ConditionalNGs are executed when the
+          panel is loaded if the LogixNG is enabled. But if the <strong>Startup</strong>
+          checkbox is unchecked, the ConditionalNG will not be executed when the panel
+          is loaded. This is in particular useful for the <strong>LogixNG</strong> icon
+          that's added in this JMRI version.</li>
           <li>A new tool <strong>Where Used</strong> has been added to LogixNG.
           It shows where in the LogixNG tree an item is used. The tool is found
           on menu item <strong>Tools &rArr; LogixNG &rArr; Where Used</strong>.</li>
@@ -451,9 +461,9 @@
 <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li>A new LogixNG icon has been added to Panel Editor. When the icon is clicked, it will
-            execute the inline LogixNG of that icon. If the inline LogixNG has several ConditionalNGs,
-            the ConditionalNGs will be executed in the order they got created.</li>
+            <li>A new <strong>LogixNG</strong> icon has been added to Panel Editor. When the icon is
+            clicked, it will execute the inline LogixNG of that icon. If the inline LogixNG has several
+            ConditionalNGs, the ConditionalNGs will be executed in the order they got created.</li>
         </ul>
 
     <h3>Control Panel Editor</h3>

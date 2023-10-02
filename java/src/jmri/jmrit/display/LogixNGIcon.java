@@ -147,7 +147,8 @@ public class LogixNGIcon extends PositionableLabel {
 
         public int getIdentity(int identity, LogixNGIcon logixNGIcon) {
             if (_identities.containsKey(identity)) {
-                throw new IllegalArgumentException(String.format("Identity %d already exists", identity));
+                log.error(String.format("Identity %d already exists", identity));
+                return getIdentity(logixNGIcon);
             }
             _identities.put(identity, logixNGIcon);
             if (identity > _lastIdentity) {
