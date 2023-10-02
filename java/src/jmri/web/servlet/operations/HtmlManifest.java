@@ -135,7 +135,7 @@ public class HtmlManifest extends HtmlTrainCommon {
             if (routeLocation != train.getTrainTerminatesRouteLocation()) {
                 // Is the next location the same as the current?
                 RouteLocation rlNext = train.getRoute().getNextRouteLocation(routeLocation);
-                if (!routeLocationName.equals(splitString(rlNext.getName()))) {
+                if (!routeLocationName.equals(rlNext.getSplitName())) {
                     if (hasWork) {
                         if (!Setup.isPrintLoadsAndEmptiesEnabled()) {
                             // Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons

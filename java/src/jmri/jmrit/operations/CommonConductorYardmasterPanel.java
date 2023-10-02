@@ -757,7 +757,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 text = TrainSwitchListText.getStringTrainDepartsLoads();
             }
             return MessageFormat.format(text,
-                    new Object[] { TrainCommon.splitString(rl.getName()), rl.getTrainDirectionString(),
+                    new Object[] { rl.getSplitName(), rl.getTrainDirectionString(),
                             _train.getNumberCarsInTrain(rl) - emptyCars, emptyCars, _train.getTrainLength(rl),
                             Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl),
                             _train.getTrainTerminatesName(), _train.getName() });
@@ -769,7 +769,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 text = TrainSwitchListText.getStringTrainDepartsCars();
             }
             return MessageFormat.format(text,
-                    new Object[] { TrainCommon.splitString(rl.getName()), rl.getTrainDirectionString(),
+                    new Object[] { rl.getSplitName(), rl.getTrainDirectionString(),
                             _train.getNumberCarsInTrain(rl), _train.getTrainLength(rl),
                             Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl),
                             _train.getTrainTerminatesName(), _train.getName() });

@@ -224,16 +224,16 @@ public class TrainCommon {
         List<String> trackNames = new ArrayList<>();
         clearUtilityCarTypes(); // list utility cars by quantity
         for (Track track : tracks) {
-            if (trackNames.contains(splitString(track.getName()))) {
+            if (trackNames.contains(track.getSplitName())) {
                 continue;
             }
-            trackNames.add(splitString(track.getName())); // use a track name
+            trackNames.add(track.getSplitName()); // use a track name
                                                           // once
             // block pick up cars, except for passenger cars
             for (RouteLocation rld : train.getTrainBlockingOrder()) {
                 for (Car car : carList) {
                     if (Setup.isSortByTrackNameEnabled() &&
-                            !splitString(track.getName()).equals(splitString(car.getTrackName()))) {
+                            !track.getSplitName().equals(car.getSplitTrackName())) {
                         continue;
                     }
                     // Block cars
@@ -282,7 +282,7 @@ public class TrainCommon {
                     // not car's track name
                     // sorting by car's track name fails if there are "similar"
                     // location names.
-                    if (!splitString(track.getName()).equals(splitString(car.getDestinationTrackName()))) {
+                    if (!track.getSplitName().equals(car.getSplitDestinationTrackName())) {
                         continue;
                     }
                 }
@@ -391,10 +391,10 @@ public class TrainCommon {
             printCarHeader(file, isManifest, !IS_TWO_COLUMN_TRACK);
         }
         for (Track track : tracks) {
-            if (trackNames.contains(splitString(track.getName()))) {
+            if (trackNames.contains(track.getSplitName())) {
                 continue;
             }
-            trackNames.add(splitString(track.getName())); // use a track name once
+            trackNames.add(track.getSplitName()); // use a track name once
             // block car pick ups
             for (RouteLocation rld : train.getTrainBlockingOrder()) {
                 for (int k = 0; k < carList.size(); k++) {
@@ -407,7 +407,7 @@ public class TrainCommon {
                     // the train.
                     if (isNextCar(car, rl, rld)) {
                         if (Setup.isSortByTrackNameEnabled() &&
-                                !splitString(track.getName()).equals(splitString(car.getTrackName()))) {
+                                !track.getSplitName().equals(car.getSplitTrackName())) {
                             continue;
                         }
                         _pickupCars = true;
@@ -484,7 +484,7 @@ public class TrainCommon {
             printCarHeader(file, isManifest, IS_TWO_COLUMN_TRACK);
         }
         for (Track track : tracks) {
-            String trackName = splitString(track.getName());
+            String trackName = track.getSplitName();
             if (trackNames.contains(trackName)) {
                 continue;
             }
@@ -493,7 +493,7 @@ public class TrainCommon {
                 for (Car car : carList) {
                     if (car.getTrack() != null &&
                             car.getRouteLocation() == rl &&
-                            trackName.equals(splitString(car.getTrackName())) &&
+                            trackName.equals(car.getSplitTrackName()) &&
                             ((car.getRouteDestination() == rld && !car.isCaboose() && !car.hasFred()) ||
                                     (rld == train.getTrainTerminatesRouteLocation() &&
                                             (car.isCaboose() || car.hasFred())))) {
@@ -522,7 +522,7 @@ public class TrainCommon {
             for (Car car : carList) {
                 if (!doneCars.contains(car) &&
                         car.getRouteDestination() == rl &&
-                        trackName.equals(splitString(car.getDestinationTrackName()))) {
+                        trackName.equals(car.getSplitDestinationTrackName())) {
                     if (!trackNames.contains(trackName)) {
                         printTrackNameHeader(file, trackName, isManifest);
                     }
@@ -611,7 +611,7 @@ public class TrainCommon {
         for (Car car : carList) {
             if (!doneCars.contains(car) &&
                     car.getRouteDestination() == rl &&
-                    trackName.equals(splitString(car.getDestinationTrackName()))) {
+                    trackName.equals(car.getSplitDestinationTrackName())) {
                 doneCars.add(car);
                 String so = appendSetoutString(s, carList, rl, car, isManifest, isTwoColumnTrack);
                 // check for utility car
@@ -1053,20 +1053,20 @@ public class TrainCommon {
         // Note for car pick up: type, id, track name. For set out type, track
         // name, id (reversed).
         if (isPickup) {
-            carAttributes = carType + car.getRouteLocationId() + splitString(car.getTrackName());
+            carAttributes = carType + car.getRouteLocationId() + car.getSplitTrackName();
             showDestination = showUtilityCarDestination(format);
             if (showDestination) {
                 carAttributes = carAttributes + car.getRouteDestinationId();
             }
         } else {
             // set outs and local moves
-            carAttributes = carType + splitString(car.getDestinationTrackName()) + car.getRouteDestinationId();
+            carAttributes = carType + car.getSplitDestinationTrackName() + car.getRouteDestinationId();
             showLocation = showUtilityCarLocation(format);
             if (showLocation && car.getTrack() != null) {
                 carAttributes = carAttributes + car.getRouteLocationId();
             }
             if (car.isLocalMove()) {
-                carAttributes = carAttributes + splitString(car.getTrackName());
+                carAttributes = carAttributes + car.getSplitTrackName();
             }
         }
         if (showLength) {
@@ -1104,13 +1104,13 @@ public class TrainCommon {
                 }
                 if (isPickup &&
                         c.getRouteLocation() == car.getRouteLocation() &&
-                        splitString(c.getTrackName()).equals(splitString(car.getTrackName()))) {
+                        c.getSplitTrackName().equals(car.getSplitTrackName())) {
                     count++;
                 }
                 if (!isPickup &&
                         c.getRouteDestination() == car.getRouteDestination() &&
-                        splitString(c.getDestinationTrackName()).equals(splitString(car.getDestinationTrackName())) &&
-                        (splitString(c.getTrackName()).equals(splitString(car.getTrackName())) || !c.isLocalMove())) {
+                        c.getSplitDestinationTrackName().equals(car.getSplitDestinationTrackName()) &&
+                        (c.getSplitTrackName().equals(car.getSplitTrackName()) || !c.isLocalMove())) {
                     count++;
                 }
             }
@@ -1313,11 +1313,10 @@ public class TrainCommon {
         for (RollingStock rs : list) {
             if ((rs.getRouteLocation() != null &&
                     rs.getTrack() != null &&
-                    TrainCommon.splitString(rs.getRouteLocation().getName())
-                            .equals(TrainCommon.splitString(location.getName()))) ||
+                    rs.getRouteLocation().getSplitName()
+                            .equals(location.getSplitName())) ||
                     (rs.getRouteDestination() != null &&
-                            TrainCommon.splitString(rs.getRouteDestination().getName())
-                                    .equals(TrainCommon.splitString(location.getName())))) {
+                            rs.getRouteDestination().getSplitName().equals(location.getSplitName()))) {
                 return true;
             }
         }
@@ -1423,11 +1422,11 @@ public class TrainCommon {
                 return SPACE + SPACE; // assumes that kernel size is 99 or less
             }
         } else if (attribute.equals(Setup.RWE)) {
-            if (!car.getReturnWhenEmptyDestName().equals(Car.NONE)) {
+            if (!car.getReturnWhenEmptyDestinationName().equals(Car.NONE)) {
                 // format RWE destination and track name
-                String rweAndTrackName = splitString(car.getReturnWhenEmptyDestinationName());
+                String rweAndTrackName = car.getSplitReturnWhenEmptyDestinationName();
                 if (!car.getReturnWhenEmptyDestTrackName().equals(Car.NONE)) {
-                    rweAndTrackName = rweAndTrackName + "," + SPACE +splitString(car.getReturnWhenEmptyDestTrackName());
+                    rweAndTrackName = rweAndTrackName + "," + SPACE + car.getSplitReturnWhenEmptyDestinationTrackName();
                 }
                 return Setup.isPrintHeadersEnabled()
                         ? padAndTruncateIfNeeded(rweAndTrackName, locationManager.getMaxLocationAndTrackNameLength())
@@ -1440,20 +1439,20 @@ public class TrainCommon {
             return padAndTruncateIfNeeded("", locationManager.getMaxLocationAndTrackNameLength());
         } else if (attribute.equals(Setup.FINAL_DEST)) {
             return Setup.isPrintHeadersEnabled()
-                    ? padAndTruncateIfNeeded(splitString(car.getFinalDestinationName()),
+                    ? padAndTruncateIfNeeded(car.getSplitFinalDestinationName(),
                             locationManager.getMaxLocationNameLength())
                     : padAndTruncateIfNeeded(
                             TrainManifestText.getStringFinalDestination() +
                                     SPACE +
-                                    splitString(car.getFinalDestinationName()),
+                                    car.getSplitFinalDestinationName(),
                             locationManager.getMaxLocationNameLength() +
                                     TrainManifestText.getStringFinalDestination().length() +
                                     1);
         } else if (attribute.equals(Setup.FINAL_DEST_TRACK)) {
             // format final destination and track name
-            String FDAndTrackName = splitString(car.getFinalDestinationName());
+            String FDAndTrackName = car.getSplitFinalDestinationName();
             if (!car.getFinalDestinationTrackName().equals(Car.NONE)) {
-                FDAndTrackName = FDAndTrackName + "," + SPACE + splitString(car.getFinalDestinationTrackName());
+                FDAndTrackName = FDAndTrackName + "," + SPACE + car.getSplitFinalDestinationTrackName();
             }
             return Setup.isPrintHeadersEnabled()
                     ? padAndTruncateIfNeeded(FDAndTrackName, locationManager.getMaxLocationAndTrackNameLength() + 2)
@@ -1490,52 +1489,52 @@ public class TrainCommon {
             } else if (((attribute.equals(Setup.LOCATION)) && (isPickup || isLocal)) ||
                     (attribute.equals(Setup.TRACK) && isPickup)) {
                 return Setup.isPrintHeadersEnabled()
-                        ? padAndTruncateIfNeeded(splitString(rs.getTrackName()),
+                        ? padAndTruncateIfNeeded(rs.getSplitTrackName(),
                                 locationManager.getMaxTrackNameLength())
                         : padAndTruncateIfNeeded(
-                                TrainManifestText.getStringFrom() + SPACE + splitString(rs.getTrackName()),
+                                TrainManifestText.getStringFrom() + SPACE + rs.getSplitTrackName(),
                                 TrainManifestText.getStringFrom().length() +
                                         locationManager.getMaxTrackNameLength() +
                                         1);
             } else if (attribute.equals(Setup.LOCATION) && !isPickup && !isLocal) {
                 return Setup.isPrintHeadersEnabled()
-                        ? padAndTruncateIfNeeded(splitString(rs.getLocationName()),
+                        ? padAndTruncateIfNeeded(rs.getSplitLocationName(),
                                 locationManager.getMaxLocationNameLength())
                         : padAndTruncateIfNeeded(
-                                TrainManifestText.getStringFrom() + SPACE + splitString(rs.getLocationName()),
+                                TrainManifestText.getStringFrom() + SPACE + rs.getSplitLocationName(),
                                 locationManager.getMaxLocationNameLength() +
                                         TrainManifestText.getStringFrom().length() +
                                         1);
             } else if (attribute.equals(Setup.DESTINATION) && isPickup) {
                 if (Setup.isPrintHeadersEnabled()) {
-                    return padAndTruncateIfNeeded(splitString(rs.getDestinationName()),
+                    return padAndTruncateIfNeeded(rs.getSplitDestinationName(),
                             locationManager.getMaxLocationNameLength());
                 }
                 if (Setup.isTabEnabled()) {
                     return padAndTruncateIfNeeded(
-                            TrainManifestText.getStringDest() + SPACE + splitString(rs.getDestinationName()),
+                            TrainManifestText.getStringDest() + SPACE + rs.getSplitDestinationName(),
                             TrainManifestText.getStringDest().length() +
                                     locationManager.getMaxLocationNameLength() +
                                     1);
                 } else {
                     return TrainManifestText.getStringDestination() +
                             SPACE +
-                            splitString(rs.getDestinationName());
+                            rs.getSplitDestinationName();
                 }
             } else if ((attribute.equals(Setup.DESTINATION) || attribute.equals(Setup.TRACK)) && !isPickup) {
                 return Setup.isPrintHeadersEnabled()
-                        ? padAndTruncateIfNeeded(splitString(rs.getDestinationTrackName()),
+                        ? padAndTruncateIfNeeded(rs.getSplitDestinationTrackName(),
                                 locationManager.getMaxTrackNameLength())
                         : padAndTruncateIfNeeded(
                                 TrainManifestText.getStringTo() +
                                         SPACE +
-                                        splitString(rs.getDestinationTrackName()),
+                                        rs.getSplitDestinationTrackName(),
                                 locationManager.getMaxTrackNameLength() +
                                         TrainManifestText.getStringTo().length() +
                                         1);
             } else if (attribute.equals(Setup.DEST_TRACK)) {
                 // format destination name and destination track name
-                String destAndTrackName = splitString(rs.getDestinationName()) + "," + SPACE + splitString(rs.getDestinationTrackName());
+                String destAndTrackName = rs.getSplitDestinationName() + "," + SPACE + rs.getSplitDestinationTrackName();
                 return Setup.isPrintHeadersEnabled()
                         ? padAndTruncateIfNeeded(destAndTrackName,
                                 locationManager.getMaxLocationAndTrackNameLength() + 2)

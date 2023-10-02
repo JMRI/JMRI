@@ -2468,12 +2468,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>If you wish to limit which trains or train routes are allowed to service to your track,
         change the "Select trains or routes for set outs" or "Select trains or routes for pick up"
-        from "Any" to one of the four options in the edit spur window. The "Trains" option allows
-        you build a list of trains can set out or pick up from the track. The "Routes" option allows
-        you to build a list of train routes that can service the track. If you only want to prevent
-        certain trains or routes from serving the track select the "Exclude Trains" or "Exclude
-        Routes" options. The "Auto" checkbox when selected will only allow you to select trains or
-        routes that service this track.</p>
+        from "Any" to one of the four options in the edit spur, interchange, or staging windows. The
+        "Trains" option allows you build a list of trains can set out or pick up from the track. The
+        "Routes" option allows you to build a list of train routes that can service the track. If
+        you only want to prevent certain trains or routes from serving the track select the "Exclude
+        Trains" or "Exclude Routes" options. The "Auto" checkbox when selected will only allow you
+        to select trains or routes that service this track.</p>
 
       <p>Note that if you do restrict which trains or routes can pull cars from a track, you
         must also restrict the track's car types, loads, and roads to the same ones that your trains
@@ -2727,7 +2727,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         value, you hopefully have 10 times the spur's available track space in a storage yard that
         is near by!</p>
 
-      <h4>Alternate Track</h4>
+      <h4>Alternate Track (Off Spot)</h4>
 
       <p>
         The second option under "Tools&rArr;Options" in the schedule window is the ability to specify
@@ -2918,13 +2918,16 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>The car's load status does not change when placed at a classification/interchange
         track.</p>
 
-      <p>If you want more control on how your classification/interchange track will operate, you
-        can optionally specify which trains or train routes can pick up or set out cars. If you
-        restrict which trains or routes can pull cars from a classification/interchange track, you
-        must also restrict the track's car types, loads, and roads to the same ones that the train
-        services, otherwise you can have cars stranded on the classification/interchange track. Once
-        you specify which trains or routes can pull cars, all cars that the train can service are
-        available to the train, even cars that were delivered by the same train or route.</p>
+      <p>
+        If you want more control on how your classification/interchange track will operate, you can
+        optionally specify which <a href="#RestrictingTrackToCertainTrains">trains or train
+          routes</a> can pick up or set out cars. If you restrict which trains or routes can pull cars
+        from a classification/interchange track, you must also restrict the track's car types,
+        loads, and roads to the same ones that the train services, otherwise you can have cars
+        stranded on the classification/interchange track. Once you specify which trains or routes
+        can pull cars, all cars that the train can service are available to the train, even cars
+        that were delivered by the same train or route.
+      </p>
 
       <p>Since you can specify that a train can set out and pull cars from a C/I track, it can
         be used to capture a set of cars for a specific train. For example if you had a set of cars
@@ -3006,6 +3009,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       create another C/I track that only accepts set outs from the local switcher. The other
       solution is to use the <a href="#PlannedPickUps">Planned Pick Ups</a> feature for both spur
       tracks.
+      
       <h3 id="Staging">Staging Tracks</h3>
       Staging tracks are normally used to represent locations that generate traffic to and from your
       layout. Many times physical access to staging tracks is limited, therefore the program places
@@ -3076,10 +3080,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
           Staging Route</a> for more info.
       </p>
 
-      <p>You can if you wish, optionally control which staging tracks a train will arrive on and
-        depart. Note that the default "Any" allows any train to arrive or depart on the staging
-        track, so if you want to restrict a train to a specific track or tracks, you must configure
-        all of the staging tracks at that location.</p>
+      <p>
+        You can if you wish, optionally control which <a href="#RestrictingTrackToCertainTrains">staging
+          tracks a train</a> will arrive on and depart. Note that the default "Any" allows any train to
+        arrive or depart on the staging track, so if you want to restrict a train to a specific
+        track or tracks, you must configure all of the staging tracks at that location.
+      </p>
 
       <p>
         You can as an <a href="#PromptDepartureTrack">option</a>, have the program ask you which
@@ -3406,6 +3412,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       the center door. Placing a 50' boxcar at either end door, prevents the program from placing a
       car at the center door. If a 40' boxcar is first placed at the center door, only 40' cars are
       then allowed at the end doors.
+      
       <h4 id="AlternateTrack">Alternate Track or "Off Spot"</h4>
       You can add an alternate track to a spur from the "Tools" menu accessed from either the edit
       spur or the edit schedule windows. The program when it finds a spur full will send cars to the
@@ -3434,6 +3441,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         You can see all "inbound" cars by using the sort by "FD" or <a href="#FinalDestination">Final
           Destination</a> in the <a href="#Cars">Cars</a> window.
       </p>
+
+      <p>The program will also use the spur's alternate track as an outbound track when routing
+        a car from a spur involving three or more trains. The car in this case is being routed and
+        has a final destination assigned to it, and the program finds that all of the first hop
+        interchanges and yards are full, and the alternate track has room, the program will redirect
+        the car to the spur's alternate track. This is done to free up space at the spur, allowing
+        the program to move inbound cars from the alternate to the spur. Once the first hop
+        interchanges or yards get cleared, the program will assign the outbound car to the available
+        interchange or yard and the car will continue to it's final destination.</p>
 
       <h4 id="PlannedPickUps">Planned Pick Ups</h4>
       The program when searching for tracks to set out cars, checks to see if there's space

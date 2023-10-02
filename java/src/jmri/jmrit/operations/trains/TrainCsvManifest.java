@@ -55,10 +55,8 @@ public class TrainCsvManifest extends TrainCsvCommon {
             List<RouteLocation> routeList = train.getRoute().getLocationsBySequenceList();
             for (RouteLocation rl : routeList) {
                 // print info only if new location
-                String routeLocationName = splitString(rl.getName());
-                String locationName = routeLocationName;
-                if (!routeLocationName.equals(previousRouteLocationName)) {
-                    printLocationName(fileOut, locationName);
+                if (!rl.getSplitName().equals(previousRouteLocationName)) {
+                    printLocationName(fileOut, rl.getSplitName());
                     if (rl != train.getTrainDepartsRouteLocation()) {
                         fileOut.printRecord("AT", Bundle.getMessage("csvArrivalTime"), train.getExpectedArrivalTime(rl)); // NOI18N
                     }
@@ -153,10 +151,9 @@ public class TrainCsvManifest extends TrainCsvCommon {
                 if (rl != train.getTrainTerminatesRouteLocation()) {
                     // Is the next location the same as the previous?
                     RouteLocation rlNext = train.getRoute().getNextRouteLocation(rl);
-                    String nextRouteLocationName = splitString(rlNext.getName());
-                    if (!routeLocationName.equals(nextRouteLocationName)) {
+                    if (!rl.getSplitName().equals(rlNext.getSplitName())) {
                         if (newWork) {
-                            printTrainDeparts(fileOut, locationName, rl.getTrainDirectionString());
+                            printTrainDeparts(fileOut, rl.getSplitName(), rl.getTrainDirectionString());
                             printTrainLength(fileOut, train.getTrainLength(rl), train.getNumberEmptyCarsInTrain(rl),
                                     train.getNumberCarsInTrain(rl));
                             printTrainWeight(fileOut, train.getTrainWeight(rl));
@@ -166,9 +163,9 @@ public class TrainCsvManifest extends TrainCsvCommon {
                         }
                     }
                 } else {
-                    printTrainTerminates(fileOut, locationName);
+                    printTrainTerminates(fileOut, rl.getSplitName());
                 }
-                previousRouteLocationName = routeLocationName;
+                previousRouteLocationName = rl.getSplitName();
             }
             // Are there any cars that need to be found?
             listCarsLocationUnknown(fileOut);
