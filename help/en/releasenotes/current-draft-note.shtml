@@ -428,6 +428,10 @@
           <li>A new tool <strong>Where Used</strong> has been added to LogixNG.
           It shows where in the LogixNG tree an item is used. The tool is found
           on menu item <strong>Tools &rArr; LogixNG &rArr; Where Used</strong>.</li>
+          <li>The action <strong>Audio</strong> and the expression <strong>Audio</strong>
+          no longer let the user select an Audio buffer when edition the action/expression.
+          LogixNG can only act on or listen to Audio sources and the Audio listener so there
+          is no point in selecting an audio buffer for LogixNG.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
