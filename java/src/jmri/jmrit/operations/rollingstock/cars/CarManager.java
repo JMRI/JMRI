@@ -156,7 +156,9 @@ public class CarManager extends RollingStockManager<Car>
             case BY_HAZARD:
                 return (c1, c2) -> ((c1.isHazardous() ? 1 : 0) - (c2.isHazardous() ? 1 : 0));
             case BY_SPLIT_FINAL_DEST:
-                return (c1, c2) -> (c1.getSplitFinalDestinationName().compareToIgnoreCase(c2.getSplitFinalDestinationName()));
+                return (c1, c2) -> (c1.getSplitFinalDestinationName() + c1.getSplitFinalDestinationTrackName())
+                        .compareToIgnoreCase(
+                                c2.getSplitFinalDestinationName() + c2.getSplitFinalDestinationTrackName());
             case BY_SPLIT_LOCATION:
                 return (c1, c2) -> (c1.getStatus() + c1.getSplitLocationName() + c1.getSplitTrackName())
                         .compareToIgnoreCase(c2.getStatus() + c2.getSplitLocationName() + c2.getSplitTrackName());
