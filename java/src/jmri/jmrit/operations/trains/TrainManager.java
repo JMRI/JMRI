@@ -56,6 +56,7 @@ public class TrainManager extends PropertyChangeSupport
     private String _rowColorBuildFailed = NONE; // row color when train build failed
     private String _rowColorTrainEnRoute = NONE; // row color when train is en route
     private String _rowColorTerminated = NONE; // row color when train is terminated
+    private String _rowColorReset = NONE; // row color when train is reset
 
     // Scripts
     protected List<String> _startUpScripts = new ArrayList<>(); // list of script pathnames to run at start up
@@ -755,6 +756,16 @@ public class TrainManager extends PropertyChangeSupport
         _rowColorTerminated = colorName;
         setDirtyAndFirePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, colorName);
     }
+    
+    public String getRowColorNameForReset() {
+        return _rowColorReset;
+    }
+
+    public void setRowColorNameForReset(String colorName) {
+        String old = _rowColorReset;
+        _rowColorReset = colorName;
+        setDirtyAndFirePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, colorName);
+    }
 
     /**
      * JColorChooser is not a replacement for getRowColorComboBox as it doesn't
@@ -1091,16 +1102,19 @@ public class TrainManager extends PropertyChangeSupport
                     _rowColorManual = a.getValue().equals(Xml.TRUE);
                 }
                 if ((a = eRowColorOptions.getAttribute(Xml.ROW_COLOR_BUILD_FAILED)) != null) {
-                    _rowColorBuildFailed = a.getValue();
+                    _rowColorBuildFailed = a.getValue().toLowerCase();
                 }
                 if ((a = eRowColorOptions.getAttribute(Xml.ROW_COLOR_BUILT)) != null) {
-                    _rowColorBuilt = a.getValue();
+                    _rowColorBuilt = a.getValue().toLowerCase();
                 }
                 if ((a = eRowColorOptions.getAttribute(Xml.ROW_COLOR_TRAIN_EN_ROUTE)) != null) {
-                    _rowColorTrainEnRoute = a.getValue();
+                    _rowColorTrainEnRoute = a.getValue().toLowerCase();
                 }
                 if ((a = eRowColorOptions.getAttribute(Xml.ROW_COLOR_TERMINATED)) != null) {
-                    _rowColorTerminated = a.getValue();
+                    _rowColorTerminated = a.getValue().toLowerCase();
+                }
+                if ((a = eRowColorOptions.getAttribute(Xml.ROW_COLOR_RESET)) != null) {
+                    _rowColorReset = a.getValue().toLowerCase();
                 }
             }
 
@@ -1166,6 +1180,7 @@ public class TrainManager extends PropertyChangeSupport
         e.setAttribute(Xml.ROW_COLOR_BUILT, getRowColorNameForBuilt());
         e.setAttribute(Xml.ROW_COLOR_TRAIN_EN_ROUTE, getRowColorNameForTrainEnRoute());
         e.setAttribute(Xml.ROW_COLOR_TERMINATED, getRowColorNameForTerminated());
+        e.setAttribute(Xml.ROW_COLOR_RESET, getRowColorNameForReset());
         options.addContent(e);
 
         if (getStartUpScripts().size() > 0 || getShutDownScripts().size() > 0) {

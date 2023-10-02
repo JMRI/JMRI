@@ -263,11 +263,11 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     /**
      * @return The name of the train row color when the train is reset
      */
-    public String getRowColorNameReset() {
+    public String getTableRowColorNameReset() {
         return _tableRowColorResetName;
     }
 
-    public void setRowColorNameReset(String colorName) {
+    public void setTableRowColorNameReset(String colorName) {
         String old = _tableRowColorResetName;
         _tableRowColorResetName = colorName;
         if (!old.equals(colorName)) {
@@ -791,11 +791,15 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         updateTrainTableRowColor();
     }
 
-    private void updateTrainTableRowColor() {
+    public void updateTrainTableRowColor() {
         if (!InstanceManager.getDefault(TrainManager.class).isRowColorManual()) {
             switch (getStatusCode()) {
                 case CODE_TRAIN_RESET:
-                    setTableRowColorName(getRowColorNameReset());
+                    String color = getTableRowColorNameReset();
+                    if (color.equals(NONE)) {
+                        color = InstanceManager.getDefault(TrainManager.class).getRowColorNameForReset();
+                    }
+                    setTableRowColorName(color);
                     break;
                 case CODE_BUILT:
                 case CODE_PARTIAL_BUILT:
@@ -3606,10 +3610,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         // Trains table row color
         Element eRowColor = e.getChild(Xml.ROW_COLOR);
         if (eRowColor != null && (a = eRowColor.getAttribute(Xml.NAME)) != null) {
-            _tableRowColorName = a.getValue();
+            _tableRowColorName = a.getValue().toLowerCase();
         }
         if (eRowColor != null && (a = eRowColor.getAttribute(Xml.RESET_ROW_COLOR)) != null) {
-            _tableRowColorResetName = a.getValue();
+            _tableRowColorResetName = a.getValue().toLowerCase();
         }
 
         Element eRoute = e.getChild(Xml.ROUTE);
@@ -4022,7 +4026,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
         Element eRowColor = new Element(Xml.ROW_COLOR);
         eRowColor.setAttribute(Xml.NAME, getTableRowColorName());
-        eRowColor.setAttribute(Xml.RESET_ROW_COLOR, getRowColorNameReset());
+        eRowColor.setAttribute(Xml.RESET_ROW_COLOR, getTableRowColorNameReset());
         e.addContent(eRowColor);
 
         Element eRoute = new Element(Xml.ROUTE);

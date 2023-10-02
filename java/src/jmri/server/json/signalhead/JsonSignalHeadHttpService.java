@@ -82,6 +82,12 @@ public class JsonSignalHeadHttpService extends JsonNonProvidedNamedBeanHttpServi
                 }
             }
         }
+        if (data.path(LIT).isTextual()) {
+            signalHead.setLit(data.path(LIT).asBoolean());            
+        }
+        if (data.path(TOKEN_HELD).isTextual()) {
+            signalHead.setHeld(data.path(TOKEN_HELD).asBoolean());            
+        }        
         return this.doGet(type, name, data, request);
     }
 

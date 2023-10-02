@@ -4,9 +4,9 @@
  * TODO: add filter to tables
  * TODO: add enum descriptions to schema and use them for converting states, and 
  *         for calc'ing the "next" state
- * TODO: additional columns and changes for block, light, route
  * TODO: improve performance when client is sitting on page while lengthy list is loaded into JMRI
  * TODO I18N titles and headers
+ * TODO: debug JMRI handling for firing route, signalHead lit and held, signalMast lit and held
  */
 
 var jmri = null;
@@ -63,13 +63,29 @@ function rebuildTable(data) {
 	}
 	$("#activity-alert").removeClass("show").addClass("hidden");
 
-	//setup for clicking on state column to send state changes
-	$('table.idTag, table.light, table.route, table.sensor, table.turnout').on('click', 'td.state', function (e) { 
+	//setup for clicking on certain columns to send state changes
+	$('table.idTag,table.light,table.route,table.sensor,table.turnout,table.car,table.engine,table.signalHead,table.signalMast')
+	  .on('click', 'td.locationUnknown,td.outOfService,td.state,td.lit,td.held', function (e) { 
 		rowName = $(this).parent('tr').data('name');
-		currState = $(this).data('state');
-		jmri.socket.send(tableType, { 'name': rowName, 'state': getNextState(tableType, currState) }, 'post');
+		colName = e.target.className;
+		currValue = $(this).data('value').toString();
+		jmri.socket.send(tableType, { 'name': rowName, [colName]: getNextValue(currValue) }, 'post');
 	 });	
 }
+//handle the toggling of the next Value for clicks
+var getNextValue = function(value){
+	switch (value) {
+		case '0':     return '4';
+		case '1':     return '4';
+		case '2':     return '4';
+		case '4':     return '2';
+		case 'true':  return 'false';
+		case 'false': return 'true';
+		case 'yes':   return 'no';
+		case 'no':    return 'yes';	
+		default:      return value; //no match, leave it the same				
+	}
+};
 
 //returns the html for a single row from that row's data object
 function buildRow(data) {
@@ -77,7 +93,7 @@ function buildRow(data) {
 	tableType = $("html").data("table-type");
 	//note: syntax below required since some JMRI json objects have a "length" attribute equal 0
 	$.each(Object.keys(data), function (index, value) {
-		r += "<td class='" + value + "' data-" + value + "='" + data[value] + "'>" 
+		r += "<td class='" + value + "' data-value='" + data[value] + "'>" 
 			+ displayCellValue(tableType, value, data[value]) + "</td>"; 
 	});
 	return r;
@@ -93,11 +109,6 @@ function replaceRow(key, data) {
 		jmri.log("row not found for name='" + key + "'");
 	}
 }
-//handle the toggling of the next value for clicks
-var getNextState = function(type, value){
-	var nextValue = (value=='4' ? '2' : '4');
-	return nextValue;
-};
 
 /* convert each cell into more human-readable form */
 function displayCellValue(type, colName, value) {
