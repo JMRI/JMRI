@@ -476,6 +476,8 @@
             <li>The <strong>Shutdown</strong> preference has two options for ignoring special kinds
             of changes.  The first is to ignore fast clock changes, the second ignores the text and
             background color changes for sensors that have been changed to panel labels.</li>
+            <li>The startup action <strong>Open file</strong> has been renamed to
+            <strong>Load table content and panels</strong>.</li>
         </ul>
 
     <h3>Resources</h3>
