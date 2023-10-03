@@ -408,7 +408,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+	        <li>add option(s) for restoring block values, issue #12459</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
