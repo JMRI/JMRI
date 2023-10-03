@@ -59,7 +59,9 @@ public class CarManager extends RollingStockManager<Car>
      */
     @Override
     public List<Car> getByLocationList() {
-        return getByList(getByKernelList(), BY_LOCATION);
+        List<Car> byFinal = getByList(getByNumberList(), BY_FINAL_DEST);
+        List<Car> byKernel = getByList(byFinal, BY_KERNEL);
+        return getByList(byKernel, BY_LOCATION);
     }
 
     /**
@@ -139,14 +141,16 @@ public class CarManager extends RollingStockManager<Car>
             case BY_KERNEL:
                 return (c1, c2) -> (c1.getKernelName().compareToIgnoreCase(c2.getKernelName()));
             case BY_RWE:
-                return (c1, c2) -> ((c1.getReturnWhenEmptyDestinationName() + c1.getReturnWhenEmptyDestTrackName())
+                return (c1, c2) -> (c1.getReturnWhenEmptyDestinationName() + c1.getReturnWhenEmptyDestTrackName())
                         .compareToIgnoreCase(
-                                (c2.getReturnWhenEmptyDestinationName() + c2.getReturnWhenEmptyDestTrackName())));
+                                c2.getReturnWhenEmptyDestinationName() + c2.getReturnWhenEmptyDestTrackName());
             case BY_RWL:
-                return (c1, c2) -> (c1.getReturnWhenLoadedDestionAndTrackName()
-                        .compareToIgnoreCase(c2.getReturnWhenLoadedDestionAndTrackName()));
+                return (c1, c2) -> (c1.getReturnWhenLoadedDestinationName() + c1.getReturnWhenLoadedDestTrackName())
+                        .compareToIgnoreCase(
+                                c2.getReturnWhenLoadedDestinationName() + c2.getReturnWhenLoadedDestTrackName());
             case BY_FINAL_DEST:
-                return (c1, c2) -> (c1.getFinalDestinationName().compareToIgnoreCase(c2.getFinalDestinationName()));
+                return (c1, c2) -> (c1.getFinalDestinationName() + c1.getFinalDestinationTrackName())
+                        .compareToIgnoreCase(c2.getFinalDestinationName() + c2.getFinalDestinationTrackName());
             case BY_DIVISION:
                 return (c1, c2) -> (c1.getDivisionName().compareToIgnoreCase(c2.getDivisionName()));
             case BY_WAIT:

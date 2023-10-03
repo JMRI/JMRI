@@ -482,6 +482,9 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         if (!ignoreKernelCheckBox.isSelected() && kernelComboBox.getSelectedItem() != null) {
             if (kernelComboBox.getSelectedItem().equals(RollingStockManager.NONE)) {
                 car.setKernel(null);
+                if (!car.isPassenger()) {
+                    car.setBlocking(Car.DEFAULT_BLOCKING_ORDER);
+                }
             } else if (!car.getKernelName().equals(kernelComboBox.getSelectedItem())) {
                 car.setKernel(InstanceManager.getDefault(KernelManager.class).getKernelByName((String) kernelComboBox.getSelectedItem()));
                 // if car has FRED or is caboose make lead
