@@ -192,7 +192,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
     void setRestoreRule(RestoreRule newRule) {
         _restoreRule = newRule;
         InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                setProperty(getClassName(), "Restore Rule", newRule.toString());  // NOI18N
+                setProperty(getClassName(), "Restore Rule", newRule.name());  // NOI18N
     }
     
     /**
@@ -203,21 +203,12 @@ public class BlockTableAction extends AbstractTableAction<Block> {
     public static RestoreRule getRestoreRule() {
         RestoreRule rr = RestoreRule.RESTOREONLYIFALLOCCUPIED; //default to previous JMRI behavior 
         Object rro = InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                getProperty("jmri.jmrit.beantable.BlockTableAction", "Restore Rule");      // NOI18N
+                getProperty("jmri.jmrit.beantable.BlockTableAction", "Restore Rule");   // NOI18N
         if (rro != null) {
-            String cr = (String) rro;
-            switch (cr) {
-                case "RESTOREALWAYS":        // NOI18N
-                    rr = RestoreRule.RESTOREALWAYS;
-                    break;
-                case "RESTOREOCCUPIEDONLY":       // NOI18N
-                    rr = RestoreRule.RESTOREOCCUPIEDONLY;
-                    break;
-                case "RESTOREONLYIFALLOCCUPIED":        // NOI18N
-                    rr = RestoreRule.RESTOREONLYIFALLOCCUPIED;
-                    break;
-                default:
-                    log.warn("Invalid Block Restore Rule value '{}' ignored", cr);  // NOI18N
+            try {
+                rr = RestoreRule.valueOf(rro.toString());
+            } catch (IllegalArgumentException ignored) {
+                log.warn("Invalid Block Restore Rule value '{}' ignored", rro);  // NOI18N
             }
         }
         return rr;
