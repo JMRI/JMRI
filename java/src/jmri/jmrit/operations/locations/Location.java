@@ -152,6 +152,10 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public String getName() {
         return _name;
     }
+    
+    public String getSplitName() {
+        return TrainCommon.splitString(getName());
+    }
 
     /**
      * Makes a copy of this location.

@@ -12,7 +12,6 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -99,7 +98,7 @@ public class ExportTrainLineups extends XmlFile {
                 for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
                     fileOut.printRecord(train.getName(),
                             train.getLeadEngineRoadAndNumber(),
-                            TrainCommon.splitString(rl.getLocation().getName()),
+                            rl.getLocation().getSplitName(),
                             rl.getTrainDirectionString(),
                             train.getExpectedArrivalTime(rl),
                             train.getExpectedDepartureTime(rl),

@@ -887,7 +887,7 @@ public class TrainManager extends PropertyChangeSupport
                 continue; // no route for this train
             }
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
-                if (TrainCommon.splitString(rl.getName()).equals(TrainCommon.splitString(location.getName()))) {
+                if (rl.getSplitName().equals(location.getSplitName())) {
                     int expectedArrivalTime = train.getExpectedTravelTimeInMinutes(rl);
                     // is already serviced then "-1"
                     if (expectedArrivalTime == -1) {

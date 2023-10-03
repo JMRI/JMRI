@@ -321,6 +321,10 @@ public class Track extends PropertyChangeSupport {
     public String getName() {
         return _name;
     }
+    
+    public String getSplitName() {
+        return TrainCommon.splitString(getName());
+    }
 
     public Division getDivision() {
         return getLocation().getDivision();

@@ -277,7 +277,7 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
      */
     public boolean isLocationNameInRoute(String name) {
         for (RouteLocation rl : getLocationsBySequenceList()) {
-            if (TrainCommon.splitString(rl.getName()).equals(TrainCommon.splitString(name))) {
+            if (rl.getSplitName().equals(TrainCommon.splitString(name))) {
                 return true;
             }
         }

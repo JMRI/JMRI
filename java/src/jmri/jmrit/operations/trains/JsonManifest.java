@@ -82,7 +82,7 @@ public class JsonManifest extends TrainCommon {
         ArrayNode locations = this.mapper.createArrayNode();
         List<RouteLocation> route = train.getRoute().getLocationsBySequenceList();
         for (RouteLocation routeLocation : route) {
-            String locationName = splitString(routeLocation.getName());
+            String locationName = routeLocation.getSplitName();
             ObjectNode jsonLocation = this.mapper.createObjectNode();
             ObjectNode jsonCars = this.mapper.createObjectNode();
             jsonLocation.put(JSON.USERNAME, StringEscapeUtils.escapeHtml4(locationName));
