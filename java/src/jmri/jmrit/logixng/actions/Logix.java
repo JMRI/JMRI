@@ -16,7 +16,6 @@ public class Logix extends AbstractDigitalAction
         implements FemaleSocketListener {
 
     private ExecuteType _executeType = ExecuteType.ExecuteOnChange;
-    private boolean _executeOnChange = true;
     private boolean _lastExpressionResult = false;
     private String _expressionSocketSystemName;
     private String _actionSocketSystemName;
@@ -76,33 +75,6 @@ public class Logix extends AbstractDigitalAction
             _actionSocket.execute(hasChangedToTrue, hasChangedToFalse);
         }
         _lastExpressionResult = result;
-    }
-
-    /*.*
-     * Sets whenether actions should only be executed when the result of the
-     * evaluation of the expression changes, or if the actions should always
-     * be executed.
-     * <p>
-     * This is the counterpart of Conditional.setTriggerOnChange()
-     *
-     * @param b if true, execution is only done on change. if false, execution
-     *          is always done.
-     *./
-    public void setExecuteOnChange(boolean b) {
-        _executeOnChange = b;
-    }
-
-    /*.*
-     * Determines whenether actions should only be executed when the result of
-     * the evaluation of the expression changes, or if the actions should always
-     * be executed.
-     * <p>
-     * This is the counterpart of Conditional.getTriggerOnChange()
-     *
-     * @return true if execution is only done on change, false otherwise
-     *./
-    public boolean isExecuteOnChange() {
-        return _executeOnChange;
     }
 
     /** {@inheritDoc} */
