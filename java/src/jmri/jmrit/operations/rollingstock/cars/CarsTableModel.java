@@ -571,6 +571,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case MOVES_COLUMN:
             case WAIT_COLUMN:
                 return Integer.class;
+            case LAST_COLUMN:
+                return Object.class; // to disable sorting
             default:
                 return String.class;
         }
@@ -652,10 +654,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 return s;
             }
             case RWE_DESTINATION_COLUMN: {
-                String s = "";
-                if (car.getReturnWhenEmptyDestination() != null) {
-                    s = car.getReturnWhenEmptyDestinationName();
-                }
+                String s = car.getReturnWhenEmptyDestinationName();
                 if (car.getReturnWhenEmptyDestTrack() != null) {
                     s = s + " (" + car.getReturnWhenEmptyDestTrackName() + ")";
                 }
@@ -664,10 +663,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case RWE_LOAD_COLUMN:
                 return car.getReturnWhenEmptyLoadName();
             case RWL_DESTINATION_COLUMN: {
-                String s = "";
-                if (car.getReturnWhenLoadedDestination() != null) {
-                    s = car.getReturnWhenLoadedDestinationName();
-                }
+                String s = car.getReturnWhenLoadedDestinationName();
                 if (car.getReturnWhenLoadedDestTrack() != null) {
                     s = s + " (" + car.getReturnWhenLoadedDestTrackName() + ")";
                 }

@@ -390,6 +390,9 @@ public class CarEditFrame extends RollingStockEditFrame {
         if (groupComboBox.getSelectedItem() != null) {
             if (groupComboBox.getSelectedItem().equals(CarManager.NONE)) {
                 car.setKernel(null);
+                if (!car.isPassenger()) {
+                    car.setBlocking(Car.DEFAULT_BLOCKING_ORDER);
+                }
             } else if (!car.getKernelName().equals(groupComboBox.getSelectedItem())) {
                 car.setKernel(InstanceManager.getDefault(KernelManager.class).getKernelByName((String) groupComboBox.getSelectedItem()));
                 // if car has FRED or caboose make lead
