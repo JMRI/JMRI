@@ -166,7 +166,7 @@
       <h5>Audio<span class="since">since 5.5.4</span></h5>
 
       <p>Returns true if the selected audio object has the indicated state.  The drop-down list
-      contains the defined audio listeners, audio buffers and audio sources.</p>
+      contains the defined audio listeners and audio sources.</p>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter6/digital_expression_audio.png"><img src=
