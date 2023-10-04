@@ -30201,7 +30201,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </IfThenElse>
-    <Logix class="jmri.jmrit.logixng.actions.configurexml.LogixXml">
+    <Logix class="jmri.jmrit.logixng.actions.configurexml.LogixXml" executeType="ExecuteOnChange">
       <systemName>IQDA:AUTO:0199</systemName>
       <ExpressionSocket>
         <socketName>qbmi1t52gn</socketName>
@@ -30281,7 +30281,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </Logix>
-    <Logix class="jmri.jmrit.logixng.actions.configurexml.LogixXml">
+    <Logix class="jmri.jmrit.logixng.actions.configurexml.LogixXml" executeType="ExecuteOnChange">
       <systemName>IQDA:AUTO:0200</systemName>
       <comment>A comment</comment>
       <ExpressionSocket>

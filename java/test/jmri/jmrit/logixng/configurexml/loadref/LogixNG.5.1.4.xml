@@ -32483,7 +32483,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </AbstractMaleSocket>
       </MaleSocket>
     </IfThenElse>
-    <Logix class="jmri.jmrit.logixng.actions.configurexml.LogixXml">
+    <Logix class="jmri.jmrit.logixng.actions.configurexml.LogixXml" executeType="ExecuteOnChange">
       <systemName>IQDA:AUTO:0221</systemName>
       <ExpressionSocket>
         <socketName>tca4vbi7ih</socketName>
@@ -32563,7 +32563,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </AbstractMaleSocket>
       </MaleSocket>
     </Logix>
-    <Logix class="jmri.jmrit.logixng.actions.configurexml.LogixXml">
+    <Logix class="jmri.jmrit.logixng.actions.configurexml.LogixXml" executeType="ExecuteOnChange">
       <systemName>IQDA:AUTO:0222</systemName>
       <comment>A comment</comment>
       <ExpressionSocket>

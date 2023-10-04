@@ -65,7 +65,7 @@ public class DigitalBooleanOnChangeTest extends AbstractDigitalBooleanActionTest
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Logix ::: Use default%n" +
+                "         Logix. Execute Actions on change of state only ::: Use default%n" +
                 "            ? E%n" +
                 "               Sensor '' is Active ::: Use default%n" +
                 "            !b A%n" +

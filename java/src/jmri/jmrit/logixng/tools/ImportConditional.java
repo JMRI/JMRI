@@ -79,7 +79,9 @@ public class ImportConditional {
 
         Logix logix = new Logix(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
 
-        logix.setExecuteOnChange(_conditional.getTriggerOnChange());
+        logix.setExecuteType(_conditional.getTriggerOnChange()
+                ? Logix.ExecuteType.ExecuteOnChange
+                : Logix.ExecuteType.ExecuteAlways);
 
         Conditional.AntecedentOperator ao = _conditional.getLogicType();
         String antecedentExpression = _conditional.getAntecedentExpression();

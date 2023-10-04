@@ -46,7 +46,7 @@ public class LogixTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Logix ::: Use default%n" +
+                "Logix. Execute Actions on change of state only ::: Use default%n" +
                 "   ? E%n" +
                 "      Sensor '' is Active ::: Use default%n" +
                 "   !b A%n" +
@@ -61,7 +61,7 @@ public class LogixTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Logix ::: Use default%n" +
+                "         Logix. Execute Actions on change of state only ::: Use default%n" +
                 "            ? E%n" +
                 "               Sensor '' is Active ::: Use default%n" +
                 "            !b A%n" +
@@ -273,7 +273,7 @@ public class LogixTest extends AbstractDigitalActionTestBase {
         DigitalActionBean a1 = new Logix("IQDA321", null);
         Assert.assertEquals("strings are equal", "Logix", a1.getShortDescription());
         DigitalActionBean a2 = new Logix("IQDA321", null);
-        Assert.assertEquals("strings are equal", "Logix", a2.getLongDescription());
+        Assert.assertEquals("strings are equal", "Logix. Execute Actions on change of state only", a2.getLongDescription());
     }
 
     @Test

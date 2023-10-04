@@ -21637,7 +21637,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </IfThenElse>
-    <Logix class="jmri.jmrit.logixng.actions.configurexml.LogixXml">
+    <Logix class="jmri.jmrit.logixng.actions.configurexml.LogixXml" executeType="ExecuteOnChange">
       <systemName>IQDA:AUTO:0161</systemName>
       <ExpressionSocket>
         <socketName>stokvn5ays</socketName>
@@ -21702,7 +21702,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </Logix>
-    <Logix class="jmri.jmrit.logixng.actions.configurexml.LogixXml">
+    <Logix class="jmri.jmrit.logixng.actions.configurexml.LogixXml" executeType="ExecuteOnChange">
       <systemName>IQDA:AUTO:0162</systemName>
       <comment>A comment</comment>
       <ExpressionSocket>

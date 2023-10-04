@@ -2659,6 +2659,13 @@ public class CreateLogixNGTreeScaffold {
 
         logix = new jmri.jmrit.logixng.actions.Logix(digitalActionManager.getAutoSystemName(), null);
         logix.setComment("A comment");
+        logix.setExecuteType(jmri.jmrit.logixng.actions.Logix.ExecuteType.ExecuteOnChange);
+        maleSocket = digitalActionManager.registerAction(logix);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        logix = new jmri.jmrit.logixng.actions.Logix(digitalActionManager.getAutoSystemName(), null);
+        logix.setComment("A comment");
+        logix.setExecuteType(jmri.jmrit.logixng.actions.Logix.ExecuteType.ExecuteAlways);
         maleSocket = digitalActionManager.registerAction(logix);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
