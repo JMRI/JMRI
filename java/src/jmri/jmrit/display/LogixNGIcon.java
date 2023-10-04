@@ -1,10 +1,13 @@
 package jmri.jmrit.display;
 
+import java.awt.event.ActionEvent;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import javax.swing.AbstractAction;
+import javax.swing.JPopupMenu;
 
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logixng.LogixNG;
@@ -20,25 +23,31 @@ public class LogixNGIcon extends PositionableLabel {
     public static final IdentityManager IDENTITY_MANAGER = new IdentityManager();
 
     private final int _identity;
+    private NamedIcon _originalIcon = new NamedIcon("resources/icons/logixng/logixng_icon.gif", "resources/icons/logixng/logixng_icon.gif");
+    private String _originalText = Bundle.getMessage("LogixNGIcon_Text");
 
     public LogixNGIcon(String s, @Nonnull Editor editor) {
         super(s, editor);
         _identity = IDENTITY_MANAGER.getIdentity(this);
+        _originalText = s;
     }
 
     public LogixNGIcon(int identity, String s, @Nonnull Editor editor) {
         super(s, editor);
         _identity = IDENTITY_MANAGER.getIdentity(identity, this);
+        _originalText = s;
     }
 
     public LogixNGIcon(@CheckForNull NamedIcon s, @Nonnull Editor editor) {
         super(s, editor);
         _identity = IDENTITY_MANAGER.getIdentity(this);
+        _originalIcon = _namedIcon;
     }
 
     public LogixNGIcon(int identity, @CheckForNull NamedIcon s, @Nonnull Editor editor) {
         super(s, editor);
         _identity = IDENTITY_MANAGER.getIdentity(identity, this);
+        _originalIcon = _namedIcon;
 
         // Please retain the line below. It's used to create the resources/icons/logixng/logixng_icon.gif icon
         // createLogixNGIconImage();
@@ -46,6 +55,14 @@ public class LogixNGIcon extends PositionableLabel {
 
     public int getIdentity() {
         return _identity;
+    }
+
+    @Override
+    protected void editIcon() {
+        super.editIcon();
+        // If the icon is changed, we must remember that in case the user
+        // switches between icon -> text -> icon
+        _originalIcon = _namedIcon;
     }
 
     @Override
@@ -93,6 +110,57 @@ public class LogixNGIcon extends PositionableLabel {
                 logixNG.getConditionalNG(i).execute();
             }
         }
+    }
+
+    private void changeLogixNGIconType() {
+        _unRotatedText = null;
+        if (isIcon()) {
+            _icon = false;
+            _text = true;
+            setText(_originalText);
+            setIcon(null);
+            setOpaque(true);
+        } else if (isText()) {
+            _icon = true;
+            if (getText() != null) {
+                _originalText = getText();
+            }
+            _text = false;
+            setText(null);
+            setUnRotatedText(null);
+            setOpaque(false);
+            setIcon(_originalIcon);
+        }
+        int deg = getDegrees();
+        rotate(deg);
+    }
+
+    /**
+     * Pop-up just displays the sensor name.
+     *
+     * @param popup the menu to display
+     * @return always true
+     */
+    @Override
+    public boolean showPopUp(JPopupMenu popup) {
+        if (isEditable()) {
+            if (isIcon()) {
+                popup.add(new AbstractAction(Bundle.getMessage("ChangeToText")) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        changeLogixNGIconType();
+                    }
+                });
+            } else {
+                popup.add(new AbstractAction(Bundle.getMessage("ChangeToIcon")) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        changeLogixNGIconType();
+                    }
+                });
+            }
+        }
+        return true;
     }
 
 
