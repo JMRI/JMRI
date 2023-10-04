@@ -10,6 +10,9 @@ import javax
 import org.slf4j.LoggerFactory
 import java.awt.Font
 
+dels = 0
+adds = 0
+
 def removeBlockContentIcons(panel):
     deleteList = []     # Prevent concurrent modification
     icons = panel.getBlockContentsLabelList()
@@ -21,6 +24,7 @@ def removeBlockContentIcons(panel):
         panel.removeFromContents(item)
 
 def removeSensorIcons(panel):
+    global dels
     blockSensors = []
     for block in blocks.getNamedBeanSet():
         sensor = block.getSensor()
@@ -36,6 +40,7 @@ def removeSensorIcons(panel):
 
     for item in deleteList:
         panel.removeFromContents(item)
+        dels += 1
 
 # ************************************************************
 # find and store the x,y to place a sensorIcon for each Block
@@ -75,6 +80,7 @@ def addOccupancyIconsAndLabels(panel):
 # small icon
 # **************************************************
 def addSmallIcon(panel, sensorName, x, y):
+    global adds
     icn = jmri.jmrit.display.SensorIcon(panel)
     icn.setIcon("SensorStateActive", jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/tracksegments/circuit-occupied.gif", "active"));
     icn.setIcon("SensorStateInactive", jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/tracksegments/circuit-empty.gif", "inactive"));
@@ -88,6 +94,7 @@ def addSmallIcon(panel, sensorName, x, y):
 
     # Add the icon to the layout editor panel
     panel.putSensor(icn)
+    adds += 1
 
 # **************************************************
 # block content label
@@ -120,4 +127,4 @@ for panel in layoutPanels:
     getBlockCenterPoints(panel)
     addOccupancyIconsAndLabels(panel)
 
-log.info( "AddOccupancyIconsToPanel.py completed" )
+log.info("AddOccupancyIconsToPanel.py completed, {} icons removed, {} icons added.",dels,adds)
