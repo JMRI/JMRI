@@ -210,7 +210,7 @@
       <div>
         <p><em>Start Up</em> preferences allow windows and files to be opened, scripts to be run,
         and additional buttons to be placed on the main window when the application starts.<br>
-        A very common use is an Open File action (see below) to automatically load your last stored
+        A very common use is a load file action (see below) to automatically load your last stored
         <a href="../jmri/jmrit/display/PanelMenuHelp.shtml">layout configuration file</a> at
         startup, so all your turnouts, sensors, panels etc. are available again.</p>
 
@@ -234,11 +234,10 @@
 
           <dd>Add extra buttons to the main PanelPro window to start scripts.</dd>
 
-          <dt>Open file...</dt>
+          <dt>Load table content and panels...</dt>
 
           <dd>Automatically load a PanelPro xml data file or Configuration file when the program
-          starts up. You can load as many files as you'd like; each will be completely loaded
-          before the next is started.</dd>
+          starts up.</dd>
 
           <dt>Pause...</dt>
 
