@@ -3,6 +3,8 @@ package jmri.jmrit.beantable;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -125,6 +127,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                 }
             }
         }
+        _restoreRule = getRestoreRule();
 
         JMenu pathMenu = new JMenu(Bundle.getMessage("MenuPaths"));
         JMenuItem item = new JMenuItem(Bundle.getMessage("MenuItemDeletePaths"));
@@ -141,6 +144,74 @@ public class BlockTableAction extends AbstractTableAction<Block> {
             ((BlockTableDataModel)m).setDefaultSpeeds(finalF);
         });
         menuBar.add(speedMenu, pos + offset + 1); // put it to the right of the Paths menu
+
+        JMenu valuesMenu = new JMenu(Bundle.getMessage("ValuesMenu"));
+        ButtonGroup valuesButtonGroup = new ButtonGroup();
+        JRadioButtonMenuItem jrbmi = new JRadioButtonMenuItem(Bundle.getMessage("ValuesMenuRestoreAlways"));  // NOI18N
+        jrbmi.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                setRestoreRule(RestoreRule.RESTOREALWAYS);
+            }
+        });
+        valuesButtonGroup.add(jrbmi);
+        valuesMenu.add(jrbmi);
+        jrbmi.setSelected(_restoreRule == RestoreRule.RESTOREALWAYS);
+
+        jrbmi = new JRadioButtonMenuItem(Bundle.getMessage("ValuesMenuRestoreOccupiedOnly"));  // NOI18N
+        jrbmi.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                setRestoreRule(RestoreRule.RESTOREOCCUPIEDONLY);
+            }
+        });
+        valuesButtonGroup.add(jrbmi);
+        valuesMenu.add(jrbmi);
+        jrbmi.setSelected(_restoreRule == RestoreRule.RESTOREOCCUPIEDONLY);
+
+        jrbmi = new JRadioButtonMenuItem(Bundle.getMessage("ValuesMenuRestoreOnlyIfAllOccupied"));  // NOI18N
+        jrbmi.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                setRestoreRule(RestoreRule.RESTOREONLYIFALLOCCUPIED);
+            }
+        });
+        valuesButtonGroup.add(jrbmi);
+        valuesMenu.add(jrbmi);
+        jrbmi.setSelected(_restoreRule == RestoreRule.RESTOREONLYIFALLOCCUPIED);
+
+        menuBar.add(valuesMenu, pos + offset + 2); // put it to the right of the Speed menu
+    
+    }
+
+    /**
+     * Save the restore rule selection. Called by menu item change events.
+     *
+     * @param newRule The RestoreRule enum constant
+     */
+    void setRestoreRule(RestoreRule newRule) {
+        _restoreRule = newRule;
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                setProperty(getClassName(), "Restore Rule", newRule.name());  // NOI18N
+    }
+    
+    /**
+     * Retrieve the restore rule selection from user preferences
+     *
+     * @return restoreRule 
+     */
+    public static RestoreRule getRestoreRule() {
+        RestoreRule rr = RestoreRule.RESTOREONLYIFALLOCCUPIED; //default to previous JMRI behavior 
+        Object rro = InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                getProperty("jmri.jmrit.beantable.BlockTableAction", "Restore Rule");   // NOI18N
+        if (rro != null) {
+            try {
+                rr = RestoreRule.valueOf(rro.toString());
+            } catch (IllegalArgumentException ignored) {
+                log.warn("Invalid Block Restore Rule value '{}' ignored", rro);  // NOI18N
+            }
+        }
+        return rr;
     }
     
     private void metricSelectionChanged(ActionEvent e) {
@@ -166,6 +237,16 @@ public class BlockTableAction extends AbstractTableAction<Block> {
     JCheckBox _autoSystemNameCheckBox = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     JLabel statusBar = new JLabel(Bundle.getMessage("AddBeanStatusEnter"), JLabel.LEADING);
     private JButton newButton = null;
+
+    /**
+     * Rules for restoring block values     *
+     */
+    public enum RestoreRule {
+        RESTOREALWAYS,
+        RESTOREOCCUPIEDONLY,
+        RESTOREONLYIFALLOCCUPIED;
+    }
+    RestoreRule _restoreRule;
 
     @Override
     protected void addPressed(ActionEvent e) {
