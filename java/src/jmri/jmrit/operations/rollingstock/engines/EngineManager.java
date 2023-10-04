@@ -1,16 +1,12 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
 
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.InstanceManagerAutoInitialize;
+import jmri.*;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
@@ -75,9 +71,9 @@ public class EngineManager extends RollingStockManager<Engine>
     }
 
     // The special sort options for engines
-    private static final int BY_MODEL = 4;
-    private static final int BY_CONSIST = 5;
-    private static final int BY_HP = 13;
+    private static final int BY_MODEL = 30;
+    private static final int BY_CONSIST = 31;
+    private static final int BY_HP = 32;
 
     // add engine options to sort comparator
     @Override

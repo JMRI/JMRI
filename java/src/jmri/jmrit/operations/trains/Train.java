@@ -399,8 +399,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     foundRouteLocation = true;
                 }
                 if (foundRouteLocation) {
-                    if (TrainCommon.splitString(rl.getName())
-                            .equals(TrainCommon.splitString(routeLocation.getName()))) {
+                    if (rl.getSplitName()
+                            .equals(routeLocation.getSplitName())) {
                         minutes = minutes + getWorkTimeAtLocation(rl);
                     } else {
                         break; // done
@@ -469,7 +469,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 // add travel time if new location
                 RouteLocation next = routeList.get(i + 1);
                 if (next != null &&
-                        !TrainCommon.splitString(rl.getName()).equals(TrainCommon.splitString(next.getName()))) {
+                        !rl.getSplitName().equals(next.getSplitName())) {
                     minutes += Setup.getTravelTime();
                 }
                 // don't count work if there's a departure time
@@ -922,8 +922,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         Route route = getRoute();
         if (route != null) {
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
-                String name = TrainCommon.splitString(rl.getName());
-                if (!departureName.equals(name)) {
+                if (!departureName.equals(rl.getSplitName())) {
                     return false; // not a local switcher
                 }
             }
@@ -1798,9 +1797,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 // ignore send to terminal if a local move
                 if (isSendCarsToTerminalEnabled() &&
                         !car.isLocalMove() &&
-                        !TrainCommon.splitString(car.getLocationName())
+                        !car.getSplitLocationName()
                                 .equals(TrainCommon.splitString(getTrainDepartsName())) &&
-                        !TrainCommon.splitString(car.getDestinationName())
+                        !car.getSplitDestinationName()
                                 .equals(TrainCommon.splitString(getTrainTerminatesName()))) {
                     if (debugFlag) {
                         log.debug("option send cars to terminal is enabled");
@@ -1847,9 +1846,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 // Can cars travel from origin to terminal?
                 if (!isAllowThroughCarsEnabled() &&
                         TrainCommon.splitString(getTrainDepartsName())
-                                .equals(TrainCommon.splitString(rLoc.getName())) &&
+                                .equals(rLoc.getSplitName()) &&
                         TrainCommon.splitString(getTrainTerminatesName())
-                                .equals(TrainCommon.splitString(rldest.getName())) &&
+                                .equals(rldest.getSplitName()) &&
                         !TrainCommon.splitString(getTrainDepartsName())
                                 .equals(TrainCommon.splitString(getTrainTerminatesName())) &&
                         !isLocalSwitcher() &&

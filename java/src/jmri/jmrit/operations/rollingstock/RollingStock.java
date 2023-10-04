@@ -17,8 +17,7 @@ import jmri.jmrit.operations.locations.divisions.DivisionManager;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.*;
 
 /**
  * Represents rolling stock, both powered (locomotives) and not powered (cars)
@@ -353,6 +352,10 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
         return NONE;
     }
+    
+    public String getSplitLocationName() {
+        return TrainCommon.splitString(getLocationName());
+    }
 
     /**
      * Get rolling stock's location id
@@ -394,6 +397,10 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             return getTrack().getName();
         }
         return NONE;
+    }
+    
+    public String getSplitTrackName() {
+        return TrainCommon.splitString(getTrackName());
     }
     
     public String getTrackType() {
@@ -641,6 +648,10 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
         return NONE;
     }
+    
+    public String getSplitDestinationName() {
+        return TrainCommon.splitString(getDestinationName());
+    }
 
     public String getDestinationId() {
         if (getDestination() != null) {
@@ -673,6 +684,10 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             return getDestinationTrack().getName();
         }
         return NONE;
+    }
+    
+    public String getSplitDestinationTrackName() {
+        return TrainCommon.splitString(getDestinationTrackName());
     }
 
     public String getDestinationTrackId() {

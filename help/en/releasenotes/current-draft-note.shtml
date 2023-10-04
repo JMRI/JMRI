@@ -428,6 +428,10 @@
           <li>A new tool <strong>Where Used</strong> has been added to LogixNG.
           It shows where in the LogixNG tree an item is used. The tool is found
           on menu item <strong>Tools &rArr; LogixNG &rArr; Where Used</strong>.</li>
+          <li>The action <strong>Audio</strong> and the expression <strong>Audio</strong>
+          no longer let the user select an Audio buffer when edition the action/expression.
+          LogixNG can only act on or listen to Audio sources and the Audio listener so there
+          is no point in selecting an audio buffer for LogixNG.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -476,6 +480,8 @@
             <li>The <strong>Shutdown</strong> preference has two options for ignoring special kinds
             of changes.  The first is to ignore fast clock changes, the second ignores the text and
             background color changes for sensors that have been changed to panel labels.</li>
+            <li>The startup action <strong>Open file</strong> has been renamed to
+            <strong>Load table content and panels</strong>.</li>
         </ul>
 
     <h3>Resources</h3>

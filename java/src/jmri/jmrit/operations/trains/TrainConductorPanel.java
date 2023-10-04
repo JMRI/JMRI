@@ -144,7 +144,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                     loadRouteLocationComment(rl);
 
                     textLocationName.setText(trainManager.isShowLocationHyphenNameEnabled() ? rl.getLocation().getName()
-                            : TrainCommon.splitString(rl.getLocation().getName()));
+                            : rl.getLocation().getSplitName());
                     pTrainDepartureTime.setVisible(_train.isShowArrivalAndDepartureTimesEnabled() &&
                             !rl.getDepartureTime().equals(RouteLocation.NONE));
                     textTrainDepartureTime.setText(rl.getFormatedDepartureTime());
