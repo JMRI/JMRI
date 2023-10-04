@@ -3,7 +3,6 @@ package jmri.jmrit.operations.trains.tools;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
-import java.text.MessageFormat;
 
 import javax.swing.AbstractAction;
 
@@ -58,8 +57,8 @@ public class PrintTrainAction extends AbstractAction {
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(new Frame(), MessageFormat.format(Bundle.getMessage("TitleTrain"),
-                    new Object[]{train.getName()}), Control.reportFontSize, .5, .5, .5, .5, isPreview);
+            writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleTrain",
+                    train.getName()), Control.reportFontSize, .5, .5, .5, .5, isPreview);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;

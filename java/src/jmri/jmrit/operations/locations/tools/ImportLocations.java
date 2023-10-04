@@ -1,7 +1,6 @@
 package jmri.jmrit.operations.locations.tools;
 
 import java.io.*;
-import java.text.MessageFormat;
 import java.util.Locale;
 
 import jmri.InstanceManager;
@@ -326,10 +325,10 @@ public class ImportLocations extends ImportRollingStock {
             }
         }
         if (importOkay) {
-            JmriJOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportTracksAdded"), new Object[]{tracksAdded}),
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ImportTracksAdded", tracksAdded),
                 Bundle.getMessage("SuccessfulImport"), JmriJOptionPane.INFORMATION_MESSAGE);
         } else {
-            JmriJOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportTracksAdded"), new Object[]{tracksAdded}),
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ImportTracksAdded", tracksAdded),
                 Bundle.getMessage("ImportFailed"), JmriJOptionPane.ERROR_MESSAGE);
         }
         fstatus.dispose();

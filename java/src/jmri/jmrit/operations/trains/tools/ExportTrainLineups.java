@@ -2,7 +2,6 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.text.MessageFormat;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -121,16 +120,16 @@ public class ExportTrainLineups extends XmlFile {
             fileOut.close();
             log.info("Exported {} trains to file {}", count, defaultOperationsFilename());
             JmriJOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("ExportedTrainsToFile"), new Object[]{
-                            count, defaultOperationsFilename()}),
+                    Bundle.getMessage("ExportedTrainsToFile",
+                            count, defaultOperationsFilename()),
                     Bundle.getMessage("ExportComplete"),
                     JmriJOptionPane.INFORMATION_MESSAGE);
 
         } catch (IOException e) {
             log.error("Can not open export trains CSV file: {}", file.getName());
             JmriJOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("ExportedTrainsToFile"), new Object[]{
-                            0, defaultOperationsFilename()}),
+                    Bundle.getMessage("ExportedTrainsToFile",
+                            0, defaultOperationsFilename()),
                     Bundle.getMessage("ExportFailed"),
                     JmriJOptionPane.ERROR_MESSAGE);
         }

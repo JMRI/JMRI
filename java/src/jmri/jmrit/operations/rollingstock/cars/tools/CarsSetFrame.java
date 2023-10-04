@@ -1,13 +1,11 @@
 package jmri.jmrit.operations.rollingstock.cars.tools;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JTable;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -137,8 +135,8 @@ public class CarsSetFrame extends CarSetFrame {
             return false;
         } else if (cars.get(0) != _car) {
             log.debug("Default car isn't the first one selected");
-            if (JmriJOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
-                    .getMessage("doYouWantToChange"), new Object[]{cars.get(0).toString()}), Bundle
+            if (JmriJOptionPane.showConfirmDialog(this, Bundle
+                    .getMessage("doYouWantToChange", cars.get(0).toString()), Bundle
                     .getMessage("changeDefaultCar"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                 super.load(cars.get(0)); // new default car
                 return false; // done, don't modify any of the cars selected

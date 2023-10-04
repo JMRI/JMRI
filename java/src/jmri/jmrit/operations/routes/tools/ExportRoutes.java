@@ -2,7 +2,6 @@ package jmri.jmrit.operations.routes.tools;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.text.MessageFormat;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -89,8 +88,8 @@ public class ExportRoutes extends XmlFile {
             }
 
             JmriJOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("ExportedRoutesToFile"),
-                            new Object[]{count, defaultOperationsFilename()}),
+                    Bundle.getMessage("ExportedRoutesToFile",
+                            count, defaultOperationsFilename()),
                     Bundle.getMessage("ExportComplete"), JmriJOptionPane.INFORMATION_MESSAGE);
 
             fileOut.flush();
@@ -98,8 +97,8 @@ public class ExportRoutes extends XmlFile {
         } catch (IOException e) {
             log.error("Can not open export Routes CSV file: {}", file.getName());
             JmriJOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("ExportedRoutesToFile"),
-                            new Object[]{0, defaultOperationsFilename()}),
+                    Bundle.getMessage("ExportedRoutesToFile",
+                            0, defaultOperationsFilename()),
                     Bundle.getMessage("ExportFailed"), JmriJOptionPane.ERROR_MESSAGE);
         }
     }

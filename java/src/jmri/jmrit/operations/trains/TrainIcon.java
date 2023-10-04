@@ -2,12 +2,9 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.Point;
 import java.awt.event.ActionEvent;
-import java.text.MessageFormat;
 import java.util.List;
 
-import javax.swing.AbstractAction;
-import javax.swing.JMenu;
-import javax.swing.JPopupMenu;
+import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;
@@ -206,9 +203,9 @@ public class TrainIcon extends LocoIcon {
                         if (nextRl == _rl && i == r + 1) {
                             _train.move();
                         } else if (nextRl == _rl) {
-                            if (JmriJOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
-                                    .getMessage("MoveTrainTo"), new Object[]{_rl.getName()}), MessageFormat.format(
-                                    Bundle.getMessage("MoveTrain"), new Object[]{_train.getIconName()}),
+                            if (JmriJOptionPane.showConfirmDialog(null, Bundle
+                                    .getMessage("MoveTrainTo", _rl.getName()), 
+                                    Bundle.getMessage("MoveTrain", _train.getIconName()),
                                     JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                                 while (_train.getCurrentRouteLocation() != _rl) {
                                     _train.move();
@@ -238,9 +235,9 @@ public class TrainIcon extends LocoIcon {
                 log.debug("Next location ({}), X={} Y={}", next.getName(), nextPoint.x, nextPoint.y);
                 if (Math.abs(getX() - nextPoint.x) < next.getTrainIconRangeX() && Math.abs(getY() - nextPoint.y) < next.getTrainIconRangeY()) {
                     log.debug("Train icon ({}) within range of ({})", _train.getName(), next.getName());
-                    if (JmriJOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("MoveTrainTo"),
-                            new Object[]{next.getName()}), MessageFormat.format(Bundle.getMessage("MoveTrain"),
-                            new Object[]{_train.getIconName()}), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
+                    if (JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("MoveTrainTo",
+                            next.getName()), Bundle.getMessage("MoveTrain",
+                            _train.getIconName()), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                         _train.move();
                     }
                 }

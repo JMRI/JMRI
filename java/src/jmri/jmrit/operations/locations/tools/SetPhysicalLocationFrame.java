@@ -2,7 +2,6 @@ package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 
 import javax.swing.*;
 
@@ -129,8 +128,8 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
             return;
         }
         if (ae.getSource() == saveButton) {
-            int value = JmriJOptionPane.showConfirmDialog(this, MessageFormat.format(
-                    Bundle.getMessage("UpdatePhysicalLocation"), new Object[]{l.getName()}),
+            int value = JmriJOptionPane.showConfirmDialog(this, 
+                    Bundle.getMessage("UpdatePhysicalLocation", l.getName()),
                     Bundle.getMessage("UpdateDefaults"), JmriJOptionPane.YES_NO_OPTION);
             if (value == JmriJOptionPane.YES_OPTION) {
                 saveSpinnerValues(l);

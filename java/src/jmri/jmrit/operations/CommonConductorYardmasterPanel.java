@@ -264,7 +264,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
 
     private void addCarToTrain() {
         if (JmriJOptionPane.showConfirmDialog(this,
-                MessageFormat.format(Bundle.getMessage("WantAddCarsToTrain?"), new Object[] { _train.getName() }),
+                Bundle.getMessage("WantAddCarsToTrain?", _train.getName()),
                 Bundle.getMessage("AddCarsToTrain?"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
             new CarsTableFrame(false, _train.getCurrentRouteLocation().getName(), null);
         }
@@ -588,8 +588,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                                 text = trainCommon.pickupUtilityCars(carList, car, isManifest,
                                         !TrainCommon.IS_TWO_COLUMN_TRACK);
                                 if (text == null) {
-                                    continue; // this car type has already been
-                                              // processed
+                                    continue; // this car type has already been processed
                                 }
                             } else {
                                 text = trainCommon.pickupCar(car, isManifest, !TrainCommon.IS_TWO_COLUMN_TRACK);

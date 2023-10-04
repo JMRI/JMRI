@@ -2,7 +2,6 @@ package jmri.jmrit.operations.automation;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 
 import javax.swing.*;
 
@@ -121,9 +120,9 @@ public class AutomationCopyFrame extends OperationsFrame {
             return false;
         }
         if (automationNameTextField.getText().length() > Control.max_len_string_automation_name) {
-            JmriJOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("AutomationNameLengthMax"),
-                    new Object[]{Control.max_len_string_automation_name}), Bundle
-                            .getMessage("CanNotCopyAutomation"), JmriJOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("AutomationNameLengthMax", Control.max_len_string_automation_name),
+                    Bundle.getMessage("CanNotCopyAutomation"), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;

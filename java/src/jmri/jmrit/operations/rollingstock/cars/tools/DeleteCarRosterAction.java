@@ -1,14 +1,11 @@
 package jmri.jmrit.operations.rollingstock.cars.tools;
 
 import java.awt.event.ActionEvent;
-import java.text.MessageFormat;
 
 import javax.swing.AbstractAction;
 
 import jmri.InstanceManager;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarsTableFrame;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -25,12 +22,12 @@ public class DeleteCarRosterAction extends AbstractAction {
         super(Bundle.getMessage("MenuItemDelete"));
         // delete all cars on a track or location
         if (carsTableFrame.carsTableModel.trackName != null) {
-            String actionName = MessageFormat.format(Bundle.getMessage("MenuDeleteCarsTrack"),
-                    new Object[] { carsTableFrame.carsTableModel.trackName });
+            String actionName = Bundle.getMessage("MenuDeleteCarsTrack",
+                    carsTableFrame.carsTableModel.trackName);
             putValue(NAME, actionName);
         } else if (carsTableFrame.carsTableModel.locationName != null) {
-            String actionName = MessageFormat.format(Bundle.getMessage("MenuDeleteCarsLocation"),
-                    new Object[] { carsTableFrame.carsTableModel.locationName });
+            String actionName = Bundle.getMessage("MenuDeleteCarsLocation",
+                    carsTableFrame.carsTableModel.locationName);
             putValue(NAME, actionName);
         }
         _carsTableFrame = carsTableFrame;
@@ -46,11 +43,11 @@ public class DeleteCarRosterAction extends AbstractAction {
             }
         } else {
             // delete all cars on track or location
-            String message = MessageFormat.format(Bundle.getMessage("carDeleteCarsTrack"),
-                    new Object[] { _carsTableFrame.carsTableModel.trackName });
+            String message = Bundle.getMessage("carDeleteCarsTrack",
+                    _carsTableFrame.carsTableModel.trackName);
             if (_carsTableFrame.carsTableModel.trackName == null) {
-                message = MessageFormat.format(Bundle.getMessage("carDeleteCarsLocation"),
-                        new Object[] { _carsTableFrame.carsTableModel.locationName });
+                message = Bundle.getMessage("carDeleteCarsLocation",
+                        _carsTableFrame.carsTableModel.locationName);
             }
             if (JmriJOptionPane.showConfirmDialog(null, message,
                     Bundle.getMessage("carDeleteAll"), JmriJOptionPane.OK_CANCEL_OPTION) == JmriJOptionPane.OK_OPTION) {

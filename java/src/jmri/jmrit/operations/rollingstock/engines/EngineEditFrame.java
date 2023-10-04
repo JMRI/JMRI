@@ -1,7 +1,6 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -9,9 +8,7 @@ import javax.swing.*;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
-import jmri.jmrit.operations.rollingstock.RollingStockEditFrame;
+import jmri.jmrit.operations.rollingstock.*;
 import jmri.jmrit.operations.rollingstock.engines.tools.EngineAttributeEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.swing.JmriJOptionPane;
@@ -64,10 +61,10 @@ public class EngineEditFrame extends RollingStockEditFrame {
 
         // load tool tips
         builtTextField.setToolTipText(Bundle.getMessage("TipBuildDate"));
-        editModelButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
-                new Object[] { Bundle.getMessage("Model").toLowerCase() }));
-        editGroupButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
-                new Object[] { Bundle.getMessage("Consist").toLowerCase() }));
+        editModelButton.setToolTipText(Bundle.getMessage("TipAddDeleteReplace",
+                Bundle.getMessage("Model").toLowerCase()));
+        editGroupButton.setToolTipText(Bundle.getMessage("TipAddDeleteReplace",
+                Bundle.getMessage("Consist").toLowerCase()));
         bUnitCheckBox.setToolTipText(Bundle.getMessage("TipBoosterUnit"));
 
         deleteButton.setToolTipText(Bundle.getMessage("TipDeleteButton"));
@@ -95,7 +92,7 @@ public class EngineEditFrame extends RollingStockEditFrame {
         pPower.add(pTe);
         pPower.setVisible(true);
 
-        teTextField.setToolTipText(MessageFormat.format(Bundle.getMessage("TipConvertTE-HP"), new Object[] { SPEED }));
+        teTextField.setToolTipText(Bundle.getMessage("TipConvertTE-HP", SPEED));
 
         pGroup.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Consist")));
 
@@ -126,8 +123,8 @@ public class EngineEditFrame extends RollingStockEditFrame {
         setTitle(Bundle.getMessage("TitleEngineEdit"));
         
         if (!engineModels.containsName(engine.getModel())) {
-            String msg = MessageFormat.format(Bundle.getMessage("modelNameNotExist"),
-                    new Object[] { engine.getModel() });
+            String msg = Bundle.getMessage("modelNameNotExist",
+                    engine.getModel());
             if (JmriJOptionPane.showConfirmDialog(this, msg, Bundle.getMessage("engineAddModel"),
                     JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                 engineModels.addName(engine.getModel());
@@ -220,9 +217,9 @@ public class EngineEditFrame extends RollingStockEditFrame {
             for (Engine cEngine : engines) {
                 if (cEngine != engine) {
                     if (cEngine.getLocation() != engine.getLocation() || cEngine.getTrack() != engine.getTrack()) {
-                        int results = JmriJOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
-                                .getMessage("engineInConsistLocation"),
-                                new Object[]{engine.toString(), engine.getLocationName(), engine.getTrackName()}),
+                        int results = JmriJOptionPane.showConfirmDialog(this, Bundle
+                                .getMessage("engineInConsistLocation",
+                                engine.toString(), engine.getLocationName(), engine.getTrackName()),
                                 Bundle.getMessage("enginePartConsist"),
                                 JmriJOptionPane.YES_NO_OPTION);
                         if (results == JmriJOptionPane.YES_OPTION) {

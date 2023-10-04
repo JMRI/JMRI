@@ -1,8 +1,7 @@
 package jmri.jmrit.operations.rollingstock.cars.tools;
 
-import java.text.MessageFormat;
-
-import javax.swing.*;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
@@ -48,7 +47,7 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
     public void initComponents(String attribute, String name) {
         super.initComponents(attribute, name);
 
-        setTitle(MessageFormat.format(Bundle.getMessage("TitleCarEditAtrribute"), new Object[] { attribute }));
+        setTitle(Bundle.getMessage("TitleCarEditAtrribute", attribute));
         carManager.addPropertyChangeListener(this);
 
         // build menu
