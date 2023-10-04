@@ -1,4 +1,6 @@
-# Script to create and place SensorIcons and BlockContents for each occupancy Block on a panel
+# AddOccupancyIconsToPanel.py
+# Script to create and place SensorIcons and BlockContentIcons for each occupancy Block on a panel
+#  will remove and replace any existing ones before adding new ones 
 #  icons are centered on longest track segment of each block 
 #  based on Bill Fitch's CreateIcons.py
 
@@ -110,14 +112,12 @@ maxSegSizes = {}   # Look for longest segment in each block
 
 panels = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
 layoutPanels = panels.getList(jmri.jmrit.display.layoutEditor.LayoutEditor)
-if (len(layoutPanels) != 1) :
-    log.error('Error finding single LayoutEditor panel.')
-    exit
-panel = layoutPanels[0]
 
-removeSensorIcons(panel)
-removeBlockContentIcons(panel)
-getBlockCenterPoints(panel)
-addOccupancyIconsAndLabels(panel)
+# update all layoutEditor panels loaded
+for panel in layoutPanels:
+    removeSensorIcons(panel)
+    removeBlockContentIcons(panel)
+    getBlockCenterPoints(panel)
+    addOccupancyIconsAndLabels(panel)
 
 log.info( "AddOccupancyIconsToPanel.py completed" )
