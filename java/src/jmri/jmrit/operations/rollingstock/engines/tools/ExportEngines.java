@@ -2,7 +2,6 @@ package jmri.jmrit.operations.rollingstock.engines.tools;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.text.MessageFormat;
 import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
@@ -116,13 +115,13 @@ public class ExportEngines extends XmlFile {
             fileOut.flush();
             fileOut.close();
             log.info("Exported {} engines to file {}", engineList.size(), defaultOperationsFilename());
-            JmriJOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ExportedEnginesToFile"),
-                    new Object[]{engineList.size(), defaultOperationsFilename()}), Bundle.getMessage("ExportComplete"),
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ExportedEnginesToFile",
+                    engineList.size(), defaultOperationsFilename()), Bundle.getMessage("ExportComplete"),
                     JmriJOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
             log.error("Can not open export engines CSV file: {}", file.getName());
-            JmriJOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ExportedEnginesToFile"),
-                    new Object[]{0, defaultOperationsFilename()}), Bundle.getMessage("ExportFailed"),
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ExportedEnginesToFile",
+                    0, defaultOperationsFilename()), Bundle.getMessage("ExportFailed"),
                     JmriJOptionPane.ERROR_MESSAGE);
         }
     }

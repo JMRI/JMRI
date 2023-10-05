@@ -3,10 +3,7 @@ package jmri.jmrit.operations.automation;
 import java.awt.Frame;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.MessageFormat;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
@@ -263,8 +260,8 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
     private void deleteAutomation(int row) {
         log.debug("Delete automation");
         Automation automation = _sysList.get(row);
-        if (JmriJOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("DoYouWantToDeleteAutomation"),
-                new Object[]{automation.getName()}), Bundle.getMessage("DeleteAutomation?"),
+        if (JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("DoYouWantToDeleteAutomation",
+                automation.getName()), Bundle.getMessage("DeleteAutomation?"),
                 JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
             automationManager.deregister(automation);
             OperationsXml.save();

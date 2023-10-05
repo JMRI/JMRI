@@ -254,8 +254,7 @@ public class PrintLocationsAction extends AbstractAction {
         writer.write(s);
         // are there trains en route, then some cars and engines not counted!
         if (numberRS != numberCars + numberEngines) {
-            s = MessageFormat.format(Bundle.getMessage("NoteRSMsg"),
-                    new Object[] { Integer.toString(numberRS - (numberCars + numberEngines)) }) + NEW_LINE;
+            s = Bundle.getMessage("NoteRSMsg", Integer.toString(numberRS - (numberCars + numberEngines))) + NEW_LINE;
             writer.write(s);
         }
         if (printSchedules.isSelected() ||
@@ -314,8 +313,7 @@ public class PrintLocationsAction extends AbstractAction {
                         if (spur.getAlternateTrack() != null) {
                             s = padOutString("", MAX_NAME_LENGTH) +
                                     SPACE +
-                                    MessageFormat.format(Bundle.getMessage("AlternateTrackName"),
-                                            new Object[] { spur.getAlternateTrack().getName() }) +
+                                    Bundle.getMessage("AlternateTrackName", spur.getAlternateTrack().getName()) +
                                     NEW_LINE;
                             writer.write(s);
                         }
@@ -323,8 +321,8 @@ public class PrintLocationsAction extends AbstractAction {
                         if (spur.getReservationFactor() != 100) {
                             s = padOutString("", MAX_NAME_LENGTH) +
                                     SPACE +
-                                    MessageFormat.format(Bundle.getMessage("PercentageStaging"),
-                                            new Object[] { spur.getReservationFactor() }) +
+                                    Bundle.getMessage("PercentageStaging",
+                                            spur.getReservationFactor()) +
                                     NEW_LINE;
                             writer.write(s);
                         }
@@ -509,50 +507,48 @@ public class PrintLocationsAction extends AbstractAction {
                     totalTrackLength += car.getTotalLength();
                 }
             }
-            writer.write(MessageFormat.format(Bundle.getMessage("NumberTypeLength"),
-                    new Object[] { numberOfCars, type, totalTrackLength, Setup.getLengthUnit().toLowerCase() }) +
+            writer.write(Bundle.getMessage("NumberTypeLength",
+                    numberOfCars, type, totalTrackLength, Setup.getLengthUnit().toLowerCase()) +
                     NEW_LINE);
             // don't bother reporting when the number of cars for a given type
             // is zero. Round up percentage used by a car type.
             if (numberOfCars > 0) {
                 // spurs
                 writer.write(SPACE +
-                        MessageFormat.format(Bundle.getMessage("SpurTrackThatAccept"), new Object[] { type }) +
+                        Bundle.getMessage("SpurTrackThatAccept", type) +
                         NEW_LINE);
                 int trackLength = getTrackLengthAcceptType(locations, type, Track.SPUR);
                 if (trackLength > 0) {
                     writer.write(SPACE +
-                            MessageFormat.format(Bundle.getMessage("TotalLengthSpur"),
-                                    new Object[]{type, trackLength, Setup.getLengthUnit().toLowerCase(),
-                                            Math.ceil((double) 100 * totalTrackLength / trackLength)}) +
+                            Bundle.getMessage("TotalLengthSpur", type, trackLength, Setup.getLengthUnit().toLowerCase(),
+                                    Math.ceil((double) 100 * totalTrackLength / trackLength)) +
                             NEW_LINE);
                 } else {
                     writer.write(SPACE + Bundle.getMessage("None") + NEW_LINE);
                 }
                 // yards
                 writer.write(SPACE +
-                        MessageFormat.format(Bundle.getMessage("YardTrackThatAccept"), new Object[]{type}) +
+                        Bundle.getMessage("YardTrackThatAccept", type) +
                         NEW_LINE);
                 trackLength = getTrackLengthAcceptType(locations, type, Track.YARD);
                 if (trackLength > 0) {
                     writer.write(SPACE +
-                            MessageFormat.format(Bundle.getMessage("TotalLengthYard"),
-                                    new Object[]{type, trackLength, Setup.getLengthUnit().toLowerCase(),
-                                            Math.ceil((double) 100 * totalTrackLength / trackLength)}) +
+                            Bundle.getMessage("TotalLengthYard", type, trackLength, Setup.getLengthUnit().toLowerCase(),
+                                    Math.ceil((double) 100 * totalTrackLength / trackLength)) +
                             NEW_LINE);
                 } else {
                     writer.write(SPACE + Bundle.getMessage("None") + NEW_LINE);
                 }
                 // interchanges
                 writer.write(SPACE +
-                        MessageFormat.format(Bundle.getMessage("InterchangesThatAccept"), new Object[]{type}) +
+                        Bundle.getMessage("InterchangesThatAccept", type) +
                         NEW_LINE);
                 trackLength = getTrackLengthAcceptType(locations, type, Track.INTERCHANGE);
                 if (trackLength > 0) {
                     writer.write(SPACE +
-                            MessageFormat.format(Bundle.getMessage("TotalLengthInterchange"),
-                                    new Object[]{type, trackLength, Setup.getLengthUnit().toLowerCase(),
-                                            Math.ceil((double) 100 * totalTrackLength / trackLength)}) +
+                            Bundle.getMessage("TotalLengthInterchange",
+                                    type, trackLength, Setup.getLengthUnit().toLowerCase(),
+                                            Math.ceil((double) 100 * totalTrackLength / trackLength)) +
                             NEW_LINE);
                 } else {
                     writer.write(SPACE + Bundle.getMessage("None") + NEW_LINE);
@@ -560,14 +556,14 @@ public class PrintLocationsAction extends AbstractAction {
                 // staging
                 if (showStaging) {
                     writer.write(SPACE +
-                            MessageFormat.format(Bundle.getMessage("StageTrackThatAccept"), new Object[] { type }) +
+                            Bundle.getMessage("StageTrackThatAccept", type) +
                             NEW_LINE);
                     trackLength = getTrackLengthAcceptType(locations, type, Track.STAGING);
                     if (trackLength > 0) {
                         writer.write(SPACE +
-                                MessageFormat.format(Bundle.getMessage("TotalLengthStage"),
-                                        new Object[]{type, trackLength, Setup.getLengthUnit().toLowerCase(),
-                                                Math.ceil((double) 100 * totalTrackLength / trackLength)}) +
+                                Bundle.getMessage("TotalLengthStage",
+                                        type, trackLength, Setup.getLengthUnit().toLowerCase(),
+                                                Math.ceil((double) 100 * totalTrackLength / trackLength)) +
                                 NEW_LINE);
                     } else {
                         writer.write(SPACE + Bundle.getMessage("None") + NEW_LINE);
@@ -613,9 +609,9 @@ public class PrintLocationsAction extends AbstractAction {
                     trackLength = trackLength + track.getLength();
                     writer.write(SPACE +
                             SPACE +
-                            MessageFormat.format(Bundle.getMessage("LocationTrackLength"),
-                                    new Object[] { location.getName(), track.getName(), track.getLength(),
-                                            Setup.getLengthUnit().toLowerCase() }) +
+                            Bundle.getMessage("LocationTrackLength",
+                                    location.getName(), track.getName(), track.getLength(),
+                                            Setup.getLengthUnit().toLowerCase()) +
                             NEW_LINE);
                 }
             }
@@ -1039,20 +1035,20 @@ public class PrintLocationsAction extends AbstractAction {
         }
         StringBuffer buf = new StringBuffer(TAB +
                 TAB +
-                MessageFormat.format(Bundle.getMessage("TrackScheduleName"), new Object[] { track.getScheduleName() }) +
+                Bundle.getMessage("TrackScheduleName", track.getScheduleName()) +
                 NEW_LINE);
         if (track.getAlternateTrack() != null) {
             buf.append(TAB +
                     TAB +
-                    MessageFormat.format(Bundle.getMessage("AlternateTrackName"),
-                            new Object[] { track.getAlternateTrack().getName() }) +
+                    Bundle.getMessage("AlternateTrackName",
+                            track.getAlternateTrack().getName()) +
                     NEW_LINE);
         }
         if (track.getReservationFactor() != 100) {
             buf.append(TAB +
                     TAB +
-                    MessageFormat.format(Bundle.getMessage("PercentageStaging"),
-                            new Object[] { track.getReservationFactor() }) +
+                    Bundle.getMessage("PercentageStaging",
+                            track.getReservationFactor()) +
                     NEW_LINE);
         }
         return buf.toString();

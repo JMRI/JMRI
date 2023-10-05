@@ -2,7 +2,6 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.*;
 import java.io.PrintWriter;
-import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
@@ -1580,7 +1579,7 @@ public class TrainCommon {
                 return createTabIfNeeded(Setup.getTab3Length() - 1);
             }
             // something isn't right!
-            return MessageFormat.format(Bundle.getMessage("ErrorPrintOptions"), new Object[]{attribute});
+            return Bundle.getMessage("ErrorPrintOptions", attribute);
 
         } catch (ArrayIndexOutOfBoundsException e) {
             if (attribute.equals(Setup.ROAD)) {
@@ -1589,7 +1588,7 @@ public class TrainCommon {
                 return padAndTruncateIfNeeded("", InstanceManager.getDefault(CarTypes.class).getMaxNameLength());
             }
             // something isn't right!
-            return MessageFormat.format(Bundle.getMessage("ErrorPrintOptions"), new Object[]{attribute});
+            return Bundle.getMessage("ErrorPrintOptions", attribute);
         }
     }
 

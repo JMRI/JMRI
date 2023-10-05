@@ -1,12 +1,9 @@
 package jmri.jmrit.operations.routes.tools;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.ComponentListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.MessageFormat;
 import java.util.List;
 
 import javax.swing.*;
@@ -15,10 +12,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.routes.RouteManager;
-import jmri.jmrit.operations.routes.RouteManagerXml;
+import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainIcon;
@@ -145,8 +139,8 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
         }
         if (ae.getSource() == applyButton) {
             if (value != JmriJOptionPane.YES_OPTION) {
-                value = JmriJOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
-                        .getMessage("UpdateTrainIconRoute"), new Object[]{_route.getName()}), Bundle
+                value = JmriJOptionPane.showConfirmDialog(this, Bundle
+                        .getMessage("UpdateTrainIconRoute", _route.getName()), Bundle
                                 .getMessage("DoYouWantThisRoute"),
                         JmriJOptionPane.YES_NO_OPTION);
             }
@@ -183,8 +177,8 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
     private void placeTestIcons() {
         Editor editor = InstanceManager.getDefault(EditorManager.class).getTargetFrame(Setup.getPanelName());
         if (editor == null) {
-            JmriJOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LoadPanel"),
-                    new Object[]{Setup.getPanelName()}), Bundle.getMessage("PanelNotFound"),
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("LoadPanel",
+                    Setup.getPanelName()), Bundle.getMessage("PanelNotFound"),
                     JmriJOptionPane.ERROR_MESSAGE);
         } else {
             if (_tIon != null) {

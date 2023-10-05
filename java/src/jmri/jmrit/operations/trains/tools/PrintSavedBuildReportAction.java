@@ -2,7 +2,6 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.text.MessageFormat;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
@@ -14,9 +13,7 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainManagerXml;
-import jmri.jmrit.operations.trains.TrainPrintUtilities;
+import jmri.jmrit.operations.trains.*;
 
 /**
  * Action to print a train's build report that has been saved.
@@ -65,7 +62,7 @@ public class PrintSavedBuildReportAction extends AbstractAction implements java.
             return;
         }
         TrainPrintUtilities.printReport(file,
-                MessageFormat.format(Bundle.getMessage("buildReport"), new Object[] { _train.getDescription() }),
+                Bundle.getMessage("buildReport", _train.getDescription()),
                 _isPreview, Train.NONE, true, Train.NONE, Train.NONE, Setup.PORTRAIT, Setup.getBuildReportFontSize(), true);
         return;
     }

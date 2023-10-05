@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +15,7 @@ import javax.swing.table.TableCellEditor;
 
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.util.swing.JmriJOptionPane;
-import jmri.util.swing.SplitButtonColorChooserPanel;
-import jmri.util.swing.XTableColumnModel;
+import jmri.util.swing.*;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -475,8 +472,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         if (length < 500 && Setup.getLengthUnit().equals(Setup.FEET) ||
                 length < 160 && Setup.getLengthUnit().equals(Setup.METER)) {
             // warn that train length might be too short
-            if (JmriJOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("LimitTrainLength"),
-                    new Object[]{length, Setup.getLengthUnit().toLowerCase(), rl.getName()}),
+            if (JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("LimitTrainLength",
+                    length, Setup.getLengthUnit().toLowerCase(), rl.getName()),
                     Bundle
                             .getMessage("WarningTooShort"),
                     JmriJOptionPane.OK_CANCEL_OPTION) != JmriJOptionPane.CANCEL_OPTION) {
@@ -485,8 +482,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         }
         if (length > Setup.getMaxTrainLength()) {
             log.error("Maximum departure length can not exceed maximum train length");
-            JmriJOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("DepartureLengthNotExceed"),
-                    new Object[]{length, Setup.getMaxTrainLength()}), Bundle.getMessage("CanNotChangeMaxLength"),
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("DepartureLengthNotExceed",
+                    length, Setup.getMaxTrainLength()), Bundle.getMessage("CanNotChangeMaxLength"),
                     JmriJOptionPane.ERROR_MESSAGE);
             return;
         } else {

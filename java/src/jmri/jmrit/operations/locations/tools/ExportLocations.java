@@ -2,7 +2,6 @@ package jmri.jmrit.operations.locations.tools;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.text.MessageFormat;
 import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
@@ -283,17 +282,13 @@ public class ExportLocations extends XmlFile {
             fileOut.close();
             log.info("Exported {} locations to file {}", locations.size(), defaultOperationsFilename());
             JmriJOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("ExportedLocationsToFile"), new Object[]{
-                locations.size(), defaultOperationsFilename()}),
-                    Bundle.getMessage("ExportComplete"),
-                    JmriJOptionPane.INFORMATION_MESSAGE);
+                    Bundle.getMessage("ExportedLocationsToFile", locations.size(), defaultOperationsFilename()),
+                    Bundle.getMessage("ExportComplete"), JmriJOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
             log.error("Can not open export locations CSV file: {}", file.getName());
             JmriJOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("ExportedLocationsToFile"), new Object[]{
-                0, defaultOperationsFilename()}),
-                    Bundle.getMessage("ExportFailed"),
-                    JmriJOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ExportedLocationsToFile", 0, defaultOperationsFilename()),
+                    Bundle.getMessage("ExportFailed"), JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 

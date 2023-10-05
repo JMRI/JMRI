@@ -2,7 +2,6 @@ package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 
 import javax.swing.*;
 
@@ -54,7 +53,7 @@ class ChangeTrackFrame extends OperationsFrame {
         // row 1a
         JPanel p1 = new JPanel();
         p1.setLayout(new GridBagLayout());
-        p1.setBorder(BorderFactory.createTitledBorder(MessageFormat.format(Bundle.getMessage("TrackType"), new Object[]{trackName})));
+        p1.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrackType", trackName)));
         addItem(p1, spurRadioButton, 0, 0);
         addItem(p1, yardRadioButton, 1, 0);
         addItem(p1, interchangeRadioButton, 2, 0);

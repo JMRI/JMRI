@@ -3,7 +3,6 @@ package jmri.jmrit.operations.trains;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.PrintWriter;
-import java.text.MessageFormat;
 import java.util.*;
 
 import javax.swing.JComboBox;
@@ -504,9 +503,9 @@ public class TrainManager extends PropertyChangeSupport
         if (Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED)) {
             TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED, TrainCommon.BLANK_LINE);
             TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED,
-                    MessageFormat.format(Bundle.getMessage("trainFindForCar"),
-                            new Object[] { car.toString(), car.getLocationName(), car.getTrackName(),
-                                    car.getDestinationName(), car.getDestinationTrackName() }));
+                    Bundle.getMessage("trainFindForCar",
+                            car.toString(), car.getLocationName(), car.getTrackName(),
+                                    car.getDestinationName(), car.getDestinationTrackName()));
         }
         for (Train train : getTrainsByIdList()) {
             if (excludeTrains.contains(train)) {
@@ -980,8 +979,8 @@ public class TrainManager extends PropertyChangeSupport
                     }
                     if (isBuildMessagesEnabled() && train.isBuildEnabled() && !train.isBuilt()) {
                         if (JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("ContinueBuilding"),
-                                MessageFormat.format(Bundle.getMessage("buildFailedMsg"),
-                                        new Object[] { train.getName(), }),
+                                Bundle.getMessage("buildFailedMsg",
+                                        train.getName()),
                                 JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.NO_OPTION) {
                             break;
                         }
@@ -1004,13 +1003,13 @@ public class TrainManager extends PropertyChangeSupport
                 status = false; // failed to print all selected trains
                 if (isBuildMessagesEnabled()) {
                     int response = JmriJOptionPane.showConfirmDialog(null,
-                            MessageFormat.format(Bundle.getMessage("NeedToBuildBeforePrinting"),
-                                    new Object[] { train.getName(),
+                            Bundle.getMessage("NeedToBuildBeforePrinting",
+                                    train.getName(),
                                             (isPrintPreviewEnabled() ? Bundle.getMessage("preview")
-                                                    : Bundle.getMessage("print")) }),
-                            MessageFormat.format(Bundle.getMessage("CanNotPrintManifest"),
-                                    new Object[] { isPrintPreviewEnabled() ? Bundle.getMessage("preview")
-                                            : Bundle.getMessage("print") }),
+                                                    : Bundle.getMessage("print"))),
+                            Bundle.getMessage("CanNotPrintManifest",
+                                    isPrintPreviewEnabled() ? Bundle.getMessage("preview")
+                                            : Bundle.getMessage("print")),
                             JmriJOptionPane.OK_CANCEL_OPTION);
                     if (response != JmriJOptionPane.OK_OPTION ) {
                         break;
@@ -1031,8 +1030,8 @@ public class TrainManager extends PropertyChangeSupport
                     status = false;
                     int response = JmriJOptionPane.showConfirmDialog(null,
                             Bundle.getMessage("WarningTrainManifestNotPrinted"),
-                            MessageFormat.format(Bundle.getMessage("TerminateTrain"),
-                                    new Object[] { train.getName(), train.getDescription() }),
+                            Bundle.getMessage("TerminateTrain",
+                                    train.getName(), train.getDescription()),
                             JmriJOptionPane.YES_NO_CANCEL_OPTION);
                     if (response == JmriJOptionPane.YES_OPTION) {
                         train.terminate();

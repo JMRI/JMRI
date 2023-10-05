@@ -2,7 +2,6 @@ package jmri.jmrit.operations.rollingstock.cars.tools;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 
 import javax.swing.*;
 
@@ -98,12 +97,12 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         // row 4
         addItem(pLoad, replaceButton, 3, 4);
 
-        deleteButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipDeleteAttributeName"),
-                new Object[]{Bundle.getMessage("Load")}));
-        addButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddAttributeName"),
-                new Object[]{Bundle.getMessage("Load")}));
-        replaceButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipReplaceAttributeName"),
-                new Object[]{Bundle.getMessage("Load")}));
+        deleteButton.setToolTipText(Bundle.getMessage("TipDeleteAttributeName",
+                Bundle.getMessage("Load")));
+        addButton.setToolTipText(Bundle.getMessage("TipAddAttributeName",
+                Bundle.getMessage("Load")));
+        replaceButton.setToolTipText(Bundle.getMessage("TipReplaceAttributeName",
+                Bundle.getMessage("Load")));
 
         // row 6
         JPanel pLoadType = new JPanel();
@@ -185,15 +184,15 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
                 return;
             }
             if (loadName.length() > Control.max_len_string_attibute) {
-                JmriJOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carAttribute"),
-                        new Object[]{Control.max_len_string_attibute}), Bundle.getMessage("canNotUseLoadName"),
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carAttribute",
+                        Control.max_len_string_attibute), Bundle.getMessage("canNotUseLoadName"),
                         JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
             // can't have the " & " as part of the load name
             if (loadName.contains(CarLoad.SPLIT_CHAR)) {
-                JmriJOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carNameNoAndChar"),
-                        new Object[]{CarLoad.SPLIT_CHAR}), Bundle.getMessage("canNotUseLoadName"),
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carNameNoAndChar",
+                        CarLoad.SPLIT_CHAR), Bundle.getMessage("canNotUseLoadName"),
                         JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -204,8 +203,8 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         if (ae.getSource() == deleteButton) {
             String deleteLoad = (String) loadComboBox.getSelectedItem();
             if (deleteLoad.equals(carLoads.getDefaultEmptyName()) || deleteLoad.equals(carLoads.getDefaultLoadName())) {
-                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carLoadDefault"), MessageFormat.format(Bundle
-                        .getMessage("canNotDelete"), new Object[]{Bundle.getMessage("Load")}),
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carLoadDefault"), Bundle
+                        .getMessage("canNotDelete", Bundle.getMessage("Load")),
                         JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -216,8 +215,8 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
             String oldLoadName = (String) loadComboBox.getSelectedItem();
             if (oldLoadName.equals(carLoads.getDefaultEmptyName())) {
                 if (JmriJOptionPane.showConfirmDialog(this,
-                        MessageFormat.format(Bundle.getMessage("replaceDefaultEmpty"),
-                                new Object[]{oldLoadName, loadName}),
+                        Bundle.getMessage("replaceDefaultEmpty",
+                                oldLoadName, loadName),
                         Bundle.getMessage("replaceAll"),
                         JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                     return;
@@ -225,8 +224,8 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
                 // don't allow the default names for load and empty to be the
                 // same
                 if (loadName.equals(carLoads.getDefaultEmptyName()) || loadName.equals(carLoads.getDefaultLoadName())) {
-                    JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carDefault"), MessageFormat.format(Bundle
-                            .getMessage("canNotReplace"), new Object[]{Bundle.getMessage("Load")}),
+                    JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carDefault"), Bundle
+                            .getMessage("canNotReplace", Bundle.getMessage("Load")),
                             JmriJOptionPane.ERROR_MESSAGE);
                     return;
                 }
@@ -236,8 +235,8 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
             }
             if (oldLoadName.equals(carLoads.getDefaultLoadName())) {
                 if (JmriJOptionPane.showConfirmDialog(this,
-                        MessageFormat.format(Bundle.getMessage("replaceDefaultLoad"),
-                                new Object[]{oldLoadName, loadName}),
+                        Bundle.getMessage("replaceDefaultLoad",
+                                oldLoadName, loadName),
                         Bundle.getMessage("replaceAll"),
                         JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                     return;
@@ -245,8 +244,8 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
                 // don't allow the default names for load and empty to be the
                 // same
                 if (loadName.equals(carLoads.getDefaultEmptyName()) || loadName.equals(carLoads.getDefaultLoadName())) {
-                    JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carDefault"), MessageFormat.format(Bundle
-                            .getMessage("canNotReplace"), new Object[]{Bundle.getMessage("Load")}),
+                    JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carDefault"), Bundle
+                            .getMessage("canNotReplace", Bundle.getMessage("Load")),
                             JmriJOptionPane.ERROR_MESSAGE);
                     return;
                 }
@@ -255,8 +254,8 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
                 return;
             }
             if (JmriJOptionPane.showConfirmDialog(this,
-                    MessageFormat.format(Bundle.getMessage("replaceMsg"), new Object[]{
-                            oldLoadName, loadName}),
+                    Bundle.getMessage("replaceMsg",
+                            oldLoadName, loadName),
                     Bundle.getMessage("replaceAll"),
                     JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                 return;

@@ -582,9 +582,9 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                 if (rs.getDestinationTrack().getLocation().isStaging() &&
                         !rs.getDestinationTrack().equals(train.getTerminationTrack())) {
                     log.debug("Rolling stock destination track is staging and not the same as train");
-                    JmriJOptionPane.showMessageDialog(this, MessageFormat.format(
-                            Bundle.getMessage("rsMustSelectSameTrack"), new Object[]{train.getTerminationTrack()
-                                    .getName()}),
+                    JmriJOptionPane.showMessageDialog(this, 
+                            Bundle.getMessage("rsMustSelectSameTrack", train.getTerminationTrack()
+                                    .getName()),
                             Bundle.getMessage("rsStagingTrackError"), JmriJOptionPane.ERROR_MESSAGE);
                 } else if (JmriJOptionPane.showConfirmDialog(this, MessageFormat.format(
                         getRb().getString("rsAddRsToTrain"), new Object[]{rs.toString(), train.getName()}),

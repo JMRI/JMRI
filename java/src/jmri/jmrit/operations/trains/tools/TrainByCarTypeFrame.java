@@ -2,7 +2,6 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 import java.util.List;
 
 import javax.swing.*;
@@ -193,8 +192,8 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
             }
             if (_car != null && _car.getTrack() != null && !_car.getTrack().isDestinationAccepted(location)) {
                 JLabel locText = new JLabel();
-                locText.setText(MessageFormat.format(Bundle.getMessage("CarOnTrackDestinationRestriction"),
-                        new Object[] { _car.toString(), _car.getLocationName(), _car.getTrackName(), locationName }));
+                locText.setText(Bundle.getMessage("CarOnTrackDestinationRestriction",
+                        _car.toString(), _car.getLocationName(), _car.getTrackName(), locationName));
                 addItemWidth(pRoute, locText, 2, 1, y++);
                 if (_car.getLocation() != location)
                     continue;

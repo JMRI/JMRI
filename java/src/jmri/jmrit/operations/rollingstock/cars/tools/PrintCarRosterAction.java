@@ -3,7 +3,6 @@ package jmri.jmrit.operations.rollingstock.cars.tools;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.List;
 
 import javax.swing.*;
@@ -363,9 +362,9 @@ public class PrintCarRosterAction extends AbstractAction {
     JCheckBox printCarLoad = new JCheckBox(Bundle.getMessage("PrintCarLoad"));
     JCheckBox printCarKernel = new JCheckBox(Bundle.getMessage("PrintKernel"));
     JCheckBox printCarValue = new JCheckBox(
-            MessageFormat.format(Bundle.getMessage("PrintCar"), new Object[] { Setup.getValueLabel() }));
+            Bundle.getMessage("PrintCar", Setup.getValueLabel()));
     JCheckBox printCarRfid = new JCheckBox(
-            MessageFormat.format(Bundle.getMessage("PrintCar"), new Object[] { Setup.getRfidLabel() }));
+            Bundle.getMessage("PrintCar", Setup.getRfidLabel()));
     JCheckBox printCarLast = new JCheckBox(Bundle.getMessage("PrintCarLastMoved"));
     JCheckBox printCarWait = new JCheckBox(Bundle.getMessage("PrintCarWait"));
     JCheckBox printCarPickup = new JCheckBox(Bundle.getMessage("PrintCarPickup"));

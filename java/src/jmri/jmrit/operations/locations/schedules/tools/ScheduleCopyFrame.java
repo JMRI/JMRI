@@ -2,7 +2,6 @@ package jmri.jmrit.operations.locations.schedules.tools;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 
 import javax.swing.*;
 
@@ -88,8 +87,9 @@ public class ScheduleCopyFrame extends OperationsFrame implements java.beans.Pro
             }
 
             if (scheduleBox.getSelectedItem() == null) {
-                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("SelectScheduleToCopy"), MessageFormat.format(Bundle
-                        .getMessage("CanNotSchedule"), new Object[]{Bundle.getMessage("ButtonCopy")}), JmriJOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("SelectScheduleToCopy"),
+                        Bundle.getMessage("CanNotSchedule", Bundle.getMessage("ButtonCopy")),
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -111,20 +111,24 @@ public class ScheduleCopyFrame extends OperationsFrame implements java.beans.Pro
      */
     protected boolean checkName() {
         if (scheduleNameTextField.getText().trim().isEmpty()) {
-            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
-                    .getMessage("CanNotSchedule"), new Object[]{Bundle.getMessage("ButtonCopy")}), JmriJOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"),
+                    Bundle.getMessage("CanNotSchedule", Bundle.getMessage("ButtonCopy")),
+                    JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (scheduleNameTextField.getText().length() > Control.max_len_string_location_name) {
-            JmriJOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("ScheduleNameLengthMax"),
-                    new Object[]{Integer.toString(Control.max_len_string_location_name + 1)}), MessageFormat.format(Bundle
-                            .getMessage("CanNotSchedule"), new Object[]{Bundle.getMessage("ButtonCopy")}), JmriJOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("ScheduleNameLengthMax",
+                            Integer.toString(Control.max_len_string_location_name + 1)),
+                    Bundle.getMessage("CanNotSchedule", Bundle.getMessage("ButtonCopy")),
+                    JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         Schedule check = scheduleManager.getScheduleByName(scheduleNameTextField.getText());
         if (check != null) {
-            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ScheduleAlreadyExists"), MessageFormat.format(Bundle
-                    .getMessage("CanNotSchedule"), new Object[]{Bundle.getMessage("ButtonCopy")}), JmriJOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ScheduleAlreadyExists"),
+                    Bundle.getMessage("CanNotSchedule", Bundle.getMessage("ButtonCopy")),
+                    JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;

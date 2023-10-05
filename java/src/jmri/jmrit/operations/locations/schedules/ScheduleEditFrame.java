@@ -2,7 +2,6 @@ package jmri.jmrit.operations.locations.schedules;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 
 import javax.swing.*;
 
@@ -83,12 +82,10 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         if (_schedule != null) {
             scheduleNameTextField.setText(_schedule.getName());
             commentTextField.setText(_schedule.getComment());
-            setTitle(MessageFormat.format(Bundle.getMessage("TitleScheduleEdit"),
-                    new Object[]{_track.getName()}));
+            setTitle(Bundle.getMessage("TitleScheduleEdit", _track.getName()));
             enableButtons(true);
         } else {
-            setTitle(MessageFormat.format(Bundle.getMessage("TitleScheduleAdd"),
-                    new Object[]{_track.getName()}));
+            setTitle(Bundle.getMessage("TitleScheduleAdd", _track.getName()));
             enableButtons(false);
         }
 
@@ -228,10 +225,9 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         }
         if (ae.getSource() == deleteScheduleButton) {
             log.debug("schedule delete button activated");
-            if (JmriJOptionPane.showConfirmDialog(this, MessageFormat.format(
-                    Bundle.getMessage("DoYouWantToDeleteSchedule"),
-                    new Object[]{scheduleNameTextField.getText()}), Bundle
-                            .getMessage("DeleteSchedule?"),
+            if (JmriJOptionPane.showConfirmDialog(this,
+                    Bundle.getMessage("DoYouWantToDeleteSchedule", scheduleNameTextField.getText()),
+                    Bundle.getMessage("DeleteSchedule?"),
                     JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                 return;
             }
@@ -326,10 +322,12 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
             } else {
                 _track.setScheduleMode(Track.MATCH);
             }
-            // check for errors, ignore no schedule items error when creating a new schedule
+            // check for errors, ignore no schedule items error when creating a
+            // new schedule
             String status = _track.checkScheduleValid();
             if (_schedule.getItemsBySequenceList().size() != 0 && !status.equals(Schedule.SCHEDULE_OKAY)) {
-                JmriJOptionPane.showMessageDialog(this, status, Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, status, Bundle.getMessage("ErrorTitle"),
+                        JmriJOptionPane.ERROR_MESSAGE);
             }
         }
 
@@ -347,7 +345,6 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
     }
 
     /**
-     *
      * @return true if name is less than 26 characters
      */
     private boolean checkName(String s) {
@@ -356,10 +353,10 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         }
         if (scheduleNameTextField.getText().length() > MAX_NAME_LENGTH) {
             log.error("Schedule name must be less than 26 charaters");
-            JmriJOptionPane.showMessageDialog(this, MessageFormat.format(
-                    Bundle.getMessage("ScheduleNameLengthMax"),
-                    new Object[]{Integer.toString(MAX_NAME_LENGTH + 1)}), MessageFormat.format(
-                            Bundle.getMessage("CanNotSchedule"), new Object[]{s}),
+            JmriJOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("ScheduleNameLengthMax",
+                            Integer.toString(MAX_NAME_LENGTH + 1)),
+                    Bundle.getMessage("CanNotSchedule", s),
                     JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -369,7 +366,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
     private void reportScheduleExists(String s) {
         log.info("Can not {}, schedule already exists", s);
         JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"),
-                MessageFormat.format(Bundle.getMessage("CanNotSchedule"), new Object[]{s}),
+                Bundle.getMessage("CanNotSchedule", s),
                 JmriJOptionPane.ERROR_MESSAGE);
     }
 

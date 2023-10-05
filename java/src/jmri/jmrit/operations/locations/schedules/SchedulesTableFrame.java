@@ -115,15 +115,6 @@ public class SchedulesTableFrame extends OperationsFrame {
         }
     }
 
-    // add button
-    // public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-    // log.debug("add schedule button activated");
-    // if (ae.getSource() == addButton){
-    // ScheduleEditFrame f = new ScheduleEditFrame();
-    // f.setTitle(MessageFormat.format(Bundle.getMessage("TitleScheduleAdd"), new Object[]{"Track Name"}));
-    // f.initComponents(null, null, null);
-    // }
-    // }
     @Override
     public void dispose() {
         schedulesModel.dispose();
