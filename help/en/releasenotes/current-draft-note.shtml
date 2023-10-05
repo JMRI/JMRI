@@ -431,6 +431,7 @@
           <li>A bug in the LogixNG action <strong>Logix</strong> has been fixed. The Logix
           feature <strong>When triggered</strong> didn't work with the LogixNG action
           <strong>Logix</strong> but has now been resolved.</li>
+          <li>The action <strong>On Change</strong> has been renamed to <strong>Logix Action</strong>.
           <li>The action <strong>Audio</strong> and the expression <strong>Audio</strong>
           no longer let the user select an Audio buffer when edition the action/expression.
           LogixNG can only act on or listen to Audio sources and the Audio listener so there
