@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.5.3plus+jake+20230908T2015Z+R68990b5134 on Fri Sep 08 16:15:46 EDT 2023-->
-  <decoderIndex version="43">
+  <!--Written by JMRI version 5.5.4plus+jake+20231002T2133Z+Rfbdf100ae5 on Mon Oct 02 17:33:26 EDT 2023-->
+  <decoderIndex version="51">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -1913,7 +1913,15 @@
         </model>
       </family>
       <family name="SFX Sound Decoders - Series 7" mfg="Digitrax" lowVersionID="203" highVersionID="203" file="Digitrax_0SFX_Series7.xml">
-        <model model="SDXH167" numOuts="6" numFns="28" productID="SDXH167">
+        <model model="SDH167" numOuts="6" numFns="28" productID="SDXH167">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Violet" />
+          <output name="5" label="F3-Brown" />
+          <output name="6" label="F4-Yellow" />
+        </model>
+        <model model="SDXH167" numOuts="6" numFns="28" productID="SDH167,SDXH167">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -11602,6 +11610,8 @@
         <model model="BLU-2200 EMD Diesels" numOuts="6" numFns="30" productID="347" />
         <model model="BLU-2200 EMD-2 Diesels" numOuts="6" numFns="30" productID="351" />
         <model model="BLU-2200 GE Diesels" numOuts="6" numFns="30" productID="348" />
+        <model model="BLU PNP8" numOuts="8" numFns="30" productID="16910442" />
+        <!-- CV 253-256 contents observed in a decoder -->
       </family>
       <family name="Blunami Electric" mfg="SoundTraxx (Throttle-Up)" lowVersionID="72" file="SoundTraxx_Blu_Electric.xml">
         <model model="BLU-2200 Electric" numOuts="6" numFns="30" productID="352" />
@@ -21442,6 +21452,76 @@
           <output name="12" label="Aux10" />
         </model>
       </family>
+      <family name="Lokommander 2 v6" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_Lokommander_2_p22_v6.xml">
+        <model model="Lokommander 2 Mini P22" numOuts="12" numFns="15" lowVersionID="5" highVersionID="6" productID="2010217">
+          <output name="1" />
+          <output name="2" />
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Aux3" />
+          <output name="6" label="Aux4" />
+          <output name="7" label="Aux5" />
+          <output name="8" label="Aux6" />
+          <output name="9" label="Aux7" />
+          <output name="10" label="Aux8" />
+          <output name="11" label="Aux9" />
+          <output name="12" label="Aux10" />
+        </model>
+        <model model="Lokommander 2 Mini W22" numOuts="12" numFns="15" lowVersionID="5" highVersionID="6" productID="2010218,2010229">
+          <output name="1" />
+          <output name="2" />
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Aux3" />
+          <output name="6" label="Aux4" />
+          <output name="7" label="Aux5" />
+          <output name="8" label="Aux6" />
+          <output name="9" label="Aux7" />
+          <output name="10" label="Aux8" />
+          <output name="11" label="Aux9" />
+          <output name="12" label="Aux10" />
+        </model>
+      </family>
+      <family name="Lokommander 2 v6" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_Lokommander_2_v6.xml">
+        <model model="Lokommander 2 Micro" numOuts="6" numFns="15" lowVersionID="5" highVersionID="6" productID="2010220,2010221,2010222,2010223,2010227">
+          <output name="1" />
+          <output name="2" />
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Aux3" />
+          <output name="6" label="Aux4" />
+        </model>
+        <model model="Lokommander 2 Micro N18" numOuts="8" numFns="15" lowVersionID="5" highVersionID="6" productID="2010216">
+          <output name="1" />
+          <output name="2" />
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Aux3" />
+          <output name="6" label="Aux4" />
+          <output name="7" label="Aux5" />
+          <output name="8" label="Aux6" />
+        </model>
+        <model model="Lokommander 2 Mini" numOuts="6" numFns="15" lowVersionID="5" highVersionID="6" productID="2010210,2010211,2010207,2010212">
+          <output name="1" />
+          <output name="2" />
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Aux3" />
+          <output name="6" label="Aux4" />
+          <output name="7" label="Aux5" />
+          <output name="8" label="Aux6" />
+        </model>
+        <model model="Lokommander 2 Mini M21" numOuts="8" numFns="15" lowVersionID="5" highVersionID="6" productID="2010208,2010209,2010228">
+          <output name="1" />
+          <output name="2" />
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Aux3" />
+          <output name="6" label="Aux4" />
+          <output name="7" label="Aux5" />
+          <output name="8" label="Aux6" />
+        </model>
+      </family>
       <family name="Lokommander" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_NMJ_224.xml">
         <model model="Lokommander Mini" numOuts="4" lowVersionID="23" highVersionID="255">
           <output name="1" label="Out1" />
@@ -21455,7 +21535,7 @@
           <output name="3" label="Out3" />
           <output name="4" label="Out4" />
         </model>
-        <model model="NMJ Skd 224" numOuts="4" lowVersionID="1" highVersionID="255">
+        <model model="NMJ Skd 224" numOuts="4" lowVersionID="1" highVersionID="255" productID="2010213">
           <output name="1" label="Out1" />
           <output name="2" label="Out2" />
           <output name="3" label="Out3" />
@@ -21463,7 +21543,7 @@
         </model>
       </family>
       <family name="Shine Plus" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_ShinePlus.xml">
-        <model model="Shine Plus Midi Digi" lowVersionID="0" highVersionID="255" numOuts="12" numFns="15">
+        <model model="Shine Plus Midi Digi" lowVersionID="0" highVersionID="255" numOuts="12" numFns="15" productID="2070317,2070318,2070319">
           <output name="1" label="Out 1" />
           <output name="2" label="Out 2" />
           <output name="3" label="Out 3" />
@@ -21477,7 +21557,7 @@
           <output name="11" label="Out 11" />
           <output name="12" label="Out 12" />
         </model>
-        <model model="Shine Plus Maxi Digi" lowVersionID="0" highVersionID="255" numOuts="16" numFns="19">
+        <model model="Shine Plus Maxi Digi" lowVersionID="0" highVersionID="255" numOuts="16" numFns="19" productID="2070314,2070315,2070316">
           <output name="1" label="Out 1" />
           <output name="2" label="Out 2" />
           <output name="3" label="Out 3" />
@@ -21495,7 +21575,7 @@
           <output name="15" label="Out 15" />
           <output name="16" label="Out 16" />
         </model>
-        <model model="NMJ B3-Series DCC Lighting" lowVersionID="4" highVersionID="255" numOuts="14" numFns="17">
+        <model model="NMJ B3-Series DCC Lighting" lowVersionID="4" highVersionID="255" numOuts="14" numFns="17" productID="2070314">
           <output name="1" label="Out 1" />
           <output name="2" label="Out 2" />
           <output name="3" label="Out 3" />
@@ -21511,7 +21591,7 @@
           <output name="13" label="Out 13" />
           <output name="14" label="Out 14" />
         </model>
-        <model model="NMJ B7-Series DCC Lighting" lowVersionID="3" highVersionID="255" numOuts="16" numFns="19">
+        <model model="NMJ B7-Series DCC Lighting" lowVersionID="3" highVersionID="255" numOuts="16" numFns="19" productID="2070314">
           <output name="1" label="Out 1" />
           <output name="2" label="Out 2" />
           <output name="3" label="Out 3" />

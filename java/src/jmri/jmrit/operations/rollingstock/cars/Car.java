@@ -530,13 +530,6 @@ public class Car extends RollingStock {
         return NONE;
     }
 
-    public String getReturnWhenLoadedDestionAndTrackName() {
-        if (getReturnWhenLoadedDestination() != null) {
-            return getReturnWhenLoadedDestinationName() + " (" + getReturnWhenLoadedDestTrackName() + ")";
-        }
-        return NONE;
-    }
-
     /**
      * Used to determine is car has been given a Return When Loaded (RWL)
      * address or custom load
@@ -545,7 +538,7 @@ public class Car extends RollingStock {
      */
     protected boolean isRwlEnabled() {
         if (!getReturnWhenLoadedLoadName().equals(carLoads.getDefaultLoadName()) ||
-                !getReturnWhenLoadedDestionAndTrackName().equals(NONE)) {
+                getReturnWhenLoadedDestination() != null) {
             return true;
         }
         return false;
