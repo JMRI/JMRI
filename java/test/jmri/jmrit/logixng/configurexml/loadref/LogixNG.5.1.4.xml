@@ -38118,7 +38118,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </AbstractMaleSocket>
       </MaleSocket>
     </DigitalBooleanMany>
-    <OnChange class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanOnChangeXml" trigger="CHANGE">
+    <LogixAction class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanLogixActionXml" trigger="CHANGE">
       <systemName>IQDB:AUTO:0003</systemName>
       <Socket>
         <socketName>s5awwtcu9i</socketName>
@@ -38194,8 +38194,8 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           </LocalVariable>
         </AbstractMaleSocket>
       </MaleSocket>
-    </OnChange>
-    <OnChange class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanOnChangeXml" trigger="CHANGE_TO_FALSE">
+    </LogixAction>
+    <LogixAction class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanLogixActionXml" trigger="CHANGE_TO_FALSE">
       <systemName>IQDB:AUTO:0004</systemName>
       <comment>A comment</comment>
       <Socket>
@@ -38272,7 +38272,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           </LocalVariable>
         </AbstractMaleSocket>
       </MaleSocket>
-    </OnChange>
+    </LogixAction>
   </LogixNGDigitalBooleanActions>
   <LogixNGAnalogExpressions class="jmri.jmrit.logixng.implementation.configurexml.DefaultAnalogExpressionManagerXml">
     <AnalogExpressionMemory class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml">

@@ -237,18 +237,18 @@ public class ImportConditional {
         for (int i=0; i < conditionalActions.size(); i++) {
             ConditionalAction ca = conditionalActions.get(i);
 
-            DigitalBooleanOnChange.Trigger trigger;
+            DigitalBooleanLogixAction.Trigger trigger;
             switch (ca.getOption()) {
                 case Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE:
-                    trigger = DigitalBooleanOnChange.Trigger.CHANGE_TO_TRUE;
+                    trigger = DigitalBooleanLogixAction.Trigger.CHANGE_TO_TRUE;
                     break;
 
                 case Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE:
-                    trigger = DigitalBooleanOnChange.Trigger.CHANGE_TO_FALSE;
+                    trigger = DigitalBooleanLogixAction.Trigger.CHANGE_TO_FALSE;
                     break;
 
                 case Conditional.ACTION_OPTION_ON_CHANGE:
-                    trigger = DigitalBooleanOnChange.Trigger.CHANGE;
+                    trigger = DigitalBooleanLogixAction.Trigger.CHANGE;
                     break;
 
                 default:
@@ -257,7 +257,7 @@ public class ImportConditional {
             }
 
             DigitalBooleanActionBean booleanAction =
-                    new DigitalBooleanOnChange(InstanceManager.getDefault(DigitalBooleanActionManager.class).getAutoSystemName(), null, trigger);
+                    new DigitalBooleanLogixAction(InstanceManager.getDefault(DigitalBooleanActionManager.class).getAutoSystemName(), null, trigger);
 
             buildAction(booleanAction, ca);
 

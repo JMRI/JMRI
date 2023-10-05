@@ -6,7 +6,7 @@ import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.actions.DigitalBooleanOnChange;
+import jmri.jmrit.logixng.actions.DigitalBooleanLogixAction;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -40,7 +40,7 @@ public class DigitalBooleanActionManagerTest extends AbstractManagerTestBase {
 
 
         // We need a male socket to test with, so we register the action and then unregister the socket
-        DigitalBooleanActionBean action = new DigitalBooleanOnChange("IQDB321", null, DigitalBooleanOnChange.Trigger.CHANGE);
+        DigitalBooleanActionBean action = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.Trigger.CHANGE);
         MaleDigitalBooleanActionSocket maleSocket = _m.registerAction(action);
         _m.deregister(maleSocket);
 

@@ -35241,7 +35241,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </DigitalBooleanMany>
-    <OnChange class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanOnChangeXml" trigger="CHANGE">
+    <LogixAction class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanLogixActionXml" trigger="CHANGE">
       <systemName>IQDB:AUTO:0003</systemName>
       <Socket>
         <socketName>xtv2pkdjuo</socketName>
@@ -35317,8 +35317,8 @@
           </LocalVariable>
         </AbstractMaleSocket>
       </MaleSocket>
-    </OnChange>
-    <OnChange class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanOnChangeXml" trigger="CHANGE_TO_FALSE">
+    </LogixAction>
+    <LogixAction class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanLogixActionXml" trigger="CHANGE_TO_FALSE">
       <systemName>IQDB:AUTO:0004</systemName>
       <comment>A comment</comment>
       <Socket>
@@ -35395,7 +35395,7 @@
           </LocalVariable>
         </AbstractMaleSocket>
       </MaleSocket>
-    </OnChange>
+    </LogixAction>
   </LogixNGDigitalBooleanActions>
   <LogixNGAnalogExpressions class="jmri.jmrit.logixng.implementation.configurexml.DefaultAnalogExpressionManagerXml">
     <AnalogExpressionMemory class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml">

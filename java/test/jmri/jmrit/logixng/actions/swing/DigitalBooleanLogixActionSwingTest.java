@@ -5,7 +5,7 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JPanel;
 
 import jmri.util.JUnitUtil;
-import jmri.jmrit.logixng.actions.DigitalBooleanOnChange;
+import jmri.jmrit.logixng.actions.DigitalBooleanLogixAction;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -14,17 +14,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test ActionLight
+ * Test DigitalBooleanLogixActionSwing
  *
  * @author Daniel Bergqvist 2018
  */
-public class DigitalBooleanOnChangeSwingTest {
+public class DigitalBooleanLogixActionSwingTest {
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        DigitalBooleanOnChangeSwing t = new DigitalBooleanOnChangeSwing();
+        DigitalBooleanLogixActionSwing t = new DigitalBooleanLogixActionSwing();
         Assert.assertNotNull("exists",t);
     }
 
@@ -33,9 +33,9 @@ public class DigitalBooleanOnChangeSwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Assert.assertTrue("panel is not null",
-            null != new DigitalBooleanOnChangeSwing().getConfigPanel(new JPanel()));
+            null != new DigitalBooleanLogixActionSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new DigitalBooleanOnChangeSwing().getConfigPanel(new DigitalBooleanOnChange("IQDB1", null, DigitalBooleanOnChange.Trigger.CHANGE), new JPanel()));
+            null != new DigitalBooleanLogixActionSwing().getConfigPanel(new DigitalBooleanLogixAction("IQDB1", null, DigitalBooleanLogixAction.Trigger.CHANGE), new JPanel()));
     }
 
     // The minimal setup for log4J

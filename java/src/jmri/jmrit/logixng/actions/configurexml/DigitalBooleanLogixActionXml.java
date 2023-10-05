@@ -3,7 +3,7 @@ package jmri.jmrit.logixng.actions.configurexml;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.DigitalBooleanActionManager;
-import jmri.jmrit.logixng.actions.DigitalBooleanOnChange;
+import jmri.jmrit.logixng.actions.DigitalBooleanLogixAction;
 
 import org.jdom2.Attribute;
 import org.jdom2.Element;
@@ -14,9 +14,9 @@ import org.jdom2.Element;
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2019
  */
-public class DigitalBooleanOnChangeXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
+public class DigitalBooleanLogixActionXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
-    public DigitalBooleanOnChangeXml() {
+    public DigitalBooleanLogixActionXml() {
     }
 
     /**
@@ -27,16 +27,16 @@ public class DigitalBooleanOnChangeXml extends jmri.managers.configurexml.Abstra
      */
     @Override
     public Element store(Object o) {
-        DigitalBooleanOnChange p = (DigitalBooleanOnChange) o;
+        DigitalBooleanLogixAction p = (DigitalBooleanLogixAction) o;
 
-        Element element = new Element("OnChange");
+        Element element = new Element("LogixAction");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
 
         element.setAttribute("trigger", p.getTrigger().name());
-        
+
         Element e2 = new Element("Socket");
         e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
         MaleSocket socket = p.getSocket().getConnectedSocket();
@@ -53,29 +53,29 @@ public class DigitalBooleanOnChangeXml extends jmri.managers.configurexml.Abstra
 
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) {
-        
+
         Attribute triggerAttribute = shared.getAttribute("trigger");
-        DigitalBooleanOnChange.Trigger trigger = DigitalBooleanOnChange.Trigger.valueOf(triggerAttribute.getValue());
-        
+        DigitalBooleanLogixAction.Trigger trigger = DigitalBooleanLogixAction.Trigger.valueOf(triggerAttribute.getValue());
+
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        DigitalBooleanOnChange h = new DigitalBooleanOnChange(sys, uname, trigger);
+        DigitalBooleanLogixAction h = new DigitalBooleanLogixAction(sys, uname, trigger);
 
         loadCommon(h, shared);
-        
+
         Element socketName = shared.getChild("Socket").getChild("socketName");
         h.getChild(0).setName(socketName.getTextTrim());
         Element socketSystemName = shared.getChild("Socket").getChild("systemName");
         if (socketSystemName != null) {
             h.setActionSocketSystemName(socketSystemName.getTextTrim());
         }
-        
+
         InstanceManager.getDefault(DigitalBooleanActionManager.class).registerAction(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OnChangeActionXml.class);
 }

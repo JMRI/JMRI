@@ -9,19 +9,19 @@ import jmri.jmrit.logixng.*;
 
 /**
  * Executes an action depending on the parameter.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2019
  */
-public class DigitalBooleanOnChange extends AbstractDigitalBooleanAction
+public class DigitalBooleanLogixAction extends AbstractDigitalBooleanAction
         implements FemaleSocketListener {
 
     /**
      * The trigger of Action.
      */
     public enum Trigger {
-        CHANGE_TO_TRUE(Bundle.getMessage("DigitalBooleanOnChange_Trigger_ChangeToTrue")),
-        CHANGE_TO_FALSE(Bundle.getMessage("DigitalBooleanOnChange_Trigger_ChangeToFalse")),
-        CHANGE(Bundle.getMessage("DigitalBooleanOnChange_Trigger_Change"));
+        CHANGE_TO_TRUE(Bundle.getMessage("DigitalBooleanLogixAction_Trigger_ChangeToTrue")),
+        CHANGE_TO_FALSE(Bundle.getMessage("DigitalBooleanLogixAction_Trigger_ChangeToFalse")),
+        CHANGE(Bundle.getMessage("DigitalBooleanLogixAction_Trigger_Change"));
 
         private final String _text;
 
@@ -38,25 +38,25 @@ public class DigitalBooleanOnChange extends AbstractDigitalBooleanAction
     private String _socketSystemName;
     private final FemaleDigitalActionSocket _socket;
     Trigger _trigger = Trigger.CHANGE;
-    
-    public DigitalBooleanOnChange(String sys, String user, Trigger trigger) {
+
+    public DigitalBooleanLogixAction(String sys, String user, Trigger trigger) {
         super(sys, user);
         _socket = InstanceManager.getDefault(DigitalActionManager.class)
                 .createFemaleSocket(this, this, "A");
         _trigger = trigger;
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
         DigitalBooleanActionManager manager = InstanceManager.getDefault(DigitalBooleanActionManager.class);
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
-        DigitalBooleanOnChange copy = new DigitalBooleanOnChange(sysName, userName, _trigger);
+        DigitalBooleanLogixAction copy = new DigitalBooleanLogixAction(sysName, userName, _trigger);
         copy.setComment(getComment());
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -97,7 +97,7 @@ public class DigitalBooleanOnChange extends AbstractDigitalBooleanAction
     public Trigger getTrigger() {
         return _trigger;
     }
-    
+
     /**
      * Set the type.
      * @param trigger the trigger
@@ -105,13 +105,13 @@ public class DigitalBooleanOnChange extends AbstractDigitalBooleanAction
     public void setTrigger(Trigger trigger) {
         _trigger = trigger;
     }
-    
+
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         switch (index) {
             case 0:
                 return _socket;
-                
+
             default:
                 throw new IllegalArgumentException(
                         String.format("index has invalid value: %d", index));
@@ -143,12 +143,12 @@ public class DigitalBooleanOnChange extends AbstractDigitalBooleanAction
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "DigitalBooleanOnChange_Short");
+        return Bundle.getMessage(locale, "DigitalBooleanLogixAction_Short");
     }
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "DigitalBooleanOnChange_Long", _trigger.toString());
+        return Bundle.getMessage(locale, "DigitalBooleanLogixAction_Long", _trigger.toString());
     }
 
     public FemaleDigitalActionSocket getSocket() {
@@ -170,7 +170,7 @@ public class DigitalBooleanOnChange extends AbstractDigitalBooleanAction
             if ( !_socket.isConnected()
                     || !_socket.getConnectedSocket().getSystemName()
                             .equals(_socketSystemName)) {
-                
+
                 String socketSystemName = _socketSystemName;
                 _socket.disconnect();
                 if (socketSystemName != null) {
@@ -193,22 +193,22 @@ public class DigitalBooleanOnChange extends AbstractDigitalBooleanAction
             throw new RuntimeException("socket is already connected");
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalBooleanOnChange.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalBooleanLogixAction.class);
 
 }

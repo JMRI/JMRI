@@ -2683,15 +2683,15 @@ public class CreateLogixNGTreeScaffold {
         booleanMany.getChild(0).connect(maleSocket);
 
 
-        DigitalBooleanOnChange onChange =
-                new DigitalBooleanOnChange(digitalBooleanActionManager.getAutoSystemName(),
-                        null, DigitalBooleanOnChange.Trigger.CHANGE);
+        DigitalBooleanLogixAction onChange =
+                new DigitalBooleanLogixAction(digitalBooleanActionManager.getAutoSystemName(),
+                        null, DigitalBooleanLogixAction.Trigger.CHANGE);
         maleSocket = digitalBooleanActionManager.registerAction(onChange);
         maleSocket.setEnabled(false);
         booleanMany.getChild(1).connect(maleSocket);
 
-        onChange = new DigitalBooleanOnChange(digitalBooleanActionManager.getAutoSystemName(),
-                null, DigitalBooleanOnChange.Trigger.CHANGE_TO_FALSE);
+        onChange = new DigitalBooleanLogixAction(digitalBooleanActionManager.getAutoSystemName(),
+                null, DigitalBooleanLogixAction.Trigger.CHANGE_TO_FALSE);
         onChange.setComment("A comment");
         maleSocket = digitalBooleanActionManager.registerAction(onChange);
         booleanMany.getChild(2).connect(maleSocket);

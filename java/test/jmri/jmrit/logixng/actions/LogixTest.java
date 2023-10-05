@@ -50,7 +50,7 @@ public class LogixTest extends AbstractDigitalActionTestBase {
                 "   ? E%n" +
                 "      Sensor '' is Active ::: Use default%n" +
                 "   !b A%n" +
-                "      On change ::: Use default%n" +
+                "      Logix Action. On change ::: Use default%n" +
                 "         ! A%n" +
                 "            Socket not connected%n");
     }
@@ -65,7 +65,7 @@ public class LogixTest extends AbstractDigitalActionTestBase {
                 "            ? E%n" +
                 "               Sensor '' is Active ::: Use default%n" +
                 "            !b A%n" +
-                "               On change ::: Use default%n" +
+                "               Logix Action. On change ::: Use default%n" +
                 "                  ! A%n" +
                 "                     Socket not connected%n");
     }
@@ -197,7 +197,7 @@ public class LogixTest extends AbstractDigitalActionTestBase {
         DigitalBooleanActionManager m1 = InstanceManager.getDefault(DigitalBooleanActionManager.class);
 
         m0.registerExpression(new ExpressionMemory("IQDE52", null));
-        m1.registerAction(new DigitalBooleanOnChange("IQDB554", null, DigitalBooleanOnChange.Trigger.CHANGE));
+        m1.registerAction(new DigitalBooleanLogixAction("IQDB554", null, DigitalBooleanLogixAction.Trigger.CHANGE));
 
         Logix expression = new Logix("IQDA321", null);
         Assert.assertNotNull("exists", expression);
@@ -311,7 +311,7 @@ public class LogixTest extends AbstractDigitalActionTestBase {
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionSensor);
         actionLogix.getChild(0).connect(maleSocket2);
 
-        DigitalBooleanOnChange actionOnChange = new DigitalBooleanOnChange("IQDB4", null, DigitalBooleanOnChange.Trigger.CHANGE);
+        DigitalBooleanLogixAction actionOnChange = new DigitalBooleanLogixAction("IQDB4", null, DigitalBooleanLogixAction.Trigger.CHANGE);
         maleSocket2 =
                 InstanceManager.getDefault(DigitalBooleanActionManager.class).registerAction(actionOnChange);
         actionLogix.getChild(1).connect(maleSocket2);
