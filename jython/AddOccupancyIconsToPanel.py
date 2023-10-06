@@ -1,4 +1,6 @@
-# Script to create and place SensorIcons and BlockContents for each occupancy Block on a panel
+# AddOccupancyIconsToPanel.py
+# Script to create and place SensorIcons and BlockContentIcons for each occupancy Block on a panel
+#  will remove and replace any existing ones before adding new ones 
 #  icons are centered on longest track segment of each block 
 #  based on Bill Fitch's CreateIcons.py
 
@@ -7,6 +9,9 @@ import java
 import javax
 import org.slf4j.LoggerFactory
 import java.awt.Font
+
+dels = 0
+adds = 0
 
 def removeBlockContentIcons(panel):
     deleteList = []     # Prevent concurrent modification
@@ -19,6 +24,7 @@ def removeBlockContentIcons(panel):
         panel.removeFromContents(item)
 
 def removeSensorIcons(panel):
+    global dels
     blockSensors = []
     for block in blocks.getNamedBeanSet():
         sensor = block.getSensor()
@@ -34,6 +40,7 @@ def removeSensorIcons(panel):
 
     for item in deleteList:
         panel.removeFromContents(item)
+        dels += 1
 
 # ************************************************************
 # find and store the x,y to place a sensorIcon for each Block
@@ -73,6 +80,7 @@ def addOccupancyIconsAndLabels(panel):
 # small icon
 # **************************************************
 def addSmallIcon(panel, sensorName, x, y):
+    global adds
     icn = jmri.jmrit.display.SensorIcon(panel)
     icn.setIcon("SensorStateActive", jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/tracksegments/circuit-occupied.gif", "active"));
     icn.setIcon("SensorStateInactive", jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/tracksegments/circuit-empty.gif", "inactive"));
@@ -86,6 +94,7 @@ def addSmallIcon(panel, sensorName, x, y):
 
     # Add the icon to the layout editor panel
     panel.putSensor(icn)
+    adds += 1
 
 # **************************************************
 # block content label
@@ -110,14 +119,12 @@ maxSegSizes = {}   # Look for longest segment in each block
 
 panels = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
 layoutPanels = panels.getList(jmri.jmrit.display.layoutEditor.LayoutEditor)
-if (len(layoutPanels) != 1) :
-    log.error('Error finding single LayoutEditor panel.')
-    exit
-panel = layoutPanels[0]
 
-removeSensorIcons(panel)
-removeBlockContentIcons(panel)
-getBlockCenterPoints(panel)
-addOccupancyIconsAndLabels(panel)
+# update all layoutEditor panels loaded
+for panel in layoutPanels:
+    removeSensorIcons(panel)
+    removeBlockContentIcons(panel)
+    getBlockCenterPoints(panel)
+    addOccupancyIconsAndLabels(panel)
 
-log.info( "AddOccupancyIconsToPanel.py completed" )
+log.info("AddOccupancyIconsToPanel.py completed, {} icons removed, {} icons added.",dels,adds)
