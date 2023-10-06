@@ -343,6 +343,11 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     logixNG.unregisterListeners();
                 }
             });
+
+            // Clear the startup flag of the LogixNGs.
+            _tsys.values().stream().forEach((logixNG) -> {
+                logixNG.clearStartup();
+            });
         };
 
         if (runOnSeparateThread) new Thread(runnable).start();

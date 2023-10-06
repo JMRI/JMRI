@@ -1288,6 +1288,31 @@
 
     </xs:complexType>
 
+    <xs:complexType name="EditorLogixNGIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a PositionableLabel
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.PositionableLabelXml
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="Identity" type="xs:integer" minOccurs="1" maxOccurs="1" />
+        <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+
+      <xs:attribute name="icon" type="xs:string"></xs:attribute>
+      <xs:attribute name="text" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
 
     <xs:simpleType name="LayoutTurnoutType">
       <xs:annotation>

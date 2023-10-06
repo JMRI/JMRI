@@ -15,6 +15,18 @@ public interface LogixNG extends Base, NamedBean {
     String PROPERTY_INLINE = "IsInline";
 
     /**
+     * Clear the startup flag.
+     */
+    void clearStartup();
+
+    /**
+     * Determines whether this LogixNG is currently during startup.
+     *
+     * @return true if the LogixNG is currently during startup, false otherwise
+     */
+    public boolean isStartup();
+
+    /**
      * Sets whether this LogixNG is inline or not.
      *
      * @param inline true if the LogixNG is inline, false otherwise

@@ -109,6 +109,7 @@ public class PanelEditor extends Editor implements ItemListener {
     private static final String FAST_CLOCK = "FastClock";
     private static final String GLOBAL_VARIABLE = "GlobalVariable";
     private static final String ICON = "Icon";
+    private static final String LOGIXNG = "LogixNG";
     private final JTextField nextX = new JTextField("0", 4);
     private final JTextField nextY = new JTextField("0", 4);
 
@@ -285,6 +286,7 @@ public class PanelEditor extends Editor implements ItemListener {
         _addIconBox.addItem(new ComboBoxItem(RPSREPORTER));
         _addIconBox.addItem(new ComboBoxItem(FAST_CLOCK));
         _addIconBox.addItem(new ComboBoxItem(GLOBAL_VARIABLE));
+        _addIconBox.addItem(new ComboBoxItem(LOGIXNG));
         _addIconBox.addItem(new ComboBoxItem(ICON));
         _addIconBox.setSelectedIndex(-1);
         _addIconBox.addItemListener(this);  // must be AFTER no selection is set
@@ -1027,6 +1029,7 @@ public class PanelEditor extends Editor implements ItemListener {
         addItemPopUp(new ComboBoxItem(RPSREPORTER), _add);
         addItemPopUp(new ComboBoxItem(FAST_CLOCK), _add);
         addItemPopUp(new ComboBoxItem(GLOBAL_VARIABLE), _add);
+        addItemPopUp(new ComboBoxItem(LOGIXNG), _add);
         addItemPopUp(new ComboBoxItem(ICON), _add);
         addItemPopUp(new ComboBoxItem("Text"), _add);
         popup.add(_add);
