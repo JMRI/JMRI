@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionSensor;
-import jmri.jmrit.logixng.actions.DigitalBooleanLogixAction.Trigger;
+import jmri.jmrit.logixng.actions.DigitalBooleanLogixAction.When;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.util.JUnitUtil;
 
@@ -47,13 +47,13 @@ public class DigitalBooleanLogixActionTest extends AbstractDigitalBooleanActionT
 
     @Override
     public NamedBean createNewBean(String systemName) {
-        return new DigitalBooleanLogixAction(systemName, null, Trigger.CHANGE);
+        return new DigitalBooleanLogixAction(systemName, null, When.Either);
     }
 
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Logix Action. On change to true ::: Use default%n" +
+                "Logix Action. True ::: Use default%n" +
                 "   ! A%n" +
                 "      Set turnout '' to state Thrown ::: Use default%n");
     }
@@ -68,7 +68,7 @@ public class DigitalBooleanLogixActionTest extends AbstractDigitalBooleanActionT
                 "            ? E%n" +
                 "               Sensor '' is Active ::: Use default%n" +
                 "            !b A%n" +
-                "               Logix Action. On change to true ::: Use default%n" +
+                "               Logix Action. True ::: Use default%n" +
                 "                  ! A%n" +
                 "                     Set turnout '' to state Thrown ::: Use default%n");
     }
@@ -80,13 +80,13 @@ public class DigitalBooleanLogixActionTest extends AbstractDigitalBooleanActionT
 
     @Test
     public void testCtor() {
-        DigitalBooleanActionBean t = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.Trigger.CHANGE);
+        DigitalBooleanActionBean t = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.When.Either);
         Assert.assertNotNull("exists",t);
     }
 
     @Test
     public void testCtorAndSetup1() {
-        DigitalBooleanLogixAction action = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.Trigger.CHANGE);
+        DigitalBooleanLogixAction action = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.When.Either);
         Assert.assertNotNull("exists", action);
         Assert.assertEquals("action has 1 female socket", 1, action.getChildCount());
         action.getChild(0).setName("ZH12");
@@ -118,7 +118,7 @@ public class DigitalBooleanLogixActionTest extends AbstractDigitalBooleanActionT
 
     @Test
     public void testCtorAndSetup2() {
-        DigitalBooleanLogixAction action = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.Trigger.CHANGE);
+        DigitalBooleanLogixAction action = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.When.Either);
         Assert.assertNotNull("exists", action);
         Assert.assertEquals("action has 1 female socket", 1, action.getChildCount());
         action.getChild(0).setName("ZH12");
@@ -152,7 +152,7 @@ public class DigitalBooleanLogixActionTest extends AbstractDigitalBooleanActionT
 
         MaleSocket childSocket0 = m1.registerAction(new ActionMemory("IQDA554", null));
 
-        DigitalBooleanLogixAction action = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.Trigger.CHANGE);
+        DigitalBooleanLogixAction action = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.When.Either);
         Assert.assertNotNull("exists", action);
         Assert.assertEquals("action has 1 female socket", 1, action.getChildCount());
         action.getChild(0).setName("ZH12");
@@ -207,34 +207,34 @@ public class DigitalBooleanLogixActionTest extends AbstractDigitalBooleanActionT
 
     @Test
     public void testGetShortDescription() {
-        DigitalBooleanActionBean a1 = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.Trigger.CHANGE_TO_TRUE);
+        DigitalBooleanActionBean a1 = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.When.True);
         Assert.assertEquals("strings are equal", "Logix Action", a1.getShortDescription());
-        DigitalBooleanActionBean a2 = new DigitalBooleanLogixAction("IQDB322", null, DigitalBooleanLogixAction.Trigger.CHANGE_TO_FALSE);
+        DigitalBooleanActionBean a2 = new DigitalBooleanLogixAction("IQDB322", null, DigitalBooleanLogixAction.When.False);
         Assert.assertEquals("strings are equal", "Logix Action", a2.getShortDescription());
-        DigitalBooleanActionBean a3 = new DigitalBooleanLogixAction("IQDB323", null, DigitalBooleanLogixAction.Trigger.CHANGE);
+        DigitalBooleanActionBean a3 = new DigitalBooleanLogixAction("IQDB323", null, DigitalBooleanLogixAction.When.Either);
         Assert.assertEquals("strings are equal", "Logix Action", a3.getShortDescription());
     }
 
     @Test
     public void testGetLongDescription() {
-        DigitalBooleanActionBean a1 = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.Trigger.CHANGE_TO_TRUE);
-        Assert.assertEquals("strings are equal", "Logix Action. On change to true", a1.getLongDescription());
-        DigitalBooleanActionBean a2 = new DigitalBooleanLogixAction("IQDB322", null, DigitalBooleanLogixAction.Trigger.CHANGE_TO_FALSE);
-        Assert.assertEquals("strings are equal", "Logix Action. On change to false", a2.getLongDescription());
-        DigitalBooleanActionBean a3 = new DigitalBooleanLogixAction("IQDB323", null, DigitalBooleanLogixAction.Trigger.CHANGE);
-        Assert.assertEquals("strings are equal", "Logix Action. On change", a3.getLongDescription());
+        DigitalBooleanActionBean a1 = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.When.True);
+        Assert.assertEquals("strings are equal", "Logix Action. True", a1.getLongDescription());
+        DigitalBooleanActionBean a2 = new DigitalBooleanLogixAction("IQDB322", null, DigitalBooleanLogixAction.When.False);
+        Assert.assertEquals("strings are equal", "Logix Action. False", a2.getLongDescription());
+        DigitalBooleanActionBean a3 = new DigitalBooleanLogixAction("IQDB323", null, DigitalBooleanLogixAction.When.Either);
+        Assert.assertEquals("strings are equal", "Logix Action. Either", a3.getLongDescription());
     }
 
     @Test
     public void testTrigger() {
-        _actionOnChange.setTrigger(Trigger.CHANGE);
-        Assert.assertEquals(Trigger.CHANGE, _actionOnChange.getTrigger());
+        _actionOnChange.setTrigger(When.Either);
+        Assert.assertEquals(When.Either, _actionOnChange.getTrigger());
 
-        _actionOnChange.setTrigger(Trigger.CHANGE_TO_FALSE);
-        Assert.assertEquals(Trigger.CHANGE_TO_FALSE, _actionOnChange.getTrigger());
+        _actionOnChange.setTrigger(When.False);
+        Assert.assertEquals(When.False, _actionOnChange.getTrigger());
 
-        _actionOnChange.setTrigger(Trigger.CHANGE_TO_TRUE);
-        Assert.assertEquals(Trigger.CHANGE_TO_TRUE, _actionOnChange.getTrigger());
+        _actionOnChange.setTrigger(When.True);
+        Assert.assertEquals(When.True, _actionOnChange.getTrigger());
     }
 
     @Test
@@ -245,48 +245,48 @@ public class DigitalBooleanLogixActionTest extends AbstractDigitalBooleanActionT
         _actionTurnout.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Thrown);
 
         // Ensure last execute is false
-        _actionOnChange.execute(false, false);
+        _actionOnChange.execute(false);
 
         // Test Trigger.CHANGE
-        _actionOnChange.setTrigger(Trigger.CHANGE);
+        _actionOnChange.setTrigger(When.Either);
         turnout.setState(Turnout.CLOSED);
-        _actionOnChange.execute(true, false);
+        _actionOnChange.execute(true);
         Assert.assertEquals(Turnout.THROWN, turnout.getState());
         turnout.setState(Turnout.CLOSED);
-        _actionOnChange.execute(false, false);
+        _actionOnChange.execute(false);
         Assert.assertEquals(Turnout.THROWN, turnout.getState());
         turnout.setState(Turnout.CLOSED);
-        _actionOnChange.execute(true, false);
+        _actionOnChange.execute(true);
         Assert.assertEquals(Turnout.THROWN, turnout.getState());
 
         // Ensure last execute is false
-        _actionOnChange.execute(false, false);
+        _actionOnChange.execute(false);
 
         // Test Trigger.CHANGE_TO_FALSE
-        _actionOnChange.setTrigger(Trigger.CHANGE_TO_FALSE);
+        _actionOnChange.setTrigger(When.False);
         turnout.setState(Turnout.CLOSED);
-        _actionOnChange.execute(true, false);
+        _actionOnChange.execute(true);
         Assert.assertEquals(Turnout.CLOSED, turnout.getState());
         turnout.setState(Turnout.CLOSED);
-        _actionOnChange.execute(false, true);
+        _actionOnChange.execute(false);
         Assert.assertEquals(Turnout.THROWN, turnout.getState());
         turnout.setState(Turnout.CLOSED);
-        _actionOnChange.execute(true, false);
+        _actionOnChange.execute(true);
         Assert.assertEquals(Turnout.CLOSED, turnout.getState());
 
         // Ensure last execute is false
-        _actionOnChange.execute(false, false);
+        _actionOnChange.execute(false);
 
         // Test Trigger.CHANGE_TO_TRUE
-        _actionOnChange.setTrigger(Trigger.CHANGE_TO_TRUE);
+        _actionOnChange.setTrigger(When.True);
         turnout.setState(Turnout.CLOSED);
-        _actionOnChange.execute(true, false);
+        _actionOnChange.execute(true);
         Assert.assertEquals(Turnout.THROWN, turnout.getState());
         turnout.setState(Turnout.CLOSED);
-        _actionOnChange.execute(false, false);
+        _actionOnChange.execute(false);
         Assert.assertEquals(Turnout.CLOSED, turnout.getState());
         turnout.setState(Turnout.CLOSED);
-        _actionOnChange.execute(true, false);
+        _actionOnChange.execute(true);
         Assert.assertEquals(Turnout.THROWN, turnout.getState());
     }
 
@@ -322,7 +322,7 @@ public class DigitalBooleanLogixActionTest extends AbstractDigitalBooleanActionT
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionSensor);
         action.getChild(0).connect(maleSocket2);
 
-        _actionOnChange = new DigitalBooleanLogixAction("IQDB322", null, DigitalBooleanLogixAction.Trigger.CHANGE_TO_TRUE);
+        _actionOnChange = new DigitalBooleanLogixAction("IQDB322", null, DigitalBooleanLogixAction.When.True);
         MaleSocket maleSocketActionOnChange =
                 InstanceManager.getDefault(DigitalBooleanActionManager.class).registerAction(_actionOnChange);
         action.getChild(1).connect(maleSocketActionOnChange);

@@ -198,7 +198,7 @@ public class DefaultDigitalBooleanActionManagerXmlTest {
     private class MyDigitalBooleanAction extends DigitalBooleanLogixAction {
 
         MyDigitalBooleanAction() {
-            super("IQDB9999", null, DigitalBooleanLogixAction.Trigger.CHANGE);
+            super("IQDB9999", null, DigitalBooleanLogixAction.When.Either);
         }
 
     }

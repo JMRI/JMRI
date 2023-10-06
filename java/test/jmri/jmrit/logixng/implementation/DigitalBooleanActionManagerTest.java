@@ -40,7 +40,7 @@ public class DigitalBooleanActionManagerTest extends AbstractManagerTestBase {
 
 
         // We need a male socket to test with, so we register the action and then unregister the socket
-        DigitalBooleanActionBean action = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.Trigger.CHANGE);
+        DigitalBooleanActionBean action = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.When.Either);
         MaleDigitalBooleanActionSocket maleSocket = _m.registerAction(action);
         _m.deregister(maleSocket);
 
@@ -169,7 +169,7 @@ public class DigitalBooleanActionManagerTest extends AbstractManagerTestBase {
         }
 
         @Override
-        public void execute(boolean hasChangedToTrue, boolean hasChangedToFalse) throws JmriException {
+        public void execute(boolean value) throws JmriException {
             throw new UnsupportedOperationException("Not supported");
         }
 

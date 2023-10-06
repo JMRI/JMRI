@@ -58,7 +58,26 @@ public class DigitalBooleanLogixActionXml extends jmri.managers.configurexml.Abs
     public boolean load(Element shared, Element perNode) {
 
         Attribute triggerAttribute = shared.getAttribute("trigger");
-        DigitalBooleanLogixAction.Trigger trigger = DigitalBooleanLogixAction.Trigger.valueOf(triggerAttribute.getValue());
+
+        DigitalBooleanLogixAction.When trigger = DigitalBooleanLogixAction.When.Either;
+        try {
+            trigger = DigitalBooleanLogixAction.When.valueOf(triggerAttribute.getValue());
+        } catch (IllegalArgumentException e) {
+            // Handle backwards compability pre JMRI 5.5.5
+            switch (triggerAttribute.getValue()) {
+                case "CHANGE_TO_TRUE":
+                    trigger = DigitalBooleanLogixAction.When.True;
+                    break;
+                case "CHANGE_TO_FALSE":
+                    trigger = DigitalBooleanLogixAction.When.False;
+                    break;
+                case "CHANGE":
+                    trigger = DigitalBooleanLogixAction.When.Either;
+                    break;
+                default:
+                    throw e;
+            }
+        }
 
         String sys = getSystemName(shared);
         String uname = getUserName(shared);

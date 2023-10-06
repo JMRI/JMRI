@@ -2683,18 +2683,24 @@ public class CreateLogixNGTreeScaffold {
         booleanMany.getChild(0).connect(maleSocket);
 
 
-        DigitalBooleanLogixAction onChange =
+        DigitalBooleanLogixAction logixAction =
                 new DigitalBooleanLogixAction(digitalBooleanActionManager.getAutoSystemName(),
-                        null, DigitalBooleanLogixAction.Trigger.CHANGE);
-        maleSocket = digitalBooleanActionManager.registerAction(onChange);
+                        null, DigitalBooleanLogixAction.When.Either);
+        maleSocket = digitalBooleanActionManager.registerAction(logixAction);
         maleSocket.setEnabled(false);
         booleanMany.getChild(1).connect(maleSocket);
 
-        onChange = new DigitalBooleanLogixAction(digitalBooleanActionManager.getAutoSystemName(),
-                null, DigitalBooleanLogixAction.Trigger.CHANGE_TO_FALSE);
-        onChange.setComment("A comment");
-        maleSocket = digitalBooleanActionManager.registerAction(onChange);
+        logixAction = new DigitalBooleanLogixAction(digitalBooleanActionManager.getAutoSystemName(),
+                null, DigitalBooleanLogixAction.When.False);
+        logixAction.setComment("A comment");
+        maleSocket = digitalBooleanActionManager.registerAction(logixAction);
         booleanMany.getChild(2).connect(maleSocket);
+
+        logixAction = new DigitalBooleanLogixAction(digitalBooleanActionManager.getAutoSystemName(),
+                null, DigitalBooleanLogixAction.When.True);
+        logixAction.setComment("A comment");
+        maleSocket = digitalBooleanActionManager.registerAction(logixAction);
+        booleanMany.getChild(3).connect(maleSocket);
 
 
         jmri.jmrit.logixng.actions.LogData logData = new jmri.jmrit.logixng.actions.LogData(digitalActionManager.getAutoSystemName(), null);

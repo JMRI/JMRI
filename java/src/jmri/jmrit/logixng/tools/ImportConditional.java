@@ -237,18 +237,18 @@ public class ImportConditional {
         for (int i=0; i < conditionalActions.size(); i++) {
             ConditionalAction ca = conditionalActions.get(i);
 
-            DigitalBooleanLogixAction.Trigger trigger;
+            DigitalBooleanLogixAction.When trigger;
             switch (ca.getOption()) {
                 case Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE:
-                    trigger = DigitalBooleanLogixAction.Trigger.CHANGE_TO_TRUE;
+                    trigger = DigitalBooleanLogixAction.When.True;
                     break;
 
                 case Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE:
-                    trigger = DigitalBooleanLogixAction.Trigger.CHANGE_TO_FALSE;
+                    trigger = DigitalBooleanLogixAction.When.False;
                     break;
 
                 case Conditional.ACTION_OPTION_ON_CHANGE:
-                    trigger = DigitalBooleanLogixAction.Trigger.CHANGE;
+                    trigger = DigitalBooleanLogixAction.When.Either;
                     break;
 
                 default:

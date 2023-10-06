@@ -35,7 +35,7 @@ public class DigitalBooleanLogixActionSwingTest {
         Assert.assertTrue("panel is not null",
             null != new DigitalBooleanLogixActionSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new DigitalBooleanLogixActionSwing().getConfigPanel(new DigitalBooleanLogixAction("IQDB1", null, DigitalBooleanLogixAction.Trigger.CHANGE), new JPanel()));
+            null != new DigitalBooleanLogixActionSwing().getConfigPanel(new DigitalBooleanLogixAction("IQDB1", null, DigitalBooleanLogixAction.When.Either), new JPanel()));
     }
 
     // The minimal setup for log4J

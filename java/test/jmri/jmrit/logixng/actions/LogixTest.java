@@ -9,7 +9,6 @@ import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
-import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
 
 import org.junit.*;
@@ -50,7 +49,7 @@ public class LogixTest extends AbstractDigitalActionTestBase {
                 "   ? E%n" +
                 "      Sensor '' is Active ::: Use default%n" +
                 "   !b A%n" +
-                "      Logix Action. On change ::: Use default%n" +
+                "      Logix Action. Either ::: Use default%n" +
                 "         ! A%n" +
                 "            Socket not connected%n");
     }
@@ -65,7 +64,7 @@ public class LogixTest extends AbstractDigitalActionTestBase {
                 "            ? E%n" +
                 "               Sensor '' is Active ::: Use default%n" +
                 "            !b A%n" +
-                "               Logix Action. On change ::: Use default%n" +
+                "               Logix Action. Either ::: Use default%n" +
                 "                  ! A%n" +
                 "                     Socket not connected%n");
     }
@@ -197,7 +196,7 @@ public class LogixTest extends AbstractDigitalActionTestBase {
         DigitalBooleanActionManager m1 = InstanceManager.getDefault(DigitalBooleanActionManager.class);
 
         m0.registerExpression(new ExpressionMemory("IQDE52", null));
-        m1.registerAction(new DigitalBooleanLogixAction("IQDB554", null, DigitalBooleanLogixAction.Trigger.CHANGE));
+        m1.registerAction(new DigitalBooleanLogixAction("IQDB554", null, DigitalBooleanLogixAction.When.Either));
 
         Logix expression = new Logix("IQDA321", null);
         Assert.assertNotNull("exists", expression);
@@ -311,7 +310,7 @@ public class LogixTest extends AbstractDigitalActionTestBase {
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionSensor);
         actionLogix.getChild(0).connect(maleSocket2);
 
-        DigitalBooleanLogixAction actionOnChange = new DigitalBooleanLogixAction("IQDB4", null, DigitalBooleanLogixAction.Trigger.CHANGE);
+        DigitalBooleanLogixAction actionOnChange = new DigitalBooleanLogixAction("IQDB4", null, DigitalBooleanLogixAction.When.Either);
         maleSocket2 =
                 InstanceManager.getDefault(DigitalBooleanActionManager.class).registerAction(actionOnChange);
         actionLogix.getChild(1).connect(maleSocket2);

@@ -26674,7 +26674,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </DigitalBooleanMany>
-    <LogixAction class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanLogixActionXml" trigger="CHANGE">
+    <LogixAction class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanLogixActionXml" trigger="Either">
       <systemName>IQDB:AUTO:0003</systemName>
       <Socket>
         <socketName>nnca3tu2cp</socketName>
@@ -26736,7 +26736,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </LogixAction>
-    <LogixAction class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanLogixActionXml" trigger="CHANGE_TO_FALSE">
+    <LogixAction class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanLogixActionXml" trigger="False">
       <systemName>IQDB:AUTO:0004</systemName>
       <comment>A comment</comment>
       <Socket>

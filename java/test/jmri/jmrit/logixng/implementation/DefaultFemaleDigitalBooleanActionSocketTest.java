@@ -78,7 +78,7 @@ public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTes
         Assert.assertNotNull("femaleSocket is not null", _femaleSocket);
         Assert.assertFalse("femaleSocket is not connected", _femaleSocket.isConnected());
         // Test execute() when not connected
-        ((DefaultFemaleDigitalBooleanActionSocket)_femaleSocket).execute(false, false);
+        ((DefaultFemaleDigitalBooleanActionSocket)_femaleSocket).execute(false);
     }
 
     @Test
@@ -152,7 +152,7 @@ public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTes
         private boolean _hasBeenSetup = false;
 
         public MyOnChangeAction(String systemName) {
-            super(systemName, null, DigitalBooleanLogixAction.Trigger.CHANGE);
+            super(systemName, null, DigitalBooleanLogixAction.When.Either);
         }
 
         /** {@inheritDoc} */

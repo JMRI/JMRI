@@ -235,7 +235,7 @@ public class DefaultLogixNGManagerTest {
                         .registerAction(new DigitalBooleanLogixAction(
                                 digitalBooleanActionManager.getAutoSystemName(),
                                 null,
-                                DigitalBooleanLogixAction.Trigger.CHANGE));
+                                DigitalBooleanLogixAction.When.Either));
         femaleSocket.connect(onChange);
 
 
@@ -361,7 +361,7 @@ public class DefaultLogixNGManagerTest {
                         .registerAction(new DigitalBooleanLogixAction(
                                 digitalBooleanActionManager.getAutoSystemName(),
                                 null,
-                                DigitalBooleanLogixAction.Trigger.CHANGE));
+                                DigitalBooleanLogixAction.When.Either));
         femaleSocket.connect(onChange);
 
 
@@ -484,7 +484,7 @@ public class DefaultLogixNGManagerTest {
                         .registerAction(new DigitalBooleanLogixAction(
                                 digitalBooleanActionManager.getAutoSystemName(),
                                 null,
-                                DigitalBooleanLogixAction.Trigger.CHANGE));
+                                DigitalBooleanLogixAction.When.Either));
         femaleSocket.connect(onChange);
 
 
@@ -608,7 +608,7 @@ public class DefaultLogixNGManagerTest {
                         .registerAction(new DigitalBooleanLogixAction(
                                 digitalBooleanActionManager.getAutoSystemName(),
                                 null,
-                                DigitalBooleanLogixAction.Trigger.CHANGE));
+                                DigitalBooleanLogixAction.When.Either));
         femaleSocket.connect(onChange);
 
 

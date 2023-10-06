@@ -12,7 +12,7 @@ import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.DigitalBooleanActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.DigitalBooleanLogixAction;
-import jmri.jmrit.logixng.actions.DigitalBooleanLogixAction.Trigger;
+import jmri.jmrit.logixng.actions.DigitalBooleanLogixAction.When;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
@@ -22,8 +22,8 @@ import jmri.util.swing.JComboBoxUtil;
  */
 public class DigitalBooleanLogixActionSwing extends AbstractBooleanActionSwing {
 
-    DigitalBooleanLogixAction.Trigger type = DigitalBooleanLogixAction.Trigger.CHANGE;
-    private JComboBox<DigitalBooleanLogixAction.Trigger> _triggerComboBox;
+    DigitalBooleanLogixAction.When type = DigitalBooleanLogixAction.When.Either;
+    private JComboBox<DigitalBooleanLogixAction.When> _triggerComboBox;
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
@@ -31,7 +31,7 @@ public class DigitalBooleanLogixActionSwing extends AbstractBooleanActionSwing {
 
         panel = new JPanel();
         _triggerComboBox = new JComboBox<>();
-        for (Trigger e : Trigger.values()) {
+        for (When e : When.values()) {
             _triggerComboBox.addItem(e);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_triggerComboBox);

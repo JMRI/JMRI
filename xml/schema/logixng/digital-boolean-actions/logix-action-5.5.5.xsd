@@ -54,9 +54,9 @@
             <xs:attribute name="trigger" use="required">
               <xs:simpleType>
                 <xs:restriction base="xs:token">
-                  <xs:enumeration value="CHANGE_TO_TRUE"/>
-                  <xs:enumeration value="CHANGE_TO_FALSE"/>
-                  <xs:enumeration value="CHANGE"/>
+                  <xs:enumeration value="True"/>
+                  <xs:enumeration value="False"/>
+                  <xs:enumeration value="Either"/>
                 </xs:restriction>
               </xs:simpleType>
             </xs:attribute>
