@@ -232,10 +232,10 @@ public class DefaultLogixNGManagerTest {
 
         femaleSocket = logix.getChild(1);
         MaleDigitalBooleanActionSocket onChange = digitalBooleanActionManager
-                        .registerAction(new DigitalBooleanOnChange(
+                        .registerAction(new DigitalBooleanLogixAction(
                                 digitalBooleanActionManager.getAutoSystemName(),
                                 null,
-                                DigitalBooleanOnChange.Trigger.CHANGE));
+                                DigitalBooleanLogixAction.When.Either));
         femaleSocket.connect(onChange);
 
 
@@ -358,10 +358,10 @@ public class DefaultLogixNGManagerTest {
 
         femaleSocket = logix.getChild(1);
         MaleDigitalBooleanActionSocket onChange = digitalBooleanActionManager
-                        .registerAction(new DigitalBooleanOnChange(
+                        .registerAction(new DigitalBooleanLogixAction(
                                 digitalBooleanActionManager.getAutoSystemName(),
                                 null,
-                                DigitalBooleanOnChange.Trigger.CHANGE));
+                                DigitalBooleanLogixAction.When.Either));
         femaleSocket.connect(onChange);
 
 
@@ -481,10 +481,10 @@ public class DefaultLogixNGManagerTest {
 
         femaleSocket = logix.getChild(1);
         MaleDigitalBooleanActionSocket onChange = digitalBooleanActionManager
-                        .registerAction(new DigitalBooleanOnChange(
+                        .registerAction(new DigitalBooleanLogixAction(
                                 digitalBooleanActionManager.getAutoSystemName(),
                                 null,
-                                DigitalBooleanOnChange.Trigger.CHANGE));
+                                DigitalBooleanLogixAction.When.Either));
         femaleSocket.connect(onChange);
 
 
@@ -605,10 +605,10 @@ public class DefaultLogixNGManagerTest {
 
         femaleSocket = logix.getChild(1);
         MaleDigitalBooleanActionSocket onChange = digitalBooleanActionManager
-                        .registerAction(new DigitalBooleanOnChange(
+                        .registerAction(new DigitalBooleanLogixAction(
                                 digitalBooleanActionManager.getAutoSystemName(),
                                 null,
-                                DigitalBooleanOnChange.Trigger.CHANGE));
+                                DigitalBooleanLogixAction.When.Either));
         femaleSocket.connect(onChange);
 
 
