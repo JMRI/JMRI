@@ -1097,7 +1097,7 @@ public class TrainBuilderBase extends TrainCommon {
             }
             addLine(_buildReport, SEVEN,
                     Bundle.getMessage("buildTrackModePriority", car.toString(), car.getTrack().getTrackTypeName(),
-                            car.getTrackName(), car.getTrack().getServiceOrder(), car.getLastDate()));
+                            car.getLocationName(), car.getTrackName(), car.getTrack().getServiceOrder(), car.getLastDate()));
             Car bestCar = car;
             for (int i = _carIndex + 1; i < _carList.size(); i++) {
                 Car testCar = _carList.get(i);
@@ -2226,7 +2226,7 @@ public class TrainBuilderBase extends TrainCommon {
         if (!car.getTrack().getServiceOrder().equals(Track.NORMAL) && !car.getTrack().isStaging()) {
             addLine(_buildReport, SEVEN,
                     Bundle.getMessage("buildTrackModePriority", car.toString(), car.getTrack().getTrackTypeName(),
-                            car.getTrackName(), car.getTrack().getServiceOrder(), car.getLastDate()));
+                            car.getLocationName(), car.getTrackName(), car.getTrack().getServiceOrder(), car.getLastDate()));
         }
     }
 

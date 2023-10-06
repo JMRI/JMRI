@@ -1,11 +1,7 @@
 package jmri.jmrit.operations.routes.tools;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.event.ComponentListener;
-import java.text.MessageFormat;
 
 import javax.swing.*;
 
@@ -16,9 +12,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainIcon;
@@ -199,7 +193,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         if (ae.getSource() == applyButton) {
             // update all routes?
             int value = JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("DoYouWantAllRoutes"),
-                    MessageFormat.format(Bundle.getMessage("UpdateTrainIcon"), new Object[] { location.getName() }),
+                    Bundle.getMessage("UpdateTrainIcon", location.getName()),
                     JmriJOptionPane.YES_NO_OPTION);
             if (value == JmriJOptionPane.YES_OPTION) {
                 saveSpinnerValues(location);
@@ -208,7 +202,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         }
         if (ae.getSource() == saveButton) {
             int value = JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("UpdateDefaults"),
-                    MessageFormat.format(Bundle.getMessage("UpdateTrainIcon"), new Object[] { location.getName() }),
+                    Bundle.getMessage("UpdateTrainIcon", location.getName()),
                     JmriJOptionPane.YES_NO_OPTION);
             if (value == JmriJOptionPane.YES_OPTION) {
                 saveSpinnerValues(location);
@@ -324,7 +318,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         Editor editor = InstanceManager.getDefault(EditorManager.class).getTargetFrame(Setup.getPanelName());
         if (editor == null) {
             JmriJOptionPane.showMessageDialog(this,
-                    MessageFormat.format(Bundle.getMessage("LoadPanel"), new Object[] { Setup.getPanelName() }),
+                    Bundle.getMessage("LoadPanel", Setup.getPanelName()),
                     Bundle.getMessage("PanelNotFound"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }

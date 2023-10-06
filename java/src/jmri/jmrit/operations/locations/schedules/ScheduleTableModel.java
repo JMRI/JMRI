@@ -6,21 +6,15 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
@@ -384,7 +378,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         if (_track.isTypeNameAccepted(si.getTypeName())) {
             return si.getTypeName();
         } else {
-            return MessageFormat.format(Bundle.getMessage("NotValid"), new Object[]{si.getTypeName()});
+            return Bundle.getMessage("NotValid", si.getTypeName());
         }
     }
 
@@ -400,7 +394,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         }
         cb.setSelectedItem(si.getRoadName());
         if (!cb.getSelectedItem().equals(si.getRoadName())) {
-            String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getRoadName() });
+            String notValid = Bundle.getMessage("NotValid", si.getRoadName());
             cb.addItem(notValid);
             cb.setSelectedItem(notValid);
         }
@@ -426,8 +420,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
             cb.setSelectedItem(sch);
         } else if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE)) {
             // error user deleted this set out day
-            String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[]{si
-                    .getSetoutTrainScheduleId()});
+            String notValid = Bundle.getMessage("NotValid", si.getSetoutTrainScheduleId());
             TrainSchedule errorSchedule = new TrainSchedule(si.getSetoutTrainScheduleId(), notValid);
             cb.addItem(errorSchedule);
             cb.setSelectedItem(errorSchedule);
@@ -443,8 +436,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
             cb.setSelectedItem(sch);
         } else if (!si.getPickupTrainScheduleId().equals(ScheduleItem.NONE)) {
             // error user deleted this pick up day
-            String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[]{si
-                    .getPickupTrainScheduleId()});
+            String notValid = Bundle.getMessage("NotValid", si.getPickupTrainScheduleId());
             TrainSchedule errorSchedule = new TrainSchedule(si.getSetoutTrainScheduleId(), notValid);
             cb.addItem(errorSchedule);
             cb.setSelectedItem(errorSchedule);
@@ -458,8 +450,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         filterLoads(si, cb); // remove loads not accepted by this track
         cb.setSelectedItem(si.getReceiveLoadName());
         if (!cb.getSelectedItem().equals(si.getReceiveLoadName())) {
-            String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[]{si
-                    .getReceiveLoadName()});
+            String notValid = Bundle.getMessage("NotValid", si.getReceiveLoadName());
             cb.addItem(notValid);
             cb.setSelectedItem(notValid);
         }

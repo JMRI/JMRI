@@ -447,8 +447,8 @@ public class TrainSwitchLists extends TrainCommon {
             }
 
         } catch (IllegalArgumentException e) {
-            newLine(fileOut, MessageFormat.format(Bundle.getMessage("ErrorIllegalArgument"),
-                    new Object[] { Bundle.getMessage("TitleSwitchListText"), e.getLocalizedMessage() }));
+            newLine(fileOut, Bundle.getMessage("ErrorIllegalArgument",
+                    Bundle.getMessage("TitleSwitchListText"), e.getLocalizedMessage()));
             newLine(fileOut, messageFormatText);
             log.error("Illegal argument", e);
         }

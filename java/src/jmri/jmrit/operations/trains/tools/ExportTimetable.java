@@ -3,11 +3,8 @@ package jmri.jmrit.operations.trains.tools;
 import java.awt.Color;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -16,9 +13,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
@@ -136,8 +131,8 @@ public class ExportTimetable extends XmlFile {
             loadTrains(fileOut);
 
             JmriJOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("ExportedTimetableToFile"),
-                            new Object[]{defaultOperationsFilename()}),
+                    Bundle.getMessage("ExportedTimetableToFile",
+                            defaultOperationsFilename()),
                     Bundle.getMessage("ExportComplete"), JmriJOptionPane.INFORMATION_MESSAGE);
 
             fileOut.flush();
@@ -145,8 +140,8 @@ public class ExportTimetable extends XmlFile {
         } catch (IOException e) {
             log.error("Can not open export timetable CSV file: {}", file.getName());
             JmriJOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("ExportedTimetableToFile"),
-                            new Object[]{defaultOperationsFilename()}),
+                    Bundle.getMessage("ExportedTimetableToFile",
+                            defaultOperationsFilename()),
                     Bundle.getMessage("ExportFailed"), JmriJOptionPane.ERROR_MESSAGE);
         }
     }

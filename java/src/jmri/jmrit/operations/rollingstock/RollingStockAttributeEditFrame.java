@@ -7,7 +7,6 @@ import java.text.MessageFormat;
 import javax.swing.*;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -96,11 +95,11 @@ public abstract class RollingStockAttributeEditFrame extends OperationsFrame imp
         updateAttributeQuanity();
 
         deleteButton.setToolTipText(
-                MessageFormat.format(Bundle.getMessage("TipDeleteAttributeName"), new Object[] { attribute }));
+                Bundle.getMessage("TipDeleteAttributeName", attribute));
         addButton.setToolTipText(
-                MessageFormat.format(Bundle.getMessage("TipAddAttributeName"), new Object[] { attribute }));
+                Bundle.getMessage("TipAddAttributeName", attribute));
         replaceButton.setToolTipText(
-                MessageFormat.format(Bundle.getMessage("TipReplaceAttributeName"), new Object[] { attribute }));
+                Bundle.getMessage("TipReplaceAttributeName", attribute));
 
         initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight250));
     }
@@ -126,7 +125,7 @@ public abstract class RollingStockAttributeEditFrame extends OperationsFrame imp
             String newItem = addTextBox.getText().trim();
             String oldItem = (String) comboBox.getSelectedItem();
             if (JmriJOptionPane.showConfirmDialog(this,
-                    MessageFormat.format(Bundle.getMessage("replaceMsg"), new Object[] { oldItem, newItem }),
+                    Bundle.getMessage("replaceMsg", oldItem, newItem),
                     Bundle.getMessage("replaceAll"), JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                 return;
             }
@@ -175,8 +174,8 @@ public abstract class RollingStockAttributeEditFrame extends OperationsFrame imp
             // can't have the " & " as part of the type name
             if (itemName.contains(CarLoad.SPLIT_CHAR)) {
                 JmriJOptionPane.showMessageDialog(this,
-                        MessageFormat.format(Bundle.getMessage("carNameNoAndChar"),
-                                new Object[] { CarLoad.SPLIT_CHAR }),
+                        Bundle.getMessage("carNameNoAndChar",
+                                CarLoad.SPLIT_CHAR),
                         MessageFormat.format(errorMessage, new Object[] { _attribute }), JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
@@ -184,8 +183,8 @@ public abstract class RollingStockAttributeEditFrame extends OperationsFrame imp
         }
         if (item[0].length() > Control.max_len_string_attibute) {
             JmriJOptionPane.showMessageDialog(this,
-                    MessageFormat.format(Bundle.getMessage("rsAttributeName"),
-                            new Object[] { Control.max_len_string_attibute }),
+                    Bundle.getMessage("rsAttributeName",
+                            Control.max_len_string_attibute),
                     MessageFormat.format(errorMessage, new Object[] { _attribute }), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -268,22 +267,22 @@ public abstract class RollingStockAttributeEditFrame extends OperationsFrame imp
             if (length < 0) {
                 log.error("length ({}) has to be a positive number", addItem);
                 JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorRsLength"),
-                        MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[] { _attribute }),
+                        Bundle.getMessage("canNotAdd", _attribute),
                         JmriJOptionPane.ERROR_MESSAGE);
                 return FAILED;
             }
             if (addItem.length() > Control.max_len_string_length_name) {
                 JmriJOptionPane.showMessageDialog(this,
-                        MessageFormat.format(Bundle.getMessage("RsAttribute"),
-                                new Object[] { Control.max_len_string_length_name }),
-                        MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[] { _attribute }),
+                        Bundle.getMessage("RsAttribute",
+                                Control.max_len_string_length_name),
+                        Bundle.getMessage("canNotAdd", _attribute),
                         JmriJOptionPane.ERROR_MESSAGE);
                 return FAILED;
             }
         } catch (NumberFormatException e) {
             log.error("length ({}) is not an integer", addItem);
             JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorRsLength"),
-                    MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[] { _attribute }),
+                    Bundle.getMessage("canNotAdd",  _attribute),
                     JmriJOptionPane.ERROR_MESSAGE);
             return FAILED;
         }

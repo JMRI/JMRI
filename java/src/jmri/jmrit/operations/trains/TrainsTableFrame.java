@@ -1,7 +1,6 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.Color;
-import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -338,8 +337,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
                 if (train.isBuildEnabled()) {
                     if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
                         int response = JmriJOptionPane.showConfirmDialog(this,
-                                MessageFormat.format(Bundle.getMessage("NeedToBuildBeforeOpenFile"),
-                                        new Object[] { train.getName() }),
+                                Bundle.getMessage("NeedToBuildBeforeOpenFile",
+                                        train.getName()),
                                 Bundle.getMessage("ErrorTitle"), JmriJOptionPane.OK_CANCEL_OPTION);
                         if (response != JmriJOptionPane.OK_OPTION ) {
                             break;
@@ -357,8 +356,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
                 log.warn("Manifest creator file not found!, directory name: {}, file name: {}", tcm.getDirectoryName(),
                         tcm.getFileName());
                 JmriJOptionPane.showMessageDialog(this,
-                        MessageFormat.format(Bundle.getMessage("LoadDirectoryNameFileName"),
-                                new Object[] { tcm.getDirectoryName(), tcm.getFileName() }),
+                        Bundle.getMessage("LoadDirectoryNameFileName",
+                                tcm.getDirectoryName(), tcm.getFileName()),
                         Bundle.getMessage("ManifestCreatorNotFound"), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -367,8 +366,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
                 if (train.isBuildEnabled()) {
                     if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
                         int response = JmriJOptionPane.showConfirmDialog(this,
-                                MessageFormat.format(Bundle.getMessage("NeedToBuildBeforeRunFile"),
-                                        new Object[] { train.getName() }),
+                                Bundle.getMessage("NeedToBuildBeforeRunFile",
+                                        train.getName()),
                                 Bundle.getMessage("ErrorTitle"), JmriJOptionPane.OK_CANCEL_OPTION);
                         if (response != JmriJOptionPane.OK_OPTION ) {
                             break;

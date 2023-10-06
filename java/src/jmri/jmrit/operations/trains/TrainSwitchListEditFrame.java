@@ -5,7 +5,6 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -439,9 +438,9 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
                     InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryName(),
                     InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName());
             JmriJOptionPane.showMessageDialog(this,
-                    MessageFormat.format(Bundle.getMessage("LoadDirectoryNameFileName"),
-                            new Object[] { InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryName(),
-                                    InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName() }),
+                    Bundle.getMessage("LoadDirectoryNameFileName",
+                            InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryName(),
+                                    InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName()),
                     Bundle.getMessage("ManifestCreatorNotFound"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
