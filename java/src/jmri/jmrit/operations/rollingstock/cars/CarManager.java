@@ -510,7 +510,7 @@ public class CarManager extends RollingStockManager<Car>
                 }
             }
             if (carMax != null) {
-                log.info("Max car ({}) comment ({}) length {}", carMax.toString(), comment, _commentLength);
+                log.info("Max car comment ({}) ({}) length {}", carMax.toString(), comment, _commentLength);
             }
         }
         return _commentLength;
