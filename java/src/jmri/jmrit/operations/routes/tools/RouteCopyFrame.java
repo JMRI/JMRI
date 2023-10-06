@@ -2,17 +2,12 @@ package jmri.jmrit.operations.routes.tools;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 
-import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteEditFrame;
-import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -108,7 +103,7 @@ public class RouteCopyFrame extends OperationsFrame {
 
     private void reportRouteExists(String s) {
         JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"),
-                MessageFormat.format(Bundle.getMessage("CanNotRoute"), new Object[]{s}),
+                Bundle.getMessage("CanNotRoute", s),
                 JmriJOptionPane.ERROR_MESSAGE);
     }
 
@@ -127,9 +122,9 @@ public class RouteCopyFrame extends OperationsFrame {
             return false;
         }
         if (routeNameTextField.getText().length() > Control.max_len_string_route_name) {
-            JmriJOptionPane.showMessageDialog(this, MessageFormat.format(
-                    Bundle.getMessage("RouteNameLess"),
-                    new Object[]{Control.max_len_string_route_name + 1}),
+            JmriJOptionPane.showMessageDialog(this, 
+                    Bundle.getMessage("RouteNameLess",
+                    Control.max_len_string_route_name + 1),
                     Bundle
                             .getMessage("CanNotAddRoute"),
                     JmriJOptionPane.ERROR_MESSAGE);

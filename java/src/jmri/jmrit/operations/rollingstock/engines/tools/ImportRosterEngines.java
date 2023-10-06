@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
-import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -114,11 +113,11 @@ public class ImportRosterEngines extends Thread {
 
         if (enginesAdded > 0) {
             JmriJOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("ImportEnginesAdded"), new Object[] { enginesAdded }),
+                    Bundle.getMessage("ImportEnginesAdded", enginesAdded),
                     Bundle.getMessage("SuccessfulImport"), JmriJOptionPane.INFORMATION_MESSAGE);
         } else {
             JmriJOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("ImportEnginesAdded"), new Object[] { enginesAdded }),
+                    Bundle.getMessage("ImportEnginesAdded", enginesAdded),
                     Bundle.getMessage("ImportFailed"), JmriJOptionPane.ERROR_MESSAGE);
         }
     }

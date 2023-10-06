@@ -17,8 +17,7 @@ import jmri.jmrit.operations.locations.divisions.DivisionManager;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.*;
 
 /**
  * Represents rolling stock, both powered (locomotives) and not powered (cars)
@@ -77,6 +76,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
 
     public static final String ERROR_TRACK = "ERROR wrong track for location"; // checks for coding error // NOI18N
 
+    // property changes
     public static final String TRACK_CHANGED_PROPERTY = "rolling stock track location"; // NOI18N
     public static final String DESTINATION_TRACK_CHANGED_PROPERTY = "rolling stock track destination"; // NOI18N
     public static final String TRAIN_CHANGED_PROPERTY = "rolling stock train"; // NOI18N
@@ -84,6 +84,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     public static final String TYPE_CHANGED_PROPERTY = "rolling stock type"; // NOI18N
     public static final String ROUTE_LOCATION_CHANGED_PROPERTY = "rolling stock route location"; // NOI18N
     public static final String ROUTE_DESTINATION_CHANGED_PROPERTY = "rolling stock route destination"; // NOI18N
+    public static final String COMMENT_CHANGED_PROPERTY = "rolling stock comment"; // NOI18N
 
     // the draw bar length must only be calculated once at startup
     public static final int COUPLERS = Setup.getLengthUnit().equals(Setup.FEET)
@@ -351,6 +352,10 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
         return NONE;
     }
+    
+    public String getSplitLocationName() {
+        return TrainCommon.splitString(getLocationName());
+    }
 
     /**
      * Get rolling stock's location id
@@ -392,6 +397,10 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             return getTrack().getName();
         }
         return NONE;
+    }
+    
+    public String getSplitTrackName() {
+        return TrainCommon.splitString(getTrackName());
     }
     
     public String getTrackType() {
@@ -639,6 +648,10 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
         return NONE;
     }
+    
+    public String getSplitDestinationName() {
+        return TrainCommon.splitString(getDestinationName());
+    }
 
     public String getDestinationId() {
         if (getDestination() != null) {
@@ -671,6 +684,10 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             return getDestinationTrack().getName();
         }
         return NONE;
+    }
+    
+    public String getSplitDestinationTrackName() {
+        return TrainCommon.splitString(getDestinationTrackName());
     }
 
     public String getDestinationTrackId() {
@@ -1235,7 +1252,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         String old = _comment;
         _comment = comment;
         if (!old.equals(comment)) {
-            setDirtyAndFirePropertyChange("rolling stock comment", old, comment); // NOI18N
+            setDirtyAndFirePropertyChange(COMMENT_CHANGED_PROPERTY, old, comment); // NOI18N
         }
     }
 

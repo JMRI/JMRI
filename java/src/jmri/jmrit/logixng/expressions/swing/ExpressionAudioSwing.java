@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.expressions.swing;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -50,6 +51,8 @@ public class ExpressionAudioSwing extends AbstractDigitalExpressionSwing {
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ExpressionAudio expression = (ExpressionAudio)object;
 
+        Predicate<Audio> filter = (bean) -> { return bean.getSubType() != Audio.BUFFER; };
+
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
@@ -60,9 +63,9 @@ public class ExpressionAudioSwing extends AbstractDigitalExpressionSwing {
 
         JPanel _tabbedPaneNamedBean;
         if (expression != null) {
-            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(expression.getSelectNamedBean());
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(expression.getSelectNamedBean(), filter);
         } else {
-            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(null);
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(null, filter);
         }
 
 

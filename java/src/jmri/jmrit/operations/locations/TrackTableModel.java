@@ -47,18 +47,21 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
     protected static final int SCHEDULE_COLUMN = 10;
     protected static final int ROAD_COLUMN = 11;
     protected static final int LOAD_COLUMN = 12;
-    protected static final int DISABLE_LOAD_CHANGE_COLUMN = 13;
-    protected static final int SHIP_COLUMN = 14;
-    protected static final int RESTRICTION_COLUMN = 15;
-    protected static final int DESTINATION_COLUMN = 16;
-    protected static final int ROUTED_COLUMN = 17;
-    protected static final int HOLD_COLUMN = 18;
-    protected static final int POOL_COLUMN = 19;
-    protected static final int PLANPICKUP_COLUMN = 20;
-    protected static final int ALT_TRACK_COLUMN = 21;
-    protected static final int ORDER_COLUMN = 22;
-    protected static final int REPORTER_COLUMN = 23;
-    protected static final int EDIT_COLUMN = 24;
+    protected static final int DEFAULT_LOAD_COLUMN = 13;
+    protected static final int CUSTOM_LOAD_COLUMN = 14;
+    protected static final int DISABLE_LOAD_CHANGE_COLUMN = 15;
+    protected static final int SHIP_COLUMN = 16;
+    protected static final int RESTRICTION_COLUMN = 17;
+    protected static final int DESTINATION_COLUMN = 18;
+    protected static final int ROUTED_COLUMN = 19;
+    protected static final int HOLD_COLUMN = 20;
+    protected static final int POOL_COLUMN = 21;
+    protected static final int PLANPICKUP_COLUMN = 22;
+    protected static final int ALT_TRACK_COLUMN = 23;
+    protected static final int ORDER_COLUMN = 24;
+    protected static final int TRAIN_DIRECTION_COLUMN = 25;
+    protected static final int REPORTER_COLUMN = 26;
+    protected static final int EDIT_COLUMN = 27;
 
     protected static final int HIGHESTCOLUMN = EDIT_COLUMN + 1;
 
@@ -117,6 +120,8 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
                 Math.max(90, new JLabel(getColumnName(SCHEDULE_COLUMN)).getPreferredSize().width + 10));
         tcm.getColumn(RESTRICTION_COLUMN).setPreferredWidth(90);
         tcm.getColumn(LOAD_COLUMN).setPreferredWidth(50);
+        tcm.getColumn(DEFAULT_LOAD_COLUMN).setPreferredWidth(60);
+        tcm.getColumn(CUSTOM_LOAD_COLUMN).setPreferredWidth(90);
         tcm.getColumn(DISABLE_LOAD_CHANGE_COLUMN).setPreferredWidth(50);
         tcm.getColumn(SHIP_COLUMN).setPreferredWidth(50);
         tcm.getColumn(ROAD_COLUMN).setPreferredWidth(50);
@@ -128,6 +133,7 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
         tcm.getColumn(ALT_TRACK_COLUMN).setPreferredWidth(120);
         tcm.getColumn(ORDER_COLUMN)
                 .setPreferredWidth(Math.max(50, new JLabel(getColumnName(ORDER_COLUMN)).getPreferredSize().width + 10));
+        tcm.getColumn(TRAIN_DIRECTION_COLUMN).setPreferredWidth(30);
         tcm.getColumn(REPORTER_COLUMN).setPreferredWidth(70);
         tcm.getColumn(EDIT_COLUMN).setPreferredWidth(80);
 
@@ -149,6 +155,8 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RESTRICTION_COLUMN),
                 _location.hasServiceRestrictions() && !_trackType.equals(Track.YARD));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), _location.hasLoadRestrictions());
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(DEFAULT_LOAD_COLUMN), _trackType.equals(Track.STAGING));
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(CUSTOM_LOAD_COLUMN), _trackType.equals(Track.STAGING));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(DISABLE_LOAD_CHANGE_COLUMN),
                 _location.hasDisableLoadChange() && _trackType.equals(Track.SPUR));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(SHIP_COLUMN), _location.hasShipLoadRestrictions());
@@ -164,6 +172,8 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ALT_TRACK_COLUMN), _location.hasAlternateTracks());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ORDER_COLUMN),
                 _location.hasOrderRestrictions() && !_trackType.equals(Track.SPUR));
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(TRAIN_DIRECTION_COLUMN),
+                _location.hasTracksWithRestrictedTrainDirections());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(REPORTER_COLUMN),
                 Setup.isRfidEnabled() && _location.hasReporters());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), Setup.isShowTrackMovesEnabled());
@@ -239,6 +249,10 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
                 return Bundle.getMessage("Restrictions");
             case LOAD_COLUMN:
                 return Bundle.getMessage("Load");
+            case DEFAULT_LOAD_COLUMN:
+                return Bundle.getMessage("LoadDefaultAbv");
+            case CUSTOM_LOAD_COLUMN:
+                return Bundle.getMessage("LoadCustomAbv");
             case DISABLE_LOAD_CHANGE_COLUMN:
                 return Bundle.getMessage("DisableLoadChange");
             case SHIP_COLUMN:
@@ -259,6 +273,8 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
                 return Bundle.getMessage("AlternateTrack");
             case ORDER_COLUMN:
                 return Bundle.getMessage("ServiceOrder");
+            case TRAIN_DIRECTION_COLUMN:
+                return Bundle.getMessage("AbbrevationDirection");
             case REPORTER_COLUMN:
                 return Bundle.getMessage("Reporters");
             case EDIT_COLUMN:
@@ -277,6 +293,8 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
             case SCHEDULE_COLUMN:
             case RESTRICTION_COLUMN:
             case LOAD_COLUMN:
+            case DEFAULT_LOAD_COLUMN:
+            case CUSTOM_LOAD_COLUMN:
             case SHIP_COLUMN:
             case ROAD_COLUMN:
             case DESTINATION_COLUMN:
@@ -284,6 +302,7 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
             case PLANPICKUP_COLUMN:
             case ALT_TRACK_COLUMN:
             case ORDER_COLUMN:
+            case TRAIN_DIRECTION_COLUMN:
             case REPORTER_COLUMN:
                 return String.class;
             case LENGTH_COLUMN:
@@ -359,6 +378,10 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
             case LOAD_COLUMN:
                 return getModifiedString(track.getLoadNames().length, track.getLoadOption().equals(Track.ALL_LOADS),
                         track.getLoadOption().equals(Track.INCLUDE_LOADS));
+            case DEFAULT_LOAD_COLUMN:
+                return getDefaultLoadString(track);
+            case CUSTOM_LOAD_COLUMN:
+                return getCustomLoadString(track);
             case DISABLE_LOAD_CHANGE_COLUMN:
                 return track.isDisableLoadChangeEnabled();
             case SHIP_COLUMN:
@@ -392,6 +415,12 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
                 return "";
             case ORDER_COLUMN:
                 return track.getServiceOrder();
+            case TRAIN_DIRECTION_COLUMN:
+                int trainDirections = track.getLocation().getTrainDirections() & Setup.getTrainDirection();
+                if (trainDirections != (track.getTrainDirections() & trainDirections)) {
+                    return "X";
+                }
+                return "";
             case REPORTER_COLUMN:
                 return track.getReporterName();
             case EDIT_COLUMN:
@@ -432,6 +461,37 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
         return "E " + Integer.toString(number); // NOI18N
     }
     
+    private String getDefaultLoadString(Track track) {
+        String defaultLoad = "";
+        if (track.isLoadSwapEnabled()) {
+            defaultLoad = Bundle.getMessage("ABV_SwapDefaultLoads");
+        }
+        if (track.isLoadEmptyEnabled()) {
+            defaultLoad = Bundle.getMessage("ABV_EmptyDefaultLoads");
+        }
+        return defaultLoad;
+    }
+    
+    private String getCustomLoadString(Track track) {
+        StringBuffer customLoad = new StringBuffer();
+        if (track.isRemoveCustomLoadsEnabled()) {
+            customLoad.append(Bundle.getMessage("ABV_EmptyCustomLoads") + " ");
+        }
+        if (track.isAddCustomLoadsEnabled()) {
+            customLoad.append(Bundle.getMessage("ABV_GenerateCustomLoad") + " ");
+        }
+        if (track.isAddCustomLoadsAnySpurEnabled()) {
+            customLoad.append(Bundle.getMessage("ABV_GenerateCustomLoadAnySpur") + " ");
+        }
+        if (track.isAddCustomLoadsAnyStagingTrackEnabled()) {
+            customLoad.append(Bundle.getMessage("ABV_GereateCustomLoadStaging"));
+        }
+        if (track.isBlockCarsEnabled()) {
+            customLoad.append(Bundle.getMessage("ABV_CarBlocking"));
+        }
+        return customLoad.toString();
+    }
+
     private String getDestinationString(Track track) {
         int size = track.getDestinationListSize();
         if (track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
@@ -529,11 +589,13 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(),
                     e.getNewValue());
         }
-        if (e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Location.TRAIN_DIRECTION_CHANGED_PROPERTY)) {
             updateList();
             fireTableDataChanged();
         }
         if (e.getPropertyName().equals(Setup.SHOW_TRACK_MOVES_PROPERTY_CHANGE) ||
+                e.getPropertyName().equals(Location.TRAIN_DIRECTION_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(Setup.ROUTING_STAGING_PROPERTY_CHANGE)) {
             setColumnsVisible();
         }
@@ -549,6 +611,7 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
                         e.getPropertyName().equals(Track.ALTERNATE_TRACK_CHANGED_PROPERTY) ||
                         e.getPropertyName().equals(Track.SERVICE_ORDER_CHANGED_PROPERTY) ||
                         e.getPropertyName().equals(Track.LOAD_OPTIONS_CHANGED_PROPERTY) ||
+                        e.getPropertyName().equals(Track.TRAIN_DIRECTION_CHANGED_PROPERTY) ||
                         e.getPropertyName().equals(Track.TRACK_REPORTER_CHANGED_PROPERTY))) {
             setColumnsVisible();
         }

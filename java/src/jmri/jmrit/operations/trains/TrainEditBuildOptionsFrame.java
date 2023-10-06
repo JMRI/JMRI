@@ -1,10 +1,6 @@
 package jmri.jmrit.operations.trains;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.text.MessageFormat;
+import java.awt.*;
 import java.util.List;
 
 import javax.swing.*;
@@ -12,9 +8,7 @@ import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarOwners;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -378,8 +372,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             serviceAllCarsCheckBox.setSelected(_train.isServiceAllCarsWithFinalDestinationsEnabled());
             sendCustomStagngCheckBox.setSelected(_train.isSendCarsWithCustomLoadsToStagingEnabled());
             buildConsistCheckBox.setSelected(_train.isBuildConsistEnabled());
-            sendToTerminalCheckBox.setText(MessageFormat.format(Bundle.getMessage("SendToTerminal"),
-                    new Object[]{_train.getTrainTerminatesName()}));
+            sendToTerminalCheckBox.setText(Bundle.getMessage("SendToTerminal",
+                    _train.getTrainTerminatesName()));
             builtAfterTextField.setText(_train.getBuiltStartYear());
             builtBeforeTextField.setText(_train.getBuiltEndYear());
             setBuiltRadioButton();
@@ -956,17 +950,6 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         }
     }
 
-    /*
-     * private boolean checkModel(String model, String numberEngines){ if
-     * (numberEngines.equals("0") || model.equals("")) return true; String type
-     * = InstanceManager.getDefault(EngineModels.class).getModelType(model);
-     * if(_train.acceptsTypeName(type)) return true;
-     * JmriJOptionPane.showMessageDialog(this,
-     * MessageFormat.format(Bundle.getMessage("TrainModelService"), new Object[]
-     * {model, type}), MessageFormat.format(Bundle.getMessage("CanNot"), new
-     * Object[] {Bundle.getMessage("save")}), JmriJOptionPane.ERROR_MESSAGE); return
-     * false; }
-     */
     @Override
     public void dispose() {
         InstanceManager.getDefault(CarOwners.class).removePropertyChangeListener(this);

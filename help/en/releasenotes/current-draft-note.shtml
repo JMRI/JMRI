@@ -310,7 +310,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li></li>
+                <li>Added a definition for the Blunami PNP8.</li>
             </ul>
 
         <h4>Tam Valley Depot</h4>
@@ -390,7 +390,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>In auto trains, after stopping, or going to manual, resume correctly even if in a section with no signal.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -408,7 +408,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+	        <li>add option(s) for restoring block values, issue #12459</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -438,6 +438,14 @@
           <li>A new tool <strong>Where Used</strong> has been added to LogixNG.
           It shows where in the LogixNG tree an item is used. The tool is found
           on menu item <strong>Tools &rArr; LogixNG &rArr; Where Used</strong>.</li>
+          <li>A bug in the LogixNG action <strong>Logix</strong> has been fixed. The Logix
+          feature <strong>When triggered</strong> didn't work with the LogixNG action
+          <strong>Logix</strong> but has now been resolved.</li>
+          <li>The action <strong>On Change</strong> has been renamed to <strong>Logix Action</strong>.
+          <li>The action <strong>Audio</strong> and the expression <strong>Audio</strong>
+          no longer let the user select an Audio buffer when edition the action/expression.
+          LogixNG can only act on or listen to Audio sources and the Audio listener so there
+          is no point in selecting an audio buffer for LogixNG.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -488,6 +496,8 @@
             <li>The <strong>Shutdown</strong> preference has two options for ignoring special kinds
             of changes.  The first is to ignore fast clock changes, the second ignores the text and
             background color changes for sensors that have been changed to panel labels.</li>
+            <li>The startup action <strong>Open file</strong> has been renamed to
+            <strong>Load table content and panels</strong>.</li>
         </ul>
 
     <h3>Resources</h3>
@@ -511,7 +521,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>YAAT: Change function number limit from 28 to 68.</li>
+            <li>YAAT: Add a random delay time: <strong>Wait for &lt;n&gt; [to &lt;n&gt;] seconds</strong></li>
         </ul>
 
     <h3>Signals</h3>
@@ -593,7 +604,8 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li></li>
+            <li>Web tables: add click toggle for several additional columns</li>
+            <li>JSON Server: support for updating SignalHead and SignalMast Lit and Held</li>
         </ul>
 
     <h3>Where Used</h3>
@@ -618,7 +630,10 @@
         <a id="VSD" name="VSD"></a>
         <ul>
             <li>Take actual speed instead of nominal speed for the distance calculation
-            (impact for steam1).</li>
+                (impact for steam1).</li>
+            <li>New option "chuff-fade-out" for steam1, see the
+                <a href="https://www.jmri.org/help/en/html/tools/vsd/VSDFileAndConfig.shtml#chuff-fade-out">documentation</a>.
+            </li>
         </ul>
 
     <h3>Miscellaneous</h3>

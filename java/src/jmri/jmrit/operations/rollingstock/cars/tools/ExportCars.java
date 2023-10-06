@@ -2,7 +2,6 @@ package jmri.jmrit.operations.rollingstock.cars.tools;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.text.MessageFormat;
 import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
@@ -155,14 +154,14 @@ public class ExportCars extends XmlFile {
             fileOut.flush();
             fileOut.close();
             log.info("Exported {} cars to file {}", _carList.size(), defaultOperationsFilename());
-            JmriJOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ExportedCarsToFile"), new Object[]{
-                _carList.size(), defaultOperationsFilename()}), Bundle.getMessage("ExportComplete"),
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ExportedCarsToFile",
+                _carList.size(), defaultOperationsFilename()), Bundle.getMessage("ExportComplete"),
                     JmriJOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
             log.error("Can not open export cars CSV file: {}", file.getName());
             JmriJOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("ExportedCarsToFile"),
-                            new Object[] { 0, defaultOperationsFilename() }),
+                    Bundle.getMessage("ExportedCarsToFile",
+                            0, defaultOperationsFilename()),
                     Bundle.getMessage("ExportFailed"), JmriJOptionPane.ERROR_MESSAGE);
         }
     }

@@ -23,6 +23,12 @@
                 <surname>Mosher</surname>
             </personname>
         </author>
+        <author>
+            <personname>
+                <firstname>Bob</firstname>
+                <surname>Jacobsen</surname>
+            </personname>
+        </author>
     </authorgroup>
     <revhistory xmlns="http://docbook.org/ns/docbook">
         <revision>
@@ -30,6 +36,12 @@
             <date>2022-12-01</date>
             <authorinitials>MM</authorinitials>
             <revremark>New file, based on TSU2 Diesel file with var changed to linked file for both BLU and TSU2</revremark>
+        </revision>
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2023-10-01</date>
+            <authorinitials>BJ</authorinitials>
+            <revremark>Added Blunami PNP8</revremark>
         </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
@@ -50,6 +62,8 @@
             <model model="BLU-2200 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="348" comment="Model 885606">
                 <size length="41.9" width="18.8" height="6.8" units="mm"/>
             </model>
+            <model model="BLU PNP8" numOuts="8" numFns="30"  productID="16910442" /> <!-- CV 253-256 contents observed in a decoder -->
+
             <output name="3" label="  FX3  "/>
             <output name="4" label="  FX4  "/>
             <output name="5" label="Airhorn| ">

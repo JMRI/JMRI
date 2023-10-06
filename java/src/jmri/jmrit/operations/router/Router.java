@@ -1163,11 +1163,43 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         if (!_status.equals(Track.OKAY)) {
             addLine(_buildReport, SEVEN, Bundle.getMessage("RouterCanNotDeliverCar", car.toString(),
                     track.getLocation().getName(), track.getName(), _status, track.getTrackTypeName()));
-            if (_status.startsWith(Track.LENGTH)) {
+            if (_status.startsWith(Track.LENGTH) && !redirectToAlternate(car, track)) {
                 return false;
             }
         }
         return true;
+    }
+    
+    /**
+     * Used when the 1st hop interchanges and yards are full. Will attempt to use a
+     * spur's alternate track when pulling a car from the spur. This will create
+     * a local move. Code checks to see if local move by the train being used is
+     * allowed. Will only use the alternate track if all possible 1st hop tracks
+     * were tested.
+     * 
+     * @param car the car being redirected
+     * @return true if car's destination was set to alternate track
+     */
+    private boolean redirectToAlternate(Car car, Track track) {
+        if (car.getTrack().isSpur() &&
+                car.getTrack().getAlternateTrack() != null &&
+                _nextLocationTracks.indexOf(track) == _nextLocationTracks.size() - 1) {
+            // try redirecting car to the alternate track
+            Car ts = clone(car);
+            ts.setDestinationTrack(car.getTrack().getAlternateTrack());
+            String specified = canSpecifiedTrainService(ts);
+            if (specified.equals(YES)) {
+                _status = car.setDestination(car.getTrack().getAlternateTrack().getLocation(),
+                        car.getTrack().getAlternateTrack());
+                if (_status.equals(Track.OKAY)) {
+                    addLine(_buildReport, SEVEN, Bundle.getMessage("RouterSendCarToAlternative",
+                            car.toString(), car.getTrack().getAlternateTrack().getName(),
+                            car.getTrack().getAlternateTrack().getLocation().getName()));
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     // sets clone car destination to final destination and track

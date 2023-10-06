@@ -637,7 +637,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
             // only use tracks serviced by this train?
             if (car.getTrack().isAddCustomLoadsEnabled() &&
-                    _train.getRoute().getLastLocationByName(track.getLocation().getName()) == null) {
+                    !_train.getRoute().isLocationNameInRoute(track.getLocation().getName())) {
                 continue;
             }
             // only the first match in a schedule is used for a spur
@@ -702,6 +702,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
             addLine(_buildReport, SEVEN, Bundle.getMessage("buildCanNotRouteCar", car.toString(),
                     si.getReceiveLoadName(), track.getLocation().getName(), track.getName()));
+            addLine(_buildReport, SEVEN, BLANK_LINE);
             car.setDestination(null, null);
             car.setFinalDestination(null);
             car.setFinalDestinationTrack(null);
@@ -1133,6 +1134,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 }
             }
         }
+        addLine(_buildReport, SEVEN, BLANK_LINE);
         addLine(_buildReport, SEVEN,
                 Bundle.getMessage("buildSetFinalDestDiv", track.getTrackTypeName(), track.getLocation().getName(),
                         track.getName(), track.getDivisionName(), car.toString(), car.getLoadType().toLowerCase(),
@@ -1272,8 +1274,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                         car.getTrackName(), car.getFinalDestinationName(), car.getFinalDestinationTrackName()));
 
         // no local moves for this train?
-        if (!_train.isAllowLocalMovesEnabled() &&
-                splitString(car.getLocationName()).equals(splitString(car.getFinalDestinationName())) &&
+        if (!_train.isLocalSwitcher() && !_train.isAllowLocalMovesEnabled() &&
+                car.getSplitLocationName().equals(car.getSplitFinalDestinationName()) &&
                 car.getTrack() != _departStageTrack) {
             addLine(_buildReport, FIVE,
                     Bundle.getMessage("buildCarHasFinalDestNoMove", car.toString(), car.getLocationName(),
@@ -1591,15 +1593,15 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         }
         // all pick ups to terminal?
         if (_train.isSendCarsToTerminalEnabled() &&
-                !splitString(rl.getName()).equals(splitString(_departLocation.getName())) &&
+                !rl.getSplitName().equals(_departLocation.getSplitName()) &&
                 routeEnd == _routeList.size()) {
             addLine(_buildReport, FIVE, Bundle.getMessage("buildSendToTerminal", _terminateLocation.getName()));
             // user could have specified several terminal locations with the
             // "same" name
             start = routeEnd - 1;
             while (start > routeIndex) {
-                if (!splitString(_routeList.get(start - 1).getName())
-                        .equals(splitString(_terminateLocation.getName()))) {
+                if (!_routeList.get(start - 1).getSplitName()
+                        .equals(_terminateLocation.getSplitName())) {
                     break;
                 }
                 start--;
@@ -1640,7 +1642,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
             // don't move car to same location unless the train is a switcher
             // (local moves) or is passenger, caboose or car with FRED
-            if (splitString(rl.getName()).equals(splitString(rld.getName())) &&
+            if (rl.getSplitName().equals(rld.getSplitName()) &&
                     !_train.isLocalSwitcher() &&
                     !car.isPassenger() &&
                     !car.isCaboose() &&

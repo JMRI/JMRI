@@ -3,7 +3,6 @@ package jmri.jmrit.operations.trains.schedules;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.MessageFormat;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -269,9 +268,9 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
                         InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(),
                         InstanceManager.getDefault(TrainCustomManifest.class).getFileName()); // NOI18N
                 JmriJOptionPane.showMessageDialog(this,
-                        MessageFormat.format(Bundle.getMessage("LoadDirectoryNameFileName"),
-                                new Object[] { InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(),
-                                        InstanceManager.getDefault(TrainCustomManifest.class).getFileName() }),
+                        Bundle.getMessage("LoadDirectoryNameFileName",
+                                InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(),
+                                        InstanceManager.getDefault(TrainCustomManifest.class).getFileName()),
                         Bundle.getMessage("ManifestCreatorNotFound"), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -280,8 +279,8 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
                 if (train.isBuildEnabled()) {
                     if (!train.isBuilt()) {
                         JmriJOptionPane.showMessageDialog(this,
-                                MessageFormat.format(Bundle.getMessage("NeedToBuildBeforeRunFile"),
-                                        new Object[] { train.getName() }),
+                                Bundle.getMessage("NeedToBuildBeforeRunFile",
+                                        train.getName()),
                                 Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                     } else {
                         // Add csv manifest file to our collection to be processed.

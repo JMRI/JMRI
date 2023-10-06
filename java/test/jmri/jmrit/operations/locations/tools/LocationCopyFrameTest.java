@@ -24,7 +24,7 @@ public class LocationCopyFrameTest  extends OperationsTestCase {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LocationCopyFrame t = new LocationCopyFrame();
+        LocationCopyFrame t = new LocationCopyFrame(null);
         Assert.assertNotNull("exists",t);
         t.setVisible(true);
         JUnitUtil.dispose(t);
@@ -35,7 +35,7 @@ public class LocationCopyFrameTest  extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         JUnitOperationsUtil.initOperationsData();
-        LocationCopyFrame f = new LocationCopyFrame();
+        LocationCopyFrame f = new LocationCopyFrame(null);
         Assert.assertNotNull("exists",f);
         f.setVisible(true);
         
@@ -73,7 +73,7 @@ public class LocationCopyFrameTest  extends OperationsTestCase {
     @Test
     public void testCloseWindowOnSave() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LocationCopyFrame f = new LocationCopyFrame();
+        LocationCopyFrame f = new LocationCopyFrame(null);
         JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
