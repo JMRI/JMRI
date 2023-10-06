@@ -56,6 +56,11 @@ public class LogixNG_Thread {
                 if (threadID > _highestThreadID) _highestThreadID = threadID;
             }
 
+            if (_threads.containsKey(threadID) && _threads.get(threadID)._name.equals(name)) {
+                log.warn("Thread ID {} with name {} already exists", threadID, name);
+                return _threads.get(threadID);
+            }
+
             if (_threads.containsKey(threadID)) {
                 throw new IllegalArgumentException(String.format("Thread ID %d already exists", threadID));
             }

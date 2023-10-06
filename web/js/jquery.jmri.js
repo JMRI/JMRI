@@ -726,6 +726,19 @@
                     });
                 }
             };
+            jmri.clickLogixNGIcon = function (identity) {
+				// This function executes the inline LogixNG of a LogixNGIcon on a panel.
+                if (jmri.socket) {
+                    jmri.socket.send("logixngicon", { identity: identity }, 'post');
+                } else {
+                    $.ajax({
+                        url: jmri.url + "logixngicon",
+                        type: "POST",
+                        data: JSON.stringify({ identity: identity }),
+                        contentType: "application/json; charset=utf-8"
+                    });
+                }
+            };
             /**
              * Force the jmri object to begin communicating with the JMRI server
              * even if the WebSocket connection cannot be immediately established
@@ -871,6 +884,10 @@
                 },
                 locations: function (e) {
                     jmri.locations(e.data);
+                },
+                logixngicon: function (e) {
+					// Do nothing. We get this event as response when we call jmri.clickLogixNGIcon()
+					// but there is nothing to do when this event arrives.
                 },
                 memory: function (e) {
                     jmri.memory(e.data.name, e.data.value, e.data);

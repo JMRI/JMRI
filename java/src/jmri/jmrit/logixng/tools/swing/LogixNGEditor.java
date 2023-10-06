@@ -752,7 +752,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         public static final int SNAME_COLUMN = 0;
         public static final int UNAME_COLUMN = SNAME_COLUMN + 1;
         public static final int THREAD_COLUMN = UNAME_COLUMN + 1;
-        public static final int BUTTON_COLUMN = THREAD_COLUMN + 1;
+        public static final int STARTUP_COLUMN = THREAD_COLUMN + 1;
+        public static final int BUTTON_COLUMN = STARTUP_COLUMN + 1;
         public static final int BUTTON_DEBUG_COLUMN = BUTTON_COLUMN + 1;
         public static final int BUTTON_DELETE_COLUMN = BUTTON_DEBUG_COLUMN + 1;
         public static final int BUTTON_EDIT_THREADS_COLUMN = BUTTON_DELETE_COLUMN + 1;
@@ -826,6 +827,9 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     || (c == BUTTON_EDIT_THREADS_COLUMN)) {
                 return JButton.class;
             }
+            if (c == STARTUP_COLUMN) {
+                return Boolean.class;
+            }
             return String.class;
         }
 
@@ -843,6 +847,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         public boolean isCellEditable(int r, int c) {
             if (!_inReorderMode) {
                 return ((c == UNAME_COLUMN)
+                        || (c == STARTUP_COLUMN)
                         || (c == BUTTON_COLUMN)
                         || ((c == BUTTON_DEBUG_COLUMN) && InstanceManager.getDefault(LogixNGPreferences.class).getInstallDebugger())
                         || (c == BUTTON_DELETE_COLUMN)
@@ -864,6 +869,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     return Bundle.getMessage("ColumnUserName");  // NOI18N
                 case THREAD_COLUMN:
                     return Bundle.getMessage("ConditionalNG_Table_ColumnThreadName");  // NOI18N
+                case STARTUP_COLUMN:
+                    return Bundle.getMessage("ConditionalNG_Table_ColumnStartup");  // NOI18N
                 case BUTTON_COLUMN:
                     return ""; // no label
                 case BUTTON_DEBUG_COLUMN:
@@ -887,6 +894,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     return new JTextField(17).getPreferredSize().width;
                 case THREAD_COLUMN:
                     return new JTextField(10).getPreferredSize().width;
+                case STARTUP_COLUMN:
+                    return new JTextField(6).getPreferredSize().width;
                 case BUTTON_COLUMN:
                     return new JTextField(6).getPreferredSize().width;
                 case BUTTON_DEBUG_COLUMN:
@@ -941,12 +950,30 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     } else {
                         return _curLogixNG.getConditionalNG(r).getCurrentThread().getThreadName();
                     }
+                case STARTUP_COLUMN:
+                    ConditionalNG c = _curLogixNG.getConditionalNG(rx);
+                    if (c != null) {
+                        return c.isExecuteAtStartup();
+                    }
+                    return false;
                 default:
                     throw new IllegalArgumentException("Unknown column");
             }
         }
 
-        private void buttomColumnClicked(int row, int col) {
+        private void buttonStartupClicked(int row, Object value) {
+            _curConditionalNG = _curLogixNG.getConditionalNG(row);
+            if (_curConditionalNG == null) {
+                log.error("Attempted edit of non-existant conditional.");  // NOI18N
+                return;
+            }
+            if (!(value instanceof Boolean)) {
+                throw new IllegalArgumentException("value is not a Boolean");
+            }
+            _curConditionalNG.setExecuteAtStartup((boolean)value);
+        }
+
+        private void buttonColumnClicked(int row, int col) {
             if (_inReorderMode) {
                 swapConditionalNG(row);
             } else {
@@ -969,7 +996,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             }
         }
 
-        private void buttomDebugClicked(int row, int col) {
+        private void buttonDebugClicked(int row, int col) {
             if (_inReorderMode) {
                 swapConditionalNG(row);
             } else {
@@ -1018,11 +1045,14 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 return;
             }
             switch (col) {
+                case STARTUP_COLUMN:
+                    buttonStartupClicked(row, value);
+                    break;
                 case BUTTON_COLUMN:
-                    buttomColumnClicked(row, col);
+                    buttonColumnClicked(row, col);
                     break;
                 case BUTTON_DEBUG_COLUMN:
-                    buttomDebugClicked(row, col);
+                    buttonDebugClicked(row, col);
                     break;
                 case BUTTON_DELETE_COLUMN:
                     deleteConditionalNG(row);
