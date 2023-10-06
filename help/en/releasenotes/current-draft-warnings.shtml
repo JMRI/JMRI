@@ -1,6 +1,11 @@
 
     <!-- contains new warnings for the release under development -->
     <li>
+        XML files with table contents and panels have been changed in JMRI 5.5.5. It's therefore not
+        possible to load an xml file with tables and panels that has been created with JMRI 5.5.5 or
+        later with a JMRI version pre 5.5.5.
+    </li>
+    <li>
         MQTT Connection - Throttle loco address and function placeholders in MQTT topics have changed from
         $address and $function to {0} and {1} for consistency with other objects.
     </li>
