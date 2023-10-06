@@ -12,17 +12,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test ActionTurnoutXml
+ * Test DigitalBooleanLogixActionXml
  *
  * @author Daniel Bergqvist 2019
  */
-public class DigitalBooleanOnChangeXmlTest {
+public class DigitalBooleanLogixActionXmlTest {
 
     @Test
     public void testLoad() throws JmriConfigureXmlException {
         AbstractNamedBeanManagerConfigXML b;
 
-        b = new DigitalBooleanOnChangeXml();
+        b = new DigitalBooleanLogixActionXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");

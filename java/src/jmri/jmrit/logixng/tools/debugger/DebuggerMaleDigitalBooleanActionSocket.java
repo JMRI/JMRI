@@ -12,10 +12,9 @@ import jmri.jmrit.logixng.MaleDigitalBooleanActionSocket;
  * @author daniel
  */
 public class DebuggerMaleDigitalBooleanActionSocket extends AbstractDebuggerMaleSocket implements MaleDigitalBooleanActionSocket {
-    
-    private boolean _nextHasChangedToTrue;
-    private boolean _nextHasChangedToFalse;
-    
+
+    private boolean _nextValue;
+
     public DebuggerMaleDigitalBooleanActionSocket(BaseManager<MaleDigitalBooleanActionSocket> manager, MaleDigitalBooleanActionSocket maleSocket) {
         super(manager, maleSocket);
     }
@@ -24,22 +23,20 @@ public class DebuggerMaleDigitalBooleanActionSocket extends AbstractDebuggerMale
     @Override
     public String getBeforeInfo() {
         return Bundle.getMessage("DigitalBooleanAction_InfoBefore",
-                _nextHasChangedToTrue ? Bundle.getMessage("True") : Bundle.getMessage("False"),
-                _nextHasChangedToFalse ? Bundle.getMessage("True") : Bundle.getMessage("False"));
+                _nextValue ? Bundle.getMessage("True") : Bundle.getMessage("False"));
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public String getAfterInfo() {
         return Bundle.getMessage("DigitalBooleanAction_InfoAfter");
     }
-    
+
     @Override
-    public void execute(boolean hasChangedToTrue, boolean hasChangedToFalse) throws JmriException {
-        _nextHasChangedToTrue = hasChangedToTrue;
-        _nextHasChangedToFalse = hasChangedToFalse;
+    public void execute(boolean value) throws JmriException {
+        _nextValue = value;
         before();
-        ((MaleDigitalBooleanActionSocket)getObject()).execute(hasChangedToTrue, hasChangedToFalse);
+        ((MaleDigitalBooleanActionSocket)getObject()).execute(value);
         after();
     }
 
@@ -87,5 +84,5 @@ public class DebuggerMaleDigitalBooleanActionSocket extends AbstractDebuggerMale
     public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n2) {
         return ((MaleDigitalBooleanActionSocket)getObject()).compareSystemNameSuffix(suffix1, suffix2, n2);
     }
-    
+
 }

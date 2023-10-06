@@ -1,13 +1,11 @@
 package jmri.jmrit.logixng.actions.configurexml;
 
 import jmri.InstanceManager;
-import jmri.Light;
-import jmri.LightManager;
-import jmri.NamedBeanHandle;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.Logix;
 
+import org.jdom2.Attribute;
 import org.jdom2.Element;
 
 /**
@@ -31,8 +29,10 @@ public class LogixXml extends jmri.managers.configurexml.AbstractNamedBeanManage
         Element element = new Element("Logix");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
+
+        element.setAttribute("executeType", p.getExecuteType().name());
 
         Element e2 = new Element("ExpressionSocket");
         e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
@@ -63,7 +63,7 @@ public class LogixXml extends jmri.managers.configurexml.AbstractNamedBeanManage
 
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) {
         String sys = getSystemName(shared);
@@ -72,23 +72,29 @@ public class LogixXml extends jmri.managers.configurexml.AbstractNamedBeanManage
 
         loadCommon(h, shared);
 
+        Attribute typeAttr = shared.getAttribute("executeType");
+        if (typeAttr != null) {
+            String typeStr = typeAttr.getValue();
+            h.setExecuteType(Logix.ExecuteType.valueOf(typeStr));
+        }
+
         Element socketName = shared.getChild("ExpressionSocket").getChild("socketName");
         h.getChild(0).setName(socketName.getTextTrim());
         Element socketSystemName = shared.getChild("ExpressionSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setExpressionSocketSystemName(socketSystemName.getTextTrim());
         }
-        
+
         socketName = shared.getChild("ActionSocket").getChild("socketName");
         h.getChild(1).setName(socketName.getTextTrim());
         socketSystemName = shared.getChild("ActionSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setActionSocketSystemName(socketSystemName.getTextTrim());
         }
-        
+
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLightXml.class);
 }

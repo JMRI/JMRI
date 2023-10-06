@@ -25,31 +25,21 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalAction_LogixType">
+    <xs:complexType name="LogixNG_DigitalBooleanAction_DigitalBooleanLogixActionType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a Logix class.
+          Define the XML stucture for storing the contents of a DigitalBooleanLogixAction class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.LogixXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.DigitalBooleanLogixActionXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
         
             <xs:sequence>
-
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
-
-              <xs:element name="ExpressionSocket" minOccurs="1" maxOccurs="1">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
-                    <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
-              <xs:element name="ActionSocket" minOccurs="1" maxOccurs="1">
+              <xs:element name="Socket" minOccurs="1" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
@@ -61,16 +51,16 @@
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
-            
-            <xs:attribute name="executeType">
+            <xs:attribute name="trigger" use="required">
               <xs:simpleType>
                 <xs:restriction base="xs:token">
-                  <xs:enumeration value="ExecuteOnChange"/>
-                  <xs:enumeration value="ExecuteAlways"/>
+                  <xs:enumeration value="True"/>
+                  <xs:enumeration value="False"/>
+                  <xs:enumeration value="Either"/>
                 </xs:restriction>
               </xs:simpleType>
             </xs:attribute>
-
+            <xs:attribute name="enabled" type="yesNoType" />
             <xs:attribute name="class" type="classType" use="required"/>
         
     </xs:complexType>

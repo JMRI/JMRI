@@ -2659,6 +2659,13 @@ public class CreateLogixNGTreeScaffold {
 
         logix = new jmri.jmrit.logixng.actions.Logix(digitalActionManager.getAutoSystemName(), null);
         logix.setComment("A comment");
+        logix.setExecuteType(jmri.jmrit.logixng.actions.Logix.ExecuteType.ExecuteOnChange);
+        maleSocket = digitalActionManager.registerAction(logix);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        logix = new jmri.jmrit.logixng.actions.Logix(digitalActionManager.getAutoSystemName(), null);
+        logix.setComment("A comment");
+        logix.setExecuteType(jmri.jmrit.logixng.actions.Logix.ExecuteType.ExecuteAlways);
         maleSocket = digitalActionManager.registerAction(logix);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -2676,18 +2683,24 @@ public class CreateLogixNGTreeScaffold {
         booleanMany.getChild(0).connect(maleSocket);
 
 
-        DigitalBooleanOnChange onChange =
-                new DigitalBooleanOnChange(digitalBooleanActionManager.getAutoSystemName(),
-                        null, DigitalBooleanOnChange.Trigger.CHANGE);
-        maleSocket = digitalBooleanActionManager.registerAction(onChange);
+        DigitalBooleanLogixAction logixAction =
+                new DigitalBooleanLogixAction(digitalBooleanActionManager.getAutoSystemName(),
+                        null, DigitalBooleanLogixAction.When.Either);
+        maleSocket = digitalBooleanActionManager.registerAction(logixAction);
         maleSocket.setEnabled(false);
         booleanMany.getChild(1).connect(maleSocket);
 
-        onChange = new DigitalBooleanOnChange(digitalBooleanActionManager.getAutoSystemName(),
-                null, DigitalBooleanOnChange.Trigger.CHANGE_TO_FALSE);
-        onChange.setComment("A comment");
-        maleSocket = digitalBooleanActionManager.registerAction(onChange);
+        logixAction = new DigitalBooleanLogixAction(digitalBooleanActionManager.getAutoSystemName(),
+                null, DigitalBooleanLogixAction.When.False);
+        logixAction.setComment("A comment");
+        maleSocket = digitalBooleanActionManager.registerAction(logixAction);
         booleanMany.getChild(2).connect(maleSocket);
+
+        logixAction = new DigitalBooleanLogixAction(digitalBooleanActionManager.getAutoSystemName(),
+                null, DigitalBooleanLogixAction.When.True);
+        logixAction.setComment("A comment");
+        maleSocket = digitalBooleanActionManager.registerAction(logixAction);
+        booleanMany.getChild(3).connect(maleSocket);
 
 
         jmri.jmrit.logixng.actions.LogData logData = new jmri.jmrit.logixng.actions.LogData(digitalActionManager.getAutoSystemName(), null);
