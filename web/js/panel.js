@@ -663,6 +663,11 @@ function processPanelXML($returnedData, $success, $xhr) {
                 case "text" :
                     $widget['styles'] = $getTextCSSFromObj($widget);
                     switch ($widget.widgetType) {
+                        case "logixngicon" :
+                            $widget.jsonType = "logixngicon"; // JSON object type
+                            $widget['identity'] = $(this).find('Identity').text();
+                            $widget.classes += " " + $widget.jsonType + " clickable ";
+                            break;
                         case "sensoricon" :
                             $widget['name'] = $widget.sensor; //normalize name
                             $widget.jsonType = "sensor"; // JSON object type
