@@ -666,6 +666,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                         case "logixngicon" :
                             $widget.jsonType = "logixngicon"; // JSON object type
                             $widget['identity'] = $(this).find('Identity').text();
+                            $widget.styles['user-select'] = "none";
                             $widget.classes += " " + $widget.jsonType + " clickable ";
                             break;
                         case "sensoricon" :
