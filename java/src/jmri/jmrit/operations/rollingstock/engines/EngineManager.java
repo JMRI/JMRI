@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
+import java.beans.PropertyChangeEvent;
 import java.util.*;
 
 import org.jdom2.Element;
@@ -11,6 +12,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManifestHeaderText;
 
 /**
  * Manages the engines.
@@ -142,6 +144,27 @@ public class EngineManager extends RollingStockManager<Engine>
         return names;
     }
 
+    int _commentLength = 0;
+
+    public int getMaxCommentLength() {
+        if (_commentLength == 0) {
+            _commentLength = TrainManifestHeaderText.getStringHeader_Comment().length();
+            String comment = "";
+            Engine engineMax = null;
+            for (Engine engine : getList()) {
+                if (engine.getComment().length() > _commentLength) {
+                    _commentLength = engine.getComment().length();
+                    comment = engine.getComment();
+                    engineMax = engine;
+                }
+            }
+            if (engineMax != null) {
+                log.info("Max engine comment ({}) ({}) length {}", engineMax.toString(), comment, _commentLength);
+            }
+        }
+        return _commentLength;
+    }
+
     public void load(Element root) {
         if (root.getChild(Xml.ENGINES) != null) {
             List<Element> engines = root.getChild(Xml.ENGINES).getChildren(Xml.ENGINE);
@@ -173,6 +196,14 @@ public class EngineManager extends RollingStockManager<Engine>
         // Set dirty
         InstanceManager.getDefault(EngineManagerXml.class).setDirty(true);
         super.firePropertyChange(p, old, n);
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals(Engine.COMMENT_CHANGED_PROPERTY)) {
+            _commentLength = 0;
+        }
+        super.propertyChange(evt);
     }
 
     private final static Logger log = LoggerFactory.getLogger(EngineManager.class);
