@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 
 import jmri.ConsistManager;
 import jmri.InstanceManager;
@@ -84,8 +85,8 @@ public class ThrottlesListPanel extends JPanel {
         JButton jbNew = new JButton();
         jbNew.setIcon(new NamedIcon("resources/icons/throttles/new.png", "resources/icons/throttles/new.png"));
         jbNew.setToolTipText(Bundle.getMessage("ThrottleToolBarNewWindowToolTip"));
-        jbNew.setVerticalTextPosition(JButton.BOTTOM);
-        jbNew.setHorizontalTextPosition(JButton.CENTER);
+        jbNew.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jbNew.setHorizontalTextPosition(SwingConstants.CENTER);
         jbNew.addActionListener((ActionEvent e) -> {
             ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
             tf.toFront();
@@ -103,8 +104,8 @@ public class ThrottlesListPanel extends JPanel {
         JButton jbPreferences = new JButton();
         jbPreferences.setIcon(new NamedIcon("resources/icons/throttles/preferences.png", "resources/icons/throttles/Preferences24.png"));
         jbPreferences.setToolTipText(Bundle.getMessage("ThrottleToolBarPreferencesToolTip"));
-        jbPreferences.setVerticalTextPosition(JButton.BOTTOM);
-        jbPreferences.setHorizontalTextPosition(JButton.CENTER);
+        jbPreferences.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jbPreferences.setHorizontalTextPosition(SwingConstants.CENTER);
         jbPreferences.addActionListener(new ThrottlesPreferencesAction());
         throttleToolBar.add(jbPreferences);
     }
