@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
-<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
+<?xml-stylesheet href="/xml/XSLT/panelfile-5-5-5.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-5-5-5.xsd">
   <jmriversion>
     <major>5</major>
     <minor>5</minor>
@@ -186,7 +186,7 @@
     </ExpressionSensor>
   </LogixNGDigitalExpressions>
   <LogixNGDigitalActions class="jmri.jmrit.logixng.implementation.configurexml.DefaultDigitalActionManagerXml">
-    <Logix class="jmri.jmrit.logixng.actions.configurexml.LogixXml">
+    <Logix class="jmri.jmrit.logixng.actions.configurexml.LogixXml" executeType="ExecuteOnChange">
       <systemName>IQDA:AUTO:0001</systemName>
       <ExpressionSocket>
         <socketName>E</socketName>
@@ -288,7 +288,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </DigitalBooleanMany>
-    <OnChange class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanOnChangeXml" trigger="CHANGE_TO_TRUE">
+    <LogixAction class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanLogixActionXml" trigger="True">
       <systemName>IQDB:AUTO:0002</systemName>
       <Socket>
         <socketName>A</socketName>
@@ -300,8 +300,8 @@
           <errorHandling>Default</errorHandling>
         </AbstractMaleSocket>
       </MaleSocket>
-    </OnChange>
-    <OnChange class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanOnChangeXml" trigger="CHANGE_TO_FALSE">
+    </LogixAction>
+    <LogixAction class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanLogixActionXml" trigger="False">
       <systemName>IQDB:AUTO:0003</systemName>
       <Socket>
         <socketName>A</socketName>
@@ -313,8 +313,8 @@
           <errorHandling>Default</errorHandling>
         </AbstractMaleSocket>
       </MaleSocket>
-    </OnChange>
-    <OnChange class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanOnChangeXml" trigger="CHANGE">
+    </LogixAction>
+    <LogixAction class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanLogixActionXml" trigger="Either">
       <systemName>IQDB:AUTO:0004</systemName>
       <Socket>
         <socketName>A</socketName>
@@ -326,7 +326,7 @@
           <errorHandling>Default</errorHandling>
         </AbstractMaleSocket>
       </MaleSocket>
-    </OnChange>
+    </LogixAction>
   </LogixNGDigitalBooleanActions>
   <filehistory>
     <operation>
