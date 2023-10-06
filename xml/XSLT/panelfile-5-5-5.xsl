@@ -2,7 +2,7 @@
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page              -->
 <!-- Used by default when the panel file is displayed in a web browser      -->
-<!-- This version corresponds to the 4.19.2 schema update                   -->
+<!-- This version corresponds to the 5.5.5 schema update                   -->
 
 <!-- TESTED with multiple web browsers (01/18/2023): 
      Safari, Chrome, MS Edge, Brave ALL OK
