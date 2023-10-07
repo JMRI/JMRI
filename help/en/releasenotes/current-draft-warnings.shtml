@@ -1,8 +1,7 @@
 
     <!-- contains new warnings for the release under development -->
     <li>
-        MQTT Connection - Throttle loco address and function placeholders in MQTT topics have changed from
-        $address and $function to {0} and {1} for consistency with other objects.
+        None yet
     </li>
     <li>
     </li>

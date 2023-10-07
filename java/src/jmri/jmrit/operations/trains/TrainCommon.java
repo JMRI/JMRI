@@ -41,6 +41,7 @@ public class TrainCommon {
     public static final String HYPHEN = "-";
     protected static final String VERTICAL_LINE_CHAR = "|";
     protected static final String TEXT_COLOR_START = "<FONT color=\"";
+    protected static final String TEXT_COLOR_DONE = "\">";
     protected static final String TEXT_COLOR_END = "</FONT>";
 
     // when true a pick up, when false a set out
@@ -93,8 +94,8 @@ public class TrainCommon {
     }
 
     /**
-     * Adds a list of locomotive pick ups for the route location to the output file.
-     * Used to generate "Standard" format.
+     * Adds a list of locomotive pick ups for the route location to the output
+     * file. Used to generate "Standard" format.
      *
      * @param file       Manifest or Switch List File
      * @param engineList List of engines for this train.
@@ -130,8 +131,8 @@ public class TrainCommon {
     }
 
     /**
-     * Adds a list of locomotive drops for the route location to the output file.
-     * Used to generate "Standard" format.
+     * Adds a list of locomotive drops for the route location to the output
+     * file. Used to generate "Standard" format.
      *
      * @param file       Manifest or Switch List File
      * @param engineList List of engines for this train.
@@ -202,8 +203,8 @@ public class TrainCommon {
     boolean _printLocalMoveHeader = true;
 
     /**
-     * Block cars by track, then pick up and set out for each location in a train's
-     * route. This routine is used for the "Standard" format.
+     * Block cars by track, then pick up and set out for each location in a
+     * train's route. This routine is used for the "Standard" format.
      *
      * @param file        Manifest or switch list File
      * @param train       The train being printed.
@@ -226,8 +227,7 @@ public class TrainCommon {
             if (trackNames.contains(track.getSplitName())) {
                 continue;
             }
-            trackNames.add(track.getSplitName()); // use a track name
-                                                          // once
+            trackNames.add(track.getSplitName()); // use a track name once
             // block pick up cars, except for passenger cars
             for (RouteLocation rld : train.getTrainBlockingOrder()) {
                 for (Car car : carList) {
@@ -277,10 +277,8 @@ public class TrainCommon {
                 if (Setup.isSortByTrackNameEnabled() &&
                         car.getRouteLocation() != null &&
                         car.getRouteDestination() == rl) {
-                    // must sort local moves by car's destination track name and
-                    // not car's track name
-                    // sorting by car's track name fails if there are "similar"
-                    // location names.
+                    // must sort local moves by car's destination track name and not car's track name
+                    // sorting by car's track name fails if there are "similar" location names.
                     if (!track.getSplitName().equals(car.getSplitDestinationTrackName())) {
                         continue;
                     }
@@ -333,7 +331,7 @@ public class TrainCommon {
             }
         }
     }
-    
+
     /**
      * Used to determine if car is the next to be processed when producing
      * Manifests or Switch Lists. Caboose or FRED is placed at end of the train.
@@ -369,8 +367,9 @@ public class TrainCommon {
     }
 
     /**
-     * Produces a two column format for car pick ups and set outs. Sorted by track
-     * and then by blocking order. This routine is used for the "Two Column" format.
+     * Produces a two column format for car pick ups and set outs. Sorted by
+     * track and then by blocking order. This routine is used for the "Two
+     * Column" format.
      *
      * @param file        Manifest or switch list File
      * @param train       The train
@@ -429,8 +428,7 @@ public class TrainCommon {
                             // or more locations
                             if (!sl.equals(s)) {
                                 s = sl;
-                                carList.remove(car); // done with this car,
-                                                     // remove from list
+                                carList.remove(car); // done with this car, remove from list
                                 k--;
                             } else {
                                 s = padAndTruncate(s + VERTICAL_LINE_CHAR, getLineLength(isManifest));
@@ -461,9 +459,10 @@ public class TrainCommon {
     List<Car> doneCars = new ArrayList<>();
 
     /**
-     * Produces a two column format for car pick ups and set outs. Sorted by track
-     * and then by destination. Track name in header format, track name removed from
-     * format. This routine is used to generate the "Two Column by Track" format.
+     * Produces a two column format for car pick ups and set outs. Sorted by
+     * track and then by destination. Track name in header format, track name
+     * removed from format. This routine is used to generate the "Two Column by
+     * Track" format.
      *
      * @param file        Manifest or switch list File
      * @param train       The train
@@ -579,8 +578,8 @@ public class TrainCommon {
     int index = 0;
 
     /*
-     * Used by two column format. Local moves (pulls and spots) are lined up when
-     * using this format,
+     * Used by two column format. Local moves (pulls and spots) are lined up
+     * when using this format,
      */
     private String appendSetoutString(String s, List<Car> carList, RouteLocation rl, boolean local, boolean isManifest,
             boolean isTwoColumnTrack) {
@@ -624,8 +623,8 @@ public class TrainCommon {
     }
 
     /*
-     * Appends to string the vertical line character, and the car set out string.
-     * Used in two column format.
+     * Appends to string the vertical line character, and the car set out
+     * string. Used in two column format.
      */
     private String appendSetoutString(String s, List<Car> carList, RouteLocation rl, Car car, boolean isManifest,
             boolean isTwoColumnTrack) {
@@ -647,8 +646,8 @@ public class TrainCommon {
     }
 
     /**
-     * Adds the car's pick up string to the output file using the truncated manifest
-     * format
+     * Adds the car's pick up string to the output file using the truncated
+     * manifest format
      *
      * @param file       Manifest or switch list File
      * @param car        The car being printed.
@@ -661,8 +660,8 @@ public class TrainCommon {
     }
 
     /**
-     * Adds the car's pick up string to the output file using the manifest or switch
-     * list format
+     * Adds the car's pick up string to the output file using the manifest or
+     * switch list format
      *
      * @param file       Manifest or switch list File
      * @param car        The car being printed.
@@ -700,14 +699,14 @@ public class TrainCommon {
     }
 
     /**
-     * Returns the pick up car string. Useful for frames like train conductor and
-     * yardmaster.
+     * Returns the pick up car string. Useful for frames like train conductor
+     * and yardmaster.
      *
      * @param car              The car being printed.
-     * @param isManifest       when true use manifest format, when false use switch
-     *                         list format
-     * @param isTwoColumnTrack True if printing using two column format sorted by
-     *                         track name.
+     * @param isManifest       when true use manifest format, when false use
+     *                         switch list format
+     * @param isTwoColumnTrack True if printing using two column format sorted
+     *                         by track name.
      * @return pick up car string
      */
     public String pickupCar(Car car, boolean isManifest, boolean isTwoColumnTrack) {
@@ -729,9 +728,9 @@ public class TrainCommon {
     }
 
     /**
-     * Adds the car's set out string to the output file using the truncated manifest
-     * format. Does not print out local moves. Local moves are only shown on the
-     * switch list for that location.
+     * Adds the car's set out string to the output file using the truncated
+     * manifest format. Does not print out local moves. Local moves are only
+     * shown on the switch list for that location.
      *
      * @param file       Manifest or switch list File
      * @param car        The car being printed.
@@ -747,8 +746,8 @@ public class TrainCommon {
     }
 
     /**
-     * Adds the car's set out string to the output file using the manifest or switch
-     * list format
+     * Adds the car's set out string to the output file using the manifest or
+     * switch list format
      *
      * @param file       Manifest or switch list File
      * @param car        The car being printed.
@@ -799,8 +798,8 @@ public class TrainCommon {
      * yardmaster.
      *
      * @param car              The car being printed.
-     * @param isManifest       when true use manifest format, when false use switch
-     *                         list format
+     * @param isManifest       when true use manifest format, when false use
+     *                         switch list format
      * @param isTwoColumnTrack True if printing using two column format.
      * @return drop car string
      */
@@ -835,8 +834,8 @@ public class TrainCommon {
      * yardmaster.
      *
      * @param car        The car being printed.
-     * @param isManifest when true use manifest format, when false use switch list
-     *                   format
+     * @param isManifest when true use manifest format, when false use switch
+     *                   list format
      * @return move car string
      */
     public String localMoveCar(Car car, boolean isManifest) {
@@ -857,8 +856,8 @@ public class TrainCommon {
     private static final int UTILITY_CAR_COUNT_FIELD_SIZE = 3;
 
     /**
-     * Add a list of utility cars scheduled for pick up from the route location to
-     * the output file. The cars are blocked by destination.
+     * Add a list of utility cars scheduled for pick up from the route location
+     * to the output file. The cars are blocked by destination.
      *
      * @param file       Manifest or Switch List File.
      * @param carList    List of cars for this train.
@@ -891,8 +890,8 @@ public class TrainCommon {
     }
 
     /**
-     * Add a list of utility cars scheduled for drop at the route location to the
-     * output file.
+     * Add a list of utility cars scheduled for drop at the route location to
+     * the output file.
      *
      * @param file       Manifest or Switch List File.
      * @param carList    List of cars for this train.
@@ -1029,9 +1028,9 @@ public class TrainCommon {
     }
 
     /**
-     * Scans the car list for utility cars that have the same attributes as the car
-     * provided. Returns 0 if this car type has already been processed, otherwise
-     * the number of cars with the same attribute.
+     * Scans the car list for utility cars that have the same attributes as the
+     * car provided. Returns 0 if this car type has already been processed,
+     * otherwise the number of cars with the same attribute.
      *
      * @param format   Message format.
      * @param carList  List of cars for this train
@@ -1155,7 +1154,7 @@ public class TrainCommon {
      * @param string string to write
      */
     protected static void addLine(PrintWriter file, String level, String string) {
-        log.debug("addLine: {}",string);
+        log.debug("addLine: {}", string);
         if (file != null) {
             String[] lines = string.split(NEW_LINE);
             for (String line : lines) {
@@ -1197,13 +1196,13 @@ public class TrainCommon {
     }
 
     /**
-     * Writes a string to a file. Checks for string length, and will automatically
-     * wrap lines.
+     * Writes a string to a file. Checks for string length, and will
+     * automatically wrap lines.
      *
      * @param file       The File to write to.
      * @param string     The string to write.
-     * @param isManifest set true for manifest page orientation, false for switch
-     *                   list orientation
+     * @param isManifest set true for manifest page orientation, false for
+     *                   switch list orientation
      */
     protected void newLine(PrintWriter file, String string, boolean isManifest) {
         String[] lines = string.split(NEW_LINE);
@@ -1214,15 +1213,13 @@ public class TrainCommon {
                 if (checkStringLength(sb.toString() + word, isManifest)) {
                     sb.append(word + SPACE);
                 } else {
-                    sb.setLength(sb.length() - 1); // remove last space added to
-                                                   // string
+                    sb.setLength(sb.length() - 1); // remove last space added to string
                     addLine(file, sb.toString());
                     sb = new StringBuffer(word + SPACE);
                 }
             }
             if (sb.length() > 0) {
-                sb.setLength(sb.length() - 1); // remove last space added to
-                                               // string
+                sb.setLength(sb.length() - 1); // remove last space added to string
             }
             addLine(file, sb.toString());
         }
@@ -1238,9 +1235,9 @@ public class TrainCommon {
     }
 
     /**
-     * Splits a string (example-number) as long as the second part of the string is
-     * an integer or if the first character after the hyphen is a left parenthesis
-     * "(".
+     * Splits a string (example-number) as long as the second part of the string
+     * is an integer or if the first character after the hyphen is a left
+     * parenthesis "(".
      *
      * @param name The string to split if necessary.
      * @return First half of the string.
@@ -1342,7 +1339,7 @@ public class TrainCommon {
         }
         addLine(file, buf.toString());
     }
-    
+
     /*
      * Gets an engine's attribute String. Returns empty if there isn't an
      * attribute and not using the tabular feature. isPickup true when engine is
@@ -1359,8 +1356,8 @@ public class TrainCommon {
     }
 
     /*
-     * Can not use String case statement since Setup.MODEL, etc, are not
-     * fixed strings.
+     * Can not use String case statement since Setup.MODEL, etc, are not fixed
+     * strings.
      */
     private String getEngineAttrib(Engine engine, String attribute, boolean isPickup) {
         if (attribute.equals(Setup.MODEL)) {
@@ -1372,10 +1369,12 @@ public class TrainCommon {
         } else if (attribute.equals(Setup.DCC_ADDRESS)) {
             return padAndTruncateIfNeeded(engine.getDccAddress(),
                     TrainManifestHeaderText.getStringHeader_DCC_Address().length());
+        } else if (attribute.equals(Setup.COMMENT)) {
+            return padAndTruncateIfNeeded(engine.getComment(), engineManager.getMaxCommentLength());
         }
         return getRollingStockAttribute(engine, attribute, isPickup, false);
     }
-    
+
     /*
      * Gets a car's attribute String. Returns empty if there isn't an attribute
      * and not using the tabular feature. isPickup true when car is being picked
@@ -1462,6 +1461,8 @@ public class TrainCommon {
         } else if (attribute.equals(Setup.DIVISION)) {
             return padAndTruncateIfNeeded(car.getDivisionName(),
                     InstanceManager.getDefault(DivisionManager.class).getMaxDivisionNameLength());
+        } else if (attribute.equals(Setup.COMMENT)) {
+            return padAndTruncateIfNeeded(car.getComment(), carManager.getMaxCommentLength());
         }
         return getRollingStockAttribute(car, attribute, isPickup, isLocal);
     }
@@ -1533,7 +1534,8 @@ public class TrainCommon {
                                         1);
             } else if (attribute.equals(Setup.DEST_TRACK)) {
                 // format destination name and destination track name
-                String destAndTrackName = rs.getSplitDestinationName() + "," + SPACE + rs.getSplitDestinationTrackName();
+                String destAndTrackName =
+                        rs.getSplitDestinationName() + "," + SPACE + rs.getSplitDestinationTrackName();
                 return Setup.isPrintHeadersEnabled()
                         ? padAndTruncateIfNeeded(destAndTrackName,
                                 locationManager.getMaxLocationAndTrackNameLength() + 2)
@@ -1544,8 +1546,6 @@ public class TrainCommon {
             } else if (attribute.equals(Setup.OWNER)) {
                 return padAndTruncateIfNeeded(rs.getOwnerName(),
                         InstanceManager.getDefault(CarOwners.class).getMaxNameLength());
-            } else if (attribute.equals(Setup.COMMENT)) {
-                return padAndTruncateIfNeeded(rs.getComment(), carManager.getMaxCommentLength());
             } // the three utility attributes that don't get printed but need to
               // be tabbed out
             else if (attribute.equals(Setup.NO_NUMBER)) {
@@ -1826,7 +1826,7 @@ public class TrainCommon {
                         locationManager.getMaxLocationAndTrackNameLength()) + SPACE);
             } else if (attribute.equals(Setup.COMMENT)) {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Comment(),
-                        carManager.getMaxCommentLength()) + SPACE);
+                        isEngine ? engineManager.getMaxCommentLength() : carManager.getMaxCommentLength()) + SPACE);
             } else if (attribute.equals(Setup.DROP_COMMENT)) {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Drop_Comment(),
                         InstanceManager.getDefault(CarLoads.class).getMaxLoadCommentLength()) + SPACE);
@@ -1919,8 +1919,9 @@ public class TrainCommon {
     }
 
     /**
-     * Pads out a string by adding spaces to the end of the string, and will remove
-     * characters from the end of the string if the string exceeds the field size.
+     * Pads out a string by adding spaces to the end of the string, and will
+     * remove characters from the end of the string if the string exceeds the
+     * field size.
      *
      * @param s         The string to pad.
      * @param fieldSize The maximum length of the string.
@@ -1942,8 +1943,8 @@ public class TrainCommon {
     }
 
     /**
-     * Adjusts string to be a certain number of characters by adding spaces to the
-     * end of the string.
+     * Adjusts string to be a certain number of characters by adding spaces to
+     * the end of the string.
      *
      * @param s         The string to pad
      * @param fieldSize The fixed length of the string.
@@ -1958,8 +1959,8 @@ public class TrainCommon {
     }
 
     /**
-     * Creates a String of spaces to create a tab for text. Tabs must be enabled.
-     * Setup.isTabEnabled()
+     * Creates a String of spaces to create a tab for text. Tabs must be
+     * enabled. Setup.isTabEnabled()
      * 
      * @param tabSize the length of tab
      * @return tab
@@ -1982,8 +1983,8 @@ public class TrainCommon {
     }
 
     /**
-     * Returns the line length for manifest or switch list printout. Always an even
-     * number.
+     * Returns the line length for manifest or switch list printout. Always an
+     * even number.
      * 
      * @param isManifest True if manifest.
      * @return line length for manifest or switch list.
@@ -2025,6 +2026,13 @@ public class TrainCommon {
      * @return false if string length is longer than page width.
      */
     private boolean checkStringLength(String string, String orientation, String fontName, int fontSize) {
+        // ignore text color controls when determining line length
+        if (string.startsWith(TEXT_COLOR_START) && string.contains(TEXT_COLOR_DONE)) {
+            string = string.substring(string.indexOf(TEXT_COLOR_DONE) + 2);
+        }
+        if (string.contains(TEXT_COLOR_END)) {
+            string = string.substring(0, string.indexOf(TEXT_COLOR_END));
+        }
         Font font = new Font(fontName, Font.PLAIN, fontSize); // NOI18N
         JLabel label = new JLabel();
         FontMetrics metrics = label.getFontMetrics(font);
@@ -2052,8 +2060,8 @@ public class TrainCommon {
     }
 
     /**
-     * Produces a string using commas and spaces between the strings provided in the
-     * array. Does not check for embedded commas in the string array.
+     * Produces a string using commas and spaces between the strings provided in
+     * the array. Does not check for embedded commas in the string array.
      *
      * @param array The string array to be formated.
      * @return formated string using commas and spaces
@@ -2072,9 +2080,9 @@ public class TrainCommon {
     }
 
     /**
-     * Adds HTML like color text control characters around a string. Note that black
-     * is the standard text color, and if black is requested no control characters
-     * are added.
+     * Adds HTML like color text control characters around a string. Note that
+     * black is the standard text color, and if black is requested no control
+     * characters are added.
      * 
      * @param text  the text to be modified
      * @param color the color the text is to be printed
@@ -2083,7 +2091,7 @@ public class TrainCommon {
     public static String formatColorString(String text, Color color) {
         String s = text;
         if (!color.equals(Color.black)) {
-            s = TEXT_COLOR_START + ColorUtil.colorToColorName(color) + "\">" + text + TEXT_COLOR_END;
+            s = TEXT_COLOR_START + ColorUtil.colorToColorName(color) + TEXT_COLOR_DONE + text + TEXT_COLOR_END;
         }
         return s;
     }
@@ -2097,7 +2105,8 @@ public class TrainCommon {
     public static String getTextColorString(String string) {
         String text = string;
         if (string.contains(TEXT_COLOR_START)) {
-            text = string.substring(0, string.indexOf(TEXT_COLOR_START)) + string.substring(string.indexOf("\">") + 2);
+            text = string.substring(0, string.indexOf(TEXT_COLOR_START)) +
+                    string.substring(string.indexOf(TEXT_COLOR_DONE) + 2);
         }
         if (text.contains(TEXT_COLOR_END)) {
             text = text.substring(0, text.indexOf(TEXT_COLOR_END)) +
@@ -2115,7 +2124,7 @@ public class TrainCommon {
         }
         return color;
     }
-    
+
     public static String getTextColorName(String string) {
         return ColorUtil.colorToColorName(getTextColor(string));
     }
