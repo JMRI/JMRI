@@ -35,8 +35,14 @@ import org.slf4j.LoggerFactory;
  * <li>QSI: (mfgID == 113) write {@literal 254=>CV49}, write {@literal 4=>CV50},
  *  then CV56 is high byte, write {@literal 5=>CV50}, then CV56 is low byte of
  *  ID</li>
- * <li>SoundTraxx: (mfgID == 141, modelID == 70, 71 or 72) CV253 is high byte, CV256
- *  is low byte of ID</li>
+ * <li>SoundTraxx: (mfgID == 141, modelID == 70, 71 or 72) The product ID is made from
+ *   <ul>
+ *    <li>CV 256 bits 0-7
+ *    <li>CV 255 bits 8-10
+ *    <li>CV 253 bit 11-18
+ *   </ul>
+ *   i.e. productID = CV256 | ((CV255 &amp; 7) &lt;&lt; 8) | (CV253 &lt;&lt; 11)
+ * </li> 
  * <li>TCS: (mfgID == 153) CV249 is physical hardware id, V5 and above use
  *  CV248, CV110 and CV111 to identify specific sound sets and
  *  features. New productID process triggers if (CV249 &gt; 128).</li>
@@ -253,7 +259,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             return true;
         case SOUNDTRAXX:
             if (modelID >= 70 && modelID <= 72) {  // SoundTraxx Econami, Tsunami2 and Blunami
-                productIDhigh = value;
+                productIDhighest = value;
                 statusUpdate("Read decoder productID low CV256");
                 readCV("256");
                 return false;
@@ -313,8 +319,8 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         case SOUNDTRAXX:
             if (modelID >= 70 && modelID <= 72) {  // SoundTraxx Econami, Tsunami2 and Blunami
                 productIDlow = value;
-                productID = (productIDhigh << 8) | productIDlow;
-                return true;
+                readCV("255");
+                return false;
             } else return true;
         case HARMAN:
             productIDlow = value;
@@ -367,6 +373,12 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read decoder product ID #4 CV 50");
             readCV("50");
             return false;
+        case SOUNDTRAXX:
+            if (modelID >= 70 && modelID <= 72) {  // SoundTraxx Econami, Tsunami2 and Blunami
+                productIDhigh = value;
+                productID = productIDlow | ((productIDhigh & 7) << 8) | (productIDhighest << 11);
+                return true;
+            } else return true;
         case TCS:
             productIDhigh = value;
             statusUpdate("Read decoder extended Version ID High Byte");
