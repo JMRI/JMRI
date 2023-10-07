@@ -2,20 +2,22 @@ package jmri.jmrix.ieee802154.xbee.swing.nodeconfig;
 
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.listeners.IDiscoveryListener;
+
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
+
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+
 import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
 import jmri.jmrix.ieee802154.xbee.XBeeNode;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user configuration of XBee nodes Derived from node configuration
@@ -281,11 +283,11 @@ public class XBeeNodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.
             return;
         }
         // confirm deletion with the user
-        if (javax.swing.JOptionPane.OK_OPTION == javax.swing.JOptionPane.showConfirmDialog(
+        if (JmriJOptionPane.OK_OPTION == JmriJOptionPane.showConfirmDialog(
                 this, Bundle.getMessage("ConfirmDelete1") + "\n"
                 + Bundle.getMessage("ConfirmDelete2"), Bundle.getMessage("ConfirmDeleteTitle"),
-                javax.swing.JOptionPane.OK_CANCEL_OPTION,
-                javax.swing.JOptionPane.WARNING_MESSAGE)) {
+                JmriJOptionPane.OK_CANCEL_OPTION,
+                JmriJOptionPane.WARNING_MESSAGE)) {
             // delete this node
             xtc.deleteNode((XBeeNode) curNode);
             // provide user feedback
@@ -319,10 +321,10 @@ public class XBeeNodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.
         }
         if (changedNode) {
             // Remind user to Save new configuration
-            javax.swing.JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("Reminder1") + "\n" + Bundle.getMessage("Reminder2"),
                     Bundle.getMessage("ReminderTitle"),
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                    JmriJOptionPane.INFORMATION_MESSAGE);
         }
         setVisible(false);
         dispose();
@@ -527,9 +529,6 @@ public class XBeeNodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.
        discoverButton.setEnabled(true);
     }
 
-
-
-
-    private final static Logger log = LoggerFactory.getLogger(XBeeNodeConfigFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(XBeeNodeConfigFrame.class);
 
 }
