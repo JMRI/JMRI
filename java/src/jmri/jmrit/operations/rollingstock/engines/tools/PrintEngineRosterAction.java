@@ -31,6 +31,7 @@ public class PrintEngineRosterAction extends AbstractAction {
             perf = new PrintEngineRosterFrame(_isPreview, _enginesTableFrame);
         } else {
             perf.setVisible(true);
+            perf.initComponents();
         }
     }
 }

@@ -96,6 +96,11 @@ public class PrintEngineRosterFrame extends OperationsFrame {
         initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight250));
     }
 
+    @Override
+    public void initComponents() {
+        sortByComboBox.setSelectedItem(_etf.enginesModel.getSortByName());
+    }
+
     private void loadSortByComboBox(JComboBox<String> box) {
         box.removeAllItems();
         for (int i =
@@ -114,7 +119,7 @@ public class PrintEngineRosterFrame extends OperationsFrame {
     private void printEngines() {
         boolean landscape = false;
         if (manifestOrientationComboBox.getSelectedItem() != null &&
-                manifestOrientationComboBox.getSelectedItem() == Setup.LANDSCAPE) {
+                manifestOrientationComboBox.getSelectedItem().equals(Setup.LANDSCAPE)) {
             landscape = true;
         }
 

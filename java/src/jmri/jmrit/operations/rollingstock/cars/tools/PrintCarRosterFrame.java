@@ -219,7 +219,7 @@ public class PrintCarRosterFrame extends OperationsFrame {
     private void printCars() {
         boolean landscape = false;
         if (manifestOrientationComboBox.getSelectedItem() != null &&
-                manifestOrientationComboBox.getSelectedItem() == Setup.LANDSCAPE) {
+                manifestOrientationComboBox.getSelectedItem().equals(Setup.LANDSCAPE)) {
             landscape = true;
         }
 
