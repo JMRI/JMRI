@@ -119,7 +119,7 @@ public class IdentifyDecoderTest {
     }
 
     /**
-     * Test Tsunami2 decoder with productID in CV253 , CV255 and CV256.
+     * Test Tsunami2 decoder with productID in CV253 and CV256.
      */
     @Test
     public void testIdentifyTsu2() {
@@ -158,22 +158,17 @@ public class IdentifyDecoderTest {
         Assert.assertEquals("running after 4 ", true, i.isRunning());
 
         // simulate CV read complete on CV256, ends
-        i.programmingOpReply(2, 0);
-        Assert.assertEquals("step 5 reads CV ", 255, cvRead);
-        Assert.assertEquals("running after 5 ", true, i.isRunning());
-
-        // simulate CV read complete on CV255, ends
-        i.programmingOpReply(3, 0);
-        Assert.assertEquals("running after 6 ", false, i.isRunning());
+        i.programmingOpReply(29, 0);
+        Assert.assertEquals("running after 5 ", false, i.isRunning());
 
         Assert.assertEquals("found mfg ID ", 141, i.mfgID.value);
         Assert.assertEquals("found model ID ", 71, i.modelID);
-        Assert.assertEquals("found product ID ", 0x0B02, i.productID);
+        Assert.assertEquals("found product ID ", 285, i.productID);
 
     }
 
     /**
-     * Test Blunami decoder with productID in CV253 , CV255 and CV256.
+     * Test Blunami decoder with productID in CV253 and CV256.
      */
     @Test
     public void testIdentifyBlunami() {
@@ -202,7 +197,7 @@ public class IdentifyDecoderTest {
         Assert.assertEquals("running after 2 ", true, i.isRunning());
 
         // simulate CV read complete on CV7, start 253
-        i.programmingOpReply(71, 0);
+        i.programmingOpReply(72, 0);
         Assert.assertEquals("step 3 reads CV ", 253, cvRead);
         Assert.assertEquals("running after 3 ", true, i.isRunning());
 
@@ -212,17 +207,12 @@ public class IdentifyDecoderTest {
         Assert.assertEquals("running after 4 ", true, i.isRunning());
 
         // simulate CV read complete on CV256, ends
-        i.programmingOpReply(2, 0);
-        Assert.assertEquals("step 5 reads CV ", 255, cvRead);
-        Assert.assertEquals("running after 5 ", true, i.isRunning());
-
-        // simulate CV read complete on CV255, ends
-        i.programmingOpReply(3, 0);
-        Assert.assertEquals("running after 6 ", false, i.isRunning());
+        i.programmingOpReply(29, 0);
+        Assert.assertEquals("running after 5 ", false, i.isRunning());
 
         Assert.assertEquals("found mfg ID ", 141, i.mfgID.value);
-        Assert.assertEquals("found model ID ", 71, i.modelID);
-        Assert.assertEquals("found product ID ", 0x0B02, i.productID);
+        Assert.assertEquals("found model ID ", 72, i.modelID);
+        Assert.assertEquals("found product ID ", 285, i.productID);
 
     }
 
