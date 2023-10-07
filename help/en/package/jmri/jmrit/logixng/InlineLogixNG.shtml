@@ -75,6 +75,10 @@
       the attached Inline LogixNG when clicked.  The ConditionalNGs within the attached LogixNG will
       be executed in sequence.</p>
 
+      <p>Since the normal trigger for the attached LogixNG is clicking on the icon, the ConditionalNGs
+      within the attached LogixNG should have the <a href="LogixNGTableEditor.shtml">Startup</a>
+      checkbox unchecked.</p>
+
       <p>When the LogixNG Icon is added to the panel, it will have a default icon image.  The image
       can be changed using the normal image processes.  It can also be converted to a text label.
       The text label can be formatted using the text label options.</p>

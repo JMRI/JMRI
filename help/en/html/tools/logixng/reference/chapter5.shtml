@@ -1423,10 +1423,11 @@
       <h4 id="common_logix_action">Logix</h4>
 
       <p>LogixNG has an action called <strong>Logix</strong> that emulates how JMRI Logix works. The
-      action Logix has one expression and a number of <a href="#boolean_logix_action">Logix Actions</a>.
-      A Logix Action responds to <strong>True</strong>, <strong>False</strong>, or
-      <strong>Either</strong> Logix evaluation states.  The action Logix was added mainly to support
-      import of JMRI Logix to LogixNG.</p>
+      action Logix has one expression and a <a href="#boolean_logix_action">Logix Action</a>.  The
+      digital boolean <strong>Many</strong> action can be used to support multiple
+      <strong>Logix Actions</strong> as shown in the example.  A Logix Action responds to
+      <strong>True</strong>, <strong>False</strong>, or <strong>Either</strong> Logix evaluation
+      states.  The action Logix was added mainly to support import of JMRI Logix to LogixNG.</p>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/other_logix_action.png"><img class="image-border" src=
@@ -1437,7 +1438,8 @@
       <p>The Logix action supports <strong>On Change</strong> and <strong>When Triggered</strong>.</p>
 
       <p>An example Logix within LogixNG.  This is a tweaked import from Logix.  The <strong>Log data</strong> actions
-      were added and the individual <strong>True</strong> Logix Actions were combined within a Many.</p>
+      were added and the individual <strong>True</strong> LogixNG actions were combined within a
+      standard Many.</p>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/logix_example.png"><img class="image-border" src=
