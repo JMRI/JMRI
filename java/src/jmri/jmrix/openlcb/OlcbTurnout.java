@@ -108,7 +108,7 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
         turnoutListener = new VersionedValueListener<Boolean>(pc.getValue()) {
             @Override
             public void update(Boolean value) {
-                int s = value ? THROWN : CLOSED;
+                int s = ((value ^ getInverted()) ? THROWN : CLOSED);
                 if (_activeFeedbackType != DIRECT) {
                     newCommandedState(s);
                     if (_activeFeedbackType == MONITORING) {
@@ -183,12 +183,12 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
     @Override
     protected void forwardCommandChangeToLayout(int s) {
         if (s == Turnout.THROWN) {
-            turnoutListener.setFromOwnerWithForceNotify(true);
+            turnoutListener.setFromOwnerWithForceNotify(true ^ getInverted());
             if (_activeFeedbackType == MONITORING) {
                 newKnownState(THROWN);
             }
         } else if (s == Turnout.CLOSED) {
-            turnoutListener.setFromOwnerWithForceNotify(false);
+            turnoutListener.setFromOwnerWithForceNotify(false ^ getInverted());
             if (_activeFeedbackType == MONITORING) {
                 newKnownState(CLOSED);
             }
@@ -217,13 +217,9 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
         // to perform a lockout change on the turnout decoder itself.
     }
 
-    /*
-     * since the events that drive a turnout can be whichever state a user
-     * wants, the order of the event pair determines what is the 'closed' state
-     */
     @Override
     public boolean canInvert() {
-        return false;
+        return true;
     }
 
     @Override

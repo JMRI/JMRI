@@ -28,10 +28,9 @@ import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.util.JmriJFrame;
 import jmri.util.gui.GuiLafPreferencesManager;
+import jmri.util.swing.JmriJOptionPane;
 
 import org.jdom2.JDOMException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame object for manipulating consists.
@@ -311,9 +310,9 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
         DccLocoAddress address = adrSelector.getAddress();
         consistManager.getConsist(address);
         // confirm delete
-        if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("DeleteWarningDialog", address),
-                Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION) {
+        if (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("DeleteWarningDialog", address),
+                Bundle.getMessage("QuestionTitle"), JmriJOptionPane.YES_NO_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE) != JmriJOptionPane.YES_OPTION ) {
             return; // do not delete
         }
         try {
@@ -503,7 +502,7 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
             return;
         } else if (_Consist_Type == Consist.ADVANCED_CONSIST
                 && adrSelector.getAddress().isLongAddress()) {
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("RequiresShortConsistError"));
             return;
         } else if (_Consist_Type == Consist.CS_CONSIST && adrSelector.getAddress() == null) {
@@ -538,12 +537,12 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
         // Make sure the Address in question is allowed for this type of
         // consist, and add it to the consist if it is
         if (!consistManager.getConsist(address).isAddressAllowed(locoaddress)) {
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("AddressNotAllowedError"));
             return;
         }
         if (consistManager.getConsist(address).contains(locoaddress)) {
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("AddressAlreadyInConsistError"));
             return;
         } 
@@ -660,7 +659,7 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
     }
 
     private void reportNoConsistSeletected(){
-        JOptionPane.showMessageDialog(this,
+        JmriJOptionPane.showMessageDialog(this,
                 Bundle.getMessage("NoConsistSelectedError"));
 
     }
@@ -669,6 +668,6 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
         _status.setText(Bundle.getMessage("DefaultStatusText"));
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ConsistToolFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConsistToolFrame.class);
 
 }

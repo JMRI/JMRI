@@ -14,7 +14,7 @@
 //.project
 /.settings
 /build.xml
-/default.lcf
+/default_lcf.xml
 /java
 /lib
 /nbproject
@@ -23,5 +23,5 @@
 /runtest.csh
 /scripts
 /serialver.csh
-/tests.lcf
+/tests_lcf.xml
 

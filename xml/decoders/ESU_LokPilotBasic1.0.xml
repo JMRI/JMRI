@@ -14,7 +14,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20080131"/>
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.1" lastUpdated="20090218"/>
-  <version author="W.D.Kok" version="2.00" lastUpdated="20210225"/>
+  <version author="W.D.Kok" version="2.00" lastUpdated="20210307"/>
   <!--   - This decoder configuration file is based on ESU_LokPilotDCC.xml                  -->
   <!--     V 4, dated 20050619, by Walter Thompson. Which also acknowledged                 -->
   <!--     "the contribution of many others" including 'jake'.                              -->
@@ -33,9 +33,11 @@
   <!--     - CV 49 and 51 switched to enum-disabledEnabled.xml                              -->
   <!--     - Define the fixed Function-Output mapping                                       -->
   <!--     - Impute tooltip                                                                 -->
+  <!--     - CV3 and 4 switched to v1AccelDecel_1-63.xml                                    -->
+  <!--     - CV2, 5 and 6 switched to v1VstartHighMid_1-63.xml                              -->
   <decoder>
     <family name="ESU LokPilot Basic 1.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255">
-      <model model="LokPilot Basic 1.0" maxInputVolts="25 V" maxMotorCurrent="0.7 A" maxTotalCurrent="1.05 A" numOuts="5" numFns="5" formFactor="HO" connector="NMRAmedium">
+      <model model="LokPilot Basic 1.0" maxInputVolts="25 V" maxMotorCurrent="0.7 A" maxTotalCurrent="1.05 A" numOuts="5" numFns="5" formFactor="HO" connector="NMRAmedium" productID="52690">
         <output name="1" label="Front|light" maxcurrent="180 mA" connection="wire">
           <label xml:lang="de">Vorder-|Licht</label>
           <label xml:lang="nl">Kop-|Lampen</label>
@@ -44,7 +46,7 @@
           <label xml:lang="de">Hinter-|Licht</label>
           <label xml:lang="nl">Achter-|Licht</label>
         </output>
-        <output name="3" label="   AUX1    " maxcurrent="180 mA" connection="wire"/>
+        <output name="3" label="AUX1" maxcurrent="180 mA" connection="wire"/>
         <output name="4" label="Shunting|gear">
           <label xml:lang="de">Rangier|gang</label>
           <label xml:lang="nl">Rangeer|snelheid</label>
@@ -59,60 +61,13 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable CV="2" default="3" item="Vstart">
-        <decVal min="1" max="63"/>
-        <label>Starting Voltage</label>
-        <label xml:lang="it">Volt Partenza</label>
-        <label xml:lang="fr">V démarr.</label>
-        <label xml:lang="de">Startspannung</label>
-        <label xml:lang="nl">Startspanning</label>
-        <tooltip>&lt;html&gt;Determines the starting speed.&lt;br&gt;(Range: 1-63, Default: 3) &lt;/html&gt;</tooltip>
-        <tooltip xml:lang="de">&lt;html&gt;Bestimmt die Startgeschwindigkeit.&lt;br&gt;(Bereich: 1-63, voreingestellt: 3) &lt;/html&gt;</tooltip>
-        <tooltip xml:lang="nl">&lt;html&gt;Bepaalt de startsnelheid.&lt;br&gt;(Bereik: 1-63, standaardinstelling: 3) &lt;/html&gt;</tooltip>
-      </variable>
-      <variable CV="3" default="8" item="Accel">
-        <decVal min="1" max="63"/>
-        <label>Acceleration</label>
-        <label xml:lang="it">Accellerazione</label>
-        <label xml:lang="fr">Accelération</label>
-        <label xml:lang="de">Anfahrverzögerung</label>
-        <label xml:lang="da">Accelerations Forsinkelse</label>
-        <label xml:lang="cs">Míra zrychlení</label>
-        <label xml:lang="nl">Versnelling</label>
-        <tooltip>&lt;html&gt;This value multiplied by 0.5 gives the time from stop to maximum speed.&lt;br&gt;(Range: 1-63, Default: 8) &lt;/html&gt;</tooltip>
-        <tooltip xml:lang="de">&lt;html&gt;Dieser Wert multipliziert mit 0,5 gibt die Zeit vom Abfahren bis zur maximalen Geschwindigkeit.&lt;br&gt;(Bereich: 1-63, voreingestellt: 8) &lt;/html&gt;</tooltip>
-        <tooltip xml:lang="nl">&lt;html&gt;Deze waarde vermenigvuldigd met 0,5 geeft de tijd van wegrijden tot maximumsnelheid-&lt;br&gt;(Bereik: 1-63, standaardinstelling: 8) &lt;/html&gt;</tooltip>
-      </variable>
-      <variable CV="4" default="6" item="Decel">
-        <decVal min="1" max="63"/>
-        <label>Deceleration</label>
-        <label xml:lang="it">Decellerazione</label>
-        <label xml:lang="fr">Décélération</label>
-        <label xml:lang="de">Bremszeit</label>
-        <label xml:lang="da">Decelerations Forsinkelse</label>
-        <label xml:lang="cs">Míra zpomalení</label>
-        <label xml:lang="nl">Remvertraging</label>
-        <tooltip>&lt;html&gt;This value multiplied by 0.5 gives the time from maximum speed to stop.&lt;br&gt;(Range: 1-63, Default: 4) &lt;/html&gt;</tooltip>
-        <tooltip xml:lang="de">&lt;html&gt;Dieser Wert multipliziert mit 0,5 gibt die Zeit von der maximalen Geschwindigkeit zum Anhalten.&lt;br&gt;(Bereich: 1-63, voreingestellt: 4) &lt;/html&gt;</tooltip>
-        <tooltip xml:lang="nl">&lt;html&gt;Deze waarde vermenigvuldigd met 0,5 geeft de tijd van maximale snelheid tot stop.&lt;br&gt;(Bereik: 1-63, standaardinstelling: 4) &lt;/html&gt;</tooltip>
-      </variable>
-      <variable CV="5" default="63" item="Vhigh">
-        <decVal min="1" max="63"/>
-        <label>Maximum Speed</label>
-        <label xml:lang="it">Volt Massimi</label>
-        <label xml:lang="de">Höchstgeschwindigkeit</label>
-        <label xml:lang="fr">Vmax</label>
-        <label xml:lang="nl">Max. snelheid</label>
-        <label xml:lang="cs">Maximální napětí</label>
-        <tooltip>&lt;html&gt;Maximum speed of locomotive.&lt;br&gt;(Range: 1-63, Default: 63) &lt;/html&gt;</tooltip>
-        <tooltip xml:lang="de">&lt;html&gt;Höchstgeschwindigkeit der Lokomotive.&lt;br&gt;(Bereich: 1-63, voreingestellt: 63) &lt;/html&gt;</tooltip>
-        <tooltip xml:lang="nl">&lt;html&gt;Maximumsnelheid van de locomotief.&lt;br&gt;(Bereik: 1-63, standaardinstelling: 63) &lt;/html&gt;</tooltip>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/esu/v1AccelDecel_1-63.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/esu/v1VstartHighMid_1-63.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <!-- CV=29 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <variable CV="49" mask="XXXXXXXV" default="1" item="EMF Static Config">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>BEMF control</label>

@@ -12,17 +12,18 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
 import jmri.InstanceManager;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
@@ -32,9 +33,9 @@ import jmri.profile.ProfileManager;
 import jmri.swing.ManagingPreferencesPanel;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.openide.util.lookup.ServiceProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -44,7 +45,7 @@ import org.slf4j.LoggerFactory;
 public class ConnectionsPreferencesPanel extends JTabbedPane implements ManagingPreferencesPanel {
 
     private static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle"); // for some items // NOI18N
-    private static final Logger log = LoggerFactory.getLogger(ConnectionsPreferencesPanel.class);
+    
 
     private final ImageIcon deleteIcon;
     private final ImageIcon deleteIconRollOver;
@@ -227,12 +228,12 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
         if (i != -1) {
             // only prompt if triggered by action event
             if (e != null) {
-                int n = JOptionPane.showConfirmDialog(null, MessageFormat.format(
+                int n = JmriJOptionPane.showConfirmDialog(null, MessageFormat.format(
                         rb.getString("MessageDoDelete"),
                         new Object[]{this.getTitleAt(i)}),
                         rb.getString("MessageDeleteConnection"),
-                        JOptionPane.YES_NO_OPTION);
-                if (n != JOptionPane.YES_OPTION) {
+                        JmriJOptionPane.YES_NO_OPTION);
+                if (n != JmriJOptionPane.YES_OPTION) {
                     return;
                 }
             }
@@ -323,4 +324,7 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
     public List<PreferencesPanel> getPreferencesPanels() {
         return new ArrayList<>(this.configPanes);
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConnectionsPreferencesPanel.class);
+
 }

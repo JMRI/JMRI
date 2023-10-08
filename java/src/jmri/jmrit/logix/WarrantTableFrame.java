@@ -1,5 +1,7 @@
 package jmri.jmrit.logix;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -17,21 +19,19 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 import javax.swing.*;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import jmri.InstanceManager;
 import jmri.Path;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseListener;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * The WarrantTableFrame lists the existing Warrants and has controls to set
@@ -64,7 +64,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements JmriMouse
     static final String retryfwd = Bundle.getMessage("MoveToNext");
     static final String retrybkwd = Bundle.getMessage("MoveToPrevious");    // removed from drop down
     static final String[] controls = {" ", ramp, resume, stop, speedup, retryfwd, estop, abort,
-                            (LoggerFactory.getLogger(WarrantTableFrame.class).isDebugEnabled()?"Debug":"")};
+                            (org.slf4j.LoggerFactory.getLogger(WarrantTableFrame.class).isDebugEnabled()?"Debug":"")};
 
     public static int _maxHistorySize = 40;
 
@@ -342,9 +342,9 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements JmriMouse
 
     protected boolean askStopQuestion(String blockName) {
         boolean includeAllCmds = false;
-        if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("stopAtBlock", blockName),
-                Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+        if (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("stopAtBlock", blockName),
+                Bundle.getMessage("QuestionTitle"), JmriJOptionPane.YES_NO_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE) == JmriJOptionPane.YES_OPTION) {
             includeAllCmds = true;
         }
         return includeAllCmds;
@@ -352,8 +352,8 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements JmriMouse
 
     public void showWarning(String msg) {
         setVisible(true);
-        JOptionPane.showMessageDialog(this, Bundle.getMessage(msg, _startWarrant.getText(), _endWarrant.getText()),
-                Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage(msg, _startWarrant.getText(), _endWarrant.getText()),
+                Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
     }
 
     /**
@@ -545,5 +545,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements JmriMouse
 
     static String BLANK = "                                                                                                 ";
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantTableFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WarrantTableFrame.class);
+
 }

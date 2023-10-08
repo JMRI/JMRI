@@ -33,7 +33,6 @@ import org.w3c.dom.Document;
 /**
  * A JInternalFrame that contains a JSlider to control loco speed, and buttons
  * for forward, reverse and STOP.
- * <p>
  *
  * @author glen Copyright (C) 2002
  * @author Bob Jacobsen Copyright (C) 2007, 2021
@@ -1294,6 +1293,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
     @Override
     public void notifyAddressReleased(LocoAddress la) {
+        if (throttle == null) {
+            log.debug("notifyAddressReleased() throttle already null, called for loc {}", la);
+            return;
+        }        
         this.setEnabled(false);
         if (throttle != null) {
             throttle.removePropertyChangeListener(this);
@@ -1315,7 +1318,11 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
     @Override
     public void notifyAddressThrottleFound(DccThrottle t) {
-        log.debug("control panel received new throttle");
+        log.debug("control panel received new throttle {}", t);
+        if (throttle != null) {
+            log.debug("notifyAddressThrottleFound() throttle non null, called for loc {}",t.getLocoAddress());
+            return;
+        }
         if (isConsist) {
             // ignore if is a consist
             return;
@@ -1348,7 +1355,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
     @Override
     public void notifyConsistAddressThrottleFound(DccThrottle t) {
-        log.debug("control panel received consist throttle");
+        log.debug("control panel received consist throttle {}", t);
         isConsist = true;
         throttle = t;
         addressThrottleFound();

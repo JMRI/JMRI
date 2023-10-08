@@ -130,7 +130,7 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         atc.terminateThreads();
         ascm.dispose();
     }
-    
+
     @Test
     public void testAddEditTripleTurnoutHead(){
         
@@ -245,7 +245,7 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         Assertions.assertEquals("Nme", newHead.getUserName());
         
     }
-    
+
     @Test
     public void testAddEditTripleOutputHead(){
         
@@ -301,7 +301,7 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         Assertions.assertEquals("NewaUName", newHead.getUserName());
         
     }
-    
+
     @Test
     public void testAddEditQuadOutputHead(){
         
@@ -358,7 +358,7 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         Assertions.assertEquals("NewaUName", newHead.getUserName());
         
     }
-    
+
     @Test
     public void testAddEditVirtualHead(){
         
@@ -416,7 +416,7 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         Assertions.assertEquals("N", newHead.getUserName());
         
     }
-    
+
     @Test
     public void testAddEditSe8cHead(){
         
@@ -471,7 +471,7 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         Assertions.assertEquals("Nse8", newHead.getUserName());
         
     }
-    
+
     @Test
     public void testAddEditGrapevineHead(){
         
@@ -598,7 +598,7 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         Assertions.assertEquals("Nm", newHead.getUserName());
         
     }
-    
+
     @Test
     public void testAddEditSingleTurnoutHead(){
         
@@ -657,7 +657,7 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         Assertions.assertEquals("Nme", newHead.getUserName());
         
     }
-    
+
     @Test
     public void testAddEditDccHead(){
         
@@ -723,7 +723,6 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         
     }
 
-    
     @Test
     public void testAddEditLsDecHead(){
         
@@ -789,8 +788,7 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         Assertions.assertEquals("N", newHead.getUserName());
         
     }
-    
-    
+
     @BeforeEach
     @Override
     public void setUp() {
@@ -798,5 +796,11 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         JUnitUtil.resetInstanceManager();
         frame = new SignalHeadAddEditFrame(null); // New Signal Head
     }
-    
+
+    @Override
+    public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        super.tearDown();
+    }
+
 }

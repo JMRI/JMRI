@@ -24,9 +24,7 @@ import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.JmriJFrame;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Provides the basic information and structure for for a editing the details of
@@ -453,9 +451,9 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
                 String msg;
                 msg = java.text.MessageFormat.format(Bundle.getMessage("WarningUserName"),
                         new Object[]{("" + value)});
-                JOptionPane.showMessageDialog(f, msg,
+                JmriJOptionPane.showMessageDialog(f, msg,
                         Bundle.getMessage("WarningTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
@@ -468,10 +466,10 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
                 }
                 String msg = Bundle.getMessage("UpdateToUserName",
                         new Object[]{nBean.getBeanType(), value, nBean.getSystemName()});
-                int optionPane = JOptionPane.showConfirmDialog(f,
+                int optionPane = JmriJOptionPane.showConfirmDialog(f,
                         msg, Bundle.getMessage("UpdateToUserNameTitle"),
-                        JOptionPane.YES_NO_OPTION);
-                if (optionPane == JOptionPane.YES_OPTION) {
+                        JmriJOptionPane.YES_NO_OPTION);
+                if (optionPane == JmriJOptionPane.YES_OPTION) {
                     //This will update the bean reference from the systemName to the userName
                     try {
                         nbMan.updateBeanFromSystemToUser(nBean);
@@ -497,10 +495,10 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
         if (!allowBlockNameChange("Remove", "")) return;  // NOI18N
         String msg = java.text.MessageFormat.format(Bundle.getMessage("UpdateToSystemName"),
                 new Object[]{bean.getBeanType()});
-        int optionPane = JOptionPane.showConfirmDialog(f,
+        int optionPane = JmriJOptionPane.showConfirmDialog(f,
                 msg, Bundle.getMessage("UpdateToSystemNameTitle"),
-                JOptionPane.YES_NO_OPTION);
-        if (optionPane == JOptionPane.YES_OPTION) {
+                JmriJOptionPane.YES_NO_OPTION);
+        if (optionPane == JmriJOptionPane.YES_OPTION) {
             nbMan.updateBeanFromUserToSystem(bean);
         }
         bean.setUserName(null);
@@ -526,19 +524,19 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
         // Remove is not allowed if there is a layout block
         if (changeType.equals("Remove")) {
             log.warn("Cannot remove user name for block {}", oldName);  // NOI18N
-                JOptionPane.showMessageDialog(f,
+                JmriJOptionPane.showMessageDialog(f,
                         Bundle.getMessage("BlockRemoveUserNameWarning", oldName),  // NOI18N
                         Bundle.getMessage("WarningTitle"),  // NOI18N
-                        JOptionPane.WARNING_MESSAGE);
+                        JmriJOptionPane.WARNING_MESSAGE);
             return false;
         }
 
         // Confirmation dialog
-        int optionPane = JOptionPane.showConfirmDialog(f,
+        int optionPane = JmriJOptionPane.showConfirmDialog(f,
                 Bundle.getMessage("BlockChangeUserName", oldName, newName),  // NOI18N
                 Bundle.getMessage("QuestionTitle"),  // NOI18N
-                JOptionPane.YES_NO_OPTION);
-        return optionPane == JOptionPane.YES_OPTION;
+                JmriJOptionPane.YES_NO_OPTION);
+        return optionPane == JmriJOptionPane.YES_OPTION;
     }
 
     /**
@@ -695,6 +693,6 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BeanEditAction.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BeanEditAction.class);
 
 }

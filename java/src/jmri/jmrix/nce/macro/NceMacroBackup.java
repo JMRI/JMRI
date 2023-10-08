@@ -1,14 +1,16 @@
 package jmri.jmrix.nce.macro;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
@@ -16,9 +18,8 @@ import jmri.jmrix.nce.NceTrafficController;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.TextFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Backups NCE Macros to a text file format defined by NCE.
@@ -108,19 +109,19 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
             }
         }
         if (f.exists()) {
-            if (JOptionPane.showConfirmDialog(null,
+            if (JmriJOptionPane.showConfirmDialog(null,
                     Bundle.getMessage("dialogConfirmOverwrite", f.getName()),
                     Bundle.getMessage("dialogConfirmTitle"),
-                    JOptionPane.OK_CANCEL_OPTION) != JOptionPane.OK_OPTION) {
+                    JmriJOptionPane.OK_CANCEL_OPTION) != JmriJOptionPane.OK_OPTION) {
                 return;
             }
         }
 
         try (PrintWriter fileOut = new PrintWriter(new BufferedWriter(new FileWriter(f)), true)) {
-            if (JOptionPane.showConfirmDialog(null,
+            if (JmriJOptionPane.showConfirmDialog(null,
                     Bundle.getMessage("dialogBackupTime"),
                     Bundle.getMessage("BackupTitle"),
-                    JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                    JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                 fileOut.close();
                 return;
             }     
@@ -182,15 +183,15 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
             fstatus.dispose();
 
             if (fileValid) {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("dialogBackupSuccess"),
                         Bundle.getMessage("BackupTitle"),
-                        JOptionPane.INFORMATION_MESSAGE);
+                        JmriJOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("dialogBackupFailed"),
                         Bundle.getMessage("BackupTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
             }
 
         } catch (IOException ignore) {
@@ -284,6 +285,6 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceMacroBackup.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceMacroBackup.class);
 
 }

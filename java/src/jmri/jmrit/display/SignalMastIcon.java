@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 
@@ -18,10 +17,8 @@ import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.SignalMastItemPanel;
 import jmri.jmrit.picker.PickListModel;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display a status of a {@link jmri.SignalMast}.
@@ -104,10 +101,10 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             error = loadIcons(aspect);
         }
         if (error) {
-            JOptionPane.showMessageDialog(_editor.getTargetFrame(),
+            JmriJOptionPane.showMessageDialog(_editor.getTargetFrame(),
                     java.text.MessageFormat.format(Bundle.getMessage("SignalMastIconLoadError"),
                             new Object[]{getSignalMast().getDisplayName()}),
-                    Bundle.getMessage("SignalMastIconLoadErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("SignalMastIconLoadErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
         }
         //Add in specific appearances for dark and held
         loadIcons("$dark");
@@ -131,7 +128,8 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             try {
                 n = new NamedIcon(s, s);
             } catch (java.lang.NullPointerException e) {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("SignalMastIconLoadError2", new Object[]{aspect, s, getNameString()}), Bundle.getMessage("SignalMastIconLoadErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("SignalMastIconLoadError2", new Object[]{aspect, s, getNameString()}),
+                    Bundle.getMessage("SignalMastIconLoadErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 log.error("{} : Cannot load Icon", Bundle.getMessage("SignalMastIconLoadError2", aspect, s, getNameString()));
                 return true;
             }
@@ -327,7 +325,8 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
                     try {
                         tct.addNamedBean(getSignalMast());
                     } catch (jmri.JmriException ex) {
-                        JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("TransitErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(null, ex.getMessage(),
+                            Bundle.getMessage("TransitErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                     }
                 }
             });
@@ -339,10 +338,11 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
                         try {
                             tct.addNamedBean(getSignalMast());
                             created = tct.createTransit();
-                            JOptionPane.showMessageDialog(null, Bundle.getMessage("TransitCreatedMessage", created.getDisplayName()), Bundle.getMessage("TransitCreatedTitle"), JOptionPane.INFORMATION_MESSAGE);
+                            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("TransitCreatedMessage", created.getDisplayName()),
+                                Bundle.getMessage("TransitCreatedTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
                         } catch (jmri.JmriException ex) {
-                            JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("TransitErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                            return;
+                            JmriJOptionPane.showMessageDialog(null, ex.getMessage(),
+                                Bundle.getMessage("TransitErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                         }
                     }
                 });
@@ -613,5 +613,6 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalMastIcon.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalMastIcon.class);
+
 }

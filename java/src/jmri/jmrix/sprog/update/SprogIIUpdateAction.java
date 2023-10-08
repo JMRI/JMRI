@@ -1,10 +1,9 @@
 package jmri.jmrix.sprog.update;
 
 import java.awt.event.ActionEvent;
-import javax.swing.JOptionPane;
+
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Swing action to create and register a SprogIIUpdateFrame object.
@@ -20,10 +19,11 @@ public class SprogIIUpdateAction extends SprogUpdateAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object[] options = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonContinue")};
-        if (1 == JOptionPane.showOptionDialog(null,
+        if (1 == // array position 1 ButtonContinue
+            JmriJOptionPane.showOptionDialog(null,
                 Bundle.getMessage("SprogXUpdateDialogString"),
-                Bundle.getMessage("SprogXFirmwareUpdate"), JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE, null, options, options[0])) {
+                Bundle.getMessage("SprogXFirmwareUpdate"), JmriJOptionPane.DEFAULT_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE, null, options, options[0])) {
             // create a SprogIIUpdateFrame
             SprogIIUpdateFrame f = new SprogIIUpdateFrame(_memo);
             try {
@@ -35,6 +35,6 @@ public class SprogIIUpdateAction extends SprogUpdateAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogIIUpdateAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SprogIIUpdateAction.class);
 
 }

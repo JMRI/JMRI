@@ -41,6 +41,12 @@
        <authorinitials>PDB</authorinitials>
        <revremark>Second version for Italian Signal System</revremark>
      </revision>
+     <revision>
+       <revnumber>3</revnumber>
+       <date>2023-08-23</date>
+       <authorinitials>PDB</authorinitials>
+       <revremark>Third version for Italian Signal System - amended aspect mapping</revremark>
+     </revision>
   </revhistory>
 
 <aspecttable>FS 1987</aspecttable>
@@ -139,7 +145,6 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <imagelink type="right Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/r2velegiallo-giallo.gif</imagelink>
       <imagelink type="left squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/lq2velegiallo-giallo.gif</imagelink>
       <imagelink type="right squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/rq2velegiallo-giallo.gif</imagelink>
-
     </appearance>
 
     <appearance>
@@ -258,16 +263,65 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
   </specificappearances>
 
   <aspectMappings>
+
+    <aspectMapping>
+      <advancedAspect>Verde</advancedAspect>
+      <ourAspect>Verde</ourAspect>
+      <ourAspect>Rosso-Verde</ourAspect>
+    </aspectMapping>
+
     <aspectMapping>
       <advancedAspect>Giallo</advancedAspect>
       <ourAspect>Verde</ourAspect>
-
+      <ourAspect>Giallo Lampeggiante</ourAspect>
+      <ourAspect>Rosso-Verde</ourAspect>
+      <ourAspect>Rosso-Giallo Lampeggiante</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Rosso</advancedAspect>
       <ourAspect>Giallo</ourAspect>
+      <ourAspect>Rosso-Giallo</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Giallo-Verde</advancedAspect>
+      <ourAspect>Verde</ourAspect>
+      <ourAspect>Rosso-Verde</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Rosso-Verde</advancedAspect>
+      <ourAspect>Giallo-Verde</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante Alt.</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Rosso-Giallo</advancedAspect>
+      <ourAspect>Giallo-Verde</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante Alt.</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Rosso-Giallo Lampeggiante</advancedAspect>
+      <ourAspect>Giallo-Verde</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante Alt.</ourAspect>
+    </aspectMapping>   
+
+    <aspectMapping>
+      <advancedAspect>Rosso-Giallo-Verde</advancedAspect>
+      <ourAspect>Giallo-Verde</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Rosso-Giallo-Giallo</advancedAspect>
+      <ourAspect>Rosso-Verde</ourAspect>
+      <ourAspect>Giallo-Verde</ourAspect>
     </aspectMapping>
 
   </aspectMappings>
+
 </appearancetable>

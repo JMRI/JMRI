@@ -225,7 +225,6 @@ public interface VariableLight extends Light, AnalogIO {
      * fixed duration regardless of the size of the intensity change.
      * <p>
      * Bound property
-     * <p>
      * @param minutes time to fade
      * @throws IllegalArgumentException if isTransitionAvailable() is false and
      *                                  minutes is not 0.0
@@ -237,7 +236,7 @@ public interface VariableLight extends Light, AnalogIO {
     /**
      * Get the number of fastclock minutes taken by a transition from full ON to
      * full OFF or vice versa.
-     * <p>
+     *
      * @return 0.0 if the output intensity transition is instantaneous
      */
     double getTransitionTime();

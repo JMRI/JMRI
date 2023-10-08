@@ -44,13 +44,13 @@ public class MqttLightTest extends AbstractLightTestBase {
 
         t.setCommandedState(Light.ON);
 
-        JUnitUtil.waitFor( ()->{ return a.getPublishCount()==1; }, "publish triggered");
+        JUnitUtil.waitFor( ()->{ return a.getPublishCount()==2; }, "publish triggered");
         Assertions.assertEquals("track/light/2", a.getLastTopic(),"topic");
         Assertions.assertEquals("ON", new String(a.getLastPayload()),"payload");
 
         t.setCommandedState(Light.OFF);
 
-        JUnitUtil.waitFor( ()->{ return a.getPublishCount()==2; }, "publish triggered 2");
+        JUnitUtil.waitFor( ()->{ return a.getPublishCount()==3; }, "publish triggered 2");
         Assertions.assertEquals("track/light/2", a.getLastTopic(),"topic");
         Assertions.assertEquals("OFF", new String(a.getLastPayload()),"payload");
 
@@ -68,7 +68,7 @@ public class MqttLightTest extends AbstractLightTestBase {
 
     @Override
     public void checkOnMsgSent() {
-        JUnitUtil.waitFor( ()->{ return a.getPublishCount()==1; }, "publish triggered");
+        JUnitUtil.waitFor( ()->{ return a.getPublishCount()==2; }, "publish triggered");
         Assertions.assertEquals("track/light/2", a.getLastTopic(),"topic");
         Assertions.assertEquals("ON", new String(a.getLastPayload()),"payload");
     }
@@ -82,7 +82,7 @@ public class MqttLightTest extends AbstractLightTestBase {
 
     @Override
     public void checkOffMsgSent() {
-        JUnitUtil.waitFor( ()->{ return a.getPublishCount()==2; }, "publish on then off triggered");
+        JUnitUtil.waitFor( ()->{ return a.getPublishCount()==3; }, "publish on then off triggered");
         Assertions.assertEquals("track/light/2", a.getLastTopic(),"topic");
         Assertions.assertEquals("OFF", new String(a.getLastPayload()),"payload");
     }

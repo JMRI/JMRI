@@ -24,25 +24,23 @@ import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
 import jmri.jmrit.ctc.editor.code.CheckJMRIObject;
 import jmri.jmrit.ctc.editor.code.CommonSubs;
 import jmri.jmrit.ctc.editor.code.CreateGUIObjectsXMLFile;
-import jmri.jmrit.ctc.editor.code.CreateXMLFiles;
+
 import jmri.jmrit.ctc.editor.code.ProgramProperties;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
-import java.util.ArrayList;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+
 import javax.swing.KeyStroke;
 import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.SensorManager;
 import jmri.jmrit.ctc.CtcManager;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.OtherData;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  *
@@ -646,7 +644,7 @@ public class FrmMainForm extends JFrame {
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         if ((_mPresentlyDefinedColumns.getSelectedValue()).contains(Columns.REFERENCES_PRESENT_INDICATOR)) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("FrmMainFormReferencesExist"));   // NOI18N
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("FrmMainFormReferencesExist"));   // NOI18N
             return; // Do nothing!
         }
         int selectedIndex = _mPresentlyDefinedColumns.getSelectedIndex();
@@ -664,10 +662,10 @@ public class FrmMainForm extends JFrame {
 
     private boolean validToExitAtThisTime(String whatIsTriggeringSave) {
         if (_mColumns.anyErrorsPresent()) {
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("FrmMainFormValidError1") + whatIsTriggeringSave + Bundle.getMessage("FrmMainFormValidError2"),
                     Bundle.getMessage("FrmMainFormValidError3"),
-                    JOptionPane.ERROR_MESSAGE);   // NOI18N
+                    JmriJOptionPane.ERROR_MESSAGE);   // NOI18N
             return false;
         }
         return true;
@@ -916,11 +914,11 @@ public class FrmMainForm extends JFrame {
     }
 
     private void _mNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mNewActionPerformed
-        int response = JOptionPane.showConfirmDialog(this,
-                Bundle.getMessage("NewConfigWarning"),
+        int response = JmriJOptionPane.showConfirmDialog(this,
+                Bundle.getMessage("NewConfigWarning"), // config will be removed, continue ?
                 Bundle.getMessage("NewConfigTitle"),
-                JOptionPane.YES_NO_OPTION);
-        if (response == 1) return;
+                JmriJOptionPane.YES_NO_OPTION);
+        if (response !=  JmriJOptionPane.YES_OPTION ) return;
 
         CtcManager ctcManager = InstanceManager.getDefault(CtcManager.class);
         _mProgramProperties = ctcManager.newProgramProperties();
@@ -929,11 +927,11 @@ public class FrmMainForm extends JFrame {
     }//GEN-LAST:event__mNewActionPerformed
 
     private void _mImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mImportActionPerformed
-        int response = JOptionPane.showConfirmDialog(this,
-                Bundle.getMessage("ImportWarning"),
+        int response = JmriJOptionPane.showConfirmDialog(this,
+                Bundle.getMessage("ImportWarning"),  // config will be replaced, continue ?
                 Bundle.getMessage("ImportTitle"),
-                JOptionPane.YES_NO_OPTION);
-        if (response == 1) return;
+                JmriJOptionPane.YES_NO_OPTION);
+        if (response != JmriJOptionPane.YES_OPTION ) return;
 
         CtcManager ctcManager = InstanceManager.getDefault(CtcManager.class);
         _mProgramProperties = ctcManager.newProgramProperties();

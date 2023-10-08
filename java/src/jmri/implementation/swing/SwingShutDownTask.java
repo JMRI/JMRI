@@ -1,10 +1,9 @@
 package jmri.implementation.swing;
 
 import java.awt.Component;
-import javax.swing.JOptionPane;
+
 import jmri.implementation.AbstractShutDownTask;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Provides a base for using Swing to ask if shutdown should conditionally
@@ -70,11 +69,11 @@ public class SwingShutDownTask extends AbstractShutDownTask {
                     Bundle.getMessage("ButtonAbort")};
             }
 
-            int selectedValue = JOptionPane.showOptionDialog(component,
+            int selectedValue = JmriJOptionPane.showOptionDialog(component,
                     warning,
                     Bundle.getMessage("ShutDownWarningTitle"),
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.WARNING_MESSAGE, null,
+                    JmriJOptionPane.DEFAULT_OPTION,
+                    JmriJOptionPane.WARNING_MESSAGE, null,
                     possibleValues, possibleValues[possibleValues.length - 1]);
             switch (selectedValue) {
                 case 1:
@@ -144,6 +143,6 @@ public class SwingShutDownTask extends AbstractShutDownTask {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SwingShutDownTask.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SwingShutDownTask.class);
 
 }

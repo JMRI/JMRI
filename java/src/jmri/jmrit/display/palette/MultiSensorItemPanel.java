@@ -6,12 +6,12 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollBar;
@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumn;
+
 import jmri.Sensor;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
@@ -26,8 +27,7 @@ import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MultiSensorIcon;
 import jmri.jmrit.picker.PickListModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
 
@@ -273,9 +273,9 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
         @Override
         public void setSelectionInterval(int row, int index1) {
             if (_nextPosition >= _positions.length) {
-                JOptionPane.showMessageDialog(_frame,
+                JmriJOptionPane.showMessageDialog(_frame,
                         Bundle.getMessage("NeedIcon", _selectionModel.getPositions().length),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 return;
             }
             if (log.isDebugEnabled()) {
@@ -287,9 +287,9 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
             }
             String position = (String) _tableModel.getValueAt(row, PickListModel.POSITION_COL);
             if (position != null && position.length() > 0) {
-                JOptionPane.showMessageDialog(_frame,
+                JmriJOptionPane.showMessageDialog(_frame,
                         Bundle.getMessage("DuplicatePosition", bean.getDisplayName(), position),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             } else {
                 _table.setValueAt(Bundle.getMessage(POSITION[_nextPosition]), row, PickListModel.POSITION_COL);
                 _selections.add(_nextPosition, bean);
@@ -308,14 +308,14 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
     public boolean oktoUpdate() {
         ArrayList<Sensor> selections = _selectionModel.getSelections();
         if (selections == null || selections.isEmpty()) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             return false;
         }
         if (selections.size() < _selectionModel.getPositions().length) {
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("NeedPosition", _selectionModel.getPositions().length),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             return false;
         }
         return getIconMap() != null;
@@ -381,6 +381,6 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MultiSensorItemPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MultiSensorItemPanel.class);
 
 }

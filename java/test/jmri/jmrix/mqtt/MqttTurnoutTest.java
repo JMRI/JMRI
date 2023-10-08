@@ -65,12 +65,12 @@ public class MqttTurnoutTest extends AbstractTurnoutTestBase {
         ((MqttTurnout)t).setParser(parser);
         
         t.setCommandedState(Turnout.THROWN);
-        Assertions.assertEquals(1, a.getPublishCount(),"1 message sent");
+        Assertions.assertEquals(2, a.getPublishCount(),"2 message sent");
         Assertions.assertEquals("track/turnout/2", a.getLastTopic(),"topic");
         Assertions.assertEquals("FOO", new String(a.getLastPayload()),"payload");
 
         t.setCommandedState(Turnout.CLOSED);
-        Assertions.assertEquals(2, a.getPublishCount(),"2 messages sent");
+        Assertions.assertEquals(3, a.getPublishCount(),"3 messages sent");
         Assertions.assertEquals("track/turnout/2", a.getLastTopic(),"topic");
         Assertions.assertEquals("BAR", new String(a.getLastPayload()),"payload");
     }

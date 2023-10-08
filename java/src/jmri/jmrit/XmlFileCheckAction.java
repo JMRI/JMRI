@@ -4,14 +4,15 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
+
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+
 import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
+
 import org.jdom2.JDOMException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Make sure an XML file is readable, without doing a DTD or Schema validation.
@@ -53,9 +54,9 @@ public class XmlFileCheckAction extends JmriAbstractAction {
             try {
                 xmlfile.setValidate(XmlFile.Validate.None);
                 readFile(file);
-                JOptionPane.showMessageDialog(_who, "OK");
+                JmriJOptionPane.showMessageDialog(_who, "OK");
             } catch (IOException | JDOMException ex) {
-                JOptionPane.showMessageDialog(_who, "Error: " + ex);
+                JmriJOptionPane.showMessageDialog(_who, "Error: " + ex);
             }
             log.debug("parsing complete");
 
@@ -82,6 +83,5 @@ public class XmlFileCheckAction extends JmriAbstractAction {
         throw new IllegalArgumentException("Should not be invoked");
     }
 
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(XmlFileCheckAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(XmlFileCheckAction.class);
 }

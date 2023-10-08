@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import javax.annotation.Nonnull;
-import javax.swing.JOptionPane;
 
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -19,9 +18,7 @@ import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import jmri.util.ThreadingUtil;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Basic Implementation of a WarrantManager.
@@ -220,17 +217,17 @@ public class WarrantManager extends AbstractManager<Warrant>
             log.warn("Cannot delete portal \"{}\" from this thread", name);
             return false;
         }
-        int val = JOptionPane.showOptionDialog(null, message,
-                Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE, null,
+        int val = JmriJOptionPane.showOptionDialog(null, message,
+                Bundle.getMessage("WarningTitle"), JmriJOptionPane.DEFAULT_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE, null,
                 new Object[]{Bundle.getMessage("ButtonYes"),
                         Bundle.getMessage("ButtonYesPlus"),
                         Bundle.getMessage("ButtonNo"),},
                 Bundle.getMessage("ButtonNo")); // default NO
-        if (val == 2) {
+        if (val == 2 || val == JmriJOptionPane.CLOSED_OPTION ) { // array position 2 No, or Dialog closed
             return false;
         }
-        if (val == 1) { // suppress future warnings
+        if (val == 1) { // array position 1 ButtonYesPlus suppress future warnings
             _suppressWarnings = true;
         }
         return true;
@@ -403,5 +400,6 @@ public class WarrantManager extends AbstractManager<Warrant>
         super.dispose();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(WarrantManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WarrantManager.class);
+
 }

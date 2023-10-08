@@ -18,7 +18,6 @@ import org.jdom2.Element;
 
 /**
  * Provides the functionality for configuring ConditionalNGManagers
- * <P>
  *
  * @author Dave Duchamp     Copyright (c) 2007
  * @author Daniel Bergqvist Copyright (c) 2018
@@ -49,6 +48,7 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
 
                     log.debug("ConditionalNG system name is {}", conditionalNG.getSystemName());  // NOI18N
                     boolean enabled = conditionalNG.isEnabled();
+                    boolean executeAtStartup = conditionalNG.isExecuteAtStartup();
                     Element elem = new Element("ConditionalNG");  // NOI18N
                     elem.addContent(new Element("systemName").addContent(conditionalNG.getSystemName()));  // NOI18N
 
@@ -73,6 +73,11 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
                     elem.addContent(e2);
 
                     elem.setAttribute("enabled", enabled ? "yes" : "no");  // NOI18N
+
+                    // executeAtStartup is by default true so only store it if it's false
+                    if (!executeAtStartup) {
+                        elem.setAttribute("executeAtStartup", "no");  // NOI18N
+                    }
 
                     conditionalNGs.addContent(elem);
                 }
@@ -174,6 +179,19 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
                         conditionalNG.setEnabled(true);
                     } else if (enabled.equals("no")) {  // NOI18N
                         conditionalNG.setEnabled(false);
+                    }
+                }
+
+                String executeAtStartup = "";
+                if (conditionalNG_Element.getAttribute("executeAtStartup") != null) {  // NOI18N
+                    executeAtStartup = conditionalNG_Element.getAttribute("executeAtStartup").getValue();  // NOI18N
+                }
+                // set enabled/disabled if attribute was present
+                if ((executeAtStartup != null) && (!executeAtStartup.equals(""))) {
+                    if (executeAtStartup.equals("yes")) {  // NOI18N
+                        conditionalNG.setExecuteAtStartup(true);
+                    } else if (executeAtStartup.equals("no")) {  // NOI18N
+                        conditionalNG.setExecuteAtStartup(false);
                     }
                 }
             }

@@ -40,9 +40,7 @@ import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
 import jmri.jmrix.bachrus.speedmatcher.*;
 import jmri.util.JmriJFrame;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 //</editor-fold>
 /**
@@ -1208,8 +1206,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             try {
                 customScale = Integer.parseUnsignedInt(customScaleField.getText());
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("CustomScaleDialog"),
-                        Bundle.getMessage("CustomScaleTitle"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("CustomScaleDialog"),
+                        Bundle.getMessage("CustomScaleTitle"), JmriJOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -1736,6 +1734,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     }
     //</editor-fold>
     //debugging logger
-    private final static Logger LOG = LoggerFactory.getLogger(SpeedoConsoleFrame.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SpeedoConsoleFrame.class);
 
 }

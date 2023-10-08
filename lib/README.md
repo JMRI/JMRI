@@ -124,9 +124,9 @@ which checks the dates of the control files to make sure they've been updated wh
 - from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api/2.20.0
 - from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core/2.20.0
 
-##### log4j-1.2-api-2.20.0.jar
-- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-1.2-api/2.20.0
-- log4j1.2 API to bridge to log4j2
+##### log4j-slf4j2-impl.jar
+- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j2-impl/2.20.0
+- slf4j bridge to log4j2
 
 ##### slf4j-api-2.0.7.jar
 - slf4j API
@@ -136,13 +136,9 @@ which checks the dates of the control files to make sure they've been updated wh
 - java.util.logging to slf4j
 - from https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j/2.0.7
 
-##### slf4j-reload4j-2.0.7.jar
-- slf4j logging interface to log4j1.2
-- from https://mvnrepository.com/artifact/org.slf4j/slf4j-reload4j
-
 ##### openlcb.jar
  - 0.7.32 from https://github.com/openlcb/OpenLCB_Java
- - Through PR#231 included
+ - Through PR#235 included as of 2023-10-06
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels

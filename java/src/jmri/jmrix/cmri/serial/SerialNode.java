@@ -7,8 +7,6 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractNode;
 import jmri.jmrix.cmri.serial.serialmon.SerialFilterFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Models a serial C/MRI node, consisting of a (S)USIC and attached cards.
@@ -1242,6 +1240,7 @@ public class SerialNode extends AbstractNode {
                     }
                     // save for next time
                     sensorTempSetting[i] = Sensor.ACTIVE;
+                    ((SerialSensor)sensorArray[i]).lastStateFromLayout = Sensor.ACTIVE;
                 } else {
                     // considered INACTIVE
                     if (((sensorTempSetting[i] == Sensor.INACTIVE)
@@ -1253,6 +1252,7 @@ public class SerialNode extends AbstractNode {
                     }
                     // save for next time
                     sensorTempSetting[i] = Sensor.INACTIVE;
+                    ((SerialSensor)sensorArray[i]).lastStateFromLayout = Sensor.INACTIVE;
                 }
             }
         } catch (JmriException e) {
@@ -1343,5 +1343,5 @@ public class SerialNode extends AbstractNode {
         timeout = 0;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialNode.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialNode.class);
 }

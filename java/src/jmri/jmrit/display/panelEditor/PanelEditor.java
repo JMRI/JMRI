@@ -33,11 +33,9 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 import jmri.CatalogTreeManager;
 import jmri.ConfigureManager;
@@ -51,14 +49,12 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.ToolTip;
 import jmri.util.JmriJFrame;
-import jmri.util.SystemType;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides a simple editor for adding jmri.jmrit.display items to a captive
@@ -113,6 +109,7 @@ public class PanelEditor extends Editor implements ItemListener {
     private static final String FAST_CLOCK = "FastClock";
     private static final String GLOBAL_VARIABLE = "GlobalVariable";
     private static final String ICON = "Icon";
+    private static final String LOGIXNG = "LogixNG";
     private final JTextField nextX = new JTextField("0", 4);
     private final JTextField nextY = new JTextField("0", 4);
 
@@ -211,13 +208,13 @@ public class PanelEditor extends Editor implements ItemListener {
                         oldName = ((JFrame) ancestor).getTitle();
                     }
                     // prompt for name
-                    String newName = JOptionPane.showInputDialog(null, Bundle.getMessage("PromptNewName"), oldName);
+                    String newName = JmriJOptionPane.showInputDialog(null, Bundle.getMessage("PromptNewName"), oldName);
                     if ((newName == null) || (oldName.equals(newName))) {
                         return;  // cancelled
                     }
                     if (InstanceManager.getDefault(EditorManager.class).contains(newName)) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("CanNotRename"), Bundle.getMessage("PanelExist"),
-                                JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("CanNotRename"), Bundle.getMessage("PanelExist"),
+                                JmriJOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     if (ancestor instanceof JFrame) {
@@ -289,6 +286,7 @@ public class PanelEditor extends Editor implements ItemListener {
         _addIconBox.addItem(new ComboBoxItem(RPSREPORTER));
         _addIconBox.addItem(new ComboBoxItem(FAST_CLOCK));
         _addIconBox.addItem(new ComboBoxItem(GLOBAL_VARIABLE));
+        _addIconBox.addItem(new ComboBoxItem(LOGIXNG));
         _addIconBox.addItem(new ComboBoxItem(ICON));
         _addIconBox.setSelectedIndex(-1);
         _addIconBox.addItemListener(this);  // must be AFTER no selection is set
@@ -613,6 +611,7 @@ public class PanelEditor extends Editor implements ItemListener {
                 setHiddenMenu(p, popup);
                 setEmptyHiddenMenu(p, popup);
                 setEditIdMenu(p, popup);
+                setEditClassesMenu(p, popup);
                 popup.addSeparator();
                 setLogixNGPositionableMenu(p, popup);
                 popup.addSeparator();
@@ -1030,6 +1029,7 @@ public class PanelEditor extends Editor implements ItemListener {
         addItemPopUp(new ComboBoxItem(RPSREPORTER), _add);
         addItemPopUp(new ComboBoxItem(FAST_CLOCK), _add);
         addItemPopUp(new ComboBoxItem(GLOBAL_VARIABLE), _add);
+        addItemPopUp(new ComboBoxItem(LOGIXNG), _add);
         addItemPopUp(new ComboBoxItem(ICON), _add);
         addItemPopUp(new ComboBoxItem("Text"), _add);
         popup.add(_add);
@@ -1256,6 +1256,6 @@ public class PanelEditor extends Editor implements ItemListener {
         popup.add(edit);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PanelEditor.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PanelEditor.class);
 
 }

@@ -1,6 +1,7 @@
 package jmri.jmrit.vsdecoder.swing;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -10,15 +11,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.Reporter;
@@ -30,8 +32,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.util.PhysicalLocation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * GUI to manage Reporters, Blocks, Locations and Listener attributes.
@@ -223,10 +224,10 @@ public class ManageLocationsFrame extends jmri.util.JmriJFrame {
     }
 
     private void saveButtonPressed(ActionEvent e) {
-        int value = JOptionPane.showConfirmDialog(null, Bundle.getMessage("FieldMLFSaveDialogConfirmMessage"),
+        int value = JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("FieldMLFSaveDialogConfirmMessage"),
                 Bundle.getMessage("FieldMLFSaveDialogTitle"),
-                JOptionPane.YES_NO_OPTION);
-        if (value == JOptionPane.YES_OPTION) {
+                JmriJOptionPane.YES_NO_OPTION);
+        if (value == JmriJOptionPane.YES_OPTION) {
             saveTableValues();
             OperationsXml.save();
         }
@@ -242,7 +243,7 @@ public class ManageLocationsFrame extends jmri.util.JmriJFrame {
             if ((Double) locModel.getValueAt(0, ManageLocationsTableModel.AZIMUTHCOL) != null
                     && ((Double) locModel.getValueAt(0, ManageLocationsTableModel.AZIMUTHCOL) == 90.0d
                     || (Double) locModel.getValueAt(0, ManageLocationsTableModel.AZIMUTHCOL) == -90.0d)) {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("FieldTableAzimuthInvalidValue"));
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("FieldTableAzimuthInvalidValue"));
             } else {
                 listenerLoc.setLocation((Double) locModel.getValueAt(0, ManageLocationsTableModel.XCOL),
                         (Double) locModel.getValueAt(0, ManageLocationsTableModel.YCOL),
@@ -287,6 +288,6 @@ public class ManageLocationsFrame extends jmri.util.JmriJFrame {
         dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ManageLocationsFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ManageLocationsFrame.class);
 
 }

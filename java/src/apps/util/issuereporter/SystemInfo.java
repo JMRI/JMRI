@@ -30,7 +30,6 @@ import purejavacomm.CommPortIdentifier;
 
 /**
  * Provide the JMRI context info.
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2009
  * @author Matt Harris Copyright (C) 2008, 2009

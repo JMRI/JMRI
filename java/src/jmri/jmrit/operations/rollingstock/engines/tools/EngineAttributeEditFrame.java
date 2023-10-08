@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
-import java.text.MessageFormat;
 import java.util.List;
 
 import javax.swing.JMenu;
@@ -45,7 +44,7 @@ public class EngineAttributeEditFrame extends RollingStockAttributeEditFrame {
     public void initComponents(String attribute, String name) {
         super.initComponents(attribute, name);
 
-        setTitle(MessageFormat.format(Bundle.getMessage("TitleEngineEditAtrribute"), new Object[] { attribute }));
+        setTitle(Bundle.getMessage("TitleEngineEditAtrribute", attribute));
 
         // build menu
         JMenuBar menuBar = new JMenuBar();

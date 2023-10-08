@@ -3,7 +3,6 @@ package jmri.jmrit.operations.locations;
 import javax.swing.BorderFactory;
 
 import jmri.jmrit.operations.locations.tools.ChangeTrackTypeAction;
-import jmri.jmrit.operations.locations.tools.IgnoreUsedTrackAction;
 
 /**
  * Frame for user edit of a yard
@@ -27,8 +26,7 @@ public class YardEditFrame extends TrackEditFrame {
         _type = Track.YARD;
         super.initComponents(location, track);
 
-        _toolMenu.insert(new IgnoreUsedTrackAction(this), TOOL_MENU_OFFSET);
-        _toolMenu.insert(new ChangeTrackTypeAction(this), TOOL_MENU_OFFSET + 1);
+        _toolMenu.insert(new ChangeTrackTypeAction(this), TOOL_MENU_OFFSET);
         addHelpMenu("package.jmri.jmrit.operations.Operations_Yards", true); // NOI18N
 
         // override text strings for tracks

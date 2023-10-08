@@ -2255,6 +2255,20 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        jmri.jmrit.display.logixng.ActionPositionableByClass actionPositionableByClass =
+                new jmri.jmrit.display.logixng.ActionPositionableByClass(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionPositionableByClass);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionPositionableByClass =
+                new jmri.jmrit.display.logixng.ActionPositionableByClass(digitalActionManager.getAutoSystemName(), null);
+        actionPositionableByClass.setClassName("TheClass");
+        maleSocket = digitalActionManager.registerAction(actionPositionableByClass);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         jmri.jmrit.logixng.actions.ActionRequestUpdateAllSensors actionRequestUpdateAllSensors =
                 new jmri.jmrit.logixng.actions.ActionRequestUpdateAllSensors(digitalActionManager.getAutoSystemName(), null, _locoNetMemo);
         maleSocket = digitalActionManager.registerAction(actionRequestUpdateAllSensors);
@@ -2645,6 +2659,13 @@ public class CreateLogixNGTreeScaffold {
 
         logix = new jmri.jmrit.logixng.actions.Logix(digitalActionManager.getAutoSystemName(), null);
         logix.setComment("A comment");
+        logix.setExecuteType(jmri.jmrit.logixng.actions.Logix.ExecuteType.ExecuteOnChange);
+        maleSocket = digitalActionManager.registerAction(logix);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        logix = new jmri.jmrit.logixng.actions.Logix(digitalActionManager.getAutoSystemName(), null);
+        logix.setComment("A comment");
+        logix.setExecuteType(jmri.jmrit.logixng.actions.Logix.ExecuteType.ExecuteAlways);
         maleSocket = digitalActionManager.registerAction(logix);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -2662,18 +2683,24 @@ public class CreateLogixNGTreeScaffold {
         booleanMany.getChild(0).connect(maleSocket);
 
 
-        DigitalBooleanOnChange onChange =
-                new DigitalBooleanOnChange(digitalBooleanActionManager.getAutoSystemName(),
-                        null, DigitalBooleanOnChange.Trigger.CHANGE);
-        maleSocket = digitalBooleanActionManager.registerAction(onChange);
+        DigitalBooleanLogixAction logixAction =
+                new DigitalBooleanLogixAction(digitalBooleanActionManager.getAutoSystemName(),
+                        null, DigitalBooleanLogixAction.When.Either);
+        maleSocket = digitalBooleanActionManager.registerAction(logixAction);
         maleSocket.setEnabled(false);
         booleanMany.getChild(1).connect(maleSocket);
 
-        onChange = new DigitalBooleanOnChange(digitalBooleanActionManager.getAutoSystemName(),
-                null, DigitalBooleanOnChange.Trigger.CHANGE_TO_FALSE);
-        onChange.setComment("A comment");
-        maleSocket = digitalBooleanActionManager.registerAction(onChange);
+        logixAction = new DigitalBooleanLogixAction(digitalBooleanActionManager.getAutoSystemName(),
+                null, DigitalBooleanLogixAction.When.False);
+        logixAction.setComment("A comment");
+        maleSocket = digitalBooleanActionManager.registerAction(logixAction);
         booleanMany.getChild(2).connect(maleSocket);
+
+        logixAction = new DigitalBooleanLogixAction(digitalBooleanActionManager.getAutoSystemName(),
+                null, DigitalBooleanLogixAction.When.True);
+        logixAction.setComment("A comment");
+        maleSocket = digitalBooleanActionManager.registerAction(logixAction);
+        booleanMany.getChild(3).connect(maleSocket);
 
 
         jmri.jmrit.logixng.actions.LogData logData = new jmri.jmrit.logixng.actions.LogData(digitalActionManager.getAutoSystemName(), null);
@@ -3201,6 +3228,113 @@ public class CreateLogixNGTreeScaffold {
         expressionLinuxLinePower.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         maleSocket = digitalExpressionManager.registerExpression(expressionLinuxLinePower);
         maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+
+        ExpressionAudio expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        expressionAudio.setComment("A comment");
+//        expressionAudio.getSelectNamedBean().setNamedBean(turnout1);
+        expressionAudio.setBeanState(ExpressionAudio.AudioState.Initial);
+        expressionAudio.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionAudio.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionAudio.getSelectNamedBean().setLocalVariable("index");
+        expressionAudio.getSelectNamedBean().setReference("{IM1}");
+        expressionAudio.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionAudio.setStateAddressing(NamedBeanAddressing.LocalVariable);
+        expressionAudio.setStateFormula("\"IT\"+index2");
+        expressionAudio.setStateLocalVariable("index2");
+        expressionAudio.setStateReference("{IM2}");
+        expressionAudio.setCheckOnlyOnChange(true);
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        expressionAudio.setComment("A comment");
+//        expressionAudio.getSelectNamedBean().setNamedBean(turnout1);
+        expressionAudio.setBeanState(ExpressionAudio.AudioState.Stopped);
+        expressionAudio.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionAudio.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionAudio.getSelectNamedBean().setLocalVariable("index");
+        expressionAudio.getSelectNamedBean().setReference("{IM1}");
+        expressionAudio.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionAudio.setStateAddressing(NamedBeanAddressing.Formula);
+        expressionAudio.setStateFormula("\"IT\"+index2");
+        expressionAudio.setStateLocalVariable("index2");
+        expressionAudio.setStateReference("{IM2}");
+        expressionAudio.setCheckOnlyOnChange(false);
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        expressionAudio.setComment("A comment");
+//        expressionAudio.getSelectNamedBean().setNamedBean(turnout1);
+        expressionAudio.setBeanState(ExpressionAudio.AudioState.Playing);
+        expressionAudio.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        expressionAudio.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionAudio.getSelectNamedBean().setLocalVariable("index");
+        expressionAudio.getSelectNamedBean().setReference("{IM1}");
+        expressionAudio.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionAudio.setStateAddressing(NamedBeanAddressing.Reference);
+        expressionAudio.setStateFormula("\"IT\"+index2");
+        expressionAudio.setStateLocalVariable("index2");
+        expressionAudio.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        expressionAudio.setComment("A comment");
+//        expressionAudio.getSelectNamedBean().setNamedBean(turnout1);
+        expressionAudio.setBeanState(ExpressionAudio.AudioState.Positioned);
+        expressionAudio.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        expressionAudio.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionAudio.getSelectNamedBean().setLocalVariable("index");
+        expressionAudio.getSelectNamedBean().setReference("{IM1}");
+        expressionAudio.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionAudio.setStateAddressing(NamedBeanAddressing.Direct);
+        expressionAudio.setStateFormula("\"IT\"+index2");
+        expressionAudio.setStateLocalVariable("index2");
+        expressionAudio.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        expressionAudio.setBeanState(ExpressionAudio.AudioState.Empty);
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        expressionAudio.setBeanState(ExpressionAudio.AudioState.Initial);
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        expressionAudio.setBeanState(ExpressionAudio.AudioState.Loaded);
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        expressionAudio.setBeanState(ExpressionAudio.AudioState.Moving);
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        expressionAudio.setBeanState(ExpressionAudio.AudioState.Playing);
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        expressionAudio.setBeanState(ExpressionAudio.AudioState.Positioned);
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionAudio = new ExpressionAudio(digitalExpressionManager.getAutoSystemName(), null);
+        expressionAudio.setBeanState(ExpressionAudio.AudioState.Stopped);
+        maleSocket = digitalExpressionManager.registerExpression(expressionAudio);
         and.getChild(indexExpr++).connect(maleSocket);
 
 

@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * A singleton instance is provided by a call to
  * <code>jmri.InstanceManager.getDefault(ThrottlesPreferences.class);</code> or
  * <code>jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class)</code>;
- * <p>
  * @author Lionel Jeanson - 2009-2021
  *
  */

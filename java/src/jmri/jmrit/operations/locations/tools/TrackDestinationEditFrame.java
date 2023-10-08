@@ -6,9 +6,6 @@ import java.util.List;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -18,6 +15,7 @@ import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.router.Router;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user edit of track roads
@@ -265,7 +263,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 
         SwingUtilities.invokeLater(() -> {
             if (checkLocationsLoop())
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("OkayMessage"));
+                JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("OkayMessage"));
             checkDestinationsButton.setEnabled(true);
         });
     }
@@ -288,11 +286,11 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                     }
                     if (!destination.acceptsTypeName(type)) {
                         noIssues = false;
-                        int response = JOptionPane.showConfirmDialog(this,
-                                MessageFormat.format(Bundle.getMessage("WarningDestinationCarType"), new Object[]{
-                                        destination.getName(), type}), Bundle.getMessage("WarningCarMayNotMove"),
-                                JOptionPane.OK_CANCEL_OPTION);
-                        if (response == JOptionPane.OK_OPTION)
+                        int response = JmriJOptionPane.showConfirmDialog(this,
+                                Bundle.getMessage("WarningDestinationCarType", 
+                                        destination.getName(), type), Bundle.getMessage("WarningCarMayNotMove"),
+                                JmriJOptionPane.OK_CANCEL_OPTION);
+                        if (response == JmriJOptionPane.OK_OPTION)
                             continue;
                         return false; // done
                     }
@@ -303,11 +301,11 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                         }
                     }
                     noIssues = false;
-                    int response = JOptionPane.showConfirmDialog(this, MessageFormat
+                    int response = JmriJOptionPane.showConfirmDialog(this, MessageFormat
                             .format(Bundle.getMessage("WarningDestinationTrackCarType"), new Object[]{
                                     destination.getName(), type}), Bundle.getMessage("WarningCarMayNotMove"),
-                            JOptionPane.OK_CANCEL_OPTION);
-                    if (response == JOptionPane.OK_OPTION)
+                            JmriJOptionPane.OK_CANCEL_OPTION);
+                    if (response == JmriJOptionPane.OK_OPTION)
                         continue;
                     return false; // done
                 }
@@ -323,11 +321,11 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                         }
                     }
                     noIssues = false;
-                    int response = JOptionPane.showConfirmDialog(this, MessageFormat
+                    int response = JmriJOptionPane.showConfirmDialog(this, MessageFormat
                             .format(Bundle.getMessage("WarningDestinationTrackCarRoad"), new Object[]{
                                     destination.getName(), road}), Bundle.getMessage("WarningCarMayNotMove"),
-                            JOptionPane.OK_CANCEL_OPTION);
-                    if (response == JOptionPane.OK_OPTION)
+                            JmriJOptionPane.OK_CANCEL_OPTION);
+                    if (response == JmriJOptionPane.OK_OPTION)
                         continue;
                     return false; // done
                 }
@@ -348,10 +346,10 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                             }
                         }
                         noIssues = false;
-                        int response = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
-                                .getMessage("WarningDestinationTrackCarLoad"), new Object[]{destination.getName(),
-                                type, load}), Bundle.getMessage("WarningCarMayNotMove"), JOptionPane.OK_CANCEL_OPTION);
-                        if (response == JOptionPane.OK_OPTION)
+                        int response = JmriJOptionPane.showConfirmDialog(this, Bundle
+                                .getMessage("WarningDestinationTrackCarLoad", destination.getName(),
+                                type, load), Bundle.getMessage("WarningCarMayNotMove"), JmriJOptionPane.OK_CANCEL_OPTION);
+                        if (response == JmriJOptionPane.OK_OPTION)
                             continue;
                         return false; // done
                     }
@@ -367,10 +365,10 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                             }
                         }
                         noIssues = false;
-                        int response = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
-                                .getMessage("WarningDestinationTrackCarLoad"), new Object[]{destination.getName(),
-                                type, load}), Bundle.getMessage("WarningCarMayNotMove"), JOptionPane.OK_CANCEL_OPTION);
-                        if (response == JOptionPane.OK_OPTION)
+                        int response = JmriJOptionPane.showConfirmDialog(this, Bundle
+                                .getMessage("WarningDestinationTrackCarLoad", destination.getName(),
+                                type, load), Bundle.getMessage("WarningCarMayNotMove"), JmriJOptionPane.OK_CANCEL_OPTION);
+                        if (response == JmriJOptionPane.OK_OPTION)
                             continue;
                         return false; // done
                     }
@@ -431,11 +429,11 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                             
                             if (!testDest.equals(Track.OKAY)) {
                                 noIssues = false;
-                                int response = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
-                                        .getMessage("WarningNoTrack"), new Object[]{destination.getName(), type, road, load,
-                                        destination.getName()}), Bundle.getMessage("WarningCarMayNotMove"),
-                                        JOptionPane.OK_CANCEL_OPTION);
-                                if (response == JOptionPane.OK_OPTION)
+                                int response = JmriJOptionPane.showConfirmDialog(this, Bundle
+                                        .getMessage("WarningNoTrack", destination.getName(), type, road, load,
+                                        destination.getName()), Bundle.getMessage("WarningCarMayNotMove"),
+                                        JmriJOptionPane.OK_CANCEL_OPTION);
+                                if (response == JmriJOptionPane.OK_OPTION)
                                     continue;
                                 return false; // done
                             }
@@ -446,11 +444,11 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                             car.setDestination(null, null); // clear destination if set by router
                             if (!results) {
                                 noIssues = false;
-                                int response = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
-                                        .getMessage("WarningNoTrain"), new Object[]{type, road, load,
-                                        destination.getName()}), Bundle.getMessage("WarningCarMayNotMove"),
-                                        JOptionPane.OK_CANCEL_OPTION);
-                                if (response == JOptionPane.OK_OPTION)
+                                int response = JmriJOptionPane.showConfirmDialog(this, Bundle
+                                        .getMessage("WarningNoTrain", type, road, load,
+                                        destination.getName()), Bundle.getMessage("WarningCarMayNotMove"),
+                                        JmriJOptionPane.OK_CANCEL_OPTION);
+                                if (response == JmriJOptionPane.OK_OPTION)
                                     continue;
                                 return false; // done
                             }
@@ -487,5 +485,5 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackDestinationEditFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackDestinationEditFrame.class);
 }

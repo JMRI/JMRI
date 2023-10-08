@@ -17,12 +17,12 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+
 import jmri.InstanceManager;
 import jmri.Scale;
 import jmri.ScaleManager;
@@ -31,8 +31,7 @@ import jmri.jmrit.dispatcher.DispatcherFrame.TrainsFrom;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Set up and processes items in the Dispatcher Options menu.
@@ -376,8 +375,8 @@ public class OptionsMenu extends JMenu {
         dispatcher.setSignalType(signalTypeBox.getSelectedIndex());
         if (autoTurnoutsCheckBox.isSelected() && ((layoutEditorList.size() == 0)
                 || (!useConnectivityCheckBox.isSelected()))) {
-            JOptionPane.showMessageDialog(optionsFrame, Bundle.getMessage(
-                    "AutoTurnoutsWarn"), Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(optionsFrame, Bundle.getMessage(
+                    "AutoTurnoutsWarn"), Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
         }
         dispatcher.setShortActiveTrainNames(shortNameCheckBox.isSelected());
         dispatcher.setShortNameInBlock(nameInBlockCheckBox.isSelected());
@@ -451,6 +450,6 @@ public class OptionsMenu extends JMenu {
         stoppingSpeedBox.setSelectedItem(dispatcher.getStoppingSpeedName());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OptionsMenu.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OptionsMenu.class);
 
 }

@@ -4,18 +4,17 @@ import jmri.JmriException;
 
 /**
  * A LogixNG logix emulator action.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2018
  */
 public interface DigitalBooleanAction extends Base {
 
     /**
      * Execute this DigitalActionBean.
-     * 
-     * @param hasChangedToTrue true if the expression has changed to true, false otherwise
-     * @param hasChangedToFalse true if the expression has changed to false, false otherwise
+     *
+     * @param value the value of the expression
      * @throws JmriException when an exception occurs
      */
-    void execute(boolean hasChangedToTrue, boolean hasChangedToFalse) throws JmriException;
-    
+    void execute(boolean value) throws JmriException;
+
 }

@@ -1,10 +1,11 @@
 package jmri.jmrit.ctc.editor.gui;
 
+import javax.swing.SpinnerNumberModel;
+
 import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
 import jmri.jmrit.ctc.editor.code.Columns;
 import jmri.jmrit.ctc.editor.code.CommonSubs;
-import javax.swing.JOptionPane;
-import javax.swing.SpinnerNumberModel;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  *
@@ -153,7 +154,7 @@ public class FrmAddModifyCTCColumn extends javax.swing.JFrame {
         _mNewGUIColumnNumber = (int)_mGUIColumnNumber.getValue();
         String errorText = _mColumns.checkForDups(_mNewSwitchNumber, _mNewGUIColumnNumber, _mIsModify, _mColumns.getEntrySelectedIndex());
         if (errorText != null) {
-            JOptionPane.showMessageDialog(this, errorText, Bundle.getMessage("ErrorDlgAddModDuplicate"), JOptionPane.ERROR_MESSAGE); return; // NOI18N   DO NOT EXIT OUT OF FORM!
+            JmriJOptionPane.showMessageDialog(this, errorText, Bundle.getMessage("ErrorDlgAddModDuplicate"), JmriJOptionPane.ERROR_MESSAGE); return; // NOI18N   DO NOT EXIT OUT OF FORM!
         }
         _mNewSignalEtcNumber = _mNewSwitchNumber + 1;
         _mNewGUIGeneratedAtLeastOnceAlready = _mGUIGeneratedAtLeastOnceAlready.isSelected();

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+    <title>JMRI: Getting Started with RFID</title>
+    <meta name="author" content="Jerry Grochow">
+    <meta name="keywords" content="JMRI RFID Reporters OperationsPro IDTags Blocks">
+    <!--#include virtual="/Style.shtml" -->
+  </head>
+  
+  <!-- ******************************************************************************************************* -->
+  <body>
+    <!--#include virtual="/Header.shtml" -->
+    <div id="mBody">
+      <!--#include virtual="Sidebar.shtml" -->
+      <div id="mainContent">
+        <h1>JMRI: Getting Started with RFID</h1>
+        <p>JMRI has numerous capabilities for working with RFID systems. This document integrates information from 
+        <a href="#_Toc148">multiple sources</a> to describe how to use your RFID system with JMRI.  It will tell you
+        how to:</p>
+        <ul>
+          <li>Keep track of where RFID readers are located on your layout</li>
+          <li>Keep track of the RFID tag number attached to various pieces of rolling stock (engines and cars/wagons)</li>
+          <li>Be notified when a particular RFID tag is seen at a particular reader</li>
+          <li>Display that information and/or take action based on it.</li>
+        </ul>
+
+        <p><i>This document is a WORK IN PROGRESS and will be edited and expanded based on user feedback via the 
+        <a href="https://groups.io/g/jmriusers" target="_blank">JMRI</a> and 
+        <a href="https://groups.io/g/RFID4MRR" target="_blank">RFID</a> user groups.</i>.
+        </p>
+        
+        <h5 id="top">
+          Contents
+        </h5>
+        <ul>
+          <li><a href="#_Toc138">Five steps to tracking trains with RFID</a></li>
+          <li><a href="#_Toc139">Setting up RFID communication to JMRI</a></li>
+          <li><a href="#_Toc140">JMRI Tables for RFID</a></li>
+          <li><a href="#_Toc143">Linking PanelPro tables to display RFID Tag names when tags are read</a></li>
+          <li><a href="#_Toc141">Setting up the OperationsPro tables for RFID</a></li>
+          <li><a href="#_Toc142">Short cut: Populating the Locomotive Table from the JMRI Roster</a></li>
+          <li><a href="#_Toc144">Automatic table information update</a></li>
+          <li><a href="#_Toc148">Further information</a></li>
+        </ul>
+        <p class="important">This document is NOT intended to be a guide to using JMRI's extensive operations
+        capabilities (known collectively as "OperationsPro"), but is focused solely on RFID setup. You do not 
+        need to use any other OperationsPro functions to use the RFID functions. See the 
+        <a href="../../apps/operationspro/index.shtml">OperationsPro help pages</a>.
+        </p>
+        <p></p>
+
+  <!-- ******************************************************************************************************* -->
+        <h2><a id="_Toc138">Five steps to tracking trains with RFID</a></h2>
+        <p>If you have already made the decision about RFID readers and tags, and have created a Layout Editor or Control Panel
+        Editor panel in JMRI that corresponds to your layout, here is what you have to do to start tracking your trains:</p>
+        <ol>
+          <li>Attach an RFID Tag to a locomotive</li>
+          <li>Set up a JMRI "connection" for your RFID Reader in Connections Preferences (PanelPro main menu: <strong>Edit&rArr;
+          Preferences&rArr;Connections&rArr;"+"</strong>)</li>
+          <li>Run the train so the reader reads the RFID tag. JMRI will automatically create entries in the <i>ID Tags Table</i>
+          (for the RFID tag) and the <i>Reporter Table</i> (for the reader).  These can be viewed via the main
+          PanelPro menu selection <strong>Tool&rArr;Tables&rArr;[Reporters, ID Tags]</strong></li>
+          <li>Enter the locomotive ID (usually the cab number) into the "User Name" field in the <i>ID Tag Table</i> (right click
+          on the "User Name" field and select <strong>Rename</strong>)</li>
+          <li>Depending on which panel type you are using:
+            <ul>
+              <li>If you created a <a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor Panel</a> you
+              can see the train name for as long as it occupies a block: 
+                <ul>
+                  <li>If you haven't already created track "blocks," create one in the <i>Block Table</i> (PanelPro menu selection:
+                  <strong>Tool&rArr;Tables&rArr;Blocks&rArr;[Click "Add"]</strong>). Find the new entry and assign the reader ID to
+                  it by selecting from the pulldown in the "Reporter" field. <i>NOTE:</i> It is recommended that you NOT check the 
+                  "Current" box which would clear the block value as soon as the RFID tag moves away from the reader.  See
+                  <a href="../../../package/jmri/jmrit/beantable/BlockTable.shtml">for more information.</a></li>
+                  <li>Assign that block to the track on the panel that corresponds to the physical location of the RFID Reader:
+                  Right-click on the track segment and select <strong>Edit</strong>; select the block name from the pulldown "Block Name".</li>
+                  <li>In the panel edit window, check the box for "Block Contents" and select the name of the block whose value you want to display.</li>
+                  <li>Shift-click on the panel where you want the value to appear. [It may be hard to see where that is if the value is
+                  currently blank so consider putting a background or border.]
+                </ul>
+              </li>
+              <li>If you created a <a href="../../../package/jmri/jmrit/display/ControlPanelEditor.shtml">Control Panel Editor Panel</a>
+              you can see the train name for as long as the reader sees the RFID tag
+                <ul>
+                  <li>Select <strong>Add Items&rArr;Item Palette&rArr;Reporter</strong>, select the reader name and drag it to the panel.</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ol>
+        <p>That's it! OK, step 5 can be a few steps itself, but now you can track your train from the time it is seen at an RFID reader as it
+        occupies different blocks around your layout.  JMRI handles that part <a href="../../tools/tracker/index.shtml">automatically!</a></p>
+
+        <a href="images/PanelsTablesLinkedRel554.jpg"><img src="images/PanelsTablesLinkedRel554.jpg"
+        height="1921" width="1043" alt="JMRI Tables used with RFID-PanelProLinks"></a>
+        <p></p>
+          <a href="#top">[Go to top of page]</a>
+        
+  <!-- ******************************************************************************************************* -->
+        <h2><a id="_Toc139">Setting up RFID communication to JMRI</a></h2>
+        <p>There are several ways to tell JMRI about your RFID readers:</p>
+        <ul>
+          <li>
+            If your readers communicate via direct serial (USB) connection or TCP/IP, set up an "RFID Connection" on
+            the Preferences Connections page (PanelPro main menu <strong>Edit&rArr;Preferences&rArr;Connections&rArr;"+"</strong>
+            [Select "RFID" as "System Manufacturer")].
+            JMRI will then create a <i>Reporter Table</i> entry automatically when a reader sends
+            a properly formatted message through the indicated connection.  You will also see a new main menu item for <strong>RFID</strong>
+            which gives you access to a command monitor and a <a href="../../../package/jmri/jmrix/rfid/swing/tagcarwin/TagMonitorPane.shtml">tag monitor </a>.
+           <a href="images/PanelProMainRel554.jpg"><img src="images/PanelProMainRel554.jpg"
+           height="650" width="285" style="text-align:right;" alt="JMRI PanelPro Main Window"></a>
+          </li>
+          <li>
+            If your readers communicate via MQTT, you must first create an entry in the <i>Reporters Table</i> manually for each reader. Use the
+            name by which the reader will send MQTT messages as the "System Name" (see the <a href="../mqtt/index.shtml">MQTT help pages</a>).    
+          </li>
+          <li>
+            If your readers communicate via LocoNet, JMRI will create a <i>Reporter Table</i> entry automatically when a reader sends a properly
+            formatted message through the indicated connection.
+          </li>
+          <li>
+            Other methods may create <i>Reporter Table</i> entries automatically or require you to create them manually.  See <a href=  "../../tools/Reporters.shtml">Reporters Documentation</a> for more information.
+          </li>
+        </ul>
+        <p class="important">Using JMRI Version 5.5.4 or earlier, it is recommended NOT to add User Names in the Reporter Table 
+        as this causes some confusion on JMRI startup. This issue has been <a href="https://github.com/JMRI/JMRI/issues/12433" target="_blank">
+        documented in the JMRI code repository</a>.
+        </p>
+        <p></p>
+          <a href="#top">[Go to top of page]</a>
+          
+   <!-- ******************************************************************************************************* -->
+        <h2><a id="_Toc140">JMRI Tables for RFID</a></h2>
+        <p>
+          JMRI stores information in tables that can be saved to files on your computer. All JMRI tables are
+          available via the user interface of all JMRI systems (PanelPro, DecoderPro, and OperationsPro). Most
+          tables used by PanelPro functions are stored in a combined xml file (sometimes called a "panel file"
+          or "panel and table file") while OperationsPro and DecoderPro table contents are stored separately in
+          individual xml files (see <a href="https://www.jmri.org/help/en/html/apps/LoadStoreWork.shtml">
+          Loading Storing Your Work</a> for more information).
+          </p>
+          <p>These are the tables you will use with RFID:</p>
+
+        <ul>
+        <li>PanelPro Tables: viewable via the PanelPro menu selection <strong>Tool&rArr;Tables&rArr;
+        [select table name]</strong>
+        <p>
+          <i>Reporter Table</i>: one entry per RFID reader necessary to recognize each RFID reader. 
+          Entries may be created automatically the first time a message is received from an RFID reader
+          depending on the communications protocol you use (see <a href="../../tools/Reporters.shtml">
+          Reporters help page</a>). If an entry is not created automatically (or even if it would be), 
+          you can create an entry manually. The Reporter Table contents is saved when you do a 
+          <strong>File&rArr;Store ALL...</strong>) from the main PanelPro menu or elsewhere. 
+          [<i>ADVANCED:</i> The <a href="../../tools/Reporters.shtml">Reporter Table</a> is also used for
+          other kinds of reports from the layout, such as <a href="../loconet/Addressing.shtml#transponding">
+          transponder</a> messages and <a href="../rps/index.shtml">real-time positioning system information
+          </a>, hence its more general name.]
+        </p>
+        <p>
+          <i>ID Tag Table</i>: entries are created and saved automatically when an ID tag is seen at a reader.
+          See also: <a href="../../tools/IdTags.shtml">ID Tag Table help</a>.
+        </p>
+        <p>
+          <i>Block Table</i>: Blocks are defined groups of track on <i>Layout Editor Panels</i>.  An RFID reader
+          can be assigned to a Block so that the ID Tag seen by that reader can be displayed on that panel.
+          This is known as the "Block Value". Block Table contents is saved when you do a 
+          <strong>File&rArr;Store ALL...</strong>) from the main PanelPro menu or elsewhere. 
+          See <a href="../../../package/jmri/jmrit/beantable/BlockTable.shtml"> Block Table help page</a>.
+        </p>
+        <a href="images/PanelProTablesRel554.jpg"><img src="images/PanelProTablesRel554.jpg"
+        height="1921" width="722" alt="PanelPro Tables used with RFID"></a>
+        </li>
+
+        <li>Operations Tables (if using OperationsPro): viewable via the main OperationsPro menu selection 
+            <strong>OperationsPro&rArr;[select table name]</strong>
+        <p>
+          <i>Location Table</i>: this table, if used, has entries for track locations around your layout. Entries 
+          can be created for locations at which you have RFID readers. The Location Table contents is
+          saved automatically to a disk file.
+        </p>
+        <p>
+          <i>Locomotive Table, Car Table</i>: these tables, if used, have entries for your rolling stock.
+          Entries can be created for locomotives or cars (wagons) to which you have attached RFID tags.
+          The Locomotive Table and the Car Table contents are saved automatically into separate files on disk.
+        </p>
+        <a href="images/OpsProTablesRel554.jpg"><img src="images/OpsProTablesRel554.jpg"
+        height="1921" width="722" alt="OpsPro Tables used with RFID"></a>
+        </li>
+
+        <li>DecoderPro Table viewable when via the PanelPro menu selection: <strong>Roster&rArr;Roster</strong>
+        <p>
+          <i>Roster</i>: contains one entry per locomotive in your fleet. While it allows you to
+          enter a great deal of information about each, it does not currently (as of JMRI Version 5.5.4) have a specific 
+          field for RFID tag. However, the Roster can be used to populate the Locomotive Table and RFID tag numbers can 
+          be entered there.  The Roster contents is saved when you make changes and do a <strong>File&rArr;Save</strong>
+          or "Save to Roster". The Roster contents is saved into a separate xml file.
+        </p>
+        </li>
+        </ul>
+        <p></p>
+          <a href="#top">[Go to top of page]</a>
+          
+  <!-- ******************************************************************************************************* -->
+        <h2><a id="_Toc143">Linking PanelPro tables to display RFID Tag names when tags are read</a>
+        </h2>
+        <p>
+          While JMRI is an integrated set of systems, various pieces were implemented at different
+          times by different people.  This means that some capabilities are not fully linked across functions and 
+          some data may appear to be in the "wrong" place, missing, or replicated (as for example, with the 
+          DecoderPro Roster and the OperationsPro Locomotive Table).  As a result, some types of data linking has 
+          to be done manually to fully use all the JMRI functionality:
+        <ul>
+          <li>To see the name or number of a locomotive or car, you have to associate that number with an RFID tag number.</li>
+          <li>To see the name or number of a locomotive or car appear on your Layout Editor Panel when it is 
+          occupying a block that has an RFID reader, you have to link the RFID reader (Reporter Name) to
+          the Block Table and put the Block Value on the Layout Panel.</li>
+          <li>To see the name or number of a locomotive or car appear on your Control Panel Editor Panel when it
+          is in front of an RFID reader, you have to put the Reporter (RFID reader name) on the CPE Panel.</li>
+        </ul>
+        <p>This section expands on the information <a href="_Toc138">above</a> to do this linking.  
+        [<a href="_Toc141">Following sections</a> tell you how to link OperationsPro tables.]</p>
+        
+        <p>
+          To identiy which RFID tag is attached to which piece of rolling stock, use the "User Name" 
+          field in the <i>ID Tag Table</i>. Enter the locomotive or car number (must be unique) into the
+          "User Name" by right-clicking on the field and selecting <strong>Rename</strong>). Other choices
+          are <strong>Remove</strong> (useful if you mistype a number) or <strong>Move User Name</strong> if you are
+          moving an RFID tag to a different piece of rolling stock. [If you are just getting started, a <a href="https://jmri.org/jython/AssignRFIDTagToRS.py" target="_blank">jython script</a> in the examples library will
+          open a window for you to enter user names when RFID tags are encountered for the first time.]
+        </p>
+        <a href="images/PanelProTablesLinkedRel554.jpg"><img src="images/PanelProTablesLinkedRel554.jpg"
+        height="1921" width="722" alt="PanelPro Tables used with RFID-Linked"></a>
+        
+        <p>
+          If you created a <a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor Panel</a> you
+          can see the train name for as long as it occupies a block by linking RFID readers to blocks on the panel.
+          Repeating instruction 5 above:
+        </p>
+        <ul>          
+          <li>If you haven't already created track blocks, create them in the <i>Block Table</i> for each block that you want 
+            to associate with an RFID reader (PanelPro menu selection: <strong>Tool&rArr;Tables&rArr;Blocks&rArr;[Click "Add"]
+          </strong>). 
+          <li>Find the new entry and assign the reader ID to it by selecting from the pulldown in the "Reporter" field.
+            <i>NOTE:</i> It is recommended that you NOT check the "Current" box which would clear the block value as
+            soon as the RFID tag moves away from the reader.  If you do, then you will only see the locomotive or car 
+            name when the RFID tag is actually reported by the reader. See
+            <a href="../../../package/jmri/jmrit/beantable/BlockTable.shtml">for more information.</a></li>
+          <li>Assign that block to the track on the panel that corresponds to the physical location of the RFID Reader:
+            Right-click on the track segment and select <strong>Edit</strong>; select the block name from the pulldown "Block Name".</li>
+          <li>In the panel edit window, check the box for "Block Contents" and select the name of the block whose value you want to display.</li>
+          <li>Shift-click on the panel where you want the value to appear. [It may be hard to see where that is if the value is
+          currently blank so consider putting a background or border.]</li>
+        </ul>
+       
+        <p>If you created a <a href="../../../package/jmri/jmrit/display/ControlPanelEditor.shtml">Control Panel Editor Panel</a>
+           you can only display the "reports" from Reporters, i.e. the train name associated with an RFID tag, for as long as the
+           reader reports that RFID tag. Once the reader report clears, the "report" is blank and the CPE Panels will not display 
+           the name.  Unfortunately, CPE Panels do not have a way to display "Blocks" and "Block Values" but have their own concept
+           of "Occupancy Blocks" (part of the <a href="../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>
+           capability) which do not link to RFID information.
+         </p>
+         <ul>
+            <li>In the CPE Panel window, select <strong>Add Items&rArr;Item Palette&rArr;Reporter</strong>, select the reader name and drag it to the panel.</li>
+         </ul>
+         
+         <a href="images/PanelsTablesLinkedRel554.jpg"><img src="images/PanelsTablesLinkedRel554.jpg"
+         height="1921" width="1043" alt="JMRI Tables used with RFID-PanelProLinks"></a>
+
+        <p></p>
+        <a href="#top">[Go to top of page]</a>
+          
+  <!-- ******************************************************************************************************* -->
+        <h2><a id="_Toc141">Setting up the OperationsPro tables for RFID</a></h2>
+        <p>To use RFID information with the Locations, Locomotive, and Car Tables, you first
+          enable the assignment of ID Tags. This is done via the OperationsPro "settings" selection.
+          Start on the main PanelPro menu and go to <strong>Tools&rArr;OperationsPro&rArr;Settings&rArr;Tools&rArr;Options&rArr;
+          [scroll to "Options" near the bottom of the page]</strong>. Click the check box for
+          &quot;Identification Tag Fields&quot;. If you now open the Locations Table, you will
+          see an additional column labeled "Reporters" (for entering RFID Reader
+          names). If you open either the Locomotive or Car Tables, you will see an "RFID" option in a box near the
+          bottom of the window. Clicking on that will display the additional RFID information fields.  Note that this
+          box must be re-checked each time the table windows are opened (i.e. it is not "sticky", as of JMRI Version
+          5.5.4).
+        </p>
+        <a href="images/LocomotivesRel554.jpg"><img src="images/LocomotivesRel554.jpg"
+        height="1158" width="289" alt="Locomotives Table used with RFID"></a>
+
+        <p>Operational information related to RFID will be filled into the various tables automatically by JMRI as
+        RFID tags are read around the layout -- once you have entered the linking information between tables: 
+        <ul>
+          <li>RFID Reader names (Reporter names) can be linked to Locations</li> 
+          <li>ID Tag names can be linked to Locomotives or Cars</li>
+        </ul>
+        <p>The Edit Location window allows you to select a Reporter to associate with a particular location
+          (<strong>OperationsPro&rArr;Locations&rArr;["Edit" a particular entry]</strong>).
+          The RFID reader name can be added to the field "IdTag Reporter at this Location" on that window 
+          from the drop down list. Readers listed in the <i>Reporters Table</i> will be listed.
+        </p>
+        <p>        
+          The Edit Locomotive and Car windows allow you to select an RFID tag to associate with a particular
+          piece of rolling stock (<strong>OperationsPro&rArr;(Locomotives, Cars)&rArr;
+          ["Edit" a particular entry]</strong>).
+          The RFID tag ID can be added to the field "RFID" on that window from the drop down list. ID Tags that have
+          previously been seen by a reader or entered manually will be listed.    
+          [If you are just starting and ID Tags are being seen for the first time, a jython script to aid in this 
+          process is available at <a href="https://jmri.org/jython/AssignRFIDTagToRS.py" target="_blank">
+          https://jmri.org/jython/AssignRFIDTagToRS.py</a>. This script will pop up a window when a new or changed
+          <i>ID Tag Table</i> entry is encountered and will automatically populate the Locomotive or Car Table if you
+          check the appropriate box.]          
+        </p>
+<!--        <p>[<i>ADVANCED:</i> You can rename the RFID field if you wish (<strong>OperationsPro&rArr;Settings&rArr;Options&rArr;</strong>
+          [Scroll to &quot;Identification Tag Field&quot;]&rArr;[Change the value in the entry
+          field (preset to &quot;RFID&quot;)]) and use it for other purposes.]
+        </p>
+-->
+        <a href="images/OpsProTablesLinkedRel554.jpg"><img src="images/OpsProTablesLinkedRel554.jpg"
+        height="1921" width="722" alt="OpsPro Tables used with RFID-Linked"></a>
+        <p></p>
+        <p>
+          <a href="#top">[Go to top of page]</a>
+          
+  <!-- ******************************************************************************************************* -->
+        <h3><a id="_Toc142">Short cut: Populating the Locomotive Table from the JMRI Roster</a>
+        </h3>
+        <p>
+          If you are just getting started in populating the <i>Locomotive Table</i>, JMRI provides a short
+          cut. From the <i>Locomotive Table</i> menu, select <strong>Tools&rArr;Locomotive Roster&rArr;Import</strong>
+          from JMRI Roster. Select which Roster Group or "All Entries" in the popup window, and JMRI will 
+          create entries for the listed locomotives. Note that certain fields may be truncated (Owner) and 
+          others may need editing (e.g. road name or model), but it is a start.<br> <strong>BE CAREFUL:</strong>
+          if you add the wrong roster group, or you add the same one a second time, JMRI will add these 
+          additional entries to the table. Luckily, you will find the file "OperationsLocomotiveRoster.xml.bak"
+          in the "operations" subdirectory of the user files location.
+        </p>
+        <p></p>
+        <p>
+          <a href="#top">[Go to top of page]</a>
+          
+  <!-- ******************************************************************************************************* -->
+        <h2><a id="_Toc144">Automatic table information update</a></h2>
+        <p>
+          If the above steps have been completed successfully, and if an appropriate reader is available to 
+          sense an RFID tag, you are good to go! Here is what will happen when an RFID tag ID
+          is sent to JMRI:
+        </p>
+        <p>
+          <i>ID Tag Table:</i> If the ID Tag has been seen  before, JMRI will update the "When Seen" and "Where Seen"
+          columns [see next step] in the corresponding <i>ID Tag Table</i> entry. If the ID tag has not been seen
+          before, JMRI will create an entry, prefixing "ID" to the tag ID to create a "System Name", and will put 
+          just the tag ID in the "Tag ID" column.
+          The "User Name" column will be left blank and you can fill it in (or not) at any time. 
+          [A jython script to aid in this process is  available at <a href="https://jmri.org/jython/AssignRFIDTagToRS.py" target="_blank">
+          https://jmri.org/jython/AssignRFIDTagToRS.py</a>]
+        </p>
+        <a href="images/IDTagTableRel554.jpg"><img src="images/IDTagTableRel554.jpg"
+        height="887" width="184" alt="ID Tag Table used with RFID"></a>
+        <p>
+          <i>Reporter Table:</i> If an entry exists in the  Reporter Table for the RFID Reader received, the "Report"
+          and "Last Report" columns will be filled in for the appropriate entry.
+          If an entry does not exist, and the communication method is LocoNet or an RFID Connection method, an entry
+          will be created and these fields will be filled in.
+        </p>
+        <a href="images/ReporterTableRel554.jpg"><img src="images/ReporterTableRel554.jpg"
+        height="696" width="233" alt="Reporter Table used with RFID"></a>
+        <p>
+          <i>Locomotive or Car Table:</i> If the RFID Reader is listed in either the Locomotive or the Car Tables, 
+          the "Reported Date" (and time) column will be updated for the appropriate entry. If the RFID Reader is
+          also associated with a particular Location in the "Locations Table", then the "Reported Location" column
+          in the <i>Locomotive or Car Table</i> will also be filled in.
+        </p>
+        <a href="images/Locomotives2Rel554.jpg"><img src="images/Locomotives2Rel554.jpg"
+        height="1158" width="289" alt="Locomotives Table used with RFID"></a>
+        <p></p>
+        <p>
+          <a href="#top">[Go to top of page]</a>
+          
+  <!-- ******************************************************************************************************* -->
+        <h2><a id="_Toc148">Further information</a></h2>
+        <p>Other JMRI help pages that might be of interest:</p>
+        <p><a href="index.shtml">RFID Hardware</a>
+        <p><a href="../../tools/Reporters.shtml">Reporters</a>
+        <p><a href="../../../package/jmri/jmrit/beantable/IdTagTable.shtml">ID Tag Table</a>
+        <p><a href="../../tools/Blocks.shtml">Blocks</a>
+        <p><a href="../../../package/jmri/jmrit/operations/Operations.shtml#AddLocation">OperationsPro Locations Table Edit</a>
+        <p><a href="../../../package/jmri/jmrit/operations/Operations.shtml#ImportLocomotives">OperationsPro Importing Locomotives</a>
+        <p></p>
+        <p>
+          <a href="#top">[Go to top of page]</a>
+          
+  <!-- ******************************************************************************************************* -->
+          <!--#include virtual="/Footer.shtml" -->
+      </div>
+      <!-- closes #mainContent-->
+    </div>
+    <!-- closes #mBody-->
+    <script src="/js/main.js"></script>
+  </body>
+</html>

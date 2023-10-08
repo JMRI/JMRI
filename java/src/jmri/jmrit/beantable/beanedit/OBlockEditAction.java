@@ -240,7 +240,7 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
                 try {
                     bean.setBlockSpeed(speed);
                 } catch (JmriException ex) {
-                    JOptionPane.showMessageDialog(f, ex.getMessage() + "\n" + speed);
+                    jmri.util.swing.JmriJOptionPane.showMessageDialog(f, ex.getMessage() + "\n" + speed);
                     return;
                 }
                 if (speed != null && !speedList.contains(speed) && !speed.contains("Global")) {

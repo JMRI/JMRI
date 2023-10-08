@@ -10,12 +10,12 @@ public interface DigitalIO extends NamedBean {
     /**
      * State value indicating output is on.
      */
-    int ON = 0x02;
+    static final int ON = 0x02;
 
     /**
      * State value indicating output is off.
      */
-    int OFF = 0x04;
+    static final int OFF = 0x04;
 
     /**
      * Show whether state is stable.

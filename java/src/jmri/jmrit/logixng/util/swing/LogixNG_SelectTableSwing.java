@@ -15,6 +15,7 @@ import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.LogixNG_SelectTable;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectPanel;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Swing class for jmri.jmrit.logixng.util.LogixNG_SelectTable.
@@ -486,10 +487,10 @@ public class LogixNG_SelectTableSwing {
 
     public boolean canClose() {
         if (_logixNG_DataDialog.checkOpenDialog()) {
-            JOptionPane.showMessageDialog(_dialog,
+            JmriJOptionPane.showMessageDialog(_dialog,
                     Bundle.getMessage("Error_InSelectMode"), // NOI18N
                     Bundle.getMessage("ErrorTitle"), // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;

@@ -53,6 +53,12 @@
        <authorinitials>PDB</authorinitials>
        <revremark>Second version for Italian Signal System</revremark>
      </revision>
+     <revision>
+       <revnumber>3</revnumber>
+       <date>2023-08-23</date>
+       <authorinitials>PDB</authorinitials>
+       <revremark>Third version for Italian Signal System - amended aspect mapping</revremark>
+     </revision>
   </revhistory>
 
   <aspects>
@@ -64,6 +70,7 @@
 	  <comment>segnale chiuso</comment>
         <speed>Stop</speed>
         <speed2>Stop</speed2>
+        <route>Either</route>
     </aspect>
 
     <aspect>
@@ -72,13 +79,14 @@
 	  <description>One yellow light</description>
 	  <description>if used alone next signal is red</description>
 	  <comment>segnale aperto</comment>
-      <speed>Slow</speed>
-      <speed2>Slow</speed2>
+      <speed>Medium</speed>
+      <speed2>Stop</speed2>
+      <route>Normal</route>
     </aspect>
 
     <aspect>
       <name>Verde</name>
-      <indication>Proceed, line clear (with timetable speed)</indication>
+      <indication>Proceed, line is clear (with timetable speed)</indication>
 	  <description>One green light</description>
 	  <comment>segnale aperto</comment>
       <speed>Normal</speed>
@@ -91,8 +99,9 @@
       <indication>1. Next signal is not red but closer to further red signal 2. Used with blinking green as speed advice</indication>
 	  <description>Blinking Yellow</description>
 	  <comment>da usare per 1. o 2. vela</comment>
-      <speed>Medium</speed>
+      <speed>Normal</speed>
       <speed2>Medium</speed2>
+      <route>Normal</route>
     </aspect>
 
     <aspect>
@@ -100,8 +109,9 @@
       <indication>Diverging Approach</indication>
 	  <description>Red-Yellow</description>
 	  <comment>da usare per 1. e 2. vela</comment>
-      <speed>Restricted</speed>
+      <speed>Slow</speed>
       <speed2>Restricted</speed2>
+      <route>Diverging</route>
     </aspect>
 
     <aspect>
@@ -110,7 +120,8 @@
 	  <description>Red-Blinking Yellow</description>
 	  <comment>da usare per 1. e 2. vela</comment>
       <speed>Slow</speed>
-      <speed2>Slow</speed2>
+      <speed2>Limited</speed2>
+      <route>Diverging</route>
     </aspect>
 
     <aspect>
@@ -118,8 +129,9 @@
       <indication>Diverging Clear</indication>
 	  <description>Red-Green</description>
 	  <comment>da usare per 1. e 2. vela</comment>
-      <speed>Restricted</speed>
-      <speed2>Restricted</speed2>
+      <speed>Slow</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
     </aspect>
 
     <aspect>
@@ -129,6 +141,7 @@
 	  <comment>da usare per 1. e 2. vela</comment>
       <speed>Restricted</speed>
       <speed2>Restricted</speed2>
+      <route>Diverging</route>
     </aspect>
 
     <aspect>
@@ -136,8 +149,9 @@
       <indication>Diverging Approach</indication>
 	  <description>Yellow-Green</description>
 	  <comment>next main signal is set to diverging route max. 30 Km/h</comment>
-      <speed>Slow</speed>
-      <speed2>Slow</speed2>
+      <speed>Normal</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
     </aspect>
 
     <aspect>
@@ -145,8 +159,9 @@
       <indication>Diverging Approach</indication>
 	  <description>Blinking Yellow-Green</description>
 	  <comment>next main signal is set to diverging route max. 60 Km/h</comment>
-      <speed>Medium</speed>
-      <speed2>Medium</speed2>
+      <speed>Normal</speed>
+      <speed2>Limited</speed2>
+      <route>Normal</route>
     </aspect>
 
     <aspect>
@@ -154,8 +169,9 @@
       <indication>Diverging Approach</indication>
 	  <description>Alternate Blinking Yellow-Green</description>
 	  <comment>next main signal is set to diverging route max. 100 Km/h</comment>
-      <speed>Limited</speed>
-      <speed2>Limited</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
     </aspect>
 
     <aspect>
@@ -165,6 +181,7 @@
 	  <comment>Diverging clear and next main signal is set to diverging route max. 30 Km/h</comment>
       <speed>Slow</speed>
       <speed2>Slow</speed2>
+      <route>Diverging</route>
     </aspect>
 
     <aspect>
@@ -172,8 +189,9 @@
       <indication>Diverging Approach</indication>
 	  <description>Alternate Blinking Yellow-Green</description>
 	  <comment>Diverging clear and next main signal is set to diverging route max. 60 Km/h</comment>
-      <speed>Slow</speed>
+      <speed>Normal</speed>
       <speed2>Medium</speed2>
+      <route>Diverging</route>
     </aspect>
 
     <aspect>
@@ -181,8 +199,9 @@
       <indication>Diverging Approach</indication>
 	  <description>Alternate Blinking Yellow-Green</description>
 	  <comment>Diverging clear and next main signal is set to diverging route max. 100 Km/h</comment>
-      <speed>Slow</speed>
-      <speed2>Limited</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
     </aspect>
 
     <aspect>
@@ -190,8 +209,9 @@
       <indication>Diverging Approach</indication>
 	  <description>Alternate Blinking Yellow-Green</description>
 	  <comment>Diverging approach</comment>
-      <speed>RestrictedSlow</speed>
-      <speed2>Normal</speed2>
+      <speed>Slow</speed>
+      <speed2>RestrictedSlow</speed2>
+      <route>Diverging</route>
     </aspect>
 
     <aspect>
@@ -209,6 +229,7 @@
 	  <comment>Stop</comment>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
+      <route>Either</route>
     </aspect>
 
     <aspect>
@@ -218,6 +239,7 @@
 	  <comment>Diverging approach</comment>
       <speed>RestrictedSlow</speed>
       <speed2>RestrictedSlow</speed2>
+      <route>Either</route>   
     </aspect>
 
   </aspects>

@@ -21,7 +21,7 @@
 	<li><a href="./Programmer.shtml">Create a custom programmer definition</a></li>
 	<li><a href="./RosterFile.shtml">Store/update a Roster</a></li>
 	<li><a href="./LocoFile.shtml">Locomotive (Roster) files</a></li>
-	<li><a href="./Debug.shtml">Debugging</a></li>
+	<li><a href="../Debug.shtml">Debugging</a></li>
 	<li><a href="./NetworkFiles.shtml">Sharing Rosters among computers</a></li>
 	<li><a href="./FileUpdate.shtml">Updating decoder definitions</a></li>
 	</ul>

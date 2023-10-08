@@ -8,7 +8,6 @@ import java.util.ListIterator;
 
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.Nonnull;
-import javax.swing.JOptionPane;
 
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
@@ -16,6 +15,7 @@ import jmri.util.ThreadingUtil;
 import jmri.jmrit.logix.ThrottleSetting.Command;
 import jmri.jmrit.logix.ThrottleSetting.CommandValue;
 import jmri.jmrit.logix.ThrottleSetting.ValueType;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * An Warrant contains the operating permissions and directives needed for a
@@ -1260,9 +1260,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     private boolean askResumeQuestion(OBlock block, String reason) {
         String msg = Bundle.getMessage("ResumeQuestion", reason);
             boolean ret = ThreadingUtil.runOnGUIwithReturn(() -> {
-                int result = JOptionPane.showConfirmDialog(WarrantTableFrame.getDefault(), msg, Bundle.getMessage("ResumeTitle"),
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (result==JOptionPane.YES_OPTION) {
+                int result = JmriJOptionPane.showConfirmDialog(WarrantTableFrame.getDefault(), msg, Bundle.getMessage("ResumeTitle"),
+                    JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.QUESTION_MESSAGE);
+                if (result==JmriJOptionPane.YES_OPTION) {
                     return true;
                 }
             return false;

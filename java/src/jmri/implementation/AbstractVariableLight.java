@@ -181,7 +181,7 @@ public abstract class AbstractVariableLight
      * Values at or below the minIntensity property will result in the Light
      * going to the OFF state immediately. Values at or above the maxIntensity
      * property will result in the Light going to the ON state immediately.
-     * <p>
+     *
      * @throws IllegalArgumentException when intensity is less than 0.0 or more
      *                                  than 1.0
      */
@@ -414,7 +414,6 @@ public abstract class AbstractVariableLight
      * vice-versa.
      * <p>
      * Bound property
-     * <p>
      * @throws IllegalArgumentException if minutes is not valid
      */
     @Override
@@ -428,7 +427,7 @@ public abstract class AbstractVariableLight
     /**
      * Get the number of fastclock minutes taken by a transition from full ON to
      * full OFF or vice versa.
-     * <p>
+     *
      * @return 0.0 if the output intensity transition is instantaneous
      */
     @Override

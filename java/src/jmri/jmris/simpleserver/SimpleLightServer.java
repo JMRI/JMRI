@@ -7,8 +7,6 @@ import jmri.JmriException;
 import jmri.Light;
 import jmri.jmris.AbstractLightServer;
 import jmri.jmris.JmriConnection;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Simple Server interface between the JMRI light manager and a network
@@ -37,13 +35,16 @@ public class SimpleLightServer extends AbstractLightServer {
      */
     @Override
     public void sendStatus(String lightName, int Status) throws IOException {
-        if (Status == Light.ON) {
-            this.sendMessage(LIGHT + " " + lightName + " ON\n");
-        } else if (Status == Light.OFF) {
-            this.sendMessage(LIGHT + " " + lightName + " OFF\n");
-        } else {
-            //  unknown state
-            this.sendMessage(LIGHT + " " + lightName + " UNKNOWN\n");
+        switch (Status) {
+            case Light.ON:
+                this.sendMessage(LIGHT + " " + lightName + " ON\n");
+                break;
+            case Light.OFF:
+                this.sendMessage(LIGHT + " " + lightName + " OFF\n");
+                break;
+            default: //  unknown state
+                this.sendMessage(LIGHT + " " + lightName + " UNKNOWN\n");
+                break;
         }
     }
 
@@ -57,15 +58,11 @@ public class SimpleLightServer extends AbstractLightServer {
         int index;
         index = statusString.indexOf(' ') + 1;
         if (statusString.contains("ON")) {
-            if (log.isDebugEnabled()) {
-                log.debug("Setting Light ON");
-            }
+            log.debug("Setting Light ON");
             initLight(statusString.substring(index, statusString.indexOf(' ', index + 1)));
             lightOn(statusString.substring(index, statusString.indexOf(' ', index + 1)));
         } else if (statusString.contains("OFF")) {
-            if (log.isDebugEnabled()) {
-                log.debug("Setting Light OFF");
-            }
+            log.debug("Setting Light OFF");
             initLight(statusString.substring(index, statusString.indexOf(' ', index + 1)));
             lightOff(statusString.substring(index, statusString.indexOf(' ', index + 1)));
         }
@@ -79,5 +76,5 @@ public class SimpleLightServer extends AbstractLightServer {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(SimpleLightServer.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SimpleLightServer.class);
 }

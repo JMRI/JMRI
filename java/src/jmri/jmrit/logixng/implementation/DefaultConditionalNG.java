@@ -9,8 +9,6 @@ import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
-import jmri.jmrit.display.Positionable;
-import jmri.jmrit.display.layoutEditor.LayoutTrackView;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.Stack;
@@ -31,6 +29,7 @@ public class DefaultConditionalNG extends AbstractBase
     private String _socketSystemName = null;
     private final FemaleDigitalActionSocket _femaleSocket;
     private boolean _enabled = true;
+    private boolean _executeAtStartup = true;
     private final ExecuteLock _executeLock = new ExecuteLock();
     private boolean _runDelayed = true;
     private final Stack _stack = new DefaultStack();
@@ -125,16 +124,20 @@ public class DefaultConditionalNG extends AbstractBase
     /** {@inheritDoc} */
     @Override
     public void execute() {
-        if (_executeLock.once()) {
-            runOnLogixNG_Thread(new ExecuteTask(this, _executeLock, null), true);
+        if (_executeAtStartup || !getLogixNG().isStartup()) {
+            if (_executeLock.once()) {
+                runOnLogixNG_Thread(new ExecuteTask(this, _executeLock, null), true);
+            }
         }
     }
 
     /** {@inheritDoc} */
     @Override
     public void execute(boolean allowRunDelayed) {
-        if (_executeLock.once()) {
-            runOnLogixNG_Thread(new ExecuteTask(this, _executeLock, null), allowRunDelayed);
+        if (_executeAtStartup || !getLogixNG().isStartup()) {
+            if (_executeLock.once()) {
+                runOnLogixNG_Thread(new ExecuteTask(this, _executeLock, null), allowRunDelayed);
+            }
         }
     }
 
@@ -379,6 +382,18 @@ public class DefaultConditionalNG extends AbstractBase
     @Override
     public boolean isEnabled() {
         return _enabled;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setExecuteAtStartup(boolean value) {
+        _executeAtStartup = value;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isExecuteAtStartup() {
+        return _executeAtStartup;
     }
 
     /** {@inheritDoc} */

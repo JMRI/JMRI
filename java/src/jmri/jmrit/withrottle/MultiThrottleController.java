@@ -158,7 +158,15 @@ public class MultiThrottleController extends ThrottleController {
         float currentSpeed = t.getSpeedSetting();
         StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
         message.append("V");
-        message.append(Math.round(currentSpeed / speedMultiplier));
+        int outSpeed = Math.round(currentSpeed / speedMultiplier);
+        if(currentSpeed < 0) {
+            outSpeed = -126;        // ensure estop is not rounded to zero
+        }
+        if(currentSpeed > 0 && outSpeed == 0) {
+            outSpeed = 1;           // ensure non-zero throttle speed is sent
+                                    // as non-zero speed to wiThrottle
+        }
+        message.append(outSpeed);
         for (ControllerInterface listener : controllerListeners) {
             listener.sendPacketToDevice(message.toString());
         }

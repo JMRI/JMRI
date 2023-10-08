@@ -250,9 +250,9 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         ) {
             // add an extra OR in list above in order to extend MAXMATRIXBITS
             // error dialog
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("MatrixOutputEmpty", mastname),
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("MatrixOutputEmpty", mastname),
                     Bundle.getMessage("WarningTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             log.warn("Empty output on panel");
             return false;
         }
@@ -260,9 +260,9 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         // check/warn if bit sets are identical
         if (identicalBits()) {
             // error dialog
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("AspectMastBitsWarning", (int) Math.sqrt(numberOfActiveAspects), numberOfActiveAspects),
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("AspectMastBitsWarning", (int) Math.sqrt(numberOfActiveAspects), numberOfActiveAspects),
                     Bundle.getMessage("WarningTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             log.warn("Identical bits on panel");
             return false;
         }
@@ -555,10 +555,10 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
             return;
         }
         if (bitNum != mast.getBitNum()) {
-            int i = JOptionPane.showConfirmDialog(null, Bundle.getMessage("MatrixColWarning", mast.getBitNum(), bitNum),
+            int i = JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("MatrixColWarning", mast.getBitNum(), bitNum),
                     Bundle.getMessage("MatrixColWarningTitle"),
-                    JOptionPane.YES_NO_OPTION);
-            if (i != 0) {
+                    JmriJOptionPane.YES_NO_OPTION);
+            if (i != JmriJOptionPane.YES_OPTION ) {
                 return;
             }
         }

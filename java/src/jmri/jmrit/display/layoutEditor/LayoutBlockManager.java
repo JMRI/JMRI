@@ -6,7 +6,7 @@ import java.util.Set;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import javax.swing.JOptionPane;
+
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.jmrit.display.EditorManager;
@@ -21,6 +21,7 @@ import jmri.Turnout;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Implementation of a Manager to handle LayoutBlocks. Note: the same
@@ -240,8 +241,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         }
 
         if (badBeanErrors > 0) { // perhaps incremented via addBadBeanError(), but that's never called?
-            JOptionPane.showMessageDialog(null, "" + badBeanErrors + " " + Bundle.getMessage("Warn2"),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(null, "" + badBeanErrors + " " + Bundle.getMessage("Warn2"),
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.ERROR_MESSAGE);
         }
         try {
             new BlockValueFile().readBlockValues();

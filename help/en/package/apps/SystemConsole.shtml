@@ -4,7 +4,8 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: System Console</title>
   <meta name="author" content="Egbert Broerse">
-  <meta name="keywords" content="JMRI help System Console"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help System Console logging debug">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->
@@ -58,6 +59,9 @@
       request the EPROM revision to see if the connection and command station is still operational.
       So if you see timeouts and "AA" commands you have either poor or failed connection, or a
       powered down or failed command station.</p>
+
+      <p>See <a href="../../html/doc/Technical/Logging.shtml">JMRI Logging</a> for details of how to change the logging levels.</p>
+
 
       <p>This is the apps.SystemConsole.shtml help page.</p>
       <!--#include virtual="/Footer.shtml" -->

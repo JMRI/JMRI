@@ -67,39 +67,39 @@ public interface Light extends DigitalIO {
      * State value indicating output intensity is less than maxIntensity and
      * more than minIntensity, and no transition is in progress
      */
-    int INTERMEDIATE = 0x08;
+    static final int INTERMEDIATE = 0x08;
 
     /**
      * State value indicating output intensity is currently changing toward
      * higher intensity, and will continue until full ON is reached
      */
-    int TRANSITIONINGTOFULLON = 0x310;
+    static final int TRANSITIONINGTOFULLON = 0x310;
 
     /**
      * State value indicating output intensity is currently changing toward
      * higher intensity. The current transition will stop before full ON is
      * reached.
      */
-    int TRANSITIONINGHIGHER = 0x210;
+    static final int TRANSITIONINGHIGHER = 0x210;
 
     /**
      * State value indicating output intensity is currently changing toward
      * lower intensity. The current transition will stop before full OFF is
      * reached.
      */
-    int TRANSITIONINGLOWER = 0x110;
+    static final int TRANSITIONINGLOWER = 0x110;
 
     /**
      * State value indicating output intensity is currently changing toward
      * lower intensity, and will continue until full OFF is reached
      */
-    int TRANSITIONINGTOFULLOFF = 0x010;
+    static final int TRANSITIONINGTOFULLOFF = 0x010;
 
     /**
      * State value mask representing status where output is changing due to a
      * request to transition.
      */
-    int TRANSITIONING = 0x010;
+    static final int TRANSITIONING = 0x010;
     
     /** {@inheritDoc} */
     @Override
@@ -143,7 +143,7 @@ public interface Light extends DigitalIO {
      * <p>
      * Note that the state may have other values, such as INTERMEDIATE or a form
      * of transitioning, but that these may not be directly set.
-     * <p>
+     *
      * @param newState the new desired state
      * @throws IllegalArgumentException if invalid newState provided
      */

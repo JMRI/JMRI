@@ -11,10 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
+
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.display.EditorManager;
@@ -28,9 +30,6 @@ import jmri.util.JmriJFrame;
 import jmri.util.swing.*;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 /**
  * JPanel to create a new EntryExitPair.
@@ -136,10 +135,10 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
 
     private void autoDiscovery() {
         if (!InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
-            int response = JOptionPane.showConfirmDialog(null, Bundle.getMessage("EnableLayoutBlockRouting"));  // NOI18N
-            if (response == 0) {
+            int response = JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("EnableLayoutBlockRouting"), Bundle.getMessage("EnableLayoutBlockRouting"), JmriJOptionPane.YES_NO_OPTION);
+            if ( response == JmriJOptionPane.YES_OPTION ) {
                 InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).enableAdvancedRouting(true);
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("LayoutBlockRoutingEnabled"));  // NOI18N
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("LayoutBlockRoutingEnabled"));  // NOI18N
             }
         }
         entryExitFrame = new jmri.util.JmriJFrame(Bundle.getMessage("DiscoverEntryExitPairs"), false, false);   // NOI18N
@@ -156,10 +155,10 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
         entryExitFrame.add(panel1);
         entryExitFrame.pack();
         entryExitFrame.setVisible(true);
-        int retval = JOptionPane.showOptionDialog(null, Bundle.getMessage("AutoGenEntryExitMessage"), Bundle.getMessage("AutoGenEntryExitTitle"),  // NOI18N
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE, null, null, null);
-        if (retval == 0) {
+        int retval = JmriJOptionPane.showOptionDialog(this, Bundle.getMessage("AutoGenEntryExitMessage"), Bundle.getMessage("AutoGenEntryExitTitle"),  // NOI18N
+                JmriJOptionPane.YES_NO_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE, null, null, null);
+        if (retval == JmriJOptionPane.YES_OPTION ) {
             final PropertyChangeListener propertyNXListener = new PropertyChangeListener() {
                 @Override
                 public void propertyChange(PropertyChangeEvent evt) {
@@ -169,7 +168,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
                             entryExitFrame.dispose();
                         }
                         nxPairs.removePropertyChangeListener(this);
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("AutoGenComplete"));  // NOI18N
+                        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("AutoGenComplete"));  // NOI18N
                     }
                 }
             };
@@ -178,7 +177,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
                 nxPairs.automaticallyDiscoverEntryExitPairs(panels.get(selectPanel.getSelectedIndex()), typeBox.getSelectedIndex());
             } catch (jmri.JmriException e) {
                 nxPairs.removePropertyChangeListener(propertyNXListener);
-                JOptionPane.showMessageDialog(null, e.toString());
+                JmriJOptionPane.showMessageDialog(this, e.toString());
                 entryExitFrame.setVisible(false);
             }
         } else {
@@ -494,16 +493,16 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
                     if (obj instanceof PositionablePoint) {
                         PositionablePoint point = (PositionablePoint) obj;
                         if (point.getType() == PositionablePoint.PointType.END_BUMPER) {
-                            JOptionPane.showMessageDialog(null, Bundle.getMessage("EndBumperPoint"));  // NOI18N
+                            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("EndBumperPoint"));  // NOI18N
                             return false;
                         }
                     }
                     if (!nxPairs.canBeBiDirectional(source.get(row), panel, dest.get(row))) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("BothWayTurnoutOnly"));  // NOI18N
+                        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("BothWayTurnoutOnly"));  // NOI18N
                         return false;
                     }
                     /*if(nxPairs.getEntryExitType(source.get(row), panel, dest.get(row))!=0x00){
-                     JOptionPane.showMessageDialog(null, Bundle.getMessage("BothWayTurnoutOnly"));
+                     JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("BothWayTurnoutOnly"));
                      return false;
                      }*/
                     return true;
@@ -739,7 +738,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
         try {
             settingTimer = Integer.parseInt(durationSetting.getText());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("ValueBeNumber"));  // NOI18N
+            JmriJOptionPane.showMessageDialog(durationSetting, Bundle.getMessage("ValueBeNumber"));  // NOI18N
             return;
         }
         nxPairs.setSettingTimer(settingTimer);
@@ -757,5 +756,6 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AddEntryExitPairPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AddEntryExitPairPanel.class);
+
 }

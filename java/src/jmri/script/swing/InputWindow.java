@@ -25,6 +25,7 @@ import jmri.script.ScriptEngineSelector;
 import jmri.script.ScriptEngineSelector.Engine;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriJOptionPane;
 
 import org.python.google.common.io.Files;
 
@@ -230,13 +231,12 @@ public class InputWindow extends JPanel {
             try {
                 // check for possible overwrite
                 if (file.exists()) {
-                    int selectedValue = JOptionPane.showConfirmDialog(null,
+                    int selectedValue = JmriJOptionPane.showConfirmDialog(null,
                             Bundle.getMessage("ConfirmDialogMessage", file.getName()),
                             Bundle.getMessage("ConfirmDialogTitle"),
-                            JOptionPane.OK_CANCEL_OPTION);
-                    if (selectedValue != JOptionPane.OK_OPTION) {
-                        results = false; // user clicked no to override
-                        return results;
+                            JmriJOptionPane.OK_CANCEL_OPTION);
+                    if (selectedValue != JmriJOptionPane.OK_OPTION) {
+                        return false; // user clicked no to override
                     }
                 }
 

@@ -15,6 +15,7 @@ import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.util.gui.GuiLafPreferencesManager;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.web.server.WebServerPreferences;
 
 /**
@@ -125,10 +126,10 @@ public class HelpUtil {
         }
 
         if (webError) {
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("HelpWeb_ServerError"),
                     Bundle.getMessage("HelpWeb_Title"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
         }
 
         // Open a local help file by default or a failure of jmri.org or the local JMRI web server.
@@ -137,16 +138,16 @@ public class HelpUtil {
             fileName = HelpUtil.createStubFile(ref, localeStr);
         } catch (IOException iox) {
             log.error("Unable to create the stub file for \"{}\" ", ref);
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("HelpError_StubFile", ref),
-                    Bundle.getMessage("HelpStub_Title"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("HelpError_StubFile", ref),
+                    Bundle.getMessage("HelpStub_Title"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
 
         File f = new File(fileName);
         if (!f.exists()) {
             log.error("The help reference \"{}\" is not found. File is not found: {}", ref, fileName);
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("HelpError_ReferenceNotFound", ref),
-                    Bundle.getMessage("HelpError_Title"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("HelpError_ReferenceNotFound", ref),
+                    Bundle.getMessage("HelpError_Title"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
 

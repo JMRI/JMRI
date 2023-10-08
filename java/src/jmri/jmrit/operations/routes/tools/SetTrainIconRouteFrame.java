@@ -1,30 +1,22 @@
 package jmri.jmrit.operations.routes.tools;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.ComponentListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.MessageFormat;
 import java.util.List;
 
 import javax.swing.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.routes.RouteManager;
-import jmri.jmrit.operations.routes.RouteManagerXml;
+import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainIcon;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for setting train icon coordinates for a location.
@@ -132,7 +124,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
 
     }
 
-    int value = JOptionPane.NO_OPTION;
+    int value = JmriJOptionPane.NO_OPTION;
 
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
@@ -146,13 +138,13 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
             placeTestIcons();
         }
         if (ae.getSource() == applyButton) {
-            if (value != JOptionPane.YES_OPTION) {
-                value = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
-                        .getMessage("UpdateTrainIconRoute"), new Object[]{_route.getName()}), Bundle
+            if (value != JmriJOptionPane.YES_OPTION) {
+                value = JmriJOptionPane.showConfirmDialog(this, Bundle
+                        .getMessage("UpdateTrainIconRoute", _route.getName()), Bundle
                                 .getMessage("DoYouWantThisRoute"),
-                        JOptionPane.YES_NO_OPTION);
+                        JmriJOptionPane.YES_NO_OPTION);
             }
-            if (value == JOptionPane.YES_OPTION) {
+            if (value == JmriJOptionPane.YES_OPTION) {
                 saveButton.setEnabled(true);
             }
             updateTrainIconCoordinates();
@@ -185,9 +177,9 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
     private void placeTestIcons() {
         Editor editor = InstanceManager.getDefault(EditorManager.class).getTargetFrame(Setup.getPanelName());
         if (editor == null) {
-            JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LoadPanel"),
-                    new Object[]{Setup.getPanelName()}), Bundle.getMessage("PanelNotFound"),
-                    JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("LoadPanel",
+                    Setup.getPanelName()), Bundle.getMessage("PanelNotFound"),
+                    JmriJOptionPane.ERROR_MESSAGE);
         } else {
             if (_tIon != null) {
                 _tIon.remove();
@@ -333,5 +325,5 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SetTrainIconRouteFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SetTrainIconRouteFrame.class);
 }

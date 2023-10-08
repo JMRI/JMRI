@@ -134,10 +134,9 @@
         <pathelement location="${libdir}/jsoup-1.15.3.jar"/>
         <pathelement location="${libdir}/jython-standalone-2.7.2.jar"/>
         <pathelement location="${libdir}/slf4j-api-2.0.7.jar"/><!-- sl4fj API -->
-        <pathelement location="${libdir}/slf4j-reload4j-2.0.7.jar"/><!-- sl4fj to log4j41.2 -->
         <pathelement location="${libdir}/jul-to-slf4j-2.0.7.jar"/><!-- java.util.logging to sl4fj -->
+        <pathelement location="${libdir}/log4j-slf4j2-impl-2.20.0.jar"/><!-- sl4fj to log4j2 -->
         <pathelement location="${libdir}/log4j-api-2.20.0.jar"/><!-- log4j2 API -->
-        <pathelement location="${libdir}/log4j-1.2-api-2.20.0.jar"/><!-- log4j1.2 to log4j2 API bridge -->
         <pathelement location="${libdir}/log4j-core-2.20.0.jar"/><!-- log4j2 Core -->
         <pathelement location="${libdir}/javax.servlet-api-3.1.0.jar"/>
         <pathelement location="${libdir}/vecmath-1.5.2.jar"/>
@@ -191,7 +190,7 @@
         <pathelement location="${libdir}/thumbnailator-0.4.8.jar"/>
         <pathelement location="${libdir}/org-openide-util-lookup-RELEASE150.jar"/>
         <pathelement location="${libdir}/apiguardian-api-1.1.0.jar"/>
-        <pathelement location="${libdir}/batik-transcoder-1.14.jar"/>
+        <pathelement location="${libdir}/batik-transcoder-1.17.jar"/>
         <pathelement location="${libdir}/batik-svg-dom-1.14.jar"/>
         <pathelement location="${libdir}/batik-dom-1.14.jar"/>
         <pathelement location="${libdir}/batik-util-1.14.jar"/>
@@ -824,7 +823,7 @@
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
-            <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="log4j2.ignoreTCL" value="true"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
@@ -862,7 +861,7 @@
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
-            <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="log4j2.ignoreTCL" value="true"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
@@ -1381,7 +1380,6 @@
             **/*.json
             **/*.jsp
             **/*.jspf
-            **/*.lcf
             **/*.md
             **/*.php
             **/*.pl
@@ -2508,7 +2506,7 @@
                      includes="xml/,resources/,help/,web/,jython/"
                      excludes="help/en/manual/**,web/app/**" />
             <fileset dir="${scriptdir}"
-                     includes="default.lcf,COPYING"/>
+                     includes="default_lcf.xml,COPYING"/>
             <fileset dir="${scriptdir}/WinInstallFiles"
                      includes="*"/>
             <fileset dir="."
@@ -2560,7 +2558,7 @@
             <fileset dir="${dist.apps}"
                      includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/"/>
             <fileset dir="scripts"
-                     includes="default.lcf,COPYING"/>
+                     includes="default_lcf.xml,COPYING"/>
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
         </copy>
@@ -2637,7 +2635,7 @@
                      includes="xml/,resources/,help/,web/,jython/"
                      excludes="help/en/manual/**,web/app/**" />
             <fileset dir="${scriptdir}"
-                     includes="default.lcf,COPYING"/>
+                     includes="default_lcf.xml,COPYING"/>
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
         </copy>

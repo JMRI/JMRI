@@ -13,22 +13,22 @@ import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.HashMap;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.TransferHandler;
 import javax.swing.event.ListSelectionEvent;
+
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Provides a simple editor for creating a Single or Double Slip Icon object.
@@ -569,7 +569,8 @@ public class SlipIconAdder extends IconAdder {
         }
         for (NamedBeanHandle<Turnout> turnoutNamedBeanHandle : _turnoutMap.values()) {
             if (name.equals(turnoutNamedBeanHandle.getName())) {
-                JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(Bundle.getMessage("DupTurnoutName"), name), Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, java.text.MessageFormat.format(Bundle.getMessage("DupTurnoutName"), name),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -649,6 +650,6 @@ public class SlipIconAdder extends IconAdder {
         }
     }
 
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SlipIconAdder.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SlipIconAdder.class);
+
 }

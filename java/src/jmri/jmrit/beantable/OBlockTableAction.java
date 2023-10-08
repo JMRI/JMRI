@@ -15,8 +15,7 @@ import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.PortalManager;
 import jmri.util.JmriJFrame;
 import jmri.util.gui.GuiLafPreferencesManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * GUI to define OBlocks, OPaths and Portals. Overrides some of the AbstractTableAction methods as this is a hybrid pane.
@@ -356,13 +355,12 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
             numberOfOblocks = (Integer) numberToAddSpinner.getValue();
         }
 
-        if (numberOfOblocks >= 65) { // limited by JSpinnerModel to 100
-            if (JOptionPane.showConfirmDialog(addOBlockFrame,
-                    Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("OBlocks"), numberOfOblocks),
-                    Bundle.getMessage("WarningTitle"),
-                    JOptionPane.YES_NO_OPTION) == 1) {
+        if (numberOfOblocks >= 65 // limited by JSpinnerModel to 100
+            && JmriJOptionPane.showConfirmDialog(addOBlockFrame,
+                Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("OBlocks"), numberOfOblocks),
+                Bundle.getMessage("WarningTitle"),
+                JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION ) {
                 return;
-            }
         }
 
         String uName = NamedBean.normalizeUserName(userName.getText());
@@ -478,10 +476,10 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
     }
 
     void handleCreateException(String sysName) {
-        JOptionPane.showMessageDialog(addOBlockFrame,
+        JmriJOptionPane.showMessageDialog(addOBlockFrame,
                 Bundle.getMessage("ErrorOBlockAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -545,6 +543,6 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
         return "package.jmri.jmrit.beantable.OBlockTable";
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OBlockTableAction.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OBlockTableAction.class);
 
 }

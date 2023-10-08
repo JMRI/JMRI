@@ -245,7 +245,7 @@
 
       <p>When starting your next PanelPro session, either load the latest xml file via the
       <strong>File &rArr; Load table content and panels...</strong> {<em>Old: <strong>Panels &rArr; Open
-      Panel...</strong></em>} menu item or add an "Open file..." entry to <a href=
+      Panel...</strong></em>} menu item or add an "Load table content and panels..." entry to <a href=
       "../../../package/apps/TabbedPreferences.shtml#Startup">"Preferences &gt; Start Up"</a> to do
       it for you.</p>
 

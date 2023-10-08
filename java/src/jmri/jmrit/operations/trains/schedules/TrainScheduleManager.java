@@ -1,10 +1,7 @@
 package jmri.jmrit.operations.trains.schedules;
 
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.JComboBox;
 
@@ -13,9 +10,7 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.InstanceManagerAutoInitialize;
+import jmri.*;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -257,10 +252,10 @@ public class TrainScheduleManager extends PropertyChangeSupport implements Insta
         TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
         String locationName = ""; // only create switch lists once for locations with similar names
         for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
-            if (location.isSwitchListEnabled() && !locationName.equals(TrainCommon.splitString(location.getName()))) {
+            if (location.isSwitchListEnabled() && !locationName.equals(location.getSplitName())) {
                 trainCsvSwitchLists.buildSwitchList(location);
                 trainSwitchLists.buildSwitchList(location);
-                locationName = TrainCommon.splitString(location.getName());
+                locationName = location.getSplitName();
                 // print switch lists for locations that have changes
                 if (Setup.isSwitchListRealTime() && location.getStatus().equals(Location.UPDATED)) {
                     trainSwitchLists.printSwitchList(location, InstanceManager.getDefault(TrainManager.class).isPrintPreviewEnabled());

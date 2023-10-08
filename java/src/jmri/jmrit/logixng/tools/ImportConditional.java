@@ -79,7 +79,9 @@ public class ImportConditional {
 
         Logix logix = new Logix(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
 
-        logix.setExecuteOnChange(_conditional.getTriggerOnChange());
+        logix.setExecuteType(_conditional.getTriggerOnChange()
+                ? Logix.ExecuteType.ExecuteOnChange
+                : Logix.ExecuteType.ExecuteAlways);
 
         Conditional.AntecedentOperator ao = _conditional.getLogicType();
         String antecedentExpression = _conditional.getAntecedentExpression();
@@ -235,18 +237,18 @@ public class ImportConditional {
         for (int i=0; i < conditionalActions.size(); i++) {
             ConditionalAction ca = conditionalActions.get(i);
 
-            DigitalBooleanOnChange.Trigger trigger;
+            DigitalBooleanLogixAction.When trigger;
             switch (ca.getOption()) {
                 case Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE:
-                    trigger = DigitalBooleanOnChange.Trigger.CHANGE_TO_TRUE;
+                    trigger = DigitalBooleanLogixAction.When.True;
                     break;
 
                 case Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE:
-                    trigger = DigitalBooleanOnChange.Trigger.CHANGE_TO_FALSE;
+                    trigger = DigitalBooleanLogixAction.When.False;
                     break;
 
                 case Conditional.ACTION_OPTION_ON_CHANGE:
-                    trigger = DigitalBooleanOnChange.Trigger.CHANGE;
+                    trigger = DigitalBooleanLogixAction.When.Either;
                     break;
 
                 default:
@@ -255,7 +257,7 @@ public class ImportConditional {
             }
 
             DigitalBooleanActionBean booleanAction =
-                    new DigitalBooleanOnChange(InstanceManager.getDefault(DigitalBooleanActionManager.class).getAutoSystemName(), null, trigger);
+                    new DigitalBooleanLogixAction(InstanceManager.getDefault(DigitalBooleanActionManager.class).getAutoSystemName(), null, trigger);
 
             buildAction(booleanAction, ca);
 

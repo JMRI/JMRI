@@ -103,7 +103,7 @@
 
       <p>For some actions, for example Signal head, you need to first select the item and then you
       can select the action to do on that item. For example, for Signal head, you first select the
-      signal head to act on and then you can select the appearence to set for that signal head.</p>
+      signal head to act on and then you can select the appearance to set for that signal head.</p>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/typical_action.png"><img src="images/chapter5/typical_action.png"
@@ -1154,9 +1154,47 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h4>Icon/Label by class on panel<span class="since">since 5.5.4</span></h4>
+
+      <p>Disable/Enable/Hide/Show all of the icons or labels on a specific panel that been assigned
+      a class name.</p>
+
+      <p>Icons and labels don't have names.  To identify the icon or label, the <strong>Edit Classes...
+      </strong> menu item in the right click context menu is used to assign a class name.  A class
+      name cannot have a comma.  Multiple classes separated by commas can be assigned.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/layout_icon_label_classes.png"><img src=
+        "images/chapter5/layout_icon_label_classes.png" alt="Chapter 5 layout icon/label classes"></a>
+      </div>
+
+      <p>Select the panel and one of the classes.  Select the desired action.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/layout_icon_label_class.png"><img src=
+        "images/chapter5/layout_icon_label_class.png" alt="Chapter 5 layout icon/label class action"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h4>Icon/Label on panel</h4>
 
       <p>Disable/Enable/Hide/Show an icon or label on a specific panel.</p>
+
+      <p>Icons and labels don't have names.  To identify the icon or label, the <strong>Edit Id...
+      </strong> menu item in the right click context menu is used to assign a name.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/layout_icon_label_id.png"><img src=
+        "images/chapter5/layout_icon_label_id.png" alt="Chapter 5 layout icon/label id"></a>
+      </div>
+
+      <p>Select the panel and one of the ids.  Select the desired action.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/layout_icon_label.png"><img src=
+        "images/chapter5/layout_icon_label.png" alt="Chapter 5 layout icon/label action"></a>
+      </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 

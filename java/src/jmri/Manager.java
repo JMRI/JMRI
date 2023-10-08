@@ -284,8 +284,6 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * Convenience implementation of
      * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}
      * that verifies name has has at least 1 number in the String.
-     * <p>
-     *
      *
      * @param name   the system name to validate
      * @param locale the locale for a localized exception; this is needed for
@@ -306,8 +304,6 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * Convenience implementation of
      * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}
      * that verifies name String is purely numeric.
-     * <p>
-     *
      *
      * @param name   the system name to validate
      * @param locale the locale for a localized exception; this is needed for
@@ -607,50 +603,50 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     /**
      * The order in which things get saved to the xml file.
      */
-    int SENSORS = 10;
-    int TURNOUTS = SENSORS + 10;
-    int LIGHTS = TURNOUTS + 10;
-    int REPORTERS = LIGHTS + 10;
-    int MEMORIES = REPORTERS + 10;
-    int SENSORGROUPS = MEMORIES + 10;
-    int SIGNALHEADS = SENSORGROUPS + 10;
-    int SIGNALMASTS = SIGNALHEADS + 10;
-    int SIGNALGROUPS = SIGNALMASTS + 10;
-    int BLOCKS = SIGNALGROUPS + 10;
-    int OBLOCKS = BLOCKS + 10;
-    int LAYOUTBLOCKS = OBLOCKS + 10;
-    int SECTIONS = LAYOUTBLOCKS + 10;
-    int TRANSITS = SECTIONS + 10;
-    int BLOCKBOSS = TRANSITS + 10;
-    int ROUTES = BLOCKBOSS + 10;
-    int WARRANTS = ROUTES + 10;
-    int SIGNALMASTLOGICS = WARRANTS + 10;
-    int IDTAGS = SIGNALMASTLOGICS + 10;
-    int ANALOGIOS = IDTAGS + 10;
-    int METERS = ANALOGIOS + 10;
-    int STRINGIOS = METERS + 10;
-    int LOGIXS = STRINGIOS + 10;
-    int CONDITIONALS = LOGIXS + 10;
-    int AUDIO = CONDITIONALS + 10;
-    int TIMEBASE = AUDIO + 10;
+    static final int SENSORS = 10;
+    static final int TURNOUTS = SENSORS + 10;
+    static final int LIGHTS = TURNOUTS + 10;
+    static final int REPORTERS = LIGHTS + 10;
+    static final int MEMORIES = REPORTERS + 10;
+    static final int SENSORGROUPS = MEMORIES + 10;
+    static final int SIGNALHEADS = SENSORGROUPS + 10;
+    static final int SIGNALMASTS = SIGNALHEADS + 10;
+    static final int SIGNALGROUPS = SIGNALMASTS + 10;
+    static final int BLOCKS = SIGNALGROUPS + 10;
+    static final int OBLOCKS = BLOCKS + 10;
+    static final int LAYOUTBLOCKS = OBLOCKS + 10;
+    static final int SECTIONS = LAYOUTBLOCKS + 10;
+    static final int TRANSITS = SECTIONS + 10;
+    static final int BLOCKBOSS = TRANSITS + 10;
+    static final int ROUTES = BLOCKBOSS + 10;
+    static final int WARRANTS = ROUTES + 10;
+    static final int SIGNALMASTLOGICS = WARRANTS + 10;
+    static final int IDTAGS = SIGNALMASTLOGICS + 10;
+    static final int ANALOGIOS = IDTAGS + 10;
+    static final int METERS = ANALOGIOS + 10;
+    static final int STRINGIOS = METERS + 10;
+    static final int LOGIXS = STRINGIOS + 10;
+    static final int CONDITIONALS = LOGIXS + 10;
+    static final int AUDIO = CONDITIONALS + 10;
+    static final int TIMEBASE = AUDIO + 10;
     // All LogixNG beans share the "Q" letter. For example, a digital expression
     // has a system name like "IQDE001".
-    int LOGIXNGS = TIMEBASE + 10;                              // LogixNG
-    int LOGIXNG_GLOBAL_VARIABLES = LOGIXNGS + 10;               // LogixNG Global Variables
-    int LOGIXNG_CONDITIONALNGS = LOGIXNG_GLOBAL_VARIABLES + 10; // LogixNG ConditionalNG
-    int LOGIXNG_MODULES = LOGIXNG_CONDITIONALNGS + 10;          // LogixNG Modules
-    int LOGIXNG_TABLES = LOGIXNG_MODULES + 10;                  // LogixNG Tables (not bean tables)
-    int LOGIXNG_DIGITAL_EXPRESSIONS = LOGIXNG_TABLES + 10;          // LogixNG Expression
-    int LOGIXNG_DIGITAL_ACTIONS = LOGIXNG_DIGITAL_EXPRESSIONS + 10; // LogixNG Action
-    int LOGIXNG_DIGITAL_BOOLEAN_ACTIONS = LOGIXNG_DIGITAL_ACTIONS + 10;   // LogixNG Digital Boolean Action
-    int LOGIXNG_ANALOG_EXPRESSIONS = LOGIXNG_DIGITAL_BOOLEAN_ACTIONS + 10;  // LogixNG AnalogExpression
-    int LOGIXNG_ANALOG_ACTIONS = LOGIXNG_ANALOG_EXPRESSIONS + 10;   // LogixNG AnalogAction
-    int LOGIXNG_STRING_EXPRESSIONS = LOGIXNG_ANALOG_ACTIONS + 10;   // LogixNG StringExpression
-    int LOGIXNG_STRING_ACTIONS = LOGIXNG_STRING_EXPRESSIONS + 10;   // LogixNG StringAction
-    int PANELFILES = LOGIXNG_STRING_ACTIONS + 10;
-    int ENTRYEXIT = PANELFILES + 10;
-    int METERFRAMES = ENTRYEXIT + 10;
-    int CTCDATA = METERFRAMES + 10;
+    static final int LOGIXNGS = TIMEBASE + 10;                              // LogixNG
+    static final int LOGIXNG_GLOBAL_VARIABLES = LOGIXNGS + 10;               // LogixNG Global Variables
+    static final int LOGIXNG_CONDITIONALNGS = LOGIXNG_GLOBAL_VARIABLES + 10; // LogixNG ConditionalNG
+    static final int LOGIXNG_MODULES = LOGIXNG_CONDITIONALNGS + 10;          // LogixNG Modules
+    static final int LOGIXNG_TABLES = LOGIXNG_MODULES + 10;                  // LogixNG Tables (not bean tables)
+    static final int LOGIXNG_DIGITAL_EXPRESSIONS = LOGIXNG_TABLES + 10;          // LogixNG Expression
+    static final int LOGIXNG_DIGITAL_ACTIONS = LOGIXNG_DIGITAL_EXPRESSIONS + 10; // LogixNG Action
+    static final int LOGIXNG_DIGITAL_BOOLEAN_ACTIONS = LOGIXNG_DIGITAL_ACTIONS + 10;   // LogixNG Digital Boolean Action
+    static final int LOGIXNG_ANALOG_EXPRESSIONS = LOGIXNG_DIGITAL_BOOLEAN_ACTIONS + 10;  // LogixNG AnalogExpression
+    static final int LOGIXNG_ANALOG_ACTIONS = LOGIXNG_ANALOG_EXPRESSIONS + 10;   // LogixNG AnalogAction
+    static final int LOGIXNG_STRING_EXPRESSIONS = LOGIXNG_ANALOG_ACTIONS + 10;   // LogixNG StringExpression
+    static final int LOGIXNG_STRING_ACTIONS = LOGIXNG_STRING_EXPRESSIONS + 10;   // LogixNG StringAction
+    static final int PANELFILES = LOGIXNG_STRING_ACTIONS + 10;
+    static final int ENTRYEXIT = PANELFILES + 10;
+    static final int METERFRAMES = ENTRYEXIT + 10;
+    static final int CTCDATA = METERFRAMES + 10;
 
     /**
      * Determine the order that types should be written when storing panel

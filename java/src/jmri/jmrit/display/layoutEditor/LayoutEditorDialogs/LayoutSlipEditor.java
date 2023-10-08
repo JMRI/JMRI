@@ -17,6 +17,7 @@ import jmri.jmrit.display.layoutEditor.*;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * MVC Editor component for LayoutSlip objects.
@@ -392,9 +393,9 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
         }
         // check if a block exists to edit
         if (layoutSlip.getLayoutBlock() == null) {
-            JOptionPane.showMessageDialog(editLayoutSlipFrame,
+            JmriJOptionPane.showMessageDialog(editLayoutSlipFrame,
                     Bundle.getMessage("Error1"),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         layoutSlip.getLayoutBlock().editLayoutBlock(editLayoutSlipFrame);
@@ -449,9 +450,9 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
         var turnoutNameB = layoutSlip.getTurnoutBName();
         if ((turnoutNameA.isEmpty() && !turnoutNameB.isEmpty()) ||
                 (turnoutNameB.isEmpty() && !turnoutNameA.isEmpty())) {
-            JOptionPane.showMessageDialog(editLayoutSlipFrame,
+            JmriJOptionPane.showMessageDialog(editLayoutSlipFrame,
                     Bundle.getMessage("Error20"),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
 

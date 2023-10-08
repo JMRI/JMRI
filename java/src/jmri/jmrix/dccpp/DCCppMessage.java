@@ -1710,7 +1710,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * <p>
      * {@code ADDRESS = INT((N - 1) / 4) + 1}
      *    {@code SUBADDRESS = (N - 1) % 4}
-     * <p>
+     *
      * @param address the primary address of the decoder (0-511).
      * @param subaddress the subaddress of the decoder (0-3).
      * @param activate true on, false off.
@@ -1752,7 +1752,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
 
     /**
      * Predefined Turnout Control Message.
-     * <p>
+     *
      * @param id the numeric ID (0-32767) of the turnout to control.
      * @param thrown true thrown, false closed.
      * @return message to set turnout.
@@ -1957,7 +1957,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
 
     /**
      * Query All Sensors States.
-     * <p>
+     *
      * @return message to query all sensor states.
      */
     public static DCCppMessage makeQuerySensorStatesMsg() {
@@ -2217,7 +2217,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * <p>
      * Writes, without any verification, a Configuration Variable to the decoder
      * of an engine on the main operations track.
-     * <p>
+     *
      * @param address the short (1-127) or long (128-10293) address of the
      *                  engine decoder.
      * @param cv the number of the Configuration Variable memory location in the
@@ -2300,7 +2300,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * Set Track Power ON or OFF.
      * <p>
      * Format: {@code <1> (ON) or <0> (OFF)}
-     * <p>
+     *
      * @return message to send track power on or off.
      * @param on true on, false off.
      */
@@ -2321,9 +2321,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * Read main operations track current
      * <p>
      * Format: {@code <c>}
-     * <p>
+     *
      * reads current being drawn on main operations track
-     * <p>
+     * 
      * @return (for DCC-EX), 1 or more of  {@code <c MeterName value C/V unit min max res warn>}
      * where name and settings are used to define arbitrary meters on the DCC-EX side
      * AND {@code <a CURRENT>} where CURRENT = 0-1024, based on
@@ -2344,7 +2344,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * first command for an interface to send to this sketch in order to verify
      * connectivity and update any GUI to reflect actual throttle and turn-out
      * settings
-     * <p>
+     *
      * @return series of status messages that can be read by an interface to
      * determine status of DCC++ Base Station and important settings
      */
@@ -2359,7 +2359,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * <p>
      * returns number of slots NOTE: this is not implemented in older versions
      * which then do not return anything at all
-     * <p>
+     *
      * @return status message with to get number of slots.
      */
     public static DCCppMessage makeCSMaxNumSlotsMsg() {
@@ -2368,7 +2368,6 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     
     /**
      * Generate a function message using the V4 'F' syntax supported by DCC-EX
-     * <p>
      * @param cab cab address to send function to
      * @param func function number to set
      * @param state new state of function 0/1
@@ -2393,7 +2392,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
 
     /**
      * Generate a "Forget Cab" message '-'
-     * <p>
+     *
      * @param cab cab address to send function to (or 0 for all)
      * @return forget message to be sent
      */
@@ -2510,6 +2509,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             m.myMessage.append(" -1");
         } else {
             int speedVal = java.lang.Math.round(speed * 126);
+            if (speed > 0 && speedVal == 0) {
+                speedVal = 1;           // ensure non-zero input results in non-zero output
+            }
             speedVal = Math.min(speedVal, DCCppConstants.MAX_SPEED);
             m.myMessage.append(" ").append(speedVal);
         }
@@ -2555,6 +2557,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             m.myMessage.append(" -1");
         } else {
             int speedVal = java.lang.Math.round(speed * 126);
+            if (speed > 0 && speedVal == 0) {
+                speedVal = 1;           // ensure non-zero input results in non-zero output
+            }
             speedVal = Math.min(speedVal, DCCppConstants.MAX_SPEED);
             m.myMessage.append(" ").append(speedVal);
         }

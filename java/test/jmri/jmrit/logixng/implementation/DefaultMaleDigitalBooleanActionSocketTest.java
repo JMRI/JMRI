@@ -11,7 +11,7 @@ import jmri.jmrit.logixng.*;
 import jmri.util.JUnitUtil;
 
 import jmri.jmrit.logixng.actions.AbstractDigitalBooleanAction;
-import jmri.jmrit.logixng.actions.DigitalBooleanOnChange;
+import jmri.jmrit.logixng.actions.DigitalBooleanLogixAction;
 
 import jmri.jmrit.logixng.implementation.DefaultMaleDigitalBooleanActionSocket.DigitalBooleanActionDebugConfig;
 
@@ -38,7 +38,7 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
 
     @Test
     public void testCtor() {
-        DigitalBooleanActionBean action = new DigitalBooleanOnChange("IQDB321", null, DigitalBooleanOnChange.Trigger.CHANGE);
+        DigitalBooleanActionBean action = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.When.Either);
         Assert.assertNotNull("exists", new DefaultMaleDigitalBooleanActionSocket(manager, action));
     }
 
@@ -58,19 +58,16 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
 
         action.je = null;
         action.re = null;
-        socket.execute(false, false);
-        Assert.assertFalse(action._hasChangedToTrue);
-        Assert.assertFalse(action._hasChangedToFalse);
-        socket.execute(true, false);
-        Assert.assertTrue(action._hasChangedToTrue);
-        Assert.assertFalse(action._hasChangedToFalse);
-        socket.execute(false, true);
-        Assert.assertFalse(action._hasChangedToTrue);
-        Assert.assertTrue(action._hasChangedToFalse);
+        socket.execute(false);
+        Assert.assertFalse(action._value);
+        socket.execute(true);
+        Assert.assertTrue(action._value);
+        socket.execute(false);
+        Assert.assertFalse(action._value);
 
         action.je = new JmriException("Test JmriException");
         action.re = null;
-        Throwable thrown = catchThrowable( () -> socket.execute(false, false));
+        Throwable thrown = catchThrowable( () -> socket.execute(false));
         assertThat(thrown)
                 .withFailMessage("Evaluate throws an exception")
                 .isNotNull()
@@ -79,7 +76,7 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
 
         action.je = null;
         action.re = new RuntimeException("Test RuntimeException");
-        thrown = catchThrowable( () -> socket.execute(false, false));
+        thrown = catchThrowable( () -> socket.execute(false));
         assertThat(thrown)
                 .withFailMessage("Evaluate throws an exception")
                 .isNotNull()
@@ -89,7 +86,7 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         // If the socket is not enabled, it shouldn't do anything
         socket.setEnabled(false);
         action.re = new RuntimeException("Test RuntimeException");
-        thrown = catchThrowable( () -> socket.execute(false, false));
+        thrown = catchThrowable( () -> socket.execute(false));
         assertThat(thrown)
                 .withFailMessage("Evaluate does nothing")
                 .isNull();
@@ -101,27 +98,19 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         action.je = null;
         action.re = null;
         config._dontExecute = true;
-        action._hasChangedToTrue = false;
-        action._hasChangedToFalse = false;
-        socket.execute(true, false);
-        Assert.assertFalse(action._hasChangedToTrue);
-        Assert.assertFalse(action._hasChangedToFalse);
-        action._hasChangedToTrue = false;
-        action._hasChangedToFalse = false;
-        socket.execute(false, false);
-        Assert.assertFalse(action._hasChangedToTrue);
-        Assert.assertFalse(action._hasChangedToFalse);
+        action._value = false;
+        socket.execute(true);
+        Assert.assertFalse(action._value);
+        action._value = false;
+        socket.execute(false);
+        Assert.assertFalse(action._value);
         config._dontExecute = false;
-        action._hasChangedToTrue = false;
-        action._hasChangedToFalse = false;
-        socket.execute(true, false);
-        Assert.assertTrue(action._hasChangedToTrue);
-        Assert.assertFalse(action._hasChangedToFalse);
-        action._hasChangedToTrue = false;
-        action._hasChangedToFalse = false;
-        socket.execute(false, true);
-        Assert.assertFalse(action._hasChangedToTrue);
-        Assert.assertTrue(action._hasChangedToFalse);
+        action._value = false;
+        socket.execute(true);
+        Assert.assertTrue(action._value);
+        action._value = false;
+        socket.execute(false);
+        Assert.assertFalse(action._value);
     }
 
     @Test
@@ -177,7 +166,7 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
 
-        DigitalBooleanActionBean actionA = new DigitalBooleanOnChange("IQDB321", null, DigitalBooleanOnChange.Trigger.CHANGE);
+        DigitalBooleanActionBean actionA = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.When.Either);
         Assert.assertNotNull("exists", actionA);
         DigitalBooleanActionBean actionB = new MyDigitalBooleanAction("IQDB322");
         Assert.assertNotNull("exists", actionA);
@@ -212,8 +201,7 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
 
         JmriException je = null;
         RuntimeException re = null;
-        boolean _hasChangedToTrue = false;
-        boolean _hasChangedToFalse = false;
+        boolean _value = false;
         boolean _vetoChange = false;
 
         MyDigitalBooleanAction(String sysName) {
@@ -266,11 +254,10 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         }
 
         @Override
-        public void execute(boolean hasChangedToTrue, boolean hasChangedToFalse) throws JmriException {
+        public void execute(boolean value) throws JmriException {
             if (je != null) throw je;
             if (re != null) throw re;
-           _hasChangedToTrue = hasChangedToTrue;
-           _hasChangedToFalse = hasChangedToFalse;
+           _value = value;
         }
 
         @Override
