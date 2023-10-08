@@ -226,24 +226,17 @@ public class PrintCarRosterFrame extends OperationsFrame {
         int fontSize = (int) fontSizeComboBox.getSelectedItem();
 
         // obtain a HardcopyWriter to do this
-        HardcopyWriter writer = null;
-        try {
-            writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleCarRoster"), fontSize, .5, .5, .5, .5,
-                    _isPreview, "", landscape, true, null);
-        } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
-            return;
-        }
+        try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleCarRoster"), fontSize, .5,
+                .5, .5, .5, _isPreview, "", landscape, true, null)) {
 
-        numberCharPerLine = writer.getCharactersPerLine();
+            numberCharPerLine = writer.getCharactersPerLine();
 
-        try {
             printHeader(writer);
 
             printRoster(writer);
 
-            // and force completion of the printing
-            writer.close();
+        } catch (HardcopyWriter.PrintCanceledException ex) {
+            log.debug("Print cancelled");
         } catch (IOException we) {
             log.error("Error printing car roster");
         }

@@ -383,8 +383,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         toolMenu.addSeparator();
         toolMenu.add(new TrainByCarTypeAction(_train));
         toolMenu.addSeparator();
-        toolMenu.add(new PrintTrainAction(false, this));
-        toolMenu.add(new PrintTrainAction(true, this));
+        toolMenu.add(new PrintTrainAction(false, _train));
+        toolMenu.add(new PrintTrainAction(true, _train));
         toolMenu.add(new PrintTrainManifestAction(false, _train));
         toolMenu.add(new PrintTrainManifestAction(true, _train));
         toolMenu.add(new PrintTrainBuildReportAction(false, _train));

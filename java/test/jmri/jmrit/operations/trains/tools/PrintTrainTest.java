@@ -1,7 +1,6 @@
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.GraphicsEnvironment;
-import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
@@ -19,18 +18,10 @@ import jmri.util.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class PrintTrainActionTest extends OperationsTestCase {
+public class PrintTrainTest extends OperationsTestCase {
 
     @Test
-    public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
-        PrintTrainAction t = new PrintTrainAction(true, train1);
-        Assert.assertNotNull("exists", t);
-    }
-
-    @Test
-    public void testPrintAction() {
+    public void testPrint() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JUnitOperationsUtil.initOperationsData();
@@ -38,10 +29,8 @@ public class PrintTrainActionTest extends OperationsTestCase {
         Train train1 = tmanager.getTrainById("1");
         Assert.assertNotNull(train1);
 
-        PrintTrainAction pta = new PrintTrainAction(true, train1);
+        PrintTrains pta = new PrintTrains(true, train1);
         Assert.assertNotNull("exists", pta);
-
-        pta.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
 
         // confirm print preview window is showing
         ResourceBundle rb = ResourceBundle

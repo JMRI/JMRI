@@ -10,9 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.trains.TrainsTableFrame;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
+import jmri.util.*;
 
 /**
  *
@@ -56,9 +54,5 @@ public class PrintTrainsActionTest extends OperationsTestCase {
         JUnitUtil.dispose(ttf);
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-
     }
-
-    // private final static Logger log = LoggerFactory.getLogger(PrintTrainsActionTest.class);
-
 }
