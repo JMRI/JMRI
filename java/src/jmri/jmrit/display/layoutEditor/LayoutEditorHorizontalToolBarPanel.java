@@ -187,6 +187,7 @@ public class LayoutEditorHorizontalToolBarPanel extends LayoutEditorToolBarPanel
         hTop6Left.add(signalHeadComboBox);
         hTop6Left.add(new JLabel(" "));
         hTop6Left.add(iconLabelButton);
+        hTop6Left.add(logixngButton);
         hTop6Left.add(shapeButton);
 
         hTop6Panel.add(hTop6Left);

@@ -3561,6 +3561,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     addBlockContents();
                 } else if (leToolBarPanel.iconLabelButton.isSelected()) {
                     addIcon();
+                } else if (leToolBarPanel.logixngButton.isSelected()) {
+                    addLogixNGIcon();
                 } else if (leToolBarPanel.shapeButton.isSelected()) {
                     LayoutShape ls = (LayoutShape) selectedObject;
                     if (ls == null) {
@@ -5980,7 +5982,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                         Bundle.getMessage("ButtonNo"));
 
                 // array position 1, ButtonNo , or Dialog Closed.
-                if (selectedValue == 1 || selectedValue == JmriJOptionPane.CLOSED_OPTION ) { 
+                if (selectedValue == 1 || selectedValue == JmriJOptionPane.CLOSED_OPTION ) {
                     return false; // return without creating if "No" response
                 }
 
@@ -6141,7 +6143,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     Bundle.getMessage("ButtonNo"));
 
              // array position 1 Button No, or Dialog closed.
-            if (selectedValue == 1 || selectedValue==JmriJOptionPane.CLOSED_OPTION ) { 
+            if (selectedValue == 1 || selectedValue==JmriJOptionPane.CLOSED_OPTION ) {
                 return false;
             }
 
@@ -6914,6 +6916,23 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      */
     void addIcon() {
         PositionableLabel l = new PositionableLabel(leToolBarPanel.iconEditor.getIcon(0), this);
+        setNextLocation(l);
+        l.setDisplayLevel(Editor.ICONS);
+        unionToPanelBounds(l.getBounds());
+        l.updateSize();
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
+    }
+
+    /**
+     * Add a LogixNG icon to the target
+     */
+    void addLogixNGIcon() {
+        LogixNGIcon l = new LogixNGIcon(leToolBarPanel.logixngEditor.getIcon(0), this);
         setNextLocation(l);
         l.setDisplayLevel(Editor.ICONS);
         unionToPanelBounds(l.getBounds());
