@@ -95,6 +95,7 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
                         .createLogixNG(userName);
         logixNG.activate();
         logixNG.setEnabled(true);
+        logixNG.clearStartup();
         return logixNG;
     }
 
@@ -105,6 +106,7 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
                         .createLogixNG(systemName, userName);
         logixNG.activate();
         logixNG.setEnabled(true);
+        logixNG.clearStartup();
         return logixNG;
     }
 
