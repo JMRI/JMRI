@@ -1,8 +1,5 @@
 package jmri.jmrix.zimo;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Represents a single command or response to the Zimo Binary Protocol.
  * <p>
@@ -205,7 +202,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage {
      */
     @Override
     public boolean checkParity() {
-        //javax.swing.JOptionPane.showMessageDialog(null, "A-Programma komt tot hier!");
+        //jmri.util.swing.JmriJOptionPane.showMessageDialog(null, "A-Programma komt tot hier!");
         int len = getNumDataElements();
         return (getElement(len - 1) == (0x0D | 0x0A));
     }
@@ -214,7 +211,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage {
 
     @Override
     public void setParity() {
-        javax.swing.JOptionPane.showMessageDialog(null, "B-Programma komt tot hier!");
+        jmri.util.swing.JmriJOptionPane.showMessageDialog(null, "B-Programma komt tot hier!");
         int len = getNumDataElements();
         setElement(len - 1, 0x0D);
     }
@@ -621,7 +618,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage {
         }
         return m;
     }
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(Mx1Message.class);
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Mx1Message.class);
 
 }
