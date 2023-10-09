@@ -419,7 +419,11 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>When a LogixNG was created and ConditionalNGs
+          was created for that LogixNG, the ConditionalNGs
+          wasn't executing until restart of JMRI if the
+          ConditionalNGs had the <strong>Startup</strong>
+          flag unchecked. That's fixed now.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
