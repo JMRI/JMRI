@@ -383,8 +383,8 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         } else if (resultCode == 15) {
             log.info("Loco can not be accessed via the Ecos Object Id {}", this.objectNumber);
             try {
-                javax.swing.JOptionPane.showMessageDialog(null, Bundle.getMessage("UnknownLocoDialog", this.address),
-                        Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("UnknownLocoDialog", this.address),
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             } catch (HeadlessException he) {
                 // silently ignore inability to display dialog
             }

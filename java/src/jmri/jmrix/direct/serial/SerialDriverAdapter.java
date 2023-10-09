@@ -9,8 +9,7 @@ import java.util.Enumeration;
 import java.util.Vector;
 import jmri.jmrix.direct.PortController;
 import jmri.jmrix.direct.TrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import purejavacomm.CommPortIdentifier;
 import purejavacomm.NoSuchPortException;
 import purejavacomm.PortInUseException;
@@ -73,9 +72,9 @@ public class SerialDriverAdapter extends PortController {
                 } catch (UnsupportedCommOperationException e2) {
                     log.warn("trouble setting 16457 baud");
                     activeSerialPort.setSerialPortParams(19200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-                    javax.swing.JOptionPane.showMessageDialog(null,
+                    jmri.util.swing.JmriJOptionPane.showMessageDialog(null,
                             Bundle.getMessage("DirectBaudError", activeSerialPort.getBaudRate()),
-                            Bundle.getMessage("ErrorConnectionTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("ErrorConnectionTitle"), jmri.util.swing.JmriJOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -189,6 +188,6 @@ public class SerialDriverAdapter extends PortController {
     InputStream serialInStream = null;
     OutputStream serialOutStream = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }
