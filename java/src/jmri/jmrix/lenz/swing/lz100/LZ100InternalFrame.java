@@ -6,13 +6,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
+
 import jmri.jmrix.lenz.XNetConstants;
 import jmri.jmrix.lenz.XNetListener;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Internal Frame displaying the LZ100 configuration utility
@@ -85,11 +85,11 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
         // install reset Command Station button handler
         resetCSButton.addActionListener(a -> {
             // ask user confirmation
-            if (javax.swing.JOptionPane.OK_OPTION == javax.swing.JOptionPane.showConfirmDialog(
+            if (JmriJOptionPane.OK_OPTION == JmriJOptionPane.showConfirmDialog(
                     null, Bundle.getMessage("LZ100ConfirmResetDialog"),
                             Bundle.getMessage("QuestionTitle"),
-                    javax.swing.JOptionPane.OK_CANCEL_OPTION,
-                    javax.swing.JOptionPane.WARNING_MESSAGE)) {
+                    JmriJOptionPane.OK_CANCEL_OPTION,
+                    JmriJOptionPane.WARNING_MESSAGE)) {
                 // indeed send reset commands
                 resetLZ100CS();
             }
@@ -254,6 +254,6 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
         autoMode = false;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(LZ100InternalFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LZ100InternalFrame.class);
 
 }

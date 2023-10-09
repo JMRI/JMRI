@@ -5,12 +5,11 @@ import java.awt.FlowLayout;
 import java.awt.event.WindowEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 import jmri.jmrix.ieee802154.IEEE802154Node;
 import jmri.jmrix.ieee802154.IEEE802154TrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for Adding new Nodes
@@ -110,7 +109,9 @@ public class AddNodeFrame extends jmri.util.JmriJFrame {
         // get a IEEE802154 Node corresponding to this node address if one exists
         curNode = (IEEE802154Node) itc.getNodeFromAddress(nodeAddress);
         if (curNode != null) {
-            javax.swing.JOptionPane.showMessageDialog(this,Bundle.getMessage("Error1",nodeAddress),Bundle.getMessage("AddNodeErrorTitle"),JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this,
+                Bundle.getMessage("Error1",nodeAddress),
+                Bundle.getMessage("AddNodeErrorTitle"),JmriJOptionPane.ERROR_MESSAGE);
             log.error("Error creating IEEE802154 Node, Node exists.");
             return;
         }
@@ -119,7 +120,8 @@ public class AddNodeFrame extends jmri.util.JmriJFrame {
         // all ready, create the new node
         curNode = itc.newNode();
         if (curNode == null) {
-            javax.swing.JOptionPane.showMessageDialog(this,Bundle.getMessage("Error3"),Bundle.getMessage("AddNodeErrorTitle"),JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this,Bundle.getMessage("Error3"),
+                Bundle.getMessage("AddNodeErrorTitle"),JmriJOptionPane.ERROR_MESSAGE);
             log.error("Error creating IEEE802154 Node, constructor returned null");
             return;
         }
@@ -160,6 +162,6 @@ public class AddNodeFrame extends jmri.util.JmriJFrame {
         nodeAddr64Field.setText("");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AddNodeFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AddNodeFrame.class);
 
 }

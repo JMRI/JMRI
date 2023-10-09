@@ -5,18 +5,17 @@ import com.digi.xbee.api.exceptions.TimeoutException;
 import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
+
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.WindowEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 import jmri.jmrix.ieee802154.xbee.XBeeNode;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for Adding new Nodes
@@ -145,7 +144,8 @@ public class XBeeAddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Add
         // get a XBeeNode corresponding to this node address if one exists
         curNode = (XBeeNode) xtc.getNodeFromXBeeDevice(remoteDevice);
         if (curNode != null) {
-            javax.swing.JOptionPane.showMessageDialog(this,Bundle.getMessage("Error1",remoteDevice),Bundle.getMessage("AddNodeErrorTitle"),JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this,Bundle.getMessage("Error1",remoteDevice),
+                Bundle.getMessage("AddNodeErrorTitle"),JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         try {
@@ -158,12 +158,14 @@ public class XBeeAddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Add
             parent.nodeListChanged();
         } catch (TimeoutException toe) {
             log.error("Timeout adding node {}.",remoteDevice);
-            javax.swing.JOptionPane.showMessageDialog(this,Bundle.getMessage("Error3"),Bundle.getMessage("AddNodeErrorTitle"),JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this,Bundle.getMessage("Error3"),
+                Bundle.getMessage("AddNodeErrorTitle"),JmriJOptionPane.ERROR_MESSAGE);
             log.error("Error creating XBee Node, constructor returned null");
             return;
         } catch (XBeeException xbe) {
             log.error("Exception adding node {}.",remoteDevice);
-            javax.swing.JOptionPane.showMessageDialog(this,Bundle.getMessage("Error3"),Bundle.getMessage("AddNodeErrorTitle"),JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this,Bundle.getMessage("Error3"),
+                Bundle.getMessage("AddNodeErrorTitle"),JmriJOptionPane.ERROR_MESSAGE);
             log.error("Error creating XBee Node, constructor returned null");
             return;
         }
@@ -192,6 +194,6 @@ public class XBeeAddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Add
         nodeIdentifierField.setText("");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeAddNodeFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(XBeeAddNodeFrame.class);
 
 }

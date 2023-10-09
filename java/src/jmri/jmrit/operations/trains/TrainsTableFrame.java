@@ -554,13 +554,13 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
             return;
         }
         if (OperationsXml.areFilesDirty()) {
-            int result = javax.swing.JOptionPane.showOptionDialog(this, Bundle.getMessage("PromptQuitWindowNotWritten"),
-                    Bundle.getMessage("PromptSaveQuit"), javax.swing.JOptionPane.YES_NO_OPTION,
-                    javax.swing.JOptionPane.WARNING_MESSAGE, null, // icon
+            int result = JmriJOptionPane.showOptionDialog(this, Bundle.getMessage("PromptQuitWindowNotWritten"),
+                    Bundle.getMessage("PromptSaveQuit"), JmriJOptionPane.YES_NO_OPTION,
+                    JmriJOptionPane.WARNING_MESSAGE, null,
                     new String[] { ResourceBundle.getBundle("jmri.util.UtilBundle").getString("WarnYesSave"), // NOI18N
                             ResourceBundle.getBundle("jmri.util.UtilBundle").getString("WarnNoClose") }, // NOI18N
                     ResourceBundle.getBundle("jmri.util.UtilBundle").getString("WarnYesSave"));
-            if (result != javax.swing.JOptionPane.NO_OPTION) {
+            if (result == JmriJOptionPane.YES_OPTION) {
                 // user wants to save
                 storeValues();
             }

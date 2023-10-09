@@ -15,8 +15,7 @@ import jmri.SystemConnectionMemo;
 import jmri.Throttle;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Abstract implementation of a ThrottleManager.
@@ -881,19 +880,16 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
                 javax.swing.JCheckBox checkbox = new javax.swing.JCheckBox(
                     Bundle.getMessage("HideFurtherAlerts"));
                 Object[] params = {Bundle.getMessage("LocoStolen", address), checkbox};
-                javax.swing.JOptionPane pane = new javax.swing.JOptionPane(params);
-                pane.setMessageType(javax.swing.JOptionPane.WARNING_MESSAGE);
-                javax.swing.JDialog dialog = pane.createDialog(null, Bundle.getMessage("LocoStolen", address));
-                dialog.setModal(false);
-                dialog.setVisible(true);
-                dialog.requestFocus();
-                dialog.toFront();
-                java.awt.event.ActionListener stolenpopupcheckbox = (java.awt.event.ActionEvent evt) -> this.hideStealNotifications(checkbox.isSelected());
+                java.awt.event.ActionListener stolenpopupcheckbox = (java.awt.event.ActionEvent evt) ->
+                    this.hideStealNotifications(checkbox.isSelected());
                 checkbox.addActionListener(stolenpopupcheckbox);
+                JmriJOptionPane.showMessageDialogNonModal(null, params, 
+                    Bundle.getMessage("LocoStolen", address),
+                    JmriJOptionPane.WARNING_MESSAGE, null);
             });
         }
     }
-    
+
     /**
      * Receive notification from a throttle dialogue
      * to display steal dialogues for rest of the JMRI instance session.
@@ -993,6 +989,6 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractThrottleManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractThrottleManager.class);
 
 }
