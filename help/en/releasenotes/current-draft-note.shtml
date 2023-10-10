@@ -425,6 +425,9 @@
           wasn't executing until restart of JMRI if the
           ConditionalNGs had the <strong>Startup</strong>
           flag unchecked. That's fixed now.</li>
+
+          <li>Warrant expression was not listening for warrant events.  Fixed along with the long
+          description.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
