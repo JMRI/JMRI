@@ -284,6 +284,7 @@
         height="722" width="1921" alt="PanelPro Tables used with RFID-Linked"></a>
         </p>
         
+        <h3>Displaying on Layout Editor Panels</h3>
         <p>
           If you created a <a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor Panel</a> you
           can see the train name for as long as it occupies a block by linking RFID readers to blocks on the panel.
@@ -304,7 +305,13 @@
           <li>Shift-click on the panel where you want the value to appear. [It may be hard to see where that is if the value is
           currently blank so consider putting a background or border.]</li>
         </ul>
-       
+        
+        <p>Alternatively, you can use a script such as <a href="../../../../../jython/ReporterFormatter.py">
+        ReporterFormatter.py</a> to parse the information in the Reporter and copy what you want into a 
+        <a href="../../tools/Memories.shtml">Memory.</a> That Memory can then be displayed on a Layout Editor Panel.</p>
+
+        
+       <h3>Displaying on a Control Panel Editor Panel</h3>
         <p>If you created a <a href="../../../package/jmri/jmrit/display/ControlPanelEditor.shtml">Control Panel Editor Panel</a>
            you can only display the "reports" from Reporters, i.e. the train name associated with an RFID tag, for as long as the
            reader reports that RFID tag. Once the reader report clears, the "report" is blank and the CPE Panels will not display 
