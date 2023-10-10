@@ -27,6 +27,7 @@
    [Add new LogixNG Modules, Tables                             (2023-04-17)
   Updates made for 5.5.5 schema and additional JMRI capabilities by jerryg2003:
    [Update info for LogixNG DigitalBooleanActions               (2023-10-10)
+   [Add info for LogixNG Icon in paneleditor                    (2023-10-10)
 -->
 
 <!-- This file is part of JMRI.  Copyright 2007-2011, 2016, 2018, 2022, 2023.     -->
@@ -2080,6 +2081,16 @@ paths:
     <td>
         to Block Name="<xsl:value-of select="@toBlockName"/>"
         from Block Name="<xsl:value-of select="@fromBlockName"/>"
+    </td>
+</tr>
+</xsl:template>
+
+<!-- *************************************************************************************** -->
+<xsl:template match="logixngicon">
+<tr><td>LogixNG Icon</td>
+    <td>icon="<xsl:value-of select="icon/@url"/>"</td>
+    <td>
+        LogixNG="<xsl:value-of select="LogixNG/InlineLogixNG_SystemName"/>"
     </td>
 </tr>
 </xsl:template>
