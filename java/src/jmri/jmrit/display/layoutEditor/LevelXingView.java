@@ -8,7 +8,6 @@ import static java.lang.Float.POSITIVE_INFINITY;
 import static java.lang.Math.PI;
 import java.util.*;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 

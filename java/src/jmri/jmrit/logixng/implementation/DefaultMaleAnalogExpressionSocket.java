@@ -1,8 +1,5 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
 import java.util.*;
 
 import javax.annotation.Nonnull;

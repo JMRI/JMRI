@@ -4,8 +4,6 @@ import java.awt.GraphicsEnvironment;
 import jmri.jmrit.display.PositionableIconTest;
 import jmri.jmrit.logix.Portal;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 
 /**

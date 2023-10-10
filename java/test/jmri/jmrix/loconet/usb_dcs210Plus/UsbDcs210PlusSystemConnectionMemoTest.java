@@ -3,8 +3,6 @@ package jmri.jmrix.loconet.usb_dcs210Plus;
 import jmri.jmrix.loconet.LnSystemConnectionMemoTestBase;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
-import jmri.util.JUnitUtil;
-
 import org.junit.jupiter.api.*;
 
 /**

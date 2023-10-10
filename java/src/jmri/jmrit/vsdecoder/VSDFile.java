@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
-import java.util.zip.ZipInputStream;
 import jmri.jmrit.XmlFile;
 import org.jdom2.Element;
 import org.slf4j.Logger;

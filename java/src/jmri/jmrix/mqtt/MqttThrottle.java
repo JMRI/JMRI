@@ -1,16 +1,13 @@
 package jmri.jmrix.mqtt;
 
-import java.util.concurrent.LinkedBlockingQueue;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
-import jmri.Throttle;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.annotation.Nonnull;
 import java.util.regex.*;
-import jmri.ThrottleListener;
 
 
 /**

@@ -4,7 +4,6 @@ import java.awt.geom.Point2D;
 
 import javax.swing.*;
 
-import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.*;
 import jmri.util.swing.JemmyUtil;

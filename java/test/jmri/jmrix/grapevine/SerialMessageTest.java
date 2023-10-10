@@ -21,6 +21,7 @@ public class SerialMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         m = msg = new SerialMessage();
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = msg = null;

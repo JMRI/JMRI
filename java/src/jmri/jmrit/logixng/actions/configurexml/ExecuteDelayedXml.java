@@ -3,7 +3,6 @@ package jmri.jmrit.logixng.actions.configurexml;
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.actions.ActionSensor;
 import jmri.jmrit.logixng.actions.ExecuteDelayed;
 import jmri.jmrit.logixng.util.TimerUnit;
 import jmri.jmrit.logixng.util.parser.ParserException;

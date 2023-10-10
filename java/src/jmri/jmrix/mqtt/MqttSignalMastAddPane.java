@@ -10,7 +10,6 @@ import javax.swing.border.TitledBorder;
 import javax.annotation.Nonnull;
 
 import jmri.*;
-import jmri.implementation.*;
 import jmri.jmrit.beantable.signalmast.SignalMastAddPane;
 
 import org.openide.util.lookup.ServiceProvider;

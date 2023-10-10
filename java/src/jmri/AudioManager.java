@@ -1,6 +1,5 @@
 package jmri;
 
-import java.util.List;
 import java.util.SortedSet;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;

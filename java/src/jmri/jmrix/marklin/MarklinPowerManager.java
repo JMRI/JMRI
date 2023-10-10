@@ -1,9 +1,6 @@
 package jmri.jmrix.marklin;
 
 import jmri.JmriException;
-import jmri.PowerManager;
-
-import java.beans.PropertyChangeListener;
 import jmri.managers.AbstractPowerManager;
 
 import org.slf4j.Logger;

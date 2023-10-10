@@ -69,6 +69,7 @@ public class JmriJFrameServletTest {
         
         // create testable object that runs clean
         JmriJFrameServlet_ut out1 = new JmriJFrameServlet_ut() {
+            @Override
             protected void doGetOnSwing(HttpServletRequest request, HttpServletResponse response) 
                     throws ServletException, IOException {
             }
@@ -82,6 +83,7 @@ public class JmriJFrameServletTest {
         
         // create testable object that throws IOException
         JmriJFrameServlet_ut out2 = new JmriJFrameServlet_ut() {
+            @Override
             protected void doGetOnSwing(HttpServletRequest request, HttpServletResponse response) 
                     throws ServletException, IOException {
                 throw new IOException("on purpose");
@@ -95,6 +97,7 @@ public class JmriJFrameServletTest {
         
         // create testable object that throws ServletException
         JmriJFrameServlet_ut out3 = new JmriJFrameServlet_ut() {
+            @Override
             protected void doGetOnSwing(HttpServletRequest request, HttpServletResponse response) 
                     throws ServletException, IOException {
                 throw new ServletException("on purpose");

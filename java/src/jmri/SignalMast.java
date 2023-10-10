@@ -106,8 +106,10 @@ public interface SignalMast extends Signal {
      *
      * @return true if lit; false if dark
      */
+    @Override
     boolean getLit();
 
+    @Override
     void setLit(boolean newLit);
 
     /**
@@ -118,8 +120,10 @@ public interface SignalMast extends Signal {
      *
      * @return true if held; false otherwise
      */
+    @Override
     boolean getHeld();
 
+    @Override
     void setHeld(boolean newHeld);
 
     /**

@@ -1,15 +1,11 @@
 package jmri.jmrit.logixng;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.StringWriter;
 import java.io.PrintWriter;
-import java.nio.charset.Charset;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
-
 import javax.annotation.CheckForNull;
 
 import jmri.JmriException;
@@ -20,8 +16,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**

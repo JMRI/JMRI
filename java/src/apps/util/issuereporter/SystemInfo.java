@@ -8,7 +8,6 @@ import java.util.*;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileSystemView;
 
 import jmri.*;

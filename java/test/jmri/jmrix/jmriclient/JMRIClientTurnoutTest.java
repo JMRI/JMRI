@@ -54,6 +54,7 @@ public class JMRIClientTurnoutTest extends jmri.implementation.AbstractTurnoutTe
         t = new JMRIClientTurnout(3, new JMRIClientSystemConnectionMemo(jcins));
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

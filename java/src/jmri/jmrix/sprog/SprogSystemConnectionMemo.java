@@ -232,6 +232,7 @@ public class SprogSystemConnectionMemo extends DefaultSystemConnectionMemo imple
     /**
      * Configure the common managers for Sprog connections.
      */
+    @Override
     public void configureManagers() {
 
         configureCommandStation();

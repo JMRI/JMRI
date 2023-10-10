@@ -6,7 +6,6 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Memory;
 import jmri.MemoryManager;
-import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.util.ReferenceUtil;

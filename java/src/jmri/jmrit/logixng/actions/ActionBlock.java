@@ -17,7 +17,6 @@ import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.util.ThreadingUtil;
-import jmri.util.TypeConversionUtil;
 
 /**
  * This action triggers a block.

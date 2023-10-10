@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng;
 
-import jmri.NamedBean;
-
 /**
  * This interface declares an Inline LogixNG.
  * @author Daniel Bergqvist (C) 2022

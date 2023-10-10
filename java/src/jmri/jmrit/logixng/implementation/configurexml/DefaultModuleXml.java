@@ -4,7 +4,6 @@ import java.util.List;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.Module.Parameter;
 import jmri.jmrit.logixng.ModuleManager;
 import jmri.jmrit.logixng.implementation.DefaultModule;

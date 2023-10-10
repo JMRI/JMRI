@@ -12,7 +12,6 @@ import jmri.NamedBean;
 import jmri.Section;
 import jmri.SectionManager;
 import jmri.Transit;
-import jmri.TransitManager;
 
 /**
  * Implementation of a Transit Manager
@@ -69,6 +68,7 @@ public class DefaultTransitManager extends AbstractManager<Transit> implements j
      *         userName already exists, or if there is trouble creating a new
      *         Transit.
      */
+    @Override
     @Nonnull
     public Transit createNewTransit(@CheckForNull String systemName, String userName) throws NamedBean.BadNameException {
         // check system name
@@ -118,6 +118,7 @@ public class DefaultTransitManager extends AbstractManager<Transit> implements j
      * @throws NamedBean.BadNameException if userName is already associated with
      *         another Transit
      */
+    @Override
     @Nonnull
     public Transit createNewTransit(String userName) throws NamedBean.BadNameException {
         return createNewTransit(getAutoSystemName(), userName);
@@ -132,6 +133,7 @@ public class DefaultTransitManager extends AbstractManager<Transit> implements j
      * @param name User name or system name to match
      * @return null if no match found
      */
+    @Override
     @CheckForNull
     public Transit getTransit(String name) {
         Transit z = getByUserName(name);
@@ -143,6 +145,7 @@ public class DefaultTransitManager extends AbstractManager<Transit> implements j
      *
      * @param z the transit to remove
      */
+    @Override
     public void deleteTransit(Transit z) {
         // delete the Transit
         deregister(z);
@@ -155,6 +158,7 @@ public class DefaultTransitManager extends AbstractManager<Transit> implements j
      * @param s the section to check Transits against
      * @return a list, possibly empty, of Transits using section s.
      */
+    @Override
     @Nonnull
     public ArrayList<Transit> getListUsingSection(Section s) {
         ArrayList<Transit> list = new ArrayList<>();
@@ -167,6 +171,7 @@ public class DefaultTransitManager extends AbstractManager<Transit> implements j
         return list;
     }
 
+    @Override
     @Nonnull
     public ArrayList<Transit> getListUsingBlock(Block b) {
         ArrayList<Transit> list = new ArrayList<>();
@@ -179,6 +184,7 @@ public class DefaultTransitManager extends AbstractManager<Transit> implements j
         return list;
     }
 
+    @Override
     @Nonnull
     public ArrayList<Transit> getListEntryBlock(Block b) {
         ArrayList<Transit> list = new ArrayList<>();

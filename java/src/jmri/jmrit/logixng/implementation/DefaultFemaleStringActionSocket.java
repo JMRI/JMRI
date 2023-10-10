@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.beans.*;
 import java.util.*;
 
 import jmri.InstanceManager;

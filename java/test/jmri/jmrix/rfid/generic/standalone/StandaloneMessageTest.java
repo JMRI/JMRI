@@ -17,6 +17,7 @@ public class StandaloneMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         m = new StandaloneMessage(5);
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = null;

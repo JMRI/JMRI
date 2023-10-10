@@ -1,8 +1,5 @@
 package jmri.jmrit.logix;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 /**
  * A TrainOrder has information about a required speed change of
