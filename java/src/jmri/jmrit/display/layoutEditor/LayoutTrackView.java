@@ -554,6 +554,7 @@ abstract public class LayoutTrackView implements InlineLogixNG {
                     logixNG.setInlineLogixNG(LayoutTrackView.this);
                     logixNG.activate();
                     logixNG.setEnabled(true);
+                    logixNG.clearStartup();
                     setLogixNG(logixNG);
                 }
                 LogixNGEditor logixNGEditor = new LogixNGEditor(null, getLogixNG().getSystemName());
