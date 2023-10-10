@@ -187,6 +187,7 @@ public class LayoutEditorVerticalToolBarPanel extends LayoutEditorToolBarPanel {
 
         JPanel vTop18Panel = new JPanel(verticalContentLayout);
         vTop18Panel.add(multiSensorButton);
+        vTop18Panel.add(changeIconsButton);
         vTop18Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop18Panel.getPreferredSize().height));
         iconsBorderPanel.add(vTop18Panel);
 
@@ -210,9 +211,9 @@ public class LayoutEditorVerticalToolBarPanel extends LayoutEditorToolBarPanel {
 
         JPanel vTop22Panel = new JPanel(verticalContentLayout);
         vTop22Panel.add(iconLabelButton);
+        vTop22Panel.add(logixngButton);
         vTop22Panel.add(shapeButton);
         vTop22Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop22Panel.getPreferredSize().height));
-        vTop22Panel.add(changeIconsButton);
         iconsBorderPanel.add(vTop22Panel);
 
         add(iconsBorderPanel);

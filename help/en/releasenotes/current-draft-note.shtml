@@ -402,7 +402,8 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+	        <li>The LogixNG Icon has been added to the toolbars.  The LogixNG Icon can run inline
+	        LogixNGs by clicking on the icon or text label when converted to text.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
