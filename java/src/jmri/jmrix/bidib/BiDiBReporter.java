@@ -126,7 +126,9 @@ public class BiDiBReporter extends jmri.implementation.AbstractRailComReporter i
             }
             @Override
             public void occupancyMultiple(byte[] address, int messageNum, int baseAddress, int detectorCount, byte[] detectorData) {
-            log.trace("occupation: node UID: {}, node addr: {}, address: {}, baseAddress: {}, detectorCount: {}, occ states: {}, timestamp: {}", addr.getNodeUID(), addr.getNodeAddr(), address, baseAddress, detectorCount, detectorData);
+            log.trace("occupation: node UID: {}, node addr: {}, address: {}, baseAddress: {}, detectorCount: {}, occ states: {}", 
+                        addr.getNodeUID(), addr.getNodeAddr(), address, baseAddress, 
+                        detectorCount, detectorData);
                 if (NodeUtils.isAddressEqual(addr.getNodeAddr(), address)  &&  !addr.isPortAddr()  &&  addr.getAddr() >= baseAddress  &&  addr.getAddr() < (baseAddress + detectorCount)) {
                     // TODO: This is very inefficent, since this function is called for each sensor! We should place the listener at a more central instance like the sensor manager
                     // our address is in the data bytes. Check which byte and then check, if the correspondent bit is set.

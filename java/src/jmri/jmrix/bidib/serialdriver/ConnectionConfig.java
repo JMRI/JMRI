@@ -195,7 +195,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
                     Long uid = ByteUtils.parseHexUniqueId(fieldtext);
                     String err = a.findPortbyUniqueID(uid);
                     if (err == null) {
-                        log.info("found port name for UID " + ByteUtils.formatHexUniqueId(a.getRootNodeUid()) + " is " + a.getCurrentPortName());
+                        log.info("found port name for UID {} is {}",
+                                    ByteUtils.formatHexUniqueId(a.getRootNodeUid()), a.getCurrentPortName());
                         a.setRootNodeUid(uid);
                         //rootNodeField.setText(String.format("0x%X", a.getRootNodeUid() & 0x0000ffffffffffL));
                         rootNodeField.setText(ByteUtils.formatHexUniqueId(a.getRootNodeUid()));
@@ -212,7 +213,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
             catch (NumberFormatException ex) {
                 a.setRootNodeUid(null);
                 rootNodeField.setText("");
-                log.warn("{}", ex);
+                log.warn("Exception:", ex);
             }
         }
     }

@@ -44,7 +44,7 @@ public class BiDiBAddress {
     // 4 - address (decimal), required
     // 5 - port type letter (type address model only), empty string of not present
     
-    private static volatile Pattern addrPattern = null;
+    private static volatile Pattern addrPattern = Pattern.compile(addrRegex);
     
     private static final Map<Character, LcOutputType> portTypeList = createPortTypeList(); //port type map
     
@@ -73,12 +73,6 @@ public class BiDiBAddress {
     public BiDiBAddress(String systemName, char typeLetter, BiDiBSystemConnectionMemo memo) {
         aString = systemName.substring(memo.getSystemPrefix().length() + 1);
         log.debug("ctor: systemName: {}, typeLetter: {}, systemPrefix: {}", systemName, typeLetter, memo.getSystemPrefix());
-        
-        
-        if (addrPattern == null) {
-            addrPattern = Pattern.compile(addrRegex);
-            log.trace("regexp: {}", addrRegex);
-        }
         
         parse(systemName, typeLetter, memo);
     }

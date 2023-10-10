@@ -353,7 +353,7 @@ public class BiDiBOutputMessageHandler extends DefaultMessageListener {
             log.info("{} accessory state was signalled, state: {}, opts: {}, node: {}",
                     type, accessoryState, accessoryStateOptions, addr);
             if (accessoryState.hasError()) {
-                log.warn(accessoryState.getErrorInformation());
+                log.warn("Accessory state error: {}", accessoryState.getErrorInformation());
                 errorState(accessoryState.getErrorCode());
             }
             else {

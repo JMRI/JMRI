@@ -13,7 +13,7 @@ public abstract class BiDiBTableModel extends AbstractTableModel {
 
     protected List<List<Object>> rowData;
     protected List<List<Object>> deletedData;
-    protected String[] columnNames;
+    protected String[] columnNames = new String[0]; // this needs content
     private int _dirtyCol = 0;
     private int _newCol = 0;
     private int _deleteCol = 0;

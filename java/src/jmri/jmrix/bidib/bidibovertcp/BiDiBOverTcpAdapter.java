@@ -67,7 +67,8 @@ public class BiDiBOverTcpAdapter extends BiDiBNetworkPortController {
         }
         else {
             opened = false;
-            log.warn("No device found on port " + getCurrentPortName() + "(" + getCurrentPortName() + ")");
+            log.warn("No device found on port {} ({}})",
+                    getCurrentPortName(), getCurrentPortName());
         }
     }
 

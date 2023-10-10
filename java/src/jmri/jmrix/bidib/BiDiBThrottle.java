@@ -203,7 +203,7 @@ public class BiDiBThrottle extends AbstractThrottle {
         
         if (sendDriveCommand(true)) {
             if (log.isDebugEnabled()) {
-                log.debug("setSpeedSetting= " + speed);
+                log.debug("setSpeedSetting= {}",speed);
             }
             this.speedSetting = oldSpeed; //super.setSpeedSetting needs the old speed here and then sets the new one. As sayed, this should be redesigned
             super.setSpeedSetting(speed);
@@ -224,7 +224,7 @@ public class BiDiBThrottle extends AbstractThrottle {
         
         if (sendDriveCommand(false)) {
             if (log.isDebugEnabled()) {
-                log.debug("setIsForward= " + forward);
+                log.debug("setIsForward= {}", forward);
             }
             if (old != forward) {
                 isForward = old;

@@ -80,7 +80,7 @@ public class BiDiBSignalMastXml
             m = (BiDiBSignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class)
                     .provideCustomSignalMast(sys, BiDiBSignalMast.class);
         } catch (JmriException e) {
-            log.error("Failed to load BiDiBSignalMast {}: {}", sys, e);
+            log.error("Failed to load BiDiBSignalMast {}:", sys, e);
             return false;
         }
 

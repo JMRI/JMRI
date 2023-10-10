@@ -42,7 +42,7 @@ public class BiDiBReporterManagerXml extends jmri.managers.configurexml.Abstract
             ProxyReporterManager rm = (ProxyReporterManager)InstanceManager.getDefault(jmri.ReporterManager.class);
             //log.debug("Reporter Manager List: {}", rm.getManagerList());
             BiDiBReporterManager mgr = (BiDiBReporterManager)rm.getManagerList().get(0);
-            if (mgr != null  && mgr instanceof BiDiBReporterManager) {
+            if (mgr != null ) {
                 mgr.updateAll();
             }
         }

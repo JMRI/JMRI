@@ -107,7 +107,7 @@ public class BiDiBProgrammer extends AbstractProgrammer {
         final int CV = Integer.parseInt(CVname);
         log.info("write mode: {}, CV={}, val={}", getMode().getStandardName(), CV, val);
         if (log.isDebugEnabled()) {
-            log.debug("writeCV " + CV + " listens " + p);
+            log.debug("writeCV {} listens {}", CV, p);
         }
         useProgrammer(p);
         if (!getCanWrite(CVname)) {
@@ -142,7 +142,7 @@ public class BiDiBProgrammer extends AbstractProgrammer {
         final int CV = Integer.parseInt(CVname);
         log.info("read mode: {}, CV={}", getMode().getStandardName(), CV);
         if (log.isDebugEnabled()) {
-            log.debug("readCV " + CV + " listens " + p);
+            log.debug("readCV {} listens {}", CV, p);
         }
         useProgrammer(p);
         if (!getCanRead(CVname)) {
@@ -184,7 +184,7 @@ public class BiDiBProgrammer extends AbstractProgrammer {
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
             if (log.isInfoEnabled()) {
-                log.info("programmer already in use by " + _usingProgrammer);
+                log.info("programmer already in use by {}", _usingProgrammer);
             }
             throw new jmri.ProgrammerException("programmer in use");
         } else {
@@ -314,7 +314,7 @@ public class BiDiBProgrammer extends AbstractProgrammer {
     // internal method to notify of the final result
     protected void notifyProgListenerEnd(int value, int status) {
         if (log.isDebugEnabled()) {
-            log.debug("notifyProgListenerEnd value " + value + " status " + status);
+            log.debug("notifyProgListenerEnd value {} status {}", value, status);
         }
         // the programmingOpReply handler might send an immediate reply, so
         // clear the current listener _first_

@@ -56,7 +56,7 @@ public class BiDiBSimulatorAdapter extends BiDiBSerialPortController {
         if (super.isDirty()) {
             return true;
         }
-        return (simulationFile != loadedSimulationFilename);
+        return (! simulationFile.equals(loadedSimulationFilename));
     }
 
     //is this ever called?
@@ -165,7 +165,8 @@ public class BiDiBSimulatorAdapter extends BiDiBSerialPortController {
         }
         else {
             opened = false;
-            log.warn("Simulation cannot be opened: " + getCurrentPortName() + " (" + getCurrentPortName() + ")");
+            log.warn("Simulation cannot be opened: {} ({}})",
+                    getCurrentPortName(), getCurrentPortName());
         }
         this.getSystemConnectionMemo().configureManagers();
     }

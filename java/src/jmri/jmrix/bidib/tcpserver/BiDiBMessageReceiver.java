@@ -101,7 +101,7 @@ public class BiDiBMessageReceiver implements RawMessageListener {
             
         }
         catch (ProtocolException e) {
-            log.warn("Protocol error while parsing incoming message from BiDiB connection: {}", e);
+            log.warn("Protocol error while parsing incoming message from BiDiB connection", e);
         }
     }
 
