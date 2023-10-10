@@ -10,16 +10,24 @@
   <!--#include virtual="/Header.shtml" -->
 
   <div id="mBody">
-    <!--#include virtual="../SidebarUp.shtml" -->
+    <!--#include virtual="SidebarUp.shtml" -->
 
     <div id="mainContent">
       <h1>Hardware Support: RFID Readers</h1>
-      <em>RFID support in JMRI is rapidly evolving; the actual code might be ahead or behind the
-      documentation on any given day.</em>
-      <p>JMRI provides support for general JMRI <a href="../../tools/Sensors.shtml">Sensors</a> and
-      <a href="../../tools/Reporters.shtml">Reporters</a> in terms of RFID Reader "events".</p>
+      <p>JMRI supports RFID readers in several different ways:</p>
+      <ul>
+      <li>Attached via USB or network protocols using Preferences "RFID Connection"</li>
+      <li>Not directly attached to JMRI but sending <a href="../mqtt/index.shtml">MQTT messages</a></li>
+      <li>Using scripting to update <a href="../../tools/IdTags.shtml"><i>IdTags</i></a> and <a href="../../tools/Reporters.shtml"><i>Reporter Tables</i></a></li>
+      </ul>
+      
+      <p>For a general introduction on how to get started with RFID in JMRI, see <a href="GettingStartedWithRFID.shtml">
+      Getting Started with RFID</a>.</p>
 
-      <h2 id="hardware">Supported Hardware</h2>
+      <h2 id="hardware">Direct Connected Supported Hardware</h2>
+      
+      <p>RFID hardware can be connected using <a href=""><strong>Preferences Connections</strong></a> and selecting "RFID" as 
+      the "System Manufacturer".</p>      
 
       <h3>Protocols</h3>
       JMRI supports several different RFID Reader Protocols:
@@ -41,9 +49,7 @@
       Select "MERG Concentrator" for the "Adapter" on the Connections tab in the JMRI
       Preferences.</p>
 
-      <h2 id="connecting">Connecting</h2>
-
-      <h3>Wiring</h3>
+      <h3 id="connecting">Connecting</h3>
 
       <ul>
         <li>Direct serial connections have been supported since JMRI 2.11.4</li>
@@ -51,7 +57,7 @@
         <li>Network connections are targeted for the JMRI 4.1.2 release series.</li>
       </ul>
 
-      <h3>Settings</h3>
+      <h3>Preferneces Settings</h3>
       <a href="images/RFID_Preferences.png"><img src="images/RFID_Preferences.png" class=
       "floatRight" height="220" width="430" alt="JMRI RFID Preferences"></a>
       <p>You configure JMRI's connection to your RFID hardware in JMRI's Preferences.<br>
@@ -67,20 +73,21 @@
       <p>Olimex MOD-RFID125 and MOD-RFID1356MIFARE readers must be operating in "CDC" mode. This
       mode is typically configured using a pushbutton on the reader.</p>
 
-      <h3>Naming</h3>
+      <h2>Object Naming</h2>
 
-      <p>The <a href="../../doc/Technical/Names.shtml">system letter</a> for RFID connections is
-      "F". Details of RFID event and object names are described below. 
+      <p>The <a href="../../doc/Technical/Names.shtml">system letter</a> for RFID connections 
+      defined on JMRI Preferences is "F". Details of RFID event and object names are described below. 
       <!-- , with technical details on a <a href="Names.shtml">separate page</a> --></p>
 
       <p>JMRI associates RFID events with individual JMRI objects (Sensors, Reporters, etc.) via
       System Names. A System Name like "<code>FSA</code>" defines a Sensor that follows the "A"
       reader, whereas a System Name like "<code>FRB</code>" defines a Reporter that follows the "B"
-      reader.</p>
+      reader. [Note that readers using MQTT will begin with "M" and readers controlled by scripts will
+      typically begin with "I" (for internal).</p>
 
       <h3>Sensors</h3>
 
-      <p>RFID readings coming into JMRI applications can be accessed via JMRI Sensor objects. The
+      <p>RFID readings coming from defined RFID connections can be accessed via JMRI Sensor objects. The
       Sensor's <!-- <a href="Names.shtml">system name</a> -->System Name determines which RFID
       Reader it corresponds to.</p>
 
@@ -113,34 +120,6 @@
       "../../../package/jmri/jmrit/beantable/ReporterAddEdit.shtml">"Add..." button</a> for
       manually creating your own internal Reporters.</p>
 
-      <h4>Displaying Reporter Values on Panels</h4>
-
-      <p>A Reporter's value can be displayed on a Control Panel via either the <a href=
-      "../../../package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor</a> or the <a href=
-      "../../../package/jmri/jmrit/display/ControlPanelEditor.shtml">Control Panel Editor</a>.
-      These are the steps for using Panel Editor:</p>
-
-      <ul>
-        <li>Open the Panel Editor window for your panel and select "Reporter" from the pulldown
-        menu under "Select the type of icon to Add to Panel."</li>
-
-        <li>Select the Reporter from the list, or add a new one by typing the desired System
-        Name.</li>
-
-        <li>Click the button to "Add to Panel." The Reporter icon will be placed on the Panel. You
-        will see "&lt;no report&gt;" displayed. Use the Reporter Table to change the value.</li>
-
-        <li>You can drag the icon to where you want by right-clicking your mouse and dragging the
-        value.</li>
-
-        <li>The pop-up menu on the icon will let you change the formatting.</li>
-      </ul>
-
-      <p>Note that a Reporter cannot be displayed directly on a Layout Editor Panel. Instead, use a
-      script such as <a href="../../../../../jython/ReporterFormatter.py">ReporterFormatter.py</a>
-      to parse the information in the Reporter and copy what you want into a <a href=
-      "../../tools/Memories.shtml">Memory.</a> That Memory can then be displayed on a Layout Editor
-      Panel.</p>
       <h3>
         Monitoring
       </h3>
@@ -153,6 +132,13 @@
         RFID Tags by Car</a> for
         details.
       </p>
+      
+      
+      <h2>Displaying Reporter Values on Panels</h2>
+
+      <p>A Reporter's value can be displayed on panels in various ways.   See <a href="GettingStartedWithRFID.shtml#_Toc143">
+      Linking PanelPro tables to display RFID Tag names on panels</a> for instructions.
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
