@@ -3656,14 +3656,26 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       additional columns for "Reported Location", "Reported Date", and "RFID" will be displayed.</p>
 
 
-      <h3>Table Sort</h3>
+      <h4>Table Sort</h4>
       To sort cars by a particular attribute, select any of the radio buttons in the "Sort by" list.
-      One of the more useful sorts is by location. You can under "Tools&rArr;Car Roster" print a list
-      of cars by their location and track when the radio button "Location" is selected. You can also
-      sort the table by clicking on any of the column headings. To perform a double sort, select the
-      first sort by selecting one of the "Sort by" radio buttons, then click on the final sort by
-      clicking on one of the column headings.
-      <h3>Add, Find, Save Buttons</h3>
+      One of the more useful sorts is by location. You can under "Tools&rArr;Car Roster" print a
+      list of cars by their location and track when the radio button "Location" is selected. You can
+      also sort the table by clicking on any of the column headings. To perform a double sort,
+      select the first sort by selecting one of the "Sort by" radio buttons, then click on the final
+      sort by clicking on one of the column headings.
+
+      <h4>Final Destination or FD</h4>
+      A car when assigned to a train is given a destination or the location where the car is to be
+      delivered. When a car is to be
+      <a href="#CarRouting">routed</a>, it is given a final destination, where the car going to be
+      delivered using two or more trains. A
+      <a href="#Schedules">schedule</a> is used to give a car a final destination, in addition to
+      the use of <a
+        href="#LocationDivision">Railroad Divisions</a> and <a href="#EditCarLoads">custom
+        car loads</a>. In the Cars table, a car's final destination has the prefix "->" in the
+      "Destination" or "Final Destination" columns.
+
+      <h4>Add, Find, Save Buttons</h4>
       There are three buttons located at the bottom of the Cars window. The "Add" button allows you
       to add a car to your roster. The "Save" button stores the cars roster to a file. The "Find"
       button and the adjacent text window can be used to find a car by its road number. You can use
@@ -3671,7 +3683,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       numbers that end with 345, enter *345, and press find. Each time you press find, the next
       car with a road number ending with "345" will be highlighted.
 
-      <h3>Moves, Wait and Last Time Moved</h3>
+      <h4>Moves, Wait and Last Time Moved</h4>
       You can edit the number of times a car has been moved by the program and the car's wait count
       directly from the "Cars" window. Double click on the cell in the Cars window to change. The
       built and owner fields can be found in the <a href="#CarsEdit">Edit Car</a> window. The last
