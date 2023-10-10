@@ -57,7 +57,7 @@
         <li>Network connections are targeted for the JMRI 4.1.2 release series.</li>
       </ul>
 
-      <h3>Preferneces Settings</h3>
+      <h3>Preferences Settings</h3>
       <a href="images/RFID_Preferences.png"><img src="images/RFID_Preferences.png" class=
       "floatRight" height="220" width="430" alt="JMRI RFID Preferences"></a>
       <p>You configure JMRI's connection to your RFID hardware in JMRI's Preferences.<br>
