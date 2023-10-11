@@ -600,6 +600,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>(For developers) Our CI process has been updated to require the
+            @Override annocation on overriding methods and removal of unused import statements.</li>
         </ul>
 
