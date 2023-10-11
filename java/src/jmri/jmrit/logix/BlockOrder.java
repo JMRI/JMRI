@@ -5,8 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import jmri.BeanSetting;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import jmri.jmrit.logix.TrainOrder.Cause;
 

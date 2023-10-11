@@ -2,7 +2,6 @@ package jmri.jmrit.operations.locations.schedules.tools;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.text.MessageFormat;
 import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
@@ -96,17 +95,13 @@ public class ExportSchedules extends XmlFile {
             fileOut.close();
             log.info("Exported {} schedules to file {}", schedules.size(), defaultOperationsFilename());
             JmriJOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("ExportedSchedulesToFile"), new Object[]{
-                schedules.size(), defaultOperationsFilename()}),
-                    Bundle.getMessage("ExportComplete"),
-                    JmriJOptionPane.INFORMATION_MESSAGE);
+                    Bundle.getMessage("ExportedSchedulesToFile", schedules.size(), defaultOperationsFilename()),
+                    Bundle.getMessage("ExportComplete"), JmriJOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
             log.error("Can not open export schedules CSV file: {}", file.getName());
             JmriJOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("ExportedSchedulesToFile"), new Object[]{
-                0, defaultOperationsFilename()}),
-                    Bundle.getMessage("ExportFailed"),
-                    JmriJOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ExportedSchedulesToFile", 0, defaultOperationsFilename()),
+                    Bundle.getMessage("ExportFailed"), JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 

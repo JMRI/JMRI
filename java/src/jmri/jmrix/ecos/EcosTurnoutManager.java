@@ -8,6 +8,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -20,8 +21,7 @@ import javax.swing.JPanel;
 import jmri.*;
 import jmri.jmrix.ecos.utilities.GetEcosObjectNumber;
 import jmri.jmrix.ecos.utilities.RemoveObjectFromEcos;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Implement turnout manager for Ecos systems.
@@ -461,14 +461,14 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                         + rb.getString("ReminderInUse"),
                                         new Object[]{et.getSystemName(), "" + count});
                                 // verify deletion
-                                int val = javax.swing.JOptionPane.showOptionDialog(null,
+                                int val = JmriJOptionPane.showOptionDialog(null,
                                         msg, Bundle.getMessage("WarningTitle"),
-                                        javax.swing.JOptionPane.YES_NO_CANCEL_OPTION, javax.swing.JOptionPane.QUESTION_MESSAGE, null,
+                                        JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null,
                                         new Object[]{Bundle.getMessage("ButtonYes"),
                                             rb.getString("ButtonYesPlus"),
                                                 Bundle.getMessage("ButtonNo")},
                                         Bundle.getMessage("ButtonNo"));
-                                if (val == 2) {
+                                if (val == 2 || val == JmriJOptionPane.CLOSED_OPTION ) { // array position 2
                                     _tecos.remove(et.getObject());
                                     deregister(et);
                                     dialog.dispose();
@@ -715,6 +715,6 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         return validateSystemNameFormatOnlyNumeric(name, locale);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosTurnoutManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EcosTurnoutManager.class);
 
 }

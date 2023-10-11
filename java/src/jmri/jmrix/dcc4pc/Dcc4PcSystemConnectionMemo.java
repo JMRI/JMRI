@@ -1,13 +1,11 @@
 package jmri.jmrix.dcc4pc;
 
 import java.util.Comparator;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import jmri.*;
 import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.jmrix.DefaultSystemConnectionMemo;
-import jmri.managers.DefaultProgrammerManager;
 import jmri.util.NamedBeanComparator;
 
 /**
@@ -56,6 +54,7 @@ public class Dcc4PcSystemConnectionMemo extends DefaultSystemConnectionMemo impl
      * be referenced from classes that don't inherit, including
      * hexfile.HexFileFrame and locormi.LnMessageClient
      */
+    @Override
     public void configureManagers() {
 
         InstanceManager.setReporterManager(

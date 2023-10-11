@@ -25,6 +25,7 @@ public class RfidMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         };
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = null;

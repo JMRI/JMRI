@@ -11,8 +11,6 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.Assume;
 
-import jmri.jmrix.can.TestTrafficController;
-
 import org.mockito.Mockito;
 
 /**

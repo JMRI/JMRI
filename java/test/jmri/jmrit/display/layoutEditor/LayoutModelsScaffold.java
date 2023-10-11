@@ -16,9 +16,11 @@ import javax.annotation.*;
 public class LayoutModelsScaffold implements LayoutModels {
 
 
+    @Override
     public boolean isDirty() {
         return panelChanged;
     }
+    @Override
     public void setDirty() {
         setDirty(true);
     }
@@ -27,6 +29,7 @@ public class LayoutModelsScaffold implements LayoutModels {
     }
     boolean panelChanged;
 
+    @Override
     public void redrawPanel() {
     }
     
@@ -36,6 +39,7 @@ public class LayoutModelsScaffold implements LayoutModels {
 
     private  LayoutEditorAuxTools auxTools = null;
 
+    @Override
     @Nonnull
     public LayoutEditorAuxTools getLEAuxTools() {
         if (auxTools == null) {
@@ -48,6 +52,7 @@ public class LayoutModelsScaffold implements LayoutModels {
     // Access to (lists of) model objects
     // ====================================
 
+    @Override
     public @Nonnull
     Stream<LayoutTrack> getLayoutTracksOfClass(Class<? extends LayoutTrack> layoutTrackClass) {
         return getLayoutTracks().stream()
@@ -55,6 +60,7 @@ public class LayoutModelsScaffold implements LayoutModels {
                 .map(layoutTrackClass::cast);
     }
 
+    @Override
     public @Nonnull
     Stream<LayoutTrackView> getLayoutTrackViewsOfClass(Class<? extends LayoutTrackView> layoutTrackViewClass) {
         return getLayoutTrackViews().stream()
@@ -62,6 +68,7 @@ public class LayoutModelsScaffold implements LayoutModels {
                 .map(layoutTrackViewClass::cast);
     }
 
+    @Override
     public @Nonnull
     List<PositionablePointView> getPositionablePointViews() {
         return getLayoutTrackViewsOfClass(PositionablePointView.class)
@@ -69,6 +76,7 @@ public class LayoutModelsScaffold implements LayoutModels {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<PositionablePoint> getPositionablePoints() {
         return getLayoutTracksOfClass(PositionablePoint.class)
@@ -76,6 +84,7 @@ public class LayoutModelsScaffold implements LayoutModels {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<LayoutSlip> getLayoutSlips() {
         return getLayoutTracksOfClass(LayoutSlip.class)
@@ -83,6 +92,7 @@ public class LayoutModelsScaffold implements LayoutModels {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<TrackSegmentView> getTrackSegmentViews() {
         return getLayoutTrackViewsOfClass(TrackSegmentView.class)
@@ -90,6 +100,7 @@ public class LayoutModelsScaffold implements LayoutModels {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<TrackSegment> getTrackSegments() {
         return getLayoutTracksOfClass(TrackSegment.class)
@@ -97,6 +108,7 @@ public class LayoutModelsScaffold implements LayoutModels {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<LayoutTurnout> getLayoutTurnouts() {
         return getLayoutTracks().stream() // next line excludes LayoutSlips
@@ -105,6 +117,7 @@ public class LayoutModelsScaffold implements LayoutModels {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<LayoutTurntable> getLayoutTurntables() {
         return getLayoutTracksOfClass(LayoutTurntable.class)
@@ -112,6 +125,7 @@ public class LayoutModelsScaffold implements LayoutModels {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<LevelXing> getLevelXings() {
         return getLayoutTracksOfClass(LevelXing.class)
@@ -119,6 +133,7 @@ public class LayoutModelsScaffold implements LayoutModels {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<LevelXingView> getLevelXingViews() {
         return getLayoutTrackViewsOfClass(LevelXingView.class)
@@ -132,6 +147,7 @@ public class LayoutModelsScaffold implements LayoutModels {
      * if you attempt to modify it.
      * @return unmodifiable copy of layout track list.
      */
+    @Override
     @Nonnull
     public List<LayoutTrack> getLayoutTracks() {
         return Collections.unmodifiableList(layoutTrackList);
@@ -143,6 +159,7 @@ public class LayoutModelsScaffold implements LayoutModels {
      * if you attempt to modify it.
      * @return unmodifiable copy of track views.
      */
+    @Override
     @Nonnull
     public List<LayoutTrackView> getLayoutTrackViews() {
         return Collections.unmodifiableList(layoutTrackViewList);
@@ -156,6 +173,7 @@ public class LayoutModelsScaffold implements LayoutModels {
     private final Map<LayoutTrackView, LayoutTrack> viewToTrk = new HashMap<>();
 
     // temporary
+    @Override
     public LayoutTrackView getLayoutTrackView(LayoutTrack trk) {
         LayoutTrackView lv = trkToView.get(trk);
         if (lv == null) {
@@ -165,6 +183,7 @@ public class LayoutModelsScaffold implements LayoutModels {
         return lv;
     }
     // temporary
+    @Override
     public LevelXingView getLevelXingView(LevelXing xing) {
         LayoutTrackView lv = trkToView.get(xing);
         if (lv == null) {
@@ -176,6 +195,7 @@ public class LayoutModelsScaffold implements LayoutModels {
         throw new IllegalArgumentException("Wrong type: "+xing.getClass());
     }
     // temporary
+    @Override
     public LayoutTurnoutView getLayoutTurnoutView(LayoutTurnout to) {
         LayoutTrackView lv = trkToView.get(to);
         if (lv == null) {
@@ -188,6 +208,7 @@ public class LayoutModelsScaffold implements LayoutModels {
     }
     
     // temporary
+    @Override
     public LayoutTurntableView getLayoutTurntableView(LayoutTurntable to) {
         LayoutTrackView lv = trkToView.get(to);
         if (lv == null) {
@@ -200,6 +221,7 @@ public class LayoutModelsScaffold implements LayoutModels {
     }
         
     // temporary
+    @Override
     public TrackSegmentView getTrackSegmentView(TrackSegment to) {
         LayoutTrackView lv = trkToView.get(to);
         if (lv == null) {
@@ -212,6 +234,7 @@ public class LayoutModelsScaffold implements LayoutModels {
     }
         
     // temporary
+    @Override
     public PositionablePointView getPositionablePointView(PositionablePoint to) {
         LayoutTrackView lv = trkToView.get(to);
         if (lv == null) {
@@ -227,6 +250,7 @@ public class LayoutModelsScaffold implements LayoutModels {
      * Add a LayoutTrack and LayoutTrackView to the list of 
      * LayoutTrack family objects.
      */
+    @Override
     public void addLayoutTrack(@Nonnull LayoutTrack trk, @Nonnull LayoutTrackView v) {
         log.trace("addLayoutTrack {}", trk);
         if (layoutTrackList.contains(trk)) log.warn("LayoutTrack {} already being maintained", trk.getName());
@@ -242,6 +266,7 @@ public class LayoutModelsScaffold implements LayoutModels {
      * and force a dirty redraw.
      * @param trk the layout track to remove.
      */
+    @Override
     public void removeLayoutTrack(@Nonnull LayoutTrack trk) {
         log.trace("removeLayoutTrack {}", trk);
         layoutTrackList.remove(trk);
@@ -251,6 +276,7 @@ public class LayoutModelsScaffold implements LayoutModels {
         viewToTrk.remove(v);
     }
     
+    @Override
     @Nonnull
     public List<LayoutTurnout> getLayoutTurnoutsAndSlips() {
         return getLayoutTracksOfClass(LayoutTurnout.class
@@ -259,11 +285,13 @@ public class LayoutModelsScaffold implements LayoutModels {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     @Nonnull
     public List<LayoutShape> getLayoutShapes() {
         return layoutShapes;
     }
 
+    @Override
     public int computeDirection(@Nonnull LayoutTrack trk1, @Nonnull HitPointType h1, 
                                 @Nonnull LayoutTrack trk2, @Nonnull HitPointType h2) {
         return jmri.Path.EAST;  // fixed result for testing

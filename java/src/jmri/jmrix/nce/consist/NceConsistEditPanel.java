@@ -2132,12 +2132,12 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                 break;
 
             case ERROR_CONSIST_DOESNT_MATCH:
-                if (JOptionPane.showConfirmDialog(null,
+                if (JmriJOptionPane.showConfirmDialog(null,
                         Bundle.getMessage("DIALOG_RosterNotMatch") + " "
                         + getRosterText(nceConsistRosterEntry),
                         Bundle.getMessage("DIALOG_NceContinue"),
                         JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
-                    if (JOptionPane.showConfirmDialog(null,
+                    if (JmriJOptionPane.showConfirmDialog(null,
                             Bundle.getMessage("DIALOG_RosterNotMatch1",
                                     nceConsistRosterEntry.getId(), nceConsistRosterEntry.getConsistNumber())
                             + "\n " + Bundle.getMessage("DIALOG_RosterNotMatch2"),

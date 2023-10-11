@@ -286,8 +286,10 @@ public interface Positionable extends Cloneable, InlineLogixNG {
 
     boolean contains(int x, int y);
 
+    @Override
     int getX();
 
+    @Override
     int getY();
 
     Point getLocation();

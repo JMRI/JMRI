@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import jmri.jmrit.ctc.NBHSensor;
-import jmri.jmrit.ctc.NBHSignal;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
-import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
 This only works with Digitrax DS54's and DS64's configured to LOCALLY change the switch via either

@@ -4,16 +4,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.util.Date;
 
-import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
-import static jmri.Light.INTERMEDIATE;
-import static jmri.Light.TRANSITIONINGHIGHER;
-import static jmri.Light.TRANSITIONINGLOWER;
-import static jmri.Light.TRANSITIONINGTOFULLOFF;
-import static jmri.Light.TRANSITIONINGTOFULLON;
-import static jmri.DigitalIO.OFF;
-import static jmri.DigitalIO.ON;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Timebase;

@@ -6,8 +6,6 @@ import java.nio.file.Path;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConfigurationManager;
-import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
-
 import jmri.util.*;
 import jmri.util.JUnitAppender;
 

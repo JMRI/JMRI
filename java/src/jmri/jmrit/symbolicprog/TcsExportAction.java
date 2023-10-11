@@ -5,8 +5,6 @@ import java.io.*;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 

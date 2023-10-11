@@ -2,8 +2,6 @@ package jmri.jmrix.loconet.usb_dcs52;
 
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.jmrix.loconet.LnSystemConnectionMemoTestBase;
-import jmri.util.JUnitUtil;
-
 import org.junit.jupiter.api.*;
 
 /**

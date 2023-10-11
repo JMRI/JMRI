@@ -85,6 +85,7 @@ public class FrameServletPreferencesPanel extends JPanel implements ListDataList
         framesEnabled.add(disableFrames);
 
         preferences.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 preferencesPropertyChange(evt);
             }

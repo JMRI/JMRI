@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.net.InetAddress;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import java.util.Set;
 import javax.swing.AbstractAction;
 import javax.swing.Action;

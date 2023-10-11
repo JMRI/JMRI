@@ -5,7 +5,6 @@ import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.actions.ActionSound;
-import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 

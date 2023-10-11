@@ -1,17 +1,12 @@
 package jmri.jmrit.operations.trains;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Frame;
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.MessageFormat;
 import java.util.Hashtable;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 
@@ -337,13 +332,13 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             case BUILD_COLUMN: {
                 if (train.isBuilt()) {
                     if (Setup.isGenerateCsvManifestEnabled() && trainManager.isOpenFileEnabled()) {
-                        setToolTip(MessageFormat.format(Bundle.getMessage("OpenTrainTip"),
-                                new Object[] { train.getName() }), row, col);
+                        setToolTip(Bundle.getMessage("OpenTrainTip",
+                                train.getName()), row, col);
                         return Bundle.getMessage("OpenFile");
                     }
                     if (Setup.isGenerateCsvManifestEnabled() && trainManager.isRunFileEnabled()) {
-                        setToolTip(MessageFormat.format(Bundle.getMessage("RunTrainTip"),
-                                new Object[] { train.getName() }), row, col);
+                        setToolTip(Bundle.getMessage("RunTrainTip",
+                                train.getName()), row, col);
                         return Bundle.getMessage("RunFile");
                     }
                     setToolTip(Bundle.getMessage("PrintTrainTip"), row, col);
@@ -355,7 +350,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                         return Bundle.getMessage("Print");
                     }
                 }
-                setToolTip(MessageFormat.format(Bundle.getMessage("BuildTrainTip"), new Object[] { train.getName() }),
+                setToolTip(Bundle.getMessage("BuildTrainTip", train.getName()),
                         row, col);
                 return Bundle.getMessage("Build");
             }
@@ -479,8 +474,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 if (!train.printManifestIfBuilt()) {
                     log.debug("Manifest file for train ({}) not found", train.getName());
                     int result = JmriJOptionPane.showConfirmDialog(null,
-                            MessageFormat.format(Bundle.getMessage("TrainManifestFileMissing"),
-                                    new Object[] { train.getName() }),
+                            Bundle.getMessage("TrainManifestFileMissing",
+                                    train.getName()),
                             Bundle.getMessage("TrainManifestFileError"), JmriJOptionPane.YES_NO_OPTION);
                     if (result == JmriJOptionPane.YES_OPTION) {
                         train.setModified(true);
@@ -509,18 +504,18 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             if (checkDepartureTrack(train)) {
                 log.debug("Train is departing staging that already has inbound cars");
                 JmriJOptionPane.showMessageDialog(null,
-                        MessageFormat.format(Bundle.getMessage("StagingTrackUsed"),
-                                new Object[] { train.getDepartureTrack().getName() }),
+                        Bundle.getMessage("StagingTrackUsed",
+                                train.getDepartureTrack().getName()),
                         Bundle.getMessage("CanNotResetTrain"), JmriJOptionPane.INFORMATION_MESSAGE);
             } else if (!train.reset()) {
                 JmriJOptionPane.showMessageDialog(null,
-                        MessageFormat.format(Bundle.getMessage("TrainIsInRoute"),
-                                new Object[] { train.getTrainTerminatesName() }),
+                        Bundle.getMessage("TrainIsInRoute",
+                                train.getTrainTerminatesName()),
                         Bundle.getMessage("CanNotResetTrain"), JmriJOptionPane.ERROR_MESSAGE);
             }
         } else if (!train.isBuilt()) {
             JmriJOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("TrainNeedsBuild"), new Object[] { train.getName() }),
+                    Bundle.getMessage("TrainNeedsBuild", train.getName()),
                     Bundle.getMessage("CanNotPerformAction"), JmriJOptionPane.INFORMATION_MESSAGE);
         } else if (train.isBuilt() && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
             log.debug("Move train ({})", train.getName());
@@ -528,9 +523,9 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         } else if (train.isBuilt() && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.TERMINATE)) {
             log.debug("Terminate train ({})", train.getName());
             int status = JmriJOptionPane.showConfirmDialog(null,
-                    MessageFormat.format(Bundle.getMessage("TerminateTrain"),
-                            new Object[] { train.getName(), train.getDescription() }),
-                    MessageFormat.format(Bundle.getMessage("DoYouWantToTermiate"), new Object[] { train.getName() }),
+                    Bundle.getMessage("TerminateTrain",
+                            train.getName(), train.getDescription()),
+                    Bundle.getMessage("DoYouWantToTermiate", train.getName()),
                     JmriJOptionPane.YES_NO_OPTION);
             if (status == JmriJOptionPane.YES_OPTION) {
                 train.terminate();

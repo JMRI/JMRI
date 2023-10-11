@@ -3,8 +3,6 @@ package jmri.jmrit.logixng.expressions;
 import java.beans.*;
 import java.util.*;
 
-import javax.annotation.Nonnull;
-
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;

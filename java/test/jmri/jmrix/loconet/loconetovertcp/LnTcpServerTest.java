@@ -1,7 +1,6 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
 import jmri.InstanceManager;
-import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 

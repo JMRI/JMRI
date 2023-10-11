@@ -1,6 +1,5 @@
 package jmri.jmrix.ecos;
 
-import jmri.jmrix.AbstractPowerManagerTestBase;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;

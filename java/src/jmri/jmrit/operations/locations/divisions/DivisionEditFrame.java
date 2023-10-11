@@ -2,7 +2,6 @@ package jmri.jmrit.operations.locations.divisions;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 
 import javax.swing.*;
 
@@ -136,8 +135,8 @@ public class DivisionEditFrame extends OperationsFrame implements java.beans.Pro
                 return;
             }
             if (JmriJOptionPane.showConfirmDialog(this,
-                    MessageFormat.format(Bundle.getMessage("DoYouWantToDeleteDivision"),
-                            new Object[] { divisionNameTextField.getText() }),
+                    Bundle.getMessage("DoYouWantToDeleteDivision",
+                            divisionNameTextField.getText()),
                     Bundle.getMessage("DeleteDivision"), JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                 return;
             }
@@ -185,10 +184,8 @@ public class DivisionEditFrame extends OperationsFrame implements java.beans.Pro
         }
         if (divisionNameTextField.getText().length() > MAX_NAME_LENGTH) {
             JmriJOptionPane.showMessageDialog(this,
-                    MessageFormat.format(Bundle.getMessage("DivisionNameLengthMax"),
-                            new Object[] { Integer.toString(MAX_NAME_LENGTH + 1) }),
-                    MessageFormat.format(Bundle.getMessage("CanNotDivision"), new Object[] { s }),
-                    JmriJOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("DivisionNameLengthMax", Integer.toString(MAX_NAME_LENGTH + 1)),
+                    Bundle.getMessage("CanNotDivision", s), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -196,8 +193,7 @@ public class DivisionEditFrame extends OperationsFrame implements java.beans.Pro
 
     private void reportDivisionExists(String s) {
         JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ReportDivisionExists"),
-                MessageFormat.format(Bundle.getMessage("CanNotDivision"), new Object[] { s }),
-                JmriJOptionPane.ERROR_MESSAGE);
+                Bundle.getMessage("CanNotDivision", s), JmriJOptionPane.ERROR_MESSAGE);
     }
 
     private void enableButtons(boolean enabled) {

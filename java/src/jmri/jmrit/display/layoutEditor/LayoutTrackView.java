@@ -391,10 +391,10 @@ abstract public class LayoutTrackView implements InlineLogixNG {
         for (String item : itemList) {
             msg.append("\n    " + item);  // NOI18N
         }
-        javax.swing.JOptionPane.showMessageDialog(layoutEditor,
+        JmriJOptionPane.showMessageDialog(layoutEditor,
                 msg.toString(),
                 Bundle.getMessage("WarningTitle"), // NOI18N
-                javax.swing.JOptionPane.WARNING_MESSAGE);
+                JmriJOptionPane.WARNING_MESSAGE);
     }
 
     /**
@@ -554,6 +554,7 @@ abstract public class LayoutTrackView implements InlineLogixNG {
                     logixNG.setInlineLogixNG(LayoutTrackView.this);
                     logixNG.activate();
                     logixNG.setEnabled(true);
+                    logixNG.clearStartup();
                     setLogixNG(logixNG);
                 }
                 LogixNGEditor logixNGEditor = new LogixNGEditor(null, getLogixNG().getSystemName());
@@ -621,10 +622,12 @@ abstract public class LayoutTrackView implements InlineLogixNG {
         this._logixNG = logixNG;
     }
 
+    @Override
     public void setLogixNG_SystemName(String systemName) {
         this._logixNG_SystemName = systemName;
     }
 
+    @Override
     public void setupLogixNG() {
         _logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
                 .getBySystemName(_logixNG_SystemName);

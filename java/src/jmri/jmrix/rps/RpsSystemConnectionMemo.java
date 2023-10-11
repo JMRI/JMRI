@@ -46,6 +46,7 @@ public class RpsSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
         return new NamedBeanComparator<>();
     }
 
+    @Override
     public void configureManagers() {
         InstanceManager.setSensorManager(getSensorManager());
         InstanceManager.setReporterManager(getReporterManager());

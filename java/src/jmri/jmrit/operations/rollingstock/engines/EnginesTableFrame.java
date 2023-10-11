@@ -2,7 +2,6 @@ package jmri.jmrit.operations.rollingstock.engines;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.MessageFormat;
 import java.util.List;
 
 import javax.swing.*;
@@ -269,8 +268,8 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         if (ae.getSource() == findButton) {
             int rowindex = enginesModel.findEngineByRoadNumber(findEngineTextBox.getText());
             if (rowindex < 0) {
-                JmriJOptionPane.showMessageDialog(this, MessageFormat.format(
-                        Bundle.getMessage("engineWithRoadNumNotFound"), new Object[]{findEngineTextBox.getText()}),
+                JmriJOptionPane.showMessageDialog(this, 
+                        Bundle.getMessage("engineWithRoadNumNotFound", findEngineTextBox.getText()),
                         Bundle.getMessage("engineCouldNotFind"), JmriJOptionPane.INFORMATION_MESSAGE);
                 return;
 

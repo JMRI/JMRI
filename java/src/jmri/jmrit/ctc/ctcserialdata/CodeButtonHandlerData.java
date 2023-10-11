@@ -5,8 +5,6 @@ package jmri.jmrit.ctc.ctcserialdata;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import javax.swing.ButtonGroup;
 import jmri.jmrit.ctc.*;
 

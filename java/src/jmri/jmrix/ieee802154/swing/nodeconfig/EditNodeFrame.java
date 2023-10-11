@@ -8,8 +8,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrix.ieee802154.IEEE802154Node;
 import jmri.jmrix.ieee802154.IEEE802154TrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for Editing Nodes

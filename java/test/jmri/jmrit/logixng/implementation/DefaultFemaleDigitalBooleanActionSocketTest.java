@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.actions.DigitalBooleanOnChange;
+import jmri.jmrit.logixng.actions.DigitalBooleanLogixAction;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -78,7 +78,7 @@ public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTes
         Assert.assertNotNull("femaleSocket is not null", _femaleSocket);
         Assert.assertFalse("femaleSocket is not connected", _femaleSocket.isConnected());
         // Test execute() when not connected
-        ((DefaultFemaleDigitalBooleanActionSocket)_femaleSocket).execute(false, false);
+        ((DefaultFemaleDigitalBooleanActionSocket)_femaleSocket).execute(false);
     }
 
     @Test
@@ -91,7 +91,7 @@ public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTes
 
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.actions.DigitalBooleanMany.class);
-        classes.add(jmri.jmrit.logixng.actions.DigitalBooleanOnChange.class);
+        classes.add(jmri.jmrit.logixng.actions.DigitalBooleanLogixAction.class);
         map.put(Category.COMMON, classes);
 
         classes = new ArrayList<>();
@@ -121,7 +121,7 @@ public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTes
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();
         _action = new MyOnChangeAction("IQDB321");
-        DigitalBooleanOnChange otherAction = new MyOnChangeAction("IQDB322");
+        DigitalBooleanLogixAction otherAction = new MyOnChangeAction("IQDB322");
         manager = InstanceManager.getDefault(DigitalBooleanActionManager.class);
         maleSocket = ((DigitalBooleanActionManager)manager).registerAction(_action);
         otherMaleSocket = ((DigitalBooleanActionManager)manager).registerAction(otherAction);
@@ -147,12 +147,12 @@ public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTes
 
 
 
-    private class MyOnChangeAction extends DigitalBooleanOnChange {
+    private class MyOnChangeAction extends DigitalBooleanLogixAction {
 
         private boolean _hasBeenSetup = false;
 
         public MyOnChangeAction(String systemName) {
-            super(systemName, null, DigitalBooleanOnChange.Trigger.CHANGE);
+            super(systemName, null, DigitalBooleanLogixAction.When.Either);
         }
 
         /** {@inheritDoc} */

@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.tools.swing;
 
-import jmri.jmrit.logixng.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;

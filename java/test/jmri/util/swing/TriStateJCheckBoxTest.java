@@ -1,7 +1,5 @@
 package jmri.util.swing;
 
-import java.awt.GraphicsEnvironment;
-
 import javax.swing.JCheckBox;
 
 import jmri.util.JUnitUtil;
@@ -11,7 +9,6 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.*;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 
 /**

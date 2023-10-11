@@ -2,7 +2,6 @@ package jmri.jmrit.operations.locations;
 
 import java.awt.Point;
 import java.beans.PropertyChangeListener;
-import java.text.MessageFormat;
 import java.util.*;
 
 import javax.swing.JComboBox;
@@ -151,6 +150,10 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
 
     public String getName() {
         return _name;
+    }
+    
+    public String getSplitName() {
+        return TrainCommon.splitString(getName());
     }
 
     /**
@@ -1372,7 +1375,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         InstanceManager.getDefault(CarRoads.class).removePropertyChangeListener(this);
         InstanceManager.getDefault(EngineTypes.class).removePropertyChangeListener(this);
         // Change name in case object is still in use, for example Schedules
-        setName(MessageFormat.format(Bundle.getMessage("NotValid"), new Object[]{getName()}));
+        setName(Bundle.getMessage("NotValid", getName()));
         setDirtyAndFirePropertyChange(DISPOSE_CHANGED_PROPERTY, null, DISPOSE_CHANGED_PROPERTY);
     }
 

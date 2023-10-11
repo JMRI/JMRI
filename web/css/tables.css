@@ -13,11 +13,19 @@ table.sortable th:hover {
 	cursor: pointer;
 }
 
-table.idTag   td.state:hover,
-table.light   td.state:hover,
-table.route   td.state:hover,
-table.sensor  td.state:hover,
-table.turnout td.state:hover {
+table.signalHead td.lit:hover,
+table.signalHead td.held:hover,
+table.signalMast td.lit:hover,
+table.signalMast td.held:hover,
+table.engine     td.outOfService:hover,
+table.engine     td.locationUnknown:hover,
+table.car        td.outOfService:hover,
+table.car        td.locationUnknown:hover,
+table.idTag      td.state:hover,
+table.light      td.state:hover,
+table.route      td.state:hover,
+table.sensor     td.state:hover,
+table.turnout    td.state:hover {
 	cursor: pointer;
 	background: #ddd;
 	font-weight: bold;

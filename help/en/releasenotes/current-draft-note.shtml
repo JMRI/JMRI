@@ -51,7 +51,7 @@
 
         <h4>Hornby</h4>
             <ul>
-                <li>DecoderPro can now identify products in the HN7000 decoder family.</li>
+                <li></li>
             </ul>
 
         <h4>Internal</h4>
@@ -101,11 +101,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>Fixed issue with invalid throttle speed message causing MQTT to disconnect</li>
-                <li>Improved robustness of MQTT Event Listener exception handling</li>
-                <li>Fixed issue with MQTT LWT messages</li>
-                <li>Changed throttle loco address placeholder in MQTT topics to {0} for consistency with other objects</li>
-                <li>Changed throttle function placeholder in MQTT topics to {1} for consistency with other objects</li>
+                <li>Fixed an issue in introduced in 5.5.5 where the incorrect default topics were used for Direction and Function.  The documenation was correct but the code wasn't.</li>
             </ul>
 
         <h4>MRC</h4>
@@ -125,7 +121,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Added the invert option to OpenLCB/LCC Turnouts.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -335,8 +331,7 @@
 
         <h4>Technologistic (train-O-matic)</h4>
             <ul>
-                <li>Support for the latest v6 firmware version of the Lokommander II decoders.</li>
-                <li>productID support for all train-O-matic decoders, allows for automatic decoder detection.</li>
+                <li></li>
             </ul>
 
         <h4>Trix Modelleisenbahn</h4>
@@ -377,8 +372,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Now looks for .txt extension on files being
-                imported from the LokProgrammer.</li>
+            <li></li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -390,7 +384,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>In auto trains, after stopping, or going to manual, resume correctly even if in a section with no signal.</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -408,7 +402,8 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+	        <li>The LogixNG Icon has been added to the toolbars.  The LogixNG Icon can run inline
+	        LogixNGs by clicking on the icon or text label when converted to text.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -425,9 +420,14 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>A new tool <strong>Where Used</strong> has been added to LogixNG.
-          It shows where in the LogixNG tree an item is used. The tool is found
-          on menu item <strong>Tools &rArr; LogixNG &rArr; Where Used</strong>.</li>
+          <li>When a LogixNG was created and ConditionalNGs
+          was created for that LogixNG, the ConditionalNGs
+          wasn't executing until restart of JMRI if the
+          ConditionalNGs had the <strong>Startup</strong>
+          flag unchecked. That's fixed now.</li>
+
+          <li>Warrant expression was not listening for warrant events.  Fixed along with the long
+          description.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -439,16 +439,10 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-          <li>New tools "Preview and Print Car routing report" in the "Set Car" window that provides
-            the train routing for a car that has a final destination.</li>
-          <li>New tool "Show Staging and Schedules by Car Type and Load" in the "Schedules" window that
-            shows which car types and loads are shipped from staging.</li>
-          <li>New feature for spurs, the ability to prevent a car's load change. Useful when the
-            spur/schedule is used for a RIP track.</li>
-          <li>New feature for staging, planned pickups.</li>
+            <li></li>
         </ul>
 
-<h3>Panel Editor</h3>
+   <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
             <li></li>
@@ -473,9 +467,7 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li>The <strong>Shutdown</strong> preference has two options for ignoring special kinds
-            of changes.  The first is to ignore fast clock changes, the second ignores the text and
-            background color changes for sensors that have been changed to panel labels.</li>
+            <li></li>
         </ul>
 
     <h3>Resources</h3>
@@ -499,8 +491,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>YAAT: Change function number limit from 28 to 68.</li>
-            <li>YAAT: Add a random delay time: <strong>Wait for &lt;n&gt; [to &lt;n&gt;] seconds</strong></li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -606,21 +597,12 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>Take actual speed instead of nominal speed for the distance calculation
-            (impact for steam1).</li>
+            <li></li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Improved Unrecoverable Error Dialog.</li>
-            <li>JMRI now has a "Software Bill of Materials" (SBOM) distributed with it.
-                Although this won't matter to most users, it allows people to determine
-                via the standardized SPDX mechanism the libraries that JMRI contains and
-                the versions being used. Providing this is a small step toward more automated
-                distribution.</li>
-            <li>UI improvements for the
-                <a href="https://www.jmri.org/help/en/package/apps/jmrit/log/Log4JTreePane.shtml">
-                Display / Edit Log Categories</a> dialog.</li>
+            <li></li>
         </ul>
 

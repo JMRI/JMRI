@@ -1,7 +1,6 @@
 package jmri.jmrit.ctc.ctcserialdata;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019

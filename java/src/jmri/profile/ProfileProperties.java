@@ -1,6 +1,5 @@
 package jmri.profile;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;

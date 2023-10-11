@@ -1023,11 +1023,11 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     }
 
     void handleCreateException(String sysName) {
-        javax.swing.JOptionPane.showMessageDialog(addFrame,
+        JmriJOptionPane.showMessageDialog(addFrame,
                 java.text.MessageFormat.format(
                         Bundle.getMessage("ErrorSwitchAddFailed"), sysName),
                 Bundle.getMessage("ErrorTitle"),
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.ERROR_MESSAGE);
     }
 
     String rootPath = "resources/icons/misc/switchboard/";

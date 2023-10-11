@@ -18,6 +18,7 @@ public class EcosReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         m = new EcosReply();
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = null;

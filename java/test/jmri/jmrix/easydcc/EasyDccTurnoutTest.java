@@ -48,6 +48,7 @@ public class EasyDccTurnoutTest extends AbstractTurnoutTestBase {
     }
 
     // reset objects
+    @Override
     @AfterEach
     public void tearDown() {
         tcis.terminateThreads();

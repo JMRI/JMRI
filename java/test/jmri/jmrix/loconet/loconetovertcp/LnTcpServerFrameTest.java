@@ -3,7 +3,6 @@ package jmri.jmrix.loconet.loconetovertcp;
 import java.awt.GraphicsEnvironment;
 
 import jmri.InstanceManager;
-import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.Assert;

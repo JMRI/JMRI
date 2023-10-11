@@ -3,7 +3,6 @@ package jmri.jmrit.operations.locations.schedules;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.MessageFormat;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -137,7 +136,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
             case EDIT_COLUMN:
                 return Bundle.getMessage("ButtonEdit");
             case DELETE_COLUMN:
-                return Bundle.getMessage("ButtonDelete"); // titles above all columns
+                return Bundle.getMessage("ButtonDelete"); // titles above all
+                                                          // columns
             default:
                 return "unknown"; // NOI18N
         }
@@ -238,9 +238,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         LocationTrackPair ltp = getLocationTrackPair(row);
         if (ltp == null) {
             log.debug("Need location track pair");
-            JmriJOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("AssignSchedule"),
-                    new Object[]{sch.getName()}), MessageFormat.format(Bundle.getMessage("CanNotSchedule"),
-                            new Object[]{Bundle.getMessage("ButtonEdit")}),
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("AssignSchedule", sch.getName()),
+                    Bundle.getMessage("CanNotSchedule", Bundle.getMessage("ButtonEdit")),
                     JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -253,9 +252,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     private void deleteSchedule(int row) {
         log.debug("Delete schedule");
         Schedule sch = sysList.get(row);
-        if (JmriJOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("DoYouWantToDeleteSchedule"),
-                new Object[]{sch.getName()}), Bundle.getMessage("DeleteSchedule?"),
-                JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
+        if (JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("DoYouWantToDeleteSchedule", sch.getName()),
+                Bundle.getMessage("DeleteSchedule?"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
             scheduleManager.deregister(sch);
             OperationsXml.save();
         }
@@ -313,7 +311,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     protected void comboBoxActionPerformed(ActionEvent ae) {
         log.debug("combobox action");
         if (table.isEditing()) {
-            table.getCellEditor().stopCellEditing(); // Allows the table contents to update
+            table.getCellEditor().stopCellEditing(); // Allows the table
+                                                     // contents to update
         }
     }
 

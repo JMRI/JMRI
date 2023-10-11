@@ -15,6 +15,16 @@
 
 <!-- This file contains definitions for LogixNG                             -->
 
+
+
+<!-- **************************************************************************
+
+    This file is replaced by logix-action-5.5.5.xsd with JMRI 5.5.5
+
+*************************************************************************** -->
+
+
+
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
            xmlns:docbook="http://docbook.org/ns/docbook"

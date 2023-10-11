@@ -21,8 +21,6 @@ import org.openlcb.swing.memconfig.MemConfigDescriptionPane;
 import org.openlcb.swing.memconfig.MemConfigReadWritePane;
 import org.openlcb.swing.networktree.NodeTreeRep;
 import org.openlcb.swing.networktree.TreePane;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying tree of OpenLCB nodes.

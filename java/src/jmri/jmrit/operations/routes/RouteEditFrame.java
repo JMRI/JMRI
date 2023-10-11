@@ -2,7 +2,6 @@ package jmri.jmrit.operations.routes;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 import java.util.List;
 
 import javax.swing.*;
@@ -242,8 +241,8 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         if (ae.getSource() == deleteRouteButton) {
             log.debug("route delete button activated");
             if (JmriJOptionPane.showConfirmDialog(this,
-                    MessageFormat.format(Bundle.getMessage("AreYouSure?"),
-                            new Object[] { routeNameTextField.getText() }),
+                    Bundle.getMessage("AreYouSure?",
+                            routeNameTextField.getText()),
                     Bundle.getMessage("DeleteRoute?"), JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                 return;
             }
@@ -355,15 +354,15 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         if (routeNameTextField.getText().trim().isEmpty()) {
             log.debug("Must enter a name for the route");
             JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"),
-                    MessageFormat.format(Bundle.getMessage("CanNotRoute"), new Object[] { s }),
+                    Bundle.getMessage("CanNotRoute", s),
                     JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (routeNameTextField.getText().length() > Control.max_len_string_route_name) {
             JmriJOptionPane.showMessageDialog(this,
-                    MessageFormat.format(Bundle.getMessage("RouteNameLess"),
-                            new Object[] { Control.max_len_string_route_name + 1 }),
-                    MessageFormat.format(Bundle.getMessage("CanNotRoute"), new Object[] { s }),
+                    Bundle.getMessage("RouteNameLess",
+                            Control.max_len_string_route_name + 1),
+                    Bundle.getMessage("CanNotRoute", s),
                     JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -379,9 +378,9 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         for (RouteLocation rl : _route.getLocationsBySequenceList()) {
             if (!directions.contains(rl.getTrainDirectionString())) {
                 JmriJOptionPane.showMessageDialog(this,
-                        MessageFormat.format(Bundle.getMessage("RouteDirection"), new Object[] { rl.getId() }),
-                        MessageFormat.format(Bundle.getMessage("RouteDirectionError"),
-                                new Object[] { rl.getTrainDirectionString() }),
+                        Bundle.getMessage("RouteDirection", rl.getId()),
+                        Bundle.getMessage("RouteDirectionError",
+                                rl.getTrainDirectionString()),
                         JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
@@ -392,7 +391,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
     private void reportRouteExists(String s) {
         log.info("Can not {}, route already exists", s);
         JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"),
-                MessageFormat.format(Bundle.getMessage("CanNotRoute"), new Object[] { s }), JmriJOptionPane.ERROR_MESSAGE);
+                Bundle.getMessage("CanNotRoute", s), JmriJOptionPane.ERROR_MESSAGE);
     }
 
     private void enableButtons(boolean enabled) {

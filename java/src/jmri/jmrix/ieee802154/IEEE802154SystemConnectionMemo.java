@@ -64,6 +64,7 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.DefaultSystemConn
      * Configure the common managers for IEEE802154 connections. This puts the
      * common manager config in one place.
      */
+    @Override
     public void configureManagers() {
         // now does nothing here, it's done by the specific class
     }

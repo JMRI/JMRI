@@ -1,13 +1,9 @@
 package jmri.jmrit.logixng;
 
 import java.io.PrintWriter;
-import java.util.List;
 import java.util.Locale;
 
 import jmri.Manager;
-import jmri.jmrit.logixng.Base.PrintTreeSettings;
-
-import org.apache.commons.lang3.mutable.MutableInt;
 
 /**
  * Manager for GlobalVariable

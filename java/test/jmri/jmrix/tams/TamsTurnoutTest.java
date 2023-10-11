@@ -39,6 +39,7 @@ public class TamsTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         t = new TamsTurnout(5,memo.getSystemPrefix(),tnis);
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

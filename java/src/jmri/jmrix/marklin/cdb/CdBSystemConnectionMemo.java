@@ -4,8 +4,6 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import jmri.*;
-import jmri.jmrix.ConfiguringSystemConnectionMemo;
-import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
 import jmri.jmrix.marklin.MarklinTrafficController;

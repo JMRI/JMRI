@@ -9,7 +9,6 @@ import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
-import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
 
 import org.junit.*;
@@ -46,11 +45,11 @@ public class LogixTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Logix ::: Use default%n" +
+                "Logix. Execute Actions on change of state only ::: Use default%n" +
                 "   ? E%n" +
                 "      Sensor '' is Active ::: Use default%n" +
                 "   !b A%n" +
-                "      On change ::: Use default%n" +
+                "      Logix Action. Either ::: Use default%n" +
                 "         ! A%n" +
                 "            Socket not connected%n");
     }
@@ -61,11 +60,11 @@ public class LogixTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Logix ::: Use default%n" +
+                "         Logix. Execute Actions on change of state only ::: Use default%n" +
                 "            ? E%n" +
                 "               Sensor '' is Active ::: Use default%n" +
                 "            !b A%n" +
-                "               On change ::: Use default%n" +
+                "               Logix Action. Either ::: Use default%n" +
                 "                  ! A%n" +
                 "                     Socket not connected%n");
     }
@@ -197,7 +196,7 @@ public class LogixTest extends AbstractDigitalActionTestBase {
         DigitalBooleanActionManager m1 = InstanceManager.getDefault(DigitalBooleanActionManager.class);
 
         m0.registerExpression(new ExpressionMemory("IQDE52", null));
-        m1.registerAction(new DigitalBooleanOnChange("IQDB554", null, DigitalBooleanOnChange.Trigger.CHANGE));
+        m1.registerAction(new DigitalBooleanLogixAction("IQDB554", null, DigitalBooleanLogixAction.When.Either));
 
         Logix expression = new Logix("IQDA321", null);
         Assert.assertNotNull("exists", expression);
@@ -273,7 +272,7 @@ public class LogixTest extends AbstractDigitalActionTestBase {
         DigitalActionBean a1 = new Logix("IQDA321", null);
         Assert.assertEquals("strings are equal", "Logix", a1.getShortDescription());
         DigitalActionBean a2 = new Logix("IQDA321", null);
-        Assert.assertEquals("strings are equal", "Logix", a2.getLongDescription());
+        Assert.assertEquals("strings are equal", "Logix. Execute Actions on change of state only", a2.getLongDescription());
     }
 
     @Test
@@ -311,7 +310,7 @@ public class LogixTest extends AbstractDigitalActionTestBase {
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionSensor);
         actionLogix.getChild(0).connect(maleSocket2);
 
-        DigitalBooleanOnChange actionOnChange = new DigitalBooleanOnChange("IQDB4", null, DigitalBooleanOnChange.Trigger.CHANGE);
+        DigitalBooleanLogixAction actionOnChange = new DigitalBooleanLogixAction("IQDB4", null, DigitalBooleanLogixAction.When.Either);
         maleSocket2 =
                 InstanceManager.getDefault(DigitalBooleanActionManager.class).registerAction(actionOnChange);
         actionLogix.getChild(1).connect(maleSocket2);

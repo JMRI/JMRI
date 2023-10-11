@@ -79,6 +79,7 @@ public class AcelaSystemConnectionMemo extends DefaultSystemConnectionMemo imple
      * Configure the common managers for Acela connections. This puts the
      * common manager config in one place.
      */
+    @Override
     public void configureManagers() {
 
         InstanceManager.setLightManager(getLightManager());

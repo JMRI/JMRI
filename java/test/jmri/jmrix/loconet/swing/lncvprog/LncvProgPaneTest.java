@@ -22,6 +22,7 @@ public class LncvProgPaneTest extends jmri.util.swing.JmriPanelTest {
     private LocoNetSystemConnectionMemo memo;
     private LncvProgPane lnPanel;
 
+    @Override
     @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testCTor() {

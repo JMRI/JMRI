@@ -5,10 +5,7 @@ import jmri.jmrit.ctc.editor.code.CheckJMRIObject;
 import jmri.jmrit.ctc.editor.code.CodeButtonHandlerDataRoutines;
 import jmri.jmrit.ctc.editor.code.CommonSubs;
 import jmri.jmrit.ctc.editor.code.ProgramProperties;
-import java.util.ArrayList;
-import jmri.jmrit.ctc.NBHSensor;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
-import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
  *
@@ -92,6 +89,7 @@ public class FrmSIDL extends javax.swing.JFrame {
 
         jButton2.setText(Bundle.getMessage("ButtonReapply"));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }

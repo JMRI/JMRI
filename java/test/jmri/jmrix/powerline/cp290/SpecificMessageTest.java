@@ -21,6 +21,7 @@ public class SpecificMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         m = new SpecificMessage(5);
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = null;

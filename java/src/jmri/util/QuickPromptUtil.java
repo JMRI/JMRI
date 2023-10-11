@@ -1,6 +1,6 @@
 package jmri.util;
 
-import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
+import static jmri.util.swing.JmriJOptionPane.OK_CANCEL_OPTION;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -13,6 +13,8 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * A collection of utilities related to prompting for values
@@ -32,8 +34,8 @@ public class QuickPromptUtil {
      */
     public static String promptForString(Component parentComponent, String message, String title, String oldValue) {
         String result = oldValue;
-        String newValue = (String) JOptionPane.showInputDialog(parentComponent,
-                message, title, JOptionPane.PLAIN_MESSAGE,
+        String newValue = (String) JmriJOptionPane.showInputDialog(parentComponent,
+                message, title, JmriJOptionPane.PLAIN_MESSAGE,
                 null, null, oldValue);
         if (newValue != null) {
             result = newValue;

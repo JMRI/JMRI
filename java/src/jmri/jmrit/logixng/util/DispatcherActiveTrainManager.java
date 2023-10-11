@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.util;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.*;
 
 import jmri.*;

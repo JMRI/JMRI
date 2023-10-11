@@ -12,7 +12,6 @@ import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.jmrix.AbstractSerialPortController;
-import jmri.SystemConnectionMemo;
 import jmri.jmrix.DefaultSystemConnectionMemo;
 
 import org.slf4j.Logger;

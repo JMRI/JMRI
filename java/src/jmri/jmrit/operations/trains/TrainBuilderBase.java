@@ -1097,7 +1097,7 @@ public class TrainBuilderBase extends TrainCommon {
             }
             addLine(_buildReport, SEVEN,
                     Bundle.getMessage("buildTrackModePriority", car.toString(), car.getTrack().getTrackTypeName(),
-                            car.getTrackName(), car.getTrack().getServiceOrder(), car.getLastDate()));
+                            car.getLocationName(), car.getTrackName(), car.getTrack().getServiceOrder(), car.getLastDate()));
             Car bestCar = car;
             for (int i = _carIndex + 1; i < _carList.size(); i++) {
                 Car testCar = _carList.get(i);
@@ -2067,8 +2067,8 @@ public class TrainBuilderBase extends TrainCommon {
             return false;
         }
         // don't allow local move to track with a "similar" name
-        if (splitString(car.getLocationName()).equals(splitString(track.getLocation().getName())) &&
-                splitString(car.getTrackName()).equals(splitString(track.getName()))) {
+        if (car.getSplitLocationName().equals(track.getLocation().getSplitName()) &&
+                car.getSplitTrackName().equals(track.getSplitName())) {
             return false;
         }
         if (track.isStaging() && car.getLocation() == track.getLocation()) {
@@ -2226,7 +2226,7 @@ public class TrainBuilderBase extends TrainCommon {
         if (!car.getTrack().getServiceOrder().equals(Track.NORMAL) && !car.getTrack().isStaging()) {
             addLine(_buildReport, SEVEN,
                     Bundle.getMessage("buildTrackModePriority", car.toString(), car.getTrack().getTrackTypeName(),
-                            car.getTrackName(), car.getTrack().getServiceOrder(), car.getLastDate()));
+                            car.getLocationName(), car.getTrackName(), car.getTrack().getServiceOrder(), car.getLastDate()));
         }
     }
 
@@ -2253,8 +2253,8 @@ public class TrainBuilderBase extends TrainCommon {
         for (Track testTrack : testDestination.getTracksByMoves(null)) {
             // normally don't move car to a track with the same name at the same
             // location
-            if (splitString(car.getLocationName()).equals(splitString(testTrack.getLocation().getName())) &&
-                    splitString(car.getTrackName()).equals(splitString(testTrack.getName())) &&
+            if (car.getSplitLocationName().equals(testTrack.getLocation().getSplitName()) &&
+                    car.getSplitTrackName().equals(testTrack.getSplitName()) &&
                     !car.isPassenger() &&
                     !car.isCaboose() &&
                     !car.hasFred()) {
@@ -2482,9 +2482,9 @@ public class TrainBuilderBase extends TrainCommon {
                 !car.isCaboose() &&
                 !car.hasFred() &&
                 !car.isPassenger() &&
-                splitString(car.getLocationName()).equals(splitString(_departLocation.getName())) &&
-                splitString(destinationName).equals(splitString(_terminateLocation.getName())) &&
-                !splitString(_departLocation.getName()).equals(splitString(_terminateLocation.getName()))) {
+                car.getSplitLocationName().equals(_departLocation.getSplitName()) &&
+                splitString(destinationName).equals(_terminateLocation.getSplitName()) &&
+                !_departLocation.getSplitName().equals(_terminateLocation.getSplitName())) {
             addLine(_buildReport, FIVE, Bundle.getMessage("buildThroughTrafficNotAllow", _departLocation.getName(),
                     _terminateLocation.getName()));
             return false; // through cars not allowed
@@ -2494,7 +2494,7 @@ public class TrainBuilderBase extends TrainCommon {
 
     private boolean checkLocalMovesAllowed(Car car, Track track) {
         if (!_train.isLocalSwitcher() && !_train.isAllowLocalMovesEnabled() &&
-                splitString(car.getLocationName()).equals(splitString(track.getLocation().getName()))) {
+                car.getSplitLocationName().equals(track.getLocation().getSplitName())) {
             addLine(_buildReport, SEVEN,
                     Bundle.getMessage("buildNoLocalMoveToTrack", car.getLocationName(), car.getTrackName(),
                             track.getLocation().getName(), track.getName(), _train.getName()));
@@ -2534,7 +2534,7 @@ public class TrainBuilderBase extends TrainCommon {
                 !car.isCaboose() &&
                 !car.hasFred() &&
                 !car.isPassenger() &&
-                splitString(car.getLocationName()).equals(splitString(stageTrack.getLocation().getName()))) {
+                car.getSplitLocationName().equals(stageTrack.getLocation().getSplitName())) {
             addLine(_buildReport, SEVEN,
                     Bundle.getMessage("buildNoReturnStaging", car.toString(), stageTrack.getLocation().getName()));
             return false;

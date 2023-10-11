@@ -1,7 +1,7 @@
 package jmri.jmrit.operations.trains.excel;
 
 import java.io.File;
-import java.text.MessageFormat;
+
 import javax.swing.JLabel;
 
 import jmri.InstanceManager;
@@ -46,13 +46,13 @@ public class SetupExcelProgramSwitchListFrame extends SetupExcelProgramFrame {
 
         if (ae.getSource() == testButton) {
             if (InstanceManager.getDefault(TrainCustomSwitchList.class).excelFileExists()) {
-                JmriJOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("DirectoryNameFileName"),
-                        new Object[]{InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryName(), InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName()}),
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("DirectoryNameFileName",
+                        InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryName(), InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName()),
                         Bundle.getMessage("ManifestCreatorFound"), JmriJOptionPane.INFORMATION_MESSAGE);
             } else {
-                JmriJOptionPane.showMessageDialog(this, MessageFormat.format(
-                        Bundle.getMessage("LoadDirectoryNameFileName"), new Object[]{
-                            InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryName(), InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName()}), Bundle
+                JmriJOptionPane.showMessageDialog(this, 
+                        Bundle.getMessage("LoadDirectoryNameFileName",
+                            InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryName(), InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName()), Bundle
                         .getMessage("ManifestCreatorNotFound"), JmriJOptionPane.ERROR_MESSAGE);
             }
         }

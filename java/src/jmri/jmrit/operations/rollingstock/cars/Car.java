@@ -379,12 +379,16 @@ public class Car extends RollingStock {
     public Location getFinalDestination() {
         return _finalDestination;
     }
-
+    
     public String getFinalDestinationName() {
         if (_finalDestination != null) {
             return _finalDestination.getName();
         }
         return NONE;
+    }
+    
+    public String getSplitFinalDestinationName() {
+        return TrainCommon.splitString(getFinalDestinationName());
     }
 
     public void setFinalDestinationTrack(Track track) {
@@ -412,6 +416,10 @@ public class Car extends RollingStock {
             return _finalDestTrack.getName();
         }
         return NONE;
+    }
+    
+    public String getSplitFinalDestinationTrackName() {
+        return TrainCommon.splitString(getFinalDestinationTrackName());
     }
 
     public void setPreviousFinalDestination(Location location) {
@@ -456,14 +464,17 @@ public class Car extends RollingStock {
         }
         return NONE;
     }
-
+    
+    public String getSplitReturnWhenEmptyDestinationName() {
+        return TrainCommon.splitString(getReturnWhenEmptyDestinationName());
+    }
+    
     public void setReturnWhenEmptyDestTrack(Track track) {
         Track old = _rweDestTrack;
         _rweDestTrack = track;
         if ((old != null && !old.equals(track)) || (track != null && !track.equals(old))) {
             setDirtyAndFirePropertyChange(RETURN_WHEN_EMPTY_CHANGED_PROPERTY, null, null);
         }
-
     }
 
     public Track getReturnWhenEmptyDestTrack() {
@@ -476,12 +487,9 @@ public class Car extends RollingStock {
         }
         return NONE;
     }
-
-    public String getReturnWhenEmptyDestName() {
-        if (getReturnWhenEmptyDestination() != null) {
-            return getReturnWhenEmptyDestinationName() + "(" + getReturnWhenEmptyDestTrackName() + ")";
-        }
-        return NONE;
+    
+    public String getSplitReturnWhenEmptyDestinationTrackName() {
+        return TrainCommon.splitString(getReturnWhenEmptyDestTrackName());
     }
 
     public void setReturnWhenLoadedDestination(Location destination) {
@@ -522,13 +530,6 @@ public class Car extends RollingStock {
         return NONE;
     }
 
-    public String getReturnWhenLoadedDestName() {
-        if (getReturnWhenLoadedDestination() != null) {
-            return getReturnWhenLoadedDestinationName() + "(" + getReturnWhenLoadedDestTrackName() + ")";
-        }
-        return NONE;
-    }
-
     /**
      * Used to determine is car has been given a Return When Loaded (RWL)
      * address or custom load
@@ -537,7 +538,7 @@ public class Car extends RollingStock {
      */
     protected boolean isRwlEnabled() {
         if (!getReturnWhenLoadedLoadName().equals(carLoads.getDefaultLoadName()) ||
-                !getReturnWhenLoadedDestName().equals(NONE)) {
+                getReturnWhenLoadedDestination() != null) {
             return true;
         }
         return false;
@@ -576,7 +577,7 @@ public class Car extends RollingStock {
      */
     public boolean isLocalMove() {
         if (getTrain() == null && getLocation() != null) {
-            return TrainCommon.splitString(getLocationName()).equals(TrainCommon.splitString(getDestinationName()));
+            return getSplitLocationName().equals(getSplitDestinationName());
         }
         if (getRouteLocation() == null || getRouteDestination() == null) {
             return false;
@@ -585,19 +586,19 @@ public class Car extends RollingStock {
             return true;
         }
         if (getTrain().isLocalSwitcher() &&
-                TrainCommon.splitString(getRouteLocation().getName())
-                        .equals(TrainCommon.splitString(getRouteDestination().getName())) &&
+                getRouteLocation().getSplitName()
+                        .equals(getRouteDestination().getSplitName()) &&
                 getTrack() != null) {
             return true;
         }
         // look for sequential locations with the "same" name
-        if (TrainCommon.splitString(getRouteLocation().getName()).equals(
-                TrainCommon.splitString(getRouteDestination().getName())) && getTrain().getRoute() != null) {
+        if (getRouteLocation().getSplitName().equals(
+                getRouteDestination().getSplitName()) && getTrain().getRoute() != null) {
             boolean foundRl = false;
             for (RouteLocation rl : getTrain().getRoute().getLocationsBySequenceList()) {
                 if (foundRl) {
-                    if (TrainCommon.splitString(getRouteDestination().getName())
-                            .equals(TrainCommon.splitString(rl.getName()))) {
+                    if (getRouteDestination().getSplitName()
+                            .equals(rl.getSplitName())) {
                         // user can specify the "same" location two more more
                         // times in a row
                         if (getRouteDestination() != rl) {

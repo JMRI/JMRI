@@ -14,7 +14,6 @@ import jmri.ShutDownTask;
 //import jmri.ShutDownManager;
 //import jmri.ShutDownTask;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
