@@ -26,8 +26,8 @@
 
       <h2 id="hardware">Direct Connected Supported Hardware</h2>
       
-      <p>RFID hardware can be connected using <a href=""><strong>Preferences Connections</strong></a> and selecting "RFID" as 
-      the "System Manufacturer".</p>      
+      <p>RFID hardware can be connected using <a href="../../../package/apps/TabbedPreferences.shtml"><strong>Preferences Connections
+      </strong></a> and selecting "RFID" as the "System Manufacturer".</p>      
 
       <h3>Protocols</h3>
       JMRI supports several different RFID Reader Protocols:
