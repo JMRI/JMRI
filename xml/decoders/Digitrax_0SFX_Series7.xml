@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?transform-xslt href="http://jmri.org/xml/decoders/Digitrax_0SFX_Series7.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2010, 2014 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -16,9 +16,8 @@
   <!-- Cleanup 9/29/23:
 		PaneDigitraxSoundExtSeries7
 		Plane SDH167 decoder
-		Draft PaneDigitraxFunctionmapSerues7
 						-->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="John McMasters" version="1" lastUpdated="20230404"/>
   <version author="John McMasters" version="2" lastUpdated="20230929"/>
    
@@ -202,14 +201,7 @@
         <functionlabel num="12" lockable="false">Safety Blow off</functionlabel>
       </functionlabels>
     </family>
-    <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="yes">
-        <capability>
-            <name>Indexed CV access</name>
-            <parameter name="PI">229</parameter>
-            <parameter name="SI">229</parameter>
-            <parameter name="cvFirst">false</parameter>
-        </capability>
-    </programming>
+    <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/vStartHighMid.xml"/>
@@ -322,10 +314,6 @@
  <xi:include href="http://jmri.org/xml/decoders/digitrax/featureSettings7.xml"/>	
   <!-- Disable Feature Settings -->
   
-  <!-- Function Map 7 Settings -->
- <xi:include href="http://jmri.org/xml/decoders/digitrax/functionMapSettings7.xml"/>	
-
- <!-- Function Map 7 Settings -->
 
     </variables>
 	      <!-- end family    -->
@@ -340,7 +328,6 @@
       </factReset>
     </resets>
   </decoder>
-
   <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitrax.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitraxSoundInfo.xml"/>
        <!-- inline sound levels and disables
@@ -350,9 +337,4 @@
                                     John McMasters (2023-04-4)          -->
  <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitraxSoundFeaturesSeries7.xml"/> 
 <!--                                                                        -->
-
- <!-- version 3 - Add new Function Map Pane "include"
-                                    John McMasters (2023-09-29)          -->
- <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitraxFunctionmapSeries7.xml"/> 
-
 </decoder-config>
