@@ -1,6 +1,5 @@
 package jmri.jmrix.openlcb;
 
-import jmri.SystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;

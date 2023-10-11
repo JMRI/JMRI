@@ -20,6 +20,7 @@ public class JMRIClientMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         m = new JMRIClientMessage(3);
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = null;

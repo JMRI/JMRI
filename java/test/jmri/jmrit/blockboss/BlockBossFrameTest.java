@@ -3,7 +3,6 @@ package jmri.jmrit.blockboss;
 import java.awt.GraphicsEnvironment;
 
 import jmri.InstanceManager;
-import jmri.SignalHead;
 import jmri.SignalHeadManager;
 import jmri.implementation.VirtualSignalHead;
 

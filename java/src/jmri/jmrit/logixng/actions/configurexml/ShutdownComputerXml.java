@@ -7,8 +7,6 @@ import jmri.jmrit.logixng.actions.ShutdownComputer;
 
 import org.jdom2.Element;
 
-import jmri.jmrit.logixng.DigitalActionBean;
-import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
 
 /**

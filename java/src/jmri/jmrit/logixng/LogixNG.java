@@ -1,8 +1,6 @@
 package jmri.jmrit.logixng;
 
 import jmri.NamedBean;
-import jmri.jmrit.display.Positionable;
-import jmri.jmrit.display.layoutEditor.LayoutTrackView;
 
 /**
  * LogixNG.

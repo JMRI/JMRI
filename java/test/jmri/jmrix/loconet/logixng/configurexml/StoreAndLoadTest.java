@@ -1,7 +1,5 @@
 package jmri.jmrix.loconet.logixng.configurexml;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrit.logixng.actions.IfThenElse;
 
 import java.beans.PropertyVetoException;

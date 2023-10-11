@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.util.parser;
 
-import java.util.Locale;
 import java.util.Map;
 
 import jmri.InstanceManager;

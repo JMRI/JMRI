@@ -1,14 +1,11 @@
 package jmri.jmrix.can.cbus.swing.modules.sprogdcc;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.node.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**

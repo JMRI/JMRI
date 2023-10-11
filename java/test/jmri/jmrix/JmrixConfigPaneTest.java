@@ -3,7 +3,6 @@ package jmri.jmrix;
 import jmri.swing.PreferencesPanelTestBase;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,6 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class JmrixConfigPaneTest extends PreferencesPanelTestBase<JmrixConfigPane> {
 
+    @Override
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

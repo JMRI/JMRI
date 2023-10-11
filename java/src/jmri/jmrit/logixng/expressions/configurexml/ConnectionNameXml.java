@@ -7,9 +7,6 @@ import jmri.jmrit.logixng.expressions.ConnectionName;
 
 import org.jdom2.Element;
 
-import jmri.jmrit.logixng.DigitalExpressionBean;
-import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectStringXml;
-
 /**
  * Handle XML configuration for ConnectionName objects.
  *

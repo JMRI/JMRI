@@ -3,9 +3,6 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 
-import jmri.util.JUnitUtil;
-
-import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
 
@@ -27,6 +24,7 @@ public class LayoutTurntableViewTest extends LayoutTrackViewTest {
 
     LayoutTurntable turntable;
     
+    @Override
     @BeforeEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
@@ -37,6 +35,7 @@ public class LayoutTurntableViewTest extends LayoutTrackViewTest {
         }
     }
 
+    @Override
     @AfterEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {

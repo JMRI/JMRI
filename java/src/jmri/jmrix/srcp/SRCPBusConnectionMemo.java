@@ -59,6 +59,7 @@ public class SRCPBusConnectionMemo extends DefaultSystemConnectionMemo implement
      * Configure the common managers for Internal connections. This puts the
      * common manager config in one place.
      */
+    @Override
     @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification="false postive, guarded by while statement")
     public void configureManagers() {
         while(!configured){

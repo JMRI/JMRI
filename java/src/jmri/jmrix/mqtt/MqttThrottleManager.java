@@ -4,7 +4,6 @@ import java.util.EnumSet;
 import java.util.HashMap;
 
 import jmri.DccThrottle;
-import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.ThrottleListener;
@@ -12,7 +11,6 @@ import jmri.jmrix.AbstractThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.annotation.Nonnull;
-import jmri.JmriException;
 
 /**
  * MQTT implementation of a ThrottleManager based on the

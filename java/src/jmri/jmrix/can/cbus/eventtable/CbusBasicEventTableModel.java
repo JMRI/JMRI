@@ -5,8 +5,6 @@ import javax.annotation.Nonnull;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusEvent;
 import jmri.jmrix.can.cbus.CbusNameService;
-import jmri.util.ThreadingUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

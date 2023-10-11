@@ -5,7 +5,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**

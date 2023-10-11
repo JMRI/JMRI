@@ -1,7 +1,6 @@
 package jmri.jmrit.ctc.ctcserialdata;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  *

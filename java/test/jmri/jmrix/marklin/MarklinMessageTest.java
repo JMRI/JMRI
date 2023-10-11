@@ -17,6 +17,7 @@ public class MarklinMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         m = new MarklinMessage();
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = null;

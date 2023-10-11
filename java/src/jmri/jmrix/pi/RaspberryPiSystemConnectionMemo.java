@@ -73,6 +73,7 @@ public class RaspberryPiSystemConnectionMemo extends DefaultSystemConnectionMemo
          store(l,LightManager.class);
     }
 
+    @Override
     public void configureManagers(){
        setTurnoutManager(new RaspberryPiTurnoutManager(this));
        setSensorManager(new RaspberryPiSensorManager(this));

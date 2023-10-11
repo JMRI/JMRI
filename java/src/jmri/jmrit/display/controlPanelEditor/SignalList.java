@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.NamedBean;
-import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
 

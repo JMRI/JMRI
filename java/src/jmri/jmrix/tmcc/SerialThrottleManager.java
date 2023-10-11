@@ -5,7 +5,6 @@ import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
-import jmri.jmrix.dccpp.DCCppInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

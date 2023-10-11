@@ -5,8 +5,6 @@ import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.ListIterator;
 /*
  * @author Pete Cressman Copyright (C) 2019
  */

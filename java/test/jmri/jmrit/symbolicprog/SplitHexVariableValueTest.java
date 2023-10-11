@@ -7,7 +7,6 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import jmri.progdebugger.ProgDebugger;
 import jmri.util.CvUtil;
 
 import org.junit.Assert;

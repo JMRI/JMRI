@@ -81,6 +81,7 @@ public class LncvDevicesManager extends PropertyChangeSupport
      *            be presented to multiple users. It should not be modified
      *            here.
      */
+    @Override
     public void message(LocoNetMessage m) {
         if (LncvMessageContents.isSupportedLncvMessage(m)) {
             if ((LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY) ||

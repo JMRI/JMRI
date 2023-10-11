@@ -7,15 +7,12 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.beans.PropertyVetoException;
-import java.util.List;
-
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.jmrit.logixng.Table;
-import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 

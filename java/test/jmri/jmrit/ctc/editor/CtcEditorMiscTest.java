@@ -4,9 +4,6 @@ import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.JPopupMenu;
-import javax.swing.JMenuItem;
-
 import jmri.InstanceManager;
 import jmri.profile.NullProfile;
 import jmri.util.JUnitUtil;
@@ -15,7 +12,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
-import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.*;
 
 /**

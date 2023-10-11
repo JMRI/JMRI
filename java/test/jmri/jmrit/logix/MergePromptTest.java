@@ -1,6 +1,5 @@
 package jmri.jmrit.logix;
 
-import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import java.awt.GraphicsEnvironment;

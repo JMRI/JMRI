@@ -1,7 +1,6 @@
 package jmri.jmrit.ctc.editor.gui;
 
 import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
-import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.OtherData;
 
 /**
@@ -56,6 +55,7 @@ public class FrmAbout extends javax.swing.JFrame {
 
         _mOK.setText(Bundle.getMessage("ButtonOK"));
         _mOK.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mOKActionPerformed(evt);
             }
