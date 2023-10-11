@@ -41,7 +41,7 @@ DEBUGX= False  #Additional level of debug info put in Script Output Window, to a
 
 AssignRFIDTagToRS_log = LoggerFactory.getLogger("jmri.jmrit.jython.exec.AssignRFIDTagToRS")
 #Update version number and date in following statement:
-AssignRFIDTagToRS_log.info("'AssignRFIDTagToRS' v40 09/02/2023 2305 loaded")
+AssignRFIDTagToRS_log.info("'AssignRFIDTagToRS' v41 10/10/2023 2305 loaded")
 
 print "AssignRFIDTagToRS: will pop up a window when new RFID Tag detected \n or when new user name entered for existing RFID Tag.\n Optionally, will update Operations Locomotive and/or Car Tables.\n May be necessary to refresh ops tables to see effect."
 
@@ -80,11 +80,36 @@ class AssignRFIDTagToRSFrame:
 
         #############################################################
         # Create display elements      
+        self.createDisplayElements()
+        
+        #############################################################
+        # Now put all the panels in a frame and display
+        self.myFrame = javax.swing.JFrame("RFID Tag:  " + str(self.newIdTag))       # argument is the frames title
+        self.myFrame.contentPane.setLayout(javax.swing.BoxLayout(self.myFrame.contentPane, javax.swing.BoxLayout.Y_AXIS))
+
+        self.myFrame.contentPane.add(self.instrLine1)
+        self.myFrame.contentPane.add(self.instrLine2)      
+        self.myFrame.contentPane.add(self.createEntryLine())
+        self.myFrame.contentPane.add(self.createCheckboxLine())
+        self.myFrame.contentPane.add(self.createButtonLine())
+        self.myFrame.contentPane.add(self.bottomLine)
+ 
+        self.myFrame.pack()
+        self.myFrame.setSize(700, 240)
+        myFrameLocIncr += myFrameLocOffset              # Move any subsequent window
+        x = self.myFrame.getX()
+        y = self.myFrame.getY()
+        #self.myFrame.setLocation(java.awt.Point.translate(myFrameLocIncr,self.myFrameLocIncr))
+        self.myFrame.setLocation(x + myFrameLocIncr, y + myFrameLocIncr)
+        self.myFrame.setVisible(True)
+        return
+
+    def createDisplayElements(self):
         #Instructions at top
-        instrLine1 = javax.swing.JPanel()
-        instrLine1.add(javax.swing.JLabel("Enter User Name (Loco or Car/Wagon #) for RFID Tag " + str(self.newIdTag)))
-        instrLine2 = javax.swing.JPanel()
-        instrLine2.add(javax.swing.JLabel("Check box to also update Operations Locomotive or Car Table"))
+        self.instrLine1 = javax.swing.JPanel()
+        self.instrLine1.add(javax.swing.JLabel("Enter User Name (Loco or Car/Wagon #) for RFID Tag " + str(self.newIdTag)))
+        self.instrLine2 = javax.swing.JPanel()
+        self.instrLine2.add(javax.swing.JLabel("Check box to also update Operations Locomotive or Car Table"))
         
         # Set the text field actions
         self.myIdTagUserName.actionPerformed = self.whenMyIdTagUserNameChanged  # if user hit return or enter
@@ -110,29 +135,9 @@ class AssignRFIDTagToRSFrame:
         self.processButton.actionPerformed    = self.whenMyProcessButtonClicked
         
         #Create bottom line
-        bottomLine = javax.swing.JPanel()
-        bottomLine.add(javax.swing.JLabel("Check Scripting Output window for messages"))
+        self.bottomLine = javax.swing.JPanel()
+        self.bottomLine.add(javax.swing.JLabel("Check Scripting Output window for messages"))
 
-        #############################################################
-        # Now put all the panels in a frame and display
-        self.myFrame = javax.swing.JFrame("RFID Tag:  " + str(self.newIdTag))       # argument is the frames title
-        self.myFrame.contentPane.setLayout(javax.swing.BoxLayout(self.myFrame.contentPane, javax.swing.BoxLayout.Y_AXIS))
-
-        self.myFrame.contentPane.add(instrLine1)
-        self.myFrame.contentPane.add(instrLine2)      
-        self.myFrame.contentPane.add(self.createEntryLine())
-        self.myFrame.contentPane.add(self.createCheckboxLine())
-        self.myFrame.contentPane.add(self.createButtonLine())
-        self.myFrame.contentPane.add(bottomLine)
- 
-        self.myFrame.pack()
-        self.myFrame.setSize(700, 240)
-        myFrameLocIncr += myFrameLocOffset              # Move any subsequent window
-        x = self.myFrame.getX()
-        y = self.myFrame.getY()
-        #self.myFrame.setLocation(java.awt.Point.translate(myFrameLocIncr,self.myFrameLocIncr))
-        self.myFrame.setLocation(x + myFrameLocIncr, y + myFrameLocIncr)
-        self.myFrame.setVisible(True)
         return
 
     def createEntryLine(self):
@@ -236,25 +241,7 @@ class AssignRFIDTagToRSFrame:
                 if not (self.myIdTagUpdateCar or self.myIdTagUpdateLoco):
                     print "ARfid: Ops tables not updated for ", self.newIdTag.getUserName()                 
                 else:
-                    #Create abbreviations
-                    cars = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarManager)
-                    engines = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.engines.EngineManager)
-                    #Find in operations-car table and update
-                    if self.myIdTagUpdateCar:
-                        #Tom's: self.updateOpsTable("car", jmri.jmrit.operations.rollingstock.cars.CarManager)
-                        self.updateOpsTable("car", cars)
-                    #Find in operations-engine table and update
-                    elif self.myIdTagUpdateLoco:
-                        #Tom's: self.updateOpsTable("engine", jmri.jmrit.operations.rollingstock.engines.EngineManager)
-                        self.updateOpsTable("engine", engines)
-                    else:    # Shouldn't ever get here
-                        print ("ART249: ERR in Ops Table selection")
-                    #See if RFID Tag previously assigned to another car or loco and remove from any (should not happen, but just in case)
-                    if self.assigned:   #Check in both types of tables             
-                        for rs in cars.getByRfidList():
-                            self.findDupUN(rs, "car") 
-                        for rs in engines.getByRfidList():
-                            self.findDupUN(rs, "engine")             
+                    self.updateAllTables()               
 
             # Update comment into IdTag Table
             if self.myIdTagComment.text is not "":
@@ -271,6 +258,28 @@ class AssignRFIDTagToRSFrame:
         # Re-attach the ID Tab Table listener
         idtags.addPropertyChangeListener(myIdTagMgrListenerGlobal)
         return
+    
+    def updateAllTables(self):
+        #Create abbreviations
+        cars = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarManager)
+        engines = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.engines.EngineManager)
+        #Find in operations-car table and update
+        if self.myIdTagUpdateCar:
+            #Tom's: self.updateOpsTable("car", jmri.jmrit.operations.rollingstock.cars.CarManager)
+            self.updateOpsTable("car", cars)
+        #Find in operations-engine table and update
+        elif self.myIdTagUpdateLoco:
+            #Tom's: self.updateOpsTable("engine", jmri.jmrit.operations.rollingstock.engines.EngineManager)
+            self.updateOpsTable("engine", engines)
+        else:    # Shouldn't ever get here
+            print ("ART249: ERR in Ops Table selection")
+        #See if RFID Tag previously assigned to another car or loco and remove from any (should not happen, but just in case)
+        if self.assigned:   #Check in both types of tables             
+            for rs in cars.getByRfidList():
+                self.findDupUN(rs, "car") 
+            for rs in engines.getByRfidList():
+                self.findDupUN(rs, "engine")
+        return        
     
     def updateOpsTable(self, type_name, ops_table):
         for rs in ops_table.getByIdList():
