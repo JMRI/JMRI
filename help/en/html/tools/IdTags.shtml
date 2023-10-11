@@ -4,6 +4,7 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: ID Tag Documentation</title>
   <meta name="author" content="Matthew Harris">
+  <meta name="author" content="Jerry Grochow">
   <meta name="keywords" content="rfid tag ID tag model railroad JMRI decoderpro panelpro">
   <!--#include virtual="/Style.shtml" -->
 </head>
@@ -23,10 +24,14 @@
       <p>An ID Tag is JMRI's way of representing information about ID Tags that can be attached to,
       for example, various items of rolling stock.</p>
 
-      <p>When an ID Tag is read by a suitable reader, this is notified via both a <a href=
-      "Sensors.shtml">Sensor</a> becoming ACTIVE and a <a href="Reporters.shtml">Reporter</a> being
-      set to the value of the ID Tag. The ID Tag will also record both by which Reporter it was
-      last seen by, as well as the time it was last seen.</p>
+      <p>When an ID Tag is read by a suitable reader (such as a connected 
+      <a href="../hardware/rfid/index.sthml">RFID reader</a>), JMRI will put the value read into  a
+      <a href="Reporters.shtml">Reporter</a> and set a <a href=
+      "Sensors.shtml">Sensor</a> to ACTIVE . The ID Tag will also record which Reporter it was
+      last seen by as well as the time it was last seen. [Note that there are other ways of getting
+      information into the JMRI ID Tag Table, including via <a href="../hardware/mqtt/index.sthml">MQTT</a>
+      messages and <a href="scripting/index.sthml">scripts.</a>]
+      </p>
 
       <p>If an unknown ID Tag is detected by a reader, details of this tag will be automatically
       entered into the <a href="../../package/jmri/jmrit/beantable/IdTagTable.shtml">ID Tag
@@ -36,13 +41,9 @@
       stored in the <strong>idtags</strong> sub-directory of the <strong>user files
       location</strong>. The storage of details when and where a given ID Tag was last seen is
       configurable by setting the option at the bottom of the ID Tag Table.</p>
-
-      <p>Current implementations are for CORE-ID based readers. These are supported in stand-alone
-      mode via the 'Generic Stand-alone' protocol and as an up-to 8-way Concentrator using <a href=
-      "http://www.merg.org.uk/">MERG</a> hardware via the 'MERG Concentrator' protocol.<br>
-      Note: The <a href="http://www.merg.org.uk/">MERG</a> starter kit as supplied should be
-      configured using the 'Generic Stand-alone' protocol - only when extending the kit with the
-      additional concentrator components should the 'MERG Concentrator' protocol be used.</p>
+      
+      <p>For general information on using ID Tags with RFID Readers, see <a href="../hardware/rfid/GettingStartedWithRFID.shtml">
+      Getting Started With RFID</a>.</p>
 
       <h2>How to setup ID Tags</h2>
 
