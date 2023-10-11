@@ -2,19 +2,12 @@ package jmri.jmrix.openlcb.swing.memtool;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.nio.charset.StandardCharsets;
 import java.io.*;
 import java.util.*;
 
 import javax.swing.*;
-import javax.swing.table.*;
-
-import jmri.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.swing.JmriJTablePersistenceManager;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.MultiLineCellRenderer;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import org.openlcb.*;

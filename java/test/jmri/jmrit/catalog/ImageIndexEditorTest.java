@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import jmri.ShutDownManager;
-import jmri.ShutDownTask;
 import jmri.implementation.swing.SwingShutDownTask;
 import org.junit.Assert;
 import org.junit.Assume;

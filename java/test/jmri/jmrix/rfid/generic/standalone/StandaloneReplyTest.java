@@ -23,6 +23,7 @@ public class StandaloneReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         m = new StandaloneReply(tc);
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = null;

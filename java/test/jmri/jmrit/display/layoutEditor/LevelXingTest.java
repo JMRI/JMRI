@@ -1,8 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
-import java.awt.geom.Point2D;
-
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;

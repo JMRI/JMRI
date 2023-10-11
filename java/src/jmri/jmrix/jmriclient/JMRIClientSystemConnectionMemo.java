@@ -66,6 +66,7 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.DefaultSystemConn
      * Configure the common managers for Internal connections. This puts the
      * common manager config in one place.
      */
+    @Override
     public void configureManagers() {
 
         setPowerManager(new jmri.jmrix.jmriclient.JMRIClientPowerManager(this));

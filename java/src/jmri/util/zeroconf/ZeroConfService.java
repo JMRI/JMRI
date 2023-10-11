@@ -2,10 +2,8 @@ package jmri.util.zeroconf;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
 import jmri.InstanceManager;
 

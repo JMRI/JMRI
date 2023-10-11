@@ -296,6 +296,7 @@ public class AnymaDMX_SystemConnectionMemo extends DefaultSystemConnectionMemo i
      * Configure the common managers for anyma dmx connections. This puts the
      * common manager config in one place.
      */
+    @Override
     public void configureManagers() {
         log.debug("* configureManagers()");
         InstanceManager.setLightManager(getLightManager());

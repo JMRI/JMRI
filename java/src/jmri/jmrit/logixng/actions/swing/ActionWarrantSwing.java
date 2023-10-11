@@ -15,7 +15,6 @@ import jmri.jmrit.logixng.actions.ActionWarrant.DirectOperation;
 import jmri.jmrit.logixng.actions.ActionWarrant.ControlAutoTrain;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
-import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;

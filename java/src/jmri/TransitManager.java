@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
-import jmri.managers.AbstractManager;
-
 /**
  * Implementation of a Transit Manager
  * <p>

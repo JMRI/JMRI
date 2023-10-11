@@ -3,7 +3,6 @@ package jmri.jmrix.dccpp;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * DCCppProgrammerManagerTest.java

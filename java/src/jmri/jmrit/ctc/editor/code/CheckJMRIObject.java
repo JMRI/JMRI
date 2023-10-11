@@ -8,7 +8,6 @@ import jmri.InstanceManager;
 import jmri.SignalHeadManager;
 import jmri.SignalMastManager;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
-import jmri.jmrit.ctc.editor.gui.FrmMainForm;
 
 /**
  *

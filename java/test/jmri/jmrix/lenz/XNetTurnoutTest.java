@@ -255,6 +255,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         lnis.terminateThreads();

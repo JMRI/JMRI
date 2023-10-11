@@ -90,6 +90,7 @@ public class SRCPReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         m = msg = new SRCPReply();
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = msg = null;

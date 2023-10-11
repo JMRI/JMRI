@@ -1,10 +1,5 @@
 package jmri.jmrit.logixng;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
-
 import jmri.util.JUnitUtil;
 
 import org.junit.After;

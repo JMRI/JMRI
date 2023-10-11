@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import jmri.Application;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;

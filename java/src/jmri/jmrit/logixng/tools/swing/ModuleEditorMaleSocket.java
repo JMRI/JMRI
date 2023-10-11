@@ -1,9 +1,5 @@
 package jmri.jmrit.logixng.tools.swing;
 
-import java.beans.*;
-import java.util.ArrayList;
-import java.util.Locale;
-
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;

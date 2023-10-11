@@ -2,8 +2,6 @@ package jmri.jmrit.logixng.implementation;
 
 import java.util.*;
 
-import static jmri.NamedBean.UNKNOWN;
-
 import javax.annotation.Nonnull;
 
 import jmri.InstanceManager;

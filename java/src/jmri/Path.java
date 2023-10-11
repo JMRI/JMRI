@@ -391,6 +391,7 @@ public class Path implements Comparable<Path> {
             return MessageFormat.format("Path: <no block>: {0}", result); // NOI18N
     }
 
+    @Override
     public int compareTo(Path obj) {
         if (obj == this) {
             return 0;

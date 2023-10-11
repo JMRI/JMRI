@@ -2,9 +2,7 @@ package jmri.jmrit.logixng;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test that LogixNG has at least the same features as Logix

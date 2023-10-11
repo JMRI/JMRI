@@ -47,8 +47,10 @@ public interface LogixManager extends Manager<Logix> {
      */
     Logix getLogix(String name);
 
+    @Override
     Logix getByUserName(String s);
 
+    @Override
     Logix getBySystemName(String s);
 
     /**

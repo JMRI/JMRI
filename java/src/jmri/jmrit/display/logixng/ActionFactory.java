@@ -1,7 +1,6 @@
 package jmri.jmrit.display.logixng;
 
 import java.util.AbstractMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 

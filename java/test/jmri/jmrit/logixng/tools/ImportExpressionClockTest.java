@@ -5,8 +5,6 @@ import java.util.Date;
 import java.lang.reflect.Field;
 
 import jmri.*;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.simpleclock.SimpleTimebase;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 

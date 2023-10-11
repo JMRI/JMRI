@@ -402,7 +402,8 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+	        <li>The LogixNG Icon has been added to the toolbars.  The LogixNG Icon can run inline
+	        LogixNGs by clicking on the icon or text label when converted to text.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -419,7 +420,11 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>When a LogixNG was created and ConditionalNGs
+          was created for that LogixNG, the ConditionalNGs
+          wasn't executing until restart of JMRI if the
+          ConditionalNGs had the <strong>Startup</strong>
+          flag unchecked. That's fixed now.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>

@@ -1,12 +1,6 @@
 package jmri;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
 import java.util.ArrayList;
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A Transit is a group of Sections representing a specified path through a

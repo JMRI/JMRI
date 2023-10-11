@@ -10,10 +10,8 @@ import jmri.jmrit.audio.AudioSource;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
 import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
-import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.ThreadingUtil;
-import jmri.util.TypeConversionUtil;
 
 /**
  * This action controls an audio object.

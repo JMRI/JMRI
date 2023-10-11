@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
-import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.ToDo;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

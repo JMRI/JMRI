@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.nio.ByteBuffer;
-import java.util.Random;
-
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
