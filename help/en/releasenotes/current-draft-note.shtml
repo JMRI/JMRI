@@ -121,7 +121,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Updates to most recent OpenLCB Java librar, which includes
+                <li>Updates to most recent OpenLCB Java library, which includes
                     <ul>
                         <li>Better status logging of save and restore operations
                         <li>Allows user to change the default backup filename using
