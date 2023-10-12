@@ -101,6 +101,7 @@ public class BiDiBThrottleManager extends AbstractThrottleManager {
 //        return (DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28 | DccThrottle.SpeedStepMode14);
 //        //return (DccThrottle.SpeedStepMode14 );
 //    }
+    @Override
     public EnumSet<SpeedStepMode> supportedSpeedModes() {
         return EnumSet.of(SpeedStepMode.NMRA_DCC_128
                 , SpeedStepMode.NMRA_DCC_28

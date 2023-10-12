@@ -250,12 +250,14 @@ public class BiDiBThrottle extends AbstractThrottle {
         }
         // BiDiB has only one message to set speed, direction and all functions
         int addr = locoAddress.getNumber();
-        SpeedStepsEnum mode = SpeedStepsEnum.DCC128; //default
+        SpeedStepsEnum mode;
         switch(this.speedStepMode) {
             case NMRA_DCC_14:
                 mode = SpeedStepsEnum.DCC14; break;
             case NMRA_DCC_28:
                 mode = SpeedStepsEnum.DCC28; break;
+            default:
+                mode = SpeedStepsEnum.DCC128; break;
         }
         Integer speed = intSpeed(speedSetting);
         DirectionEnum dir = isForward ? DirectionEnum.FORWARD : DirectionEnum.BACKWARD;

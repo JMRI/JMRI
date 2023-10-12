@@ -95,7 +95,7 @@ public class BiDiBSignalMast extends AbstractSignalMast implements BiDiBNamedBea
                         memo = (BiDiBSystemConnectionMemo)m;
                     } else {
                         log.error("Can't create mast \"{}\" because system \"{}}\" is not BiDiBSystemConnectionMemo but rather {}",
-                                systemName, systemPrefix, memo.getClass());
+                                systemName, systemPrefix, m.getClass());
                     }
                     break;
                 }

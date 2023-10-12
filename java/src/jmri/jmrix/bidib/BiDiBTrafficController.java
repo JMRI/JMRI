@@ -879,7 +879,6 @@ public class BiDiBTrafficController implements CommandStation {
         } catch (ProtocolException e) {
             log.error("getAllConfigX message failed:", e);
         }
-        log.trace("returned port config list from node {}:\n{}", node, portConfigXList);
         return portConfigXList;
     }
     
@@ -952,6 +951,8 @@ public class BiDiBTrafficController implements CommandStation {
                     switch (ioCtrl) {
                         case 0: //simple output
                             ticks = 0; //disable
+                            switchControl = (1 << 4); //1 << 4 | 0
+                            break;
                         case 1: //high pulse (same than simple output, but turns off after ticks
                             switchControl = (1 << 4); //1 << 4 | 0
                             break;
@@ -960,6 +961,11 @@ public class BiDiBTrafficController implements CommandStation {
                             break;
                         case 3: //tristate
                             ticks = 0;
+                            break;
+                        default:
+                            // same as tristate TODO: Support 4 (pullup) and 5 (pulldown) - port is an input then (??, spec not clear)
+                            ticks = 0;
+                            break;
                     }
                     BytePortConfigValue pcfgTicks = new BytePortConfigValue(ticks);
                     BytePortConfigValue pcfgSwitchControl = new BytePortConfigValue(switchControl);

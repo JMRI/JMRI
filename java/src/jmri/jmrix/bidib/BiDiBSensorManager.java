@@ -57,7 +57,7 @@ public class BiDiBSensorManager extends jmri.managers.AbstractSensorManager {
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
         log.trace("createNewSensor {} - {}", systemName, userName);
-        String addr = systemName.substring(getSystemPrefix().length() + 1);
+        //String addr = systemName.substring(getSystemPrefix().length() + 1);
         // first, check validity
         try {
             validateSystemNameFormat(systemName);
@@ -205,9 +205,9 @@ public class BiDiBSensorManager extends jmri.managers.AbstractSensorManager {
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
         log.trace("validSystemNameFormat: systemNname: {}", systemName);
-        String addr;
+        //String addr;
         try {
-            addr = systemName.substring(getSystemPrefix().length() + 1); // get only the address part
+            /*addr = */ systemName.substring(getSystemPrefix().length() + 1); // get only the address part
         } catch (StringIndexOutOfBoundsException e) {
             return NameValidity.INVALID;
         }

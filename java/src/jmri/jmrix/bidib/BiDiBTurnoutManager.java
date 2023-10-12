@@ -52,7 +52,7 @@ public class BiDiBTurnoutManager extends jmri.managers.AbstractTurnoutManager {/
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         log.trace("createNewTurnout {} - {}", systemName, userName);
-        String addr = systemName.substring(getSystemPrefix().length() + 1);
+        //String addr = systemName.substring(getSystemPrefix().length() + 1);
         // first, check validity
         try {
             validateSystemNameFormat(systemName);
