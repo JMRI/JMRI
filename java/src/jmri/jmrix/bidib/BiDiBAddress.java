@@ -141,7 +141,9 @@ public class BiDiBAddress {
                     if (typeLetter == 'S') {
                         switch(addrType) {
                             case "t":
-                                addrType = "f"; 
+                                addrType = "f"; //what does "t" mean here? Silently convert to "f"
+                                if (!NodeUtils.hasFeedbackFunctions(uid)) addrType = "";
+                                break; //don't use "fall through" as some code checkers does not like it...
                             case "f":
                                 if (!NodeUtils.hasFeedbackFunctions(uid)) addrType = "";
                                 break;

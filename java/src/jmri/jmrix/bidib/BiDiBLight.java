@@ -287,6 +287,9 @@ public class BiDiBLight extends AbstractVariableLight implements BiDiBNamedBeanI
                 case BidibLibrary.BIDIB_PORT_DIMM_ON:
                     intensity = mMaxIntensity;
                     break;
+                default:
+                    intensity = 0;
+                    break;
             }
             notifyTargetIntensityChange(intensity);
             if (portstat == BidibLibrary.BIDIB_PORT_DIMM_OFF  ||  portstat == BidibLibrary.BIDIB_PORT_TURN_OFF) {

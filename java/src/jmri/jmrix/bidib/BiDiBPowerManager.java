@@ -2,6 +2,7 @@ package jmri.jmrix.bidib;
 
 import static jmri.PowerManager.OFF;
 import static jmri.PowerManager.ON;
+import static jmri.PowerManager.POWER;
 
 import jmri.JmriException;
 import jmri.PowerManager;
@@ -19,7 +20,7 @@ import org.bidib.jbidibc.messages.message.BoostOffMessage;
 import org.bidib.jbidibc.messages.message.BoostQueryMessage;
 import org.bidib.jbidibc.messages.message.CommandStationSetStateMessage;
 import org.bidib.jbidibc.messages.utils.NodeUtils;
-
+import org.bidib.jbidibc.messages.utils.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,6 +56,7 @@ public class BiDiBPowerManager implements PowerManager {
 
     @Override
     public void setPower(int v) throws JmriException {
+        int old = power;
         power = UNKNOWN;
         checkTC();
         Node csnode = tc.getFirstCommandStationNode();
@@ -72,9 +74,9 @@ public class BiDiBPowerManager implements PowerManager {
             if (csnode != null) {
                 tc.sendBiDiBMessage(new CommandStationSetStateMessage(CommandStationState.OFF), csnode);
             }
-            tc.sendBiDiBMessage(new BoostOffMessage(BoostOnMessage.BROADCAST_MESSAGE), tc.getRootNode());
+            tc.sendBiDiBMessage(new BoostOffMessage(BoostOffMessage.BROADCAST_MESSAGE), tc.getRootNode());
         }
-        firePropertyChange("Power", null, null);
+        firePropertyChange(POWER, old, power);
     }
 
     /**
@@ -169,15 +171,13 @@ public class BiDiBPowerManager implements PowerManager {
             @Override
             public void boosterState(byte[] address, int messageNum, BoosterState state, BoosterControl control) {//ByteUtils
                 Node node = tc.getFirstBoosterNode();
-                //log.trace("booster state: msg addr: {}, booster: {}, state: {}, control: {}", ByteUtils.bytesToHex(address), node, state.getType(), control.getType());
+                log.trace("booster state: msg addr: {}, booster: {}, state: {}, control: {}", ByteUtils.bytesToHex(address), node, state.getType(), control.getType());
                 if (NodeUtils.isAddressEqual(node.getAddr(), address)) {
                     log.info("POWER booster state was signalled: {}, control: {}", state.getType(), control.getType());
+                    int old = power;
                     power = BoosterState.isOnState(state) ? ON : OFF;
-                    if (BoosterState.isOnState(state)) {
-                        firePropertyChange("Power", null, null);
-                    } else {
-                        firePropertyChange("Power", null, null);
-                    }
+                    log.debug("change {} from {} to {}", POWER, old, power);
+                    firePropertyChange(POWER, old, power);
                 }
             }
             @Override
