@@ -29,6 +29,6 @@ public class PrintTrainAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        new PrintTrains(_isPreview, _train);
+        new PrintTrainsFrame(_isPreview, _train);
     }
 }
