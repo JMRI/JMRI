@@ -30,11 +30,11 @@ import org.slf4j.LoggerFactory;
  */
 public class BiDiBNodeInitializer implements Runnable {
 
-    private class simplePair {
+    private static class SimplePair {
         public Node node;
         public boolean isNewNode; //true: new node, false: node lost
         
-        public simplePair(Node node, boolean isNewNode) {
+        public SimplePair(Node node, boolean isNewNode) {
             this.node = node;
             this.isNewNode = isNewNode;
         }
@@ -43,9 +43,9 @@ public class BiDiBNodeInitializer implements Runnable {
     private final Map<Long, Node> nodes;
     private final BidibInterface bidib;
     private final BiDiBTrafficController tc;
-    private simplePair currentNode;
+    private SimplePair currentNode;
     private Thread initThread;
-    private final LinkedList<simplePair> queue;
+    private final LinkedList<SimplePair> queue;
     
     
     public BiDiBNodeInitializer(BiDiBTrafficController tc, BidibInterface bidib, Map<Long, Node> nodes) {
@@ -106,7 +106,7 @@ public class BiDiBNodeInitializer implements Runnable {
                     }
                 }
                 catch (ProtocolException ex) {
-                    log.error("Features can't be loaded from node: " + ex.getMessage());
+                    log.error("Features can't be loaded from node: {}", ex.getMessage());
                 }
                 log.info("Finished query features."); // NOSONAR
 
@@ -239,13 +239,13 @@ public class BiDiBNodeInitializer implements Runnable {
                 }
                 initThread = new Thread(this, "NodeInitThread"); //create a new thread
                 initThread.setPriority(Thread.MIN_PRIORITY);
-                queue.add(new simplePair(node, isNewNode));
+                queue.add(new SimplePair(node, isNewNode));
                 initThread.start();
                 log.debug("thread was started - return");
             }
             else {
                 // Thread running, just add the node to the queue
-                queue.add(new simplePair(node, isNewNode));
+                queue.add(new SimplePair(node, isNewNode));
                 log.debug("thread running, just add node to queue and return");
             }
         }
@@ -279,7 +279,7 @@ public class BiDiBNodeInitializer implements Runnable {
                     nodeNewBeans(currentNode.node);
                 }
                 catch (Exception e) {
-                    log.warn("error initializing node {} {}", currentNode.node, e);
+                    log.warn("error initializing node {}", currentNode.node, e);
                 }
             }
             else {

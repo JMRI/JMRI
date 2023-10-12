@@ -142,7 +142,7 @@ public class BiDiBTurnout extends AbstractTurnout implements BiDiBNamedBeanInter
                 // first look for the double case, which we can't handle
                 if ((s & Turnout.THROWN) != 0) {
                     // this is the disaster case!
-                    log.error("Cannot command both CLOSED and THROWN " + s);
+                    log.error("Cannot command both CLOSED and THROWN {}", s);
                 } else {
                     // send a CLOSED command
                     sendMessage(true ^ getInverted());

@@ -38,7 +38,7 @@ public class BiDiBThrottleManager extends AbstractThrottleManager {
     public void requestThrottleSetup(LocoAddress a, boolean control) {
         DccLocoAddress address = (DccLocoAddress) a;
         BiDiBThrottle throttle;
-        log.debug("request BiDiBThrottle for " + address);
+        log.debug("request BiDiBThrottle for {}", address);
         // the BiDiB protocol doesn't require an interaction with the command
         // station for this, so immediately trigger the callback.
         

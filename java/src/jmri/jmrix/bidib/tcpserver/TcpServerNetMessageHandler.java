@@ -38,7 +38,7 @@ public class TcpServerNetMessageHandler  implements NetMessageHandler {
         log.debug("Received a packet from address: {}, port: {}, data: {}", packet.getAddress(), packet.getPort(),
                 ByteUtils.bytesToHex(packet.getData()));
 
-        BidibNetAddress current = new BidibNetAddress(packet.getAddress(), packet.getPort());
+//        BidibNetAddress current = new BidibNetAddress(packet.getAddress(), packet.getPort());
 //        if (!knownBidibHosts.contains(current)) {
 //
 //            LOGGER.info("Adding new known Bidib host: {}", current);
@@ -83,7 +83,7 @@ public class TcpServerNetMessageHandler  implements NetMessageHandler {
             port.send(output.toByteArray(), null, 0); //InetAdress and port are not used in send, so no need to provide them
         }
         catch (Exception e) {
-            log.warn("no data sent {}", e);
+            log.warn("no data sent", e);
         }
     }
     

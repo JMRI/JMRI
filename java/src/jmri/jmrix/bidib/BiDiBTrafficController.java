@@ -137,7 +137,7 @@ public class BiDiBTrafficController implements CommandStation {
             public void error(byte[] address, int messageNum, int errorCode, byte[] reasonData) {
                 log.debug("Node error event: addr: {}, msg num: {}, error code: {}, data: {}", address, messageNum, errorCode, reasonData);
                 if (errorCode == 1) {
-                    log.info(new String(reasonData));
+                    log.info("error: {}", new String(reasonData));
                 }
             }
 
@@ -160,23 +160,24 @@ public class BiDiBTrafficController implements CommandStation {
                         txt += value.replace("\n","");
                         switch(stringId) {
                             case StringData.INDEX_DEBUG_STDOUT:
-                                log.info("{} {} stdout: {}", prefix, uid, txt);
+                                log.info("INDEX_DEBUG_STDOUT: {} {} stdout: {}", prefix, uid, txt);
                                 break;
                             case StringData.INDEX_DEBUG_STDERR:
-                                log.info("{} {} stderr: {}", prefix, uid, txt);
+                                log.info("INDEX_DEBUG_STDERR: {} {} stderr: {}", prefix, uid, txt);
                                 break;
                             case StringData.INDEX_DEBUG_WARN:
-                                log.warn("{} {}: {}", prefix, uid, txt);
+                                log.warn("INDEX_DEBUG_WARN: {} {}: {}", prefix, uid, txt);
                                 break;
                             case StringData.INDEX_DEBUG_INFO:
-                                log.info("{} {}: {}", prefix, uid, txt);
+                                log.info("INDEX_DEBUG_INFO: {} {}: {}", prefix, uid, txt);
                                 break;
                             case StringData.INDEX_DEBUG_DEBUG:
-                                log.debug("{} {}: {}", prefix, uid, txt);
+                                log.debug("INDEX_DEBUG_DEBUG: {} {}: {}", prefix, uid, txt);
                                 break;
                             case StringData.INDEX_DEBUG_TRACE:
-                                log.trace("{} {}: {}", prefix, uid, txt);
+                                log.trace("INDEX_DEBUG_TRACE: {} {}: {}", prefix, uid, txt);
                                 break;
+                            default: break;
                         }
                     }
                     else {
@@ -379,11 +380,10 @@ public class BiDiBTrafficController implements CommandStation {
 
         }
         catch (PortNotFoundException ex) {
-            log.error("The provided port was not found: " + ex.getMessage() // NOSONAR
-                + ". Verify that the BiDiB device is connected.");
+            log.error("The provided port was not found: {}. Verify that the BiDiB device is connected.", ex.getMessage());
         }
         catch (Exception ex) {
-            log.error("Execute command failed: " + ex); // NOSONAR
+            log.error("Execute command failed: ", ex); // NOSONAR
         }
         return null;
     }
@@ -877,7 +877,7 @@ public class BiDiBTrafficController implements CommandStation {
                 }
             }
         } catch (ProtocolException e) {
-            log.error("getAllConfigX message failed: {}", e);
+            log.error("getAllConfigX message failed:", e);
         }
         log.trace("returned port config list from node {}:\n{}", node, portConfigXList);
         return portConfigXList;
@@ -914,7 +914,7 @@ public class BiDiBTrafficController implements CommandStation {
                 }
             }
         } catch (ProtocolException e) {
-            log.error("getConfigXBulk message failed: {}", e);
+            log.error("getConfigXBulk message failed", e);
         }
         return null; ////////TODO remove return value completely
     }
@@ -1192,7 +1192,7 @@ public class BiDiBTrafficController implements CommandStation {
                 log.trace("  bidib node: {}", getBidib().getNode(node));
                 BidibNodeAccessor.sendNoWait(getBidib().getNode(node), m);
             } catch (ProtocolException e) {
-                log.error("sending BiDiB message failed: {}", e);
+                log.error("sending BiDiB message failed", e);
             }
         }
         else {
@@ -1242,7 +1242,7 @@ public class BiDiBTrafficController implements CommandStation {
                         hasChanged = 1;
                     }
                     catch (ProtocolException e) {
-                        log.error("sending MSG_CS_STATE message failed: {}", e);
+                        log.error("sending MSG_CS_STATE message failed", e);
                         currentGlobalProgrammerNode = null;
                         hasChanged = -1;
                     }
@@ -1308,7 +1308,7 @@ public class BiDiBTrafficController implements CommandStation {
                 jmri.util.TimerUtil.schedule(watchdogTimer, timeout, timeout);
             }
             else {
-                log.debug("set watchdog FALSE, requested state: {}, timeout: {}", state);
+                log.debug("set watchdog FALSE, requested state: {}, timeout", state);
                 watchdogStatus.set(false);
                 if (watchdogTimer != null) {
                     watchdogTimer.cancel();
@@ -1442,7 +1442,7 @@ public class BiDiBTrafficController implements CommandStation {
             bidib.getRootNode().sysDisable();
         }
         catch (ProtocolException e) {
-            log.error("unable to disable node: {}", e);
+            log.error("unable to disable node", e);
         }
         
         log.debug("Cleanup ends");

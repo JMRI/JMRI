@@ -57,7 +57,7 @@ public class BiDiBTurnoutManager extends jmri.managers.AbstractTurnoutManager {/
         try {
             validateSystemNameFormat(systemName);
         } catch (IllegalArgumentException e) {
-            log.error(e.toString());
+            log.error("failed to validate:", e);
             throw e;
         }
         

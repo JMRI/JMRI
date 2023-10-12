@@ -62,7 +62,7 @@ public class BiDiBSensorManager extends jmri.managers.AbstractSensorManager {
         try {
             validateSystemNameFormat(systemName);
         } catch (IllegalArgumentException e) {
-            log.error(e.toString());
+            log.error("Illegal address", e);
             throw e;
         }
         // OK, make

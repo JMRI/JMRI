@@ -79,11 +79,11 @@ public class BiDiBSignalMast extends AbstractSignalMast implements BiDiBNamedBea
         BiDiBSystemConnectionMemo memo = null;
         String[] parts = systemName.split(":", 3); //the last part contains a BiDiB address and therfor may contain a colon itself
         if (parts.length < 3) {
-            log.error("SignalMast system name needs at least three parts: " + systemName);
+            log.error("SignalMast system name needs at least three parts: {}", systemName);
             throw new IllegalArgumentException("System name needs at least three parts: " + systemName);
         }
         if (!parts[0].endsWith(mastType)) {
-            log.warn("First part of SignalMast system name is incorrect " + systemName + " : " + mastType);
+            log.warn("First part of SignalMast system name is incorrect {} : {}", systemName, mastType);
         } else {
             String systemPrefix = parts[0].substring(0, parts[0].indexOf("$") - 1);
             java.util.List<SystemConnectionMemo> memoList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
@@ -94,14 +94,16 @@ public class BiDiBSignalMast extends AbstractSignalMast implements BiDiBNamedBea
                         tc = ((BiDiBSystemConnectionMemo) m).getBiDiBTrafficController();
                         memo = (BiDiBSystemConnectionMemo)m;
                     } else {
-                        log.error("Can't create mast \""+systemName+"\" because system \"" + systemPrefix + "\" is not BiDiBSystemConnectionMemo but rather "+memo.getClass());
+                        log.error("Can't create mast \"{}\" because system \"{}}\" is not BiDiBSystemConnectionMemo but rather {}",
+                                systemName, systemPrefix, memo.getClass());
                     }
                     break;
                 }
             }
 
             if (tc == null) {
-                log.error("No BiDiB connection found for system prefix \"" + systemPrefix + "\", so mast \""+systemName+"\" will not function");
+                log.error("No BiDiB connection found for system prefix \"{}\", so mast \"{}\" will not function",
+                            systemPrefix, systemName);
             }
         }
         String system = parts[1];

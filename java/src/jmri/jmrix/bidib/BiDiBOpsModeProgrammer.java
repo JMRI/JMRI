@@ -50,7 +50,7 @@ public class BiDiBOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
         tc = controller;
         node = tc.getFirstCommandStationNode();
         if (log.isDebugEnabled()) {
-            log.debug("Creating Ops Mode Programmer for Address " + pAddress);
+            log.debug("Creating Ops Mode Programmer for Address {}", pAddress);
         }
         mAddress = pAddress;
         // register as a listener
@@ -91,7 +91,7 @@ public class BiDiBOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
             csNode.writePom(false, decoderAddress, CommandStationPom.WR_BYTE, cv, value);
         }
         catch (ProtocolException ex) {
-            log.error("writePom async failed on node: {}, addr: {} - {}", node, decoderAddress, ex);
+            log.error("writePom async failed on node: {}, addr: {} - ", node, decoderAddress, ex);
             progState = NOTPROGRAMMING;
             notifyProgListenerEnd(p, 0, PomAcknowledge.NOT_ACKNOWLEDGED);
         }
@@ -145,7 +145,7 @@ public class BiDiBOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
             csNode.readPom(false, decoderAddress, CommandStationPom.RD_BYTE, cv);
         }
         catch (ProtocolException ex) {
-            log.error("readPom async failed on node: {}, addr: {} - {}", node, decoderAddress, ex);
+            log.error("readPom async failed on node: {}, addr: {} - ", node, decoderAddress, ex);
             progState = NOTPROGRAMMING;
             notifyProgListenerEnd(p, 0, PomAcknowledge.NOT_ACKNOWLEDGED);
         }
@@ -183,7 +183,7 @@ public class BiDiBOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
 
     public void notifyProgListenerEnd(ProgListener p, int value, PomAcknowledge result) {
         if (log.isDebugEnabled()) {
-            log.debug("notifyProgListenerEnd value " + value);
+            log.debug("notifyProgListenerEnd value {}", value);
         }
         stopTimer();
         tc.removeMessageListener(messageListener);        

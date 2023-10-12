@@ -48,12 +48,12 @@ public class BiDiBLightManager extends AbstractLightManager {
     @Override
     public Light createNewLight(String systemName, String userName) {
         log.trace("createNewLight {} - {}", systemName, userName);
-        String addr = systemName.substring(getSystemPrefix().length() + 1);
+
         // first, check validity
         try {
             validateSystemNameFormat(systemName);
         } catch (IllegalArgumentException e) {
-            log.error(e.toString());
+            log.error("Error validating", e);
             throw e;
         }
         // OK, make
@@ -139,9 +139,8 @@ public class BiDiBLightManager extends AbstractLightManager {
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        String addr;
         try {
-            addr = systemName.substring(getSystemPrefix().length() + 1); // get only the address part
+            systemName.substring(getSystemPrefix().length() + 1); // get only the address part
         } catch (StringIndexOutOfBoundsException e) {
             return NameValidity.INVALID;
         }

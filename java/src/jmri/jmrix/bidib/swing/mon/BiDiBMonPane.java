@@ -260,6 +260,8 @@ public class BiDiBMonPane extends jmri.jmrix.AbstractMonPane implements BiDiBPan
                             line += ", " + dynText + ": " + m.getTimestamp();
                         }
                         break;
+                    default:
+                        log.error("Unexpected case: {}", dynNumber);
                 }
             }
                 break;
@@ -437,6 +439,7 @@ public class BiDiBMonPane extends jmri.jmrix.AbstractMonPane implements BiDiBPan
                                     line2 += prefix + " TRACE: " + txt;
                                 }
                                 break;
+                            default: break;
                         }
                         if (!line2.isEmpty()) {
                             line = line2;
@@ -780,7 +783,7 @@ public class BiDiBMonPane extends jmri.jmrix.AbstractMonPane implements BiDiBPan
                     logMessage(">>", data, messages, lines);
                 }
                 catch (ProtocolException ex) {
-                    log.error("Illegal BiDiB Message to send: {} {}", data, ex);
+                    log.error("Illegal BiDiB Message to send: {}", data, ex);
                 }
             }
         };
