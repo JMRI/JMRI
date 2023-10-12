@@ -160,22 +160,22 @@ public class BiDiBTrafficController implements CommandStation {
                         txt += value.replace("\n","");
                         switch(stringId) {
                             case StringData.INDEX_DEBUG_STDOUT:
-                                log.info("INDEX_DEBUG_STDOUT: {} {} stdout: {}", prefix, uid, txt);
+                                log.info("{} {} stdout: {}", prefix, uid, txt);
                                 break;
                             case StringData.INDEX_DEBUG_STDERR:
-                                log.info("INDEX_DEBUG_STDERR: {} {} stderr: {}", prefix, uid, txt);
+                                log.info("{} {} stderr: {}", prefix, uid, txt);
                                 break;
                             case StringData.INDEX_DEBUG_WARN:
-                                log.warn("INDEX_DEBUG_WARN: {} {}: {}", prefix, uid, txt);
+                                log.warn("{} {}: {}", prefix, uid, txt);
                                 break;
                             case StringData.INDEX_DEBUG_INFO:
-                                log.info("INDEX_DEBUG_INFO: {} {}: {}", prefix, uid, txt);
+                                log.info("{} {}: {}", prefix, uid, txt);
                                 break;
                             case StringData.INDEX_DEBUG_DEBUG:
-                                log.debug("INDEX_DEBUG_DEBUG: {} {}: {}", prefix, uid, txt);
+                                log.debug("{} {}: {}", prefix, uid, txt);
                                 break;
                             case StringData.INDEX_DEBUG_TRACE:
-                                log.trace("INDEX_DEBUG_TRACE: {} {}: {}", prefix, uid, txt);
+                                log.trace("{} {}: {}", prefix, uid, txt);
                                 break;
                             default: break;
                         }
