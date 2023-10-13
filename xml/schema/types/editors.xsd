@@ -1312,6 +1312,21 @@
       <xs:attribute name="sound" type="xs:string"></xs:attribute>
       <xs:attribute name="icon" type="xs:string"></xs:attribute>
       <xs:attribute name="text" type="xs:string"></xs:attribute>
+
+      <xs:attribute name="onClickOperation" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="PlaySoundGlobally"></xs:enumeration>
+            <xs:enumeration value="PlaySoundLocally"></xs:enumeration>
+            <xs:enumeration value="DoNothing"></xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+
+      <xs:attribute name="hideWhenNotInEditMode" type="yesNoType" use="required"></xs:attribute>
+      <xs:attribute name="playSoundWhenJmriPlays" type="yesNoType" use="required"></xs:attribute>
+      <xs:attribute name="stopSoundWhenJmriStops" type="yesNoType" use="required"></xs:attribute>
+
     </xs:complexType>
 
     <xs:complexType name="EditorLogixNGIconType">

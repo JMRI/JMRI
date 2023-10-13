@@ -55,6 +55,11 @@ public class AudioIcon extends PositionableLabel {
         pos._originalIcon = new NamedIcon(_originalIcon);
         pos._originalText = _originalText;
         pos.setAudio(getNamedAudio().getName());
+        pos._hideWhenNotInEditMode = _hideWhenNotInEditMode;
+        pos._onClickOperation = _onClickOperation;
+        pos._playSoundWhenJmriPlays = _playSoundWhenJmriPlays;
+        pos._stopSoundWhenJmriStops = _stopSoundWhenJmriStops;
+
         return super.finishClone(pos);
     }
 
@@ -111,6 +116,38 @@ public class AudioIcon extends PositionableLabel {
 
     public NamedBeanHandle<Audio> getNamedAudio() {
         return namedAudio;
+    }
+
+    public void setHideWhenNotInEditMode(boolean value) {
+        _hideWhenNotInEditMode = value;
+    }
+
+    public boolean getHideWhenNotInEditMode() {
+        return _hideWhenNotInEditMode;
+    }
+
+    public void setOnClickOperation(OnClickOperation operation) {
+        _onClickOperation = operation;
+    }
+
+    public OnClickOperation getOnClickOperation() {
+        return _onClickOperation;
+    }
+
+    public void setPlaySoundWhenJmriPlays(boolean value) {
+        _playSoundWhenJmriPlays = value;
+    }
+
+    public boolean getPlaySoundWhenJmriPlays() {
+        return _playSoundWhenJmriPlays;
+    }
+
+    public void setStopSoundWhenJmriStops(boolean value) {
+        _stopSoundWhenJmriStops = value;
+    }
+
+    public boolean getStopSoundWhenJmriStops() {
+        return _stopSoundWhenJmriStops;
     }
 
     @Override

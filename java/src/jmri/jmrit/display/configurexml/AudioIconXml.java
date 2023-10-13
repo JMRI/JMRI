@@ -59,6 +59,11 @@ public class AudioIconXml extends PositionableLabelXml {
             element.addContent(storeIcon("icon", (NamedIcon) p.getIcon()));
         }
 
+        element.setAttribute("hideWhenNotInEditMode", p.getHideWhenNotInEditMode() ? "yes" : "no");
+        element.setAttribute("onClickOperation", p.getOnClickOperation().name());
+        element.setAttribute("playSoundWhenJmriPlays", p.getPlaySoundWhenJmriPlays() ? "yes" : "no");
+        element.setAttribute("stopSoundWhenJmriStops", p.getStopSoundWhenJmriStops() ? "yes" : "no");
+
         storeLogixNG_Data(p, element);
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.AudioIconXml");
@@ -151,6 +156,25 @@ public class AudioIconXml extends PositionableLabelXml {
             editor.loadFailed();
             return;
         }
+
+        String onClickOperation = element.getAttribute("onClickOperation").getValue();
+        l.setOnClickOperation(AudioIcon.OnClickOperation.valueOf(onClickOperation));
+
+        String yesno = element.getAttribute("hideWhenNotInEditMode").getValue();
+        if ((yesno != null) && (!yesno.equals(""))) {
+            l.setHideWhenNotInEditMode(yesno.equals("yes"));
+        }
+
+        yesno = element.getAttribute("playSoundWhenJmriPlays").getValue();
+        if ((yesno != null) && (!yesno.equals(""))) {
+            l.setPlaySoundWhenJmriPlays(yesno.equals("yes"));
+        }
+
+        yesno = element.getAttribute("stopSoundWhenJmriStops").getValue();
+        if ((yesno != null) && (!yesno.equals(""))) {
+            l.setStopSoundWhenJmriStops(yesno.equals("yes"));
+        }
+
         try {
             editor.putItem(l);
         } catch (Positionable.DuplicateIdException e) {
