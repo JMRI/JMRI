@@ -10,7 +10,6 @@ import org.bidib.jbidibc.messages.SoftwareVersion;
 import org.bidib.jbidibc.messages.StringData;
 import org.bidib.jbidibc.messages.helpers.Context;
 import org.bidib.jbidibc.messages.helpers.DefaultContext;
-import org.bidib.jbidibc.core.node.BidibNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

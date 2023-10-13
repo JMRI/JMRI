@@ -2,7 +2,6 @@ package jmri.jmrix.bidib.configurexml;
 
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
-import jmri.managers.ProxySensorManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

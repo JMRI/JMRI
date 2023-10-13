@@ -1,8 +1,5 @@
 package jmri.jmrix.bidib;
 
-import static jmri.NamedBean.INCONSISTENT;
-
-import java.util.LinkedHashMap;
 import jmri.implementation.AbstractVariableLight;
 import jmri.util.MathUtil;
 

@@ -1,12 +1,7 @@
 package jmri.jmrix.bidib.configurexml;
 
-import java.util.List;
-
 import jmri.InstanceManager;
-import jmri.managers.ProxyLightManager;
-import jmri.Light;
 
-import jmri.jmrix.bidib.BiDiBLight;
 import jmri.jmrix.bidib.BiDiBLightManager;
 import jmri.jmrix.bidib.BiDiBSystemConnectionMemo;
 

@@ -1,6 +1,5 @@
 package jmri.jmrix.bidib.bidibovertcp;
 
-import jmri.jmrix.bidib.serialdriver.*;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;

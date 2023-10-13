@@ -1,14 +1,10 @@
 package jmri.jmrix.bidib;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-import org.bidib.jbidibc.core.AbstractMessageReceiver;
-import org.bidib.jbidibc.core.BidibInterface;
 
 import org.bidib.jbidibc.core.BidibMessageProcessor;
-import org.bidib.jbidibc.core.DefaultMessageListener;
 import org.bidib.jbidibc.messages.ConnectionListener;
 import org.bidib.jbidibc.core.MessageListener;
 import org.bidib.jbidibc.messages.MessageReceiver;
@@ -27,8 +23,6 @@ import org.bidib.jbidibc.core.node.NodeRegistry;
 import org.bidib.jbidibc.core.node.RootNode;
 import org.bidib.jbidibc.core.node.listener.TransferListener;
 import org.bidib.jbidibc.messages.utils.NodeUtils;
-
-import org.mockito.Mockito;
 
 /**
  * Test scaffold to replace the jbidibc BidibInterface

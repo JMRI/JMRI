@@ -1,9 +1,5 @@
 package jmri.jmrix.bidib;
 
-import static jmri.PowerManager.OFF;
-import static jmri.PowerManager.ON;
-import static jmri.PowerManager.POWER;
-
 import jmri.JmriException;
 import jmri.PowerManager;
 

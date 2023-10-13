@@ -1,8 +1,5 @@
 package jmri.jmrix.bidib;
 
-import static jmri.Turnout.CLOSED;
-import static jmri.Turnout.THROWN;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import jmri.NamedBean;

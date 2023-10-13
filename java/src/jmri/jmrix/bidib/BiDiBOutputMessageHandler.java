@@ -26,7 +26,6 @@ import org.bidib.jbidibc.messages.message.BidibCommandMessage;
 import org.bidib.jbidibc.messages.message.BidibRequestFactory;
 import org.bidib.jbidibc.messages.message.CommandStationAccessoryMessage;
 import org.bidib.jbidibc.messages.message.FeedbackGetRangeMessage;
-import org.bidib.jbidibc.messages.message.LcConfigXGetMessage;
 import org.bidib.jbidibc.messages.port.ReconfigPortConfigValue;
 import org.bidib.jbidibc.messages.utils.ByteUtils;
 import org.bidib.jbidibc.messages.utils.NodeUtils;

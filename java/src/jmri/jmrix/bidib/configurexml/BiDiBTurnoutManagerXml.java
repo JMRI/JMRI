@@ -2,7 +2,6 @@ package jmri.jmrix.bidib.configurexml;
 
 import jmri.InstanceManager;
 import jmri.jmrix.bidib.BiDiBSystemConnectionMemo;
-import jmri.managers.ProxyTurnoutManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
