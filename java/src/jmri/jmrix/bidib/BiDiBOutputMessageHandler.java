@@ -56,7 +56,7 @@ public class BiDiBOutputMessageHandler extends DefaultMessageListener {
     final Object portConfigLock = new Object();
 
     // the configLock is used to synchronize config messages
-    private final Object configLock = new Object();
+    //private final Object configLock = new Object();
     
     // internal cs accessory request aspect table since MSG_CS_ACCESSORY_ACK does not return the accessory state
     private final Map<BiDiBAddress, Integer> csAccessoryAspectMap = new LinkedHashMap<>();
@@ -105,7 +105,7 @@ public class BiDiBOutputMessageHandler extends DefaultMessageListener {
             if (addr.isPortAddr()) {
                 if (portExists()  &&  requestFactory != null) {
                     waitQueryConfig();
-                    BidibCommandMessage m = (BidibCommandMessage)requestFactory.createLcOutputMessage(tc.getPortModel(node), lcType, addr.getAddr(), portstat);
+                    BidibCommandMessage m = requestFactory.createLcOutputMessage(tc.getPortModel(node), lcType, addr.getAddr(), portstat);
                     tc.sendBiDiBMessage(m, node);
                 }
             }
@@ -141,10 +141,10 @@ public class BiDiBOutputMessageHandler extends DefaultMessageListener {
                 // only ports have configurations
                 BidibCommandMessage m;
                 if (node.getProtocolVersion().isHigherThan(ProtocolVersion.VERSION_0_6)) { //ConfigX is available since V0.6
-                    m = (BidibCommandMessage)requestFactory.createLcConfigXGet(tc.getPortModel(node), lcType, addr.getAddr());
+                    m = requestFactory.createLcConfigXGet(tc.getPortModel(node), lcType, addr.getAddr());
                 }
                 else {
-                    m = (BidibCommandMessage)requestFactory.createLcConfigGet(tc.getPortModel(node), lcType, addr.getAddr());
+                    m = requestFactory.createLcConfigGet(tc.getPortModel(node), lcType, addr.getAddr());
                 }
                 portConfigx = null;// invalidate
                 tc.sendBiDiBMessage(m, node);
@@ -190,11 +190,11 @@ public class BiDiBOutputMessageHandler extends DefaultMessageListener {
                     waitQueryConfig();
                     BidibCommandMessage m;
                     if (node.getProtocolVersion().isHigherThan(ProtocolVersion.VERSION_0_6)  ||  lcType.getType() <= 7) {
-                        m = (BidibCommandMessage)requestFactory.createLcPortQuery(tc.getPortModel(node), lcType, addr.getAddr());
+                        m = requestFactory.createLcPortQuery(tc.getPortModel(node), lcType, addr.getAddr());
                     }
                     else {
                         // this is only used for input ports on nodes with older firmware (<= 0.6)
-                        m = (BidibCommandMessage)requestFactory.createLcKey(addr.getAddr());
+                        m = requestFactory.createLcKey(addr.getAddr());
                     }
                     tc.sendBiDiBMessage(m, node);
                 }
@@ -232,8 +232,8 @@ public class BiDiBOutputMessageHandler extends DefaultMessageListener {
      * For flat addressing this is only a hint how many ports of this type exists in the flat address range.
      * In the latter case this feature may not been implemented and will return 0.
      * 
-     * @param node
-     * @param port type to look for
+     * @param node to check
+     * @param type to look for
      * @return number of ports for this type.
      */
     private int getPortTypeCount(Node node, LcOutputType type) {

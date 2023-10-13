@@ -51,10 +51,10 @@ public class TcpServer {
     static final String PORT_NUMBER_KEY = "PortNumber";
     static final String SETTINGS_FILE_NAME = "BiDiBOverTcpSettings.ini";
 
-    private TcpServer() {
-        log.debug("BiDiB TcpServer started!");
-        memo = null;
-    }
+    // private TcpServer() {
+    //    log.debug("BiDiB TcpServer started!");
+    //    memo = null;
+    // }
     
     public TcpServer(BiDiBSystemConnectionMemo memo) {
         this.memo = memo;
@@ -200,7 +200,7 @@ public class TcpServer {
             updateServerStateListener();
 
             // Now close all the client connections
-            Object[] clientsArray;
+//            Object[] clientsArray;
 
 //            synchronized (clients) {
 //                clientsArray = clients.toArray();

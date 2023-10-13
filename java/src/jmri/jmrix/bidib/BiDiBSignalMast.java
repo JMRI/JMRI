@@ -252,6 +252,8 @@ public class BiDiBSignalMast extends AbstractSignalMast implements BiDiBNamedBea
                     case INPUTPORT:
                         log.warn("output to INPUT port is not possible, addr: {}", addr);
                         return;
+                    default:
+                        break;
                 }
             }
             else {

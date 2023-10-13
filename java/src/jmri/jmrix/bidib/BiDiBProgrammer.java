@@ -123,7 +123,7 @@ public class BiDiBProgrammer extends AbstractProgrammer {
         _cv = CV;
 
 //TODO bit mode ??
-        sendBiDiBMessage(new CommandStationProgMessage(CommandStationPt.BIDIB_CS_PROG_WR_BYTE, _cv, (int)_val));
+        sendBiDiBMessage(new CommandStationProgMessage(CommandStationPt.BIDIB_CS_PROG_WR_BYTE, _cv, _val));
     }
 
     /** 
@@ -155,7 +155,7 @@ public class BiDiBProgrammer extends AbstractProgrammer {
         _cv = CV;
 
 //TODO bit mode ??
-        sendBiDiBMessage(new CommandStationProgMessage(CommandStationPt.BIDIB_CS_PROG_RD_BYTE, _cv, (int)0));
+        sendBiDiBMessage(new CommandStationProgMessage(CommandStationPt.BIDIB_CS_PROG_RD_BYTE, _cv, 0));
     }
     
     private void sendBiDiBMessage(BidibCommandMessage message) {
@@ -224,15 +224,15 @@ public class BiDiBProgrammer extends AbstractProgrammer {
                                 notifyProgListenerEnd(_val, jmri.ProgListener.OK);
                             }
                             else { //not ok - return error
-                                if (commandStationProgState == commandStationProgState.PROG_NO_LOCO ) {
+                                if (commandStationProgState == CommandStationProgState.PROG_NO_LOCO ) {
                                     log.debug(" error: no loco detected");
                                     notifyProgListenerEnd(_val, jmri.ProgListener.NoLocoDetected);
                                 }
-                                else if (commandStationProgState == commandStationProgState.PROG_STOPPED) {
+                                else if (commandStationProgState == CommandStationProgState.PROG_STOPPED) {
                                     log.debug(" error: user aborted");
                                     notifyProgListenerEnd(_val, jmri.ProgListener.UserAborted);
                                 }
-                                else if (commandStationProgState == commandStationProgState.PROG_NO_ANSWER) {
+                                else if (commandStationProgState == CommandStationProgState.PROG_NO_ANSWER) {
                                     log.debug(" error: no answer");
                                     // hack for BiDiB simulator - it does not report CV8 (manufacturer) and CV7 (decoder version)
                                     // JMRI identify needs them, so we use return CV8=238 (NMRA Reserved) and CV7=42 (you know...)
@@ -251,11 +251,11 @@ public class BiDiBProgrammer extends AbstractProgrammer {
                                         //notifyProgListenerEnd(_val, jmri.ProgListener.OK);
                                     }
                                 }
-                                else if (commandStationProgState == commandStationProgState.PROG_SHORT) {
+                                else if (commandStationProgState == CommandStationProgState.PROG_SHORT) {
                                     log.warn(" error: programming short");
                                     notifyProgListenerEnd(_val, jmri.ProgListener.ProgrammingShort);
                                 }
-                                else if (commandStationProgState == commandStationProgState.PROG_VERIFY_FAILED) {
+                                else if (commandStationProgState == CommandStationProgState.PROG_VERIFY_FAILED) {
                                     log.warn(" error: verify failed");
                                     notifyProgListenerEnd(_val, jmri.ProgListener.ConfirmFailed);
                                 }

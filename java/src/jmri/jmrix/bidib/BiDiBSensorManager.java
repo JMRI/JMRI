@@ -239,7 +239,7 @@ public class BiDiBSensorManager extends jmri.managers.AbstractSensorManager {
         return Bundle.getMessage("AddInputEntryToolTip");
     }
 
-    /**
+    /*
      * {@inheritDoc} Send a query message to get all sensors.
      */
 /* NOT USED

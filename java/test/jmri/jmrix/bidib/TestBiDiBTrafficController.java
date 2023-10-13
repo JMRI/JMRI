@@ -23,13 +23,13 @@ public class TestBiDiBTrafficController extends BiDiBTrafficController {
     
     public TestBiDiBTrafficController(BidibInterface b) {
         super(b);
-        BidibNode bidibNode;
+        // BidibNode bidibNode;
         byte[] addr = {0};
         int nodeVersion = 42;
         long uid = 0xDE000D68001234L; //this is command station like GMBboost Master (CS, Prog and feedback)
         //Node node = new Node(nodeVersion, addr, uid);
         Node node = org.bidib.jbidibc.messages.Node.createNode(nodeVersion, addr, uid);
-        bidibNode = b.getNode(node);
+        // bidibNode = b.getNode(node);
         node.setStoredString(StringData.INDEX_USERNAME, "Test0");
         node.setProtocolVersion(ProtocolVersion.VERSION_0_7);
         node.setSoftwareVersion(new SoftwareVersion (1,42,0));
@@ -39,7 +39,7 @@ public class TestBiDiBTrafficController extends BiDiBTrafficController {
         uid = 0x45000DE8004321L; //this a light and feedback and accessory decoder
         //node = new Node(nodeVersion, addr, uid);
         node = org.bidib.jbidibc.messages.Node.createNode(nodeVersion, addr, uid);
-        bidibNode = b.getNode(node);
+        // bidibNode = b.getNode(node);
         node.setStoredString(StringData.INDEX_USERNAME, "Test1");
         node.setProtocolVersion(ProtocolVersion.VERSION_0_7);
         node.setSoftwareVersion(new SoftwareVersion (1,42,1));
@@ -51,7 +51,7 @@ public class TestBiDiBTrafficController extends BiDiBTrafficController {
         uid = 0x01000DE8009876L; //this a light only controller
         //node = new Node(nodeVersion, addr, uid);
         node = org.bidib.jbidibc.messages.Node.createNode(nodeVersion, addr, uid);
-        bidibNode = b.getNode(node);
+        // bidibNode = b.getNode(node);
         node.setStoredString(StringData.INDEX_USERNAME, "Test2");
         node.setProtocolVersion(ProtocolVersion.VERSION_0_7);
         node.setSoftwareVersion(new SoftwareVersion (1,42,2));
@@ -63,7 +63,7 @@ public class TestBiDiBTrafficController extends BiDiBTrafficController {
         uid = 0x45000DE8014321L; //this a light and feedback and accessory decoder
         //node = new Node(nodeVersion, addr, uid);
         node = org.bidib.jbidibc.messages.Node.createNode(nodeVersion, addr, uid);
-        bidibNode = b.getNode(node);
+        // bidibNode = b.getNode(node);
         node.setStoredString(StringData.INDEX_USERNAME, "01.02-03_04"); //contains all allowed special characters and a leading number
         node.setProtocolVersion(ProtocolVersion.VERSION_0_7);
         node.setSoftwareVersion(new SoftwareVersion (1,42,3));

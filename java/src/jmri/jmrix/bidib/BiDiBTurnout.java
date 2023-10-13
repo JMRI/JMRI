@@ -206,6 +206,9 @@ public class BiDiBTurnout extends AbstractTurnout implements BiDiBNamedBeanInter
                 case INPUTPORT:
                     log.warn("output to INPUT port is not possible, addr: {}", addr);
                     return;
+                default:
+                    // just drop through
+                    break;
             }
         }
         if (getFeedbackMode() == MONITORING) {

@@ -73,7 +73,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      * Same as unpackElement() in super class, but that one is called from load() too late.
      * Get the additional parameters from XML.
      * 
-     * @see unpackElement
+     * @see #unpackElement
      * @param shared selected Element
      * @param perNode from super class
      */

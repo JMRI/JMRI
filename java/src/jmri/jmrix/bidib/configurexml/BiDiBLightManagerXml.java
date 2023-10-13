@@ -63,7 +63,7 @@ public class BiDiBLightManagerXml extends jmri.managers.configurexml.AbstractLig
         return result;
     }
     
-    /**
+    /* 
      * Find the system connection memo object when we only have the XML element <LIGHTS>...</LIGHTS>.
      * This depends on the fact that there is a separate <LIGHTS> element for each connection.
      * We scan the <LIGHT> elements and check if it is an instance of a BiDiBLight. The BiDiBLight object gives us the

@@ -129,6 +129,8 @@ public class BiDiBMonPane extends jmri.jmrix.AbstractMonPane implements BiDiBPan
                 case BidibLibrary.MSG_CS_STATE:
                 case BidibLibrary.MSG_CS_SET_STATE:
                     return true;
+                default:
+                    break;
             }
         }
         return false;
@@ -402,6 +404,10 @@ public class BiDiBMonPane extends jmri.jmrix.AbstractMonPane implements BiDiBPan
                     String prefix = "===== device";
                     int stringId = m.getStringData().getIndex();
                     String value = m.getStringData().getValue();
+                    if (node == null) {
+                        log.error("Found node null in MSG_STRING");
+                        break;
+                    }
                     long key = (node.getUniqueId() & 0x0000ffffffffffL) | (long)stringId << 40;
                     if (value.charAt(value.length() - 1) == '\n') {
                         String txt = "";
@@ -665,6 +671,8 @@ public class BiDiBMonPane extends jmri.jmrix.AbstractMonPane implements BiDiBPan
                 break;
             case flat_extended:
                 portModelName = "flat-extended";
+                break;
+            default:
                 break;
         }
         return portModelName;

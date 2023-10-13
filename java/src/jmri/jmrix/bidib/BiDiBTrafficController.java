@@ -1092,7 +1092,7 @@ public class BiDiBTrafficController implements CommandStation {
 //                    }
 //                }
                 // just query everything
-                BidibCommandMessage m = (BidibCommandMessage)rf.createPortQueryAll(typemask, 0, 0xFFFF);
+                BidibCommandMessage m = rf.createPortQueryAll(typemask, 0, 0xFFFF);
                 sendBiDiBMessage(m, node);
             }
             else {
@@ -1102,7 +1102,7 @@ public class BiDiBTrafficController implements CommandStation {
                     // since flat addressing is only available since version 0.6, this is only possible with exactly version 0.6
                     numPorts = node.getPortFlatModel();
                     for (int addr = 0; addr < numPorts; addr++) {
-                        BidibCommandMessage m = (BidibCommandMessage)rf.createLcPortQuery(getPortModel(node), null, addr);
+                        BidibCommandMessage m = rf.createLcPortQuery(getPortModel(node), null, addr);
                         sendBiDiBMessage(m, node);
                     }
                 }
@@ -1112,7 +1112,7 @@ public class BiDiBTrafficController implements CommandStation {
                         if ( ((tmask & typemask) != 0)  &&  t.hasPortStatus()  &&  t.getType() <= 7) { //outputs only - for old protocol version
                             numPorts = getTypeCount(node, t);
                             for (int addr = 0; addr < numPorts; addr++) {
-                                BidibCommandMessage m = (BidibCommandMessage)rf.createLcPortQuery(getPortModel(node), t, addr);
+                                BidibCommandMessage m = rf.createLcPortQuery(getPortModel(node), t, addr);
                                 sendBiDiBMessage(m, node);
                             }
                         }
@@ -1123,7 +1123,7 @@ public class BiDiBTrafficController implements CommandStation {
                     if ( ((tmask & typemask) != 0) ) {
                         numPorts = getTypeCount(node, t);
                         for (int addr = 0; addr < numPorts; addr++) {
-                            BidibCommandMessage m = (BidibCommandMessage)rf.createLcKey(addr);
+                            BidibCommandMessage m = rf.createLcKey(addr);
                             sendBiDiBMessage(m, node);
                         }
                     }
@@ -1303,7 +1303,7 @@ public class BiDiBTrafficController implements CommandStation {
             long timeout = 0;
             log.trace("setWatchdogTimer {} on node {}", state, csnode);
             if (csnode != null) {
-                timeout = (long) (getNodeFeature(csnode, BidibLibrary.FEATURE_GEN_WATCHDOG)) * 100L; //value in milliseconds
+                timeout = getNodeFeature(csnode, BidibLibrary.FEATURE_GEN_WATCHDOG) * 100L; //value in milliseconds
                 log.trace("FEATURE_GEN_WATCHDOG in ms: {}", timeout);
                 if (timeout < 2000) {
                     timeout = timeout / 2; //half the devices watchdog timeout value for small values

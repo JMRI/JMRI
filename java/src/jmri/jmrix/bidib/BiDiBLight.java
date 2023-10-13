@@ -25,7 +25,7 @@ public class BiDiBLight extends AbstractVariableLight implements BiDiBNamedBeanI
     private final char typeLetter;
     private BiDiBTrafficController tc = null;
     protected BiDiBOutputMessageHandler messageHandler = null;
-    private LcConfigX portConfigx;
+    //private LcConfigX portConfigx;
     private LcOutputType lcType; //cached type from portConfigX or fixed in type based address
 
     /**
@@ -45,7 +45,7 @@ public class BiDiBLight extends AbstractVariableLight implements BiDiBNamedBeanI
     }
     
     private void init() {
-        portConfigx = new LcConfigX(addr.makeBidibPort(), new LinkedHashMap<>() );
+        // portConfigx = new LcConfigX(addr.makeBidibPort(), new LinkedHashMap<>() );
 
         createLightListener();
         
@@ -141,6 +141,9 @@ public class BiDiBLight extends AbstractVariableLight implements BiDiBNamedBeanI
                 case MOTORPORT: //not really supported so far
                 case ANALOGPORT: //not specified!
                     return true;
+                default:
+                    // drop through and return false
+                    break;
             }
         }
         return false;
@@ -299,7 +302,7 @@ public class BiDiBLight extends AbstractVariableLight implements BiDiBNamedBeanI
             }
         }
         else if (isIntensityVariable()) {
-            double intensity = (double) MathUtil.pin( (double)portstat / 255, 0.0, 1.0);
+            double intensity = MathUtil.pin( (double)portstat / 255, 0.0, 1.0);
             notifyTargetIntensityChange(intensity);
             notifyStateChange(mState, intensity <= mMinIntensity ? OFF : ON);
         }

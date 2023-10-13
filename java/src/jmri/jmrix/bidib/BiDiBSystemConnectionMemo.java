@@ -169,7 +169,7 @@ public class BiDiBSystemConnectionMemo extends DefaultSystemConnectionMemo /* im
         if (getDisabled()) {
             return null;
         }
-        return (BiDiBProgrammerManager) classObjectMap.computeIfAbsent(BiDiBProgrammerManager.class,(Class c) ->  {
+        return (BiDiBProgrammerManager) classObjectMap.computeIfAbsent(BiDiBProgrammerManager.class,(Class<?> c) ->  {
             BiDiBProgrammerManager programmerManager = new BiDiBProgrammerManager(this);
             log.debug("programmer manager created: {}", programmerManager);
             return programmerManager;
@@ -188,7 +188,7 @@ public class BiDiBSystemConnectionMemo extends DefaultSystemConnectionMemo /* im
         if (getDisabled()) {
             return null;
         }
-        return (ThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class, (Class c) -> {
+        return (ThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class, (Class<?> c) -> {
             ThrottleManager throttleManager = new BiDiBThrottleManager(this);
             log.debug("throttle manager created: {}", throttleManager);
             return throttleManager;
@@ -208,7 +208,7 @@ public class BiDiBSystemConnectionMemo extends DefaultSystemConnectionMemo /* im
         if (getDisabled()) {
             return null;
         }
-        return (PowerManager) classObjectMap.computeIfAbsent(PowerManager.class, (Class c) -> {
+        return (PowerManager) classObjectMap.computeIfAbsent(PowerManager.class, (Class<?> c) -> {
             PowerManager powerManager = new BiDiBPowerManager(this);
             log.debug("power manager created: {}", powerManager);
             return powerManager;
@@ -229,7 +229,7 @@ public class BiDiBSystemConnectionMemo extends DefaultSystemConnectionMemo /* im
         if (getDisabled()) {
             return null;
         }
-        return (SensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class c) -> {
+        return (SensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class<?> c) -> {
             SensorManager sensorManager = new BiDiBSensorManager(this);
             log.debug("sensor manager created: {}", sensorManager);
             return sensorManager;
@@ -249,7 +249,7 @@ public class BiDiBSystemConnectionMemo extends DefaultSystemConnectionMemo /* im
         if (getDisabled()) {
             return null;
         }
-        return (ReporterManager) classObjectMap.computeIfAbsent(ReporterManager.class, (Class c) -> {
+        return (ReporterManager) classObjectMap.computeIfAbsent(ReporterManager.class, (Class<?> c) -> {
             ReporterManager reporterManager = new BiDiBReporterManager(this);
             log.debug("reporter manager created: {}", reporterManager);
             return reporterManager;
@@ -268,7 +268,7 @@ public class BiDiBSystemConnectionMemo extends DefaultSystemConnectionMemo /* im
         if (getDisabled()) {
             return null;
         }
-        return (TurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class, (Class c) -> {
+        return (TurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class, (Class<?> c) -> {
             TurnoutManager turnoutManager = new BiDiBTurnoutManager(this);
             log.debug("turnout manager created: {}", turnoutManager);
             return turnoutManager;
@@ -287,7 +287,7 @@ public class BiDiBSystemConnectionMemo extends DefaultSystemConnectionMemo /* im
         if (getDisabled()) {
             return null;
         }
-        return (LightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class c) -> {
+        return (LightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class<?> c) -> {
             LightManager lightManager = new BiDiBLightManager(this);
             log.debug("light manager created: {}", lightManager);
             return lightManager;
@@ -327,8 +327,8 @@ public class BiDiBSystemConnectionMemo extends DefaultSystemConnectionMemo /* im
         if (getDisabled()  ||  tc.getFirstCommandStationNode()== null) {
             return null;
         }
-        return (CommandStation) classObjectMap.computeIfAbsent(CommandStation.class, (Class c) -> {
-            return (CommandStation) tc;
+        return (CommandStation) classObjectMap.computeIfAbsent(CommandStation.class, (Class<?> c) -> {
+            return tc;
         });
     }
 
