@@ -115,7 +115,8 @@
         <!-- <Logger name="jmri.jmrit.operations" level="DEBUG"/> -->
 
         <!-- //Mey -->
-        <Logger name="jmri.jmrix.bidib" level="INFO"/>
+        <Logger name="jmri.jmrix.bidib" level="DEBUG"/>
+        <Logger name="jmri.jmrix.bidib.serialdriver" level="TRACE"/>
         <Logger name="org.bidib.wizard" level="WARN"/>
         <Logger name="org.bidib.jbidibc" level="WARN"/>
         <Logger name="RX" level="WARN"/>

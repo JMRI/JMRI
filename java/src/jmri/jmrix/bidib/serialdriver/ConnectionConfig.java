@@ -78,11 +78,17 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     public Vector<String> getPortNames() {
         // used for SCM - will prepend "/dev" fpr Linux
         Vector<String> portNameVector = new Vector<>();
-//        List<String> portNameList = ScmPortIdentifierUtils.getPortIdentifiers();
-        List<String> portNameList = SerialDriverAdapter.getPortIdentifiers();
-        for (String portName : portNameList) {
-            portNameVector.addElement(portName);
+        try {
+            List<String> portNameList = ((SerialDriverAdapter)adapter).getPortIdentifiers();
+            for (String portName : portNameList) {
+                portNameVector.addElement(portName);
+            }
         }
+        catch (Exception ex) {
+            log.error("Serial adapter not set: ", ex); // NOSONAR
+        }
+//        List<String> portNameList = SerialDriverAdapter.getPortIdentifiers();
+        log.trace("getPortNames done {}", portNameVector);
         return portNameVector;
     }
     
@@ -220,8 +226,10 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     
     private void portNameFilterChanged(AWTEvent e) {
         SerialDriverAdapter a = (SerialDriverAdapter)adapter;
+        String s = a.getCurrentPortName();
         String fieldtext = ((JTextField)e.getSource()).getText();
-        // TODO: really use the changed value!
+        a.setPortNameFilter(fieldtext);
+        refreshPortBox();
     }
     
     /**

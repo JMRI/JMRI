@@ -49,6 +49,7 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
     protected Long rootNodeUid;
     protected boolean useAutoScan = false;
     
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public SerialDriverAdapter() {
         //super(new BiDiBSystemConnectionMemo());
         setManufacturer(jmri.jmrix.bidib.BiDiBConnectionTypeList.BIDIB);
@@ -271,18 +272,30 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
      * Get a list of available port names
      * @return list of portnames
      */
-    static public List<String> getPortIdentifiers() {
-        if (useScm) {
-            List<String> ret = new ArrayList<>();
+    /*static - no longer, since we need portNameFilter here */
+    public List<String> getPortIdentifiers() {
+        List<String> ret = null;
+        List<String> list = null;
+//        if (useScm) {
+//            list = new ArrayList<>();
 //            for (String s : ScmPortIdentifierUtils.getPortIdentifiers()) {
-//                ret.add(s.replace("/dev/", ""));
+//                list.add(s.replace("/dev/", ""));
 //            }
-            return ret;
-        }
+//        }
         if (usePurjavacomm) {
-            return PortIdentifierUtils.getPortIdentifiers();
+            list = PortIdentifierUtils.getPortIdentifiers();
         }
-        return null;
+        if (list != null) {
+            ret = new ArrayList<>();
+            String portPrefix = portNameFilter.replaceAll("\\*", "");
+            log.trace("port name filter: {}", portPrefix);
+            for (String s : list) {
+                if (s.startsWith(portPrefix)) {
+                    ret.add(s);
+                }
+            }
+        }
+        return ret;
     }
     
     /**
@@ -342,18 +355,18 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
     /**
      * Scan all ports (filtered by portNameFilter) for a unique ID of the root node.
      * 
-     * @param bidib a BiDiB object from jbidibc
      * @param requid requested unique ID of the root node
      * @param portNameFilter a port name filter (e.g. /dev/ttyUSB* for Linux)
      * @return found port name (e.g. /dev/ttyUSB0) or null of not found
      */
     //static private String scanPorts(BidibInterface bidib, Long requid, String portNameFilter) {
     private String scanPorts(Long requid, String portNameFilter) {
-        String portPrefix = portNameFilter.replaceAll("\\*", "");
+        //String portPrefix = portNameFilter.replaceAll("\\*", "");
+        log.trace("scanPorts for UID {}, filter: {}", ByteUtils.formatHexUniqueId(requid), portNameFilter);
         List<String> portNameList = getPortIdentifiers();
         for (String portName : portNameList) {
             //log.trace("check port {}", portName);
-            if (portName.startsWith(portPrefix)) {
+            //if (portName.startsWith(portPrefix)) {
                 log.trace("check port {}", portName);
                 if (!connectionRootNodeList.containsKey(getRealPortName(portName))) {
                     log.debug("BIDIB: try port {}", portName);
@@ -363,7 +376,7 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
                         return portName;
                     }
                 }
-            }
+            //}
         }
         return null;
     }
