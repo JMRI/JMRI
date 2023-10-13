@@ -103,7 +103,7 @@
 				<tooltip>Indication a la mise sous tension</tooltip>
 			</variable>
 			<variable CV="5" item="Allumage par no Cible" default="0" minOut="1">
-				<xi:include href="file:/xml/decoders/Leb/enum-Signal_Cible.xml"/>
+				<xi:include href="file:/xml/decoders/leb/enum-Signal_Cible.xml"/>
 				<label>Allumage par no Cible</label>
 				<tooltip>Allumage par no Cible</tooltip>
 			</variable>
