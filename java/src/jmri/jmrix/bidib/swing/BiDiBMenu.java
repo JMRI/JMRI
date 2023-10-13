@@ -30,7 +30,7 @@ public class BiDiBMenu extends JMenu {
         WindowInterface wi = new JmriJFrameInterface();
 
         for (Item item : panelItems) {
-            if (item == null) {
+            if (item == null || memo == null) {
                 add(new JSeparator());
             } else {
                 add(new BiDiBNamedPaneAction(item.name, wi, item.load, memo)); // NOI18N

@@ -18,7 +18,7 @@ import org.bidib.jbidibc.messages.helpers.DefaultContext;
  */
 public abstract class BiDiBSerialPortController extends jmri.jmrix.AbstractSerialPortController implements BiDiBPortController {
 
-    protected BidibInterface bidib;
+    protected BidibInterface bidib = null;
     protected Context context = new DefaultContext();
 
     public BiDiBSerialPortController() {

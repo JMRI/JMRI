@@ -198,19 +198,21 @@ public class BiDiBThrottle extends AbstractThrottle {
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
     public void setSpeedSetting(float speed) {
-        oldSpeed = this.speedSetting;
-        this.speedSetting = speed; //sendDriveCommand needs it - TODO: should be redesigned
+        synchronized(this) {
+            oldSpeed = this.speedSetting;
+            this.speedSetting = speed; //sendDriveCommand needs it - TODO: should be redesigned
         
-        if (sendDriveCommand(true)) {
-            if (log.isDebugEnabled()) {
-                log.debug("setSpeedSetting= {}",speed);
+            if (sendDriveCommand(true)) {
+                if (log.isDebugEnabled()) {
+                    log.debug("setSpeedSetting= {}",speed);
+                }
+                this.speedSetting = oldSpeed; //super.setSpeedSetting needs the old speed here and then sets the new one. As sayed, this should be redesigned
+                super.setSpeedSetting(speed);
             }
-            this.speedSetting = oldSpeed; //super.setSpeedSetting needs the old speed here and then sets the new one. As sayed, this should be redesigned
-            super.setSpeedSetting(speed);
-        }
-        else {
-            this.speedSetting = oldSpeed;
-            //notifyPropertyChangeListener("SpeedSetting", null, oldSpeed);
+            else {
+                this.speedSetting = oldSpeed;
+                //notifyPropertyChangeListener("SpeedSetting", null, oldSpeed);
+            }
         }
     }
     
@@ -245,21 +247,26 @@ public class BiDiBThrottle extends AbstractThrottle {
      * @return true if successful
      */
     protected boolean sendDriveCommand(boolean isSpeedSet) {
-        if (!isSpeedSet  &&  this.speedSetting < 0) {
-            this.speedSetting = 0; //remove estop condition when changing something other than speed
-        }
-        // BiDiB has only one message to set speed, direction and all functions
-        int addr = locoAddress.getNumber();
+        int addr;
         SpeedStepsEnum mode;
-        switch(this.speedStepMode) {
-            case NMRA_DCC_14:
-                mode = SpeedStepsEnum.DCC14; break;
-            case NMRA_DCC_28:
-                mode = SpeedStepsEnum.DCC28; break;
-            default:
-                mode = SpeedStepsEnum.DCC128; break;
+        Integer speed;
+        
+        synchronized(this) {
+            if (!isSpeedSet  &&  this.speedSetting < 0) {
+                this.speedSetting = 0; //remove estop condition when changing something other than speed
+            }
+            // BiDiB has only one message to set speed, direction and all functions
+            addr = locoAddress.getNumber();
+            switch(this.speedStepMode) {
+                case NMRA_DCC_14:
+                    mode = SpeedStepsEnum.DCC14; break;
+                case NMRA_DCC_28:
+                    mode = SpeedStepsEnum.DCC28; break;
+                default:
+                    mode = SpeedStepsEnum.DCC128; break;
+            }
+            speed = intSpeed(speedSetting);
         }
-        Integer speed = intSpeed(speedSetting);
         DirectionEnum dir = isForward ? DirectionEnum.FORWARD : DirectionEnum.BACKWARD;
 /* old - before v5.1.2
         functions.set(0, getF0());
@@ -416,10 +423,12 @@ public class BiDiBThrottle extends AbstractThrottle {
  */
 	
     protected void receiveSpeedSetting(int speed) {
-        oldSpeed = this.speedSetting;
-        float newSpeed = floatSpeed(speed, 127);
-        log.trace("  set speed: old: {}, new: {} {}", oldSpeed, newSpeed, speed);
-        super.setSpeedSetting(newSpeed);
+        synchronized(this) {
+            oldSpeed = this.speedSetting;
+            float newSpeed = floatSpeed(speed, 127);
+            log.trace("  set speed: old: {}, new: {} {}", oldSpeed, newSpeed, speed);
+            super.setSpeedSetting(newSpeed);
+        }
     }
     
     protected void receiveIsForward(boolean forward) {
@@ -512,10 +521,12 @@ public class BiDiBThrottle extends AbstractThrottle {
     @Override
     protected void throttleDispose() {
         log.trace("dispose throttle addr {}", locoAddress);
-        if (this.speedSetting < 0) {
-            sendDeregister = true;
-            this.speedSetting = 0;
-            sendDriveCommand(false); //will send a DCC deregister message
+        synchronized(this) {
+            if (this.speedSetting < 0) {
+                sendDeregister = true;
+                this.speedSetting = 0;
+                sendDriveCommand(false); //will send a DCC deregister message
+            }
         }
         //tc.removeMessageListener(messageListener); //TEMP 
         active = false;

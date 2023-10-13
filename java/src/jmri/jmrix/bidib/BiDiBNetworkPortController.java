@@ -19,7 +19,7 @@ import org.bidib.jbidibc.messages.helpers.DefaultContext;
  */
 public abstract class BiDiBNetworkPortController extends jmri.jmrix.AbstractNetworkPortController implements BiDiBPortController {
 
-    protected BidibInterface bidib;
+    protected BidibInterface bidib = null;
     protected Context context = new DefaultContext();
 
     public BiDiBNetworkPortController() {

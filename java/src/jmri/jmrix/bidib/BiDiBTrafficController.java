@@ -1,5 +1,7 @@
 package jmri.jmrix.bidib;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.LinkedHashSet;
@@ -66,6 +68,7 @@ import org.slf4j.LoggerFactory;
  * @author Eckart Meyer Copyright (C) 2019-2023
  *
  */
+@SuppressFBWarnings(value = "JLM_JSR166_UTILCONCURRENT_MONITORENTER")
 public class BiDiBTrafficController implements CommandStation {
 
     private final BidibInterface bidib;
@@ -126,6 +129,7 @@ public class BiDiBTrafficController implements CommandStation {
      * @param p BiDiB port adapter (serial or simulation)
      * @return a jbidibc context
      */
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST",justification = "Cast safe by design")
     public Context connnectPort(PortAdapter p) {
         // init bidib
         Context context = ((BiDiBPortController)p).getContext();
@@ -142,6 +146,7 @@ public class BiDiBTrafficController implements CommandStation {
             }
 
             @Override
+            @SuppressFBWarnings(value = "SLF4J_SIGN_ONLY_FORMAT",justification = "info message contains context information")
             public void nodeString(byte[] address, int messageNum, int namespace, int stringId, String value) {
                 // handle debug messages from a node
                 if (namespace == StringData.NAMESPACE_DEBUG) {
@@ -1010,6 +1015,9 @@ public class BiDiBTrafficController implements CommandStation {
                     case 5: //pulldown
                         inputControl = 3; //active HIGH + Pulldown
                         break;
+                    default:
+                        // do nothing, leave inputControl at 1
+                        break;
                 }
                 BytePortConfigValue pcfgInputControl = new BytePortConfigValue(inputControl);
                 portConfigValues.put(BidibLibrary.BIDIB_PCFG_INPUT_CTRL, pcfgInputControl);
@@ -1295,7 +1303,7 @@ public class BiDiBTrafficController implements CommandStation {
             long timeout = 0;
             log.trace("setWatchdogTimer {} on node {}", state, csnode);
             if (csnode != null) {
-                timeout = getNodeFeature(csnode, BidibLibrary.FEATURE_GEN_WATCHDOG) * 100; //value in milliseconds
+                timeout = (long) (getNodeFeature(csnode, BidibLibrary.FEATURE_GEN_WATCHDOG)) * 100L; //value in milliseconds
                 log.trace("FEATURE_GEN_WATCHDOG in ms: {}", timeout);
                 if (timeout < 2000) {
                     timeout = timeout / 2; //half the devices watchdog timeout value for small values

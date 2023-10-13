@@ -226,7 +226,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     
     private void portNameFilterChanged(AWTEvent e) {
         SerialDriverAdapter a = (SerialDriverAdapter)adapter;
-        String s = a.getCurrentPortName();
+        // String s = a.getCurrentPortName();
         String fieldtext = ((JTextField)e.getSource()).getText();
         a.setPortNameFilter(fieldtext);
         refreshPortBox();

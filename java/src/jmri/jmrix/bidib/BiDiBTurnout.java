@@ -3,6 +3,8 @@ package jmri.jmrix.bidib;
 import static jmri.Turnout.CLOSED;
 import static jmri.Turnout.THROWN;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
@@ -38,6 +40,7 @@ public class BiDiBTurnout extends AbstractTurnout implements BiDiBNamedBeanInter
      * @param mgr Turnout Manager, we get the memo object and the type letter (T) from the manager
      */
     @SuppressWarnings("OverridableMethodCallInConstructor")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",justification = "Write safe by design")
     public BiDiBTurnout(String systemName, BiDiBTurnoutManager mgr) {
         super(systemName);
         tc = mgr.getMemo().getBiDiBTrafficController();

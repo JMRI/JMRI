@@ -139,9 +139,7 @@ public class BiDiBLightManager extends AbstractLightManager {
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        try {
-            systemName.substring(getSystemPrefix().length() + 1); // get only the address part
-        } catch (StringIndexOutOfBoundsException e) {
+        if (systemName.length() <= getSystemPrefix().length() ) {
             return NameValidity.INVALID;
         }
 //        try {

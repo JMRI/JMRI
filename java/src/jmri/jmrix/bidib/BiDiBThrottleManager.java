@@ -1,5 +1,7 @@
 package jmri.jmrix.bidib;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.EnumSet;
 import java.util.HashMap;
 import jmri.DccLocoAddress;
@@ -34,6 +36,7 @@ public class BiDiBThrottleManager extends AbstractThrottleManager {
     BiDiBTrafficController tc = null;
     String prefix = "";
 
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST",justification = "Cast safe by design")
     @Override
     public void requestThrottleSetup(LocoAddress a, boolean control) {
         DccLocoAddress address = (DccLocoAddress) a;
@@ -126,6 +129,7 @@ public class BiDiBThrottleManager extends AbstractThrottleManager {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST",justification = "Cast safe by design")
     @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {

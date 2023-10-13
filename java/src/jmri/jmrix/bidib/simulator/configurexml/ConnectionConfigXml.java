@@ -68,7 +68,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
         java.util.List<Attribute> al = perNode.getAttributes();
         log.debug("load: attr list: {}", al);
-        Attribute a = perNode.getAttribute("simulationFile");
+        //Attribute a = perNode.getAttribute("simulationFile");
         //boolean b = a.isSpecified();
         String simulationFile = perNode.getAttribute("simulationFile").getValue();
         ((BiDiBSimulatorAdapter)adapter).setSimulationFile(simulationFile);        

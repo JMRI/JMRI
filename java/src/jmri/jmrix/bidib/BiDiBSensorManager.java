@@ -205,12 +205,11 @@ public class BiDiBSensorManager extends jmri.managers.AbstractSensorManager {
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
         log.trace("validSystemNameFormat: systemNname: {}", systemName);
-        //String addr;
-        try {
-            /*addr = */ systemName.substring(getSystemPrefix().length() + 1); // get only the address part
-        } catch (StringIndexOutOfBoundsException e) {
+        
+        if (systemName.length() <= getSystemPrefix().length()) {
             return NameValidity.INVALID;
         }
+        
 //        try {
 //            validateAddressFormat(addr);
 //        } catch (IllegalArgumentException e) {
