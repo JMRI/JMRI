@@ -16,7 +16,7 @@ import org.junit.Assert;
 public class BiDiBPowerManagerTest {
     
     BiDiBSystemConnectionMemo memo;
-    PowerManager p = null;	// holds objects under test
+    PowerManager p = null;  // holds objects under test
     
     @Test
     public void testCtor() {

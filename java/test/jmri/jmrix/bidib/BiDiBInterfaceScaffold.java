@@ -210,12 +210,12 @@ public class BiDiBInterfaceScaffold implements org.bidib.jbidibc.core.BidibInter
     @Override
     public void removeRawMessageListener(final RawMessageListener rawMessageListener) {
     }
-	
+    
     @Override
-	public void attach(Long uniqueId) {
-	}		
+    public void attach(Long uniqueId) {
+    }       
 
     @Override
-	public void detach(Long uniqueId) {
-	}		
+    public void detach(Long uniqueId) {
+    }       
 }

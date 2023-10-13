@@ -340,42 +340,42 @@ public class BiDiBThrottle extends AbstractThrottle {
 ///////////////////////////
 
     protected void receiveFunctions(byte[] functions) {
-		
-		updateFunction(0, (functions[0] & 0x10) != 0);
-		updateFunction(1, (functions[0] & 0x01) != 0);
-		updateFunction(2, (functions[0] & 0x02) != 0);
-		updateFunction(3, (functions[0] & 0x04) != 0);
-		updateFunction(4, (functions[0] & 0x08) != 0);
+        
+        updateFunction(0, (functions[0] & 0x10) != 0);
+        updateFunction(1, (functions[0] & 0x01) != 0);
+        updateFunction(2, (functions[0] & 0x02) != 0);
+        updateFunction(3, (functions[0] & 0x04) != 0);
+        updateFunction(4, (functions[0] & 0x08) != 0);
 
-		updateFunction(5,  (functions[1] & 0x01) != 0);
-		updateFunction(6,  (functions[1] & 0x02) != 0);
-		updateFunction(7,  (functions[1] & 0x04) != 0);
-		updateFunction(8,  (functions[1] & 0x08) != 0);
-		updateFunction(9,  (functions[1] & 0x10) != 0);
-		updateFunction(10, (functions[1] & 0x20) != 0);
-		updateFunction(11, (functions[1] & 0x40) != 0);
-		updateFunction(12, (functions[1] & 0x80) != 0);
+        updateFunction(5,  (functions[1] & 0x01) != 0);
+        updateFunction(6,  (functions[1] & 0x02) != 0);
+        updateFunction(7,  (functions[1] & 0x04) != 0);
+        updateFunction(8,  (functions[1] & 0x08) != 0);
+        updateFunction(9,  (functions[1] & 0x10) != 0);
+        updateFunction(10, (functions[1] & 0x20) != 0);
+        updateFunction(11, (functions[1] & 0x40) != 0);
+        updateFunction(12, (functions[1] & 0x80) != 0);
 
-		updateFunction(13, (functions[2] & 0x01) != 0);
-		updateFunction(14, (functions[2] & 0x02) != 0);
-		updateFunction(15, (functions[2] & 0x04) != 0);
-		updateFunction(16, (functions[2] & 0x08) != 0);
-		updateFunction(17, (functions[2] & 0x10) != 0);
-		updateFunction(18, (functions[2] & 0x20) != 0);
-		updateFunction(19, (functions[2] & 0x40) != 0);
-		updateFunction(20, (functions[2] & 0x80) != 0);
+        updateFunction(13, (functions[2] & 0x01) != 0);
+        updateFunction(14, (functions[2] & 0x02) != 0);
+        updateFunction(15, (functions[2] & 0x04) != 0);
+        updateFunction(16, (functions[2] & 0x08) != 0);
+        updateFunction(17, (functions[2] & 0x10) != 0);
+        updateFunction(18, (functions[2] & 0x20) != 0);
+        updateFunction(19, (functions[2] & 0x40) != 0);
+        updateFunction(20, (functions[2] & 0x80) != 0);
 
-		updateFunction(21, (functions[3] & 0x01) != 0);
-		updateFunction(22, (functions[3] & 0x02) != 0);
-		updateFunction(23, (functions[3] & 0x04) != 0);
-		updateFunction(24, (functions[3] & 0x08) != 0);
-		updateFunction(25, (functions[3] & 0x10) != 0);
-		updateFunction(26, (functions[3] & 0x20) != 0);
-		updateFunction(27, (functions[3] & 0x40) != 0);
-		updateFunction(28, (functions[3] & 0x80) != 0);
+        updateFunction(21, (functions[3] & 0x01) != 0);
+        updateFunction(22, (functions[3] & 0x02) != 0);
+        updateFunction(23, (functions[3] & 0x04) != 0);
+        updateFunction(24, (functions[3] & 0x08) != 0);
+        updateFunction(25, (functions[3] & 0x10) != 0);
+        updateFunction(26, (functions[3] & 0x20) != 0);
+        updateFunction(27, (functions[3] & 0x40) != 0);
+        updateFunction(28, (functions[3] & 0x80) != 0);
 
 /*
-		not possible any more since 4.19.5 - updateFunction is now used, see above
+        not possible any more since 4.19.5 - updateFunction is now used, see above
         this.f0 = receiveFunction(Throttle.F0, this.f0, functions[0] & 0x10);
         this.f1 = receiveFunction(Throttle.F1, this.f1, functions[0] & 0x01);
         this.f2 = receiveFunction(Throttle.F2, this.f2, functions[0] & 0x02);
@@ -421,7 +421,7 @@ public class BiDiBThrottle extends AbstractThrottle {
         return (newStat != 0);
     }
  */
-	
+    
     protected void receiveSpeedSetting(int speed) {
         synchronized(this) {
             oldSpeed = this.speedSetting;
@@ -435,7 +435,7 @@ public class BiDiBThrottle extends AbstractThrottle {
         boolean old = isForward;
         log.trace("  set isForward: old: {}, new: {}", old, forward);
         if (old != forward) {
-	        //isForward = forward;
+            //isForward = forward;
         //notifyPropertyChangeListener("IsForward", old, forward);//TODO: use firePropertyChange or super.setIsForward
         super.setIsForward(forward);
         }

@@ -145,8 +145,6 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
     }
     
     /**
-     * {@inheritDoc}
-     * 
      * Static function to get the port name in the format which is used by jbidibc
      * @param portName displayed port name
      * @return real port name
