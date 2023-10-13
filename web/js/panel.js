@@ -294,6 +294,41 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($widget.rotation * 90);
                             $widget['scale'] = $(this).find('icon').attr('scale');
                             break;
+                        case "audioicon" :
+//                            $widget['identity'] = $(this).find('Identity').text();
+                            $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
+//                            $widget['sound'] = $(this).find('sound').text();
+                            $widget['sound'] = $(this).attr('sound');
+                            log.log("Sound: "+$widget['sound']);
+                            $widget['audio_widget'] = new Audio($widget['sound']);
+							$widget['audio_widget'].play();
+//                            $widget['sound'] = $(this).find('sound').text();
+                            $widget['sound'] = "/dist/resources/sounds/Crossing.wav";
+                            $widget['rotation'] = $(this).find('icon').find('rotation').text() * 1;
+                            $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($widget.rotation * 90);
+                            $widget['scale'] = $(this).find('icon').attr('scale');
+//                            $widget.classes += " " + $widget.jsonType + " clickable"; //make it clickable
+//                            if (!$('#' + $widget.id).hasClass('clickable')) {
+//                                $('#' + $widget.id).addClass("clickable");
+//                                $('#' + $widget.id).bind(UPEVENT, $handleClick);
+//                            }
+
+
+//        $imgHtml = "<img id=" + $widget.id + " class='" + $widget.classes +
+//                "' src='" + $widget["icon" + $indicator + $state] + "' " + $hoverText + "/>"
+
+//        $imgHtml = "<audio controls><source src=\""+$widget["sound"]+"\" type=\"audio/wav\">Your browser does not support the audio element.</audio>"
+//		log.log($widget['icon' + UNKNOWN]);
+//		log.log($imgHtml);
+//		log.log("Sound attr: "+$(this).attr('sound'));
+//		log.log("Sound attr: "+$(this).find('icon').attr('sound'));
+
+//        $("#panel-area").append($imgHtml); // put the html in the panel
+
+//        $("#panel-area>#" + $widget.id).css($widget.styles); // apply style array to widget
+
+
+                            break;
                         case "logixngicon" :
                             $widget['identity'] = $(this).find('Identity').text();
                             $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
@@ -663,6 +698,12 @@ function processPanelXML($returnedData, $success, $xhr) {
                 case "text" :
                     $widget['styles'] = $getTextCSSFromObj($widget);
                     switch ($widget.widgetType) {
+                        case "audio" :
+                            $widget.jsonType = "audioicon"; // JSON object type
+//                            $widget['identity'] = $(this).find('Identity').text();
+                            $widget.styles['user-select'] = "none";
+//                            $widget.classes += " " + $widget.jsonType + " clickable ";
+                            break;
                         case "logixngicon" :
                             $widget.jsonType = "logixngicon"; // JSON object type
                             $widget['identity'] = $(this).find('Identity').text();
@@ -2286,7 +2327,8 @@ var $preloadWidgetImages = function($widget) {
 // note: not-yet-supported widgets are commented out here so as to return undefined
 var $getWidgetFamily = function($widget, $element) {
 
-    if (($widget.widgetType == "positionablelabel" || $widget.widgetType == "linkinglabel" || $widget.widgetType == "logixngicon")
+    if (($widget.widgetType == "positionablelabel" || $widget.widgetType == "linkinglabel"
+            || $widget.widgetType == "audioicon" || $widget.widgetType == "logixngicon")
             && isDefined($widget.text)) {
         return "text";  //special case to distinguish text vs. icon labels
     }
@@ -2307,6 +2349,7 @@ var $getWidgetFamily = function($widget, $element) {
             return "text";
             break;
         case "positionablelabel" :
+        case "audioicon" :
         case "logixngicon" :
         case "linkinglabel" :
         case "turnouticon" :
