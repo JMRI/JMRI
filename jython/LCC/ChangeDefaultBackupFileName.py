@@ -11,11 +11,17 @@ class MyNameGenerator(org.openlcb.cdi.swing.CdiPanel.FileNameGenerator) :
     def generateFileName(self, rep, nodeName) :
         nodeID = rep.getRemoteNodeAsString()
         
+        softwareVersion = ""
+        if (rep.getCdiRep() != None and rep.getCdiRep().getIdentification() != None) :
+            softwareVersion = rep.getCdiRep().getIdentification().getSoftwareVersion()
+        
         timeFormat = java.time.format.DateTimeFormatter.ofPattern("uu-MM-dd-HH-mm-ss")
         time = java.time.LocalDateTime.now().format(timeFormat)
         
+        # assemble desired filename from above parts
         result = "config-"+nodeName+"-"+time+".txt"
         
-        return result.replace(" ", "-")
+        # replace spaces with underscores and return the result
+        return result.replace(" ", "_")
         
 org.openlcb.cdi.swing.CdiPanel.fileNameGenerator = MyNameGenerator()
