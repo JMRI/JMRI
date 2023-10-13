@@ -91,13 +91,13 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         options.put("16.5", new Option(Bundle.getMessage("NameTopicThrottleRcv"),
                                        new String[]{Bundle.getMessage("TopicThrottleRcv")},  Option.Type.TEXT));
         options.put("17.3", new Option(Bundle.getMessage("NameTopicDirectionSend"),
-                                       new String[]{Bundle.getMessage("TopicThrottleSend")},  Option.Type.TEXT));
+                                       new String[]{Bundle.getMessage("TopicDirectionSend")},  Option.Type.TEXT));
         options.put("17.5", new Option(Bundle.getMessage("NameTopicDirectionRcv"),
-                                       new String[]{Bundle.getMessage("TopicThrottleRcv")},  Option.Type.TEXT));
+                                       new String[]{Bundle.getMessage("TopicDirectionRcv")},  Option.Type.TEXT));
         options.put("18.3", new Option(Bundle.getMessage("NameTopicFunctionSend"),
-                                       new String[]{Bundle.getMessage("TopicThrottleSend")},  Option.Type.TEXT));
+                                       new String[]{Bundle.getMessage("TopicFunctionSend")},  Option.Type.TEXT));
         options.put("18.5", new Option(Bundle.getMessage("NameTopicFunctionRcv"),
-                                       new String[]{Bundle.getMessage("TopicThrottleRcv")},  Option.Type.TEXT));
+                                       new String[]{Bundle.getMessage("TopicFunctionRcv")},  Option.Type.TEXT));
         options.put("19.3", new Option(Bundle.getMessage("NameTopicConsistSend"),
                                        new String[]{Bundle.getMessage("TopicConsistSend")},  Option.Type.TEXT));
         options.put("20.3", new Option(Bundle.getMessage("NameTopicPowerSend"),
@@ -180,11 +180,14 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
                     && ! getOptionState("LastWillMessage").isEmpty())) {
                 mqttClient.connect(getMqttConnectionOptions());
 
-                publish(getOptionState("LastWillTopic"), "");
-
             } else {
                 mqttClient.connect();
             }
+
+            if ( ! getOptionState("LastWillTopic").isEmpty()) {
+                publish(getOptionState("LastWillTopic"), "");
+            }
+
             mqttClient.setCallback(this);
 
         } catch (MqttException ex) {
@@ -290,12 +293,19 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     private void tryToReconnect(boolean showLogMessages) {
         if (showLogMessages) log.warn("Try to reconnect");
         try {
-            if ( getOptionState(MQTT_USERNAME_OPTION) != null
-                    && ! getOptionState(MQTT_USERNAME_OPTION).isEmpty()) {
+             if ((getOptionState(MQTT_USERNAME_OPTION) != null
+                    && ! getOptionState(MQTT_USERNAME_OPTION).isEmpty())
+                    || ( ! getOptionState("LastWillTopic").isEmpty()
+                    && ! getOptionState("LastWillMessage").isEmpty())) {
                 mqttClient.connect(getMqttConnectionOptions());
             } else {
                 mqttClient.connect();
             }
+
+            if (! getOptionState("LastWillTopic").isEmpty()) {
+                publish(getOptionState("LastWillTopic"), "");
+            }
+
             log.warn("Succeeded to reconnect");
 
             mqttClient.setCallback(this);
@@ -333,7 +343,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     @Override
     @API(status=API.Status.INTERNAL)
     public void messageArrived(String topic, MqttMessage mm) throws Exception {
-        log.debug("Message received, topic : {}", topic);
+        log.debug("Message received, topic : {} - '{}'", topic, mm);
 
         boolean found = false;
         Map<String,ArrayList<MqttEventListener>> tempMap
@@ -343,7 +353,12 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             if (MqttTopic.isMatched(e.getKey(), topic) ) {
                 found = true;
                 e.getValue().forEach((mel) -> {
-                    mel.notifyMqttMessage(topic, mm.toString());
+                    try {
+                        mel.notifyMqttMessage(topic, mm.toString());
+                    }
+                    catch (Exception exception) {
+                        log.error("MqttEventListener exception: ", exception);
+                    }
                 });
             }
         }

@@ -12,7 +12,6 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import jmri.InstanceManager;
@@ -208,7 +207,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
                 return;
             }
             int value = JmriJOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("UpdatePhysicalLocation"),
-                    new Object[]{l.getDisplayName()}), rb.getString("SaveLocation?"), JOptionPane.YES_NO_OPTION);
+                    new Object[]{l.getDisplayName()}), rb.getString("SaveLocation?"), JmriJOptionPane.YES_NO_OPTION);
             if (value == JmriJOptionPane.YES_OPTION) {
                 saveSpinnerValues(l);
             }

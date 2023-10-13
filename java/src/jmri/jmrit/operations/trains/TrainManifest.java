@@ -97,7 +97,7 @@ public class TrainManifest extends TrainCommon {
                 boolean printHeader = false;
                 boolean hasWork = isThereWorkAtLocation(carList, engineList, rl);
                 // print info only if new location
-                String routeLocationName = splitString(rl.getName());
+                String routeLocationName = rl.getSplitName();
                 if (!routeLocationName.equals(previousRouteLocationName) || (hasWork && !hadWork)) {
                     if (hasWork) {
                         newLine(fileOut);
@@ -165,7 +165,7 @@ public class TrainManifest extends TrainCommon {
                             train.getSecondLegOptions() == Train.HELPER_ENGINES) {
                         newLine(fileOut,
                                 MessageFormat.format(messageFormatText = TrainManifestText.getStringRemoveHelpers(),
-                                        new Object[] { splitString(rl.getName()), train.getName(),
+                                        new Object[] { rl.getSplitName(), train.getName(),
                                                 train.getDescription(), train.getSecondLegNumberEngines(),
                                                 train.getSecondLegEngineModel(), train.getSecondLegEngineRoad() }));
                     }
@@ -178,7 +178,7 @@ public class TrainManifest extends TrainCommon {
                             train.getThirdLegOptions() == Train.HELPER_ENGINES) {
                         newLine(fileOut,
                                 MessageFormat.format(messageFormatText = TrainManifestText.getStringRemoveHelpers(),
-                                        new Object[] { splitString(rl.getName()), train.getName(),
+                                        new Object[] { rl.getSplitName(), train.getName(),
                                                 train.getDescription(), train.getThirdLegNumberEngines(),
                                                 train.getThirdLegEngineModel(), train.getThirdLegEngineRoad() }));
                     }
@@ -205,7 +205,7 @@ public class TrainManifest extends TrainCommon {
                 if (rl != train.getTrainTerminatesRouteLocation()) {
                     // Is the next location the same as the current?
                     RouteLocation rlNext = train.getRoute().getNextRouteLocation(rl);
-                    if (routeLocationName.equals(splitString(rlNext.getName()))) {
+                    if (routeLocationName.equals(rlNext.getSplitName())) {
                         continue;
                     }
                     if (hadWork) {
@@ -291,8 +291,8 @@ public class TrainManifest extends TrainCommon {
             addCarsLocationUnknown(fileOut, IS_MANIFEST);
 
         } catch (IllegalArgumentException e) {
-            newLine(fileOut, MessageFormat.format(Bundle.getMessage("ErrorIllegalArgument"), new Object[]{
-                    Bundle.getMessage("TitleManifestText"), e.getLocalizedMessage()}));
+            newLine(fileOut, Bundle.getMessage("ErrorIllegalArgument",
+                    Bundle.getMessage("TitleManifestText"), e.getLocalizedMessage()));
             newLine(fileOut, messageFormatText);
             log.error("Illegal argument", e);
         }
@@ -319,23 +319,23 @@ public class TrainManifest extends TrainCommon {
             }
             newLine(fileOut,
                     MessageFormat.format(messageFormatText = TrainManifestText.getStringAddHelpers(),
-                            new Object[] { splitString(rl.getName()), train.getName(), train.getDescription(),
+                            new Object[] { rl.getSplitName(), train.getName(), train.getDescription(),
                                     numberEngines, endLocationName, engineModel, engineRoad }));
         } else if ((legOptions & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
                 ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE ||
                         (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE)) {
             newLine(fileOut, MessageFormat.format(
                     messageFormatText = TrainManifestText.getStringLocoAndCabooseChange(), new Object[]{
-                            splitString(rl.getName()), train.getName(), train.getDescription(),
+                            rl.getSplitName(), train.getName(), train.getDescription(),
                             rl.getLocation().getDivisionName()}));
         } else if ((legOptions & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
             newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText.getStringLocoChange(),
-                    new Object[]{splitString(rl.getName()), train.getName(), train.getDescription(),
+                    new Object[]{rl.getSplitName(), train.getName(), train.getDescription(),
                             rl.getLocation().getDivisionName()}));
         } else if ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE ||
                 (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE) {
             newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText.getStringCabooseChange(),
-                    new Object[]{splitString(rl.getName()), train.getName(), train.getDescription(),
+                    new Object[]{rl.getSplitName(), train.getName(), train.getDescription(),
                             rl.getLocation().getDivisionName()}));
         }
     }

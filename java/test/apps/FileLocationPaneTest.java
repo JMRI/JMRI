@@ -6,8 +6,6 @@ import jmri.swing.PreferencesPanelTestBase;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 import org.mockito.Mockito;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,6 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class FileLocationPaneTest extends PreferencesPanelTestBase<FileLocationPane> {
 
+    @Override
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

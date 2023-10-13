@@ -17,6 +17,7 @@ public class SprogReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         m = new SprogReply();
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = null;

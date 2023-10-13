@@ -4,9 +4,6 @@ import jmri.InstanceManager;
 import jmri.jmrix.openlcb.OlcbConfigurationManager;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.annotation.Nonnull;
 
 /**

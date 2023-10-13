@@ -101,7 +101,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>Fixed an issue in introduced in 5.5.5 where the incorrect default topics were used for Direction and Function.  The documenation was correct but the code wasn't.</li>
             </ul>
 
         <h4>MRC</h4>
@@ -121,7 +121,16 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Updates to most recent OpenLCB Java library, which includes
+                    <ul>
+                        <li>Better status logging of save and restore operations
+                        <li>Allows user to change the default backup filename using
+                            a script like 
+                            <a href="https://jmri.org/jython/LCC/ChangeDefaultBackupFileName.py">jython/LCC/ChangeDefaultBackupFileName.py</a>
+                        <li>Fixes a problem that could cause the configuration dialog
+                            to not open for certain nodes, including the DCC-LCC Gateway.
+                    </ul>
+                </li>
             </ul>
 
         <h4>Powerline</h4>
@@ -211,7 +220,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li></li>
+                <li>Updated the Series 7 SFX decoder definition.</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -402,7 +411,8 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+	        <li>The LogixNG Icon has been added to the toolbars.  The LogixNG Icon can run inline
+	        LogixNGs by clicking on the icon or text label when converted to text.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -419,7 +429,14 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>When a LogixNG was created and ConditionalNGs
+          was created for that LogixNG, the ConditionalNGs
+          wasn't executing until restart of JMRI if the
+          ConditionalNGs had the <strong>Startup</strong>
+          flag unchecked. That's fixed now.</li>
+
+          <li>Warrant expression was not listening for warrant events.  Fixed along with the long
+          description.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -431,7 +448,10 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Improvements to the car, locomotive, and train preview and print tools.</li>
+            <li>Minor improvement to the train build report when routing.</li>
+            <li>To see all changes to OperationsPro, use the link below</li>
+            <li><a href="https://github.com/pulls?q=is%3Apr+author%3ADanielBoudreau+archived%3Afalse+is%3Aclosed">OperationsPro Changes</a></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -595,6 +615,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>(For developers) Our CI process has been updated to require the
+            @Override annotation on overriding methods and removal of unused import statements.</li>
         </ul>
 

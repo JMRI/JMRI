@@ -137,6 +137,7 @@ public class PrintingTestListener extends SummaryGeneratingListener {
      * OK (946 tests)
      * Tests run: 42353, Failures: 1, Errors: 0, Skipped: 3129
      */
+    @Override
     public TestExecutionSummary getSummary() {
         if (!quiet) return super.getSummary();
         

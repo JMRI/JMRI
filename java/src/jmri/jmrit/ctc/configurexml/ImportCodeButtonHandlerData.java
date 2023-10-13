@@ -6,23 +6,13 @@ package jmri.jmrit.ctc.configurexml;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import javax.swing.ButtonGroup;
-
 import jmri.jmrit.ctc.CTCFiles;
-import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
  *

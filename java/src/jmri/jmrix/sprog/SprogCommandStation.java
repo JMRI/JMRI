@@ -1,18 +1,17 @@
 package jmri.jmrix.sprog;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Vector;
-import javax.swing.JOptionPane;
+
 import jmri.CommandStation;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
-import jmri.jmrix.sprog.sprogslotmon.SprogSlotMonDataModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Control a collection of slots, acting as a soft command station for SPROG
@@ -690,8 +689,8 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                         } catch (JmriException ex) {
                             log.error("Exception turning power off", ex);
                         }
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("CSErrorFrameDialogString"),
-                            Bundle.getMessage("SprogCSTitle"), JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("CSErrorFrameDialogString"),
+                            Bundle.getMessage("SprogCSTitle"), JmriJOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
@@ -833,7 +832,6 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         return adaptermemo.getSystemPrefix();
     }
 
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SprogCommandStation.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SprogCommandStation.class);
 
 }

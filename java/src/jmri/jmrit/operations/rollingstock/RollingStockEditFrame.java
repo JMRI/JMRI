@@ -122,14 +122,14 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         deleteButton.setEnabled(false);
         saveButton.setEnabled(false);
 
-        editRoadButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
-                new Object[] { Bundle.getMessage("road") })); // initial caps for some languages i.e. German
-        editTypeButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
-                new Object[] { Bundle.getMessage("type") })); // initial caps for some languages i.e. German
-        editLengthButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
-                new Object[] { Bundle.getMessage("length") })); // initial caps for some languages i.e. German
-        editOwnerButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
-                new Object[] { Bundle.getMessage("Owner").toLowerCase() }));
+        editRoadButton.setToolTipText(Bundle.getMessage("TipAddDeleteReplace",
+                Bundle.getMessage("road"))); // initial caps for some languages i.e. German
+        editTypeButton.setToolTipText(Bundle.getMessage("TipAddDeleteReplace",
+                Bundle.getMessage("type"))); // initial caps for some languages i.e. German
+        editLengthButton.setToolTipText(Bundle.getMessage("TipAddDeleteReplace",
+                Bundle.getMessage("length"))); // initial caps for some languages i.e. German
+        editOwnerButton.setToolTipText(Bundle.getMessage("TipAddDeleteReplace",
+                Bundle.getMessage("Owner").toLowerCase()));
 
         autoTrackCheckBox.setToolTipText(getRb().getString("rsTipAutoTrack"));
 
@@ -329,7 +329,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         // engines and cars share the same road database
         if (!InstanceManager.getDefault(CarRoads.class).containsName(rs.getRoadName())) {
             if (JmriJOptionPane.showConfirmDialog(this,
-                    MessageFormat.format(Bundle.getMessage("roadNameNotExist"), new Object[] { rs.getRoadName() }),
+                    Bundle.getMessage("roadNameNotExist", rs.getRoadName()),
                     Bundle.getMessage("addRoad"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                 InstanceManager.getDefault(CarRoads.class).addName(rs.getRoadName());
             }
@@ -340,7 +340,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
         if (!getTypeManager().containsName(rs.getTypeName())) {
             if (JmriJOptionPane.showConfirmDialog(this,
-                    MessageFormat.format(Bundle.getMessage("typeNameNotExist"), new Object[] { rs.getTypeName() }),
+                    Bundle.getMessage("typeNameNotExist", rs.getTypeName()),
                     Bundle.getMessage("addType"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                 getTypeManager().addName(rs.getTypeName());
             }
@@ -350,7 +350,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
         if (!getLengthManager().containsName(rs.getLength())) {
             if (JmriJOptionPane.showConfirmDialog(this,
-                    MessageFormat.format(Bundle.getMessage("lengthNameNotExist"), new Object[] { rs.getLength() }),
+                    Bundle.getMessage("lengthNameNotExist", rs.getLength()),
                     Bundle.getMessage("addLength"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                 getLengthManager().addName(rs.getLength());
             }
@@ -368,7 +368,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         // Engines and cars share the owner database
         if (!InstanceManager.getDefault(CarOwners.class).containsName(rs.getOwnerName())) {
             if (JmriJOptionPane.showConfirmDialog(this,
-                    MessageFormat.format(Bundle.getMessage("ownerNameNotExist"), new Object[] { rs.getOwnerName() }),
+                    Bundle.getMessage("ownerNameNotExist", rs.getOwnerName()),
                     Bundle.getMessage("addOwner"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                 InstanceManager.getDefault(CarOwners.class).addName(rs.getOwnerName());
             }

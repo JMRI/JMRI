@@ -2,12 +2,9 @@ package jmri.jmrit.operations.routes;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.MessageFormat;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
@@ -220,8 +217,8 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
             for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
                 if (train.getRoute() == route && train.isBuilt()) {
                     buf.append(NEW_LINE +
-                            MessageFormat.format(Bundle.getMessage("TrainIsBuilt"),
-                                    new Object[]{train.getName(), route.getName()}));
+                            Bundle.getMessage("TrainIsBuilt",
+                                    train.getName(), route.getName()));
                 }
             }
             JmriJOptionPane.showMessageDialog(null, buf.toString(), Bundle.getMessage("TrainBuilt"),

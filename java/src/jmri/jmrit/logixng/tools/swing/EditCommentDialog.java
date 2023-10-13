@@ -1,8 +1,6 @@
 package jmri.jmrit.logixng.tools.swing;
 
 import java.awt.*;
-import static java.awt.Component.LEFT_ALIGNMENT;
-import static java.awt.Component.TOP_ALIGNMENT;
 import java.awt.event.ActionEvent;
 
 import javax.swing.*;

@@ -26,10 +26,10 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
 
     // radio buttons
     JRadioButton zeroPercent = new JRadioButton(Bundle.getMessage("Disabled"));
-    JRadioButton twentyfivePercent = new JRadioButton("25%"); // NOI18N
-    JRadioButton fiftyPercent = new JRadioButton("50%");  // NOI18N
-    JRadioButton seventyfivePercent = new JRadioButton("75%"); // NOI18N
-    JRadioButton hundredPercent = new JRadioButton("100%");  // NOI18N
+    JRadioButton twentyfivePercent = new JRadioButton(Track.IGNORE_25+"%"); // NOI18N
+    JRadioButton fiftyPercent = new JRadioButton(Track.IGNORE_50+"%");  // NOI18N
+    JRadioButton seventyfivePercent = new JRadioButton(Track.IGNORE_75+"%"); // NOI18N
+    JRadioButton hundredPercent = new JRadioButton(Track.IGNORE_100+"%");  // NOI18N
 
     // major buttons
     JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
@@ -74,9 +74,11 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
         p2.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("PrePlanedPickups")));
 
         p2.add(zeroPercent);
-        p2.add(twentyfivePercent);
-        p2.add(fiftyPercent);
-        p2.add(seventyfivePercent);
+        if (!_track.isStaging()) {
+            p2.add(twentyfivePercent);
+            p2.add(fiftyPercent);
+            p2.add(seventyfivePercent);
+        }
         p2.add(hundredPercent);
 
         ButtonGroup buttonGroup = new ButtonGroup();
@@ -88,11 +90,11 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
 
         // select the correct radio button
         int percentage = _track.getIgnoreUsedLengthPercentage();
-        zeroPercent.setSelected(percentage >= 0);
-        twentyfivePercent.setSelected(percentage >= 25);
-        fiftyPercent.setSelected(percentage >= 50);
-        seventyfivePercent.setSelected(percentage >= 75);
-        hundredPercent.setSelected(percentage >= 100);
+        zeroPercent.setSelected(percentage >= Track.IGNORE_0);
+        twentyfivePercent.setSelected(percentage >= Track.IGNORE_25);
+        fiftyPercent.setSelected(percentage >= Track.IGNORE_50);
+        seventyfivePercent.setSelected(percentage >= Track.IGNORE_75);
+        hundredPercent.setSelected(percentage >= Track.IGNORE_100);
         
         // warning text for planned pick ups.
         JPanel p3 = new JPanel();
@@ -122,16 +124,17 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
             // save percentage selected
             int percentage = 0;
             if (twentyfivePercent.isSelected()) {
-                percentage = 25;
+                percentage = Track.IGNORE_25;
             } else if (fiftyPercent.isSelected()) {
-                percentage = 50;
+                percentage = Track.IGNORE_50;
             } else if (seventyfivePercent.isSelected()) {
-                percentage = 75;
+                percentage = Track.IGNORE_75;
             } else if (hundredPercent.isSelected()) {
-                percentage = 100;
+                percentage = Track.IGNORE_100;
             }
             if (_track != null) {
                 _track.setIgnoreUsedLengthPercentage(percentage);
+                // issue error message if using an alternate track
                 if (_track.getAlternateTrack() != null && percentage > 0) {
                     JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("PPWarningAlternate"),
                             Bundle.getMessage("PPWarningConfiguration"),

@@ -2,8 +2,6 @@ package jmri.jmrit.beantable;
 
 import java.beans.PropertyChangeEvent;
 import java.util.Date;
-import java.util.stream.Stream;
-
 import jmri.*;
 import jmri.implementation.DefaultIdTag;
 

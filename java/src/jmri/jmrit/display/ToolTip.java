@@ -6,8 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
 
-import jmri.NamedBean;
-
 /**
  * Implements Tooltips for Positionable objects.
  *

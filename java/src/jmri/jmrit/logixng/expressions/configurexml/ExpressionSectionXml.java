@@ -1,9 +1,6 @@
 package jmri.jmrit.logixng.expressions.configurexml;
 
-import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
-import javax.swing.JOptionPane;
-
 import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.Section;
@@ -11,9 +8,6 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionSection;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
-import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectStringXml;
-import jmri.jmrit.logixng.util.parser.ParserException;
-
 import org.jdom2.Element;
 
 /**

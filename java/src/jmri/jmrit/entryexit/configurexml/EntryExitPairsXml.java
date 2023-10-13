@@ -49,6 +49,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         }
 
         java.util.Collections.sort(editors, new Comparator<LayoutEditor>(){
+                    @Override
                     public int compare(LayoutEditor o1, LayoutEditor o2) { return o1.toString().compareTo(o2.toString() ); }
                 });
 
@@ -91,6 +92,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
             List<Object> nxpair = p.getSourceList(panel);
 
             java.util.Collections.sort(nxpair, new Comparator<Object>(){
+                    @Override
                     public int compare(Object o1, Object o2) { return o1.toString().compareTo(o2.toString() ); }
                 });
             Element panelElem = new Element("layoutPanel");  // NOI18N
@@ -117,6 +119,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
 
                 List<Object> a = p.getDestinationList(key, panel);
                 java.util.Collections.sort(a, new Comparator<Object>(){
+                    @Override
                     public int compare(Object o1, Object o2) { return o1.toString().compareTo(o2.toString() ); }
                 });
 

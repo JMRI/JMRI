@@ -1,8 +1,6 @@
 package jmri;
 
-import java.util.Date;
 import java.util.List;
-import javax.annotation.Nonnull;
 
 /**
  * Each LightControl object is linked to a specific Light, and provides one of

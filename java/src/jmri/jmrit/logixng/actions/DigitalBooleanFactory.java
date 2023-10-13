@@ -22,7 +22,7 @@ public class DigitalBooleanFactory implements DigitalBooleanActionFactory {
         Set<Map.Entry<Category, Class<? extends Base>>> digitalBooleanActionClasses =
                 Set.of(
                         new AbstractMap.SimpleEntry<>(Category.COMMON, DigitalBooleanMany.class),
-                        new AbstractMap.SimpleEntry<>(Category.COMMON, DigitalBooleanOnChange.class)
+                        new AbstractMap.SimpleEntry<>(Category.COMMON, DigitalBooleanLogixAction.class)
                 );
         
         return digitalBooleanActionClasses;

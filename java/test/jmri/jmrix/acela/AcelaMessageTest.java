@@ -17,6 +17,7 @@ public class AcelaMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         m = new AcelaMessage();
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = null;

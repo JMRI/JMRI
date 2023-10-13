@@ -4,10 +4,9 @@ import java.awt.BorderLayout;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -16,13 +15,13 @@ import javax.swing.SortOrder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableRowSorter;
+
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 import jmri.jmrix.dcc4pc.swing.Dcc4PcPanelInterface;
 import jmri.swing.RowSorterUtil;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for Signal Mast Add / Edit Panel
@@ -30,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2011
  * 
  */
-public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements PropertyChangeListener, Dcc4PcPanelInterface {
+public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements Dcc4PcPanelInterface {
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.dcc4pc.swing.boardlists.BoardListBundle");
 
@@ -78,22 +77,6 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         add(footer, BorderLayout.SOUTH);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void initComponents() {
-    }
-
-    JLabel sourceLabel = new JLabel();
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
-    }
-
     private List<Integer> _boardListCount;
 
     public class ReaderBoardModel extends AbstractTableModel implements PropertyChangeListener {
@@ -101,7 +84,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         ReaderBoardModel() {
             super();
             if (senMan != null) {
-                senMan.addPropertyChangeListener(this);
+                senMan.addPropertyChangeListener(ReaderBoardModel.this);
             }
         }
 
@@ -114,12 +97,6 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
          }*/
         @Override
         public Class<?> getColumnClass(int c) {
-            /*if (c ==ENCODING_COLUMN)
-             return Boolean.class;
-             if (c ==VERSION_COLUMN)
-             return Boolean.class;
-             if(c==DESCRIPTION_COLUMN)
-             return JButton.class;*/
             if (c == EDIT_COLUMN) {
                 return JButton.class;
             }
@@ -162,25 +139,21 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
 
         @Override
         public String getColumnName(int col) {
-            if (col == INPUTS_COLUMN) {
-                return rb.getString("ColumnInput");
+            switch (col) {
+                case INPUTS_COLUMN:
+                    return rb.getString("ColumnInput");
+                case ADDRESS_COLUMN:
+                    return rb.getString("ColumnAddress");
+                case ENCODING_COLUMN:
+                    return rb.getString("ColumnEncoding");
+                case VERSION_COLUMN:
+                    return rb.getString("ColumnVersion");
+                case DESCRIPTION_COLUMN:
+                    return rb.getString("ColumnDescription");
+                case EDIT_COLUMN: // no title above Edit buttons
+                default:
+                    return "";
             }
-            if (col == ADDRESS_COLUMN) {
-                return rb.getString("ColumnAddress");
-            }
-            if (col == ENCODING_COLUMN) {
-                return rb.getString("ColumnEncoding");
-            }
-            if (col == VERSION_COLUMN) {
-                return rb.getString("ColumnVersion");
-            }
-            if (col == DESCRIPTION_COLUMN) {
-                return rb.getString("ColumnDescription");
-            }
-            if (col == EDIT_COLUMN) {
-                return ""; //rb.getString(""); //no title above Edit buttons
-            }
-            return "";
         }
 
         public void dispose() {
@@ -239,28 +212,19 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
 
         @Override
         public boolean isCellEditable(int r, int c) {
-            if (c == EDIT_COLUMN) {
-                return true;
-            }
-            return false;
+            return c == EDIT_COLUMN;
         }
 
         protected void editAddress(int r) {
             int boardAddress = _boardListCount.get(r);
-            JPanel newAddressPanel = new JPanel();
-            JTextField newAddressField = new JTextField(10);
-            //newAddressPanel.add(new JLabel(rb.getString("SensorInactiveTimer")));
-            newAddressPanel.add(newAddressField);
 
-            int retval = JOptionPane.showOptionDialog(null,
-                    rb.getString("ChangeAddress"), rb.getString("ChangeAddressTitle"),
-                    0, JOptionPane.INFORMATION_MESSAGE, null,
-                    new Object[]{"Cancel", "OK", newAddressPanel}, null);
-            if (retval != 1) {
+            String retval = JmriJOptionPane.showInputDialog(_BoardScrollPane, rb.getString("ChangeAddress"),
+                rb.getString("ChangeAddressTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
+            if ( retval == null ) { // Dialog closed
                 return;
             }
             //Need some validation!
-            senMan.changeBoardAddress(boardAddress, Integer.parseInt(newAddressField.getText()));
+            senMan.changeBoardAddress(boardAddress, Integer.parseInt(retval));
         }
 
         public static final int ADDRESS_COLUMN = 0;
@@ -270,8 +234,6 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         public static final int DESCRIPTION_COLUMN = 4;
         public static final int EDIT_COLUMN = 5;
 
-        public void setSetToState(String x) {
-        }
 
         @Override
         public int getRowCount() {
@@ -340,6 +302,6 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BoardListPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BoardListPanel.class);
 
 }

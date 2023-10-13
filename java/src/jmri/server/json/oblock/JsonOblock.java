@@ -1,7 +1,5 @@
 package jmri.server.json.oblock;
 
-import jmri.server.json.JSON;
-
 /**
  * Constants used by the internal JMRI JSON Oblock service. Copied from jmri/server/json/blocks/
  *

@@ -48,9 +48,12 @@ public class XpaThrottle extends AbstractThrottle {
     @Override
     public void setSpeedSetting(float speed) {
         super.setSpeedSetting(speed);
-        int value = (int) ((127) * speed);
+        int value = Math.round((127) * speed);
         if (value > 127) {
             value = 127;    // max possible speed
+        }
+        if (speed > 0 && value == 0) {
+            value = 1;
         }
         if (this.speedvalue != value) {
             XpaMessage m;

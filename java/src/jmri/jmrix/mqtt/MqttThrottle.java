@@ -1,16 +1,13 @@
 package jmri.jmrix.mqtt;
 
-import java.util.concurrent.LinkedBlockingQueue;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
-import jmri.Throttle;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.annotation.Nonnull;
 import java.util.regex.*;
-import jmri.ThrottleListener;
 
 
 /**
@@ -25,17 +22,17 @@ import jmri.ThrottleListener;
 
     private final MqttAdapter mqttAdapter;
     @Nonnull
-    public String sendThrottleTopic = "cab/$address/throttle";
+    public String sendThrottleTopic = "cab/{0}/throttle";
     @Nonnull
-    public String rcvThrottleTopic ="cab/$address/throttle";
+    public String rcvThrottleTopic ="cab/{0}/throttle";
     @Nonnull
-    public String sendDirectionTopic = "cab/$address/direction";
+    public String sendDirectionTopic = "cab/{0}/direction";
     @Nonnull
-    public String rcvDirectionTopic = "cab/$address/direction";
+    public String rcvDirectionTopic = "cab/{0}/direction";
     @Nonnull
-    public String sendFunctionTopic = "cab/$address/function/$function";
+    public String sendFunctionTopic = "cab/{0}/function/{1}";
     @Nonnull
-    public String rcvFunctionTopic = "cab/$address/function/$function";
+    public String rcvFunctionTopic = "cab/{0}/function/{1}";
 
     protected int address = -1;
 
@@ -124,17 +121,26 @@ import jmri.ThrottleListener;
             speed = 0;
             // Send MQTT message
             jmri.util.ThreadingUtil.runOnLayout(() -> {
-                mqttAdapter.publish(this.sendDirectionTopic.replaceFirst("\\$address", String.valueOf(address)), "STOP");
+                mqttAdapter.publish(this.sendDirectionTopic.replaceFirst("\\{0\\}", String.valueOf(address)), "STOP");
             });
             super.setSpeedSetting(0);
             log.debug("sent address {} direction {}", address, "STOP");
         }
 
-        String intSpeed = String.valueOf(Math.round(speed * 100));
+        int intSpeed = Math.round(speed * 100);
+        
+        // ensure non-zero input will result in non-zero output
+        if (speed > 0 && intSpeed == 0)
+        {
+            intSpeed = 1;
+        }
 
+        final String stringSpeed = String.valueOf(intSpeed);
+        
         // Send MQTT message
         jmri.util.ThreadingUtil.runOnLayout(() -> {
-            mqttAdapter.publish(this.sendThrottleTopic.replaceFirst("\\$address", String.valueOf(address)), intSpeed);
+
+            mqttAdapter.publish(this.sendThrottleTopic.replaceFirst("\\{0\\}", String.valueOf(address)), stringSpeed);
         });
         log.debug("sent address {} speed {}", address, intSpeed);
 
@@ -152,7 +158,7 @@ import jmri.ThrottleListener;
         super.setIsForward(forward);
          // Send MQTT message
         jmri.util.ThreadingUtil.runOnLayout(() -> {
-            mqttAdapter.publish(this.sendDirectionTopic.replaceFirst("\\$address", String.valueOf(address)), (forward ? "FORWARD" : "REVERSE"));
+            mqttAdapter.publish(this.sendDirectionTopic.replaceFirst("\\{0\\}", String.valueOf(address)), (forward ? "FORWARD" : "REVERSE"));
         });
         log.debug("sent address {} direction {}", address, (forward ? "FORWARD" : "REVERSE"));
 
@@ -166,7 +172,7 @@ import jmri.ThrottleListener;
 
         // Send MQTT message
         jmri.util.ThreadingUtil.runOnLayoutEventually(() -> {
-            mqttAdapter.publish(this.sendFunctionTopic.replaceFirst("\\$address", String.valueOf(address)).replaceFirst("\\$function",String.valueOf(functionNum)), (getFunction(functionNum) ? "ON" : "OFF"));
+            mqttAdapter.publish(this.sendFunctionTopic.replaceFirst("\\{0\\}", String.valueOf(address)).replaceFirst("\\{1\\}",String.valueOf(functionNum)), (getFunction(functionNum) ? "ON" : "OFF"));
         });
 
         log.debug("sent address {} function {} {}", address, functionNum, (getFunction(functionNum) ? "ON" : "OFF"));
@@ -180,19 +186,19 @@ import jmri.ThrottleListener;
 
         // Send blank MQTT message to remove any persistent message
         jmri.util.ThreadingUtil.runOnLayout(() -> {
-            mqttAdapter.publish(this.sendThrottleTopic.replaceFirst("\\$address", String.valueOf(address)), "");
-            mqttAdapter.publish(this.sendDirectionTopic.replaceFirst("\\$address", String.valueOf(address)), "");
+            mqttAdapter.publish(this.sendThrottleTopic.replaceFirst("\\{0\\}", String.valueOf(address)), "");
+            mqttAdapter.publish(this.sendDirectionTopic.replaceFirst("\\{0\\}", String.valueOf(address)), "");
 
             for (int functionNum = 0; functionNum < getFunctions().length; functionNum++) {
-                mqttAdapter.publish(this.sendFunctionTopic.replaceFirst("\\$address",
-                    String.valueOf(address)).replaceFirst("\\$function",String.valueOf(functionNum)), "");
+                mqttAdapter.publish(this.sendFunctionTopic.replaceFirst("\\{0\\}",
+                    String.valueOf(address)).replaceFirst("\\{1\\}",String.valueOf(functionNum)), "");
             }
         });
         consistManager.deactivateConsist(getLocoAddress());
 
-        mqttAdapter.unsubscribe(this.rcvThrottleTopic.replaceFirst("\\$address", String.valueOf(address)), this);
-        mqttAdapter.unsubscribe(this.rcvDirectionTopic.replaceFirst("\\$address", String.valueOf(address)), this);
-        mqttAdapter.unsubscribe(this.rcvFunctionTopic.replaceFirst("\\$address", String.valueOf(address)).replaceFirst("\\$function", "#"),  this);
+        mqttAdapter.unsubscribe(this.rcvThrottleTopic.replaceFirst("\\{0\\}", String.valueOf(address)), this);
+        mqttAdapter.unsubscribe(this.rcvDirectionTopic.replaceFirst("\\{0\\}", String.valueOf(address)), this);
+        mqttAdapter.unsubscribe(this.rcvFunctionTopic.replaceFirst("\\{0\\}", String.valueOf(address)).replaceFirst("\\{0\\}", "#"),  this);
 
     }
 
@@ -217,31 +223,31 @@ import jmri.ThrottleListener;
         if (address > 0) {
             // Send blank MQTT message to remove any persistent message
             jmri.util.ThreadingUtil.runOnLayout(() -> {
-                mqttAdapter.publish(this.sendThrottleTopic.replaceFirst("\\$address", String.valueOf(address)), "");
-                mqttAdapter.publish(this.sendDirectionTopic.replaceFirst("\\$address", String.valueOf(address)), "");
+                mqttAdapter.publish(this.sendThrottleTopic.replaceFirst("\\{0\\}", String.valueOf(address)), "");
+                mqttAdapter.publish(this.sendDirectionTopic.replaceFirst("\\{0\\}", String.valueOf(address)), "");
 
                 for (int functionNum = 0; functionNum < getFunctions().length; functionNum++) {
-                    mqttAdapter.publish(this.sendFunctionTopic.replaceFirst("\\$address",
-                        String.valueOf(address)).replaceFirst("\\$function",String.valueOf(functionNum)), "");
+                    mqttAdapter.publish(this.sendFunctionTopic.replaceFirst("\\{0\\}",
+                        String.valueOf(address)).replaceFirst("\\{1\\}",String.valueOf(functionNum)), "");
                 }
             });
 
-            mqttAdapter.unsubscribe(this.rcvThrottleTopic.replaceFirst("\\$address", String.valueOf(address)), this);
-            mqttAdapter.unsubscribe(this.rcvDirectionTopic.replaceFirst("\\$address", String.valueOf(address)), this);
-            mqttAdapter.unsubscribe(this.rcvFunctionTopic.replaceFirst("\\$address", String.valueOf(address)).replaceFirst("\\$function", "#"), this);
+            mqttAdapter.unsubscribe(this.rcvThrottleTopic.replaceFirst("\\{0\\}", String.valueOf(address)), this);
+            mqttAdapter.unsubscribe(this.rcvDirectionTopic.replaceFirst("\\{0\\}", String.valueOf(address)), this);
+            mqttAdapter.unsubscribe(this.rcvFunctionTopic.replaceFirst("\\{0\\}", String.valueOf(address)).replaceFirst("\\{1\\}", "#"), this);
         }
         address = newaddress;
 
-        mqttAdapter.subscribe(this.rcvThrottleTopic.replaceFirst("\\$address", String.valueOf(address)), this);
-        mqttAdapter.subscribe(this.rcvDirectionTopic.replaceFirst("\\$address", String.valueOf(address)), this);
-        mqttAdapter.subscribe(this.rcvFunctionTopic.replaceFirst("\\$address", String.valueOf(address)).replaceFirst("\\$function", "#"), this);
+        mqttAdapter.subscribe(this.rcvThrottleTopic.replaceFirst("\\{0\\}", String.valueOf(address)), this);
+        mqttAdapter.subscribe(this.rcvDirectionTopic.replaceFirst("\\{0\\}", String.valueOf(address)), this);
+        mqttAdapter.subscribe(this.rcvFunctionTopic.replaceFirst("\\{0\\}", String.valueOf(address)).replaceFirst("\\{1\\}", "#"), this);
 
         consistManager.activateConsist(getLocoAddress());
         setSpeedSetting(0);
         setIsForward(true);
 
-        functionPattern = Pattern.compile(this.rcvFunctionTopic.replaceFirst("\\$address",
-            String.valueOf(address)).replaceFirst("\\$function", "(\\\\d+)"));
+        functionPattern = Pattern.compile(this.rcvFunctionTopic.replaceFirst("\\{0\\}",
+            String.valueOf(address)).replaceFirst("\\{1\\}", "(\\\\d+)"));
 
         return address;
     }
@@ -258,10 +264,23 @@ import jmri.ThrottleListener;
     @Override
     public void notifyMqttMessage(String receivedTopic, String message) {
 
-        if (receivedTopic.endsWith(this.rcvThrottleTopic.replaceFirst("\\$address", String.valueOf(address)))) {
-            super.setSpeedSetting(Math.max(0.0f,Math.min(Float.parseFloat(message)/100.0f,1.0f)));
+        if (receivedTopic.endsWith(this.rcvThrottleTopic.replaceFirst("\\{0\\}", String.valueOf(address)))) {
 
-        } else if (receivedTopic.endsWith(this.rcvDirectionTopic.replaceFirst("\\$address",
+            Float speed ;
+
+            try {
+                speed = Math.max(0.0f,Math.min(Float.parseFloat(message)/100.0f,1.0f));
+            }
+            catch (Exception e){
+                if (message.length() != 0) {
+                    log.error("Invalid throttle speed: '{}'", message);
+                }
+                speed = -1.0f;
+            }
+
+            super.setSpeedSetting(speed);
+
+        } else if (receivedTopic.endsWith(this.rcvDirectionTopic.replaceFirst("\\{0\\}",
                     String.valueOf(address)))) {
             switch (message) {
                 case "FORWARD":
@@ -271,6 +290,7 @@ import jmri.ThrottleListener;
                     super.setIsForward(false);
                     break;
                 case "STOP":
+                case "":
                     super.setSpeedSetting(-1);
                     break;
                 default:
@@ -287,8 +307,5 @@ import jmri.ThrottleListener;
 
     // register for notification
     private final static Logger log = LoggerFactory.getLogger(MqttThrottle.class);
-
-
-
 
  }

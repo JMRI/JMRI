@@ -4,18 +4,20 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+
 import jmri.jmrix.loconet.spjfile.SpjFile;
 import jmri.util.FileUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Pane for downloading .hex files
@@ -165,9 +167,9 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
 
     void doRead() {
         if (inputFileName.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNoInputFile"),
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNoInputFile"),
                     Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -179,14 +181,14 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
             file = new SpjFile(chooser.getSelectedFile());
             file.read();
         } catch (FileNotFoundException f) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorFileNotFound"),
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorFileNotFound"),
                     Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         } catch (IOException f) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorIOError"),
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorIOError"),
                     Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
 

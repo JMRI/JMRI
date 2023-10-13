@@ -15,9 +15,13 @@ import jmri.profile.ProfileUtils;
 public final class ShutdownPreferences extends PreferencesBean implements InstanceManagerAutoDefault {
 
     public static final String ENABLE_STORE_CHECK = "enableStoreCheck";
+    public static final String IGNORE_TIMEBASE = "ignoreTimebase";
+    public static final String IGNORE_SENSORCOLORS = "ignoreSensorColors";
     public static final String DISPLAY_DIALOG = "displayDialog";
 
     private boolean _enableStoreCheck = false;
+    private boolean _ignoreTimebase = false;
+    private boolean _ignoreSensorColors = false;
     private DialogDisplayOptions _displayDialog = DialogDisplayOptions.ShowDialog;
 
 
@@ -30,6 +34,8 @@ public final class ShutdownPreferences extends PreferencesBean implements Instan
 
     private void readPreferences(Preferences sharedPreferences) {
         _enableStoreCheck = sharedPreferences.getBoolean(ENABLE_STORE_CHECK, true);
+        _ignoreTimebase = sharedPreferences.getBoolean(IGNORE_TIMEBASE, false);
+        _ignoreSensorColors = sharedPreferences.getBoolean(IGNORE_SENSORCOLORS, false);
         var display = sharedPreferences.get(DISPLAY_DIALOG, "ShowDialog");
         _displayDialog = DialogDisplayOptions.valueOf(display);
         setIsDirty(false);
@@ -37,6 +43,12 @@ public final class ShutdownPreferences extends PreferencesBean implements Instan
 
     public boolean compareValuesDifferent(ShutdownPreferences prefs) {
         if (isStoreCheckEnabled() != prefs.isStoreCheckEnabled()) {
+            return true;
+        }
+        if (isIgnoreTimebaseEnabled() != prefs.isIgnoreTimebaseEnabled()) {
+            return true;
+        }
+        if (isIgnoreSensorColorsEnabled() != prefs.isIgnoreSensorColorsEnabled()) {
             return true;
         }
         if (!getDisplayDialog().equals(prefs.getDisplayDialog())) {
@@ -47,12 +59,16 @@ public final class ShutdownPreferences extends PreferencesBean implements Instan
 
     public void apply(ShutdownPreferences prefs) {
         setEnableStoreCheck(prefs.isStoreCheckEnabled());
+        setIgnoreTimebase(prefs.isIgnoreTimebaseEnabled());
+        setIgnoreSensorColors(prefs.isIgnoreSensorColorsEnabled());
         setDisplayDialog(prefs.getDisplayDialog());
     }
 
     public void save() {
         Preferences sharedPreferences = ProfileUtils.getPreferences(this.getProfile(), this.getClass(), true);
         sharedPreferences.putBoolean(ENABLE_STORE_CHECK, this.isStoreCheckEnabled());
+        sharedPreferences.putBoolean(IGNORE_TIMEBASE, this.isIgnoreTimebaseEnabled());
+        sharedPreferences.putBoolean(IGNORE_SENSORCOLORS, this.isIgnoreSensorColorsEnabled());
         sharedPreferences.put(DISPLAY_DIALOG, this.getDisplayDialog().name());
         setIsDirty(false);
     }
@@ -64,6 +80,24 @@ public final class ShutdownPreferences extends PreferencesBean implements Instan
 
     public boolean isStoreCheckEnabled() {
         return _enableStoreCheck;
+    }
+
+    public void setIgnoreTimebase(boolean value) {
+        _ignoreTimebase = value;
+        setIsDirty(true);
+    }
+
+    public boolean isIgnoreTimebaseEnabled() {
+        return _ignoreTimebase;
+    }
+
+    public void setIgnoreSensorColors(boolean value) {
+        _ignoreSensorColors = value;
+        setIsDirty(true);
+    }
+
+    public boolean isIgnoreSensorColorsEnabled() {
+        return _ignoreSensorColors;
     }
 
     public void setDisplayDialog(DialogDisplayOptions value) {

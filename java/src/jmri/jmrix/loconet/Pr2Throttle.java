@@ -70,18 +70,37 @@ public class Pr2Throttle extends AbstractThrottle {
      */
     @Override
     // This is a specific implementation for the PR2 that seems to
-    // return different values from the super class.  Not sure whether
-    // that's required by the hardware or not.  If so, please edit this comment
-    // to confirm.  If not, this should use the superclass implementation after
-    // checking for available modes.
+    // return different values from the super class.  This is an attempt at only
+    // outputting those speeds to the Pr2 that generate discrete DCC speeds
+    // 14/28 speed steps are the same as LocoNetThrottle.intSpeed
     protected int intSpeed(float fSpeed) {
-        if (fSpeed< 0.) return 1;  // what the parent class does
+        int speed;
+        if (fSpeed < 0.) {
+            return 1;
+        }  // emergency stop
+        if (fSpeed == 0.) {
+            return 0;
+        } // idle (zero speed)
+        
         switch (this.getSpeedStepMode()) {
             case NMRA_DCC_28:
             case MOTOROLA_28:
-                return (int) ((fSpeed * 28) * 4) + 12;
+                speed = (int) ((fSpeed * 28) * 4) + 12;
+                // ensure we never send a non-zero speed to loconet 
+                // that we reinterpret as 0 in floatSpeed() later
+                if (speed < 16) {
+                    speed = 16;
+                }
+                return speed;
+
             case NMRA_DCC_14:
-                return (int) ((fSpeed * 14) * 8) + 8;
+                speed = (int) ((fSpeed * 14) * 8) + 8;
+                // ensure we never send a non-zero speed to loconet 
+                // that we reinterpret as 0 in floatSpeed() later
+                if (speed < 16) {
+                    speed = 16;
+                }
+                return speed;
 
             default:
                 // includes the 128 case

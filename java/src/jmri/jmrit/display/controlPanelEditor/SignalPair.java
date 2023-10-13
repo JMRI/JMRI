@@ -1,8 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor;
 
 import jmri.NamedBean;
-import jmri.SignalHead;
-import jmri.SignalMast;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.logix.Portal;
 

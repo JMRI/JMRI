@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import jmri.Application;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -185,11 +184,9 @@ public class AppConfigBase extends JmriPanel {
                     options,
                     null);
             switch (retVal) {
-                case JOptionPane.YES_OPTION:
+                case 0: // array position 0, restart Now
                     dispose();
                     Apps.handleRestart();
-                    break;
-                case JOptionPane.NO_OPTION:
                     break;
                 default:
                     break;

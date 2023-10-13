@@ -3,7 +3,6 @@ package jmri.jmrit.operations.trains;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.PrintWriter;
-import java.text.MessageFormat;
 import java.util.*;
 
 import javax.swing.JComboBox;
@@ -56,6 +55,7 @@ public class TrainManager extends PropertyChangeSupport
     private String _rowColorBuildFailed = NONE; // row color when train build failed
     private String _rowColorTrainEnRoute = NONE; // row color when train is en route
     private String _rowColorTerminated = NONE; // row color when train is terminated
+    private String _rowColorReset = NONE; // row color when train is reset
 
     // Scripts
     protected List<String> _startUpScripts = new ArrayList<>(); // list of script pathnames to run at start up
@@ -410,7 +410,6 @@ public class TrainManager extends PropertyChangeSupport
             _id = id;
         }
         setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(getNumEntries()));
-        // listen for name and state changes to forward
     }
 
     /**
@@ -503,9 +502,9 @@ public class TrainManager extends PropertyChangeSupport
         if (Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED)) {
             TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED, TrainCommon.BLANK_LINE);
             TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED,
-                    MessageFormat.format(Bundle.getMessage("trainFindForCar"),
-                            new Object[] { car.toString(), car.getLocationName(), car.getTrackName(),
-                                    car.getDestinationName(), car.getDestinationTrackName() }));
+                    Bundle.getMessage("trainFindForCar",
+                            car.toString(), car.getLocationName(), car.getTrackName(),
+                                    car.getDestinationName(), car.getDestinationTrackName()));
         }
         for (Train train : getTrainsByIdList()) {
             if (excludeTrains.contains(train)) {
@@ -755,6 +754,16 @@ public class TrainManager extends PropertyChangeSupport
         _rowColorTerminated = colorName;
         setDirtyAndFirePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, colorName);
     }
+    
+    public String getRowColorNameForReset() {
+        return _rowColorReset;
+    }
+
+    public void setRowColorNameForReset(String colorName) {
+        String old = _rowColorReset;
+        _rowColorReset = colorName;
+        setDirtyAndFirePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, colorName);
+    }
 
     /**
      * JColorChooser is not a replacement for getRowColorComboBox as it doesn't
@@ -876,7 +885,7 @@ public class TrainManager extends PropertyChangeSupport
                 continue; // no route for this train
             }
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
-                if (TrainCommon.splitString(rl.getName()).equals(TrainCommon.splitString(location.getName()))) {
+                if (rl.getSplitName().equals(location.getSplitName())) {
                     int expectedArrivalTime = train.getExpectedTravelTimeInMinutes(rl);
                     // is already serviced then "-1"
                     if (expectedArrivalTime == -1) {
@@ -969,8 +978,8 @@ public class TrainManager extends PropertyChangeSupport
                     }
                     if (isBuildMessagesEnabled() && train.isBuildEnabled() && !train.isBuilt()) {
                         if (JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("ContinueBuilding"),
-                                MessageFormat.format(Bundle.getMessage("buildFailedMsg"),
-                                        new Object[] { train.getName(), }),
+                                Bundle.getMessage("buildFailedMsg",
+                                        train.getName()),
                                 JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.NO_OPTION) {
                             break;
                         }
@@ -993,13 +1002,13 @@ public class TrainManager extends PropertyChangeSupport
                 status = false; // failed to print all selected trains
                 if (isBuildMessagesEnabled()) {
                     int response = JmriJOptionPane.showConfirmDialog(null,
-                            MessageFormat.format(Bundle.getMessage("NeedToBuildBeforePrinting"),
-                                    new Object[] { train.getName(),
+                            Bundle.getMessage("NeedToBuildBeforePrinting",
+                                    train.getName(),
                                             (isPrintPreviewEnabled() ? Bundle.getMessage("preview")
-                                                    : Bundle.getMessage("print")) }),
-                            MessageFormat.format(Bundle.getMessage("CanNotPrintManifest"),
-                                    new Object[] { isPrintPreviewEnabled() ? Bundle.getMessage("preview")
-                                            : Bundle.getMessage("print") }),
+                                                    : Bundle.getMessage("print"))),
+                            Bundle.getMessage("CanNotPrintManifest",
+                                    isPrintPreviewEnabled() ? Bundle.getMessage("preview")
+                                            : Bundle.getMessage("print")),
                             JmriJOptionPane.OK_CANCEL_OPTION);
                     if (response != JmriJOptionPane.OK_OPTION ) {
                         break;
@@ -1020,8 +1029,8 @@ public class TrainManager extends PropertyChangeSupport
                     status = false;
                     int response = JmriJOptionPane.showConfirmDialog(null,
                             Bundle.getMessage("WarningTrainManifestNotPrinted"),
-                            MessageFormat.format(Bundle.getMessage("TerminateTrain"),
-                                    new Object[] { train.getName(), train.getDescription() }),
+                            Bundle.getMessage("TerminateTrain",
+                                    train.getName(), train.getDescription()),
                             JmriJOptionPane.YES_NO_CANCEL_OPTION);
                     if (response == JmriJOptionPane.YES_OPTION) {
                         train.terminate();
@@ -1041,6 +1050,22 @@ public class TrainManager extends PropertyChangeSupport
             if (train.isBuildFailed())
                 train.reset();
         }
+    }
+
+    int _maxTrainNameLength = 0;
+
+    public int getMaxTrainNameLength() {
+        String trainName = "";
+        if (_maxTrainNameLength == 0) {
+            for (Train train : getList()) {
+                if (train.getName().length() > _maxTrainNameLength) {
+                    trainName = train.getName();
+                    _maxTrainNameLength = train.getName().length();
+                }
+            }
+            log.info("Max train name ({}) length {}", trainName, _maxTrainNameLength);
+        }
+        return _maxTrainNameLength;
     }
 
     public void load(Element root) {
@@ -1091,16 +1116,19 @@ public class TrainManager extends PropertyChangeSupport
                     _rowColorManual = a.getValue().equals(Xml.TRUE);
                 }
                 if ((a = eRowColorOptions.getAttribute(Xml.ROW_COLOR_BUILD_FAILED)) != null) {
-                    _rowColorBuildFailed = a.getValue();
+                    _rowColorBuildFailed = a.getValue().toLowerCase();
                 }
                 if ((a = eRowColorOptions.getAttribute(Xml.ROW_COLOR_BUILT)) != null) {
-                    _rowColorBuilt = a.getValue();
+                    _rowColorBuilt = a.getValue().toLowerCase();
                 }
                 if ((a = eRowColorOptions.getAttribute(Xml.ROW_COLOR_TRAIN_EN_ROUTE)) != null) {
-                    _rowColorTrainEnRoute = a.getValue();
+                    _rowColorTrainEnRoute = a.getValue().toLowerCase();
                 }
                 if ((a = eRowColorOptions.getAttribute(Xml.ROW_COLOR_TERMINATED)) != null) {
-                    _rowColorTerminated = a.getValue();
+                    _rowColorTerminated = a.getValue().toLowerCase();
+                }
+                if ((a = eRowColorOptions.getAttribute(Xml.ROW_COLOR_RESET)) != null) {
+                    _rowColorReset = a.getValue().toLowerCase();
                 }
             }
 
@@ -1166,6 +1194,7 @@ public class TrainManager extends PropertyChangeSupport
         e.setAttribute(Xml.ROW_COLOR_BUILT, getRowColorNameForBuilt());
         e.setAttribute(Xml.ROW_COLOR_TRAIN_EN_ROUTE, getRowColorNameForTrainEnRoute());
         e.setAttribute(Xml.ROW_COLOR_TERMINATED, getRowColorNameForTerminated());
+        e.setAttribute(Xml.ROW_COLOR_RESET, getRowColorNameForReset());
         options.addContent(e);
 
         if (getStartUpScripts().size() > 0 || getShutDownScripts().size() > 0) {

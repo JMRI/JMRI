@@ -2,19 +2,14 @@ package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 
 import javax.swing.*;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationEditFrame;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
@@ -57,10 +52,11 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
     static boolean moveRollingStock = false;
     static boolean deleteTrack = false;
 
-    public TrackCopyFrame(LocationEditFrame lef) {
-        if (lef != null) {
-            _destination = lef._location;
-        }
+    /*
+     * Copies track to destination
+     */
+    public TrackCopyFrame(Track track, Location destination) {
+         _destination = destination;
 
         // general GUI config
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -125,15 +121,12 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 
         pack();
         setMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight400));
-
-        if (_destination != null) {
-            setTitle(MessageFormat.format(Bundle.getMessage("TitleCopyTrack"), new Object[]{_destination.getName()}));
-            pCopyTo.setVisible(false);
-            _destination.addPropertyChangeListener(this);
-        } else {
-            setTitle(Bundle.getMessage("MenuItemCopyTrack"));
-            copyButton.setEnabled(false);
+        
+        if (track != null) {
+            locationBox.setSelectedItem(track.getLocation());
+            trackBox.setSelectedItem(track);
         }
+        destinationBox.setSelectedItem(destination);
 
         // setup buttons
         addButtonAction(copyButton);
@@ -141,6 +134,8 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 
         addCheckBoxAction(sameNameCheckBox);
         addCheckBoxAction(moveRollingStockCheckBox);
+        
+        setTitle(Bundle.getMessage("MenuItemCopyTrack"));
     }
 
     // location combo box
@@ -197,24 +192,24 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
             }
             Track fromTrack = (Track) trackBox.getSelectedItem();
             if (moveRollingStockCheckBox.isSelected() && fromTrack.getPickupRS() > 0) {
-                JmriJOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("FoundRollingStockPickUp"),
-                        new Object[]{fromTrack.getPickupRS()}), MessageFormat.format(Bundle
-                                .getMessage("TrainsServicingTrack"), new Object[]{fromTrack.getName()}),
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("FoundRollingStockPickUp",
+                        fromTrack.getPickupRS()), Bundle
+                                .getMessage("TrainsServicingTrack", fromTrack.getName()),
                         JmriJOptionPane.WARNING_MESSAGE);
                 return; // failed
             }
             if (moveRollingStockCheckBox.isSelected() && fromTrack.getDropRS() > 0) {
-                JmriJOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("FoundRollingStockDrop"),
-                        new Object[]{fromTrack.getDropRS()}), MessageFormat.format(Bundle
-                                .getMessage("TrainsServicingTrack"), new Object[]{fromTrack.getName()}),
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("FoundRollingStockDrop",
+                        fromTrack.getDropRS()), Bundle
+                                .getMessage("TrainsServicingTrack", fromTrack.getName()),
                         JmriJOptionPane.WARNING_MESSAGE);
                 return; // failed
             }
             // only copy tracks that are okay with the location
             if (fromTrack.isStaging() ^ _destination.isStaging()) {
-                JmriJOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackTypeWrong"),
-                        new Object[]{fromTrack.getTrackType(), _destination.getName()}), MessageFormat.format(Bundle
-                                .getMessage("CanNotCopy"), new Object[]{fromTrack.getName()}), JmriJOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("TrackTypeWrong",
+                        fromTrack.getTrackType(), _destination.getName()), Bundle
+                                .getMessage("CanNotCopy", fromTrack.getName()), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
             Track toTrack = fromTrack.copyTrack(trackNameTextField.getText(), _destination);
@@ -261,14 +256,14 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
      */
     protected boolean checkName() {
         if (trackNameTextField.getText().trim().isEmpty()) {
-            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
-                    .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), JmriJOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), Bundle
+                    .getMessage("CanNotTrack", Bundle.getMessage("ButtonCopy")), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (TrainCommon.splitString(trackNameTextField.getText()).length() > Control.max_len_string_track_name) {
-            JmriJOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackNameLengthMax"),
-                    new Object[]{Integer.toString(Control.max_len_string_track_name + 1)}), MessageFormat.format(Bundle
-                            .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), JmriJOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("TrackNameLengthMax",
+                    Integer.toString(Control.max_len_string_track_name + 1)), Bundle
+                            .getMessage("CanNotTrack", Bundle.getMessage("ButtonCopy")), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         // check to see if track already exists
@@ -277,8 +272,8 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
         }
         Track check = _destination.getTrackByName(trackNameTextField.getText(), null);
         if (check != null) {
-            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("TrackAlreadyExists"), MessageFormat.format(Bundle
-                    .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), JmriJOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("TrackAlreadyExists"), Bundle
+                    .getMessage("CanNotTrack", Bundle.getMessage("ButtonCopy")), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;

@@ -4,8 +4,6 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for serial systems
@@ -66,9 +64,9 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         if (!SerialAddress.validSystemNameConfig(sName, 'T', getMemo())) {
             // system name does not correspond to configured hardware
             log.warn("Turnout '{}' refers to an unconfigured output bit.", sName);
-            javax.swing.JOptionPane.showMessageDialog(null, "WARNING - The Turnout just added, "
+            jmri.util.swing.JmriJOptionPane.showMessageDialog(null, "WARNING - The Turnout just added, "
                     + sName + ", refers to an unconfigured output bit.", "Configuration Warning",
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
+                    jmri.util.swing.JmriJOptionPane.INFORMATION_MESSAGE);
         }
         return t;
     }
@@ -181,6 +179,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 // }
 
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialTurnoutManager.class);
 
 }

@@ -4,11 +4,8 @@ import java.util.Arrays;
 import java.util.Set;
 
 import jmri.InstanceInitializer;
-import jmri.InstanceManager;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrit.logixng.*;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
-
 import org.openide.util.lookup.ServiceProvider;
 
 /**

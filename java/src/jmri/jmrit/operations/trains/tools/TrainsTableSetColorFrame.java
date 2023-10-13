@@ -38,31 +38,35 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
 
     // combo boxes
     JComboBox<Train> trainBox = InstanceManager.getDefault(TrainManager.class).getTrainComboBox();
-    
-    // JColorChooser is not a replacement for getRowColorComboBox as it doesn't support no color as a selection.
+
+    // JColorChooser is not a replacement for getRowColorComboBox as it doesn't
+    // support no color as a selection.
     JComboBox<String> colorBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
-    JComboBox<String> colorResetBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
+    JComboBox<String> colorResetBoxAuto = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
+
     JComboBox<String> colorBuiltBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
     JComboBox<String> colorBuildFailedBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
     JComboBox<String> colorTrainEnRouteBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
     JComboBox<String> colorTerminatedBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
+    JComboBox<String> colorResetBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
 
     // display panels based on which option is selected
     JPanel pTrains;
     JPanel pColor;
-    JPanel pColorReset;
+    JPanel pColorResetAuto;
 
     // auto
     JPanel pColorBuilt;
     JPanel pColorBuildFailed;
     JPanel pColorTrainEnRoute;
     JPanel pColorTerminated;
+    JPanel pColorReset;
 
     public TrainsTableSetColorFrame(Train train) {
         // general GUI config
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-  // Layout the panel by rows
+        // Layout the panel by rows
 
         // row 1
         JPanel pOption = new JPanel();
@@ -89,11 +93,11 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
         pColor.setLayout(new GridBagLayout());
         pColor.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SelectRowColor")));
         addItem(pColor, colorBox, 0, 0);
-        
-        pColorReset = new JPanel();
-        pColorReset.setLayout(new GridBagLayout());
-        pColorReset.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SelectRowColorReset")));
-        addItem(pColorReset, colorResetBox, 0, 0);
+
+        pColorResetAuto = new JPanel();
+        pColorResetAuto.setLayout(new GridBagLayout());
+        pColorResetAuto.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SelectRowColorResetAuto")));
+        addItem(pColorResetAuto, colorResetBoxAuto, 0, 0);
 
         pColorBuilt = new JPanel();
         pColorBuilt.setLayout(new GridBagLayout());
@@ -116,13 +120,19 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
 
         colorTrainEnRouteBox.setSelectedItem(trainManager.getRowColorNameForTrainEnRoute());
 
-        // row 5
         pColorTerminated = new JPanel();
         pColorTerminated.setLayout(new GridBagLayout());
         pColorTerminated.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SelectRowColorTerminated")));
         addItem(pColorTerminated, colorTerminatedBox, 0, 0);
 
         colorTerminatedBox.setSelectedItem(trainManager.getRowColorNameForTerminated());
+
+        pColorReset = new JPanel();
+        pColorReset.setLayout(new GridBagLayout());
+        pColorReset.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SelectRowColorReset")));
+        addItem(pColorReset, colorResetBox, 0, 0);
+
+        colorResetBox.setSelectedItem(trainManager.getRowColorNameForReset());
 
         // row 4
         JPanel pButton = new JPanel();
@@ -131,11 +141,13 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
         getContentPane().add(pOption);
         getContentPane().add(pTrains);
         getContentPane().add(pColor);
-        getContentPane().add(pColorReset);
+        getContentPane().add(pColorResetAuto);
+
         getContentPane().add(pColorBuilt);
         getContentPane().add(pColorBuildFailed);
         getContentPane().add(pColorTrainEnRoute);
         getContentPane().add(pColorTerminated);
+        getContentPane().add(pColorReset);
         getContentPane().add(pButton);
 
         // add help menu to window
@@ -150,7 +162,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
         addButtonAction(saveButton);
         addRadioButtonAction(manualRadioButton);
         addRadioButtonAction(autoRadioButton);
-        
+
         addComboBoxAction(trainBox);
 
         makePanelsVisible();
@@ -167,13 +179,18 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
                 Train train = (Train) trainBox.getSelectedItem();
                 if (train != null) {
                     train.setTableRowColorName((String) colorBox.getSelectedItem());
-                    train.setRowColorNameReset((String) colorResetBox.getSelectedItem());
+                    train.setTableRowColorNameReset((String) colorResetBoxAuto.getSelectedItem());
                 }
             } else {
                 trainManager.setRowColorNameForBuildFailed((String) colorBuildFailedBox.getSelectedItem());
                 trainManager.setRowColorNameForBuilt((String) colorBuiltBox.getSelectedItem());
                 trainManager.setRowColorNameForTrainEnRoute((String) colorTrainEnRouteBox.getSelectedItem());
                 trainManager.setRowColorNameForTerminated((String) colorTerminatedBox.getSelectedItem());
+                trainManager.setRowColorNameForReset((String) colorResetBox.getSelectedItem());
+                // update all trains
+                for (Train train : trainManager.getTrainsByNameList()) {
+                    train.updateTrainTableRowColor();
+                }
             }
             // save train file
             OperationsXml.save();
@@ -197,27 +214,29 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
     private void makePanelsVisible() {
         pTrains.setVisible(manualRadioButton.isSelected());
         pColor.setVisible(manualRadioButton.isSelected());
-        pColorReset.setVisible(manualRadioButton.isSelected());
+        pColorResetAuto.setVisible(manualRadioButton.isSelected());
         // the inverse
         pColorBuildFailed.setVisible(!manualRadioButton.isSelected());
         pColorBuilt.setVisible(!manualRadioButton.isSelected());
         pColorTrainEnRoute.setVisible(!manualRadioButton.isSelected());
         pColorTerminated.setVisible(!manualRadioButton.isSelected());
+        pColorReset.setVisible(!manualRadioButton.isSelected());
     }
-    
+
     @Override
     public void comboBoxActionPerformed(ActionEvent ae) {
         Train train = (Train) trainBox.getSelectedItem();
         if (train != null) {
             colorBox.setSelectedItem(train.getTableRowColorName());
-            colorResetBox.setSelectedItem(train.getRowColorNameReset());
+            colorResetBoxAuto.setSelectedItem(train.getTableRowColorNameReset());
         }
     }
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
-            log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
+            log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(),
+                    e.getNewValue()); // NOI18N
         }
         if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)) {
             trainManager.updateTrainComboBox(trainBox);

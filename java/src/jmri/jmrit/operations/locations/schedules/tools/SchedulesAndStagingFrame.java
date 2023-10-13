@@ -15,6 +15,7 @@ import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.tools.CarLoadEditFrameAction;
 import jmri.jmrit.operations.rollingstock.cars.tools.PrintCarLoadsAction;
 import jmri.jmrit.operations.setup.Control;
 
@@ -40,6 +41,7 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
     JPanel locationsPanel;
 
     // checkbox
+    JCheckBox generatedLoadsCheckBox = new JCheckBox(Bundle.getMessage("generatedLoads"));
     JCheckBox allLoadsCheckBox = new JCheckBox(Bundle.getMessage("allLoads"));
 
     public SchedulesAndStagingFrame() {
@@ -62,7 +64,8 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
         load.setLayout(new GridBagLayout());
         load.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Load")));
         addItem(load, loadsComboBox, 0, 0);
-        addItem(load, allLoadsCheckBox, 1, 0);
+        addItem(load, generatedLoadsCheckBox, 1, 0);
+        addItem(load, allLoadsCheckBox, 2, 0);
 
         p1.add(type);
         p1.add(load);
@@ -79,6 +82,10 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
         addComboBoxAction(typesComboBox);
         addComboBoxAction(loadsComboBox);
 
+        generatedLoadsCheckBox.setSelected(true);
+        generatedLoadsCheckBox.setToolTipText(Bundle.getMessage("generatedLoadsTip"));
+
+        addCheckBoxAction(generatedLoadsCheckBox);
         addCheckBoxAction(allLoadsCheckBox);
 
         // property changes
@@ -89,11 +96,12 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
+        toolMenu.add(new CarLoadEditFrameAction());
         toolMenu.add(new PrintCarLoadsAction(true));
         toolMenu.add(new PrintCarLoadsAction(false));
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
-        addHelpMenu("package.jmri.jmrit.operations.Operations_ShowSchedulesByCarTypeAndLoad", true); // NOI18N
+        addHelpMenu("package.jmri.jmrit.operations.Operations_ShowStagingAndSchedulesByCarTypeAndLoad", true); // NOI18N
 
         // select first item to load contents
         typesComboBox.setSelectedIndex(0);
@@ -115,7 +123,6 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
     @Override
     public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         loadsComboBox.setEnabled(!allLoadsCheckBox.isSelected());
-        updateLoadComboBox();
         updateLocations();
     }
 
@@ -134,7 +141,8 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("ShipLoadOption")), 3, 0);
         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Load")), 4, 0);
         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("destinationTrack")), 5, 0);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Schedule")), 6, 0);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("LoadOption")), 6, 0);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Schedule")), 7, 0);
 
         x = 1;
         for (Location location : locationManager.getLocationsByNameList()) {
@@ -206,7 +214,12 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
     }
 
     private void listSpurs(Track track, String type, String load) {
-        if (!track.isLoadNameAndCarTypeShipped(load, type)) {
+        if (load == null || !track.isLoadNameAndCarTypeShipped(load, type)) {
+            return;
+        }
+        // ignore default empty and load names
+        if (generatedLoadsCheckBox.isSelected() &&
+                (load.equals(carLoads.getDefaultEmptyName()) || load.equals(carLoads.getDefaultLoadName()))) {
             return;
         }
         // now list all of the spurs with schedules for this type and load
@@ -214,7 +227,7 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
             // only spurs have schedules
             if (!location.hasSpurs())
                 continue;
-            // now look for a spur with a schedule
+            // find spurs with a schedule
             for (Track spur : location.getTracksByNameList(Track.SPUR)) {
                 Schedule sch = spur.getSchedule();
                 if (sch == null) {
@@ -227,14 +240,15 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
                 sch.addPropertyChangeListener(this);
                 // determine if schedule is requesting car type and load
                 for (ScheduleItem si : sch.getItemsBySequenceList()) {
-                    if (si.getTypeName().equals(type) &&
+                    if (spur.isLoadNameAccepted(load) &&
+                            si.getTypeName().equals(type) &&
                             (si.getReceiveLoadName().equals(load) ||
                                     (si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
-                                            spur.isLoadNameAccepted(load)))) {
-
+                                            !generatedLoadsCheckBox.isSelected()))) {
                         addItemLeft(locationsPanel, new JLabel(load), 4, x);
                         addItemLeft(locationsPanel, new JLabel(location.getName() + " (" + spur.getName() + ")"), 5, x);
-                        addItemLeft(locationsPanel, new JLabel(sch.getName() + " " + si.getId()), 6, x++);
+                        addItemLeft(locationsPanel, new JLabel(spur.getLoadOptionString()), 6, x);
+                        addItemLeft(locationsPanel, new JLabel(sch.getName() + " " + si.getId()), 7, x++);
                     }
                 }
             }

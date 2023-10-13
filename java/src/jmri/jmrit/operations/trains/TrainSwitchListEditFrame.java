@@ -5,7 +5,6 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +12,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.OperationsPanel;
-import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.*;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
@@ -366,11 +363,10 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         // note that getUniqueLocationsByNameList() method updates the status of
         // locations with "similar" names.
         for (Location location : locationManager.getUniqueLocationsByNameList()) {
-            String name = TrainCommon.splitString(location.getName());
             JCheckBox checkBox = new JCheckBox();
             locationCheckBoxes.add(checkBox);
             checkBox.setSelected(location.isSwitchListEnabled());
-            checkBox.setText(name);
+            checkBox.setText(location.getSplitName());
             checkBox.setName(location.getName());
             addLocationCheckBoxAction(checkBox);
             addItemLeft(locationPanelCheckBoxes, checkBox, 0, y);
@@ -442,9 +438,9 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
                     InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryName(),
                     InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName());
             JmriJOptionPane.showMessageDialog(this,
-                    MessageFormat.format(Bundle.getMessage("LoadDirectoryNameFileName"),
-                            new Object[] { InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryName(),
-                                    InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName() }),
+                    Bundle.getMessage("LoadDirectoryNameFileName",
+                            InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryName(),
+                                    InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName()),
                     Bundle.getMessage("ManifestCreatorNotFound"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }

@@ -2,19 +2,14 @@ package jmri.jmrix.dccpp.swing;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import javax.swing.JOptionPane;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import javax.script.Bindings;
-import javax.script.ScriptException;
-import javax.script.SimpleBindings;
 
-import jmri.JmriException;
+import javax.script.ScriptException;
+
 import jmri.script.ScriptEngineSelector;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Menu action to Export all JMRI Roster Entries as ROSTER() macro calls
@@ -28,7 +23,6 @@ public class DCCppRosterExportAction extends AbstractAction {
 
     private final ScriptEngineSelector _scriptEngineSelector = new ScriptEngineSelector();
     private final String scriptFilename = "program:jython"+File.separator+"DCC-EX"+File.separator+"RosterExportToDCC-EX.py";
-    private static final Logger log = LoggerFactory.getLogger(DCCppRosterExportAction.class);
     
     public DCCppRosterExportAction(String s) {
         super(s);
@@ -48,9 +42,9 @@ public class DCCppRosterExportAction extends AbstractAction {
         if (engine == null) {
             String em = "Script engine is null";
             log.error(em);
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     em, "Script Error",
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         try (InputStreamReader reader = new InputStreamReader(
@@ -60,11 +54,12 @@ public class DCCppRosterExportAction extends AbstractAction {
         } catch (IOException | ScriptException ex) {
             String em = "Cannot execute script: " + ex;
             log.error(em);
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     em, "Script Error",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
+                    JmriJOptionPane.ERROR_MESSAGE);
         }
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppRosterExportAction.class);
 
 }

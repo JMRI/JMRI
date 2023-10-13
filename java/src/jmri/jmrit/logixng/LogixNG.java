@@ -1,8 +1,6 @@
 package jmri.jmrit.logixng;
 
 import jmri.NamedBean;
-import jmri.jmrit.display.Positionable;
-import jmri.jmrit.display.layoutEditor.LayoutTrackView;
 
 /**
  * LogixNG.
@@ -13,6 +11,18 @@ import jmri.jmrit.display.layoutEditor.LayoutTrackView;
 public interface LogixNG extends Base, NamedBean {
 
     String PROPERTY_INLINE = "IsInline";
+
+    /**
+     * Clear the startup flag.
+     */
+    void clearStartup();
+
+    /**
+     * Determines whether this LogixNG is currently during startup.
+     *
+     * @return true if the LogixNG is currently during startup, false otherwise
+     */
+    public boolean isStartup();
 
     /**
      * Sets whether this LogixNG is inline or not.

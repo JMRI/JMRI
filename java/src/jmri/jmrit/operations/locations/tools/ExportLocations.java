@@ -2,7 +2,6 @@ package jmri.jmrit.operations.locations.tools;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.text.MessageFormat;
 import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
@@ -93,6 +92,7 @@ public class ExportLocations extends XmlFile {
                     Bundle.getMessage("MenuItemDestinations"),
                     Bundle.getMessage("Destinations"),
                     Bundle.getMessage("HoldCarsWithCustomLoads"),
+                    Bundle.getMessage("DisableLoadChange"),
                     Bundle.getMessage("SwapCarLoads"),
                     Bundle.getMessage("EmptyDefaultCarLoads"),
                     Bundle.getMessage("EmptyCarLoads"),
@@ -263,6 +263,7 @@ public class ExportLocations extends XmlFile {
                             Bundle.getMessage(track.getDestinationOption().equals(Track.ALL_DESTINATIONS) ? "All" : "Include"),
                             destinationNames.toString(),
                             (track.isHoldCarsWithCustomLoadsEnabled() ? Bundle.getMessage("ButtonYes") : ""),
+                            (track.isDisableLoadChangeEnabled() ? Bundle.getMessage("ButtonYes") : ""),
                             (track.isLoadSwapEnabled() ? Bundle.getMessage("ButtonYes") : ""),
                             (track.isLoadEmptyEnabled() ? Bundle.getMessage("ButtonYes") : ""),
                             (track.isRemoveCustomLoadsEnabled() ? Bundle.getMessage("ButtonYes") : ""),
@@ -281,17 +282,13 @@ public class ExportLocations extends XmlFile {
             fileOut.close();
             log.info("Exported {} locations to file {}", locations.size(), defaultOperationsFilename());
             JmriJOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("ExportedLocationsToFile"), new Object[]{
-                locations.size(), defaultOperationsFilename()}),
-                    Bundle.getMessage("ExportComplete"),
-                    JmriJOptionPane.INFORMATION_MESSAGE);
+                    Bundle.getMessage("ExportedLocationsToFile", locations.size(), defaultOperationsFilename()),
+                    Bundle.getMessage("ExportComplete"), JmriJOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
             log.error("Can not open export locations CSV file: {}", file.getName());
             JmriJOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("ExportedLocationsToFile"), new Object[]{
-                0, defaultOperationsFilename()}),
-                    Bundle.getMessage("ExportFailed"),
-                    JmriJOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ExportedLocationsToFile", 0, defaultOperationsFilename()),
+                    Bundle.getMessage("ExportFailed"), JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 

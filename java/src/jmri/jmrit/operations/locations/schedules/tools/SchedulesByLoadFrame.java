@@ -2,8 +2,6 @@ package jmri.jmrit.operations.locations.schedules.tools;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
-
 import javax.swing.*;
 
 import org.slf4j.Logger;
@@ -16,6 +14,7 @@ import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.tools.CarLoadEditFrameAction;
 import jmri.jmrit.operations.rollingstock.cars.tools.PrintCarLoadsAction;
 import jmri.jmrit.operations.setup.Control;
 
@@ -91,6 +90,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
+        toolMenu.add(new CarLoadEditFrameAction());
         toolMenu.add(new PrintCarLoadsAction(true));
         toolMenu.add(new PrintCarLoadsAction(false));
         menuBar.add(toolMenu);
@@ -207,8 +207,8 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                                 si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
                                 !spur.isLoadNameAndCarTypeAccepted(load, type)) {
                             addItemLeft(locationsPanel,
-                                    new JLabel(MessageFormat.format(Bundle.getMessage("spurNotTypeLoad"),
-                                            new Object[] { spur.getName(), type, load })),
+                                    new JLabel (Bundle.getMessage("spurNotTypeLoad",
+                                            spur.getName(), type, load )),
                                     2, x++);
                         }
                     }
@@ -248,7 +248,8 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         }
         if (e.getSource().getClass().equals(Schedule.class) ||
                 e.getSource().getClass().equals(LocationManager.class) ||
-                e.getPropertyName().equals(Track.LOADS_CHANGED_PROPERTY)) {
+                e.getPropertyName().equals(Track.LOADS_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY)) {
             updateLocations();
         }
     }

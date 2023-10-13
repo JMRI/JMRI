@@ -66,6 +66,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     final JTextField readDataField = new JTextField(60);
     final JTextField writeDataField = new JTextField(60);
     final JComboBox<String> addrSpace = new JComboBox<>(new String[]{"CDI", "All", "Config", "None"});
+    final JComboBox<String> validitySelector = new JComboBox<String>(new String[]{"Unknown", "Valid", "Invalid"});
 
     Connection connection;
     AliasMap aliasMap;
@@ -170,7 +171,14 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         // event messages 
         add(new JSeparator());
         sendEventField.setColumns(24);
-        add(addLineLabel("Send OpenLCB event message with eventID:", sendEventField));
+        
+        var insert = new JPanel();
+        insert.setLayout(new WrapLayout());
+        insert.add(sendEventField);
+        insert.add(validitySelector);
+        
+        
+        add(addLineLabel("Send OpenLCB event message with eventID:", insert));
         pane2 = new JPanel();
         pane2.setLayout(new WrapLayout());
         add(pane2);
@@ -378,8 +386,17 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         connection.put(m, null);
     }
 
+    EventState validity() {
+        switch (validitySelector.getSelectedIndex()) {
+            case 1 : return EventState.Valid;
+            case 2 : return EventState.Invalid;
+            case 0 : 
+            default: return EventState.Unknown;
+        }
+    }
+    
     public void sendConsumerID(java.awt.event.ActionEvent e) {
-        Message m = new ConsumerIdentifiedMessage(srcNodeID, eventID(), EventState.Valid);
+        Message m = new ConsumerIdentifiedMessage(srcNodeID, eventID(), validity());
         connection.put(m, null);
     }
 
@@ -389,7 +406,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     public void sendProducerID(java.awt.event.ActionEvent e) {
-        Message m = new ProducerIdentifiedMessage(srcNodeID, eventID(), EventState.Valid);
+        Message m = new ProducerIdentifiedMessage(srcNodeID, eventID(), validity());
         connection.put(m, null);
     }
 

@@ -646,12 +646,12 @@ public class MqttThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     private MqttThrottleManager tm;
     private MqttAdapterScaffold a;
 
-    public String sendThrottleTopic = "cab/$address/throttle";
-    public String rcvThrottleTopic ="cab/$address/throttle";
-    public String sendDirectionTopic = "cab/$address/direction";
-    public String rcvDirectionTopic = "cab/$address/direction";
-    public String sendFunctionTopic = "cab/$address/function/$function";
-    public String rcvFunctionTopic = "cab/$address/function/$function";
+    public String sendThrottleTopic = "cab/{0}/throttle";
+    public String rcvThrottleTopic ="cab/{0}/throttle";
+    public String sendDirectionTopic = "cab/{0}/direction";
+    public String rcvDirectionTopic = "cab/{0}/direction";
+    public String sendFunctionTopic = "cab/{0}/function/{1}";
+    public String rcvFunctionTopic = "cab/{0}/function/{1}";
 
 
     @Override

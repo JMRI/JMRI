@@ -135,6 +135,7 @@ public class Xml {
     static final String ROW_COLOR_BUILD_FAILED = "rowColorBuidFailed"; // NOI18N
     static final String ROW_COLOR_TRAIN_EN_ROUTE = "rowColorTrainEnRoute"; // NOI18N
     static final String ROW_COLOR_TERMINATED = "rowColorTerminated"; // NOI18N
+    static final String ROW_COLOR_RESET = "rowColorReset"; // NOI18N
 
     // TrainManagerXml.java
     static final String TRAINS = "trains"; // NOI18N

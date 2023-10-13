@@ -48,10 +48,12 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     controlSensors.append([i, 'soundSensor', 'Enable Announcements', 10, 5]); i += 1
     controlSensors.append([i, 'simulateSensor', 'Simulate Dispatched Trains', 10, 5]); i += 1
     controlSensors.append([i, 'checkRouteSensor', 'Dispatch Path must be clear', 10, 5]); i += 1
+    controlSensors.append([i, 'stopAtStopSensor', 'Stop at Stop Sensors (Default)', 10, 5]); i += 1
 
     controlSensors.append([i, 'setDispatchSensor', 'Run Dispatch', 0, 5]); i += 1
     controlSensors.append([i, 'setRouteSensor', 'Setup Route', 0, 5]); i += 1
     controlSensors.append([i, 'setStoppingDistanceSensor', 'Set Stopping Length', 0, 5]); i += 1
+    controlSensors.append([i, 'setStopSensor', 'Set Stop Sensor', 0, 5]); i += 1
     controlSensors.append([i, 'setStationWaitTimeSensor', 'Set Station Wait Time', 0, 5]); i += 1
     controlSensors.append([i, 'setStationDirectionSensor', 'Set Station Direction', 0, 5]); i += 1
     controlSensors.append([i, 'setTransitBlockRestrictionSensor', 'Restrict Transit Operation', 0, 5]); i += 1
@@ -66,33 +68,34 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
 
     def __init__(self):
+        self.result = "Success"    #value is returned in __str__ and set to "Failure" in self.tryme()
         self.define_DisplayProgress_global()
         if self.perform_initial_checks():
-            self.waitMsec(5000)
             self.show_progress(0)
-            self.removeIconsAndLabels()
-            self.removeLogix()
-            self.removeTransits()
-            self.removeSML()            # do before removeSections in case direction sensors have been added to the SML
-            self.removeSections()
+            self.tryme(self.saveForwardStoppingSensors, "Cannot save Forward Stopping Sensors: Contact Developer")
+            self.tryme(self.removeIconsAndLabels, "Cannot remove Icons And Labels: Contact Developer")
+            self.tryme(self.removeLogix, "Cannot remove startup Logix: Contact Developer")
+            self.tryme(self.removeTransits, "Cannot remove Transits: Contact Developer")
+            self.tryme(self.removeSML, "Cannot remove SML: Contact Developer")            # do before removeSections in case direction sensors have been added to the SML
+            self.tryme(self.removeSections, "Cannot remove Sections: Contact Developer")
             self.show_progress(20)
-            self.removeSensors()
+            self.tryme(self.removeSensors, "Cannot generate startup Logix: Contact Developer")
             self.show_progress(40)
-            self.updatePanels()
-            self.waitMsec(5000)
-            self.get_list_of_stopping_points()
+            self.tryme(self.updatePanels, "Cannot update Panels: Contact Developer")
+            self.tryme(self.get_list_of_stopping_points, "Cannot get list of stopping points, Contact Developer")
             self.addSensors()
-            self.generateSML()
+            self.tryme(self.generateSML, "Cannot generate Signal Mast Logic: Signal Masts not set up correctly. Needs to be fixed before using Dispatcher System.")
             self.show_progress(60)
-            self.generateSections()
+            self.tryme(self.generateSections, "Cannot generate Sections: Signal Masts not set up correctly. Needs to be fixed before using Dispatcher System.")
             self.show_progress(80)
-            self.addLogix()
+            self.tryme(self.addLogix, "Cannot generate startup Logix: Contact Developer")
             self.addIcons()
+            self.tryme(self.retrieveForwardStoppingSensors, "Cannot retrieve Stopping Sensors: Contact Developer")
             self.stop_all_threads()
             self.end_show_progress()
 
-            # msg = 'The JMRI tables and panels have been updated to support the Dispatcher System\nA store is recommended.'
-            # JOptionPane.showMessageDialog(None, msg, 'Message', JOptionPane.WARNING_MESSAGE)
+    def __str__(self):
+        return self.result      # allow return value from calling processPanels()
 
     def stop_all_threads(self):
         summary = jmri.jmrit.automat.AutomatSummary.instance()
@@ -102,6 +105,15 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
         for automat in automatsList:
             automat.stop()
+
+    def tryme(self, func, failure_message):
+        try:
+            func()
+        except:
+            title = "Error in Routine"
+            Query().displayMessage(failure_message,title)
+            self.result = "Failure"
+        pass
 
     def define_DisplayProgress_global(self):
         global dpg
@@ -590,7 +602,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         cdlManager = jmri.InstanceManager.getDefault(jmri.ConditionalManager)
         lgx = lgxManager.createNewLogix('IX:DSLX:1', 'Run Dispatcher')
         cdl = cdlManager.createNewConditional('IX:DSLX:1C1', 'Run Dispatcher')
-        lgx.addConditional('IX:DSLX:1C1', 0):
+        lgx.addConditional('IX:DSLX:1C1', 0)
         if cdl is not None:
             cdl.setUserName('Run Dispatcher')
             vars = []
@@ -712,7 +724,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                 x += 20
                 self.addTextLabel(panel, control[2], x, y)
 
-        panel.setSize(300, 470)
+        panel.setSize(300, 540)
         panel.setAllEditable(False)
         panel.setVisible(True)
 
@@ -793,6 +805,54 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         label.setLocation(int(x), int(y))
         panel.putItem(label)
 
+    def saveForwardStoppingSensors(self):
+        forward_stop_sensors = \
+            [["section: " , str(section.getUserName()), " stop sensor: " , str(section.getForwardStoppingSensor().getUserName())] \
+             for section in sections.getNamedBeanSet() if section.getForwardStoppingSensor() != None]
+        self.write_list(forward_stop_sensors)
+
+    def retrieveForwardStoppingSensors(self):
+        forward_stop_sensors = self.read_list()
+        if forward_stop_sensors != []:
+            [sections.getSection(section_name).setForwardStoppingSensorName(forward_stopping_sensor_name) \
+             for [sn_prompt, section_name, fss_prompt, forward_stopping_sensor_name] in forward_stop_sensors \
+             if forward_stop_sensors is not [] and sections.getSection(section_name) is not None]
+    def directory(self):
+        path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "forwardStoppingSensors"
+        if not os.path.exists(path):
+            os.makedirs(path)
+        return path + java.io.File.separator
+    def write_list(self, a_list):
+        # store list in binary file so 'wb' mode
+        file = self.directory() + "forwardStoppingSensors.txt"
+        #print "block_info" , a_list
+        #print "file"  +file
+        with open(file, 'wb') as fp:
+            for items in a_list:
+                i = 0
+                for item in items:
+                    fp.write('%s' %item)
+                    if i < 3 : fp.write(",")
+                    i+=1
+                fp.write('\n')
+
+    # Read list to memory
+    def read_list(self):
+        # for reading also binary mode is important
+        file = self.directory() + "forwardStoppingSensors.txt"
+        n_list = []
+        try:
+            with open(file, 'rb') as fp:
+                for line in fp:
+                    x = line[:-1]
+                    #print x
+                    y = x.split(",")
+                    #print "y" , y
+                    n_list.append(y)
+            return n_list
+        except:
+            return []
+
 class DisplayProgress:
     def __init__(self):
         #labels don't seem to work. This is the only thing I could get to work. Improvements welcome
@@ -808,6 +868,7 @@ class DisplayProgress:
 
 
 
+
 class Query:
     def customQuestionMessage2(self, msg, title, opt1, opt2):
         self.CLOSED_OPTION = False
@@ -820,6 +881,22 @@ class Query:
                                          None,
                                          options,
                                          options[0])
+        if s == JOptionPane.CLOSED_OPTION:
+            self.CLOSED_OPTION = True
+            return
+        return s
+
+    def displayMessage(self, msg, title = ""):
+        self.CLOSED_OPTION = False
+        s = JOptionPane.showOptionDialog(None,
+                                         msg,
+                                         title,
+                                         JOptionPane.YES_NO_OPTION,
+                                         JOptionPane.PLAIN_MESSAGE,
+                                         None,
+                                         ["OK"],
+                                         None)
+        #JOptionPane.showMessageDialog(None, msg, 'Message', JOptionPane.WARNING_MESSAGE)
         if s == JOptionPane.CLOSED_OPTION:
             self.CLOSED_OPTION = True
             return

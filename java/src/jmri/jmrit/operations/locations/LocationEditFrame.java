@@ -3,7 +3,6 @@ package jmri.jmrit.operations.locations;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +11,7 @@ import javax.swing.*;
 import jmri.*;
 import jmri.jmrit.operations.*;
 import jmri.jmrit.operations.locations.divisions.*;
+import jmri.jmrit.operations.locations.schedules.tools.SchedulesAndStagingAction;
 import jmri.jmrit.operations.locations.tools.*;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
@@ -347,22 +347,27 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
     private void loadToolMenu() {
         toolMenu.removeAll();
-        toolMenu.add(new TrackCopyAction(this));
+        toolMenu.add(new LocationCopyAction(_location));
+        toolMenu.add(new TrackCopyAction(null, _location));
         toolMenu.add(new ChangeTracksTypeAction(this));
-        toolMenu.add(new ShowTrackMovesAction());
-        toolMenu.add(new ModifyLocationsAction(_location));
-        toolMenu.add(new ModifyLocationsCarLoadsAction(_location));
         if (_location != null && !_location.isStaging()) {
             toolMenu.add(new LocationTrackBlockingOrderAction(_location));
         }
+        toolMenu.add(new ShowTrackMovesAction());
         toolMenu.add(new EditCarTypeAction());
-        toolMenu.add(new ShowCarsByLocationAction(false, _location, null));
         if (Setup.isVsdPhysicalLocationEnabled()) {
             toolMenu.add(new SetPhysicalLocationAction(_location));
         }
         toolMenu.addSeparator();
+        toolMenu.add(new ModifyLocationsAction(_location));
+        toolMenu.add(new ModifyLocationsCarLoadsAction(_location));
+        toolMenu.addSeparator();
+        toolMenu.add(new ShowCarsByLocationAction(false, _location, null));
         toolMenu.add(new ShowTrainsServingLocationAction(_location, null));
         toolMenu.add(new ShowRoutesServingLocationAction(_location));
+        if (_location != null && _location.isStaging()) {
+            toolMenu.add(new SchedulesAndStagingAction());
+        }
         toolMenu.addSeparator();
         toolMenu.add(new PrintLocationsAction(false, _location));
         toolMenu.add(new PrintLocationsAction(true, _location));
@@ -476,8 +481,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         if (route != null) {
             JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("RouteUsesLocation", route.getName(), location.getName()),
-                    Bundle.getMessage("CanNotDeleteLocation"),
-                    JmriJOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("CanNotDeleteLocation"), JmriJOptionPane.ERROR_MESSAGE);
             // show all the routes using this location
             ShowRoutesServingLocationFrame frame = new ShowRoutesServingLocationFrame();
             frame.initComponents(location);
@@ -485,16 +489,16 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         }
         int count = location.getNumberRS();
         if (count > 0) {
-            if (JOptionPane.showConfirmDialog(this,
-                    MessageFormat.format(Bundle.getMessage("ThereAreCars"), new Object[] { Integer.toString(count) }),
-                    Bundle.getMessage("deletelocation?"), JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
+            if (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("ThereAreCars", Integer.toString(count)),
+                    Bundle.getMessage("deletelocation?"),
+                    JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                 return;
             }
         } else {
-            if (JOptionPane.showConfirmDialog(this,
-                    MessageFormat.format(Bundle.getMessage("DoYouWantToDeleteLocation"),
-                            new Object[] { locationNameTextField.getText() }),
-                    Bundle.getMessage("deletelocation?"), JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
+            if (JmriJOptionPane.showConfirmDialog(this,
+                    Bundle.getMessage("DoYouWantToDeleteLocation", locationNameTextField.getText()),
+                    Bundle.getMessage("deletelocation?"),
+                    JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                 return;
             }
         }
@@ -558,8 +562,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         String locationName = locationNameTextField.getText().trim();
         if (locationName.isEmpty()) {
             JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"),
-                    MessageFormat.format(Bundle.getMessage("CanNotLocation"), new Object[] { s }),
-                    JmriJOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("CanNotLocation", s), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         // hyphen feature needs at least one character to work properly
@@ -567,9 +570,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             String[] check = locationName.split(TrainCommon.HYPHEN);
             if (check.length == 0) {
                 JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("HyphenFeature"),
-                        MessageFormat.format(Bundle.getMessage("CanNotLocation"), new Object[] { s }),
-                        JmriJOptionPane.ERROR_MESSAGE);
-
+                        Bundle.getMessage("CanNotLocation", s), JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
             locationName = check[0];
@@ -578,17 +579,14 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             // log.error("Location name must be less than "+
             // Integer.toString(MAX_NAME_LENGTH+1) +" characters");
             JmriJOptionPane.showMessageDialog(this,
-                    MessageFormat.format(Bundle.getMessage("LocationNameLengthMax"),
-                            new Object[] { Integer.toString(MAX_NAME_LENGTH + 1) }),
-                    MessageFormat.format(Bundle.getMessage("CanNotLocation"), new Object[] { s }),
-                    JmriJOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("LocationNameLengthMax", Integer.toString(MAX_NAME_LENGTH + 1)),
+                    Bundle.getMessage("CanNotLocation", s), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (!OperationsXml.checkFileName(locationName)) { // NOI18N
             JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("NameResChar") + NEW_LINE + Bundle.getMessage("ReservedChar"),
-                    MessageFormat.format(Bundle.getMessage("CanNotLocation"), new Object[] { s }),
-                    JmriJOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("CanNotLocation", s), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -597,8 +595,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     private void reportLocationExists(String s) {
         // log.info("Can not " + s + ", location already exists");
         JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("LocationAlreadyExists"),
-                MessageFormat.format(Bundle.getMessage("CanNotLocation"), new Object[] { s }),
-                JmriJOptionPane.ERROR_MESSAGE);
+                Bundle.getMessage("CanNotLocation", s), JmriJOptionPane.ERROR_MESSAGE);
     }
 
     private void enableButtons(boolean enabled) {

@@ -2,7 +2,6 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -12,9 +11,7 @@ import org.apache.commons.csv.CSVPrinter;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCommon;
-import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.*;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -74,7 +71,7 @@ public class ExportTrains extends XmlFile {
                     Bundle.getMessage("Owners"), Bundle.getMessage("Built"),
                     Bundle.getMessage("NormalModeWhenBuilding"), Bundle.getMessage("AllowCarsToReturn"),
                     Bundle.getMessage("AllowThroughCars"), Bundle.getMessage("SendCustomToStaging"),
-                    MessageFormat.format(Bundle.getMessage("SendToTerminal"), new Object[] { "" }),
+                    Bundle.getMessage("SendToTerminal", ""),
                     Bundle.getMessage("AllowLocalMoves"), Bundle.getMessage("ServiceAllCars"),
                     Bundle.getMessage("BuildConsist"));
 
@@ -180,14 +177,14 @@ public class ExportTrains extends XmlFile {
             fileOut.close();
             log.info("Exported {} trains to file {}", count, defaultOperationsFilename());
             JmriJOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("ExportedTrainsToFile"),
-                            new Object[] { count, defaultOperationsFilename() }),
+                    Bundle.getMessage("ExportedTrainsToFile",
+                            count, defaultOperationsFilename()),
                     Bundle.getMessage("ExportComplete"), JmriJOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
             log.error("Can not open export trains CSV file: {}", file.getName());
             JmriJOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("ExportedTrainsToFile"),
-                            new Object[] { 0, defaultOperationsFilename() }),
+                    Bundle.getMessage("ExportedTrainsToFile",
+                            0, defaultOperationsFilename()),
                     Bundle.getMessage("ExportFailed"), JmriJOptionPane.ERROR_MESSAGE);
         }
     }

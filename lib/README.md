@@ -138,8 +138,7 @@ which checks the dates of the control files to make sure they've been updated wh
 
 ##### openlcb.jar
  - 0.7.32 from https://github.com/openlcb/OpenLCB_Java
- - Through PR#231 included as of 2023-09-08
- - Includes TN CDI update from branch
+ - Through PR#237 included as of 2023-10-12
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels

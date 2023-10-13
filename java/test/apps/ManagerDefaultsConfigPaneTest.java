@@ -13,6 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class ManagerDefaultsConfigPaneTest extends PreferencesPanelTestBase<ManagerDefaultsConfigPane> {
 
+    @Override
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

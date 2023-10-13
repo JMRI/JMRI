@@ -7,9 +7,6 @@ import java.util.function.Predicate;
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
 
-import jmri.NamedBean;
-import jmri.jmrit.display.Positionable;
-import jmri.jmrit.logixng.InlineLogixNG;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.util.JmriJFrame;
 

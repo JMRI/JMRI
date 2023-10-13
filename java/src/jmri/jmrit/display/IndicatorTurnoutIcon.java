@@ -10,7 +10,6 @@ import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.controlPanelEditor.shape.LocoLabel;
 import jmri.jmrit.display.palette.IndicatorTOItemPanel;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.picker.PickListModel;

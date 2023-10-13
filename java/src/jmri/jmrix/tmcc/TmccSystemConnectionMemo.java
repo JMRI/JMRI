@@ -93,6 +93,7 @@ public class TmccSystemConnectionMemo extends DefaultSystemConnectionMemo implem
      * Configure the common managers for tmcc connections. This puts the common
      * manager config in one place.
      */
+    @Override
     public void configureManagers() {
         log.debug("configureManagers");
         TurnoutManager turnoutManager = getTurnoutManager();

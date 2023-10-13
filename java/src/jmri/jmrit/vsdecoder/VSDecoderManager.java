@@ -6,7 +6,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import jmri.Audio;
@@ -37,8 +36,6 @@ import java.awt.geom.Point2D;
 import java.awt.GraphicsEnvironment;
 import javax.swing.Timer;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * VSDecoderFactory, builds VSDecoders as needed, handles loading from XML if needed.
@@ -1091,20 +1088,14 @@ public class VSDecoderManager implements PropertyChangeListener {
             Timer t = new Timer(check_time, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    float newspeed;
                     if (alf_version == 1) {
-                        newspeed = d.currentspeed;
-                        d.avgspeed = (newspeed + d.lastspeed) / 2f;
                         calcNewPosition(d);
-                        d.lastspeed = newspeed;
                     } else if (alf_version == 2) {
-                        if ((d.getEngineSound().isEngineStarted() && d.currentspeed > 0.0f) || d.getLayoutTrack() instanceof LayoutTurntable) {
-                            newspeed = d.currentspeed;
-                            d.avgspeed = (newspeed + d.lastspeed) / 2f;
-                            d.lastspeed = newspeed;
-                            int ix = getArrayIndex(d.getAddress().getNumber()); // ix = decoder number 0-3 (max_decoder)
-                            if (locoInBlock[ix][DIR_FN] != d.dirfn) {
-                                // traveling direction has changed
+                        int ix = getArrayIndex(d.getAddress().getNumber()); // ix = decoder number 0-3 (max_decoder)
+                        float actualspeed = d.getEngineSound().getActualSpeed();
+                        if (locoInBlock[ix][DIR_FN] != d.dirfn) {
+                            // traveling direction has changed
+                            if (d.getEngineSound().isEngineStarted()) {
                                 locoInBlock[ix][DIR_FN] = d.dirfn; // save traveling direction info
                                 if (d.distanceOnTrack <= d.getReturnDistance()) {
                                     d.distanceOnTrack = d.getReturnDistance() - d.distanceOnTrack;
@@ -1115,8 +1106,13 @@ public class VSDecoderManager implements PropertyChangeListener {
                                 d.setLastTrack(d.getReturnLastTrack());
                                 log.debug("direction changed to {}, layout: {}, last: {}, return: {}, d.getReturnDistance: {}, d.distanceOnTrack: {}, d.getDistance: {}",
                                         d.dirfn, d.getLayoutTrack(), d.getLastTrack(), d.getReturnTrack(), d.getReturnDistance(), d.distanceOnTrack, d.getDistance());
+                                d.setDistance(0);
+                                d.navigate();
+                                d.getModels().repaint();
                             }
-                            float speed_ms = d.avgspeed * (d.dirfn == 1 ? d.topspeed : d.topspeed_rev) * 0.44704f / layout_scale; // calculate the speed
+                        }
+                        if ((d.getEngineSound().isEngineStarted() && actualspeed > 0.0f) || d.getLayoutTrack() instanceof LayoutTurntable) {
+                            float speed_ms = actualspeed * (d.dirfn == 1 ? d.topspeed : d.topspeed_rev) * 0.44704f / layout_scale; // calculate the speed
                             d.setDistance(d.getDistance() + speed_ms * check_time / 10.0); // d.getDistance() normally is 0, but can content an overflow
                             d.navigate();
                             Point2D loc = d.getLocation();
@@ -1126,6 +1122,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                             d.posToSet.z = 0.0f;
                             log.debug("address {} position to set: {}, location: {}", d.getAddress(), d.posToSet, loc);
                             d.setPosition(d.posToSet);
+                            d.getModels().repaint();
                         }
                     }
                 }
@@ -1163,7 +1160,8 @@ public class VSDecoderManager implements PropertyChangeListener {
     //  train route is described by a combination of two types of geometric elements: line track or curve track
     //  the train route data is provided by a xml file and gathered by method getBlockValues
     public void calcNewPosition(VSDecoder d) {
-        if (d.currentspeed > 0.0f && d.topspeed > 0) { // proceed only, if the loco is running and if a topspeed value is available
+        float actualspeed = d.getEngineSound().getActualSpeed();
+        if (actualspeed > 0.0f && d.topspeed > 0) { // proceed only, if the loco is running and if a topspeed value is available
             int dadr = d.getAddress().getNumber();
             int dadr_index = getArrayIndex(dadr); // check, if the decoder is in "Block status for locos" - remove this check?
             if (dadr_index < locoInBlock.length) {
@@ -1172,9 +1170,9 @@ public class VSDecoderManager implements PropertyChangeListener {
                 if (reporterlists.get(d.setup_index).contains(dadr_block)) {
                     int dadr_block_index = reporterlists.get(d.setup_index).indexOf(dadr_block);
                     newPosition = new PhysicalLocation(0.0f, 0.0f, 0.0f, d.savedSound.getTunnel());
-                    // calculate current speed in meter/second; support topspeed forward or reverse
-                    // JMRI speed is 0-1; currentspeed is speed after speedCurve(); multiply with topspeed (MPH); convert MPH to meter/second; regard layout scale
-                    float speed_ms = d.avgspeed * (d.dirfn == 1 ? d.topspeed : d.topspeed_rev) * 0.44704f / layout_scale;
+                    // calculate actual speed in meter/second; support topspeed forward or reverse
+                    // JMRI speed is 0-1; actual speed is speed after speedCurve(float); in steam1 it is calculated from actual RPM; convert MPH to meter/second; regard layout scale
+                    float speed_ms = actualspeed * (d.dirfn == 1 ? d.topspeed : d.topspeed_rev) * 0.44704f / layout_scale;
                     d.distanceMeter = speed_ms * check_time / 1000; // distance in Meter
                     if (locoInBlock[dadr_index][DIR_FN] == 0) { // On start
                         locoInBlock[dadr_index][DIR_FN] = d.dirfn;
@@ -1241,6 +1239,6 @@ public class VSDecoderManager implements PropertyChangeListener {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(VSDecoderManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VSDecoderManager.class);
 
 }

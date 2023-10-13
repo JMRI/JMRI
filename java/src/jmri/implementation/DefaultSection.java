@@ -24,7 +24,6 @@ import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import jmri.jmrit.display.layoutEditor.TrackNode;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
 
-import jmri.util.JmriJFrame;
 import jmri.util.NonNullArrayList;
 
 /**
@@ -208,6 +207,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      * @return {@link #OCCUPIED}, {@link #UNOCCUPIED}, or the state of the first
      *         block that is neither occupied or unoccupied
      */
+    @Override
     public int getOccupancy() {
         if (mOccupancyInitialized) {
             return mOccupancy;
@@ -233,6 +233,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         firePropertyChange("occupancy", old, mOccupancy);
     }
 
+    @Override
     public String getForwardBlockingSensorName() {
         if (mForwardBlockingNamedSensor != null) {
             return mForwardBlockingNamedSensor.getName();
@@ -240,6 +241,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return mForwardBlockingSensorName;
     }
 
+    @Override
     public Sensor getForwardBlockingSensor() {
         if (mForwardBlockingNamedSensor != null) {
             return mForwardBlockingNamedSensor.getBean();
@@ -259,6 +261,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return null;
     }
 
+    @Override
     public Sensor setForwardBlockingSensorName(String forwardSensor) {
         if ((forwardSensor == null) || (forwardSensor.length() <= 0)) {
             mForwardBlockingSensorName = "";
@@ -278,10 +281,12 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return s;
     }
 
+    @Override
     public void delayedSetForwardBlockingSensorName(String forwardSensor) {
         mForwardBlockingSensorName = forwardSensor;
     }
 
+    @Override
     public String getReverseBlockingSensorName() {
         if (mReverseBlockingNamedSensor != null) {
             return mReverseBlockingNamedSensor.getName();
@@ -289,6 +294,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return mReverseBlockingSensorName;
     }
 
+    @Override
     public Sensor setReverseBlockingSensorName(String reverseSensor) {
         if ((reverseSensor == null) || (reverseSensor.length() <= 0)) {
             mReverseBlockingNamedSensor = null;
@@ -308,10 +314,12 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return s;
     }
 
+    @Override
     public void delayedSetReverseBlockingSensorName(String reverseSensor) {
         mReverseBlockingSensorName = reverseSensor;
     }
 
+    @Override
     public Sensor getReverseBlockingSensor() {
         if (mReverseBlockingNamedSensor != null) {
             return mReverseBlockingNamedSensor.getBean();
@@ -331,6 +339,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return null;
     }
 
+    @Override
     public Block getLastBlock() {
         return mLastBlock;
     }
@@ -355,6 +364,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return s;
     }
 
+    @Override
     public String getForwardStoppingSensorName() {
         if (mForwardStoppingNamedSensor != null) {
             return mForwardStoppingNamedSensor.getName();
@@ -362,6 +372,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return mForwardStoppingSensorName;
     }
 
+    @Override
     @CheckForNull
     public Sensor getForwardStoppingSensor() {
         if (mForwardStoppingNamedSensor != null) {
@@ -382,6 +393,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return null;
     }
 
+    @Override
     public Sensor setForwardStoppingSensorName(String forwardSensor) {
         if ((forwardSensor == null) || (forwardSensor.length() <= 0)) {
             mForwardStoppingNamedSensor = null;
@@ -401,10 +413,12 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return s;
     }
 
+    @Override
     public void delayedSetForwardStoppingSensorName(String forwardSensor) {
         mForwardStoppingSensorName = forwardSensor;
     }
 
+    @Override
     public String getReverseStoppingSensorName() {
         if (mReverseStoppingNamedSensor != null) {
             return mReverseStoppingNamedSensor.getName();
@@ -412,6 +426,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return mReverseStoppingSensorName;
     }
 
+    @Override
     @CheckForNull
     public Sensor setReverseStoppingSensorName(String reverseSensor) {
         if ((reverseSensor == null) || (reverseSensor.length() <= 0)) {
@@ -432,10 +447,12 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return s;
     }
 
+    @Override
     public void delayedSetReverseStoppingSensorName(String reverseSensor) {
         mReverseStoppingSensorName = reverseSensor;
     }
 
+    @Override
     @CheckForNull
     public Sensor getReverseStoppingSensor() {
         if (mReverseStoppingNamedSensor != null) {
@@ -465,6 +482,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      * @return true if Block was added or false if Block does not connect to the
      *         current Block, or the Block is not unique.
      */
+    @Override
     public boolean addBlock(Block b) {
         // validate that this entry is unique, if not first.
         if (mBlockEntries.isEmpty()) {
@@ -503,6 +521,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
     private boolean initializationNeeded = false;
     private final List<String> blockNameList = new ArrayList<>();
 
+    @Override
     public void delayedAddBlock(String blockName) {
         initializationNeeded = true;
         blockNameList.add(blockName);
@@ -553,6 +572,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      *
      * @return a list of blocks
      */
+    @Override
     @Nonnull
     public List<Block> getBlockList() {
         if (initializationNeeded) {
@@ -566,6 +586,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      *
      * @return the number of blocks
      */
+    @Override
     public int getNumBlocks() {
         if (initializationNeeded) {
             initializeBlocks();
@@ -582,6 +603,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      * @param scale  the scale; one of {@link jmri.Scale}
      * @return the scale length
      */
+    @Override
     public float getLengthF(boolean meters, Scale scale) {
         if (initializationNeeded) {
             initializeBlocks();
@@ -597,6 +619,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return (length * 0.00328084f);
     }
 
+    @Override
     public int getLengthI(boolean meters, Scale scale) {
         return ((int) ((getLengthF(meters, scale) + 0.5f)));
     }
@@ -606,6 +629,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      *
      * @return the real length in millimeters
      */
+    @Override
     public int getActualLength() {
         if (initializationNeeded) {
             initializeBlocks();
@@ -623,6 +647,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      * @param seqNumber the sequence number
      * @return the block or null if the sequence number is invalid
      */
+    @Override
     @CheckForNull
     public Block getBlockBySequenceNumber(int seqNumber) {
         if (initializationNeeded) {
@@ -640,6 +665,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      * @param b the block to get the sequence of
      * @return the sequence number of b or -1 if b is not in the Section
      */
+    @Override
     public int getBlockSequenceNumber(Block b) {
         for (int i = 0; i < mBlockEntries.size(); i++) {
             if (b == mBlockEntries.get(i)) {
@@ -652,6 +678,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
     /**
      * Remove all Blocks, Block Listeners, and Entry Points
      */
+    @Override
     public void removeAllBlocksFromSection() {
         for (int i = mBlockEntries.size(); i > 0; i--) {
             Block b = mBlockEntries.get(i - 1);
@@ -674,6 +701,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      */
     private int blockIndex = 0;  // index of last block returned
 
+    @Override
     @CheckForNull
     public Block getEntryBlock() {
         if (initializationNeeded) {
@@ -690,6 +718,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return mBlockEntries.get(blockIndex - 1);
     }
 
+    @Override
     @CheckForNull
     public Block getNextBlock() {
         if (initializationNeeded) {
@@ -706,6 +735,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return mBlockEntries.get(blockIndex - 1);
     }
 
+    @Override
     @CheckForNull
     public Block getExitBlock() {
         if (initializationNeeded) {
@@ -722,6 +752,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return mBlockEntries.get(blockIndex - 1);
     }
 
+    @Override
     public boolean containsBlock(Block b) {
         for (Block block : mBlockEntries) {
             if (b == block) {
@@ -731,6 +762,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return false;
     }
 
+    @Override
     public boolean connectsToBlock(Block b) {
         if (mForwardEntryPoints.stream().anyMatch((ep) -> (ep.getFromBlock() == b))) {
             return true;
@@ -738,6 +770,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return mReverseEntryPoints.stream().anyMatch((ep) -> (ep.getFromBlock() == b));
     }
 
+    @Override
     public String getBeginBlockName() {
         if (initializationNeeded) {
             initializeBlocks();
@@ -748,6 +781,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return mFirstBlock.getDisplayName();
     }
 
+    @Override
     public String getEndBlockName() {
         if (initializationNeeded) {
             initializeBlocks();
@@ -758,18 +792,21 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return mLastBlock.getDisplayName();
     }
 
+    @Override
     public void addToForwardList(EntryPoint ep) {
         if (ep != null) {
             mForwardEntryPoints.add(ep);
         }
     }
 
+    @Override
     public void addToReverseList(EntryPoint ep) {
         if (ep != null) {
             mReverseEntryPoints.add(ep);
         }
     }
 
+    @Override
     public void removeEntryPoint(EntryPoint ep) {
         for (int i = mForwardEntryPoints.size(); i > 0; i--) {
             if (mForwardEntryPoints.get(i - 1) == ep) {
@@ -783,20 +820,24 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         }
     }
 
+    @Override
     public List<EntryPoint> getForwardEntryPointList() {
         return new ArrayList<>(this.mForwardEntryPoints);
     }
 
+    @Override
     public List<EntryPoint> getReverseEntryPointList() {
         return new ArrayList<>(this.mReverseEntryPoints);
     }
 
+    @Override
     public List<EntryPoint> getEntryPointList() {
         List<EntryPoint> list = new ArrayList<>(this.mForwardEntryPoints);
         list.addAll(this.mReverseEntryPoints);
         return list;
     }
 
+    @Override
     public boolean isForwardEntryPoint(EntryPoint ep) {
         for (int i = 0; i < mForwardEntryPoints.size(); i++) {
             if (ep == mForwardEntryPoints.get(i)) {
@@ -806,6 +847,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return false;
     }
 
+    @Override
     public boolean isReverseEntryPoint(EntryPoint ep) {
         for (int i = 0; i < mReverseEntryPoints.size(); i++) {
             if (ep == mReverseEntryPoints.get(i)) {
@@ -824,6 +866,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      *            {@link #REVERSE}
      * @return the entry point or null if not found
      */
+    @Override
     @CheckForNull
     public EntryPoint getEntryPointFromSection(Section s, int dir) {
         if (dir == FORWARD) {
@@ -851,6 +894,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      *            {@link #REVERSE}
      * @return the entry point or null if not found
      */
+    @Override
     @CheckForNull
     public EntryPoint getExitPointToSection(Section s, int dir) {
         if (s == null) {
@@ -881,6 +925,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      *            {@link #REVERSE}
      * @return the entry point or null if not found
      */
+    @Override
     @CheckForNull
     public EntryPoint getEntryPointFromBlock(Block b, int dir) {
         if (dir == FORWARD) {
@@ -908,6 +953,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      *            {@link #REVERSE}
      * @return the entry point or null if not found
      */
+    @Override
     @CheckForNull
     public EntryPoint getExitPointToBlock(Block b, int dir) {
         if (dir == REVERSE) {
@@ -1643,6 +1689,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      *
      * @return the number or errors placing sensors; 1 is returned if no direction sensor is defined for this section
      */
+    @Override
     public int placeDirectionSensors() {
         int missingSignalsBB = 0;
         int missingSignalsTurnouts = 0;
@@ -2394,6 +2441,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      *
      * @return an error description or empty string if there are no errors
      */
+    @Override
     public String validate() {
         if (initializationNeeded) {
             initializeBlocks();
@@ -2521,6 +2569,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      *
      * @param set true to use alternate unoccupied color; false otherwise
      */
+    @Override
     public void setAlternateColor(boolean set) {
         for (Block b : mBlockEntries) {
             String userName = b.getUserName();
@@ -2543,6 +2592,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      *
      * @param set true to use alternate unoccupied color; false otherwise
      */
+    @Override
     public void setAlternateColorFromActiveBlock(boolean set) {
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         boolean beenSet = false;
@@ -2589,6 +2639,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      *
      * @param name the value to set all blocks to
      */
+    @Override
     public void setNameInBlocks(String name) {
         for (Block b : mBlockEntries) {
             b.setValue(name);
@@ -2600,12 +2651,14 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      *
      * @param value the name to set block values to
      */
+    @Override
     public void setNameInBlocks(Object value) {
         for (Block b : mBlockEntries) {
             b.setValue(value);
         }
     }
 
+    @Override
     public void setNameFromActiveBlock(Object value) {
         boolean beenSet = false;
         if (value == null || getState() == FREE || getState() == UNKNOWN) {
@@ -2637,6 +2690,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
     /**
      * Clear the block values for blocks in this Section.
      */
+    @Override
     public void clearNameInUnoccupiedBlocks() {
         for (Block b : mBlockEntries) {
             if (b.getState() == Block.UNOCCUPIED) {
@@ -2651,6 +2705,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      *
      * @param set true to suppress the update; false otherwise
      */
+    @Override
     public void suppressNameUpdate(boolean set) {
         for (Block b : mBlockEntries) {
             String userName = b.getUserName();
@@ -2674,6 +2729,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      * </ul>
      * @param type constant of section type.
      */
+    @Override
     public void setSectionType(SectionType type) {
         sectionType = type;
     }
@@ -2683,6 +2739,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      * Defaults to USERDEFINED.
      * @return constant of section type.
      */
+    @Override
     public SectionType getSectionType() {
         return sectionType;
     }

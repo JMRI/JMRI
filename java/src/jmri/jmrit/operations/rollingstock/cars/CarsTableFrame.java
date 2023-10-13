@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
-import java.text.MessageFormat;
 import java.util.List;
 
 import javax.swing.*;
@@ -30,7 +29,7 @@ import jmri.util.swing.JmriJOptionPane;
 public class CarsTableFrame extends OperationsFrame implements TableModelListener {
 
     public CarsTableModel carsTableModel;
-    JTable carsTable;
+    public JTable carsTable;
     boolean showAllCars;
     String locationName;
     String trackName;
@@ -355,8 +354,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         if (ae.getSource() == findButton) {
             int rowindex = carsTableModel.findCarByRoadNumber(findCarTextBox.getText());
             if (rowindex < 0) {
-                JmriJOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carWithRoadNumNotFound"),
-                        new Object[]{findCarTextBox.getText()}), Bundle.getMessage("carCouldNotFind"),
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carWithRoadNumNotFound",
+                        findCarTextBox.getText()), Bundle.getMessage("carCouldNotFind"),
                         JmriJOptionPane.INFORMATION_MESSAGE);
                 return;
             }

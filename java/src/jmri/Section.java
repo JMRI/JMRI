@@ -1,15 +1,9 @@
 package jmri;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
-import java.beans.*;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
 /**
  * Sections represent a group of one or more connected Blocks that may be

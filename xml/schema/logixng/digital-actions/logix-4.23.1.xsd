@@ -62,6 +62,15 @@
 
             </xs:sequence>
             
+            <xs:attribute name="executeType">
+              <xs:simpleType>
+                <xs:restriction base="xs:token">
+                  <xs:enumeration value="ExecuteOnChange"/>
+                  <xs:enumeration value="ExecuteAlways"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+
             <xs:attribute name="class" type="classType" use="required"/>
         
     </xs:complexType>

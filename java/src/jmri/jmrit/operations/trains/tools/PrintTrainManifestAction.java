@@ -1,7 +1,6 @@
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.event.ActionEvent;
-import java.text.MessageFormat;
 
 import javax.swing.AbstractAction;
 
@@ -38,20 +37,20 @@ public class PrintTrainManifestAction extends AbstractAction {
             if (_isPreview) {
                 printOrPreview = Bundle.getMessage("preview");
             }
-            String string = MessageFormat.format(Bundle.getMessage("DoYouWantToPrintPreviousManifest"),
-                    new Object[]{printOrPreview, _train.getName()});
-            int results = JmriJOptionPane.showConfirmDialog(null, string, MessageFormat.format(
-                    Bundle.getMessage("PrintPreviousManifest"), new Object[]{printOrPreview}),
+            String string = Bundle.getMessage("DoYouWantToPrintPreviousManifest",
+                    printOrPreview, _train.getName());
+            int results = JmriJOptionPane.showConfirmDialog(null, string, 
+                    Bundle.getMessage("PrintPreviousManifest", printOrPreview),
                     JmriJOptionPane.YES_NO_OPTION);
             if (results != JmriJOptionPane.YES_OPTION) {
                 return;
             }
         }
         if (!_train.printManifest(_isPreview)) {
-            String string = MessageFormat.format(Bundle.getMessage("NeedToBuildTrainBeforePrinting"),
-                    new Object[]{_train.getName()});
-            JmriJOptionPane.showMessageDialog(null, string, MessageFormat.format(
-                    Bundle.getMessage("CanNotPrintManifest"), new Object[]{Bundle.getMessage("print")}),
+            String string = Bundle.getMessage("NeedToBuildTrainBeforePrinting",
+                    _train.getName());
+            JmriJOptionPane.showMessageDialog(null, string, 
+                    Bundle.getMessage("CanNotPrintManifest", Bundle.getMessage("print")),
                     JmriJOptionPane.ERROR_MESSAGE);
             return;
         }

@@ -1,7 +1,6 @@
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.*;
-import java.text.MessageFormat;
 import java.util.List;
 
 import javax.swing.*;
@@ -134,8 +133,8 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
 
         JPanel minLengthTrack = new JPanel();
         minLengthTrack.setLayout(new GridBagLayout());
-        minLengthTrack.setBorder(BorderFactory.createTitledBorder(MessageFormat.format(Bundle
-                .getMessage("PoolTrackMinimum"), new Object[]{_track.getName()})));
+        minLengthTrack
+                .setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("PoolTrackMinimum", _track.getName())));
         addItem(minLengthTrack, trackMinLengthTextField, 0, 0);
 
         trackMinLengthTextField.setText(Integer.toString(_track.getMinimumLength()));
@@ -262,8 +261,7 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
             totalLen.setText(Integer.toString(totalLength));
             addItem(poolStatus, totalLen, 3, totalLine);
         }
-        poolStatus.setBorder(BorderFactory.createTitledBorder(MessageFormat.format(Bundle.getMessage("PoolTracks"),
-                new Object[]{poolName})));
+        poolStatus.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("PoolTracks", poolName)));
         poolStatus.repaint();
         poolStatus.revalidate();
         setPreferredSize(null); // kill JMRI window size

@@ -49,6 +49,7 @@ public class XpaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase 
         t = new XpaTurnout(3, memo);
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();

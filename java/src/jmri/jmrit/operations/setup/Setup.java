@@ -123,6 +123,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String BUILD_REPORT_DETAILED = "5";
     public static final String BUILD_REPORT_VERY_DETAILED = "7";
 
+    // the following are converted to English spelling when storing to file, see KEYS below
     public static final String ROAD = Bundle.getMessage("Road"); // the supported message format options
     public static final String NUMBER = Bundle.getMessage("Number");
     public static final String TYPE = Bundle.getMessage("Type");
@@ -153,6 +154,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String TAB = Bundle.getMessage("Tab"); // used to tab out in tabular mode
     public static final String TAB2 = Bundle.getMessage("Tab2");
     public static final String TAB3 = Bundle.getMessage("Tab3");
+    
     public static final String BOX = " [ ] "; // NOI18N
 
     // these are for the utility printing when using tabs
@@ -175,16 +177,17 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private static final String[] CAR_ATTRIBUTES = { ROAD, NUMBER, TYPE, LENGTH, WEIGHT, LOAD, LOAD_TYPE, HAZARDOUS,
             COLOR, KERNEL, KERNEL_SIZE, OWNER, DIVISION, TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK,
             COMMENT, DROP_COMMENT, PICKUP_COMMENT, RWE };
+    
     private static final String[] ENGINE_ATTRIBUTES = { ROAD, NUMBER, TYPE, MODEL, LENGTH, WEIGHT, CONSIST, OWNER,
             TRACK, LOCATION, DESTINATION, COMMENT, DCC_ADDRESS };
     /*
      * The print Manifest and switch list user selectable options are stored in the
-     * xml file using the English translation.
+     * xml file using the English translations.
      */
     private static final String[] KEYS = {"Road", "Number", "Type", "Model", "Length", "Weight", "Load", "Load_Type",
-            "Color", "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist", "Kernel",
-            "DCC_Address", "Kernel_Size", "Owner", "RWE", "Comment", "SetOut_Msg", "PickUp_Msg", "Hazardous", "Tab",
-            "Tab2", "Tab3"};
+            "Color", "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist",
+            "DCC_Address", "Kernel", "Kernel_Size", "Owner", "Division", "RWE", "Comment", "SetOut_Msg", "PickUp_Msg",
+            "Hazardous", "Tab", "Tab2", "Tab3"};
 
     private int scale = HO_SCALE; // Default scale
     private int ratio = HO_RATIO;
@@ -2247,6 +2250,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 String setting = a.getValue();
                 log.debug("pickupEngFormat: {}", setting);
                 String[] keys = setting.split(",");
+                xmlAttributeToKeyConversion(keys);
                 keyToStringConversion(keys);
                 setPickupEngineMessageFormat(keys);
             }
@@ -2259,6 +2263,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 String setting = a.getValue();
                 log.debug("dropEngFormat: {}", setting);
                 String[] keys = setting.split(",");
+                xmlAttributeToKeyConversion(keys);
                 keyToStringConversion(keys);
                 setDropEngineMessageFormat(keys);
             }
@@ -2927,7 +2932,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
             try {
                 keys[i] = Bundle.getMessage(keys[i]);
             } catch (Exception e) {
-                log.debug("Key {}: ({}) not found", i, keys[i]);
+                log.warn("Key {}: ({}) not found", i, keys[i]);
             }
         }
     }
@@ -2938,8 +2943,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
      */
     private static void stringToTagConversion(String[] strings) {
         for (int i = 0; i < strings.length; i++) {
-            String old = strings[i];
-            if (old.equals(BLANK)) {
+            if (strings[i].equals(BLANK)) {
                 continue;
             }
             for (String key : KEYS) {

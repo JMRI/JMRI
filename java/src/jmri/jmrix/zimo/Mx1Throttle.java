@@ -179,7 +179,10 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
         synchronized(this) {
             if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_128) {
                 //m = Mx1Message.getSendSpeed128(addressLo, addressHi, value);
-                value = (int) ((127 - 1) * speedSetting); // -1 for rescale to avoid estop
+                value = Math.round((127 - 1) * speedSetting); // -1 for rescale to avoid estop
+                if (speedSetting > 0 && value == 0) {
+                    value = 1;          // ensure non-zero speed for non-zero input
+                }
                 if (value > 0) {
                     value = value + 1;  // skip estop
                 }
@@ -192,7 +195,10 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
                 value = (value & 0x7F);
                 cData1 = cData1 + 0xc;
             } else if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_28) {
-                value = (int) ((28) * speedSetting); // -1 for rescale to avoid estop
+                value = Math.round((28) * speedSetting); // -1 for rescale to avoid estop
+                if (speedSetting > 0 && value == 0) {
+                    value = 1;          // ensure non-zero speed for non-zero input
+                }
                 if (value > 0) {
                     value = value + 3; // skip estop
                 }

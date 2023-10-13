@@ -19,10 +19,12 @@ public class OlcbReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
 
     OlcbTestInterface ti;
 
+    @Override
     protected String getNameToTest1() {
         return "06.80.0D.11.22.33.00.00";
     }
 
+    @Override
     protected String getNameToTest2() {
         return "06.80.0D.44.55.66.00.00";
     }

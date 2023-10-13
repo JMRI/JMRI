@@ -327,12 +327,13 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         inActive.add(inActiveSpinner);
         input.add(inActive);
 
-        int retval = JOptionPane.showOptionDialog(_who,
+        int retval = JmriJOptionPane.showOptionDialog(_who,
                 input, Bundle.getMessage("SensorGlobalDebounceMessageTitle"),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
+                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")},
+                Bundle.getMessage("ButtonCancel"));
         log.debug("dialog retval={}", retval);
-        if (retval != 0) {
+        if (retval != 0) { // array position 0, ButtonOK
             return;
         }
 
@@ -365,11 +366,10 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         stateBoxPane.add(stateCombo);
         input.add(stateBoxPane);
 
-        int retval = JOptionPane.showOptionDialog(_who,
+        int retval = JmriJOptionPane.showConfirmDialog(_who,
                 input, Bundle.getMessage("InitialSensorState"),
-                0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
-        if (retval != 0) {
+                JmriJOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        if (retval != JmriJOptionPane.OK_OPTION) {
             return;
         }
         int defaultState = jmri.Sensor.UNKNOWN;

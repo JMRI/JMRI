@@ -2,7 +2,6 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -143,8 +142,8 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
      */
     private void save() {
         if (copyCheckBox.isSelected() &&
-                JmriJOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("CopyCarType"),
-                        new Object[]{typeComboBox.getSelectedItem(), copyComboBox.getSelectedItem()}),
+                JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("CopyCarType",
+                        typeComboBox.getSelectedItem(), copyComboBox.getSelectedItem()),
                         Bundle.getMessage("CopyCarTypeTitle"),
                         JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
             return;
@@ -182,7 +181,7 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
             train.addPropertyChangeListener(this);
             JCheckBox cb = new JCheckBox(train.getName());
             cb.setName(train.getId());
-            cb.setToolTipText(MessageFormat.format(Bundle.getMessage("TipTrainCarType"), new Object[]{carType}));
+            cb.setToolTipText(Bundle.getMessage("TipTrainCarType", carType));
             addCheckBoxAction(cb);
             trainList.add(cb);
             cb.setSelected(train.isTypeNameAccepted(carType));

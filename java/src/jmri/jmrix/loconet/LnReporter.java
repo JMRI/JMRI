@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.IdTag;
-import jmri.AddressedIdTag;
 import jmri.LocoAddress;
 import jmri.CollectingReporter;
 import jmri.PhysicalLocationReporter;

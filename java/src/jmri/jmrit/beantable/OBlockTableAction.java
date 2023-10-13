@@ -356,7 +356,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
         }
 
         if (numberOfOblocks >= 65 // limited by JSpinnerModel to 100
-            && JOptionPane.showConfirmDialog(addOBlockFrame,
+            && JmriJOptionPane.showConfirmDialog(addOBlockFrame,
                 Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("OBlocks"), numberOfOblocks),
                 Bundle.getMessage("WarningTitle"),
                 JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION ) {

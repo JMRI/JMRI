@@ -1,8 +1,6 @@
 package jmri.jmrix.nce.boosterprog;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
-
 import jmri.AddressedProgrammer;
 import jmri.ProgListener;
 import jmri.ProgrammerException;

@@ -4,7 +4,6 @@ import java.util.EnumSet;
 import java.util.HashMap;
 
 import jmri.DccThrottle;
-import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.ThrottleListener;
@@ -12,7 +11,6 @@ import jmri.jmrix.AbstractThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.annotation.Nonnull;
-import jmri.JmriException;
 
 /**
  * MQTT implementation of a ThrottleManager based on the
@@ -53,17 +51,17 @@ public class MqttThrottleManager extends AbstractThrottleManager {
     }
 
     @Nonnull
-    public String sendThrottleTopic = "cab/$address/throttle"; // for constructing topic; public for script access
+    public String sendThrottleTopic = "cab/{0}/throttle"; // for constructing topic; public for script access
     @Nonnull
-    public String rcvThrottleTopic = "cab/$address/throttle"; // for constructing topic; public for script access
+    public String rcvThrottleTopic = "cab/{0}/throttle"; // for constructing topic; public for script access
     @Nonnull
-    public String sendDirectionTopic = "cab/$address/direction"; // for constructing topic; public for script access
+    public String sendDirectionTopic = "cab/{0}/direction"; // for constructing topic; public for script access
     @Nonnull
-    public String rcvDirectionTopic = "cab/$address/direction"; // for constructing topic; public for script access
+    public String rcvDirectionTopic = "cab/{0}/direction"; // for constructing topic; public for script access
     @Nonnull
-    public String sendFunctionTopic = "cab/$address/function"; // for constructing topic; public for script access
+    public String sendFunctionTopic = "cab/{0}/function/{1}"; // for constructing topic; public for script access
     @Nonnull
-    public String rcvFunctionTopic = "cab/$address/function"; // for constructing topic; public for script access
+    public String rcvFunctionTopic = "cab/{0}/function/{1}"; // for constructing topic; public for script access
 
 
     /**

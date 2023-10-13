@@ -75,6 +75,33 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
         panel.setAttribute("turnoutcirclethrowncolor", editor.getTurnoutCircleThrownColor());
         panel.setAttribute("turnoutfillcontrolcircles", (editor.isTurnoutFillControlCircles()) ? "yes" : "no");
 
+        //add Layout Track Drawing Options settings
+        LayoutTrackDrawingOptions ltdo = editor.getLayoutTrackDrawingOptions();
+        panel.setAttribute("mainBallastColor", (ColorUtil.colorToColorName(ltdo.getMainBallastColor())));       
+        panel.setAttribute("mainBallastWidth", (Integer.toString(ltdo.getMainBallastWidth())));       
+        panel.setAttribute("mainBlockLineDashPercentageX10", (Integer.toString(ltdo.getMainBlockLineDashPercentageX10())));       
+        panel.setAttribute("mainBlockLineWidth", (Integer.toString(ltdo.getMainBlockLineWidth())));       
+        panel.setAttribute("mainRailColor", (ColorUtil.colorToColorName(ltdo.getMainRailColor())));       
+        panel.setAttribute("mainRailCount", (Integer.toString(ltdo.getMainRailCount())));       
+        panel.setAttribute("mainRailGap", (Integer.toString(ltdo.getMainRailGap())));       
+        panel.setAttribute("mainRailWidth", (Integer.toString(ltdo.getMainRailWidth())));       
+        panel.setAttribute("mainTieColor", (ColorUtil.colorToColorName(ltdo.getMainTieColor())));       
+        panel.setAttribute("mainTieGap", (Integer.toString(ltdo.getMainTieGap())));       
+        panel.setAttribute("mainTieLength", (Integer.toString(ltdo.getMainTieLength())));       
+        panel.setAttribute("mainTieWidth", (Integer.toString(ltdo.getMainTieWidth())));       
+        panel.setAttribute("sideBallastColor", (ColorUtil.colorToColorName(ltdo.getSideBallastColor())));       
+        panel.setAttribute("sideBallastWidth", (Integer.toString(ltdo.getSideBallastWidth())));       
+        panel.setAttribute("sideBlockLineDashPercentageX10", (Integer.toString(ltdo.getSideBlockLineDashPercentageX10())));       
+        panel.setAttribute("sideBlockLineWidth", (Integer.toString(ltdo.getSideBlockLineWidth())));       
+        panel.setAttribute("sideRailColor", (ColorUtil.colorToColorName(ltdo.getSideRailColor())));       
+        panel.setAttribute("sideRailCount", (Integer.toString(ltdo.getSideRailCount())));       
+        panel.setAttribute("sideRailGap", (Integer.toString(ltdo.getSideRailGap())));       
+        panel.setAttribute("sideRailWidth", (Integer.toString(ltdo.getSideRailWidth())));       
+        panel.setAttribute("sideTieColor", (ColorUtil.colorToColorName(ltdo.getSideTieColor())));       
+        panel.setAttribute("sideTieGap", (Integer.toString(ltdo.getSideTieGap())));       
+        panel.setAttribute("sideTieLength", (Integer.toString(ltdo.getSideTieLength())));       
+        panel.setAttribute("sideTieWidth", (Integer.toString(ltdo.getSideTieWidth())));       
+
         // include positionable elements
         List<Positionable> contents = editor.getContents();
         log.debug("Number of positionable elements: {}", contents.size());
