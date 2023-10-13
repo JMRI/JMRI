@@ -245,7 +245,7 @@ public class BiDiBMonPane extends jmri.jmrix.AbstractMonPane implements BiDiBPan
                         line += dynText + ": " + m.getDynValue() + "%";
                         break;
                     case 4:
-                        dynText = rb.getString("BmDynState5"); // NOI18N
+                        dynText = rb.getString("BmDynState4"); // NOI18N
                         line += dynText + ": " + m.getDynValue() + "%";
                         break;
                     case 5:

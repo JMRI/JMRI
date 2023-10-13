@@ -221,6 +221,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     private void portNameFilterChanged(AWTEvent e) {
         SerialDriverAdapter a = (SerialDriverAdapter)adapter;
         String fieldtext = ((JTextField)e.getSource()).getText();
+        // TODO: really use the changed value!
     }
     
     /**

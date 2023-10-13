@@ -27,6 +27,7 @@ public class NetPlainTcpBidib {
     private NetBidibPort netBidibTcpPort;
     private BiDiBMessageReceiver bidibMessageReveiver;
     private final AtomicBoolean isStarted = new AtomicBoolean();
+    private final Object stopSync = new Object();
     
     public NetPlainTcpBidib(BiDiBTrafficController tc) {
         this.tc = tc;
@@ -118,7 +119,7 @@ public class NetPlainTcpBidib {
             netBidibTcpPort.stop();
 
             if (portWorker != null) {
-                synchronized (portWorker) {
+                synchronized (stopSync) {
                     try {
                         portWorker.join(5000L);
                     }

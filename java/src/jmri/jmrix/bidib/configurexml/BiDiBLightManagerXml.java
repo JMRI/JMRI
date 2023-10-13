@@ -72,6 +72,7 @@ public class BiDiBLightManagerXml extends jmri.managers.configurexml.AbstractLig
      * @param lights XML element containing the lights to be configured
      * @return the BiDiBSystemConnectionMemo object
      */
+/* UNUSED
     private BiDiBSystemConnectionMemo findSystemConnectionMemo(Element lights) {
         for (BiDiBSystemConnectionMemo memo : InstanceManager.getList(BiDiBSystemConnectionMemo.class)) {
             log.debug("*** found memo: {}", memo.getUserName());
@@ -90,6 +91,7 @@ public class BiDiBLightManagerXml extends jmri.managers.configurexml.AbstractLig
         }
         return null;
     }
+*/
 
     private final static Logger log = LoggerFactory.getLogger(BiDiBLightManagerXml.class);
 
