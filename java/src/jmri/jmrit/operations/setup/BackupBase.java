@@ -2,9 +2,7 @@ package jmri.jmrit.operations.setup;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -217,7 +215,7 @@ public abstract class BackupBase {
      */
     public void copyBackupSet(File sourceDir, File destDir) throws IOException {
         log.debug("copying backup set from: {} to: {}", sourceDir, destDir);
-        log.info("Saving copy of operations files to: {}", destDir);
+        log.info(Bundle.getMessage("InfoSavingCopy", destDir));
 
         if (!sourceDir.exists()) // This throws an exception, as the dir should
         // exist.

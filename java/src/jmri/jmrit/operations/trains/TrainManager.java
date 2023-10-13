@@ -1063,7 +1063,7 @@ public class TrainManager extends PropertyChangeSupport
                     _maxTrainNameLength = train.getName().length();
                 }
             }
-            log.info("Max train name ({}) length {}", trainName, _maxTrainNameLength);
+            log.info(Bundle.getMessage("InfoMaxName", trainName, _maxTrainNameLength));
         }
         return _maxTrainNameLength;
     }

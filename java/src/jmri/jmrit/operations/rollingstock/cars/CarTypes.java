@@ -116,7 +116,7 @@ public class CarTypes extends RollingStockAttribute implements InstanceManagerAu
     public int getMaxNameLength() {
         if (maxNameSubStringLength == 0) {
             super.getMaxNameSubStringLength();
-            log.info("Max car type name ({}) length {}", maxName, maxNameSubStringLength);
+            log.info(Bundle.getMessage("InfoMaxType", maxName, maxNameSubStringLength));
         }
         return maxNameSubStringLength;
     }

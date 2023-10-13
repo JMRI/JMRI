@@ -61,7 +61,7 @@ public class AutoSave {
                     }
                     if (OperationsXml.areFilesDirty()) {
                         OperationsXml.save();
-                        log.info("Operation files automatically saved");
+                        log.info(Bundle.getMessage("InfoFilesSaved"));
                     }
                 }
             }

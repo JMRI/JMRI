@@ -159,7 +159,7 @@ public class EngineManager extends RollingStockManager<Engine>
                 }
             }
             if (engineMax != null) {
-                log.info("Max engine comment ({}) ({}) length {}", engineMax.toString(), comment, _commentLength);
+                log.info(Bundle.getMessage("InfoMaxComment", engineMax.toString(), comment, _commentLength));
             }
         }
         return _commentLength;

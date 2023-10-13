@@ -480,9 +480,9 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
                         + track.getSplitName().length();
             }
         }
-        log.info("Max track name ({}) at ({}) length {}", maxTrackName, maxLocNameForTrack, _maxTrackNameLength);
-        log.info("Max location name ({}) length {}", maxLocationName, _maxLocationNameLength);
-        log.info("Max location and track name ({}) length {}", maxLocationAndTrackName, _maxLocationAndTrackNameLength);
+        log.info(Bundle.getMessage("InfoMaxTrackName", maxTrackName, _maxTrackNameLength, maxLocNameForTrack));
+        log.info(Bundle.getMessage("InfoMaxLocationName", maxLocationName, _maxLocationNameLength));
+        log.info(Bundle.getMessage("InfoMaxLocAndTrackName", maxLocationAndTrackName, _maxLocationAndTrackNameLength));
     }
 
     /**

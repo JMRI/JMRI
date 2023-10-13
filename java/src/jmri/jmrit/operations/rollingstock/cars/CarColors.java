@@ -50,7 +50,7 @@ public class CarColors extends RollingStockAttribute implements InstanceManagerA
     public int getMaxNameLength() {
         if (maxNameLength == 0) {
             super.getMaxNameLength();
-            log.info("Max color name ({}) length {}", maxName, maxNameLength);
+            log.info(Bundle.getMessage("InfoMaxColor", maxName, maxNameLength));
         }
         return maxNameLength;
     }

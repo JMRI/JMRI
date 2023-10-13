@@ -364,7 +364,6 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
     }
 
     private void reportScheduleExists(String s) {
-        log.info("Can not {}, schedule already exists", s);
         JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"),
                 Bundle.getMessage("CanNotSchedule", s),
                 JmriJOptionPane.ERROR_MESSAGE);

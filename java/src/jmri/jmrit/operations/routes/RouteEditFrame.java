@@ -389,7 +389,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     private void reportRouteExists(String s) {
-        log.info("Can not {}, route already exists", s);
         JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"),
                 Bundle.getMessage("CanNotRoute", s), JmriJOptionPane.ERROR_MESSAGE);
     }

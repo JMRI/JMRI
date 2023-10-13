@@ -58,7 +58,7 @@ public class CarRoads extends RollingStockAttribute implements InstanceManagerAu
     public int getMaxNameLength() {
         if (maxNameSubStringLength == 0) {
             super.getMaxNameSubStringLength();
-            log.info("Max road name ({}) length {}", maxName, maxNameSubStringLength);
+            log.info(Bundle.getMessage("InfoMaxRoad", maxName, maxNameSubStringLength));
         }
         return maxNameSubStringLength;
     }
