@@ -433,7 +433,7 @@ public class BiDiBTrafficController implements CommandStation {
     /**
      * Get node by unique id from nodelist
      * 
-     * @param uniqueId
+     * @param uniqueId search for this
      * @return node
      */
     public Node getNodeByUniqueID(long uniqueId) {
@@ -443,7 +443,7 @@ public class BiDiBTrafficController implements CommandStation {
     /**
      * Get node by node address from nodelist
      * 
-     * @param addr
+     * @param addr input to search
      * @return node 
      */
     public Node getNodeByAddr(byte[] addr) {
@@ -459,7 +459,7 @@ public class BiDiBTrafficController implements CommandStation {
     /**
      * Get node by node username from nodelist
      * 
-     * @param userName
+     * @param userName input to search
      * @return node 
      */
     public Node getNodeByUserName(String userName) {
@@ -689,7 +689,7 @@ public class BiDiBTrafficController implements CommandStation {
     /**
      * Find a feature for given node.
      * 
-     * @param node
+     * @param node selected node
      * @param requestedFeatureId as integer
      * @return a Feature object or null if the node does not have the feature at all
      */
@@ -700,8 +700,8 @@ public class BiDiBTrafficController implements CommandStation {
     /**
      * Get the feature value of a node.
      * 
-     * @param node
-     * @param requestedFeatureId
+     * @param node selected node
+     * @param requestedFeatureId feature to get
      * @return the feature value as integer or 0 if the node does not have the feature
      */
     public int getNodeFeature(Node node, final int requestedFeatureId) {
@@ -733,7 +733,7 @@ public class BiDiBTrafficController implements CommandStation {
     
     /**
      * Add a message Listener to the connection
-     * @param messageListener 
+     * @param messageListener to be added
      */
     public void addMessageListener(MessageListener messageListener) {
         if (bidib != null) {
@@ -747,7 +747,7 @@ public class BiDiBTrafficController implements CommandStation {
 
     /**
      * Remove a message Listener from the connection
-     * @param messageListener 
+     * @param messageListener to be removed
      */
     public void removeMessageListener(MessageListener messageListener) {
         if (bidib != null) {
@@ -761,7 +761,7 @@ public class BiDiBTrafficController implements CommandStation {
 
     /**
      * Add a raw message Listener to the connection
-     * @param rawMessageListener 
+     * @param rawMessageListener to be added
      */
     public void addRawMessageListener(RawMessageListener rawMessageListener) {
         if (bidib != null) {
@@ -771,7 +771,7 @@ public class BiDiBTrafficController implements CommandStation {
 
     /**
      * Remove a raw message Listener from the connection
-     * @param rawMessageListener 
+     * @param rawMessageListener to be removed
      */
     public void removeRawMessageListener(RawMessageListener rawMessageListener) {
         if (bidib != null) {
@@ -840,7 +840,7 @@ public class BiDiBTrafficController implements CommandStation {
     /**
      * Request CONFIGX from all ports on a given node and possibly only for a given type.
      * 
-     * @param node
+     * @param node requested node
      * @param type - if null, request all port types
      * @return Note: always returns null, since data is not collected synchroneously but delivered to registered Message Listeners.
      */
@@ -890,7 +890,7 @@ public class BiDiBTrafficController implements CommandStation {
     /**
      * Request CONFIGX if a given port on a given node and possibly only for a given type.
      * 
-     * @param node
+     * @param node requested node
      * @param portAddr as an integer
      * @param type - if null, request all port types
      * @return Note: always returns null, since data is not collected synchroneously but delivered to registered Message Listeners.
@@ -927,7 +927,7 @@ public class BiDiBTrafficController implements CommandStation {
      * Convert a CONFIG object to a CONFIGX object.
      * This is a convenience method so the JMRI components need only to handle the CONFIGX format
      * 
-     * @param node
+     * @param node context node
      * @param lcConfig the LcConfig object
      * @return a new LcConfigX object
      */
@@ -1053,7 +1053,7 @@ public class BiDiBTrafficController implements CommandStation {
      * Received data is delivered to registered Message Listeners.
      * The differences for the addressing model an the old LC_STAT handling are hidden to the caller.
      * 
-     * @param node
+     * @param node selected node
      * @param typemask a 16 bit type mask where each bit represents a type, Bit0 is SWITCHPORT, Bit1 is LIGHTPORT and so on. Bit 15 is INPUTPORT.
      *        Return LC_STAT only for ports which are selected on the type mask (the correspondend bit is set).
      */
@@ -1174,7 +1174,7 @@ public class BiDiBTrafficController implements CommandStation {
      * Returns immediately.
      * Received data is delivered to registered Message Listeners.
      * 
-     * @param node 
+     * @param node selected node
      */
     public void feedback(Node node) {
         int bmSize = getNodeFeature(node, BidibLibrary.FEATURE_BM_SIZE);
@@ -1219,7 +1219,7 @@ public class BiDiBTrafficController implements CommandStation {
      * If the command station is not in the requested state, a message is sent to BiDiB to switch to the requested state.
      * 
      * @param needProgMode true if we request the command station to be in programming state, false if normal state is requested
-     * @param node
+     * @param node selected node
      * @return 0 if nothing to do, 1 if state has been changed, -1 on error
      */
     public synchronized int checkProgMode(boolean needProgMode, Node node) {

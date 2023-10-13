@@ -71,7 +71,7 @@ public class BiDiBProgrammer extends AbstractProgrammer {
     /** 
      * {@inheritDoc}
      * 
-     * The default implementation does not check for cv > 1024 - not neccessary? We do it here anywhere
+     * The default implementation does not check for cv &gt; 1024 - not neccessary? We do it here anywhere
      */
     @Override
     public boolean getCanWrite(String cv) {

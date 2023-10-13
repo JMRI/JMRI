@@ -59,8 +59,8 @@ public class BiDiBNodeInitializer implements Runnable {
     /**
      * Get everything we need from the node. The node must already be inserted into the BiDiB node list.
      * 
-     * @param node
-     * @throws ProtocolException 
+     * @param node node to initialize
+     * @throws ProtocolException when features can't be loaded
      */
     public void initNode(Node node) throws ProtocolException {
         if (node != null) {

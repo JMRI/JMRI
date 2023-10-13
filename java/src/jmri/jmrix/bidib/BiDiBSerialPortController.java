@@ -50,10 +50,10 @@ public abstract class BiDiBSerialPortController extends jmri.jmrix.AbstractSeria
      * We need this here since the BidibInterface does not
      * provide this method.
      * 
-     * @param connectionListener
-     * @param nodeListeners
-     * @param messageListeners
-     * @param transferListeners 
+     * @param connectionListener where to add
+     * @param nodeListeners listeners to add
+     * @param messageListeners listeners to add
+     * @param transferListeners listeners to add
      */    
     @Override
     public abstract void registerAllListeners(ConnectionListener connectionListener, Set<NodeListener> nodeListeners,

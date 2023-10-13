@@ -19,6 +19,10 @@ public class BiDiBNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**
      * Enhanced constructor for placing the pane in various GUIs
+     * @param s Name
+     * @param wi Window context
+     * @param paneClass class to instantiate
+     * @param memo Source of stuff
      */
     public BiDiBNamedPaneAction(String s, WindowInterface wi, String paneClass, BiDiBSystemConnectionMemo memo) {
         super(s, wi, paneClass);

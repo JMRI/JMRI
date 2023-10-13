@@ -35,7 +35,7 @@ public class BiDiBReporter extends jmri.implementation.AbstractRailComReporter i
     /**  
      * Create a reporter instance. 
      * 
-     * @param systemName
+     * @param systemName name to be created
      * @param mgr Reporter Manager, we get the memo object and the type letter (R) from the manager
      */
     public BiDiBReporter(String systemName, BiDiBReporterManager mgr) {
@@ -80,7 +80,7 @@ public class BiDiBReporter extends jmri.implementation.AbstractRailComReporter i
     /**
      * Notify loco address
      * 
-     * @param tag 
+     * @param tag found tag
      */
     public void notify_loco(RailCom tag){
         //log.trace("tag: {}", tag);

@@ -243,7 +243,7 @@ public class BiDiBThrottle extends AbstractThrottle {
      * Internal send method for this class.
      * Allocates speed and function data and constructs a BiDiB message
      * 
-     * @param isSpeedSet
+     * @param isSpeedSet false if not yet
      * @return true if successful
      */
     protected boolean sendDriveCommand(boolean isSpeedSet) {

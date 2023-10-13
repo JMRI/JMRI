@@ -128,7 +128,7 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
      * Get the canonical port name from the underlying operating system.
      * For a symbolic link, the real path is returned.
      * 
-     * @param portName
+     * @param portName human-readable name
      * @return canonical path
      */
     static public String getCanonicalPortName(String portName) {

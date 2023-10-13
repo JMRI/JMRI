@@ -30,7 +30,7 @@ public class BiDiBSensor extends AbstractSensor implements BiDiBNamedBeanInterfa
     /**
      * Create a Sensor object from system name.
      *
-     * @param systemName
+     * @param systemName name of added Sensor
      * @param mgr Sensor Manager, we get the memo object and the type letter (S) from the manager
      */
     public BiDiBSensor(String systemName, BiDiBSensorManager mgr) {

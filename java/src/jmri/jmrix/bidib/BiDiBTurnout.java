@@ -36,7 +36,7 @@ public class BiDiBTurnout extends AbstractTurnout implements BiDiBNamedBeanInter
     /**
      * Create a turnout. 
      * 
-     * @param systemName
+     * @param systemName to be created
      * @param mgr Turnout Manager, we get the memo object and the type letter (T) from the manager
      */
     @SuppressWarnings("OverridableMethodCallInConstructor")

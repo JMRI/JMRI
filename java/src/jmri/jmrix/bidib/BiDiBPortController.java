@@ -25,10 +25,10 @@ public interface BiDiBPortController extends jmri.jmrix.PortAdapter {
      * We need this here since the BidibInterface does not
      * provide this method.
      * 
-     * @param connectionListener
-     * @param nodeListeners
-     * @param messageListeners
-     * @param transferListeners 
+     * @param connectionListener register to this
+     * @param nodeListeners listeners to add 
+     * @param messageListeners listeners to add 
+     * @param transferListeners  listeners to add 
      */    
     public abstract void registerAllListeners(ConnectionListener connectionListener, Set<NodeListener> nodeListeners,
         Set<MessageListener> messageListeners, Set<TransferListener> transferListeners);

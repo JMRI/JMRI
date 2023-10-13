@@ -74,8 +74,8 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      * Get the additional parameters from XML.
      * 
      * @see unpackElement
-     * @param shared
-     * @param perNode 
+     * @param shared selected Element
+     * @param perNode from super class
      */
     protected void unpackElement1(Element shared, Element perNode) {
         SerialDriverAdapter a = (SerialDriverAdapter)adapter;

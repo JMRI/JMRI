@@ -312,7 +312,7 @@ public class BiDiBOutputMessageHandler extends DefaultMessageListener {
     
     /**
      * Notify output state
-     * @param state 
+     * @param state desired state from NamedBean list
      */
     public void newOutputState(int state) {
     }
@@ -326,7 +326,7 @@ public class BiDiBOutputMessageHandler extends DefaultMessageListener {
     
     /**
      * Notify output will change later
-     * @param time 
+     * @param time in msec
      */
     public void outputWait(int time) {
     }
@@ -334,8 +334,8 @@ public class BiDiBOutputMessageHandler extends DefaultMessageListener {
     /**
      * Notify LC port ConfigX
      * 
-     * @param lcConfigX
-     * @param lcType 
+     * @param lcConfigX input
+     * @param lcType input
      */
     public void newLcConfigX(LcConfigX lcConfigX, LcOutputType lcType) {
     }

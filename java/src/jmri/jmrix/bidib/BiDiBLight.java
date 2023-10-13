@@ -31,7 +31,7 @@ public class BiDiBLight extends AbstractVariableLight implements BiDiBNamedBeanI
     /**
      * Create a Light object from system name.
      *
-     * @param systemName
+     * @param systemName System name of light to be created
      * @param mgr Light Manager, we get the memo object and the type letter (L) from the manager
      */
     public BiDiBLight(String systemName, BiDiBLightManager mgr) {

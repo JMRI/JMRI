@@ -200,7 +200,7 @@ public class BiDiBSignalMastAddPane extends SignalMastAddPane {
      * Check if the given aspect string is a valid BiDiB aspect.
      * Only numeric values between 0 and 31 are allowed
      * 
-     * @param strAspect
+     * @param strAspect name of aspect
      * @return true if valid
      */
     static boolean validateAspectId(@Nonnull String strAspect) {
@@ -232,6 +232,8 @@ public class BiDiBSignalMastAddPane extends SignalMastAddPane {
 
     /** 
      * Create a mast of the specific subtype.
+     * @param name system name to create
+     * @return the new signal
      */
     protected BiDiBSignalMast constructMast(@Nonnull String name) {
         return new BiDiBSignalMast(name);
@@ -376,6 +378,7 @@ public class BiDiBSignalMastAddPane extends SignalMastAddPane {
 
     /**
      * Copy aspects by name from another DccSignalMast.
+     * @param strMast name
      */
     void copyFromAnotherBiDiBMastAspect(@Nonnull String strMast) {
         BiDiBSignalMast mast = (BiDiBSignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(strMast);
@@ -399,7 +402,7 @@ public class BiDiBSignalMastAddPane extends SignalMastAddPane {
     /**
      * JPanel to define properties of an Aspect for a DCC Signal Mast.
      * <p>
-     * Invoked from the {@link AddSignalMastPanel} class when a DCC Signal Mast is
+     * Invoked from the AddSignalMastPanel class when a DCC Signal Mast is
      * selected.
      */
     static class BiDiBAspectPanel {

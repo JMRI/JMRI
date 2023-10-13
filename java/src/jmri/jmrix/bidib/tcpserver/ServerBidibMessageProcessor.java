@@ -17,7 +17,7 @@ public interface ServerBidibMessageProcessor extends BidibMessageProcessor {
      * 
      * @param output
      *            the output stream that contains the responses
-     * @throws ProtocolException
+     * @throws ProtocolException when can't provide sequence
      */
     void publishResponse(final ByteArrayOutputStream output) throws ProtocolException;
 

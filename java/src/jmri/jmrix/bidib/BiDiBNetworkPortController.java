@@ -54,10 +54,10 @@ public abstract class BiDiBNetworkPortController extends jmri.jmrix.AbstractNetw
      * We need this here since the BidibInterface does not
      * provide this method.
      * 
-     * @param connectionListener
-     * @param nodeListeners
-     * @param messageListeners
-     * @param transferListeners 
+     * @param connectionListener add to this
+     * @param nodeListeners listeners to add
+     * @param messageListeners listeners to add
+     * @param transferListeners  listeners to add
      */    
     @Override
     public abstract void registerAllListeners(ConnectionListener connectionListener, Set<NodeListener> nodeListeners,
