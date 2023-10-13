@@ -439,7 +439,10 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Improvements to the car, locomotive, and train preview and print tools.</li>
+            <li>Minor improvement to the train build report when routing.</li>
+            <li>To see all changes to OperationsPro, use the link below</li>
+            <li><a href="https://github.com/pulls?q=is%3Apr+author%3ADanielBoudreau+archived%3Afalse+is%3Aclosed">OperationsPro Changes</a></li>
         </ul>
 
    <h3>Panel Editor</h3>
