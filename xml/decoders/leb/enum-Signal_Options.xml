@@ -35,5 +35,5 @@
   </revhistory>
   <!-- Specific for Qdecoder accessory decoder -->
 	<!-- Switching modes for + (plus) decoders   -->
-	<xi:include href="file:/xml/decoders/Leb/choix-Signal_Options.xml"/>  
+	<xi:include href="file:/xml/decoders/leb/choix-Signal_Options.xml"/>  
 </enumVal>
