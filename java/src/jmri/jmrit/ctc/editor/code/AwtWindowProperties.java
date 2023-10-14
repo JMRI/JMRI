@@ -6,8 +6,6 @@ import java.awt.Rectangle;
 
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
-import jmri.jmrit.ctc.CTCFiles;
-import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
  * Use the JMRI UserPreferencesManager to store the size and location for

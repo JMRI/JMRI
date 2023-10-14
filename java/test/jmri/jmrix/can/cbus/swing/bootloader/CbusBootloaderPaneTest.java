@@ -1,6 +1,5 @@
 package jmri.jmrix.can.cbus.swing.bootloader;
 
-import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;

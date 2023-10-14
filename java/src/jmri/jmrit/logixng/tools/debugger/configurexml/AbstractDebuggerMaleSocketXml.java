@@ -1,9 +1,6 @@
 package jmri.jmrit.logixng.tools.debugger.configurexml;
 
-import java.util.List;
-
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.configurexml.MaleSocketXml;
 
 import org.jdom2.Element;

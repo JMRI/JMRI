@@ -134,11 +134,14 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 }};
 
                 profilesPopupMenu.addPopupMenuListener(new PopupMenuListener() {
+                    @Override
                     public void popupMenuWillBecomeVisible(PopupMenuEvent evt) {
                         profilesPopupMenuPopupMenuWillBecomeVisible(evt);
                     }
+                    @Override
                     public void popupMenuWillBecomeInvisible(PopupMenuEvent evt) {
                     }
+                    @Override
                     public void popupMenuCanceled(PopupMenuEvent evt) {
                     }
                 });
@@ -146,6 +149,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 ResourceBundle bundle = ResourceBundle.getBundle("jmri/profile/Bundle"); // NOI18N
                 renameMI.setText(bundle.getString("ProfilePreferencesPanel.renameMI.text")); // NOI18N
                 renameMI.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
                         renameMIActionPerformed(evt);
                     }
@@ -173,6 +177,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 btnOpenExistingProfile.setText(bundle.getString("ProfilePreferencesPanel.btnOpenExistingProfile.text")); // NOI18N
                 btnOpenExistingProfile.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnOpenExistingProfile.toolTipText")); // NOI18N
                 btnOpenExistingProfile.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
                         btnOpenExistingProfileActionPerformed(evt);
                     }
@@ -181,6 +186,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 btnDeleteProfile.setText(bundle.getString("ProfilePreferencesPanel.btnDeleteProfile.text")); // NOI18N
                 btnDeleteProfile.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnDeleteProfile.toolTipText")); // NOI18N
                 btnDeleteProfile.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
                         btnDeleteProfileActionPerformed(evt);
                     }
@@ -189,6 +195,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 btnCreateNewProfile.setText(bundle.getString("ProfilePreferencesPanel.btnCreateNewProfile.text")); // NOI18N
                 btnCreateNewProfile.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnCreateNewProfile.toolTipText")); // NOI18N
                 btnCreateNewProfile.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
                         btnCreateNewProfileActionPerformed(evt);
                     }
@@ -197,6 +204,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 btnActivateProfile.setText(bundle.getString("ProfilePreferencesPanel.btnActivateProfile.text")); // NOI18N
                 btnActivateProfile.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnActivateProfile.toolTipText")); // NOI18N
                 btnActivateProfile.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
                         btnActivateProfileActionPerformed(evt);
                     }
@@ -205,6 +213,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 btnExportProfile.setText(bundle.getString("ProfilePreferencesPanel.btnExportProfile.text")); // NOI18N
                 btnExportProfile.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnExportProfile.toolTipText")); // NOI18N
                 btnExportProfile.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
                         btnExportProfileActionPerformed(evt);
                     }
@@ -212,6 +221,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
 
                 btnCopyProfile.setText(bundle.getString("ProfilePreferencesPanel.btnCopyProfile.text")); // NOI18N
                 btnCopyProfile.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
                         btnCopyProfileActionPerformed(evt);
                     }
@@ -219,6 +229,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
 
                 spinnerTimeout.setModel(new SpinnerNumberModel(10, 0, 500, 1));
                 spinnerTimeout.addChangeListener(new ChangeListener() {
+                    @Override
                     public void stateChanged(ChangeEvent evt) {
                         spinnerTimeoutStateChanged(evt);
                     }
@@ -229,6 +240,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 grpStartWithSelectors.add(rdoStartWithActiveProfile);
                 rdoStartWithActiveProfile.setText(bundle.getString("ProfilePreferencesPanel.rdoStartWithActiveProfile.text")); // NOI18N
                 rdoStartWithActiveProfile.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
                         rdoStartWithActiveProfileActionPerformed(evt);
                     }
@@ -237,6 +249,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 grpStartWithSelectors.add(rdoStartWithProfileSelector);
                 rdoStartWithProfileSelector.setText(bundle.getString("ProfilePreferencesPanel.rdoStartWithProfileSelector.text")); // NOI18N
                 rdoStartWithProfileSelector.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
                         rdoStartWithProfileSelectorActionPerformed(evt);
                     }
@@ -299,6 +312,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 btnRemoveSearchPath.setText(bundle.getString("ProfilePreferencesPanel.btnRemoveSearchPath.text")); // NOI18N
                 btnRemoveSearchPath.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnRemoveSearchPath.toolTipText")); // NOI18N
                 btnRemoveSearchPath.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
                         btnRemoveSearchPathActionPerformed(evt);
                     }
@@ -307,6 +321,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 btnAddSearchPath.setText(bundle.getString("ProfilePreferencesPanel.btnAddSearchPath.text")); // NOI18N
                 btnAddSearchPath.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnAddSearchPath.toolTipText")); // NOI18N
                 btnAddSearchPath.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
                         btnAddSearchPathActionPerformed(evt);
                     }

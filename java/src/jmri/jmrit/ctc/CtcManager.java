@@ -10,7 +10,6 @@ import jmri.InstanceManagerAutoDefault;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
 import jmri.NamedBeanUsageReport;
 import jmri.jmrit.ctc.ctcserialdata.*;
 import jmri.jmrit.ctc.editor.code.*;
@@ -150,6 +149,7 @@ public class CtcManager implements InstanceManagerAutoDefault, java.beans.Vetoab
         return Manager.CTCDATA;
     }
 
+    @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         jmri.NamedBean nb = (jmri.NamedBean) evt.getOldValue();
         if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N

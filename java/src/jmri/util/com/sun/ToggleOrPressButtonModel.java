@@ -1,7 +1,6 @@
 package jmri.util.com.sun;
 
 import java.awt.event.ActionEvent;
-import javax.swing.DefaultButtonModel;
 import javax.swing.JToggleButton;
 
 // import org.slf4j.Logger;

@@ -3,10 +3,7 @@ package jmri.web.server;
 import jmri.swing.PreferencesPanelTestBase;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for the jmri.web.server.WebServerPreferencesPanel class
@@ -15,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class WebServerPreferencesPanelTest extends PreferencesPanelTestBase<WebServerPreferencesPanel> {
 
+    @Override
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

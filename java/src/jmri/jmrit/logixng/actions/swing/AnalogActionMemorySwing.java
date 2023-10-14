@@ -8,8 +8,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
 import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.jmrit.logixng.Base;
@@ -17,7 +15,6 @@ import jmri.jmrit.logixng.AnalogActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.AnalogActionMemory;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;
-import jmri.util.swing.BeanSelectPanel;
 
 /**
  * Configures an ActionMemory object with a Swing JPanel.

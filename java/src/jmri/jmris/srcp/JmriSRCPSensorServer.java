@@ -150,6 +150,7 @@ public class JmriSRCPSensorServer extends AbstractSensorServer implements Proper
 
 
     // update state as state of sensor changes
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // If the Commanded State changes, show transition state as "<inconsistent>"
         if (e.getPropertyName().equals("KnownState")) {

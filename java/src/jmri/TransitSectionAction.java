@@ -1,8 +1,5 @@
 package jmri;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * This class holds information and options for a Action to be applied when an
  * automated train enters, exits, or is inside of a Section in a Transit.

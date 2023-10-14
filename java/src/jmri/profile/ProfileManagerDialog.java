@@ -153,6 +153,7 @@ public class ProfileManagerDialog extends JDialog {
             }
         });
         profiles.addListSelectionListener(new ListSelectionListener() {
+            @Override
             public void valueChanged(ListSelectionEvent evt) {
                 profilesValueChanged(evt);
             }
@@ -164,6 +165,7 @@ public class ProfileManagerDialog extends JDialog {
 
         btnSelect.setText(Bundle.getMessage("ProfileManagerDialog.btnSelect.text")); // NOI18N
         btnSelect.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 btnSelectActionPerformed(evt);
             }
@@ -172,6 +174,7 @@ public class ProfileManagerDialog extends JDialog {
         btnCreate.setText(Bundle.getMessage("ProfileManagerDialog.btnCreate.text")); // NOI18N
         btnCreate.setToolTipText(Bundle.getMessage("ProfilePreferencesPanel.btnCreateNewProfile.toolTipText")); // NOI18N
         btnCreate.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 btnCreateActionPerformed(evt);
             }
@@ -179,6 +182,7 @@ public class ProfileManagerDialog extends JDialog {
 
         btnUseExisting.setText(Bundle.getMessage("ProfileManagerDialog.btnUseExisting.text")); // NOI18N
         btnUseExisting.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 btnUseExistingActionPerformed(evt);
             }

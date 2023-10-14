@@ -42,7 +42,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     TrainManagerXml trainManagerXml = InstanceManager.getDefault(TrainManagerXml.class);
     LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
-    TrainsTableModel trainsModel;
+    public TrainsTableModel trainsModel;
     JTable trainsTable;
     JScrollPane trainsPane;
 
@@ -399,7 +399,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 
     SortOrder _status = SortOrder.ASCENDING;
 
-    protected String getSortBy() {
+    public String getSortBy() {
         // set the defaults
         String sortBy = TrainsTableModel.TIMECOLUMNNAME;
         _status = SortOrder.ASCENDING;
@@ -418,8 +418,12 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     }
 
     public List<Train> getSortByList() {
+        return getSortByList(getSortBy());
+    }
+
+    public List<Train> getSortByList(String sortBy) {
         List<Train> sysList;
-        String sortBy = getSortBy();
+
         if (sortBy.equals(TrainsTableModel.IDCOLUMNNAME)) {
             sysList = trainManager.getTrainsByIdList();
         } else if (sortBy.equals(TrainsTableModel.TIMECOLUMNNAME)) {

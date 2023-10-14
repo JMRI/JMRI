@@ -7,8 +7,6 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.implementation.DefaultConditionalAction;
-import jmri.jmrit.audio.AudioListener;
-import jmri.jmrit.audio.AudioSource;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;

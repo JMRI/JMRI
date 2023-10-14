@@ -21,8 +21,6 @@ import jmri.jmrit.vsdecoder.swing.VSDControl;
 import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
 import jmri.util.PhysicalLocation;
 
-import javax.annotation.*;
-
 import org.jdom2.Element;
 
 /**

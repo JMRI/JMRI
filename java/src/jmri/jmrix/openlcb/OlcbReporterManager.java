@@ -2,15 +2,9 @@ package jmri.jmrix.openlcb;
 
 import jmri.BooleanPropertyDescriptor;
 import jmri.JmriException;
-import jmri.NameIncrementingManager;
 import jmri.NamedBean;
 import jmri.NamedBeanPropertyDescriptor;
 import jmri.Reporter;
-import jmri.Sensor;
-import jmri.VariableControlSpanBean;
-import jmri.jmrix.can.CanListener;
-import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import org.openlcb.OlcbInterface;
 import org.slf4j.Logger;

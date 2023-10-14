@@ -25,6 +25,9 @@
    [Added TOC and links to top                                  (2023-04-11)
    [Separate Logix/LogixNG by Enabled/Not Enabled               (2023-04-14)
    [Add new LogixNG Modules, Tables                             (2023-04-17)
+  Updates made for 5.5.5 schema and additional JMRI capabilities by jerryg2003:
+   [Update info for LogixNG DigitalBooleanActions               (2023-10-10)
+   [Add info for LogixNG Icon in paneleditor                    (2023-10-10)
 -->
 
 <!-- This file is part of JMRI.  Copyright 2007-2011, 2016, 2018, 2022, 2023.     -->
@@ -1199,18 +1202,18 @@ value="<xsl:value-of select="@dataString"/>"
 <xsl:template match="layout-config/LogixNGDigitalExpressions">
     <p><a href="#toc">[Click to go back to TOC]</a></p>
     <h2 style="page-break-before: always">LogixNG Digital Expressions</h2>
-    <table border="1">
+    <table style="width:100%" border="1">
         <tr>
-            <th style="width:20%" >Type</th>
-            <th style="width:20%" >System Name</th>
+            <th style="width:15%" >Type</th>
+            <th style="width:15%" >System Name</th>
             <th style="width:30%" >Other Info</th>
             <th>Comment</th>
          </tr>
     <!-- index through individual elements -->
      <xsl:for-each select="./*">
         <xsl:variable name="typeName" select="local-name()"/>
-        <tr><td style="width:20%" ><xsl:value-of select="$typeName"/></td>
-            <td style="width:20%" ><xsl:value-of select="systemName"/></td> 
+        <tr><td style="width:15%" ><xsl:value-of select="$typeName"/></td>
+            <td style="width:15%" ><xsl:value-of select="systemName"/></td> 
             <xsl:choose>
               <xsl:when test="( $typeName = 'TriggerOnce' )">
                  <td style="width:30%" ></td>
@@ -1248,18 +1251,18 @@ value="<xsl:value-of select="@dataString"/>"
 <xsl:template match="layout-config/LogixNGDigitalActions">
     <p><a href="#toc">[Click to go back to TOC]</a></p>
     <h2 style="page-break-before: always">LogixNG Digital Actions</h2>
-    <table border="1">
+    <table style="width:100%" border="1">
         <tr>
-            <th style="width:20%" >Type</th>
-            <th style="width:20%" >System Name</th>
+            <th style="width:15%" >Type</th>
+            <th style="width:15%" >System Name</th>
             <th style="width:30%" >Other Info</th>
             <th>Comment</th>
          </tr>
     <!-- index through individual elements -->
      <xsl:for-each select="./*">
         <xsl:variable name="typeName" select="local-name()"/>
-        <tr><td style="width:20%" ><xsl:value-of select="$typeName"/></td>
-            <td style="width:20%" ><xsl:value-of select="systemName"/></td> 
+        <tr><td style="width:15%" ><xsl:value-of select="$typeName"/></td>
+            <td style="width:15%" ><xsl:value-of select="systemName"/></td> 
             <xsl:choose>
               <xsl:when test="( $typeName = 'ActionScript' )">
                  <td style="width:30%" ><xsl:value-of select="operationType"/>: <xsl:value-of select="script"/></td>
@@ -1286,7 +1289,9 @@ value="<xsl:value-of select="@dataString"/>"
                  <td style="width:30%" >Audio: <xsl:value-of select="namedBean/name"/></td>
               </xsl:when>
               <xsl:when test="( $typeName = 'Logix' )">
-                 <td style="width:30%" ><xsl:value-of select="./ExpressionSocket"/>;<xsl:value-of select="./ActionSocket"/></td>
+                 <td style="width:30%" >
+                   <xsl:value-of select="./ExpressionSocket/socketName"/>:<xsl:value-of select="./ExpressionSocket/systemName"/>;
+                   <xsl:value-of select="./ActionSocket/socketName"/>:<xsl:value-of select="./ActionSocket/systemName"/></td>
               </xsl:when>
               <xsl:when test="( $typeName = 'ExecuteDelayed' )">
                  <td style="width:30%" ><xsl:value-of select="Socket"/></td>
@@ -1306,27 +1311,39 @@ value="<xsl:value-of select="@dataString"/>"
 <xsl:template match="layout-config/LogixNGDigitalBooleanActions">
     <p><a href="#toc">[Click to go back to TOC]</a></p>
     <h2 style="page-break-before: always">LogixNG Digital Boolean Actions</h2>
-    <table border="1">
+    <table style="width:100%" border="1">
         <tr>
-            <th style="width:20%">Type</th>
-            <th style="width:20%">System Name</th>
-            <th style="width:20%">Trigger</th>
+            <th style="width:15%">Type</th>
+            <th style="width:15%">System Name</th>
+            <th style="width:10%">Trigger</th>
+            <th style="width:30%" >Other Info</th>
             <th>Comment</th>
          </tr>
     <!-- index through individual elements -->
      <xsl:for-each select="./*">
 
         <xsl:variable name="typeName" select="local-name()"/>
-        <tr><td style="width:20%"><xsl:value-of select="$typeName"/></td>
-            <td style="width:20%"><xsl:value-of select="systemName"/></td> 
+        <tr><td style="width:15%"><xsl:value-of select="$typeName"/></td>
+            <td style="width:15%"><xsl:value-of select="systemName"/></td> 
             <xsl:choose>
-                <xsl:when test="$typeName = 'OnChange'">
-                    <td style="width:20%"><xsl:value-of select="@trigger"/></td>
+                <xsl:when test="$typeName = 'LogixAction'">
+                    <td style="width:10%"><xsl:value-of select="@trigger"/></td>
                 </xsl:when>
                 <xsl:otherwise>
-                    <td style="width:20%"></td>
+                    <td style="width:10%"></td>
                 </xsl:otherwise>
             </xsl:choose>
+            <xsl:choose>
+             <xsl:when test="( $typeName = 'DigitalBooleanMany' )">
+                 <td style="width:30%" ><xsl:value-of select="./Actions"/></td>
+              </xsl:when>
+              <xsl:when test="( $typeName = 'LogixAction' )">
+                 <td style="width:30%" >
+                   <xsl:value-of select="./Socket/socketName"/>:<xsl:value-of select="./Socket/systemName"/>;
+                 </td>
+              </xsl:when>
+              <xsl:otherwise><td style="width:30%" ></td></xsl:otherwise>
+           </xsl:choose>
  
             <xsl:if test="string-length(comment)!=0" > <td><xsl:value-of select="comment"/></td></xsl:if>
         </tr>
@@ -2064,6 +2081,16 @@ paths:
     <td>
         to Block Name="<xsl:value-of select="@toBlockName"/>"
         from Block Name="<xsl:value-of select="@fromBlockName"/>"
+    </td>
+</tr>
+</xsl:template>
+
+<!-- *************************************************************************************** -->
+<xsl:template match="logixngicon">
+<tr><td>LogixNG Icon</td>
+    <td>icon="<xsl:value-of select="icon/@url"/>"</td>
+    <td>
+        LogixNG="<xsl:value-of select="LogixNG/InlineLogixNG_SystemName"/>"
     </td>
 </tr>
 </xsl:template>

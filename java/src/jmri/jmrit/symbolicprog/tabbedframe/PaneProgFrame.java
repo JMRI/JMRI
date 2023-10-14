@@ -432,6 +432,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     // Invoked by forward search operation
     private final Runnable searchForwardTask = new Runnable() {
+        @Override
         public void run() {
             log.trace("start forward");
             loadSearchTargets();
@@ -469,6 +470,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     // Invoked by backward search operation
     private final Runnable searchBackwardTask = new Runnable() {
+        @Override
         public void run() {
             log.trace("start backward");
             loadSearchTargets();
@@ -506,6 +508,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     // Invoked when search bar Done is pressed
     private final Runnable searchDoneTask = new Runnable() {
+        @Override
         public void run() {
             log.debug("done with search bar");
             searchBar.setVisible(false);

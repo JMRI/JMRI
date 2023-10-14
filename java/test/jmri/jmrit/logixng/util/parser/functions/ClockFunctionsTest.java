@@ -2,19 +2,14 @@ package jmri.jmrit.logixng.util.parser.functions;
 
 import java.time.Instant;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.ExpressionNodeFloatingNumber;
 import jmri.jmrit.logixng.util.parser.ExpressionNodeString;
-import jmri.jmrit.logixng.util.parser.ExpressionNodeTrue;
 import jmri.jmrit.logixng.util.parser.Token;
 import jmri.jmrit.logixng.util.parser.TokenType;
-import jmri.jmrit.logixng.util.parser.WrongNumberOfParametersException;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;

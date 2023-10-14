@@ -3643,11 +3643,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       mark), number, type, and length. The program will automatically calculate the car's maximum
       weight based on length and the scale your modeling. You can optionally add the car's color,
       built date, load and owner. If you want a group of cars to be switched as a unit, you can
-      create a "kernel". You can assign any number of cars to a kernel but the type of the first car
-      assigned will be used by the program to determine if the kernel is allowed at a location. The
-      entire length of the kernel is used to determine if the cars in the kernel will fit. Note that
-      the program also includes space for the car's couplers when calculating the length of a
-      kernel.
+      create a <a href="#Kernel">kernel</a>.
+      
       <p>
         <img src="images/Cars.png" alt="">
       </p>
@@ -3674,20 +3671,21 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         href="#LocationDivision">Railroad Divisions</a> and <a href="#EditCarLoads">custom
         car loads</a>. In the Cars table, a car's final destination has the prefix "->" in the
       "Destination" or "Final Destination" columns.
-
-      <h4>Add, Find, Save Buttons</h4>
-      There are three buttons located at the bottom of the Cars window. The "Add" button allows you
-      to add a car to your roster. The "Save" button stores the cars roster to a file. The "Find"
-      button and the adjacent text window can be used to find a car by its road number. You can use
-      the wild card "*" when entering a car number. For example if you want to find all cars with
-      numbers that end with 345, enter *345, and press find. Each time you press find, the next
-      car with a road number ending with "345" will be highlighted.
-
+      
       <h4>Moves, Wait and Last Time Moved</h4>
       You can edit the number of times a car has been moved by the program and the car's wait count
       directly from the "Cars" window. Double click on the cell in the Cars window to change. The
       built and owner fields can be found in the <a href="#CarsEdit">Edit Car</a> window. The last
       time moved is set by the program.
+
+      <h4>Add, Find, Save Buttons</h4>
+      There are three buttons located at the bottom of the Cars window. The
+      <a href="#CarsEdit">Add</a> button allows you to add a car to your roster. The "Save" button
+      stores the cars roster to a file. The "Find" button and the adjacent text window can be used
+      to find a car by its road number. You can use the wild card "*" when entering a car number.
+      For example if you want to find all cars with numbers that end with 345, enter *345, and press
+      find. Each time you press find, the next car with a road number ending with "345" will be
+      highlighted.
 
       <h3 id="ImportingCars">Importing Cars from a File</h3>
       If you already have a list of cars in a database, you can import the cars into the program.
@@ -3900,10 +3898,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       can accept the kernel. However, the program does use the entire length of the kernel to
       determine if the group of cars will fit on the destination track. Picking up or dropping off a
       kernel is regarded as one "move" when defining the number of moves in a train's route.
+      
       <p>
         Kernels are shown on Manifests and switch lists in the order they are entered, with the lead
         car being the first one entered. You can modify the order the cars in a kernel are printed
-        by changing their blocking order in the <a href="#CarsEdit">Edit Car</a> window.
+        by changing their blocking order in the <a href="#CarsEdit">Edit Car</a> window.  A negative 
+        blocking number will place the car before positive numbers.
       </p>
 
       <h4>Built</h4>

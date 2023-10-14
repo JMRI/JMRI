@@ -1,11 +1,7 @@
 package jmri.jmrix.mqtt;
 
-import jmri.DccLocoAddress;
 import jmri.implementation.AbstractConsistManager;
 import jmri.util.JUnitUtil;
-import jmri.util.JUnitAppender;
-import jmri.util.junit.annotations.*;
-
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
@@ -19,12 +15,14 @@ public class MqttConsistManagerTest extends jmri.implementation.AbstractConsistM
     private MqttAdapterScaffold a;
     private MqttSystemConnectionMemo memo;
 
+    @Override
     @Test
     public void testIsCommandStationConsistPossible(){
        // default is false, override if necessary
        Assert.assertTrue("CS Consist Possible",cm.isCommandStationConsistPossible());
     }
 
+    @Override
     @Test
     public void testCsConsistNeedsSeperateAddress(){
        Assume.assumeTrue(cm.isCommandStationConsistPossible());
@@ -32,6 +30,7 @@ public class MqttConsistManagerTest extends jmri.implementation.AbstractConsistM
        Assert.assertTrue("CS Consist Needs Seperate Address",cm.csConsistNeedsSeperateAddress());
     }
 
+    @Override
     @Test
     public void testShouldRequestUpdateFromLayout(){
        Assume.assumeTrue(cm instanceof AbstractConsistManager);

@@ -3,7 +3,6 @@ package jmri.util.swing;
 import java.awt.Component;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
-import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.ListModel;

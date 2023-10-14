@@ -622,10 +622,12 @@ abstract public class LayoutTrackView implements InlineLogixNG {
         this._logixNG = logixNG;
     }
 
+    @Override
     public void setLogixNG_SystemName(String systemName) {
         this._logixNG_SystemName = systemName;
     }
 
+    @Override
     public void setupLogixNG() {
         _logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
                 .getBySystemName(_logixNG_SystemName);
