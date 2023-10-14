@@ -61,7 +61,8 @@
       <revnumber>5</revnumber>
       <date>2005-08-14</date>
       <authorinitials>BJ</authorinitials>
-      <revremark>Revision in original Lenz_Gold.xml file</revremark>
+	<!--<revremark>Revision in original Lenz_Gold.xml file</revremark>--> 
+
     </revision>
   </revhistory>
   

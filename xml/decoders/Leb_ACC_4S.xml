@@ -106,6 +106,7 @@
 			<relation>eq</relation>
 			<value>0</value>
 		</qualifier> -->
+		<decVal/>
 	 </variable>
 
 

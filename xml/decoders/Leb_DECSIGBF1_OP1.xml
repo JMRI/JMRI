@@ -68,7 +68,7 @@
 				<splitVal highCV="9" factor="4" offset="+1"/>
 				<label>Turnout_A_Address_High2</label>
 			</variable>
-			<variable item="Decoder A Address2" CV="1" mask="XXVVVVVV" comment="Decoder A address outputs G - H1" default="02">
+			<variable item="Decoder A Address2" CV="1" mask="XXVVVVVV" comment="Decoder A address outputs G - H1" default="03">
 				<splitVal highCV="9"/>
 				<label>Decoder A Address2</label>
 				<comment>Decoder A address outputs G - H2</comment>
@@ -112,7 +112,7 @@
 				<splitVal highCV="10" factor="4" offset="+1"/>
 				<label>Turnout_B_Address_High2</label>
 			</variable>
-			<variable item="Decoder B Address2" CV="2" mask="XXVVVVVV" comment="Decoder B address outputs G - H1" default="02">
+			<variable item="Decoder B Address2" CV="2" mask="XXVVVVVV" comment="Decoder B address outputs G - H1" default="05">
 				<splitVal highCV="10"/>
 				<label>Decoder B Address2</label>
 				<comment>Decoder B address outputs G - H2</comment>
@@ -156,7 +156,7 @@
 				<splitVal highCV="11" factor="4" offset="+1"/>
 				<label>Turnout_C_Address_High2</label>
 			</variable>
-			<variable item="Decoder C Address2" CV="3" mask="XXVVVVVV" comment="Decoder C address outputs G - H1" default="02">
+			<variable item="Decoder C Address2" CV="3" mask="XXVVVVVV" comment="Decoder C address outputs G - H1" default="07">
 				<splitVal highCV="11"/>
 				<label>Decoder C Address2</label>
 				<comment>Decoder C address outputs G - H2</comment>
@@ -195,7 +195,7 @@
 			
 			<variable CV="12" item="Indication a la mise sous tension" default="0" minOut="1">
 				<xi:include href="file:/xml/decoders/leb/enum-Signal_Indication.xml"/>
-				<label>Indication a la mise sous tension A</label>
+				<label>CV 12/524 Indication a la mise sous tension A</label>
 				<tooltip>Indication a la mise sous tension A</tooltip>
 			</variable>
 			
@@ -217,7 +217,7 @@
 			</variable>
 			<variable CV="13" item="Indication a la mise sous tension" default="0" minOut="1">
 				<xi:include href="file:/xml/decoders/leb/enum-Signal_Indication.xml"/>
-				<label>Indication a la mise sous tension B</label>
+				<label>CV 13/525 Indication a la mise sous tension B</label>
 				<tooltip>Indication a la mise sous tension B</tooltip>
 			</variable>
 			
@@ -239,7 +239,7 @@
 			</variable>
 			<variable CV="14" item="Indication a la mise sous tension" default="0" minOut="1">
 				<xi:include href="file:/xml/decoders/leb/enum-Signal_Indication.xml"/>
-				<label>Indication a la mise sous tension C</label>
+				<label>CV 14/526 Indication a la mise sous tension C</label>
 				<tooltip>Indication a la mise sous tension C</tooltip>
 			</variable>
 			
@@ -267,6 +267,13 @@
 		<column>
 			<row>
 				<column>
+					<label>
+						<text>CV 1/513 9/521 Adresses du decodeur A</text>
+					</label>
+					<label>
+						<text> </text>
+					</label>
+					
 					<display item="Decoder A Address" label="Group 1 Module No A: " tooltip="Sets base address for signal A, B, C , D and E">
 						<label>   Group 1 Module No A: </label>
 					</display>
@@ -310,11 +317,11 @@
 					</label>
 				</column>
 				<column>
-					<label>
+				    <label>
 						<text> </text>
 					</label>
 					<label>
-						<text>   Choix Allumage A </text>
+						<text>      CV 4/516 Choix Allumage A </text>
 					</label>
 					<label>
 						<text> </text>
@@ -333,7 +340,7 @@
 					</label>
 					<display item="Allumage choix A"/>
 					<display item="Allumage par no Cible A"/>
-					<display item="Indication a la mise sous tension A"/>
+					<display item="CV 12/524 Indication a la mise sous tension A"/>
 					<display item=""/>
 				</column>
 			
@@ -341,6 +348,13 @@
 			<separator/>
 			<row>
 				<column>
+					<label>
+						<text>CV 2/514 10/522 Adresses du decodeur B</text>
+					</label>
+					<label>
+						<text> </text>
+					</label>
+					
 					<display item="Decoder B Address" label="Group 1 Module No B: " tooltip="Sets base address for signal A, B, C , D and E">
 						<label>   Group 1 Module No B: </label>
 					</display>
@@ -362,6 +376,7 @@
 					<label>
 						<text> </text>
 					</label>
+			
 				</column>
 				<column>
 					<display item="Decoder B Address2" label="Group 2 Module No B: " tooltip="Sets base address for ID B + Option B">
@@ -388,7 +403,7 @@
 						<text> </text>
 					</label>
 					<label>
-						<text>   Choix Allumage B </text>
+						<text>      CV 5/517 Choix Allumage B </text>
 					</label>
 					<label>
 						<text> </text>
@@ -407,7 +422,7 @@
 					</label>
 					<display item="Allumage choix B"/>
 					<display item="Allumage par no Cible B"/>
-					<display item="Indication a la mise sous tension B"/>
+					<display item="CV 13/525 Indication a la mise sous tension B"/>
 					<display item=""/>
 				</column>
 			
@@ -415,6 +430,13 @@
 			<separator/>
 			<row>
 				<column>
+					<label>
+						<text>CV 3/515 11/523 Adresses du decodeur C</text>
+					</label>
+					<label>
+						<text> </text>
+					</label>
+					
 					<display item="Decoder C Address" label="Group 1 Module No C: " tooltip="Sets base address for signal A, B, C , D and E">
 						<label>   Group 1 Module No C: </label>
 					</display>
@@ -462,7 +484,7 @@
 						<text> </text>
 					</label>
 					<label>
-						<text>   Choix Allumage C </text>
+						<text>      CV 6/518 Choix Allumage C </text>
 					</label>
 					<label>
 						<text> </text>
@@ -481,7 +503,7 @@
 					</label>
 					<display item="Allumage choix C"/>
 					<display item="Allumage par no Cible C"/>
-					<display item="Indication a la mise sous tension C"/>
+					<display item="CV 14/526 Indication a la mise sous tension C"/>
 					<display item=""/>
 				</column>
 			

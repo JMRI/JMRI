@@ -61,21 +61,24 @@
       <revnumber>5</revnumber>
       <date>2005-08-14</date>
       <authorinitials>BJ</authorinitials>
-      <revremark>Revision in original Lenz_Gold.xml file</revremark>
+	<!--<revremark>Revision in original Lenz_Gold.xml file</revremark>--> 
+
     </revision>
   </revhistory>
   
 
     <column>
-         <display item="Choix Allumage Led no  1"/>
-         <display item="Choix Allumage Led no  2"/>
-         <display item="Choix Allumage Led no  3"/>
-         <display item="Choix Allumage Led no  4"/>
-         <display item="Choix Allumage Led no  5"/>
-         <display item="Choix Allumage Led no  6"/>
-         <display item="Choix Allumage Led no  7"/>
-  <!--       <display item="Choix Allumage Led no  8"/>
-         <display item="Choix Allumage Led no  9"/>
-         <display item="Choix Allumage Led no 10"/> -->
+         <display item="CV 15/527 Choix Allumage Led no  1"/>
+         <display item="CV 16/528 Choix Allumage Led no  2"/>
+         <display item="CV 17/529 Choix Allumage Led no  3"/>
+         <display item="CV 18/530 Choix Allumage Led no  4"/>
+         <display item="CV 19/531 Choix Allumage Led no  5"/>
+         <display item="CV 20/532 Choix Allumage Led no  6"/>
+         <display item="CV 21/533 Choix Allumage Led no  7"/>
+  <!--   reserve version 14pin
+	     <display item="CV 22/534 Choix Allumage Led no  8"/>
+         <display item="CV 23/535 Choix Allumage Led no  9"/>
+         <display item="CV 24/536 Choix Allumage Led no 10"/>
+         <display item="CV 25/537 Choix Allumage Led no 11"/> -->
     </column>
 </pane>

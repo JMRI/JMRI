@@ -15,24 +15,9 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
 	<version author="dave@bayworld.com" version="1" lastUpdated="20021128"/>
 	<decoder>
-		<!--
-    <family name="LEB Signal Decoder" mfg="Public-domain and DIY" comment="DECSIG_B_F1_V3 is a signal decoder, but it can be programmed in the usual way"> 
- -->
 		<family name="LEB Signal Decoder" mfg="LEB" comment="DECSIG_B_F1_V3 is a signal decoder, but it can be programmed in the usual way">
 			<model model="DECSIG_B_F1_V3" productID="38"/>
 		</family>
-		<!--
-	MERG_ACC5.xml	gestion de version
-  lowVersionID="4" highVersionID="52"
-   <family name="ACC Decoders" mfg="MERG" comment="DCCACC5 is steady state MERG decoder.">	
-      <model model="DCCACC5 to V5.1" productID="51">
-        <versionCV lowVersionID="4" highVersionID="51"/>
-       </model>
-      <model model="DCCACC5 from V5.2" productID="52">
-         <versionCV lowVersionID="52" highVersionID="52"/>
-       </model>
-    </family>
--->
 		<programming direct="no" paged="yes" register="no" ops="no"/>
 		<variables>
 			<xi:include href="file:/xml/decoders/leb/TableAllumage.xml"/>
