@@ -484,6 +484,8 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
     
     int maxCommentLength = 0;
     
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification = "I18N of Info Message")
     public int getMaxLoadCommentLength() {
         if (maxCommentLength == 0) {
             String maxComment = "";
