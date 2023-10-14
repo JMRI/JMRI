@@ -1,12 +1,12 @@
 #Script to create a property change listener on the ID Tag Table
 
-# A more advanced example of scripting, this script "listens" for new RFID tags and pops up a window to allow 
+# A more advanced example of scripting, this script "listens" for new ID tags and pops up a window to allow 
 # the user to enter a user name (typically loco or car/wagon number) and comment. Additionally, it listens for
 # new or changed user names on existing RFID tags.  It does this by creating 
 # a property change listener on the ID Tag Table. It will also update OperationsPro Locomotive Table or Car 
 # Table if requested (check box on the popup window). It will flag loco/car numbers that do not exist, as well 
 # as move an ID Tag from one loco to another or from one car to another and eliminate dupicate assignment of 
-# RFID Tag or cars or locomotives.
+# ID Tag or cars or locomotives.
 
 #If you are actively using RFID, recommended that this script be started as a JMRI Startup action, although it can be started at any time
 
@@ -39,11 +39,11 @@ from org.slf4j import LoggerFactory
 DEBUG = False
 DEBUGX= False  #Additional level of debug info put in Script Output Window, to avoid unnecessary log calls
 
-AssignRFIDTagToRS_log = LoggerFactory.getLogger("jmri.jmrit.jython.exec.AssignRFIDTagToRS")
+AssignIdTagToRS_log = LoggerFactory.getLogger("jmri.jmrit.jython.exec.AssignIdTagToRS")
 #Update version number and date in following statement:
-AssignRFIDTagToRS_log.info("'AssignRFIDTagToRS' v42 10/13/2023 2305 loaded")
+AssignIdTagToRS_log.info("'AssignIdTagToRS' v42 10/13/2023 2305 loaded")
 
-print "AssignRFIDTagToRS: will pop up a window when new RFID Tag detected \n or when new user name entered for existing RFID Tag.\n Optionally, will update Operations Locomotive and/or Car Tables.\n May be necessary to refresh ops tables to see effect."
+print "AssignIdTagToRS: will pop up a window when new RFID Tag detected \n or when new user name entered for existing RFID Tag.\n Optionally, will update Operations Locomotive and/or Car Tables.\n May be necessary to refresh ops tables to see effect."
 
 #To move subsequent frames around screen
 myFrameLocIncr = 0
@@ -51,7 +51,7 @@ myFrameLocOffset = 15                  #Number of pixels to offset next window (
 
 ################################################################################################################
 # Create a frame to hold the button, set up for nice layout
-class AssignRFIDTagToRSFrame:
+class AssignIdTagToRSFrame:
  
     def __init__(self, newIdTag, existingIDTagUserName):
         self.newIdTag = newIdTag
@@ -252,7 +252,7 @@ class AssignRFIDTagToRSFrame:
                 self.assigned = False
                 # See if Ops Table update requested
                 if not (self.myIdTagUpdateCar or self.myIdTagUpdateLoco):
-                    print "ARfid: Ops tables not updated for ", self.newIdTag.getUserName()                 
+                    print "AssignId: Ops tables not updated for ", self.newIdTag.getUserName()                 
                 else:
                     self.updateOpsTables()               
 
@@ -304,7 +304,7 @@ class AssignRFIDTagToRSFrame:
             if self.assigned:
                 break
         else:
-            print("ARfid: No such " + type_name + " number " + str(self.newIdTag.getUserName()))
+            print("AssignId: No such " + type_name + " number " + str(self.newIdTag.getUserName()))
         return
       
     def processNewUN(self, rs, type_name):
@@ -312,12 +312,12 @@ class AssignRFIDTagToRSFrame:
             print "ART281:" , rs.getId(), rs.getNumber(), "[", self.newIdTag.getUserName(), "]", rs.getIdTag(), rs.getRfid() 
         if rs.getNumber() == self.newIdTag.getUserName():
             if rs.getIdTag() is not None:
-                print "ARfid: REPLACED " ,  rs.getRfid(), "on   ", type_name, rs.getId() 
-                #print("ARfid: REPLACED {} on {} {}".format(rs.getRfid(), type_name, rs.getId()))
+                print "AssignId: REPLACED " ,  rs.getRfid(), "on   ", type_name, rs.getId() 
+                #print("AssignId: REPLACED {} on {} {}".format(rs.getRfid(), type_name, rs.getId()))
             rs.setIdTag(self.newIdTag)
             rs.setRfid(self.newIdTag.getSystemName())
-            print "ARfid: Assigned" ,  rs.getRfid(), "to   ", type_name, rs.getId()  
-            #Tom's: print("ARfid: Assigned {} to {} {}".format(rs.getRfid(), type_name, rs.getId()))
+            print "AssignId: Assigned" ,  rs.getRfid(), "to   ", type_name, rs.getId()  
+            #Tom's: print("AssignId: Assigned {} to {} {}".format(rs.getRfid(), type_name, rs.getId()))
             self.assigned = True
         return
 
@@ -329,14 +329,14 @@ class AssignRFIDTagToRSFrame:
             if rs.getNumber() != self.newIdTag.getUserName():
                 rs.setIdTag(None)
                 rs.setRfid(None)
-                print "ARfid: REMOVED " ,  self.newIdTag.getSystemName(), "from ", type_name, rs.getId() 
-                #Tom's: print("ARfid: REMOVED {} from {} {}".format(self.newIdTag.getSystemName(), type_name, rs.getId()))
+                print "AssignId: REMOVED " ,  self.newIdTag.getSystemName(), "from ", type_name, rs.getId() 
+                #Tom's: print("AssignId: REMOVED {} from {} {}".format(self.newIdTag.getSystemName(), type_name, rs.getId()))
         return
 
 
 ############################################################################################################
 # Define a Manager listener for the IdTagManager.
-class ARfidTagManagerListener(java.beans.PropertyChangeListener):
+class AssignIdTagManagerListener(java.beans.PropertyChangeListener):
 
   prevEventSource   = None
   prevEventProperty = None
@@ -356,33 +356,33 @@ class ARfidTagManagerListener(java.beans.PropertyChangeListener):
         newIdTag = idtags.getBySystemName(str(event.newValue))
         if newIdTag is not None:
             if DEBUG:
-                print "ART326: ARfidTagManagerListener:  ", newIdTag, "/", event.propertyName, "/", event.newValue
-            AssignRFIDTagToRSFrame(newIdTag, "")
+                print "ART326: AssignIdTagManagerListener:  ", newIdTag, "/", event.propertyName, "/", event.newValue
+            AssignIdTagToRSFrame(newIdTag, "")
     elif (event.propertyName == "DisplayListName" and event.newValue is not None):  #Added/changed user name to existing RFID Tag
         existingIdTag = idtags.getByUserName(str(event.newValue))
         if existingIdTag is not None:
             if DEBUG:
-                print "ART332: ARfidTagManagerListener:  ", existingIdTag, "/", event.propertyName, "/", event.newValue
-            AssignRFIDTagToRSFrame(existingIdTag, str(event.newValue))    
+                print "ART332: AssignIdTagManagerListener:  ", existingIdTag, "/", event.propertyName, "/", event.newValue
+            AssignIdTagToRSFrame(existingIdTag, str(event.newValue))    
     return
 
 
 ############################################################################################################
 #----- MAINLINE --------------------------------------------------------------------------------
-if globals().get("AssignRFIDTagToRS_running") is not None: # Script already loaded so exit
-    AssignRFIDTagToRS_log.warn("'AssignRFIDTagToRS' already loaded and running. Restart JMRI before loading this script.")
+if globals().get("AssignIdTagToRS_running") is not None: # Script already loaded so exit
+    AssignIdTagToRS_log.warn("'AssignIdTagToRS' already loaded and running. Restart JMRI before loading this script.")
 else: # Continue running script
-    AssignRFIDTagToRS_log.info("'AssignRFIDTagToRS' started.")
+    AssignIdTagToRS_log.info("'AssignIdTagToRS' started.")
     #idtags = jmri.InstanceManager.getDefault(jmri.IdTagManager)     #Uncomment this line if using JMRI 5.5.3 or earlier
     # Remove a prior listener, if any
     if globals().get("myIdTagMgrListenerGlobal") is not None:
         if myIdTagMgrListenerGlobal is not None:
             idtags.removePropertyChangeListener(myIdTagMgrListenerGlobal)
-            AssignRFIDTagToRS_log.info("'AssignRFIDTagToRS' prior IdTag Table listener removed.")
+            AssignIdTagToRS_log.info("'AssignIdTagToRS' prior IdTag Table listener removed.")
             myIdTagMgrListenerGlobal = None
     # Attach the new sensor manager listener
-    myIdTagMgrListenerGlobal = ARfidTagManagerListener()
+    myIdTagMgrListenerGlobal = AssignIdTagManagerListener()
     idtags.addPropertyChangeListener(myIdTagMgrListenerGlobal)
-    AssignRFIDTagToRS_running = True               #So script won't be loaded twice
-    AssignRFIDTagToRS_log.info("'AssignRFIDTagToRS' IdTag Table listener started.")
+    AssignIdTagToRS_running = True               #So script won't be loaded twice
+    AssignIdTagToRS_log.info("'AssignIdTagToRS' IdTag Table listener started.")
 
