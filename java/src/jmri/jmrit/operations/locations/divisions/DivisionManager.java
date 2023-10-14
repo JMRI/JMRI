@@ -200,6 +200,8 @@ public class DivisionManager extends PropertyChangeSupport implements InstanceMa
     
     protected int _maxDivisionNameLength = 0;
     
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification="I18N of Info Message")
     public int getMaxDivisionNameLength() {
         String maxName = TrainManifestHeaderText.getStringHeader_Division();
         for (Division div : getList()) {

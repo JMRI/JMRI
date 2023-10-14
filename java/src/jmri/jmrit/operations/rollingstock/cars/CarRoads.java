@@ -54,6 +54,8 @@ public class CarRoads extends RollingStockAttribute implements InstanceManagerAu
      *
      * @return the maximum character length of a car road name
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification="I18N of Info Message")
     @Override
     public int getMaxNameLength() {
         if (maxNameSubStringLength == 0) {

@@ -497,6 +497,8 @@ public class CarManager extends RollingStockManager<Car>
     
     int _commentLength = 0;
     
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification="I18N of Info Message")
     public int getMaxCommentLength() {
         if (_commentLength == 0) {
             _commentLength = TrainManifestHeaderText.getStringHeader_Comment().length();

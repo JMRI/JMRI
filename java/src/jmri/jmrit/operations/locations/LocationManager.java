@@ -454,6 +454,8 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
         return _maxLocationAndTrackNameLength;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification = "I18N of Info Message")
     private void calculateMaxNameLengths() {
         if (_maxLocationNameLength != 0) // only do this once
         {
