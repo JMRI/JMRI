@@ -57,7 +57,7 @@
 
       <p>This is an example script for invoking an AppleScript from JMRI on Mac OS X.</p>
 
-      <p><a href="../../../../../jython/AssignRfidTagToRollingStock.py">AssignRfidTagToRollingStock.py</a>
+      <p><a href="../../../../../jython/AssignIdTagToRollingStock.py">AssignIdTagToRollingStock.py</a>
       </p>
       
       <p>A more advanced example of scripting, this script "listens" for new or changed ID Tag Table entries (RFID Tags)
