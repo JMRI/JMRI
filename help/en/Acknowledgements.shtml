@@ -838,6 +838,9 @@
 
         <li>Rob Plevier, who provided instructions for running JMRI on OpenSUSE GNU/Linux</li>
 
+        <li>Jean-Francois Plisson, <!-- Speedjf37 -->
+        who provided the LEB decoder definitions.
+        
         <li>John Plocher, who make good suggestions on XML DTD items, created the infrastructure
         for this website, lead the construction of the demo layout for the JavaOne show, worked on
         GUI updates, and built a replacement RXTX library for Mac OS X 10.4.</li>
