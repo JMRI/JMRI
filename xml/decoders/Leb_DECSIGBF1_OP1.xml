@@ -44,7 +44,9 @@
 			<variable CV="1" mask="XXVVVVVV" comment="Decoder A address " item="Short A Address " default="03">
 <!--			<variable item="Low 7 bytes of Address CV1" CV="1" mask="XVVVVVVV" comment="Decoder address" default="01"> -->
 				<decVal min="1" max="63"/>
+<!--  
 				<splitVal highCV="9"/>
+ -->
 				<label>Decoder A Address</label>
 				<comment>Decoder A address </comment>
 			</variable>
@@ -193,7 +195,7 @@
 				<label>Table Allumage Personnalisee A</label>
 			</variable>
 			
-			<variable CV="12" item="Indication a la mise sous tension" default="0" minOut="1">
+			<variable CV="12" item="CV 12/524 Indication a la mise sous tension" default="0" minOut="1">
 				<xi:include href="file:/xml/decoders/leb/enum-Signal_Indication.xml"/>
 				<label>CV 12/524 Indication a la mise sous tension A</label>
 				<tooltip>Indication a la mise sous tension A</tooltip>
@@ -215,7 +217,7 @@
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 				<label>Table Allumage Personnalisee B</label>
 			</variable>
-			<variable CV="13" item="Indication a la mise sous tension" default="0" minOut="1">
+			<variable CV="13" item="CV 13/525 Indication a la mise sous tension" default="0" minOut="1">
 				<xi:include href="file:/xml/decoders/leb/enum-Signal_Indication.xml"/>
 				<label>CV 13/525 Indication a la mise sous tension B</label>
 				<tooltip>Indication a la mise sous tension B</tooltip>
@@ -237,7 +239,7 @@
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 				<label>Table Allumage Personnalisee C</label>
 			</variable>
-			<variable CV="14" item="Indication a la mise sous tension" default="0" minOut="1">
+			<variable CV="14" item="CV 14/526 Indication a la mise sous tension" default="0" minOut="1">
 				<xi:include href="file:/xml/decoders/leb/enum-Signal_Indication.xml"/>
 				<label>CV 14/526 Indication a la mise sous tension C</label>
 				<tooltip>Indication a la mise sous tension C</tooltip>

@@ -82,7 +82,10 @@
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 				<label>Table Allumage Personnalisee</label>
 			</variable>
+<!-- 
 			<variable item="Table Allumage Personnalisee" CV="3" mask="XVXXXXXX" default="0">
+ -->
+			<variable item="2ID separes" CV="3" mask="XVXXXXXX" default="0">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 				<label>2ID separes</label>
 			</variable>
