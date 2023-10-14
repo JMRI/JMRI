@@ -41,7 +41,7 @@ DEBUGX= False  #Additional level of debug info put in Script Output Window, to a
 
 AssignRFIDTagToRS_log = LoggerFactory.getLogger("jmri.jmrit.jython.exec.AssignRFIDTagToRS")
 #Update version number and date in following statement:
-AssignRFIDTagToRS_log.info("'AssignRFIDTagToRS' v41 10/10/2023 2305 loaded")
+AssignRFIDTagToRS_log.info("'AssignRFIDTagToRS' v42 10/13/2023 2305 loaded")
 
 print "AssignRFIDTagToRS: will pop up a window when new RFID Tag detected \n or when new user name entered for existing RFID Tag.\n Optionally, will update Operations Locomotive and/or Car Tables.\n May be necessary to refresh ops tables to see effect."
 
@@ -60,29 +60,23 @@ class AssignRFIDTagToRSFrame:
         self.myIdTagUserNameChanged = False
         self.myIdTagCommentChanged = False
         self.createFrame(existingIDTagUserName)
-
-    def createFrame (self, existingIDTagUserName) :
-        global myFrameLocIncr, myFrameLocOffset
-               
-        # Frame fields
-        self.myIdTagUserName = javax.swing.JTextField(12)
-        self.myIdTagUserName.setText(existingIDTagUserName)
-        self.myIdTagComment = javax.swing.JTextField(20)
-        self.processButton = javax.swing.JButton("Process")
-        self.cancelButton = javax.swing.JButton("Cancel")
-        self.noOpsUpdateBox = javax.swing.JRadioButton("No Ops Table Update")
-        self.locoUpdateBox = javax.swing.JRadioButton("Locomotive Table")
-        self.carUpdateBox = javax.swing.JRadioButton("Car Table")
         # To keep track of whether to update either of the ops tables
-        #Tom: why is this here rather than in __init__??
         self.myIdTagUpdateLoco = False
         self.myIdTagUpdateCar = False
 
         #############################################################
-        # Create display elements      
-        self.createDisplayElements()
+    def createFrame (self, existingIDTagUserName) :
+        global myFrameLocIncr, myFrameLocOffset
+               
+        # Create input fields
+        self.createInputFields(existingIDTagUserName)
+        # Create process buttons
+        self.createProcessButtons()
+        # Create the buttons that control Ops Tables Updates
+        self.createOpsTablesSelectButtons()
+        # Create text display lines      
+        self.createTextElements()
         
-        #############################################################
         # Now put all the panels in a frame and display
         self.myFrame = javax.swing.JFrame("RFID Tag:  " + str(self.newIdTag))       # argument is the frames title
         self.myFrame.contentPane.setLayout(javax.swing.BoxLayout(self.myFrame.contentPane, javax.swing.BoxLayout.Y_AXIS))
@@ -104,36 +98,54 @@ class AssignRFIDTagToRSFrame:
         self.myFrame.setVisible(True)
         return
 
-    def createDisplayElements(self):
-        #Instructions at top
-        self.instrLine1 = javax.swing.JPanel()
-        self.instrLine1.add(javax.swing.JLabel("Enter User Name (Loco or Car/Wagon #) for RFID Tag " + str(self.newIdTag)))
-        self.instrLine2 = javax.swing.JPanel()
-        self.instrLine2.add(javax.swing.JLabel("Check box to also update Operations Locomotive or Car Table"))
-        
+    def createInputFields(self,existingIDTagUserName):
+        # Input fields fields
+        self.myIdTagUserName = javax.swing.JTextField(12)
+        self.myIdTagUserName.setText(existingIDTagUserName)
+        self.myIdTagComment = javax.swing.JTextField(20)
         # Set the text field actions
         self.myIdTagUserName.actionPerformed = self.whenMyIdTagUserNameChanged  # if user hit return or enter
         self.myIdTagUserName.focusLost = self.whenMyIdTagUserNameChanged        # if user tabs away
         self.myIdTagComment.actionPerformed = self.whenMyIdTagCommentChanged    # if user hit return or enter
         self.myIdTagComment.focusLost = self.whenMyIdTagCommentChanged          # if user tabs away
- 
-        # Create the check box group features
-        self.noOpsUpdateBox.setSelected(True)           #pre-select the no Operations Table update box
-        self.noOpsUpdateBox.actionPerformed = self.radioBtnCheck
-        self.locoUpdateBox.actionPerformed  = self.radioBtnCheck
-        self.carUpdateBox.actionPerformed   = self.radioBtnCheck
-        #...and the checkbox group
-        opsUpdateBoxGroup = javax.swing.ButtonGroup()
-        opsUpdateBoxGroup.add(self.noOpsUpdateBox)
-        opsUpdateBoxGroup.add(self.locoUpdateBox)
-        opsUpdateBoxGroup.add(self.carUpdateBox)
+        return
 
+    def createProcessButtons(self):
+        self.processButton = javax.swing.JButton("Process")
+        self.cancelButton = javax.swing.JButton("Cancel") 
         # create the button features
         self.cancelButton.setEnabled(True)              # button enabled
         self.cancelButton.actionPerformed   = self.whenMyCancelButtonClicked
         self.processButton.setEnabled(False)            # button disabled until user name entered
         self.processButton.actionPerformed    = self.whenMyProcessButtonClicked
+        return
+
+    def createOpsTablesSelectButtons(self):
+        # Create the check box group features
+        self.noOpsUpdateBox = javax.swing.JRadioButton("No Ops Table Update")
+        self.noOpsUpdateBox.setSelected(True)           #pre-select the no Operations Table update box
+        self.noOpsUpdateBox.actionPerformed = self.radioBtnCheck
+
+        self.locoUpdateBox = javax.swing.JRadioButton("Locomotive Table")
+        self.locoUpdateBox.actionPerformed  = self.radioBtnCheck
+
+        self.carUpdateBox = javax.swing.JRadioButton("Car Table")
+        self.carUpdateBox.actionPerformed   = self.radioBtnCheck
+        #...and the checkbox group
         
+        opsUpdateBoxGroup = javax.swing.ButtonGroup()
+        opsUpdateBoxGroup.add(self.noOpsUpdateBox)
+        opsUpdateBoxGroup.add(self.locoUpdateBox)
+        opsUpdateBoxGroup.add(self.carUpdateBox)
+        return
+
+    def createTextElements(self):
+        #Instructions at top
+        self.instrLine1 = javax.swing.JPanel()
+        self.instrLine1.add(javax.swing.JLabel("Enter User Name (Loco or Car/Wagon #) for RFID Tag " + str(self.newIdTag)))
+        self.instrLine2 = javax.swing.JPanel()
+        self.instrLine2.add(javax.swing.JLabel("Check box to also update Operations Locomotive or Car Table"))
+               
         #Create bottom line
         self.bottomLine = javax.swing.JPanel()
         self.bottomLine.add(javax.swing.JLabel("Check Scripting Output window for messages"))
@@ -171,6 +183,7 @@ class AssignRFIDTagToRSFrame:
         buttonLine.add(self.processButton)
         return buttonLine
         
+    #############################################################
     # Change handlers for frame
     # When one of the radio buttons is selected
     def radioBtnCheck(self,event):
@@ -241,7 +254,7 @@ class AssignRFIDTagToRSFrame:
                 if not (self.myIdTagUpdateCar or self.myIdTagUpdateLoco):
                     print "ARfid: Ops tables not updated for ", self.newIdTag.getUserName()                 
                 else:
-                    self.updateAllTables()               
+                    self.updateOpsTables()               
 
             # Update comment into IdTag Table
             if self.myIdTagComment.text is not "":
@@ -259,18 +272,19 @@ class AssignRFIDTagToRSFrame:
         idtags.addPropertyChangeListener(myIdTagMgrListenerGlobal)
         return
     
-    def updateAllTables(self):
+    #############################################################
+    def updateOpsTables(self):
         #Create abbreviations
         cars = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarManager)
         engines = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.engines.EngineManager)
         #Find in operations-car table and update
         if self.myIdTagUpdateCar:
-            #Tom's: self.updateOpsTable("car", jmri.jmrit.operations.rollingstock.cars.CarManager)
-            self.updateOpsTable("car", cars)
+            #Tom's: self.updateLocoCarTable("car", jmri.jmrit.operations.rollingstock.cars.CarManager)
+            self.updateLocoCarTable("car", cars)
         #Find in operations-engine table and update
         elif self.myIdTagUpdateLoco:
-            #Tom's: self.updateOpsTable("engine", jmri.jmrit.operations.rollingstock.engines.EngineManager)
-            self.updateOpsTable("engine", engines)
+            #Tom's: self.updateLocoCarTable("engine", jmri.jmrit.operations.rollingstock.engines.EngineManager)
+            self.updateLocoCarTable("engine", engines)
         else:    # Shouldn't ever get here
             print ("ART249: ERR in Ops Table selection")
         #See if RFID Tag previously assigned to another car or loco and remove from any (should not happen, but just in case)
@@ -281,7 +295,7 @@ class AssignRFIDTagToRSFrame:
                 self.findDupUN(rs, "engine")
         return        
     
-    def updateOpsTable(self, type_name, ops_table):
+    def updateLocoCarTable(self, type_name, ops_table):
         for rs in ops_table.getByIdList():
             if type_name == "car":
                 self.processNewUN(rs, "car")
