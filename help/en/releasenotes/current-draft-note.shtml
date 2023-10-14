@@ -140,7 +140,8 @@
 
         <h4>RFID</h4>
             <ul>
-                <li></li>
+                <li>New Getting Started document</li>
+                <li>Script to update Car/Locomotive Tables when new/changed RFID tag seen</li>
             </ul>
 
         <h4>Roco z21/Z21</h4>
@@ -452,6 +453,7 @@
             <li>Minor improvement to the train build report when routing.</li>
             <li>To see all changes to OperationsPro, use the link below</li>
             <li><a href="https://github.com/pulls?q=is%3Apr+author%3ADanielBoudreau+archived%3Afalse+is%3Aclosed">OperationsPro Changes</a></li>
+            <li>Script to update Car/Locomotive Tables on update to Id Tag Table User Name</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -618,4 +620,3 @@
             <li>(For developers) Our CI process has been updated to require the
             @Override annotation on overriding methods and removal of unused import statements.</li>
         </ul>
-
