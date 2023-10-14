@@ -2279,6 +2279,7 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
         editor.setIcon(0, "plainIcon", "resources/icons/audio_icon.gif");
         JFrameItem frame = makeAddIconFrame("Audio", true, false, editor);
         _iconEditorFrame.put("Audio", frame);
+        editor.setPickList(PickListModel.audioPickModelInstance());
 
         ActionListener addIconAction = a -> putAudio();
         editor.makeIconPanel(true);
@@ -2675,6 +2676,10 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
             log.debug("putAudio: {} url= {}", (icon == null ? "null" : "icon"), url);
         }
         AudioIcon result = new AudioIcon(icon, this);
+        NamedBean b = iconEditor.getTableSelection();
+        if (b != null) {
+            result.setAudio(b.getDisplayName());
+        }
 //        l.setPopupUtility(null);        // no text
         result.setDisplayLevel(ICONS);
         setNextLocation(result);

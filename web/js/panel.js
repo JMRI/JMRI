@@ -297,13 +297,10 @@ function processPanelXML($returnedData, $success, $xhr) {
                         case "audioicon" :
 //                            $widget['identity'] = $(this).find('Identity').text();
                             $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
-//                            $widget['sound'] = $(this).find('sound').text();
                             $widget['sound'] = $(this).attr('sound');
                             log.log("Sound: "+$widget['sound']);
                             $widget['audio_widget'] = new Audio($widget['sound']);
 							$widget['audio_widget'].play();
-//                            $widget['sound'] = $(this).find('sound').text();
-                            $widget['sound'] = "/dist/resources/sounds/Crossing.wav";
                             $widget['rotation'] = $(this).find('icon').find('rotation').text() * 1;
                             $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($widget.rotation * 90);
                             $widget['scale'] = $(this).find('icon').attr('scale');
@@ -312,22 +309,6 @@ function processPanelXML($returnedData, $success, $xhr) {
 //                                $('#' + $widget.id).addClass("clickable");
 //                                $('#' + $widget.id).bind(UPEVENT, $handleClick);
 //                            }
-
-
-//        $imgHtml = "<img id=" + $widget.id + " class='" + $widget.classes +
-//                "' src='" + $widget["icon" + $indicator + $state] + "' " + $hoverText + "/>"
-
-//        $imgHtml = "<audio controls><source src=\""+$widget["sound"]+"\" type=\"audio/wav\">Your browser does not support the audio element.</audio>"
-//		log.log($widget['icon' + UNKNOWN]);
-//		log.log($imgHtml);
-//		log.log("Sound attr: "+$(this).attr('sound'));
-//		log.log("Sound attr: "+$(this).find('icon').attr('sound'));
-
-//        $("#panel-area").append($imgHtml); // put the html in the panel
-
-//        $("#panel-area>#" + $widget.id).css($widget.styles); // apply style array to widget
-
-
                             break;
                         case "logixngicon" :
                             $widget['identity'] = $(this).find('Identity').text();

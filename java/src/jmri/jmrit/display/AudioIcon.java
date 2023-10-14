@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -43,7 +44,7 @@ public class AudioIcon extends PositionableLabel {
 
         // For testing only
         AudioIcon.this.setAudio("IAS1");
-        ((AudioSource)namedAudio.getBean()).play();
+        if (namedAudio != null) ((AudioSource)namedAudio.getBean()).play();
 
         // Please retain the line below. It's used to create the resources/icons/audio_icon.gif icon
         // createAudioIconImage();
@@ -99,7 +100,6 @@ public class AudioIcon extends PositionableLabel {
 //            getAudio().addPropertyChangeListener(this, s.getName(), "AudioIcon on Panel " + _editor.getName());
             setName(namedAudio.getName());  // Swing name for e.g. tests
         }
-//        setAttributes();
     }
 
     public Audio getAudio() {
@@ -148,6 +148,30 @@ public class AudioIcon extends PositionableLabel {
 
     public boolean getStopSoundWhenJmriStops() {
         return _stopSoundWhenJmriStops;
+    }
+
+    @Override
+    protected void edit() {
+        makeIconEditorFrame(this, "Audio", true, null);
+        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.audioPickModelInstance());
+        _iconEditor.setIcon(0, "plainIcon", _namedIcon);
+        _iconEditor.makeIconPanel(false);
+
+        // set default icons, then override with this turnout's icons
+        ActionListener addIconAction = (ActionEvent a) -> updateAudio();
+        _iconEditor.complete(addIconAction, true, true, true);
+        _iconEditor.setSelection(getAudio());
+    }
+
+    void updateAudio() {
+        setAudio(_iconEditor.getTableSelection().getDisplayName());
+        var iconMap = _iconEditor.getIconMap();
+        NamedIcon newIcon = iconMap.get("plainIcon");
+        setIcon(newIcon);
+        _iconEditorFrame.dispose();
+        _iconEditorFrame = null;
+        _iconEditor = null;
+        invalidate();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
-import jmri.AudioException;
+import jmri.jmrit.audio.AudioBuffer;
+import jmri.jmrit.audio.AudioSource;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.*;
@@ -31,20 +32,20 @@ public class AudioIconXml extends PositionableLabelXml {
         Element element = new Element("audioicon");
         storeCommonAttributes(p, element);
 
-        try {
-            jmri.jmrit.audio.AudioSource source = (jmri.jmrit.audio.AudioSource)p.getAudio();
-            jmri.jmrit.audio.AudioBuffer buffer = (jmri.jmrit.audio.AudioBuffer) jmri.InstanceManager.getDefault(jmri.AudioManager.class).provideAudio(source.getAssignedBufferName());
-//            element.addContent(new Element("sound").addContent(buffer.getURL()));
-
-            // We need to use the attribute "sound" instead of the element "sound"
-            // since the method jmri.web.server.WebServer.portablePathToURI()
-            // converts paths in attributes to portable paths, but not paths
-            // in elements.
-            element.setAttribute("sound", buffer.getURL());
-            log.error("Sound: {}", buffer.getURL());
-        } catch (AudioException e) {
-            throw new RuntimeException(e);
+        AudioSource source = (AudioSource)p.getAudio();
+        if (source != null) {
+            AudioBuffer buffer = (AudioBuffer) jmri.InstanceManager.getDefault(jmri.AudioManager.class)
+                    .getAudio(source.getAssignedBufferName());
+            if (buffer != null) {
+                // We need to use the attribute "sound" instead of the element "sound"
+                // since the method jmri.web.server.WebServer.portablePathToURI()
+                // converts paths in attributes to portable paths, but not paths
+                // in elements.
+                element.setAttribute("sound", buffer.getURL());
+                log.error("Sound: {}", buffer.getURL());
+            }
         }
+
 //        element.addContent(new Element("Identity").addContent(Integer.toString(p.getIdentity())));
 
         if (p.isText()) {
