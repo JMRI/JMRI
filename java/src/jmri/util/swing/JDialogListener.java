@@ -10,7 +10,7 @@ import javax.swing.JDialog;
  * If the JMRI Web Frame Server, JmriJFrameServlet encounters a Frame with
  * this listener attached, the Dialog will be accessible via the server.
  * This listener must be removed when the Dialog is closed.
- * @since 5.5.5
+ * @since 5.5.6
  * @author Steve Young Copyright (C) 2023
  */
 public class JDialogListener implements PropertyChangeListener {
