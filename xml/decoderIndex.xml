@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.5.4plus+jake+20231007T0116Z+R47fe11cc5e on Fri Oct 06 20:17:11 CDT 2023-->
-  <decoderIndex version="53">
+  <!--Written by JMRI version 5.5.5plus+jake+20231015T1638Z+R4280f19e86 on Sun Oct 15 12:38:36 EDT 2023-->
+  <decoderIndex version="55">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -1913,7 +1913,15 @@
         </model>
       </family>
       <family name="SFX Sound Decoders - Series 7" mfg="Digitrax" lowVersionID="203" highVersionID="203" file="Digitrax_0SFX_Series7.xml">
-        <model model="SDXH167" numOuts="6" numFns="28" productID="SDXH167">
+        <model model="SDH167" numOuts="6" numFns="28" productID="SDXH167">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Violet" />
+          <output name="5" label="F3-Brown" />
+          <output name="6" label="F4-Yellow" />
+        </model>
+        <model model="SDXH167" numOuts="6" numFns="28" productID="SDH167,SDXH167">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -8135,6 +8143,24 @@
             <!-- virtual "output" -->
           </output>
         </model>
+      </family>
+      <family name="LEB ACCS Decoder" mfg="LEB" file="Leb_ACC_4S.xml">
+        <model model="ACC_4S" productID="55" />
+      </family>
+      <family name="LEB Signal Decoder" mfg="LEB" file="Leb_DECSIGBF1_OP1.xml">
+        <model model="DECSIG_B_O1_V1" productID="38" />
+      </family>
+      <family name="LEB Signal Decoder" mfg="LEB" file="Leb_DECSIGBF1_V1.xml">
+        <model model="DECSIG_B_F1_V1" productID="33" />
+      </family>
+      <family name="LEB Signal Decoder" mfg="LEB" file="Leb_DECSIGBF1_V2.xml">
+        <model model="DECSIG_B_F1_V2" productID="35" />
+      </family>
+      <family name="LEB Signal Decoder" mfg="LEB" file="Leb_DECSIGBF1_V3.xml">
+        <model model="DECSIG_B_F1_V3" productID="38" />
+      </family>
+      <family name="LEB Signal Decoder" mfg="LEB" file="Leb_DECSIGBF1_V4.xml">
+        <model model="DECSIG_B_F1_V4" productID="40" />
       </family>
       <family name="Lenz 4th gen BEMF decoders" mfg="Lenz" lowVersionID="51" file="Lenz_51.xml">
         <model model="LE030" numOuts="2">
