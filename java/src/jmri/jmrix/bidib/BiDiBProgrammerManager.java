@@ -7,7 +7,7 @@ import jmri.Programmer;
 import jmri.managers.DefaultProgrammerManager;
 
 /**
- * Extend DefaultProgrammerManager to provide ops mode programmers for NCE
+ * Extend DefaultProgrammerManager to provide ops mode programmers for BiDiB
  * systems
  *
  * @see jmri.GlobalProgrammerManager

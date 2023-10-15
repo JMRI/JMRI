@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement turnout manager for EasyDcc systems.
+ * Implement turnout manager for BiDiB systems.
  * <p>
  * System names are "BTnnn", where B is the user configurable system prefix,
  * nnn is the turnout number without padding.

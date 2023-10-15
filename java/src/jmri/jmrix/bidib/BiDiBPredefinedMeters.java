@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Provide access to voltage and current readings from the Roco Z21 
+ * Provide access to voltage and current readings
  *
  * @author Mark Underwood    Copyright (C) 2015
  * @author Paul Bender       Copyright (C) 2017

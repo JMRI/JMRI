@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * NCE implementation of a ThrottleManager.
+ * BiDiB implementation of a ThrottleManager.
  * <P>
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Eckart Meyer Copyright (C) 2019

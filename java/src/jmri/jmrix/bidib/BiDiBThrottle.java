@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * An implementation of DccThrottle with code specific to an NCE connection.
+ * An implementation of DccThrottle with code specific to an BiDiB connection.
  * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2001

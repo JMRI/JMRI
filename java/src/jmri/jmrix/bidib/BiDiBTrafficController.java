@@ -68,7 +68,14 @@ import org.slf4j.LoggerFactory;
  * @author Eckart Meyer Copyright (C) 2019-2023
  *
  */
+ 
 @SuppressFBWarnings(value = "JLM_JSR166_UTILCONCURRENT_MONITORENTER")
+// This code uses several AtomicBoolean variables as synch objects.  In this use, 
+// they're synchronizing access to code blocks, not just synchronizing access
+// to the underlying boolean value. it would be possible to use separate
+// Object variables for this process, but keeping those in synch would actually
+// be more complex and confusing than this approach.
+
 public class BiDiBTrafficController implements CommandStation {
 
     private final BidibInterface bidib;
