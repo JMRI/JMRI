@@ -215,6 +215,9 @@
       <manufacturer mfg="Zimo" mfgID="145" />
       <manufacturer mfg="ZTC" mfgID="132" />
 
+      <!-- not registered, uses DIY number -->
+      <manufacturer mfg="LEB" mfgID="13" />
+
       <!-- we include Lionel as a special case to support TMCC -->
       <manufacturer mfg="Lionel" mfgID="1001" />
 </mfgList>
