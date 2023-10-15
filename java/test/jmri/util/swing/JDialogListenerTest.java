@@ -6,11 +6,13 @@ import javax.swing.JFrame;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
  * @author Steve Young Copyright (C) 2023
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class JDialogListenerTest {
 
     @Test
