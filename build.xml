@@ -220,16 +220,16 @@
         <pathelement location="${libdir}/bidibwizard-common-2.0.13.jar"/>
         <pathelement location="${libdir}/bidibwizard-model-2.0.13.jar"/>
         <pathelement location="${libdir}/bidibwizard-simulation-2.0.13.jar"/>
-		<!-- BiDiB dependencies -->
-		<pathelement location="${libdir}/commons-collections4-4.4.jar"/>
+        <!-- BiDiB dependencies -->
+        <pathelement location="${libdir}/commons-collections4-4.4.jar"/>
         <pathelement location="${libdir}/eventbus-1.4.jar"/>
-		<pathelement location="${libdir}/javax.activation-api-1.2.0.jar"/>
-		<pathelement location="${libdir}/jaxb-api-2.3.1.jar"/>
+        <pathelement location="${libdir}/javax.activation-api-1.2.0.jar"/>
+        <pathelement location="${libdir}/jaxb-api-2.3.1.jar"/>
         <pathelement location="${libdir}/jaxb-core-2.3.0.1.jar"/>
         <pathelement location="${libdir}/jaxb-impl-2.3.2.jar"/>
         <pathelement location="${libdir}/jgoodies-binding-2.13.0.jar"/>
         <pathelement location="${libdir}/jgoodies-common-1.8.1.jar"/>
-		<!-- //BiDiB -->
+        <!-- //BiDiB -->
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
 
@@ -382,8 +382,8 @@
     <fileset id="junitfileset" dir="${testtarget}">
         <include name="**/Test*.class"/>
         <include name="**/*Test.class"/>
-	<include name="**/*IT.class"/>
-	<include name="**/IT*.class"/>
+    <include name="**/*IT.class"/>
+    <include name="**/IT*.class"/>
         <exclude name="apps.tests.AllTest.class"/>
         <exclude name="jmri.HeadLessTest.class"/>
         <exclude name="jmri.ArchitectureTest.class"/>
@@ -861,7 +861,7 @@
             <arg line="--reports-dir '${testreport}'" />
             <jvmarg value="-Xmx1536m"/>
             <jvmarg value="-ea"/>
-	    <jvmarg line="${test-single.jvmargs}"/>
+        <jvmarg line="${test-single.jvmargs}"/>
         </java>
         <fail>
             <condition>
@@ -900,7 +900,7 @@
             <jvmarg value="-Xmx1536m"/>
             <jvmarg value="-ea"/>
             <jvmarg value="${jacocoagent}"/>
-	    <jvmarg line="${test-single.jvmargs}"/>
+        <jvmarg line="${test-single.jvmargs}"/>
         </java>
         <fail>
             <condition>
@@ -1687,7 +1687,7 @@
             <!-- <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/> no longer specify specific library -->
 
             <sysproperty key="user.language" value="en"/>
-	    <sysproperty key="user.country" value="US"/>
+        <sysproperty key="user.country" value="US"/>
 
             <classpath refid="test.class.path"/>
 
@@ -1699,7 +1699,7 @@
 
     <target name="logalltest" depends="tests, runtime-library-selection" description="run AllTest test suite with jacoco output">
         <mkdir dir="${tempdir}"/>
-	    <mkdir dir="${testreport}"/>
+        <mkdir dir="${testreport}"/>
         <jacoco:agent property="jacocoagent" destfile="${jacocoexec}" excludes="org.slf4j.*" />
 
         <java classpathref="test.class.path" classname="org.junit.platform.console.ConsoleLauncher" fork="true" failonerror="true"  >
