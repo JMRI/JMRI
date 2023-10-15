@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.5.5plus+jake+20231015T1638Z+R4280f19e86 on Sun Oct 15 12:38:36 EDT 2023-->
-  <decoderIndex version="55">
+  <!--Written by JMRI version 5.5.5plus+jake+20231015T1704Z+R6c39505c76 on Sun Oct 15 13:04:38 EDT 2023-->
+  <decoderIndex version="57">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -82,6 +82,7 @@
       <manufacturer mfg="Krois-Modell" mfgID="52" />
       <manufacturer mfg="Kuehn Ing." mfgID="157" />
       <manufacturer mfg="LDH" mfgID="56" />
+      <manufacturer mfg="LEB" mfgID="13" />
       <manufacturer mfg="LGB" mfgID="159" />
       <manufacturer mfg="LS Models Sprl" mfgID="77" />
       <manufacturer mfg="LSdigital" mfgID="112" />
