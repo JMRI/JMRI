@@ -86,9 +86,9 @@ public class JmriJFrameServlet extends HttpServlet {
         // log.debug("component is {}", c);
         log.debug("Local click at {},{}", x, y);
 
-        if (c instanceof JButton) {
+        if (c.getClass().equals(JButton.class)) {
             ((AbstractButton) c).doClick();
-        } else if (c instanceof JToggleButton) {
+        } else if (c.getClass().equals(JToggleButton.class)) {
             ((AbstractButton) c).doClick();
         } else if (c.getClass().equals(JCheckBox.class)) {
             ((AbstractButton) c).doClick();
