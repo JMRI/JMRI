@@ -90,6 +90,13 @@ public class JmriJOptionPane {
 
         JOptionPane pane = new JOptionPane(message, messageType);
         JDialog dialog = pane.createDialog(parentComponent, title);
+        Window w = findWindowForComponent(parentComponent);
+        if ( w != null ) {
+            JDialogListener pcl = new JDialogListener(dialog);
+            w.addPropertyChangeListener(pcl);
+            pane.addPropertyChangeListener(JOptionPane.VALUE_PROPERTY, unused ->
+                w.removePropertyChangeListener(pcl));
+        }
         if ( callback !=null ) {
             pane.addPropertyChangeListener(JOptionPane.VALUE_PROPERTY, unused -> callback.run());
         }
