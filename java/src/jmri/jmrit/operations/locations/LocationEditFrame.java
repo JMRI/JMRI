@@ -593,7 +593,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     }
 
     private void reportLocationExists(String s) {
-        // log.info("Can not " + s + ", location already exists");
         JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("LocationAlreadyExists"),
                 Bundle.getMessage("CanNotLocation", s), JmriJOptionPane.ERROR_MESSAGE);
     }
