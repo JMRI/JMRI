@@ -1,9 +1,6 @@
 package jmri.jmrit.operations.locations.divisions;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.JComboBox;
 
@@ -11,9 +8,7 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.InstanceManagerAutoInitialize;
+import jmri.*;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.trains.TrainManifestHeaderText;
@@ -205,6 +200,8 @@ public class DivisionManager extends PropertyChangeSupport implements InstanceMa
     
     protected int _maxDivisionNameLength = 0;
     
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification="I18N of Info Message")
     public int getMaxDivisionNameLength() {
         String maxName = TrainManifestHeaderText.getStringHeader_Division();
         for (Division div : getList()) {
@@ -213,7 +210,7 @@ public class DivisionManager extends PropertyChangeSupport implements InstanceMa
             }
         }
         if (maxName.length() != _maxDivisionNameLength) {
-            log.info("Max division name ({}) length {}", maxName, maxName.length());
+            log.info(Bundle.getMessage("InfoMaxDivisionName", maxName, maxName.length()));
             _maxDivisionNameLength = maxName.length();
         }
         return _maxDivisionNameLength;

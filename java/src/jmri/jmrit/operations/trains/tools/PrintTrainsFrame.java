@@ -154,7 +154,7 @@ public class PrintTrainsFrame extends OperationsFrame {
                         List<RouteLocation> route = train.getRoute().getLocationsBySequenceList();
                         // determine if another detailed summary can fit on the same page
                         if (writer.getLinesPerPage() - writer.getCurrentLineNumber() < route.size() +
-                                getNumberOfLines(train.getComment()) +
+                                getNumberOfLines(writer, Bundle.getMessage("Comment") + ": " + train.getComment()) +
                                 NUMBER_OF_HEADER_LINES) {
                             writer.write(FORM_FEED);
                         } else if (writer.getCurrentLineNumber() > 0) {
@@ -273,9 +273,15 @@ public class PrintTrainsFrame extends OperationsFrame {
         box.setSelectedItem(_trainsTableFrame.getSortBy());
     }
 
-    private int getNumberOfLines(String string) {
+    private int getNumberOfLines(HardcopyWriter writer, String string) {
         String[] lines = string.split(NEW_LINE);
-        return lines.length;
+        int count = lines.length;
+        // any long lines that exceed the page width?
+        for (String line : lines) {
+            int add = line.length() / writer.getCharactersPerLine();
+            count = count + add;
+        }
+        return count;
     }
 
     private final static Logger log = LoggerFactory.getLogger(PrintTrainsFrame.class);

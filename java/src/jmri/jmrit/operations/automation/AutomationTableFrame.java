@@ -321,7 +321,6 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
     }
 
     private void reportAutomationExists(String s) {
-        log.info("Can not {} automation already exists", s);
         JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"),
                 Bundle.getMessage("CanNotAutomation", s), JmriJOptionPane.ERROR_MESSAGE);
     }

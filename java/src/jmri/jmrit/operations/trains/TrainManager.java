@@ -1054,6 +1054,8 @@ public class TrainManager extends PropertyChangeSupport
 
     int _maxTrainNameLength = 0;
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification="I18N of Info Message")
     public int getMaxTrainNameLength() {
         String trainName = "";
         if (_maxTrainNameLength == 0) {
@@ -1063,7 +1065,7 @@ public class TrainManager extends PropertyChangeSupport
                     _maxTrainNameLength = train.getName().length();
                 }
             }
-            log.info("Max train name ({}) length {}", trainName, _maxTrainNameLength);
+            log.info(Bundle.getMessage("InfoMaxName", trainName, _maxTrainNameLength));
         }
         return _maxTrainNameLength;
     }
