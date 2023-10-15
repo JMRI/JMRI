@@ -587,7 +587,7 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li></li>
+            <li>JMRI Web Frame Server can now access many of the Dialog popup boxes.</li>
         </ul>
 
     <h3>Where Used</h3>
