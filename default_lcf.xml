@@ -96,6 +96,11 @@
         <!-- JMDNS Logger -->
         <Logger name="javax.jmdns.impl" level="ERROR"/>
 
+        <!-- libraries used by BiDiB support -->
+        <Logger name="RX" level="WARN"/>
+        <Logger name="TX" level="WARN"/>
+        <Logger name="RAW" level="WARN"/>
+
         <!-- Examples of changing priority of specific categories (classes, packages): -->
         <!-- Remove the comment symbols before and after the class, then relaunch JMRI to activate. -->
         <!-- Valid Level names are OFF, FATAL, ERROR, WARN, INFO, DEBUG and TRACE. -->
@@ -113,16 +118,6 @@
         <!-- <Logger name="jmri.jmrit.display.layoutEditor" level="DEBUG"/> -->
         <!-- <Logger name="jmri.jmrit.display.layoutEditor.LayoutBlock" level="DEBUG"/> -->
         <!-- <Logger name="jmri.jmrit.operations" level="DEBUG"/> -->
-
-        <!-- //Mey -->
-        <Logger name="jmri.jmrix.bidib" level="DEBUG"/>
-        <Logger name="jmri.jmrix.bidib.serialdriver" level="TRACE"/>
-        <Logger name="org.bidib.wizard" level="WARN"/>
-        <Logger name="org.bidib.jbidibc" level="WARN"/>
-        <Logger name="RX" level="WARN"/>
-        <Logger name="TX" level="WARN"/>
-        <Logger name="RAW" level="WARN"/>
-        <Logger name="myScripts" level="INFO"/>
 
     </Loggers>
 </Configuration>
