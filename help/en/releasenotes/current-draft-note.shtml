@@ -388,7 +388,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Fixed a bug that prevented output labels from 
+                properly showing up in some decoder definitions.</li>
         </ul>
 
     <h3>CTC Tool</h3>
