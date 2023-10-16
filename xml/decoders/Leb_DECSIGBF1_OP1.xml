@@ -15,163 +15,142 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
 	<version author="dave@bayworld.com" version="1" lastUpdated="20021128"/>
 	<decoder>
-		<!--
-    <family name="LEB Signal Decoder" mfg="Public-domain and DIY" comment="DECSIG_B_F1_V3 is a signal decoder, but it can be programmed in the usual way"> 
- -->
 		<family name="LEB Signal Decoder" mfg="LEB" comment="DECSIG_B_O1_V1 is a signal decoder, but it can be programmed in the usual way">
 			<model model="DECSIG_B_O1_V1" productID="38"/>
 		</family>
-		<!--
-	MERG_ACC5.xml	gestion de version
-  lowVersionID="4" highVersionID="52"
-   <family name="ACC Decoders" mfg="MERG" comment="DCCACC5 is steady state MERG decoder.">	
-      <model model="DCCACC5 to V5.1" productID="51">
-        <versionCV lowVersionID="4" highVersionID="51"/>
-       </model>
-      <model model="DCCACC5 from V5.2" productID="52">
-         <versionCV lowVersionID="52" highVersionID="52"/>
-       </model>
-    </family>
--->
+
 		<programming direct="no" paged="yes" register="no" ops="no"/>
 		<variables>
 		<xi:include href="file:/xml/decoders/leb/TableAllumageOptions.xml"/>	
-	<!--<xi:include href="file:/xml/decoders/leb/TableAllumage.xml"/>-->
-			<variable item="High 3 bytes of Address CV9" CV="9" mask="XXXXXVVV">
-			<decVal min="0" max="7"/>
-			<label>High 3 bytes of Address CV9</label>
-			</variable>
-			<variable CV="1" mask="XXVVVVVV" comment="Decoder A address " item="Short A Address " default="03">
+		
+			<variable CV="1" mask="XVVVVVVV" comment="Decoder A address " item="Short A Address " default="03" >
 <!--			<variable item="Low 7 bytes of Address CV1" CV="1" mask="XVVVVVVV" comment="Decoder address" default="01"> -->
-				<decVal min="1" max="63"/>
-<!--  
 				<splitVal highCV="9"/>
- -->
 				<label>Decoder A Address</label>
 				<comment>Decoder A address </comment>
 			</variable>
-			<variable CV="1" item="Turnout_A_Address_Low1" mask="XXVVVVVV" default="01">
+			<variable CV="1" item="Turnout_A_Address_Low1" mask="XVVVVVVV" default="03" >
 				<splitVal highCV="9" factor="4" offset="-3"/>
 				<label>Turnout_A_Address_Low1</label>
 			</variable>
-			<variable CV="1" item="Turnout_A_Address_MidLow1" mask="XXVVVVVV" default="02">
+			<variable CV="1" item="Turnout_A_Address_MidLow1" mask="XVVVVVVV" default="03">
 				<splitVal highCV="9" factor="4" offset="-2"/>
 				<label>Turnout_A_Address_MidLow1</label>
 			</variable>
-			<variable CV="1" item="Turnout_A_Address_MidHigh1" mask="XXVVVVVV" default="03">
+			<variable CV="1" item="Turnout_A_Address_MidHigh1" mask="XVVVVVVV" default="03">
 				<splitVal highCV="9" factor="4" offset="-1"/>
 				<label>Turnout_A_Address_MidHigh1</label>
 			</variable>
-			<variable CV="1" item="Turnout_A_Address_High1" mask="XXVVVVVV" default="04">
+			<variable CV="1" item="Turnout_A_Address_High1" mask="XVVVVVVV" default="03">
 				<splitVal highCV="9" factor="4"/>
 				<label>Turnout_A_Address_High1</label>
 			</variable>
-			<variable CV="1" item="Turnout_A_Address_High2" mask="XXVVVVVV" default="05">
+			<variable CV="1" item="Turnout_A_Address_High2" mask="XVVVVVVV" default="03">
 				<splitVal highCV="9" factor="4" offset="+1"/>
 				<label>Turnout_A_Address_High2</label>
 			</variable>
-			<variable item="Decoder A Address2" CV="1" mask="XXVVVVVV" comment="Decoder A address outputs G - H1" default="03">
-				<splitVal highCV="9"/>
+			<variable item="Decoder A Address2" CV="1" mask="XVVVVVVV" comment="Decoder A address outputs G - H1" default="03">
+				<splitVal highCV="9" offset="+1"/>
 				<label>Decoder A Address2</label>
 				<comment>Decoder A address outputs G - H2</comment>
 			</variable>
-			<variable CV="1" item="Turnout_A_Address_High3" mask="XXVVVVVV" default="06">
+			<variable CV="1" item="Turnout_A_Address_High3" mask="XVVVVVVV" default="03">
 				<splitVal highCV="9" factor="4" offset="+2"/>
 				<label>Turnout_A_Address_High3</label>
 			</variable>
-			<variable CV="1" item="Turnout_A_Address_High4" mask="XXVVVVVV" default="07">
+			<variable CV="1" item="Turnout_A_Address_High4" mask="XVVVVVVV" default="03">
 				<splitVal highCV="9" factor="4" offset="+3"/>
 				<label>Turnout_A_Address_High4</label>
 			</variable>
-			<variable CV="1" item="Turnout_A_Address_High5" mask="XXVVVVVV" default="08">
+			<variable CV="1" item="Turnout_A_Address_High5" mask="XVVVVVVV" default="03">
 				<splitVal highCV="9" factor="4" offset="+4"/>
 				<label>Turnout_A_Address_High5</label>
 			</variable>
 				
 			
-			<variable CV="2" mask="XXVVVVVV" comment="Decoder B address" item="Short B Address" default="05">
+			<variable CV="2" mask="XVVVVVVV" comment="Decoder B address" item="Short B Address" default="05">
 				<splitVal highCV="10"/>
 				<label>Decoder B Address</label>
 				<comment>Decoder B address </comment>
 			</variable>
-			<variable CV="2" item="Turnout_B_Address_Low1" mask="XXVVVVVV" default="01">
+			<variable CV="2" item="Turnout_B_Address_Low1" mask="XVVVVVVV" default="05">
 				<splitVal highCV="10" factor="4" offset="-3"/>
 				<label>Turnout_B_Address_Low1</label>
 			</variable>
-			<variable CV="2" item="Turnout_B_Address_MidLow1" mask="XXVVVVVV" default="02">
+			<variable CV="2" item="Turnout_B_Address_MidLow1" mask="XVVVVVVV" default="05">
 				<splitVal highCV="10" factor="4" offset="-2"/>
 				<label>Turnout_B_Address_MidLow1</label>
 			</variable>
-			<variable CV="2" item="Turnout_B_Address_MidHigh1" mask="XXVVVVVV" default="03">
+			<variable CV="2" item="Turnout_B_Address_MidHigh1" mask="XVVVVVVV" default="05">
 				<splitVal highCV="10" factor="4" offset="-1"/>
 				<label>Turnout_B_Address_MidHigh1</label>
 			</variable>
-			<variable CV="2" item="Turnout_B_Address_High1" mask="XXVVVVVV" default="04">
+			<variable CV="2" item="Turnout_B_Address_High1" mask="XVVVVVVV" default="05">
 				<splitVal highCV="10" factor="4"/>
 				<label>Turnout_B_Address_High1</label>
 			</variable>
-			<variable CV="2" item="Turnout_B_Address_High2" mask="XXVVVVVV" default="05">
+			<variable CV="2" item="Turnout_B_Address_High2" mask="XVVVVVVV" default="05">
 				<splitVal highCV="10" factor="4" offset="+1"/>
 				<label>Turnout_B_Address_High2</label>
 			</variable>
-			<variable item="Decoder B Address2" CV="2" mask="XXVVVVVV" comment="Decoder B address outputs G - H1" default="05">
-				<splitVal highCV="10"/>
+			<variable item="Decoder B Address2" CV="2" mask="XVVVVVVV" comment="Decoder B address outputs G - H1" default="05">
+				<splitVal highCV="10" offset="+1"/>
 				<label>Decoder B Address2</label>
 				<comment>Decoder B address outputs G - H2</comment>
 			</variable>
-			<variable CV="2" item="Turnout_B_Address_High3" mask="XXVVVVVV" default="06">
+			<variable CV="2" item="Turnout_B_Address_High3" mask="XVVVVVVV" default="05">
 				<splitVal highCV="10" factor="4" offset="+2"/>
 				<label>Turnout_B_Address_High3</label>
 			</variable>
-			<variable CV="2" item="Turnout_B_Address_High4" mask="XXVVVVVV" default="07">
+			<variable CV="2" item="Turnout_B_Address_High4" mask="XVVVVVVV" default="05">
 				<splitVal highCV="10" factor="4" offset="+3"/>
 				<label>Turnout_B_Address_High4</label>
 			</variable>
-			<variable CV="2" item="Turnout_B_Address_High5" mask="XXVVVVVV" default="08">
+			<variable CV="2" item="Turnout_B_Address_High5" mask="XVVVVVVV" default="05">
 				<splitVal highCV="10" factor="4" offset="+4"/>
 				<label>Turnout_B_Address_High5</label>
 			</variable>			
 
 			
-			<variable CV="3" mask="XXVVVVVV" comment="Decoder C address" item="Short C Address" default="07">
+			<variable CV="3" mask="XVVVVVVV" comment="Decoder C address" item="Short C Address" default="07">
 				<splitVal highCV="11"/>
 				<label>Decoder C Address</label>
 				<comment>Decoder C address </comment>
 			</variable>
-			<variable CV="3" item="Turnout_C_Address_Low1" mask="XXVVVVVV" default="01">
+			<variable CV="3" item="Turnout_C_Address_Low1" mask="XVVVVVVV" default="07">
 				<splitVal highCV="11" factor="4" offset="-3"/>
 				<label>Turnout_C_Address_Low1</label>
 			</variable>
-			<variable CV="3" item="Turnout_C_Address_MidLow1" mask="XXVVVVVV" default="02">
+			<variable CV="3" item="Turnout_C_Address_MidLow1" mask="XVVVVVVV" default="07">
 				<splitVal highCV="11" factor="4" offset="-2"/>
 				<label>Turnout_C_Address_MidLow1</label>
 			</variable>
-			<variable CV="3" item="Turnout_C_Address_MidHigh1" mask="XXVVVVVV" default="03">
+			<variable CV="3" item="Turnout_C_Address_MidHigh1" mask="XVVVVVVV" default="07">
 				<splitVal highCV="11" factor="4" offset="-1"/>
 				<label>Turnout_C_Address_MidHigh1</label>
 			</variable>
-			<variable CV="3" item="Turnout_C_Address_High1" mask="XXVVVVVV" default="04">
+			<variable CV="3" item="Turnout_C_Address_High1" mask="XVVVVVVV" default="07">
 				<splitVal highCV="11" factor="4"/>
 				<label>Turnout_C_Address_High1</label>
 			</variable>
-			<variable CV="3" item="Turnout_C_Address_High2" mask="XXVVVVVV" default="05">
+			<variable CV="3" item="Turnout_C_Address_High2" mask="XVVVVVVV" default="07">
 				<splitVal highCV="11" factor="4" offset="+1"/>
 				<label>Turnout_C_Address_High2</label>
 			</variable>
-			<variable item="Decoder C Address2" CV="3" mask="XXVVVVVV" comment="Decoder C address outputs G - H1" default="07">
-				<splitVal highCV="11"/>
+			<variable item="Decoder C Address2" CV="3" mask="XVVVVVVV" comment="Decoder C address outputs G - H1" default="07">
+				<splitVal highCV="11" offset="+1"/>
 				<label>Decoder C Address2</label>
 				<comment>Decoder C address outputs G - H2</comment>
 			</variable>
-			<variable CV="3" item="Turnout_C_Address_High3" mask="XXVVVVVV" default="06">
+			<variable CV="3" item="Turnout_C_Address_High3" mask="XVVVVVVV" default="07">
 				<splitVal highCV="11" factor="4" offset="+2"/>
 				<label>Turnout_C_Address_High3</label>
 			</variable>
-			<variable CV="3" item="Turnout_C_Address_High4" mask="XXVVVVVV" default="07">
+			<variable CV="3" item="Turnout_C_Address_High4" mask="XVVVVVVV" default="07">
 				<splitVal highCV="11" factor="4" offset="+3"/>
 				<label>Turnout_C_Address_High4</label>
 			</variable>
-			<variable CV="3" item="Turnout_C_Address_High5" mask="XXVVVVVV" default="08">
+			<variable CV="3" item="Turnout_C_Address_High5" mask="XVVVVVVV" default="07">
 				<splitVal highCV="11" factor="4" offset="+4"/>
 				<label>Turnout_C_Address_High5</label>
 			</variable>
@@ -197,7 +176,7 @@
 			
 			<variable CV="12" item="CV 12/524 Indication a la mise sous tension" default="0" minOut="1">
 				<xi:include href="file:/xml/decoders/leb/enum-Signal_Indication.xml"/>
-				<label>CV 12/524 Indication a la mise sous tension A</label>
+				<label>      CV 12/524 Indication a la mise sous tension A</label>
 				<tooltip>Indication a la mise sous tension A</tooltip>
 			</variable>
 			
@@ -219,7 +198,7 @@
 			</variable>
 			<variable CV="13" item="CV 13/525 Indication a la mise sous tension" default="0" minOut="1">
 				<xi:include href="file:/xml/decoders/leb/enum-Signal_Indication.xml"/>
-				<label>CV 13/525 Indication a la mise sous tension B</label>
+				<label>      CV 13/525 Indication a la mise sous tension B</label>
 				<tooltip>Indication a la mise sous tension B</tooltip>
 			</variable>
 			
@@ -241,7 +220,7 @@
 			</variable>
 			<variable CV="14" item="CV 14/526 Indication a la mise sous tension" default="0" minOut="1">
 				<xi:include href="file:/xml/decoders/leb/enum-Signal_Indication.xml"/>
-				<label>CV 14/526 Indication a la mise sous tension C</label>
+				<label>      CV 14/526 Indication a la mise sous tension C</label>
 				<tooltip>Indication a la mise sous tension C</tooltip>
 			</variable>
 			
@@ -267,10 +246,11 @@
 	</decoder>
 	<pane>
 		<column>
+		<separator/>
 			<row>
 				<column>
 					<label>
-						<text>CV 1/513 9/521 Adresses du decodeur A</text>
+						<text>CV 1/513 9/521 Adresse du decodeur A</text>
 					</label>
 					<label>
 						<text> </text>
@@ -342,7 +322,7 @@
 					</label>
 					<display item="Allumage choix A"/>
 					<display item="Allumage par no Cible A"/>
-					<display item="CV 12/524 Indication a la mise sous tension A"/>
+					<display item="      CV 12/524 Indication a la mise sous tension A"/>
 					<display item=""/>
 				</column>
 			
@@ -351,7 +331,7 @@
 			<row>
 				<column>
 					<label>
-						<text>CV 2/514 10/522 Adresses du decodeur B</text>
+						<text>CV 2/514 10/522 Adresse du decodeur B</text>
 					</label>
 					<label>
 						<text> </text>
@@ -424,7 +404,7 @@
 					</label>
 					<display item="Allumage choix B"/>
 					<display item="Allumage par no Cible B"/>
-					<display item="CV 13/525 Indication a la mise sous tension B"/>
+					<display item="      CV 13/525 Indication a la mise sous tension B"/>
 					<display item=""/>
 				</column>
 			
@@ -433,7 +413,7 @@
 			<row>
 				<column>
 					<label>
-						<text>CV 3/515 11/523 Adresses du decodeur C</text>
+						<text>CV 3/515 11/523 Adresse du decodeur C</text>
 					</label>
 					<label>
 						<text> </text>
@@ -505,7 +485,7 @@
 					</label>
 					<display item="Allumage choix C"/>
 					<display item="Allumage par no Cible C"/>
-					<display item="CV 14/526 Indication a la mise sous tension C"/>
+					<display item="      CV 14/526 Indication a la mise sous tension C"/>
 					<display item=""/>
 				</column>
 			
@@ -532,6 +512,5 @@
 		<name>DECSIG_B_O1_V1</name>
 	</pane>
 	<xi:include href="file:/xml/decoders/leb/TableAllumageOptionsPane.xml"/>
-<!--<xi:include href="file:/xml/decoders/leb/TableAllumagePane.xml"/>-->
 
 </decoder-config>

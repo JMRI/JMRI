@@ -21,52 +21,54 @@
 			<programming direct="no" paged="yes" register="no" ops="no"/>
 		<variables>
 			<xi:include href="file:/xml/decoders/leb/TableAllumage.xml"/>
-			<variable CV="1" mask="XXVVVVVV" comment="Decoder address" item="Short Address" default="03">
+			
+			<variable CV="1" mask="XVVVVVVV" comment="Decoder address" item="Short Address" default="05">
 				<splitVal highCV="9"/>
 				<label>Decoder Address</label>
 				<comment>Decoder address </comment>
 			</variable>
-			<variable CV="1" item="Turnout_Address_Low1" mask="XXVVVVVV" default="01">
+			<variable CV="1" item="Turnout_Address_Low1" mask="XVVVVVVV" default="05">
 				<splitVal highCV="9" factor="4" offset="-3"/>
 				<label>Turnout_Address_Low1</label>
 			</variable>
-			<variable CV="1" item="Turnout_Address_MidLow1" mask="XXVVVVVV" default="02">
+			<variable CV="1" item="Turnout_Address_MidLow1" mask="XVVVVVVV" default="05">
 				<splitVal highCV="9" factor="4" offset="-2"/>
 				<label>Turnout_Address_MidLow1</label>
 			</variable>
-			<variable CV="1" item="Turnout_Address_MidHigh1" mask="XXVVVVVV" default="03">
+			<variable CV="1" item="Turnout_Address_MidHigh1" mask="XVVVVVVV" default="05">
 				<splitVal highCV="9" factor="4" offset="-1"/>
 				<label>Turnout_Address_MidHigh1</label>
 			</variable>
-			<variable CV="1" item="Turnout_Address_High1" mask="XXVVVVVV" default="04">
+			<variable CV="1" item="Turnout_Address_High1" mask="XVVVVVVV" default="05">
 				<splitVal highCV="9" factor="4"/>
 				<label>Turnout_Address_High1</label>
 			</variable>
-			<variable CV="1" item="Turnout_Address_High2" mask="XXVVVVVV" default="05">
+			<variable CV="1" item="Turnout_Address_High2" mask="XVVVVVVV" default="05">
 				<splitVal highCV="9" factor="4" offset="+1"/>
 				<label>Turnout_Address_High2</label>
 			</variable>
-			<variable item="Decoder Address2" CV="1" mask="XXVVVVVV" comment="Decoder address outputs G - H1" default="02">
-				<splitVal highCV="9"/>
+			<variable item="Decoder Address2" CV="1" mask="XVVVVVVV" comment="Decoder address outputs G - H1" default="05">
+				<splitVal highCV="9" offset="+1"/>
 				<label>Decoder Address2</label>
 				<comment>Decoder address outputs G - H2</comment>
 			</variable>
-			<variable CV="1" item="Turnout_Address_High3" mask="XXVVVVVV" default="06">
+			<variable CV="1" item="Turnout_Address_High3" mask="XVVVVVVV" default="05">
 				<splitVal highCV="9" factor="4" offset="+2"/>
 				<label>Turnout_Address_High3</label>
 			</variable>
-			<variable CV="1" item="Turnout_Address_High4" mask="XXVVVVVV" default="07">
+			<variable CV="1" item="Turnout_Address_High4" mask="XVVVVVVV" default="05">
 				<splitVal highCV="9" factor="4" offset="+3"/>
 				<label>Turnout_Address_High4</label>
 			</variable>
-			<variable CV="1" item="Turnout_Address_High5" mask="XXVVVVVV" default="08">
+			<variable CV="1" item="Turnout_Address_High5" mask="XVVVVVVV" default="05">
 				<splitVal highCV="9" factor="4" offset="+4"/>
 				<label>Turnout_Address_High5</label>
 			</variable>
-			<variable CV="3" item="Turnout_Address_High6" mask="XXVVVVVV" default="08">
-				<splitVal highCV="9" factor="4" offset="+4"/>
-				<label>Turnout_Address_High5</label>
+			<variable CV="1" item="Turnout_Address_High6" mask="XVVVVVVV" default="05">
+				<splitVal highCV="9" factor="4" offset="+5"/>
+				<label>Turnout_Address_High6</label>
 			</variable>
+			
 			<variable item="CV 3/515 Allumage choix" CV="3" mask="XXXXXXXX" default="0">
 				<label>CV 3/515 Allumage choix</label>
 			</variable>
@@ -82,9 +84,6 @@
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 				<label>Table Allumage Personnalisee</label>
 			</variable>
-<!-- 
-			<variable item="Table Allumage Personnalisee" CV="3" mask="XVXXXXXX" default="0">
- -->
 			<variable item="2ID separes" CV="3" mask="XVXXXXXX" default="0">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 				<label>2ID separes</label>
@@ -151,10 +150,12 @@
 	</decoder>
 	<pane>
 		<column>
+		<separator/>
 			<row>
+			
 				<column>
 				<label>
-						<text>Adresses du decodeur </text>
+						<text>CV 1/513 9/521 Adresse du decodeur </text>
 					</label>
 					<label>
 						<text> </text>

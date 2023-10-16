@@ -25,7 +25,7 @@
       for example, various items of rolling stock.</p>
  
       <p>When an ID Tag is read by a suitable reader (such as a transponder or a connected 
-      <a href="../hardware/rfid/index.sthml">RFID reader</a>): </p>
+      <a href="../hardware/rfid/index.shtml">RFID reader</a>): </p>
       
       <ul>
       <li>If the ID Tag is detected for the first time, details of this tag will be automatically
@@ -38,8 +38,8 @@
       </ul>
 
       <p>There are other ways of getting information into the JMRI ID Tag Table, including 
-      manually (see below) and via <a href="../hardware/mqtt/index.sthml">MQTT</a>
-      messages and <a href="scripting/index.sthml">scripts.</a>]
+      manually (see below) and via <a href="../hardware/mqtt/index.shtml">MQTT</a>
+      messages and <a href="scripting/index.shtml">scripts.</a>]
       </p>
 
       

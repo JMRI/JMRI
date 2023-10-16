@@ -11,7 +11,7 @@
    <body>
       <!--#include virtual="/Header.shtml" -->
       <div id="mBody">
-         <!--#include virtual="SidebarUp.shtml" -->
+         <!--#include virtual="Sidebar.shtml" -->
          <div id="mainContent">
 
             <h1>Hardware Support: RFID Readers</h1>
