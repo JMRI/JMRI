@@ -1,0 +1,112 @@
+package jmri.jmrix.bidib;
+
+import java.io.ByteArrayOutputStream;
+import org.bidib.jbidibc.core.BidibMessageProcessor;
+import org.bidib.jbidibc.core.MessageListener;
+import org.bidib.jbidibc.messages.Node;
+import org.bidib.jbidibc.core.NodeListener;
+import org.bidib.jbidibc.messages.StallStatusProvider;
+import org.bidib.jbidibc.messages.exception.ProtocolException;
+import org.bidib.jbidibc.messages.message.BidibCommand;
+import org.bidib.jbidibc.messages.message.BidibMessageInterface;
+import org.bidib.jbidibc.core.message.BidibRequestFactory;
+import org.bidib.jbidibc.core.node.BidibNode;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Test class to replace the BidibNode in tests
+ *
+ * @author  Eckart Meyer  Copyright (C) 2020
+ */
+public class TestBidibNode extends BidibNode {
+    
+    protected TestBidibNode(final Node node, final BidibMessageProcessor messageReceiver, final StallStatusProvider stallStatusProvider, boolean ignoreWaitTimeout) {
+        super(node, messageReceiver, stallStatusProvider, ignoreWaitTimeout);
+    }
+    
+    public TestBidibNode(final Node node) {
+        super(node, new TestMessageProcessor(), new TestStallStatusProvider(), false);        
+    }
+    
+    @Override
+    public BidibRequestFactory getRequestFactory() {
+        return new BidibRequestFactory();
+    }
+
+//    @Override
+//    protected BidibMessageInterface send(
+//            BidibCommand message, Integer receiveTimeout, boolean expectAnswer, Integer... expectedResponseTypes)
+//            throws ProtocolException {
+//        LOGGER.debug("SEND: msg: {}, expectAnswer: {}, expected response types: {}", message, expectAnswer, expectedResponseTypes);
+//        return null;
+//    }
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestBidibNode.class);
+}
+
+class TestMessageProcessor implements BidibMessageProcessor {
+    
+    // from BidibMessageProcessor
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addMessageListener(MessageListener messageListener) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void removeMessageListener(MessageListener messageListener) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addNodeListener(NodeListener nodeListener) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void removeNodeListener(NodeListener nodeListener) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getErrorInformation() {
+        return "TEST";
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+//    @Override
+//    public void setIgnoreWrongMessageNumber(boolean ignoreWrongMessageNumber) {
+//    }
+    
+    // from MessageProcessor
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void processMessages(final ByteArrayOutputStream output) throws ProtocolException {
+    }
+
+}
+
+class TestStallStatusProvider implements StallStatusProvider {
+	
+//	@Override
+//    public void blockIfParentNodeStall(final Node node, long timeout) {
+//	}
+}

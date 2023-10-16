@@ -2,9 +2,9 @@ SPDXVersion: SPDX-2.2
 DataLicense: CC0-1.0
 SPDXID: SPDXRef-DOCUMENT
 DocumentName: JMRI-5.5.5-SNAPSHOT
-DocumentNamespace: http://spdx.org/spdxpackages/JMRI-5.5.5-SNAPSHOT-9a7f3ee3-e6d9-4f94-b1c3-ff90d056f151
+DocumentNamespace: http://spdx.org/spdxpackages/JMRI-5.5.5-SNAPSHOT-e335ed97-8b08-4a93-b4e8-69456b339b7e
 Creator: Tool: spdx-sbom-generator-source-code
-Created: 2023-10-07T01:31:12Z
+Created: 2023-10-15T16:51:42Z
 
 
 ##### Package representing the JMRI
@@ -1255,6 +1255,278 @@ PackageCopyrightText: NOASSERTION
 PackageLicenseComments: NOASSERTION
 PackageComment: NOASSERTION
 
+##### Package representing the jbidibc-core
+
+PackageName: jbidibc-core
+SPDXID: SPDXRef-Package-jbidibc-core-2.0.13
+PackageVersion: 2.0.13
+PackageSupplier: Organization: jbidibc-core
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/jbidibc-core/2.0.13
+FilesAnalyzed: false
+PackageChecksum: SHA1: ab1e13fc94b0381383418f7731519548d03a0eb6
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the jbidibc-serial
+
+PackageName: jbidibc-serial
+SPDXID: SPDXRef-Package-jbidibc-serial-2.0.13
+PackageVersion: 2.0.13
+PackageSupplier: Organization: jbidibc-serial
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/jbidibc-serial/2.0.13
+FilesAnalyzed: false
+PackageChecksum: SHA1: 49554e7d825feef2dd2d43d8ce88c168b31f2dac
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the jbidibc-simulation
+
+PackageName: jbidibc-simulation
+SPDXID: SPDXRef-Package-jbidibc-simulation-2.0.13
+PackageVersion: 2.0.13
+PackageSupplier: Organization: jbidibc-simulation
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/jbidibc-simulation/2.0.13
+FilesAnalyzed: false
+PackageChecksum: SHA1: 1bac6b2faea6bf6a7fd3b5cc4588437d1e048008
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the jbidibc-purejavacomm
+
+PackageName: jbidibc-purejavacomm
+SPDXID: SPDXRef-Package-jbidibc-purejavacomm-2.0.13
+PackageVersion: 2.0.13
+PackageSupplier: Organization: jbidibc-purejavacomm
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/jbidibc-purejavacomm/2.0.13
+FilesAnalyzed: false
+PackageChecksum: SHA1: 2bfdd1db3ea09f69f3bfe69f4efffc8372d746ea
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the jbidibc-messages
+
+PackageName: jbidibc-messages
+SPDXID: SPDXRef-Package-jbidibc-messages-2.0.13
+PackageVersion: 2.0.13
+PackageSupplier: Organization: jbidibc-messages
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/jbidibc-messages/2.0.13
+FilesAnalyzed: false
+PackageChecksum: SHA1: f6d859a4f53ecea27991190474cb1977dad370d1
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the jbidibc-net-serial-over-tcp
+
+PackageName: jbidibc-net-serial-over-tcp
+SPDXID: SPDXRef-Package-jbidibc-net-serial-over-tcp-2.0.13
+PackageVersion: 2.0.13
+PackageSupplier: Organization: jbidibc-net-serial-over-tcp
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/jbidibc-net-serial-over-tcp/2.0.13
+FilesAnalyzed: false
+PackageChecksum: SHA1: 17cfee598ba1472134508bd456618135d235c87b
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the bidibwizard-common
+
+PackageName: bidibwizard-common
+SPDXID: SPDXRef-Package-bidibwizard-common-2.0.13
+PackageVersion: 2.0.13
+PackageSupplier: Organization: bidibwizard-common
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/bidibwizard-common/2.0.13
+FilesAnalyzed: false
+PackageChecksum: SHA1: b3702ea3f41796008028dcc00957cf11ccf06133
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the bidibwizard-model
+
+PackageName: bidibwizard-model
+SPDXID: SPDXRef-Package-bidibwizard-model-2.0.13
+PackageVersion: 2.0.13
+PackageSupplier: Organization: bidibwizard-model
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/bidibwizard-model/2.0.13
+FilesAnalyzed: false
+PackageChecksum: SHA1: e27035ab873d62130384a81823254f8493018e4e
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the bidibwizard-simulation
+
+PackageName: bidibwizard-simulation
+SPDXID: SPDXRef-Package-bidibwizard-simulation-2.0.13
+PackageVersion: 2.0.13
+PackageSupplier: Organization: bidibwizard-simulation
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/bidibwizard-simulation/2.0.13
+FilesAnalyzed: false
+PackageChecksum: SHA1: fc04f0099a7800a1f104889d203788e7eb8b4097
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the commons-collections4
+
+PackageName: commons-collections4
+SPDXID: SPDXRef-Package-commons-collections4-4.4
+PackageVersion: 4.4
+PackageSupplier: Organization: commons-collections4
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.apache.commons/commons-collections4/4.4
+FilesAnalyzed: false
+PackageChecksum: SHA1: dc0ecead9a461f0226dcb93bfbc2a9902a00b161
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the eventbus
+
+PackageName: eventbus
+SPDXID: SPDXRef-Package-eventbus-1.4
+PackageVersion: 1.4
+PackageSupplier: Organization: eventbus
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.bushe/eventbus/1.4
+FilesAnalyzed: false
+PackageChecksum: SHA1: 75ac998b3f6620e7691f4d6bcd31d43d8d97f79a
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the javax.activation-api
+
+PackageName: javax.activation-api
+SPDXID: SPDXRef-Package-javax.activation-api-1.2.0
+PackageVersion: 1.2.0
+PackageSupplier: Organization: javax.activation-api
+PackageDownloadLocation: https://mvnrepository.com/artifact/javax.activation/javax.activation-api/1.2.0
+FilesAnalyzed: false
+PackageChecksum: SHA1: 64ba77335278b4a1369a29639f5ef63b3e716fbd
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the jaxb-api
+
+PackageName: jaxb-api
+SPDXID: SPDXRef-Package-jaxb-api-2.3.1
+PackageVersion: 2.3.1
+PackageSupplier: Organization: jaxb-api
+PackageDownloadLocation: https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api/2.3.1
+FilesAnalyzed: false
+PackageChecksum: SHA1: d01528f9cfecc48eb992f930ee8b25d7cbe2e0e4
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the jaxb-core
+
+PackageName: jaxb-core
+SPDXID: SPDXRef-Package-jaxb-core-2.3.0.1
+PackageVersion: 2.3.0.1
+PackageSupplier: Organization: jaxb-core
+PackageDownloadLocation: https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-core/2.3.0.1
+FilesAnalyzed: false
+PackageChecksum: SHA1: a6662bfa444be4d73c90cd2a835589cb8005765a
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the jaxb-impl
+
+PackageName: jaxb-impl
+SPDXID: SPDXRef-Package-jaxb-impl-2.3.2
+PackageVersion: 2.3.2
+PackageSupplier: Organization: jaxb-impl
+PackageDownloadLocation: https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-impl/2.3.2
+FilesAnalyzed: false
+PackageChecksum: SHA1: 520d6b0435c5469bc64191a5f682473e13f377e3
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the jgoodies-binding
+
+PackageName: jgoodies-binding
+SPDXID: SPDXRef-Package-jgoodies-binding-2.13.0
+PackageVersion: 2.13.0
+PackageSupplier: Organization: jgoodies-binding
+PackageDownloadLocation: https://mvnrepository.com/artifact/com.jgoodies/jgoodies-binding/2.13.0
+FilesAnalyzed: false
+PackageChecksum: SHA1: 3bdb5f4a8db47440db13163b541a2cc84f569810
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the jgoodies-common
+
+PackageName: jgoodies-common
+SPDXID: SPDXRef-Package-jgoodies-common-1.8.1
+PackageVersion: 1.8.1
+PackageSupplier: Organization: jgoodies-common
+PackageDownloadLocation: https://mvnrepository.com/artifact/com.jgoodies/jgoodies-common/1.8.1
+FilesAnalyzed: false
+PackageChecksum: SHA1: b91459ec26831f22c89cd0cd1193d1ead27cdc0f
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
 ##### Package representing the maven-failsafe-plugin
 
 PackageName: maven-failsafe-plugin
@@ -1367,6 +1639,70 @@ PackageCopyrightText: NOASSERTION
 PackageLicenseComments: NOASSERTION
 PackageComment: NOASSERTION
 
+##### Package representing the jackson-datatype-jdk8
+
+PackageName: jackson-datatype-jdk8
+SPDXID: SPDXRef-Package-jackson-datatype-jdk8-2.13.5
+PackageVersion: 2.13.5
+PackageSupplier: Organization: jackson-datatype-jdk8
+PackageDownloadLocation: https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jdk8/2.13.5
+FilesAnalyzed: false
+PackageChecksum: SHA1: 8d5bfa7d7d95cf2a6c00d4cf7d3cf84220445830
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the jackson-datatype-jsr310
+
+PackageName: jackson-datatype-jsr310
+SPDXID: SPDXRef-Package-jackson-datatype-jsr310-2.13.5
+PackageVersion: 2.13.5
+PackageSupplier: Organization: jackson-datatype-jsr310
+PackageDownloadLocation: https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310/2.13.5
+FilesAnalyzed: false
+PackageChecksum: SHA1: 4703a2dafab41966266c51108041e38172f32df0
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the woodstox-core
+
+PackageName: woodstox-core
+SPDXID: SPDXRef-Package-woodstox-core-6.5.1
+PackageVersion: 6.5.1
+PackageSupplier: Organization: woodstox-core
+PackageDownloadLocation: https://mvnrepository.com/artifact/com.fasterxml.woodstox/woodstox-core/6.5.1
+FilesAnalyzed: false
+PackageChecksum: SHA1: 615a0310eb991f546415c52cafee0cb03c55c97e
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the rxjava3-extensions
+
+PackageName: rxjava3-extensions
+SPDXID: SPDXRef-Package-rxjava3-extensions-3.1.1
+PackageVersion: 3.1.1
+PackageSupplier: Organization: rxjava3-extensions
+PackageDownloadLocation: https://mvnrepository.com/artifact/com.github.akarnokd/rxjava3-extensions/3.1.1
+FilesAnalyzed: false
+PackageChecksum: SHA1: 4264c714c821e1bacdbc85e963ca697e5166a508
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
 ##### Package representing the gson
 
 PackageName: gson
@@ -1431,6 +1767,38 @@ PackageCopyrightText: NOASSERTION
 PackageLicenseComments: NOASSERTION
 PackageComment: NOASSERTION
 
+##### Package representing the jgoodies-forms
+
+PackageName: jgoodies-forms
+SPDXID: SPDXRef-Package-jgoodies-forms-1.9.0
+PackageVersion: 1.9.0
+PackageSupplier: Organization: jgoodies-forms
+PackageDownloadLocation: https://mvnrepository.com/artifact/com.jgoodies/jgoodies-forms/1.9.0
+FilesAnalyzed: false
+PackageChecksum: SHA1: e7ba96e59b14d8964fd8b17c7b133a163271931a
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the jgoodies-validation
+
+PackageName: jgoodies-validation
+SPDXID: SPDXRef-Package-jgoodies-validation-2.5.1
+PackageVersion: 2.5.1
+PackageSupplier: Organization: jgoodies-validation
+PackageDownloadLocation: https://mvnrepository.com/artifact/com.jgoodies/jgoodies-validation/2.5.1
+FilesAnalyzed: false
+PackageChecksum: SHA1: 63222986c8e0219ba377d54f350d5435bf848ca9
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
 ##### Package representing the bridj
 
 PackageName: bridj
@@ -1472,6 +1840,38 @@ PackageSupplier: Organization: okio
 PackageDownloadLocation: https://mvnrepository.com/artifact/com.squareup.okio/okio/1.14.0
 FilesAnalyzed: false
 PackageChecksum: SHA1: 83777c6dac215d0d3b34c8548130d2042da199a7
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the jakarta.activation
+
+PackageName: jakarta.activation
+SPDXID: SPDXRef-Package-jakarta.activation-1.2.2
+PackageVersion: 1.2.2
+PackageSupplier: Organization: jakarta.activation
+PackageDownloadLocation: https://mvnrepository.com/artifact/com.sun.activation/jakarta.activation/1.2.2
+FilesAnalyzed: false
+PackageChecksum: SHA1: aa2f81f1574dc3463e1cfafd5ae40c69f98231f3
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the istack-commons-runtime
+
+PackageName: istack-commons-runtime
+SPDXID: SPDXRef-Package-istack-commons-runtime-3.0.12
+PackageVersion: 3.0.12
+PackageSupplier: Organization: istack-commons-runtime
+PackageDownloadLocation: https://mvnrepository.com/artifact/com.sun.istack/istack-commons-runtime/3.0.12
+FilesAnalyzed: false
+PackageChecksum: SHA1: c1069d5b52d45bc8837c082caedb17bcb13d0a8b
 PackageHomePage: NOASSERTION
 PackageLicenseConcluded: NOASSERTION
 PackageLicenseDeclared: NOASSERTION
@@ -1671,6 +2071,38 @@ PackageCopyrightText: NOASSERTION
 PackageLicenseComments: NOASSERTION
 PackageComment: NOASSERTION
 
+##### Package representing the rxjava
+
+PackageName: rxjava
+SPDXID: SPDXRef-Package-rxjava-3.1.6
+PackageVersion: 3.1.6
+PackageSupplier: Organization: rxjava
+PackageDownloadLocation: https://mvnrepository.com/artifact/io.reactivex.rxjava3/rxjava/3.1.6
+FilesAnalyzed: false
+PackageChecksum: SHA1: 32e3ad818551684432e8ddde0941e29400bcab39
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the jakarta.xml.bind-api
+
+PackageName: jakarta.xml.bind-api
+SPDXID: SPDXRef-Package-jakarta.xml.bind-api-2.3.3
+PackageVersion: 2.3.3
+PackageSupplier: Organization: jakarta.xml.bind-api
+PackageDownloadLocation: https://mvnrepository.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api/2.3.3
+FilesAnalyzed: false
+PackageChecksum: SHA1: 863d1c168727396b187bab67a5c2cea41464d07b
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
 ##### Package representing the activation
 
 PackageName: activation
@@ -1680,6 +2112,22 @@ PackageSupplier: Organization: activation
 PackageDownloadLocation: https://mvnrepository.com/artifact/javax.activation/activation/1.1
 FilesAnalyzed: false
 PackageChecksum: SHA1: 6d183114493d1d4647e348df3e7c7aa0d05fa9db
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the javax.annotation-api
+
+PackageName: javax.annotation-api
+SPDXID: SPDXRef-Package-javax.annotation-api-1.3.2
+PackageVersion: 1.3.2
+PackageSupplier: Organization: javax.annotation-api
+PackageDownloadLocation: https://mvnrepository.com/artifact/javax.annotation/javax.annotation-api/1.3.2
+FilesAnalyzed: false
+PackageChecksum: SHA1: 70501dc8356718cb28c36552076ca9baae9b3a40
 PackageHomePage: NOASSERTION
 PackageLicenseConcluded: NOASSERTION
 PackageLicenseDeclared: NOASSERTION
@@ -1712,6 +2160,22 @@ PackageSupplier: Organization: usb-api
 PackageDownloadLocation: https://mvnrepository.com/artifact/javax.usb/usb-api/1.0.2
 FilesAnalyzed: false
 PackageChecksum: SHA1: 638a5905e52fee9cc3de5922bab961c639cbf7c6
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the validation-api
+
+PackageName: validation-api
+SPDXID: SPDXRef-Package-validation-api-2.0.1.Final
+PackageVersion: 2.0.1.Final
+PackageSupplier: Organization: validation-api
+PackageDownloadLocation: https://mvnrepository.com/artifact/javax.validation/validation-api/2.0.1.Final
+FilesAnalyzed: false
+PackageChecksum: SHA1: 7a40136afd8df4dbd02482a3f53411a964f4e28b
 PackageHomePage: NOASSERTION
 PackageLicenseConcluded: NOASSERTION
 PackageLicenseDeclared: NOASSERTION
@@ -1831,6 +2295,22 @@ PackageCopyrightText: NOASSERTION
 PackageLicenseComments: NOASSERTION
 PackageComment: NOASSERTION
 
+##### Package representing the Saxon-HE
+
+PackageName: Saxon-HE
+SPDXID: SPDXRef-Package-Saxon-HE-11.4
+PackageVersion: 11.4
+PackageSupplier: Organization: Saxon-HE
+PackageDownloadLocation: https://mvnrepository.com/artifact/net.sf.saxon/Saxon-HE/11.4
+FilesAnalyzed: false
+PackageChecksum: SHA1: a9be09ffe1ce0690e004806de1251b8cfa495689
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
 ##### Package representing the commons-compress
 
 PackageName: commons-compress
@@ -1856,6 +2336,22 @@ PackageSupplier: Organization: commons-exec
 PackageDownloadLocation: https://mvnrepository.com/artifact/org.apache.commons/commons-exec/1.3
 FilesAnalyzed: false
 PackageChecksum: SHA1: f76f8c5b028bf86a2f114ea8e0baba60f32d0147
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the commons-math3
+
+PackageName: commons-math3
+SPDXID: SPDXRef-Package-commons-math3-3.6.1
+PackageVersion: 3.6.1
+PackageSupplier: Organization: commons-math3
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.apache.commons/commons-math3/3.6.1
+FilesAnalyzed: false
+PackageChecksum: SHA1: 2e6bf49df86182e3d6bdd1ffe7b80469877b349e
 PackageHomePage: NOASSERTION
 PackageLicenseConcluded: NOASSERTION
 PackageLicenseDeclared: NOASSERTION
@@ -2183,6 +2679,22 @@ PackageCopyrightText: NOASSERTION
 PackageLicenseComments: NOASSERTION
 PackageComment: NOASSERTION
 
+##### Package representing the aspectjweaver
+
+PackageName: aspectjweaver
+SPDXID: SPDXRef-Package-aspectjweaver-1.9.7
+PackageVersion: 1.9.7
+PackageSupplier: Organization: aspectjweaver
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.aspectj/aspectjweaver/1.9.7
+FilesAnalyzed: false
+PackageChecksum: SHA1: f02482d0fa55b1804aa09e8d5490da0c662d198c
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
 ##### Package representing the assertj-swing
 
 PackageName: assertj-swing
@@ -2192,6 +2704,70 @@ PackageSupplier: Organization: assertj-swing
 PackageDownloadLocation: https://mvnrepository.com/artifact/org.assertj/assertj-swing/3.9.2
 FilesAnalyzed: false
 PackageChecksum: SHA1: 75ac6015518f8d4d82bbd58cc5c66b4dea36cb0e
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the bidibwizard-api
+
+PackageName: bidibwizard-api
+SPDXID: SPDXRef-Package-bidibwizard-api-2.0.13
+PackageVersion: 2.0.13
+PackageSupplier: Organization: bidibwizard-api
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/bidibwizard-api/2.0.13
+FilesAnalyzed: false
+PackageChecksum: SHA1: fc75c952980973c1cd1c3d453b0bde8442d28456
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the bidibwizard-migration
+
+PackageName: bidibwizard-migration
+SPDXID: SPDXRef-Package-bidibwizard-migration-2.0.13
+PackageVersion: 2.0.13
+PackageSupplier: Organization: bidibwizard-migration
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/bidibwizard-migration/2.0.13
+FilesAnalyzed: false
+PackageChecksum: SHA1: c3c7afd2607afa83f67dcd3ad21666b084ad09b6
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the jbidibc-debug
+
+PackageName: jbidibc-debug
+SPDXID: SPDXRef-Package-jbidibc-debug-2.0.13
+PackageVersion: 2.0.13
+PackageSupplier: Organization: jbidibc-debug
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/jbidibc-debug/2.0.13
+FilesAnalyzed: false
+PackageChecksum: SHA1: 9aa241155c255b6f5a80b1efbe546e138519710d
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the jbidibc-exchange
+
+PackageName: jbidibc-exchange
+SPDXID: SPDXRef-Package-jbidibc-exchange-2.0.13
+PackageVersion: 2.0.13
+PackageSupplier: Organization: jbidibc-exchange
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/jbidibc-exchange/2.0.13
+FilesAnalyzed: false
+PackageChecksum: SHA1: 0e636de136ec2f1855d56e9ad15a4222db4bd63c
 PackageHomePage: NOASSERTION
 PackageLicenseConcluded: NOASSERTION
 PackageLicenseDeclared: NOASSERTION
@@ -2224,6 +2800,22 @@ PackageSupplier: Organization: animal-sniffer-annotations
 PackageDownloadLocation: https://mvnrepository.com/artifact/org.codehaus.mojo/animal-sniffer-annotations/1.14
 FilesAnalyzed: false
 PackageChecksum: SHA1: 569e149657d7b9bdbb63add80771187f4a420ee3
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the stax2-api
+
+PackageName: stax2-api
+SPDXID: SPDXRef-Package-stax2-api-4.2.1
+PackageVersion: 4.2.1
+PackageSupplier: Organization: stax2-api
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.codehaus.woodstox/stax2-api/4.2.1
+FilesAnalyzed: false
+PackageChecksum: SHA1: 05958f4c3534716f23902149c4671a7da8633549
 PackageHomePage: NOASSERTION
 PackageLicenseConcluded: NOASSERTION
 PackageLicenseDeclared: NOASSERTION
@@ -2407,6 +2999,38 @@ PackageCopyrightText: NOASSERTION
 PackageLicenseComments: NOASSERTION
 PackageComment: NOASSERTION
 
+##### Package representing the jaxb-runtime
+
+PackageName: jaxb-runtime
+SPDXID: SPDXRef-Package-jaxb-runtime-2.3.8
+PackageVersion: 2.3.8
+PackageSupplier: Organization: jaxb-runtime
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime/2.3.8
+FilesAnalyzed: false
+PackageChecksum: SHA1: 85eaaae5a653b70618879c30b2e9b6705b826eeb
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the txw2
+
+PackageName: txw2
+SPDXID: SPDXRef-Package-txw2-2.3.8
+PackageVersion: 2.3.8
+PackageSupplier: Organization: txw2
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.glassfish.jaxb/txw2/2.3.8
+FilesAnalyzed: false
+PackageChecksum: SHA1: 07e165bcbb206fd9ed7769012f903c26234b56a0
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
 ##### Package representing the hamcrest-core
 
 PackageName: hamcrest-core
@@ -2416,6 +3040,22 @@ PackageSupplier: Organization: hamcrest-core
 PackageDownloadLocation: https://mvnrepository.com/artifact/org.hamcrest/hamcrest-core/1.3
 FilesAnalyzed: false
 PackageChecksum: SHA1: 740952b7992158338becf5fef9e2246da2d7927c
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the imgscalr-lib
+
+PackageName: imgscalr-lib
+SPDXID: SPDXRef-Package-imgscalr-lib-4.2
+PackageVersion: 4.2
+PackageSupplier: Organization: imgscalr-lib
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.imgscalr/imgscalr-lib/4.2
+FilesAnalyzed: false
+PackageChecksum: SHA1: 76727b1b8faca20d4d5732cc6cd7cdd7a73bcc1c
 PackageHomePage: NOASSERTION
 PackageLicenseConcluded: NOASSERTION
 PackageLicenseDeclared: NOASSERTION
@@ -2935,6 +3575,22 @@ PackageCopyrightText: NOASSERTION
 PackageLicenseComments: NOASSERTION
 PackageComment: NOASSERTION
 
+##### Package representing the reactive-streams
+
+PackageName: reactive-streams
+SPDXID: SPDXRef-Package-reactive-streams-1.0.3
+PackageVersion: 1.0.3
+PackageSupplier: Organization: reactive-streams
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.reactivestreams/reactive-streams/1.0.3
+FilesAnalyzed: false
+PackageChecksum: SHA1: e90a0c13ab933c16ae629a8a219dce2e00fa8e74
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
 ##### Package representing the selenium-api
 
 PackageName: selenium-api
@@ -3079,6 +3735,70 @@ PackageCopyrightText: NOASSERTION
 PackageLicenseComments: NOASSERTION
 PackageComment: NOASSERTION
 
+##### Package representing the spring-boot-autoconfigure
+
+PackageName: spring-boot-autoconfigure
+SPDXID: SPDXRef-Package-spring-boot-autoconfigure-2.7.15
+PackageVersion: 2.7.15
+PackageSupplier: Organization: spring-boot-autoconfigure
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-autoconfigure/2.7.15
+FilesAnalyzed: false
+PackageChecksum: SHA1: b2ecc58517040f5ec0059e2062607d1386bffe17
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the spring-boot
+
+PackageName: spring-boot
+SPDXID: SPDXRef-Package-spring-boot-2.7.15
+PackageVersion: 2.7.15
+PackageSupplier: Organization: spring-boot
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.springframework.boot/spring-boot/2.7.15
+FilesAnalyzed: false
+PackageChecksum: SHA1: 86432b5c503a1bd6ce695d03aff14384b92df726
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the spring-aop
+
+PackageName: spring-aop
+SPDXID: SPDXRef-Package-spring-aop-5.3.29
+PackageVersion: 5.3.29
+PackageSupplier: Organization: spring-aop
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.springframework/spring-aop/5.3.29
+FilesAnalyzed: false
+PackageChecksum: SHA1: 60086a1a8d186a697105443997514c4cd56ee998
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the spring-aspects
+
+PackageName: spring-aspects
+SPDXID: SPDXRef-Package-spring-aspects-5.3.29
+PackageVersion: 5.3.29
+PackageSupplier: Organization: spring-aspects
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.springframework/spring-aspects/5.3.29
+FilesAnalyzed: false
+PackageChecksum: SHA1: eb1e05a23d0e898d3ddd8a89f008e7b500f19613
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
 ##### Package representing the spring-beans
 
 PackageName: spring-beans
@@ -3095,6 +3815,22 @@ PackageCopyrightText: NOASSERTION
 PackageLicenseComments: NOASSERTION
 PackageComment: NOASSERTION
 
+##### Package representing the spring-context
+
+PackageName: spring-context
+SPDXID: SPDXRef-Package-spring-context-5.3.29
+PackageVersion: 5.3.29
+PackageSupplier: Organization: spring-context
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.springframework/spring-context/5.3.29
+FilesAnalyzed: false
+PackageChecksum: SHA1: 6fc49536540c433f2a6b2a12788e469c76318e72
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
 ##### Package representing the spring-core
 
 PackageName: spring-core
@@ -3104,6 +3840,22 @@ PackageSupplier: Organization: spring-core
 PackageDownloadLocation: https://mvnrepository.com/artifact/org.springframework/spring-core/5.1.14.RELEASE
 FilesAnalyzed: false
 PackageChecksum: SHA1: 071027b3698d27bbb143bb056c08c53b82014345
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the spring-expression
+
+PackageName: spring-expression
+SPDXID: SPDXRef-Package-spring-expression-5.3.29
+PackageVersion: 5.3.29
+PackageSupplier: Organization: spring-expression
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.springframework/spring-expression/5.3.29
+FilesAnalyzed: false
+PackageChecksum: SHA1: 630ec400b57f68c0c5ed4f84ef1400121d573206
 PackageHomePage: NOASSERTION
 PackageLicenseConcluded: NOASSERTION
 PackageLicenseDeclared: NOASSERTION
@@ -3255,6 +4007,38 @@ PackageCopyrightText: NOASSERTION
 PackageLicenseComments: NOASSERTION
 PackageComment: NOASSERTION
 
+##### Package representing the xmlresolver
+
+PackageName: xmlresolver
+SPDXID: SPDXRef-Package-xmlresolver-4.4.3
+PackageVersion: 4.4.3
+PackageSupplier: Organization: xmlresolver
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.xmlresolver/xmlresolver/4.4.3
+FilesAnalyzed: false
+PackageChecksum: SHA1: 5e81e5ce1866a2d1f4c350e7270173a82a728fe5
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the xmlresolver
+
+PackageName: xmlresolver
+SPDXID: SPDXRef-Package-xmlresolver-data
+PackageVersion: data
+PackageSupplier: Organization: xmlresolver
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.xmlresolver/xmlresolver/data
+FilesAnalyzed: false
+PackageChecksum: SHA1: 5e81e5ce1866a2d1f4c350e7270173a82a728fe5
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
 ##### Package representing the xml-apis-ext
 
 PackageName: xml-apis-ext
@@ -3272,179 +4056,227 @@ PackageLicenseComments: NOASSERTION
 PackageComment: NOASSERTION
 
 Relationship: SPDXRef-DOCUMENT DESCRIBES SPDXRef-Package-JMRI
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-awt-util-1.17
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-text-1.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-cucumber-junit-4.3.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jsr305-3.0.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jsplitbutton-1.3.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-net-3.9.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-jupiter-5.9.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-dom-1.17
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-xml-apis-ext-1.3.04
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-cucumber-html-0.2.7
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-gvt-1.17
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-spring-boot-autoconfigure-2.7.15
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-javax.mail-api-1.5.4
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-mockito-core-3.5.11
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jgoodies-common-1.8.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-lang3-3.7
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-usb4java-javax-1.3.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jcip-annotations-1.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-reactive-streams-1.0.3
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-okhttp-3.11.0
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-ext-1.17
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-platform-suite-api-1.9.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-platform-launcher-1.9.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jmdns-3.5.5
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-lifecycle-mapping-1.0.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-gson-2.8.6
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-gherkin-5.1.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-parser-1.17
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-javahelp-2.0.05
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-log4j-slf4j2-impl-2.20.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jsoup-1.15.3
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-csv-1.9.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-transcoder-1.17
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jetty-client-9.4.28.v20200408
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-hamcrest-core-1.3
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jdom2-2.0.6
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jetty-util-9.4.28.v20200408
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-spring-core-5.1.14.RELEASE
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-assertj-core-3.12.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-bridge-1.17
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-selenium-chrome-driver-3.141.59
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-selenium-firefox-driver-3.141.59
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-selenium-remote-driver-3.141.59
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-spring-web-5.1.14.RELEASE
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jna-5.13.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-xbee-java-library-1.3.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-gluegen-rt-natives-windows-i586
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jython-standalone-2.7.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-joal-main-2.3.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-assertj-swing-3.9.2
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-spring-beans-5.1.14.RELEASE
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jackson-core-2.13.4
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-spotbugs-annotations-4.7.3
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-css-1.17
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-svggen-1.17
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-log4j-core-2.20.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-websocket-common-9.4.28.v20200408
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-spring-test-5.1.14.RELEASE
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-archunit-junit5-engine-api-1.0.0-rc1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-usb-api-1.0.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-typetools-0.5.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-constants-1.17
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-fest-util-1.2.5
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-platform-engine-1.9.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-org.eclipse.paho.client.mqttv3-1.2.5
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-assertj-swing-junit-3.9.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jna-platform-5.13.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-properties-maven-plugin-1.0.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-error-prone-annotations-2.1.3
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-j2objc-annotations-1.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jinput-platform-natives-windows
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-anim-1.17
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-jupiter-api-5.9.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-cucumber-expressions-6.2.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-svg-dom-1.17
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jcip-annotations-1.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-selenium-java-3.141.59
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-lang3-3.7
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-org-openide-util-lookup-RELEASE150
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-archunit-junit5-api-1.0.0-rc1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-archunit-1.0.0-rc1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-assertj-swing-3.9.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-animal-sniffer-annotations-1.14
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-javax.mail-api-1.5.4
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-spring-jcl-5.1.14.RELEASE
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-cucumber-java-4.3.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-webdrivermanager-4.2.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-vecmath-1.5.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-beansbinding-1.2.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-pi4j-gpio-extension-1.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-maven-failsafe-plugin-2.22.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-httpcore5-h2-5.0.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-platform-commons-1.9.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jetty-server-9.4.28.v20200408
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jetty-security-9.4.28.v20200408
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-pi4j-device-1.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-byte-buddy-1.10.14
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-thumbnailator-0.4.8
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-javax.servlet-api-3.1.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-platform-suite-commons-1.9.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-selenium-safari-driver-3.141.59
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-log4j-api-2.20.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-selenium-api-3.141.59
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-selenium-support-3.141.59
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jul-to-slf4j-2.0.7
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-openlcb-0.7.32
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-usb4java-javax-1.3.0
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-json-schema-validator-1.0.28
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-okio-1.14.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-cucumber-core-4.3.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-selenium-ie-driver-3.141.59
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-fest-util-1.2.5
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-net-3.9.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-maven-gpg-plugin-1.6
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-constants-1.17
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-checker-compat-qual-2.0.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-jupiter-engine-5.9.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jsplitbutton-1.3.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jinput-platform-natives-windows
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-shared-resources-1.17
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jetty-security-9.4.28.v20200408
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-slf4j-api-2.0.7
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-httpcore5-h2-5.0.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-archunit-junit5-engine-api-1.0.0-rc1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-hamcrest-core-1.3
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jmdns-3.5.5
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jakarta.xml.bind-api-2.3.3
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jetty-xml-9.4.28.v20200408
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-jupiter-params-5.9.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jinput-2.0.6
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-xml-apis-ext-1.3.04
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-xercesImpl-2.12.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-maven-checkstyle-plugin-3.1.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-guava-25.0-jre
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-httpclient5-5.0.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-httpcore5-5.0.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-selenium-ie-driver-3.141.59
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-jupiter-5.9.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-script-1.17
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-fest-reflect-1.4.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-libusb4java-win32-x86
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-datatable-1.1.12
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-mockito-junit-jupiter-3.5.11
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-activation-1.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-4.13.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-platform-runner-1.9.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jetty-http-9.4.28.v20200408
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jetty-io-9.4.28.v20200408
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-codec-1.13
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-gvt-1.17
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jackson-databind-2.13.4.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-hid4java-0.5.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-util-1.17
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-objenesis-3.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-picocontainer-2.15
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jarchivelib-1.1.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-gluegen-rt-main-2.3.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-slf4j-api-2.0.7
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jetty-servlet-9.4.28.v20200408
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jackson-annotations-2.13.4
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-logging-1.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-bridj-0.7.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-selenium-opera-driver-3.141.59
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-cucumber-java8-4.3.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-xmlgraphics-commons-2.9
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-websocket-client-9.4.28.v20200408
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-webcam-capture-0.3.12
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-cucumber-picocontainer-4.3.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-purejavacomm-1.0.5
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jemmy-2.3.1.1-RELEASE125
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-apiguardian-api-1.1.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-shared-resources-1.17
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-checker-compat-qual-2.0.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-vintage-engine-5.9.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-cucumber-html-0.2.7
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jlfgr-1_0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-xml-1.17
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-jupiter-engine-5.9.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-byte-buddy-agent-1.10.14
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-maven-gpg-plugin-1.6
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-compress-1.20
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-exec-1.3
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-opentest4j-1.2.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-selenium-edge-driver-3.141.59
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-mockito-inline-3.5.11
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-websocket-server-9.4.28.v20200408
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jinputvalidator-0.8.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-okhttp-3.11.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jna-5.13.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-javax.activation-api-1.2.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-openlcb-0.7.32
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jbidibc-simulation-2.0.13
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jbidibc-net-serial-over-tcp-2.0.13
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-beansbinding-1.2.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-pi4j-device-1.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-pi4j-gpio-extension-1.2
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-datatable-dependencies-1.1.12
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-tag-expressions-1.1.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-dom-1.17
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-joal-natives-windows-i586
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-websocket-servlet-9.4.28.v20200408
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-bluecove-2.1.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-mockito-core-3.5.11
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jqassistant-maven-plugin-1.6.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-objenesis-3.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jlfgr-1_0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jemmy-2.3.1.1-RELEASE125
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-gson-2.8.6
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-archunit-junit5-engine-1.0.0-rc1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-i18n-1.17
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-usb4java-1.3.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-pi4j-core-1.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-websocket-api-9.4.28.v20200408
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-error-prone-annotations-2.1.3
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-cucumber-junit-4.3.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jaxb-impl-2.3.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-4.13.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-log4j-slf4j2-impl-2.20.0
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-io-2.11.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-nexus-staging-maven-plugin-1.6.7
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jutils-1.0.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-eventbus-1.4
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-archunit-1.0.0-rc1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-math3-3.6.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-selenium-edge-driver-3.141.59
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-archunit-junit5-1.0.0-rc1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jython-standalone-2.7.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jbidibc-core-2.0.13
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-svggen-1.17
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-assertj-core-3.12.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-mockito-inline-3.5.11
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-platform-launcher-1.9.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-spring-jcl-5.1.14.RELEASE
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-selenium-opera-driver-3.141.59
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-log4j-api-2.20.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-websocket-api-9.4.28.v20200408
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-cucumber-core-4.3.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-gluegen-rt-natives-windows-i586
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-opentest4j-1.2.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-spring-aspects-5.3.29
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-platform-runner-1.9.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-vecmath-1.5.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-spotbugs-annotations-4.7.3
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-validation-api-2.0.1.Final
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-spring-web-5.1.14.RELEASE
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-webcam-capture-0.3.12
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-gherkin-5.1.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-awt-util-1.17
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-joal-natives-windows-i586
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-vintage-engine-5.9.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-Saxon-HE-11.4
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-compress-1.20
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-archunit-junit5-api-1.0.0-rc1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jaxb-runtime-2.3.8
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-usb4java-1.3.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-script-1.17
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-spring-aop-5.3.29
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-selenium-java-3.141.59
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-log4j-core-2.20.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-i18n-1.17
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jna-platform-5.13.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-byte-buddy-1.10.14
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jgoodies-binding-2.13.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-selenium-firefox-driver-3.141.59
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-cucumber-java-4.3.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-istack-commons-runtime-3.0.12
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-bidibwizard-common-2.0.13
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-maven-failsafe-plugin-2.22.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-codec-1.13
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-xbee-java-library-1.3.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-guava-25.0-jre
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jgoodies-forms-1.9.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-javax.annotation-api-1.3.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-websocket-common-9.4.28.v20200408
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-csv-1.9.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jbidibc-messages-2.0.13
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jqassistant-maven-plugin-1.6.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-cucumber-java8-4.3.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jinputvalidator-0.8.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jbidibc-purejavacomm-2.0.13
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-nexus-staging-maven-plugin-1.6.7
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-selenium-api-3.141.59
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-webdrivermanager-4.2.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jetty-servlet-9.4.28.v20200408
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-apiguardian-api-1.1.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-okio-1.14.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-typetools-0.5.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jetty-http-9.4.28.v20200408
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-spring-context-5.3.29
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-cucumber-picocontainer-4.3.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jsoup-1.15.3
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jackson-datatype-jsr310-2.13.5
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-logging-1.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-j2objc-annotations-1.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-anim-1.17
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-platform-engine-1.9.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-text-1.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-pi4j-core-1.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-thumbnailator-0.4.8
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jackson-databind-2.13.4.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jackson-datatype-jdk8-2.13.5
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-maven-checkstyle-plugin-3.1.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-rxjava-3.1.6
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jetty-server-9.4.28.v20200408
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-picocontainer-2.15
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-javahelp-2.0.05
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-websocket-servlet-9.4.28.v20200408
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jbidibc-serial-2.0.13
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-selenium-remote-driver-3.141.59
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-libusb4java-win32-x86
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-bidibwizard-model-2.0.13
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-parser-1.17
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-bidibwizard-migration-2.0.13
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-activation-1.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jul-to-slf4j-2.0.7
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-joal-main-2.3.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-lifecycle-mapping-1.0.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-css-1.17
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-websocket-client-9.4.28.v20200408
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-imgscalr-lib-4.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-platform-commons-1.9.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-assertj-swing-junit-3.9.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jinput-2.0.6
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-jupiter-api-5.9.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-properties-maven-plugin-1.0.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-spring-boot-2.7.15
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-org-openide-util-lookup-RELEASE150
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jakarta.activation-1.2.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-xmlgraphics-commons-2.9
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-byte-buddy-agent-1.10.14
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-hid4java-0.5.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-bridge-1.17
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-fest-reflect-1.4.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-tag-expressions-1.1.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-usb-api-1.0.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-httpclient5-5.0.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jetty-client-9.4.28.v20200408
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-transcoder-1.17
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-httpcore5-5.0.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-aspectjweaver-1.9.7
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-xml-1.17
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-stax2-api-4.2.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-platform-suite-commons-1.9.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-mockito-junit-jupiter-3.5.11
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-bidibwizard-simulation-2.0.13
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jbidibc-debug-2.0.13
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-spring-core-5.1.14.RELEASE
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-gluegen-rt-main-2.3.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-bridj-0.7.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-datatable-1.1.12
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-bidibwizard-api-2.0.13
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-platform-suite-api-1.9.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-spring-test-5.1.14.RELEASE
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-animal-sniffer-annotations-1.14
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-selenium-support-3.141.59
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-xercesImpl-2.12.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-txw2-2.3.8
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-xmlresolver-data
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-purejavacomm-1.0.5
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-javax.servlet-api-3.1.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jutils-1.0.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-collections4-4.4
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jarchivelib-1.1.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-bluecove-2.1.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jdom2-2.0.6
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-selenium-safari-driver-3.141.59
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-util-1.17
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jbidibc-exchange-2.0.13
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-exec-1.3
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-websocket-server-9.4.28.v20200408
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jetty-util-9.4.28.v20200408
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-spring-expression-5.3.29
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jsr305-3.0.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-woodstox-core-6.5.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-selenium-chrome-driver-3.141.59
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-svg-dom-1.17
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jetty-io-9.4.28.v20200408
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-rxjava3-extensions-3.1.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jgoodies-validation-2.5.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-cucumber-expressions-6.2.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-org.eclipse.paho.client.mqttv3-1.2.5
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jaxb-api-2.3.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jaxb-core-2.3.0.1
 Relationship: SPDXRef-Package-javax.mail-api-1.5.4 DEPENDS_ON SPDXRef-Package-activation-1.1
 Relationship: SPDXRef-Package-junit-jupiter-5.9.1 DEPENDS_ON SPDXRef-Package-junit-jupiter-params-5.9.1
 Relationship: SPDXRef-Package-junit-jupiter-engine-5.9.1 DEPENDS_ON SPDXRef-Package-junit-platform-engine-1.9.1
@@ -3459,22 +4291,22 @@ Relationship: SPDXRef-Package-assertj-swing-junit-3.9.2 DEPENDS_ON SPDXRef-Packa
 Relationship: SPDXRef-Package-cucumber-java-4.3.1 DEPENDS_ON SPDXRef-Package-cucumber-core-4.3.1
 Relationship: SPDXRef-Package-cucumber-java8-4.3.1 DEPENDS_ON SPDXRef-Package-typetools-0.5.0
 Relationship: SPDXRef-Package-cucumber-picocontainer-4.3.1 DEPENDS_ON SPDXRef-Package-picocontainer-2.15
+Relationship: SPDXRef-Package-selenium-java-3.141.59 DEPENDS_ON SPDXRef-Package-selenium-api-3.141.59
 Relationship: SPDXRef-Package-selenium-java-3.141.59 DEPENDS_ON SPDXRef-Package-selenium-chrome-driver-3.141.59
 Relationship: SPDXRef-Package-selenium-java-3.141.59 DEPENDS_ON SPDXRef-Package-selenium-firefox-driver-3.141.59
+Relationship: SPDXRef-Package-selenium-java-3.141.59 DEPENDS_ON SPDXRef-Package-selenium-remote-driver-3.141.59
 Relationship: SPDXRef-Package-selenium-java-3.141.59 DEPENDS_ON SPDXRef-Package-selenium-safari-driver-3.141.59
-Relationship: SPDXRef-Package-selenium-java-3.141.59 DEPENDS_ON SPDXRef-Package-selenium-support-3.141.59
 Relationship: SPDXRef-Package-selenium-java-3.141.59 DEPENDS_ON SPDXRef-Package-guava-25.0-jre
-Relationship: SPDXRef-Package-selenium-java-3.141.59 DEPENDS_ON SPDXRef-Package-selenium-api-3.141.59
+Relationship: SPDXRef-Package-selenium-java-3.141.59 DEPENDS_ON SPDXRef-Package-selenium-edge-driver-3.141.59
 Relationship: SPDXRef-Package-selenium-java-3.141.59 DEPENDS_ON SPDXRef-Package-selenium-ie-driver-3.141.59
 Relationship: SPDXRef-Package-selenium-java-3.141.59 DEPENDS_ON SPDXRef-Package-selenium-opera-driver-3.141.59
-Relationship: SPDXRef-Package-selenium-java-3.141.59 DEPENDS_ON SPDXRef-Package-selenium-remote-driver-3.141.59
+Relationship: SPDXRef-Package-selenium-java-3.141.59 DEPENDS_ON SPDXRef-Package-selenium-support-3.141.59
 Relationship: SPDXRef-Package-selenium-java-3.141.59 DEPENDS_ON SPDXRef-Package-commons-exec-1.3
 Relationship: SPDXRef-Package-selenium-java-3.141.59 DEPENDS_ON SPDXRef-Package-okhttp-3.11.0
 Relationship: SPDXRef-Package-selenium-java-3.141.59 DEPENDS_ON SPDXRef-Package-okio-1.14.0
-Relationship: SPDXRef-Package-selenium-java-3.141.59 DEPENDS_ON SPDXRef-Package-selenium-edge-driver-3.141.59
+Relationship: SPDXRef-Package-webdrivermanager-4.2.2 DEPENDS_ON SPDXRef-Package-jarchivelib-1.1.0
 Relationship: SPDXRef-Package-webdrivermanager-4.2.2 DEPENDS_ON SPDXRef-Package-gson-2.8.6
 Relationship: SPDXRef-Package-webdrivermanager-4.2.2 DEPENDS_ON SPDXRef-Package-httpclient5-5.0.1
-Relationship: SPDXRef-Package-webdrivermanager-4.2.2 DEPENDS_ON SPDXRef-Package-jarchivelib-1.1.0
 Relationship: SPDXRef-Package-jetty-servlet-9.4.28.v20200408 DEPENDS_ON SPDXRef-Package-jetty-security-9.4.28.v20200408
 Relationship: SPDXRef-Package-websocket-servlet-9.4.28.v20200408 DEPENDS_ON SPDXRef-Package-javax.servlet-api-3.1.0
 Relationship: SPDXRef-Package-websocket-server-9.4.28.v20200408 DEPENDS_ON SPDXRef-Package-websocket-common-9.4.28.v20200408
@@ -3491,20 +4323,32 @@ Relationship: SPDXRef-Package-mockito-core-3.5.11 DEPENDS_ON SPDXRef-Package-obj
 Relationship: SPDXRef-Package-spring-test-5.1.14.RELEASE DEPENDS_ON SPDXRef-Package-spring-core-5.1.14.RELEASE
 Relationship: SPDXRef-Package-spring-web-5.1.14.RELEASE DEPENDS_ON SPDXRef-Package-spring-beans-5.1.14.RELEASE
 Relationship: SPDXRef-Package-webcam-capture-0.3.12 DEPENDS_ON SPDXRef-Package-bridj-0.7.0
-Relationship: SPDXRef-Package-batik-transcoder-1.17 DEPENDS_ON SPDXRef-Package-batik-svggen-1.17
-Relationship: SPDXRef-Package-batik-transcoder-1.17 DEPENDS_ON SPDXRef-Package-batik-bridge-1.17
-Relationship: SPDXRef-Package-batik-transcoder-1.17 DEPENDS_ON SPDXRef-Package-batik-shared-resources-1.17
 Relationship: SPDXRef-Package-batik-transcoder-1.17 DEPENDS_ON SPDXRef-Package-batik-dom-1.17
 Relationship: SPDXRef-Package-batik-transcoder-1.17 DEPENDS_ON SPDXRef-Package-batik-gvt-1.17
+Relationship: SPDXRef-Package-batik-transcoder-1.17 DEPENDS_ON SPDXRef-Package-batik-svggen-1.17
 Relationship: SPDXRef-Package-batik-transcoder-1.17 DEPENDS_ON SPDXRef-Package-batik-util-1.17
-Relationship: SPDXRef-Package-batik-transcoder-1.17 DEPENDS_ON SPDXRef-Package-batik-xml-1.17
 Relationship: SPDXRef-Package-batik-transcoder-1.17 DEPENDS_ON SPDXRef-Package-xml-apis-ext-1.3.04
-Relationship: SPDXRef-Package-batik-transcoder-1.17 DEPENDS_ON SPDXRef-Package-batik-anim-1.17
 Relationship: SPDXRef-Package-batik-transcoder-1.17 DEPENDS_ON SPDXRef-Package-batik-awt-util-1.17
-Relationship: SPDXRef-Package-guava-25.0-jre DEPENDS_ON SPDXRef-Package-animal-sniffer-annotations-1.14
+Relationship: SPDXRef-Package-batik-transcoder-1.17 DEPENDS_ON SPDXRef-Package-batik-bridge-1.17
+Relationship: SPDXRef-Package-batik-transcoder-1.17 DEPENDS_ON SPDXRef-Package-batik-xml-1.17
+Relationship: SPDXRef-Package-batik-transcoder-1.17 DEPENDS_ON SPDXRef-Package-batik-anim-1.17
+Relationship: SPDXRef-Package-batik-transcoder-1.17 DEPENDS_ON SPDXRef-Package-batik-shared-resources-1.17
+Relationship: SPDXRef-Package-jbidibc-core-2.0.13 DEPENDS_ON SPDXRef-Package-woodstox-core-6.5.1
+Relationship: SPDXRef-Package-jbidibc-core-2.0.13 DEPENDS_ON SPDXRef-Package-jaxb-runtime-2.3.8
+Relationship: SPDXRef-Package-jbidibc-purejavacomm-2.0.13 DEPENDS_ON SPDXRef-Package-jbidibc-debug-2.0.13
+Relationship: SPDXRef-Package-bidibwizard-common-2.0.13 DEPENDS_ON SPDXRef-Package-bidibwizard-migration-2.0.13
+Relationship: SPDXRef-Package-bidibwizard-common-2.0.13 DEPENDS_ON SPDXRef-Package-imgscalr-lib-4.2
+Relationship: SPDXRef-Package-bidibwizard-common-2.0.13 DEPENDS_ON SPDXRef-Package-spring-context-5.3.29
+Relationship: SPDXRef-Package-bidibwizard-common-2.0.13 DEPENDS_ON SPDXRef-Package-spring-boot-2.7.15
+Relationship: SPDXRef-Package-bidibwizard-common-2.0.13 DEPENDS_ON SPDXRef-Package-spring-boot-autoconfigure-2.7.15
+Relationship: SPDXRef-Package-bidibwizard-common-2.0.13 DEPENDS_ON SPDXRef-Package-bidibwizard-api-2.0.13
+Relationship: SPDXRef-Package-bidibwizard-model-2.0.13 DEPENDS_ON SPDXRef-Package-javax.annotation-api-1.3.2
+Relationship: SPDXRef-Package-woodstox-core-6.5.1 DEPENDS_ON SPDXRef-Package-stax2-api-4.2.1
+Relationship: SPDXRef-Package-rxjava3-extensions-3.1.1 DEPENDS_ON SPDXRef-Package-reactive-streams-1.0.3
 Relationship: SPDXRef-Package-guava-25.0-jre DEPENDS_ON SPDXRef-Package-checker-compat-qual-2.0.0
 Relationship: SPDXRef-Package-guava-25.0-jre DEPENDS_ON SPDXRef-Package-error-prone-annotations-2.1.3
 Relationship: SPDXRef-Package-guava-25.0-jre DEPENDS_ON SPDXRef-Package-j2objc-annotations-1.1
+Relationship: SPDXRef-Package-guava-25.0-jre DEPENDS_ON SPDXRef-Package-animal-sniffer-annotations-1.14
 Relationship: SPDXRef-Package-archunit-junit5-api-1.0.0-rc1 DEPENDS_ON SPDXRef-Package-archunit-1.0.0-rc1
 Relationship: SPDXRef-Package-archunit-junit5-engine-1.0.0-rc1 DEPENDS_ON SPDXRef-Package-archunit-junit5-engine-api-1.0.0-rc1
 Relationship: SPDXRef-Package-cucumber-core-4.3.1 DEPENDS_ON SPDXRef-Package-cucumber-html-0.2.7
@@ -3514,23 +4358,42 @@ Relationship: SPDXRef-Package-cucumber-core-4.3.1 DEPENDS_ON SPDXRef-Package-cuc
 Relationship: SPDXRef-Package-cucumber-core-4.3.1 DEPENDS_ON SPDXRef-Package-datatable-1.1.12
 Relationship: SPDXRef-Package-datatable-1.1.12 DEPENDS_ON SPDXRef-Package-datatable-dependencies-1.1.12
 Relationship: SPDXRef-Package-junit-4.13.2 DEPENDS_ON SPDXRef-Package-hamcrest-core-1.3
+Relationship: SPDXRef-Package-Saxon-HE-11.4 DEPENDS_ON SPDXRef-Package-xmlresolver-data
 Relationship: SPDXRef-Package-httpclient5-5.0.1 DEPENDS_ON SPDXRef-Package-httpcore5-5.0.1
 Relationship: SPDXRef-Package-httpclient5-5.0.1 DEPENDS_ON SPDXRef-Package-httpcore5-h2-5.0.1
 Relationship: SPDXRef-Package-httpclient5-5.0.1 DEPENDS_ON SPDXRef-Package-commons-codec-1.13
-Relationship: SPDXRef-Package-batik-anim-1.17 DEPENDS_ON SPDXRef-Package-batik-svg-dom-1.17
 Relationship: SPDXRef-Package-batik-anim-1.17 DEPENDS_ON SPDXRef-Package-batik-css-1.17
 Relationship: SPDXRef-Package-batik-anim-1.17 DEPENDS_ON SPDXRef-Package-batik-ext-1.17
 Relationship: SPDXRef-Package-batik-anim-1.17 DEPENDS_ON SPDXRef-Package-batik-parser-1.17
+Relationship: SPDXRef-Package-batik-anim-1.17 DEPENDS_ON SPDXRef-Package-batik-svg-dom-1.17
 Relationship: SPDXRef-Package-batik-awt-util-1.17 DEPENDS_ON SPDXRef-Package-xmlgraphics-commons-2.9
 Relationship: SPDXRef-Package-batik-bridge-1.17 DEPENDS_ON SPDXRef-Package-batik-script-1.17
 Relationship: SPDXRef-Package-batik-util-1.17 DEPENDS_ON SPDXRef-Package-batik-constants-1.17
 Relationship: SPDXRef-Package-batik-util-1.17 DEPENDS_ON SPDXRef-Package-batik-i18n-1.17
 Relationship: SPDXRef-Package-assertj-swing-3.9.2 DEPENDS_ON SPDXRef-Package-fest-util-1.2.5
+Relationship: SPDXRef-Package-bidibwizard-api-2.0.13 DEPENDS_ON SPDXRef-Package-jackson-datatype-jsr310-2.13.5
+Relationship: SPDXRef-Package-bidibwizard-api-2.0.13 DEPENDS_ON SPDXRef-Package-rxjava3-extensions-3.1.1
+Relationship: SPDXRef-Package-bidibwizard-api-2.0.13 DEPENDS_ON SPDXRef-Package-jgoodies-validation-2.5.1
+Relationship: SPDXRef-Package-bidibwizard-api-2.0.13 DEPENDS_ON SPDXRef-Package-aspectjweaver-1.9.7
+Relationship: SPDXRef-Package-bidibwizard-api-2.0.13 DEPENDS_ON SPDXRef-Package-jbidibc-exchange-2.0.13
+Relationship: SPDXRef-Package-bidibwizard-api-2.0.13 DEPENDS_ON SPDXRef-Package-spring-aspects-5.3.29
+Relationship: SPDXRef-Package-bidibwizard-api-2.0.13 DEPENDS_ON SPDXRef-Package-jackson-datatype-jdk8-2.13.5
+Relationship: SPDXRef-Package-bidibwizard-api-2.0.13 DEPENDS_ON SPDXRef-Package-jgoodies-forms-1.9.0
+Relationship: SPDXRef-Package-bidibwizard-api-2.0.13 DEPENDS_ON SPDXRef-Package-rxjava-3.1.6
+Relationship: SPDXRef-Package-bidibwizard-api-2.0.13 DEPENDS_ON SPDXRef-Package-validation-api-2.0.1.Final
+Relationship: SPDXRef-Package-bidibwizard-api-2.0.13 DEPENDS_ON SPDXRef-Package-commons-math3-3.6.1
+Relationship: SPDXRef-Package-bidibwizard-migration-2.0.13 DEPENDS_ON SPDXRef-Package-Saxon-HE-11.4
 Relationship: SPDXRef-Package-websocket-client-9.4.28.v20200408 DEPENDS_ON SPDXRef-Package-jetty-client-9.4.28.v20200408
 Relationship: SPDXRef-Package-websocket-client-9.4.28.v20200408 DEPENDS_ON SPDXRef-Package-jetty-xml-9.4.28.v20200408
 Relationship: SPDXRef-Package-websocket-common-9.4.28.v20200408 DEPENDS_ON SPDXRef-Package-jetty-util-9.4.28.v20200408
 Relationship: SPDXRef-Package-websocket-common-9.4.28.v20200408 DEPENDS_ON SPDXRef-Package-jetty-io-9.4.28.v20200408
 Relationship: SPDXRef-Package-jetty-security-9.4.28.v20200408 DEPENDS_ON SPDXRef-Package-jetty-server-9.4.28.v20200408
+Relationship: SPDXRef-Package-jaxb-runtime-2.3.8 DEPENDS_ON SPDXRef-Package-jakarta.xml.bind-api-2.3.3
+Relationship: SPDXRef-Package-jaxb-runtime-2.3.8 DEPENDS_ON SPDXRef-Package-txw2-2.3.8
+Relationship: SPDXRef-Package-jaxb-runtime-2.3.8 DEPENDS_ON SPDXRef-Package-istack-commons-runtime-3.0.12
+Relationship: SPDXRef-Package-jaxb-runtime-2.3.8 DEPENDS_ON SPDXRef-Package-jakarta.activation-1.2.2
 Relationship: SPDXRef-Package-jarchivelib-1.1.0 DEPENDS_ON SPDXRef-Package-commons-compress-1.20
+Relationship: SPDXRef-Package-spring-context-5.3.29 DEPENDS_ON SPDXRef-Package-spring-aop-5.3.29
+Relationship: SPDXRef-Package-spring-context-5.3.29 DEPENDS_ON SPDXRef-Package-spring-expression-5.3.29
 Relationship: SPDXRef-Package-spring-core-5.1.14.RELEASE DEPENDS_ON SPDXRef-Package-spring-jcl-5.1.14.RELEASE
 Relationship: SPDXRef-Package-usb4java-1.3.0 DEPENDS_ON SPDXRef-Package-libusb4java-win32-x86

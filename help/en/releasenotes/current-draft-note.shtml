@@ -19,6 +19,15 @@
                 <li></li>
             </ul>
 
+	    <h4><a href="http://bidib.org/index_e.html">BiDiB</a></h4>
+            <ul>
+                <li>Eckart Meyer has provided a first implementation 
+                    for the 
+                    <a href="http://bidib.org/index_e.html">BiDiB</a>
+                    system connection.
+                    </li>
+            </ul>
+
         <h4>CBUS</h4>
             <ul>
                 <li></li>
@@ -298,6 +307,11 @@
         <h4>Norsk Modelljernbane (NJM)</h4>
             <ul>
                 <li></li>
+            </ul>
+
+        <h4>Piko decoders</h4>
+            <ul>
+                <li>Add Decoder Piko BR 93 TT XP 5.1 Sound</li>
             </ul>
 
         <h4>Public Domain and DIY decoders</h4>

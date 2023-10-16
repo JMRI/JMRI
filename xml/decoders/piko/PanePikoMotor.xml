@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2022 All rights reserved                            -->
+<!-- Copyright (C) JMRI 2022,2023 All rights reserved                       -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -130,7 +130,7 @@
 				</column>
 			</row>
 		</group>
-		<group include="PIKO46550-18">
+		<group include="PIKO46550-18,PIKO46551-18">
 			<!--Piko SmartDecoder XP5.1-->
 			<row>
 				<column>
