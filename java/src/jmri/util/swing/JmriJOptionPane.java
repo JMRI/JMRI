@@ -90,6 +90,13 @@ public class JmriJOptionPane {
 
         JOptionPane pane = new JOptionPane(message, messageType);
         JDialog dialog = pane.createDialog(parentComponent, title);
+        Window w = findWindowForComponent(parentComponent);
+        if ( w != null ) {
+            JDialogListener pcl = new JDialogListener(dialog);
+            w.addPropertyChangeListener(pcl);
+            pane.addPropertyChangeListener(JOptionPane.VALUE_PROPERTY, unused ->
+                w.removePropertyChangeListener(pcl));
+        }
         if ( callback !=null ) {
             pane.addPropertyChangeListener(JOptionPane.VALUE_PROPERTY, unused -> callback.run());
         }
@@ -153,7 +160,7 @@ public class JmriJOptionPane {
         Object message, String title, int optionType, int messageType,
         Icon icon, Object[] options, Object initialValue)
         throws HeadlessException {
-        log.debug("showConfirmDialog comp {} ", parentComponent);
+        log.debug("showOptionDialog comp {} ", parentComponent);
 
         JOptionPane pane = new JOptionPane(message, messageType,
             optionType, icon, options, initialValue);
@@ -264,15 +271,21 @@ public class JmriJOptionPane {
 
     private static void displayDialog(JOptionPane pane, Component parentComponent, String title){
         pane.setComponentOrientation(JOptionPane.getRootFrame().getComponentOrientation());
+        Window w = findWindowForComponent(parentComponent);
         JDialog dialog = pane.createDialog(parentComponent, title);
-        if ( parentComponent != null ) {
+        JDialogListener pcl = new JDialogListener(dialog);
+        if ( w != null ) {
             dialog.setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
+            w.addPropertyChangeListener(pcl);
         }
         setDialogLocation(parentComponent, dialog);
         dialog.setAlwaysOnTop(true);
         dialog.toFront();
         dialog.setVisible(true); // and waits for input
         dialog.dispose();
+        if ( w != null ) {
+            w.removePropertyChangeListener(pcl);
+        }
     }
 
     /**
