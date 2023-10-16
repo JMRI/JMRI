@@ -30,6 +30,10 @@
 
  <indexitem text="Bachrus - Hardware, Connection, Tools " target="html.hardware.bachrus.index"/>
 
+ <indexitem text="BiDiB - Hardware, Connection, Tools " target="html.hardware.bidib.index">
+  <indexitem text="Signal Masts " target="html.hardware.bidib.BiDiB-SignalMast"/>
+
+ </indexitem>
  <indexitem text="Blocks " target="html.tools.Blocks">
   <indexitem text="Add Blocks " target="package.jmri.jmrit.beantable.BlockAddEdit"/>
 

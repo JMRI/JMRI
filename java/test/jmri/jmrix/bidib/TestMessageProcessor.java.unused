@@ -1,0 +1,74 @@
+package jmri.jmrix.bidib;
+
+import java.io.ByteArrayOutputStream;
+import org.bidib.jbidibc.core.AbstractMessageReceiver;
+import org.bidib.jbidibc.core.MessageListener;
+import org.bidib.jbidibc.core.NodeListener;
+import org.bidib.jbidibc.core.node.NodeRegistry;
+import org.bidib.jbidibc.messages.exception.ProtocolException;
+import org.bidib.jbidibc.messages.message.ResponseFactory;
+
+/**
+ *
+ * @author meyer
+ */
+public class TestMessageProcessor extends AbstractMessageReceiver {
+    
+    
+    public TestMessageProcessor(final NodeRegistry nodeRegistry, final ResponseFactory responseFactory, boolean checkCRC) {
+        super(nodeRegistry, responseFactory, checkCRC);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addMessageListener(MessageListener messageListener) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void removeMessageListener(MessageListener messageListener) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addNodeListener(NodeListener nodeListener) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void removeNodeListener(NodeListener nodeListener) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getErrorInformation() {
+        return "TEST";
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+//    @Override
+//    public void setIgnoreWrongMessageNumber(boolean ignoreWrongMessageNumber) {
+//    }
+    
+    // from MessageProcessor
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void processMessages(final ByteArrayOutputStream output) throws ProtocolException {
+    }
+
+}
