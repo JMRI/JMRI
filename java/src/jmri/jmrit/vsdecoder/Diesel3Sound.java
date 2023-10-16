@@ -665,7 +665,6 @@ class Diesel3Sound extends EngineSound {
             } catch (InterruptedException ie) {
                 // kill thread
                 log.debug("thread interrupted");
-                return;
             }
         }
 
