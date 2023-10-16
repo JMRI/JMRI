@@ -217,4 +217,8 @@
 
       <!-- we include Lionel as a special case to support TMCC -->
       <manufacturer mfg="Lionel" mfgID="1001" />
+
+      <!-- not registered, provide custom number -->
+      <manufacturer mfg="LEB" mfgID="1002" />
+
 </mfgList>

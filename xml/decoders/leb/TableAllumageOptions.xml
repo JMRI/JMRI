@@ -47,37 +47,37 @@
     </revision>
   </revhistory>
   
-	<variable CV="527" item="Switching Mode Affichage no 0" default="0" minOut="1">
+	<variable CV="15" item="Switching Mode Affichage no 0" default="0" minOut="1">
 	    <xi:include href="file:/xml/decoders/leb/enum-Signal_Options.xml"/> 
 		<label>CV 15/527 Choix Allumage Led no  1</label>
 		<tooltip>Led  1</tooltip>
 	</variable>
-	<variable CV="528" item="Switching Mode Affichage no 1" default="4" minOut="1">
+	<variable CV="16" item="Switching Mode Affichage no 1" default="4" minOut="1">
 	    <xi:include href="file:/xml/decoders/leb/enum-Signal_Options.xml"/> 
 		<label>CV 16/528 Choix Allumage Led no  2</label>
 		<tooltip>Led  2</tooltip>
 	</variable>
-	<variable CV="529" item="Switching Mode Affichage no 2" default="8" minOut="1">
+	<variable CV="17" item="Switching Mode Affichage no 2" default="8" minOut="1">
 	    <xi:include href="file:/xml/decoders/leb/enum-Signal_Options.xml"/> 
 		<label>CV 17/529 Choix Allumage Led no  3</label>
 		<tooltip>Led  3</tooltip>
 	</variable>
-	<variable CV="530" item="Switching Mode Affichage no 3" default="12" minOut="1">
+	<variable CV="18" item="Switching Mode Affichage no 3" default="12" minOut="1">
 	    <xi:include href="file:/xml/decoders/leb/enum-Signal_Options.xml"/> 
 		<label>CV 18/530 Choix Allumage Led no  4</label>
 		<tooltip>Led 4</tooltip>
 	</variable>
-	<variable CV="531" item="Switching Mode Affichage no 4" default="0" minOut="1">
+	<variable CV="19" item="Switching Mode Affichage no 4" default="0" minOut="1">
 	    <xi:include href="file:/xml/decoders/leb/enum-Signal_Options.xml"/> 
 		<label>CV 19/531 Choix Allumage Led no  5</label>
 		<tooltip>Led 5</tooltip>
 	</variable>
-	<variable CV="532" item="Switching Mode Affichage no 5" default="4" minOut="1">
+	<variable CV="20" item="Switching Mode Affichage no 5" default="4" minOut="1">
 	    <xi:include href="file:/xml/decoders/leb/enum-Signal_Options.xml"/> 
 		<label>CV 20/532 Choix Allumage Led no  6</label>
 		<tooltip>Led 6</tooltip>
 	</variable>
-	<variable CV="533" item="Switching Mode Affichage no 6" default="3" minOut="1">
+	<variable CV="21" item="Switching Mode Affichage no 6" default="3" minOut="1">
 	    <xi:include href="file:/xml/decoders/leb/enum-Signal_Options.xml"/> 
 		<label>CV 21/533 Choix Allumage Led no  7</label>
 		<tooltip>Led 7</tooltip>
