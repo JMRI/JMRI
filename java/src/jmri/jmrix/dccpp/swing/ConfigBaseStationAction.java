@@ -62,10 +62,13 @@ public class ConfigBaseStationAction extends DCCppSystemConnectionAction {
             DCCppTrafficController tc = memo.getDCCppTrafficController();
             tc.addDCCppListener(DCCppInterface.CS_INFO, f);
             
-            // Request definitions for Turnouts, Sensors and Outputs
+            // Request definitions for Turnouts, TurnoutIDs, Sensors and Outputs
             tc.sendDCCppMessage(DCCppMessage.makeSensorListMsg(), f); 
             tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), f);
             tc.sendDCCppMessage(DCCppMessage.makeOutputListMsg(), f); 
+            if (tc.getCommandStation().isTurnoutIDsMessageRequired()) {
+                tc.sendDCCppMessage(DCCppMessage.makeTurnoutIDsMsg(), f);
+            }
         }
         f.setExtendedState(Frame.NORMAL);
     }
