@@ -140,6 +140,7 @@
                             to not open for certain nodes, including the DCC-LCC Gateway.
                     </ul>
                 </li>
+                <li>Added Window and Help menus to the Configure Node window.
             </ul>
 
         <h4>Powerline</h4>
