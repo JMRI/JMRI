@@ -52,7 +52,8 @@ public class JsonAudioHttpService extends JsonNamedBeanHttpService<Audio> {
 
     @Override
     public ObjectNode doPost(Audio audio, String name, String type, JsonNode data, JsonRequest request) throws JsonException {
-        if (audio.getSubType() != Audio.SOURCE) {
+
+        if (audio.getSubType() != Audio.SOURCE || (!(audio instanceof AudioSource))) {
             throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorAudioNotSource", AUDIO, audio.getSubType()), request.id);
         }
 
