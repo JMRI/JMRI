@@ -295,14 +295,14 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['scale'] = $(this).find('icon').attr('scale');
                             break;
                         case "audioicon" :
-							log.log("Register audioicon");
+                            log.log("Register audioicon");
                             $widget.jsonType = 'audio'; // JSON object type
 //                            $widget['identity'] = $(this).find('Identity').text();
                             $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
                             $widget['sound'] = $(this).attr('sound');
                             log.log("Sound: "+$widget['sound']);
                             $widget['audio_widget'] = new Audio($widget['sound']);
-							$widget['audio_widget'].play();
+                            $widget['audio_widget'].play();
                             $widget['rotation'] = $(this).find('icon').find('rotation').text() * 1;
                             $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($widget.rotation * 90);
                             $widget['scale'] = $(this).find('icon').attr('scale');
@@ -311,9 +311,9 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $('#' + $widget.id).addClass("clickable");
                                 $('#' + $widget.id).bind(UPEVENT, $handleClick);
                             }
-							log.log("Get audio state");
-					        jmri.getAudio($widget.systemName);
-							log.log("Register audioicon done");
+                            log.log("Get audio state");
+                            jmri.getAudio($widget.systemName);
+                            log.log("Register audioicon done");
                             break;
                         case "logixngicon" :
                             $widget['identity'] = $(this).find('Identity').text();
@@ -1191,11 +1191,11 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['cornerRadius'] = $(this).find('size').attr('cornerRadius');
                             lc = $(this).find('lineColor');
                             $widget['lineColor'] = 
-                            	'rgba('+lc.attr('red')+','+lc.attr('green')+',' +
+                                'rgba('+lc.attr('red')+','+lc.attr('green')+',' +
                                 lc.attr('blue')+','+lc.attr('alpha')/256+')';
                             fc = $(this).find('fillColor');
                             $widget['fillColor'] = 
-                             	'rgba('+fc.attr('red')+','+fc.attr('green')+',' +
+                                 'rgba('+fc.attr('red')+','+fc.attr('green')+',' +
                                 fc.attr('blue')+','+fc.attr('alpha')/256+')';
                             //store this widget in persistent array, with ident as key
                             $widget['id'] = $widget.ident;
@@ -1474,11 +1474,11 @@ function $handleClick(e) {
         var $widget = $gWidgets[this.id];
         log.log("Click on audioicon: "+$widget);
         log.log("Audio state: "+$widget.systemName+", "+$widget['state']);
-		if ($widget['state'] == 16) {    // Sound is stopped
+        if ($widget['state'] == 16) {    // Sound is stopped
             jmri.setAudio($widget.systemName, "Play");
-		} else if ($widget['state'] == 17) {    // Sound is playing
+        } else if ($widget['state'] == 17) {    // Sound is playing
             jmri.setAudio($widget.systemName, "Stop");
-		}
+        }
 //        sendElementChange($widget.jsonType, $widget.systemName, $newState);
 //        jmri.clickLogixNGIcon($widget['identity']);
     } else if (this.className.startsWith('logixngicon ')) {
@@ -1643,7 +1643,7 @@ function $drawIcon($widget) {
             $.extend(ovlCSS, $widget.styles); // append the styles from the widget
             delete ovlCSS['background-color'];  // clear the background color
             if (isDefined($widget.fixedHeight)) {
-            	$.extend(ovlCSS, {lineHeight: $widget.fixedHeight + 'px'}); // add lineheight for vertical centering (if set)
+                $.extend(ovlCSS, {lineHeight: $widget.fixedHeight + 'px'}); // add lineheight for vertical centering (if set)
             }
             $("#panel-area>#" + $widget.id + "-overlay").css(ovlCSS);
         }
@@ -2472,9 +2472,9 @@ $(document).ready(function() {
                 location.reload(false);
             },
             audio: function(name, state, data) {
-				log.log("Received audio state: "+name+", "+state+", "+data);
-//				log.log("WhereUsed: "+whereUsed[$widget.systemName]);
-				log.log("WhereUsed: "+whereUsed[name]+", sound: "+$gWidgets[whereUsed[name]]['sound']);
+                log.log("Received audio state: "+name+", "+state+", "+data);
+//                log.log("WhereUsed: "+whereUsed[$widget.systemName]);
+                log.log("WhereUsed: "+whereUsed[name]+", sound: "+$gWidgets[whereUsed[name]]['sound']);
                 $gWidgets[whereUsed[name]]['state'] = state;
 //                updateOccupancy(name, state, data);
 //                //console.log("Sensor " + name + " state=" + state);
@@ -3542,9 +3542,9 @@ function $drawPositionableRoundRect($widget) {
     }
 
     $gCtx.beginPath();
-	$gCtx.roundRect($widget.x, $widget.y, $widget.width, $widget.height, $widget.cornerRadius);
-	$gCtx.stroke()
-	$gCtx.fill()
+    $gCtx.roundRect($widget.x, $widget.y, $widget.width, $widget.height, $widget.cornerRadius);
+    $gCtx.stroke()
+    $gCtx.fill()
     $gCtx.restore();        // restore color and width back to default
 
 }   // function $drawPositionableRoundRect($widget)
@@ -5033,13 +5033,13 @@ class BumperDecoration extends Decoration {
         var halfLength = bumperLength / 2;
         // common points
         if ((this.end == "start") || (this.end == "both")) {
-	        var p1 = [0, -halfLength], p2 = [0, +halfLength];
+            var p1 = [0, -halfLength], p2 = [0, +halfLength];
             var p1 = $point_add($point_rotate(p1, startAngleRAD), this.ep1);
             var p2 = $point_add($point_rotate(p2, startAngleRAD), this.ep1);
             $drawLineP(p1, p2);   // draw cross tie
         }
         if ((this.end == "stop") || (this.end == "both")) {
-	        var p1 = [0, -halfLength], p2 = [0, +halfLength];
+            var p1 = [0, -halfLength], p2 = [0, +halfLength];
             var p1 = $point_add($point_rotate(p1, stopAngleRAD), this.ep2);
             var p2 = $point_add($point_rotate(p2, stopAngleRAD), this.ep2);
             $drawLineP(p1, p2);   // draw cross tie
