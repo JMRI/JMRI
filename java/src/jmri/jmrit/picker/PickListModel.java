@@ -1051,7 +1051,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
         @Override
         protected SortedSet<Audio> getNamedBeanSet() {
             java.util.function.Predicate<Audio> filter = (bean) -> { return bean.getSubType() == Audio.SOURCE; };
-            TreeSet namedBeanSet = new TreeSet<>(new NamedBeanComparator<>());
+            TreeSet<Audio> namedBeanSet = new TreeSet<>(new NamedBeanComparator<>());
             namedBeanSet.addAll(manager.getNamedBeanSet().stream().filter(filter)
                             .collect(java.util.stream.Collectors.toSet()));
             return Collections.unmodifiableSortedSet(namedBeanSet);

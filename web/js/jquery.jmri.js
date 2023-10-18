@@ -108,6 +108,10 @@
             };
             jmri.goodbye = function (data) {
             };
+            jmri.audio = function (name, state, data) {
+            };
+            jmri.audios = function (data) {
+            };
             jmri.block = function (name, value, data) {
             };
             jmri.blocks = function (data) {
@@ -224,6 +228,32 @@
             jmri.INACTIVE = 4;
             jmri.INCONSISTENT = 8;
             // Getters and Setters
+            jmri.getAudio = function (name) {
+                if (jmri.socket) {
+                    jmri.socket.send("audio", { name: name });
+                } else {
+                    $.getJSON(jmri.url + "audio/" + name, function (json) {
+                        jmri.audio(json.data.name, json.data.state, json.data);
+                    });
+                }
+            };
+            jmri.setAudio = function (name, command) {
+				log.log("setAudio: "+name+", "+command);
+                if (jmri.socket) {
+                    jmri.socket.send("audio", { name: name, command: command }, 'post');
+                } else {
+                    $.ajax({
+                        url: jmri.url + "audio/" + name,
+                        type: "POST",
+                        data: JSON.stringify({ command: command }),
+                        contentType: "application/json; charset=utf-8",
+                        success: function (json) {
+                            jmri.audio(json.data.name, json.data.state, json.data);
+                            jmri.getAudio(json.data.name, json.data.state);
+                        }
+                    });
+                }
+            };
             jmri.getLight = function (name) {
                 if (jmri.socket) {
                     jmri.socket.send("light", { name: name });
@@ -413,6 +443,9 @@
 
             jmri.getObject = function (type, name) {
                 switch (type) {
+                    case "audio":
+                        jmri.getAudio(name);
+                        break;
                     case "light":
                         jmri.getLight(name);
                         break;
@@ -830,6 +863,9 @@
                 },
                 pong: function (e) {
                     jmri.pong();
+                },
+                audio: function (e) {
+                    jmri.audio(e.data.name, e.data.state, e.data);
                 },
                 block: function (e) {
                     jmri.block(e.data.name, e.data.value, e.data);

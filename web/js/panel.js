@@ -295,6 +295,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['scale'] = $(this).find('icon').attr('scale');
                             break;
                         case "audioicon" :
+							log.log("Register audioicon");
+                            $widget.jsonType = 'audio'; // JSON object type
 //                            $widget['identity'] = $(this).find('Identity').text();
                             $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
                             $widget['sound'] = $(this).attr('sound');
@@ -304,11 +306,14 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['rotation'] = $(this).find('icon').find('rotation').text() * 1;
                             $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($widget.rotation * 90);
                             $widget['scale'] = $(this).find('icon').attr('scale');
-//                            $widget.classes += " " + $widget.jsonType + " clickable"; //make it clickable
-//                            if (!$('#' + $widget.id).hasClass('clickable')) {
-//                                $('#' + $widget.id).addClass("clickable");
-//                                $('#' + $widget.id).bind(UPEVENT, $handleClick);
-//                            }
+                            $widget.classes += " " + $widget.jsonType + " clickable"; //make it clickable
+                            if (!$('#' + $widget.id).hasClass('clickable')) {
+                                $('#' + $widget.id).addClass("clickable");
+                                $('#' + $widget.id).bind(UPEVENT, $handleClick);
+                            }
+							log.log("Get audio state");
+					        jmri.getAudio($widget.systemName);
+							log.log("Register audioicon done");
                             break;
                         case "logixngicon" :
                             $widget['identity'] = $(this).find('Identity').text();
@@ -683,7 +688,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget.jsonType = "audioicon"; // JSON object type
 //                            $widget['identity'] = $(this).find('Identity').text();
                             $widget.styles['user-select'] = "none";
-//                            $widget.classes += " " + $widget.jsonType + " clickable ";
+                            $widget.classes += " " + $widget.jsonType + " clickable ";
                             break;
                         case "logixngicon" :
                             $widget.jsonType = "logixngicon"; // JSON object type
@@ -1464,6 +1469,18 @@ function $handleClick(e) {
             sendElementChange($widget.jsonType, $widget.turnoutLowerEast, $turnoutWestNewState); // note: same as turnoutEast
         }
         return;
+    } else if (this.className.startsWith('audioicon ')) {
+        // special handling of audioicon
+        var $widget = $gWidgets[this.id];
+        log.log("Click on audioicon: "+$widget);
+        log.log("Audio state: "+$widget.systemName+", "+$widget['state']);
+		if ($widget['state'] == 16) {    // Sound is stopped
+            jmri.setAudio($widget.systemName, "Play");
+		} else if ($widget['state'] == 17) {    // Sound is playing
+            jmri.setAudio($widget.systemName, "Stop");
+		}
+//        sendElementChange($widget.jsonType, $widget.systemName, $newState);
+//        jmri.clickLogixNGIcon($widget['identity']);
     } else if (this.className.startsWith('logixngicon ')) {
         // special handling of logixngicon
         var $widget = $gWidgets[this.id];
@@ -2453,6 +2470,15 @@ $(document).ready(function() {
                 // simplest method to refresh every object in the panel
                 log.log("Reloading at reconnect");
                 location.reload(false);
+            },
+            audio: function(name, state, data) {
+				log.log("Received audio state: "+name+", "+state+", "+data);
+//				log.log("WhereUsed: "+whereUsed[$widget.systemName]);
+				log.log("WhereUsed: "+whereUsed[name]+", sound: "+$gWidgets[whereUsed[name]]['sound']);
+                $gWidgets[whereUsed[name]]['state'] = state;
+//                updateOccupancy(name, state, data);
+//                //console.log("Sensor " + name + " state=" + state);
+//                updateWidgets(name, state, data);
             },
             light: function(name, state, data) {
                 updateWidgets(name, state, data);
