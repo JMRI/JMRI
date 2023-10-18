@@ -861,11 +861,19 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         Staging and Schedules by Car Type and Load</a> tool.
       </p>
 
+      <p>
+        To determine why a car isn't being routed correctly, you can use a <a
+          href="#BuildReportDetails">train build report</a> with the router set to "Detailed" or
+        "Very Detailed". You can also use the <a href="#CarsSet">Set Car</a> tool found in the <a
+          href="#Cars">Cars</a> window.
+      </p>
+
       <p>OperationsPro&trade; will send messages to the system console when there are errors or
         problems with the program. You can access the system console from any menu bar under
         "Help".</p>
 
       <p style="page-break-after: always"><a href="#toc">[Click to go back to TOC]</a></p>
+      
       <h2 id="Settings">Settings</h2>
       The Settings window contains general parameters for the Operations application. Select from
       the JMRI main window "Tools&rArr;Operations&rArr;Settings" to open the Settings window. The
@@ -4144,9 +4152,18 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       track that the final destination specifies happens to be full, the program will search for a
       yard to place the car. When the track becomes available, the program will move the car from
       the yard to the track specified.
-      <p>When selecting a final destination, you don't have to specify a track. And when
-        selecting a destination that is staging, you shouldn't select a destination track, let the
-        program do that for you.</p>
+
+      <p>
+        When selecting a final destination, you don't have to specify a track. And when selecting a
+        destination that is staging, you shouldn't select a destination track, let the program do
+        that for you. The program will confirm after pressing "Save" that the program can route the
+        car from the car's current location to the final destination that you've specified. You can
+        review a "mini" build report for the car by using the Set Car tool "Preview or Print car
+        routing report". The program when creating the report uses the settings in the <a
+          href="#BuildReportDetails">Build Report Options</a> window. It is recommended that you set
+        the router level to "Detailed" or "Very Detailed" when trying to determine why a route
+        fails.
+      </p>
 
       <h4>Train</h4>
 
