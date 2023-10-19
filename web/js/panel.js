@@ -303,10 +303,14 @@ function processPanelXML($returnedData, $success, $xhr) {
                             log.log("Sound: "+$widget['sound']);
                             $widget['onClickOperation'] = $(this).attr('onClickOperation');
                             log.log("onClickOperation: "+$widget['onClickOperation']);
-                            if ($widget['onClickOperation'] == "PlaySoundLocally") {
-                                $widget['audio_widget'] = new Audio($widget['sound']);
+                            $widget['audio_widget'] = new Audio($widget['sound']);
+//                            if ($widget['onClickOperation'] == "PlaySoundLocally") {
+//                                $widget['audio_widget'] = new Audio($widget['sound']);
 //                                $widget['audio_widget'].play();
-                            }
+//                            }
+                            log.log("playSoundWhenJmriPlays: "+$(this).attr('playSoundWhenJmriPlays')+", stopSoundWhenJmriStops: "+$(this).attr('stopSoundWhenJmriStops'));
+                            $widget['playSoundWhenJmriPlays'] = $(this).attr('playSoundWhenJmriPlays') == "yes";
+                            $widget['stopSoundWhenJmriStops'] = $(this).attr('stopSoundWhenJmriStops') == "yes";
                             $widget['rotation'] = $(this).find('icon').find('rotation').text() * 1;
                             $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($widget.rotation * 90);
                             $widget['scale'] = $(this).find('icon').attr('scale');
@@ -2498,20 +2502,25 @@ $(document).ready(function() {
 
                 $.each(whereUsed[name], function(index, widgetId) {
                     log.log("WhereUsed: "+widgetId+", sound: "+$gWidgets[widgetId]['sound']);
-                    $gWidgets[widgetId]['state'] = state;
-//                    $setWidgetState(widgetId, state, data);
-                });
-//                for (var $wu in whereUsed[name]) {
-//                    log.log("wu: "+$wu);
-//                    log.log("WhereUsed: "+$wu+", sound: "+$gWidgets[$wu]['sound']);
-//                    $gWidgets[$wu]['state'] = state;
-//                }
-//                log.log("WhereUsed: "+whereUsed[name]+", sound: "+$gWidgets[whereUsed[name]]['sound']);
-//                $gWidgets[whereUsed[name]]['state'] = state;
 
-//                updateOccupancy(name, state, data);
-//                //console.log("Sensor " + name + " state=" + state);
-//                updateWidgets(name, state, data);
+                    $widget = $gWidgets[widgetId];
+                    $widget['state'] = state;
+
+                    log.log("Daniel: state: "+state+", play: "+$widget['playSoundWhenJmriPlays']+", stop: "+$widget['stopSoundWhenJmriStops']);
+
+                    if (state == 16 && $widget['stopSoundWhenJmriStops']) {         // Sound is stopped
+                        log.log("Stop sound");
+                        $widget['audio_widget'].pause();
+                        $widget['audio_widget'].currentTime = 0;
+                    } else if (state == 17 && $widget['playSoundWhenJmriPlays']) {  // Sound is playing
+                        log.log("Play sound");
+                        $widget['audio_widget'].currentTime = 0;
+                        $widget['audio_widget'].play();
+                    } else {
+                        log.log("Daniel: Something else: state: "+state+", play: "+$widget['playSoundWhenJmriPlays']+", stop: "+$widget['stopSoundWhenJmriStops']);
+                    }
+                    log.log("Received audio state: "+name+", "+state+", "+data+" - done");
+                });
             },
             light: function(name, state, data) {
                 updateWidgets(name, state, data);

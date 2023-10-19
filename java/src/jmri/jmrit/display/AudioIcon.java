@@ -24,7 +24,6 @@ public class AudioIcon extends PositionableLabel {
 
     private NamedIcon _originalIcon = new NamedIcon("resources/icons/audio_icon.gif", "resources/icons/audio_icon.gif");
     private String _originalText = Bundle.getMessage("AudioIcon_Text");
-    private boolean _hideWhenNotInEditMode = false;
     private OnClickOperation _onClickOperation = OnClickOperation.DoNothing;
     private boolean _playSoundWhenJmriPlays = true;
     private boolean _stopSoundWhenJmriStops = false;
@@ -51,7 +50,6 @@ public class AudioIcon extends PositionableLabel {
         pos._originalIcon = new NamedIcon(_originalIcon);
         pos._originalText = _originalText;
         pos.setAudio(getNamedAudio().getName());
-        pos._hideWhenNotInEditMode = _hideWhenNotInEditMode;
         pos._onClickOperation = _onClickOperation;
         pos._playSoundWhenJmriPlays = _playSoundWhenJmriPlays;
         pos._stopSoundWhenJmriStops = _stopSoundWhenJmriStops;
@@ -103,14 +101,6 @@ public class AudioIcon extends PositionableLabel {
 
     public NamedBeanHandle<Audio> getNamedAudio() {
         return namedAudio;
-    }
-
-    public void setHideWhenNotInEditMode(boolean value) {
-        _hideWhenNotInEditMode = value;
-    }
-
-    public boolean getHideWhenNotInEditMode() {
-        return _hideWhenNotInEditMode;
     }
 
     public void setOnClickOperation(OnClickOperation operation) {
@@ -208,14 +198,6 @@ public class AudioIcon extends PositionableLabel {
                         changeAudioIconType();
                     }
                 });
-
-                // Hide when not in edit mode
-                JCheckBoxMenuItem cbMenuItem1 = new JCheckBoxMenuItem(Bundle.getMessage("AudioIcon_HideWhenNotInEditMode"));
-                cbMenuItem1.addActionListener((ActionEvent event) -> {
-                    _hideWhenNotInEditMode = cbMenuItem1.isSelected();
-                });
-                cbMenuItem1.setSelected(_hideWhenNotInEditMode);
-                popup.add(cbMenuItem1);
 
                 JMenu menu = new JMenu(Bundle.getMessage("AudioIcon_WebPanelMenu"));
                 ButtonGroup buttonGroup = new ButtonGroup();
