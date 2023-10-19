@@ -34,6 +34,8 @@ public class AudioIconXml extends PositionableLabelXml {
 
         AudioSource source = (AudioSource)p.getAudio();
         if (source != null) {
+            element.setAttribute("audio", source.getSystemName());
+
             AudioBuffer buffer = (AudioBuffer) jmri.InstanceManager.getDefault(jmri.AudioManager.class)
                     .getAudio(source.getAssignedBufferName());
             if (buffer != null) {
@@ -88,6 +90,17 @@ public class AudioIconXml extends PositionableLabelXml {
 
         // get object class and determine editor being used
         Editor editor = (Editor) o;
+
+        String audioName;
+        Attribute attr = element.getAttribute("audio");
+        if (attr == null) {
+            log.error("incorrect information for audio; must use audio name");
+            editor.loadFailed();
+            return;
+        } else {
+            audioName = attr.getValue();
+        }
+
         if (element.getAttribute("icon") != null) {
             NamedIcon icon;
             String name = element.getAttribute("icon").getValue();
@@ -157,6 +170,8 @@ public class AudioIconXml extends PositionableLabelXml {
             editor.loadFailed();
             return;
         }
+
+        l.setAudio(audioName);
 
         String onClickOperation = element.getAttribute("onClickOperation").getValue();
         l.setOnClickOperation(AudioIcon.OnClickOperation.valueOf(onClickOperation));

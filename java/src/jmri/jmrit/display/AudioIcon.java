@@ -42,10 +42,6 @@ public class AudioIcon extends PositionableLabel {
         super(s, editor);
         _originalIcon = _namedIcon;
 
-        // For testing only
-        AudioIcon.this.setAudio("IAS1");
-        if (namedAudio != null) ((AudioSource)namedAudio.getBean()).play();
-
         // Please retain the line below. It's used to create the resources/icons/audio_icon.gif icon
         // createAudioIconImage();
     }

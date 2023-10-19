@@ -1323,6 +1323,8 @@
         </xs:simpleType>
       </xs:attribute>
 
+      <xs:attribute name="audio" type="beanNameType"></xs:attribute>
+
       <xs:attribute name="hideWhenNotInEditMode" type="yesNoType" use="required"></xs:attribute>
       <xs:attribute name="playSoundWhenJmriPlays" type="yesNoType" use="required"></xs:attribute>
       <xs:attribute name="stopSoundWhenJmriStops" type="yesNoType" use="required"></xs:attribute>
