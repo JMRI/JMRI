@@ -1429,7 +1429,7 @@ public class ImportConditional {
                 oblockData = ca.getActionString();
                 if (oblockData == null || oblockData.isEmpty()) {
                     throw new InvalidConditionalActionException(
-                            Bundle.getMessage("ActionBadOBlockMmeory", ca.getType().toString()));
+                            Bundle.getMessage("ActionBadOBlockMemory", ca.getType().toString()));
                 }
                 action.getSelectMemoryNamedBean().setNamedBean(oblockData);
                 break;
@@ -1439,7 +1439,7 @@ public class ImportConditional {
                 oblockData = ca.getActionString();
                 if (oblockData == null || oblockData.isEmpty()) {
                     throw new InvalidConditionalActionException(
-                            Bundle.getMessage("ActionBadOBlockMmeory", ca.getType().toString()));
+                            Bundle.getMessage("ActionBadOBlockMemory", ca.getType().toString()));
                 }
                 action.getSelectMemoryNamedBean().setNamedBean(oblockData);
                 break;
