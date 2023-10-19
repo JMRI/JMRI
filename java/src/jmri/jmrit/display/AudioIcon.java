@@ -84,16 +84,8 @@ public class AudioIcon extends PositionableLabel {
      * @param s the Audio
      */
     public void setAudio(NamedBeanHandle<Audio> s) {
-//        if (namedAudio != null) {
-//            getAudio().removePropertyChangeListener(this);
-//        }
-
         namedAudio = s;
         if (namedAudio != null) {
-//            if (_iconMap == null) {
-//                makeIconMap();
-//            }
-//            getAudio().addPropertyChangeListener(this, s.getName(), "AudioIcon on Panel " + _editor.getName());
             setName(namedAudio.getName());  // Swing name for e.g. tests
         }
     }
