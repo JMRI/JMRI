@@ -13,7 +13,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 
 import jmri.*;
-import jmri.jmrit.audio.AudioSource;
 import jmri.jmrit.catalog.NamedIcon;
 
 /**
