@@ -442,7 +442,16 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>A new <strong>Audio</strong> icon has been added to Panel Editor.
+            It can be used to play audio on a web panel, or let the user start
+            playing sound in JMRI by clicking on the Audio icon. When editing the
+            panel, the popup menu for the icon has a new sub menu <strong>Web
+            panels</strong> that sets the options for how the icon should act on
+            a web panel.<br>
+            If the icon is used to play sound on a web panel, the option
+            <strong>Hide when not editing</strong> might be useful if the user
+            shouldn't see the icon. The icon plays the sound even if it's not
+            visible.</li>
         </ul>
 
     <h3>Control Panel Editor</h3>

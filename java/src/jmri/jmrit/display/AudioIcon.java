@@ -13,7 +13,9 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 
 import jmri.*;
+import jmri.jmrit.audio.AudioSource;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.util.swing.JmriMouseEvent;
 
 /**
  * An icon that plays an audio on a web panel.
@@ -29,7 +31,7 @@ public class AudioIcon extends PositionableLabel {
     private boolean _stopSoundWhenJmriStops = false;
 
     // the associated Audio object
-    private NamedBeanHandle<Audio> namedAudio;
+    private NamedBeanHandle<Audio> _namedAudio;
 
     public AudioIcon(String s, @Nonnull Editor editor) {
         super(s, editor);
@@ -81,17 +83,17 @@ public class AudioIcon extends PositionableLabel {
      * @param s the Audio
      */
     public void setAudio(NamedBeanHandle<Audio> s) {
-        namedAudio = s;
-        if (namedAudio != null) {
-            setName(namedAudio.getName());  // Swing name for e.g. tests
+        _namedAudio = s;
+        if (_namedAudio != null) {
+            setName(_namedAudio.getName());  // Swing name for e.g. tests
         }
     }
 
     public Audio getAudio() {
-        if (namedAudio == null) {
+        if (_namedAudio == null) {
             return null;
         }
-        return namedAudio.getBean();
+        return _namedAudio.getBean();
     }
 
     @Override
@@ -100,7 +102,7 @@ public class AudioIcon extends PositionableLabel {
     }
 
     public NamedBeanHandle<Audio> getNamedAudio() {
-        return namedAudio;
+        return _namedAudio;
     }
 
     public void setOnClickOperation(OnClickOperation operation) {
@@ -157,6 +159,25 @@ public class AudioIcon extends PositionableLabel {
         // If the icon is changed, we must remember that in case the user
         // switches between icon -> text -> icon
         _originalIcon = _namedIcon;
+    }
+
+    @Override
+    public void doMousePressed(JmriMouseEvent e) {
+        log.debug("doMousePressed");
+        if (!e.isMetaDown() && !e.isAltDown()) {
+            if (_onClickOperation != OnClickOperation.DoNothing && _namedAudio != null) {
+                Audio audio = _namedAudio.getBean();
+                if (audio.getSubType() == Audio.SOURCE && (audio instanceof AudioSource)) {
+                    AudioSource source = (AudioSource)audio;
+                    if (source.getState() == Audio.STATE_PLAYING) {
+                        source.stop();
+                    } else {
+                        source.play();
+                    }
+                }
+            }
+        }
+        super.doMousePressed(e);
     }
 
     private void changeAudioIconType() {
