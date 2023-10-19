@@ -2687,7 +2687,7 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
             putItem(result);
         } catch (Positionable.DuplicateIdException e) {
             // This should never happen
-            log.error("Editor.putLogixNG() with null id has thrown DuplicateIdException", e);
+            log.error("Editor.putAudio() with null id has thrown DuplicateIdException", e);
         }
         result.updateSize();
         return result;
