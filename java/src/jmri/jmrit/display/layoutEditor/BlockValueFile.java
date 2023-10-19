@@ -1,8 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static jmri.jmrit.XmlFile.newDocument;
-import static jmri.jmrit.XmlFile.xsltLocation;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -19,15 +16,12 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.PowerManager;
-import jmri.JmriException;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.ProcessingInstruction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle saving/restoring block value information to XML files. This class

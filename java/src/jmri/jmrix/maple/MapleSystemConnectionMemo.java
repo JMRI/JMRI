@@ -74,6 +74,7 @@ public class MapleSystemConnectionMemo extends DefaultSystemConnectionMemo imple
         return new NamedBeanComparator<>();
     }
 
+    @Override
     public void configureManagers(){
         setTurnoutManager(new SerialTurnoutManager(this));
         InstanceManager.setTurnoutManager(getTurnoutManager());

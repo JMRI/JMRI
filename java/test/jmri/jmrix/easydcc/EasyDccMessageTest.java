@@ -72,6 +72,7 @@ public class EasyDccMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         m = msg = new EasyDccMessage(1);
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = msg = null;

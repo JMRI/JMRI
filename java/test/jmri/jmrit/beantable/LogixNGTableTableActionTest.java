@@ -3,13 +3,8 @@ package jmri.jmrit.beantable;
 import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
 
-import javax.swing.*;
-import javax.swing.tree.TreePath;
-
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.actions.ActionTurnout;
-import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.tools.swing.ConditionalNGEditor;
 
 import jmri.util.*;
@@ -17,8 +12,6 @@ import jmri.util.*;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
-
-import org.netbeans.jemmy.operators.*;
 
 
 /**

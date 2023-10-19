@@ -1,6 +1,5 @@
 package jmri.web.server;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.prefs.BackingStoreException;
@@ -10,7 +9,6 @@ import jmri.InstanceManagerAutoDefault;
 import jmri.beans.PreferencesBean;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
-import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

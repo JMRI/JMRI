@@ -11,7 +11,6 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
-import jmri.jmrix.loconet.LnCommandStationType.SupportsSlot250;
 import jmri.jmrix.loconet.SlotMapEntry.SlotType;
 
 import org.slf4j.Logger;

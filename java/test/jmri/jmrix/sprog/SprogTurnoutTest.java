@@ -50,6 +50,7 @@ public class SprogTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         stcs.dispose();

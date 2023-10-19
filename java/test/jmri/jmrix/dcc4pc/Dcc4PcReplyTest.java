@@ -17,6 +17,7 @@ public class Dcc4PcReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         m = new Dcc4PcReply();
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = null;

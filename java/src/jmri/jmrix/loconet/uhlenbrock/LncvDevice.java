@@ -2,9 +2,6 @@ package jmri.jmrix.loconet.uhlenbrock;
 
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.decoderdefn.DecoderFile;
-import jmri.jmrix.loconet.LncvDevicesManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A class to hold LocoNet LNCV device identity information.

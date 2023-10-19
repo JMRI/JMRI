@@ -1,8 +1,5 @@
 package jmri.jmrit.logixng;
 
-import java.util.List;
-import java.util.Map;
-
 import jmri.Manager;
 
 /**

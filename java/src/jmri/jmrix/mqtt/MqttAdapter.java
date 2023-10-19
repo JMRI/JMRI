@@ -91,13 +91,13 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         options.put("16.5", new Option(Bundle.getMessage("NameTopicThrottleRcv"),
                                        new String[]{Bundle.getMessage("TopicThrottleRcv")},  Option.Type.TEXT));
         options.put("17.3", new Option(Bundle.getMessage("NameTopicDirectionSend"),
-                                       new String[]{Bundle.getMessage("TopicThrottleSend")},  Option.Type.TEXT));
+                                       new String[]{Bundle.getMessage("TopicDirectionSend")},  Option.Type.TEXT));
         options.put("17.5", new Option(Bundle.getMessage("NameTopicDirectionRcv"),
-                                       new String[]{Bundle.getMessage("TopicThrottleRcv")},  Option.Type.TEXT));
+                                       new String[]{Bundle.getMessage("TopicDirectionRcv")},  Option.Type.TEXT));
         options.put("18.3", new Option(Bundle.getMessage("NameTopicFunctionSend"),
-                                       new String[]{Bundle.getMessage("TopicThrottleSend")},  Option.Type.TEXT));
+                                       new String[]{Bundle.getMessage("TopicFunctionSend")},  Option.Type.TEXT));
         options.put("18.5", new Option(Bundle.getMessage("NameTopicFunctionRcv"),
-                                       new String[]{Bundle.getMessage("TopicThrottleRcv")},  Option.Type.TEXT));
+                                       new String[]{Bundle.getMessage("TopicFunctionRcv")},  Option.Type.TEXT));
         options.put("19.3", new Option(Bundle.getMessage("NameTopicConsistSend"),
                                        new String[]{Bundle.getMessage("TopicConsistSend")},  Option.Type.TEXT));
         options.put("20.3", new Option(Bundle.getMessage("NameTopicPowerSend"),

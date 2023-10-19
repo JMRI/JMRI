@@ -1,8 +1,6 @@
 package jmri.jmrit.blockboss;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
-
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SignalHead;

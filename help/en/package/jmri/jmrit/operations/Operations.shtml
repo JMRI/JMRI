@@ -1791,14 +1791,17 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       OperationsPro&trade; supports several types of fonts for printing. Select the desired font and
       size using the pull down menus. You can also select which printer to use when printing out a
       Manifest or switch list. See <a href="#SwitchList">Switch Lists</a> for more details.
+
       <h3>Format</h3>
       If you would like your Manifest and switch lists printed in a tabular (columns) format select
       the "Tabular" checkbox. The program uses the longest character length for each of the
-      attribute's names (Road, Number, Type, Length, Color, Load, etc.) to set the width of each
-      column. Location names and track names can be up to 25 characters, so you might want to
-      consider shorter length names when using the "Tabular" feature. FYI, the program reports the
-      longest attribute, track and location names to the system console when creating Manifests. You
-      can access the system console from any menu bar under "Help".
+      attribute's names (Road, Number, Type, Load, Hazardous, Color, Kernel, Owner, Division, Track,
+      Location, Comment, Set Out and Pick Up Messages) to set the width of each column. Location
+      names and track names can be up to 25 characters, so you might want to consider shorter length
+      names when using the "Tabular" feature. FYI, the program reports the longest attribute names
+      to the system console when creating Manifests. You can access the system console from any menu
+      bar under "Help".
+
       <p>
         There are three options with regards to how your Manifests and switch lists are formated.
         "Standard" provides one line for each car pick up or set out. The "Two Column" format
@@ -3643,11 +3646,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       mark), number, type, and length. The program will automatically calculate the car's maximum
       weight based on length and the scale your modeling. You can optionally add the car's color,
       built date, load and owner. If you want a group of cars to be switched as a unit, you can
-      create a "kernel". You can assign any number of cars to a kernel but the type of the first car
-      assigned will be used by the program to determine if the kernel is allowed at a location. The
-      entire length of the kernel is used to determine if the cars in the kernel will fit. Note that
-      the program also includes space for the car's couplers when calculating the length of a
-      kernel.
+      create a <a href="#Kernel">kernel</a>.
+      
       <p>
         <img src="images/Cars.png" alt="">
       </p>
@@ -3674,20 +3674,21 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         href="#LocationDivision">Railroad Divisions</a> and <a href="#EditCarLoads">custom
         car loads</a>. In the Cars table, a car's final destination has the prefix "->" in the
       "Destination" or "Final Destination" columns.
-
-      <h4>Add, Find, Save Buttons</h4>
-      There are three buttons located at the bottom of the Cars window. The "Add" button allows you
-      to add a car to your roster. The "Save" button stores the cars roster to a file. The "Find"
-      button and the adjacent text window can be used to find a car by its road number. You can use
-      the wild card "*" when entering a car number. For example if you want to find all cars with
-      numbers that end with 345, enter *345, and press find. Each time you press find, the next
-      car with a road number ending with "345" will be highlighted.
-
+      
       <h4>Moves, Wait and Last Time Moved</h4>
       You can edit the number of times a car has been moved by the program and the car's wait count
       directly from the "Cars" window. Double click on the cell in the Cars window to change. The
       built and owner fields can be found in the <a href="#CarsEdit">Edit Car</a> window. The last
       time moved is set by the program.
+
+      <h4>Add, Find, Save Buttons</h4>
+      There are three buttons located at the bottom of the Cars window. The
+      <a href="#CarsEdit">Add</a> button allows you to add a car to your roster. The "Save" button
+      stores the cars roster to a file. The "Find" button and the adjacent text window can be used
+      to find a car by its road number. You can use the wild card "*" when entering a car number.
+      For example if you want to find all cars with numbers that end with 345, enter *345, and press
+      find. Each time you press find, the next car with a road number ending with "345" will be
+      highlighted.
 
       <h3 id="ImportingCars">Importing Cars from a File</h3>
       If you already have a list of cars in a database, you can import the cars into the program.
@@ -3900,10 +3901,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       can accept the kernel. However, the program does use the entire length of the kernel to
       determine if the group of cars will fit on the destination track. Picking up or dropping off a
       kernel is regarded as one "move" when defining the number of moves in a train's route.
+      
       <p>
         Kernels are shown on Manifests and switch lists in the order they are entered, with the lead
         car being the first one entered. You can modify the order the cars in a kernel are printed
-        by changing their blocking order in the <a href="#CarsEdit">Edit Car</a> window.
+        by changing their blocking order in the <a href="#CarsEdit">Edit Car</a> window.  A negative 
+        blocking number will place the car before positive numbers.
       </p>
 
       <h4>Built</h4>
@@ -3917,7 +3920,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <a href="#TrainBuildOptions">configured</a> to only accept certain owner names.
 
       <h4>Comment</h4>
-      You can enter a comment for this car. The comment isn't shown on Manifests or switch lists.
+      You can enter a comment for this car. If you want to see the car's comment on the Train's Manifest
+      or switch lists, make an adjust to the <a href="#MessageFormats">Message Formats</a>.
 
       <h4 id="CARIDTAG">Id Tag
             [only if <a href="#EnableIdentificationTagFields">Enable ID Tag</a> option has been selected]</h4>

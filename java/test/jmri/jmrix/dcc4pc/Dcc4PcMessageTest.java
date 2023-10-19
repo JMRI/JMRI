@@ -168,6 +168,7 @@ public class Dcc4PcMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         m = new Dcc4PcMessage(5);
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = null;

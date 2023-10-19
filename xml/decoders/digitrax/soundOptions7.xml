@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI  2023 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2023</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2023-09-29</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+  </revhistory>
+  
+      <!-- Sound Options -->
+        <variable CV="60" item="Sound Option 1" include="SDXH167Ext">
+        <enumVal>
+          <enumChoice choice="Single Scheme">
+          </enumChoice>
+        </enumVal>
+        <label>Locomotive Sound Scheme</label>
+      </variable>
+      <variable CV="60" item="Sound Option 1" include="SDXH167ExtS">
+        <enumVal>
+          <enumChoice choice="Steam">
+            <choice xml:lang="it">Vapore</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Steam/Diesel Option</label>
+        <label xml:lang="it">Opzioni Vapore-Diesel</label>
+      </variable>
+	  <variable CV="60" item="Sound Option 1" include="SDXH167ExtD">
+        <enumVal>
+          <enumChoice choice="Diesel">
+            <choice xml:lang="it">Diesel</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Steam/Diesel Option</label>
+        <label xml:lang="it">Opzioni Vapore-Diesel</label>
+      </variable>
+      <variable CV="60" item="Sound Option 1" include="SDH167,SDXH167">
+        <enumVal>
+          <enumChoice choice="GP38 Diesel"/>
+          <enumChoice choice="GE Evo Diesel"/>
+          <enumChoice choice="SD70 Diesel"/>
+          <enumChoice choice="GP10 Diesel"/>
+          <enumChoice choice="RS1 Diesel"/>
+          <enumChoice choice="C420 Diesel"/>
+          <enumChoice choice="Steam 1 (UP3985)"/>
+          <enumChoice choice="Steam 2 (K27)"/>
+        </enumVal>
+        <label>Locomotive Sound Scheme</label>
+        <label xml:lang="it">Schema Suoni Loco</label>
+      </variable>
+	      <!-- Whistle Selector for Steam -->
+      <variable CV="150" item="Sound Option 2" include="SDXH167ExtS">
+        <enumVal>
+          <enumChoice choice="Default Whistle">
+            <choice>Standard Whistle</choice>
+            <choice xml:lang="it">Tromba Standard</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Whistle 1">
+            <choice>Alternate Whistle 1</choice>
+            <choice xml:lang="it">Tromba alternativa 1</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Whistle 2">
+            <choice>Alternate Whistle 2</choice>
+            <choice xml:lang="it">Tromba alternativa 2</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Whistle 3">
+            <choice>Alternate Whistle 3</choice>
+            <choice xml:lang="it">Tromba alternativa 3</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Whistle 1" value="128">
+            <choice>Alternate Whistle 128</choice>
+            <choice xml:lang="it">Tromba alternativa 128</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Whistle 2">
+            <choice>Alternate Whistle 129</choice>
+            <choice xml:lang="it">Tromba alternativa 129</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Whistle 3">
+            <choice>Alternate Whistle 130</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Whistle 4">
+            <choice>Alternate Whistle 131</choice>
+            <choice xml:lang="it">Tromba alternativa 131</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Whistle Selector</label>
+        <label xml:lang="it">Selettore Tromba</label>
+      </variable>
+      <!-- Horn Selector for Diesel -->
+      <variable CV="150" item="Sound Option 2" include="SDXH167Ext,SDXH167ExtD">
+        <enumVal>
+          <enumChoice choice="Default Horn">
+            <choice>Standard Horn</choice>
+            <choice xml:lang="it">Tromba Standard</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Horn 1">
+            <choice>Alternate Horn 1</choice>
+            <choice xml:lang="it">Tromba alternativa 1</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Horn 2">
+            <choice>Alternate Horn 2</choice>
+            <choice xml:lang="it">Tromba alternativa 2</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Horn 3">
+            <choice>Alternate Horn 3</choice>
+            <choice xml:lang="it">Tromba alternativa 3</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Horn 1" value="128">
+            <choice>Alternate Horn 128</choice>
+            <choice xml:lang="it">Tromba alternativa 128</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Horn 2">
+            <choice>Alternate Horn 129</choice>
+            <choice xml:lang="it">Tromba alternativa 129</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Horn 3">
+            <choice>Alternate Horn 130</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Horn 4">
+            <choice>Alternate Horn 131</choice>
+            <choice xml:lang="it">Tromba alternativa 131</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Horn Selector</label>
+        <label xml:lang="it">Selettore Tromba</label>
+      </variable>
+      <!-- Horn Selector for Diesel -->
+      <variable CV="150" item="Sound Option 2" exclude="SDXH167ExtS,SDXH167ExtD">
+        <qualifier>
+          <variableref>Sound Option 1</variableref>
+          <relation>le</relation>
+          <value>5</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Default Horn">
+            <choice>Horn GP38</choice>
+            <choice xml:lang="it">Tromba GP38</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Horn 1">
+            <choice>Horn GEVO</choice>
+            <choice xml:lang="it">Tromba GEVO</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Horn 2">
+            <choice>Horn SD70</choice>
+            <choice xml:lang="it">Tromba SD70</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Horn 3">
+            <choice>Horn GP10</choice>
+            <choice xml:lang="it">Tromba GP10</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Horn 4">
+            <choice>Horn RS1</choice>
+            <choice xml:lang="it">Tromba RS1</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Horn 5">
+            <choice>Horn C420</choice>
+            <choice xml:lang="it">Tromba C420</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Horn 6">
+            <choice>Alternate Horn 6</choice>
+            <choice xml:lang="it">Tromba alternativa 3</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Horn 7">
+            <choice>Alternate Horn 7</choice>
+            <choice xml:lang="it">Tromba alternativa 3</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Default Horn" value="128">
+            <choice>Playable Default Horn</choice>
+            <choice xml:lang="it">Tromba alternativa 128</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Horn 1">
+            <choice>Playable Horn 1</choice>
+            <choice xml:lang="it">Tromba alternativa 129</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Horn 2">
+            <choice>Playable Horn 2</choice>
+            <choice xml:lang="it">Tromba alternativa 130</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Horn 3">
+            <choice>Playable Horn 3</choice>
+            <choice xml:lang="it">Tromba alternativa 131</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Horn 4">
+            <choice>Playable Horn 4</choice>
+            <choice xml:lang="it">Tromba alternativa 132</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Horn 5">
+            <choice>Playable Horn 5</choice>
+            <choice xml:lang="it">Tromba alternativa 133</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Horn 6">
+            <choice>Playable Horn 6</choice>
+            <choice xml:lang="it">Tromba alternativa 134</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Horn 7">
+            <choice>Playable Horn 7</choice>
+            <choice xml:lang="it">Tromba alternativa 135</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Horn Selector</label>
+        <label xml:lang="it">Selettore Tromba</label>
+      </variable>
+      <variable CV="151" item="Sound Option 5" default="28">
+        <decVal max="64"/>
+        <label>Peak Speed for Auto coupler/brake on dir change</label>
+        <label xml:lang="it">Velocità picco per freni/aggancio automatico per cambio direzione</label>
+      </variable>
+  
+	     <variable CV="155" item="Sound Option 6" default="0">
+        <enumVal>
+          <enumChoice choice="Automatic">
+            <choice>Automatic</choice>
+            <choice xml:lang="it">Automatico</choice>
+          </enumChoice>
+          <enumChoice choice="Semi-Automatic">
+            <choice>Semi-Automatic</choice>
+            <choice xml:lang="it">Semi automatico</choice>
+          </enumChoice>
+          <enumChoice choice="Manual">
+            <choice>Manual</choice>
+            <choice xml:lang="it">Manuale</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Notching Mode</label>
+        <label xml:lang="it">Modalità Notch</label>
+      </variable>
+      <variable CV="157" item="Sound Option 4" exclude="SDH166D,SDH186MT,SDN136PS">
+        <enumVal>
+          <enumChoice choice="Default Bell">
+            <choice>Standard Bell</choice>
+            <choice xml:lang="it">Campana Standard</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Bell 1">
+            <choice>Alternate Bell 1</choice>
+            <choice xml:lang="it">Campana alternativa 1</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Bell 2">
+            <choice>Alternate Bell 2</choice>
+            <choice xml:lang="it">Campana alternativa 2</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Bell 3">
+            <choice>Alternate Bell 3</choice>
+            <choice xml:lang="it">Campana alternativa 3</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Bell Selector</label>
+        <label xml:lang="it">Selettore Campana</label>
+      </variable>
+
+	   <variable CV="10" item="Sound Option 8" default="0"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+        <decVal/>
+		<label>BEMF tachometer voltage gain adjust</label>
+		<label xml:lang="it">BEMF tachometer voltage gain adjust</label>
+		<tooltip>Series7 will give about 1 scale mph at speed step 1% on DT6XX with factory default CV10=00, 127 = step 1 will be about 1/2 scale mph  </tooltip>
+	  </variable>
+	  <variable CV="129" item="Sound Option 9" readOnly="no" default="0"  include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+        <enumVal>
+          <enumChoice choice="Series7 Std Power Curve" value="0">
+            <choice>Series7 Std Power Curve</choice>
+          </enumChoice>
+          <enumChoice choice="On:1" value="1">
+            <choice>On:1</choice>
+          </enumChoice>
+        </enumVal>
+		<label> (1=PW6, 0=PW7)(Selects logic to follow changes in motor speed)</label>
+      </variable>
+  
+	  
+	  <variable CV="11" tooltip="Sound times out after loco is de-selected or idle" item="Sound Option 7" default="6">
+        <enumVal>
+          <enumChoice choice="Off" value="0">
+            <choice>Off</choice>
+            <choice xml:lang="it">spento</choice>
+          </enumChoice>
+          <enumChoice choice="On:06" value="06">
+            <choice>On:06</choice>
+          </enumChoice>
+          <enumChoice choice="On:30" value="30">
+            <choice>On:30</choice>
+          </enumChoice>
+          <enumChoice choice="On:60" value="60">
+            <choice>On:60</choice>
+          </enumChoice>
+          <enumChoice choice="On:90" value="90">
+            <choice>On:90</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Sound Time Out (seconds)</label>
+        <label xml:lang="it">Durata Suono</label>
+      </variable>
+
+  <variable CV="166" item="Sound Option 10" default="7"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <decVal max="9"/>
+    <label>Cutoff Speed for wheel slip</label>
+    <label xml:lang="it">Cutoff Speed for wheel slip</label>
+    <tooltip>3-6</tooltip>
+  </variable>
+
+  <variable CV="190" item="Sound Option 11" default="5"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <decVal max="14"/>
+    <label>Cutoff Minimum Speed Slip</label>
+    <label xml:lang="it">Cutoff Minimum Speed SlipSlip</label>
+    <tooltip>Min 3-12, Max 14</tooltip>
+  </variable>
+
+  <variable CV="169" item="Sound Option 12" default="30"    include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <decVal max="99"/>
+    <label>Cutoff Speed HIGH</label>
+    <label xml:lang="it">Cutoff Speed HIGH</label>
+    <tooltip>28-50</tooltip>
+  </variable>
+
+  <variable CV="170" item="Sound Option 13" default="13"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <decVal max="28"/>
+    <label>Cutoff Speed LOW</label>
+    <label xml:lang="it">Cutoff Speed LOW</label>
+    <tooltip>9-28</tooltip>
+  </variable>
+  <variable CV="192" item="Sound Option 14" default="5"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <decVal max="14"/>
+    <label>Cutoff Speed Horn-Whistle</label>
+    <label xml:lang="it">Cutoff Speed Horn-Whistle</label>
+    <tooltip>Min 3-12, Max 14</tooltip>
+  </variable>
+
+  <variable CV="167" item="Sound Option 15" default="14"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <decVal max="64"/>
+    <label>Cutoff Speed for Auto Open Cyl</label>
+    <label xml:lang="it">Cutoff Speed for Auto Open Cyl</label>
+    <tooltip>Min 12-21, Max 64</tooltip>
+  </variable>
+
+  <variable CV="184" item="Sound Option 16" default="21"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <decVal max="32"/>
+    <label>Steam cock threshold</label>
+    <label xml:lang="it">Velocità di Steam cock threshold</label>
+  </variable>
+       <!-- Sound options -->
+      <variable CV="132" item="Sound Option 17" default="128">
+        <decVal/>
+        <label>Notch Rate</label>
+        <label xml:lang="it">Tasso di Notch</label>
+      </variable>
+      <variable CV="133" item="Sound Option 18" tooltip="DRIVER dia in.(5/32 to 200/32 ratio (96=3:1))" default="69" include="SDXH167ExtS">
+        <decVal max="200"/>
+        <label>Steam Chuff/CAM Config</label>
+        <label xml:lang="it">Configura Chuff-CAM</label>
+      </variable>
+      <variable CV="133" item="Sound Option 18" default="63" include="SDXH167Ext">
+        <decVal max="200"/>
+        <label>Steam Chuff/CAM-Driver Config</label>
+        <label xml:lang="it">Configura Chuff-CAM</label>
+      </variable>
+      <variable CV="133" item="Sound Option 18" default="42" include="SDXH167ExtD">
+        <decVal max="200"/>
+        <label>Driver Dia Config</label>
+        <label xml:lang="it">Configura Driver Dia</label>
+      </variable>
+	  <variable CV="133" item="Sound Option 18" default="63" exclude="SDXH167ExtS">
+        <decVal max="200"/>
+        <label>Steam Chuff/CAM Config</label>
+        <label xml:lang="it">Configura Chuff-CAM</label>
+      </variable>
+      <variable CV="134" item="Sound Option 19" tooltip="32=100%" default="23" include="SDXH167Ext">
+        <decVal max="128"/>
+        <label>Driver Gear Ratio Trim</label>
+        <label xml:lang="it">Regola rapporto marcia Vapore</label>
+      </variable>
+      <variable CV="134" item="Sound Option 19" tooltip="32=100%" default="23" include="SDXH167ExtS">
+        <decVal max="128"/>
+        <label>Steam Gear Ratio Trim</label>
+        <label xml:lang="it">Regola rapporto marcia Vapore</label>
+      </variable>
+      <variable CV="134" item="Sound Option 19" tooltip="32=100%" default="32" include="SDXH167ExtD">
+        <decVal max="128"/>
+        <label>Driver Gear Ratio Trim</label>
+        <label xml:lang="it">Regola rapporto marcia Vapore</label>
+      </variable>
+      <variable CV="134" item="Sound Option 19" tooltip="32=100%" default="12"  exclude="SDXH167ExtS,SDXH167ExtD">
+        <decVal max="128"/>
+        <label>Steam Gear Ratio Trim</label>
+        <label xml:lang="it">Regola rapporto marcia Vapore</label>
+      </variable>
+   
+
+
+</variables>

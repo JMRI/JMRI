@@ -11,6 +11,7 @@ import org.junit.jupiter.api.*;
 
 /**
  * Check help files for UTF-8 characters.
+ * Files that contain &l;tmeta charset="utf-8"&gt; are exempt.
  *
  * @author Daniel Bergqvist Copyright (C) 2022
  */
@@ -34,6 +35,7 @@ public class CheckHelpFilesForUTF8Test {
 
                 var lines = Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
                 for (String s : lines) {
+                    if (s.contains("<meta charset=\"utf-8\">")) break; // no further testing for UTF
                     s.codePoints().forEach((codePoint) -> {
                         if (codePoint > 127) {
                             numErrors++;

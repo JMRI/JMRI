@@ -7,8 +7,6 @@ import jmri.jmrit.logixng.expressions.TriggerOnce;
 
 import org.jdom2.Element;
 
-import jmri.jmrit.logixng.DigitalExpressionBean;
-
 /**
  * Handle XML configuration for ActionLightXml objects.
  *

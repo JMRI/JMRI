@@ -8,8 +8,6 @@ import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.ColorUtil;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This module handles saving and loading LayoutTrackDrawingOptions for a

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.OtherData;
-import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 import jmri.jmrit.ctc.ctcserialdata.TrafficLockingData;
 import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
 import jmri.jmrit.ctc.editor.code.CheckJMRIObject;
@@ -133,6 +132,7 @@ public class FrmTRL extends javax.swing.JFrame {
 
         _mEditLeftTrafficLockingRules.setText(Bundle.getMessage("LabelDlgTRLEdit"));
         _mEditLeftTrafficLockingRules.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mEditLeftTrafficLockingRulesActionPerformed(evt);
             }
@@ -140,6 +140,7 @@ public class FrmTRL extends javax.swing.JFrame {
 
         _mEditRightTrafficLockingRules.setText(Bundle.getMessage("LabelDlgTRLEdit"));
         _mEditRightTrafficLockingRules.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mEditRightTrafficLockingRulesActionPerformed(evt);
             }
@@ -151,6 +152,7 @@ public class FrmTRL extends javax.swing.JFrame {
 
         _mOK.setText(Bundle.getMessage("ButtonOK"));
         _mOK.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mOKActionPerformed(evt);
             }
@@ -168,6 +170,7 @@ public class FrmTRL extends javax.swing.JFrame {
 
         _mAutoGenerate.setText(Bundle.getMessage("LabelDlgTRLAutoGenerate"));
         _mAutoGenerate.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mAutoGenerateActionPerformed(evt);
             }
@@ -175,6 +178,7 @@ public class FrmTRL extends javax.swing.JFrame {
 
         _mReverseLeftRight.setText(Bundle.getMessage("LabelDlgTRLReverseLeftRight"));
         _mReverseLeftRight.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mReverseLeftRightActionPerformed(evt);
             }

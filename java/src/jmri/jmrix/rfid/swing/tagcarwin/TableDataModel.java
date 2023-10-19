@@ -574,6 +574,7 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
             this.model = model;
         }
 
+        @Override
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
             if (model == null) {
                 log.error("was not called through the correct constructor - model is null");

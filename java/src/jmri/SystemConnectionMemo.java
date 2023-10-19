@@ -2,7 +2,6 @@ package jmri;
 
 import java.util.Comparator;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 

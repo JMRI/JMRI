@@ -4,18 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.Properties;
 
-import jmri.JmriException;
 import jmri.jmrit.roster.RosterEntry;
-
-import org.openlcb.EventID;
-import org.openlcb.NodeID;
-import org.openlcb.OlcbInterface;
-import org.openlcb.cdi.CdiRep;
-import org.openlcb.cdi.cmd.BackupConfig;
-import org.openlcb.cdi.impl.ConfigRepresentation;
 
 /**
  * Import CV values from a TCS backup file (from a CDI backup)

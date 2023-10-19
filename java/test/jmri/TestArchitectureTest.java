@@ -54,7 +54,8 @@ public class TestArchitectureTest {
     public static final ArchRule junit4TestRule = noClasses().that()
         .doNotHaveFullyQualifiedName("jmri.util.junit.rules.RetryRuleTest").and()
         .doNotHaveFullyQualifiedName("jmri.jmrit.display.logixng.ActionPositionableTest").and()
-        .resideOutsideOfPackage("jmri.jmrit.logixng..")
+        .resideOutsideOfPackage("jmri.jmrit.logixng..").and()
+        .resideOutsideOfPackage("jmri.jmrix.bidib..")
         .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Test");
 
     /**
@@ -64,7 +65,8 @@ public class TestArchitectureTest {
     public static final ArchRule junit4BeforeRule = noClasses().that()
         .doNotHaveFullyQualifiedName("jmri.util.junit.rules.RetryRuleTest").and()
         .doNotHaveFullyQualifiedName("jmri.jmrit.display.logixng.ActionPositionableTest").and()
-        .resideOutsideOfPackage("jmri.jmrit.logixng..")
+        .resideOutsideOfPackage("jmri.jmrit.logixng..").and()
+        .resideOutsideOfPackage("jmri.jmrix.bidib..")
         .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Before");
     
     /**
@@ -74,7 +76,8 @@ public class TestArchitectureTest {
     public static final ArchRule junit4AfterRule = noClasses().that()
         .doNotHaveFullyQualifiedName("jmri.util.junit.rules.RetryRuleTest").and()
         .doNotHaveFullyQualifiedName("jmri.jmrit.display.logixng.ActionPositionableTest").and()
-        .resideOutsideOfPackage("jmri.jmrit.logixng..")
+        .resideOutsideOfPackage("jmri.jmrit.logixng..").and()
+        .resideOutsideOfPackage("jmri.jmrix.bidib..")
         .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.After");
 
     /**

@@ -3,8 +3,6 @@ package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 import java.beans.PropertyChangeListener;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Table data model for display of Neighbouring layout blocks.

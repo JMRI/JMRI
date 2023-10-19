@@ -14,7 +14,6 @@ import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.ConnectionConfig;
-import jmri.jmrix.ActiveSystemsMenu;
 import jmri.jmrix.ConnectionConfigManager;
 
 import org.slf4j.Logger;

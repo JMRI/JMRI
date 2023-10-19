@@ -10,7 +10,6 @@ import jmri.util.swing.WindowInterface;
 import javax.swing.JMenu;
 
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import jmri.jmrix.loconet.swing.LocoNetMenuItem;
 import jmri.jmrix.loconet.swing.menuitemspi.spi.MenuItemsInterface;
 
 import org.slf4j.Logger;

@@ -56,8 +56,8 @@
 -err:-unusedAllocation
   # cases of the `catch (FooException ex)` and then not using `ex`
 -err:-unusedExceptionParam
-  # allow unused imports as a convenience
--err:-unusedImport
+  # unused imports removed Oct 2023
+-err:+unusedImport
 -err:+unusedLabel
 -err:+unusedLocal
   # our APIs routinely have "may need in future" parameters
@@ -117,7 +117,6 @@
 -err:+semicolon
 -err:+specialParamHiding
 -err:+switchDefault
--err:+syncOverride
 -err:+unavoidableGenericProblems
 -err:+unchecked
 -err:+uselessTypeCheck

@@ -98,6 +98,7 @@ public class EasyDccReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         m = msg = new EasyDccReply();
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = msg = null;

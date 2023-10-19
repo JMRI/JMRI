@@ -4,15 +4,12 @@ import java.awt.GraphicsEnvironment;
 
 import jmri.jmrit.logixng.actions.*;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 
 import jmri.*;
 import jmri.jmrit.display.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.*;

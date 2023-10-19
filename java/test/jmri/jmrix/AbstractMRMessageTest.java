@@ -18,6 +18,7 @@ public class AbstractMRMessageTest extends AbstractMessageTestBase {
         };
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = null;

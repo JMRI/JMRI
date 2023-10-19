@@ -722,7 +722,12 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                             dccTurnoutModel.setDirtyRow(row, false);
                         }
                     }
-                    _tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); //request updated definitions list 
+                    //request updated definitions list
+                    if (_tc.getCommandStation().isTurnoutIDsMessageRequired()) {
+                        _tc.sendDCCppMessage(DCCppMessage.makeTurnoutIDsMsg(), this);
+                    } else {
+                        _tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); 
+                    }                    
                     break;
                 case SERVOTURNOUT:
                     for (int i = 0; i < servoTurnoutModel.getRowData().size(); i++) {
@@ -754,7 +759,12 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                             servoTurnoutModel.setDirtyRow(row, false);
                         }
                     }
-                    _tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); //request updated definitions list 
+                    //request updated definitions list
+                    if (_tc.getCommandStation().isTurnoutIDsMessageRequired()) {
+                        _tc.sendDCCppMessage(DCCppMessage.makeTurnoutIDsMsg(), this);
+                    } else {
+                        _tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); 
+                    }                    
                     break;
                 case VPINTURNOUT:
                     for (int i = 0; i < vpinTurnoutModel.getRowData().size(); i++) {
@@ -784,7 +794,12 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                             vpinTurnoutModel.setDirtyRow(row, false);
                         }
                     }
-                    _tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); //request updated definitions list 
+                    //request updated definitions list
+                    if (_tc.getCommandStation().isTurnoutIDsMessageRequired()) {
+                        _tc.sendDCCppMessage(DCCppMessage.makeTurnoutIDsMsg(), this);
+                    } else {
+                        _tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); 
+                    }                    
                     break;
                 case OUTPUT:
                     for (int i = 0; i < outputModel.getRowData().size(); i++) {

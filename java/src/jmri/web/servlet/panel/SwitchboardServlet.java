@@ -1,6 +1,5 @@
 package jmri.web.servlet.panel;
 
-import java.awt.*;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,7 +8,6 @@ import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.jmrit.display.switchboardEditor.BeanSwitch;
 import jmri.server.json.JSON;
-import jmri.util.ColorUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;

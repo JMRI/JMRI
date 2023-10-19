@@ -11,7 +11,6 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
-import jmri.jmrix.sprog.sprogslotmon.SprogSlotMonDataModel;
 import jmri.util.swing.JmriJOptionPane;
 
 /**

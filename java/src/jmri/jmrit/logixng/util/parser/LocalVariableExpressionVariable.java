@@ -2,7 +2,6 @@ package jmri.jmrit.logixng.util.parser;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.SymbolTable;
 
 /**

@@ -29,7 +29,7 @@ public class PrintTrainTest extends OperationsTestCase {
         Train train1 = tmanager.getTrainById("1");
         Assert.assertNotNull(train1);
 
-        PrintTrains pta = new PrintTrains(true, train1);
+        PrintTrainsFrame pta = new PrintTrainsFrame(true, train1);
         Assert.assertNotNull("exists", pta);
 
         // confirm print preview window is showing

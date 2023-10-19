@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.implementation;
 
-import static jmri.NamedBean.UNKNOWN;
-
 import java.io.PrintWriter;
 import java.util.*;
 
@@ -12,7 +10,6 @@ import jmri.NamedBean;
 import jmri.NamedBeanUsageReport;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
-import jmri.jmrit.logixng.Module.Parameter;
 import jmri.jmrit.logixng.ModuleManager;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.SymbolTable.VariableData;

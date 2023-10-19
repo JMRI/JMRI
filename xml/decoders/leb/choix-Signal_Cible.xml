@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id$	-->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>JF</firstname>
+        <surname>Leb</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2019-05-16</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial creation</revremark>
+    </revision>
+  </revhistory>
+  <!-- Specific for Leb signal decoder -->
+  <!-- Switching modes common to Leb decoders  -->
+  <enumChoice choice="[0]" value="0">
+		<choice> [0] Aucune</choice>
+  </enumChoice>
+  <enumChoice choice="[1]" value="1">
+		<choice> [1] S Vl Cible A</choice>
+  </enumChoice>
+  <enumChoice choice="[2]" value="2">
+		<choice> [2] S Vl Cible A</choice>
+  </enumChoice>
+  <enumChoice choice="[3]" value="3">
+		<choice> [3] S A Vl Cible A</choice>
+  </enumChoice>
+  <enumChoice choice="[4]" value="4">
+		<choice> [4] Cv M Cible A</choice>
+  </enumChoice>
+  <enumChoice choice="[5]" value="5">
+		<choice> [5] C S Vl  Cible C</choice>
+  </enumChoice>
+  <enumChoice choice="[6]" value="6">
+		<choice> [6]] C S A Vl  Cible C</choice>
+  </enumChoice>
+  <enumChoice choice="[7]" value="7">
+		<choice> [7]] C S A M Vl  Cible C</choice>
+  </enumChoice>
+  <enumChoice choice="[8]" value="8">
+		<choice> [8]] Cv S A M Vl Cible C</choice>
+  </enumChoice>
+  <enumChoice choice="[9]" value="9">
+		<choice> [9]] S R A Vl  Cible F</choice>
+  </enumChoice>
+  <enumChoice choice="[10]" value="10">
+		<choice>[10] C S R A Vl Cible F</choice>
+  </enumChoice>
+  <enumChoice choice="[11]" value="11">
+		<choice>[11] Cv S R A Vl Cible F</choice>
+  </enumChoice>
+  <enumChoice choice="[12]" value="12">
+		<choice>[12] C S R A M Vl Cible F</choice>
+  </enumChoice>
+  <enumChoice choice="[13]" value="13">
+		<choice>[13] Cv S R A M Vl Cible F</choice>
+  </enumChoice>
+  <enumChoice choice="[14]" value="14">
+		<choice>[14] C S RR A Vl Cible H</choice>
+  </enumChoice>
+  <enumChoice choice="[15]" value="15">
+		<choice>[15] C S RR R A Vl Cible H</choice>
+  </enumChoice>
+  <enumChoice choice="[16]" value="16">
+		<choice>[16] Cv S RR A Vl Cible H</choice>
+  </enumChoice>
+  <enumChoice choice="[17]" value="17">
+		<choice>[17]] C S M RR A Vl Cible H</choice>
+  </enumChoice>
+  <enumChoice choice="[18]" value="18">
+		<choice>[18] Cv S M RR A Vl Cible H</choice>
+  </enumChoice>
+  <enumChoice choice="[19]" value="19">
+		<choice>[19] C S M RR R A Vl Cible H</choice>
+  </enumChoice>
+  <enumChoice choice="[20]" value="20">
+		<choice>[20] Cv S M RR R A Vl Cible H</choice>
+  </enumChoice>
+  <enumChoice choice="[21]" value="21">
+		<choice>[21] A Vl Cible R</choice>
+  </enumChoice>
+  <enumChoice choice="[22]" value="22">
+		<choice>[22] S A Vl Cible R</choice>
+  </enumChoice>
+  <enumChoice choice="[23]" value="23">
+		<choice>[23] D A Vl Cible R</choice>
+  </enumChoice>
+  <enumChoice choice="[24]" value="24">
+		<choice>[24] R A  Cible R</choice>
+  </enumChoice>
+  <enumChoice choice="[25]" value="25">
+		<choice>[25] R A Vl Cible R</choice>
+  </enumChoice>
+  <enumChoice choice="[26]" value="26">
+		<choice>[26] D R A Vl Cible R</choice>
+  </enumChoice>
+  <enumChoice choice="[27]" value="27">
+		<choice> [27]] C S M Vl  Cible C</choice>
+  </enumChoice>
+  <enumChoice choice="[28]" value="28">
+		<choice> [28]] Cv A M Vl Cible C</choice>
+  </enumChoice>
+  <enumChoice choice="[29]" value="29">
+		<choice> [29]] S Vl  Cible C</choice>
+  </enumChoice>
+  <enumChoice choice="[33]" value="33">
+		<choice> [33] TIV Cible TIV</choice>
+  </enumChoice>
+  <enumChoice choice="[34]" value="34">
+		<choice> [34] Rouge Cible Bande Sol nain</choice>
+  </enumChoice>
+  <enumChoice choice="[35]" value="35">
+		<choice> [35] Rouge Cible Bande </choice>
+  </enumChoice>
+  <enumChoice choice="[36]" value="36">
+		<choice> [36] Jaune Cible Bande </choice>
+  </enumChoice>
+  <enumChoice choice="[40]" value="40">
+		<choice> [40] Cv M Cible Sol nain</choice>
+  </enumChoice>
+  <enumChoice choice="[41]" value="41">
+		<choice> [41] C S RR A  Cible H</choice>
+  </enumChoice>
+
+</enumChoiceGroup>

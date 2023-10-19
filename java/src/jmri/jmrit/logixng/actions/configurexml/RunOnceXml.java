@@ -1,13 +1,10 @@
 package jmri.jmrit.logixng.actions.configurexml;
 
-import java.util.*;
-
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.RunOnce;
 
-import org.jdom2.Attribute;
 import org.jdom2.Element;
 
 

@@ -2,7 +2,6 @@ package jmri.jmrit.symbolicprog;
 
 import java.io.File;
 import java.io.IOException;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import jmri.jmrit.roster.RosterEntry;

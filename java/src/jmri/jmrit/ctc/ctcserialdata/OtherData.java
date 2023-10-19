@@ -1,8 +1,6 @@
 package jmri.jmrit.ctc.ctcserialdata;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import javax.swing.ButtonGroup;
 import jmri.jmrit.ctc.NBHSensor;
 
