@@ -301,8 +301,12 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
                             $widget['sound'] = $(this).attr('sound');
                             log.log("Sound: "+$widget['sound']);
-                            $widget['audio_widget'] = new Audio($widget['sound']);
-                            $widget['audio_widget'].play();
+                            $widget['onClickOperation'] = $(this).attr('onClickOperation');
+                            log.log("onClickOperation: "+$widget['onClickOperation']);
+                            if ($widget['onClickOperation'] == "PlaySoundLocally") {
+                                $widget['audio_widget'] = new Audio($widget['sound']);
+//                                $widget['audio_widget'].play();
+                            }
                             $widget['rotation'] = $(this).find('icon').find('rotation').text() * 1;
                             $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($widget.rotation * 90);
                             $widget['scale'] = $(this).find('icon').attr('scale');
@@ -1474,10 +1478,24 @@ function $handleClick(e) {
         var $widget = $gWidgets[this.id];
         log.log("Click on audioicon: "+$widget);
         log.log("Audio state: "+$widget.systemName+", "+$widget['state']);
-        if ($widget['state'] == 16) {    // Sound is stopped
-            jmri.setAudio($widget.systemName, "Play");
-        } else if ($widget['state'] == 17) {    // Sound is playing
-            jmri.setAudio($widget.systemName, "Stop");
+        log.log("Audio onClickOperation: "+$widget['onClickOperation']);
+        switch ($widget['onClickOperation']) {
+            case "PlaySoundLocally":
+                log.log("Audio is playing: "+(!$widget['audio_widget'].paused));
+                if ($widget['audio_widget'].paused) {   // Sound is stopped
+                    $widget['audio_widget'].play();
+                } else {                                // Sound is playing
+                    $widget['audio_widget'].pause();
+                    $widget['audio_widget'].currentTime = 0;
+                }
+                break;
+            case "PlaySoundGlobally":
+                if ($widget['state'] == 16) {           // Sound is stopped
+                    jmri.setAudio($widget.systemName, "Play");
+                } else if ($widget['state'] == 17) {    // Sound is playing
+                    jmri.setAudio($widget.systemName, "Stop");
+                }
+                break;
         }
 //        sendElementChange($widget.jsonType, $widget.systemName, $newState);
 //        jmri.clickLogixNGIcon($widget['identity']);
@@ -2474,8 +2492,23 @@ $(document).ready(function() {
             audio: function(name, state, data) {
                 log.log("Received audio state: "+name+", "+state+", "+data);
 //                log.log("WhereUsed: "+whereUsed[$widget.systemName]);
-                log.log("WhereUsed: "+whereUsed[name]+", sound: "+$gWidgets[whereUsed[name]]['sound']);
-                $gWidgets[whereUsed[name]]['state'] = state;
+                log.log("whereUsed[name]: "+whereUsed[name]);
+                log.log("whereUsed[name][0]: "+whereUsed[name][0]);
+                log.log("Typeof whereUsed[name]: "+(typeof whereUsed[name]));
+
+                $.each(whereUsed[name], function(index, widgetId) {
+                    log.log("WhereUsed: "+widgetId+", sound: "+$gWidgets[widgetId]['sound']);
+                    $gWidgets[widgetId]['state'] = state;
+//                    $setWidgetState(widgetId, state, data);
+                });
+//                for (var $wu in whereUsed[name]) {
+//                    log.log("wu: "+$wu);
+//                    log.log("WhereUsed: "+$wu+", sound: "+$gWidgets[$wu]['sound']);
+//                    $gWidgets[$wu]['state'] = state;
+//                }
+//                log.log("WhereUsed: "+whereUsed[name]+", sound: "+$gWidgets[whereUsed[name]]['sound']);
+//                $gWidgets[whereUsed[name]]['state'] = state;
+
 //                updateOccupancy(name, state, data);
 //                //console.log("Sensor " + name + " state=" + state);
 //                updateWidgets(name, state, data);
