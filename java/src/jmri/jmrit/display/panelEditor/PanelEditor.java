@@ -396,7 +396,7 @@ public class PanelEditor extends Editor implements ItemListener {
         setShowHidden(hiddenBox.isSelected());
         if (editableBox.isSelected()) {
             hiddenBox.setEnabled(false);
-            hiddenBox.setSelected(true);
+//            hiddenBox.setSelected(true);
         } else {
             hiddenBox.setEnabled(true);
             hiddenBox.addActionListener(event -> setShowHidden(hiddenBox.isSelected()));
