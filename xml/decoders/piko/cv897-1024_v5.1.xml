@@ -43,8 +43,14 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Extended CVs for PWM outputs A1 to A6</revremark>
 		</revision>
+		<revision>
+			<revnumber>4</revnumber>
+			<date>2023-10-20</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add CV Fade-in-out</revremark>
+		</revision>
 	</revhistory>
-	<!-- Interner Lichtdecoder CVs -->
+	<!-- Interner Zusatzcontroller CVs -->
 	<!-- Declaration of the "switch" CV, not for direct use but for checking value -->
 	<variable item="SUSI_Bank_Switch" CV="1021" default="0">
 		<enumVal>
@@ -4174,13 +4180,13 @@
 		<label xml:lang="de">Ausgang A6 ausblenden</label>
 		<tooltip xml:lang="de">Effekt Flag A6 "Ausblenden"</tooltip>
 	</variable>
-	<!--Ausgang 7 Wert = F-Taste - nur Ein - CV1018-->	
+	<!--Ausgang 7 Wert = F-Taste - nur Ein - CV1018-->
 	<variable item="A7_F_Key" CV="1018.1021=2" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF68Off255.xml"/>
 		<label>Key to activate A7:</label>
 		<label xml:lang="de">Ausgang 7 Ein </label>
 	</variable>
-<!-- PWM Dimmung A1 - A6 -->
+	<!-- PWM Dimmung A1 - A6 -->
 	<variable item="PWM1_A1" CV="982.1021=3" default="255">
 		<decVal/>
 		<label>PWM1 A1</label>
@@ -4217,12 +4223,24 @@
 		<label xml:lang="de">Dimmung Ausgang 6</label>
 		<tooltip>0 - 255</tooltip>
 	</variable>
-<!-- Ein- und Ausblenddauer alle Ausgänge -->
+	<!-- Ein- und Ausblenddauer alle Ausgänge -->
 	<variable item="PWM_Time" CV="1012.1021=3" default="0">
 		<decVal/>
 		<label>PWM Time</label>
-		<label xml:lang="de">Zeitstufen zum Ein- und Ausblenden alle Ausgänge</label>
+		<label xml:lang="de">Zeitstufen zum Ein- und Ausblenden der Ausgänge</label>
 		<tooltip>0 - 255</tooltip>
+	</variable>
+	<variable CV="1012.1021=3" mask="XXXXVVVV" item="Fade_in_time" default="0">
+		<decVal max="15"/>
+		<label>Fade In  A1 to A6</label>
+		<label xml:lang="de">Einblenden A1 bis A6</label>
+		<tooltip>0 - 15 Zeitstufen</tooltip>
+	</variable>
+	<variable CV="1012.1021=3" mask="VVVVXXXX" item="Fade_out_time" default="0">
+		<decVal max="15"/>
+		<label>Fade Out A1 to A6</label>
+		<label xml:lang="de">Ausblenden A1 bis A6</label>
+		<tooltip>0 - 15 Zeitstufen</tooltip>
 	</variable>
 </variables>
 
