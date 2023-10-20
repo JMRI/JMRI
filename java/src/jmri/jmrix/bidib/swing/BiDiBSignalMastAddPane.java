@@ -19,6 +19,7 @@ import jmri.SystemConnectionMemo;
 import jmri.jmrix.bidib.BiDiBAddress;
 import jmri.jmrix.bidib.BiDiBSystemConnectionMemo;
 import jmri.util.ConnectionNameFromSystemName;
+import jmri.util.swing.JmriJOptionPane;
 
 import org.openide.util.lookup.ServiceProvider;
 
@@ -208,11 +209,11 @@ public class BiDiBSignalMastAddPane extends SignalMastAddPane {
         try {
             aspect = Integer.parseInt(strAspect.trim());
         } catch (java.lang.NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("BiDiBMastAspectNumber"));
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("BiDiBMastAspectNumber"));
             return false;
         }
         if (aspect < 0 || aspect > 31) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("BiDiBMastAspectOutOfRange"));
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("BiDiBMastAspectOutOfRange"));
             log.error("invalid aspect {}", aspect);
             return false;
         }
@@ -312,7 +313,7 @@ public class BiDiBSignalMastAddPane extends SignalMastAddPane {
      */
     private boolean validateBiDiBAddress() {
         if (bidibAccesoryAddressField.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("BiDiBMastAddressBlank"));
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("BiDiBMastAddressBlank"));
             return false;
         }
         char accessoryTypeLetter = 'T';
@@ -324,25 +325,25 @@ public class BiDiBSignalMastAddPane extends SignalMastAddPane {
         log.trace("validate Accessory Systemname: {}", accessorySystemName);
         // first, check validity
         if (!BiDiBAddress.isValidSystemNameFormat(accessorySystemName, accessoryTypeLetter, memo)) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("BiDiBMastAddressInvalid"));
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("BiDiBMastAddressInvalid"));
             return false;
         }
         BiDiBAddress addr = new BiDiBAddress(accessorySystemName, accessoryTypeLetter, memo);
 
 // checks disabled
 //        if (!addr.isValid()) {
-//            JOptionPane.showMessageDialog(null, Bundle.getMessage("BiDiBMastAddressInvalid"));
+//            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("BiDiBMastAddressInvalid"));
 //            return false;
 //        }
 //        if (addr.isValid()  &&  !addr.isAccessoryAddr()  &&  !addr.isTrackAddr()) {
-//            JOptionPane.showMessageDialog(null, Bundle.getMessage("BiDiBMastAddressWrongType"));
+//            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("BiDiBMastAddressWrongType"));
 //            return false;
 //        }
 
         // check if accessory address is already used
         if (BiDiBSignalMast.isAccessoryAddressUsed(addr) != null) {
             String msg = Bundle.getMessage("BiDiBMastAddressAssigned", new Object[]{bidibAccesoryAddressField.getText(), BiDiBSignalMast.isAccessoryAddressUsed(addr)});
-            JOptionPane.showMessageDialog(null, msg);
+            JmriJOptionPane.showMessageDialog(null, msg);
             return false;
         }
 
