@@ -33,8 +33,8 @@ public abstract class PowerManagerMenu extends JMenu {
 
     /**
      * Create a PowerManager menu.
-     * @param includeAllConns
-     * @param defaultPwrMgr
+     * @param includeAllConns true to include all connections
+     * @param defaultPwrMgr specify a PowerManager to be selected on Menu startup.
      */
     public PowerManagerMenu(boolean includeAllConns, PowerManager defaultPwrMgr) {
         super();
