@@ -708,7 +708,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 addLine(_buildReport, SEVEN, Bundle.getMessage("RouterCouldNotFindStaging",
                         car.getFinalDestinationName()));
             } else {
-                addLine(_buildReport, SEVEN, Bundle.getMessage("RouterCouldNotFind",
+                addLine(_buildReport, SEVEN, Bundle.getMessage("RouterCouldNotFindLast",
                         car.getFinalDestinationName()));
             }
             return false;

@@ -3,13 +3,16 @@ package jmri.jmrit.operations.rollingstock.cars.tools;
 import java.awt.event.ActionEvent;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+
 import javax.swing.AbstractAction;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.router.Router;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.TrainPrintUtilities;
+import jmri.jmrit.operations.trains.TrainUtilities;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Creates a routing report for the selected car.
@@ -39,6 +42,9 @@ public class CarRoutingReportAction extends AbstractAction {
             Router router = InstanceManager.getDefault(Router.class);
             router.isCarRouteable(car, null, car.getFinalDestination(), car.getFinalDestinationTrack(), printWriter);
             showCarRoutingReport(car);
+        } else {
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("WarnMsgNoLocOrFD"),
+                    Bundle.getMessage("WarnMsgNoLocOrFD"), JmriJOptionPane.WARNING_MESSAGE);
         }
     }
 
