@@ -201,9 +201,6 @@
 			<text>  </text>
 		</label>
 		<display item="Short circuit supervision"/>
-		<!--	<label>
-			<text>  </text>
-		</label>-->
 		<display item="Shutdown Temperature"/>
 		<display item="Function Outputs Short Constant"/>
 		<display item="Motor Output Short Constant"/>
@@ -214,13 +211,5 @@
 		<row>
 			<display item="Error register"/>
 		</row>
-		<!--		<label>
-			<text>  </text>
-		</label>
-		<display item="Offset Register"/>
-		<display item="Page Register"/>
-		<label>
-			<text>  </text>
-		</label>-->
 	</column>
 </pane>
