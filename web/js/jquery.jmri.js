@@ -257,7 +257,6 @@
                 }
             };
             jmri.getAudioIcon = function (identity) {
-                log.log("getAudioIcon");
                 if (jmri.socket) {
                     jmri.socket.send("audioicon", { identity: identity });
                 } else {
