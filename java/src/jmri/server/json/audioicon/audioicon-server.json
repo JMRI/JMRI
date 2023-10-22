@@ -1,19 +1,19 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "jmri-json-logixngicon-server-message",
+    "title": "jmri-json-audioicon-server-message",
     "type": "object",
-    "description": "Data portion of message from JMRI to client for type \"logixngicon\"",
+    "description": "Data portion of message from JMRI to client for type \"audioicon\"",
     "properties": {
         "name": {
             "type": "string",
-            "description": "Always the string 'logixngicon'"
+            "description": "Always the string 'audioicon'"
         },
         "data": {
             "type": "array",
-            "description": "Data for the logixngicon",
+            "description": "Data for the audioicon",
             "items": {
                 "identity": "integer",
-                "description": "The identity of the 'logixngicon'"
+                "description": "The identity of the 'audioicon'"
             }
         }
     },
