@@ -3,6 +3,7 @@ package jmri.swing;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -56,7 +57,8 @@ public abstract class PowerManagerMenu extends JMenu {
         List<PowerManager> managers = InstanceManager.getList(PowerManager.class);
         for (PowerManager mgr : managers) {
             if (mgr != null) {
-                JMenuItem item = new JRadioButtonMenuItem(mgr.getUserName());
+                JMenuItem item = new JRadioButtonMenuItem(getManagerNameIncludeIfDefault(mgr));
+                item.setActionCommand(mgr.getUserName());
                 add(item);
                 group.add(item);
                 menuItems.add(item);
@@ -108,6 +110,15 @@ public abstract class PowerManagerMenu extends JMenu {
             }
         }
         return null;
+    }
+
+    @Nonnull
+    public static String getManagerNameIncludeIfDefault(@Nonnull PowerManager mgr){
+        String mgrName = mgr.getUserName();
+        if ( mgr == InstanceManager.getDefault(PowerManager.class) ) {
+            mgrName = Bundle.getMessage("DefaultConnection",mgr.getUserName());
+        }
+        return mgrName;
     }
 
 }
