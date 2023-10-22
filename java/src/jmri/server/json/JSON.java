@@ -685,11 +685,11 @@ public final class JSON {
      */
     public static final String AUDIO_COMMAND_NONE = "None";
     /**
-     * {@value #AUDIO_PLAY}
+     * {@value #AUDIO_COMMAND_PLAY}
      */
     public static final String AUDIO_COMMAND_PLAY = "Play";
     /**
-     * {@value #AUDIO_STOP}
+     * {@value #AUDIO_COMMAND_STOP}
      */
     public static final String AUDIO_COMMAND_STOP = "Stop";
 
