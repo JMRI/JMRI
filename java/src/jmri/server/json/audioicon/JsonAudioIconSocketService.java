@@ -44,9 +44,7 @@ public class JsonAudioIconSocketService extends JsonSocketService<JsonAudioIconH
             connection.sendMessage(service.doGet(type, "audioicon", data, request), request.id);
         }
         AudioIcon audioIcon = AudioIcon.IDENTITY_MANAGER.getAudioIcon(data.get("identity").asInt());
-        log.error("onMessage: {}, {}, {}, {}", data.get("identity").asText(), data.get("identity").asInt(), audioIcon, beanListeners.containsKey(audioIcon));
         if (!beanListeners.containsKey(audioIcon)) {
-            log.error("onMessage: add listener: {}", beanListeners.containsKey(audioIcon));
             addListenerToBean(audioIcon);
         }
     }
@@ -58,7 +56,6 @@ public class JsonAudioIconSocketService extends JsonSocketService<JsonAudioIconH
     }
 
     protected void addListenerToBean(AudioIcon audioIcon) {
-        log.error("addListenerToBean: {}", audioIcon);
         if (audioIcon != null) {
             AudioIconListener listener = new AudioIconListener(audioIcon);
             audioIcon.addPropertyChangeListener(listener);
@@ -72,31 +69,25 @@ public class JsonAudioIconSocketService extends JsonSocketService<JsonAudioIconH
 
         public AudioIconListener(AudioIcon audioIcon) {
             this._audioIcon = audioIcon;
-            log.error("AudioIconListener ctor(): {}", audioIcon.getIdentity());
         }
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.error("AudioIconListener.propertyChange(): {}, {}", evt.getPropertyName(), AudioIcon.PROPERTY_COMMAND);
-
-            // Do nothing if unknown property command
+            // Do nothing if unknown property
             if (!evt.getPropertyName().equals(AudioIcon.PROPERTY_COMMAND)) return;
 
             try {
-                log.error("AudioIconListener.propertyChange() try");
                 String command;
                 switch (evt.getNewValue().toString()) {
                     case AudioIcon.PROPERTY_COMMAND_PLAY:
                         command = JSON.AUDIO_COMMAND_PLAY;
-                        log.error("AudioIconListener.propertyChange(): play");
                         break;
                     case AudioIcon.PROPERTY_COMMAND_STOP:
                         command = JSON.AUDIO_COMMAND_STOP;
-                        log.error("AudioIconListener.propertyChange(): stop");
                         break;
                     default:
                         // Do nothing if unknown property command
-                        log.error("AudioIconListener.propertyChange(): other: {}", evt.getNewValue());
+                        log.debug("Unknown command: {}", evt.getNewValue());
                         return;
                 }
 
@@ -110,7 +101,6 @@ public class JsonAudioIconSocketService extends JsonSocketService<JsonAudioIconH
                 ObjectNode data = root.with(JSON.DATA);
                 data.put(JSON.AUDIO_ICON_IDENTITY, _audioIcon.getIdentity());
                 data.put(JSON.AUDIO_COMMAND, command);
-                log.error("AudioIconListener.propertyChange(): sendMessage: {}", command);
                 connection.sendMessage(root, 0);
             } catch (IOException ex) {
                 // if we get an error, unregister as listener

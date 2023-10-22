@@ -46,7 +46,6 @@ public class AudioIconXml extends PositionableLabelXml {
                 // converts paths in attributes to portable paths, but not paths
                 // in elements.
                 element.setAttribute("sound", buffer.getURL());
-                log.error("Sound: {}", buffer.getURL());
             }
         }
 
