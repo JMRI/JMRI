@@ -116,7 +116,7 @@ public class TimerSwing extends AbstractDigitalExpressionSwing {
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
         // Create a temporary action to test formula
-        Timer action = new Timer("IQDA1", null);
+        Timer action = new Timer("IQDE1", null);
 
         try {
             if (_tabbedPaneDelay.getSelectedComponent() == _panelDelayReference) {
