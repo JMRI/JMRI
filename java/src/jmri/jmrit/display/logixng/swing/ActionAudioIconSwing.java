@@ -1,5 +1,6 @@
 package jmri.jmrit.display.logixng.swing;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.*;
 
@@ -171,7 +172,15 @@ public class ActionAudioIconSwing extends AbstractDigitalActionSwing {
         for (JComponent c : componentList) innerPanel.add(c);
 
         panel.add(innerPanel);
-        panel.add(new JLabel(Bundle.getMessage("ActionAudioIcon_Info")));
+
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel(Bundle.getMessage("ActionAudioIcon_Info"));
+        labelPanel.getLayout();
+        label.setBorder(new javax.swing.border.CompoundBorder(
+                BorderFactory.createLineBorder(Color.GRAY),
+                BorderFactory.createEmptyBorder(3, 3, 3, 3)));
+        labelPanel.add(label);
+        panel.add(labelPanel);
     }
 
     private void updateAudioIcons(ActionEvent e) {
