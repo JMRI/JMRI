@@ -12,30 +12,20 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-	<version author="Ulrich Gerlach" version="1" lastUpdated="2022-11-11"/>
-	<version author="Peter Ulvestad" version="2" lastUpdated="2023-05-16"/>
-	<version author="Ulrich Gerlach" version="3" lastUpdated="2023-10-10"/>
-	<version author="Ulrich Gerlach" version="4" lastUpdated="2023-10-20"/>
-	<version author="Ulrich Gerlach" version="5" lastUpdated="2023-10-20"/>
-	<!-- Version 1 - For Piko SmartDecoder XP5.1 Sound from FW 1.2.0. Copied and adapted from PIKO40501-18.xml Uses common parts -->
-	<!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
-	<!-- Version 2 - Updated lowVersionID, changed CV7-8 to use include file -->
-	<!-- Version 2.1 - Updated lowVersionID, This decoder definition is valid from VersionID=2 -->
-	<!-- Version 3 - For Piko SmartDecoder XP5.1 Sound. Add PIKO46551-18 decoder (BR 93) -->
-	<!-- Version 4 - For Piko SmartDecoder XP5.1 Sound. Add PIKO46505-18 decoder neutral (FW 1.8.0) -->
-	<!-- Version 5 - Obsolete, replaced by Piko_SmartDecoder_XP5.1_Sound_v1.5 or Piko_SmartDecoder_XP5.1_Sound_v1.8 -->
+	<version author="Ulrich Gerlach" version="1" lastUpdated="2023-10-20"/>
+	<!-- Version 1 - For Piko SmartDecoder XP5.1 Sound FW 1.8.x without SUSI Decoder on board -->
+	<!-- Supported decoder: PIKO46505-18 = decoder neutral, PIKO46540-18 = BR55-TT -->
 	<!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
 	<decoder>
-		<family name="PIKO SmartDecoder XP5.1 (old - not use)" mfg="PIKO" lowVersionID="2" highVersionID="15" comment="Decoders not sorted (necessarily) in numerical order">
-			<!-- to be checked by hardware owner -->
-			<model model="PIKO46550-18" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46550-18" lowVersionID="5" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 plug (Plus) (FW 1.5.0)" replacementModel="PIKO46550-18 BR83-TT V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5)">
+		<family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="9" comment="Decoders not sorted (necessarily) in numerical order">
+			<model model="PIKO46505-18 XP5.1 V1.8 no SUSI" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46505-18" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound allgemein (FW 1.8.0)">
 				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
 				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
 				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
 				<output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
 				<size length="21.5" width="10.5" height="3.7" units="mm"/>
 			</model>
-			<model model="PIKO46551-18" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46551-18" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 93 TT Next18 plug (Plus) (FW 1.8.0)" replacementModel="PIKO46551-18 BR93-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8)">
+			<model model="PIKO46540-18 BR55TT V1.8 no SUSI" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46540-18" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 55 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0)">
 				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
 				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
 				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
@@ -116,7 +106,7 @@
 			<!-- CVs 33-46 nrma function mapping -->
 			<xi:include href="http://jmri.org/xml/decoders/nmra/functionmap.xml"/>
 			<!-- CV 47 -->
-			<variable item="Spezialfunktionen" CV="47" default="1" minOut="4" include="PIKO46505-18,PIKO46550-18,PIKO46551-18">
+			<variable item="Spezialfunktionen" CV="47" default="1" minOut="4" include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18">
 				<!-- Next-18 Decoder -->
 				<decVal max="63"/>
 				<label>Spezialfunktionen</label>
@@ -315,25 +305,7 @@
 			<!-- CV 95 -->
 			<!-- CV 67 - 94 -->
 			<xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
-			<variable item="Advanced Function Mapping" CV="96" default="2" include="PIKO46550-18">
-				<enumVal>
-					<enumChoice choice="1" value="1">
-						<choice>Advanced Function Mapping off</choice>
-						<choice xml:lang="de">Einfaches Funktionsmapping</choice>
-					</enumChoice>
-					<enumChoice choice="2" value="2">
-						<choice>Advanced Function Mapping on</choice>
-						<choice xml:lang="de">Erweitertes Funktionsmapping</choice>
-					</enumChoice>
-				</enumVal>
-				<label>Use Advanced Function Mapping</label>
-				<label xml:lang="de">Art des Funktionsmapping</label>
-				<label xml:lang="nl">Uitgebreide Functiemapping actief</label>
-				<label xml:lang="cs">Použití mapování pokročilých funkcí</label>
-				<tooltip>simple value=1 / extended value=2 (up to V1.5)</tooltip>
-				<tooltip xml:lang="de">einfach Wert=1 / erweitert Wert=2 (bis V1.5)</tooltip>
-			</variable>
-			<variable item="Advanced Function Mapping" CV="96" default="6" include="PIKO46505-18,PIKO46551-18">
+			<variable item="Advanced Function Mapping" CV="96" default="6">
 				<enumVal>
 					<enumChoice choice="1" value="1">
 						<choice>Advanced Function Mapping off</choice>
@@ -944,8 +916,8 @@
 			<xi:include href="http://jmri.org/xml/decoders/piko/cv257-512_bank16_v5.1.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/piko/cv257-512_bank17_v5.1.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/piko/cv257-512_bank18_v5.1.xml"/>
-			<!-- Interner Lichtdecoder CV897 - 1024 -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv897-1024_v5.1.xml"/>
+			<!-- Kein Interner Lichtdecoder CV897 - 1024 -->
+			<!--<xi:include href="http://jmri.org/xml/decoders/piko/cv897-1024_v5.1.xml"/>-->
 		</variables>
 		<xi:include href="http://jmri.org/xml/decoders/piko/cv8factReset_v5.1.xml"/>
 	</decoder>
@@ -955,7 +927,8 @@
 	<xi:include href="http://jmri.org/xml/decoders/piko/PanePiko1.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/piko/PanePiko2_v5.1.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoMotor.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoLichtDecoder_v5.1.xml"/>
+	<!-- Kein Interner Lichtdecoder CV897 - 1024 -->
+	<!--<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoLichtDecoder_v5.1.xml"/>-->
 	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoSound_v5.1.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoExtendedFmap_v5.1.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoConfigOutput_v5.1.xml"/>

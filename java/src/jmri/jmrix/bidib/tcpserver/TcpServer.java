@@ -177,7 +177,7 @@ public class TcpServer {
                 }
             }
             else {
-                javax.swing.JOptionPane.showMessageDialog(null, rb.getString("BiDiBOverTCPServerConnectError"), "TCP over BiDiB Server", javax.swing.JOptionPane.ERROR_MESSAGE);
+                jmri.util.swing.JmriJOptionPane.showMessageDialog(null, rb.getString("BiDiBOverTCPServerConnectError"), "TCP over BiDiB Server", jmri.util.swing.JmriJOptionPane.ERROR_MESSAGE);
             }
             
 //            // advertise over Zeroconf/Bonjour
