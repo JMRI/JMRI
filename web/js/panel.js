@@ -306,10 +306,6 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['onClickOperation'] = $(this).attr('onClickOperation');
                             log.log("onClickOperation: "+$widget['onClickOperation']);
                             $widget['audio_widget'] = new Audio($widget['sound']);
-//                            if ($widget['onClickOperation'] == "PlaySoundLocally") {
-//                                $widget['audio_widget'] = new Audio($widget['sound']);
-//                                $widget['audio_widget'].play();
-//                            }
                             log.log("playSoundWhenJmriPlays: "+$(this).attr('playSoundWhenJmriPlays')+", stopSoundWhenJmriStops: "+$(this).attr('stopSoundWhenJmriStops'));
                             $widget['playSoundWhenJmriPlays'] = $(this).attr('playSoundWhenJmriPlays') == "yes";
                             $widget['stopSoundWhenJmriStops'] = $(this).attr('stopSoundWhenJmriStops') == "yes";
@@ -2528,9 +2524,9 @@ $(document).ready(function() {
             audioicon: function(identity, command) {
                 log.log("Received audio icon command: "+identity+", "+command);
                 $widget = audioIconIDs['audioicon:'+identity];
-                if ($widget['audio_widget'].paused) {   // Sound is stopped
+                if (command == "Play") {
                     $widget['audio_widget'].play();
-                } else {                                // Sound is playing
+                } else if (command == "Stop") {
                     $widget['audio_widget'].pause();
                     $widget['audio_widget'].currentTime = 0;
                 }

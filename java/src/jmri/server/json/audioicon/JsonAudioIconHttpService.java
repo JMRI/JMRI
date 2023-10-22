@@ -26,31 +26,10 @@ public class JsonAudioIconHttpService extends JsonHttpService {
     public JsonNode doGet(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
         ObjectNode theData = mapper.createObjectNode();
         theData.put(JSON.AUDIO_ICON_IDENTITY, data.get("identity").asInt());
-//        theData.put(JSON.AUDIO_COMMAND, JSON.AUDIO_COMMAND_PLAY);
-        theData.put(JSON.AUDIO_COMMAND, JSON.AUDIO_COMMAND_STOP);
+        theData.put(JSON.AUDIO_COMMAND, JSON.AUDIO_COMMAND_NONE);
         return message(AUDIO_ICON, theData, request.id);
-/*
-        new Exception("Daniel").printStackTrace();
-        // We use this request only to register a listener for the audio icon.
-        ObjectNode node = mapper.createObjectNode();
-        return message(AUDIO_ICON, node, request.id);
-//        throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(request.locale, "GetNotAllowed", type), request.id);
-*/
     }
 
-    /**
-     * Respond to an HTTP POST request for the requested AudioIcon.
-     * <p>
-     * This method throws a 404 Not Found error if the named AudioIcon does not
-     * exist.
-     *
-     * @param type   {@link jmri.server.json.audioicon.JsonAudioIconServiceFactory#LOGIXNG_ICON}
-     * @param name   the name of the requested AudioIcon
-     * @param data   JSON data set of attributes of the requested AudioIcon to be
-     *               updated
-     * @param request the JSON request
-     * @return an empty JSON audioicon message.
-     */
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
         throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(request.locale, "PostNotAllowed", type), request.id);
