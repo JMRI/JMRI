@@ -7,7 +7,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -105,7 +104,6 @@ public class JsonAudioIconSocketService extends JsonSocketService<JsonAudioIconH
 
                 ObjectNode root = connection.getObjectMapper().createObjectNode();
                 root.put(JSON.TYPE, AUDIO_ICON);
-//                root.set(JSON.DATA, data);
                 root.put(JSON.METHOD, JSON.GET);
                 root.put(JSON.ID, request.id);
 
