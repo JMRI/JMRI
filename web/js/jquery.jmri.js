@@ -240,7 +240,6 @@
                 }
             };
             jmri.setAudio = function (name, command) {
-				log.log("setAudio: "+name+", "+command);
                 if (jmri.socket) {
                     jmri.socket.send("audio", { name: name, command: command }, 'post');
                 } else {
