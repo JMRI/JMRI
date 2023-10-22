@@ -175,7 +175,6 @@ public class ActionAudioIconSwing extends AbstractDigitalActionSwing {
 
         JPanel labelPanel = new JPanel();
         JLabel label = new JLabel(Bundle.getMessage("ActionAudioIcon_Info"));
-        labelPanel.getLayout();
         label.setBorder(new javax.swing.border.CompoundBorder(
                 BorderFactory.createLineBorder(Color.GRAY),
                 BorderFactory.createEmptyBorder(3, 3, 3, 3)));
