@@ -880,9 +880,6 @@
                     jmri.audio(e.data.name, e.data.state, e.data);
                 },
                 audioicon: function (e) {
-                    log.log(e);
-                    log.log(e.data);
-                    log.log(e.data.command);
                     jmri.audioicon(e.data.identity, e.data.command);
                 },
                 block: function (e) {

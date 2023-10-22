@@ -296,17 +296,13 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['scale'] = $(this).find('icon').attr('scale');
                             break;
                         case "audioicon" :
-                            log.log("Register audioicon");
                             $widget.jsonType = 'audio'; // JSON object type
                             $widget['identity'] = $(this).find('Identity').text();
                             audioIconIDs['audioicon:'+$widget['identity']] = $widget;   // Ensure the key is a string, not a number
                             $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
                             $widget['sound'] = $(this).attr('sound');
-                            log.log("Sound: "+$widget['sound']);
                             $widget['onClickOperation'] = $(this).attr('onClickOperation');
-                            log.log("onClickOperation: "+$widget['onClickOperation']);
                             $widget['audio_widget'] = new Audio($widget['sound']);
-                            log.log("playSoundWhenJmriPlays: "+$(this).attr('playSoundWhenJmriPlays')+", stopSoundWhenJmriStops: "+$(this).attr('stopSoundWhenJmriStops'));
                             $widget['playSoundWhenJmriPlays'] = $(this).attr('playSoundWhenJmriPlays') == "yes";
                             $widget['stopSoundWhenJmriStops'] = $(this).attr('stopSoundWhenJmriStops') == "yes";
                             $widget['rotation'] = $(this).find('icon').find('rotation').text() * 1;
@@ -317,10 +313,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $('#' + $widget.id).addClass("clickable");
                                 $('#' + $widget.id).bind(UPEVENT, $handleClick);
                             }
-                            log.log("Get audio state");
                             jmri.getAudio($widget.systemName);
                             jmri.getAudioIcon($widget['identity']);
-                            log.log("Register audioicon done");
                             break;
                         case "logixngicon" :
                             $widget['identity'] = $(this).find('Identity').text();
