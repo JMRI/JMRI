@@ -99,9 +99,9 @@ public class ActionAudioIconXml extends jmri.managers.configurexml.AbstractNamed
                 h.setStateAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }
 
-            Element isControlling = shared.getChild("operation");
-            if (isControlling != null) {
-                h.setOperation(ActionAudioIcon.Operation.valueOf(isControlling.getTextTrim()));
+            Element operation = shared.getChild("operation");
+            if (operation != null) {
+                h.setOperation(ActionAudioIcon.Operation.valueOf(operation.getTextTrim()));
             }
 
             elem = shared.getChild("stateReference");
