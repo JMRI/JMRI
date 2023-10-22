@@ -1473,12 +1473,8 @@ function $handleClick(e) {
     } else if (this.className.startsWith('audioicon ')) {
         // special handling of audioicon
         var $widget = $gWidgets[this.id];
-        log.log("Click on audioicon: "+$widget);
-        log.log("Audio state: "+$widget.systemName+", "+$widget['state']);
-        log.log("Audio onClickOperation: "+$widget['onClickOperation']);
         switch ($widget['onClickOperation']) {
             case "PlaySoundLocally":
-                log.log("Audio is playing: "+(!$widget['audio_widget'].paused));
                 if ($widget['audio_widget'].paused) {   // Sound is stopped
                     $widget['audio_widget'].play();
                 } else {                                // Sound is playing
@@ -1494,8 +1490,6 @@ function $handleClick(e) {
                 }
                 break;
         }
-//        sendElementChange($widget.jsonType, $widget.systemName, $newState);
-//        jmri.clickLogixNGIcon($widget['identity']);
     } else if (this.className.startsWith('logixngicon ')) {
         // special handling of logixngicon
         var $widget = $gWidgets[this.id];
@@ -2487,36 +2481,20 @@ $(document).ready(function() {
                 location.reload(false);
             },
             audio: function(name, state, data) {
-                log.log("Received audio state: "+name+", "+state+", "+data);
-//                log.log("WhereUsed: "+whereUsed[$widget.systemName]);
-                log.log("whereUsed[name]: "+whereUsed[name]);
-                log.log("whereUsed[name][0]: "+whereUsed[name][0]);
-                log.log("Typeof whereUsed[name]: "+(typeof whereUsed[name]));
-
                 $.each(whereUsed[name], function(index, widgetId) {
-                    log.log("WhereUsed: "+widgetId+", sound: "+$gWidgets[widgetId]['sound']);
-
                     $widget = $gWidgets[widgetId];
                     $widget['state'] = state;
 
-                    log.log("Daniel: state: "+state+", play: "+$widget['playSoundWhenJmriPlays']+", stop: "+$widget['stopSoundWhenJmriStops']);
-
                     if (state == 16 && $widget['stopSoundWhenJmriStops']) {         // Sound is stopped
-                        log.log("Stop sound");
                         $widget['audio_widget'].pause();
                         $widget['audio_widget'].currentTime = 0;
                     } else if (state == 17 && $widget['playSoundWhenJmriPlays']) {  // Sound is playing
-                        log.log("Play sound");
                         $widget['audio_widget'].currentTime = 0;
                         $widget['audio_widget'].play();
-                    } else {
-                        log.log("Daniel: Something else: state: "+state+", play: "+$widget['playSoundWhenJmriPlays']+", stop: "+$widget['stopSoundWhenJmriStops']);
                     }
-                    log.log("Received audio state: "+name+", "+state+", "+data+" - done");
                 });
             },
             audioicon: function(identity, command) {
-                log.log("Received audio icon command: "+identity+", "+command);
                 $widget = audioIconIDs['audioicon:'+identity];
                 if (command == "Play") {
                     $widget['audio_widget'].play();
