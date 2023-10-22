@@ -62,7 +62,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/not-4.23.3.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/or-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/reset-on-true-4.23.1.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/timer-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/timer-5.5.6.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/trigger-once-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/true-4.23.1.xsd"/>
 

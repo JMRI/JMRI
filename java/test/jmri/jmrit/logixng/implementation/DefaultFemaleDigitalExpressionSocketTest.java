@@ -119,6 +119,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         classes.add(jmri.jmrit.logixng.expressions.DigitalFormula.class);
         classes.add(jmri.jmrit.logixng.expressions.Not.class);
         classes.add(jmri.jmrit.logixng.expressions.Or.class);
+        classes.add(jmri.jmrit.logixng.expressions.Timer.class);
         map.put(Category.COMMON, classes);
 
         classes = new ArrayList<>();
