@@ -122,12 +122,8 @@ public class PowerPane extends jmri.util.swing.JmriPanel {
             // general GUI config
             setLayout(new java.awt.GridLayout((powerMgr.implementsIdle() ? 3 : 2), 2, 3, 5)); // r, c, hgap , vgap
             var border = BorderFactory.createLineBorder(Color.BLACK, 1);
-
-            String title = powerMgr.getUserName();
-            if ( InstanceManager.getDefault(PowerManager.class) == powerMgr ) {
-                title += " ( " + Bundle.getMessage("optionDefault") + " ) ";
-            }
-            setBorder(BorderFactory.createTitledBorder(border, title));
+            setBorder(BorderFactory.createTitledBorder(border,
+                PowerManagerMenu.getManagerNameIncludeIfDefault(powerMgr)));
 
             // set minimum size ( for all 6 cells in the layout ) to prevent twitching
             onOffStatus.setPreferredSize(new java.awt.Dimension(getLabelMinimumWidth(onOffStatus), onButton.getPreferredSize().height+10 ));
