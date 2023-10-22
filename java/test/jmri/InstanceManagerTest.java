@@ -148,9 +148,7 @@ public class InstanceManagerTest {
     @Test
     public void testListTwoDifferentTypes() {
         PowerManager m1 = new PowerManagerScaffold();
-        PowerManager m2;
         TurnoutManager t1 = new TurnoutManagerScaffold();
-        TurnoutManager t2;
 
         InstanceManager.store(m1, PowerManager.class);
         InstanceManager.store(t1, TurnoutManager.class);
