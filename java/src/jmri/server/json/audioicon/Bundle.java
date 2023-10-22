@@ -1,7 +1,5 @@
 package jmri.server.json.audioicon;
 
-import jmri.server.json.logixngicon.*;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.util.Locale;
