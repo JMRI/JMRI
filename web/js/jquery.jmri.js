@@ -112,6 +112,8 @@
             };
             jmri.audios = function (data) {
             };
+            jmri.audioicon = function (identity, command) {
+            };
             jmri.block = function (name, value, data) {
             };
             jmri.blocks = function (data) {
@@ -233,7 +235,7 @@
                     jmri.socket.send("audio", { name: name });
                 } else {
                     $.getJSON(jmri.url + "audio/" + name, function (json) {
-                        jmri.audio(json.data.name, json.data.state, json.data);
+                        jmri.audio(json.data.name, json.data.identity, json.data.command);
                     });
                 }
             };
@@ -251,6 +253,16 @@
                             jmri.audio(json.data.name, json.data.state, json.data);
                             jmri.getAudio(json.data.name, json.data.state);
                         }
+                    });
+                }
+            };
+            jmri.getAudioIcon = function (identity) {
+                log.log("getAudioIcon");
+                if (jmri.socket) {
+                    jmri.socket.send("audioicon", { identity: identity });
+                } else {
+                    $.getJSON(jmri.url + "audioicon/" + identity, function (json) {
+                        jmri.audioicon(json.data.identity, json.data.command);
                     });
                 }
             };
@@ -866,6 +878,12 @@
                 },
                 audio: function (e) {
                     jmri.audio(e.data.name, e.data.state, e.data);
+                },
+                audioicon: function (e) {
+                    log.log(e);
+                    log.log(e.data);
+                    log.log(e.data.command);
+                    jmri.audioicon(e.data.identity, e.data.command);
                 },
                 block: function (e) {
                     jmri.block(e.data.name, e.data.value, e.data);

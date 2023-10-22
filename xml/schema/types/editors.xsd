@@ -1300,7 +1300,7 @@
       <xs:sequence>
         <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
-<!--        <xs:element name="sound" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element> -->
+        <xs:element name="Identity" type="xs:integer" minOccurs="1" maxOccurs="1" />
         <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>

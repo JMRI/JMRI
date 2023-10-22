@@ -2,6 +2,8 @@ package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -24,6 +26,13 @@ import jmri.util.swing.JmriMouseEvent;
  */
 public class AudioIcon extends PositionableLabel {
 
+    public static final String PROPERTY_COMMAND = "Command";
+    public static final String PROPERTY_COMMAND_PLAY = "Play";
+    public static final String PROPERTY_COMMAND_STOP = "Stop";
+
+    public static final IdentityManager IDENTITY_MANAGER = new IdentityManager();
+
+    private final int _identity;
     private NamedIcon _originalIcon = new NamedIcon("resources/icons/audio_icon.gif", "resources/icons/audio_icon.gif");
     private String _originalText = Bundle.getMessage("AudioIcon_Text");
     private OnClickOperation _onClickOperation = OnClickOperation.DoNothing;
@@ -35,11 +44,28 @@ public class AudioIcon extends PositionableLabel {
 
     public AudioIcon(String s, @Nonnull Editor editor) {
         super(s, editor);
+        _identity = IDENTITY_MANAGER.getIdentity(this);
+        _originalText = s;
+    }
+
+    public AudioIcon(int identity, String s, @Nonnull Editor editor) {
+        super(s, editor);
+        _identity = IDENTITY_MANAGER.getIdentity(identity, this);
         _originalText = s;
     }
 
     public AudioIcon(@CheckForNull NamedIcon s, @Nonnull Editor editor) {
         super(s, editor);
+        _identity = IDENTITY_MANAGER.getIdentity(this);
+        _originalIcon = _namedIcon;
+
+        // Please retain the line below. It's used to create the resources/icons/audio_icon.gif icon
+        // createAudioIconImage();
+    }
+
+    public AudioIcon(int identity, @CheckForNull NamedIcon s, @Nonnull Editor editor) {
+        super(s, editor);
+        _identity = IDENTITY_MANAGER.getIdentity(identity, this);
         _originalIcon = _namedIcon;
 
         // Please retain the line below. It's used to create the resources/icons/audio_icon.gif icon
@@ -57,6 +83,10 @@ public class AudioIcon extends PositionableLabel {
         pos._stopSoundWhenJmriStops = _stopSoundWhenJmriStops;
 
         return super.finishClone(pos);
+    }
+
+    public int getIdentity() {
+        return _identity;
     }
 
     /**
@@ -127,6 +157,16 @@ public class AudioIcon extends PositionableLabel {
 
     public boolean getStopSoundWhenJmriStops() {
         return _stopSoundWhenJmriStops;
+    }
+
+    public void play() {
+        log.debug("AudioIcon.play()");
+        firePropertyChange(PROPERTY_COMMAND, null, PROPERTY_COMMAND_PLAY);
+    }
+
+    public void stop() {
+        log.debug("AudioIcon.stop()");
+        firePropertyChange(PROPERTY_COMMAND, null, PROPERTY_COMMAND_STOP);
     }
 
     @Override
@@ -327,6 +367,41 @@ public class AudioIcon extends PositionableLabel {
         }
 
     }
+
+
+    public static class IdentityManager {
+
+        Map<Integer, AudioIcon> _identities = new HashMap<>();
+        int _lastIdentity = -1;
+
+        private IdentityManager() {
+            // Private constructor to keep it as a singleton
+        }
+
+        public int getIdentity(AudioIcon audioIcon) {
+            _lastIdentity++;
+            _identities.put(_lastIdentity, audioIcon);
+            return _lastIdentity;
+        }
+
+        public int getIdentity(int identity, AudioIcon audioIcon) {
+            if (_identities.containsKey(identity)) {
+                log.error("Identity {} already exists", identity);
+                return getIdentity(audioIcon);
+            }
+            _identities.put(identity, audioIcon);
+            if (identity > _lastIdentity) {
+                _lastIdentity = identity;
+            }
+            return identity;
+        }
+
+        public AudioIcon getAudioIcon(int identity) {
+            return _identities.get(identity);
+        }
+
+    }
+
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AudioIcon.class);
 }

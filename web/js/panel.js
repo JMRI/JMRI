@@ -37,6 +37,7 @@ var $gWidgets = {};         //array of all widget objects, key=CSSId
 var $gPanelList = {};       //store list of available panels
 var $gPanel = {};           //store overall panel info
 var whereUsed = {};         //associative array of array of elements indexed by systemName or userName
+var audioIconIDs = {};      //associative array of audio icons
 var occupancyNames = {};    //associative array of array of elements indexed by occupancy sensor name
 var $oblockNames = {};      //associative array of array of elements indexed by occupancy block name (CPE panels)
 var $gPts = {};             //array of all points, key="pointname.pointtype" (used for layoutEditor panels)
@@ -297,7 +298,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                         case "audioicon" :
                             log.log("Register audioicon");
                             $widget.jsonType = 'audio'; // JSON object type
-//                            $widget['identity'] = $(this).find('Identity').text();
+                            $widget['identity'] = $(this).find('Identity').text();
+                            audioIconIDs['audioicon:'+$widget['identity']] = $widget;   // Ensure the key is a string, not a number
                             $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
                             $widget['sound'] = $(this).attr('sound');
                             log.log("Sound: "+$widget['sound']);
@@ -321,6 +323,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             }
                             log.log("Get audio state");
                             jmri.getAudio($widget.systemName);
+                            jmri.getAudioIcon($widget['identity']);
                             log.log("Register audioicon done");
                             break;
                         case "logixngicon" :
@@ -692,9 +695,9 @@ function processPanelXML($returnedData, $success, $xhr) {
                 case "text" :
                     $widget['styles'] = $getTextCSSFromObj($widget);
                     switch ($widget.widgetType) {
-                        case "audio" :
+                        case "audioicon" :
                             $widget.jsonType = "audioicon"; // JSON object type
-//                            $widget['identity'] = $(this).find('Identity').text();
+                            $widget['identity'] = $(this).find('Identity').text();
                             $widget.styles['user-select'] = "none";
                             $widget.classes += " " + $widget.jsonType + " clickable ";
                             break;
@@ -2521,6 +2524,16 @@ $(document).ready(function() {
                     }
                     log.log("Received audio state: "+name+", "+state+", "+data+" - done");
                 });
+            },
+            audioicon: function(identity, command) {
+                log.log("Received audio icon command: "+identity+", "+command);
+                $widget = audioIconIDs['audioicon:'+identity];
+                if ($widget['audio_widget'].paused) {   // Sound is stopped
+                    $widget['audio_widget'].play();
+                } else {                                // Sound is playing
+                    $widget['audio_widget'].pause();
+                    $widget['audio_widget'].currentTime = 0;
+                }
             },
             light: function(name, state, data) {
                 updateWidgets(name, state, data);

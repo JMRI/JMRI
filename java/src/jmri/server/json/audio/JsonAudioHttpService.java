@@ -60,10 +60,10 @@ public class JsonAudioHttpService extends JsonNamedBeanHttpService<Audio> {
         AudioSource audioSource = (AudioSource) audio;
         String command = data.path(JSON.AUDIO_COMMAND).asText();
         switch (command) {
-            case JSON.AUDIO_PLAY:
+            case JSON.AUDIO_COMMAND_PLAY:
                 audioSource.play();
                 break;
-            case JSON.AUDIO_STOP:
+            case JSON.AUDIO_COMMAND_STOP:
                 audioSource.stop();
                 break;
             default:

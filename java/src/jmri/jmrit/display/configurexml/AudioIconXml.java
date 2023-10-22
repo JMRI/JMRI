@@ -32,6 +32,8 @@ public class AudioIconXml extends PositionableLabelXml {
         Element element = new Element("audioicon");
         storeCommonAttributes(p, element);
 
+        element.addContent(new Element("Identity").addContent(Integer.toString(p.getIdentity())));
+
         AudioSource source = (AudioSource)p.getAudio();
         if (source != null) {
             element.setAttribute("audio", source.getSystemName());
@@ -83,6 +85,8 @@ public class AudioIconXml extends PositionableLabelXml {
         // create the objects
         AudioIcon l = null;
 
+        int identity = Integer.parseInt(element.getChildText("Identity"));
+
         // get object class and determine editor being used
         Editor editor = (Editor) o;
 
@@ -116,7 +120,7 @@ public class AudioIconXml extends PositionableLabelXml {
                 log.info("AudioIcon icon removed for url= {}", name);
                 return;
             }
-            l = new AudioIcon(icon, editor);
+            l = new AudioIcon(identity, icon, editor);
             try {
                 Attribute a = element.getAttribute("rotate");
                 if (a != null && icon != null) {
@@ -141,7 +145,7 @@ public class AudioIconXml extends PositionableLabelXml {
 
         if (element.getAttribute("text") != null) {
             if (l == null) {
-                l = new AudioIcon(element.getAttribute("text").getValue(), editor);
+                l = new AudioIcon(identity, element.getAttribute("text").getValue(), editor);
             }
             loadTextInfo(l, element);
 

@@ -673,17 +673,25 @@ public final class JSON {
 
     /* Audio commands */
     /**
+     * {@value #AUDIO_ICON_IDENTITY}
+     */
+    public static final String AUDIO_ICON_IDENTITY = "identity";
+    /**
      * {@value #AUDIO_COMMAND}
      */
     public static final String AUDIO_COMMAND = "command";
     /**
+     * {@value #AUDIO_COMMAND_NONE}
+     */
+    public static final String AUDIO_COMMAND_NONE = "None";
+    /**
      * {@value #AUDIO_PLAY}
      */
-    public static final String AUDIO_PLAY = "Play";
+    public static final String AUDIO_COMMAND_PLAY = "Play";
     /**
      * {@value #AUDIO_STOP}
      */
-    public static final String AUDIO_STOP = "Stop";
+    public static final String AUDIO_COMMAND_STOP = "Stop";
 
     /* Common state */
     /**
