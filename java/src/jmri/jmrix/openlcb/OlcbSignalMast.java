@@ -105,7 +105,6 @@ public class OlcbSignalMast extends AbstractSignalMast {
             java.util.List<SystemConnectionMemo> memoList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
 
             for (SystemConnectionMemo memo : memoList) {
-                System.out.println("memo: " + memo);
                 if (memo.getSystemPrefix().equals(systemPrefix)) {
                     if (memo instanceof jmri.jmrix.can.CanSystemConnectionMemo) {
                         systemMemo = (jmri.jmrix.can.CanSystemConnectionMemo) memo;
