@@ -415,7 +415,8 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Check each section against reserved sections for conflicting blocks.</li>
+             <li>Do not turn off block alternate colour when it has already be reallocated.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
