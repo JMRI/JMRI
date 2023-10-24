@@ -29,7 +29,7 @@ public class Timer extends AbstractDigitalExpression {
 
     private enum State { IDLE, RUNNING, COMPLETED }
 
-    private final Map<ConditionalNG, StateAndTimerTask> _stateAndTimerTask = new HashMap();
+    private final Map<ConditionalNG, StateAndTimerTask> _stateAndTimerTask = new HashMap<>();
     private int _delay;
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private TimerUnit _unit = TimerUnit.MilliSeconds;

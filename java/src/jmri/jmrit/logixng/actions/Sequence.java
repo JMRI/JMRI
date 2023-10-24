@@ -36,7 +36,7 @@ public class Sequence extends AbstractDigitalAction
     private boolean _startImmediately = false;
     private boolean _runContinuously = false;
     private boolean disableCheckForUnconnectedSocket = false;
-    private final Map<ConditionalNG, State> _stateMap = new HashMap();
+    private final Map<ConditionalNG, State> _stateMap = new HashMap<>();
 
     public Sequence(String sys, String user) {
         super(sys, user);
