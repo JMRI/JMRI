@@ -15,6 +15,11 @@ import jmri.jmrit.logixng.expressions.AbstractDigitalExpression;
 public class Sequence extends AbstractDigitalAction
         implements FemaleSocketListener {
 
+    private static class State {
+        private int _currentStep = -1;
+        private boolean _isRunning = false;
+    }
+
     public static final int EXPRESSION_START = 0;
     public static final int EXPRESSION_STOP = 1;
     public static final int EXPRESSION_RESET = 2;
@@ -28,11 +33,10 @@ public class Sequence extends AbstractDigitalAction
     private final FemaleDigitalExpressionSocket _resetExpressionSocket;
     private final List<ExpressionEntry> _expressionEntries = new ArrayList<>();
     private final List<ActionEntry> _actionEntries = new ArrayList<>();
-    private int _currentStep = -1;
-    private boolean _isRunning = false;
     private boolean _startImmediately = false;
     private boolean _runContinuously = false;
     private boolean disableCheckForUnconnectedSocket = false;
+    private final Map<ConditionalNG, State> _stateMap = new HashMap();
 
     public Sequence(String sys, String user) {
         super(sys, user);
@@ -137,57 +141,60 @@ public class Sequence extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
+        State state = _stateMap.computeIfAbsent(getConditionalNG(), o -> new State());
+        if (_startImmediately) state._isRunning = true;
+
         // We want to limit the number of loops in case all expressions return
         // True so we don't get caught in an endless loop
         for (int count=0; count < _actionEntries.size(); count++) {
             if (_stopExpressionSocket.isConnected()
                     && _stopExpressionSocket.evaluate()) {
-                _isRunning = false;
+                state._isRunning = false;
 //                System.out.format("Stop: _currentStep: %d%n", _currentStep);
                 return;
             }
 
             if (_startExpressionSocket.isConnected()
                     && _startExpressionSocket.evaluate()) {
-                _isRunning = true;
+                state._isRunning = true;
 //                System.out.format("Start: _currentStep: %d%n", _currentStep);
             }
 
             if (_resetExpressionSocket.isConnected()
                     && _resetExpressionSocket.evaluate()) {
-                _currentStep = -1;
+                state._currentStep = -1;
 //                System.out.format("Reset: _currentStep: %d%n", _currentStep);
             }
 
-            if (!_isRunning) return;
+            if (!state._isRunning) return;
 
-            if (_currentStep == -1) {
-                _currentStep = 0;
+            if (state._currentStep == -1) {
+                state._currentStep = 0;
 //                System.out.format("_currentStep: %d, size: %d%n", _currentStep, _actionEntries.size());
                 FemaleDigitalActionSocket socket =
-                        _actionEntries.get(_currentStep)._socket;
+                        _actionEntries.get(state._currentStep)._socket;
                 if (socket.isConnected()) socket.execute();
             }
 
             FemaleDigitalExpressionSocket exprSocket =
-                    _expressionEntries.get(_currentStep)._socket;
+                    _expressionEntries.get(state._currentStep)._socket;
             if (exprSocket.isConnected()) {
                 if (exprSocket.evaluate()) {
-                    _currentStep++;
+                    state._currentStep++;
 //                    System.out.format("_currentStep: %d, size: %d%n", _currentStep, _actionEntries.size());
-                    if (_currentStep >= _actionEntries.size()) {
-                        _currentStep = 0;
+                    if (state._currentStep >= _actionEntries.size()) {
+                        state._currentStep = 0;
 //                        System.out.format("_currentStep set to 0: %d%n", _currentStep);
                     }
 
                     FemaleDigitalActionSocket actionSocket =
-                            _actionEntries.get(_currentStep)._socket;
+                            _actionEntries.get(state._currentStep)._socket;
                     if (actionSocket.isConnected()) actionSocket.execute();
 
-                    if (!_runContinuously && _currentStep == _actionEntries.size() - 1) {
+                    if (!_runContinuously && state._currentStep == _actionEntries.size() - 1) {
                         // Sequence is done, stop and reset the sequence so that it can be started again later
-                        _isRunning = false;
-                        _currentStep = -1;
+                        state._isRunning = false;
+                        state._currentStep = -1;
                     }
                 } else {
                     // Break the outer for loop
@@ -211,7 +218,9 @@ public class Sequence extends AbstractDigitalAction
      */
     public void setStartImmediately(boolean startImmediately) {
         _startImmediately = startImmediately;
-        if (_startImmediately) _isRunning = true;
+        if (_startImmediately) {
+            _stateMap.forEach((conditionalNG, state) -> { state._isRunning = true; });
+        }
     }
 
     /**

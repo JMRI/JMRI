@@ -456,6 +456,10 @@
           until some time has passed. It then returns <strong>True</strong> once and the timer starts
           again. This expression is intended to be used together with the action <strong>Sequence</strong></li>.
 
+          <li>The action <strong>Sequence</strong> is now safe to use in LogixNG modules. The action
+          had a bug which made it sometimes fail if it was used in a module and that module was called
+          from several ConditionalNGs at once.</li>
+
           <li>When a LogixNG was created and ConditionalNGs
           was created for that LogixNG, the ConditionalNGs
           wasn't executing until restart of JMRI if the
