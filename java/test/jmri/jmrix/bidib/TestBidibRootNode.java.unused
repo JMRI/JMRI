@@ -1,0 +1,41 @@
+package jmri.jmrix.bidib;
+
+import org.bidib.jbidibc.core.BidibMessageProcessor;
+import org.bidib.jbidibc.messages.Node;
+import org.bidib.jbidibc.messages.message.BidibCommand;
+import org.bidib.jbidibc.messages.message.BidibMessageInterface;
+import org.bidib.jbidibc.core.message.BidibRequestFactory;
+import org.bidib.jbidibc.core.node.RootNode;
+import org.bidib.jbidibc.messages.LastSendMessageTimestampProvider;
+import org.bidib.jbidibc.messages.MasterNode;
+import org.bidib.jbidibc.messages.StallStatusProvider;
+import org.bidib.jbidibc.messages.exception.ProtocolException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class TestBidibRootNode extends RootNode {
+
+    protected TestBidibRootNode(final MasterNode node, final BidibMessageProcessor messageReceiver,
+            final StallStatusProvider stallStatusProvider, boolean ignoreWaitTimeout, final LastSendMessageTimestampProvider lastSendMessageTimestampProvider) {
+        super(node, messageReceiver, stallStatusProvider, ignoreWaitTimeout, lastSendMessageTimestampProvider);
+    }
+    
+    public TestBidibRootNode(final MasterNode node) {
+        super(node, new TestMessageProcessor(), new TestStallStatusProvider(), false, null);        
+    }
+    
+    @Override
+    public BidibRequestFactory getRequestFactory() {
+        return new BidibRequestFactory();
+    }
+
+//    @Override
+//    protected BidibMessageInterface send(
+//            BidibCommand message, Integer receiveTimeout, boolean expectAnswer, Integer... expectedResponseTypes)
+//            throws ProtocolException {
+//        LOGGER.debug("SEND: msg: {}, expectAnswer: {}, expected response types: {}", message, expectAnswer, expectedResponseTypes);
+//        return null;
+//    }
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestBidibNode.class);
+}

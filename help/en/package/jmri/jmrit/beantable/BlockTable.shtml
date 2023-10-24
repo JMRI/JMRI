@@ -122,8 +122,8 @@
         </li>
 
         <li>
-          <p><strong>Reporter</strong> The Reporter assigned to this Block. See the <a href=
-          "ReporterTable.shtml">Reporter Table</a>. Puts the Reporter Value into the Block
+          <p><strong>Reporter</strong> The Reporter assigned to this Block. See <a href=
+          "../../../../html/tools/Reporters.shtml">Reporters help</a>. Puts the Reporter Value into the Block
           value.</p>
         </li>
 
@@ -133,7 +133,8 @@
           associated with Blocks. Until the train is known, we have nothing to track. Typically, we
           can manually type the train ID into a pane and then this is tracked around the layout
           based on Block occupancy. If, however, we have an attached device that can provide us
-          with the train ID, such as an RFID reader, we no longer need to manually type the train
+          with the train ID, such as an <a href="../../../../html/hardware/rfid/index.shtml">RFID reader</a>,
+          we no longer need to manually type the train
           ID in - the reader does this for us. In essence, the reader is little more than an
           'intelligent' sensor - not only can it sense that 'something' is there, it can tell us
           which something it is.</p>

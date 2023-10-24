@@ -47,6 +47,7 @@
       You add and/or edit OpenLCB Signal Masts via the Signal Mast Table using the usual "Add" and
       "Edit" buttons. For adding, select "OpenLCB Event Mast" as the mast driver type. You'll then
       get a pane that will let you configure a specific mast:
+      
       <p><a href="images/Add_OlcbSignalMast.png"><img src="images/Add_OlcbSignalMast.png" height=
       "293" width="204" alt="empty signal definition"></a> <a href=
       "images/Edit_OlcbSignalMast.png"><img src="images/Edit_OlcbSignalMast.png" height="290"

@@ -19,6 +19,15 @@
                 <li></li>
             </ul>
 
+	    <h4><a href="http://bidib.org/index_e.html">BiDiB</a></h4>
+            <ul>
+                <li>Eckart Meyer has provided a first implementation
+                    for the
+                    <a href="http://bidib.org/index_e.html">BiDiB</a>
+                    system connection.
+                    </li>
+            </ul>
+
         <h4>CBUS</h4>
             <ul>
                 <li></li>
@@ -121,7 +130,17 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Updates to most recent OpenLCB Java library, which includes
+                    <ul>
+                        <li>Better status logging of save and restore operations
+                        <li>Allows user to change the default backup filename using
+                            a script like
+                            <a href="https://jmri.org/jython/LCC/ChangeDefaultBackupFileName.py">jython/LCC/ChangeDefaultBackupFileName.py</a>
+                        <li>Fixes a problem that could cause the configuration dialog
+                            to not open for certain nodes, including the DCC-LCC Gateway.
+                    </ul>
+                </li>
+                <li>Added Window and Help menus to the Configure Node window.
             </ul>
 
         <h4>Powerline</h4>
@@ -131,7 +150,8 @@
 
         <h4>RFID</h4>
             <ul>
-                <li></li>
+                <li>New Getting Started document</li>
+                <li>Script to update Car/Locomotive Tables when new/changed RFID tag seen</li>
             </ul>
 
         <h4>Roco z21/Z21</h4>
@@ -211,7 +231,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li></li>
+                <li>Updated the Series 7 SFX decoder definition.</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -242,6 +262,12 @@
         <h4><a href="http://www.ldhtrenes.com.ar">LDH</a></h4>
             <ul>
                 <li></li>
+            </ul>
+
+        <h4>LEB</h4>
+            <ul>
+                <li>Added the
+                    <a href="http://lebmodelisme.com">LEB signal decoders</a></li>
             </ul>
 
         <h4>Lenz</h4>
@@ -282,6 +308,11 @@
         <h4>Norsk Modelljernbane (NJM)</h4>
             <ul>
                 <li></li>
+            </ul>
+
+        <h4>Piko decoders</h4>
+            <ul>
+                <li>Add Decoders for Piko BR 93 TT XP 5.1 Sound, Piko BR 55 TT XP 5.1 Sound, Support of Decoder XP5.1 FW 1.8.x, Changing pane layout</li>
             </ul>
 
         <h4>Public Domain and DIY decoders</h4>
@@ -372,7 +403,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Fixed a bug that prevented output labels from
+                properly showing up in some decoder definitions.</li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -428,6 +460,9 @@
 
           <li>Warrant expression was not listening for warrant events.  Fixed along with the long
           description.</li>
+
+          <li>Add the <strong>GET_BLOCK_WARRANT</strong> and <strong>GET_BLOCK_TRAIN_NAME</strong>
+          OBlock actions to the OBlock Logix import.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -439,7 +474,11 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Improvements to the car, locomotive, and train preview and print tools.</li>
+            <li>Minor improvement to the train build report when routing.</li>
+            <li>To see all changes to OperationsPro, use the link below</li>
+            <li><a href="https://github.com/pulls?q=is%3Apr+author%3ADanielBoudreau+archived%3Afalse+is%3Aclosed">OperationsPro Changes</a></li>
+            <li>Script to update Car/Locomotive Tables on update to Id Tag Table User Name</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -501,7 +540,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>The Italian FS-1987 signal system was updated for better operation.</li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -573,7 +612,7 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li></li>
+            <li>JMRI Web Frame Server can now access many of the Dialog popup boxes.</li>
         </ul>
 
     <h3>Where Used</h3>
@@ -600,9 +639,15 @@
             <li></li>
         </ul>
 
+   <h3>Other Tools</h3>
+        <a id="Tools" name="Tools"></a>
+        <ul>
+            <li>The Power Control now defaults to display all connections.</li>
+        </ul>
+
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>(For developers) Our CI process has been updated to require the
+            @Override annotation on overriding methods and removal of unused import statements.</li>
         </ul>
-

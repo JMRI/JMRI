@@ -1383,6 +1383,8 @@ public class ImportConditional {
         }
         action.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
 
+        String oblockData;
+
         switch (ca.getType()) {
             case DEALLOCATE_BLOCK:
                 action.getSelectEnum().setEnum(ActionOBlock.DirectOperation.Deallocate);
@@ -1390,7 +1392,7 @@ public class ImportConditional {
 
             case SET_BLOCK_VALUE:
                 action.getSelectEnum().setEnum(ActionOBlock.DirectOperation.SetValue);
-                String oblockData = ca.getActionString();
+                oblockData = ca.getActionString();
                 if (oblockData == null || oblockData.isEmpty()) {
                     throw new InvalidConditionalActionException(
                             Bundle.getMessage("ActionBadOBlockValue", ca.getType().toString()));
@@ -1420,6 +1422,26 @@ public class ImportConditional {
 
             case SET_BLOCK_IN_SERVICE:
                 action.getSelectEnum().setEnum(ActionOBlock.DirectOperation.ClearOutOfService);
+                break;
+
+            case GET_BLOCK_WARRANT:
+                action.getSelectEnum().setEnum(ActionOBlock.DirectOperation.GetBlockWarrant);
+                oblockData = ca.getActionString();
+                if (oblockData == null || oblockData.isEmpty()) {
+                    throw new InvalidConditionalActionException(
+                            Bundle.getMessage("ActionBadOBlockMemory", ca.getType().toString()));
+                }
+                action.getSelectMemoryNamedBean().setNamedBean(oblockData);
+                break;
+
+            case GET_BLOCK_TRAIN_NAME:
+                action.getSelectEnum().setEnum(ActionOBlock.DirectOperation.GetBlockValue);
+                oblockData = ca.getActionString();
+                if (oblockData == null || oblockData.isEmpty()) {
+                    throw new InvalidConditionalActionException(
+                            Bundle.getMessage("ActionBadOBlockMemory", ca.getType().toString()));
+                }
+                action.getSelectMemoryNamedBean().setNamedBean(oblockData);
                 break;
 
             default:

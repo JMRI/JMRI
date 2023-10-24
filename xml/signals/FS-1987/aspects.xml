@@ -59,6 +59,12 @@
        <authorinitials>PDB</authorinitials>
        <revremark>Third version for Italian Signal System - amended aspect mapping</revremark>
      </revision>
+     <revision>
+       <revnumber>4</revnumber>
+       <date>2023-10-01</date>
+       <authorinitials>PDB</authorinitials>
+       <revremark>Fourth version for Italian Signal System - amended aspect mapping</revremark>
+     </revision>
   </revhistory>
 
   <aspects>
@@ -179,7 +185,7 @@
       <indication>Diverging Approach</indication>
 	  <description>Alternate Blinking Yellow-Green</description>
 	  <comment>Diverging clear and next main signal is set to diverging route max. 30 Km/h</comment>
-      <speed>Slow</speed>
+      <speed>Normal</speed>
       <speed2>Slow</speed2>
       <route>Diverging</route>
     </aspect>

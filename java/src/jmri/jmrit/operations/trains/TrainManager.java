@@ -410,7 +410,6 @@ public class TrainManager extends PropertyChangeSupport
             _id = id;
         }
         setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(getNumEntries()));
-        // listen for name and state changes to forward
     }
 
     /**
@@ -1051,6 +1050,24 @@ public class TrainManager extends PropertyChangeSupport
             if (train.isBuildFailed())
                 train.reset();
         }
+    }
+
+    int _maxTrainNameLength = 0;
+
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification="I18N of Info Message")
+    public int getMaxTrainNameLength() {
+        String trainName = "";
+        if (_maxTrainNameLength == 0) {
+            for (Train train : getList()) {
+                if (train.getName().length() > _maxTrainNameLength) {
+                    trainName = train.getName();
+                    _maxTrainNameLength = train.getName().length();
+                }
+            }
+            log.info(Bundle.getMessage("InfoMaxName", trainName, _maxTrainNameLength));
+        }
+        return _maxTrainNameLength;
     }
 
     public void load(Element root) {

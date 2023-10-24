@@ -771,7 +771,6 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
     }
 
     private void reportTrackExists(String s) {
-        log.info("Can not {}, track already exists", s);
         JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("TrackAlreadyExists"),
                 Bundle.getMessage("CanNotTrack", s), JmriJOptionPane.ERROR_MESSAGE);
     }

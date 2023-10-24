@@ -96,6 +96,11 @@
         <!-- JMDNS Logger -->
         <Logger name="javax.jmdns.impl" level="ERROR"/>
 
+        <!-- libraries used by BiDiB support -->
+        <Logger name="RX" level="WARN"/>
+        <Logger name="TX" level="WARN"/>
+        <Logger name="RAW" level="WARN"/>
+
         <!-- Examples of changing priority of specific categories (classes, packages): -->
         <!-- Remove the comment symbols before and after the class, then relaunch JMRI to activate. -->
         <!-- Valid Level names are OFF, FATAL, ERROR, WARN, INFO, DEBUG and TRACE. -->

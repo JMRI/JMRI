@@ -36,6 +36,18 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Add SUSI decoder BR 93 TT, add CV1018 for output test</revremark>
 		</revision>
+		<revision>
+			<revnumber>3</revnumber>
+			<date>2023-10-10</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add PWM_A1 to PWM_A6</revremark>
+		</revision>
+		<revision>
+			<revnumber>4</revnumber>
+			<date>2023-10-20</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add CV Fade-in-out</revremark>
+		</revision>
 	</revhistory>
 	<name>SUSI LightDecoder</name>
 	<name xml:lang="de">SUSI LichtDecoder</name>
@@ -66,6 +78,7 @@
 		</label>
 		<label>
 			<text>Extended Light Function available in this Piko SmartDecoder XP 5.1</text>
+			<text xml:lang="de">Externer SUSI Zusatzcontroller verfügbar</text>
 		</label>
 		<label>
 			<text>Setting that determines which bank 0-3 is programmed. Reset to "Bank 0" when done!</text>
@@ -118,6 +131,9 @@
 					<text xml:lang="de">Ausgang 1 (FS Beleuchtung) - Bedingungen: </text>
 				</label>
 			</row>
+			<label>
+				<text>   </text>
+			</label>
 			<row>
 				<!-- BEGIN - Function Vorwärts ein Grid On1-4/Off1-4-->
 				<grid gridy="4" weightx="1" ipadx="4">
@@ -730,6 +746,9 @@
 					<text xml:lang="de">Ausgang 3 (Fahrwerk Beleuchtung) - Bedingungen: </text>
 				</label>
 			</row>
+			<label>
+				<text>   </text>
+			</label>
 			<row>
 				<!-- BEGIN - Function Vorwärts ein Grid On1-4/Off1-4-->
 				<grid gridy="4" weightx="1" ipadx="4">
@@ -1358,13 +1377,44 @@
 			<!--Bank 3 -->
 			<row>
 				<label>
-					<text>PWM 1 - 6: </text>
-					<text xml:lang="de">PWM 1 - 6 (Programmierung nicht unterstützt): </text>
+					<text>PWM A1 - A6: </text>
+					<text xml:lang="de">PWM Ausgang 1 - 6 (Programmierung der Dimmung 0 - 255): </text>
 				</label>
+			</row>
+			<row>
+				<column>
+					<label>
+						<text>     </text>
+					</label>
+					<display item="PWM1_A1"/>
+					<display item="PWM1_A2"/>
+					<display item="PWM1_A3"/>
+					<display item="PWM1_A4"/>
+					<display item="PWM1_A5"/>
+					<display item="PWM1_A6"/>
+					<label>
+						<text>     </text>
+					</label>
+				</column>
+			</row>
+			<row>
+				<label>
+					<text>PWM A1 - A6: </text>
+					<text xml:lang="de">Zeitstufen zum Ein- und Ausblenden der Ausgänge (0 - 15)</text>
+				</label>
+			</row>
+			<row>
+				<column>
+					<label>
+						<text>     </text>
+					</label>
+					<display item="Fade_in_time"/>
+					<display item="Fade_out_time"/>
+				</column>
 			</row>
 		</group>
 	</group>
-	<group include="PIKO46551-18,PIKO_BR93_SUSI_Decoder">
+	<group include="PIKO46505-18,PIKO_SUSI_Decoder,PIKO46551-18,PIKO_BR93_SUSI_Decoder,PIKO46549-18,PIKO_S499_SUSI_Decoder">
 		<!-- Piko SmartDecoder XP5.1 -->
 		<!-- BR93 TT -->
 		<row>
@@ -1384,6 +1434,7 @@
 		</label>
 		<label>
 			<text>Extended Light Function available in this Piko SmartDecoder XP 5.1</text>
+			<text xml:lang="de">Externer SUSI Zusatzcontroller verfügbar</text>
 		</label>
 		<label>
 			<text>Setting that determines which bank 0-3 is programmed. Reset to "Bank 0" when done!</text>
@@ -1430,11 +1481,28 @@
 				</label>
 			</row>
 			<row>
-				<label>
-					<text>Output #1 - Conditions: </text>
-					<text xml:lang="de">Ausgang 1 (Fahrwerk Beleuchtung) - Bedingungen: </text>
-				</label>
+				<group include="PIKO46505-18,PIKO_SUSI_Decoder">
+					<label>
+						<text>Output #1 - Conditions: </text>
+						<text xml:lang="de">Ausgang 1 - Bedingungen: </text>
+					</label>
+				</group>
+				<group include="PIKO46551-18,PIKO_BR93_SUSI_Decoder">
+					<label>
+						<text>Output #1 - Conditions: </text>
+						<text xml:lang="de">Ausgang 1 (Fahrwerk Beleuchtung) - Bedingungen: </text>
+					</label>
+				</group>
+				<group include="PIKO46549-18,PIKO_S499_SUSI_Decoder">
+					<label>
+						<text>Output #1 - Conditions: </text>
+						<text xml:lang="de">Ausgang 1 (Signallicht / Fernlicht vorn) - Bedingungen: </text>
+					</label>
+				</group>
 			</row>
+			<label>
+				<text>   </text>
+			</label>
 			<row>
 				<!-- BEGIN - Function Vorwärts ein Grid On1-4/Off1-4-->
 				<grid gridy="4" weightx="1" ipadx="4">
@@ -2028,11 +2096,28 @@
 				</label>
 			</row>
 			<row>
-				<label>
-					<text>Output #2 - Conditions: </text>
-					<text xml:lang="de">Ausgang 2 (Schlusslicht vorn rechts) - Bedingungen: </text>
-				</label>
+				<group include="PIKO46505-18,PIKO_SUSI_Decoder">
+					<label>
+						<text>Output #2 - Conditions: </text>
+						<text xml:lang="de">Ausgang 2 - Bedingungen: </text>
+					</label>
+				</group>
+				<group include="PIKO46551-18,PIKO_BR93_SUSI_Decoder">
+					<label>
+						<text>Output #2 - Conditions: </text>
+						<text xml:lang="de">Ausgang 2 (Schlusslicht vorn rechts) - Bedingungen: </text>
+					</label>
+				</group>
+				<group include="PIKO46549-18,PIKO_S499_SUSI_Decoder">
+					<label>
+						<text>Output #2 - Conditions: </text>
+						<text xml:lang="de">Ausgang 2 (Fernlicht oben vorn) - Bedingungen: </text>
+					</label>
+				</group>
 			</row>
+			<label>
+				<text>   </text>
+			</label>
 			<row>
 				<!-- BEGIN - Function Vorwärts ein Grid On1-4/Off1-4-->
 				<grid gridy="4" weightx="1" ipadx="4">
@@ -2629,11 +2714,28 @@
 			</qualifier>
 			<!--Bank 1 -->
 			<row>
-				<label>
-					<text>Output #3 - Conditions: </text>
-					<text xml:lang="de">Ausgang 3 (Schlusslicht vorn links) - Bedingungen: </text>
-				</label>
+				<group include="PIKO46505-18,PIKO_SUSI_Decoder">
+					<label>
+						<text>Output #3 - Conditions: </text>
+						<text xml:lang="de">Ausgang 3 - Bedingungen: </text>
+					</label>
+				</group>
+				<group include="PIKO46551-18,PIKO_BR93_SUSI_Decoder">
+					<label>
+						<text>Output #3 - Conditions: </text>
+						<text xml:lang="de">Ausgang 3 (Schlusslicht vorn links) - Bedingungen: </text>
+					</label>
+				</group>
+				<group include="PIKO46549-18,PIKO_S499_SUSI_Decoder">
+					<label>
+						<text>Output #3 - Conditions: </text>
+						<text xml:lang="de">Ausgang 3 (Führerstandsbeleuchtung vorn) - Bedingungen: </text>
+					</label>
+				</group>
 			</row>
+			<label>
+				<text>   </text>
+			</label>
 			<row>
 				<!-- BEGIN - Function Vorwärts ein Grid On1-4/Off1-4-->
 				<grid gridy="4" weightx="1" ipadx="4">
@@ -3227,11 +3329,28 @@
 				</label>
 			</row>
 			<row>
-				<label>
-					<text>Output #4 - Conditions: </text>
-					<text xml:lang="de">Ausgang 4 (Schlusslicht hinten rechts) - Bedingungen: </text>
-				</label>
+				<group include="PIKO46505-18,PIKO_SUSI_Decoder">
+					<label>
+						<text>Output #4 - Conditions: </text>
+						<text xml:lang="de">Ausgang 4 - Bedingungen: </text>
+					</label>
+				</group>
+				<group include="PIKO46551-18,PIKO_BR93_SUSI_Decoder">
+					<label>
+						<text>Output #4 - Conditions: </text>
+						<text xml:lang="de">Ausgang 4 (Schlusslicht hinten rechts) - Bedingungen: </text>
+					</label>
+				</group>
+				<group include="PIKO46549-18,PIKO_S499_SUSI_Decoder">
+					<label>
+						<text>Output #4 - Conditions: </text>
+						<text xml:lang="de">Ausgang 4 (Signallicht / Fernlicht hinten) - Bedingungen: </text>
+					</label>
+				</group>
 			</row>
+			<label>
+				<text>   </text>
+			</label>
 			<row>
 				<!-- BEGIN - Function Vorwärts ein Grid On1-4/Off1-4-->
 				<grid gridy="4" weightx="1" ipadx="4">
@@ -3828,11 +3947,28 @@
 			</qualifier>
 			<!--Bank 2 -->
 			<row>
-				<label>
-					<text>Output #5 - Conditions: </text>
-					<text xml:lang="de">Ausgang 5 (Schlusslicht vorn links) - Bedingungen: </text>
-				</label>
+				<group include="PIKO46505-18,PIKO_SUSI_Decoder">
+					<label>
+						<text>Output #5 - Conditions: </text>
+						<text xml:lang="de">Ausgang 5 - Bedingungen: </text>
+					</label>
+				</group>
+				<group include="PIKO46551-18,PIKO_BR93_SUSI_Decoder">
+					<label>
+						<text>Output #5 - Conditions: </text>
+						<text xml:lang="de">Ausgang 5 (Führerstandsbeleuchtung) - Bedingungen: </text>
+					</label>
+				</group>
+				<group include="PIKO46549-18,PIKO_S499_SUSI_Decoder">
+					<label>
+						<text>Output #5 - Conditions: </text>
+						<text xml:lang="de">Ausgang 5 (Fernlicht oben hinten) - Bedingungen: </text>
+					</label>
+				</group>
 			</row>
+			<label>
+				<text>   </text>
+			</label>
 			<row>
 				<!-- BEGIN - Function Vorwärts ein Grid On1-4/Off1-4-->
 				<grid gridy="4" weightx="1" ipadx="4">
@@ -4426,11 +4562,28 @@
 				</label>
 			</row>
 			<row>
-				<label>
-					<text>Output #6 - Conditions: </text>
-					<text xml:lang="de">Ausgang 6 (Schlusslicht hinten links) - Bedingungen: </text>
-				</label>
+				<group include="PIKO46505-18,PIKO_SUSI_Decoder">
+					<label>
+						<text>Output #6 - Conditions: </text>
+						<text xml:lang="de">Ausgang 6 - Bedingungen: </text>
+					</label>
+				</group>
+				<group include="PIKO46551-18,PIKO_BR93_SUSI_Decoder">
+					<label>
+						<text>Output #6 - Conditions: </text>
+						<text xml:lang="de">Ausgang 6 (Schlusslicht hinten links) - Bedingungen: </text>
+					</label>
+				</group>
+				<group include="PIKO46549-18,PIKO_S499_SUSI_Decoder">
+					<label>
+						<text>Output #6 - Conditions: </text>
+						<text xml:lang="de">Ausgang 6 (Führerstandsbeleuchtung hinten) - Bedingungen: </text>
+					</label>
+				</group>
 			</row>
+			<label>
+				<text>   </text>
+			</label>
 			<row>
 				<!-- BEGIN - Function Vorwärts ein Grid On1-4/Off1-4-->
 				<grid gridy="4" weightx="1" ipadx="4">
@@ -5028,11 +5181,60 @@
 			<!--Bank 3 -->
 			<row>
 				<label>
-					<text>PWM 1 - 6: </text>
-					<text xml:lang="de">PWM 1 - 6 (Programmierung nicht unterstützt): </text>
+					<text>PWM A1 - A6: </text>
+					<text xml:lang="de">PWM Ausgang 1 - 6 (Programmierung der Dimmung 0 - 255): </text>
 				</label>
 			</row>
+			<row>
+				<column>
+					<label>
+						<text>     </text>
+					</label>
+					<display item="PWM1_A1"/>
+					<display item="PWM1_A2"/>
+					<display item="PWM1_A3"/>
+					<display item="PWM1_A4"/>
+					<display item="PWM1_A5"/>
+					<display item="PWM1_A6"/>
+					<label>
+						<text>     </text>
+					</label>
+				</column>
+			</row>
+			<row>
+				<label>
+					<text>PWM A1 - A6: </text>
+					<text xml:lang="de">Zeitstufen zum Ein- und Ausblenden der Ausgänge  (0 - 15)</text>
+				</label>
+			</row>
+			<row>
+				<column>
+					<label>
+						<text>     </text>
+					</label>
+					<display item="Fade_in_time"/>
+					<display item="Fade_out_time"/>
+				</column>
+			</row>
+			<group include="PIKO46505-18,PIKO_SUSI_Decoder">
+				<column>
+					<label>
+						<text>     </text>
+					</label>
+					<display item="A7_F_Key" label="     Ausgang 7 (ON / OFF) - Funktionstaste: ">
+						</display>
+				</column>
+			</group>
+			<group include="PIKO46549-18,PIKO_S499_SUSI_Decoder">
+				<column>
+					<label>
+						<text>     </text>
+					</label>
+					<display item="A7_F_Key" label="Ausgang 7 (Motorraumbeleuchtung) - Funktionstaste: ">
+						</display>
+				</column>
+			</group>
 		</group>
 	</group>
 </pane>
-		
+
