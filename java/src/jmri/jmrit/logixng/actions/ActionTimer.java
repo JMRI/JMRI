@@ -18,6 +18,15 @@ import jmri.util.TimerUtil;
 public class ActionTimer extends AbstractDigitalAction
         implements FemaleSocketListener {
 
+    private static class State{
+        private ProtectedTimerTask _timerTask;
+        private int _currentTimer = -1;
+        private TimerState _timerState = TimerState.Off;
+        private long _currentTimerDelay = 0;
+        private long _currentTimerStart = 0;
+        private boolean _startIsActive = false;
+    }
+
     public static final int EXPRESSION_START = 0;
     public static final int EXPRESSION_STOP = 1;
     public static final int NUM_STATIC_EXPRESSIONS = 2;
@@ -27,16 +36,11 @@ public class ActionTimer extends AbstractDigitalAction
     private final FemaleDigitalExpressionSocket _startExpressionSocket;
     private final FemaleDigitalExpressionSocket _stopExpressionSocket;
     private final List<ActionEntry> _actionEntries = new ArrayList<>();
-    private ProtectedTimerTask _timerTask;
-    private int _currentTimer = -1;
-    private TimerState _timerState = TimerState.Off;
     private boolean _startImmediately = false;
     private boolean _runContinuously = false;
     private boolean _startAndStopByStartExpression = false;
     private TimerUnit _unit = TimerUnit.MilliSeconds;
-    private long _currentTimerDelay = 0;
-    private long _currentTimerStart = 0;
-    private boolean _startIsActive = false;
+    private final Map<ConditionalNG, State> _stateMap = new HashMap<>();
 
 
     public ActionTimer(String sys, String user) {
@@ -104,17 +108,17 @@ public class ActionTimer extends AbstractDigitalAction
     /**
      * Get a new timer task.
      */
-    private ProtectedTimerTask getNewTimerTask() {
+    private ProtectedTimerTask getNewTimerTask(ConditionalNG conditionalNG, State state) {
         return new ProtectedTimerTask() {
             @Override
             public void execute() {
                 try {
-                    long currentTimerTime = System.currentTimeMillis() - _currentTimerStart;
-                    if (currentTimerTime < _currentTimerDelay) {
-                        scheduleTimer(_currentTimerDelay - currentTimerTime);
+                    long currentTimerTime = System.currentTimeMillis() - state._currentTimerStart;
+                    if (currentTimerTime < state._currentTimerDelay) {
+                        scheduleTimer(conditionalNG, state, state._currentTimerDelay - currentTimerTime);
                     } else {
-                        _timerState = TimerState.Completed;
-                        getConditionalNG().execute();
+                        state._timerState = TimerState.Completed;
+                        conditionalNG.execute();
                     }
                 } catch (Exception e) {
                     log.error("Exception thrown", e);
@@ -123,63 +127,63 @@ public class ActionTimer extends AbstractDigitalAction
         };
     }
 
-    private void scheduleTimer(long delay) {
+    private void scheduleTimer(ConditionalNG conditionalNG, State state, long delay) {
         synchronized(this) {
-            if (_timerTask != null) {
-                _timerTask.stopTimer();
-                _timerTask = null;
+            if (state._timerTask != null) {
+                state._timerTask.stopTimer();
+                state._timerTask = null;
             }
         }
-        _timerTask = getNewTimerTask();
-        TimerUtil.schedule(_timerTask, delay);
+        state._timerTask = getNewTimerTask(conditionalNG, state);
+        TimerUtil.schedule(state._timerTask, delay);
     }
 
-    private void schedule() {
+    private void schedule(ConditionalNG conditionalNG, State state) {
         synchronized(this) {
-            ActionEntry ae = _actionEntries.get(_currentTimer);
-            _currentTimerDelay = ae._delay * _unit.getMultiply();
-            _currentTimerStart = System.currentTimeMillis();
-            _timerState = TimerState.WaitToRun;
-            scheduleTimer(ae._delay * _unit.getMultiply());
+            ActionEntry ae = _actionEntries.get(state._currentTimer);
+            state._currentTimerDelay = ae._delay * _unit.getMultiply();
+            state._currentTimerStart = System.currentTimeMillis();
+            state._timerState = TimerState.WaitToRun;
+            scheduleTimer(conditionalNG, state, ae._delay * _unit.getMultiply());
         }
     }
 
-    private boolean start() throws JmriException {
-        boolean lastStartIsActive = _startIsActive;
-        _startIsActive = _startExpressionSocket.isConnected() && _startExpressionSocket.evaluate();
-        return _startIsActive && !lastStartIsActive;
+    private boolean start(State state) throws JmriException {
+        boolean lastStartIsActive = state._startIsActive;
+        state._startIsActive = _startExpressionSocket.isConnected() && _startExpressionSocket.evaluate();
+        return state._startIsActive && !lastStartIsActive;
     }
 
-    private boolean checkStart() throws JmriException {
-        if (start()) _timerState = TimerState.RunNow;
+    private boolean checkStart(ConditionalNG conditionalNG, State state) throws JmriException {
+        if (start(state)) state._timerState = TimerState.RunNow;
 
-        if (_timerState == TimerState.RunNow) {
+        if (state._timerState == TimerState.RunNow) {
             synchronized(this) {
-                if (_timerTask != null) {
-                    _timerTask.stopTimer();
-                    _timerTask = null;
+                if (state._timerTask != null) {
+                    state._timerTask.stopTimer();
+                    state._timerTask = null;
                 }
             }
-            _currentTimer = 0;
-            while (_currentTimer < _actionEntries.size()) {
-                ActionEntry ae = _actionEntries.get(_currentTimer);
+            state._currentTimer = 0;
+            while (state._currentTimer < _actionEntries.size()) {
+                ActionEntry ae = _actionEntries.get(state._currentTimer);
                 if (ae._delay > 0) {
-                    schedule();
+                    schedule(conditionalNG, state);
                     return true;
                 }
                 else {
-                    _currentTimer++;
+                    state._currentTimer++;
                 }
             }
             // If we get here, all timers has a delay of 0 ms
-            _timerState = TimerState.Off;
+            state._timerState = TimerState.Off;
             return true;
         }
 
         return false;
     }
 
-    private boolean stop() throws JmriException {
+    private boolean stop(State state) throws JmriException {
         boolean stop;
 
         if (_startAndStopByStartExpression) {
@@ -190,10 +194,10 @@ public class ActionTimer extends AbstractDigitalAction
 
         if (stop) {
             synchronized(this) {
-                if (_timerTask != null) _timerTask.stopTimer();
-                _timerTask = null;
+                if (state._timerTask != null) state._timerTask.stopTimer();
+                state._timerTask = null;
             }
-            _timerState = TimerState.Off;
+            state._timerState = TimerState.Off;
             return true;
         }
         return false;
@@ -202,42 +206,45 @@ public class ActionTimer extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        if (stop()) {
-            _startIsActive = false;
+        ConditionalNG conditionalNG = getConditionalNG();
+        State state = _stateMap.computeIfAbsent(conditionalNG, o -> new State());
+
+        if (stop(state)) {
+            state._startIsActive = false;
             return;
         }
 
-        if (checkStart()) return;
+        if (checkStart(conditionalNG, state)) return;
 
-        if (_timerState == TimerState.Off) return;
-        if (_timerState == TimerState.Running) return;
+        if (state._timerState == TimerState.Off) return;
+        if (state._timerState == TimerState.Running) return;
 
-        int startTimer = _currentTimer;
-        while (_timerState == TimerState.Completed) {
+        int startTimer = state._currentTimer;
+        while (state._timerState == TimerState.Completed) {
             // If the timer has passed full time, execute the action
-            if ((_timerState == TimerState.Completed) && _actionEntries.get(_currentTimer)._socket.isConnected()) {
-                _actionEntries.get(_currentTimer)._socket.execute();
+            if ((state._timerState == TimerState.Completed) && _actionEntries.get(state._currentTimer)._socket.isConnected()) {
+                _actionEntries.get(state._currentTimer)._socket.execute();
             }
 
             // Move to them next timer
-            _currentTimer++;
-            if (_currentTimer >= _actionEntries.size()) {
-                _currentTimer = 0;
+            state._currentTimer++;
+            if (state._currentTimer >= _actionEntries.size()) {
+                state._currentTimer = 0;
                 if (!_runContinuously) {
-                    _timerState = TimerState.Off;
+                    state._timerState = TimerState.Off;
                     return;
                 }
             }
 
-            ActionEntry ae = _actionEntries.get(_currentTimer);
+            ActionEntry ae = _actionEntries.get(state._currentTimer);
             if (ae._delay > 0) {
-                schedule();
+                schedule(conditionalNG, state);
                 return;
             }
 
-            if (startTimer == _currentTimer) {
+            if (startTimer == state._currentTimer) {
                 // If we get here, all timers has a delay of 0 ms
-                _timerState = TimerState.Off;
+                state._timerState = TimerState.Off;
             }
         }
     }
@@ -531,11 +538,15 @@ public class ActionTimer extends AbstractDigitalAction
     @Override
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
-            // If _timerState is not TimerState.Off, the timer was running when listeners wss unregistered
-            if ((_startImmediately) || (_timerState != TimerState.Off)) {
-                if (_timerState == TimerState.Off) _timerState = TimerState.RunNow;
-                getConditionalNG().execute();
-            }
+            _stateMap.forEach((conditionalNG, state) -> {
+                // If _timerState is not TimerState.Off, the timer was running when listeners wss unregistered
+                if ((_startImmediately) || (state._timerState != TimerState.Off)) {
+                    if (state._timerState == TimerState.Off) {
+                        state._timerState = TimerState.RunNow;
+                    }
+                    conditionalNG.execute();
+                }
+            });
             _listenersAreRegistered = true;
         }
     }
@@ -544,11 +555,13 @@ public class ActionTimer extends AbstractDigitalAction
     @Override
     public void unregisterListenersForThisClass() {
         synchronized(this) {
-            // stopTimer() will not return until the timer task
-            // is cancelled and stopped.
-            if (_timerTask != null) _timerTask.stopTimer();
-            _timerTask = null;
-            _timerState = TimerState.Off;
+            _stateMap.forEach((conditionalNG, state) -> {
+                // stopTimer() will not return until the timer task
+                // is cancelled and stopped.
+                if (state._timerTask != null) state._timerTask.stopTimer();
+                state._timerTask = null;
+                state._timerState = TimerState.Off;
+            });
         }
         _listenersAreRegistered = false;
     }
@@ -557,8 +570,10 @@ public class ActionTimer extends AbstractDigitalAction
     @Override
     public void disposeMe() {
         synchronized(this) {
-            if (_timerTask != null) _timerTask.stopTimer();
-            _timerTask = null;
+            _stateMap.forEach((conditionalNG, state) -> {
+                if (state._timerTask != null) state._timerTask.stopTimer();
+                state._timerTask = null;
+            });
         }
     }
 
