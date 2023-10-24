@@ -1,15 +1,12 @@
 package jmri.jmrit.logixng.expressions;
 
-import java.util.Locale;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.TimerUtil;
@@ -27,10 +24,10 @@ public class Timer extends AbstractDigitalExpression {
 
     private static class StateAndTimerTask{
         ProtectedTimerTask _timerTask;
-        State _currentState = State.INIT;
+        State _currentState = State.IDLE;
     }
 
-    private enum State { INIT, RUNNING, COMPLETED }
+    private enum State { IDLE, RUNNING, COMPLETED }
 
     private final Map<ConditionalNG, StateAndTimerTask> _stateAndTimerTask = new HashMap();
     private int _delay;
@@ -73,11 +70,10 @@ public class Timer extends AbstractDigitalExpression {
     /**
      * Get a new timer task.
      * @param conditionalNG  the ConditionalNG
-     * @param symbolTable    the symbol table
      * @param timerDelay     the time the timer should wait
      * @param timerStart     the time when the timer was started
      */
-    private ProtectedTimerTask getNewTimerTask(ConditionalNG conditionalNG, SymbolTable symbolTable, long timerDelay, long timerStart) throws JmriException {
+    private ProtectedTimerTask getNewTimerTask(ConditionalNG conditionalNG, long timerDelay, long timerStart) throws JmriException {
 
         return new ProtectedTimerTask() {
             @Override
@@ -90,10 +86,12 @@ public class Timer extends AbstractDigitalExpression {
                         long currentTime = System.currentTimeMillis();
                         long currentTimerTime = currentTime - timerStart;
                         if (currentTimerTime < timerDelay) {
-                            scheduleTimer(conditionalNG, symbolTable, timerDelay - currentTimerTime, currentTime);
+                            scheduleTimer(conditionalNG, timerDelay, timerStart);
                         } else {
                             stateAndTimerTask._currentState = State.COMPLETED;
-                            conditionalNG.execute();
+                            if (conditionalNG.isListenersRegistered()) {
+                                conditionalNG.execute();
+                            }
                         }
                     }
                 } catch (RuntimeException | JmriException e) {
@@ -103,18 +101,20 @@ public class Timer extends AbstractDigitalExpression {
         };
     }
 
-    private void scheduleTimer(ConditionalNG conditionalNG, SymbolTable symbolTable, long timerDelay, long timerStart) throws JmriException {
+    private void scheduleTimer(ConditionalNG conditionalNG, long timerDelay, long timerStart) throws JmriException {
         synchronized(Timer.this) {
             StateAndTimerTask stateAndTimerTask = _stateAndTimerTask.get(conditionalNG);
             if (stateAndTimerTask._timerTask != null) {
                 stateAndTimerTask._timerTask.stopTimer();
             }
-            stateAndTimerTask._timerTask = getNewTimerTask(conditionalNG, symbolTable, timerDelay, timerStart);
-            TimerUtil.schedule(stateAndTimerTask._timerTask, timerDelay);
+            long currentTime = System.currentTimeMillis();
+            long currentTimerTime = currentTime - timerStart;
+            stateAndTimerTask._timerTask = getNewTimerTask(conditionalNG, timerDelay, timerStart);
+            TimerUtil.schedule(stateAndTimerTask._timerTask, timerDelay - currentTimerTime);
         }
     }
 
-    private long getNewDelay() throws JmriException {
+    private long getNewDelay(ConditionalNG conditionalNG) throws JmriException {
 
         switch (_stateAddressing) {
             case Direct:
@@ -122,10 +122,10 @@ public class Timer extends AbstractDigitalExpression {
 
             case Reference:
                 return TypeConversionUtil.convertToLong(ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _stateReference));
+                        conditionalNG.getSymbolTable(), _stateReference));
 
             case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+                SymbolTable symbolTable = conditionalNG.getSymbolTable();
                 return TypeConversionUtil
                         .convertToLong(symbolTable.getValue(_stateLocalVariable));
 
@@ -133,7 +133,7 @@ public class Timer extends AbstractDigitalExpression {
                 return _stateExpressionNode != null
                         ? TypeConversionUtil.convertToLong(
                                 _stateExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()))
+                                        conditionalNG.getSymbolTable()))
                         : 0;
 
             default:
@@ -148,21 +148,25 @@ public class Timer extends AbstractDigitalExpression {
             ConditionalNG conditionalNG = getConditionalNG();
             StateAndTimerTask stateAndTimerTask = _stateAndTimerTask
                     .computeIfAbsent(conditionalNG, o -> new StateAndTimerTask());
-            if (stateAndTimerTask._currentState == State.RUNNING) {
-                return false;
+
+            switch (stateAndTimerTask._currentState) {
+                case RUNNING:
+                    return false;
+                case COMPLETED:
+                    stateAndTimerTask._currentState = State.IDLE;
+                    return true;
+                case IDLE:
+                    stateAndTimerTask._currentState = State.RUNNING;
+                    if (stateAndTimerTask._timerTask != null) {
+                        stateAndTimerTask._timerTask.stopTimer();
+                    }
+                    long timerStart = System.currentTimeMillis();
+                    long timerDelay = getNewDelay(conditionalNG) * _unit.getMultiply();
+                    scheduleTimer(conditionalNG, timerDelay, timerStart);
+                    return false;
+                default:
+                    throw new UnsupportedOperationException("currentState has invalid state: "+stateAndTimerTask._currentState.name());
             }
-
-            boolean completed = stateAndTimerTask._currentState == State.COMPLETED;
-            stateAndTimerTask._currentState = State.RUNNING;
-
-            if (stateAndTimerTask._timerTask != null) {
-                stateAndTimerTask._timerTask.stopTimer();
-            }
-            long timerDelay = getNewDelay() * _unit.getMultiply();
-            long timerStart = System.currentTimeMillis();
-            scheduleTimer(conditionalNG, conditionalNG.getSymbolTable(), timerDelay, timerStart);
-
-            return completed;
         }
     }
 

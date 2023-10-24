@@ -116,6 +116,12 @@ public interface ConditionalNG extends Base, NamedBean {
     void execute(FemaleDigitalActionSocket socket);
 
     /**
+     * Are listeners registered?
+     * @return true if listeners are registered, otherwise return false
+     */
+    boolean isListenersRegistered();
+
+    /**
      * Get the stack
      * @return the stack
      */

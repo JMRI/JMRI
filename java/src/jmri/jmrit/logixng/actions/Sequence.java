@@ -137,53 +137,62 @@ public class Sequence extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        if (_stopExpressionSocket.isConnected()
-                && _stopExpressionSocket.evaluate()) {
-            _isRunning = false;
-//            System.out.format("Stop: _currentStep: %d%n", _currentStep);
-            return;
-        }
-
-        if (_startExpressionSocket.isConnected()
-                && _startExpressionSocket.evaluate()) {
-            _isRunning = true;
-//            System.out.format("Start: _currentStep: %d%n", _currentStep);
-        }
-
-        if (_resetExpressionSocket.isConnected()
-                && _resetExpressionSocket.evaluate()) {
-            _currentStep = -1;
-//            System.out.format("Reset: _currentStep: %d%n", _currentStep);
-        }
-
-        if (!_isRunning) return;
-
-        if (_currentStep == -1) {
-            _currentStep = 0;
-//            System.out.format("_currentStep: %d, size: %d%n", _currentStep, _actionEntries.size());
-            FemaleDigitalActionSocket socket =
-                    _actionEntries.get(_currentStep)._socket;
-            if (socket.isConnected()) socket.execute();
-        }
-
-        FemaleDigitalExpressionSocket exprSocket =
-                _expressionEntries.get(_currentStep)._socket;
-        if (exprSocket.isConnected() && exprSocket.evaluate()) {
-            _currentStep++;
-//            System.out.format("_currentStep: %d, size: %d%n", _currentStep, _actionEntries.size());
-            if (_currentStep >= _actionEntries.size()) {
-                _currentStep = 0;
-//                System.out.format("_currentStep set to 0: %d%n", _currentStep);
+        // We want to limit the number of loops in case all expressions return
+        // True so we don't get caught in an endless loop
+        for (int count=0; count < _actionEntries.size(); count++) {
+            if (_stopExpressionSocket.isConnected()
+                    && _stopExpressionSocket.evaluate()) {
+                _isRunning = false;
+//                System.out.format("Stop: _currentStep: %d%n", _currentStep);
+                return;
             }
 
-            FemaleDigitalActionSocket actionSocket =
-                    _actionEntries.get(_currentStep)._socket;
-            if (actionSocket.isConnected()) actionSocket.execute();
+            if (_startExpressionSocket.isConnected()
+                    && _startExpressionSocket.evaluate()) {
+                _isRunning = true;
+//                System.out.format("Start: _currentStep: %d%n", _currentStep);
+            }
 
-            if (!_runContinuously && _currentStep == _actionEntries.size() - 1) {
-                // Sequence is done, stop and reset the sequence so that it can be started again later
-                _isRunning = false;
+            if (_resetExpressionSocket.isConnected()
+                    && _resetExpressionSocket.evaluate()) {
                 _currentStep = -1;
+//                System.out.format("Reset: _currentStep: %d%n", _currentStep);
+            }
+
+            if (!_isRunning) return;
+
+            if (_currentStep == -1) {
+                _currentStep = 0;
+//                System.out.format("_currentStep: %d, size: %d%n", _currentStep, _actionEntries.size());
+                FemaleDigitalActionSocket socket =
+                        _actionEntries.get(_currentStep)._socket;
+                if (socket.isConnected()) socket.execute();
+            }
+
+            FemaleDigitalExpressionSocket exprSocket =
+                    _expressionEntries.get(_currentStep)._socket;
+            if (exprSocket.isConnected()) {
+                if (exprSocket.evaluate()) {
+                    _currentStep++;
+//                    System.out.format("_currentStep: %d, size: %d%n", _currentStep, _actionEntries.size());
+                    if (_currentStep >= _actionEntries.size()) {
+                        _currentStep = 0;
+//                        System.out.format("_currentStep set to 0: %d%n", _currentStep);
+                    }
+
+                    FemaleDigitalActionSocket actionSocket =
+                            _actionEntries.get(_currentStep)._socket;
+                    if (actionSocket.isConnected()) actionSocket.execute();
+
+                    if (!_runContinuously && _currentStep == _actionEntries.size() - 1) {
+                        // Sequence is done, stop and reset the sequence so that it can be started again later
+                        _isRunning = false;
+                        _currentStep = -1;
+                    }
+                } else {
+                    // Break the outer for loop
+                    return;
+                }
             }
         }
     }
