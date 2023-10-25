@@ -1795,6 +1795,8 @@ public class CreateLogixNGTreeScaffold {
         actionTimer.setStartImmediately(false);
         actionTimer.setRunContinuously(true);
         actionTimer.setStartAndStopByStartExpression(true);
+        actionTimer.setDelayByLocalVariables(true);
+        actionTimer.setDelayLocalVariablePrefix("Delay");
         maleSocket = digitalActionManager.registerAction(actionTimer);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 

@@ -40,6 +40,8 @@ public class ActionTimer extends AbstractDigitalAction
     private boolean _runContinuously = false;
     private boolean _startAndStopByStartExpression = false;
     private TimerUnit _unit = TimerUnit.MilliSeconds;
+    private boolean _delayByLocalVariables = false;
+    private String _delayLocalVariablePrefix = "";  // An index is appended, for example Delay1, Delay2, ... Delay15.
     private final Map<ConditionalNG, State> _stateMap = new HashMap<>();
 
 
@@ -82,6 +84,8 @@ public class ActionTimer extends AbstractDigitalAction
         copy.setRunContinuously(_runContinuously);
         copy.setStartAndStopByStartExpression(_startAndStopByStartExpression);
         copy.setUnit(_unit);
+        copy.setDelayByLocalVariables(_delayByLocalVariables);
+        copy.setDelayLocalVariablePrefix(_delayLocalVariablePrefix);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
@@ -138,13 +142,22 @@ public class ActionTimer extends AbstractDigitalAction
         TimerUtil.schedule(state._timerTask, delay);
     }
 
-    private void schedule(ConditionalNG conditionalNG, State state) {
+    private void schedule(ConditionalNG conditionalNG, SymbolTable symbolTable, State state) {
         synchronized(this) {
-            ActionEntry ae = _actionEntries.get(state._currentTimer);
-            state._currentTimerDelay = ae._delay * _unit.getMultiply();
+            long delay;
+
+            if (_delayByLocalVariables) {
+                delay = jmri.util.TypeConversionUtil
+                        .convertToLong(symbolTable.getValue(
+                                _delayLocalVariablePrefix + Integer.toString(state._currentTimer+1)));
+            } else {
+                delay = _actionEntries.get(state._currentTimer)._delay;
+            }
+
+            state._currentTimerDelay = delay * _unit.getMultiply();
             state._currentTimerStart = System.currentTimeMillis();
             state._timerState = TimerState.WaitToRun;
-            scheduleTimer(conditionalNG, state, ae._delay * _unit.getMultiply());
+            scheduleTimer(conditionalNG, state, delay * _unit.getMultiply());
         }
     }
 
@@ -154,7 +167,7 @@ public class ActionTimer extends AbstractDigitalAction
         return state._startIsActive && !lastStartIsActive;
     }
 
-    private boolean checkStart(ConditionalNG conditionalNG, State state) throws JmriException {
+    private boolean checkStart(ConditionalNG conditionalNG, SymbolTable symbolTable, State state) throws JmriException {
         if (start(state)) state._timerState = TimerState.RunNow;
 
         if (state._timerState == TimerState.RunNow) {
@@ -168,7 +181,7 @@ public class ActionTimer extends AbstractDigitalAction
             while (state._currentTimer < _actionEntries.size()) {
                 ActionEntry ae = _actionEntries.get(state._currentTimer);
                 if (ae._delay > 0) {
-                    schedule(conditionalNG, state);
+                    schedule(conditionalNG, symbolTable, state);
                     return true;
                 }
                 else {
@@ -214,7 +227,7 @@ public class ActionTimer extends AbstractDigitalAction
             return;
         }
 
-        if (checkStart(conditionalNG, state)) return;
+        if (checkStart(conditionalNG, conditionalNG.getSymbolTable(), state)) return;
 
         if (state._timerState == TimerState.Off) return;
         if (state._timerState == TimerState.Running) return;
@@ -238,7 +251,7 @@ public class ActionTimer extends AbstractDigitalAction
 
             ActionEntry ae = _actionEntries.get(state._currentTimer);
             if (ae._delay > 0) {
-                schedule(conditionalNG, state);
+                schedule(conditionalNG, conditionalNG.getSymbolTable(), state);
                 return;
             }
 
@@ -331,6 +344,38 @@ public class ActionTimer extends AbstractDigitalAction
         _unit = unit;
     }
 
+    /**
+     * Is delays given by local variables?
+     * @return value true if delay is given by local variables
+     */
+    public boolean isDelayByLocalVariables() {
+        return _delayByLocalVariables;
+    }
+
+    /**
+     * Set if delays should be given by local variables.
+     * @param value true if delay is given by local variables
+     */
+    public void setDelayByLocalVariables(boolean value) {
+        _delayByLocalVariables = value;
+    }
+
+    /**
+     * Is both start and stop is controlled by the start expression.
+     * @return true if to start immediately
+     */
+    public String getDelayLocalVariablePrefix() {
+        return _delayLocalVariablePrefix;
+    }
+
+    /**
+     * Set if both start and stop is controlled by the start expression.
+     * @param value true if to start immediately
+     */
+    public void setDelayLocalVariablePrefix(String value) {
+        _delayLocalVariablePrefix = value;
+    }
+
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         if (index == EXPRESSION_START) return _startExpressionSocket;
@@ -385,11 +430,15 @@ public class ActionTimer extends AbstractDigitalAction
 
     @Override
     public String getLongDescription(Locale locale) {
+        String options = "";
+        if (_delayByLocalVariables) {
+            options = Bundle.getMessage("ActionTimer_Options_DelayByLocalVariable", _delayLocalVariablePrefix);
+        }
         if (_startAndStopByStartExpression) {
             return Bundle.getMessage(locale, "ActionTimer_Long2",
-                    Bundle.getMessage("ActionTimer_StartAndStopByStartExpression"));
+                    Bundle.getMessage("ActionTimer_StartAndStopByStartExpression"), options);
         } else {
-            return Bundle.getMessage(locale, "ActionTimer_Long");
+            return Bundle.getMessage(locale, "ActionTimer_Long", options);
         }
     }
 
