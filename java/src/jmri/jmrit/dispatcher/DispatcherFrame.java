@@ -2198,6 +2198,23 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         return _levelXingList;
     }
 
+    /**
+     * Checks for a block in allocated section, except one
+     * @param b - The Block
+     * @param ignoreSection - ignore this section, can be null
+     * @return true is The Block is being used in a section.
+     */
+    protected boolean checkForBlockInAllocatedSection ( Block b, Section ignoreSection ) {
+        for ( AllocatedSection as : allocatedSections) {
+            if (ignoreSection == null || as.getSection() != ignoreSection) {
+                if (as.getSection().getBlockList().contains(b)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /*
      * This is used to determine if the blocks in a section we want to allocate are already allocated to a section, or if they are now free.
      */
