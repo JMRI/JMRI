@@ -651,4 +651,5 @@
         <ul>
             <li>(For developers) Our CI process has been updated to require the
             @Override annotation on overriding methods and removal of unused import statements.</li>
+            <li>Fixed a validation errors in the xml/schema/auxiliary-configuration.xsd  file.</li>
         </ul>
