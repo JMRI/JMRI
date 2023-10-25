@@ -161,14 +161,14 @@ public class ActionTimer extends AbstractDigitalAction
         }
     }
 
-    private boolean start(State state) throws JmriException {
+    private boolean start(State state, boolean startIsActive) throws JmriException {
         boolean lastStartIsActive = state._startIsActive;
-        state._startIsActive = _startExpressionSocket.isConnected() && _startExpressionSocket.evaluate();
+        state._startIsActive = startIsActive;
         return state._startIsActive && !lastStartIsActive;
     }
 
-    private boolean checkStart(ConditionalNG conditionalNG, SymbolTable symbolTable, State state) throws JmriException {
-        if (start(state)) state._timerState = TimerState.RunNow;
+    private boolean checkStart(ConditionalNG conditionalNG, SymbolTable symbolTable, State state, boolean startIsActive) throws JmriException {
+        if (start(state, startIsActive)) state._timerState = TimerState.RunNow;
 
         if (state._timerState == TimerState.RunNow) {
             synchronized(this) {
@@ -196,11 +196,11 @@ public class ActionTimer extends AbstractDigitalAction
         return false;
     }
 
-    private boolean stop(State state) throws JmriException {
+    private boolean stop(State state, boolean startIsNotActive) throws JmriException {
         boolean stop;
 
         if (_startAndStopByStartExpression) {
-            stop = _startExpressionSocket.isConnected() && !_startExpressionSocket.evaluate();
+            stop = startIsNotActive;
         } else {
             stop = _stopExpressionSocket.isConnected() && _stopExpressionSocket.evaluate();
         }
@@ -222,12 +222,25 @@ public class ActionTimer extends AbstractDigitalAction
         ConditionalNG conditionalNG = getConditionalNG();
         State state = _stateMap.computeIfAbsent(conditionalNG, o -> new State());
 
-        if (stop(state)) {
+        boolean startIsActive;
+        boolean startIsNotActive;
+        if (_startExpressionSocket.isConnected()) {
+            // _startExpressionSocket.evaluate() will go false once read if the
+            // TriggerOnce expression is used.
+            boolean isActive = _startExpressionSocket.evaluate();
+            startIsActive = isActive;
+            startIsNotActive = !isActive;
+        } else {
+            startIsActive = false;
+            startIsNotActive = false;
+        }
+
+        if (stop(state, startIsNotActive)) {
             state._startIsActive = false;
             return;
         }
 
-        if (checkStart(conditionalNG, conditionalNG.getSymbolTable(), state)) return;
+        if (checkStart(conditionalNG, conditionalNG.getSymbolTable(), state, startIsActive)) return;
 
         if (state._timerState == TimerState.Off) return;
         if (state._timerState == TimerState.Running) return;
