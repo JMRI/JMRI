@@ -463,6 +463,13 @@
 
           <li>Add the <strong>GET_BLOCK_WARRANT</strong> and <strong>GET_BLOCK_TRAIN_NAME</strong>
           OBlock actions to the OBlock Logix import.</li>
+
+          <li>The action <strong>Timer</strong> has been improved. It can now be used within a
+          LogixNG module. It also supports local variables to tell the different delays for the
+          timers in the Timer action.<br>
+          To use the Timer action in a LogixNG module, have an <strong>Always true</strong>
+          expression as <strong>Start</strong> expression for the Timer action, together with the
+          option <strong>Start/Stop by Start expression</strong> selected.</strong>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
