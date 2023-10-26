@@ -220,7 +220,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
 
     /*
      * Populate the list of valid OpenLCB connection names.
-     * Only connections that have "OpenLCB" as their manufacturer are added.
+     * Only connections that have "OpenLCB" or "LCC" as their manufacturer are added.
      */
     private void getOlcbConnections() {
         olcbConnections = null;
@@ -239,11 +239,11 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
             log.debug("conns[{}]: name={} info={} adapter={} conn={}  man={}",
                       x, cc.name(), cc.getInfo(), cc.getAdapter(),
                       cc.getConnectionName(), cc.getManufacturer());
-            /* As this is the Olcb signal mast add pane, only show OpenLCB connections */
+            /* As this is the Olcb signal mast add pane, only show OpenLCB/LCC connections */
             String man = cc.getManufacturer();
             String name = cc.getConnectionName();
-            /* TODO: are there other strings than "OpenLCB" for manufacturer? */
-            if (man != null && man.equals("OpenLCB") && name != null && !name.isEmpty()) {
+            if (man != null && name != null && !name.isEmpty() &&
+                (man.equals("OpenLCB") || man.equals("LCC"))) {
                 if (olcbConnections == null) {
                     olcbConnections = new ArrayList<String>();
                 }
