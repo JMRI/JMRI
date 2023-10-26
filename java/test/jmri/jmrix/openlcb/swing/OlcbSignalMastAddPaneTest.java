@@ -29,17 +29,15 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     @Test
     public void testSetMast() {
         OlcbSignalMast s1 = new OlcbSignalMast("MF$olm:basic:one-searchlight($0001)", "user name");
-        // TODO: Enable multiple OpenLCB connections for tests
-        //OlcbSignalMast s2 = new OlcbSignalMast("SF$olm:basic:one-low($0002)", "user name");
-        //OlcbSignalMast s3 = new OlcbSignalMast("M3F$olm:basic:two-searchlight($0003)", "user name");
+        OlcbSignalMast s2 = new OlcbSignalMast("SF$olm:basic:one-low($0002)", "user name");
+        OlcbSignalMast s3 = new OlcbSignalMast("M3F$olm:basic:two-searchlight($0003)", "user name");
         MatrixSignalMast m1 = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
 
         OlcbSignalMastAddPane vp = new OlcbSignalMastAddPane();
 
         Assert.assertTrue(vp.canHandleMast(s1));
-        // TODO: Enable multiple OpenLCB connections for tests
-        //Assert.assertTrue(vp.canHandleMast(s2));
-        //Assert.assertTrue(vp.canHandleMast(s3));
+        Assert.assertTrue(vp.canHandleMast(s2));
+        Assert.assertTrue(vp.canHandleMast(s3));
         Assert.assertFalse(vp.canHandleMast(m1));
 
         vp.setMast(null);
@@ -51,11 +49,10 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
 
         vp.setAspectNames(s1.getAppearanceMap(), ss );
         vp.setMast(s1);
-        // TODO: Enable multiple OpenLCB connections for tests
-        //vp.setAspectNames(s2.getAppearanceMap(), ss );
-        //vp.setMast(s2);
-        //vp.setAspectNames(s3.getAppearanceMap(), ss );
-        //vp.setMast(s3);
+        vp.setAspectNames(s2.getAppearanceMap(), ss );
+        vp.setMast(s2);
+        vp.setAspectNames(s3.getAppearanceMap(), ss );
+        vp.setMast(s3);
 
         vp.setAspectNames(m1.getAppearanceMap(), ss );
         vp.setMast(m1);
@@ -263,8 +260,12 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
 
     // from here down is testing infrastructure
     private static OlcbSystemConnectionMemoScaffold memo;
+    private static OlcbSystemConnectionMemoScaffold memo1;
+    private static OlcbSystemConnectionMemoScaffold memo2;
     static Connection connection;
     static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
+    static NodeID nodeID1 = new NodeID(new byte[]{2, 0, 0, 0, 0, 0});
+    static NodeID nodeID2 = new NodeID(new byte[]{3, 0, 0, 0, 0, 0});
     static java.util.ArrayList<Message> messages;
 
     private static void resetMessages(){
@@ -287,6 +288,8 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalTurnoutManager();
         nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
+        nodeID1 = new NodeID(new byte[]{2, 0, 0, 0, 0, 0});
+        nodeID2 = new NodeID(new byte[]{3, 0, 0, 0, 0, 0});
 
         messages = new java.util.ArrayList<>();
         connection = new AbstractConnection() {
@@ -296,13 +299,26 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
             }
         };
 
-        // TODO: Enable multiple OpenLCB connections for tests. Not sure how to
-        // do this, because OlcbSystemConnectionMemoScaffold defaults to a connection
-        // with prefix 'M' (from the default constructor in CanSystemConnectionMemo).
-
+        // Enable multiple OpenLCB connections for tests.
         memo = new OlcbSystemConnectionMemoScaffold(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
         memo.setInterface(new OlcbInterface(nodeID, connection) {
+            @Override
+            public Connection getOutputConnection() {
+                return connection;
+            }
+        });
+        memo1 = new OlcbSystemConnectionMemoScaffold("S");
+        memo1.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
+        memo1.setInterface(new OlcbInterface(nodeID1, connection) {
+            @Override
+            public Connection getOutputConnection() {
+                return connection;
+            }
+        });
+        memo2 = new OlcbSystemConnectionMemoScaffold("M3");
+        memo2.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
+        memo2.setInterface(new OlcbInterface(nodeID2, connection) {
             @Override
             public Connection getOutputConnection() {
                 return connection;
@@ -322,9 +338,19 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();
         }
+        if(memo1 != null && memo1.getInterface() !=null ) {
+           memo1.getInterface().dispose();
+        }
+        if(memo2 != null && memo2.getInterface() !=null ) {
+           memo2.getInterface().dispose();
+        }
         memo = null;
+        memo1 = null;
+        memo2 = null;
         connection = null;
         nodeID = null;
+        nodeID1 = null;
+        nodeID2 = null;
         JUnitUtil.tearDown();
     }
 }
