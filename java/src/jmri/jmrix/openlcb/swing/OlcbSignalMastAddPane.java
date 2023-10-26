@@ -135,8 +135,8 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
 
     // This used to be called "disabledAspects", but that's misleading: it's actually a map of
     // ALL aspects' "disabled" checkboxes, regardless of their enabled/disabled state.
-    LinkedHashMap<String, JCheckBox> allAspectsCheckBoxes = new LinkedHashMap<String, JCheckBox>(NOTIONAL_ASPECT_COUNT);
-    final LinkedHashMap<String, EventIdTextField> aspectEventIDs = new LinkedHashMap<String, EventIdTextField>(NOTIONAL_ASPECT_COUNT);
+    LinkedHashMap<String, JCheckBox> allAspectsCheckBoxes = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);
+    final LinkedHashMap<String, EventIdTextField> aspectEventIDs = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);
     final JPanel allAspectsPanel = new JPanel();
     final EventIdTextField litEventID = new EventIdTextField();
     final EventIdTextField notLitEventID = new EventIdTextField();
@@ -155,7 +155,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
     public void setAspectNames(@Nonnull SignalAppearanceMap map, @Nonnull SignalSystem sigSystem) {
         Enumeration<String> aspectNames = map.getAspects();
         // update immediately
-        allAspectsCheckBoxes = new LinkedHashMap<String, JCheckBox>(NOTIONAL_ASPECT_COUNT);
+        allAspectsCheckBoxes = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);
         allAspectsPanel.removeAll();
         while (aspectNames.hasMoreElements()) {
             String aspectName = aspectNames.nextElement();
