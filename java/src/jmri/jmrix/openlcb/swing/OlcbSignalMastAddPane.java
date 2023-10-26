@@ -188,7 +188,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
                     n = new NamedIcon(iconLink, iconLink);
                     log.debug("Loaded icon {}", iconLink);
                 } catch (Exception e) {
-                    log.debug("Got exception trying to load icon link {}: {}", iconLink, e);
+                    log.debug("Got exception trying to load icon link {}: {}", iconLink, e.getMessage());
                 }
                 // display icon
                 if (n != null) {
