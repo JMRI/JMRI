@@ -396,14 +396,20 @@ public class DefaultConditionalNG extends AbstractBase
 
     /** {@inheritDoc} */
     @Override
-    public void registerListenersForThisClass() {
-        // Do nothing
+    public synchronized boolean isListenersRegistered() {
+        return _listenersAreRegistered;
     }
 
     /** {@inheritDoc} */
     @Override
-    public void unregisterListenersForThisClass() {
-        // Do nothing
+    public synchronized void registerListenersForThisClass() {
+        _listenersAreRegistered = true;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public synchronized void unregisterListenersForThisClass() {
+        _listenersAreRegistered = false;
     }
 
     @Override

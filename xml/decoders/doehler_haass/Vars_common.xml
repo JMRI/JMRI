@@ -1207,7 +1207,7 @@
     <label>AUX 1 Auto-off timer</label>
     <label xml:lang="it">AUX1 tempo auto-spegnimento</label>
     <label xml:lang="fr">AUX 1 minuteur (off)</label>
-    <label xml:lang="de">AUX 1 Timer für Ausschlaten</label>
+    <label xml:lang="de">AUX 1 Timer für Ausschalten</label>
     <label xml:lang="ca">Temps d'apagada automàtica de AUX1</label>
   </variable>
   <variable item="AUX 2 Auto-off timer" CV="118" default="0" minOut="4" tooltip="CV118 (0-250, 1=100ms)">
@@ -1215,7 +1215,7 @@
     <label>AUX 2 Auto-off timer</label>
     <label xml:lang="it">AUX2 tempo auto-spegnimento</label>
     <label xml:lang="fr">AUX 2 minuteur (off)</label>
-    <label xml:lang="de">AUX 2 Timer für Ausschlaten</label>
+    <label xml:lang="de">AUX 2 Timer für Ausschalten</label>
     <label xml:lang="ca">Temps d'apagada automàtica de AUX2</label>
   </variable>
   <variable item="AUX 3 Auto-off timer" CV="119" default="0" minOut="5" tooltip="CV119 (0-250, 1=100ms)">
@@ -1223,7 +1223,7 @@
     <label>AUX 3 Auto-off timer</label>
     <label xml:lang="it">AUX3 tempo auto-spegnimento</label>
     <label xml:lang="fr">AUX 3 minuteur (off)</label>
-    <label xml:lang="de">AUX 3 Timer für Ausschlaten</label>
+    <label xml:lang="de">AUX 3 Timer für Ausschalten</label>
     <label xml:lang="ca">Temps d'apagada automàtica de AUX3</label>
   </variable>
   <variable item="AUX 4 Auto-off timer" CV="120" default="0" minOut="6" tooltip="CV120 (0-250, 1=100ms)">
@@ -1231,7 +1231,7 @@
     <label>AUX 4 Auto-off timer</label>
     <label xml:lang="it">AUX4 tempo auto-spegnimento</label>
     <label xml:lang="fr">AUX 4 minuteur (off)</label>
-    <label xml:lang="de">AUX 4 Timer für Ausschlaten</label>
+    <label xml:lang="de">AUX 4 Timer für Ausschalten</label>
     <label xml:lang="ca">Temps d'apagada automàtica de AUX4</label>
   </variable>
   <!-- D&H Function 'Preclusion' -->

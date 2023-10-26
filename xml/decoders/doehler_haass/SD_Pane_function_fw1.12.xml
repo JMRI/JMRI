@@ -24,7 +24,7 @@
             <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
               <label>
                 <text>&lt;html&gt;Only in Fwd/Rev&lt;br&gt;group A&lt;/html&gt;</text>
-                <text xml:lang="de">&lt;html&gt;Nur bei Vor/Rück&lt;br&gt;gruppe A&lt;/html&gt;</text>
+                <text xml:lang="de">&lt;html&gt;Nur bei Vor/Rück&lt;br&gt;Gruppe A&lt;/html&gt;</text>
                 <text xml:lang="fr">&lt;html&gt;Seulem. Av/Ar&lt;br&gt;groupe A&lt;/html&gt;</text>
                 <text xml:lang="nl">&lt;html&gt;alleen voor/achter&lt;br&gt;groep A&lt;/html&gt;</text>
               </label>
@@ -32,15 +32,15 @@
             <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
               <label>
                 <text>&lt;html&gt;Only when Stop/Drive&lt;br&gt;group B&lt;/html&gt;</text>
-                <text xml:lang="de">Nur im Stand/Fahrt&lt;br&gt;gruppe B&lt;/html&gt;</text>
-                <text xml:lang="fr">Seulem. Arrêt/Marche&lt;br&gt;groupe B&lt;/html&gt;</text>
+                <text xml:lang="de">&lt;html&gt;Nur im Stand/Fahrt&lt;br&gt;Gruppe B&lt;/html&gt;</text>
+                <text xml:lang="fr">&lt;html&gt;Seulem. Arrêt/Marche&lt;br&gt;groupe B&lt;/html&gt;</text>
                 <text xml:lang="nl">&lt;html&gt;alleen stop/rijden&lt;br&gt;groep B&lt;/html&gt;</text>
               </label>
             </griditem>
             <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
               <label>
                 <text>&lt;html&gt;Only F0 (light) Off/On&lt;br&gt;group C&lt;/html&gt;</text>
-                <text xml:lang="de">&lt;html&gt;Nur F0 (Licht) Aus/An&lt;br&gt;gruppe C&lt;/html&gt;</text>
+                <text xml:lang="de">&lt;html&gt;Nur F0 (Licht) Aus/An&lt;br&gt;Gruppe C&lt;/html&gt;</text>
                 <text xml:lang="fr">&lt;html&gt;Seulem. F0 (lumière) Off/On&lt;br&gt;groupe C&lt;/html&gt;</text>
                 <text xml:lang="nl">&lt;html&gt;alleen (licht) uit/aan&lt;br&gt;groep C&lt;/html&gt;</text>
               </label>
@@ -48,7 +48,7 @@
             <griditem gridx="NEXT" gridy="" anchor="CENTER">
               <label>
                 <text>&lt;html&gt;In Shunting Mode&lt;br&gt;group D&lt;/html&gt;</text>
-                <text xml:lang="de">&lt;html&gt;Im Rangiergang&lt;br&gt;gruppe D&lt;/html&gt;</text>
+                <text xml:lang="de">&lt;html&gt;Im Rangiergang&lt;br&gt;Gruppe D&lt;/html&gt;</text>
                 <text xml:lang="fr">&lt;html&gt;En mode Manoeuvre&lt;br&gt;groupe D&lt;/html&gt;</text>
                 <text xml:lang="nl">&lt;html&gt;In rangeergang&lt;br&gt;groep D&lt;/html&gt;</text>
               </label>

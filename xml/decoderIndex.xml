@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.5.5plus+jake+20231016T1844Z+R675ff3c44e on Mon Oct 16 14:44:39 EDT 2023-->
-  <decoderIndex version="3">
+  <!--Written by JMRI version 5.5.5plus+jake+20231022T1454Z+R89075f1edd on Sun Oct 22 10:55:47 EDT 2023-->
+  <decoderIndex version="5">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -12873,6 +12873,15 @@
       </family>
       <family name="PIKO SUSI Lichtdekoder (XP5.1)" mfg="PIKO" lowVersionID="0" highVersionID="15" file="Piko_SUSI_LichtDecoder_XP5.1.xml">
         <!-- to be checked by hardware owner -->
+        <model model="PIKO SUSI Decoder" numOuts="7" numFns="31" productID="PIKO_SUSI_Decoder" lowVersionID="0">
+          <output name="1" label="A1" />
+          <output name="2" label="A2" />
+          <output name="3" label="A3" />
+          <output name="4" label="A4" />
+          <output name="5" label="A5" />
+          <output name="6" label="A6" />
+          <output name="7" label="A7" />
+        </model>
         <model model="PIKO BR 83 SUSI Decoder" numOuts="6" numFns="31" productID="PIKO_BR83_SUSI_Decoder" lowVersionID="0">
           <output name="1" label="A1" />
           <output name="2" label="A2" />
@@ -12953,16 +12962,63 @@
           <!-- Anfahren/Bremsen -->
         </model>
       </family>
-      <family name="PIKO SmartDecoder XP5.1" mfg="PIKO" lowVersionID="2" highVersionID="15" file="Piko_SmartDecoder_XP5.1_Sound.xml">
+      <family name="PIKO SmartDecoder XP5.1 (old - not use)" mfg="PIKO" lowVersionID="2" highVersionID="15" file="Piko_SmartDecoder_XP5.1_Sound.xml">
         <!-- to be checked by hardware owner -->
-        <model model="PIKO46550-18" numOuts="4" numFns="68" productID="PIKO46550-18" lowVersionID="5">
+        <model model="PIKO46550-18" numOuts="4" numFns="68" productID="PIKO46550-18" lowVersionID="5" replacementModel="PIKO46550-18 BR83-TT V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <!-- to be checked by hardware owner -->
-        <model model="PIKO46551-18" numOuts="4" numFns="68" productID="PIKO46551-18" lowVersionID="8">
+        <model model="PIKO46551-18" numOuts="4" numFns="68" productID="PIKO46551-18" lowVersionID="8" replacementModel="PIKO46551-18 BR93-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+      </family>
+      <family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="9" file="Piko_SmartDecoder_XP5.1_Sound_noSUSI_v1.8.xml">
+        <model model="PIKO46505-18 XP5.1 V1.8 no SUSI" numOuts="4" numFns="68" productID="PIKO46505-18" lowVersionID="8">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model model="PIKO46540-18 BR55TT V1.8 no SUSI" numOuts="4" numFns="68" productID="PIKO46540-18" lowVersionID="8">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+      </family>
+      <family name="PIKO SmartDecoder XP5.1 (version 1.5+)" mfg="PIKO" lowVersionID="2" highVersionID="5" file="Piko_SmartDecoder_XP5.1_Sound_v1.5.xml">
+        <model model="PIKO46505-18 XP5.1 V1.5" numOuts="4" numFns="68" productID="PIKO46505-18" lowVersionID="5" replacementModel="PIKO46505-18 XP5.1 V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model model="PIKO46550-18 BR83-TT V1.5" numOuts="4" numFns="68" productID="PIKO46550-18" lowVersionID="5" replacementModel="PIKO46550-18 BR83-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+      </family>
+      <family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="9" file="Piko_SmartDecoder_XP5.1_Sound_v1.8.xml">
+        <model model="PIKO46505-18 XP5.1 V1.8" numOuts="4" numFns="68" productID="PIKO46505-18" lowVersionID="8">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model model="PIKO46550-18 BR83-TT V1.8" numOuts="4" numFns="68" productID="PIKO46550-18" lowVersionID="8">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model model="PIKO46551-18 BR93-TT V1.8" numOuts="4" numFns="68" productID="PIKO46551-18" lowVersionID="8">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />

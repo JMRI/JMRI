@@ -4352,6 +4352,41 @@ public class CreateLogixNGTreeScaffold {
         and.getChild(indexExpr++).connect(maleSocket);
 
 
+        jmri.jmrit.logixng.expressions.Timer expressionTimer =
+                new jmri.jmrit.logixng.expressions.Timer(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(expressionTimer);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionTimer = new jmri.jmrit.logixng.expressions.Timer(digitalExpressionManager.getAutoSystemName(), null);
+        expressionTimer.setComment("A comment");
+        expressionTimer.setDelayAddressing(NamedBeanAddressing.Direct);
+        expressionTimer.setDelay(100);
+        maleSocket = digitalExpressionManager.registerExpression(expressionTimer);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionTimer = new jmri.jmrit.logixng.expressions.Timer(digitalExpressionManager.getAutoSystemName(), null);
+        expressionTimer.setComment("A comment");
+        expressionTimer.setDelayAddressing(NamedBeanAddressing.LocalVariable);
+        expressionTimer.setDelayLocalVariable("MyVar");
+        maleSocket = digitalExpressionManager.registerExpression(expressionTimer);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionTimer = new jmri.jmrit.logixng.expressions.Timer(digitalExpressionManager.getAutoSystemName(), null);
+        expressionTimer.setComment("A comment");
+        expressionTimer.setDelayAddressing(NamedBeanAddressing.Reference);
+        expressionTimer.setDelayReference("{MyMemory}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionTimer);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionTimer = new jmri.jmrit.logixng.expressions.Timer(digitalExpressionManager.getAutoSystemName(), null);
+        expressionTimer.setComment("A comment");
+        expressionTimer.setDelayAddressing(NamedBeanAddressing.Formula);
+        expressionTimer.setDelayFormula("MyVar + 10");
+        maleSocket = digitalExpressionManager.registerExpression(expressionTimer);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+
         ExpressionTransit expressionTransit = new ExpressionTransit(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionTransit);
         maleSocket.setEnabled(false);

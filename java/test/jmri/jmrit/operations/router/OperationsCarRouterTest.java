@@ -2897,7 +2897,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
 
         Location foxboro = lmanager.getLocationByName("Foxboro");
         Location gulf = lmanager.getLocationByName("Gulf");
-        Track gulfInterchange1 = gulf.getTrackByName("Gulf Interchange 1", Track.INTERCHANGE);
+        Track gulfYard1 = gulf.getTrackByName("Gulf Yard 1", Track.YARD);
 
         // create four staging tracks
         Location staging = lmanager.newLocation("Staging MA");
@@ -3086,7 +3086,10 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         trainStagingToFoxboro2.build();
         Assert.assertTrue(trainStagingToFoxboro2.isBuilt());
 
-        Assert.assertEquals("car's destination", gulfInterchange1, c4.getDestinationTrack());
+        // Route for car (BB 4): (Staging MA, Staging 4)-> (Train Staging-Gulf-Essex-Foxboro 
+        // 2)-> (Gulf, Gulf Yard 1)-> (Train Staging-Gulf-Essex-Foxboro 1)-> (Foxboro, )
+
+        Assert.assertEquals("car's destination", gulfYard1, c4.getDestinationTrack());
         Assert.assertEquals("car's final destination", foxboro, c4.getFinalDestination());
 
         // test having train terminate into staging 2, build will try and send
@@ -3103,13 +3106,8 @@ public class OperationsCarRouterTest extends OperationsTestCase {
 
         Assert.assertEquals("car's destination", essexInterchange1, c3.getDestinationTrack());
         Assert.assertEquals("car's final destination", chelmsford, c3.getFinalDestination());
-        Assert.assertEquals("car's destination", stagingT2, c4.getDestinationTrack()); // sent
-                                                                                       // to
-                                                                                       // staging
-                                                                                       // rather
-                                                                                       // than
-                                                                                       // build
-                                                                                       // failure
+        Assert.assertEquals("car's destination", stagingT2, c4.getDestinationTrack());
+        // sent to staging rather than build failure 
         Assert.assertEquals("car's final destination", chelmsford, c4.getFinalDestination());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();

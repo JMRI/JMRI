@@ -54,6 +54,7 @@ public class DigitalFactory implements DigitalExpressionFactory {
                                 new AbstractMap.SimpleEntry<>(Category.OTHER, LogData.class),
                                 new AbstractMap.SimpleEntry<>(Category.COMMON, Not.class),
                                 new AbstractMap.SimpleEntry<>(Category.COMMON, Or.class),
+                                new AbstractMap.SimpleEntry<>(Category.COMMON, Timer.class),
                                 new AbstractMap.SimpleEntry<>(Category.OTHER, TriggerOnce.class),
                                 new AbstractMap.SimpleEntry<>(Category.OTHER, True.class)
                         ));
