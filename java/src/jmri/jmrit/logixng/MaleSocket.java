@@ -126,6 +126,10 @@ public interface MaleSocket extends Debugable {
 
     List<VariableData> getLocalVariables();
 
+    default boolean isSupportingLocalVariables() {
+        return true;
+    }
+
     /**
      * Get the error handling type for this socket.
      * @return the error handling type
