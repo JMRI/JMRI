@@ -497,18 +497,19 @@ public class TrainManager extends PropertyChangeSupport
      *         destination.
      */
     public Train getTrainForCar(Car car, List<Train> excludeTrains, PrintWriter buildReport) {
-//        log.debug("Find train for car ({}) location ({}, {}) destination ({}, {})", car.toString(),
-//                car.getLocationName(), car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName()); // NOI18N
-        if (Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED)) {
-            TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED, TrainCommon.BLANK_LINE);
-            TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED,
-                    Bundle.getMessage("trainFindForCar",
-                            car.toString(), car.getLocationName(), car.getTrackName(),
-                                    car.getDestinationName(), car.getDestinationTrackName()));
-        }
-        for (Train train : getTrainsByIdList()) {
+        addLine(buildReport, TrainCommon.BLANK_LINE);
+        addLine(buildReport, Bundle.getMessage("trainFindForCar", car.toString(), car.getLocationName(),
+                car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName()));
+
+        main: for (Train train : getTrainsByIdList()) {
             if (excludeTrains.contains(train)) {
                 continue;
+            }
+            for (Train t : excludeTrains) {
+                if (t != null && train.getRoute() == t.getRoute()) {
+                    addLine(buildReport, Bundle.getMessage("trainHasSameRoute", train, t));
+                    continue main;
+                }
             }
             if (Setup.isOnlyActiveTrainsEnabled() && !train.isBuildEnabled()) {
                 continue;
@@ -522,6 +523,14 @@ public class TrainManager extends PropertyChangeSupport
             }
         }
         return null;
+    }
+
+    protected static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
+
+    private void addLine(PrintWriter buildReport, String string) {
+        if (Setup.getRouterBuildReportLevel().equals(SEVEN)) {
+            TrainCommon.addLine(buildReport, SEVEN, string);
+        }
     }
 
     /**

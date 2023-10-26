@@ -498,13 +498,17 @@ public class LogixNGTest {
 
         /** {@inheritDoc} */
         @Override
-        public void registerListenersForThisClass() {
+        public synchronized void registerListenersForThisClass() {
+            // The method DefaultConditionalNG.registerListenersForThisClass()
+            // is synchronized so this method needs to be it as well.
             listenersAreRegistered = true;
         }
 
         /** {@inheritDoc} */
         @Override
-        public void unregisterListenersForThisClass() {
+        public synchronized void unregisterListenersForThisClass() {
+            // The method DefaultConditionalNG.unregisterListenersForThisClass()
+            // is synchronized so this method needs to be it as well.
             listenersAreRegistered = false;
         }
     }
