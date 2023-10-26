@@ -11690,7 +11690,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         RouteLocation rlB = route.getRouteLocationBySequenceNumber(2);
         Location boston = rlB.getLocation();
-        Track bostonInterchange1 = boston.getTrackByName("Boston Interchange 1", null);
+        Track bostonYard1 = boston.getTrackByName("Boston Yard 1", null);
         // now configure train 2 to not be able to service c1
         rlB.setMaxTrainLength(40); // c1 length is 40 feet, 44 feet with
                                    // couplers
@@ -11700,9 +11700,12 @@ public class TrainBuilderTest extends OperationsTestCase {
         train2.build();
         Assert.assertTrue("Train 2 status", train2.isBuilt());
 
-        // confirm car destinations, a local move was the only option
+        // Route for car (A 1): (Acton, Acton Spur 1)-> (Train Acton-Boston-Chelmsford 2)-> 
+        // (Boston, Boston Yard 1)-> (Train Acton-Boston-Chelmsford 1)-> (Chelmsford, Chelmsford 
+        // Interchange 2)
+        // confirm car destination
         Assert.assertEquals("c1 assigned to train", train2, c1.getTrain());
-        Assert.assertEquals("c1 destination", bostonInterchange1, c1.getDestinationTrack());
+        Assert.assertEquals("c1 destination", bostonYard1, c1.getDestinationTrack());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
@@ -18963,6 +18966,136 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Warnings", 0, tb._warnings);
         Assert.assertEquals("Train assignment", acbaTrain, c1.getTrain());
         Assert.assertEquals("car c1 destination track", actonInterchange2, c1.getDestinationTrack());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    /**
+     * Test that a spur's alternate track is selected when routing with 3 or
+     * more trains, and all 1st hop tracks are full
+     */
+    @Test
+    public void testRedirectToAlternate3Trains() {
+        // build a set of trains servicing multiple locations.
+        JUnitOperationsUtil.createSevenNormalLocations();
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonSpur2 = acton.getTrackByName("Acton Spur 2", null);
+        Track actonYard2 = acton.getTrackByName("Acton Yard 2", null);
+        
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonInterchange1 = boston.getTrackByName("Boston Interchange 1", null);
+        Track bostonInterchange2 = boston.getTrackByName("Boston Interchange 2", null);
+        Track bostonYard1 = boston.getTrackByName("Boston Yard 1", null);
+        Track bostonYard2 = boston.getTrackByName("Boston Yard 2", null);
+
+        
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        Location danvers = lmanager.getLocationByName("Danvers");
+
+        // Create the train Acton-Boston
+        Route abRoute = rmanager.newRoute("Acton-Boston");
+        abRoute.addLocation(acton);
+        abRoute.addLocation(boston);
+        Train abTrain = tmanager.newTrain("Acton-Boston");
+        abTrain.setRoute(abRoute);
+
+        // Create the train Boston-Chelmsford
+        Route bcRoute = rmanager.newRoute("Boston-Chelmsford");
+        bcRoute.addLocation(boston);
+        bcRoute.addLocation(chelmsford);
+        Train bcTrain = tmanager.newTrain("Boston-Chelmsford");
+        bcTrain.setRoute(bcRoute);
+        
+        // Create the train Chelmsford-Danvers
+        Route cdRoute = rmanager.newRoute("Chelmsford-Danvers");
+        cdRoute.addLocation(chelmsford);
+        cdRoute.addLocation(danvers);
+        Train cdTrain = tmanager.newTrain("Chelmsford-Danvers");
+        cdTrain.setRoute(cdRoute);
+
+        // now place car at Acton destination Danvers
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", "DAB", "1958", actonSpur2, 0);
+        c1.setFinalDestination(danvers);
+        
+        // provide an alternate track
+        actonSpur2.setAlternateTrack(actonYard2);
+        
+        // only enough room for one car at tracks
+        bostonInterchange1.setLength(60);
+        bostonInterchange2.setLength(60);
+        bostonYard1.setLength(60);
+        bostonYard2.setLength(60);
+        actonYard2.setLength(60);
+        
+        // route for car
+        // Acton -> abTrain -> Boston -> bcTrain -> Chelmsford -> cdTrain -> Danvers
+
+        Setup.setCarRoutingViaYardsEnabled(false);
+        
+        TrainBuilder tb = new TrainBuilder();
+        Assert.assertTrue(tb.build(abTrain));
+        Assert.assertEquals("Train assignment", abTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", bostonInterchange1, c1.getDestinationTrack()); 
+        abTrain.reset();
+        
+        // make boston interchange 1 full
+        JUnitOperationsUtil.createAndPlaceCar("A", "2", "Boxcar", "40", "DAB", "1958", bostonInterchange1, 0);
+        
+        Assert.assertTrue(tb.build(abTrain));
+        Assert.assertEquals("Train assignment", abTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", bostonInterchange2, c1.getDestinationTrack());
+        abTrain.reset();
+        
+        // make boston interchange 2 full
+        JUnitOperationsUtil.createAndPlaceCar("A", "3", "Boxcar", "40", "DAB", "1958", bostonInterchange2, 0);
+        
+        Assert.assertTrue(tb.build(abTrain));
+        Assert.assertEquals("Train assignment", abTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", actonYard2, c1.getDestinationTrack());
+        abTrain.reset();
+        
+        Setup.setCarRoutingViaYardsEnabled(true);
+        
+        Assert.assertTrue(tb.build(abTrain));
+        Assert.assertEquals("Train assignment", abTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", bostonYard1, c1.getDestinationTrack());
+        abTrain.reset();
+        
+        // make boston Yard 1 full
+        JUnitOperationsUtil.createAndPlaceCar("A", "4", "Boxcar", "40", "DAB", "1958", bostonYard1, 0);
+        
+        Assert.assertTrue(tb.build(abTrain));
+        Assert.assertEquals("Train assignment", abTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", bostonYard2, c1.getDestinationTrack());
+        abTrain.reset();
+        
+        // make boston interchange 2 full
+        JUnitOperationsUtil.createAndPlaceCar("A", "5", "Boxcar", "40", "DAB", "1958", bostonYard2, 0);
+        
+        Assert.assertTrue(tb.build(abTrain));
+        Assert.assertEquals("Train assignment", abTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", actonYard2, c1.getDestinationTrack());
+        abTrain.reset();
+        
+        // don't allow local moves
+        abTrain.setAllowLocalMovesEnabled(false);
+        
+        Assert.assertTrue(tb.build(abTrain));
+        Assert.assertEquals("Train assignment", null, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", null, c1.getDestinationTrack());
+        abTrain.reset();
+        
+        abTrain.setAllowLocalMovesEnabled(true);
+        // make Acton yard 2 full
+        JUnitOperationsUtil.createAndPlaceCar("A", "6", "Boxcar", "40", "DAB", "1958", actonYard2, 0);
+        
+        Assert.assertTrue(tb.build(abTrain));
+        Assert.assertEquals("Train assignment", null, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", null, c1.getDestinationTrack());
+        abTrain.reset();
+        
+        Assert.assertEquals("FD", danvers, c1.getFinalDestination());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }

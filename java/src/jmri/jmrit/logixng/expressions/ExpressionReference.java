@@ -2,7 +2,6 @@ package jmri.jmrit.logixng.expressions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.VetoableChangeListener;
 import java.util.Locale;
 import java.util.Map;
 import jmri.*;

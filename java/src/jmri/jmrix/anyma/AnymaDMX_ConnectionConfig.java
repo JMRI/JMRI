@@ -1,11 +1,10 @@
 package jmri.jmrix.anyma;
 
 import java.util.List;
-import jmri.jmrix.AbstractUsbConnectionConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
+
+import jmri.jmrix.AbstractUsbConnectionConfig;
 
 /**
  * Definition of objects to handle configuring an Anyma DMX layout connection
@@ -64,10 +63,10 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
         //    // don't show more than once every 30 seconds
         //    if (!GraphicsEnvironment.isHeadless()
         //            && (this.DMXMessageShown == null || ((new Date().getTime() - this.DMXMessageShown.getTime()) / 1000 % 60) > 30)) {
-        //        JOptionPane.showMessageDialog(this._details,
+        //        JmriJOptionPane.showMessageDialog(this._details,
         //                Bundle.getMessage("NoDMXControllerMessage"),
         //                Bundle.getMessage("NoDMXControllerTitle"),
-        //                JOptionPane.ERROR_MESSAGE);
+        //                JmriJOptionPane.ERROR_MESSAGE);
         //        this.DMXMessageShown = new Date();
         //    }
         //}
@@ -86,6 +85,5 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
         return getAdapter().getPortNames();
     }
 
-    private final static Logger log
-            = LoggerFactory.getLogger(AnymaDMX_ConnectionConfig.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnymaDMX_ConnectionConfig.class);
 }

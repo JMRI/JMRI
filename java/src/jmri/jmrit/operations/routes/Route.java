@@ -14,8 +14,7 @@ import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.*;
 
 /**
  * Represents a route on the layout
@@ -267,6 +266,22 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
             }
         }
         return null;
+    }
+    
+    /**
+     * Used to determine if a "similar" location name is in the route. Note that
+     * a similar name might not actually be part of the route.
+     * 
+     * @param name the name of the location
+     * @return true if a "similar" name was found
+     */
+    public boolean isLocationNameInRoute(String name) {
+        for (RouteLocation rl : getLocationsBySequenceList()) {
+            if (rl.getSplitName().equals(TrainCommon.splitString(name))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

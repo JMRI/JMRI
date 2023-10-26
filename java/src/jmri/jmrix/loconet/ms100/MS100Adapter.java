@@ -7,11 +7,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.Vector;
+
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LnPortController;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import purejavacomm.CommPortIdentifier;
 import purejavacomm.NoSuchPortException;
 import purejavacomm.PortInUseException;
@@ -81,11 +81,11 @@ public class MS100Adapter extends LnPortController {
                     activeSerialPort.setSerialPortParams(16457, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
                 } catch (UnsupportedCommOperationException e2) {
                     log.warn("trouble setting 16600 baud");
-                    javax.swing.JOptionPane.showMessageDialog(null,
+                    jmri.util.swing.JmriJOptionPane.showMessageDialog(null,
                             "Failed to set the correct baud rate for the MS100. Port is set to "
                             + activeSerialPort.getBaudRate()
                             + " baud. See the README file for more info.",
-                            "Connection failed", javax.swing.JOptionPane.ERROR_MESSAGE);
+                            "Connection failed", jmri.util.swing.JmriJOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -209,6 +209,6 @@ public class MS100Adapter extends LnPortController {
     InputStream serialInStream = null;
     OutputStream serialOutStream = null;
 
-    private final static Logger log = LoggerFactory.getLogger(MS100Adapter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MS100Adapter.class);
 
 }

@@ -405,6 +405,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             case LENGTH_COLUMN:
             case MOVES_COLUMN:
                 return Integer.class;
+            case LAST_COLUMN:
+                return Object.class; // to disable sorting
             default:
                 return String.class;
         }

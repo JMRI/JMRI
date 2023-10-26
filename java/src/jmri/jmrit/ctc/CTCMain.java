@@ -10,19 +10,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import javax.swing.JOptionPane;
-
 import jmri.*;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.OtherData;
-import jmri.jmrit.ctc.ctcserialdata.TrafficLockingData;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 public class CTCMain {
-    private final static Logger log = LoggerFactory.getLogger(CTCMain.class);
+
     private final CTCSerialData _mCTCSerialData;
     private final ArrayList<CodeButtonHandler> _mCodeButtonHandlersArrayList = new ArrayList<>();       // "Const" after initialization completes.
     private NBHSensor _mCTCDebugSystemReloadInternalSensor = null;
@@ -247,16 +242,16 @@ public class CTCMain {
             int messageType;
             switch (exceptionBufferRecordSeverity2) {
                 case ERROR:
-                    messageType = JOptionPane.ERROR_MESSAGE;
+                    messageType = JmriJOptionPane.ERROR_MESSAGE;
                     break;
                 case WARN:
-                    messageType = JOptionPane.WARNING_MESSAGE;
+                    messageType = JmriJOptionPane.WARNING_MESSAGE;
                     break;
                 default:    // And INFO
-                    messageType = JOptionPane.INFORMATION_MESSAGE;
+                    messageType = JmriJOptionPane.INFORMATION_MESSAGE;
                     break;
             }
-            JOptionPane.showMessageDialog(null, _mCTCExceptionBuffer.getAllMessages(), Bundle.getMessage("CTCMainRuntimeStartupIssues"), messageType);  // NOI18N
+            JmriJOptionPane.showMessageDialog(null, _mCTCExceptionBuffer.getAllMessages(), Bundle.getMessage("CTCMainRuntimeStartupIssues"), messageType);  // NOI18N
         }
         log.info("CTC {} {}", OtherData.CTC_VERSION, Bundle.getMessage("CTCMainStarted"));   // NOI18N
     }
@@ -272,5 +267,7 @@ public class CTCMain {
             externalLockTurnout();
         }
     };
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CTCMain.class);
 
 }

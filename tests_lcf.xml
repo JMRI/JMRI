@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- tests_lcf.xml
+
+When updating this file, please also update tests_jacoco_lcf.xml
+which runs the tests with the DEBUG Level to increase unit test coverage.
+
+This configures three appenders:  J, R and A.
+J and R are used routinely; A is for debugging use.
+
+The R appender writes all logging output to the tests.log file.
+This includes messages that the tests have intentionally suppressed,
+so it's quite verbose.
+
+The J appender is a JMRI-specific one, configured so that JMRI tests
+can examine their output.  Changing the levels or
+format of J can result in obscure test failures.
+
+The A appender, if used, is configured to send output to stderr.
+This is typically used when debugging to make it easier to 
+see the output during running.
+The level can be set in the ThresholdFilter line below.
+
+All three appenders use PatternLayout to control their output format.
+Note that the default output formats are not the same across the three appenders.
+
+The default level for test logging is WARN
+All the specific class loggers are initially set to ignore everything below that.
+You can set a specific class to e.g. debug so that it does log its 
+information instead of ignoring it, see examples at the bottom.
+Then the logging level on each appender (see below) is used to decide if
+the data is actually logged.
+
+-->
+<Configuration status="WARN" name="JUnitTestsConfig">
+
+    <Appenders>
+        <Console name="A" target="SYSTEM_ERR">
+            <PatternLayout pattern="%d{ss,SSS} [%t] %-5p %c{2}.%M() - %m%n"/>
+            <ThresholdFilter level="WARN"/>
+        </Console>
+
+        <File name="R" fileName="tests.log" append="false">
+            <PatternLayout pattern="%d{ss,SSS} [%t] %-5p %c{2}.%M() - %m%n"/>
+        </File>
+
+        <!-- JUnitAppender is a custom appender via Log4j2 plugin, see
+        https://github.com/JMRI/JMRI/blob/master/java/test/jmri/util/JUnitAppender.java -->
+        <JUnitAppender name="J">
+            <PatternLayout pattern="%-5p - %m [%t] %c{4}.%M()%n"/>
+            <ThresholdFilter level="INFO"/>
+        </JUnitAppender>
+
+    </Appenders>
+    <Loggers>
+        <Root level="WARN">
+            <!-- <AppenderRef ref="A"/> -->
+            <AppenderRef ref="R"/>
+            <AppenderRef ref="J"/>
+        </Root>
+
+        <!-- Valid Level names are OFF, FATAL, ERROR, WARN, INFO, DEBUG and TRACE. -->
+
+        <!-- Turning off logging for Java Xerces; emits WARNING messages during routine use -->
+        <Logger name="org.jdom2.transform" level="OFF"/>
+
+        <!-- Turning off logging for Java JMDNS; logs SEVERE and WARNING to j.u.l too routinely -->
+        <Logger name="com.strangeberry" level="OFF"/>
+        <Logger name="javax.jmdns" level="OFF"/>
+
+        <!-- Turning off logging for the WebDriver Manager -->
+        <Logger name="io.github.bonigarcia.wdm" level="OFF"/>
+
+        <!-- Turn off logging for the JUnit 5 discovery process. -->
+        <Logger name="org.junit.vintage.engine.discovery" level="ERROR"/>
+
+
+        <!-- ################################################################### -->
+        <!-- #    Settings needed for specific tests (last so not accidentally overridden) -->
+        <!-- # ################################################################### -->
+
+        <!-- Needed for Jenkins I18N testing -->
+        <Logger name="jmri.util.I18NTest" level="DEBUG"/>
+
+        <!-- Force classpath info into early log -->
+        <Logger name="jmri.VersionTest" level="INFO"/>
+        <Logger name="jmri.ClassPathTest" level="INFO"/>
+
+        <!-- Needed for jmri.util.JUnitAppenderTest -->
+        <Logger name="jmri.util.JUnitAppenderTest" level="INFO"/>
+
+        <!-- Needed for jmri.util.LoggingUtilTest -->
+        <Logger name="jmri.util.LoggingUtilTest" level="INFO"/>
+        <Logger name="LoggingUtilTest-extra-logger" level="INFO"/>
+
+        <!-- INFO is part of application tests -->
+        <Logger name="apps.Apps" level="INFO"/>
+        <Logger name="apps.AppsBase" level="INFO"/>
+        <Logger name="apps.PanelPro.PanelPro" level="INFO"/>
+        <Logger name="apps.gui3.Apps3" level="INFO"/>
+        <Logger name="apps.gui3.dp3.DecoderPro3" level="INFO"/>
+
+    </Loggers>
+    
+</Configuration>

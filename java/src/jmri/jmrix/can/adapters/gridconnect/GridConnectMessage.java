@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * CAN frame :XhhhhhhhhNd0d1d2d3d4d5d6d7; The X indicates an extended CAN frame
  * hhhh is the two byte header N or R indicates a normal or remote frame, in
  * position 6 or 10 d0 - d7 are the (up to) 8 data bytes
- * <p>
  *
  * @author Andrew Crosland Copyright (C) 2008
  */

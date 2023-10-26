@@ -2,7 +2,6 @@ package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
 import jmri.util.JUnitUtil;
 
-import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTrackDrawingOptions;
 

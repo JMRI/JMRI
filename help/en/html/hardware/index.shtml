@@ -240,6 +240,10 @@
           <em style="padding-left: 1em;"><a href="#networks">Networks and Protocols:</a></em>
           <ul>
             <li>
+              <a href="bidib/index.shtml">BiDiB</a>
+            </li>
+
+            <li>
               <a href="can/index.shtml">CAN Bus Networks</a>
             </li>
 
@@ -1041,6 +1045,23 @@
           <dt>JMRI Support <!-- header, link--></dt>
 
           <dd>&nbsp;</dd>
+
+          <dt class="im">
+            <a href="http://bidib.org/index_e.html" target="_blank"><img src=
+            "bidib/images/bidib_logo.png" alt="BiDiB logo" height="40"></a>
+          </dt>
+
+          <dt>
+            <a href="bidib/index.shtml">BiDiB</a>
+          </dt>
+
+          <dd>
+            <p class="dl">Configure: <a href="bidib/index.shtml">BiDiB networks</a></p>
+
+            <p>&nbsp;</p>
+
+            <p>&nbsp;</p>
+          </dd>
 
           <dt class="im">
             <a href="https://www.jlcenterprises.net/" target="_blank">C/MRI</a>

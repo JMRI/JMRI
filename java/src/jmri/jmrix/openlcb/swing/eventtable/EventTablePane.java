@@ -7,7 +7,6 @@ import java.io.*;
 import java.util.*;
 
 import javax.swing.*;
-import javax.swing.event.*;
 import javax.swing.table.*;
 
 import jmri.*;
@@ -29,7 +28,6 @@ import org.openlcb.swing.*;
 
 /**
  * Pane for displaying a table of relationships of nodes, producers and consumers
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2023
  * @since 5.3.4

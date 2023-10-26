@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet.ds64;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -11,13 +12,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.Collections;
+
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -26,13 +27,13 @@ import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
 import jmri.jmrix.loconet.AbstractBoardProgPanel;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.ValidatedTextField;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A "tabbed" swing panel to display and modify Digitrax DS64 board
@@ -1961,12 +1962,12 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         Object[] dialogBoxButtonOptions = {
             Bundle.getMessage("ButtonResetToFactoryDefault"),
             Bundle.getMessage("ButtonCancel")};
-        int userReply = JOptionPane.showOptionDialog(this.getParent(),
+        int userReply = JmriJOptionPane.showOptionDialog(this,
                 Bundle.getMessage("DialogTextBoardResetWarning"),
                 Bundle.getMessage("WarningTitle"),
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.QUESTION_MESSAGE,
                 null, dialogBoxButtonOptions, dialogBoxButtonOptions[1]);
-        if (userReply != 0) {
+        if ( userReply != JmriJOptionPane.YES_OPTION ) {
             factoryResetButton.setSelected(false);
             return; // compare only to exactly the value for executing the reset!
         }
@@ -2531,12 +2532,12 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                         Object[] dialogBoxButtonOptions = {
                             Bundle.getMessage("ButtonResetRouteN", routeNumber),
                             Bundle.getMessage("ButtonCancel")};
-                        int userReply = JOptionPane.showOptionDialog(this.getParent(),
+                        int userReply = JmriJOptionPane.showOptionDialog(this,
                                 Bundle.getMessage("DialogTextClearRouteWarning", routeNumber),
                                 Bundle.getMessage("WarningTitle"),
-                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                                JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.QUESTION_MESSAGE,
                                 null, dialogBoxButtonOptions, dialogBoxButtonOptions[1]);
-                        if (userReply != 0) {
+                        if ( userReply != JmriJOptionPane.YES_OPTION ) {
                             resetRouteButton.setSelected(false);
                             return; // compare only to exactly the value for executing the "clear route" operation!
                         }
@@ -3117,6 +3118,6 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         localSensorType.setSelectedIndex(opsw[21]?1:0);
     }
     
-    private final static Logger log = LoggerFactory.getLogger(Ds64TabbedPanel.class); // NOI18N
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Ds64TabbedPanel.class);
 
 }

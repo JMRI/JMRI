@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import jmri.*;
 import jmri.implementation.*;
-import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.util.*;

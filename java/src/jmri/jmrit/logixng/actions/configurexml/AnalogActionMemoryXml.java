@@ -2,7 +2,6 @@ package jmri.jmrit.logixng.actions.configurexml;
 
 import jmri.InstanceManager;
 import jmri.Memory;
-import jmri.MemoryManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.AnalogActionManager;
 import jmri.jmrit.logixng.actions.AnalogActionMemory;

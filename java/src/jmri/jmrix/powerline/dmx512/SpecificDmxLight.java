@@ -8,7 +8,6 @@ import jmri.jmrix.powerline.SerialTrafficController;
  * Implementation of the Light class for DMX based subclasses.
  * <p>
  * DMX maps the value of 0.0 to 1.0 to values of 0 to 255.
- * <p>
  *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009, 2010

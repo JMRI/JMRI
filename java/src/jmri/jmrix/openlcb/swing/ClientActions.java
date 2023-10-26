@@ -41,7 +41,8 @@ public class ClientActions {
         JmriJFrame f = new JmriJFrame();
         f.setTitle(Bundle.getMessage("CdiPanelConfigure", description));
         f.setLayout(new javax.swing.BoxLayout(f.getContentPane(), javax.swing.BoxLayout.Y_AXIS));
-
+        f.addHelpMenu("package.jmri.jmrix.openlcb.swing.networktree.NetworkTreePane_CDItool", true);
+        
         CdiPanel m = new CdiPanel();
         f.add(m);
         m.setEventTable(iface.getNodeStore().getSimpleNodeIdent(destNode).getUserName(),

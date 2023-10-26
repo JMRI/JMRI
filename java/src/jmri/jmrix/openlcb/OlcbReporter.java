@@ -5,7 +5,6 @@ import jmri.NamedBean;
 import jmri.RailCom;
 import jmri.RailComManager;
 import jmri.implementation.AbstractIdTagReporter;
-import jmri.implementation.AbstractReporter;
 import org.openlcb.Connection;
 import org.openlcb.ConsumerRangeIdentifiedMessage;
 import org.openlcb.EventID;

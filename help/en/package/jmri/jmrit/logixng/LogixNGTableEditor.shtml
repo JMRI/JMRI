@@ -73,6 +73,13 @@
         <strong>Edit threads</strong> button. This is particular useful when using the
         <a href="ConditionalNGDebugger.shtml">LogixNG Debugger</a>.</dd>
 
+        <dt>Startup</dt>
+
+        <dd>Enabled LogixNGs start automatically after the layout configuration has been loaded.
+        The resulting actions will depend on the current state of the expressions.  Sometimes a
+        LogixNG ConditionalNG should wait until a specific event occurs.  Unchecking the
+        <strong>Startup</strong> checkbox will bypass the automatic process.</dd>
+
         <dt>Edit</dt>
 
         <dd>The <strong>Edit</strong> button opens the ConditionalNG Editor window.</dd>

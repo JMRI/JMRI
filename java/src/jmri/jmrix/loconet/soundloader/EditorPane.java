@@ -3,13 +3,15 @@ package jmri.jmrix.loconet.soundloader;
 import java.awt.FlowLayout;
 import java.io.File;
 import java.io.IOException;
+
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for editing Digitrax SPJ files.
@@ -109,8 +111,8 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
             saveFile(EditorPane.chooser.getSelectedFile().getPath());
         } catch (IOException e) {
             // failed, warn user
-            JOptionPane.showMessageDialog(this, "Error during save: " + e,
-                    "Save failed!", JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, "Error during save: " + e,
+                    "Save failed!", JmriJOptionPane.WARNING_MESSAGE);
         }
     }
 

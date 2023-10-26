@@ -16,6 +16,8 @@ import jmri.Section;
 import jmri.Sensor;
 import jmri.Transit;
 import jmri.beans.PropertyChangeProvider;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -106,7 +108,6 @@ import org.slf4j.LoggerFactory;
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <p>
  *
  * @author Dave Duchamp Copyright (C) 2008-2011
  */
@@ -792,7 +793,17 @@ public class ActiveTrain implements PropertyChangeProvider {
             as.getSection().clearNameInUnoccupiedBlocks();
             as.getSection().suppressNameUpdate(false);
         }
-        as.getSection().setAlternateColor(false);
+        for (Block b: as.getSection().getBlockList()) {
+            if (!InstanceManager.getDefault(DispatcherFrame.class).checkForBlockInAllocatedSection(b, as.getSection())) {
+                String userName = b.getUserName();
+                if (userName != null) {
+                    LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
+                    if (lb != null) {
+                        lb.setUseExtraColor(false);
+                    }
+                }
+            }
+        }
         refreshPanel();
         if (as.getSection() == mLastAllocatedSection) {
             mLastAllocatedSection = null;
@@ -828,7 +839,7 @@ public class ActiveTrain implements PropertyChangeProvider {
         resetAllAllocatedSections();
         clearAllocations();
         setAllocationReversed(false);
-        // wait for autoallocate to do its stuffbefore continuing
+        // wait for AutoAllocate to do complete.
         InstanceManager.getDefault(DispatcherFrame.class).queueWaitForEmpty();
         if (mAutoRun) {
             mAutoActiveTrain.allocateAFresh();

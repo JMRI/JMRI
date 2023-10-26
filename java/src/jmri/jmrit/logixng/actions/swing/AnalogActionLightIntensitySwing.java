@@ -9,9 +9,7 @@ import javax.swing.*;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.AnalogActionLightIntensity;
-import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;
-import jmri.util.swing.BeanSelectPanel;
 
 /**
  * Configures an AnalogActionLightIntensity object with a Swing JPanel.

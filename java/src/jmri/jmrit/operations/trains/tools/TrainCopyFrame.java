@@ -2,19 +2,14 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 
 import javax.swing.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainEditFrame;
-import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.*;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for making a new copy of a train.
@@ -107,13 +102,13 @@ public class TrainCopyFrame extends OperationsFrame {
     }
 
     private void reportTrainExists() {
-        JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNameExists"), MessageFormat.format(Bundle
-                .getMessage("CanNotTrain"), new Object[]{Bundle.getMessage("copy")}), JOptionPane.ERROR_MESSAGE);
+        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNameExists"), Bundle
+                .getMessage("CanNotTrain", Bundle.getMessage("copy")), JmriJOptionPane.ERROR_MESSAGE);
     }
 
     private void reportTrainDoesNotExist() {
-        JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectTrain"), MessageFormat.format(Bundle
-                .getMessage("CanNotTrain"), new Object[]{Bundle.getMessage("copy")}), JOptionPane.ERROR_MESSAGE);
+        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("SelectTrain"), Bundle
+                .getMessage("CanNotTrain", Bundle.getMessage("copy")), JmriJOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -122,14 +117,14 @@ public class TrainCopyFrame extends OperationsFrame {
      */
     private boolean checkName() {
         if (trainNameTextField.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("EnterTrainName"), MessageFormat.format(Bundle
-                    .getMessage("CanNotTrain"), new Object[]{Bundle.getMessage("copy")}), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("EnterTrainName"), Bundle
+                    .getMessage("CanNotTrain", Bundle.getMessage("copy")), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (trainNameTextField.getText().length() > Control.max_len_string_train_name) {
-            JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrainNameLess"),
-                    new Object[]{Control.max_len_string_train_name + 1}), MessageFormat.format(Bundle
-                            .getMessage("CanNot"), new Object[]{Bundle.getMessage("copy")}), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNameLess",
+                    Control.max_len_string_train_name + 1), Bundle
+                            .getMessage("CanNot", Bundle.getMessage("copy")), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -140,5 +135,5 @@ public class TrainCopyFrame extends OperationsFrame {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainCopyFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrainCopyFrame.class);
 }

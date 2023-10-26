@@ -3878,12 +3878,15 @@ public class LocoNetMessageInterpret {
     }
 
     private static String interpretOpcImmPacket(LocoNetMessage l) {
+        String result;
+        result = "";
+
         /*
          * OPC_IMM_PACKET   0xED
          */
         if (l.getElement(1) == 0x0F) { // length = 15
             // check for a specific type - Uhlenbrock LNSV Programming messages format
-            String result = interpretLncvMessage(l);
+            result = interpretLncvMessage(l);
             if (result.length() > 0) {
                 return result;
             }
@@ -4094,6 +4097,164 @@ public class LocoNetMessageInterpret {
                             Bundle.getMessage(((packetInt[1] & 0x08) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
                 } else {
                     // Unknown
+                    if ((packetInt[0] & 0xC0) == 0x80 ) {
+                        /*
+                        * 2.4.7 Extended Decoder Control Packet address for 
+                        * operations mode programming
+                        * 10AAAAAA 0 0AAA0AA1
+                        * Please note that the use of 0 in bit 3 of byte 2 is to 
+                        * ensure that this packet cannot be confused with the 
+                        * legacy accessory-programming packets. The resulting packet 
+                        * would be:
+                        * {preamble} 10AAAAAA 0 0AAA0AA1 0 (1110CCVV 0 VVVVVVVV 0 DDDDDDDD) 0 EEEEEEEE 1
+                        * Signal Decoder Address (Configuration Variable Access Instruction) Error Byte
+                        */
+                        log.debug("Is an Extended Accessory Ops-mode CV access");
+                        log.debug("   LocoNet message: {} {} {} {} {} {} {} {} {} {} {}",
+                                StringUtil.twoHexFromInt(l.getElement(0)),
+                                StringUtil.twoHexFromInt(l.getElement(1)),
+                                StringUtil.twoHexFromInt(l.getElement(2)),
+                                StringUtil.twoHexFromInt(l.getElement(3)),
+                                StringUtil.twoHexFromInt(l.getElement(4)),
+                                StringUtil.twoHexFromInt(l.getElement(5)),
+                                StringUtil.twoHexFromInt(l.getElement(6)),
+                                StringUtil.twoHexFromInt(l.getElement(7)),
+                                StringUtil.twoHexFromInt(l.getElement(8)),
+                                StringUtil.twoHexFromInt(l.getElement(9)),
+                                StringUtil.twoHexFromInt(l.getElement(10))
+                                );
+                        log.debug("   NMRA packet: {} {} {} {} {}",
+                                StringUtil.twoHexFromInt(packetInt[0]),
+                                StringUtil.twoHexFromInt(packetInt[1]),
+                                StringUtil.twoHexFromInt(packetInt[2]),
+                                StringUtil.twoHexFromInt(packetInt[3]),
+                                StringUtil.twoHexFromInt(packetInt[4])
+                                );
+                        
+                        if ((packetInt[2] & 0xF0) == 0xF0) {
+                            /*
+                            * 2.3.7.2 Configuration Variable Access Instruction - Short Form
+                            * This instruction has the format of:
+                            * {instruction bytes} = 1111GGGG 0 DDDDDDDD 0 DDDDDDDD
+                            * The 8 bit data DDDDDDDD is placed in the configuration 
+                            * variable identified by GGGG according
+                            */
+                            log.debug("Is an Short-form Extended Accessory Ops-mode CV access");
+                        }
+                        if ((packetInt[2] & 0xf0) == 0xe0) {
+                            /*
+                            * 2.3.7.3 Configuration Variable Access Instruction - Long Form
+                            * The long form allows the direct manipulation of all CVs8. This 
+                            * instruction is valid both when the Digital Decoder has its 
+                            * long address active and short address active. Digital Decoders 
+                            * shall not act on this instruction if sent to its consist 
+                            * address. 
+                            *
+                            * The format of the instructions using Direct CV 
+                            * addressing is:
+                            *   {instruction bytes}= 1110GGVV 0 VVVVVVVV 0 DDDDDDDD
+                            *
+                            * The actual Configuration Variable desired is selected 
+                            * via the 10-bit address with the 2-bit address (VV) in 
+                            * the first data byte being the most significant bits of 
+                            * the address. The Configuration variable being addressed 
+                            * is the provided 10-bit address plus 1. For example, to 
+                            * address CV1 the 10 bit address is “00 00000000”.
+                            *
+                            * The defined values for Instruction type (CC) are:
+                            *       GG=00 Reserved for future use
+                            *       GG=01 Verify byte 505
+                            *       GG=11 Write byte
+                            *       GG=10 Bit manipulation
+                            * */
+                            int addr = 1 + ((packetInt[0] & 0x3F) << 2) + 
+                                    ((( ~ packetInt[1]) & 0x70) << 4)
+                                    + ((packetInt[1] & 0x06) >> 1);
+                            log.debug("Long-format Extended Accessory Ops-mode CV access: Extended Acceccory Address {}", addr);
+                            int cvnum = 1 + ((packetInt[2] & 0x03) << 2) + (packetInt[3] & 0xff);
+                            switch (packetInt[2] & 0x0C) {
+                                case 0x04:
+                                    //  GG=01 Verify byte
+                                    /*
+                                     * Type = "01" VERIFY BYTE
+                                     *
+                                     * The contents of the Configuration Variable as indicated 
+                                     * by the 10-bit address are compared with the data byte 
+                                     * (DDDDDDDD). If the decoder successfully receives this 
+                                     * packet and the values are identical, the Digital 
+                                     * Decoder shall respond with the contents of the CV as 
+                                     * the Decoder Response Transmission, if enabled.
+                                    */
+                                    log.debug("CV # {}, Verify Byte: {}", cvnum, packetInt[4]);
+                                    return Bundle.getMessage("LN_MSG_EXTEND_ACCY_CV_VERIFY",
+                                            addr, cvnum, packetInt[4] );
+                                case 0x08:
+                                    // GG=10 Bit manipulation
+                                    /*
+                                     * Type = "10" BIT MANIPULATION.
+                                     *
+                                     * The bit manipulation instructions use a special 
+                                     * format for the data byte (DDDDDDDD): 111FDBBB, where 
+                                     * BBB represents the bit position within the CV, 
+                                     * D contains the value of the bit to be verified 
+                                     * or written, and F describes whether the 
+                                     * operation is a verify bit or a write bit 
+                                     * operation.
+                                     * 
+                                     * F = "1" : WRITE BIT
+                                     * F = "0" : VERIFY BIT
+                                     * The VERIFY BIT and WRITE BIT instructions operate 
+                                     * in a manner similar to the VERIFY BYTE and WRITE 
+                                     * BYTE instructions (but operates on a single bit). 
+                                     * Using the same criteria as the VERIFY BYTE 
+                                     * instruction, an operations mode acknowledgment 
+                                     * will be generated in response to a VERIFY BIT 
+                                     * instruction if appropriate. Using the same 
+                                     * criteria as the WRITE BYTE instruction, a 
+                                     * configuration variable access acknowledgment 
+                                     * will be generated in response to the second 
+                                     * identical WRITE BIT instruction if appropriate.
+                                     */
+                                    if ((packetInt[4]& 0xE0) != 0xE0) {
+                                        break;
+                                    }
+                                    log.debug("CV # {}, Bit Manipulation: {} {} (of bits 0-7) with {}", 
+                                            cvnum, (packetInt[4] & 0x10) == 0x10 ? "Write" : "Verify",
+                                            (packetInt[4] & 0x7),
+                                            (packetInt[4] >> 3) & 0x1);
+                                    
+                                    // "Extended Accessory Decoder CV Bit {} bit, 
+                                    // Address {}, CV {}, bit # {} (of bits 0-7) 
+                                    // with value {}.\n"
+                                    return Bundle.getMessage("LN_MSG_EXTEND_ACCY_CV_BIT_ACCESS",
+                                            ((packetInt[4] & 0x10) == 0x10 ? "Write" : "Verify"),
+                                            addr, cvnum, (packetInt[4] & 0x7),
+                                            ((packetInt[4] >>3) & 0x1) );
+                                case 0x0c:
+                                    // GG=11 Write byte
+                                    /*
+                                     * Type = "11" WRITE BYTE
+                                     *
+                                     * The contents of the Configuration Variable as indicated by the 10-bit
+                                     * address are replaced by the data byte (DDDDDDDD). Two identical 
+                                     * packets are needed before the decoder shall modify a 
+                                     * configuration variable. These two packets need not be back
+                                     * to back on the track. However any other packet to the same 
+                                     * decoder will invalidate the write operation. (This includes 
+                                     * broadcast packets.) If the decoder successfully receives 
+                                     * this second identical packet, it shall respond with a 
+                                     * configuration variable access acknowledgment.
+                                     */
+                                    log.debug("CV # {}, Write Byte: {}", cvnum, packetInt[4]);
+                                    return Bundle.getMessage("LN_MSG_EXTEND_ACCY_CV_WRITE",
+                                            addr, cvnum, packetInt[4] );
+                                case 0x0:
+                                default:
+                                    // GG=00 Reserved for future use
+                                    log.debug("CV # {}, Reserved (GG=0); {}", cvnum, packetInt[4]);    
+                            }
+                        }
+                    }
                     return Bundle.getMessage("LN_MSG_OPC_IMM_PKT_GENERIC",
                             ((reps & 0x70) >> 4),
                             (reps & 0x07),
@@ -4151,6 +4312,8 @@ public class LocoNetMessageInterpret {
         return ""; // not an understood message.
     }
 
+    
+    
     private static String interpretOpcPr3Mode(LocoNetMessage l) {
         /*
          * Sets the operating mode of the PR3 device, if present.

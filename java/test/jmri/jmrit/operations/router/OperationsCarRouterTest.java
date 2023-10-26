@@ -408,7 +408,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         ActonToBostonTrain.setRoute(routeAB);
 
         // should work
-        Assert.assertTrue("Try routing with final destination and train", router.setDestination(c3, null, null));
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c3, null, null));
         Assert.assertEquals("Check car's destination", "Boston", c3.getDestinationName());
 
         // try specific train
@@ -820,7 +820,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         bostonToChelmsfordTrain.setRoute(routeBC);
 
         // should work
-        Assert.assertTrue("Try routing with final destination and train", router.setDestination(c3, null, null));
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c3, null, null));
         Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
         Assert.assertEquals("Check car's destination track", "Acton Interchange 1", c3.getDestinationTrackName());
 
@@ -914,7 +914,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         chelmsfordToDanversTrain.setRoute(routeCD);
 
         // should work
-        Assert.assertTrue("Try routing with final destination and train", router.setDestination(c3, null, null));
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c3, null, null));
         Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
         Assert.assertEquals("Check car's destination track", "Acton Interchange 1", c3.getDestinationTrackName());
 
@@ -960,7 +960,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         danversToEssexTrain.setRoute(routeDE);
 
         // should work
-        Assert.assertTrue("Try routing with final destination and train", router.setDestination(c3, null, null));
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c3, null, null));
         Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
         Assert.assertEquals("Check car's destination track", "Acton Interchange 1", c3.getDestinationTrackName());
 
@@ -1001,7 +1001,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         EssexToFoxboroTrain.setRoute(routeEF);
 
         // 6th train
-        Assert.assertTrue("Try routing with final destination and train", router.setDestination(c3, null, null));
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c3, null, null));
         Assert.assertTrue("Try routing with final destination and train", router.setDestination(c3, actonTrain, null));
         Assert.assertTrue("Try routing with final destination and train", router.setDestination(c3, actonTrain2, null));
 
@@ -1458,7 +1458,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         tActonToBoston.setRoute(routeAB);
 
         // should work
-        Assert.assertTrue("Try routing with final destination and train", router.setDestination(c3, null, null));
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c3, null, null));
         Assert.assertEquals("Check car's destination", "Boston", c3.getDestinationName());
 
         // try specific train
@@ -1810,8 +1810,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
 
         c3.setDestination(null, null); // clear previous destination
         c3.setFinalDestination(boston); // the final destination for the car
-        c3.setFinalDestinationTrack(bostonSpur1); // now specify the actual
-                                                  // track
+        c3.setFinalDestinationTrack(bostonSpur1);
 
         Assert.assertTrue("Try routing two trains via interchange", router.setDestination(c3, null, null));
         Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
@@ -1823,8 +1822,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
 
         c3.setDestination(null, null); // clear previous destination
         c3.setFinalDestination(boston); // the final destination for the car
-        c3.setFinalDestinationTrack(bostonSpur1); // now specify the actual
-                                                  // track
+        c3.setFinalDestinationTrack(bostonSpur1);
 
         Assert.assertTrue("Try routing two trains via interchange", router.setDestination(c3, null, null));
         Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
@@ -1834,8 +1832,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
 
         c3.setDestination(null, null); // clear previous destination
         c3.setFinalDestination(boston); // the final destination for the car
-        c3.setFinalDestinationTrack(bostonSpur1); // now specify the actual
-                                                  // track
+        c3.setFinalDestinationTrack(bostonSpur1);
 
         Assert.assertTrue("Try routing two trains via yard", router.setDestination(c3, null, null));
         Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
@@ -1888,13 +1885,15 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Assert.assertEquals("Check car's destination track", "", c3.getDestinationTrackName());
 
         // make interim track issue length
-        actonInterchange1.setLength(c3.getTotalLength() + c5.getTotalLength() - 1); // too
-                                                                                    // short
-                                                                                    // for
-                                                                                    // two
-                                                                                    // cars
-        Assert.assertEquals("place car at bostonInterchange 1", Track.OKAY, c5.setLocation(acton, actonInterchange1));
+        actonInterchange1.setLength(c3.getTotalLength() + c5.getTotalLength() - 1);
+        Assert.assertEquals("place car at actionInterchange 1", Track.OKAY, c5.setLocation(acton, actonInterchange1));
         Assert.assertTrue("Try routing two trains", router.setDestination(c3, tActon2, null));
+        
+        c3.setDestination(null, null); // clear previous destination
+        c3.setFinalDestination(boston); // the final destination for the car
+        c3.setFinalDestinationTrack(bostonSpur1);
+        Assert.assertTrue("Try routing two trains", router.setDestination(c3, null, null));
+        Assert.assertEquals("Router status", Router.STATUS_NOT_ABLE, router.getStatus());
 
         // restore track length
         actonInterchange1.setLength(500);
@@ -1991,11 +1990,11 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         c4.setFinalDestination(foxboro);
 
         // should work
-        Assert.assertTrue("Try routing with final destination and train", router.setDestination(c3, null, null));
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c3, null, null));
         Assert.assertEquals("Check car's destination", "Boston", c3.getDestinationName());
         Assert.assertEquals("Check car's destination track", "Boston Interchange 1", c3.getDestinationTrackName());
 
-        Assert.assertTrue("Try routing with final destination and train", router.setDestination(c4, null, null));
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c4, null, null));
         Assert.assertEquals("Check car's destination", "Boston", c4.getDestinationName());
         Assert.assertEquals("Check car's destination track", "Boston Interchange 1", c4.getDestinationTrackName());
 
@@ -2122,7 +2121,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         bostonToChelmsfordTrain.setRoute(routeBC);
 
         // 3 train route should work (A -> A -> B -> C)
-        Assert.assertTrue("Try routing with final destination and train", router.setDestination(c3, null, null));
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c3, null, null));
         Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
         Assert.assertEquals("Check car's destination track", "Acton Interchange 1", c3.getDestinationTrackName());
 
@@ -2136,7 +2135,6 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Assert.assertEquals("Check car's destination track", "Acton Interchange 1", c3.getDestinationTrackName());
 
         c3.setDestination(null, null); // clear previous destination
-        c3.setFinalDestination(chelmsford);
 
         // set final destination Danvers
         c3.setDestination(null, null); // clear previous destination
@@ -2152,7 +2150,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         chelmsfordToDanversTrain.setRoute(routeCD);
 
         // 4 train route should work (A -> A -> B -> C -> D)
-        Assert.assertTrue("Try routing with final destination and train", router.setDestination(c3, null, null));
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c3, null, null));
         Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
         Assert.assertEquals("Check car's destination track", "Acton Interchange 1", c3.getDestinationTrackName());
 
@@ -2165,15 +2163,13 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Assert.assertEquals("Check car's destination track", "Acton Interchange 1", c3.getDestinationTrackName());
 
         c3.setDestination(null, null); // clear previous destination
-        c3.setFinalDestination(danvers); // the final destination for the car
 
         // don't allow train 2 to service cars with load Tools
         actonTrain2.addLoadName("Tools");
         actonTrain2.setLoadOption(Train.EXCLUDE_LOADS);
         c3.setLoadName("Tools");
         // routing should work using train 2, but destinations and track should
-        // not be
-        // set
+        // not be set
         Assert.assertTrue("Try routing four trains", router.setDestination(c3, actonTrain2, null));
         Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
         Assert.assertEquals("Check car's destination track", "", c3.getDestinationTrackName());
@@ -2194,7 +2190,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         danversToEssexTrain.setRoute(routeDE);
 
         // 5 train route should work (A -> A -> B -> C -> D -> E)
-        Assert.assertTrue("Try routing with final destination and train", router.setDestination(c3, null, null));
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c3, null, null));
         Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
         Assert.assertEquals("Check car's destination track", "Acton Interchange 1", c3.getDestinationTrackName());
 
@@ -2206,12 +2202,10 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Assert.assertEquals("Check car's destination track", "Acton Interchange 1", c3.getDestinationTrackName());
 
         c3.setDestination(null, null); // clear previous destination
-        c3.setFinalDestination(essex);
         // don't allow train 2 to pickup
         rlA2.setPickUpAllowed(false);
         // routing should work using train 2, but destinations and track should
-        // not be
-        // set
+        // not be set
         Assert.assertTrue("Try routing five trains", router.setDestination(c3, actonTrain2, null));
         Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
         Assert.assertEquals("Check car's destination track", "", c3.getDestinationTrackName());
@@ -2233,13 +2227,15 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         EssexToFoxboroTrain.setRoute(routeEF);
 
         // 6 train route should work (A -> A -> B -> C -> D -> E -> F)
-        Assert.assertTrue("Try routing with final destination and train", router.setDestination(c3, null, null));
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c3, null, null));
         Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
         Assert.assertEquals("Check car's destination track", "Acton Interchange 1", c3.getDestinationTrackName());
+        
         c3.setDestination(null, null); // clear previous destination
         Assert.assertTrue("Try routing with final destination and train", router.setDestination(c3, actonTrain1, null));
         Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
         Assert.assertEquals("Check car's destination track", "Acton Interchange 1", c3.getDestinationTrackName());
+        
         c3.setDestination(null, null); // clear previous destination
         Assert.assertTrue("Try routing with final destination and train", router.setDestination(c3, actonTrain2, null));
         Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
@@ -2287,8 +2283,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         actonTrain2.setBuiltStartYear("1985");
         actonTrain2.setBuiltEndYear("2010");
         // routing should work using train 2, but destinations and track should
-        // not be
-        // set
+        // not be set
         Assert.assertTrue("Try routing three trains", router.setDestination(c3, actonTrain2, null));
         Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
         Assert.assertEquals("Check car's destination track", "", c3.getDestinationTrackName());
@@ -2302,8 +2297,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Assert.assertEquals("c4 consumes all of the interchange track", Track.OKAY,
                 c4.setLocation(actonInterchange1.getLocation(), actonInterchange1));
         // Track AI1 is long enough, but c4 is consuming all of the track, but
-        // there is a
-        // route using AI2
+        // there is a route using AI2
         Assert.assertTrue("Try routing six trains", router.setDestination(c3, actonTrain2, null));
         Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
         Assert.assertEquals("Check car's destination track", "Acton Interchange 2", c3.getDestinationTrackName());
@@ -2332,24 +2326,25 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         FoxboroToGulfTrain.setRoute(routeFG);
 
         // 7 train route (A -> A -> B -> C -> D -> E -> F -> G)
-        Assert.assertTrue("Try routing with final destination and train", router.setDestination(c3, null, null));
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c3, null, null));
         Assert.assertTrue("Try routing with final destination and train",
                 router.setDestination(c3, actonTrain1, null));
         Assert.assertTrue("Try routing with final destination and train",
                 router.setDestination(c3, actonTrain2, null));
 
         c3.setDestination(null, null); // clear previous destination
+
         // Force last move to be by local train
         gulfSpur1.setTrainDirections(0);
 
         // create a local train servicing Gulf
-        Train gulfTrain1 = tmanager.newTrain("Acton Local 1");
+        Train gulfTrain1 = tmanager.newTrain("Gulf Local 1");
         Route routeG = rmanager.newRoute("G");
         routeG.addLocation(gulf);
         gulfTrain1.setRoute(routeG);
 
         // 8 train route should fail (A -> A -> B -> C -> D -> E -> F -> G -> G)
-        Assert.assertFalse("Try routing with final destination and train", router.setDestination(c3, null, null));
+        Assert.assertFalse("Try routing with final destination", router.setDestination(c3, null, null));
         Assert.assertFalse("Try routing with final destination and train",
                 router.setDestination(c3, actonTrain1, null));
         Assert.assertFalse("Try routing with final destination and train",
@@ -2359,12 +2354,385 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         actonSpur1.setTrainDirections(Track.NORTH);
 
         // 7 trains should work! (A -> B -> C -> D -> E -> F -> G -> G)
-        Assert.assertTrue("Try routing with final destination and train", router.setDestination(c3, null, null));
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c3, null, null));
         Assert.assertEquals("Check car's destination", "Boston", c3.getDestinationName());
         Assert.assertEquals("Check car's destination track", "Boston Interchange 1", c3.getDestinationTrackName());
 
         // TODO test restrict location by car type
         // TODO test restrict tracks by type road, load
+    }
+    
+    /**
+     * Seven train routing test. First move uses a local train. Test that the
+     * program will find multiple routes to move a car.
+     */
+    @Test
+    public void testCarRouting7TrainsMultiplePaths() {
+
+        // now load up the managers
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        Router router = InstanceManager.getDefault(Router.class);
+
+        // create 7 locations and tracks
+        JUnitOperationsUtil.createSevenNormalLocations();
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+        Track actonInterchange1 = acton.getTrackByName("Acton Interchange 1", Track.INTERCHANGE);
+        Track actonInterchange2 = acton.getTrackByName("Acton Interchange 2", Track.INTERCHANGE);
+
+        Location boston = lmanager.getLocationByName("Boston");
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        Location danvers = lmanager.newLocation("Danvers");
+        Location essex = lmanager.getLocationByName("Essex");
+        Location foxboro = lmanager.getLocationByName("Foxboro");
+        Location gulf = lmanager.getLocationByName("Gulf");
+
+        Track gulfSpur1 = gulf.getTrackByName("Gulf Spur 1", null);
+
+        // create car
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("BA", "3", "Boxcar", "40", "DAB", "1984", actonSpur1, 0);
+
+        // create a local train servicing Acton
+        Train actonTrain1 = tmanager.newTrain("Acton Local 1");
+        Route routeA = rmanager.newRoute("A");
+        routeA.addLocation(acton);
+        actonTrain1.setRoute(routeA);
+
+        // add a second local train
+        // create a local train servicing Acton
+        Train actonTrain2 = tmanager.newTrain("Acton Local 2");
+        Route routeA2 = rmanager.newRoute("A2");
+        RouteLocation rlA2 = routeA2.addLocation(acton);
+        actonTrain2.setRoute(routeA2);
+
+        // create a train with a route from Acton to Boston
+        Train actonToBostonTrain = tmanager.newTrain("Acton to Boston");
+        Route routeAB = rmanager.newRoute("AB");
+        routeAB.addLocation(acton);
+        routeAB.addLocation(boston);
+        actonToBostonTrain.setRoute(routeAB);
+
+        // Force first move to be by local train
+        actonSpur1.setTrainDirections(0);
+        
+        // There are two interchange tracks at Acton
+        // Bias to actonInterchange2
+        actonInterchange1.setMoves(100);
+        // allow only 1 car at the 2nd interchange
+        actonInterchange2.setLength(60);
+
+        // set final destination Chelmsford
+        c3.setFinalDestination(chelmsford);
+        c3.setFinalDestinationTrack(null);
+        // should fail no train!
+        Assert.assertFalse("Try routing with final destination", router.setDestination(c3, null, null));
+        Assert.assertEquals("Check car's final destination", chelmsford, c3.getFinalDestination());
+
+        // create a train with a route from Boston to Chelmsford
+        Train bostonToChelmsfordTrain = tmanager.newTrain("Boston to Chelmsford");
+        Route routeBC = rmanager.newRoute("BC");
+        routeBC.addLocation(boston);
+        routeBC.addLocation(chelmsford);
+        bostonToChelmsfordTrain.setRoute(routeBC);
+
+        // 3 train route should work (A -> A -> B -> C)
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c3, null, null));
+        Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
+        Assert.assertEquals("Check car's destination track", "Acton Interchange 2", c3.getDestinationTrackName());
+        Assert.assertEquals("Check car's final destination", chelmsford, c3.getFinalDestination());
+
+        // now make Acton Interchange track full by placing car there
+        c3.setDestination(null, null); // clear previous destination
+        JUnitOperationsUtil.createAndPlaceCar("BB", "5", "Flat", "40", "AT", "1-86", actonInterchange2, 0);
+        
+        // 3 train route should work (A -> A -> B -> C)
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c3, null, null));
+        Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
+        Assert.assertEquals("Check car's destination track", "Acton Interchange 1", c3.getDestinationTrackName());
+        Assert.assertEquals("Check car's final destination", chelmsford, c3.getFinalDestination());
+
+        // try with train 2
+        c3.setDestination(null, null); // clear previous destination
+
+        // routing should work using train 2
+        Assert.assertTrue("Try routing three trains", router.setDestination(c3, actonTrain2, null));
+        Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
+        Assert.assertEquals("Check car's destination track", "Acton Interchange 1", c3.getDestinationTrackName());
+        Assert.assertEquals("Check car's final destination", chelmsford, c3.getFinalDestination());
+
+        c3.setDestination(null, null); // clear previous destination
+
+        // set final destination Danvers
+        c3.setDestination(null, null); // clear previous destination
+        c3.setFinalDestination(danvers);
+        // should fail no train!
+        Assert.assertFalse("Try routing with final destination", router.setDestination(c3, null, null));
+
+        // create a train with a route from Chelmsford to Danvers
+        Train chelmsfordToDanversTrain = tmanager.newTrain("Chelmsford to Danvers");
+        Route routeCD = rmanager.newRoute("CD");
+        routeCD.addLocation(chelmsford);
+        routeCD.addLocation(danvers);
+        chelmsfordToDanversTrain.setRoute(routeCD);
+
+        // 4 train route should work (A -> A -> B -> C -> D)
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c3, null, null));
+        Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
+        Assert.assertEquals("Check car's destination track", "Acton Interchange 1", c3.getDestinationTrackName());
+        Assert.assertEquals("Check car's final destination", danvers, c3.getFinalDestination());
+
+        c3.setDestination(null, null); // clear previous destination
+
+        // routing should work using train 2
+        Assert.assertTrue("Try routing four trains", router.setDestination(c3, actonTrain2, null));
+        Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
+        Assert.assertEquals("Check car's destination track", "Acton Interchange 1", c3.getDestinationTrackName());
+        Assert.assertEquals("Check car's final destination", danvers, c3.getFinalDestination());
+
+        c3.setDestination(null, null); // clear previous destination
+
+        // don't allow train 2 to service cars with load Tools
+        actonTrain2.addLoadName("Tools");
+        actonTrain2.setLoadOption(Train.EXCLUDE_LOADS);
+        c3.setLoadName("Tools");
+        // routing should work using train 2, but destinations and track should
+        // not be set
+        Assert.assertTrue("Try routing four trains", router.setDestination(c3, actonTrain2, null));
+        Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
+        Assert.assertEquals("Check car's destination track", "", c3.getDestinationTrackName());
+        Assert.assertEquals("Check car's final destination", danvers, c3.getFinalDestination());
+
+        // restore train 2
+        actonTrain2.setLoadOption(Train.ALL_LOADS);
+
+        // set final destination Essex
+        c3.setFinalDestination(essex);
+        // should fail no train!
+        Assert.assertFalse("Try routing with final destination", router.setDestination(c3, null, null));
+
+        // create a train with a route from Danvers to Essex
+        Train danversToEssexTrain = tmanager.newTrain("Danvers to Essex");
+        Route routeDE = rmanager.newRoute("DE");
+        routeDE.addLocation(danvers);
+        routeDE.addLocation(essex);
+        danversToEssexTrain.setRoute(routeDE);
+
+        // 5 train route should work (A -> A -> B -> C -> D -> E)
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c3, null, null));
+        Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
+        Assert.assertEquals("Check car's destination track", "Acton Interchange 1", c3.getDestinationTrackName());
+        Assert.assertEquals("Check car's final destination", essex, c3.getFinalDestination());
+
+        // routing should work using train 2
+        c3.setDestination(null, null); // clear previous destination
+        Assert.assertTrue("Try routing five trains", router.setDestination(c3, actonTrain2, null));
+        Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
+        Assert.assertEquals("Check car's destination track", "Acton Interchange 1", c3.getDestinationTrackName());
+        Assert.assertEquals("Check car's final destination", essex, c3.getFinalDestination());
+
+        c3.setDestination(null, null); // clear previous destination
+        // don't allow train 2 to pickup
+        rlA2.setPickUpAllowed(false);
+        // routing should work using train 2, but destinations and track should
+        // not be set
+        Assert.assertTrue("Try routing five trains", router.setDestination(c3, actonTrain2, null));
+        Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
+        Assert.assertEquals("Check car's destination track", "", c3.getDestinationTrackName());
+        Assert.assertEquals("Check status",
+                MessageFormat.format(Router.STATUS_NOT_THIS_TRAIN, new Object[]{actonTrain2.getName()}),
+                router.getStatus());
+        Assert.assertEquals("Check car's final destination", essex, c3.getFinalDestination());
+
+        // set final destination Foxboro
+        c3.setFinalDestination(foxboro);
+        // should fail no train!
+        Assert.assertFalse("Try routing with final destination", router.setDestination(c3, null, null));
+
+        // create a train with a route from Essex to Foxboro
+        Train essexToFoxboroTrain = tmanager.newTrain("Essex to Foxboro");
+        Route routeEF = rmanager.newRoute("EF");
+        routeEF.addLocation(essex);
+        routeEF.addLocation(foxboro);
+        essexToFoxboroTrain.setRoute(routeEF);
+
+        // 6 train route should work (A -> A -> B -> C -> D -> E -> F)
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c3, null, null));
+        Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
+        Assert.assertEquals("Check car's destination track", "Acton Interchange 1", c3.getDestinationTrackName());
+        Assert.assertEquals("Check car's final destination", foxboro, c3.getFinalDestination());
+        
+        c3.setDestination(null, null); // clear previous destination
+        Assert.assertTrue("Try routing with final destination and train", router.setDestination(c3, actonTrain1, null));
+        Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
+        Assert.assertEquals("Check car's destination track", "Acton Interchange 1", c3.getDestinationTrackName());
+        Assert.assertEquals("Check car's final destination", foxboro, c3.getFinalDestination());
+        
+        c3.setDestination(null, null); // clear previous destination
+        Assert.assertTrue("Try routing with final destination and train", router.setDestination(c3, actonTrain2, null));
+        Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
+        Assert.assertEquals("Check car's destination track", "", c3.getDestinationTrackName());
+        Assert.assertEquals("Check status",
+                MessageFormat.format(Router.STATUS_NOT_THIS_TRAIN, new Object[]{actonTrain2.getName()}),
+                router.getStatus());
+        Assert.assertEquals("Check car's final destination", foxboro, c3.getFinalDestination());
+
+        // use yard track if interchange tracks are too short
+        actonInterchange1.setLength(c3.getTotalLength() - 1);
+        c3.setDestination(null, null); // clear previous destination
+        Assert.assertEquals("car still has final destination", foxboro, c3.getFinalDestination());
+        Assert.assertTrue("Try routing 6 trains through yard track", router.setDestination(c3, actonTrain1, null));
+        Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
+        Assert.assertEquals("Check car's destination track", "Acton Yard 1", c3.getDestinationTrackName());
+        Assert.assertEquals("Check car's final destination", foxboro, c3.getFinalDestination());
+
+        // disable the use of yard tracks for routing
+        Setup.setCarRoutingViaYardsEnabled(false);
+        c3.setDestination(null, null); // clear previous destination
+        Assert.assertEquals("car still has final destination", foxboro, c3.getFinalDestination());
+        // both interchange tracks are not available, but there still a route
+        Assert.assertTrue("Try routing 6 trains to yard track, option disabled",
+                router.setDestination(c3, actonTrain1, null));
+        Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
+        Assert.assertEquals("Check car's destination track", "", c3.getDestinationTrackName());
+        Assert.assertEquals("Check car's final destination", foxboro, c3.getFinalDestination());
+
+        // test disabling pulls from interchange
+        actonInterchange1.setPickupOption(Track.TRAINS);
+        actonInterchange2.setPickupOption(Track.TRAINS);
+        
+        // routing should fail
+        Assert.assertFalse("Try routing 6 trains to yard track, interchange pulls disabled",
+                router.setDestination(c3, actonTrain1, null));
+        Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
+        Assert.assertFalse("Try routing 6 trains to yard track, interchange pulls disabled",
+                router.setDestination(c3, null, null));
+        Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
+        Assert.assertEquals("Check car's final destination", foxboro, c3.getFinalDestination());
+
+        // fix interchange by adding train id
+        actonInterchange2.addPickupId(actonToBostonTrain.getId());
+        
+        Assert.assertTrue("Try routing 6 trains to yard track, interchange pull enabled",
+                router.setDestination(c3, actonTrain1, null));
+        Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
+        Assert.assertEquals("Check car's final destination", foxboro, c3.getFinalDestination());
+
+        // set final destination Gulf
+        c3.setFinalDestination(gulf);
+        c3.setFinalDestinationTrack(gulfSpur1);
+        // should fail no train!
+        Assert.assertFalse("Try routing with final destination", router.setDestination(c3, null, null));
+
+        // create a train with a route from Foxboro to Gulf
+        Train FoxboroToGulfTrain = tmanager.newTrain("Foxboro To Gulf");
+        Route routeFG = rmanager.newRoute("FG");
+        routeFG.addLocation(foxboro);
+        routeFG.addLocation(gulf);
+        FoxboroToGulfTrain.setRoute(routeFG);
+
+        // 7 train route (A -> A -> B -> C -> D -> E -> F -> G)
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c3, null, null));
+        Assert.assertTrue("Try routing with final destination and train",
+                router.setDestination(c3, actonTrain1, null));
+        Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
+        Assert.assertTrue("Try routing with final destination and train",
+                router.setDestination(c3, actonTrain2, null));
+        Assert.assertEquals("Check car's destination", "", c3.getDestinationName());        
+        Assert.assertEquals("Check car's final destination", gulf, c3.getFinalDestination());
+        Assert.assertEquals("Check car's final destination track", gulfSpur1, c3.getFinalDestinationTrack());
+
+        // break route in the middle
+        Track danversInterchange1 = danvers.getTrackByName("Danvers Interchange 1", Track.INTERCHANGE);
+        Track danversInterchange2 = danvers.getTrackByName("Danvers Interchange 2", Track.INTERCHANGE);
+        // test disabling pulls from interchange
+        danversInterchange1.setPickupOption(Track.TRAINS);
+        danversInterchange2.setPickupOption(Track.TRAINS);
+        
+        Assert.assertFalse("Try routing with final destination", router.setDestination(c3, null, null));
+        
+        //Fix route
+        danversInterchange2.addPickupId(danversToEssexTrain.getId());
+        
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c3, null, null));
+        Assert.assertTrue("Try routing with final destination and train",
+                router.setDestination(c3, actonTrain1, null));
+        Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
+        Assert.assertTrue("Try routing with final destination and train",
+                router.setDestination(c3, actonTrain2, null));
+        Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
+        Assert.assertEquals("Check car's final destination", gulf, c3.getFinalDestination());
+        Assert.assertEquals("Check car's final destination track", gulfSpur1, c3.getFinalDestinationTrack());
+       
+        // break route in the middle again using drops
+        // test disabling drops to interchange
+        danversInterchange1.setDropOption(Track.TRAINS);
+        danversInterchange2.setDropOption(Track.TRAINS);
+        
+        Assert.assertFalse("Try routing with final destination", router.setDestination(c3, null, null));
+
+        //Fix route
+        danversInterchange2.addDropId(chelmsfordToDanversTrain.getId());
+        
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c3, null, null));
+        Assert.assertTrue("Try routing with final destination and train",
+                router.setDestination(c3, actonTrain1, null));
+        Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
+        Assert.assertTrue("Try routing with final destination and train",
+                router.setDestination(c3, actonTrain2, null));
+        Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
+        Assert.assertEquals("Check car's final destination", gulf, c3.getFinalDestination());
+        Assert.assertEquals("Check car's final destination track", gulfSpur1, c3.getFinalDestinationTrack());
+
+        // Force last move to be by local train
+        gulfSpur1.setTrainDirections(0);
+        
+        // create a local train servicing Gulf
+        Train gulfTrain1 = tmanager.newTrain("Gulf Local 1");
+        Route routeG = rmanager.newRoute("G");
+        routeG.addLocation(gulf);
+        gulfTrain1.setRoute(routeG);
+
+        // 8 train route should fail (A -> A -> B -> C -> D -> E -> F -> G -> G)
+        Assert.assertFalse("Try routing with final destination", router.setDestination(c3, null, null));
+        Assert.assertFalse("Try routing with final destination and train",
+                router.setDestination(c3, actonTrain1, null));
+        Assert.assertEquals("Check car's destination", null, c3.getDestination());
+        Assert.assertFalse("Try routing with final destination and train",
+                router.setDestination(c3, actonTrain2, null));
+        Assert.assertEquals("Check car's destination", null, c3.getDestination());
+        
+        // allow Acton to Boston train to pull car
+        actonSpur1.setTrainDirections(Track.NORTH);
+        
+        // 7 train route should pass (A -> B -> C -> D -> E -> F -> G -> G)
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c3, null, null));
+        Assert.assertEquals("Check car's destination", boston, c3.getDestination());
+        Assert.assertEquals("Check car's final destination", gulf, c3.getFinalDestination());
+        Assert.assertEquals("Check car's final destination track", gulfSpur1, c3.getFinalDestinationTrack());
+        
+        // Locals won't set the car's destination
+        c3.setDestination(null, null); // clear previous destination
+        Assert.assertTrue("Try routing with final destination and local train",
+                router.setDestination(c3, actonTrain1, null));
+        Assert.assertEquals("Check car's destination", null, c3.getDestination());
+        Assert.assertEquals("Check car's final destination", gulf, c3.getFinalDestination());
+        Assert.assertEquals("Check car's final destination track", gulfSpur1, c3.getFinalDestinationTrack());
+       
+        Assert.assertTrue("Try routing with final destination and local train",
+                router.setDestination(c3, actonTrain2, null));
+        Assert.assertEquals("Check car's destination", null, c3.getDestination());
+        Assert.assertEquals("Check car's final destination", gulf, c3.getFinalDestination());
+        Assert.assertEquals("Check car's final destination track", gulfSpur1, c3.getFinalDestinationTrack());
+        
+        // Acton to Boston track can pull
+        Assert.assertTrue("Try routing with final destination and train",
+                router.setDestination(c3, actonToBostonTrain, null));
+        Assert.assertEquals("Check car's destination", boston, c3.getDestination());
+        Assert.assertEquals("Check car's final destination", gulf, c3.getFinalDestination());
+        Assert.assertEquals("Check car's final destination track", gulfSpur1, c3.getFinalDestinationTrack());
     }
 
     /**
@@ -2529,7 +2897,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
 
         Location foxboro = lmanager.getLocationByName("Foxboro");
         Location gulf = lmanager.getLocationByName("Gulf");
-        Track gulfInterchange1 = gulf.getTrackByName("Gulf Interchange 1", Track.INTERCHANGE);
+        Track gulfYard1 = gulf.getTrackByName("Gulf Yard 1", Track.YARD);
 
         // create four staging tracks
         Location staging = lmanager.newLocation("Staging MA");
@@ -2718,7 +3086,10 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         trainStagingToFoxboro2.build();
         Assert.assertTrue(trainStagingToFoxboro2.isBuilt());
 
-        Assert.assertEquals("car's destination", gulfInterchange1, c4.getDestinationTrack());
+        // Route for car (BB 4): (Staging MA, Staging 4)-> (Train Staging-Gulf-Essex-Foxboro 
+        // 2)-> (Gulf, Gulf Yard 1)-> (Train Staging-Gulf-Essex-Foxboro 1)-> (Foxboro, )
+
+        Assert.assertEquals("car's destination", gulfYard1, c4.getDestinationTrack());
         Assert.assertEquals("car's final destination", foxboro, c4.getFinalDestination());
 
         // test having train terminate into staging 2, build will try and send
@@ -2735,13 +3106,8 @@ public class OperationsCarRouterTest extends OperationsTestCase {
 
         Assert.assertEquals("car's destination", essexInterchange1, c3.getDestinationTrack());
         Assert.assertEquals("car's final destination", chelmsford, c3.getFinalDestination());
-        Assert.assertEquals("car's destination", stagingT2, c4.getDestinationTrack()); // sent
-                                                                                       // to
-                                                                                       // staging
-                                                                                       // rather
-                                                                                       // than
-                                                                                       // build
-                                                                                       // failure
+        Assert.assertEquals("car's destination", stagingT2, c4.getDestinationTrack());
+        // sent to staging rather than build failure 
         Assert.assertEquals("car's final destination", chelmsford, c4.getFinalDestination());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();

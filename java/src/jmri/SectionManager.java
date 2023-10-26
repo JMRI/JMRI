@@ -1,15 +1,6 @@
 package jmri;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import jmri.managers.AbstractManager;
-
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
 /**
  * Basic Implementation of a SectionManager.

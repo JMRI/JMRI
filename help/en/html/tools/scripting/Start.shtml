@@ -131,7 +131,7 @@ window immediately:
         <p>Investigate the information found in the <a href="../../doc/Technical/Logging.shtml"
         target="_blank">technical reference</a> to be better able to insert more of your own DEBUG
         and INFO messages into the session.log file, and also the JMRI System Console window. You
-        might also investigate the "default.lcf" file that is described in that link.</p>
+        might also investigate the "default_lcf.xml" file that is described in that link.</p>
 
         <p>Note to Mac OS users: BBEdit and similar tools do some syntax checking. For PC users,
         Notepad++ is a good tool for getting indentation correct.</p>

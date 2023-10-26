@@ -19,6 +19,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.adapters.gridconnect.GridConnectMessage;
 import jmri.jmrix.can.adapters.gridconnect.GridConnectReply;
 import jmri.jmrix.can.swing.CanPanelInterface;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.util.zeroconf.ZeroConfServiceManager;
 
@@ -252,11 +253,11 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         JCheckBox checkbox = new JCheckBox(Bundle.getMessage("SendLineTermination")); // NOI18N
         checkbox.setSelected(_send_line_endings);
         Object[] params = {Bundle.getMessage("LineTermSettingDialog"), checkbox }; // NOI18N
-        int result = JOptionPane.showConfirmDialog(this, 
+        int result = JmriJOptionPane.showConfirmDialog(this, 
             params,
             Bundle.getMessage("SendLineTermination"), // NOI18N
-            JOptionPane.OK_CANCEL_OPTION);
-        if (result == JOptionPane.OK_OPTION) {
+            JmriJOptionPane.OK_CANCEL_OPTION);
+        if (result == JmriJOptionPane.OK_OPTION) {
             _send_line_endings = checkbox.isSelected();
             userPreferencesManager.setSimplePreferenceState(getClass().getName() + USER_SAVED, true); // NOI18N
             userPreferencesManager.setSimplePreferenceState(getClass().getName() + USER_SEND_LINE_ENDINGS, _send_line_endings); // NOI18N
@@ -267,11 +268,11 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         JCheckBox checkbox = new JCheckBox(Bundle.getMessage("RequireLineTermination")); // NOI18N
         checkbox.setSelected(this.getRequireLineEndingsFromUserPref());
         Object[] params = {Bundle.getMessage("LineTermSettingDialog"), checkbox }; // NOI18N
-        int result = JOptionPane.showConfirmDialog(this, 
+        int result = JmriJOptionPane.showConfirmDialog(this, 
             params,
             Bundle.getMessage("RequireLineTermination"), // NOI18N
-            JOptionPane.OK_CANCEL_OPTION);
-        if (result == JOptionPane.OK_OPTION) {
+            JmriJOptionPane.OK_CANCEL_OPTION);
+        if (result == JmriJOptionPane.OK_OPTION) {
             userPreferencesManager.setSimplePreferenceState(getClass().getName() + USER_REQUIRE_LINE_ENDINGS, checkbox.isSelected()); // NOI18N
         }
     }

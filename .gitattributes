@@ -26,7 +26,6 @@
 *.json          text
 *.jsp           text
 *.jspf          text
-*.lcf           text
 *.md            text
 *.php           text
 *.pl            text

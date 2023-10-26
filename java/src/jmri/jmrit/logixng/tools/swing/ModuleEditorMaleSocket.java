@@ -1,9 +1,5 @@
 package jmri.jmrit.logixng.tools.swing;
 
-import java.beans.*;
-import java.util.ArrayList;
-import java.util.Locale;
-
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
@@ -12,12 +8,10 @@ import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 /**
  * MaleSocket for a Module.
  * This class is used by the ModuleEditor class
- * 
+ *
  * @author Daniel Bergqvist 2020
  */
 class ModuleEditorMaleSocket extends AbstractMaleSocket {
-    
-//    Module _module;
 
     public ModuleEditorMaleSocket(BaseManager<? extends NamedBean> manager, Module module) {
         super(manager, module);
@@ -78,5 +72,10 @@ class ModuleEditorMaleSocket extends AbstractMaleSocket {
         ((Module)getObject()).setComment(comment);
     }
 
-}
+    @Override
+    public boolean isSupportingLocalVariables() {
+        return false;
+    }
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConditionalNGEditor.class);
+}

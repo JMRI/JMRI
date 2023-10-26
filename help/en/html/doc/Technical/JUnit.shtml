@@ -68,7 +68,7 @@
             </li>
 
             <li>
-              <a href="#HandlingLogOutput">Handling Log4J Output From Tests</a>
+              <a href="#HandlingLogOutput">Handle Logging Output From Tests</a>
             </li>
 
             <li>
@@ -283,7 +283,7 @@ suite.<br>
 
         <dt>jmri.log4jconfigfilename</dt>
 
-        <dd>Override the default "tests.lcf" logging control file name.</dd>
+        <dd>Override the default "tests_lcf.xml" logging control file name.</dd>
 
         <dt>jmri.shutdownmanager</dt>
 
@@ -506,12 +506,12 @@ on <a href="StartUpScripts.shtml">startup scripts</a>.
       <p>Many tests use the Assertions from
       <pre style="font-family: monospace;">import org.junit.Assert;</pre>
       
-      <h3 id="HandlingLogOutput">Handling Log4J Output FromTests</h3>
-      JMRI uses <a href="https://logging.apache.org/log4j/2.x/index.html">Log4j</a> to <a href=
-      "Logging.shtml">handle logging of various conditions</a>, including error messages and
+      <h3 id="HandlingLogOutput">Handling Logging Output from Tests</h3>
+      JMRI uses the <a href="https://www.slf4j.org/">slf4j interface</a> to 
+      <a href="Logging.shtml">handle logging of various conditions</a>, including error messages and
       debugging information. Tests are intended to run without error or warning output, so that
       it's immediately apparent from an empty standard log that they ran cleanly.
-      <p>Log4j usage in the test classes themselves has two aspects:</p>
+      <p>Logging in the test classes themselves has two aspects:</p>
 
       <ol>
         <li>It's perfectly OK to use log.debug(...) statements to make it easy to debug problems in
@@ -527,13 +527,14 @@ on <a href="StartUpScripts.shtml">startup scripts</a>.
       to make sure that the conditions are being handled properly. This will often produce
       log.error(...) or log.warn(...) messages, which must be intercepted and checked.</p>
 
-      <p>To allow this, JMRI runs it's using tests with a special log4j appender, which stores
-      messages so that the JUnit tests can look at them before they are forwarded to the log. There
-      are two aspects to making this work:</p>
+      <p>To allow this, JMRI runs it's using tests with a special <a href="https://logging.apache.org/log4j/2.x/index.html">log4j</a>
+      appender, which stores
+      messages so that the JUnit tests can look at them before they are forwarded to the log.
+      There are two aspects to making this work:</p>
 
       <ol>
         <li>All the test classes should include common code in their setUp() and tearDown() code to
-        ensure that log4j is properly initiated, and that the custom appender is told when a test
+        ensure that logging is properly initiated, and that the custom appender is told when a test
         is beginning and ending.
 
           <pre style="font-family: monospace;">
@@ -566,24 +567,28 @@ line:<br>
         </li>
 
         <li>
-          <a id="warnOnce"></a> The <code>Log4JUtil.warnOnce(..)</code> requires some special
-          handling in tests. We want each test to be independent, so we reset the "want <u>only</u>
+          <a id="warnOnce"></a> The <a 
+           href="https://www.jmri.org/JavaDoc/doc/jmri/util/LoggingUtil.html"><code>LoggingUtil.warnOnce(..)</code></a>
+          requires some special handling in tests.
+          We want each test to be independent, so we reset the "want <u>only</u>
           once" logic early in the <code>JUnitUtil.setUp()</code> that's routinely invoked
           <code>@BeforeEach</code> the tests. This means that the first invocation, and only the
           first invocation, for each message will be logged.
         </li>
 
         <li>
-          <a id="deprecationWarning"></a> We want to make it easy to add a
-          <code>Log4JUtil.deprecationWarning</code> call when <a href="RP.shtml#deprecating">a
-          method is deprecated</a>. This will log a message the first time it's invoked. We want to
+          <a id="deprecationWarning"></a> We want to make it easy to add a <a 
+           href="https://www.jmri.org/JavaDoc/doc/jmri/util/LoggingUtil.html"><code>LoggingUtil.deprecationWarning</code></a>
+          call when <a href="RP.shtml#deprecating">a method is deprecated</a>.
+          This will log a message the first time it's invoked. We want to
           warn that deprecated code is being invoked during normal operation, so this is normally
-          becomes a <code>Log4JUtil.warnOnce(..)</code> call. When you see those warnings messages,
+          becomes a <code>LoggingUtil.warnOnce(..)</code> call. When you see those warnings messages,
           you should remove them by completing the migration away from the deprecated method.
-          <p>The one exception is during unit and CI testing of the actual deprecated method. We
-          want to keep those tests around until the deprecated method is finally removed. That
-          ensures it keeps working until it's deliberately removed, and not inadvertently broken in
-          the meantime. In this case, you should turn off the
+          <p>The one exception is during unit and CI testing of the actual deprecated method.
+          We want to keep those tests around until the deprecated method is finally removed.
+          That ensures it keeps working until it's deliberately removed,
+          and not inadvertently broken in the meantime.
+          In this case, you should turn off the
           <code>Log4JUtil.deprecationWarning</code> in just that test method using
           <code>Log4JUtil.setDeprecatedLogging(false)</code> before invoking the deprecated method.
           (You can also do an <code>JUnitAppender.assertWarn</code> for all the messages emitted,

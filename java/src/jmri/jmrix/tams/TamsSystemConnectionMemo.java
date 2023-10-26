@@ -56,6 +56,7 @@ public class TamsSystemConnectionMemo extends DefaultSystemConnectionMemo implem
     /**
      * This puts the common manager config in one place.
      */
+    @Override
     public void configureManagers() {
 
         TamsPowerManager powerManager = new TamsPowerManager(getTrafficController());

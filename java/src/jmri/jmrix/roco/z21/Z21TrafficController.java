@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import jmri.jmrix.*;
-import jmri.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

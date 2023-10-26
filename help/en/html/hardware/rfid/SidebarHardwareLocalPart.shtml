@@ -1,0 +1,16 @@
+<!-- SidebarHardwareLocalPart.shtml for arduino -->
+
+      <dt><a href="index.shtml">RFID with JMRI</a></dt>
+		  <dd>
+		    <ul>
+          <li><a href="index.shtml">RFID Hardware</a></li>
+          <li><a href="GettingStartedWithRFID.shtml">Getting Started with RFID</a></li>        
+          <li><a href="../../tools/Reporters.shtml">Reporters</a></li>
+          <li><a href="../../../package/jmri/jmrit/beantable/IdTagTable.shtml">ID Tag Table</a></li>
+          <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml#Locations">Location Table</a></li>
+          <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml#Cars">Cars Table</a></li>
+          <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml#Locomotives">Locomotives Table</a></li>
+				</ul>
+		  </dd>
+
+<!-- /SidebarHardwareLocalPart.shtml -->

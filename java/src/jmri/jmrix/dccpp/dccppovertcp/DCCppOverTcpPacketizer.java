@@ -31,7 +31,6 @@ import javax.annotation.concurrent.GuardedBy;
  * <li> XmtHandler - down one, which is assumed to be above the GUI
  * <li> (everything else)
  * </ul>
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Alex Shepherd Copyright (C) 2003, 2006

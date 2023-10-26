@@ -99,22 +99,22 @@ public class HtmlConductor extends HtmlTrainCommon {
     }
 
     // needed for location comments, not yet in formatter
-    private String getEngineChanges(RouteLocation location) {
+    private String getEngineChanges(RouteLocation rl) {
         // engine change or helper service?
         if (train.getSecondLegOptions() != Train.NO_CABOOSE_OR_FRED) {
-            if (location == train.getSecondLegStartRouteLocation()) {
-                return engineChange(location, train.getSecondLegOptions());
+            if (rl == train.getSecondLegStartRouteLocation()) {
+                return engineChange(rl, train.getSecondLegOptions());
             }
-            if (location == train.getSecondLegEndRouteLocation() && train.getSecondLegOptions() == Train.HELPER_ENGINES) {
-                return String.format(strings.getProperty("RemoveHelpersAt"), splitString(location.getName())); // NOI18N
+            if (rl == train.getSecondLegEndRouteLocation() && train.getSecondLegOptions() == Train.HELPER_ENGINES) {
+                return String.format(strings.getProperty("RemoveHelpersAt"), rl.getSplitName()); // NOI18N
             }
         }
         if (train.getThirdLegOptions() != Train.NO_CABOOSE_OR_FRED) {
-            if (location == train.getThirdLegStartRouteLocation()) {
-                return engineChange(location, train.getSecondLegOptions());
+            if (rl == train.getThirdLegStartRouteLocation()) {
+                return engineChange(rl, train.getSecondLegOptions());
             }
-            if (location == train.getThirdLegEndRouteLocation() && train.getThirdLegOptions() == Train.HELPER_ENGINES) {
-                return String.format(strings.getProperty("RemoveHelpersAt"), splitString(location.getName())); // NOI18N
+            if (rl == train.getThirdLegEndRouteLocation() && train.getThirdLegOptions() == Train.HELPER_ENGINES) {
+                return String.format(strings.getProperty("RemoveHelpersAt"), rl.getSplitName()); // NOI18N
             }
         }
         return "";
@@ -127,7 +127,7 @@ public class HtmlConductor extends HtmlTrainCommon {
         boolean work = isThereWorkAtLocation(train, routeLocation.getLocation());
 
         // print info only if new location
-        String routeLocationName = StringEscapeUtils.escapeHtml4(splitString(routeLocation.getName()));
+        String routeLocationName = StringEscapeUtils.escapeHtml4(routeLocation.getSplitName());
         if (work) {
             if (!train.isShowArrivalAndDepartureTimesEnabled()) {
                 builder.append(String.format(locale, strings.getProperty("ScheduledWorkAt"), routeLocationName)); // NOI18N
@@ -262,16 +262,16 @@ public class HtmlConductor extends HtmlTrainCommon {
         List<String> pickedUp = new ArrayList<>();
         this.clearUtilityCarTypes();
         for (Track track : tracks) {
-            if (trackNames.contains(splitString(track.getName()))) {
+            if (trackNames.contains(track.getSplitName())) {
                 continue;
             }
-            trackNames.add(splitString(track.getName())); // use a track name once
+            trackNames.add(track.getSplitName()); // use a track name once
             // block cars by destination
             for (RouteLocation rld : train.getRoute().getLocationsBySequenceList()) {
                 for (Car car : carList) {
                     if (pickedUp.contains(car.getId())
-                            || (Setup.isSortByTrackNameEnabled() && !splitString(track.getName()).equals(
-                                    splitString(car.getTrackName())))) {
+                            || (Setup.isSortByTrackNameEnabled() && !track.getSplitName().equals(
+                                    car.getSplitTrackName()))) {
                         continue;
                     }
                     if (car.isLocalMove() && rlocation == rld) {
@@ -309,14 +309,14 @@ public class HtmlConductor extends HtmlTrainCommon {
         List<String> trackNames = new ArrayList<>();
         List<String> dropped = new ArrayList<>();
         for (Track track : tracks) {
-            if (trackNames.contains(splitString(track.getName()))) {
+            if (trackNames.contains(track.getSplitName())) {
                 continue;
             }
-            trackNames.add(splitString(track.getName())); // use a track name once
+            trackNames.add(track.getSplitName()); // use a track name once
             for (Car car : carList) {
                 if (dropped.contains(car.getId())
-                        || (Setup.isSortByTrackNameEnabled() && !splitString(track.getName()).equals(
-                                splitString(car.getDestinationTrackName())))) {
+                        || (Setup.isSortByTrackNameEnabled() && !track.getSplitName().equals(
+                                car.getSplitDestinationTrackName()))) {
                     continue;
                 }
                 if (car.isLocalMove() == local

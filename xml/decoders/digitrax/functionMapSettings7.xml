@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI  2023 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2023</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2023-09-29</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+  </revhistory>
+  
+  <!-- Function Map 7 Settings -->
+       <variable CV="229" item="XfnC Page" default="0" include="SDH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+        <enumVal>
+          <enumChoice choice="F0F"  value="0">
+            <choice>F0 state combined with current FWD direction</choice>
+          </enumChoice>
+          <enumChoice choice="F0R"  value="1"> 
+            <choice>F0 state combined with current REV direction</choice>
+          </enumChoice>
+          <enumChoice choice="F1"  value="2">
+            <choice>F1 Function Key 1</choice>
+          </enumChoice>
+          <enumChoice choice="F2"  value="3">
+            <choice>F2 Function Key 2</choice>
+          </enumChoice>
+          <enumChoice choice="F3"  value="4">
+            <choice>F3 Function Key 3</choice>
+          </enumChoice>
+          <enumChoice choice="F4"  value="5">
+            <choice>F4 Function Key 4</choice>
+          </enumChoice>
+          <enumChoice choice="F5"  value="6">
+            <choice>F5 Function Key 5</choice>
+          </enumChoice>
+          <enumChoice choice="F6"  value="7">
+            <choice>F6 Function Key 6</choice>
+          </enumChoice>
+          <enumChoice choice="F7"  value="8">
+            <choice>F7 Function Key 7</choice>
+          </enumChoice>
+          <enumChoice choice="F8"  value="9">
+            <choice>F8 Function Key 8</choice>
+          </enumChoice>
+          <enumChoice choice="F9"  value="10">
+            <choice>F9 Function Key 9</choice>
+          </enumChoice>
+          <enumChoice choice="F10"  value="11">
+            <choice>F10 Function Key 10</choice>
+          </enumChoice>
+          <enumChoice choice="F11"  value="12">
+            <choice>F11 Function Key 11</choice>
+          </enumChoice>
+          <enumChoice choice="F12"  value="13">
+            <choice>F12 Function Key 12</choice>
+          </enumChoice>
+          <enumChoice choice="F13"  value="14">
+            <choice>F13 Function Key 13</choice>
+          </enumChoice>
+          <enumChoice choice="F14"  value="15">
+            <choice>F14 Function Key 14</choice>
+          </enumChoice>
+          <enumChoice choice="F15"  value="16">
+            <choice>F15 Function Key 15</choice>
+          </enumChoice>
+          <enumChoice choice="F16"  value="17">
+            <choice>F16 Function Key 16</choice>
+          </enumChoice>
+          <enumChoice choice="F17"  value="18">
+            <choice>F17 Function Key 17</choice>
+          </enumChoice>
+          <enumChoice choice="F18"  value="19">
+            <choice>F18 Function Key 18</choice>
+          </enumChoice>
+          <enumChoice choice="F19"  value="20">
+            <choice>F19 Function Key 19</choice>
+          </enumChoice>
+          <enumChoice choice="F20"  value="21">
+            <choice>F20 Function Key 20</choice>
+          </enumChoice>
+          <enumChoice choice="F21"  value="22">
+            <choice>F21 Function Key 21</choice>
+          </enumChoice>
+          <enumChoice choice="F22"  value="23">
+            <choice>F22 Function Key 22</choice>
+          </enumChoice>
+          <enumChoice choice="F23"  value="24">
+            <choice>F23 Function Key 23</choice>
+          </enumChoice>
+          <enumChoice choice="F24"  value="25">
+            <choice>F24 Function Key 24</choice>
+          </enumChoice>
+          <enumChoice choice="F25"  value="26">
+            <choice>F25 Function Key 25</choice>
+          </enumChoice>
+          <enumChoice choice="F26"  value="27">
+            <choice>F26 Function Key 26</choice>
+          </enumChoice>
+          <enumChoice choice="F27"  value="28">
+            <choice>F27 Function Key 27</choice>
+          </enumChoice>
+          <enumChoice choice="F28"  value="29">
+            <choice>F28 Function Key 28</choice>
+          </enumChoice>
+        </enumVal>
+		<label>Xf Function Page</label>
+      </variable>
+
+
+  <variable item="Ctl Group 1" CV="230"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <decVal/>
+    <label>Ctl 1</label>
+    <tooltip>Set sum of bits 0-7 ON to then write full sheet for Fkey selected in CV229</tooltip>
+  </variable>
+
+  <variable item="Ctl Group 1-1" CV="230" mask="XXXXXXXV"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Enable Logic</tooltip>
+    <label>Enable Logic0</label>
+  </variable>
+  <variable item="Ctl Group 1-2" CV="230" mask="XXXXXXVX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Log0 Logic</tooltip>
+    <label>Log0 Logic1</label>
+  </variable>
+  <variable item="Ctl Group 1-3" CV="230" mask="XXXXXVXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Log1 Logic</tooltip>
+    <label>Log1 Logic2</label>
+  </variable>
+  <variable item="Ctl Group 1-4" CV="230" mask="XXXXVXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Logic</tooltip>
+    <label>res=0 Logic3</label>
+  </variable>
+  <variable item="Ctl Group 1-5" CV="230" mask="XXXVXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Logic</tooltip>
+    <label>res=0 Logic4</label>
+  </variable>
+  <variable item="Ctl Group 1-6" CV="230" mask="XXVXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Logic</tooltip>
+    <label>res=0 Logic5</label>
+  </variable>
+  <variable item="Ctl Group 1-7" CV="230" mask="XVXXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Invert Logic</tooltip>
+    <label>Invert Logic6</label>
+  </variable>
+  <variable item="Ctl Group 1-8" CV="230" mask="VXXXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Zap Logic</tooltip>
+    <label>Zap Logic7</label>
+   </variable>
+ 
+   <variable item="OpA Group 2" CV="231"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <decVal/>
+    <label>Ctl 2</label>
+    <tooltip>Set sum of bits 0-7 ON to then write full sheet for Fkey selected in CV229</tooltip>
+   </variable>
+
+   <variable item="OpA Group 2-1" CV="231" mask="XXXXXXXV"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>White Output0</tooltip>
+    <label>White Output0</label>
+   </variable>
+   <variable item="OpA Group 2-2" CV="231" mask="XXXXXXVX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Yellow Output1</tooltip>
+    <label>Yellow Output1</label>
+   </variable>
+   <variable item="OpA Group 2-3" CV="231" mask="XXXXXVXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Green Output2</tooltip>
+    <label>Green Output2</label>
+   </variable>
+   <variable item="OpA Group 2-4" CV="231" mask="XXXXVXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Violet Output3</tooltip>
+    <label>Violet Output3</label>
+   </variable>
+   <variable item="OpA Group 2-5" CV="231" mask="XXXVXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Op4 Output4</tooltip>
+    <label>OpA Output4</label>
+   </variable>
+   <variable item="OpA Group 2-6" CV="231" mask="XXVXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Op5 Output5</tooltip>
+    <label>OpA Output5</label>
+   </variable>
+   <variable item="OpA Group 2-7" CV="231" mask="XVXXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Op6 Output6</tooltip>
+    <label>OpA Output6</label>
+   </variable>
+   <variable item="OpA Group 2-8" CV="231" mask="VXXXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Op7 Output7</tooltip>
+    <label>OpA Output7</label>
+   </variable>
+  
+   <variable item="OpB Group 3" CV="232"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <decVal/>
+    <label>OpB 3</label>
+    <tooltip>Set sum of bits 0-7 ON to then write full sheet for Fkey selected in CV229</tooltip>
+   </variable>
+  
+   <variable item="OpB Group 3-1" CV="232" mask="XXXXXXXV"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Op8 Output8</tooltip>
+    <label>OpB Output8</label>
+  </variable>
+  <variable item="OpB Group 3-2" CV="232" mask="XXXXXXVX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Op9 Output9</tooltip>
+    <label>OpB Output9</label>
+  </variable>
+  <variable item="OpB Group 3-3" CV="232" mask="XXXXXVXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Op10 Output10</tooltip>
+    <label>OpB Output10</label>
+  </variable>
+  <variable item="OpB Group 3-4" CV="232" mask="XXXXVXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Op11 Output11</tooltip>
+    <label>OpB Output11</label>
+  </variable>
+  <variable item="OpB Group 3-5" CV="232" mask="XXXVXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Op12 Output12</tooltip>
+    <label>OpB Output12</label>
+  </variable>
+  <variable item="OpB Group 3-6" CV="232" mask="XXVXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Op13 Output13</tooltip>
+    <label>OpB Output13</label>
+  </variable>
+  <variable item="OpB Group 3-7" CV="232" mask="XVXXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Op14 Output14</tooltip>
+    <label>OpB Output14</label>
+  </variable>
+  <variable item="OpB Group 3-8" CV="232" mask="VXXXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Op15 Output15</tooltip>
+    <label>OpB Output15</label>
+  </variable>
+  
+   <variable item="OpC Group 4" CV="233"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <decVal/>
+    <label>OpC 4</label>
+    <tooltip>Set sum of bits 0-7 ON to then write full sheet for Fkey selected in CV229</tooltip>
+   </variable>
+  
+   <variable item="OpC Group 4-1" CV="233" mask="XXXXXXXV"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Output16</tooltip>
+    <label>res=0 Output16</label>
+  </variable>
+  <variable item="OpC Group 4-2" CV="233" mask="XXXXXXVX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Output17</tooltip>
+    <label>res=0 Output18</label>
+  </variable>
+  <variable item="OpC Group 4-3" CV="233" mask="XXXXXVXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Output19</tooltip>
+    <label>res=0 Output19</label>
+  </variable>
+  <variable item="OpC Group 4-4" CV="233" mask="XXXXVXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Output20</tooltip>
+    <label>res=0 Output20</label>
+  </variable>
+  <variable item="OpC Group 4-5" CV="233" mask="XXXVXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Output21</tooltip>
+    <label>res=0 Output21</label>
+  </variable>
+  <variable item="OpC Group 4-6" CV="233" mask="XXVXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Output22</tooltip>
+    <label>res=0 Output22</label>
+  </variable>
+  <variable item="OpC Group 4-7" CV="233" mask="XVXXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Output23</tooltip>
+    <label>res=0 Output23</label>
+  </variable>
+  <variable item="OpC Group 4-8" CV="233" mask="VXXXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Output24</tooltip>
+    <label>res=0 Output24</label>
+  </variable>
+  
+   <variable item="Typ Group 5" CV="234"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <decVal/>
+    <label>Typ 5</label>
+    <tooltip>Set sum of bits 0-7 ON to then write full sheet for Fkey selected in CV229</tooltip>
+   </variable>
+  
+   <variable item="Typ Group 5-1" CV="234" mask="XXXXXXXV"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Ty0 Type</tooltip>
+    <label>Ty0 Type0</label>
+  </variable>
+  <variable item="Typ Group 5-2" CV="234" mask="XXXXXXVX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Ty1 Type</tooltip>
+    <label>Ty1 Type1</label>
+  </variable>
+  <variable item="Typ Group 5-3" CV="234" mask="XXXXXVXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Ty2 Type</tooltip>
+    <label>Ty2 Type2</label>
+  </variable>
+  <variable item="Typ Group 5-4" CV="234" mask="XXXXVXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Ty3 Type</tooltip>
+    <label>Ty3 Type3</label>
+  </variable>
+  <variable item="Typ Group 5-5" CV="234" mask="XXXVXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Type4</tooltip>
+    <label>res=0 Type4</label>
+  </variable>
+  <variable item="Typ Group 5-6" CV="234" mask="XXVXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Type5</tooltip>
+    <label>res=0 Type5</label>
+  </variable>
+  <variable item="Typ Group 5-7" CV="234" mask="XVXXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Type6</tooltip>
+    <label>res=0 Type6</label>
+  </variable>
+  <variable item="Typ Group 5-8" CV="234" mask="VXXXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Type7</tooltip>
+    <label>res=0 Type7</label>
+  </variable>
+
+  
+   <variable item="Qual Group 6" CV="235"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <decVal/>
+    <label>Qual 6</label>
+    <tooltip>Set sum of bits 0-7 ON to then write full sheet for Fkey selected in CV229</tooltip>
+   </variable>
+  
+   <variable item="Qual Group 6-1" CV="235" mask="XXXXXXXV"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Qual0 Value0</tooltip>
+    <label>Qual0 Value0</label>
+  </variable>
+  <variable item="Qual Group 6-2" CV="235" mask="XXXXXXVX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Qual1 Value1</tooltip>
+    <label>Qual1 Value1</label>
+  </variable>
+  <variable item="Qual Group 6-3" CV="235" mask="XXXXXVXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Qual2 Value2</tooltip>
+    <label>Qual2 Value2</label>
+  </variable>
+  <variable item="Qual Group 6-4" CV="235" mask="XXXXVXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Qual3 Value3</tooltip>
+    <label>Qual3 Value3</label>
+  </variable>
+  <variable item="Qual Group 6-5" CV="235" mask="XXXVXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Value4</tooltip>
+    <label>res=0 Value4</label>
+  </variable>
+  <variable item="Qual Group 6-6" CV="235" mask="XXVXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Value5</tooltip>
+    <label>res=0 Value5</label>
+  </variable>
+  <variable item="Qual Group 6-7" CV="235" mask="XVXXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Value6</tooltip>
+    <label>res=0 Value6</label>
+  </variable>
+  <variable item="Qual Group 6-8" CV="235" mask="VXXXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Value7</tooltip>
+    <label>res=0 Value7</label>
+  </variable>
+  
+   <variable item="Snd Group 7" CV="236"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <decVal/>
+    <label>Snd 7</label>
+    <tooltip>Set sum of bits 0-7 ON to then write full sheet for Fkey selected in CV229</tooltip>
+   </variable>
+  
+   <variable item="Snd Group 7-1" CV="236" mask="XXXXXXXV"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Strg0 Trig0</tooltip>
+    <label>Strg0 Trig0</label>
+  </variable>
+  <variable item="Snd Group 7-2" CV="236" mask="XXXXXXVX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Strg1 Trig1</tooltip>
+    <label>Strg1 Trig1</label>
+  </variable>
+  <variable item="Snd Group 7-3" CV="236" mask="XXXXXVXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Strg2 Trig2</tooltip>
+    <label>Strg2 Trig2</label>
+  </variable>
+  <variable item="Snd Group 7-4" CV="236" mask="XXXXVXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Strg3 Trig3</tooltip>
+    <label>Strg3 Trig3</label>
+  </variable>
+  <variable item="Snd Group 7-5" CV="236" mask="XXXVXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Strg4 Trig4</tooltip>
+    <label>Strg4 Trig4</label>
+  </variable>
+  <variable item="Snd Group 7-6" CV="236" mask="XXVXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Strg5 Trig5</tooltip>
+    <label>Strg5 Trig5</label>
+  </variable>
+  <variable item="Snd Group 7-7" CV="236" mask="XVXXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Strg.nn nn</tooltip>
+    <label>Strg.nn nn</label>
+  </variable>
+  <variable item="Snd Group 7-8" CV="236" mask="VXXXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>nTrig n</tooltip>
+    <label>nTrig n</label>
+  </variable>
+
+   <variable item="Res Group 8" CV="237"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <decVal/>
+    <label>Res 8</label>
+    <tooltip>Set sum of bits 0-7 ON to then write full sheet for Fkey selected in CV229</tooltip>
+   </variable>
+  
+   <variable item="Res Group 8-1" CV="237" mask="XXXXXXXV"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Res</tooltip>
+    <label>res=0 Res0</label>
+  </variable>
+  <variable item="Res Group 8-2" CV="237" mask="XXXXXXVX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Res</tooltip>
+    <label>res=0 Res1</label>
+  </variable>
+  <variable item="Res Group 8-3" CV="237" mask="XXXXXVXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Res</tooltip>
+    <label>res=0 Res2</label>
+  </variable>
+  <variable item="Res Group 8-4" CV="237" mask="XXXXVXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Res</tooltip>
+    <label>res=0 Res3</label>
+  </variable>
+  <variable item="Res Group 8-5" CV="237" mask="XXXVXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Res4</tooltip>
+    <label>res=0 Res4</label>
+  </variable>
+  <variable item="Res Group 8-6" CV="237" mask="XXVXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Res5</tooltip>
+    <label>res=0 Res5</label>
+  </variable>
+  <variable item="Res Group 8-7" CV="237" mask="XVXXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Res6</tooltip>
+    <label>res=0 Res6</label>
+  </variable>
+  <variable item="Res Group 8-8" CV="237" mask="VXXXXXXX"   include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>res=0 Res7</tooltip>
+    <label>res=0 Res7</label>
+  </variable>
+
+</variables>

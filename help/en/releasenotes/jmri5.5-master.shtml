@@ -9,12 +9,17 @@
                 <li></li>
             </ul>
 
-	    <h4>Anyma DMX512</h4>
+        <h4>Anyma DMX512</h4>
             <ul>
                 <li></li>
             </ul>
 
-	    <h4>Bachrus Speedo</h4>
+        <h4>Bachrus Speedo</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4><a href="http://bidib.org/index_e.html">BiDiB</a></h4>
             <ul>
                 <li></li>
             </ul>
@@ -324,7 +329,7 @@
                 <li></li>
             </ul>
 
-	    <h4>Team Digital</h4>
+        <h4>Team Digital</h4>
             <ul>
                 <li></li>
             </ul>
@@ -402,7 +407,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+            <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -506,22 +511,22 @@
                 <li></li>
             </ul>
 
-    	<h4>Signal Groups</h4>
+        <h4>Signal Groups</h4>
             <ul>
                 <li></li>
             </ul>
 
-	    <h4>Cab Signals</h4>
+        <h4>Cab Signals</h4>
             <ul>
                 <li></li>
             </ul>
 
-    	<h4>Simple Signal Logic</h4>
+        <h4>Simple Signal Logic</h4>
             <ul>
                 <li></li>
             </ul>
 
-	    <h4>USS CTC Logic</h4>
+        <h4>USS CTC Logic</h4>
             <ul>
                 <li></li>
             </ul>

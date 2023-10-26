@@ -202,6 +202,7 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         t = new DCCppTurnout("DCCPP", 42, dnis);
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

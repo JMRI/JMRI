@@ -60,6 +60,7 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnect
     /**
      * This puts the common manager config in one place.
      */
+    @Override
     public void configureManagers() {
 
         PowerManager powerManager = new MarklinPowerManager(getTrafficController());

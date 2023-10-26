@@ -1,7 +1,5 @@
 package jmri.jmrix.loconet;
 
-import jmri.util.JUnitUtil;
-
 import org.junit.jupiter.api.*;
 
 /**

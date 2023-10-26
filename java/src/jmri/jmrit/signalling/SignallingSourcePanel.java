@@ -6,11 +6,11 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.Set;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -19,6 +19,7 @@ import javax.swing.SortOrder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableRowSorter;
+
 import jmri.InstanceManager;
 import jmri.SignalMast;
 import jmri.SignalMastLogic;
@@ -27,10 +28,9 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for the Signal Mast Table - Edit Logic Pane.
@@ -148,10 +148,11 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
      */
     void discoverPressed(ActionEvent e) {
         if (!InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
-            int response = JOptionPane.showConfirmDialog(null, Bundle.getMessage("EnableLayoutBlockRouting"));  // NOI18N
-            if (response == 0) {
+            int response = JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("EnableLayoutBlockRouting"),
+                Bundle.getMessage("QuestionTitle"), JmriJOptionPane.QUESTION_MESSAGE);
+            if ( response == JmriJOptionPane.OK_OPTION ) {
                 InstanceManager.getDefault(LayoutBlockManager.class).enableAdvancedRouting(true);
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("LayoutBlockRoutingEnabledShort"));  // NOI18N
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("LayoutBlockRoutingEnabledShort"));  // NOI18N
             }
         }
 
@@ -172,15 +173,15 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                     InstanceManager.getDefault(jmri.SignalMastLogicManager.class).discoverSignallingDest(sourceMast, editor);
                 } catch (jmri.JmriException ex) {
                     signalMastLogicFrame.setVisible(false);
-                    JOptionPane.showMessageDialog(null, ex.toString());
+                    JmriJOptionPane.showMessageDialog(this, ex.toString());
                 }
             }
             signalMastLogicFrame.setVisible(false);
             signalMastLogicFrame.dispose();
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("GenComplete"));  // NOI18N
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("GenComplete"));  // NOI18N
         } else {
             // don't take the trouble of searching
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("GenSkipped"));  // NOI18N
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("GenSkipped"));  // NOI18N
         }
     }
 
@@ -524,6 +525,6 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignallingSourcePanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignallingSourcePanel.class);
 
 }

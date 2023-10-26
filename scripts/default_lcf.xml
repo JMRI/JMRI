@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+# scripts/default_lcf.xml
+# Default logging configuration file for JMRI project scripts.
+
+# JMRI itself uses Log4J et al for logging.  Some of the components
+# that JMRI uses, however, use other approaches.
+#    purejavacomm:  Uses a "purejavacomm.loglevel" system property not controlled here,
+#                   c.f.the build.xml file for how we handle it when running under Ant.
+
+# #############################################################
+#  Log4J2 Configuration
+# #############################################################
+
+# Output is sent to system.err, generally a console window.
+# The output info consists of relative time, priority, thread name,
+# category name, nested diagnostic context, and the message in
+# that order.
+
+# For the general syntax of this Configuration File see
+# https://logging.apache.org/log4j/2.x/manual/configuration.html#XML
+
+# Valid Level names are OFF, FATAL, ERROR, WARN, INFO, DEBUG and TRACE.
+
+# The root category is set to log priority INFO and above
+# to the console (A1), to rolling log files (T), and to a single file (R).
+
+# The root category is the only category that is given
+# a default priority. All other categories do not have a default
+# priority, in which case the priority is inherited from the
+# hierarchy.  See the end of the file for examples of how to
+# control this at a finer level.
+
+-->
+<Configuration status="INFO">
+    <Appenders>
+
+        <!-- The Appenders use PatternLayout to format the LogEvent, see -->
+        <!-- https://logging.apache.org/log4j/2.x/manual/layouts.html#pattern-layout -->
+        <!-- BEWARE, some pattern characters are expensive operations and may impact performance. -->
+
+        <!-- A1 Console Appender writes to system.err to synchronize with e.g. exception traces -->
+        <Console name="A1" target="SYSTEM_ERR">
+            <PatternLayout pattern="%d{ABSOLUTE} %-37.37c{8} %-5p - %m [%t]%n"/>
+            <!-- %d{ABSOLUTE}: Time in HH:mm:ss, such as "15:30:45".
+                %-37.37c{8}: Logger (class) name with a width of 37 characters, left-aligned.
+                The {8} specifies that only the last 8 segments of the fully-qualified class name will be shown.
+                %-5p: This part specifies the log level with a width of 5 characters, left-aligned.
+                %m: This part represents the actual log message.
+                [%t]: This part represents the thread name in square brackets.
+                %n: This is the newline character, which adds a new line after each log message. -->
+        </Console>
+
+        <!-- R File Appender  set to output to a single log file.
+            This is defined for systems that can't (or don't want to) have rolling files. -->
+        <RollingFile name="R" fileName="${sys:jmri.log.path}session.log"
+            filePattern="${sys:jmri.log.path}session.log" append="false">
+            <PatternLayout pattern="%d{ISO8601} %-37.37c{2} %-5p - %m [%t]%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="5MB"/>
+            </Policies>
+        </RollingFile>
+
+        <!-- T Rolling File Appender is set to output to a rolling file.
+            This only works for certain systems, but manages files in a convenient way.
+            T is defined to preserve messages between sessions and to keep up to
+            2 previous log files in addition to the current. -->
+        <RollingFile name="T" fileName="${sys:jmri.log.path}messages.log"
+            filePattern="${jmri.log.path}messages.%i.log" append="true">
+            <PatternLayout pattern="%d{ISO8601} %-37.37c{2} %-5p - %m [%t]%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="1000KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="2"/>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <!-- Root Logger -->
+        <Root level="INFO">
+            <AppenderRef ref="A1"/><!-- Console Appender -->
+            <AppenderRef ref="R"/><!-- Session Log File -->
+            <AppenderRef ref="T"/><!-- Rolling Log File -->
+        </Root>
+
+        <!-- Jetty Server Logger only logging WARN since it can be verbose at points -->
+        <Logger name="org.eclipse.jetty" level="WARN"/>
+        <Logger name="org.eclipse.jetty.server.handler" level="WARN"/>
+
+        <!-- Turning off logging for Java Xerces; emits WARNING messages during routine use -->
+        <Logger name="org.jdom2.transform" level="OFF"/>
+
+        <!-- JMDNS Logger -->
+        <Logger name="javax.jmdns.impl" level="ERROR"/>
+
+        <!-- Examples of changing priority of specific categories (classes, packages): -->
+        <!-- Remove the comment symbols before and after the class, then relaunch JMRI to activate. -->
+        <!-- Valid Level names are OFF, FATAL, ERROR, WARN, INFO, DEBUG and TRACE. -->
+
+        <!-- <Logger name="jmri" level="DEBUG"/> -->
+        <!-- <Logger name="jmri.jmrit.beantable.LogixTableAction" level="DEBUG"/> -->
+        <!-- <Logger name="jmri.jmrit.display" level="DEBUG"/> -->
+        <!-- <Logger name="jmri.jmrit.display.IndicatorTrackPaths" level="DEBUG"/> -->
+        <!-- <Logger name="jmri.jmrit.progsupport" level="TRACE"/> -->
+        <!-- <Logger name="jmri.jmrit.symbolicprog.tabbedframe" level="DEBUG"/> -->
+        <!-- <Logger name="jmri.jmrit.symbolicprog.DecVariableValue" level="DEBUG"/> -->
+        <!-- <Logger name="jmri.jmrix" level="DEBUG"/> -->
+        <!-- <Logger name="jmri.jmrix.nce.NceTrafficController" level="WARN"/> -->
+
+        <!-- <Logger name="jmri.jmrit.display.layoutEditor" level="DEBUG"/> -->
+        <!-- <Logger name="jmri.jmrit.display.layoutEditor.LayoutBlock" level="DEBUG"/> -->
+        <!-- <Logger name="jmri.jmrit.operations" level="DEBUG"/> -->
+
+    </Loggers>
+</Configuration>

@@ -3,13 +3,13 @@ package jmri.configurexml;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ResourceBundle;
+
 import javax.annotation.CheckForNull;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Store the JMRI configuration information as XML.
@@ -71,11 +71,11 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
         log.debug("Save file: {}", file.getPath());
         // check for possible overwrite
         if (file.exists()) {
-            int selectedValue = JOptionPane.showConfirmDialog(null,
+            int selectedValue = JmriJOptionPane.showConfirmDialog(null,
                     Bundle.getMessage("FileOverwriteWarning", file.getName()),
                     Bundle.getMessage("OverwriteFile"),
-                    JOptionPane.OK_CANCEL_OPTION);
-            if (selectedValue != JOptionPane.OK_OPTION) {
+                    JmriJOptionPane.OK_CANCEL_OPTION);
+            if (selectedValue != JmriJOptionPane.OK_OPTION) {
                 return null;
             }
         }
@@ -97,16 +97,15 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
             boolean results = cm.storeConfig(file);
             log.debug("store {}", results ? "was successful" : "failed");
             if (!results) {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         rb.getString("StoreHasErrors") + "\n"
                         + rb.getString("StoreIncomplete") + "\n"
                         + rb.getString("ConsoleWindowHasInfo"),
-                        rb.getString("StoreError"), JOptionPane.ERROR_MESSAGE);
+                        rb.getString("StoreError"), JmriJOptionPane.ERROR_MESSAGE);
             }
         }
     }
 
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(StoreXmlConfigAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StoreXmlConfigAction.class);
 
 }

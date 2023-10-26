@@ -1,15 +1,17 @@
 package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrix.rps.Distributor;
 import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.MeasurementListener;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * An icon to display the position of an RPS input.
@@ -296,7 +298,7 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
 
     public void setFilterPopup() {
         // Popup menu has trigger request for filter value
-        String inputValue = JOptionPane.showInputDialog("Please enter a filter value");
+        String inputValue = JmriJOptionPane.showInputDialog(null, "Please enter a filter value", "");
         if (inputValue == null) {
             return; // cancelled
         }

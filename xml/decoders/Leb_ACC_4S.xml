@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2004 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
+				xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"
+				showEmptyPanes="no">
+ <version author="dave@bayworld.com" version="1" lastUpdated="20021128"/>
+  <decoder>
+ <!--   <family name="LEB Signal Decoder" mfg="Public-domain and DIY" comment="DECSIG_B_F1_V2 is a signal decoder, but it can be programmed in the usual way"> -->
+    <family name="LEB ACCS Decoder" mfg="LEB" comment="ACC_4S is an accessories decoder, but it can be programmed in the usual way">
+      <model model="ACC_4S"  productID="55" />
+    </family>
+    <programming direct="no" paged="yes" register="no" ops="no"/>
+    <variables>
+ 	<xi:include href="file:/xml/decoders/leb/TableAllumage.xml"/>   
+     <variable CV="1" mask="XXVVVVVV" comment="Decoder address" item="Short Address" default="05">
+        <splitVal highCV="9"/>
+        <label>Decoder Address</label>
+        <comment>Decoder address </comment>
+      </variable>
+      <variable CV="1" item="Turnout_Address_Low1" mask="XXVVVVVV" default="01">
+        <splitVal highCV="9" factor="4" offset="-3"/>
+        <label>Turnout_Address_Low1</label>
+      </variable>
+      <variable CV="1" item="Turnout_Address_MidLow1" mask="XXVVVVVV" default="02">
+        <splitVal highCV="9" factor="4" offset="-2"/>
+        <label>Turnout_Address_MidLow1</label>
+      </variable>
+      <variable  CV="1" item="Turnout_Address_MidHigh1" mask="XXVVVVVV" default="03">
+        <splitVal highCV="9" factor="4" offset="-1"/>
+        <label>Turnout_Address_MidHigh1</label>
+      </variable>
+      <variable CV="1" item="Turnout_Address_High1" mask="XXVVVVVV" default="04">
+        <splitVal highCV="9" factor="4" />
+        <label>Turnout_Address_High1</label>
+      </variable>
+      <variable CV="1" item="Turnout_Address_High2" mask="XXVVVVVV" default="05">
+        <splitVal highCV="9" factor="4" offset="+1"/>
+        <label>Turnout_Address_High2</label>
+      </variable>
+	  
+<!--	  
+      <variable item="Decoder Address2" CV="1" mask="XXVVVVVV" comment="Decoder address outputs G - H1" default="02">
+        <splitVal highCV="9"/>
+        <label>Decoder Address2</label>
+        <comment>Decoder address outputs G - H2</comment>
+      </variable>
+	  
+     <variable CV="1" item="Turnout_Address_High3" mask="XXVVVVVV" default="06">
+        <splitVal highCV="9" factor="4" offset="+2"/>
+        <label>Turnout_Address_High3</label>
+      </variable>
+     <variable CV="1" item="Turnout_Address_High4" mask="XXVVVVVV" default="07">
+        <splitVal highCV="9" factor="4" offset="+3"/>
+        <label>Turnout_Address_High4</label>
+      </variable>
+     <variable CV="1" item="Turnout_Address_High5" mask="XXVVVVVV" default="08">
+        <splitVal highCV="9" factor="4" offset="+4"/>
+        <label>Turnout_Address_High5</label>
+      </variable>
+     <variable CV="1" item="Turnout_Address_High6" mask="XXVVVVVV" default="08">
+        <splitVal highCV="9" factor="4" offset="+4"/>
+        <label>Turnout_Address_High5</label>
+      </variable>
+	  -->
+	  
+      <variable item="Allumage choix" CV="3" mask="XXXXXXXX" default="0">
+	  <label>Allumage choix</label>
+	  </variable>  
+	  
+<!--
+      <variable item="Allumage ID" CV="3" mask="XXXXXXXV" default="0">
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Allumage ID</label>
+      </variable>
+      <variable item="Allumage Option" CV="3" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Allumage Option</label>
+      </variable>
+	  -->
+
+<!--  test -->
+ <variable label="TEST_Qualifier" CV="16.0.263" default="123" item="TEST_Qualifier" mask="XXXVVVVV">
+        <qualifier><variableref>Allumage par no Cible</variableref><relation>eq</relation><value>123</value></qualifier>
+        <decVal max="31"/>
+    </variable>
+<!-- fin	-->
+
+
+      <variable label="Table Allumage Personnalisee" item="Table Allumage Personnalisee" tooltip="Table Allumage Personnalisee" CV="3" mask="XXVXXXXX" default="0">
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+ <!--    	<qualifier>
+		  <variableref>Allumage par no Cible</variableref>
+			<relation>eq</relation>
+			<value>0</value>
+		</qualifier> -->
+	 </variable>
+
+
+ 	  	<variable CV="4" item="Indication a la mise sous tension" default="0" minOut="1">
+        <xi:include href="file:/xml/decoders/leb/enum-Signal_Indication.xml"/> 
+	     <label>Indication a la mise sous tension</label>
+		<tooltip>Indication a la mise sous tension</tooltip>
+		</variable>
+
+
+	  	<variable CV="5" item="Allumage par no Cible" default="0" minOut="1">
+        <xi:include href="file:/xml/decoders/leb/enum-Signal_Cible.xml"/> 
+	     <label>Allumage par no Cible</label>
+		<tooltip>Allumage par no Cible</tooltip>
+		</variable>
+
+ 	  <variable CV="7" mask="VVVVVVVV" item="Decoder Version" readOnly="yes" default="48">
+        <decVal/>
+        <label>numero version logicielle</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version Decodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+
+      <variable CV="8" item="Manufacturer" readOnly="yes" default="13">
+        <decVal/>
+        <label>identifiant fabriquant</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+      </variable>
+ 
+ 
+    <!-- Switching Mode			 										 -->
+	<variable CV="522" item="Affichage 00" default="0" minOut="1">
+			 <decVal min="0" max="32"/>
+			 <label>Table d'allumage 13 525</label>
+	</variable>
+
+	</variables>
+	    <resets>
+      <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8"/>
+    </resets>
+	
+  </decoder>
+  <pane>
+  <column>
+      <row>
+        <column>
+          <display item="Decoder Address" label="Group 1 Module Number: " tooltip="Sets base address for signal A, B, C , D and E">
+            <label>Group 1 Module Number: </label>
+          </display>
+          <display item="Turnout_Address_Low1" label="Output Address A: ">
+            <label>Output Address A: </label>
+          </display>
+          <display item="Turnout_Address_MidLow1" label="B: ">
+            <label>B: </label>
+          </display>
+          <display item="Turnout_Address_MidHigh1" label="C: ">
+            <label>C: </label>
+          </display>
+          <display item="Turnout_Address_High1" label="D: ">
+            <label>D: </label>
+          </display>
+          <display item="Turnout_Address_High2" label="E: ">
+            <label>E: </label>
+          </display>
+          <label>
+            <text> </text>
+          </label>
+        </column>
+<!--
+        <column>
+          <display item="Decoder Address2" label="Group 2 Module Number: " tooltip="Sets base address for ID + Option">
+            <label>Group 2 Module Number: </label>
+          </display>
+          <display item="Turnout_Address_High3" label="Output Address ID0: ">
+            <label>ID0: </label>
+          </display>
+          <display item="Turnout_Address_High4" label="ID1: ">
+            <label>ID1: </label>
+          </display>
+          <display item="Turnout_Address_High5" label="Op: ">
+            <label>Op: </label>
+          </display>
+		  <display item=""/>
+		  <display item=""/>
+		  <display item=""/>
+		  <label>
+            <text> </text>
+          </label>
+        </column>
+-->
+      </row>
+      <separator/>
+      <row>
+       <column>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>   Choix Allumage </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+<!--
+		  <display item="Allumage ID" format="checkbox" label="      Input A Disabled " tooltip="Disables Allumage ID">
+            <label>      Allumage ID </label>
+          </display>
+          <display item="Allumage Option" format="checkbox" label="      Input B Disabled " tooltip="Disables Allumage Option">
+            <label>      Allumage Option</label>
+          </display>
+-->
+          <display item="Table Allumage Personnalisee" format="checkbox" label="      Input C Disabled " tooltip="Disables Table Allumage Personnalisee">
+            <label>      Table Allumage Personnalisee </label>
+          </display>
+
+          <label>
+            <text> </text>
+          </label>
+          <display item="TEST_Qualifier"/>
+	        <display item="Allumage choix"/>
+	        <display item="Allumage par no Cible"/>
+	        <display item="Indication a la mise sous tension"/>
+		  <display item=""/>
+        </column>
+      </row>
+     <separator/>
+      <row>
+           <column>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Decoder Version"/>
+          <display item="Manufacturer"/>
+          <display item="Hardware Version"/>
+          <display item="Firmware Version"/>
+          <display item="Configuration"/>		  
+		  <display item=""/>
+        </column>
+      </row>
+  
+ </column>
+   
+     <name>ACC_4S</name>
+  </pane>
+  <xi:include href="file:/xml/decoders/leb/TableAllumagePane.xml"/>
+ </decoder-config>

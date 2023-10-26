@@ -23,16 +23,10 @@
 # Enforce missing synch in synchronized method override
 -err:+syncOverride
 
-
-
 # Allowing 55 un-annotated deprecations
 -err:-dep-ann
 -err:-deprecation
 -err:-allDeprecation
-
-# 176 missing @Override annotations
--err:-allOver-ann
--err:-over-ann
 
 # 179 generic raw types
 -err:-raw

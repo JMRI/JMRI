@@ -4,7 +4,6 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import java.awt.GraphicsEnvironment;

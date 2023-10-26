@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  */
 public final class AboutDialog extends JDialog {
 
-    // this should probably be changed to a JmriAbstractAction that opens a JOptionPane with the contents and an OK button instead.
+    // this should probably be changed to a JmriAbstractAction that opens a JmriJOptionPane with the contents and an OK button instead.
     public AboutDialog(JFrame frame, boolean modal) {
 
         super(frame, modal);

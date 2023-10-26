@@ -89,6 +89,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         Map<Category, List<Class<? extends Base>>> map = new HashMap<>();
 
         List<Class<? extends Base>> classes = new ArrayList<>();
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionAudio.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionBlock.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionClock.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionConditional.class);
@@ -118,6 +119,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         classes.add(jmri.jmrit.logixng.expressions.DigitalFormula.class);
         classes.add(jmri.jmrit.logixng.expressions.Not.class);
         classes.add(jmri.jmrit.logixng.expressions.Or.class);
+        classes.add(jmri.jmrit.logixng.expressions.Timer.class);
         map.put(Category.COMMON, classes);
 
         classes = new ArrayList<>();

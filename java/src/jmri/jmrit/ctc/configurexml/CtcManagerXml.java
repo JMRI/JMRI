@@ -1,6 +1,5 @@
 package jmri.jmrit.ctc.configurexml;
 
-import java.lang.reflect.Field;
 import java.util.*;
 
 import jmri.*;

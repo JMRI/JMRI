@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: LogixNG Where Used</title>
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="JMRI logixng where used">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../../../../html/tools/logixng/Sidebar.shtml"-->
+
+    <div id="mainContent">
+      <h1>JMRI: LogixNG Where Used</h1>
+
+      <p>The LogixNG Where Used tool is used to find where tables entries have been used in a
+      LogixNG, a LogixNG module or in the LogixNG clipboard.  References are shown using the normal
+      LogixNG Browser format.  The tool is based on the standard Where Used at <strong>Tools &rArr;
+      Where Used</strong>.</p>
+
+      <p>The LogixNG Where Used tool is at PanelPro <strong>Tools &rArr; LogixNG &rArr; Where Used
+      </strong>.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/logixng_where_used.png"><img src="images/logixng_where_used.png" alt=
+        "LogixNG Where Used"></a>
+      </div>
+
+      <p>Select an item type and item name and click on the <strong>Create</strong> button to
+      generate the report.  The <strong>Save to Text File</strong> button can be used to save the
+      report in a text file.</p>
+
+      <p>The standard Where Used also shows the references but with less LogixNG detail.  It does
+      not search the LogixNG clipboard.</p>
+
+<pre class="code">
+    Sensor: ShutdownRequest (IS995)
+    Listener count: 3
+
+  LogixNG references
+    Shutdown (IQ:AUTO:0012), Initialize, action: Set sensor ShutdownRequest to state Inactive
+    Shutdown (IQ:AUTO:0012), Request, expression: Sensor ShutdownRequest is Active
+    Shutdown (IQ:AUTO:0012), Continue, expression: Sensor ShutdownRequest is Active
+
+  Panel references
+    Control Editor :: SensorIcon :: x=30, y=130
+</pre>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

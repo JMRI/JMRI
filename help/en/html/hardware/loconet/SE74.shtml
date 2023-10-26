@@ -73,13 +73,15 @@
       JMRI-supported features include signal control, switch control, and inputs.
 
       <h2 id="configuring">Configuring the SE74 with JMRI</h2>
-      <p>JMRI is not able (at this time) to provide "configuration" of the SE74.
-      Digitrax introduced a different configuration mechanism with the generation of
-      devices which includes the DS74.  JMRI developers have not yet provided support
-      for this new methodology, in part because it includes a mode which extends to
-      non-LocoNet systems, but behaves in a way that is not consistent with other
-      products which use a similar mechanism.
-      <p>As such, configuring the SE74 must be done using the methods described
+      <span class="since">Since <a href="jmri5.3.4.shtml">JMRI 5.3.4</a></span>
+      DecoderPro can configure the Op Switches of the SE74 so long as it has 
+      a LocoNet connection to the SE74.
+      <p>To do this, you open DecoderPro (as an individual application or via
+      selecting "Roster" in PanelPro) and create a new roster entry. Select the
+      Digitrax SE74 decoder type for it and enter the SE74's address.
+      You can then use the usual DecoderPro panes to read and write the configuration
+      variables (Op Switches) in the SE74.
+      <p>Configuring the SE74's routes be done using the methods described
       in the Digitrax documentation for the SE74.
 
       <h2 id="signaling">Signaling using the SE74 with JMRI</h2>

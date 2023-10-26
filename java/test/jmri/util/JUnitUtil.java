@@ -208,13 +208,13 @@ public class JUnitUtil {
         if (!isLoggingInitialized) {
             // init logging if needed
             isLoggingInitialized = true;
-            String filename = System.getProperty("jmri.log4jconfigfilename", "tests.lcf");
+            String filename = System.getProperty("jmri.log4jconfigfilename", "tests_lcf.xml");
             TestingLoggerConfiguration.initLogging(filename);
         }
 
         // need to do this each time
         try {
-            JUnitAppender.start();
+            JUnitAppender.startLogging();
 
             // reset warn _only_ once logic to make tests repeatable
             JUnitLoggingUtil.restartWarnOnce();

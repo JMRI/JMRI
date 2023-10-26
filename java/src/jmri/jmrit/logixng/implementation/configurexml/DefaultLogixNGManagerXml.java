@@ -20,7 +20,6 @@ import jmri.util.ThreadingUtil;
 
 /**
  * Provides the functionality for configuring LogixNGManagers
- * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
  * @author Daniel Bergqvist Copyright (c) 2018

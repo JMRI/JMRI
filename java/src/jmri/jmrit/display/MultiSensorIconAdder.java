@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -23,12 +24,12 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.TransferHandler;
 import javax.swing.event.ListSelectionEvent;
+
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
@@ -36,8 +37,7 @@ import jmri.Sensor;
 import jmri.CatalogTreeLeaf;
 import jmri.CatalogTreeNode;
 import jmri.jmrit.catalog.NamedIcon;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Provides a simple editor for creating a MultiSensorIcon object. Allows drops
@@ -384,10 +384,10 @@ public class MultiSensorIconAdder extends IconAdder {
      */
     public NamedIcon getIcon(int index) {
         if (index >= _iconOrderList.size()) {
-            JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
+            JmriJOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                     Bundle.getMessage("NoIconAt"), index - 2),
                     Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return null;
         }
         return (NamedIcon) _iconMap.get(_iconOrderList.get(index)).getIcon();
@@ -402,10 +402,10 @@ public class MultiSensorIconAdder extends IconAdder {
      */
     public NamedBeanHandle<Sensor> getSensor(int index) {
         if (index >= _iconOrderList.size()) {
-            JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
+            JmriJOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                     Bundle.getMessage("NoSensorAt"), index - 2),
                     Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return null;
         }
         return _sensorMap.get(_iconOrderList.get(index));
@@ -420,7 +420,7 @@ public class MultiSensorIconAdder extends IconAdder {
         log.debug("putSensor: key= {} sensor= {}", key, name);
         for (NamedBeanHandle<Sensor> sensorNamedBeanHandle : _sensorMap.values()) {
             if (name.equals(sensorNamedBeanHandle.getName())) {
-                JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("DupSensorName"), name), Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("DupSensorName"), name), Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -492,7 +492,6 @@ public class MultiSensorIconAdder extends IconAdder {
         }
     }
 
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(MultiSensorIconAdder.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MultiSensorIconAdder.class);
 
 }

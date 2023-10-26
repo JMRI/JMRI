@@ -2,11 +2,6 @@ package jmri.jmrix.loconet.uhlenbrock.usb_63120;
 
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
-
 import java.util.Arrays;
 
 /**

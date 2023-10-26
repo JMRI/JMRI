@@ -2,9 +2,10 @@ package jmri.jmrix.can.cbus.eventtable;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
 import javax.annotation.Nonnull;
 import javax.swing.JCheckBox;
-import javax.swing.JOptionPane;
+
 import jmri.NamedBean;
 import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.CanMessage;
@@ -14,6 +15,7 @@ import jmri.jmrix.can.cbus.CbusEvent;
 import jmri.jmrix.can.cbus.CbusEventInterface;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.util.ThreadingUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  *
@@ -114,10 +116,10 @@ public class CbusEventTableAction implements PropertyChangeListener {
                 + Bundle.getMessage("DelConfirmTwo"); // NOI18N
                 Object[] params = {message, checkbox};
 
-                if (JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(
+                if (JmriJOptionPane.OK_OPTION == JmriJOptionPane.showConfirmDialog(
                         null, params, Bundle.getMessage("DelEvPopTitle"),  // NOI18N
-                        JOptionPane.OK_CANCEL_OPTION,
-                    JOptionPane.WARNING_MESSAGE)) {
+                        JmriJOptionPane.OK_CANCEL_OPTION,
+                    JmriJOptionPane.WARNING_MESSAGE)) {
 
                         sessionConfirmDeleteRow=!checkbox.isSelected();
                         removeRow(row);

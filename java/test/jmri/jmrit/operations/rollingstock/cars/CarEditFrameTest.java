@@ -590,7 +590,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[] { car.getTypeName() }),
                 Bundle.getMessage("ButtonNo"));
-        // 2nd dialog, make all Boxcar blocking order 23
+        // 2nd dialog, make all Boxcar blocking order 23, no
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[] { car.getTypeName() }),
                 Bundle.getMessage("ButtonNo"));
@@ -609,19 +609,26 @@ public class CarEditFrameTest extends OperationsTestCase {
         
         Assert.assertFalse(car.isPassenger());
         Assert.assertFalse(car2.isPassenger());
-        Assert.assertEquals("blocking order", 23, car.getBlocking());
+        
+        // Blocking order gets cleared
+        Assert.assertEquals("blocking order", 0, car.getBlocking());
         Assert.assertEquals("blocking order", 0, car2.getBlocking());
 
+        f.blockingTextField.setText("32"); // random number for blocking order
         JemmyUtil.enterClickAndLeave(f.passengerCheckBox);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(f,
                 MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[] { car.getTypeName() }),
                 Bundle.getMessage("ButtonYes"));
+        // 2nd dialog, make all Boxcar blocking order 32, no
+        JemmyUtil.pressDialogButton(f,
+                MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[] { car.getTypeName() }),
+                Bundle.getMessage("ButtonNo"));
         JemmyUtil.waitFor(f);
         
         Assert.assertTrue(car.isPassenger());
         Assert.assertTrue(car2.isPassenger());
-        Assert.assertEquals("blocking order", 23, car.getBlocking());
+        Assert.assertEquals("blocking order", 32, car.getBlocking());
         Assert.assertEquals("blocking order", 0, car2.getBlocking());
 
         f.blockingTextField.setText("99"); // random number for blocking order

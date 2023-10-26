@@ -42,10 +42,8 @@ import jmri.jmrit.logix.PortalManager;
 import jmri.jmrit.logix.WarrantTableAction;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.HelpUtil;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * ControlPanelEditor CircuitBuilder tools.
@@ -500,9 +498,9 @@ public class CircuitBuilder {
                 } else {
                     frame = _editor;
                 }
-                JOptionPane.showMessageDialog(frame,
+                JmriJOptionPane.showMessageDialog(frame,
                         Bundle.getMessage("blocksEtcOK"), Bundle.getMessage("ButtonOK"),
-                        javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                        JmriJOptionPane.INFORMATION_MESSAGE);
             }
         });
         _todoMenu.add(pError);      // #12
@@ -693,9 +691,9 @@ public class CircuitBuilder {
     private boolean editingOK() {
         if (_editFrame != null) {
             // Already editing a circuit, ask for completion of that edit
-            JOptionPane.showMessageDialog(_editFrame,
+            JmriJOptionPane.showMessageDialog(_editFrame,
                     Bundle.getMessage("AlreadyEditing"), Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             _editFrame.toFront();
             _editFrame.setVisible(true);
             return false;
@@ -706,8 +704,8 @@ public class CircuitBuilder {
         } else {
             for (OBlock block : manager.getNamedBeanSet()) {
                 if ((block.getState() & OBlock.ALLOCATED) != 0) {
-                    JOptionPane.showMessageDialog(_editor, Bundle.getMessage("cannotEditCB", block.getWarrant().getDisplayName()),
-                            Bundle.getMessage("editCiruit"), JOptionPane.INFORMATION_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(_editor, Bundle.getMessage("cannotEditCB", block.getWarrant().getDisplayName()),
+                            Bundle.getMessage("editCiruit"), JmriJOptionPane.INFORMATION_MESSAGE);
                     return false;
                 }
             }
@@ -776,8 +774,8 @@ public class CircuitBuilder {
         return false;
     }
     private void selectPrompt() {
-        JOptionPane.showMessageDialog(_editor, Bundle.getMessage("selectOBlock"),
-                Bundle.getMessage("NeedDataTitle"), JOptionPane.INFORMATION_MESSAGE);
+        JmriJOptionPane.showMessageDialog(_editor, Bundle.getMessage("selectOBlock"),
+                Bundle.getMessage("NeedDataTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
     }
 
     /*
@@ -1266,8 +1264,8 @@ public class CircuitBuilder {
             }
         }
         if (msg != null) {
-            JOptionPane.showMessageDialog(_editFrame, msg,
-                    Bundle.getMessage("noIcons"), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(_editFrame, msg,
+                    Bundle.getMessage("noIcons"), JmriJOptionPane.INFORMATION_MESSAGE);
             return false;
         } else {
             return true;
@@ -1357,12 +1355,12 @@ public class CircuitBuilder {
             OBlock block = ((IndicatorTrack) pos).getOccBlock();
             if (block != null) {
                 if (!block.equals(editBlock)) {
-                    int result = JOptionPane.showConfirmDialog(_editor, java.text.MessageFormat.format(
+                    int result = JmriJOptionPane.showConfirmDialog(_editor, java.text.MessageFormat.format(
                             Bundle.getMessage("iconBlockConflict"),
                             block.getDisplayName(), editBlock.getDisplayName()),
-                            Bundle.getMessage("whichCircuit"), JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE);
-                    if (result == JOptionPane.YES_OPTION) {
+                            Bundle.getMessage("whichCircuit"), JmriJOptionPane.YES_NO_OPTION,
+                            JmriJOptionPane.QUESTION_MESSAGE);
+                    if (result == JmriJOptionPane.YES_OPTION) {
                         // move icon from block to editBlock
                         getCircuitIcons(block).remove(pos);
                         ((IndicatorTrack) pos).setOccBlockHandle(
@@ -1403,9 +1401,9 @@ public class CircuitBuilder {
                 return true;
             }
         }
-        JOptionPane.showMessageDialog(_editFrame,
+        JmriJOptionPane.showMessageDialog(_editFrame,
                 Bundle.getMessage("moveOffBlock", block.getDisplayName(), pos.getNameString()),
-                Bundle.getMessage("editCiruit"), JOptionPane.INFORMATION_MESSAGE);
+                Bundle.getMessage("editCiruit"), JmriJOptionPane.INFORMATION_MESSAGE);
         return false;
     }
 
@@ -1553,8 +1551,8 @@ public class CircuitBuilder {
                 while (iter.hasNext()) {
                     selects[i++] = iter.next().getNameString();
                 }
-                Object select = JOptionPane.showInputDialog(_editor, Bundle.getMessage("multipleSelections"),
-                        Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE,
+                Object select = JmriJOptionPane.showInputDialog(_editor, Bundle.getMessage("multipleSelections"),
+                        Bundle.getMessage("QuestionTitle"), JmriJOptionPane.QUESTION_MESSAGE,
                         null, selects, null);
                 if (select != null) {
                     iter = tracks.iterator();
@@ -1825,5 +1823,6 @@ public class CircuitBuilder {
         return panel;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CircuitBuilder.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CircuitBuilder.class);
+
 }

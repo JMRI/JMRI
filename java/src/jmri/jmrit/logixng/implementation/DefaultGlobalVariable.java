@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.implementation;
 
-import static jmri.NamedBean.UNKNOWN;
-
 import java.io.PrintWriter;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

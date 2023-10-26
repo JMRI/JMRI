@@ -71,31 +71,31 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
      * initial state of a newly created object before communication with the
      * layout.
      */
-    int UNKNOWN = 0x01;
+    static final int UNKNOWN = 0x01;
 
     /**
      * Constant representing an "inconsistent" state, indicating that some
      * inconsistency has been detected in the hardware readback.
      */
-    int INCONSISTENT = 0x08;
+    static final int INCONSISTENT = 0x08;
 
     /**
      * Format used for {@link #getDisplayName(DisplayOptions)} when displaying
      * the user name and system name without quoation marks around the user
      * name.
      */
-    String DISPLAY_NAME_FORMAT = "%s (%s)";
+    final static String DISPLAY_NAME_FORMAT = "%s (%s)";
 
     /**
      * Format used for {@link #getDisplayName(DisplayOptions)} when displaying
      * the user name and system name with quoation marks around the user name.
      */
-    String QUOTED_NAME_FORMAT = "\"%s\" (%s)";
+    final static String QUOTED_NAME_FORMAT = "\"%s\" (%s)";
 
     /**
      * Property of changed state.
      */
-    String PROPERTY_STATE = "state";
+    final static String PROPERTY_STATE = "state";
 
     /**
      * User's identification for the item. Bound parameter so manager(s) can

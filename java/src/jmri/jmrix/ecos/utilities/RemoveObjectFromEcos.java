@@ -4,8 +4,6 @@ import jmri.jmrix.ecos.EcosListener;
 import jmri.jmrix.ecos.EcosMessage;
 import jmri.jmrix.ecos.EcosReply;
 import jmri.jmrix.ecos.EcosTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class RemoveObjectFromEcos implements EcosListener {
 
@@ -60,8 +58,8 @@ public class RemoveObjectFromEcos implements EcosListener {
             log.error("JMRI has no control over the ecos object {}. Retrying Attempt {}", _ecosObject, ecosretry);
         } //We do not want to do a force control over an object when we are trying to delete it, bad things might happen on the layout if we do this!
         else {
-            javax.swing.JOptionPane.showMessageDialog(null, Bundle.getMessage("DeleteFromEcosWarning"),
-                    Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
+            jmri.util.swing.JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("DeleteFromEcosWarning"),
+                    Bundle.getMessage("WarningTitle"), jmri.util.swing.JmriJOptionPane.WARNING_MESSAGE);
             ecosretry = 0;
         }
     }
@@ -78,6 +76,6 @@ public class RemoveObjectFromEcos implements EcosListener {
         // messages are ignored
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RemoveObjectFromEcos.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RemoveObjectFromEcos.class);
 
 }

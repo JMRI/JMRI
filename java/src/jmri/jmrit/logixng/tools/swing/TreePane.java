@@ -2,14 +2,11 @@ package jmri.jmrit.logixng.tools.swing;
 
 import java.awt.Color;
 import java.awt.*;
-import static java.awt.Component.LEFT_ALIGNMENT;
-import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
 import java.util.List;
 
-import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;

@@ -6,9 +6,9 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import jmri.jmrix.nce.*;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Pane for user input of NCE macros.
@@ -116,10 +116,10 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
         NceMessage m = createMacroCmd(input);
         if (m == null) {
             macroReply.setText(Bundle.getMessage("error"));
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("EnterMacroNumber"),
                     Bundle.getMessage("NceMacro"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         macroReply.setText(Bundle.getMessage("waiting"));

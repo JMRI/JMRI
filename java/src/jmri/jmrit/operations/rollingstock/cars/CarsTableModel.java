@@ -571,6 +571,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case MOVES_COLUMN:
             case WAIT_COLUMN:
                 return Integer.class;
+            case LAST_COLUMN:
+                return Object.class; // to disable sorting
             default:
                 return String.class;
         }
@@ -614,25 +616,21 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 return car.getColor();
             case LENGTH_COLUMN:
                 return car.getLengthInteger();
-            case TYPE_COLUMN: {
+            case TYPE_COLUMN:
                 return car.getTypeName() + car.getTypeExtensions();
-            }
-            case KERNEL_COLUMN: {
+            case KERNEL_COLUMN:
                 if (car.isLead()) {
                     return car.getKernelName() + "*";
                 }
                 return car.getKernelName();
-            }
-            case LOCATION_COLUMN: {
+            case LOCATION_COLUMN:
                 if (car.getLocation() != null) {
                     return car.getStatus() + car.getLocationName() + " (" + car.getTrackName() + ")";
                 }
                 return car.getStatus();
-            }
-            case RFID_WHERE_LAST_SEEN_COLUMN: {
+            case RFID_WHERE_LAST_SEEN_COLUMN:
                 return car.getWhereLastSeenName() +
                         (car.getTrackLastSeenName().equals(Car.NONE) ? "" : " (" + car.getTrackLastSeenName() + ")");
-            }
             case RFID_WHEN_LAST_SEEN_COLUMN: {
                 return car.getWhenLastSeenDate();
             }
@@ -655,12 +653,22 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 }
                 return s;
             }
-            case RWE_DESTINATION_COLUMN:
-                return car.getReturnWhenEmptyDestName();
+            case RWE_DESTINATION_COLUMN: {
+                String s = car.getReturnWhenEmptyDestinationName();
+                if (car.getReturnWhenEmptyDestTrack() != null) {
+                    s = s + " (" + car.getReturnWhenEmptyDestTrackName() + ")";
+                }
+                return s;
+            }
             case RWE_LOAD_COLUMN:
                 return car.getReturnWhenEmptyLoadName();
-            case RWL_DESTINATION_COLUMN:
-                return car.getReturnWhenLoadedDestName();
+            case RWL_DESTINATION_COLUMN: {
+                String s = car.getReturnWhenLoadedDestinationName();
+                if (car.getReturnWhenLoadedDestTrack() != null) {
+                    s = s + " (" + car.getReturnWhenLoadedDestTrackName() + ")";
+                }
+                return s;
+            }
             case RWL_LOAD_COLUMN:
                 return car.getReturnWhenLoadedLoadName();
             case DIVISION_COLUMN:

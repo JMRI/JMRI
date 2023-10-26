@@ -35,6 +35,8 @@
 	<!-- Ensure productID matches what JRMI computes -->
    <version author="Konrad Malkowski" version="12" lastUpdated="20230305"/>
 	<!-- Remove individual volume panes -->
+   <version author="Peter Ulvestad" version="13" lastUpdated="20231015"/>
+	<!-- update factory resets (added full reset) -->
    <decoder>
       <family name="WOW Steam Sound Set 4" mfg="Train Control Systems">
          <model model="WOW Steam 101 SS4" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="9pin" lowVersionID="4" highVersionID="4" productID="1666">
@@ -658,6 +660,7 @@
         <mode>PAGEMODE</mode>
         <mode>DIRECTMODE</mode>
         <mode>OPSBYTEMODE</mode>
+        <factReset label="Entire decoder" CV="8" default="8"/>
         <factReset label="Entire decoder (except speed table)" CV="8" default="2"/>
         <factReset label="Entire decoder (except address and speed table)" CV="T2CV.5.0" default="2"/>
         <factReset label="All sound settings" CV="T2CV.5.0" default="3"/>
@@ -668,9 +671,9 @@
         <factReset label="User Preset 1" CV="T2CV.5.0" default="8"/>
         <factReset label="User Preset 2" CV="T2CV.5.0" default="9"/>
         <factReset label="User Preset 3" CV="T2CV.5.0" default="10"/>
-			<factReset label="Quick Lighting Preset: Standard Ditch Lights" CV="8" default="10"/>
-			<factReset label="Quick Lighting Preset: Standard Trolley" CV="8" default="11"/>
-			<factReset label="Quick Lighting Preset: Modified Trolley" CV="8" default="12"/>
+	<factReset label="Quick Lighting Preset: Standard Ditch Lights" CV="8" default="10"/>
+	<factReset label="Quick Lighting Preset: Standard Trolley" CV="8" default="11"/>
+	<factReset label="Quick Lighting Preset: Modified Trolley" CV="8" default="12"/>
       </resets>
    </decoder>
    <xi:include href="http://jmri.org/xml/programmers/parts/BasicSpeedControlTrimPane.xml"/>

@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * Abstract base for classes representing a RFID communications port
  * <p>
  * NOTE: This currently only supports the standalone RFID interfaces.
- * <p>
  *
  * @author Paul Bender Copyright (C) 2014
  */

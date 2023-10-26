@@ -134,6 +134,33 @@ public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // set speed step mode to 128.
         instance.setSpeedStepMode(jmri.SpeedStepMode.NMRA_DCC_128);
         super.testGetSpeed_float();
+        
+        // set speed step mode to 28
+        instance.setSpeedStepMode(jmri.SpeedStepMode.NMRA_DCC_28);
+        Assert.assertEquals("Idle", 0, ((LocoNetThrottle)instance).intSpeed(0.0F));
+        Assert.assertEquals("Emergency", 1, ((LocoNetThrottle)instance).intSpeed(-1.0F));
+        Assert.assertEquals("Emergency", 1, ((LocoNetThrottle)instance).intSpeed(-0.001F));
+        Assert.assertEquals("Full Speed", 124, ((LocoNetThrottle)instance).intSpeed(1.0F)); // 124 from class source
+
+        float incre = 1.F/111F;
+        float speed = incre;
+        for ( int i=1; i < 112; i++ ) {
+            int result = ((LocoNetThrottle)instance).intSpeed(speed);
+            // System.out.println("speed="+speed+" step="+result+" i="+i);
+            Assert.assertNotSame(speed + "(28 steps) should not idle", 0, result);
+            Assert.assertNotSame(speed + "(28 steps) should not eStop", 1, result);
+            Assert.assertTrue(speed + " should be 16 or larger ", result >= 16);
+            if(i>4)
+            {
+                Assert.assertEquals("loconet speed from " + speed, i+12, result);
+            }
+            else
+            {
+                Assert.assertEquals("loconet speed from " + speed, 16, result);
+            }
+            speed += incre;
+        }
+
     }
 
     /**

@@ -9,10 +9,10 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map.Entry;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
 import jmri.NamedBean;
 import jmri.jmrit.beantable.AbstractTableAction;
 import jmri.jmrit.beantable.BeanTableFrame;
@@ -39,8 +40,7 @@ import jmri.jmrit.display.SensorIcon;
 import jmri.jmrit.display.SignalMastIcon;
 import jmri.jmrit.display.TurnoutIcon;
 import jmri.jmrit.picker.PickListModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * FamilyItemPanel extension for placing of CPE item types that come from tool Tables
@@ -205,8 +205,8 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
                 }
                 _addTableDialog.dispose();
             } catch (IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(_frame, ex.getMessage(),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                JmriJOptionPane.showMessageDialog(_frame, ex.getMessage(),
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             }
         }
         _sysNametext.setText("");
@@ -328,8 +328,8 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
         protected boolean okToDrag() {
             E bean = getDeviceNamedBean();
             if (bean == null) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 return false;
             }
             return true;
@@ -392,6 +392,6 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TableItemPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TableItemPanel.class);
 
 }

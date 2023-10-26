@@ -194,6 +194,30 @@ public class DCCppCommandStationTest {
     }
 
     @Test
+    public void testIsTurnoutIDsMessageRequired() {
+        //added at 5.0.0
+        DCCppCommandStation c = new DCCppCommandStation();
+        DCCppReply r = DCCppReply.parseDCCppReply(
+                "iDCC-EX V-5.0.0 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
+        c.setCommandStationInfo(r);
+        log.debug("Version: {}", c.getVersion());
+        Assert.assertTrue("v5.0.0+ supports the servo turnout creation", c.isTurnoutIDsMessageRequired());
+
+        r = DCCppReply.parseDCCppReply(
+                "iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
+        c.setCommandStationInfo(r);
+        log.debug("Version: {}", c.getVersion());
+        Assert.assertFalse("< v5.0.0 does not support the servo turnout creation", c.isTurnoutIDsMessageRequired());
+
+        r = DCCppReply.parseDCCppReply(
+                "iDCC-EX V-3.1.7 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
+        c.setCommandStationInfo(r);
+        log.debug("Version: {}", c.getVersion());
+        Assert.assertFalse("< v5.0.0 does not support the servo turnout creation", c.isTurnoutIDsMessageRequired());
+
+    }
+
+    @Test
     public void testSetBaseStationTypeString() {
         DCCppCommandStation c = new DCCppCommandStation();
         c.setStationType("MEGA_4.3");

@@ -62,6 +62,24 @@ public interface ConditionalNG extends Base, NamedBean {
     boolean isEnabled();
 
     /**
+     * Set whenether this ConditionalNG should be executed at startup or at
+     * panel load.
+     *
+     * @param value true if this ConditionalNG should be executed at startup
+     * or at panel load.
+     */
+    void setExecuteAtStartup(boolean value);
+
+    /**
+     * Determines whenether this ConditionalNG should be executed at startup
+     * or at panel load.
+     *
+     * @return true if this ConditionalNG should be executed at startup or at
+     * panel load.
+     */
+    boolean isExecuteAtStartup();
+
+    /**
      * Set whenether execute() should run on the LogixNG thread at once or
      * should dispatch the call until later.
      * Most tests turns off the delay to simplify the tests.
@@ -96,6 +114,12 @@ public interface ConditionalNG extends Base, NamedBean {
      * @param socket the female socket
      */
     void execute(FemaleDigitalActionSocket socket);
+
+    /**
+     * Are listeners registered?
+     * @return true if listeners are registered, otherwise return false
+     */
+    boolean isListenersRegistered();
 
     /**
      * Get the stack

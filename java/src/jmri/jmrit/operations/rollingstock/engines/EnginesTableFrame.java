@@ -2,14 +2,10 @@ package jmri.jmrit.operations.rollingstock.engines;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.MessageFormat;
 import java.util.List;
 
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
@@ -18,6 +14,7 @@ import jmri.jmrit.operations.rollingstock.engines.tools.NceConsistEngineAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.swing.JTablePersistenceManager;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for adding and editing the engine roster for operations.
@@ -271,9 +268,9 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         if (ae.getSource() == findButton) {
             int rowindex = enginesModel.findEngineByRoadNumber(findEngineTextBox.getText());
             if (rowindex < 0) {
-                JOptionPane.showMessageDialog(this, MessageFormat.format(
-                        Bundle.getMessage("engineWithRoadNumNotFound"), new Object[]{findEngineTextBox.getText()}),
-                        Bundle.getMessage("engineCouldNotFind"), JOptionPane.INFORMATION_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, 
+                        Bundle.getMessage("engineWithRoadNumNotFound", findEngineTextBox.getText()),
+                        Bundle.getMessage("engineCouldNotFind"), JmriJOptionPane.INFORMATION_MESSAGE);
                 return;
 
             }
@@ -334,5 +331,5 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EnginesTableFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EnginesTableFrame.class);
 }

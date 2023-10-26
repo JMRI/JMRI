@@ -22,6 +22,7 @@ import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.swing.SwingTools;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.jmrit.logixng.util.parser.swing.FunctionsHelpDialog;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.ThreadingUtil;
 
 import org.apache.commons.lang3.mutable.MutableObject;
@@ -349,10 +350,10 @@ public class TreeEditor extends TreeViewer {
      */
     final protected boolean isPopupMenuLocked() {
         if (_lockPopupMenu) {
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("TreeEditor_PopupLockMessage"),
                     Bundle.getMessage("TreeEditor_PopupLockTitle"),
-                    JOptionPane.INFORMATION_MESSAGE);
+                    JmriJOptionPane.INFORMATION_MESSAGE);
         }
         return _lockPopupMenu;
     }
@@ -438,10 +439,10 @@ public class TreeEditor extends TreeViewer {
                 _treePane._tree.updateUI();
                 setPopupMenuLock(false);
             } else {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("ValidateFemaleSocketMessage", _socketNameTextField.getText()),
                         Bundle.getMessage("ValidateFemaleSocketTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -542,10 +543,10 @@ public class TreeEditor extends TreeViewer {
                             if (errorMsg.length() > 0) errorMsg.append("<br>");
                             errorMsg.append(s);
                         }
-                        JOptionPane.showMessageDialog(null,
+                        JmriJOptionPane.showMessageDialog(null,
                                 Bundle.getMessage("ValidateErrorMessage", errorMsg),
                                 Bundle.getMessage("ValidateErrorTitle"),
-                                JOptionPane.ERROR_MESSAGE);
+                                JmriJOptionPane.ERROR_MESSAGE);
                     }
                     ThreadingUtil.runOnGUIEventually(() -> {
                         if (_treePane._femaleRootSocket.isActive()) {
@@ -649,10 +650,10 @@ public class TreeEditor extends TreeViewer {
                             errorMsg.append(s);
                         }
                         ThreadingUtil.runOnGUIEventually(() -> {
-                            JOptionPane.showMessageDialog(null,
+                            JmriJOptionPane.showMessageDialog(null,
                                     Bundle.getMessage("ValidateErrorMessage", errorMsg),
                                     Bundle.getMessage("ValidateErrorTitle"),
-                                    JOptionPane.ERROR_MESSAGE);
+                                    JmriJOptionPane.ERROR_MESSAGE);
                         });
                     }
                 });
@@ -916,10 +917,10 @@ public class TreeEditor extends TreeViewer {
                         if (errorMsg.length() > 0) errorMsg.append("<br>");
                         errorMsg.append(s);
                     }
-                    JOptionPane.showMessageDialog(null,
+                    JmriJOptionPane.showMessageDialog(null,
                             Bundle.getMessage("ValidateErrorMessage", errorMsg),
                             Bundle.getMessage("ValidateErrorTitle"),
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
 
                 } else {
                     _treePane._femaleRootSocket.unregisterListeners();
@@ -1061,10 +1062,10 @@ public class TreeEditor extends TreeViewer {
                 boolean hasErrors = false;
                 if (hasErrors) {
                     String errorMsg = "";
-                    JOptionPane.showMessageDialog(null,
+                    JmriJOptionPane.showMessageDialog(null,
                             Bundle.getMessage("ValidateErrorMessage", errorMsg),
                             Bundle.getMessage("ValidateErrorTitle"),
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
 
                 } else {
                     _treePane._femaleRootSocket.unregisterListeners();
@@ -1087,9 +1088,9 @@ public class TreeEditor extends TreeViewer {
                                     ThreadingUtil.runOnGUIEventually(() -> {
                                         log.error("User name is not unique {}", uname);
                                         String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + uname)});
-                                        JOptionPane.showMessageDialog(null, msg,
+                                        JmriJOptionPane.showMessageDialog(null, msg,
                                                 Bundle.getMessage("WarningTitle"),
-                                                JOptionPane.ERROR_MESSAGE);
+                                                JmriJOptionPane.ERROR_MESSAGE);
                                     });
                                     username = null;
                                 }
@@ -1103,10 +1104,10 @@ public class TreeEditor extends TreeViewer {
                             NamedBeanHandleManager nbMan = InstanceManager.getDefault(NamedBeanHandleManager.class);
                             if (nbMan.inUse(maleSocket.getSystemName(), (NamedBean)m)) {
                                 String msg = Bundle.getMessage("UpdateToUserName", new Object[]{maleSocket.getManager().getBeanTypeHandled(), username, maleSocket.getSystemName()});
-                                int optionPane = JOptionPane.showConfirmDialog(null,
+                                int optionPane = JmriJOptionPane.showConfirmDialog(null,
                                         msg, Bundle.getMessage("UpdateToUserNameTitle"),
-                                        JOptionPane.YES_NO_OPTION);
-                                if (optionPane == JOptionPane.YES_OPTION) {
+                                        JmriJOptionPane.YES_NO_OPTION);
+                                if (optionPane == JmriJOptionPane.YES_OPTION) {
                                     //This will update the bean reference from the systemName to the userName
                                     try {
                                         nbMan.updateBeanFromSystemToUser((NamedBean)m);
@@ -1296,13 +1297,13 @@ public class TreeEditor extends TreeViewer {
      * @return true if not edit system node, else return false
      */
     private boolean abortEditAboutSystem(Base b) {
-        int result = JOptionPane.showConfirmDialog(
+        int result = JmriJOptionPane.showConfirmDialog(
                 this,
                 Bundle.getMessage("TreeEditor_ChangeSystemNode"),
                 b.getLongDescription(),
-                JOptionPane.YES_NO_OPTION);
+                JmriJOptionPane.YES_NO_OPTION);
 
-        return result == JOptionPane.NO_OPTION;
+        return ( result != JmriJOptionPane.YES_OPTION );
     }
 
     private void editItem(FemaleSocket femaleSocket, TreePath path) {
@@ -1337,10 +1338,10 @@ public class TreeEditor extends TreeViewer {
                 MaleSocket maleSocket = femaleSocket.getConnectedSocket();
                 femaleSocket.disconnect();
                 if (!clipboard.add(maleSocket, errors)) {
-                    JOptionPane.showMessageDialog(this,
+                    JmriJOptionPane.showMessageDialog(this,
                             String.join("<br>", errors),
                             Bundle.getMessage("TitleError"),
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                 }
                 ThreadingUtil.runOnGUIEventually(() -> {
                     maleSocket.forEntireTree((Base b) -> {
@@ -1382,18 +1383,18 @@ public class TreeEditor extends TreeViewer {
                    if (!clipboard.add(
                            maleSocket,
                            errors)) {
-                       JOptionPane.showMessageDialog(this,
+                       JmriJOptionPane.showMessageDialog(this,
                                String.join("<br>", errors),
                                Bundle.getMessage("TitleError"),
-                               JOptionPane.ERROR_MESSAGE);
+                               JmriJOptionPane.ERROR_MESSAGE);
                    }
                } catch (JmriException ex) {
                    log.error("getDeepCopy thrown exception: {}", ex, ex);
                    ThreadingUtil.runOnGUIEventually(() -> {
-                       JOptionPane.showMessageDialog(null,
+                       JmriJOptionPane.showMessageDialog(null,
                                "An exception has occured: "+ex.getMessage(),
                                "An error has occured",
-                               JOptionPane.ERROR_MESSAGE);
+                               JmriJOptionPane.ERROR_MESSAGE);
                    });
                }
                if (maleSocket != null) {
@@ -1434,10 +1435,10 @@ public class TreeEditor extends TreeViewer {
                     femaleSocket.connect(clipboard.fetchTopItem());
                     List<String> errors = new ArrayList<>();
                     if (!femaleSocket.setParentForAllChildren(errors)) {
-                        JOptionPane.showMessageDialog(this,
+                        JmriJOptionPane.showMessageDialog(this,
                                 String.join("<br>", errors),
                                 Bundle.getMessage("TitleError"),
-                                JOptionPane.ERROR_MESSAGE);
+                                JmriJOptionPane.ERROR_MESSAGE);
                     }
                 } catch (SocketAlreadyConnectedException ex) {
                     log.error("item cannot be connected", ex);
@@ -1482,10 +1483,10 @@ public class TreeEditor extends TreeViewer {
                 } catch (JmriException ex) {
                     log.error("getDeepCopy thrown exception: {}", ex, ex);
                     ThreadingUtil.runOnGUIEventually(() -> {
-                        JOptionPane.showMessageDialog(null,
+                        JmriJOptionPane.showMessageDialog(null,
                                 "An exception has occured: "+ex.getMessage(),
                                 "An error has occured",
-                                JOptionPane.ERROR_MESSAGE);
+                                JmriJOptionPane.ERROR_MESSAGE);
                     });
                 }
                 if (maleSocket != null) {
@@ -1493,10 +1494,10 @@ public class TreeEditor extends TreeViewer {
                         femaleSocket.connect(maleSocket);
                         List<String> errors = new ArrayList<>();
                         if (!femaleSocket.setParentForAllChildren(errors)) {
-                            JOptionPane.showMessageDialog(this,
+                            JmriJOptionPane.showMessageDialog(this,
                                     String.join("<br>", errors),
                                     Bundle.getMessage("TitleError"),
-                                    JOptionPane.ERROR_MESSAGE);
+                                    JmriJOptionPane.ERROR_MESSAGE);
                         }
                     } catch (SocketAlreadyConnectedException ex) {
                         log.error("item cannot be connected", ex);
@@ -1738,10 +1739,10 @@ public class TreeEditor extends TreeViewer {
             } else {
                 if (_disableRootPopup
                         && (_currentFemaleSocket == _treePane._femaleRootSocket)) {
-                    JOptionPane.showMessageDialog(null,
+                    JmriJOptionPane.showMessageDialog(null,
                             Bundle.getMessage("TreeEditor_RootHasNoPopupMenu"),
                             Bundle.getMessage("TreeEditor_Info"),
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
@@ -1890,7 +1891,10 @@ public class TreeEditor extends TreeViewer {
                 menuItemLock.setEnabled(isAnyUnlocked.get());
                 menuItemUnlock.setEnabled(isAnyLocked.get());
 
-                menuItemLocalVariables.setEnabled(femaleSocket.isConnected() && !_isLocked);
+                menuItemLocalVariables.setEnabled(
+                        femaleSocket.isConnected()
+                        && femaleSocket.getConnectedSocket().isSupportingLocalVariables()
+                        && !_isLocked);
 
                 menuItemChangeUsername.setEnabled(femaleSocket.isConnected() && !_isLocked);
 
@@ -2005,9 +2009,9 @@ public class TreeEditor extends TreeViewer {
                             ((NamedBean)_maleSocket.getObject()).getDisplayName(
                                     NamedBean.DisplayOptions.USERNAME_SYSTEMNAME),
                             e.getMessage()));
-                    JOptionPane.showMessageDialog(null, message.toString(),
+                    JmriJOptionPane.showMessageDialog(null, message.toString(),
                             Bundle.getMessage("WarningTitle"),
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                     return null;
                 }
                 message.append(e.getMessage());

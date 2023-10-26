@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * digits l is the number of bytes of data dd are the (up to) 8 data bytes
  * <p>
  * RTR Extended frames start with an R, RTR standard frames with r.
- * <p>
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
  * @author Steve Young Copyright (C) 2022 ( added RTR Can Frame support )

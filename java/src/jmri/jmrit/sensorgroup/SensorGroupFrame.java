@@ -13,8 +13,7 @@ import jmri.*;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.implementation.SensorGroupConditional;
 import jmri.swing.RowSorterUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * User interface for creating and editing sensor groups.
@@ -197,9 +196,9 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         deleteGroup(false);
         String group = _nameField.getText();
         if (group == null || group.length() == 0) {
-            javax.swing.JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("MessageError1"), Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         Logix logix = getSystemLogix();
@@ -225,9 +224,9 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
             }
         }
         if (count < 2) {
-            javax.swing.JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("MessageError2"), Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
         }
         Conditional c = new SensorGroupConditional(cSystemName, cUserName);
         c.setStateVariables(variableList);
@@ -336,9 +335,9 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
 
         if (group == null || group.isEmpty()) {
             if (showMsg) {
-                javax.swing.JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("MessageError3"), Bundle.getMessage("ErrorTitle"),
-                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
             }
             return;
         }
@@ -374,12 +373,12 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
 
                     // Conditional delete failed or was vetoed
                     if (showMsg) {
-                        javax.swing.JOptionPane.showMessageDialog(this,
+                        JmriJOptionPane.showMessageDialog(this,
                                 Bundle.getMessage("MessageError41") + " " + msgs[0] + " (" + msgs[1] + ") "
                                 + Bundle.getMessage("MessageError42") + " " + msgs[2] + " (" + msgs[3] + "), "
                                 + Bundle.getMessage("MessageError43") + " " + msgs[4] + " (" + msgs[5] + "). "
                                 + Bundle.getMessage("MessageError44"),
-                                Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+                                Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                     }
                     return;
                 }
@@ -399,5 +398,5 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         clear();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SensorGroupFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SensorGroupFrame.class);
 }

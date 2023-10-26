@@ -89,7 +89,7 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
             // handle user name from request
             if (userName != null) {
                 // check if already on set in Object, might be inconsistent
-                if (!userName.equals(m.getUserName())) {
+                if (m.getUserName()!=null && !userName.equals(m.getUserName())) {
                     // this is a problem
                     log.warn("newMemory request for system name \"{}\" user name \"{}\" found memory with existing user name \"{}\"", systemName, userName, m.getUserName());
                 } else {

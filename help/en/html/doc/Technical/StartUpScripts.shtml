@@ -126,7 +126,7 @@
 
         <dt>jmri.log</dt>
 
-        <dd>Full or partial pathname of the logging control file, by default "default.lcf"</dd>
+        <dd>Full or partial pathname of the logging configuration file, by default "default_lcf.xml"</dd>
 
         <dt>jmri.log.path</dt>
 

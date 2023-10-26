@@ -4,8 +4,6 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Sensor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manage the specific Sensor implementation.
@@ -89,9 +87,9 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         // check configured
         if (!SerialAddress.validSystemNameConfig(sName, 'S', getMemo())) {
             log.warn("Sensor system Name '{}' does not address configured hardware.", sName);
-            javax.swing.JOptionPane.showMessageDialog(null, "WARNING - The Sensor just added, "
+            jmri.util.swing.JmriJOptionPane.showMessageDialog(null, "WARNING - The Sensor just added, "
                     + sName + ", refers to an unconfigured input bit.", "Configuration Warning",
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
+                    jmri.util.swing.JmriJOptionPane.INFORMATION_MESSAGE);
         }
         // register this sensor
         getMemo().getTrafficController().inputBits().registerSensor(s, bit - 1);
@@ -191,6 +189,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     private int address = 0;
     private int iName = 0;
 
-    private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialSensorManager.class);
 
 }

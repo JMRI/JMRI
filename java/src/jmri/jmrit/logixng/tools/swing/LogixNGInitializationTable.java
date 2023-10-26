@@ -17,6 +17,7 @@ import jmri.jmrit.logixng.LogixNG_Manager;
 
 import jmri.util.JmriJFrame;
 import jmri.util.swing.BeanSelectPanel;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -112,18 +113,18 @@ public class LogixNGInitializationTable extends JmriJFrame {
         addLogixNG.addActionListener((ActionEvent e) -> {
             LogixNG logixNG = logixNG_SelectPanel.getNamedBean();
             if (logixNG == null) {
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("LogixNG_Initialization_ErrorNoLogixNG_Selected"),
                         Bundle.getMessage("LogixNG_Initialization_ErrorTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
             for (LogixNG l : _initManager.getList()) {
                 if (logixNG == l) {
-                    JOptionPane.showMessageDialog(this,
+                    JmriJOptionPane.showMessageDialog(this,
                             Bundle.getMessage("LogixNG_Initialization_ErrorLogixNG_Exists"),
                             Bundle.getMessage("LogixNG_Initialization_ErrorTitle"),
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }

@@ -3,7 +3,8 @@
 #   waits for sensor changes plus a bit, to allow signals, etc. to respond.
 #   Runs as a background thread, ends itself when no trains are found in Dispatcher Active Trains list.
 
-# NOTE: to enable logging, add "log4j.category.jmri.jmrit.jython.exec=DEBUG" to default.lcf
+# NOTE: to enable logging, see https://www.jmri.org/help/en/html/apps/Debug.shtml
+# Add the Logger Category name "jmri.jmrit.jython.exec" at DEBUG Level.
 
 import jmri
 import datetime

@@ -25,7 +25,6 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -44,8 +43,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Make panels for WarrantFrame and NXFrame windows that create and edit
@@ -316,13 +314,11 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
             return;
         }
         if (Roster.getDefault().getEntryForId(id) == null) {
-            String rosterId = JOptionPane.showInputDialog(this,
+            String rosterId = JmriJOptionPane.showInputDialog(this,
                     Bundle.getMessage("makeRosterEntry", _speedUtil.getAddress()),
                     Bundle.getMessage("QuestionTitle"),
-                    JOptionPane.QUESTION_MESSAGE);
-            if (log.isDebugEnabled()) {
-                log.debug("Create roster entry {}", rosterId);
-            }
+                    JmriJOptionPane.QUESTION_MESSAGE);
+            log.debug("Create roster entry {}", rosterId);
             if (rosterId == null || rosterId.isEmpty()) {
                 rosterId = id;
             }
@@ -370,8 +366,8 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         if ((speedProfile == null || speedProfile.getProfileSize() == 0) &&
                 (rosterSpeedProfile == null || rosterSpeedProfile.getProfileSize() == 0)) {
             _viewProfile.setEnabled(false);
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("NoSpeedProfile", id),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("NoSpeedProfile", id),
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             return null;
         } else {
             _viewProfile.setEnabled(true);
@@ -462,8 +458,8 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
     private void checkAddress() {
         String msg = setAddress();
         if (msg != null) {
-            JOptionPane.showMessageDialog(this, msg,
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, msg,
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -533,8 +529,8 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
     protected void calculate() {
         String msg = findRoute();
         if (msg != null) {
-            JOptionPane.showMessageDialog(this, msg,
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, msg,
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -802,8 +798,8 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
             blockBox.setText(text);
             OBlock block = InstanceManager.getDefault(OBlockManager.class).getOBlock(text);
             if (block == null && text.length() > 0) {
-                JOptionPane.showMessageDialog(blockBox.getParent(), Bundle.getMessage("BlockNotFound", text),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                JmriJOptionPane.showMessageDialog(blockBox.getParent(), Bundle.getMessage("BlockNotFound", text),
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             }
             return block;
         }
@@ -866,8 +862,8 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
             }
             List<Path> list = block.getPaths();
             if (list.isEmpty()) {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("NoPaths", block.getDisplayName()),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("NoPaths", block.getDisplayName()),
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 return false;
             }
             for (int i = 0; i < list.size(); i++) {
@@ -954,15 +950,15 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
     private boolean pathsAreValid(OBlock block) {
         List<Path> list = block.getPaths();
         if (list.isEmpty()) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("NoPaths", block.getDisplayName()),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("NoPaths", block.getDisplayName()),
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             return false;
         }
         for (int i = 0; i < list.size(); i++) {
             OPath path = (OPath) list.get(i);
             if (path.getFromPortal() == null && path.getToPortal() == null) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("PathNeedsPortal", path.getName(), block.getDisplayName()),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("PathNeedsPortal", path.getName(), block.getDisplayName()),
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 return false;
             }
         }
@@ -1214,8 +1210,8 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
     }
 
     protected void showWarning(String msg) {
-        JOptionPane.showMessageDialog(this, msg,
-                Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+        JmriJOptionPane.showMessageDialog(this, msg,
+                Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
     }
 
     /**
@@ -1269,12 +1265,12 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
      * @param dest   ending block
      */
     protected void debugRoute(DefaultTreeModel tree, BlockOrder origin, BlockOrder dest) {
-        if (JOptionPane.NO_OPTION == JOptionPane.showConfirmDialog(this, Bundle.getMessage("NoRoute",
+        if (JmriJOptionPane.YES_OPTION != JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("NoRoute",
                 new Object[]{origin.getBlock().getDisplayName(),
                     origin.getPathName(), origin.getExitName(), dest.getBlock().getDisplayName(),
                     dest.getEntryName(), dest.getPathName(), getDepth()}),
-                Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION,
-                JOptionPane.WARNING_MESSAGE)) {
+                Bundle.getMessage("WarningTitle"), JmriJOptionPane.YES_NO_OPTION,
+                JmriJOptionPane.WARNING_MESSAGE)) {
             return;
         }
         if (_debugFrame != null) {
@@ -1625,5 +1621,6 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         return panel;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantRoute.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WarrantRoute.class);
+
 }

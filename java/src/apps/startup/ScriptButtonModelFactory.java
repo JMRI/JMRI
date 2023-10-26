@@ -1,14 +1,16 @@
 package apps.startup;
 
-import jmri.util.startup.StartupModelFactory;
-import jmri.util.startup.StartupModel;
-import jmri.util.startup.StartupActionsManager;
 import java.awt.Component;
 import java.io.File;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+
 import jmri.InstanceManager;
 import jmri.script.swing.ScriptFileChooser;
+import jmri.util.startup.StartupModelFactory;
+import jmri.util.startup.StartupModel;
+import jmri.util.startup.StartupActionsManager;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -58,10 +60,10 @@ public class ScriptButtonModelFactory implements StartupModelFactory {
                 buttonPanel.setScript(""); // NOI18N
             }
             buttonPanel.setButtonName(model.getName());
-            JOptionPane.showMessageDialog(parent,
+            JmriJOptionPane.showMessageDialog(parent,
                     buttonPanel,
                     this.getDescription(),
-                    JOptionPane.PLAIN_MESSAGE);
+                    JmriJOptionPane.PLAIN_MESSAGE);
             if (!buttonPanel.getButtonName().isEmpty()) {
                 model.setName(buttonPanel.getButtonName());
                 ((ScriptButtonModel) model).setScript(new File(buttonPanel.getScript()));

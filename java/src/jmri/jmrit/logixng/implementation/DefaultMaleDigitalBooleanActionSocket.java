@@ -9,7 +9,7 @@ import jmri.jmrit.logixng.*;
 
 /**
  * Every DigitalBooleanActionBean has an DefaultMaleDigitalBooleanActionSocket as its parent.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2018
  */
 public class DefaultMaleDigitalBooleanActionSocket
@@ -18,31 +18,31 @@ public class DefaultMaleDigitalBooleanActionSocket
 //    private final DigitalBooleanActionBean ((DigitalBooleanActionBean)getObject());
     private DebugConfig _debugConfig = null;
     private boolean _enabled = true;
-    
-    
+
+
     public DefaultMaleDigitalBooleanActionSocket(@Nonnull BaseManager<? extends NamedBean> manager, @Nonnull DigitalBooleanActionBean action) {
         super(manager, action);
     }
-    
+
     /** {@inheritDoc} */
     @Override
-    public void execute(boolean hasChangedToTrue, boolean hasChangedToFalse) throws JmriException {
+    public void execute(boolean value) throws JmriException {
         if (! _enabled) {
             return;
         }
-        
+
         if ((_debugConfig != null)
                 && ((DigitalBooleanActionDebugConfig)_debugConfig)._dontExecute) {
             return;
         }
-        
+
         ConditionalNG conditionalNG = getConditionalNG();
-        
+
         int currentStackPos = conditionalNG.getStack().getCount();
-        
+
         try {
             conditionalNG.getSymbolTable().createSymbols(_localVariables);
-            ((DigitalBooleanActionBean)getObject()).execute(hasChangedToTrue, hasChangedToFalse);
+            ((DigitalBooleanActionBean)getObject()).execute(value);
         } catch (JmriException e) {
             if (e.getErrors() != null) {
                 handleError(this, Bundle.getMessage("ExceptionExecuteMulti"), e.getErrors(), e, log);
@@ -52,7 +52,7 @@ public class DefaultMaleDigitalBooleanActionSocket
         } catch (RuntimeException e) {
             handleError(this, Bundle.getMessage("ExceptionExecuteBooleanAction", e.getLocalizedMessage()), e, log);
         }
-        
+
         conditionalNG.getStack().setCount(currentStackPos);
         conditionalNG.getSymbolTable().removeSymbols(_localVariables);
     }
@@ -74,7 +74,7 @@ public class DefaultMaleDigitalBooleanActionSocket
     public void registerListenersForThisClass() {
         ((DigitalBooleanActionBean)getObject()).registerListeners();
     }
-    
+
     /**
      * Register listeners if this object needs that.
      */
@@ -82,7 +82,7 @@ public class DefaultMaleDigitalBooleanActionSocket
     public void unregisterListenersForThisClass() {
         ((DigitalBooleanActionBean)getObject()).unregisterListeners();
     }
-    
+
     @Override
     public void setState(int s) throws JmriException {
         ((DigitalBooleanActionBean)getObject()).setState(s);
@@ -166,38 +166,38 @@ public class DefaultMaleDigitalBooleanActionSocket
             unregisterListeners();
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setEnabledFlag(boolean enable) {
         _enabled = enable;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean isEnabled() {
         return _enabled;
     }
-    
+
 
 
     public static class DigitalBooleanActionDebugConfig implements MaleSocket.DebugConfig {
-        
+
         // If true, the socket is not executing the action.
         // It's useful if you want to test the LogixNG without affecting the
         // layout (turnouts, sensors, and so on).
         public boolean _dontExecute = false;
-        
+
         @Override
         public DebugConfig getCopy() {
             DigitalBooleanActionDebugConfig config = new DigitalBooleanActionDebugConfig();
             config._dontExecute = _dontExecute;
             return config;
         }
-        
+
     }
-    
-    
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleDigitalBooleanActionSocket.class);
 
 }

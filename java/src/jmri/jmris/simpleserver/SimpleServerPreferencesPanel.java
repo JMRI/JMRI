@@ -5,13 +5,15 @@ import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
+
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -63,10 +65,10 @@ public class SimpleServerPreferencesPanel extends JPanel implements PreferencesP
             portNum = 0;
         }
         if ((portNum < 1) || (portNum > 65535)) { //  Invalid port value
-            javax.swing.JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("InvalidPortWarningMessage"),
                     Bundle.getMessage("InvalidPortWarningTitle"),
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
             didSet = false;
         } else {
             preferences.setPort(portNum);

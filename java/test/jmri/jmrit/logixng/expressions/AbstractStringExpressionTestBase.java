@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.expressions;
 
-import java.util.Locale;
-
 import jmri.StringIO;
 import jmri.JmriException;
 import jmri.NamedBean;

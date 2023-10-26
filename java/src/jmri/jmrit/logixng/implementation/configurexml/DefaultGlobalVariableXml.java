@@ -1,7 +1,6 @@
 package jmri.jmrit.logixng.implementation.configurexml;
 
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.GlobalVariableManager;

@@ -1,10 +1,14 @@
 package jmri.swing;
 
 import java.util.List;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
+
 import jmri.InstanceManager;
 import jmri.PowerManager;
 
@@ -14,24 +18,26 @@ import jmri.PowerManager;
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.5
  */
-abstract public class PowerManagerMenu extends JMenu {
+public abstract class PowerManagerMenu extends JMenu {
 
-    /**
-     * Get the currently selected manager.
-     *
-     * @return null unless overridden by subclass
-     */
-    // should this be abstract?
-    public PowerManager get() {
-        return null;
-    }
+    JMenuItem allConnsItem = new JRadioButtonMenuItem(Bundle.getMessage("AllConnections"));
+    private final List<JMenuItem> menuItems = new java.util.ArrayList<>();
 
-    abstract protected void choiceChanged();
+    protected abstract void choiceChanged();
 
     /**
      * Create a PowerManager menu.
      */
     public PowerManagerMenu() {
+        this(false, null);
+    }
+
+    /**
+     * Create a PowerManager menu.
+     * @param includeAllConns true to include all connections
+     * @param defaultPwrMgr specify a PowerManager to be selected on Menu startup.
+     */
+    public PowerManagerMenu(boolean includeAllConns, PowerManager defaultPwrMgr) {
         super();
 
         ButtonGroup group = new ButtonGroup();
@@ -39,49 +45,55 @@ abstract public class PowerManagerMenu extends JMenu {
         // label this menu
         setText(Bundle.getMessage("MenuConnection")) ;
 
+        if (includeAllConns) {
+            add(allConnsItem);
+            group.add(allConnsItem);
+            menuItems.add(allConnsItem);
+            allConnsItem.addActionListener((java.awt.event.ActionEvent e) -> 
+                choiceChanged());
+        }
+
         // now add an item for each available manager
         List<PowerManager> managers = InstanceManager.getList(PowerManager.class);
         for (PowerManager mgr : managers) {
             if (mgr != null) {
-                JMenuItem item = new JRadioButtonMenuItem(mgr.getUserName());
+                JMenuItem item = new JRadioButtonMenuItem(getManagerNameIncludeIfDefault(mgr));
+                item.setActionCommand(mgr.getUserName());
                 add(item);
                 group.add(item);
-                items.add(item);
-                item.addActionListener((java.awt.event.ActionEvent e) -> {
-                    choiceChanged();
-                });
+                menuItems.add(item);
+                item.addActionListener((java.awt.event.ActionEvent e) -> 
+                    choiceChanged());
             }
         }
 
-        setDefault();
+        PowerManagerMenu.this.setManager(defaultPwrMgr);
     }
 
-    List<JMenuItem> items = new java.util.ArrayList<>();
-
-    void setDefault() {
-        // name of default
-        PowerManager manager = InstanceManager.getNullableDefault(jmri.PowerManager.class);
-        if (manager == null) {
+    public void setManager(@CheckForNull PowerManager suppliedMgr) {
+        if (InstanceManager.getNullableDefault(jmri.PowerManager.class) == null) {
             return;
         }
-        String defaultMgr = manager.getUserName();
-        for (JMenuItem item : items) {
-            if (defaultMgr.equals(item.getActionCommand())) {
+        String searchMgr = ( suppliedMgr != null ? suppliedMgr.getUserName() : "");
+        for (JMenuItem item : menuItems) {
+            if (searchMgr.equals(item.getActionCommand())) {
                 item.setSelected(true);
+                return;
             }
         }
+        allConnsItem.setSelected(true);
     }
 
+    /**
+     * Get the selected PowerManager.
+     * @return null if All Connections option selected.
+     */
+    @CheckForNull
     public PowerManager getManager() {
-        // start with default
-        PowerManager manager = InstanceManager.getNullableDefault(jmri.PowerManager.class);
-        if (manager == null) {
-            return null;
-        }
-        String name = manager.getUserName();
 
+        String name="";
         // find active name
-        for (JMenuItem item : items) {
+        for (JMenuItem item : menuItems) {
             if (item.isSelected()) {
                 name = item.getActionCommand();
                 break;
@@ -89,12 +101,24 @@ abstract public class PowerManagerMenu extends JMenu {
         }
         // find PowerManager and return
         List<PowerManager> managers = InstanceManager.getList(PowerManager.class);
+        if (managers.size()==1){
+            return managers.get(0);
+        }
         for (PowerManager mgr : managers) {
             if (name.equals(mgr.getUserName())) {
                 return mgr;
             }
         }
-        // should not happen
         return null;
     }
+
+    @Nonnull
+    public static String getManagerNameIncludeIfDefault(@Nonnull PowerManager mgr){
+        String mgrName = mgr.getUserName();
+        if ( mgr == InstanceManager.getDefault(PowerManager.class) ) {
+            mgrName = Bundle.getMessage("DefaultConnection",mgr.getUserName());
+        }
+        return mgrName;
+    }
+
 }

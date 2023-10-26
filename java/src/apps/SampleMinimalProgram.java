@@ -6,9 +6,6 @@ import jmri.util.prefs.JmriPreferencesActionFactory;
 import jmri.web.server.WebServer;
 import jmri.web.server.WebServerPreferences;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import apps.util.Log4JUtil;
 
 /**
@@ -63,19 +60,10 @@ public class SampleMinimalProgram {
      * a non-minimal program, invoke jmri.util.Log4JUtil.initLogging
      */
     static protected void initLog4J() {
-        // initialize log4j - from logging control file (lcf) only
+        // initialize log4j2 - from logging configuration file (lcf) only
         // if can find it!
-        String logFile = "default.lcf";
-        try {
-            if (new java.io.File(logFile).canRead()) {
-                org.apache.log4j.PropertyConfigurator.configure(logFile);
-            } else {
-                org.apache.log4j.BasicConfigurator.configure();
-                org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.ERROR);
-            }
-        } catch (java.lang.NoSuchMethodError e) {
-            log.error("Exception starting logging", e);
-        }
+        String configFile = "default_lcf.xml";
+        apps.util.Log4JUtil.initLogging(configFile);
         // install default exception handler
         Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
     }
@@ -134,5 +122,6 @@ public class SampleMinimalProgram {
         log.info("Up!");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SampleMinimalProgram.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SampleMinimalProgram.class);
+
 }

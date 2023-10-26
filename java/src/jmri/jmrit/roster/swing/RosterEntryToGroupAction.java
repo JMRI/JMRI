@@ -3,13 +3,13 @@ package jmri.jmrit.roster.swing;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.AbstractAction;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
+
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Associate a Roster Entry to a Roster Group
@@ -64,12 +64,12 @@ public class RosterEntryToGroupAction extends AbstractAction {
                 rosterEntryUpdate();
             }
         });
-        int retval = JOptionPane.showOptionDialog(_who,
+        int retval = JmriJOptionPane.showOptionDialog(_who,
                 Bundle.getMessage("AddEntryToGroupDialog"), Bundle.getMessage("AddEntryToGroupTitle"),
-                0, JOptionPane.INFORMATION_MESSAGE, null,
+                JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.INFORMATION_MESSAGE, null,
                 new Object[]{Bundle.getMessage("ButtonDone"), Bundle.getMessage("ButtonOK"), selections, rosterEntry}, null);
         log.debug("Dialog value {} selected {}:{}, {}:{}", retval, selections.getSelectedIndex(), selections.getSelectedItem(), rosterEntry.getSelectedIndex(), rosterEntry.getSelectedItem());
-        if (retval != 1) {
+        if (retval != 1) { // not array position 1, ButtonOK
             return;
         }
 
@@ -93,6 +93,5 @@ public class RosterEntryToGroupAction extends AbstractAction {
         });
     }
 
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(RosterEntryToGroupAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RosterEntryToGroupAction.class);
 }

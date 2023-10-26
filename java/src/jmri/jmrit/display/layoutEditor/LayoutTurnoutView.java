@@ -17,6 +17,7 @@ import jmri.jmrit.display.layoutEditor.LayoutTurnout.LinkType;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout.TurnoutType;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.MathUtil;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
 
 /**
@@ -1730,17 +1731,17 @@ public class LayoutTurnoutView extends LayoutTrackView {
                     while (entering) {
                         // prompt for rotation angle
                         error = false;
-                        newAngle = JOptionPane.showInputDialog(layoutEditor,
-                                Bundle.getMessage("MakeLabel", Bundle.getMessage("EnterRotation")));
-                        if (newAngle.isEmpty()) {
+                        newAngle = JmriJOptionPane.showInputDialog(layoutEditor,
+                                Bundle.getMessage("MakeLabel", Bundle.getMessage("EnterRotation")),"");
+                        if (newAngle==null || newAngle.isEmpty()) {
                             return;  // cancelled
                         }
                         double rot = 0.0;
                         try {
                             rot = Double.parseDouble(newAngle);
                         } catch (Exception e1) {
-                            JOptionPane.showMessageDialog(layoutEditor, Bundle.getMessage("Error3")
-                                    + " " + e1, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.showMessageDialog(layoutEditor, Bundle.getMessage("Error3")
+                                    + " " + e1, Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                             error = true;
                             newAngle = "";
                         }

@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.util;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.*;
 
 import jmri.*;
@@ -121,8 +119,8 @@ public class DispatcherActiveTrainManager extends Bean implements InstanceManage
         ActiveTrain oldTrain = getActiveTrain(fileName);
         if (oldTrain == null) return;
 
-        oldTrain.setTerminateWhenDone(true);
-        oldTrain.setStatus(ActiveTrain.DONE);
+        DispatcherFrame df = InstanceManager.getDefault(DispatcherFrame.class);
+        df.terminateActiveTrain(oldTrain, true, false);
 
         _activeTrainMap.remove(fileName);
         firePropertyChange("ActiveTrain", fileName, "");

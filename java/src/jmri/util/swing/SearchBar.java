@@ -5,8 +5,6 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 /**
  * Provides a standard "search bar" for addition to
  * other panels.  Actual search is via call-back.
@@ -114,6 +112,7 @@ public class SearchBar extends javax.swing.JPanel {
             KeyStroke.getKeyStroke(KeyEvent.VK_F, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()), "openSearch");
 
         rootPane.getActionMap().put("openSearch", new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
 
                 // don't retain last text?
@@ -133,6 +132,7 @@ public class SearchBar extends javax.swing.JPanel {
             KeyStroke.getKeyStroke(KeyEvent.VK_G, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()|java.awt.event.InputEvent.SHIFT_DOWN_MASK), "forwardSearch");
 
         rootPane.getActionMap().put("forwardSearch", new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
 
                 // same as button
@@ -144,6 +144,7 @@ public class SearchBar extends javax.swing.JPanel {
             KeyStroke.getKeyStroke(KeyEvent.VK_G, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()), "backwardSearch");
 
         rootPane.getActionMap().put("backwardSearch", new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
 
                 // same as button

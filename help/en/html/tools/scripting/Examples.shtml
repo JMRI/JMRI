@@ -57,6 +57,24 @@
 
       <p>This is an example script for invoking an AppleScript from JMRI on Mac OS X.</p>
 
+      <p><a href="../../../../../jython/AssignIdTagToRollingStock.py">AssignIdTagToRollingStock.py</a>
+      </p>
+      
+      <p>A more advanced example of scripting, this script "listens" for new or changed ID Tag Table entries (RFID Tags)
+      and opens a window to allow the user to enter a user name (typically locomotive or car/wagon number) and comment.
+      It does this by creating a property change listener on the ID Tag Table.
+      It will also update the OperationsPro Locomotive Table or Car Table if requested (check box on
+      the popup window). It will flag locomotive/car numbers that do not exist, as well as move an ID
+      Tag from one loco or car to another and eliminate dupicate assignment of RFID Tag to cars or locomotives.</p>
+
+      <p>This script illustrates the use of the JMRI property change listener, writing to the 
+      Script Output window, writing information to the System Console, updating the ID Tag Table, 
+      updating the OperationsPro Locomotive and Car Tables, and using Java swing to create a popup 
+      window with entry fields and radio buttons.</p> 
+      
+      <p>For more information about the use of RFID and the Id Tags Table, see <a href=
+      "../../hardware/rfid/GettingStartedWithRFID.shtml">Getting Started with RFID</a>.</p>
+
       <p><a href=
       "../../../../../jython/AutoActiveTrains_Simulator.py">AutoActiveTrains_Simulator.py</a>
       </p>
@@ -301,9 +319,9 @@
       <p><a href="../../../../../jython/ReporterFormatter.py">ReporterFormatter.py</a>
       </p>
 
-      <p>Provides an example of listening to a Reporter, and putting the changes to a Memory in a
-      nicer format. The Reporter and Memory names are hardcoded in the example near the bottom.
-      Change those to something that makes sense for your layout. First, define the listener class.
+      <p>Provides an example of listening to a LocoNet Reporter, and putting the changes to a Memory in a
+      nicer format. [As of JMRI Version 5.0, there are a dozen different types of Reporters and this example
+      specifically refers to the types of messages coming from LocoNet transponding.]  The Reporter and Memory names are hardcoded in the example near the bottom, but you can easily change these. The example first defines the listener class.
       This gets messages from the Reporter, uses them to keep track of the decoders in a Block, and
       writes that list to a Memory for display.</p>
 

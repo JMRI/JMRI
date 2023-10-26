@@ -7,8 +7,6 @@ import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML configuration for Grapevine SerialSignalHead objects.

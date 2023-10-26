@@ -35,7 +35,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
     @Override
     public void getInstanceTest() {
        super.getInstanceTest();
-       JUnitAppender.assertErrorMessageStartsWith("Error opening network connection:");
+       JUnitAppender.assertErrorMessageStartsWith("Error opening network connection to");
        JUnitAppender.assertErrorMessageStartsWith("init (pipe)");
        JUnitAppender.assertErrorMessageStartsWith("Error connecting or configuring port.");
     }
