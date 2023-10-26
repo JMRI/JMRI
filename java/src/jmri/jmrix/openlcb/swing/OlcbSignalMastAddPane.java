@@ -236,9 +236,9 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
         }
         for (int x = 0; x < conns.length; x++) {
             ConnectionConfig cc = conns[x];
-            log.debug("conns[" + x + "]: name=" + cc.name() + " info=" + cc.getInfo() +
-                      " adapter=" + cc.getAdapter() + " conn=" + cc.getConnectionName() +
-                      " man=" + cc.getManufacturer());
+            log.debug("conns[{}]: name={} info={} adapter={} conn={}  man={}",
+                      x, cc.name(), cc.getInfo(), cc.getAdapter(),
+                      cc.getConnectionName(), cc.getManufacturer());
             /* As this is the Olcb signal mast add pane, only show OpenLCB connections */
             String man = cc.getManufacturer();
             String name = cc.getConnectionName();
@@ -273,7 +273,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
         if (mastPrefix != null) {
             for (String conn : olcbConnections) {
                 String connectionPrefix = ConnectionNameFromSystemName.getPrefixFromName(conn);
-                if (connectionPrefix.equals(mastPrefix)) {
+                if (connectionPrefix != null && connectionPrefix.equals(mastPrefix)) {
                     connSelectionBox.setSelectedItem(conn);
                     break;
                 }
@@ -350,7 +350,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
             // create a mast
             String selItem = (String)connSelectionBox.getSelectedItem();
             String connectionPrefix = ConnectionNameFromSystemName.getPrefixFromName(selItem);
-            log.debug("selected name=" + selItem + ", prefix=" + connectionPrefix);
+            log.debug("selected name={}, prefix={}", selItem, connectionPrefix);
             // if prefix is null, use default
             if (connectionPrefix == null || connectionPrefix.isEmpty()) {
                 connectionPrefix = "M";
@@ -359,7 +359,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
             String type = mastname.substring(11, mastname.length() - 4);
             String name = connectionPrefix + "F$olm:" + sigsysname + ":" + type;
             name += "($" + (paddedNumber.format(OlcbSignalMast.getLastRef() + 1)) + ")";
-            log.debug("Creating mast: " + name);
+            log.debug("Creating mast: {}", name);
             currentMast = new OlcbSignalMast(name);
             if (!username.equals("")) {
                 currentMast.setUserName(username);
