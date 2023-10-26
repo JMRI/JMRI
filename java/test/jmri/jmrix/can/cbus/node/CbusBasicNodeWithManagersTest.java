@@ -38,7 +38,7 @@ public class CbusBasicNodeWithManagersTest {
         Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
-        
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

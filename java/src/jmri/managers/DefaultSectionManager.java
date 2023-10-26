@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.Block;
@@ -92,6 +91,7 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
      *         userName already exists, or if there is trouble creating a new
      *         Section.
      */
+    @Override
     @Nonnull
     public Section createNewSection(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + ((userName == null) ? "null" : userName));  // NOI18N
@@ -134,6 +134,7 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
      * @throws IllegalArgumentException if existing Section, or
      *          unable to create a new Section.
      */
+    @Override
     @Nonnull
     public Section createNewSection(String userName) throws IllegalArgumentException {
         return createNewSection(getAutoSystemName(), userName);
@@ -144,6 +145,7 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
      *
      * @param y the section to remove
      */
+    @Override
     public void deleteSection(Section y) {
         // delete the Section
         deregister(y);
@@ -158,6 +160,7 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
      *             followed by system names
      * @return the found section of null if no matching Section found
      */
+    @Override
     public Section getSection(String name) {
         Section y = getByUserName(name);
         if (y != null) {
@@ -171,6 +174,7 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
      *
      * @return number or validation errors; -2 is returned if there are no sections
      */
+    @Override
     public int validateAllSections() {
         Set<Section> set = getNamedBeanSet();
         int numSections = 0;
@@ -195,6 +199,7 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
      *
      * @return the number or errors; 0 if no errors; -1 if the panel is null; -2 if there are no sections
      */
+    @Override
     public int setupDirectionSensors() {
         Set<Section> set = getNamedBeanSet();
         int numSections = 0;
@@ -216,6 +221,7 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
      *
      * @return the number or errors; 0 if no errors; -1 if the panel is null; -2 if there are no sections
      */
+    @Override
     public int removeDirectionSensorsFromSSL() {
         Set<Section> set = getNamedBeanSet();
         if (set.size() <= 0) {
@@ -251,6 +257,7 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
     /**
      * Initialize all blocking sensors that exist - set them to 'ACTIVE'.
      */
+    @Override
     public void initializeBlockingSensors() {
         for (Section s : getNamedBeanSet()) {
             try {
@@ -278,6 +285,7 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
     /**
      * Find stub end blocks.
      */
+    @Override
     public void generateBlockSections() {
         //find blocks with no paths through i.e. stub (siding)
         LayoutBlockManager layoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);

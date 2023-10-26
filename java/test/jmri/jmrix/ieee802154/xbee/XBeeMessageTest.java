@@ -27,6 +27,7 @@ public class XBeeMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         m = new XBeeMessage(3);
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = null;

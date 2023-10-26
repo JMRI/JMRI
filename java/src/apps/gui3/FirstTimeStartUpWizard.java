@@ -20,7 +20,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -39,9 +38,7 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import jmri.util.prefs.InitializationException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 public class FirstTimeStartUpWizard implements Thread.UncaughtExceptionHandler {
 
@@ -278,12 +275,12 @@ public class FirstTimeStartUpWizard implements Thread.UncaughtExceptionHandler {
         var conn = connectionConfigPane.getCurrentObject();
         String connName = ( conn == null ? "No Connection " : conn.getConnectionName()  );
         jmri.util.ThreadingUtil.runOnGUI(() -> {
-            JOptionPane.showMessageDialog(parent,
+            JmriJOptionPane.showMessageDialog(parent,
                 "<html>An error occurred while trying to connect to " + connName
                     + ", <br>press the back button and check the connection details.<br>"
                     + ex.getLocalizedMessage() + "</html>",
                 "Error Opening Connection",
-                JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.ERROR_MESSAGE);
         });
     }
 
@@ -423,6 +420,6 @@ public class FirstTimeStartUpWizard implements Thread.UncaughtExceptionHandler {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(FirstTimeStartUpWizard.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FirstTimeStartUpWizard.class);
 
 }

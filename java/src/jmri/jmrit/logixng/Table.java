@@ -22,7 +22,7 @@ public interface Table {
      * @return the value of the cell
      */
     @CheckReturnValue
-    default public Object getCell(int row) {
+    default Object getCell(int row) {
         return getCell(row, 1);
     }
     
@@ -33,7 +33,7 @@ public interface Table {
      * @return the value of the cell
      */
     @CheckReturnValue
-    public Object getCell(int row, int column);
+    Object getCell(int row, int column);
     
     /**
      * Get the value of a cell.
@@ -44,7 +44,7 @@ public interface Table {
      * @throws RowNotFoundException if the row is not found
      */
     @CheckReturnValue
-    default public Object getCell(@Nonnull String row)
+    default Object getCell(@Nonnull String row)
             throws RowNotFoundException {
         return getCell(getRowNumber(row), 1);
     }
@@ -62,7 +62,7 @@ public interface Table {
      * @throws RowNotFoundException if the row is not found
      * @throws ColumnNotFoundException if the column is not found
      */
-    default public Object getCell(@Nonnull String row, @Nonnull String column)
+    default Object getCell(@Nonnull String row, @Nonnull String column)
             throws RowNotFoundException, ColumnNotFoundException {
         return getCell(getRowNumber(row), getColumnNumber(column));
     }
@@ -74,7 +74,7 @@ public interface Table {
      * @param column the column of the cell
      */
     @CheckReturnValue
-    public void setCell(Object value, int row, int column);
+    void setCell(Object value, int row, int column);
     
     /**
      * Set the value of a cell.
@@ -84,7 +84,7 @@ public interface Table {
      * @param row the row of the cell
      * @throws RowNotFoundException if the row is not found
      */
-    default public void setCell(Object value, String row)
+    default void setCell(Object value, String row)
             throws RowNotFoundException {
         setCell(value, getRowNumber(row), 1);
     }
@@ -101,7 +101,7 @@ public interface Table {
      * @throws RowNotFoundException if the row is not found
      * @throws ColumnNotFoundException if the column is not found
      */
-    default public void setCell(Object value, String row, String column)
+    default void setCell(Object value, String row, String column)
             throws RowNotFoundException, ColumnNotFoundException {
         setCell(value, getRowNumber(row), getColumnNumber(column));
     }
@@ -110,13 +110,13 @@ public interface Table {
      * Get the number of rows in the table.
      * @return the number of rows
      */
-    public int numRows();
+    int numRows();
     
     /**
      * Get the number of columns in the table.
      * @return the number of columns
      */
-    public int numColumns();
+    int numColumns();
 
     /**
      * Get the row number by name of row.
@@ -125,7 +125,7 @@ public interface Table {
      * @return the row number
      * @throws RowNotFoundException if the row is not found
      */
-    public int getRowNumber(String rowName) throws RowNotFoundException;
+    int getRowNumber(String rowName) throws RowNotFoundException;
     
     /**
      * Get the row number by name of row.
@@ -135,7 +135,7 @@ public interface Table {
      * @return the column number
      * @throws ColumnNotFoundException if the column is not found
      */
-    public int getColumnNumber(String columnName) throws ColumnNotFoundException;
+    int getColumnNumber(String columnName) throws ColumnNotFoundException;
 
     /**
      * The available types of CSV from which to load a table
@@ -144,7 +144,7 @@ public interface Table {
      * COMMA uses csvFormat of RFC-4180, which is the standard Comma
      * Seperated Value format, but does not allow empty lines
      */
-    public enum CsvType {
+    enum CsvType {
 
         TABBED(Bundle.getMessage("CsvType_Tabbed")),
         COMMA(Bundle.getMessage("CsvType_Comma"));
@@ -162,15 +162,15 @@ public interface Table {
 
     }
 
-    public default boolean isCsvTypeSupported() {
+    default boolean isCsvTypeSupported() {
         return false;
     }
 
-    public default void setCsvType(CsvType csvType) {
+    default void setCsvType(CsvType csvType) {
         throw new UnsupportedOperationException("Not supported");
     }
 
-    public default CsvType getCsvType() {
+    default CsvType getCsvType() {
         throw new UnsupportedOperationException("Not supported");
     }
 
@@ -179,7 +179,7 @@ public interface Table {
      * @param file the CSV file
      * @throws java.io.FileNotFoundException if file not found
      */
-    public void storeTableAsCSV(@Nonnull File file)
+    void storeTableAsCSV(@Nonnull File file)
             throws FileNotFoundException;
 
     /**
@@ -193,7 +193,7 @@ public interface Table {
      * @param userName the user name of the table
      * @throws java.io.FileNotFoundException if file not found
      */
-    public void storeTableAsCSV(
+    void storeTableAsCSV(
             @Nonnull File file,
             @CheckForNull String systemName, @CheckForNull String userName)
             throws FileNotFoundException;
@@ -201,7 +201,7 @@ public interface Table {
 
 
 
-    public static class RowNotFoundException extends IllegalArgumentException {
+    class RowNotFoundException extends IllegalArgumentException {
 
         /**
          * Constructs a <code>RowNotFoundException</code>.
@@ -232,7 +232,7 @@ public interface Table {
     }
 
 
-    public static class ColumnNotFoundException extends IllegalArgumentException {
+    class ColumnNotFoundException extends IllegalArgumentException {
 
         /**
          * Constructs a <code>ColumnNotFoundException</code>.

@@ -16,6 +16,6 @@ public interface DigitalExpression extends Base {
      * @return the result of the evaluation
      * @throws JmriException when an exception occurs
      */
-    public boolean evaluate() throws JmriException;
+    boolean evaluate() throws JmriException;
     
 }

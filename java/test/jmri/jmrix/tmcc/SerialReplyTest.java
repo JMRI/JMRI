@@ -54,6 +54,7 @@ public class SerialReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         m = msg = new SerialReply();
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = msg = null;

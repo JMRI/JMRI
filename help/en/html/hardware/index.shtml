@@ -240,6 +240,10 @@
           <em style="padding-left: 1em;"><a href="#networks">Networks and Protocols:</a></em>
           <ul>
             <li>
+              <a href="bidib/index.shtml">BiDiB</a>
+            </li>
+
+            <li>
               <a href="can/index.shtml">CAN Bus Networks</a>
             </li>
 
@@ -486,9 +490,6 @@
             when disconnected from a layout</a>.</p>
 
             <p class="dl">Configure: Remote connection to a LocoNet via <a href=
-            "loconet/LocoNetServer.shtml">JMRI LocoNet Server</a>.</p>
-
-            <p class="dl">Configure: Remote connection to a LocoNet via <a href=
             "loconet/LbServer.shtml">LbServer</a>. More information on <a href=
             "loconet/LocoNetworking.shtml">connecting multiple computers to a single
             LocoNet</a></p>
@@ -716,9 +717,6 @@
 
             <p class="dl">Configure: <a href="loconet/LocoNetSim.shtml">LocoNet Simulator for use
             when disconnected from a layout</a>.</p>
-
-            <p class="dl">Configure: Remote connection to a LocoNet via <a href=
-            "loconet/LocoNetServer.shtml">JMRI LocoNet Server</a>.</p>
 
             <p class="dl">Configure: Remote connection to a LocoNet via <a href=
             "loconet/LbServer.shtml">LbServer</a>. More information on <a href=
@@ -1049,6 +1047,23 @@
           <dd>&nbsp;</dd>
 
           <dt class="im">
+            <a href="http://bidib.org/index_e.html" target="_blank"><img src=
+            "bidib/images/bidib_logo.png" alt="BiDiB logo" height="40"></a>
+          </dt>
+
+          <dt>
+            <a href="bidib/index.shtml">BiDiB</a>
+          </dt>
+
+          <dd>
+            <p class="dl">Configure: <a href="bidib/index.shtml">BiDiB networks</a></p>
+
+            <p>&nbsp;</p>
+
+            <p>&nbsp;</p>
+          </dd>
+
+          <dt class="im">
             <a href="https://www.jlcenterprises.net/" target="_blank">C/MRI</a>
           </dt>
 
@@ -1147,9 +1162,6 @@
 
             <p class="dl">Configure: <a href="loconet/LocoNetSim.shtml">LocoNet Simulator for use
             when disconnected from a layout</a>.</p>
-
-            <p class="dl">Configure: Remote connection to a LocoNet via <a href=
-            "loconet/LocoNetServer.shtml">JMRI LocoNet Server</a>.</p>
 
             <p class="dl">Configure: Remote connection to a LocoNet via <a href=
             "loconet/LbServer.shtml">LbServer</a>. More information on <a href=

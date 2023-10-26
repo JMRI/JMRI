@@ -1,8 +1,6 @@
 package jmri.jmrix.tams;
 
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.*;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 

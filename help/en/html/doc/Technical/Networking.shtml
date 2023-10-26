@@ -47,13 +47,6 @@
         <li>LocoNet systems
           <ul>
             <li>
-              <a href="../../hardware/loconet/LocoNetServer.shtml">LocoNet RMI client server
-              connection</a>
-              <p>This uses Java RMI to provide client-server access to the LocoNet message stream
-              on another JMRI instance.</p>
-            </li>
-
-            <li>
               <a href="../../hardware/loconet/LbServer.shtml">LocoNet over TCP</a>
               <p>This uses <a href="https://loconetovertcp.sourceforge.net/">LocoNet over TCP</a> to
               provide client-server access to the LocoNet message stream from <a href=
@@ -173,11 +166,6 @@
         <li>Via running JMRI as an <a href=
         "http://www.modelrailroadmanager.com/MRRM_Advanced_Edition/Software_Architecture.html">Enterprise
         Java Bean</a>
-        </li>
-
-        <li>Via providing a <a href="../../hardware/loconet/LocoNetServer.shtml">LocoNet RMI
-        server</a>.
-          <p>This is advertised on Bonjour/Zeroconf as a "_jmri-locormi._tcp.local." service.</p>
         </li>
 
         <li>Via providing a <a href="https://loconetovertcp.sourceforge.net/">LocoNet over TCP</a>

@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
@@ -18,6 +17,7 @@ import jmri.MemoryManager;
 import jmri.NamedBean;
 import jmri.UserPreferencesManager;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriJOptionPane;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -133,10 +133,10 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
         }
 
         if (numberOfMemory >= 65) { // limited by JSpinnerModel to 100
-            if (JOptionPane.showConfirmDialog(addFrame,
+            if (JmriJOptionPane.showConfirmDialog(addFrame,
                     Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("Memories"), numberOfMemory),
                     Bundle.getMessage("WarningTitle"),
-                    JOptionPane.YES_NO_OPTION) == 1) {
+                    JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                 return;
             }
         }
@@ -228,10 +228,10 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
     }
 
     void handleCreateException(String sysName) {
-        JOptionPane.showMessageDialog(addFrame,
+        JmriJOptionPane.showMessageDialog(addFrame,
                 Bundle.getMessage("ErrorMemoryAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.ERROR_MESSAGE);
     }
 
     /** {@inheritDoc} */

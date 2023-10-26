@@ -3,9 +3,9 @@ package jmri.jmrit.symbolicprog;
 import java.util.ResourceBundle;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import jmri.Programmer;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Holds a table of the available factory resets available for a particular
@@ -52,11 +52,11 @@ public class ResetTableModel extends ExtraMenuTableModel {
                 + ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FactoryResetModeWarn4")
                 + "\n\n"
                 + java.text.MessageFormat.format(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FactoryResetModeWarn5"), currentMode);
-        return (JOptionPane.YES_OPTION
-                == JOptionPane.showConfirmDialog(null,
+        return (JmriJOptionPane.YES_OPTION
+                == JmriJOptionPane.showConfirmDialog(null,
                         resetWarning,
                         ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FactoryResetTitle"),
-                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE));
+                        JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.WARNING_MESSAGE));
     }
 
     /**
@@ -81,11 +81,11 @@ public class ResetTableModel extends ExtraMenuTableModel {
                 + ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FactoryResetOpsWarn6")
                 + "\n\n"
                 + ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FactoryResetOpsWarn7");
-        return (JOptionPane.YES_OPTION
-                == JOptionPane.showConfirmDialog(null,
+        return (JmriJOptionPane.YES_OPTION
+                == JmriJOptionPane.showConfirmDialog(null,
                         resetWarning,
                         ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FactoryResetOpsTitle"),
-                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE));
+                        JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.WARNING_MESSAGE));
     }
 
 

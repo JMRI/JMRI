@@ -6,8 +6,6 @@ import jmri.ConfigureManager;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistence of directory locations.

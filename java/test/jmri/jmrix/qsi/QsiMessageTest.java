@@ -70,6 +70,7 @@ public class QsiMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         m = msg = new QsiMessage(1);
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         memo = null;

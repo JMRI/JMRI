@@ -200,6 +200,19 @@ public class DCCppCommandStation implements jmri.CommandStation {
     }
 
     /**
+     * Does this command station require the new "J" commands for turnout definitions?
+     * @return true if yes or false if no
+     */
+    public boolean isTurnoutIDsMessageRequired() {
+        boolean ret = false;
+        try {
+            ret = (jmri.Version.compareCanonicalVersions(version, "5.0.0") >= 0);
+        } catch (IllegalArgumentException ignore) {
+        }
+        return ret;  
+    }
+
+    /**
      * Does this command station need the throttle register to be sent?
      * @return true if yes or false if no
      */

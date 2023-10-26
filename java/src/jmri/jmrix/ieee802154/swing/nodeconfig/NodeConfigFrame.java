@@ -2,15 +2,16 @@ package jmri.jmrix.ieee802154.swing.nodeconfig;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+
 import jmri.jmrix.ieee802154.IEEE802154Node;
 import jmri.jmrix.ieee802154.IEEE802154TrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user configuration of IEEE 802.15.4 nodes. 
@@ -292,11 +293,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             return;
         }
         // confirm deletion with the user
-        if (javax.swing.JOptionPane.OK_OPTION == javax.swing.JOptionPane.showConfirmDialog(
+        if (JmriJOptionPane.OK_OPTION == JmriJOptionPane.showConfirmDialog(
                 this, Bundle.getMessage("ConfirmDelete1") + "\n"
                 + Bundle.getMessage("ConfirmDelete2"), Bundle.getMessage("ConfirmDeleteTitle"),
-                javax.swing.JOptionPane.OK_CANCEL_OPTION,
-                javax.swing.JOptionPane.WARNING_MESSAGE)) {
+                JmriJOptionPane.OK_CANCEL_OPTION,
+                JmriJOptionPane.WARNING_MESSAGE)) {
             // delete this node
             itc.deleteNode(nodeAddress);
             // provide user feedback
@@ -329,10 +330,10 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         }
         if (changedNode) {
             // Remind user to Save new configuration
-            javax.swing.JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("Reminder1") + "\n" + Bundle.getMessage("Reminder2"),
                     Bundle.getMessage("ReminderTitle"),
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                    JmriJOptionPane.INFORMATION_MESSAGE);
         }
         setVisible(false);
         dispose();
@@ -480,6 +481,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         nodeAddr64Field.setSelectedIndex(nodeAddrField.getSelectedIndex());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NodeConfigFrame.class);
 
 }

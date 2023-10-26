@@ -1686,6 +1686,7 @@ public class LnIPLImplementationTest {
         memo.dispose();
         JUnitUtil.removeMatchingThreads("LnPowerManager LnTrackStatusUpdateThread");
         JUnitUtil.removeMatchingThreads("LnSensorUpdateThread");
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

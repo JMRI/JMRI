@@ -60,6 +60,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     }
 
     // OK to used this for class clean up?
+    @Override
     @AfterEach
     public void tearDown() {
         tcis = null;

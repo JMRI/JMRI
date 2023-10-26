@@ -122,7 +122,7 @@ public class HexFile {
     /**
      * Read a hex file.
      * <p>
-     * Read hex records and store DATA records in the array.
+     * Read hex records and store TYPE_DATA records in the array.
      * 
      * @throws IOException on read error
      */
@@ -143,7 +143,7 @@ public class HexFile {
                 log.debug("Found extended adress record for address {}", Integer.toHexString(address));
                 continue;
             }
-            if (r.type == HexRecord.DATA) {
+            if (r.type == HexRecord.TYPE_DATA) {
                 address = (address & 0xffff0000) + r.getAddress();
                 hexRecords[lineNo].address = address;
                 log.debug("Hex record for address {}", Integer.toHexString(hexRecords[lineNo].address));
@@ -230,7 +230,7 @@ public class HexFile {
 
     
     /**
-     * Return the next DATA record from the file
+     * Return the next TYPE_DATA record from the file
      * 
      * @return the next hex record
      */
@@ -256,7 +256,7 @@ public class HexFile {
         while (true) { 
             try {
                 r = hexRecords[readIndex++];
-                if ((r.type == HexRecord.DATA)
+                if ((r.type == HexRecord.TYPE_DATA)
                         && (addr >= r.address) && (addr < (r.address + r.len))) {
                     return Optional.of(r);
                 }

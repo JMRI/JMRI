@@ -2,6 +2,7 @@ package jmri.jmrit.throttle;
 
 import java.util.*;
 
+import javax.annotation.CheckForNull;
 import javax.swing.table.AbstractTableModel;
 
 import jmri.ConsistListListener;
@@ -57,6 +58,26 @@ public class ThrottlesTableModel extends AbstractTableModel implements java.bean
         fireTableDataChanged();
     }
 
+    /**
+     * Get the number of usages of a particular Loco Address.
+     * @param la the Loco Address, can be null.
+     * @return 0 if no usages, else number of AddressPanel usages.
+     */
+    public int getNumberOfEntriesFor(@CheckForNull DccLocoAddress la) {
+        if (la == null) { 
+            return 0; 
+        }
+        int ret = 0;
+        for (ThrottleFrame tf: throttleFrames) {
+            AddressPanel ap = tf.getAddressPanel();
+            if ( ap.getThrottle() != null && 
+                ( la.equals( ap.getCurrentAddress()) || la.equals(ap.getConsistAddress()) ) ) {
+                ret++; // in use, increment count.
+            }
+        }
+        return ret;
+    }
+
     public void removeThrottleFrame(ThrottleFrame tf, DccLocoAddress la) {
         throttleFrames.remove(tf);
         fireTableDataChanged();
@@ -76,5 +97,7 @@ public class ThrottlesTableModel extends AbstractTableModel implements java.bean
     public void notifyConsistListChanged() {
         fireTableDataChanged();
     }
+
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ThrottlesTableModel.class);
 
 }

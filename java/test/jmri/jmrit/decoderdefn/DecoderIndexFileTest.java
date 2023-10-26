@@ -10,7 +10,6 @@ import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Tests for DecoderIndexFile class.
@@ -38,9 +37,9 @@ public class DecoderIndexFileTest {
         // invoke parsing
         di.readMfgSection();
         // check results
-        Assert.assertEquals("Digitrax ID from name ", "129", di.mfgIdFromName("Digitrax"));
-        Assert.assertEquals("NMRA ID from name ", "999", di.mfgIdFromName("NMRA"));
-        Assert.assertEquals("Digitrax name from id ", "Digitrax", di.mfgNameFromID("129"));
+        Assertions.assertEquals("129", di.mfgIdFromName("Digitrax"), "Digitrax ID from name ");
+        Assertions.assertEquals("999", di.mfgIdFromName("NMRA"), "NMRA ID from name ");
+        Assertions.assertEquals("Digitrax", di.mfgNameFromID("129"), "Digitrax name from id ");
     }
 
     @Test
@@ -52,10 +51,10 @@ public class DecoderIndexFileTest {
         di.readMfgSection();
         di.readFamilySection(decoderIndexElement);
         // check first Digitrax decoder in test tree; actually the 5th decoder (counting 2 families)
-        Assert.assertEquals("1st decoder model ", "DH142", (di.decoderList.get(4)).getModel());
-        Assert.assertEquals("1st decoder mfg ", "Digitrax", (di.decoderList.get(4)).getMfg());
-        Assert.assertEquals("1st decoder mfgID ", "129", (di.decoderList.get(4)).getMfgID());
-        Assert.assertEquals("1st decoder family ", "FX2 family", (di.decoderList.get(4)).getFamily());
+        Assertions.assertEquals("DH142", (di.decoderList.get(4)).getModel(), "1st decoder model ");
+        Assertions.assertEquals("Digitrax", (di.decoderList.get(4)).getMfg(), "1st decoder mfg ");
+        Assertions.assertEquals("129", (di.decoderList.get(4)).getMfgID(), "1st decoder mfgID ");
+        Assertions.assertEquals("FX2 family", (di.decoderList.get(4)).getFamily(), "1st decoder family ");
     }
 
     @Test
@@ -67,12 +66,12 @@ public class DecoderIndexFileTest {
         // parse a single Family
         di.readFamily(family1);
         // expect to find two decoders in a single family
-        Assert.assertEquals("number of decoders ", 3, di.numDecoders());
+        Assertions.assertEquals(3, di.numDecoders(), "number of decoders ");
         // check second one
-        Assert.assertEquals("2nd decoder model ", "full set", (di.decoderList.get(1)).getModel());
-        Assert.assertEquals("2nd decoder mfg ", "NMRA", (di.decoderList.get(1)).getMfg());
-        Assert.assertEquals("2nd decoder mfgID ", "999", (di.decoderList.get(1)).getMfgID());
-        Assert.assertEquals("2nd decoder family ", "NMRA S&RP definitions", (di.decoderList.get(1)).getFamily());
+        Assertions.assertEquals("full set", (di.decoderList.get(1)).getModel(), "2nd decoder model ");
+        Assertions.assertEquals("NMRA", (di.decoderList.get(1)).getMfg(), "2nd decoder mfg ");
+        Assertions.assertEquals("999", (di.decoderList.get(1)).getMfgID(), "2nd decoder mfgID ");
+        Assertions.assertEquals("NMRA S&RP definitions", (di.decoderList.get(1)).getFamily(), "2nd decoder family ");
     }
 
     @Test
@@ -84,28 +83,28 @@ public class DecoderIndexFileTest {
         // parse a single Family
         di.readFamily(family2);
         // expect to find two decoders in a single family
-        Assert.assertEquals("number of decoders ", 3, di.numDecoders());
+        Assertions.assertEquals(3, di.numDecoders(), "number of decoders ");
         // check family entry
-        Assert.assertEquals("1st decoder model ", "FX2 family", (di.decoderList.get(0)).getModel());
-        Assert.assertEquals("1st decoder mfg ", "Digitrax", (di.decoderList.get(0)).getMfg());
-        Assert.assertEquals("1st decoder mfgID ", "129", (di.decoderList.get(0)).getMfgID());
-        Assert.assertEquals("1st decoder family ", "FX2 family", (di.decoderList.get(0)).getFamily());
-        Assert.assertEquals("1st decoder numFns ", -1, (di.decoderList.get(0)).getNumFunctions());
-        Assert.assertEquals("1st decoder numOuts ", -1, (di.decoderList.get(0)).getNumOutputs());
+        Assertions.assertEquals("FX2 family", (di.decoderList.get(0)).getModel(), "1st decoder model ");
+        Assertions.assertEquals("Digitrax", (di.decoderList.get(0)).getMfg(), "1st decoder mfg ");
+        Assertions.assertEquals("129", (di.decoderList.get(0)).getMfgID(), "1st decoder mfgID ");
+        Assertions.assertEquals("FX2 family", (di.decoderList.get(0)).getFamily(), "1st decoder family ");
+        Assertions.assertEquals(-1, (di.decoderList.get(0)).getNumFunctions(), "1st decoder numFns ");
+        Assertions.assertEquals(-1, (di.decoderList.get(0)).getNumOutputs(), "1st decoder numOuts ");
         // check first read decoder
-        Assert.assertEquals("1st decoder model ", "DH142", (di.decoderList.get(1)).getModel());
-        Assert.assertEquals("1st decoder mfg ", "Digitrax", (di.decoderList.get(1)).getMfg());
-        Assert.assertEquals("1st decoder mfgID ", "129", (di.decoderList.get(1)).getMfgID());
-        Assert.assertEquals("1st decoder family ", "FX2 family", (di.decoderList.get(1)).getFamily());
-        Assert.assertEquals("1st decoder numFns ", 4, (di.decoderList.get(1)).getNumFunctions());
-        Assert.assertEquals("1st decoder numOuts ", 2, (di.decoderList.get(1)).getNumOutputs());
+        Assertions.assertEquals("DH142", (di.decoderList.get(1)).getModel(), "1st decoder model ");
+        Assertions.assertEquals("Digitrax", (di.decoderList.get(1)).getMfg(), "1st decoder mfg ");
+        Assertions.assertEquals("129", (di.decoderList.get(1)).getMfgID(), "1st decoder mfgID ");
+        Assertions.assertEquals("FX2 family", (di.decoderList.get(1)).getFamily(), "1st decoder family ");
+        Assertions.assertEquals(4, (di.decoderList.get(1)).getNumFunctions(), "1st decoder numFns ");
+        Assertions.assertEquals(2, (di.decoderList.get(1)).getNumOutputs(), "1st decoder numOuts ");
         // check second real decoder
-        Assert.assertEquals("2nd decoder model ", "DN142", (di.decoderList.get(2)).getModel());
-        Assert.assertEquals("2nd decoder mfg ", "Digitrax", (di.decoderList.get(2)).getMfg());
-        Assert.assertEquals("2nd decoder mfgID ", "129", (di.decoderList.get(2)).getMfgID());
-        Assert.assertEquals("2nd decoder family ", "FX2 family", (di.decoderList.get(2)).getFamily());
-        Assert.assertEquals("2nd decoder numFns ", 5, (di.decoderList.get(2)).getNumFunctions());
-        Assert.assertEquals("2nd decoder numOuts ", 1, (di.decoderList.get(2)).getNumOutputs());
+        Assertions.assertEquals("DN142", (di.decoderList.get(2)).getModel(), "2nd decoder model ");
+        Assertions.assertEquals("Digitrax", (di.decoderList.get(2)).getMfg(), "2nd decoder mfg ");
+        Assertions.assertEquals("129", (di.decoderList.get(2)).getMfgID(), "2nd decoder mfgID ");
+        Assertions.assertEquals("FX2 family", (di.decoderList.get(2)).getFamily(), "2nd decoder family ");
+        Assertions.assertEquals(5, (di.decoderList.get(2)).getNumFunctions(), "2nd decoder numFns ");
+        Assertions.assertEquals(1, (di.decoderList.get(2)).getNumOutputs(), "2nd decoder numOuts ");
     }
 
     @Test
@@ -118,18 +117,18 @@ public class DecoderIndexFileTest {
         di.readFamilySection(decoderIndexElement);
         // search for the two Digitrax decoders
         List<DecoderFile> l1 = di.matchingDecoderList("Digitrax", null, null, null, null, null);
-        Assert.assertEquals("Found with name Digitrax ", 3, l1.size());
-        Assert.assertEquals("Found with name Digitrax ", "DH142", (l1.get(1)).getModel());
-        Assert.assertEquals("Found with name Digitrax ", "DN142", (l1.get(2)).getModel());
+        Assertions.assertEquals(3, l1.size(), "Found with name Digitrax ");
+        Assertions.assertEquals("DH142", (l1.get(1)).getModel(), "Found with name Digitrax ");
+        Assertions.assertEquals("DN142", (l1.get(2)).getModel(), "Found with name Digitrax ");
         // search for the two decoders from mfgID 129
         List<DecoderFile> l2 = di.matchingDecoderList(null, null, "129", null, null, null);
-        Assert.assertEquals("Found with id 129 ", 3, l2.size());
+        Assertions.assertEquals(3, l2.size(), "Found with id 129 ");
         // search for the two from the NMRA family
         List<DecoderFile> l4 = di.matchingDecoderList(null, "NMRA S&RP definitions", null, null, null, null);
-        Assert.assertEquals("Found from NMRA family ", 3, l4.size());
+        Assertions.assertEquals(3, l4.size(), "Found from NMRA family ");
         // search for the one with version ID 21
         List<DecoderFile> l3 = di.matchingDecoderList(null, null, null, "21", null, null);
-        Assert.assertEquals("Found with version 21 ", 1, l3.size());
+        Assertions.assertEquals(1, l3.size(), "Found with version 21 ");
     }
 
     @Test
@@ -142,18 +141,18 @@ public class DecoderIndexFileTest {
         di.readFamilySection(decoderIndexElement);
         // search for the two Digitrax decoders
         JComboBox<String> l1 = di.matchingComboBox("Digitrax", null, null, null, null, null);
-        Assert.assertEquals("Found with name Digitrax ", 3, l1.getItemCount());
-        Assert.assertEquals("Found with name Digitrax ", "DH142 (FX2 family)", l1.getItemAt(1));
-        Assert.assertEquals("Found with name Digitrax ", "DN142 (FX2 family)", l1.getItemAt(2));
+        Assertions.assertEquals(3, l1.getItemCount(), "Found with name Digitrax ");
+        Assertions.assertEquals("DH142 (FX2 family)", l1.getItemAt(1), "Found with name Digitrax ");
+        Assertions.assertEquals("DN142 (FX2 family)", l1.getItemAt(2), "Found with name Digitrax ");
         // search for the two decoders from mfgID 129
         JComboBox<String> l2 = di.matchingComboBox(null, null, "129", null, null, null);
-        Assert.assertEquals("Found with id 129 ", 3, l2.getItemCount());
+        Assertions.assertEquals(3, l2.getItemCount(), "Found with id 129 ");
         // search for the two from the NMRA family
         JComboBox<String> l4 = di.matchingComboBox(null, "NMRA S&RP definitions", null, null, null, null);
-        Assert.assertEquals("Found from NMRA family ", 3, l4.getItemCount());
+        Assertions.assertEquals(3, l4.getItemCount(), "Found from NMRA family ");
         // search for the one with version ID 21
         JComboBox<String> l3 = di.matchingComboBox(null, null, null, "21", null, null);
-        Assert.assertEquals("Found with version 21 ", 1, l3.getItemCount());
+        Assertions.assertEquals(1, l3.getItemCount(), "Found with version 21 ");
     }
 
     @Test
@@ -167,20 +166,20 @@ public class DecoderIndexFileTest {
         // search for the one with various version IDs
         List<DecoderFile> l3;
         l3 = di.matchingDecoderList(null, null, null, "20", null, null);
-        Assert.assertEquals("Found with version 20 ", 0, l3.size());
+        Assertions.assertEquals(0, l3.size(), "Found with version 20 ");
         l3 = di.matchingDecoderList(null, null, null, "21", null, null);
-        Assert.assertEquals("Found with version 21 ", 1, l3.size());
+        Assertions.assertEquals(1, l3.size(), "Found with version 21 ");
         l3 = di.matchingDecoderList(null, null, null, "22", null, null);
-        Assert.assertEquals("Found with version 22 ", 1, l3.size());
+        Assertions.assertEquals(1, l3.size(), "Found with version 22 ");
         l3 = di.matchingDecoderList(null, null, null, "23", null, null);
-        Assert.assertEquals("Found with version 23 ", 1, l3.size());
+        Assertions.assertEquals(1, l3.size(), "Found with version 23 ");
         l3 = di.matchingDecoderList(null, null, null, "24", null, null);
-        Assert.assertEquals("Found with version 24 ", 1, l3.size());
+        Assertions.assertEquals(1, l3.size(), "Found with version 24 ");
         l3 = di.matchingDecoderList(null, null, null, "25", null, null);
-        Assert.assertEquals("Found with version 25 ", 0, l3.size());
+        Assertions.assertEquals(0, l3.size(), "Found with version 25 ");
     }
 
-    // static variables for the test XML structures
+    // static variables for the test of XML structures
     Element root = null;
     Document doc = null;
     Element decoderIndexElement = null;
@@ -241,8 +240,6 @@ public class DecoderIndexFileTest {
                         )
                 )
         ); // end of adding contents
-
-        return;
     }
 
     @BeforeEach

@@ -13,13 +13,13 @@ public interface DigitalExpressionFactory {
     /**
      * Init the factory, for example create categories.
      */
-    public default void init() {}
+    default void init() {}
     
     /**
      * Get a set of classes that implements the DigitalExpressionBean interface.
      * 
      * @return a set of entries with category and class
      */
-    public Set<Map.Entry<Category, Class<? extends DigitalExpressionBean>>> getExpressionClasses();
+    Set<Map.Entry<Category, Class<? extends DigitalExpressionBean>>> getExpressionClasses();
     
 }

@@ -39,6 +39,7 @@ import jmri.swing.NamedBeanComboBox;
 import jmri.util.*;
 import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
 
 /**
@@ -266,7 +267,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private int numLayoutSlips = 0;
     private int numLayoutTurnouts = 0;
     private int numLayoutTurntables = 0;
-    private int numShapes = 0;
 
     private LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
 
@@ -1099,17 +1099,18 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         optionMenu.add(titleItem);
         titleItem.addActionListener((ActionEvent event) -> {
             // prompt for name
-            String newName = (String) JOptionPane.showInputDialog(getTargetFrame(),
+            String newName = (String) JmriJOptionPane.showInputDialog(getTargetFrame(),
                     Bundle.getMessage("MakeLabel", Bundle.getMessage("EnterTitle")),
                     Bundle.getMessage("EditTitleMessageTitle"),
-                    JOptionPane.PLAIN_MESSAGE, null, null, getLayoutName());
+                    JmriJOptionPane.PLAIN_MESSAGE, null, null, getLayoutName());
 
             if (newName != null) {
                 if (!newName.equals(getLayoutName())) {
                     if (InstanceManager.getDefault(EditorManager.class).contains(newName)) {
-                        JOptionPane.showMessageDialog(
-                                null, Bundle.getMessage("CanNotRename"), Bundle.getMessage("PanelExist"),
-                                JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(null,
+                            Bundle.getMessage("CanNotRename", Bundle.getMessage("Panel")),
+                            Bundle.getMessage("AlreadyExist", Bundle.getMessage("Panel")),
+                            JmriJOptionPane.ERROR_MESSAGE);
                     } else {
                         setTitle(newName);
                         setLayoutName(newName);
@@ -1601,7 +1602,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             // bring up scale track diagram dialog
             assignBlockToSelection();
         });
-        assignBlockToSelectionMenuItem.setEnabled(_layoutTrackSelection.size() > 0);
+        assignBlockToSelectionMenuItem.setEnabled(!_layoutTrackSelection.isEmpty());
 
         // scale track diagram
         JMenuItem jmi = new JMenuItem(Bundle.getMessage("ScaleTrackDiagram") + "...");
@@ -1621,8 +1622,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             // bring up translate selection dialog
             if (!selectionActive || (selectionWidth == 0.0) || (selectionHeight == 0.0)) {
                 // no selection has been made - nothing to move
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("Error12"),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error12"),
+                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             } else {
                 // bring up move selection dialog
                 MoveSelectionDialog d = new MoveSelectionDialog(this);
@@ -2397,9 +2398,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         JMenuItem newTrainItem = new JMenuItem(Bundle.getMessage("MenuItemNewTrain"));
         dispMenu.add(newTrainItem);
         newTrainItem.addActionListener((ActionEvent event) -> {
-            if (InstanceManager.getDefault(TransitManager.class).getNamedBeanSet().size() <= 0) {
+            if (InstanceManager.getDefault(TransitManager.class).getNamedBeanSet().isEmpty()) {
                 // Inform the user that there are no Transits available, and don't open the window
-                JOptionPane.showMessageDialog(
+                JmriJOptionPane.showMessageDialog(
                         null,
                         ResourceBundle.getBundle("jmri.jmrit.dispatcher.DispatcherBundle").
                                 getString("NoTransitsMessage"));
@@ -2878,6 +2879,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     /**
      * Allow external trigger of re-drawHidden
      */
+    @Override
     public void redrawPanel() {
         repaint();
     }
@@ -2914,6 +2916,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         panelChanged = val;
     }
 
+    @Override
     public void setDirty() {
         setDirty(true);
     }
@@ -2923,6 +2926,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      *
      * @return true if panel has changed
      */
+    @Override
     public boolean isDirty() {
         return panelChanged;
     }
@@ -3135,7 +3139,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         if (!event.isPopupTrigger()) {
             List<Positionable> selections = getSelectedItems(event);
 
-            if (selections.size() > 0) {
+            if (!selections.isEmpty()) {
                 selections.get(0).doMousePressed(event);
             }
         }
@@ -3560,14 +3564,17 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     addBlockContents();
                 } else if (leToolBarPanel.iconLabelButton.isSelected()) {
                     addIcon();
+                } else if (leToolBarPanel.logixngButton.isSelected()) {
+                    addLogixNGIcon();
                 } else if (leToolBarPanel.shapeButton.isSelected()) {
-                    if (selectedObject == null) {
-                        addLayoutShape(currentPoint);
-                        _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                    LayoutShape ls = (LayoutShape) selectedObject;
+                    if (ls == null) {
+                        ls = addLayoutShape(currentPoint);
                     } else {
-                        LayoutShape ls = (LayoutShape) selectedObject;
                         ls.addPoint(currentPoint, selectedHitPointType.shapePointIndex());
                     }
+                    unionToPanelBounds(ls.getBounds());
+                    _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                 } else if (leToolBarPanel.signalMastButton.isSelected()) {
                     addSignalMast();
                 } else {
@@ -3700,7 +3707,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         if (!event.isPopupTrigger() && !isDragging) {
             List<Positionable> selections = getSelectedItems(event);
-            if (selections.size() > 0) {
+            if (!selections.isEmpty()) {
                 selections.get(0).doMouseReleased(event);
                 whenReleased = event.getWhen();
             }
@@ -3709,7 +3716,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         // train icon needs to know when moved
         if (event.isPopupTrigger() && isDragging) {
             List<Positionable> selections = getSelectedItems(event);
-            if (selections.size() > 0) {
+            if (!selections.isEmpty()) {
                 selections.get(0).doMouseDragged(event);
             }
         }
@@ -3899,7 +3906,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
                 if (p.doViemMenu()) {
                     setHiddenMenu(p, popup);
+                    setEmptyHiddenMenu(p, popup);
                     setEditIdMenu(p, popup);
+                    setEditClassesMenu(p, popup);
                     popup.addSeparator();
                     setLogixNGPositionableMenu(p, popup);
                 }
@@ -3933,7 +3942,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 && !awaitingIconChange && !event.isShiftDown() && !event.isControlDown()) {
             List<Positionable> selections = getSelectedItems(event);
 
-            if (selections.size() > 0) {
+            if (!selections.isEmpty()) {
                 selections.get(0).doMouseClicked(event);
             }
         } else if (event.isPopupTrigger() && (whenReleased != event.getWhen())) {
@@ -4381,7 +4390,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 }
             }
         });
-        assignBlockToSelectionMenuItem.setEnabled(_layoutTrackSelection.size() > 0);
+        assignBlockToSelectionMenuItem.setEnabled(!_layoutTrackSelection.isEmpty());
 
         layoutShapes.forEach((ls) -> {
             if (selectionRect.intersects(ls.getBounds())) {
@@ -4405,19 +4414,20 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     private void deleteSelectedItems() {
         if (!noWarnGlobalDelete) {
-            int selectedValue = JOptionPane.showOptionDialog(this,
+            int selectedValue = JmriJOptionPane.showOptionDialog(this,
                     Bundle.getMessage("Question6"), Bundle.getMessage("WarningTitle"),
-                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                    JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null,
                     new Object[]{Bundle.getMessage("ButtonYes"),
                         Bundle.getMessage("ButtonNo"),
                         Bundle.getMessage("ButtonYesPlus")},
                     Bundle.getMessage("ButtonNo"));
 
-            if (selectedValue == JOptionPane.NO_OPTION) {
+            // array position 1, ButtonNo or Dialog closed.
+            if (selectedValue == 1 || selectedValue == JmriJOptionPane.CLOSED_OPTION ) {
                 return; // return without creating if "No" response
             }
 
-            if (selectedValue == JOptionPane.CANCEL_OPTION) {
+            if (selectedValue == 2) { // array positio 2, ButtonYesPlus
                 // Suppress future warnings, and continue
                 noWarnGlobalDelete = true;
             }
@@ -4479,7 +4489,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         } else {
             _layoutTrackSelection.add(p);
         }
-        assignBlockToSelectionMenuItem.setEnabled(_layoutTrackSelection.size() > 0);
+        assignBlockToSelectionMenuItem.setEnabled(!_layoutTrackSelection.isEmpty());
         redrawPanel();
     }
 
@@ -4565,9 +4575,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     private boolean showAlignPopup() {
-        return ((_positionableSelection.size() > 0)
-                || (_layoutTrackSelection.size() > 0)
-                || (_layoutShapeSelection.size() > 0));
+        return ((!_positionableSelection.isEmpty())
+                || (!_layoutTrackSelection.isEmpty())
+                || (!_layoutShapeSelection.isEmpty()));
     }
 
     /**
@@ -4801,9 +4811,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     leToolBarPanel.setLocationText(currentPoint);
                 }
 
-                if ((_positionableSelection.size() > 0)
-                        || (_layoutTrackSelection.size() > 0)
-                        || (_layoutShapeSelection.size() > 0)) {
+                if ((!_positionableSelection.isEmpty())
+                        || (!_layoutTrackSelection.isEmpty())
+                        || (!_layoutShapeSelection.isEmpty())) {
                     Point2D lastPoint = new Point2D.Double(_lastX, _lastY);
                     Point2D offset = MathUtil.subtract(currentPoint, lastPoint);
                     Point2D newPoint;
@@ -5158,8 +5168,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             try {
                 rot = Double.parseDouble(s);
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("Error3") + " "
-                        + e, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error3") + " "
+                        + e, Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
 
                 return;
             }
@@ -5269,8 +5279,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             try {
                 rot = Double.parseDouble(s);
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("Error3") + " "
-                        + e, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error3") + " "
+                        + e, Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
 
                 return;
             }
@@ -5409,9 +5419,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         if (t == null) {
             // There is no turnout corresponding to this name
             if (inOpenPane != null) {
-                JOptionPane.showMessageDialog(inOpenPane,
+                JmriJOptionPane.showMessageDialog(inOpenPane,
                         MessageFormat.format(Bundle.getMessage("Error8"), inTurnoutName),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             }
             return false;
         }
@@ -5500,9 +5510,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
 
         if (!result && (inOpenPane != null)) {
-            JOptionPane.showMessageDialog(inOpenPane,
+            JmriJOptionPane.showMessageDialog(inOpenPane,
                     MessageFormat.format(Bundle.getMessage("Error4"), inTurnoutName),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
         }
         return result;
     }
@@ -5619,17 +5629,17 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                         }
                     } else {
                         // Appears to be a system name, request a user name
-                        String blkUserName = JOptionPane.showInputDialog(getTargetFrame(),
+                        String blkUserName = (String)JmriJOptionPane.showInputDialog(getTargetFrame(),
                                 Bundle.getMessage("BlkUserNameMsg"),
                                 Bundle.getMessage("BlkUserNameTitle"),
-                                JOptionPane.PLAIN_MESSAGE);
+                                JmriJOptionPane.PLAIN_MESSAGE, null, null, "");
                         if (blkUserName != null && !blkUserName.isEmpty()) {
                             // Verify the user name
                             Block checkDuplicate = InstanceManager.getDefault(BlockManager.class).getByUserName(blkUserName);
                             if (checkDuplicate != null) {
-                                JOptionPane.showMessageDialog(getTargetFrame(),
+                                JmriJOptionPane.showMessageDialog(getTargetFrame(),
                                         Bundle.getMessage("BlkUserNameInUse", blkUserName),
-                                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                             } else {
                                 // OK to use as a block user name
                                 checkBlock.setUserName(blkUserName);
@@ -5901,19 +5911,19 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         if (usage != null) {
             usage = String.format("<html>%s</html>", usage);
-            int selectedValue = JOptionPane.showOptionDialog(this,
+            int selectedValue = JmriJOptionPane.showOptionDialog(this,
                     usage, Bundle.getMessage("WarningTitle"),
-                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                    JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null,
                     new Object[]{Bundle.getMessage("ButtonYes"),
                         Bundle.getMessage("ButtonNo"),
                         Bundle.getMessage("ButtonCancel")},
                     Bundle.getMessage("ButtonYes"));
 
-            if (selectedValue == JOptionPane.NO_OPTION) {
+            if (selectedValue == 1 ) { // array pos 1, No
                 return true; // return leaving the references in place but allow the icon to be deleted.
             }
-
-            if (selectedValue == JOptionPane.CANCEL_OPTION) {
+            // array pos 2, cancel or Dialog closed
+            if (selectedValue == 2 || selectedValue == JmriJOptionPane.CLOSED_OPTION ) {
                 return false; // do not delete the item
             }
             if (bean instanceof Sensor) {
@@ -5966,19 +5976,20 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         // First verify with the user that this is really wanted, only show message if there is a bit of track connected
         if ((o.getConnect1() != null) || (o.getConnect2() != null)) {
             if (!noWarnPositionablePoint) {
-                int selectedValue = JOptionPane.showOptionDialog(this,
+                int selectedValue = JmriJOptionPane.showOptionDialog(this,
                         Bundle.getMessage("Question2"), Bundle.getMessage("WarningTitle"),
-                        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                        JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null,
                         new Object[]{Bundle.getMessage("ButtonYes"),
                             Bundle.getMessage("ButtonNo"),
                             Bundle.getMessage("ButtonYesPlus")},
                         Bundle.getMessage("ButtonNo"));
 
-                if (selectedValue == JOptionPane.NO_OPTION) {
+                // array position 1, ButtonNo , or Dialog Closed.
+                if (selectedValue == 1 || selectedValue == JmriJOptionPane.CLOSED_OPTION ) {
                     return false; // return without creating if "No" response
                 }
 
-                if (selectedValue == JOptionPane.CANCEL_OPTION) {
+                if (selectedValue == 2) { // array position 2, ButtonYesPlus
                     // Suppress future warnings, and continue
                     noWarnPositionablePoint = true;
                 }
@@ -6022,19 +6033,20 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     public boolean removeLayoutTurnout(@Nonnull LayoutTurnout o) {
         // First verify with the user that this is really wanted
         if (!noWarnLayoutTurnout) {
-            int selectedValue = JOptionPane.showOptionDialog(this,
+            int selectedValue = JmriJOptionPane.showOptionDialog(this,
                     Bundle.getMessage("Question1r"), Bundle.getMessage("WarningTitle"),
-                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                    JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null,
                     new Object[]{Bundle.getMessage("ButtonYes"),
                         Bundle.getMessage("ButtonNo"),
                         Bundle.getMessage("ButtonYesPlus")},
                     Bundle.getMessage("ButtonNo"));
 
-            if (selectedValue == JOptionPane.NO_OPTION) {
-                return false; // return without removing if "No" response
+            // return without removing if array position 1 "No" response or Dialog closed
+            if (selectedValue == 1 || selectedValue==JmriJOptionPane.CLOSED_OPTION ) {
+                return false;
             }
 
-            if (selectedValue == JOptionPane.CANCEL_OPTION) {
+            if (selectedValue == 2 ) { // ButtonYesPlus in array position 2
                 // Suppress future warnings, and continue
                 noWarnLayoutTurnout = true;
             }
@@ -6125,19 +6137,20 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     public boolean removeLevelXing(@Nonnull LevelXing o) {
         // First verify with the user that this is really wanted
         if (!noWarnLevelXing) {
-            int selectedValue = JOptionPane.showOptionDialog(this,
+            int selectedValue = JmriJOptionPane.showOptionDialog(this,
                     Bundle.getMessage("Question3r"), Bundle.getMessage("WarningTitle"),
-                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                    JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null,
                     new Object[]{Bundle.getMessage("ButtonYes"),
                         Bundle.getMessage("ButtonNo"),
                         Bundle.getMessage("ButtonYesPlus")},
                     Bundle.getMessage("ButtonNo"));
 
-            if (selectedValue == JOptionPane.NO_OPTION) {
-                return false; // return without creating if "No" response
+             // array position 1 Button No, or Dialog closed.
+            if (selectedValue == 1 || selectedValue==JmriJOptionPane.CLOSED_OPTION ) {
+                return false;
             }
 
-            if (selectedValue == JOptionPane.CANCEL_OPTION) {
+            if (selectedValue == 2 ) { // array position 2 ButtonYesPlus
                 // Suppress future warnings, and continue
                 noWarnLevelXing = true;
             }
@@ -6205,19 +6218,20 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         // First verify with the user that this is really wanted
         if (!noWarnSlip) {
-            int selectedValue = JOptionPane.showOptionDialog(this,
+            int selectedValue = JmriJOptionPane.showOptionDialog(this,
                     Bundle.getMessage("Question5r"), Bundle.getMessage("WarningTitle"),
-                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                    JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null,
                     new Object[]{Bundle.getMessage("ButtonYes"),
                         Bundle.getMessage("ButtonNo"),
                         Bundle.getMessage("ButtonYesPlus")},
                     Bundle.getMessage("ButtonNo"));
 
-            if (selectedValue == JOptionPane.NO_OPTION) {
-                return false; // return without creating if "No" response
+             // return without removing if array position 1 "No" response or Dialog closed
+            if (selectedValue == 1 || selectedValue==JmriJOptionPane.CLOSED_OPTION ) {
+                return false;
             }
 
-            if (selectedValue == JOptionPane.CANCEL_OPTION) {
+            if (selectedValue == 2 ) { // ButtonYesPlus in array position 2
                 // Suppress future warnings, and continue
                 noWarnSlip = true;
             }
@@ -6277,19 +6291,20 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     public boolean removeTurntable(@Nonnull LayoutTurntable o) {
         // First verify with the user that this is really wanted
         if (!noWarnTurntable) {
-            int selectedValue = JOptionPane.showOptionDialog(this,
+            int selectedValue = JmriJOptionPane.showOptionDialog(this,
                     Bundle.getMessage("Question4r"), Bundle.getMessage("WarningTitle"),
-                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                    JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null,
                     new Object[]{Bundle.getMessage("ButtonYes"),
                         Bundle.getMessage("ButtonNo"),
                         Bundle.getMessage("ButtonYesPlus")},
                     Bundle.getMessage("ButtonNo"));
 
-            if (selectedValue == JOptionPane.NO_OPTION) {
-                return false; // return without creating if "No" response
+            // return without removing if array position 1 "No" response or Dialog closed
+            if (selectedValue == 1 || selectedValue==JmriJOptionPane.CLOSED_OPTION ) {
+                return false;
             }
 
-            if (selectedValue == JOptionPane.CANCEL_OPTION) {
+            if (selectedValue == 2 ) { // ButtonYesPlus in array position 2
                 // Suppress future warnings, and continue
                 noWarnTurntable = true;
             }
@@ -6518,8 +6533,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
 
         if (newName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("Error10"),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error10"),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         SensorIcon l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
@@ -6575,9 +6590,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         if (mHead == null) {
             // There is no signal head corresponding to this name
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     MessageFormat.format(Bundle.getMessage("Error9"), newName),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -6666,9 +6681,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         if (mMast == null) {
             // There is no signal head corresponding to this name
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     MessageFormat.format(Bundle.getMessage("Error9"), newName),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
 
             return;
         }
@@ -6723,8 +6738,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         labelText = (labelText != null) ? labelText.trim() : "";
 
         if (labelText.isEmpty()) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("Error11"),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error11"),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         PositionableLabel l = super.addLabel(labelText);
@@ -6780,8 +6795,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
 
         if (memoryName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("Error11a"),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error11a"),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         MemoryIcon l = new MemoryIcon(" ", this);
@@ -6815,8 +6830,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
 
         if (globalVariableName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("Error11c"),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error11c"),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         GlobalVariableIcon l = new GlobalVariableIcon(" ", this);
@@ -6850,8 +6865,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
 
         if (newName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("Error11b"),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error11b"),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         BlockContentsIcon l = new BlockContentsIcon(" ", this);
@@ -6904,6 +6919,23 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      */
     void addIcon() {
         PositionableLabel l = new PositionableLabel(leToolBarPanel.iconEditor.getIcon(0), this);
+        setNextLocation(l);
+        l.setDisplayLevel(Editor.ICONS);
+        unionToPanelBounds(l.getBounds());
+        l.updateSize();
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
+    }
+
+    /**
+     * Add a LogixNG icon to the target
+     */
+    void addLogixNGIcon() {
+        LogixNGIcon l = new LogixNGIcon(leToolBarPanel.logixngEditor.getIcon(0), this);
         setNextLocation(l);
         l.setDisplayLevel(Editor.ICONS);
         unionToPanelBounds(l.getBounds());
@@ -7001,7 +7033,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     @Nonnull
     private LayoutShape addLayoutShape(@Nonnull Point2D p) {
         // get unique name
-        String name = finder.uniqueName("S", ++numShapes);
+        String name = finder.uniqueName("S", getLayoutShapes().size() + 1);
 
         // create object
         LayoutShape o = new LayoutShape(name, p, this);
@@ -7097,6 +7129,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     private LayoutEditorAuxTools auxTools = null;
 
+    @Override
     @Nonnull
     public LayoutEditorAuxTools getLEAuxTools() {
         if (auxTools == null) {
@@ -7162,10 +7195,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             for (String message : messages) {
                 msg.append(message);
             }
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     msg.toString(),
                     Bundle.getMessage("ErrorTitle"), // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
         }
 
         return messages.isEmpty();
@@ -7984,6 +8017,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     return getLayoutTracksOfClass(PositionablePoint);
     }
      */
+    @Override
     public @Nonnull
     Stream<LayoutTrack> getLayoutTracksOfClass(Class<? extends LayoutTrack> layoutTrackClass) {
         return getLayoutTracks().stream()
@@ -7991,6 +8025,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .map(layoutTrackClass::cast);
     }
 
+    @Override
     public @Nonnull
     Stream<LayoutTrackView> getLayoutTrackViewsOfClass(Class<? extends LayoutTrackView> layoutTrackViewClass) {
         return getLayoutTrackViews().stream()
@@ -7998,6 +8033,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .map(layoutTrackViewClass::cast);
     }
 
+    @Override
     public @Nonnull
     List<PositionablePointView> getPositionablePointViews() {
         return getLayoutTrackViewsOfClass(PositionablePointView.class)
@@ -8005,6 +8041,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<PositionablePoint> getPositionablePoints() {
         return getLayoutTracksOfClass(PositionablePoint.class)
@@ -8019,6 +8056,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<LayoutSlip> getLayoutSlips() {
         return getLayoutTracksOfClass(LayoutSlip.class)
@@ -8026,6 +8064,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<TrackSegmentView> getTrackSegmentViews() {
         return getLayoutTrackViewsOfClass(TrackSegmentView.class)
@@ -8033,6 +8072,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<TrackSegment> getTrackSegments() {
         return getLayoutTracksOfClass(TrackSegment.class)
@@ -8048,6 +8088,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<LayoutTurnout> getLayoutTurnouts() { // this specifically does not include slips
         return getLayoutTracks().stream() // next line excludes LayoutSlips
@@ -8056,6 +8097,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<LayoutTurntable> getLayoutTurntables() {
         return getLayoutTracksOfClass(LayoutTurntable.class)
@@ -8070,6 +8112,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<LevelXing> getLevelXings() {
         return getLayoutTracksOfClass(LevelXing.class)
@@ -8077,6 +8120,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<LevelXingView> getLevelXingViews() {
         return getLayoutTrackViewsOfClass(LevelXingView.class)
@@ -8091,6 +8135,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      *
      * @return unmodifiable copy of layout track list.
      */
+    @Override
     @Nonnull
     final public List<LayoutTrack> getLayoutTracks() {
         return Collections.unmodifiableList(layoutTrackList);
@@ -8104,6 +8149,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<LayoutTurnout> getLayoutTurnoutsAndSlips() {
         return getLayoutTracksOfClass(LayoutTurnout.class
@@ -8119,6 +8165,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      *
      * @return unmodifiable copy of track views.
      */
+    @Override
     @Nonnull
     final public List<LayoutTrackView> getLayoutTrackViews() {
         return Collections.unmodifiableList(layoutTrackViewList);
@@ -8130,6 +8177,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private final Map<LayoutTrackView, LayoutTrack> viewToTrk = new HashMap<>();
 
     // temporary
+    @Override
     final public LayoutTrackView getLayoutTrackView(LayoutTrack trk) {
         LayoutTrackView lv = trkToView.get(trk);
         if (lv == null) {
@@ -8140,6 +8188,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     // temporary
+    @Override
     final public LevelXingView getLevelXingView(LevelXing xing) {
         LayoutTrackView lv = trkToView.get(xing);
         if (lv == null) {
@@ -8155,6 +8204,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     // temporary
+    @Override
     final public LayoutTurnoutView getLayoutTurnoutView(LayoutTurnout to) {
         LayoutTrackView lv = trkToView.get(to);
         if (lv == null) {
@@ -8170,6 +8220,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     // temporary
+    @Override
     final public LayoutTurntableView getLayoutTurntableView(LayoutTurntable to) {
         LayoutTrackView lv = trkToView.get(to);
         if (lv == null) {
@@ -8200,6 +8251,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     // temporary
+    @Override
     final public TrackSegmentView getTrackSegmentView(TrackSegment to) {
         LayoutTrackView lv = trkToView.get(to);
         if (lv == null) {
@@ -8215,6 +8267,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     // temporary
+    @Override
     final public PositionablePointView getPositionablePointView(PositionablePoint to) {
         LayoutTrackView lv = trkToView.get(to);
         if (lv == null) {
@@ -8235,6 +8288,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      *
      * @param trk the layout track to add.
      */
+    @Override
     final public void addLayoutTrack(@Nonnull LayoutTrack trk, @Nonnull LayoutTrackView v) {
         log.trace("addLayoutTrack {}", trk);
         if (layoutTrackList.contains(trk)) {
@@ -8276,6 +8330,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      *
      * @param trk the layout track to remove.
      */
+    @Override
     final public void removeLayoutTrack(@Nonnull LayoutTrack trk) {
         log.trace("removeLayoutTrack {}", trk);
         layoutTrackList.remove(trk);
@@ -8296,6 +8351,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         viewToTrk.clear();
     }
 
+    @Override
     public @Nonnull
     List<LayoutShape> getLayoutShapes() {
         return layoutShapes;

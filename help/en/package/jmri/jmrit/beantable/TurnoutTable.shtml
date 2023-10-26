@@ -20,8 +20,8 @@
       <h2 id="columns">Turnout Table Columns</h2>
 
       <p class="im"><img src="images/TurnoutTableColumnList.jpg" alt=
-      "Turnout Table Columns (Rel 4.20)" style="float:right" height="438" width="150"> Contents of
-      the Turnout Table are displayed by selecting it under <strong>Tools&rArr;Tables</strong>. As with
+      "Turnout Table Columns (Rel 5.5.1)" style="float:right" height="548" width="215"> Contents of
+      the Turnout Table are displayed by selecting it under <strong>Tools &rArr; Tables</strong>. As with
       all JMRI tool tables, you can add or remove columns from the display by right-clicking
       anywhere in the column header and selecting or deselecting the desired columns from the menu
       that appears (see picture at right). You can change the order of the columns by dragging
@@ -127,7 +127,7 @@
         <dd>Shows the System Name of the optional Sensor that provides the feedback for a Turnout.
         You can also directly enter or change the System Name of Sensor 2 for a Turnout.</dd>
 
-        <dt><strong>Automation</strong>
+        <dt><strong>Retry Automation</strong>
         </dt>
 
         <dd>
@@ -192,6 +192,16 @@
           the speed setting through this Turnout; the tool should then only consider speeds that
           are set on <a href="BlockTable.shtml#BlockSpeed">Blocks</a>.</p>
         </dd>
+        
+        <dt id="forget"><strong>Forget</strong></dt>
+        <dd><p>The <span class="textbutton">Forget</span> button will set the Commanded Turnout state to Unknown.
+        For Turnouts using Feedback Sensors, the feedback state is unaffected, whereas for Direct and Delayed Mode
+        the Turnout feedback state will also be Unknown.</p></dd>
+        
+        <dt id="query"><strong>Query</strong></dt>
+        <dd><p>For some system types, the <span class="textbutton">Query</span> button can poll the Sensor to obtain
+        the current status. There is also a LogixNG Action to <a href="../../../../html/tools/logixng/reference/chapter5.shtml#requestUpdateAll"
+         >Query All Sensors</a> for a particular connection.</p></dd>
       </dl>
 
       <h2 id="controls">Turnout Table Controls</h2>
@@ -237,7 +247,7 @@
 
         <dd>When checked, the optional Sensor State Query and State Forget columns are shown.</dd>
 
-        <dt>Automation menu</dt>
+        <dt>Retry Automation menu</dt>
 
         <dd>To read or set global (system wide) turnout retry settings, choose the Automation -&gt;
         Edit... menu. Change the number of retries and the interval between them.</dd>
@@ -364,6 +374,7 @@
                 <th>Sensor 1</th>
                 <th>Sensor 2</th>
                 <th>Feedback (known) State</th>
+                <th></th>
               </tr>
             </thead>
 
@@ -372,12 +383,14 @@
                 <td>Active</td>
                 <td>Inactive</td>
                 <td>Thrown</td>
+                <td></td>
               </tr>
 
               <tr>
                 <td>Inactive</td>
                 <td>Active</td>
                 <td>Closed</td>
+                <td></td>
               </tr>
 
               <tr>
@@ -398,6 +411,7 @@
                 <td>Active</td>
                 <td>Active</td>
                 <td>Inconsistent</td>
+                <td></td>
               </tr>
 
               <tr>
@@ -411,36 +425,42 @@
                 <td>Inactive</td>
                 <td>Inconsistent</td>
                 <td>Inconsistent</td>
+                <td></td>
               </tr>
 
               <tr>
                 <td>Inconsistent</td>
                 <td>Active</td>
                 <td>Inconsistent</td>
+                <td></td>
               </tr>
 
               <tr>
                 <td>Inconsistent</td>
                 <td>Inactive</td>
                 <td>Inconsistent</td>
+                <td></td>
               </tr>
 
               <tr>
                 <td>Unknown</td>
                 <td>Active</td>
                 <td>Inconsistent</td>
+                <td></td>
               </tr>
 
               <tr>
                 <td>Unknown</td>
                 <td>Inactive</td>
                 <td>Inconsistent</td>
+                <td></td>
               </tr>
 
               <tr>
                 <td>Unknown</td>
                 <td>Inconsistent</td>
                 <td>Inconsistent</td>
+                <td></td>
               </tr>
 
               <tr>
@@ -454,12 +474,14 @@
                 <td>Active</td>
                 <td>Unknown</td>
                 <td>Inconsistent</td>
+                <td></td>
               </tr>
 
               <tr>
                 <td>Inactive</td>
                 <td>Unknown</td>
                 <td>Inconsistent</td>
+                <td></td>
               </tr>
 
               <tr>
@@ -507,7 +529,7 @@
         </dd>
       </dl>
 
-      <h2 id="automation">Turnout Automation</h2>
+      <h2 id="automation">Turnout Retry Automation</h2>
 
       <p>JMRI can watch a Turnout and automate certain operations on it. This was originally added
       to handle the case of "I usually have to click that turnout a couple times to get it to throw
@@ -542,8 +564,10 @@
 
       <p>You can customize the automation by clicking "Edit Auto" for an individual Turnout.</p>
 
-      <p>It's also possible to set global Automation defaults, and some Turnouts use those. Use the
-      Automation -&gt; Edit... menu to access those defaults.</p>
+      <p>It's also possible to set global Retry Automation defaults, and some Turnouts use those. Use the
+      Retry Automation -&gt; Edit... menu to access those defaults.</p>
+      <img src="images/TurnoutRetryOperationEditor_574x188.jpg" height="188" width="574" alt="Turnout Retry Operation Editor" >
+
 
       <h2 id="Turnout_lock_feature">Turnout Lock feature</h2>
 

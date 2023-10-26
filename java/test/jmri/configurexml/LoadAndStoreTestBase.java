@@ -235,10 +235,13 @@ public class LoadAndStoreTestBase {
                 }
                 
                 if (!match) {
-                    // if either line contains a fontname attribute
+                    // remove fontname and fontFamily attributes
                     String fontname_regexe = "( fontname=\"[^\"]*\")";
                     line1 = filterLineUsingRegEx(line1, fontname_regexe);
                     line2 = filterLineUsingRegEx(line2, fontname_regexe);
+                    String fontFamily_regexe = "( fontFamily=\"[^\"]*\")";
+                    line1 = filterLineUsingRegEx(line1, fontFamily_regexe);
+                    line2 = filterLineUsingRegEx(line2, fontFamily_regexe);
                 }
                 
                 if (!match && !line1.equals(line2)) {

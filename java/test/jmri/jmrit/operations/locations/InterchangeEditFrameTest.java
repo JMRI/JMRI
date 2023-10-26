@@ -2,6 +2,11 @@ package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
 
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
@@ -13,10 +18,6 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  * Tests for the Operations Locations GUI class
@@ -158,12 +159,8 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         f.initComponents(l, t);
         
         JemmyUtil.enterClickAndLeave(f.trainDrop);
-        // add does nothing, nothing selected
         JemmyUtil.enterClickAndLeave(f.addDropButton);
         
-        Assert.assertEquals("no drop ids", 0, t.getDropIds().length);
-        f.comboBoxDropTrains.setSelectedIndex(1);
-        JemmyUtil.enterClickAndLeave(f.addDropButton);
         Assert.assertEquals("one drop id", 1, t.getDropIds().length);
         Assert.assertEquals("drop id", "1", t.getDropIds()[0]);
         
@@ -190,8 +187,6 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         // add does nothing, nothing selected
         JemmyUtil.enterClickAndLeave(f.addPickupButton);
         
-        Assert.assertEquals("no pickup ids", 0, t.getPickupIds().length);
-        f.comboBoxPickupTrains.setSelectedIndex(1);
         JemmyUtil.enterClickAndLeave(f.addPickupButton);
         Assert.assertEquals("one pickup id", 1, t.getPickupIds().length);
         Assert.assertEquals("pickup id", "1", t.getPickupIds()[0]);
@@ -216,12 +211,8 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         f.initComponents(l, t);
         
         JemmyUtil.enterClickAndLeave(f.routeDrop);
-        // add does nothing, nothing selected
         JemmyUtil.enterClickAndLeave(f.addDropButton);
-        
-        Assert.assertEquals("no drop ids", 0, t.getDropIds().length);
-        f.comboBoxDropRoutes.setSelectedIndex(1);
-        JemmyUtil.enterClickAndLeave(f.addDropButton);
+
         Assert.assertEquals("one drop id", 1, t.getDropIds().length);
         Assert.assertEquals("drop id", "1", t.getDropIds()[0]);
         
@@ -245,12 +236,8 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         f.initComponents(l, t);
         
         JemmyUtil.enterClickAndLeave(f.routePickup);
-        // add does nothing, nothing selected
         JemmyUtil.enterClickAndLeave(f.addPickupButton);
         
-        Assert.assertEquals("no pickup ids", 0, t.getPickupIds().length);
-        f.comboBoxPickupRoutes.setSelectedIndex(1);
-        JemmyUtil.enterClickAndLeave(f.addPickupButton);
         Assert.assertEquals("one pickup id", 1, t.getPickupIds().length);
         Assert.assertEquals("pickup id", "1", t.getPickupIds()[0]);
         
@@ -274,6 +261,10 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.initComponents(l, t);
         
+        // confirm default
+        Assert.assertTrue(f.autoPickupCheckBox.isSelected());
+        JemmyUtil.enterClickAndLeave(f.autoPickupCheckBox);
+        
         // create a route not serviced by this location
         Location locB = lManager.getLocationByName("Test Loc B"); 
         RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
@@ -296,6 +287,10 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.initComponents(l, t);
         
+        // confirm default
+        Assert.assertTrue(f.autoDropCheckBox.isSelected());
+        JemmyUtil.enterClickAndLeave(f.autoDropCheckBox);
+        
         // create a route not serviced by this location
         Location locB = lManager.getLocationByName("Test Loc B"); 
         RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
@@ -317,6 +312,10 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         Track t = l.addTrack("Test Yard Pickup Error", Track.INTERCHANGE);
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.initComponents(l, t);
+        
+        // confirm default
+        Assert.assertTrue(f.autoPickupCheckBox.isSelected());
+        JemmyUtil.enterClickAndLeave(f.autoPickupCheckBox);
         
         // create a route not serviced by this location
         Location locB = lManager.getLocationByName("Test Loc B"); 
@@ -344,6 +343,10 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.initComponents(l, t);
         
+        // confirm default
+        Assert.assertTrue(f.autoDropCheckBox.isSelected());
+        JemmyUtil.enterClickAndLeave(f.autoDropCheckBox);
+        
         // create a route not serviced by this location
         Location locB = lManager.getLocationByName("Test Loc B"); 
         RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
@@ -362,6 +365,16 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         
         JUnitUtil.dispose(f);
     }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Track t = l.addTrack("Test Close", Track.INTERCHANGE);
+        InterchangeEditFrame f = new InterchangeEditFrame();
+        f.initComponents(l, t);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
+    }
+
 
 
     // Ensure minimal setup for log4J

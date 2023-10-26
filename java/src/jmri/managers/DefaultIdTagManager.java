@@ -383,7 +383,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     @Override
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {
-        return Bundle.getMessage(plural ? "BeanNameReporters" : "BeanNameReporter");
+        return Bundle.getMessage(plural ? "BeanNameIdTags" : "BeanNameIdTag");
     }
 
     /**

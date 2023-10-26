@@ -175,10 +175,7 @@ class createandshowGUI3(TableModelListener):
             activeTrainList.add(activeTrain)
 
         for activeTrain in activeTrainList:
-            # print "i", i
-            # activeTrain = activeTrainsList.get(i)
             if self.logLevel > 0: print ("active train", activeTrain)
-            print ("active train", activeTrain)
             #swap the direction of the train
             # (found need to do this as train went off in wrong direction after setting new trainsit)
             train_name = activeTrain.getTrainName()

@@ -108,6 +108,11 @@
                     </li>
                       
                     <li>
+                        <a href="html/hardware/bidib/index.shtml">BiDiB </a>
+                        <ul></ul>
+                    </li>
+                      
+                    <li>
                         <a href="html/hardware/can/index.shtml">CAN Bus Overview </a>
                         <ul></ul>
                     </li>
@@ -1679,6 +1684,18 @@
                                
                             <li>
                                 <a href="package/jmri/jmrix/bachrus/SpeedoConsoleFrame.shtml">Speedo Console </a>
+                                <ul></ul>
+                            </li>
+                              
+                        </ul>
+                    </li>
+                      
+                    <li>
+                        <a href="html/hardware/bidib/index.shtml">BiDiB </a>
+                        <ul>
+                               
+                            <li>
+                                <a href="html/hardware/bidib/BiDiB-SignalMast.shtml">Signal Masts </a>
                                 <ul></ul>
                             </li>
                               

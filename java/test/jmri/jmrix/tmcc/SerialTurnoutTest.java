@@ -46,6 +46,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 //       Assert.assertEquals("content", "41 54 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROUGH (CLOSED) message
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         t.dispose();

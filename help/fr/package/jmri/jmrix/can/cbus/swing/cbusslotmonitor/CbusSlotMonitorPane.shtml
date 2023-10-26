@@ -144,11 +144,8 @@
       <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Page d'aide principale de
       CBUS JMRI</a> .</p>
 
-      <p>Voir les informations de débogage pour le Moniteur de Centrale en ajoutant .
-      log4j.category.jmri.jmrix.can.cbus.swing.cbusslotmonitor=DEBUG à votre fichier
-      default.lcf.</p>
 
-      <p>CBUS® est une marque déposée du Dr Michael Bolton.</p>
+      <p>CBUS&reg; est une marque déposée du Dr Michael Bolton.</p>
 
       <p>Traduction 2021-03-19</p>
 

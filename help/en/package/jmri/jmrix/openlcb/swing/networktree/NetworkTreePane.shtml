@@ -48,9 +48,10 @@
           </td>
         </tr>
 
-        <tr>
+        <tr  id="CDItool">
           <td>If you click on the "CDI" item, for Configuration Description Information, you'll get
-          a DecoderPro-like configuration tool for the node. Note that this is entirely taken from
+          a DecoderPro-like configuration tool for the node. 
+          Note that this is entirely taken from
           the OpenLCB node itself. There's no need to find a decoder configuration file, select the
           right board type, etc.</td>
           <td>

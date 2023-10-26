@@ -6,7 +6,6 @@ import static jmri.server.json.JSON.DECODER_FAMILY;
 import static jmri.server.json.JSON.DECODER_MODEL;
 import static jmri.server.json.JSON.F;
 import static jmri.server.json.JSON.FUNCTION_KEYS;
-import static jmri.server.json.JSON.GET;
 import static jmri.server.json.JSON.GROUP;
 import static jmri.server.json.JSON.ICON;
 import static jmri.server.json.JSON.IMAGE;
@@ -23,7 +22,6 @@ import static jmri.server.json.JSON.OWNER;
 import static jmri.server.json.JSON.ROAD;
 import static jmri.server.json.JSON.SELECTED_ICON;
 import static jmri.server.json.JSON.SHUNTING_FUNCTION;
-import static jmri.server.json.JSON.V5;
 import static jmri.server.json.JSON.VALUE;
 
 import com.fasterxml.jackson.databind.JsonNode;

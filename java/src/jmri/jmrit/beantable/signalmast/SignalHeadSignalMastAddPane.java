@@ -17,7 +17,6 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
@@ -37,6 +36,7 @@ import jmri.swing.NamedBeanComboBox;
 import jmri.util.StringUtil;
 import jmri.util.javaworld.GridLayout2;
 import jmri.util.swing.JComboBoxUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * A pane for configuring SignalHeadSignalMast objects.
@@ -215,8 +215,8 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
                 // see if it exists (remember, we're not handling a current mast)
                 SignalMast m = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(name);
                 if (m != null) {
-                    JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(Bundle.getMessage("DuplicateMast"),
-                            new Object[]{m.getDisplayName()}), Bundle.getMessage("DuplicateMastTitle"), JOptionPane.INFORMATION_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(this, java.text.MessageFormat.format(Bundle.getMessage("DuplicateMast"),
+                            new Object[]{m.getDisplayName()}), Bundle.getMessage("DuplicateMastTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
                     return false;
                 }
                 try {
@@ -267,10 +267,10 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
     }
 
     void handleCreateException(String sysName) {
-        JOptionPane.showMessageDialog(null,
+        JmriJOptionPane.showMessageDialog(this,
                 Bundle.getMessage("ErrorSignalMastAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.ERROR_MESSAGE);
     }
 
     @ServiceProvider(service = SignalMastAddPane.SignalMastAddPaneProvider.class)

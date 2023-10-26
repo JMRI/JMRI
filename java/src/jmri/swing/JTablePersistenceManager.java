@@ -56,7 +56,7 @@ public interface JTablePersistenceManager {
      *                                  persisted by the same name
      * @throws NullPointerException     if the table name is null
      */
-    public default void persist(@Nonnull JTable table) throws IllegalArgumentException, NullPointerException {
+    default void persist(@Nonnull JTable table) throws IllegalArgumentException, NullPointerException {
         this.persist(table, false);
     }
 
@@ -81,7 +81,7 @@ public interface JTablePersistenceManager {
      *                                  persisted by the same name
      * @throws NullPointerException     if the table name is null
      */
-    public void persist(@Nonnull JTable table, boolean resetState) throws IllegalArgumentException, NullPointerException;
+    void persist(@Nonnull JTable table, boolean resetState) throws IllegalArgumentException, NullPointerException;
 
     /**
      * Stop persisting the table. This does not clear the persistence state, but
@@ -91,7 +91,7 @@ public interface JTablePersistenceManager {
      * @param table the table to stop persisting
      * @throws NullPointerException if the table name is null
      */
-    public void stopPersisting(@Nonnull JTable table) throws NullPointerException;
+    void stopPersisting(@Nonnull JTable table) throws NullPointerException;
 
     /**
      * Remove the persistent state for a table from the cache. This does not
@@ -100,7 +100,7 @@ public interface JTablePersistenceManager {
      * @param table the table to clear
      * @throws NullPointerException if the table name is null
      */
-    public void clearState(@Nonnull JTable table) throws NullPointerException;
+    void clearState(@Nonnull JTable table) throws NullPointerException;
 
     /**
      * Add the current state for a table to the cache. This does not cause the
@@ -109,7 +109,7 @@ public interface JTablePersistenceManager {
      * @param table the table to cache
      * @throws NullPointerException if the table name is null
      */
-    public void cacheState(@Nonnull JTable table) throws NullPointerException;
+    void cacheState(@Nonnull JTable table) throws NullPointerException;
 
     /**
      * Reset the table state to the cached state. This does not cause the
@@ -118,7 +118,7 @@ public interface JTablePersistenceManager {
      * @param table the table to reset
      * @throws NullPointerException if the table name is null
      */
-    public void resetState(@Nonnull JTable table) throws NullPointerException;
+    void resetState(@Nonnull JTable table) throws NullPointerException;
 
     /**
      * Pause saving persistence data to storage. If setting paused to false,
@@ -127,14 +127,14 @@ public interface JTablePersistenceManager {
      * @param paused true if saving persistence data should be paused; false
      *               otherwise.
      */
-    public void setPaused(boolean paused);
+    void setPaused(boolean paused);
 
     /**
      * Determine if saving persistence data is paused.
      *
      * @return true if saving persistence data is paused; false otherwise.
      */
-    public boolean isPaused();
+    boolean isPaused();
 
     /**
      * Determine if a table is being persisted.
@@ -142,7 +142,7 @@ public interface JTablePersistenceManager {
      * @param table the table to check against
      * @return true if the table is being persisted; false otherwise
      */
-    public boolean isPersisting(@Nonnull JTable table);
+    boolean isPersisting(@Nonnull JTable table);
 
     /**
      * Determine if a table is being persisted by name.
@@ -150,7 +150,7 @@ public interface JTablePersistenceManager {
      * @param name the name of the table to check against
      * @return true if the table is being persisted; false otherwise
      */
-    public boolean isPersisting(@Nonnull String name);
+    boolean isPersisting(@Nonnull String name);
 
     /**
      * Determine if persistence data is being held for a table.
@@ -158,7 +158,7 @@ public interface JTablePersistenceManager {
      * @param table the table to check against
      * @return true if the table has persistence data; false otherwise
      */
-    public boolean isPersistenceDataRetained(@Nonnull JTable table);
+    boolean isPersistenceDataRetained(@Nonnull JTable table);
 
     /**
      * Determine if persistence data is being held for a table.
@@ -166,5 +166,5 @@ public interface JTablePersistenceManager {
      * @param name the name of the table to check against
      * @return true if the table has persistence data; false otherwise
      */
-    public boolean isPersistenceDataRetained(@Nonnull String name);
+    boolean isPersistenceDataRetained(@Nonnull String name);
 }

@@ -2,8 +2,6 @@ package jmri.jmrix.loconet.pr3;
 
 import jmri.jmrix.loconet.LnSystemConnectionMemoTestBase;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
-import jmri.util.JUnitUtil;
-
 import org.junit.jupiter.api.*;
 
 /**

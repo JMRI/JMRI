@@ -10,9 +10,9 @@ package jmri.jmrix.dcc4pc;
  */
 public interface Dcc4PcInterface {
 
-    public void addDcc4PcListener(Dcc4PcListener l);
+    void addDcc4PcListener(Dcc4PcListener l);
 
-    public void removeDcc4PcListener(Dcc4PcListener l);
+    void removeDcc4PcListener(Dcc4PcListener l);
 
     /**
      * Test operational status of interface.

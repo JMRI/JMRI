@@ -38,6 +38,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>5</revnumber>
+      <date>2023-07-17</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>disable unimplemented CV by PD-series and DH06A</revremark>
+    </revision>
+    <revision>
       <revnumber>4</revnumber>
       <date>2019-07-28</date>
       <authorinitials>ALM</authorinitials>
@@ -62,7 +68,7 @@
       <revremark>Creation. Motorola support added on May 31st 2014 with firmware 3.04.</revremark>
     </revision>
   </revhistory>
-  <variable item="Motorola" CV="12" mask="XXXXXVVV" tooltip="CV12 Bits 0-2" default="1" exclude="PD05A,PD12A">
+  <variable item="Motorola" CV="12" mask="XXXXXVVV" tooltip="CV12 Bits 0-2" default="1" exclude="60,130,131,132,133,134">
     <enumVal>
       <enumChoice choice="Deactivated" value="0">
         <choice>Deactivated</choice>
@@ -123,7 +129,7 @@
     </enumVal>
     <label>Motorola</label>
   </variable>
-  <variable item="Reverse Motorola direction" CV="12" mask="XXXXVXXX" tooltip="CV12 Bit 3" default="0" exclude="PD05A,PD12A">
+  <variable item="Reverse Motorola direction" CV="12" mask="XXXXVXXX" tooltip="CV12 Bit 3" default="0" exclude="60,130,131,132,133,134">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Reverse Motorola direction</label>
     <label xml:lang="it">Direzione invertita in MM1</label>

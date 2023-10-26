@@ -172,7 +172,7 @@
     track individual changes on files that you commit.</p>
 
     <p>If you are using <a href="githubdesktopintro.shtml">GitHub Desktop</a>
-    to manage your copy of the JMRI code, create Pull Requests etc. then this will 
+    to manage your copy of the JMRI code, create Pull Requests etc. then this will
     take care of properly convert line endings to the correct format.
     There is no need to change anything within NetBeans.</p>
 
@@ -535,6 +535,11 @@
         System (NSIS), which can be downloaded from <a href=
         "https://sourceforge.net/projects/nsis/">the NSIS project website</a> on
         SourceForge.</p>
+
+        <p>Comments in <a href="https://github.com/JMRI/JMRI/blob/master/scripts/WinInstallFiles/LaunchJMRI.nsi#L21"
+        >LaunchJMRI.nsi</a> suggest that it is also necessary to install ( extract ) the 
+        &quot;Large strings&quot; build available from
+        <a href="https://nsis.sourceforge.io/Special_Builds">NSIS Special Builds<a>.
 
         <p>Once NSIS is installed on the computer, it is necessary to create a file called
         local.properties in the same directory as JMRI's build.xml file. This file is

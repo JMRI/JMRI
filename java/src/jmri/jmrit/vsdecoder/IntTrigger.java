@@ -1,5 +1,10 @@
 package jmri.jmrit.vsdecoder;
 
+import java.beans.PropertyChangeEvent;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Integer trigger.
  *
@@ -18,11 +23,6 @@ package jmri.jmrit.vsdecoder;
  *
  * @author Mark Underwood Copyright (C) 2011
  */
-import java.beans.PropertyChangeEvent;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 class IntTrigger extends Trigger {
 
     int notch;

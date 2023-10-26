@@ -6,9 +6,6 @@
 package jmri.jmrit.ctc.editor.code;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
-import jmri.jmrit.ctc.ctcserialdata.OtherData;
 
 /**
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019

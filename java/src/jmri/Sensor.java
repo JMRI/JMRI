@@ -24,23 +24,23 @@ import org.slf4j.LoggerFactory;
 public interface Sensor extends DigitalIO {
 
     // states are parameters; both closed and thrown is possible!
-    public static final int ACTIVE = DigitalIO.ON;
-    public static final int INACTIVE = DigitalIO.OFF;
+    static final int ACTIVE = DigitalIO.ON;
+    static final int INACTIVE = DigitalIO.OFF;
 
-    // MAx value for Debounce Parameter
-    public static final Long MAX_DEBOUNCE = 9999999L;
+    // Max value for Debounce Parameter
+    static final Long MAX_DEBOUNCE = 9999999L;
 
 
     /** {@inheritDoc} */
     @Override
-    default public boolean isConsistentState() {
+    default boolean isConsistentState() {
         return true;
     }
     
     /** {@inheritDoc} */
     @Override
     @InvokeOnLayoutThread
-    default public void setCommandedState(int s) {
+    default void setCommandedState(int s) {
         try {
             setState(s);
         } catch (JmriException ex) {
@@ -50,7 +50,7 @@ public interface Sensor extends DigitalIO {
     
     /** {@inheritDoc} */
     @Override
-    default public int getCommandedState() {
+    default int getCommandedState() {
         return getState();
     }
     
@@ -63,7 +63,7 @@ public interface Sensor extends DigitalIO {
      * @throws jmri.JmriException if unable to set the state
      */
     @InvokeOnLayoutThread
-    public void setKnownState(int newState) throws jmri.JmriException;
+    void setKnownState(int newState) throws jmri.JmriException;
 
     /**
      * Control whether the actual sensor input is considered to be inverted,
@@ -76,7 +76,7 @@ public interface Sensor extends DigitalIO {
      * @param inverted true if the sensor should be inverted; false otherwise
      */
     @InvokeOnLayoutThread
-    public void setInverted(boolean inverted);
+    void setInverted(boolean inverted);
 
     /**
      * Get the inverted state.
@@ -84,7 +84,7 @@ public interface Sensor extends DigitalIO {
      * @return true if the electrical signal that normally results in an ACTIVE
      *         state now results in an INACTIVE state; false otherwise
      */
-    public boolean getInverted();
+    boolean getInverted();
 
     /**
      * Determine if sensor can be inverted. When a turnout is inverted the
@@ -92,14 +92,14 @@ public interface Sensor extends DigitalIO {
      *
      * @return true if can be inverted; false otherwise
      */
-    public boolean canInvert();
+    boolean canInvert();
 
     /**
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
      */
     @Override
-    public void dispose();  // remove _all_ connections!
+    void dispose();  // remove _all_ connections!
 
     /**
      * Used to return the Raw state of a sensor prior to the known state of a
@@ -108,35 +108,35 @@ public interface Sensor extends DigitalIO {
      *
      * @return raw state value
      */
-    public int getRawState();
+    int getRawState();
 
     /**
      * Set the active debounce delay.
      *
      * @param timer delay in milliseconds; set to zero to de-activate debounce
      */
-    public void setSensorDebounceGoingActiveTimer(long timer);
+    void setSensorDebounceGoingActiveTimer(long timer);
 
     /**
      * Get the active debounce delay.
      *
      * @return delay in milliseconds
      */
-    public long getSensorDebounceGoingActiveTimer();
+    long getSensorDebounceGoingActiveTimer();
 
     /**
      * Set the inactive debounce delay.
      *
      * @param timer delay in milliseconds; set to zero to de-activate debounce
      */
-    public void setSensorDebounceGoingInActiveTimer(long timer);
+    void setSensorDebounceGoingInActiveTimer(long timer);
 
     /**
      * Get the inactive debounce delay.
      *
      * @return delay in milliseconds
      */
-    public long getSensorDebounceGoingInActiveTimer();
+    long getSensorDebounceGoingInActiveTimer();
 
     /**
      * Use the timers specified in the {@link jmri.SensorManager} for the
@@ -145,7 +145,7 @@ public interface Sensor extends DigitalIO {
      *
      * @param flag true to set to current defaults if not previously true
      */
-    public void setUseDefaultTimerSettings(boolean flag);
+    void setUseDefaultTimerSettings(boolean flag);
 
     /**
      * Does this sensor use the default timers values? (A remarkably unfortunate
@@ -155,7 +155,7 @@ public interface Sensor extends DigitalIO {
      * @return true if using default debounce values from the
      *         {@link jmri.SensorManager}
      */
-    public boolean getUseDefaultTimerSettings();
+    boolean getUseDefaultTimerSettings();
 
     /**
      * Some sensor boards also serve the function of being able to report back
@@ -165,7 +165,7 @@ public interface Sensor extends DigitalIO {
      *
      * @param re the reporter to associate with the sensor
      */
-    public void setReporter(@CheckForNull Reporter re);
+    void setReporter(@CheckForNull Reporter re);
 
     /**
      * Retrieve the reporter associated with this sensor if there is one.
@@ -173,14 +173,14 @@ public interface Sensor extends DigitalIO {
      * @return the reporter or null if there is no associated reporter
      */
     @CheckForNull
-    public Reporter getReporter();
+    Reporter getReporter();
 
     /*
      * Some sensor types allow us to configure a pull up and/or pull down 
      * resistor at runtime.  The PullResistance enum provides valid values
      * for the pull resistance.  The short name is used in xml files.
      */
-    public enum PullResistance {
+    enum PullResistance {
         PULL_UP("up", "PullResistanceUp"), // NOI18N
         PULL_DOWN("down", "PullResistanceDown"), // NOI18N
         PULL_OFF("off", "PullResistanceOff"); // NOI18N
@@ -232,16 +232,16 @@ public interface Sensor extends DigitalIO {
      * @param r PullResistance value to use.
      */
     @InvokeOnLayoutThread
-    public void setPullResistance(PullResistance r);
+    void setPullResistance(PullResistance r);
 
     /**
      * Get the pull resistance
      *
      * @return the currently set PullResistance value.
      */
-    public PullResistance getPullResistance();
+    PullResistance getPullResistance();
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_LOGGER_SHOULD_BE_PRIVATE",justification="Private not available in interface")
-    final static Logger log = LoggerFactory.getLogger(Sensor.class);
+    static final Logger log = LoggerFactory.getLogger(Sensor.class);
     
 }

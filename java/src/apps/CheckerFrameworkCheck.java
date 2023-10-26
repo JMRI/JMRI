@@ -19,7 +19,6 @@ package apps;
  * Types are explicitly qualified (instead of using 'import') to make it
  * completely clear which is being used at each point. That makes this the code
  * less readable, so it's not recommended for general use.
- * <p>
  * @see apps.FindBugsCheck
  * @author Bob Jacobsen 2016
  */

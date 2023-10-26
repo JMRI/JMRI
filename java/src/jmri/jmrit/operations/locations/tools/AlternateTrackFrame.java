@@ -5,9 +5,6 @@ import java.awt.GridBagLayout;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -15,6 +12,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.TrackEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame that allows user to select alternate track and options.
@@ -78,10 +76,10 @@ class AlternateTrackFrame extends OperationsFrame implements java.beans.Property
         if (ae.getSource() == saveButton) {
             // warn user that planned pickups and alternate track don't work
             // together
-            if (trackBox.getSelectedItem() != null && _track.getIgnoreUsedLengthPercentage() > 0) {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("PPWarningAlternate"),
+            if (trackBox.getSelectedItem() != null && _track.getIgnoreUsedLengthPercentage() > Track.IGNORE_0) {
+                JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("PPWarningAlternate"),
                         Bundle.getMessage("PPWarningConfiguration"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
             }
             _track.setAlternateTrack((Track) trackBox.getSelectedItem());
             OperationsXml.save();
@@ -102,5 +100,5 @@ class AlternateTrackFrame extends OperationsFrame implements java.beans.Property
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AlternateTrackFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AlternateTrackFrame.class);
 }

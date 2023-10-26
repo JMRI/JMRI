@@ -27,7 +27,7 @@ public interface LogixManager extends Manager<Logix> {
      * @param userName   the user name
      * @return a new Logix or null if unable to create: An error, or the Logix already exists
      */
-    public Logix createNewLogix(String systemName, String userName);
+    Logix createNewLogix(String systemName, String userName);
 
     /**
      * For use with User GUI, to allow the auto generation of systemNames, where
@@ -36,7 +36,7 @@ public interface LogixManager extends Manager<Logix> {
      * @param userName the user name
      * @return a new Logix or null if unable to create
      */
-    public Logix createNewLogix(String userName);
+    Logix createNewLogix(String userName);
 
     /**
      * Locate via user name, then system name if needed. Does not create a new
@@ -45,17 +45,19 @@ public interface LogixManager extends Manager<Logix> {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    public Logix getLogix(String name);
+    Logix getLogix(String name);
 
-    public Logix getByUserName(String s);
+    @Override
+    Logix getByUserName(String s);
 
-    public Logix getBySystemName(String s);
+    @Override
+    Logix getBySystemName(String s);
 
     /**
      * Activate all Logixs that are not currently active This method is called
      * after a configuration file is loaded.
      */
-    public void activateAllLogixs();
+    void activateAllLogixs();
 
     /**
      * Delete Logix by removing it from the manager. The Logix must first be
@@ -70,6 +72,6 @@ public interface LogixManager extends Manager<Logix> {
      * 
      * @param s true if Logix should be loadable while disabled
      */
-    public void setLoadDisabled(boolean s);
+    void setLoadDisabled(boolean s);
 
 }

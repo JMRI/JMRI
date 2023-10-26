@@ -16,35 +16,18 @@
 
     <div id="mainContent">
       <h1>Hardware Support: Methods to Connect Multiple Computers to a LocoNet&reg; Layout</h1>
-
-      <p>JMRI currently supports two different ways to connect multiple computers to your
-      LocoNet&reg;-equipped layout using a single LocoBuffer. In both methods, the computers
-      communicate using standard TCP/IP protocols, but there are differences in the details.</p>
-
-      <p>One method allows multiple JMRI nodes to connect as Clients to a single <a href=
+      
+      <p>To connect multiple computers to your LocoNet&reg;-equipped layout using a single
+      LocoBuffer, use LocoNet over TCP. It uses standard TCP/IP protocols to communicate.
+      See the <a href=
       "https://loconetovertcp.sourceforge.net/Interface/index.html">LocoNetOverTCP LbServer</a>,
-      which is external to JMRI.<br>
-      The other method uses the inbuilt <a href="LocoNetServer.shtml">LocoNet Client/Server
-      capability</a> of JMRI.</p>
+      which is external to JMRI.</p>
 
-      <p>The difference between these two methods is that JMRI LocoNet Client/Server uses the
-      native Java Remote Method Invocation (RMI) protocol, whereas the LocoNetOverTCP uses a
+      <p>The LocoNetOverTCP uses a
       separate non-Java server process, LbServer, that communicates using plain ASCII String
       messages over TCP/IP sockets, allowing non-Java nodes to also share the one LocoBuffer.</p>
 
-      <p>For most people who simply want to have several computers share a single LocoBuffer
-      connection, the <a href="LocoNetServer.shtml">JMRI LocoNet Client/Server option</a> can be
-      easier to configure. For others wanting to provide remote access the layout over Internet,
-      the <a href="LbServer.shtml">LocoNetOverTCP LbServer option</a> may be more suitable as
-      configuring the firewall rules to allow external access will be simpler. Setting up
-      networking equipment can be complicated, so if one of them doesn't work for you initially,
-      you might want to just try the other one to see if it works on your home network.</p>
-
       <ul>
-        <li>
-          <a href="LocoNetServer.shtml">How to set up LocoNet Client/Server</a>
-        </li>
-
         <li>
           <a href="LbServer.shtml">How to set up LocoNetOverTCP LbServer</a>
         </li>

@@ -71,6 +71,8 @@
 <mapID target="html.hardware.arduino.index_connect" url="html/hardware/arduino/index.shtml#connect"/>
 <mapID target="html.hardware.arduino.index_using" url="html/hardware/arduino/index.shtml#using"/>
 <mapID target="html.hardware.bachrus.index" url="html/hardware/bachrus/index.shtml"/>
+<mapID target="html.hardware.bidib.BiDiB-SignalMast" url="html/hardware/bidib/BiDiB-SignalMast.shtml"/>
+<mapID target="html.hardware.bidib.index" url="html/hardware/bidib/index.shtml"/>
 <mapID target="html.hardware.can.cbus.CbusMeters" url="html/hardware/can/cbus/CbusMeters.shtml"/>
 <mapID target="html.hardware.can.cbus.Names" url="html/hardware/can/cbus/Names.shtml"/>
 <mapID target="html.hardware.can.cbus.index" url="html/hardware/can/cbus/index.shtml"/>

@@ -2,7 +2,6 @@ package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -18,29 +17,30 @@ public class DCCppLightTest extends jmri.implementation.AbstractLightTestBase {
         return xnis.numListeners();
     }
 
-    DCCppInterfaceScaffold xnis;
-
     @Override
     public void checkOnMsgSent() {
-        Assert.assertEquals("ON message", "a 6 0 1",
-                xnis.outbound.elementAt(xnis.outbound.size() - 1).toString());
-        Assert.assertEquals("ON state", jmri.Light.ON, t.getState());
+        Assertions.assertEquals( "a 6 0 1",
+                xnis.outbound.elementAt(xnis.outbound.size() - 1).toString(), "ON message");
+        Assertions.assertEquals( jmri.Light.ON, t.getState(), "ON state");
     }
 
     @Override
     public void checkOffMsgSent() {
-        Assert.assertEquals("OFF message", "a 6 0 0",
-                xnis.outbound.elementAt(xnis.outbound.size() - 1).toString());
-        Assert.assertEquals("OFF state", jmri.Light.OFF, t.getState());
+        Assertions.assertEquals( "a 6 0 0",
+                xnis.outbound.elementAt(xnis.outbound.size() - 1).toString(), "OFF message");
+        Assertions.assertEquals( jmri.Light.OFF, t.getState(), "OFF state");
     }
 
+    private DCCppInterfaceScaffold xnis = null;
+    private DCCppSystemConnectionMemo memo = null;
+    
     @Override
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
         xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
-        DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(xnis);
+        memo = new DCCppSystemConnectionMemo(xnis);
         xnis.setSystemConnectionMemo(memo);
         memo.setSystemPrefix("d2");
         DCCppLightManager xlm = new DCCppLightManager(xnis.getSystemConnectionMemo());
@@ -50,7 +50,9 @@ public class DCCppLightTest extends jmri.implementation.AbstractLightTestBase {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        Assertions.assertNotNull(memo);
+        memo.getDCCppTrafficController().terminateThreads();
+        memo.dispose();
         JUnitUtil.tearDown();
 
     }

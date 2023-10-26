@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.locations.schedules;
 
-import java.text.MessageFormat;
 import java.util.*;
 
 import org.jdom2.Element;
@@ -9,9 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.beans.PropertyChangeSupport;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.LocationManagerXml;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
@@ -38,7 +35,7 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
 
     public static final String LISTCHANGE_CHANGED_PROPERTY = "scheduleListChange"; // NOI18N
     public static final String DISPOSE = "scheduleDispose"; // NOI18N
-    
+
     public static final String SCHEDULE_OKAY = ""; // NOI18N
 
     public Schedule(String id, String name) {
@@ -97,8 +94,8 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
 
     /**
      * Adds a car type to the end of this schedule
+     * 
      * @param type The string car type to add.
-     *
      * @return ScheduleItem created for the car type added
      */
     public ScheduleItem addItem(String type) {
@@ -121,9 +118,9 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
      * Add a schedule item at a specific place (sequence) in the schedule
      * Allowable sequence numbers are 0 to max size of schedule. 0 = start of
      * list.
-     * @param carType The string car type name to add.
+     * 
+     * @param carType  The string car type name to add.
      * @param sequence Where in the schedule to add the item.
-     *
      * @return schedule item
      */
     public ScheduleItem addItem(String carType, int sequence) {
@@ -139,6 +136,7 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     * 
      * @param si The schedule item to add.
      */
     public void register(ScheduleItem si) {
@@ -162,8 +160,8 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
 
     /**
      * Delete a ScheduleItem
+     * 
      * @param si The scheduleItem to delete.
-     *
      */
     public void deleteItem(ScheduleItem si) {
         if (si != null) {
@@ -184,15 +182,16 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
     private void resequenceIds() {
         List<ScheduleItem> scheduleItems = getItemsBySequenceList();
         for (int i = 0; i < scheduleItems.size(); i++) {
-            scheduleItems.get(i).setSequenceId(i + 1); // start sequence numbers at 1
+            scheduleItems.get(i).setSequenceId(i + 1); // start sequence numbers
+                                                       // at 1
             _sequenceNum = i + 1;
         }
     }
 
     /**
      * Get item by car type (gets last schedule item with this type)
+     * 
      * @param carType The string car type to search for.
-     *
      * @return schedule item
      */
     public ScheduleItem getItemByType(String carType) {
@@ -210,8 +209,8 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
 
     /**
      * Get a ScheduleItem by id
+     * 
      * @param id The string id of the ScheduleItem.
-     *
      * @return schedule item
      */
     public ScheduleItem getItemById(String id) {
@@ -260,8 +259,8 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
 
     /**
      * Places a ScheduleItem earlier in the schedule
+     * 
      * @param si The ScheduleItem to move.
-     *
      */
     public void moveItemUp(ScheduleItem si) {
         int sequenceId = si.getSequenceId();
@@ -283,8 +282,8 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
 
     /**
      * Places a ScheduleItem later in the schedule
+     * 
      * @param si The ScheduleItem to move.
-     *
      */
     public void moveItemDown(ScheduleItem si) {
         int sequenceId = si.getSequenceId();
@@ -312,11 +311,11 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
         }
         return null;
     }
-    
+
     /**
      * Check to see if schedule is valid for the track.
+     * 
      * @param track The track associated with this schedule
-     *
      * @return SCHEDULE_OKAY if schedule okay, otherwise an error message.
      */
     public String checkScheduleValid(Track track) {
@@ -330,33 +329,32 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
             if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) &&
                     InstanceManager.getDefault(TrainScheduleManager.class)
                             .getScheduleById(si.getSetoutTrainScheduleId()) == null) {
-                status = MessageFormat.format(Bundle.getMessage("NotValid"),
-                        new Object[] { si.getSetoutTrainScheduleId() });
+                status = Bundle.getMessage("NotValid", si.getSetoutTrainScheduleId());
                 break;
             }
             if (!si.getPickupTrainScheduleId().equals(ScheduleItem.NONE) &&
                     InstanceManager.getDefault(TrainScheduleManager.class)
                             .getScheduleById(si.getPickupTrainScheduleId()) == null) {
-                status = MessageFormat.format(Bundle.getMessage("NotValid"),
-                        new Object[] { si.getPickupTrainScheduleId() });
+                status = Bundle.getMessage("NotValid", si.getPickupTrainScheduleId());
                 break;
             }
             if (!track.getLocation().acceptsTypeName(si.getTypeName())) {
-                status = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getTypeName() });
+                status = Bundle.getMessage("NotValid", si.getTypeName());
                 break;
             }
             if (!track.isTypeNameAccepted(si.getTypeName())) {
-                status = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getTypeName() });
+                status = Bundle.getMessage("NotValid", si.getTypeName());
                 break;
             }
-            // check roads, accepted by track, valid road, and there's at least one car with
+            // check roads, accepted by track, valid road, and there's at least
+            // one car with
             // that road
             if (!si.getRoadName().equals(ScheduleItem.NONE) &&
                     (!track.isRoadNameAccepted(si.getRoadName()) ||
                             !InstanceManager.getDefault(CarRoads.class).containsName(si.getRoadName()) ||
                             InstanceManager.getDefault(CarManager.class).getByTypeAndRoad(si.getTypeName(),
                                     si.getRoadName()) == null)) {
-                status = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getRoadName() });
+                status = Bundle.getMessage("NotValid", si.getRoadName());
                 break;
             }
             // check loads
@@ -364,11 +362,11 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
             if (!si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
                     (!track.isLoadNameAndCarTypeAccepted(si.getReceiveLoadName(), si.getTypeName()) ||
                             !loads.contains(si.getReceiveLoadName()))) {
-                status = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getReceiveLoadName() });
+                status = Bundle.getMessage("NotValid", si.getReceiveLoadName());
                 break;
             }
             if (!si.getShipLoadName().equals(ScheduleItem.NONE) && !loads.contains(si.getShipLoadName())) {
-                status = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getShipLoadName() });
+                status = Bundle.getMessage("NotValid", si.getShipLoadName());
                 break;
             }
             // check destination
@@ -376,41 +374,41 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
                     (!si.getDestination().acceptsTypeName(si.getTypeName()) ||
                             InstanceManager.getDefault(LocationManager.class)
                                     .getLocationById(si.getDestination().getId()) == null)) {
-                status = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getDestination() });
+                status = Bundle.getMessage("NotValid", si.getDestination());
                 break;
             }
             // check destination track
             if (si.getDestination() != null && si.getDestinationTrack() != null) {
                 if (!si.getDestination().isTrackAtLocation(si.getDestinationTrack())) {
-                    status = MessageFormat.format(Bundle.getMessage("NotValid"),
-                            new Object[] { si.getDestinationTrack() + " (" + Bundle.getMessage("Track") + ")" });
+                    status = Bundle.getMessage("NotValid",
+                            si.getDestinationTrack() + " (" + Bundle.getMessage("Track") + ")");
                     break;
                 }
                 if (!si.getDestinationTrack().isTypeNameAccepted(si.getTypeName())) {
-                    status = MessageFormat.format(Bundle.getMessage("NotValid"),
-                            new Object[] { si.getDestinationTrack() + " (" + Bundle.getMessage("Type") + ")" });
+                    status = Bundle.getMessage("NotValid",
+                            si.getDestinationTrack() + " (" + Bundle.getMessage("Type") + ")");
                     break;
                 }
                 if (!si.getRoadName().equals(ScheduleItem.NONE) &&
                         !si.getDestinationTrack().isRoadNameAccepted(si.getRoadName())) {
-                    status = MessageFormat.format(Bundle.getMessage("NotValid"),
-                            new Object[] { si.getDestinationTrack() + " (" + Bundle.getMessage("Road") + ")" });
+                    status = Bundle.getMessage("NotValid",
+                            si.getDestinationTrack() + " (" + Bundle.getMessage("Road") + ")");
                     break;
                 }
                 if (!si.getShipLoadName().equals(ScheduleItem.NONE) &&
                         !si.getDestinationTrack().isLoadNameAndCarTypeAccepted(si.getShipLoadName(),
                                 si.getTypeName())) {
-                    status = MessageFormat.format(Bundle.getMessage("NotValid"),
-                            new Object[] { si.getDestinationTrack() + " (" + Bundle.getMessage("Load") + ")" });
+                    status = Bundle.getMessage("NotValid",
+                            si.getDestinationTrack() + " (" + Bundle.getMessage("Load") + ")");
                     break;
                 }
             }
         }
         return status;
     }
-    
+
     private static boolean debugFlag = false;
-    
+
     /*
      * Match mode search
      */
@@ -419,7 +417,8 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
             log.debug("Search match for car ({}) type ({}) load ({})", car.toString(), car.getTypeName(),
                     car.getLoadName());
         }
-        // has the car already been assigned a schedule item? Then verify that its still
+        // has the car already been assigned a schedule item? Then verify that
+        // its still
         // okay
         if (!car.getScheduleItemId().equals(Track.NONE)) {
             ScheduleItem si = getItemById(car.getScheduleItemId());
@@ -432,6 +431,11 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
                         car.getScheduleItemId(), status);
             }
         }
+        // first check to see if the schedule services car type
+        if (!checkScheduleAttribute(Track.TYPE, car.getTypeName(), car)) {
+            return Track.SCHEDULE + " " + Bundle.getMessage("scheduleNotType", getName(), car.getTypeName());
+        }
+
         // search schedule for a match
         for (int i = 0; i < getSize(); i++) {
             ScheduleItem si = track.getNextScheduleItem();
@@ -445,7 +449,8 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
                 log.debug("Found item match ({}) car ({}) type ({}) load ({}) ship ({}) destination ({}, {})",
                         si.getId(), car.toString(), car.getTypeName(), si.getReceiveLoadName(), si.getShipLoadName(),
                         si.getDestinationName(), si.getDestinationTrackName()); // NOI18N
-                car.setScheduleItemId(si.getId()); // remember which item was a match
+                car.setScheduleItemId(si.getId()); // remember which item was a
+                                                   // match
                 return Track.OKAY;
             } else {
                 if (debugFlag) {
@@ -457,11 +462,12 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
             log.debug("No Match");
         }
         car.setScheduleItemId(Car.NONE); // clear the car's schedule id
-        return Track.SCHEDULE + " " + Bundle.getMessage("noMatch");
+        return Track.SCHEDULE + " " + Bundle.getMessage("matchMessage", getName());
     }
-    
+
     public String checkScheduleItem(ScheduleItem si, Car car, Track track) {
-        // if car is already assigned to this schedule item allow it to be dropped off
+        // if car is already assigned to this schedule item allow it to be
+        // dropped off
         // on the wrong day (car arrived late)
         if (!car.getScheduleItemId().equals(si.getId()) &&
                 !si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) &&
@@ -525,7 +531,8 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
                     si.getReceiveLoadName() +
                     ")";
         }
-        // don't try the random feature if car is already assigned to this schedule item
+        // don't try the random feature if car is already assigned to this
+        // schedule item
         if (car.getFinalDestinationTrack() != track &&
                 !si.getRandom().equals(ScheduleItem.NONE) &&
                 !car.getScheduleItemId().equals(si.getId())) {
@@ -534,8 +541,7 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
                 double random = 100 * Math.random();
                 log.debug("Selected random {}, created random {}", si.getRandom(), random);
                 if (random > value) {
-                    return MessageFormat.format(Bundle.getMessage("scheduleRandom"),
-                            new Object[] { Track.SCHEDULE, getName(), si.getId(), value, random });
+                    return Bundle.getMessage("scheduleRandom", Track.SCHEDULE, getName(), si.getId(), value, random);
                 }
             } catch (NumberFormatException e) {
                 log.error("Random value {} isn't a number", si.getRandom());
@@ -543,7 +549,7 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
         }
         return Track.OKAY;
     }
-    
+
     public boolean checkScheduleAttribute(String attribute, String carType, Car car) {
         List<ScheduleItem> scheduleItems = getItemsBySequenceList();
         for (ScheduleItem si : scheduleItems) {
@@ -590,7 +596,6 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
         }
         return false;
     }
-
 
     /**
      * Construct this Entry from XML. This member has to remain synchronized

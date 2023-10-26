@@ -7,14 +7,11 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Pete Cressman Copyright (c) 2012
@@ -85,11 +82,11 @@ public class ShapeDrawer {
 
     protected boolean makeNewShape() {
         if (_drawFrame != null) {
-            int ans = JOptionPane.showConfirmDialog(_drawFrame,
+            int ans = JmriJOptionPane.showConfirmDialog(_drawFrame,
                    Bundle.getMessage("cancelFrame", _drawFrame.getTitle()),
                    Bundle.getMessage("QuestionTitle"),
-                   JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (ans == JOptionPane.YES_OPTION) {
+                   JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.QUESTION_MESSAGE);
+            if (ans == JmriJOptionPane.YES_OPTION) {
                 _drawFrame.closingEvent(true);
                 return true;
             } else {
@@ -259,5 +256,6 @@ public class ShapeDrawer {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ShapeDrawer.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ShapeDrawer.class);
+
 }

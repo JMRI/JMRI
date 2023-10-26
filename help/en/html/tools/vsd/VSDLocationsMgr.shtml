@@ -32,17 +32,17 @@
       consolidated location to manage and set the apparent physical location of sounds for trains
       using Virtual Sound Decoder</span>.</p>
       The <strong>Manage VSD Locations</strong> window has four tabs: Reporters, Blocks, Operations
-      Locations, and Listeners. Each tab shows a list of objects, each with a check-box to
+      Locations, and Listener. Each tab shows a list of objects, each with a check-box to
       enable/disable use (for VSD purposes, not for other JMRI purposes), and entry cells for X, Y,
       and Z location coordinates.
       <h5>Reporters</h5>
       <img src="images/VSD_Locations01.png" alt="Manage Reporter Locations" width="550" height=
-      "356">
+      "232">
       <p>The Reporters tab shows a list of all currently defined Reporters. This is intended for
       use with Digitrax Transponding or other similar locomotive tracking hardware systems.</p>
 
       <h5>Blocks</h5>
-      <img src="images/VSD_Locations02.png" alt="Manage Block Locations" width="550" height="232">
+      <img src="images/VSD_Locations02.png" alt="Manage Block Locations" width="550" height="266">
       <p>The Blocks tab shows a list of all currently defined Blocks. This is intended for use with
       Digitrax Transponding or other similar locomotive tracking hardware systems. Using occupancy
       sensors it's possible to track exactly one loco.</p>
@@ -53,10 +53,10 @@
       <p>The Operations Locations tab shows a list of all Locations defined within the JMRI
       Operations system.</p>
 
-      <h5>Listeners</h5>
+      <h5>Listener</h5>
       <img src="images/VSD_Locations04.png" alt="Manage Listener Location" width="550" height=
       "232">
-      <p>The Listeners tab shows the location of the Listener in the VSD sound system. The Listener
+      <p>The Listener tab shows the location of the Listener in the VSD sound system. The Listener
       position has two additional measurements: the Bearing (angle clockwise from the Y axis) and
       Azimuth (angle up or down from the X/Y plane) which together describe which way the Listener
       is facing.</p>
@@ -65,7 +65,8 @@
 
       <p>With input from locomotive tracking hardware, Virtual Sound Decoder is able to move the
       apparent source of the locomotive sound to follow the locomotive's position on the
-      layout.</p>
+      layout. Well, there is an option to do this without any hardware, 
+      <a href="VSDLocationsMgr.shtml#advanced_location_following">see below</a>.</p>
 
       <h5>Location Following Setup</h5>
       To enable location following you will need a hardware method of tracking the locomotive's
@@ -140,7 +141,7 @@
       <p>If you do not specifically set the Listener location and orientation, the Listener by
       default will be at (0, 0, 0) and facing straight ahead along the +Y axis (bearing 0.0 degrees
       / azimuth 0.0 degrees). To set a different Listener location and/or orientation, go to the
-      Listeners tab and set the X / Y / Z coordinates of the Listener's location. The coordinates
+      Listener tab and set the X / Y / Z coordinates of the Listener's location. The coordinates
       and units must be the same as those used for the Reporters or other Objects.</p>
 
       <p>The Bearing and Azimuth values set the orientation of the Listener, or the direction the
@@ -204,6 +205,13 @@
       the apparent source of the locomotive sound to follow the locomotive's position on the
       layout.</p>
 
+      <p><strong>However, there is an option to do this without tracking hardware:</strong>
+      simply uncheck the CheckBox "Use Blocks" in VSD Preferences.<br>
+      This data driven "sound following" based on a LayoutEditor panel works as long as there
+      is an available piece of track.<br>
+      A disadvantage: a mechanical issue may stop a loco but will not stop the sound
+      following - sound and loco position will get out of sync.</p>
+
       <p>The next section presents two setup possibilities - a newer and simple way based on a
       LayoutEditor panel and an earlier way by adding some geometric layout data into a file.
       </p>
@@ -252,17 +260,14 @@
       possible starting Block, then open the throttle.</p>
 
       <p>The current sound position is printed in the System Console.</p>
-      <p>No further block setting is necessary if your are in Simulator Mode and the CheckBox
-      "Use Blocks" in VSD Preferences is unchecked.</p>
+
       <p>Watch the System Console for events that stop the sound positioning.</p>
       <p>To use another panel do also change the panel title in the VSDGeoData.xml.</p>
 
-      <p>Turntables are not supported. The sound position remains unchanged, until you 
-      reverse the locomotive traveling direction.</p>
-
       <p>Routes, Signals and Dispatcher are not tested.</p>
-      <p><em>Note:</em> To hear the surround sound, at least two speakers are required.</p>
- 
+      <p><em>Note 1:</em> To hear the surround sound, at least two speakers are required.</p>
+      <p><em>Note 2:</em> A turntable must have a ray track at a 180 degree offset for each ray
+      track. The turntable support started with JMRI Test Release 5.5.2.</p>
  
       <p><strong>And here is the old setup version of Advanced Location Following.</strong></p>
 
@@ -385,11 +390,9 @@
       <p>During the setting up and test process I recommend to open a JMRI system console, which
       might provide helpful information: <strong>Help &rArr; System Console</strong>.</p>
 
-      <p>You might also enrich the logging information, by adding the line</p>
-
-      <pre>   log4j.category.jmri.jmrit.vsdecoder.VSDGeoFile=DEBUG</pre>
-      <p>to the file <strong>default.lcf</strong> as the last line. This file is located in your
-      "Settings Location" (JMRI).</p>
+      <p>You might also enrich the logging information ( see <a 
+       href="../../apps/Debug.shtml">Debugging and System Logging</a> ), by adding the Logger Category Name
+      <br><code>jmri.jmrit.vsdecoder.VSDGeoFile</code> at DEBUG level.</p>
 
       <p>Once you have a working setup, you can activate an option in your VSD configuration file
       to print the calculated position points describing the route of your locomotive. Please see

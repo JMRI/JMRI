@@ -15,7 +15,7 @@ public class HexRecord {
 
     // Record types
     static final byte EXT_ADDR = 4;
-    static final byte DATA = 0;
+    static final byte TYPE_DATA = 0;
     static final byte END = 1;
     // Maximum data length
     static final int MAX_LEN = 256;

@@ -154,6 +154,8 @@ var requestPanelXML = function(panelName) {
         success: function(data, textStatus, jqXHR) {
             processPanelXML(data, textStatus, jqXHR);
             setTitle($gPanel["name"]);  // set final title once load completes, helps with testing
+            // set new attribute data-panel-name on the panel-area div to the panel name so that a user's css can use it.
+            $("#panel-area").attr("data-panel-name", $gPanel["name"]);
         },
         error: function( jqXHR, textStatus, errorThrown) {
             alert("Error retrieving panel xml from server.  Please press OK to retry.\n\nDetails: " +
@@ -291,6 +293,18 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['rotation'] = $(this).find('icon').find('rotation').text() * 1;
                             $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($widget.rotation * 90);
                             $widget['scale'] = $(this).find('icon').attr('scale');
+                            break;
+                        case "logixngicon" :
+                            $widget['identity'] = $(this).find('Identity').text();
+                            $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
+                            $widget['rotation'] = $(this).find('icon').find('rotation').text() * 1;
+                            $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($widget.rotation * 90);
+                            $widget['scale'] = $(this).find('icon').attr('scale');
+                            $widget.classes += " " + $widget.jsonType + " clickable"; //make it clickable
+                            if (!$('#' + $widget.id).hasClass('clickable')) {
+                                $('#' + $widget.id).addClass("clickable");
+                                $('#' + $widget.id).bind(UPEVENT, $handleClick);
+                            }
                             break;
                         case "linkinglabel" :
                             $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
@@ -649,6 +663,12 @@ function processPanelXML($returnedData, $success, $xhr) {
                 case "text" :
                     $widget['styles'] = $getTextCSSFromObj($widget);
                     switch ($widget.widgetType) {
+                        case "logixngicon" :
+                            $widget.jsonType = "logixngicon"; // JSON object type
+                            $widget['identity'] = $(this).find('Identity').text();
+                            $widget.styles['user-select'] = "none";
+                            $widget.classes += " " + $widget.jsonType + " clickable ";
+                            break;
                         case "sensoricon" :
                             $widget['name'] = $widget.sensor; //normalize name
                             $widget.jsonType = "sensor"; // JSON object type
@@ -1136,6 +1156,26 @@ function processPanelXML($returnedData, $success, $xhr) {
                             //draw the LayoutShape
                             $drawLayoutShape($widget);
                             break;
+                        case "positionableRoundRect" :
+                            //log.log("#### positionableRoundRect ####");
+                            //copy and reformat some attributes from children into object
+                            $widget['width'] = $(this).find('size').attr('width');
+                            $widget['height'] = $(this).find('size').attr('height');
+                            $widget['cornerRadius'] = $(this).find('size').attr('cornerRadius');
+                            lc = $(this).find('lineColor');
+                            $widget['lineColor'] = 
+                            	'rgba('+lc.attr('red')+','+lc.attr('green')+',' +
+                                lc.attr('blue')+','+lc.attr('alpha')/256+')';
+                            fc = $(this).find('fillColor');
+                            $widget['fillColor'] = 
+                             	'rgba('+fc.attr('red')+','+fc.attr('green')+',' +
+                                fc.attr('blue')+','+fc.attr('alpha')/256+')';
+                            //store this widget in persistent array, with ident as key
+                            $widget['id'] = $widget.ident;
+                            $gWidgets[$widget.id] = $widget;
+                            //draw the positionableRoundRect
+                            $drawPositionableRoundRect($widget);
+                            break;
                         default:
                             log.warn("unknown $widget.widgetType: " + $widget.widgetType + ".");
                             break;
@@ -1402,6 +1442,10 @@ function $handleClick(e) {
             sendElementChange($widget.jsonType, $widget.turnoutLowerEast, $turnoutWestNewState); // note: same as turnoutEast
         }
         return;
+    } else if (this.className.startsWith('logixngicon ')) {
+        // special handling of logixngicon
+        var $widget = $gWidgets[this.id];
+        jmri.clickLogixNGIcon($widget['identity']);
     } else {
         var $widget = $gWidgets[this.id];
         var $newState = $getNextState($widget); // determine next state from current state
@@ -1559,6 +1603,9 @@ function $drawIcon($widget) {
             ovlCSS = {position:'absolute', left: $widget.x + 'px', top: $widget.y + 'px', zIndex: $widget.level*1 + 1, pointerEvents: 'none'};
             $.extend(ovlCSS, $widget.styles); // append the styles from the widget
             delete ovlCSS['background-color'];  // clear the background color
+            if (isDefined($widget.fixedHeight)) {
+            	$.extend(ovlCSS, {lineHeight: $widget.fixedHeight + 'px'}); // add lineheight for vertical centering (if set)
+            }
             $("#panel-area>#" + $widget.id + "-overlay").css(ovlCSS);
         }
     } else {
@@ -1609,8 +1656,8 @@ var $getTextCSSFromObj = function($widget) {
     if (isDefined($widget.size)) {
         $retCSS['font-size'] = $widget.size + "px ";
     }
-    if (isDefined($widget.fontname)) {
-        $retCSS['font-family'] = $widget.fontname;
+    if (isDefined($widget.fontFamily)) {
+        $retCSS['font-family'] = $widget.fontFamily;
     }
     if (isDefined($widget.margin)) {
         $retCSS['padding'] = $widget.margin + "px ";
@@ -1946,9 +1993,9 @@ var $setWidgetState = function($id, $newState, data) {
     }
 
     if ($widget.state !== $newState) { // don't bother if already this value
-        //if (jmri_logging) {
+        if (jmri_logging) {
             log.log("JMRI changed " + $id + " (" + $widget.jsonType + " " + $widget.name + ") from state '" + $widget.state + "' to '" + $newState + "'.");
-        //}
+        }
         if (data.type == "sensor" && ($widget.widgetType == "indicatortrackicon" || $widget.widgetType == "indicatortrackicon")) {
             $widget.occupancystate = $newState;
         } else { // standard handling of icon widgets
@@ -2239,7 +2286,7 @@ var $preloadWidgetImages = function($widget) {
 // note: not-yet-supported widgets are commented out here so as to return undefined
 var $getWidgetFamily = function($widget, $element) {
 
-    if (($widget.widgetType == "positionablelabel" || $widget.widgetType == "linkinglabel")
+    if (($widget.widgetType == "positionablelabel" || $widget.widgetType == "linkinglabel" || $widget.widgetType == "logixngicon")
             && isDefined($widget.text)) {
         return "text";  //special case to distinguish text vs. icon labels
     }
@@ -2260,6 +2307,7 @@ var $getWidgetFamily = function($widget, $element) {
             return "text";
             break;
         case "positionablelabel" :
+        case "logixngicon" :
         case "linkinglabel" :
         case "turnouticon" :
         case "sensoricon" :
@@ -2282,6 +2330,7 @@ var $getWidgetFamily = function($widget, $element) {
         case "levelxing" :
         case "layoutturntable" :
         case "layoutShape" :
+        case "positionableRoundRect" :
             return "drawn";
             break;
         case "beanswitch" :
@@ -3420,6 +3469,36 @@ function $drawSlip($widget) {
     }
 }   // function $drawSlip($widget)
 
+function $drawPositionableRoundRect($widget) {
+    //log.log("drawing PositionableRoundRect")
+    if ($gCtx == undefined) {  //create context if needed for drawing
+        $("#panel-area").prepend("<canvas id='panelCanvas' width=" + $gPanel.panelwidth + "px height=" +
+            $gPanel.panelheight + "px style='position:absolute;z-index:2;'>");
+        var canvas = document.getElementById("panelCanvas");
+        $gCtx = canvas.getContext("2d");
+        $gCtx.strokeStyle = $gPanel.defaulttrackcolor;
+        $gCtx.lineWidth = $gPanel.sidelinetrackwidth;
+    }
+    $gCtx.save();   // save current line width and color
+
+    if (isDefined($widget.lineColor)) {
+        $gCtx.strokeStyle = $widget.lineColor;
+    }
+    if (isDefined($widget.fillColor)) {
+        $gCtx.fillStyle = $widget.fillColor;
+    }
+    if (isDefined($widget.lineWidth)) {
+        $gCtx.lineWidth = $widget.lineWidth;
+    }
+
+    $gCtx.beginPath();
+	$gCtx.roundRect($widget.x, $widget.y, $widget.width, $widget.height, $widget.cornerRadius);
+	$gCtx.stroke()
+	$gCtx.fill()
+    $gCtx.restore();        // restore color and width back to default
+
+}   // function $drawPositionableRoundRect($widget)
+
 function $drawLayoutShape($widget) {
     var $pts = $widget.points;   // get the points
     var len = $pts.length;
@@ -3433,7 +3512,7 @@ function $drawLayoutShape($widget) {
             $gCtx.fillStyle = $widget.fillColor;
         }
         if (isDefined($widget.linewidth)) {
-            $gCtx.lineWidth = $widget.linewidth;
+            $gCtx.lineWidth = $widget.linewidth; //TODO: check case on this
         }
 
         $gCtx.beginPath();

@@ -18,6 +18,6 @@ public interface Dcc4PcPanelInterface {
      * classes.
      * @param memo system connection.
      */
-    public void initComponents(Dcc4PcSystemConnectionMemo memo);
+    void initComponents(Dcc4PcSystemConnectionMemo memo);
 
 }

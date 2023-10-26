@@ -1,7 +1,7 @@
 <!-- SidebarInstall.shtml -->
 <!-- Sidebar Part to list installation and setup files -->
 
-<dt><a href="/help/en/html/setup">JMRI Setup and Installation</a></dt>
+<dt><a href="/help/en/html/setup/index.shtml">JMRI Setup and Installation</a></dt>
 		<dd> JMRI environments...
 		    <ul>
             <li><a href="/install/WindowsNew.shtml">Windows</a>

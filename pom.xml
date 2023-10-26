@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>5.3.8-SNAPSHOT</version>
+    <version>5.5.5-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -20,7 +20,8 @@
         <jetty.version>9.4.28.v20200408</jetty.version>
         <!-- this is a custom version, see lib/README.md -->
         <jemmy.version>RELEASE125</jemmy.version>
-        <slf4j.version>1.7.25</slf4j.version>
+        <slf4j.version>2.0.7</slf4j.version>
+        <log4j.version>2.20.0</log4j.version>
         <jackson-core.version>2.13.4</jackson-core.version>
         <jackson-databind.version>2.13.4.2</jackson-databind.version>
         <jackson-annotations.version>2.13.4</jackson-annotations.version>
@@ -705,7 +706,7 @@
                     </groups>
                     <bottom><![CDATA[<i>Copyright &copy; ${project.inceptionYear}&#x2013;{currentYear} JMRI Community.
                     <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
-                       <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
+                       <br><a href="https://www.jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                 ]]>
                     </bottom>
                     <links>
@@ -1174,22 +1175,6 @@
             <version>2.0.6</version>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jul-to-slf4j</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>javax.mail-api</artifactId>
             <version>1.5.4</version>
@@ -1303,9 +1288,30 @@
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j2-impl</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
@@ -1456,13 +1462,13 @@
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna-platform</artifactId>
-            <version>5.9.0</version>
+            <version>5.13.0</version>
         </dependency>
         <!-- the following dependency required for Eclipse IDE -->
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
-            <version>5.9.0</version>
+            <version>5.13.0</version>
         </dependency>
         <dependency>
             <groupId>net.java.jinput</groupId>
@@ -1659,7 +1665,7 @@
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-transcoder</artifactId>
-            <version>1.14</version>
+            <version>1.17</version>
             <exclusions>
                 <exclusion>
                     <artifactId>fop</artifactId>
@@ -1671,6 +1677,103 @@
                 </exclusion>
             </exclusions>
         </dependency>
+		<!-- //BiDiB client library -->
+		<!-- jbidibc 2.0.13 -->
+        <dependency>
+            <groupId>org.bidib.jbidib</groupId>
+            <artifactId>jbidibc-core</artifactId>
+            <version>2.0.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bidib.jbidib</groupId>
+            <artifactId>jbidibc-serial</artifactId>
+            <version>2.0.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bidib.jbidib</groupId>
+            <artifactId>jbidibc-simulation</artifactId>
+            <version>2.0.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bidib.jbidib</groupId>
+            <artifactId>jbidibc-purejavacomm</artifactId>
+            <version>2.0.13</version>
+            <exclusions>
+				<!-- don't use special purejavacomm mentioned in jbidibc-purejavacomm -->
+                <exclusion>
+                    <groupId>org.bidib.com.github.purejavacomm</groupId>
+                    <artifactId>purejavacomm</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.bidib.jbidib</groupId>
+            <artifactId>jbidibc-messages</artifactId>
+            <version>2.0.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bidib.jbidib</groupId>
+            <artifactId>jbidibc-net-serial-over-tcp</artifactId>
+            <version>2.0.13</version>
+        </dependency>
+		<!-- BiDiB Wizard Simulation 2.0.13 -->
+       <dependency>
+            <groupId>org.bidib.jbidib</groupId>
+            <artifactId>bidibwizard-common</artifactId>
+            <version>2.0.13</version>
+        </dependency>
+       <dependency>
+            <groupId>org.bidib.jbidib</groupId>
+            <artifactId>bidibwizard-model</artifactId>
+            <version>2.0.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bidib.jbidib</groupId>
+            <artifactId>bidibwizard-simulation</artifactId>
+            <version>2.0.13</version>
+        </dependency>
+        <!--  dependencies from jbidibc and bidibwizard -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bushe</groupId>
+            <artifactId>eventbus</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>javax.activation-api</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version> <!-- should be 2.3.1 for compatibility -->
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-core</artifactId>
+            <version>2.3.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.3.2</version> <!-- should be 2.3.2 for compatibility -->
+        </dependency>
+        <dependency>
+            <groupId>com.jgoodies</groupId>
+            <artifactId>jgoodies-binding</artifactId>
+            <version>2.13.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jgoodies</groupId>
+            <artifactId>jgoodies-common</artifactId>
+            <version>1.8.1</version>
+        </dependency>
+ 		<!-- //BiDiB -->
     </dependencies>
 
     <repositories>

@@ -12,20 +12,18 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.CvUtil;
 import jmri.util.FileUtil;
 import jmri.util.jdom.LocaleSelector;
+import jmri.util.swing.JmriJOptionPane;
 
 import org.jdom2.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide a graphical representation of the ESU mapping table. Each row
@@ -555,9 +553,9 @@ public final class FnMapPanelESU extends JPanel {
                     @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         String params[] = e.getActionCommand().split(",");
-                        JOptionPane.showMessageDialog(
+                        JmriJOptionPane.showMessageDialog(
                                 blockPanel, blockItemsScrollPane, "Row " + (Integer.parseInt(params[0]) + 1) + ", "
-                                + outBlockName[Integer.parseInt(params[1])], JOptionPane.PLAIN_MESSAGE);
+                                + outBlockName[Integer.parseInt(params[1])], JmriJOptionPane.PLAIN_MESSAGE);
                     }
                 });
                 blockPanelCs.anchor = GridBagConstraints.LINE_START;
@@ -1071,7 +1069,6 @@ public final class FnMapPanelESU extends JPanel {
         removeAll();  // JPanel call
     }
 
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(FnMapPanelESU.class
-    );
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FnMapPanelESU.class);
+
 }

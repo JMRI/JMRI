@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * <p>
  * For X10, keeps track of the controller's "dim count", and if not certain
  * forces it to zero to be sure.
- * <p>
  *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008

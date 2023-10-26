@@ -2,26 +2,22 @@ package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 
 import javax.swing.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for copying a location for operations.
@@ -50,8 +46,17 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
     // remember state of checkboxes during a session
     static boolean moveRollingStock = false;
     static boolean deleteTrack = false;
+    
+    Location _location;
+    
+    public LocationCopyFrame(Location location) {
+        super(Bundle.getMessage("MenuItemCopyLocation"));
+        _location = location;
+        initComponents();
+    }
 
-    public LocationCopyFrame() {
+    @Override
+    public void initComponents() {
 
         // general GUI config
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -99,16 +104,15 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_CopyLocation", true); // NOI18N
 
-        pack();
-        setMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight400));
+        initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight400));
 
         // setup buttons
         addButtonAction(copyButton);
         addButtonAction(saveButton);
 
         addCheckBoxAction(moveRollingStockCheckBox);
-
-        setTitle(Bundle.getMessage("MenuItemCopyLocation"));
+        
+        locationBox.setSelectedItem(_location);
     }
 
     @Override
@@ -121,8 +125,8 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
             }
 
             if (locationBox.getSelectedItem() == null) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationToCopy"), MessageFormat.format(Bundle
-                        .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationToCopy"), Bundle
+                        .getMessage("CanNotLocation", Bundle.getMessage("ButtonCopy")), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -131,17 +135,17 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
             if (moveRollingStockCheckBox.isSelected()) {
                 for (Track track : location.getTracksList()) {
                     if (track.getPickupRS() > 0) {
-                        JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
-                                .getMessage("FoundRollingStockPickUp"), new Object[]{track.getPickupRS()}),
-                                MessageFormat.format(Bundle.getMessage("TrainsServicingTrack"), new Object[]{track
-                                    .getName()}), JOptionPane.WARNING_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(this,
+                                Bundle.getMessage("FoundRollingStockPickUp", track.getPickupRS()),
+                                Bundle.getMessage("TrainsServicingTrack", track.getName()),
+                                JmriJOptionPane.WARNING_MESSAGE);
                         return; // can't move rolling stock, some are scheduled for a pick up
                     }
                     if (track.getDropRS() > 0) {
-                        JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
-                                .getMessage("FoundRollingStockDrop"), new Object[]{track.getDropRS()}),
-                                MessageFormat.format(Bundle.getMessage("TrainsServicingTrack"), new Object[]{track
-                                    .getName()}), JOptionPane.WARNING_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(this,
+                                Bundle.getMessage("FoundRollingStockDrop", track.getDropRS()),
+                                Bundle.getMessage("TrainsServicingTrack", track.getName()),
+                                JmriJOptionPane.WARNING_MESSAGE);
                         return; // can't move rolling stock, some are scheduled for drops
                     }
                 }
@@ -167,6 +171,9 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
             deleteTrack = deleteTrackCheckBox.isSelected();
             // save location file
             OperationsXml.save();
+            if (Setup.isCloseWindowOnSaveEnabled()) {
+                dispose();
+            }
         }
     }
 
@@ -191,20 +198,24 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
      */
     protected boolean checkName() {
         if (loctionNameTextField.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
-                    .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"),
+                    Bundle.getMessage("CanNotLocation", Bundle.getMessage("ButtonCopy")),
+                    JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (TrainCommon.splitString(loctionNameTextField.getText()).length() > Control.max_len_string_location_name) {
-            JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LocationNameLengthMax"),
-                    new Object[]{Integer.toString(Control.max_len_string_location_name + 1)}), MessageFormat.format(Bundle
-                            .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("LocationNameLengthMax",
+                            Integer.toString(Control.max_len_string_location_name + 1)),
+                    Bundle.getMessage("CanNotLocation", Bundle.getMessage("ButtonCopy")),
+                    JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         Location check = locationManager.getLocationByName(loctionNameTextField.getText());
         if (check != null) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("LocationAlreadyExists"), MessageFormat.format(Bundle
-                    .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("LocationAlreadyExists"),
+                    Bundle.getMessage("CanNotLocation", Bundle.getMessage("ButtonCopy")),
+                    JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -237,5 +248,5 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationCopyFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LocationCopyFrame.class);
 }

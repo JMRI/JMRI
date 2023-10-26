@@ -22,6 +22,10 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         super(systemName);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
     public String getAppearanceName(int appearance) {
         String ret = jmri.util.StringUtil.getNameFromState(
@@ -32,11 +36,19 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         return ("");
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
     public String getAppearanceName() {
         return getAppearanceName(getAppearance());
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
     public String getAppearanceKey(int appearance) {
         String ret = jmri.util.StringUtil.getNameFromState(
@@ -47,6 +59,10 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         return ("");
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
     public String getAppearanceKey() {
         return getAppearanceKey(getAppearance());
@@ -54,6 +70,9 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
 
     protected int mAppearance = DARK;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getAppearance() {
         return mAppearance;
@@ -100,7 +119,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
 
     /**
      * Default behavior for "lit" parameter is to track value and return it.
-     *
+     * {@inheritDoc}
      * @return is lit
      */
     @Override
@@ -115,6 +134,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
 
     /**
      * "Held" parameter is just tracked and notified.
+     * {@inheritDoc}
      * @return is held
      */
     @Override
@@ -165,14 +185,11 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
      * @param appearance the index of the appearance
      * @return translated name for appearance
      */
+    @Nonnull
     public static String getDefaultStateName(int appearance) {
         String ret = jmri.util.StringUtil.getNameFromState(
                 appearance, getDefaultValidStates(), getDefaultValidStateNames());
-        if (ret != null) {
-            return ret;
-        } else {
-            return ("");
-        }
+        return ( ret != null ? ret : "" );
     }
 
     private static final int[] validStates = new int[]{
@@ -186,6 +203,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         FLASHGREEN,
         FLASHLUNAR
     };
+
     private static final String[] validStateKeys = new String[]{
         "SignalHeadStateDark",
         "SignalHeadStateRed",
@@ -230,6 +248,9 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
      */
     abstract boolean isTurnoutUsed(Turnout t);
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
@@ -240,6 +261,9 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public @Nonnull String getBeanType() {
         return Bundle.getMessage("BeanNameSignalHead");

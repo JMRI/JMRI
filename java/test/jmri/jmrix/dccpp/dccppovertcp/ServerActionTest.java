@@ -2,7 +2,6 @@ package jmri.jmrix.dccpp.dccppovertcp;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,14 +13,14 @@ import org.junit.jupiter.api.*;
 public class ServerActionTest {
 
    @Test
-   public void ConstructorTest(){
-      Assert.assertNotNull("ServerAction constructor",new ServerAction());
+   public void testDccPpServerActionConstructor(){
+      Assertions.assertNotNull( new ServerAction(), "ServerAction constructor");
    }
 
    @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
         jmri.jmrix.dccpp.DCCppSystemConnectionMemo memo = new jmri.jmrix.dccpp.DCCppSystemConnectionMemo();
         jmri.InstanceManager.setDefault(jmri.jmrix.dccpp.DCCppSystemConnectionMemo.class, memo);
    }

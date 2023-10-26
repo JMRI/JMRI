@@ -411,7 +411,7 @@ definition (the old file remains in JMRI) until they decide to move forward to a
       updates based on versionID or productID are not possible as these values are <a href=
       "#id">not stored</a> in the roster entry. An interactive update process is now available in
       these cases and uses a special syntax: <span class="since">Since <a href=
-      "/releasenotes/jmri4.9.5.shtml" target="_blank">JMRI 4.9.5</a></span></p>
+      "/releasenotes/jmri4.9.5.shtml" >JMRI 4.9.5</a></span></p>
 
       <pre style="font-family: monospace;">
   &lt;model show="no" model="DP2X" numOuts="2" numFns="2" replacementFamily="query:Jan 2000|June 2007|Jan 2012"&gt;
@@ -419,11 +419,11 @@ definition (the old file remains in JMRI) until they decide to move forward to a
       <p>A replacement field begining with the string "query:", optionally (preferably) followed by
       a vertical bar "|" separated list of possible replacements, triggers interactive user
       dialogs, containing further explanations and guidance for the user. Click <a href=
-      "/help/en/html/apps/DecoderPro/images/UpdDecDef1.png" target="_blank">here</a> and <a href=
-      "/help/en/html/apps/DecoderPro/images/UpdDecDef2.png" target="_blank">here</a> for typical
+      "images/UpdDecDef1.png" >here</a> and <a href=
+      "images/UpdDecDef2.png" >here</a> for typical
       samples of these dialogs. Missing decoder definitions will also be detected. Click <a href=
-      "/help/en/html/apps/DecoderPro/images/UpdDecDef3.png" target="_blank">here</a> and <a href=
-      "/help/en/html/apps/DecoderPro/images/UpdDecDef4.png" target="_blank">here</a> for more
+      "images/UpdDecDef3.png" >here</a> and <a href=
+      "images/UpdDecDef4.png" >here</a> for more
       samples.</p>
 
       <p>The model element "show" attribute helps ensure that new users starts with the new

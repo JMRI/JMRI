@@ -2,22 +2,14 @@ package jmri.jmrit.operations.routes.tools;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 
-import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteEditFrame;
-import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Control;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for copying a route for operations.
@@ -110,14 +102,14 @@ public class RouteCopyFrame extends OperationsFrame {
     }
 
     private void reportRouteExists(String s) {
-        JOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"),
-                MessageFormat.format(Bundle.getMessage("CanNotRoute"), new Object[]{s}),
-                JOptionPane.ERROR_MESSAGE);
+        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"),
+                Bundle.getMessage("CanNotRoute", s),
+                JmriJOptionPane.ERROR_MESSAGE);
     }
 
     private void reportRouteDoesNotExist() {
-        JOptionPane.showMessageDialog(this, Bundle.getMessage("CopyRoute"),
-                Bundle.getMessage("CopyRoute"), JOptionPane.ERROR_MESSAGE);
+        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("CopyRoute"),
+                Bundle.getMessage("CopyRoute"), JmriJOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -125,17 +117,17 @@ public class RouteCopyFrame extends OperationsFrame {
      */
     private boolean checkName() {
         if (routeNameTextField.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("EnterRouteName"),
-                    Bundle.getMessage("EnterRouteName"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("EnterRouteName"),
+                    Bundle.getMessage("EnterRouteName"), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (routeNameTextField.getText().length() > Control.max_len_string_route_name) {
-            JOptionPane.showMessageDialog(this, MessageFormat.format(
-                    Bundle.getMessage("RouteNameLess"),
-                    new Object[]{Control.max_len_string_route_name + 1}),
+            JmriJOptionPane.showMessageDialog(this, 
+                    Bundle.getMessage("RouteNameLess",
+                    Control.max_len_string_route_name + 1),
                     Bundle
                             .getMessage("CanNotAddRoute"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -146,6 +138,5 @@ public class RouteCopyFrame extends OperationsFrame {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RouteCopyFrame.class
-            .getName());
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RouteCopyFrame.class);
 }

@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import java.beans.PropertyChangeEvent;
 import java.text.NumberFormat;
 import java.util.*;
 
@@ -14,6 +15,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManifestHeaderText;
 
 /**
  * Manages the cars.
@@ -57,7 +59,9 @@ public class CarManager extends RollingStockManager<Car>
      */
     @Override
     public List<Car> getByLocationList() {
-        return getByList(getByKernelList(), BY_LOCATION);
+        List<Car> byFinal = getByList(getByNumberList(), BY_FINAL_DEST);
+        List<Car> byKernel = getByList(byFinal, BY_KERNEL);
+        return getByList(byKernel, BY_LOCATION);
     }
 
     /**
@@ -113,15 +117,20 @@ public class CarManager extends RollingStockManager<Car>
     }
 
     // The special sort options for cars
-    private static final int BY_LOAD = 4;
-    private static final int BY_KERNEL = 5;
-    private static final int BY_RWE = 13; // Return When Empty
-    private static final int BY_FINAL_DEST = 14;
-    private static final int BY_WAIT = 16;
-    private static final int BY_PICKUP = 19;
-    private static final int BY_HAZARD = 21;
-    private static final int BY_RWL = 22; // Return When loaded
-    private static final int BY_DIVISION = 23;
+    private static final int BY_LOAD = 30;
+    private static final int BY_KERNEL = 31;
+    private static final int BY_RWE = 32; // Return When Empty
+    private static final int BY_FINAL_DEST = 33;
+    private static final int BY_WAIT = 34;
+    private static final int BY_PICKUP = 35;
+    private static final int BY_HAZARD = 36;
+    private static final int BY_RWL = 37; // Return When loaded
+    private static final int BY_DIVISION = 38;
+    
+    // the name of the location and track is "split"
+    private static final int BY_SPLIT_FINAL_DEST = 40;
+    private static final int BY_SPLIT_LOCATION = 41;
+    private static final int BY_SPLIT_DESTINATION = 42;
 
     // add car options to sort comparator
     @Override
@@ -132,13 +141,16 @@ public class CarManager extends RollingStockManager<Car>
             case BY_KERNEL:
                 return (c1, c2) -> (c1.getKernelName().compareToIgnoreCase(c2.getKernelName()));
             case BY_RWE:
-                return (c1,
-                        c2) -> (c1.getReturnWhenEmptyDestName().compareToIgnoreCase(c2.getReturnWhenEmptyDestName()));
+                return (c1, c2) -> (c1.getReturnWhenEmptyDestinationName() + c1.getReturnWhenEmptyDestTrackName())
+                        .compareToIgnoreCase(
+                                c2.getReturnWhenEmptyDestinationName() + c2.getReturnWhenEmptyDestTrackName());
             case BY_RWL:
-                return (c1,
-                        c2) -> (c1.getReturnWhenLoadedDestName().compareToIgnoreCase(c2.getReturnWhenLoadedDestName()));
+                return (c1, c2) -> (c1.getReturnWhenLoadedDestinationName() + c1.getReturnWhenLoadedDestTrackName())
+                        .compareToIgnoreCase(
+                                c2.getReturnWhenLoadedDestinationName() + c2.getReturnWhenLoadedDestTrackName());
             case BY_FINAL_DEST:
-                return (c1, c2) -> (c1.getFinalDestinationName().compareToIgnoreCase(c2.getFinalDestinationName()));
+                return (c1, c2) -> (c1.getFinalDestinationName() + c1.getFinalDestinationTrackName())
+                        .compareToIgnoreCase(c2.getFinalDestinationName() + c2.getFinalDestinationTrackName());
             case BY_DIVISION:
                 return (c1, c2) -> (c1.getDivisionName().compareToIgnoreCase(c2.getDivisionName()));
             case BY_WAIT:
@@ -147,6 +159,16 @@ public class CarManager extends RollingStockManager<Car>
                 return (c1, c2) -> (c1.getPickupScheduleName().compareToIgnoreCase(c2.getPickupScheduleName()));
             case BY_HAZARD:
                 return (c1, c2) -> ((c1.isHazardous() ? 1 : 0) - (c2.isHazardous() ? 1 : 0));
+            case BY_SPLIT_FINAL_DEST:
+                return (c1, c2) -> (c1.getSplitFinalDestinationName() + c1.getSplitFinalDestinationTrackName())
+                        .compareToIgnoreCase(
+                                c2.getSplitFinalDestinationName() + c2.getSplitFinalDestinationTrackName());
+            case BY_SPLIT_LOCATION:
+                return (c1, c2) -> (c1.getStatus() + c1.getSplitLocationName() + c1.getSplitTrackName())
+                        .compareToIgnoreCase(c2.getStatus() + c2.getSplitLocationName() + c2.getSplitTrackName());
+            case BY_SPLIT_DESTINATION:
+                return (c1, c2) -> (c1.getSplitDestinationName() + c1.getSplitDestinationTrackName())
+                        .compareToIgnoreCase(c2.getSplitDestinationName() + c2.getSplitDestinationTrackName());
             default:
                 return super.getComparator(attribute);
         }
@@ -260,10 +282,10 @@ public class CarManager extends RollingStockManager<Car>
      * @return Ordered list of cars assigned to the train
      */
     public List<Car> getByTrainDestinationList(Train train) {
-        List<Car> byFinal = getByList(getList(train), BY_FINAL_DEST);
-        List<Car> byLocation = getByList(byFinal, BY_LOCATION);
+        List<Car> byFinal = getByList(getList(train), BY_SPLIT_FINAL_DEST);
+        List<Car> byLocation = getByList(byFinal, BY_SPLIT_LOCATION);
         List<Car> byHazard = getByList(byLocation, BY_HAZARD);
-        List<Car> byDestination = getByList(byHazard, BY_DESTINATION);
+        List<Car> byDestination = getByList(byHazard, BY_SPLIT_DESTINATION);
         // now place cabooses, cars with FRED, and passenger cars at the rear of the
         // train
         List<Car> out = new ArrayList<>();
@@ -472,6 +494,29 @@ public class CarManager extends RollingStockManager<Car>
         }
         return false;
     }
+    
+    int _commentLength = 0;
+    
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification="I18N of Info Message")
+    public int getMaxCommentLength() {
+        if (_commentLength == 0) {
+            _commentLength = TrainManifestHeaderText.getStringHeader_Comment().length();
+            String comment = "";
+            Car carMax = null;
+            for (Car car : getList()) {
+                if (car.getComment().length() > _commentLength) {
+                    _commentLength = car.getComment().length();
+                    comment = car.getComment();
+                    carMax = car;
+                }
+            }
+            if (carMax != null) {
+                log.info(Bundle.getMessage("InfoMaxComment", carMax.toString(), comment, _commentLength));
+            }
+        }
+        return _commentLength;
+    }
 
     public void load(Element root) {
         if (root.getChild(Xml.CARS) != null) {
@@ -507,6 +552,14 @@ public class CarManager extends RollingStockManager<Car>
         // Set dirty
         InstanceManager.getDefault(CarManagerXml.class).setDirty(true);
         super.firePropertyChange(p, old, n);
+    }
+    
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals(Car.COMMENT_CHANGED_PROPERTY)) {
+            _commentLength = 0;
+        }
+        super.propertyChange(evt);
     }
 
     private final static Logger log = LoggerFactory.getLogger(CarManager.class);

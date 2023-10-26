@@ -5,11 +5,12 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.*;
+
+import javax.annotation.Nonnull;
 import javax.swing.SwingUtilities;
 
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
-import jmri.ShutDownTask;
 
 /**
  * Abstract base for TrafficControllers in a Message/Reply protocol.
@@ -128,6 +129,10 @@ public abstract class AbstractMRTrafficController {
 
     protected final Vector<AbstractMRListener> cmdListeners = new Vector<>();
 
+    /**
+     * Add a Listener to the Listener list.
+     * @param l The Listener to be added, not null.
+     */
     protected synchronized void addListener(AbstractMRListener l) {
         // add only if not already registered
         if (l == null) {
@@ -138,6 +143,24 @@ public abstract class AbstractMRTrafficController {
         }
     }
 
+    /**
+     * Add a Listener to start of the Listener list.
+     * Intended for use only by system Consoles which may prefer notification
+     * before other objects have processed a Message and sent a Reply.
+     * @param l The Listener to be added, not null.
+     */
+    protected synchronized void addConsoleListener(@Nonnull AbstractMRListener l){
+        // add only if not already registered
+        if (!cmdListeners.contains(l)) {
+            cmdListeners.insertElementAt(l, 0);
+        }
+    }
+
+    /**
+     * Remove a Listener from the Listener list.
+     * The Listener will receive no further notifications.
+     * @param l The Listener to be removed.
+     */
     protected synchronized void removeListener(AbstractMRListener l) {
         if (cmdListeners.contains(l)) {
             cmdListeners.removeElement(l);

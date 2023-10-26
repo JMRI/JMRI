@@ -4,15 +4,11 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Builds a train and then creates the train's manifest.
@@ -235,10 +231,6 @@ public class TrainBuilder extends TrainBuilderCars {
                 }
             } else {
                 for (Track track : stagingTracks) {
-                    addLine(_buildReport, THREE,
-                            Bundle.getMessage("buildStagingHas", track.getName(),
-                                    Integer.toString(track.getNumberEngines()),
-                                    Integer.toString(track.getNumberCars())));
                     // is the departure track available?
                     if (!checkDepartureStagingTrack(track)) {
                         addLine(_buildReport, SEVEN,
@@ -351,6 +343,9 @@ public class TrainBuilder extends TrainBuilderCars {
             _train.reset();
             _train.setStatusCode(Train.CODE_BUILDING);
             _train.setLeadEngine(null);
+            // using the same departure and termination tracks
+            _train.setDepartureTrack(_departStageTrack);
+            _train.setTerminationTrack(_terminateStageTrack);
             showAndInitializeTrainRoute();
             getAndRemoveEnginesFromList();
             addEnginesToTrain();
@@ -512,10 +507,10 @@ public class TrainBuilder extends TrainBuilderCars {
 
     private void showWarningMessage() {
         if (trainManager.isBuildMessagesEnabled() && _warnings > 0) {
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("buildCheckReport", _train.getName(), _train.getDescription()),
                     Bundle.getMessage("buildWarningMsg", _train.getName(), _warnings),
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -530,15 +525,15 @@ public class TrainBuilder extends TrainBuilderCars {
             String trainName = _train.getName();
             String trainDescription = _train.getDescription();
             if (e.getExceptionType().equals(BuildFailedException.NORMAL)) {
-                JOptionPane.showMessageDialog(null, msg,
-                        Bundle.getMessage("buildErrorMsg", trainName, trainDescription), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(null, msg,
+                        Bundle.getMessage("buildErrorMsg", trainName, trainDescription), JmriJOptionPane.ERROR_MESSAGE);
             } else {
                 // build error, could not find destinations for cars departing
                 // staging
                 Object[] options = {Bundle.getMessage("buttonRemoveCars"), Bundle.getMessage("ButtonOK")};
-                int results = JOptionPane.showOptionDialog(null, msg,
+                int results = JmriJOptionPane.showOptionDialog(null, msg,
                         Bundle.getMessage("buildErrorMsg", trainName, trainDescription),
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[1]);
+                        JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.ERROR_MESSAGE, null, options, options[1]);
                 if (results == 0) {
                     log.debug("User requested that cars be removed from staging track");
                     removeCarsFromStaging();
@@ -546,15 +541,15 @@ public class TrainBuilder extends TrainBuilderCars {
             }
             int size = carManager.getList(_train).size();
             if (size > 0) {
-                if (JOptionPane.showConfirmDialog(null,
+                if (JmriJOptionPane.showConfirmDialog(null,
                         Bundle.getMessage("buildCarsResetTrain", size, trainName),
-                        Bundle.getMessage("buildResetTrain"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        Bundle.getMessage("buildResetTrain"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                     _train.setStatusCode(Train.CODE_TRAIN_RESET);
                 }
             } else if ((size = engineManager.getList(_train).size()) > 0) {
-                if (JOptionPane.showConfirmDialog(null,
+                if (JmriJOptionPane.showConfirmDialog(null,
                         Bundle.getMessage("buildEnginesResetTrain", size, trainName),
-                        Bundle.getMessage("buildResetTrain"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        Bundle.getMessage("buildResetTrain"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                     _train.setStatusCode(Train.CODE_TRAIN_RESET);
                 }
             }
@@ -576,6 +571,6 @@ public class TrainBuilder extends TrainBuilderCars {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainBuilder.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrainBuilder.class);
 
 }

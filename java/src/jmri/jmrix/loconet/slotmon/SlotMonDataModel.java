@@ -3,9 +3,9 @@ package jmri.jmrix.loconet.slotmon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
 import jmri.Throttle;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
@@ -13,8 +13,7 @@ import jmri.jmrix.loconet.LocoNetSlot;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.SlotListener;
 import jmri.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Table data model for display of slot manager contents.
@@ -544,14 +543,13 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 if ((s.consistStatus() == LnConstants.CONSIST_SUB)
                         || (s.consistStatus() == LnConstants.CONSIST_MID)) {
                     Object[] options = {Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")};
-                    int result
-                            = JOptionPane.showOptionDialog(null,
+                    int result = JmriJOptionPane.showOptionDialog(null,
                                     Bundle.getMessage("SlotEstopWarning"),
                                     Bundle.getMessage("WarningTitle"),
-                                    JOptionPane.DEFAULT_OPTION,
-                                    JOptionPane.WARNING_MESSAGE,
+                                    JmriJOptionPane.DEFAULT_OPTION,
+                                    JmriJOptionPane.WARNING_MESSAGE,
                                     null, options, options[1]);
-                    if (result == 1) {
+                    if ( result != 0 ) { // not array position 0 ButtonOK
                         return;
                     }
                 }
@@ -801,15 +799,14 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                         // the next time that loco is selected, it comes
                         // back as CONSIST_NO).  Freeing the CONSIST_TOP
                         // will kill the entire consist.
-                        Object[] options = {"OK", "Cancel"};
-                        int result
-                                = JOptionPane.showOptionDialog(null,
+                        Object[] options = {Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")};
+                        int result = JmriJOptionPane.showOptionDialog(null,
                                         "Freeing a consist member will destroy the consist.\n\nAre you sure you want to do that?",
-                                        "Warning",
-                                        JOptionPane.DEFAULT_OPTION,
-                                        JOptionPane.WARNING_MESSAGE,
+                                        Bundle.getMessage("WarningTitle"),
+                                        JmriJOptionPane.DEFAULT_OPTION,
+                                        JmriJOptionPane.WARNING_MESSAGE,
                                         null, options, options[1]);
-                        if (result == 1) {
+                        if ( result != 0 ) { // not array position 0, ButtonOK
                             return;
                         }
                     }
@@ -1214,6 +1211,6 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         memo.getSlotManager().removeSlotListener(this);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SlotMonDataModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SlotMonDataModel.class);
 
 }

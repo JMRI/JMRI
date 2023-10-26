@@ -48,6 +48,7 @@ public class SpeedoReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("getCount",2222, m.getCount());
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = null;

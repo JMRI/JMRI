@@ -9,7 +9,7 @@ import jmri
 import java
 import java.beans
 
-from org.apache.log4j import Logger
+from org.slf4j import LoggerFactory
 
 # Define one listener. 
 class ThrottleFunctionForTurnoutListener(java.beans.PropertyChangeListener):
@@ -50,7 +50,7 @@ class ThrottleTurnoutAutomaton(jmri.jmrit.automat.AbstractAutomaton) :
             self.waitMsec(100)  #give it a chance to happen
 
 ####################################################################
-logger = Logger.getLogger("jmri.jmrit.jython.exec.ThrottleFunctionForTurnout")
+logger = LoggerFactory.getLogger("jmri.jmrit.jython.exec.ThrottleFunctionForTurnout")
 
 #connect each turnout to its loco and function, repeat as needed
 # (These are samples, change as needed for your layout; use whatever pattern helps you remember)

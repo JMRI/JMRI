@@ -201,7 +201,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
             throw new BuildFailedException("ERROR coding issue, engine missing from checkEngineHP()");
         }
         // departing staging?
-        if (leadEngine.getRouteLocation() == _train.getTrainDepartsRouteLocation() && _departStageTrack != null) {
+        if (leadEngine.getRouteLocation() == _train.getTrainDepartsRouteLocation() && _train.isDepartingStaging()) {
             return;
         }
         addLine(_buildReport, ONE, BLANK_LINE);
@@ -279,11 +279,14 @@ public class TrainBuilderEngines extends TrainBuilderBase {
      * train's calculated tonnage. Minimum speed for the train is fixed at 36
      * MPH. The formula HPT x 12 / % Grade = Speed, is used to determine the
      * horsepower needed. For example a 1% grade requires a minimum of 3 HPT.
+     * 
+     * Ignored when departing staging
      *
      * @throws BuildFailedException if build failure
      */
     protected void checkNumnberOfEnginesNeededHPT() throws BuildFailedException {
         if (_train.getNumberEngines().equals("0") ||
+                _train.isDepartingStaging() ||
                 !_train.isBuildConsistEnabled() ||
                 Setup.getHorsePowerPerTon() == 0) {
             return;

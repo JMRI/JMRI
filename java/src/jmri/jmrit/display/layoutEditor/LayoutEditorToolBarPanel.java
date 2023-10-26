@@ -22,6 +22,7 @@ import jmri.jmrit.logixng.GlobalVariable;
 import jmri.jmrit.logixng.GlobalVariableManager;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.MathUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -120,6 +121,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
             InstanceManager.getDefault(SignalHeadManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
 
     protected JRadioButton iconLabelButton = new JRadioButton(Bundle.getMessage("IconLabel"));
+    protected JRadioButton logixngButton = new JRadioButton(Bundle.getMessage("LogixNGIcon"));
     protected JRadioButton shapeButton = new JRadioButton(Bundle.getMessage("LayoutShape"));
 
     protected JButton changeIconsButton = new JButton(Bundle.getMessage("ChangeIcons") + "...");
@@ -132,6 +134,9 @@ public class LayoutEditorToolBarPanel extends JPanel {
 
     protected MultiIconEditor iconEditor = null;
     protected JFrame iconFrame = null;
+
+    protected MultiIconEditor logixngEditor = null;
+    protected JFrame logixngFrame = null;
 
     protected MultiSensorIconFrame multiSensorFrame = null;
 
@@ -193,6 +198,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
         itemGroup.add(globalVariableButton);
         itemGroup.add(blockContentsButton);
         itemGroup.add(iconLabelButton);
+        itemGroup.add(logixngButton);
         itemGroup.add(shapeButton);
 
         // This is used to enable/disable property controls depending on which (radio) button is selected
@@ -279,7 +285,8 @@ public class LayoutEditorToolBarPanel extends JPanel {
             // changeIconsButton
             e = (sensorButton.isSelected()
                     || signalButton.isSelected()
-                    || iconLabelButton.isSelected());
+                    || iconLabelButton.isSelected()
+                    || logixngButton.isSelected());
             log.debug("changeIconsButton is {}", e ? "enabled" : "disabled");
             changeIconsButton.setEnabled(e);
         };
@@ -306,6 +313,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
         globalVariableButton.addActionListener(selectionListAction);
         blockContentsButton.addActionListener(selectionListAction);
         iconLabelButton.addActionListener(selectionListAction);
+        logixngButton.addActionListener(selectionListAction);
         shapeButton.addActionListener(selectionListAction);
 
         // first row of edit tool bar items
@@ -542,6 +550,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
 
         // icon label
         iconLabelButton.setToolTipText(Bundle.getMessage("IconLabelToolTip"));
+        logixngButton.setToolTipText(Bundle.getMessage("LogixNGIconToolTip"));
         shapeButton.setToolTipText(Bundle.getMessage("LayoutShapeToolTip"));
 
         // change icons...
@@ -553,23 +562,33 @@ public class LayoutEditorToolBarPanel extends JPanel {
                 signalFrame.setVisible(true);
             } else if (iconLabelButton.isSelected()) {
                 iconFrame.setVisible(true);
+            } else if (logixngButton.isSelected()) {
+                logixngFrame.setVisible(true);
             } else {
                 //explain to the user why nothing happens
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("ChangeIconNotApplied"),
-                        Bundle.getMessage("ChangeIcons"), JOptionPane.INFORMATION_MESSAGE);
+                JmriJOptionPane.showMessageDialog(changeIconsButton, Bundle.getMessage("ChangeIconNotApplied"),
+                        Bundle.getMessage("ChangeIcons"), JmriJOptionPane.INFORMATION_MESSAGE);
             }
         });
 
         changeIconsButton.setToolTipText(Bundle.getMessage("ChangeIconToolTip"));
         changeIconsButton.setEnabled(false);
 
-        // ??
+        // Default icon icon
         iconEditor = new MultiIconEditor(1);
         iconEditor.setIcon(0, "", "resources/icons/smallschematics/tracksegments/block.gif");
         iconEditor.complete();
         iconFrame = new JFrame(Bundle.getMessage("EditIcon"));
         iconFrame.getContentPane().add(iconEditor);
         iconFrame.pack();
+
+        // LogixNG Icon
+        logixngEditor = new MultiIconEditor(1);
+        logixngEditor.setIcon(0, "", "resources/icons/logixng/logixng_icon.gif");
+        logixngEditor.complete();
+        logixngFrame = new JFrame(Bundle.getMessage("EditIcon"));
+        logixngFrame.getContentPane().add(logixngEditor);
+        logixngFrame.pack();
     }
 
     /*=========================*\
@@ -721,6 +740,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
             put(signalMastButton, Bundle.getMessage("SignalMast_QuickKeys"));
             put(signalButton, Bundle.getMessage("Signal_QuickKeys"));
             put(iconLabelButton, Bundle.getMessage("IconLabel_QuickKeys"));
+            put(logixngButton, Bundle.getMessage("LogixNGIcon_QuickKeys"));
             put(shapeButton, Bundle.getMessage("Shape_QuickKeys"));
         }
     };

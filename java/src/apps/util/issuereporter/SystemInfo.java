@@ -8,7 +8,6 @@ import java.util.*;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileSystemView;
 
 import jmri.*;
@@ -30,7 +29,6 @@ import purejavacomm.CommPortIdentifier;
 
 /**
  * Provide the JMRI context info.
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2009
  * @author Matt Harris Copyright (C) 2008, 2009

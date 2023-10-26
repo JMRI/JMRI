@@ -7,7 +7,6 @@ import java.util.Set;
 import jmri.*;
 import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.util.parser.*;
-import jmri.util.FileUtilSupport;
 import jmri.util.TypeConversionUtil;
 
 import org.openide.util.lookup.ServiceProvider;

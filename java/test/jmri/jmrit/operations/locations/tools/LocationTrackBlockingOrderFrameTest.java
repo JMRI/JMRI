@@ -1,19 +1,18 @@
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.GraphicsEnvironment;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.Test;
+import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JTableOperator;
+
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
+import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
-
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JTableOperator;
-import org.junit.Assume;
 
 /**
  *
@@ -82,6 +81,15 @@ public class LocationTrackBlockingOrderFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(ltbo.saveButton);
         
         JUnitUtil.dispose(ltbo);
+    }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        LocationTrackBlockingOrderFrame f = new LocationTrackBlockingOrderFrame();
+        Location westford = JUnitOperationsUtil.createOneNormalLocation("Westford");
+        f.initComponents(westford);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LocationTrackBlockingOrderFrameTest.class);

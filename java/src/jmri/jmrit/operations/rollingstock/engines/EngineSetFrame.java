@@ -4,12 +4,11 @@ import java.awt.Dimension;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.swing.JOptionPane;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStockSetFrame;
 import jmri.jmrit.operations.setup.Control;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user to place engine on the layout
@@ -68,8 +67,8 @@ public class EngineSetFrame extends RollingStockSetFrame<Engine> {
         checkTrain(_engine);
         // is this engine part of a consist?
         if (_engine.getConsist() != null) {
-            if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("engineInConsist"),
-                    Bundle.getMessage("enginePartConsist"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            if (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("engineInConsist"),
+                    Bundle.getMessage("enginePartConsist"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                 // convert cars list to rolling stock list
                 List<Engine> list = _engine.getConsist().getEngines();
                 if (!updateGroup(list)) {

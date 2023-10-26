@@ -6,19 +6,19 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.HashMap;
 import java.util.Map.Entry;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.swing.ImagePanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * This class is used when FamilyItemPanel classes add, modify or delete icon
@@ -134,8 +134,8 @@ public class IconDialog extends ItemDialog {
             log.debug("doDoneAction: {} for {} family= {}", (_parent._update?"Update":""), _type, _family);
         }
         if (_family == null || _family.isEmpty()) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("NoFamilyName"),
-                    Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("NoFamilyName"),
+                    Bundle.getMessage("MessageTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
             return false;
         }
         HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_type);
@@ -181,8 +181,8 @@ public class IconDialog extends ItemDialog {
         log.debug("doDoneAction: map of {} in storage with name= {}", editFamily, catalogFamily);
         if (_parent._update) {
             if (!catalogFamily.equals(editFamily)) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("CannotChangeName", editFamily, catalogFamily),
-                        Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("CannotChangeName", editFamily, catalogFamily),
+                        Bundle.getMessage("MessageTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
                 return false;
             }
         } else {
@@ -190,9 +190,9 @@ public class IconDialog extends ItemDialog {
                     editFamily, (nameUsed?"is":"NOT"), (sameMap?"":"NOT"), catalogFamily);
             if (catalogFamily.equals(editFamily)) {
                 if (!sameMap) {
-                    JOptionPane.showMessageDialog(this, 
+                    JmriJOptionPane.showMessageDialog(this, 
                             Bundle.getMessage("DuplicateFamilyName", editFamily, _type, Bundle.getMessage("UseAnotherName")),
-                            Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+                            Bundle.getMessage("MessageTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
                     return false;
                 }             
             } else {
@@ -200,16 +200,16 @@ public class IconDialog extends ItemDialog {
                     String oldFamily = _parent.getFamilyName(); // if oldFamily != null, this is an edit, not new set
                     if (oldFamily != null) {    // editing an catalog set
                         if (nameUsed) {
-                            JOptionPane.showMessageDialog(this, Bundle.getMessage("SameNameSet", editFamily, catalogFamily),
-                                    Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+                            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("SameNameSet", editFamily, catalogFamily),
+                                    Bundle.getMessage("MessageTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
                             return false;
                         }
                     } else {
                         if (!nameUsed) {
-                            JOptionPane.showMessageDialog(this, 
+                            JmriJOptionPane.showMessageDialog(this, 
                                     Bundle.getMessage("DuplicateFamilyName", editFamily,
                                             _type, Bundle.getMessage("CannotUseName", catalogFamily)),
-                                    Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+                                    Bundle.getMessage("MessageTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
                             return false;
                         }
                     }
@@ -232,8 +232,8 @@ public class IconDialog extends ItemDialog {
         if (_parent._update) {
             if (nameUsed) {    // name is a key to stored map
                 log.debug("{} keys a stored map. name is used", editFamily); 
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("NeedDifferentName", editFamily),
-                        Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("NeedDifferentName", editFamily),
+                        Bundle.getMessage("MessageTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
                 return false;
             }
         } else {
@@ -242,30 +242,35 @@ public class IconDialog extends ItemDialog {
                 if (nameUsed) { // map in catalog under another name
                     if (!editFamily.equals(oldFamily)) { // named changed
                         if (!sameMap) { // also map changed
-                            JOptionPane.showMessageDialog(this, Bundle.getMessage("badReplaceIconSet", oldFamily, editFamily),
-                                    Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+                            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("badReplaceIconSet", oldFamily, editFamily),
+                                    Bundle.getMessage("MessageTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
                             return false;
                         }
                     }
                 } else {
-                    int result = JOptionPane.showOptionDialog(this, Bundle.getMessage("ReplaceFamily", oldFamily, editFamily),
-                            Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_CANCEL_OPTION, 
-                            JOptionPane.QUESTION_MESSAGE, null,
+                    int result = JmriJOptionPane.showOptionDialog(this,
+                            Bundle.getMessage("ReplaceFamily", oldFamily, editFamily),
+                            Bundle.getMessage("QuestionTitle"), JmriJOptionPane.DEFAULT_OPTION, 
+                            JmriJOptionPane.QUESTION_MESSAGE, null,
                             new Object[] {oldFamily, editFamily, Bundle.getMessage("ButtonCancel")},
                             Bundle.getMessage("ButtonCancel"));
-                    if (result == JOptionPane.YES_OPTION) {
-                        _family = oldFamily;
-                    } else if (result == JOptionPane.CANCEL_OPTION) {
-                        return true;
-                    } else if (result == JOptionPane.CLOSED_OPTION) {
-                        return true;
+                    switch (result) {
+                        case 0: // array position 0, oldFamily
+                            _family = oldFamily;
+                            break;
+                        case 2: // array position 2 Cancel Button
+                        case JmriJOptionPane.CLOSED_OPTION: // Dialog closed
+                            return true;
+                        case 1: // array position 1 editFamily
+                        default:
+                            break;
                     }
                 }
             } else {
                 if (nameUsed) { // map in catalog under another name
-                    JOptionPane.showMessageDialog(this, 
+                    JmriJOptionPane.showMessageDialog(this, 
                             Bundle.getMessage("DuplicateFamilyName", editFamily, _type, Bundle.getMessage("UseAnotherName")),
-                            Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+                            Bundle.getMessage("MessageTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
                     return false;
                 }
             }
@@ -322,5 +327,6 @@ public class IconDialog extends ItemDialog {
         return clone;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IconDialog.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IconDialog.class);
+
 }

@@ -167,9 +167,21 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         switch (this.getSpeedStepMode()) {
             case NMRA_DCC_28:
             case MOTOROLA_28:
-                return (int) ((fSpeed * 28) * 4) + 12;
+                speed = (int) ((fSpeed * 28) * 4) + 12;
+                // ensure we never send a non-zero speed to loconet 
+                // that we reinterpret as 0 in floatSpeed() later
+                if (speed < 16) {
+                    speed = 16;
+                }
+                return speed;
             case NMRA_DCC_14:
-                return (int) ((fSpeed * 14) * 8) + 8;
+                speed = (int) ((fSpeed * 14) * 8) + 8;
+                // ensure we never send a non-zero speed to loconet
+                // that we reinterpret as 0 in floatSpeed() later
+                if (speed < 16) {
+                    speed = 16;
+                }
+                return speed;
             case NMRA_DCC_128:
                 return speed;
             default:

@@ -18,6 +18,6 @@ public interface MarklinPanelInterface {
      * classes.
      * @param memo system connection.
      */
-    public void initComponents(MarklinSystemConnectionMemo memo);
+    void initComponents(MarklinSystemConnectionMemo memo);
 
 }

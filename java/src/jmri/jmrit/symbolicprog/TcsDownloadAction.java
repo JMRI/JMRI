@@ -3,31 +3,31 @@ package jmri.jmrit.symbolicprog;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
 import javax.swing.AbstractAction;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.util.swing.JmriJOptionPane;
 
 import org.openlcb.OlcbInterface;
 import org.openlcb.NodeID;
-import org.openlcb.cdi.CdiRep;
 import org.openlcb.cdi.impl.ConfigRepresentation;
 
 /**
- * Action to download the function labels from a TCS CS-105
+ * Action to download the function labels from a TCS CS-105 to a roster entry
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2023
  * @author Dave Heap Copyright (C) 2015
  */
 public class TcsDownloadAction extends AbstractAction implements PropertyChangeListener {
 
-    public TcsDownloadAction(String actionName, CvTableModel pModel, PaneProgFrame pParent, JLabel pStatus, RosterEntry re) {
+    public TcsDownloadAction(String actionName, CvTableModel pModel, VariableTableModel vModel, PaneProgFrame pParent, JLabel pStatus, RosterEntry re) {
         super(actionName);
         this.cvTable = pModel;
+        this.vModel = vModel;
         this.rosterEntry = re;
         this.frame = pParent;
     }
@@ -52,6 +52,7 @@ public class TcsDownloadAction extends AbstractAction implements PropertyChangeL
     PaneProgFrame frame;
     RosterEntry rosterEntry;
     CvTableModel cvTable;
+    VariableTableModel vModel;
     ConfigRepresentation configRep;
 
     @Override
@@ -70,7 +71,7 @@ public class TcsDownloadAction extends AbstractAction implements PropertyChangeL
         var nodeStore = getSystemConnectionMemo().get(org.openlcb.MimicNodeStore.class);
         var nodeMemo = nodeStore.findNode(nodeID);
         if (nodeMemo == null) {
-            JOptionPane.showMessageDialog(frame, "Entry "+addr+" not found in CS-105, canceling");
+            JmriJOptionPane.showMessageDialog(frame, "Entry "+addr+" not found in CS-105, canceling");
             return;
         }
 
@@ -98,89 +99,6 @@ public class TcsDownloadAction extends AbstractAction implements PropertyChangeL
                 log.error("Unexpected PropertyChangeEvent {}", event);
                 return;
         }
-    }
-
-    /**
-     * Construct and execute a listener that processses
-     * the relevant CDI elements into RosterEntry.
-     *
-     * Intended for a bulk importer eventually.
-     *
-     * TODO: Should save the RosterEntry at end? Doesn't.
-     * TODO: Code further up takes initial address from GUI, not RosterEntry.
-     */
-    void processValuesToRosterElement() {
-        configRep.visit(new ConfigRepresentation.Visitor() {
-            @Override
-            public void visitString(ConfigRepresentation.StringEntry e) {
-                log.trace("String entry {} is {}", e.key, e.getValue());
-
-                if (e.key.startsWith("Train.User Description")) {
-                    log.info("setComment \"{}\"", e.getValue());
-                    rosterEntry.setComment(e.getValue());
-                 } else if (e.key.startsWith("Train.Functions")) {
-                    int index = getNumberField(e.key);
-                    if (index == -1) {
-                        log.warn("Unexpected format \"{}\"", e.key);
-                        return;
-                    }
-                    if (e.key.endsWith("Description")) {
-                        String value = e.getValue();
-                        log.debug("Found function {} description \"{}\"", index, value);
-                        if (value==null) {
-                            value = "";
-                        }
-                        // Display has already written contents
-                        // to this.  If content here is empty, we defer to that;
-                        // if there are content here, overrides what Display wrote.
-                        if (!value.isEmpty()) {
-                            rosterEntry.setFunctionLabel(index+1, value);
-                            log.trace("Description sets {} {} {}", index, e.getValue(), value);
-                        }
-                    } else {
-                        log.warn("Unexpected content \"{}\"", e.key);
-                    }
-                }
-            }
-
-            // TODO: Have to update the Function Pane contents on every change
-            //       so that the data is present for viewing and saving
-            @Override
-            public void visitInt(ConfigRepresentation.IntegerEntry e) {
-                log.trace("Integer entry {} is {}", e.key, e.getValue());
-
-                // is this the last entry?
-                if (e.key.startsWith("Train.Delete From Roster")) {
-                    // TODO: This is firing much too soon
-                    JOptionPane.showMessageDialog(frame, "Download complete.");
-                } else if (e.key.startsWith("Train.Functions")) {
-                    int index = getNumberField(e.key);
-                    if (index == -1) {
-                        log.warn("Unexpected format \"{}\"", e.key);
-                        return;
-                    }
-                    if (e.key.endsWith(".Momentary")) {
-                        boolean lockable = (e.getValue() == 0);
-                        rosterEntry.setFunctionLockable(index+1, lockable);
-                    } else if (e.key.endsWith(".Consist Behavior")) {
-                        // TODO: set value in consisting CVs
-                    } else if (e.key.endsWith(".Display")) {
-                        // do a reverse lookup and store every time,
-                        // will be overwritten by Description if needed
-                        var description = TcsImporter.unpackDescription("", ""+e.getValue());
-                        log.trace("Display sets {} {} {}", index, e.getValue(), description);
-                        rosterEntry.setFunctionLabel(index+1, description);
-                    } else {
-                        log.warn("Unexpected content \"{}\"", e.key);
-                    }
-                }
-            }
-
-            @Override
-            public void visitEvent(ConfigRepresentation.EventEntry e) {
-                log.trace("Event entry {} is {}", e.key, e.getValue());
-            }
-        });
     }
 
     /**
@@ -230,7 +148,7 @@ public class TcsDownloadAction extends AbstractAction implements PropertyChangeL
                 // is this the last entry?
                 if (e.key.startsWith("Train.Delete From Roster")) {
                     // TODO: This is firing much too soon
-                    JOptionPane.showMessageDialog(frame, "Download complete.");
+                    JmriJOptionPane.showMessageDialog(frame, "Download complete.");
                 } else if (e.key.startsWith("Train.Functions")) {
                     int index = getNumberField(e.key);
                     if (index == -1) {
@@ -241,7 +159,17 @@ public class TcsDownloadAction extends AbstractAction implements PropertyChangeL
                         boolean lockable = (e.getValue() == 0);
                         frame.getFnLabelPane().getLockable(index+1).setSelected(lockable);
                     } else if (e.key.endsWith(".Consist Behavior")) {
-                        // TODO: set value in consisting CVs
+                        // process consist bit
+                        // first, see if function variable exists
+                        var variable = vModel.findVar("Consist Address Active For F"+(index+1));
+                        if (variable != null) {
+                            // it exists, so we transfer that to the consist info
+                            int value = (int)e.getValue();
+                            variable.setIntValue(value);
+                            log.trace("Set Consist Address Active For F{} to {}", (index+1), value);
+                        } else {
+                            log.trace("Variable Consist Address Active For F{} not found", (index+1) );
+                        }
                     } else if (e.key.endsWith(".Display")) {
                         // do a reverse lookup and store every time,
                         // will be overwritten by Description if needed

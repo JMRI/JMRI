@@ -2,7 +2,6 @@ package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 
 import javax.swing.*;
 
@@ -11,10 +10,9 @@ import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationEditFrame;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Action to change all of tracks at a location to the same type of track. Track
@@ -54,8 +52,7 @@ class ChangeTracksFrame extends OperationsFrame {
         // row 1a
         JPanel p1 = new JPanel();
         p1.setLayout(new GridBagLayout());
-        p1.setBorder(BorderFactory.createTitledBorder(MessageFormat.format(Bundle.getMessage("TrackType"),
-                new Object[]{_location.getName()})));
+        p1.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrackType", _location.getName())));
         addItem(p1, spurRadioButton, 0, 0);
         addItem(p1, yardRadioButton, 1, 0);
         addItem(p1, interchangeRadioButton, 2, 0);
@@ -97,6 +94,9 @@ class ChangeTracksFrame extends OperationsFrame {
                 changeTracks(Track.INTERCHANGE);
             } else if (stagingRadioButton.isSelected()) {
                 changeTracks(Track.STAGING);
+            }
+            if (Setup.isCloseWindowOnSaveEnabled()) {
+                dispose();
             }
         }
     }

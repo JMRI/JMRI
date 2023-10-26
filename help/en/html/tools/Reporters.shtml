@@ -3,9 +3,38 @@
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Reporters Documentation</title>
-  <meta name="Author" content="Bob Jacobsen">
+  <meta name="Author" content="Bob Jacobsen, Jerry Grochow">
   <meta name="keywords" content="sensor model railroad JMRI decoderpro panelpro">
   <!--#include virtual="/Style.shtml" -->
+  <style>
+    table.boxed th {
+        background-color: #EEECF6;
+        color: #383DB3;
+        font-weight: bold;
+        cursor: default;
+        }
+  tr:nth-of-type(odd) {
+  background-color:#eee;
+  }
+
+  * {
+  box-sizing: border-box;
+  }
+
+  /* Create three equal columns that float next to each other */
+  .column {
+    float: left;
+    width: 33.33%;
+    padding: 10px;
+  }
+
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+</style>
 </head>
 <body>
   <div id="container">
@@ -23,33 +52,186 @@
 
         <p>A Reporter is JMRI's way of representing information reported back from the layout.</p>
 
-        <p>A Reporter can contain arbitrary information, unlike a Sensor which is only ACTIVE or
-        INACTIVE. Each Reporter is associated with some specific source of information on the
-        layout, and makes that devices information available to the rest of JMRI.</p>
+        <p>A Reporter can contain arbitrary text, unlike a Sensor which is only ACTIVE or
+        INACTIVE. Each Reporter is associated with a specific source of information on the
+        layout and makes that device's information available to the rest of JMRI.</p>
+        
+        <p>Reporters are created automatically in certain cases, such as when an 
+        <a href="../hardware/rfid/GettingStartedWithRFID.shtml">RFID Reader</a> sees
+        a tag referencing a specific reader for the first time. For all other uses, they must be
+        created manually by updating the <a href="../../package/jmri/jmrit/beantable/ReporterTable.shtml">
+        Reporter Table</a> or via a <a href="scripting/index.shtml">script</a>.
 
-        <p>The initial implementation is for LocoNet (Digitrax) transponding, where the Reporter
-        provides access to information from Digitrax <a href=
-        "http://www.digitrax.com/prd_statdec_bdl168.php">BDL168</a> cards with <a href=
-        "http://www.digitrax.com/prd_statdec_rx4.php">RX4 transponding sensors</a>. When the BDL168
-        reports that a decoder has been seen in a transponding block or is not longer visible in
-        the block, the corresponding Reporter will display messages like "1234 enter" and "1234
-        exits". There is also a LocoNet Reporter implementation for displaying messages from
-        <a href="http://www.rjftrains.com/intellibox/uhlenbrock.htm">Lissy detectors</a>.</p>
-
-        <h2>How to setup Reporters</h2>
-
-        <h3>The Reporter Table</h3>
+        <p>Reporters are populated automatically as noted below or manually by updating the
+        <a href="../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table</a>,
+        using a <a href="logixng/reference/chapter5.shtml#digital_action_item">LogixNG</a>
+        or via a <a href="scripting/index.shtml">script</a>.
+        
+        <h2>The Reporter Table</h2>
 
         <p>The <a href="../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table</a>
-        provides easy access to the contents of all Reporters that JMRI knows about. There's also
-        an <a href="../../package/jmri/jmrit/beantable/ReporterAddEdit.shtml">"Add..." button</a>
-        for creating your own internal Reporters; JMRI automatically creates Reporter objects for
-        devices on the layout.</p>
+        provides easy access to the contents of all Reporters that JMRI knows about. 
+        JMRI automatically creates Reporter objects for certain connection types
+        (currently <a href="../hardware/loconet/Addressing.shtml#transponding">LocoNet 
+        transponders</a> and <a href="../hardware/rfid/index.shtml">RFID readers</a>).
+        There is also an <a href="../../package/jmri/jmrit/beantable/ReporterAddEdit.shtml">"Add..." button</a>
+        for creating your own Reporters, either "internal" or for any 
+        <a href="../hardware/mqtt/index.shtml#objects">MQTT connections</a>.</p>
 
-        <h3>Displaying Reporter Values on Panels</h3>
+        <h2>Creating and Updating Reporters</h2>
+
+        <p>Reporters can be created manually by direct entry or via script into the Reporter Table. For some hardware
+        reporters, Reporters are automatically created in the Reporter Table.  Current Report is populated and cleared by some 
+        implementations (including being cleared when the same reported object appears in another Reporter).
+        For example, for an RFID Reporter, if an ID tag is seen at second reporter, it will
+        be removed from the first reporter.  For other types of Reporters (e.g. Internal REporters), this 
+        must be done manually or via a script. </p>
+        
+        <p>Last Report is always set equal to the Current Report and is only changed by a new (non-blank)
+        Current Report.  This is to handle the situation where a report may not be able to sent a timely report
+        but it is useful to know the last report received.  [Advanced: See the <a href="../../../../JavaDoc/doc/jmri/Reporter.html">
+        Java documentation</a></p>
+
+        <p>The following table provides details for implementations as of JMRI Release 5.3.7 [Asterisk (*) indicates 
+        additional information below the table.  Number sign (#) indicates information that had not been verified when
+        this page was updated.] [Advanced Reference Info: Code Source is the java program defining
+        this type of Reporter. See <a href="../../../../JavaDoc/doc/jmri/doc-files/Reporter.png">this diagram.
+        </a>]</p>        
+       
+        <table class="boxed">
+        <tr style="text-align: left">
+          <th>Source</th>
+          <th>When Reporter Created</th>
+          <th>Current Report Populated</th>
+          <th>Current Report Cleared</th>
+          <th>Add'l Table</th>
+          <th>Code Source</th>
+        </tr>
+        <tr><td>Cbus</td>
+            <td>When Cbus message with new ReporterID received</td>
+            <td>With IDTag UserName or IDTag; Sensor (if associated) set Active</td>
+            <td>#Cleared when object appears in another Reporter</td>
+            <td>IDTag Table</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/can/cbus/CbusReporter.html">CbusReporter extends AbstractRailComReporter</a></td>
+ <!-- Why does CbusReporter extend AbstractRailComReporter rather than AbstractIdTagReporter which
+ seems more appropriate for what it does?  @jerryg2003 2023-06-29 -->           
+        </tr>
+        <tr><td>DCC4PC</td>
+            <td>#</td>
+            <td>With RailCom packet information</td>
+            <td>When empty RailCom packet received</td>
+            <td>RailCom Table</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/dcc4pc/Dcc4PcReporter.html">Dcc4PcReporter</a> extends AbstractRailComReporter</td>
+        </tr>
+        <tr><td>Digitrax Transponding*</td>
+            <td>On receiving Block Entry with new ReporterID</td>
+            <td>From Block Entry message</td>
+            <td>On Block Exit message</td>
+            <td>#</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/loconet/LnReporter.html">LnReporter</a> extends AbstractIdTagReporter</td>
+        </tr>
+        <tr><td>ECOS</td>
+            <td>#</td>
+            <td>#</td>
+            <td>#</td>
+            <td>#</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/ecos/EcosReporter.html">EcosReporter</a> extends AbstractReporter</td>
+        </tr>
+        <tr><td>Internal</td>
+            <td>Manually or via script</td>
+            <td>Manually or via script</td>
+            <td>Manually or via script</td>
+            <td>IDTag Table must be updated manually or via script</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/internal/TrackReporter.html">TrackReporter</a> extends AbstractReporter</td>
+        </tr>
+        <tr><td>JMRI Client</td>
+            <td>#</td>
+            <td>#</td>
+            <td>#</td>
+            <td>#</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/jmriclient/JMRIClientReporter.html">JMRIClientReporter</a> extends AbstractReporter</td>
+        </tr>
+        <tr><td>Lissy Detectors</td>
+            <td>#</td>
+            <td>#</td>
+            <td>#</td>
+            <td>#</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/loconet/LnReporter.html">LnReporter</a> extends AbstractIdTagReporter</td>
+        </tr>
+        <tr><td>MQTT</td>
+            <td>Manually or via script</td>
+            <td>On receipt of IDTag, with IDTag and additional message contents</td>
+            <td>Cleared by a blank message or when object appears in another Reporter</td>
+            <td>IDTag Table entried created and updated</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/mqtt/MqttReporter.html">MqttReporter</a> extends AbstractIDTagReporter</td>
+        </tr>
+        <tr><td>OpenLCB/LCC*</td>
+            <td>Manually or via script</td>
+            <td>On Event Report in the range specified by the Reporter SystemName</td>
+            <td>#</td>
+            <td>RailCom Table entries created and updated</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/openlcb/OlcbReporter.html">OlcbReporter</a> extends AbstractIdTagReporter</td>
+        </tr>
+        <tr><td>RFID Connection*</td>
+            <td>When IDTag message with new Reporter ID received [Also create Sensor]</td>
+            <td>With IDTag UserName or IDTag; Sensor set Active</td>
+            <td>Current Report (and Sensor) automaticly cleared after 2 seconds</td>
+            <td>IDTag Table, Sensor Table entried created and updated</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/rfid/RfidReporter.html">RfidReporter</a> extends AbstractIdTagReporter</td>
+        </tr>
+        <tr><td>RPS</td>
+            <td>#</td>
+            <td>#</td>
+            <td>#</td>
+            <td>#</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/rps/RpsReporter.html">RpsReporter</a> extends AbstractReporter</td>
+        </tr>
+        <tr><td>Z21 (Roco)</td>
+            <td>#</td>
+            <td>#</td>
+            <td>#</td>
+            <td>#</td>
+            <td><a href="../../../../JavaDoc/doc/jmri/jmrix/roco/z21/Z21Reporter.html">Z21Reporter</a>, <a href="../../../../avaDoc/doc/jmri/jmrix/roco/z21/Z21CanReporter.html">Z21CanReporter</a> extend AbstractRailComReporter</td>
+        </tr>
+        </table>
+          
+        <p>Additional information:</p>
+        <ul>
+        <li><strong>Digitrax Transponding: </strong>If you are using LocoNet (Digitrax) transponding, the Reporter will
+        automatically be populated with information from Digitrax <a href=
+        "http://www.digitrax.com/prd_statdec_bdl168.php">BDL168</a> cards with <a href=
+        "http://www.digitrax.com/prd_statdec_rx4.php">RX4 transponding sensors</a>. When the BDL168
+        reports that a decoder has been seen in a transponding block or is no longer visible in
+        the block, the corresponding Reporter will display messages like "1234 enter" and "1234
+        exits".</li>
+               
+        <li><strong>OpenLCB/LCC: </strong> Any Event Report message falling into the range specified by the System Name
+        will update the reporter. This will specify a DCC address and an orientation, or that the locomotive left.
+        When the OpenLCB reporter is updated, JMRI will automatically create a Tag with the given DCC address in the 
+        <a href="../../package/jmri/jmrit/beantable/RailComTable.shtml">RailCom table</a>
+        if there isn't one. The Tag will show its last seen location as the given Reporter. Caveat: it is not possible
+        to differentiate long and short DCC addresses in the Tag entries, so 3L and 3S will be showing the same Tag.</li>
+        
+        <li><strong>RFID Connection: </strong>If you are using RFID readers and have set up an RFID Connection, JMRI will automatically
+        create and update Reporters corresponding to the name of the reader and the UID of the RFID
+        tag seen by the named reader.  The Reporter will automatically clear the "Current Report" field
+        after 2 seconds.</li>
+        
+        <li>[Advanced} AbstractRailComReporter extends AbstractIdTagReporter which extends AbstractReporter</li>
+        
+        </ul>
+
+
+
+        <h2>Displaying Reporter Values on Panels</h2>
+        
+        <p> Reporter contents can be displayed on panels using several different mechanisms:
+        
+        <h3>Display on a Panel using Panel Editor</h3>
         <a href="images/AddReportertoPanel.png"><img src="images/AddReportertoPanel.png" height=
         "146" width="166" class="floatRight" alt="reporter values"></a>
-        <p>A Reporter's value can be displayed on a Panel via an icon. To do this:</p>
+           
+        <p>A Reporter's value can be displayed on a Control Panel via an icon. To do this:</p>
 
         <ul>
           <li>On the Panel Editor window for your Panel, find the "Add Reporter" button.</li>
@@ -65,13 +247,26 @@
 
           <li>The pop-up menu on the icon will let you change the formatting.</li>
         </ul>
+        
+        <h3>Display on a Layout Panel as a Block Value</h3>
+        <p>Reporters can be associated with 
+        <a href="../../package/jmri/jmrit/beantable/BlockTable.shtml">layout blocks</a>.  When the
+        <em>current report</em> of the Reporter changes, that value will be put into (or removed from)
+        the <em>block value</em>. Block values can be displayed using the Layout Panel Editor.</p>
 
-        <h3>Saving Reporters to disk</h3>
+        <h3>Display Memory Variables containing Reporter contents</h3>        
+        <p>Using <a href="./logixng/reference/chapter5.shtml#digital_action_item">LogixNG's Reporter action </a>,
+        Reporter contents from fields Current Report, Last Report, and State can be copied to
+        a memory variable or a LogixNG local variable.  Memory variables can then be display on any type of Panels
+        using the appropriate panel editor.</p>
+ 
+
+        <h2>Saving Reporters in Layout Configuration</h2>
 
         <p>Reporters are kept in your <em>layout configuration</em>, along with Turnouts, Sensors,
-        Signal Heads, control panel setup etc. To store this information on disk, allowing you to
-        <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload it</a> next time you
-        run JMRI, see <a href="../apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>.</p>
+        Signal Heads, control panel setup etc. "Report" and "Last Report" field contents are not
+        stored. See <a href="../apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>.</p>
+
         <!--#include virtual="/Footer.shtml" -->
       </div>
       <!-- closes #mainContent-->

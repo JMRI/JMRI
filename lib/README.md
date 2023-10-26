@@ -119,22 +119,32 @@ which checks the dates of the control files to make sure they've been updated wh
 - version 2.03
 - from <http://java.sun.com/javase/technologies/desktop/javahelp/>
 
-##### log4j.jar
-- version 1.2.17
+##### log4j-api-2.20.0.jar, log4j-core-2.20.0.jar
+- version 2.20.0
+- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api/2.20.0
+- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core/2.20.0
 
-##### slf4j-api-1.7.25.jar, slf4j-log4j12-1.7.25.jar, jul-to-slf4j-1.7.25.jar
-- slf4j logging interface to log4j
-- from http://www.slf4j.org
+##### log4j-slf4j2-impl.jar
+- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j2-impl/2.20.0
+- slf4j bridge to log4j2
+
+##### slf4j-api-2.0.7.jar
+- slf4j API
+- from https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+
+##### jul-to-slf4j-2.0.7.jar
+- java.util.logging to slf4j
+- from https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j/2.0.7
 
 ##### openlcb.jar
  - 0.7.32 from https://github.com/openlcb/OpenLCB_Java
- - Through PR#228 included
+ - Through PR#237 included as of 2023-10-12
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
 
 ##### purejavacomm-1.0.5.jar
-- version 1.0.5
+- version 1.0.5 plus custom change to the Mac M1 support (only)
 - from https://search.maven.org/artifact/org.opensmarthouse/purejavacomm/1.0.5/jar
 - formerly from http://www.sparetimelabs.com/maven2/com/sparetimelabs/purejavacomm/1.0.1/
 - javadoc still at https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE
@@ -266,14 +276,14 @@ Windows and Linux libraries from <https://jogamp.org/deployment/archive/rc/v2.4.
 - Version 3.5.5 (2018-12-04)
 - from https://github.com/jmdns/jmdns/releases
 
-##### jna-5.9.0.jar
+##### jna-5.13.0.jar
 - Java Native Access library
-- from https://mvnrepository.com/artifact/net.java.dev.jna/jna/5.9.0
+- from https://mvnrepository.com/artifact/net.java.dev.jna/jna/5.13.0
 - See also https://github.com/java-native-access/jna
 
-##### jna-platform-5.9.0.jar
+##### jna-platform-5.13.0.jar
 - Java Native Access platform-specific utilities library
-- from https://mvnrepository.com/artifact/net.java.dev.jna/jna-platform/5.9.0
+- from https://mvnrepository.com/artifact/net.java.dev.jna/jna-platform/5.13.0
 
 
 ##### pi4j-core-1.2.jar, pi4j-device-1.2.jar, pi4j-gpio-extension-1.2.jar

@@ -1,5 +1,10 @@
 package jmri.jmrit.vsdecoder;
 
+import java.beans.PropertyChangeEvent;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Notch trigger.
  *
@@ -16,13 +21,8 @@ package jmri.jmrit.vsdecoder;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
-import java.beans.PropertyChangeEvent;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 class NotchTrigger extends Trigger {
 
     int current_notch, prev_notch;

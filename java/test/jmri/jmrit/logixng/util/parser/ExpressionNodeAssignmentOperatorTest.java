@@ -3,9 +3,7 @@ package jmri.jmrit.logixng.util.parser;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;

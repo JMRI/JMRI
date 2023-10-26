@@ -33,7 +33,7 @@ public interface LocoNetInterface {
      * in a reply, you need to register a LocoNetListener object to watch the
      * message stream.
      */
-    public void sendLocoNetMessage(LocoNetMessage msg);
+    void sendLocoNetMessage(LocoNetMessage msg);
 
     /**
      * Request notification of things happening on the LocoNet.
@@ -69,55 +69,55 @@ public interface LocoNetInterface {
      * 
      * @return true if implementation is operational.
      */
-    public boolean status();
+    boolean status();
 
     /**
      * Mask value to request notification of all incoming messages
      */
-    public static final int ALL = ~0;
+    int ALL = ~0;
 
     /**
      * Mask value to request notification of messages effecting slot status,
      * including the programming slot
      */
-    public static final int SLOTINFO = 1;
+    int SLOTINFO = 1;
 
     /**
      * Mask value to request notification of messages associated with
      * programming
      */
-    public static final int PROGRAMMING = 2;
+    int PROGRAMMING = 2;
 
     /**
      * Mask value to request notification of messages indicating changes in
      * turnout status
      */
-    public static final int TURNOUTS = 4;
+    int TURNOUTS = 4;
 
     /**
      * Mask value to request notification of messages indicating changes in
      * sensor status
      */
-    public static final int SENSORS = 8;
+    int SENSORS = 8;
 
     /**
      * Mask value to request notification of messages associated with layout
      * power
      */
-    public static final int POWER = 16;
+    int POWER = 16;
 
     /**
      * Set the system connection memo associated with this connection.
      *
      * @param m associated systemConnectionMemo object
      */
-    public void setSystemConnectionMemo(LocoNetSystemConnectionMemo m);
+    void setSystemConnectionMemo(LocoNetSystemConnectionMemo m);
 
     /**
      * Get the system connection memo associated with this connection.
      *
      * @return the associated systemConnectionMemo object
      */
-    public LocoNetSystemConnectionMemo getSystemConnectionMemo();
+    LocoNetSystemConnectionMemo getSystemConnectionMemo();
 
 }

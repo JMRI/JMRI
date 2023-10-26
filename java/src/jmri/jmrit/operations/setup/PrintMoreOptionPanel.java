@@ -82,8 +82,9 @@ public class PrintMoreOptionPanel extends OperationsPreferencesPanel {
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == saveButton) {
             this.savePreferences();
-            if (Setup.isCloseWindowOnSaveEnabled()) {
-                dispose();
+            var topLevelAncestor = getTopLevelAncestor();
+            if (Setup.isCloseWindowOnSaveEnabled() && topLevelAncestor instanceof PrintMoreOptionFrame) {
+                ((PrintMoreOptionFrame) topLevelAncestor).dispose();
             }
         }
     }

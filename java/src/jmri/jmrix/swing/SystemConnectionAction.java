@@ -20,7 +20,7 @@ public interface SystemConnectionAction<M extends SystemConnectionMemo> {
      * @return the SystemConnectionMemo or null if not bound.
      */
     @CheckForNull
-    public M getSystemConnectionMemo();
+    M getSystemConnectionMemo();
 
     /**
      * Set the {@link SystemConnectionMemo} this action is bound to.
@@ -31,7 +31,7 @@ public interface SystemConnectionAction<M extends SystemConnectionMemo> {
      * @param memo the SystemConnectionMemo
      * @throws IllegalArgumentException if the SystemConnectionMemo is invalid
      */
-    public void setSystemConnectionMemo(@Nonnull M memo);
+    void setSystemConnectionMemo(@Nonnull M memo);
 
     /**
      * Get a list of {@link SystemConnectionMemo} subclasses that the
@@ -44,5 +44,5 @@ public interface SystemConnectionAction<M extends SystemConnectionMemo> {
      * @return Set of SystemConnectionMemo subclasses or empty array.
      */
     @Nonnull
-    public Set<Class<? extends SystemConnectionMemo>> getSystemConnectionMemoClasses();
+    Set<Class<? extends SystemConnectionMemo>> getSystemConnectionMemoClasses();
 }

@@ -157,6 +157,7 @@ public class SRCPMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         m = msg = new SRCPMessage();
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = msg = null;

@@ -2,7 +2,6 @@ package jmri.jmrix.marklin;
 
 import java.util.Hashtable;
 import javax.annotation.Nonnull;
-import javax.swing.JOptionPane;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;

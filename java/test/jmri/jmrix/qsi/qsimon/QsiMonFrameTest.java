@@ -1,137 +1,77 @@
 package jmri.jmrix.qsi.qsimon;
 
-import java.awt.GraphicsEnvironment;
-import java.util.ArrayList;
-import jmri.jmrix.qsi.QsiListener;
+import jmri.ProgrammingMode;
 import jmri.jmrix.qsi.QsiMessage;
 import jmri.jmrix.qsi.QsiReply;
-import jmri.jmrix.qsi.QsiTrafficController;
+import jmri.jmrix.qsi.QsiTrafficControlScaffold;
+import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrameTestBase;
 
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * JUnit tests for the QsiProgrammer class
  *
  * @author Bob Jacobsen
  */
-public class QsiMonFrameTest {
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+public class QsiMonFrameTest extends JmriJFrameTestBase {
 
     @Test
     public void testCreate() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        QsiMonFrame f = new QsiMonFrame(new jmri.jmrix.qsi.QsiSystemConnectionMemo());
-        Assert.assertNotNull("exists", f);
+        Assertions.assertNotNull(frame, "exists");
     }
 
     @Test
     public void testMsg() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        QsiMessage m = new QsiMessage(3);
-        m.setOpCode('L');
-        m.setElement(1, '0');
-        m.setElement(2, 'A');
+        QsiMessage m = QsiMessage.getReadCV(25, ProgrammingMode.PAGEMODE);
+        ((QsiMonFrame)frame).message(m);
 
-        QsiMonFrame f = new QsiMonFrame(new jmri.jmrix.qsi.QsiSystemConnectionMemo());
-
-        f.message(m);
-
-        // Following lines don't match up; need to use valid content above
-        // Assert.assertEquals("length ", "cmd: \"L0A\"\n".length(), f.getFrameText().length());
-        // Assert.assertEquals("display", "cmd: \"L0A\"\n", f.getFrameText());
+        JUnitUtil.waitFor(() -> (!((QsiMonFrame)frame).getTextArea().getText().isEmpty()), "Text Area populated");
+        Assertions.assertTrue( ((QsiMonFrame)frame).getTextArea().getText().contains("M: OP_REQ_READ_CV with CV=25"));
     }
 
     @Test
     public void testReply() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         QsiReply m = new QsiReply();
         m.setOpCode('C');
         m.setElement(1, 'o');
         m.setElement(2, ':');
+        ((QsiMonFrame)frame).reply(m);
 
-        QsiMonFrame f = new QsiMonFrame(new jmri.jmrix.qsi.QsiSystemConnectionMemo());
-
-        f.reply(m);
-
-        // Following lines don't match up; need to use valid content above
-        // Assert.assertEquals("display", "rep: \"Co:\"\n", f.getFrameText());
-        // Assert.assertEquals("length ", "rep: \"Co:\"\n".length(), f.getFrameText().length());
+        JUnitUtil.waitFor(() -> (!((QsiMonFrame)frame).getTextArea().getText().isEmpty()), "Text Area populated");
+        Assertions.assertTrue( ((QsiMonFrame)frame).getTextArea().getText().contains("U: Untranslated reply: <67><111><58>"));
     }
 
-    @Test
-    public void testWrite() {
-        new QsiInterfaceScaffold();
-    }
-
-    // service internal class to handle transmit/receive for tests
-    class QsiInterfaceScaffold extends QsiTrafficController {
-
-        public QsiInterfaceScaffold() {
-        }
-
-        // override some QsiInterfaceController methods for test purposes
-        @Override
-        public boolean status() {
-            return true;
-        }
-
-        /**
-         * record messages sent, provide access for making sure they are OK
-         */
-        public ArrayList<QsiMessage> outbound = new ArrayList<>();  // public OK here, so long as this is a test class
-
-        @Override
-        public void sendQsiMessage(QsiMessage m, QsiListener l) {
-            if (log.isDebugEnabled()) {
-                log.debug("sendQsiMessage [{}]", m);
-            }
-            // save a copy
-            outbound.add(m);
-        }
-
-        // test control member functions
-        /**
-         * forward a message to the listeners, e.g. test receipt
-         */
-        protected void sendTestMessage(QsiMessage m) {
-            // forward a test message to Listeners
-            if (log.isDebugEnabled()) {
-                log.debug("sendTestMessage    [{}]", m);
-            }
-            notifyMessage(m, null);
-        }
-
-        protected void sendTestReply(QsiReply m) {
-            // forward a test message to Listeners
-            if (log.isDebugEnabled()) {
-                log.debug("sendTestReply    [{}]", m);
-            }
-            notifyReply(m);
-        }
-
-        /*
-         * Check number of listeners, used for testing dispose()
-         */
-        public int numListeners() {
-            return cmdListeners.size();
-        }
-
-    }
+    private jmri.jmrix.qsi.QsiSystemConnectionMemo memo = null;
+    private QsiTrafficControlScaffold tc = null;
 
     @BeforeEach
+    @Override
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
+        tc = new QsiTrafficControlScaffold();
+        memo = new jmri.jmrix.qsi.QsiSystemConnectionMemo(tc);
+        frame = new QsiMonFrame(memo);
     }
 
     @AfterEach
+    @Override
     public void tearDown() {
-        jmri.util.JUnitUtil.clearShutDownManager();
-        jmri.util.JUnitUtil.tearDown();
+        if(frame!=null) {
+           JUnitUtil.dispose(frame); // close frame before memo
+        }
+        frame = null;
+        Assertions.assertNotNull(memo);
+        Assertions.assertNotNull(tc);
+        memo.dispose();
+        memo = null;
+        tc = null;
+        super.tearDown();
+
     }
 
-    private final static Logger log = LoggerFactory.getLogger(QsiMonFrameTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(QsiMonFrameTest.class);
 
 }

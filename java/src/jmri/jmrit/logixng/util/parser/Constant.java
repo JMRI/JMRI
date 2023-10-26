@@ -1,10 +1,5 @@
 package jmri.jmrit.logixng.util.parser;
 
-import java.util.List;
-
-import jmri.JmriException;
-import jmri.jmrit.logixng.SymbolTable;
-
 /**
  * Definition of a constant used in expressions.
  * 

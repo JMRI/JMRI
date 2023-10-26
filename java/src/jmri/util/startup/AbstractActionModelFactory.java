@@ -9,7 +9,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
@@ -19,9 +18,7 @@ import jmri.InstanceManager;
 import jmri.SystemConnectionMemo;
 import jmri.jmrix.swing.SystemConnectionAction;
 import jmri.util.ConnectionNameFromSystemName;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Provide an abstract StartupModelFactory with common methods for factories
@@ -30,8 +27,6 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood
  */
 public abstract class AbstractActionModelFactory implements StartupModelFactory {
-
-    private static final Logger log = LoggerFactory.getLogger(AbstractActionModelFactory.class);
 
     @Override
     public String getDescription() {
@@ -65,15 +60,12 @@ public abstract class AbstractActionModelFactory implements StartupModelFactory 
             if (!userName.isEmpty()) {
                 connections.setSelectedItem(userName);
             }
-            int result = JOptionPane.showOptionDialog(parent,
+            int result = JmriJOptionPane.showConfirmDialog(parent,
                     message,
                     this.getDescription(),
-                    JOptionPane.OK_CANCEL_OPTION,
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    null,
-                    null);
-            if (result == JOptionPane.OK_OPTION) {
+                    JmriJOptionPane.OK_CANCEL_OPTION,
+                    JmriJOptionPane.PLAIN_MESSAGE);
+            if (result == JmriJOptionPane.OK_OPTION) {
                 String name = actions.getSelectedValue();
                 Optional<StartupActionsManager> manager = InstanceManager.getOptionalDefault(StartupActionsManager.class);
                 if (!name.equals(model.getName())) {
@@ -134,4 +126,7 @@ public abstract class AbstractActionModelFactory implements StartupModelFactory 
         panel.add(connections);
         return panel;
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractActionModelFactory.class);
+
 }

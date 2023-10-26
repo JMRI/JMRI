@@ -32,11 +32,9 @@ import jmri.util.JmriJFrame;
 import jmri.util.AlphanumComparator;
 import jmri.util.StringUtil;
 import jmri.util.swing.JComboBoxUtil;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a Signal Group Table.
@@ -393,10 +391,10 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
                 workingTitle = Bundle.getMessage("NONE");
                 _systemName.setText(workingTitle);
             }
-            JOptionPane.showMessageDialog(addFrame,
+            JmriJOptionPane.showMessageDialog(addFrame,
                     Bundle.getMessage("SigGroupEditBusyWarning", workingTitle),
                     Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             // cancelEdit(); not needed as second edit is blocked
             return;
         }
@@ -812,10 +810,10 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         SignalMast mMast = mainSignalComboBox.getSelectedItem();
         if (mMast == null) {
             //log.warn("Signal Mast not selected. mainSignal = {}", mainSignalComboBox.getSelectedItem());
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("NoMastSelectedWarning"),
                     Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
             return false;
         }
         return true;
@@ -1761,6 +1759,6 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         return Bundle.getMessage("TitleSignalGroupTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalGroupTableAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalGroupTableAction.class);
 
 }

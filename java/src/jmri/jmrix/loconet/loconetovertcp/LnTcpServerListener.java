@@ -7,8 +7,8 @@ package jmri.jmrix.loconet.loconetovertcp;
  */
 public interface LnTcpServerListener {
 
-    public void notifyServerStateChanged(LnTcpServer s);
+    void notifyServerStateChanged(LnTcpServer s);
 
-    public void notifyClientStateChanged(LnTcpServer s);
+    void notifyClientStateChanged(LnTcpServer s);
 
 }

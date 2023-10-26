@@ -134,10 +134,10 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
             iconHeight = (int) (iconWidth / iconAspect);
         }
         for (int i = 0; i < 10; i++) {
-            Image scaledImage = baseTubes[i].getImage().getScaledInstance(iconWidth, iconHeight, Image.SCALE_SMOOTH);
+            Image scaledImage = baseTubes[i].getImage().getScaledInstance(Math.max(1,iconWidth), Math.max(1,iconHeight), Image.SCALE_SMOOTH);
             tubes[i].setImage(scaledImage);
         }
-        Image scaledImage = baseColon.getImage().getScaledInstance(iconWidth / 2, iconHeight, Image.SCALE_SMOOTH);
+        Image scaledImage = baseColon.getImage().getScaledInstance(Math.max(1,iconWidth / 2), Math.max(1,iconHeight), Image.SCALE_SMOOTH);
         colonIcon.setImage(scaledImage);
         // update the images on screen
         this.getContentPane().revalidate();

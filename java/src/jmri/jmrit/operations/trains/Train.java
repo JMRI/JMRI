@@ -6,11 +6,7 @@ import java.io.*;
 import java.text.MessageFormat;
 import java.util.*;
 
-import javax.swing.JOptionPane;
-
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.beans.Identifiable;
@@ -29,6 +25,7 @@ import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Represents a train on the layout
@@ -266,11 +263,11 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     /**
      * @return The name of the train row color when the train is reset
      */
-    public String getRowColorNameReset() {
+    public String getTableRowColorNameReset() {
         return _tableRowColorResetName;
     }
 
-    public void setRowColorNameReset(String colorName) {
+    public void setTableRowColorNameReset(String colorName) {
         String old = _tableRowColorResetName;
         _tableRowColorResetName = colorName;
         if (!old.equals(colorName)) {
@@ -402,8 +399,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     foundRouteLocation = true;
                 }
                 if (foundRouteLocation) {
-                    if (TrainCommon.splitString(rl.getName())
-                            .equals(TrainCommon.splitString(routeLocation.getName()))) {
+                    if (rl.getSplitName()
+                            .equals(routeLocation.getSplitName())) {
                         minutes = minutes + getWorkTimeAtLocation(rl);
                     } else {
                         break; // done
@@ -472,7 +469,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 // add travel time if new location
                 RouteLocation next = routeList.get(i + 1);
                 if (next != null &&
-                        !TrainCommon.splitString(rl.getName()).equals(TrainCommon.splitString(next.getName()))) {
+                        !rl.getSplitName().equals(next.getSplitName())) {
                     minutes += Setup.getTravelTime();
                 }
                 // don't count work if there's a departure time
@@ -761,6 +758,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public Track getDepartureTrack() {
         return _departureTrack;
     }
+    
+    public boolean isDepartingStaging() {
+        return getDepartureTrack() != null;
+    }
 
     public void setTerminationTrack(Track track) {
         Track old = _terminationTrack;
@@ -790,11 +791,15 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         updateTrainTableRowColor();
     }
 
-    private void updateTrainTableRowColor() {
+    public void updateTrainTableRowColor() {
         if (!InstanceManager.getDefault(TrainManager.class).isRowColorManual()) {
             switch (getStatusCode()) {
                 case CODE_TRAIN_RESET:
-                    setTableRowColorName(getRowColorNameReset());
+                    String color = getTableRowColorNameReset();
+                    if (color.equals(NONE)) {
+                        color = InstanceManager.getDefault(TrainManager.class).getRowColorNameForReset();
+                    }
+                    setTableRowColorName(color);
                     break;
                 case CODE_BUILT:
                 case CODE_PARTIAL_BUILT:
@@ -917,8 +922,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         Route route = getRoute();
         if (route != null) {
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
-                String name = TrainCommon.splitString(rl.getName());
-                if (!departureName.equals(name)) {
+                if (!departureName.equals(rl.getSplitName())) {
                     return false; // not a local switcher
                 }
             }
@@ -1624,20 +1628,20 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         setServiceStatus(NONE);
         // check to see if train can carry car
         if (!isTypeNameAccepted(car.getTypeName())) {
-            addLine(buildReport, MessageFormat.format(Bundle.getMessage("trainCanNotServiceCarType"),
-                    new Object[] { getName(), car.toString(), car.getTypeName() }));
+            addLine(buildReport, Bundle.getMessage("trainCanNotServiceCarType",
+                    getName(), car.toString(), car.getTypeName()));
             return false;
         }
         if (!isLoadNameAccepted(car.getLoadName(), car.getTypeName())) {
-            addLine(buildReport, MessageFormat.format(Bundle.getMessage("trainCanNotServiceCarLoad"),
-                    new Object[] { getName(), car.toString(), car.getTypeName(), car.getLoadName() }));
+            addLine(buildReport, Bundle.getMessage("trainCanNotServiceCarLoad",
+                    getName(), car.toString(), car.getTypeName(), car.getLoadName()));
             return false;
         }
         if (!isBuiltDateAccepted(car.getBuilt()) ||
                 !isOwnerNameAccepted(car.getOwnerName()) ||
                 !isCarRoadNameAccepted(car.getRoadName())) {
-            addLine(buildReport, MessageFormat.format(Bundle.getMessage("trainCanNotServiceCar"),
-                    new Object[] { getName(), car.toString() }));
+            addLine(buildReport, Bundle.getMessage("trainCanNotServiceCar",
+                    getName(), car.toString()));
             return false;
         }
 
@@ -1653,13 +1657,13 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         // determine if the car's location and destination is serviced by this
         // train
         if (route.getLastLocationByName(car.getLocationName()) == null) {
-            addLine(buildReport, MessageFormat.format(Bundle.getMessage("trainNotThisLocation"),
-                    new Object[] { getName(), car.getLocationName() }));
+            addLine(buildReport, Bundle.getMessage("trainNotThisLocation",
+                    getName(), car.getLocationName()));
             return false;
         }
         if (car.getDestination() != null && route.getLastLocationByName(car.getDestinationName()) == null) {
-            addLine(buildReport, MessageFormat.format(Bundle.getMessage("trainNotThisLocation"),
-                    new Object[] { getName(), car.getDestinationName() }));
+            addLine(buildReport, Bundle.getMessage("trainNotThisLocation",
+                    getName(), car.getDestinationName()));
             return false;
         }
         // now find the car in the train's route
@@ -1674,9 +1678,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 if (((car.getTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0 && !isLocalSwitcher()) ||
                         !car.getTrack().isPickupTrainAccepted(this)) {
                     addLine(buildReport,
-                            MessageFormat.format(Bundle.getMessage("trainCanNotServiceCarFrom"),
-                                    new Object[] { getName(), car.toString(), car.getLocationName(), car.getTrackName(),
-                                            rLoc.getId() }));
+                            Bundle.getMessage("trainCanNotServiceCarFrom",
+                                    getName(), car.toString(), car.getLocationName(), car.getTrackName(),
+                                            rLoc.getId()));
                     continue;
                 }
                 if (debugFlag) {
@@ -1684,8 +1688,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                             car.toString(), getName(), car.getLocationName(), car.getTrackName(),
                             car.getDestinationName(), car.getDestinationTrackName());
                 }
-                addLine(buildReport, MessageFormat.format(Bundle.getMessage("trainCanPickUpCar"), new Object[] {
-                        getName(), car.toString(), car.getLocationName(), car.getTrackName(), rLoc.getId() }));
+                addLine(buildReport, Bundle.getMessage("trainCanPickUpCar",
+                        getName(), car.toString(), car.getLocationName(), car.getTrackName(), rLoc.getId()));
                 if (car.getDestination() == null) {
                     if (debugFlag) {
                         log.debug("Car ({}) does not have a destination", car.toString());
@@ -1695,8 +1699,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 // now check car's destination
                 return isServiceableDestination(buildReport, car, rLoc, rLocations);
             } else if (rLoc.getName().equals(car.getLocationName())) {
-                addLine(buildReport, MessageFormat.format(Bundle.getMessage("trainCanNotServiceCarFrom"), new Object[] {
-                        getName(), car.toString(), car.getLocationName(), car.getTrackName(), rLoc.getId() }));
+                addLine(buildReport, Bundle.getMessage("trainCanNotServiceCarFrom",
+                        getName(), car.toString(), car.getLocationName(), car.getTrackName(), rLoc.getId()));
             }
         }
         if (debugFlag) {
@@ -1751,10 +1755,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     String status = car.checkDestination(getTerminationTrack().getLocation(), getTerminationTrack());
                     if (!status.equals(Track.OKAY)) {
                         addLine(buildReport,
-                                MessageFormat.format(Bundle.getMessage("trainCanNotDeliverToStaging"),
-                                        new Object[] { getName(), car.toString(),
+                                Bundle.getMessage("trainCanNotDeliverToStaging",
+                                        getName(), car.toString(),
                                                 getTerminationTrack().getLocation().getName(),
-                                                getTerminationTrack().getName(), status }));
+                                                getTerminationTrack().getName(), status));
                         setServiceStatus(status);
                         continue;
                     }
@@ -1784,30 +1788,27 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                             log.debug("Destination ({}) can not service car ({}) using train ({}) no track available",
                                     car.getDestinationName(), car.toString(), getName()); // NOI18N
                         }
-                        addLine(buildReport, MessageFormat.format(Bundle.getMessage("trainCanNotDeliverNoTracks"),
-                                new Object[] { getName(), car.toString(), car.getDestinationName(), rldest.getId() }));
+                        addLine(buildReport, Bundle.getMessage("trainCanNotDeliverNoTracks",
+                                getName(), car.toString(), car.getDestinationName(), rldest.getId()));
                         continue;
                     }
                 }
                 // restriction to only carry cars to terminal?
+                // ignore send to terminal if a local move
                 if (isSendCarsToTerminalEnabled() &&
-                        !TrainCommon.splitString(car.getLocationName())
+                        !car.isLocalMove() &&
+                        !car.getSplitLocationName()
                                 .equals(TrainCommon.splitString(getTrainDepartsName())) &&
-                        !TrainCommon.splitString(car.getDestinationName())
+                        !car.getSplitDestinationName()
                                 .equals(TrainCommon.splitString(getTrainTerminatesName()))) {
                     if (debugFlag) {
                         log.debug("option send cars to terminal is enabled");
                     }
-                    // check to see if local move allowed
-                    if (!isAllowLocalMovesEnabled() ||
-                            isAllowLocalMovesEnabled() &&
-                                    !TrainCommon.splitString(car.getLocationName())
-                                            .equals(TrainCommon.splitString(car.getDestinationName())))
-                        addLine(buildReport,
-                                MessageFormat.format(Bundle.getMessage("trainCanNotCarryCarOption"),
-                                        new Object[] { getName(), car.toString(), car.getLocationName(),
-                                                car.getTrackName(), car.getDestinationName(),
-                                                car.getDestinationTrackName() }));
+                    addLine(buildReport,
+                            Bundle.getMessage("trainCanNotCarryCarOption",
+                                    getName(), car.toString(), car.getLocationName(),
+                                            car.getTrackName(), car.getDestinationName(),
+                                            car.getDestinationTrackName()));
                     continue;
                 }
                 // don't allow local move when car is in staging
@@ -1823,31 +1824,31 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                         car.getTrack().isStaging() &&
                         rldest.getLocation() == car.getLocation()) {
                     addLine(buildReport,
-                            MessageFormat.format(Bundle.getMessage("trainCanReturnCarToStaging"),
-                                    new Object[] { getName(), car.toString(), car.getDestinationName(),
-                                            car.getDestinationTrackName() }));
+                            Bundle.getMessage("trainCanReturnCarToStaging",
+                                    getName(), car.toString(), car.getDestinationName(),
+                                            car.getDestinationTrackName()));
                     return true;
                 }
                 // is this a local move?
-                if (!isAllowLocalMovesEnabled() &&
+                if (!isLocalSwitcher() &&
+                        !isAllowLocalMovesEnabled() &&
                         !car.isCaboose() &&
                         !car.hasFred() &&
                         !car.isPassenger() &&
-                        TrainCommon.splitString(car.getLocationName())
-                                .equals(TrainCommon.splitString(car.getDestinationName()))) {
+                        car.isLocalMove()) {
                     if (debugFlag) {
                         log.debug("Local move not allowed");
                     }
-                    addLine(buildReport, MessageFormat.format(Bundle.getMessage("trainCanNotPerformLocalMove"),
-                            new Object[] { getName(), car.toString(), car.getLocationName() }));
+                    addLine(buildReport, Bundle.getMessage("trainCanNotPerformLocalMove",
+                            getName(), car.toString(), car.getLocationName()));
                     continue;
                 }
                 // Can cars travel from origin to terminal?
                 if (!isAllowThroughCarsEnabled() &&
                         TrainCommon.splitString(getTrainDepartsName())
-                                .equals(TrainCommon.splitString(rLoc.getName())) &&
+                                .equals(rLoc.getSplitName()) &&
                         TrainCommon.splitString(getTrainTerminatesName())
-                                .equals(TrainCommon.splitString(rldest.getName())) &&
+                                .equals(rldest.getSplitName()) &&
                         !TrainCommon.splitString(getTrainDepartsName())
                                 .equals(TrainCommon.splitString(getTrainTerminatesName())) &&
                         !isLocalSwitcher() &&
@@ -1857,14 +1858,14 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     if (debugFlag) {
                         log.debug("Through car ({}) not allowed", car.toString());
                     }
-                    addLine(buildReport, MessageFormat.format(Bundle.getMessage("trainDoesNotCarryOriginTerminal"),
-                            new Object[] { getName(), car.getLocationName(), car.getDestinationName() }));
+                    addLine(buildReport, Bundle.getMessage("trainDoesNotCarryOriginTerminal",
+                            getName(), car.getLocationName(), car.getDestinationName()));
                     continue;
                 }
                 // check to see if moves are available
                 if (getStatusCode() == CODE_BUILDING && rldest.getMaxCarMoves() - rldest.getCarMoves() <= 0) {
-                    setServiceStatus(MessageFormat.format(Bundle.getMessage("trainNoMoves"),
-                            new Object[] { getName(), getRoute().getName(), rldest.getId(), rldest.getName() }));
+                    setServiceStatus(Bundle.getMessage("trainNoMoves",
+                            getName(), getRoute().getName(), rldest.getId(), rldest.getName()));
                     if (debugFlag) {
                         log.debug("No available moves for destination {}", rldest.getName());
                     }
@@ -1879,10 +1880,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             }
             // check to see if train length is okay
             if (getStatusCode() == CODE_BUILDING && rldest.getTrainLength() + length > rldest.getMaxTrainLength()) {
-                setServiceStatus(MessageFormat.format(Bundle.getMessage("trainExceedsMaximumLength"),
-                        new Object[] { getName(), getRoute().getName(), rldest.getId(), rldest.getMaxTrainLength(),
+                setServiceStatus(Bundle.getMessage("trainExceedsMaximumLength",
+                        getName(), getRoute().getName(), rldest.getId(), rldest.getMaxTrainLength(),
                                 Setup.getLengthUnit().toLowerCase(), rldest.getName(), car.toString(),
-                                rldest.getTrainLength() + length - rldest.getMaxTrainLength() }));
+                                rldest.getTrainLength() + length - rldest.getMaxTrainLength()));
                 if (debugFlag) {
                     log.debug("Car ({}) exceeds maximum train length {} when departing ({})", car.toString(),
                             rldest.getMaxTrainLength(), rldest.getName());
@@ -1891,21 +1892,21 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 return false;
             }
         }
-        addLine(buildReport, MessageFormat.format(Bundle.getMessage("trainCanNotDeliverToDestination"),
-                new Object[] { getName(), car.toString(), car.getDestinationName(), car.getDestinationTrackName() }));
+        addLine(buildReport, Bundle.getMessage("trainCanNotDeliverToDestination",
+                getName(), car.toString(), car.getDestinationName(), car.getDestinationTrackName()));
         return false;
     }
 
     private boolean isServicableTrack(PrintWriter buildReport, Car car, RouteLocation rldest, Track track) {
         if ((track.getTrainDirections() & rldest.getTrainDirection()) == 0 && !isLocalSwitcher()) {
-            addLine(buildReport, MessageFormat.format(Bundle.getMessage("buildCanNotDropRsUsingTrain"),
-                    new Object[] { car.toString(), rldest.getTrainDirectionString(), track.getName() }));
+            addLine(buildReport, Bundle.getMessage("buildCanNotDropRsUsingTrain",
+                    car.toString(), rldest.getTrainDirectionString(), track.getName()));
             return false;
         }
         if (!track.isDropTrainAccepted(this)) {
-            addLine(buildReport, MessageFormat.format(Bundle.getMessage("buildCanNotDropCarTrain"),
-                    new Object[]{car.toString(), getName(), track.getTrackTypeName(), track.getLocation().getName(),
-                            track.getName()}));
+            addLine(buildReport, Bundle.getMessage("buildCanNotDropCarTrain",
+                    car.toString(), getName(), track.getTrackTypeName(), track.getLocation().getName(),
+                            track.getName()));
             return false;
         }
         return true;
@@ -3001,7 +3002,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             TrainPrintUtilities.editReport(buildFile, getName());
         } else {
             TrainPrintUtilities.printReport(buildFile,
-                    MessageFormat.format(Bundle.getMessage("buildReport"), new Object[] { getDescription() }),
+                    Bundle.getMessage("buildReport", getDescription()),
                     isPreview, NONE, true, NONE, NONE, Setup.PORTRAIT, Setup.getBuildReportFontSize(), true);
         }
         return true;
@@ -3122,11 +3123,11 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         InstanceManager.getDefault(TrainCustomManifest.class).addCsvFile(file);
         if (!InstanceManager.getDefault(TrainCustomManifest.class).process()) {
             if (!InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists()) {
-                JOptionPane.showMessageDialog(null,
-                        MessageFormat.format(Bundle.getMessage("LoadDirectoryNameFileName"),
-                                new Object[] { InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(),
-                                        InstanceManager.getDefault(TrainCustomManifest.class).getFileName() }),
-                        Bundle.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("LoadDirectoryNameFileName",
+                                InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(),
+                                        InstanceManager.getDefault(TrainCustomManifest.class).getFileName()),
+                        Bundle.getMessage("ManifestCreatorNotFound"), JmriJOptionPane.ERROR_MESSAGE);
             }
             return false;
         }
@@ -3333,8 +3334,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             if (getCurrentLocationName().equals(NONE)) {
                 txt = getDescription() + " " + Bundle.getMessage("Terminated") + " (" + getTrainTerminatesName() + ")";
             } else {
-                txt = MessageFormat.format(Bundle.getMessage("TrainAtNext"),
-                        new Object[] { getDescription(), getCurrentLocationName(), getNextLocationName() });
+                txt = Bundle.getMessage("TrainAtNext",
+                        getDescription(), getCurrentLocationName(), getNextLocationName());
             }
             _trainIcon.getToolTip().setText(txt);
             _trainIcon.getToolTip().setBackgroundColor(Color.white);
@@ -3608,10 +3609,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         // Trains table row color
         Element eRowColor = e.getChild(Xml.ROW_COLOR);
         if (eRowColor != null && (a = eRowColor.getAttribute(Xml.NAME)) != null) {
-            _tableRowColorName = a.getValue();
+            _tableRowColorName = a.getValue().toLowerCase();
         }
         if (eRowColor != null && (a = eRowColor.getAttribute(Xml.RESET_ROW_COLOR)) != null) {
-            _tableRowColorResetName = a.getValue();
+            _tableRowColorResetName = a.getValue().toLowerCase();
         }
 
         Element eRoute = e.getChild(Xml.ROUTE);
@@ -4024,7 +4025,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
         Element eRowColor = new Element(Xml.ROW_COLOR);
         eRowColor.setAttribute(Xml.NAME, getTableRowColorName());
-        eRowColor.setAttribute(Xml.RESET_ROW_COLOR, getRowColorNameReset());
+        eRowColor.setAttribute(Xml.RESET_ROW_COLOR, getTableRowColorNameReset());
         e.addContent(eRowColor);
 
         Element eRoute = new Element(Xml.ROUTE);
@@ -4273,6 +4274,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Train.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Train.class);
 
 }

@@ -637,7 +637,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
             // only use tracks serviced by this train?
             if (car.getTrack().isAddCustomLoadsEnabled() &&
-                    _train.getRoute().getLastLocationByName(track.getLocation().getName()) == null) {
+                    !_train.getRoute().isLocationNameInRoute(track.getLocation().getName())) {
                 continue;
             }
             // only the first match in a schedule is used for a spur
@@ -702,6 +702,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
             addLine(_buildReport, SEVEN, Bundle.getMessage("buildCanNotRouteCar", car.toString(),
                     si.getReceiveLoadName(), track.getLocation().getName(), track.getName()));
+            addLine(_buildReport, SEVEN, BLANK_LINE);
             car.setDestination(null, null);
             car.setFinalDestination(null);
             car.setFinalDestinationTrack(null);
@@ -709,7 +710,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         // restore car's load
         car.setLoadName(oldCarLoad);
         car.setScheduleItemId(Car.NONE);
-        addLine(_buildReport, SEVEN, Bundle.getMessage("buildUnableNewLoad", car.toString()));
+        addLine(_buildReport, FIVE, Bundle.getMessage("buildUnableNewLoad", car.toString()));
         return false; // done, no load generated for this car
     }
 
@@ -1133,6 +1134,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 }
             }
         }
+        addLine(_buildReport, SEVEN, BLANK_LINE);
         addLine(_buildReport, SEVEN,
                 Bundle.getMessage("buildSetFinalDestDiv", track.getTrackTypeName(), track.getLocation().getName(),
                         track.getName(), track.getDivisionName(), car.toString(), car.getLoadType().toLowerCase(),
@@ -1272,11 +1274,12 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                         car.getTrackName(), car.getFinalDestinationName(), car.getFinalDestinationTrackName()));
 
         // no local moves for this train?
-        if (!_train.isAllowLocalMovesEnabled() &&
-                splitString(car.getLocationName()).equals(splitString(car.getFinalDestinationName())) &&
+        if (!_train.isLocalSwitcher() && !_train.isAllowLocalMovesEnabled() &&
+                car.getSplitLocationName().equals(car.getSplitFinalDestinationName()) &&
                 car.getTrack() != _departStageTrack) {
             addLine(_buildReport, FIVE,
-                    Bundle.getMessage("buildCarHasFinalDestNoMove", car.toString(), car.getFinalDestinationName()));
+                    Bundle.getMessage("buildCarHasFinalDestNoMove", car.toString(), car.getLocationName(),
+                            car.getFinalDestinationName(), _train.getName()));
             addLine(_buildReport, FIVE, BLANK_LINE);
             log.debug("Removing car ({}) from list", car.toString());
             _carList.remove(car);
@@ -1337,7 +1340,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             // staging
             if ((!router.getStatus().startsWith(Track.LENGTH) &&
                     !_train.isServiceAllCarsWithFinalDestinationsEnabled()) || (car.getTrack() == _departStageTrack)) {
-                // add car to not able to route list
+                // add car to unable to route list
                 if (!_notRoutable.contains(car)) {
                     _notRoutable.add(car);
                 }
@@ -1411,7 +1414,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             // are drops allows at this location?
             if (!rld.isDropAllowed()) {
                 addLine(_buildReport, FIVE, Bundle.getMessage("buildRouteNoDropLocation", _train.getRoute().getName(),
-                        rld.getName(), rld.getId()));
+                        rld.getId(), rld.getName()));
                 continue;
             }
             if (_train.isLocationSkipped(rld.getId())) {
@@ -1590,15 +1593,15 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         }
         // all pick ups to terminal?
         if (_train.isSendCarsToTerminalEnabled() &&
-                !splitString(rl.getName()).equals(splitString(_departLocation.getName())) &&
+                !rl.getSplitName().equals(_departLocation.getSplitName()) &&
                 routeEnd == _routeList.size()) {
             addLine(_buildReport, FIVE, Bundle.getMessage("buildSendToTerminal", _terminateLocation.getName()));
             // user could have specified several terminal locations with the
             // "same" name
             start = routeEnd - 1;
             while (start > routeIndex) {
-                if (!splitString(_routeList.get(start - 1).getName())
-                        .equals(splitString(_terminateLocation.getName()))) {
+                if (!_routeList.get(start - 1).getSplitName()
+                        .equals(_terminateLocation.getSplitName())) {
                     break;
                 }
                 start--;
@@ -1612,9 +1615,9 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 multiplePickup = true;
             }
             if (rld.isDropAllowed() || car.hasFred() || car.isCaboose()) {
-                addLine(_buildReport, SEVEN, Bundle.getMessage("buildSearchingLocation", rld.getName(), rld.getId()));
+                addLine(_buildReport, FIVE, Bundle.getMessage("buildSearchingLocation", rld.getName(), rld.getId()));
             } else {
-                addLine(_buildReport, SEVEN, Bundle.getMessage("buildRouteNoDropLocation", _train.getRoute().getName(),
+                addLine(_buildReport, FIVE, Bundle.getMessage("buildRouteNoDropLocation", _train.getRoute().getName(),
                         rld.getId(), rld.getName()));
                 continue;
             }
@@ -1639,7 +1642,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
             // don't move car to same location unless the train is a switcher
             // (local moves) or is passenger, caboose or car with FRED
-            if (splitString(rl.getName()).equals(splitString(rld.getName())) &&
+            if (rl.getSplitName().equals(rld.getSplitName()) &&
                     !_train.isLocalSwitcher() &&
                     !car.isPassenger() &&
                     !car.isCaboose() &&

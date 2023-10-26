@@ -41,7 +41,7 @@ public class ShutdownComputerSwing extends AbstractDigitalActionSwing {
         if (action != null) {
             _tabbedPaneOperation = _selectOperationSwing.createPanel(action.getSelectEnum(), Operation.values());
         } else {
-            _tabbedPaneOperation = _selectOperationSwing.createPanel(null, Operation.values());
+            _tabbedPaneOperation = _selectOperationSwing.createPanel(null, Operation.values(), Operation.ShutdownJMRI);
         }
 
         panel = new JPanel();

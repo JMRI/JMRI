@@ -8,7 +8,6 @@ import org.junit.Test;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.AbstractBaseTestBase;
 import jmri.jmrit.logixng.DigitalActionBean;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 
 /**
  * Base class for classes that tests DigitalAction

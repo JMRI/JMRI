@@ -10,7 +10,7 @@ import jmri
 import java
 import java.beans
 
-from org.apache.log4j import Logger
+from org.slf4j import LoggerFactory
 
 # Define one sensor listener. 
 class ThrottleFunctionForSensorListener(java.beans.PropertyChangeListener):
@@ -51,7 +51,7 @@ class Automaton(jmri.jmrit.automat.AbstractAutomaton) :
             self.waitMsec(500)  #give it a chance to happen
 
 ####################################################################
-logger = Logger.getLogger("jmri.jmrit.jython.exec.ThrottleFunctionForSensor")
+logger = LoggerFactory.getLogger("jmri.jmrit.jython.exec.ThrottleFunctionForSensor")
 
 #connect each sensor to its loco and function, repeat as needed
 Automaton().setup("LS1003", 909, "F1")  #horn for address 909

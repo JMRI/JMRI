@@ -3,11 +3,8 @@ package jmri.jmrit.logixng.tools.swing;
 import java.awt.event.*;
 import java.util.*;
 
-import javax.annotation.Nonnull;
-
 import jmri.InstanceManager;
 import jmri.jmrit.beantable.BeanTableDataModel;
-import jmri.jmrit.beantable.BeanTableFrame;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;

@@ -1,8 +1,6 @@
 package jmri;
 
-import java.util.Date;
 import java.util.List;
-import javax.annotation.Nonnull;
 
 /**
  * Each LightControl object is linked to a specific Light, and provides one of
@@ -40,7 +38,7 @@ public interface LightControl {
      *
      * @return the Control Type, eg. FAST_CLOCK_CONTROL
      */
-    public int getControlType();
+    int getControlType();
 
     /**
      * Set the control type used by the Control
@@ -48,7 +46,7 @@ public interface LightControl {
      *
      * @param type the Control Type, eg. FAST_CLOCK_CONTROL
      */
-    public void setControlType(int type);
+    void setControlType(int type);
 
     /**
      * Set Sensor 1 used by the 1 Sensor and 2 Sensor Control
@@ -58,14 +56,14 @@ public interface LightControl {
      *
      * @param sensorName the Sensor name
      */
-    public void setControlSensorName(String sensorName);
+    void setControlSensorName(String sensorName);
 
     /**
      * Get the Sensor State used by the 1 Sensor Control
      *
      * @return Sensor.ACTIVE or Sensor.INACTIVE
      */
-    public int getControlSensorSense();
+    int getControlSensorSense();
 
     /**
      * Get the Sensor 1 name for 1 and 2 Sensor Control Types.
@@ -73,7 +71,7 @@ public interface LightControl {
      * @return  If a Sensor is registered, returns the Sensor.getName()
      *          else the Sensor Name as set by #setControlSensorName
      */
-    public String getControlSensorName();
+    String getControlSensorName();
 
     /**
      * Set the Sensor State used by the Control
@@ -81,49 +79,49 @@ public interface LightControl {
      *
      * @param sense The state to react to, eg. Sensor.ACTIVE or Sensor.INACTIVE
      */
-    public void setControlSensorSense(int sense);
+    void setControlSensorSense(int sense);
 
     /**
      * Get the Fast Clock On Hour.
      *
      * @return  On Hour value
      */
-    public int getFastClockOnHour();
+    int getFastClockOnHour();
 
     /**
      * Get the Fast Clock On Minute.
      *
      * @return  On Minute value
      */
-    public int getFastClockOnMin();
+    int getFastClockOnMin();
 
     /**
      * Get the Fast Clock On Hours and Minutes Combined
      * Convenience method of separate getFastClockOnHour() and getFastClockOnMin()
      * @return  Total combined Minute value
      */
-    public int getFastClockOnCombined();
+    int getFastClockOnCombined();
 
     /**
      * Get the Fast Clock Off Hour.
      *
      * @return  Off Hour value
      */
-    public int getFastClockOffHour();
+    int getFastClockOffHour();
 
     /**
      * Get the Fast Clock Off Minute.
      *
      * @return  Off Minute value
      */
-    public int getFastClockOffMin();
+    int getFastClockOffMin();
     
     /**
      * Get the Fast Clock Off Hours and Minutes Combined
      * Convenience method of separate getFastClockOnHour() and getFastClockOnMin()
      * @return  Total combined Minute value
      */
-    public int getFastClockOffCombined();
+    int getFastClockOffCombined();
 
     /**
      * Set a Fast Clock LightControl Schedule.
@@ -133,14 +131,14 @@ public interface LightControl {
      * @param offHour Hour the Light should switch Off
      * @param offMin Minute the Light should switch Off     * 
      */
-    public void setFastClockControlSchedule(int onHour, int onMin, int offHour, int offMin);
+    void setFastClockControlSchedule(int onHour, int onMin, int offHour, int offMin);
 
     /**
      * Get the LightControl Turnout Name.
      *
      * @return  The Turnout name
      */
-    public String getControlTurnoutName();
+    String getControlTurnoutName();
 
     /**
      * Set the Turnout used by the Control
@@ -151,14 +149,14 @@ public interface LightControl {
      *
      * @param turnoutName The Turnout name
      */
-    public void setControlTurnout(String turnoutName);
+    void setControlTurnout(String turnoutName);
 
     /**
      * Get the LightControl Turnout Name.
      *
      * @return  The Turnout name
      */
-    public int getControlTurnoutState();
+    int getControlTurnoutState();
 
     /**
      * Set the Turnout State used by the Control
@@ -166,14 +164,14 @@ public interface LightControl {
      *
      * @param state Turnout state to act on, eg. Turnout.CLOSED or Turnout.THROWN
      */
-    public void setControlTurnoutState(int state);
+    void setControlTurnoutState(int state);
 
     /**
      * Get the Timed On Trigger Sensor name.
      *
      * @return  The Sensor Name as set by #setControlTimedOnSensorName
      */
-    public String getTimedSensorName();
+    String getTimedSensorName();
 
     /**
      * Get the Timed On Trigger Sensor name.
@@ -181,7 +179,7 @@ public interface LightControl {
      * @return  If a Sensor is registered, returns the Sensor.getName()
      *          else the Sensor Name as set by #setControlTimedOnSensorName
      */
-    public String getControlTimedOnSensorName();
+    String getControlTimedOnSensorName();
 
     /**
      * Set Sensor used by the Timed On Control
@@ -189,14 +187,14 @@ public interface LightControl {
      *
      * @param sensorName the Sensor name to be used for the On Trigger
      */
-    public void setControlTimedOnSensorName(String sensorName);
+    void setControlTimedOnSensorName(String sensorName);
 
     /**
      * Get the Timed On Control Duration
      *
      * @return duration in ms
      */
-    public int getTimedOnDuration();
+    int getTimedOnDuration();
 
     /**
      * Set Duration used by the Timed On Control
@@ -204,7 +202,7 @@ public interface LightControl {
      *
      * @param duration in ms following the Sensor On Trigger
      */
-    public void setTimedOnDuration(int duration);
+    void setTimedOnDuration(int duration);
 
     /**
      * Get the Second Sensor name.
@@ -213,7 +211,7 @@ public interface LightControl {
      * @return  If a 2nd Sensor is registered, returns the Sensor.getName()
      *          else the 2nd Sensor Name as set by #setControlSensor2Name
      */
-    public String getControlSensor2Name();
+    String getControlSensor2Name();
 
     /**
      * Set Sensor 2 used by the 2 Sensor Control
@@ -221,7 +219,7 @@ public interface LightControl {
      *
      * @param sensorName the Sensor 2 name
      */
-    public void setControlSensor2Name(String sensorName);
+    void setControlSensor2Name(String sensorName);
 
     /**
      * Set Light to control
@@ -229,7 +227,7 @@ public interface LightControl {
      *
      * @param l the Light object to control
      */
-    public void setParentLight(Light l);
+    void setParentLight(Light l);
 
     /**
      * Get a Textual Description
@@ -239,14 +237,14 @@ public interface LightControl {
      * @param lightName the Light Name, can be empty.
      * @return An I18N full-text description of thiscontrol
      */
-    public String getDescriptionText(String lightName);
+    String getDescriptionText(String lightName);
 
     /**
      * Activates a Light Control by control type. This method tests the control
      * type, and set up a control mechanism, appropriate for the control type.
      * Adds PropertyChangeListeners to Sensors / Turnout / Fast Clock as necessary
      */
-    public void activateLightControl();
+    void activateLightControl();
     
     /**
      * Check to see if we have the FastClock Follower has unique times for a single Light Control.
@@ -255,7 +253,7 @@ public interface LightControl {
      * 
      * @return true if the clock on time equals the off time, otherwise false.
      */
-    public boolean onOffTimesFaulty();
+    boolean onOffTimesFaulty();
     
     /**
      * Check to see if we have the FastClock Follower has unique times for a single Light.
@@ -265,13 +263,13 @@ public interface LightControl {
      * @param compareList the ArrayList of other Light Controls to compare against
      * @return true if there are multiple exact same times
      */
-    public boolean areFollowerTimesFaulty( List<LightControl> compareList );
+    boolean areFollowerTimesFaulty( List<LightControl> compareList );
     
     /**
      * Deactivates a LightControl by control type. This method tests the control
      * type, and deactivates the control mechanism, appropriate for the control
      * type.
      */
-    public void deactivateLightControl();
+    void deactivateLightControl();
 
 }

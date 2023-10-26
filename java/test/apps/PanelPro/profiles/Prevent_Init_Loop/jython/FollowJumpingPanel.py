@@ -12,7 +12,7 @@
 #
 #
 # Based on information gleaned from DisableOpsMode.py and from the 
-# http://jmri.org/help/en/html/tools/scripting/FAQ.shtml web page 
+# https://www.jmri.org/help/en/html/tools/scripting/FAQ.shtml web page 
 # and from other examples in the JMRI distribution download jython folder. 
 # Information concerning the need to delay access to the Main JFrame Window 
 # until it is visible was discovered during preliminary testing. 
@@ -23,15 +23,13 @@
 """
     Normal usage of this script should not require the DEBUG log messages, HOWEVER:
 
-    If you wish to enable the DEBUG log messages, COPY the following TWO LINES:
-log4j.category.jmri.jmrit.jython.exec=DEBUG
+    If you wish to enable the DEBUG log messages, add the following line:
+    
+    <Logger name="jmri.jmrit.jython.exec" level="DEBUG"/>
 
-# ###########  Copy the two lines above this one  ############# #
-    into the file named "default.lcf" found in your JMRI Programs folder or into the copy that you have placed in your settings directory. Place those copied lines near or at the END of the file.  But, be certain that the last line of that file is an empty string! 
-
-            IMPORTANT FURTHER INFORMATION: 
-    EFFECTIVE with JMRI Version 4.6, the following change is described in the Release Notes: 
-        'Logging Preferences in a file named "default.lcf" in the settings directory take precedence over logging preferences that ship with JMRI. The "default.lcf" can be copied from the JMRI installation as a starting point.' 
+    into the file named "default_lcf.xml" found in your JMRI Programs folder or into the copy that you have placed in your settings directory.
+    Place this copied line with the other <Logger> elements towards the bottom of the file.
+    For more information on Logging, see https://www.jmri.org/help/en/html/doc/Technical/Logging.shtml
 
 """
 # Execution is staged on enabling evidence of the completion of three Start Up 
@@ -68,7 +66,7 @@ However, for this script to provide useful metrics, it should be executed before
 #
 import jmri
 import java
-import org.apache.log4j
+import org.slf4j.LoggerFactory
 
 
 class FollowJumpingPanel(jmri.jmrit.automat.AbstractAutomaton):
@@ -91,7 +89,7 @@ class FollowJumpingPanel(jmri.jmrit.automat.AbstractAutomaton):
     def handle(self):
 
         # Debug logging log4j overhead:
-        LogfileWrite = org.apache.log4j.Logger.getLogger("jmri.jmrit.jython.exec.script.FollowJumpingPanel")
+        LogfileWrite = org.slf4j.LoggerFactory.getLogger("jmri.jmrit.jython.exec.script.FollowJumpingPanel")
 
         # The JMRI Main Window is moved to the lower left corner of the screen, but only
         # because, a script to do that task has been modified for the Jumping Panel diagnostics

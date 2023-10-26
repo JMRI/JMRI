@@ -2,6 +2,9 @@ package jmri.managers;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import sun.misc.Signal;
+import sun.misc.SignalHandler;
+
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
@@ -11,6 +14,7 @@ import java.util.concurrent.*;
 
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
+import jmri.util.SystemType;
 
 import jmri.beans.Bean;
 import jmri.util.ThreadingUtil;
@@ -80,6 +84,41 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
             Runtime.getRuntime().addShutdownHook(this.shutdownHook);
         } catch (IllegalStateException ex) {
             // thrown only if System.exit() has been called, so ignore
+        }
+        
+        // register a Signal handlers that do shutdown
+        try {
+            if (SystemType.isMacOSX() || SystemType.isLinux()) {
+                SignalHandler handler = new SignalHandler () {
+                    @Override
+                    public void handle(Signal sig) {
+                        shutdown();
+                    }
+                };
+                Signal.handle(new Signal("TERM"), handler);
+                Signal.handle(new Signal("INT"), handler);
+                
+                handler = new SignalHandler () {
+                    @Override
+                    public void handle(Signal sig) {
+                        restart();
+                    }
+                };
+                Signal.handle(new Signal("HUP"), handler);     
+            } 
+            
+            else if (SystemType.isWindows()) {
+                SignalHandler handler = new SignalHandler () {
+                    @Override
+                    public void handle(Signal sig) {
+                        shutdown();
+                    }
+                };
+                Signal.handle(new Signal("TERM"), handler);
+            }
+            
+        } catch (NullPointerException e) {
+            log.warn("Failed to add signal handler due to missing signal definition");
         }
     }
 
@@ -217,7 +256,6 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
      * Executes all registered {@link jmri.ShutDownTask}
      * Runs the Early shutdown tasks, the main shutdown tasks,
      * then terminates the program with provided status.
-     * <p>
      *
      * @param status integer status on program exit
      * @param exit   true if System.exit() should be called if all tasks are
@@ -252,6 +290,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
      */
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     private void doShutdown(int status, boolean exit) {
+        log.debug("shutdown called with {} {}", status, exit);
         if (!shuttingDown) {
             Date start = new Date();
             log.debug("Shutting down with {} callable and {} runnable tasks",

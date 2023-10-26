@@ -4,8 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.SwingUtilities;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Superclass for Steam, Diesel and Electric Sound.
@@ -13,14 +11,14 @@ import org.slf4j.LoggerFactory;
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
@@ -28,11 +26,10 @@ import org.slf4j.LoggerFactory;
  */
 public class EngineSound extends VSDSound {
 
-    boolean initialized = false;
-    boolean engine_started = false;
+    private boolean engine_started = false;
     boolean auto_start_engine = false;
     boolean is_auto_start; // Can be used in config.xml
-    boolean is_first = false;
+    private boolean is_first = false;
 
     int fade_length = 100;
     int fade_in_time = 100;
@@ -41,20 +38,15 @@ public class EngineSound extends VSDSound {
     float engine_rd;
     float engine_gain;
     int sleep_interval;
-    private int default_sleep_interval = 50; // time in ms
+    float exponent;
+    private float actual_speed;
 
     EnginePane engine_pane;
 
     public EngineSound(String name) {
         super(name);
-        is_playing = false;
-        engine_started = false;
-        initialized = init();
-    }
-
-    public boolean init() {
+        setEngineStarted(false);
         auto_start_engine = VSDecoderManager.instance().getVSDecoderPreferences().isAutoStartingEngine();
-        return true;
     }
 
     // Note:  Play and Loop do the same thing, since all of the notch sounds are set to loop.
@@ -72,7 +64,6 @@ public class EngineSound extends VSDSound {
     @Override
     public void stop() {
         log.info("Emergency Stop called!");
-        is_playing = false;
     }
 
     @Override
@@ -160,6 +151,18 @@ public class EngineSound extends VSDSound {
         return is_first;
     }
 
+    void setActualSpeed(float a) {
+        actual_speed = a;
+    }
+
+    public float getActualSpeed() {
+        return actual_speed;
+    }
+
+    double speedCurve(float t) {
+        return Math.pow(t, exponent);
+    }
+
     public void startEngine() {
         log.debug("Starting Engine");
     }
@@ -223,6 +226,18 @@ public class EngineSound extends VSDSound {
         } else {
             return false;
         }
+    }
+
+    protected float setXMLExponent(Element e) {
+        String ex = e.getChildText("exponent");
+        if (ex != null) {
+            try {
+                return Float.parseFloat(ex.trim());
+            } catch (NumberFormatException en) {
+                log.warn("invalid exponent; default {} used", default_exponent);
+            }
+        }
+        return default_exponent;
     }
 
     protected float setXMLGain(Element e) {
@@ -289,6 +304,6 @@ public class EngineSound extends VSDSound {
             this.getFadeInTime(), this.getFadeOutTime());
     }
 
-    private static final Logger log = LoggerFactory.getLogger(EngineSound.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EngineSound.class);
 
 }

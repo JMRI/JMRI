@@ -27,7 +27,7 @@ public interface WindowInterface {
      * @param child  new JmriPanel to show
      * @param action JmriAbstractAction making the request
      */
-    public void show(jmri.util.swing.JmriPanel child, JmriAbstractAction action);
+    void show(jmri.util.swing.JmriPanel child, JmriAbstractAction action);
 
     /**
      * Show, in whatever way is appropriate, a specific JmriPanel, in a hinted
@@ -37,7 +37,7 @@ public interface WindowInterface {
      * @param action JmriAbstractAction making the request
      * @param hint   suggestion on where to put the content
      */
-    public void show(jmri.util.swing.JmriPanel child, JmriAbstractAction action, Hint hint);
+    void show(jmri.util.swing.JmriPanel child, JmriAbstractAction action, Hint hint);
 
     /**
      * Should 2nd and subsequent requests for a panel create a new instance, or
@@ -46,21 +46,21 @@ public interface WindowInterface {
      * @return true if multiple instances should be provided, false if only one
      *         should be provided
      */
-    public boolean multipleInstances();
+    boolean multipleInstances();
 
-    public void dispose();
+    void dispose();
 
     /**
      * Returns the WindowInterface as a Frame or null.
      *
      * @return a Frame or null
      */
-    public Frame getFrame();
+    Frame getFrame();
 
     /**
      * Suggested location for subsequent panels
      */
-    public enum Hint {
+    enum Hint {
         DEFAULT, // let the interface pick
         REPLACE, // replace the current content with new
         EXTEND     // place nearby

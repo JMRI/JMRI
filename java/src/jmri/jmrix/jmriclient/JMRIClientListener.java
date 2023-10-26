@@ -8,8 +8,8 @@ package jmri.jmrix.jmriclient;
  */
 public interface JMRIClientListener extends jmri.jmrix.AbstractMRListener {
 
-    public void message(JMRIClientMessage m);
+    void message(JMRIClientMessage m);
 
-    public void reply(JMRIClientReply m);
+    void reply(JMRIClientReply m);
 
 }

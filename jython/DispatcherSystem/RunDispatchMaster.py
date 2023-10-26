@@ -96,6 +96,8 @@ class RunDispatcherMaster():
         sensors.getSensor("setDispatchSensor").setKnownState(ACTIVE)
         sensors.getSensor("checkRouteSensor").setKnownState(INACTIVE)
         sensors.getSensor("checkRouteSensor").setKnownState(ACTIVE)
+        sensors.getSensor("soundSensor").setKnownState(INACTIVE)
+        sensors.getSensor("stopAtStopSensor").setKnownState(ACTIVE)
 
 
 if __name__ == '__builtin__':

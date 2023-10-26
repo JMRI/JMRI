@@ -25,7 +25,7 @@ public interface Lock {
      * @param lockLogger the logger on which to emit status messages
      * @return True if lock is clear and operation permitted
      */
-    public boolean isLockClear(LockLogger lockLogger);
+    boolean isLockClear(LockLogger lockLogger);
 
     /**
      * Check a collection of Locks, handling the logging etc as needed.
@@ -33,7 +33,7 @@ public interface Lock {
      * @param lockLogger the logger on which to emit status messages
      * @return false if a lock is not clear, else true.
      */
-    static public boolean checkLocksClear(List<Lock> locks, LockLogger lockLogger) {
+    static boolean checkLocksClear(List<Lock> locks, LockLogger lockLogger) {
         lockLogger.clear();
         if (locks != null) {
             for (Lock lock : locks) {
@@ -44,7 +44,7 @@ public interface Lock {
     }
 
     // static while we decide whether to access via scripts
-    final static LockLogger signalLockLogger  = new LockLogger("IMUSS CTC:SIGNAL LOCK:1:LOG"){
+    LockLogger signalLockLogger  = new LockLogger("IMUSS CTC:SIGNAL LOCK:1:LOG"){
 
         @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
         justification="Status provided by implementing class.")
@@ -53,7 +53,7 @@ public interface Lock {
             log.info(message);
         }
     };
-    final static LockLogger turnoutLockLogger = new LockLogger("IMUSS CTC:TURNOUT LOCK:1:LOG"){
+    LockLogger turnoutLockLogger = new LockLogger("IMUSS CTC:TURNOUT LOCK:1:LOG"){
 
         @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
         justification="Status provided by implementing class.")
@@ -63,5 +63,5 @@ public interface Lock {
         }
     };
 
-    final static LockLogger debugLockLogger = new LockLogger("IMUSS CTC:DEBUG LOCK:1:LOG");
+    LockLogger debugLockLogger = new LockLogger("IMUSS CTC:DEBUG LOCK:1:LOG");
 }

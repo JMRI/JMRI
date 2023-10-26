@@ -68,4 +68,9 @@ public class NoFeedbackTurnoutOperation extends CommonTurnoutOperation {
         return new NoFeedbackTurnoutOperator(t, interval, maxTries);
     }
 
+    @Override
+    public String getToolTip(){
+        return Bundle.getMessage("TurnoutOperationNoFeedbackTip");
+    }
+
 }

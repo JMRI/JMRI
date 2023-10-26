@@ -28,9 +28,7 @@ import jmri.jmrit.beantable.*;
 import jmri.jmrit.beantable.beanedit.BlockEditAction;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.JComboBoxUtil;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Data model for a Block Table.
@@ -243,7 +241,7 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
                 try {
                     b.setBlockSpeed(speed);
                 } catch (JmriException ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
+                    JmriJOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
                     return;
                 }
                 if (!speedList.contains(speed) && !speed.contains("Global")) { // NOI18N
@@ -508,14 +506,14 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
         block.setAlignmentX(Component.LEFT_ALIGNMENT);
         speedspanel.add(block);
 
-        int retval = JOptionPane.showConfirmDialog(
+        int retval = JmriJOptionPane.showConfirmDialog(
                 _who,
                 speedspanel,
                 title,
-                JOptionPane.OK_CANCEL_OPTION,
-                JOptionPane.INFORMATION_MESSAGE);
+                JmriJOptionPane.OK_CANCEL_OPTION,
+                JmriJOptionPane.INFORMATION_MESSAGE);
         log.debug("Retval = {}", retval);
-        if (retval != JOptionPane.OK_OPTION) { // OK button not clicked
+        if (retval != JmriJOptionPane.OK_OPTION) { // OK button not clicked
             return;
         }
 
@@ -524,7 +522,7 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
         try {
             InstanceManager.getDefault(BlockManager.class).setDefaultSpeed(speedValue);
         } catch (IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(_who, ex.getMessage() + "\n" + speedValue);
+            JmriJOptionPane.showMessageDialog(_who, ex.getMessage() + "\n" + speedValue);
         }
     }
 
@@ -675,6 +673,6 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
 
     } // end of ImageIconRenderer class
 
-    private final static Logger log = LoggerFactory.getLogger(BlockTableDataModel.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockTableDataModel.class);
 
 }

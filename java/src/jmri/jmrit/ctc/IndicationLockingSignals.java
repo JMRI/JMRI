@@ -9,9 +9,7 @@ import jmri.SignalMast;
 import jmri.SignalMastLogic;
 import jmri.SignalMastLogicManager;
 import jmri.Turnout;
-import jmri.TurnoutManager;
 import jmri.jmrit.ctc.ctcserialdata.OtherData;
-import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 public class IndicationLockingSignals {
     private final ArrayList<NBHSignal> _mListOfSignals;

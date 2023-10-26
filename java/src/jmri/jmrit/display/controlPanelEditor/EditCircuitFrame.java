@@ -10,7 +10,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -27,8 +26,7 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.picker.PickListModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * @author Pete Cressman Copyright: Copyright (c) 2011
@@ -252,8 +250,8 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
             }
         }
         if (sb.toString().length() > 0) {
-            JOptionPane.showMessageDialog(this, sb.toString(),
-                    Bundle.getMessage("editCiruit"), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, sb.toString(),
+                    Bundle.getMessage("editCiruit"), JmriJOptionPane.INFORMATION_MESSAGE);
             _systemName.setText(_homeBlock.getSystemName());
             return;
         }
@@ -273,8 +271,8 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
             }
         }
         if (msg != null) {
-            JOptionPane.showMessageDialog(this, msg,
-                    Bundle.getMessage("editCiruit"), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, msg,
+                    Bundle.getMessage("editCiruit"), JmriJOptionPane.INFORMATION_MESSAGE);
             return;
             
         }
@@ -291,10 +289,10 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
     }
 
     private void deleteCircuit() {
-        int result = JOptionPane.showConfirmDialog(this, Bundle.getMessage("confirmBlockDelete"),
-                Bundle.getMessage("editCiruit"), JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE);
-        if (result == JOptionPane.YES_OPTION) {
+        int result = JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("confirmBlockDelete"),
+                Bundle.getMessage("editCiruit"), JmriJOptionPane.YES_NO_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE);
+        if (result == JmriJOptionPane.YES_OPTION) {
             _parent.removeBlock(_homeBlock);
             closingEvent(true, null);   // No Messages, just close
         }
@@ -439,10 +437,10 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
         }
         if (errName.length() > 2) {
             if (_homeBlock.getSensor() == null) {
-                int result = JOptionPane.showConfirmDialog(this, Bundle.getMessage("mixedSensors"),
-                        Bundle.getMessage("noSensor"), JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE);
-                if (result == JOptionPane.YES_OPTION) {
+                int result = JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("mixedSensors"),
+                        Bundle.getMessage("noSensor"), JmriJOptionPane.YES_NO_OPTION,
+                        JmriJOptionPane.QUESTION_MESSAGE);
+                if (result == JmriJOptionPane.YES_OPTION) {
                     if (!_homeBlock.setSensor(errName)) {
                         return java.text.MessageFormat.format(Bundle.getMessage("badSensorName"), errName);
                     } else {
@@ -508,5 +506,6 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EditCircuitFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EditCircuitFrame.class);
+
 }

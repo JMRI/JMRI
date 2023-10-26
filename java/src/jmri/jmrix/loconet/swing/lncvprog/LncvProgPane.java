@@ -14,10 +14,9 @@ import jmri.jmrix.loconet.uhlenbrock.LncvDevice;
 import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 import jmri.swing.JTablePersistenceManager;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for discovery and display of LocoNet LNCV boards.
@@ -351,12 +350,12 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         Object[] dialogBoxButtonOptions = {
                 Bundle.getMessage("ButtonProceed"),
                 Bundle.getMessage("ButtonCancel")};
-        int userReply = JOptionPane.showOptionDialog(this.getParent(),
+        int userReply = JmriJOptionPane.showOptionDialog(this.getParent(),
                 Bundle.getMessage("DialogAllWarning"),
                 Bundle.getMessage("WarningTitle"),
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE,
                 null, dialogBoxButtonOptions, dialogBoxButtonOptions[1]);
-        if (userReply != 0) {
+        if (userReply != 0 ) { // not array position 0 ButtonProceed
             return;
         }
         statusText1.setText(Bundle.getMessage("FeedBackStartAllProg"));
@@ -838,6 +837,6 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LncvProgPane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LncvProgPane.class);
 
 }

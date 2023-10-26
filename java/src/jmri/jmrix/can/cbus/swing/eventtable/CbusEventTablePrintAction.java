@@ -230,14 +230,6 @@ public class CbusEventTablePrintAction extends AbstractAction {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-
     private final static Logger log = LoggerFactory.getLogger(CbusEventTablePrintAction.class);
 
 }

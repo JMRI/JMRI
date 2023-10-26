@@ -19,6 +19,6 @@ package jmri.jmrix.rfid;
 public interface RfidTagListener extends jmri.IdTagListener {
 
     // Interface moved to IdTagListener.  kept until removed or extended.
-    // public void notify(IdTag r);
+    // void notify(IdTag r);
 
 }

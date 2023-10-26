@@ -1,9 +1,6 @@
 package jmri.jmrit.operations.routes;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.JComboBox;
 
@@ -17,8 +14,7 @@ import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.*;
 
 /**
  * Represents a route on the layout
@@ -46,6 +42,7 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
     public static final String LISTCHANGE_CHANGED_PROPERTY = "routeListChange"; // NOI18N
     public static final String ROUTE_STATUS_CHANGED_PROPERTY = "routeStatusChange"; // NOI18N
     public static final String ROUTE_BLOCKING_CHANGED_PROPERTY = "routeBlockingChange"; // NOI18N
+    public static final String ROUTE_NAME_CHANGED_PROPERTY = "routeNameChange"; // NOI18N
     public static final String DISPOSE = "routeDispose"; // NOI18N
 
     public static final String OKAY = Bundle.getMessage("ButtonOK");
@@ -69,7 +66,7 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
         String old = _name;
         _name = name;
         if (!old.equals(name)) {
-            setDirtyAndFirePropertyChange("nameChange", old, name); // NOI18N
+            setDirtyAndFirePropertyChange(ROUTE_NAME_CHANGED_PROPERTY, old, name); // NOI18N
         }
     }
 
@@ -269,6 +266,22 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
             }
         }
         return null;
+    }
+    
+    /**
+     * Used to determine if a "similar" location name is in the route. Note that
+     * a similar name might not actually be part of the route.
+     * 
+     * @param name the name of the location
+     * @return true if a "similar" name was found
+     */
+    public boolean isLocationNameInRoute(String name) {
+        for (RouteLocation rl : getLocationsBySequenceList()) {
+            if (rl.getSplitName().equals(TrainCommon.splitString(name))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

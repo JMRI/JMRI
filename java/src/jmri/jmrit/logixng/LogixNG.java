@@ -1,8 +1,6 @@
 package jmri.jmrit.logixng;
 
 import jmri.NamedBean;
-import jmri.jmrit.display.Positionable;
-import jmri.jmrit.display.layoutEditor.LayoutTrackView;
 
 /**
  * LogixNG.
@@ -12,35 +10,47 @@ import jmri.jmrit.display.layoutEditor.LayoutTrackView;
  */
 public interface LogixNG extends Base, NamedBean {
 
-    public static final String PROPERTY_INLINE = "IsInline";
+    String PROPERTY_INLINE = "IsInline";
+
+    /**
+     * Clear the startup flag.
+     */
+    void clearStartup();
+
+    /**
+     * Determines whether this LogixNG is currently during startup.
+     *
+     * @return true if the LogixNG is currently during startup, false otherwise
+     */
+    public boolean isStartup();
 
     /**
      * Sets whether this LogixNG is inline or not.
      *
      * @param inline true if the LogixNG is inline, false otherwise
      */
-    public void setInline(boolean inline);
+    void setInline(boolean inline);
 
     /**
      * Determines whether this LogixNG is inline or not.
      *
      * @return true if the LogixNG is inline, false otherwise
      */
-    public boolean isInline();
+    boolean isInline();
 
     /**
      * Set the InlineLogixNG that owns this LogixNG, if the LogixNG is inline.
      *
      * @param inlineLogixNG the InlineLogixNG that owns this LogixNG, if the LogixNG is inline.
      */
-    public void setInlineLogixNG(InlineLogixNG inlineLogixNG);
+    void setInlineLogixNG(InlineLogixNG inlineLogixNG);
 
     /**
      * Get the InlineLogixNG that owns this LogixNG, if the LogixNG is inline.
      *
      * @return the InlineLogixNG
      */
-    public InlineLogixNG getInlineLogixNG();
+    InlineLogixNG getInlineLogixNG();
 
     /**
      * Set whenether this LogixNG is enabled or disabled.
@@ -50,7 +60,7 @@ public interface LogixNG extends Base, NamedBean {
      *
      * @param enable true if this LogixNG should be enabled, false otherwise
      */
-    public void setEnabled(boolean enable);
+    void setEnabled(boolean enable);
 
     /**
      * Determines whether this LogixNG is enabled.
@@ -58,7 +68,7 @@ public interface LogixNG extends Base, NamedBean {
      * @return true if the LogixNG is enabled, false otherwise
      */
     @Override
-    public boolean isEnabled();
+    boolean isEnabled();
 
     /**
      * Activates this LogixNG.
@@ -66,28 +76,28 @@ public interface LogixNG extends Base, NamedBean {
      * This method is only called by the LogixNG manager and it is called
      * during initialization of the LogixNGs.
      */
-    public void activate();
+    void activate();
 
     /**
      * Set the system name for the conditionalNG at the specified position in this list
      * @param index index of the element to set the system name
      * @return the system name
      */
-    public String getConditionalNG_SystemName(int index);
+    String getConditionalNG_SystemName(int index);
 
     /**
      * Set the system name for the conditionalNG at the specified position in this list
      * @param index index of the element to set the system name
      * @param systemName the new system name
      */
-    public void setConditionalNG_SystemName(int index, String systemName);
+    void setConditionalNG_SystemName(int index, String systemName);
 
     /**
      * Get number of ConditionalNGs for this LogixNG.
      *
      * @return the number of conditionals
      */
-    public int getNumConditionalNGs();
+    int getNumConditionalNGs();
 
     /**
      * Move 'row' to 'nextInOrder' and shift all between 'nextInOrder' and 'row'
@@ -96,7 +106,7 @@ public interface LogixNG extends Base, NamedBean {
      * @param nextInOrder target order for ConditionalNG at row
      * @param row         position of ConditionalNG to move
      */
-    public void swapConditionalNG(int nextInOrder, int row);
+    void swapConditionalNG(int nextInOrder, int row);
 
     /**
      * Returns the conditionalNG that will calculate in the specified order.
@@ -107,7 +117,7 @@ public interface LogixNG extends Base, NamedBean {
      * @param order order in which the ConditionalNG calculates
      * @return the conditionalNG or null
      */
-    public ConditionalNG getConditionalNG(int order);
+    ConditionalNG getConditionalNG(int order);
 
     /**
      * Add a child ConditionalNG to the parent LogixNG.
@@ -120,7 +130,7 @@ public interface LogixNG extends Base, NamedBean {
      * @param conditionalNG The ConditionalNG object.
      * @return true if the ConditionalNG was added, false otherwise.
      */
-    public boolean addConditionalNG(ConditionalNG conditionalNG);
+    boolean addConditionalNG(ConditionalNG conditionalNG);
 
     /**
      * Get a ConditionalNG belonging to this LogixNG.
@@ -128,7 +138,7 @@ public interface LogixNG extends Base, NamedBean {
      * @param systemName The name of the ConditionalNG object.
      * @return the ConditionalNG object or null if not found.
      */
-    public ConditionalNG getConditionalNG(String systemName);
+    ConditionalNG getConditionalNG(String systemName);
 
     /**
      * Get a ConditionalNG belonging to this LogixNG.
@@ -136,7 +146,7 @@ public interface LogixNG extends Base, NamedBean {
      * @param userName The name of the ConditionalNG object.
      * @return the ConditionalNG object or null if not found.
      */
-    public ConditionalNG getConditionalNGByUserName(String userName);
+    ConditionalNG getConditionalNGByUserName(String userName);
 
     /**
      * Delete a ConditionalNG from this LogixNG.
@@ -149,17 +159,17 @@ public interface LogixNG extends Base, NamedBean {
      *
      * @param conditionalNG The ConditionalNG to delete
      */
-    public void deleteConditionalNG(ConditionalNG conditionalNG);
+    void deleteConditionalNG(ConditionalNG conditionalNG);
 
     /**
      * Execute all ConditionalNGs if the LogixNG is enabled and activated.
      */
-    public void execute();
+    void execute();
 
     /**
      * Execute all ConditionalNGs if the LogixNG is enabled and activated.
      * @param allowRunDelayed true if it's ok to run delayed, false otherwise
      */
-    public void execute(boolean allowRunDelayed);
+    void execute(boolean allowRunDelayed);
 
 }

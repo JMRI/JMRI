@@ -10,10 +10,8 @@ import java.util.Map;
 
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
-import javax.swing.JTextField;
 
 import jmri.InstanceManager;
 import jmri.Memory;
@@ -26,10 +24,8 @@ import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.util.datatransfer.RosterEntrySelection;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display a status of a Memory.
@@ -577,20 +573,12 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
     }
 
     protected void editMemoryValue() {
-        JTextField newMemory = new JTextField(20);
-        if (getMemory().getValue() != null) {
-            newMemory.setText(getMemory().getValue().toString());
-        }
-        Object[] options = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), newMemory};
-        int retval = JOptionPane.showOptionDialog(this,
-                "Edit Current Memory Value", namedMemory.getName(),
-                0, JOptionPane.INFORMATION_MESSAGE, null,
-                options, options[2]);
-
-        if (retval != 1) {
-            return;
-        }
-        setValue(newMemory.getText());
+    
+        String reval = (String)JmriJOptionPane.showInputDialog(this,
+                                     Bundle.getMessage("EditCurrentMemoryValue", namedMemory.getName()),
+                                     getMemory().getValue());
+    
+        setValue(reval);
         updateSize();
     }
 
@@ -611,19 +599,19 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
         Object[] options = {"Facing West",
             "Facing East",
             "Do Not Add"};
-        int n = JOptionPane.showOptionDialog(this, // TODO I18N
+        int n = JmriJOptionPane.showOptionDialog(this, // TODO I18N
                 "Would you like to assign loco "
                 + roster.titleString() + " to this location",
                 "Assign Loco",
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
+                JmriJOptionPane.DEFAULT_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE,
                 null,
                 options,
                 options[2]);
-        if (n == 2) {
+        if ( n == 2 || n==JmriJOptionPane.CLOSED_OPTION ) { // option array 2 Do Not Add, or Dialog closed
             return;
         }
-        flipRosterIcon = (n == 0);
+        flipRosterIcon = (n == 0); // true if option array position 0, Facing West
         if (getValue() == roster) {
             //No change in the loco but a change in direction facing might have occurred
             updateIconFromRosterVal(roster);
@@ -669,6 +657,6 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MemoryIcon.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MemoryIcon.class);
 
 }

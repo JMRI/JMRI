@@ -21,8 +21,8 @@ package jmri;
  */
 public interface TimeDisplay {
 
-    public void setUpdateRate(int msec);
+    void setUpdateRate(int msec);
 
-    public int getUpdateRate();
+    int getUpdateRate();
 
 }

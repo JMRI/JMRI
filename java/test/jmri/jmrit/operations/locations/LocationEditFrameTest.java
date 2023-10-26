@@ -12,6 +12,9 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
+import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
@@ -126,7 +129,13 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Assert.assertNotNull(tef);
 
         JemmyUtil.enterClickAndLeaveThreadSafe(f.deleteLocationButton);
-        // confirm delete dialog window should appear
+        // confirm delete dialog window should appear, try no
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("deletelocation?"), Bundle.getMessage("ButtonNo"));
+        JemmyUtil.waitFor(f);
+        Assert.assertEquals("should be 1 locations", 1, lManager.getLocationsByNameList().size());
+        
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.deleteLocationButton);
+        // confirm delete dialog window should appear, try yes
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("deletelocation?"), Bundle.getMessage("ButtonYes"));
         JemmyUtil.waitFor(f);
         JUnitUtil.waitFor(() -> {
@@ -142,6 +151,72 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Assert.assertNull(tef);
         tef = JmriJFrame.getFrame(Bundle.getMessage("AddYard"));
         Assert.assertNull(tef);
+
+        JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testCarsDeleteButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitOperationsUtil.createOneNormalLocation("Test Location");
+
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
+        Assert.assertEquals("should be 1 locations", 1, lManager.getLocationsByNameList().size());
+        Location loc = lManager.getLocationByName("Test Location");
+        Assert.assertNotNull(loc);
+        
+        Track track = loc.getTrackByName("Test Location Spur 1", null);
+        Assert.assertNotNull(track);
+        
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("DB", "001", "Boxcar", "40", track, 0);
+
+        LocationEditFrame f = new LocationEditFrame(loc);
+        Assert.assertNotNull(f);
+        
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.deleteLocationButton);
+        // confirm delete dialog window should appear, try no
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("deletelocation?"), Bundle.getMessage("ButtonNo"));
+        JemmyUtil.waitFor(f);
+        Assert.assertEquals("should be 1 locations", 1, lManager.getLocationsByNameList().size());
+        Assert.assertEquals("Car's track", track, c1.getTrack());
+        Assert.assertEquals("Car's location", loc, c1.getLocation());
+        
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.deleteLocationButton);
+        // confirm delete dialog window should appear, try yes
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("deletelocation?"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
+        Assert.assertEquals("should be 0 locations", 0, lManager.getLocationsByNameList().size());
+        Assert.assertEquals("Car's track", null, c1.getTrack());
+        Assert.assertEquals("Car's location", null, c1.getLocation());
+        
+        JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testRouteDeleteButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        LocationEditFrame f = new LocationEditFrame(null);
+        f.setTitle("Test Delete Location Frame");
+
+        f.locationNameTextField.setText("Test Location");
+        JemmyUtil.enterClickAndLeave(f.addLocationButton);
+
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
+        Assert.assertEquals("should be 1 locations", 1, lManager.getLocationsByNameList().size());
+        Location newLoc = lManager.getLocationByName("Test Location");
+
+        Assert.assertNotNull(newLoc);
+        
+        // add location to a route
+        RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
+        Route route = routeManager.newRoute("Test Route");
+        route.addLocation(newLoc);
+
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.deleteLocationButton);
+        // Can not delete warning window should appear
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotDeleteLocation"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
 
         JUnitUtil.dispose(f);
     }
@@ -379,7 +454,7 @@ public class LocationEditFrameTest extends OperationsTestCase {
         
         Setup.setCarRoutingViaStagingEnabled(true);
         
-        Assert.assertEquals("Confirm number of columns", 11, tbl.getColumnCount());
+        Assert.assertEquals("Confirm number of columns", 13, tbl.getColumnCount());
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Moves")));
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Hold")));
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Schedule")));
@@ -391,10 +466,14 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("PlanPickUp")));
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Dest")));
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Ship")));
+        
+        // confirm columns unique to staging are visible
+        Assert.assertEquals("Column exists", 9, tbl.findColumn(Bundle.getMessage("LoadDefaultAbv")));
+        Assert.assertEquals("Column exists", 10, tbl.findColumn(Bundle.getMessage("LoadCustomAbv")));
                
         // add track moves column
         Setup.setShowTrackMovesEnabled(true);
-        Assert.assertEquals("Confirm number of columns", 12, tbl.getColumnCount());
+        Assert.assertEquals("Confirm number of columns", 14, tbl.getColumnCount());
         Assert.assertEquals("Column exists", 5, tbl.findColumn(Bundle.getMessage("Moves")));
         
         // test 2nd row
@@ -406,41 +485,41 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("moves", 23, track.getMoves());
         
         // test routed
-        Assert.assertEquals("Column exists", 10, tbl.findColumn(Bundle.getMessage("Routed")));
+        Assert.assertEquals("Column exists", 12, tbl.findColumn(Bundle.getMessage("Routed")));
         Assert.assertFalse("Routed", track.isOnlyCarsWithFinalDestinationEnabled());
         tbl.clickOnCell(1, tbl.findColumn(Bundle.getMessage("Routed")));
         Assert.assertTrue("Routed", track.isOnlyCarsWithFinalDestinationEnabled());
 
         // add road restriction
         track.setRoadOption(Track.EXCLUDE_ROADS);
-        Assert.assertEquals("Confirm number of columns", 13, tbl.getColumnCount());
+        Assert.assertEquals("Confirm number of columns", 15, tbl.getColumnCount());
         Assert.assertEquals("Column exists", 10, tbl.findColumn(Bundle.getMessage("Road")));
 
         // add load restriction
         track.setLoadOption(Track.EXCLUDE_LOADS);
-        Assert.assertEquals("Confirm number of columns", 14, tbl.getColumnCount());
+        Assert.assertEquals("Confirm number of columns", 16, tbl.getColumnCount());
         Assert.assertEquals("Column exists", 11, tbl.findColumn(Bundle.getMessage("Load")));
 
         // add train restriction
         track.setPickupOption(Track.EXCLUDE_TRAINS);
-        Assert.assertEquals("Confirm number of columns", 15, tbl.getColumnCount());
-        Assert.assertEquals("Column exists", 12, tbl.findColumn(Bundle.getMessage("Restrictions")));
+        Assert.assertEquals("Confirm number of columns", 17, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 14, tbl.findColumn(Bundle.getMessage("Restrictions")));
         
         // add pool
         Pool pool = loc.addPool("Pool One");
         track.setPool(pool);
-        Assert.assertEquals("Confirm number of columns", 16, tbl.getColumnCount());
-        Assert.assertEquals("Column exists", 14, tbl.findColumn(Bundle.getMessage("Pool")));
+        Assert.assertEquals("Confirm number of columns", 18, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 16, tbl.findColumn(Bundle.getMessage("Pool")));
         
         // destination restrictions
         track.setDestinationOption(Track.EXCLUDE_DESTINATIONS);
-        Assert.assertEquals("Confirm number of columns", 17, tbl.getColumnCount());
-        Assert.assertEquals("Column exists", 13, tbl.findColumn(Bundle.getMessage("Dest")));
+        Assert.assertEquals("Confirm number of columns", 19, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 15, tbl.findColumn(Bundle.getMessage("Dest")));
         
         // ship load restrictions
         track.setShipLoadOption(Track.INCLUDE_LOADS);
-        Assert.assertEquals("Confirm number of columns", 18, tbl.getColumnCount());
-        Assert.assertEquals("Column exists", 12, tbl.findColumn(Bundle.getMessage("Ship")));
+        Assert.assertEquals("Confirm number of columns", 20, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 14, tbl.findColumn(Bundle.getMessage("Ship")));
         
         // remove routed
         Setup.setCarRoutingViaStagingEnabled(false);
@@ -737,5 +816,13 @@ public class LocationEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
         tef = JmriJFrame.getFrame(Bundle.getMessage("EditYard"));
         Assert.assertNull(tef);
+    }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Location loc = JUnitOperationsUtil.createOneNormalLocation("Test Location");
+        LocationEditFrame f = new LocationEditFrame(loc);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 }

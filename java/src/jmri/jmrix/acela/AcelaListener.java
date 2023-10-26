@@ -10,7 +10,7 @@ package jmri.jmrix.acela;
  */
 public interface AcelaListener extends jmri.jmrix.AbstractMRListener {
 
-    public void message(AcelaMessage m);
+    void message(AcelaMessage m);
 
-    public void reply(AcelaReply m);
+    void reply(AcelaReply m);
 }

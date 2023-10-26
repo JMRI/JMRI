@@ -11,9 +11,7 @@ import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
 import jmri.jmrix.can.cbus.swing.modules.CbusConfigPaneProvider;
 import jmri.jmrix.can.cbus.swing.modules.UnknownPaneProvider;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  *
@@ -127,8 +125,8 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
      */
     protected void liveUpdateOption() {
         if ( liveUpdateNvButton.isSelected() && areNvsDirty() ) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("LiveUpdateVeto"),
-                    nodeOfInterest.toString(), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("LiveUpdateVeto"),
+                    nodeOfInterest.toString(), JmriJOptionPane.ERROR_MESSAGE);
             liveUpdateNvButton.setSelected(false);
             return;
         }
@@ -252,6 +250,6 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
         editNVGui.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusNodeEditNVarPane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusNodeEditNVarPane.class);
 
 }

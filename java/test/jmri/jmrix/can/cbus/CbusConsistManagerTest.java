@@ -1,6 +1,5 @@
 package jmri.jmrix.can.cbus;
 
-import jmri.implementation.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;

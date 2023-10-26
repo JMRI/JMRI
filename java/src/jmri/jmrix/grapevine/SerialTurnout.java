@@ -1,6 +1,5 @@
 package jmri.jmrix.grapevine;
 
-import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

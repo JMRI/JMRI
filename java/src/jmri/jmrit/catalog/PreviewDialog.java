@@ -15,13 +15,13 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -29,9 +29,9 @@ import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.util.swing.DrawSquares;
 import jmri.util.swing.ImagePanel;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.apache.commons.io.FilenameUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Create a Dialog to display the images in a file system directory.
@@ -113,11 +113,11 @@ public class PreviewDialog extends JDialog {
         _startNum = startNum;
         needsMore = setIcons(startNum);
         if (_noMemory) {
-            int choice = JOptionPane.showOptionDialog(null,
+            int choice = JmriJOptionPane.showOptionDialog(this,
                     Bundle.getMessage("OutOfMemory", _cnt), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                    JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.INFORMATION_MESSAGE, null,
                     new String[]{Bundle.getMessage("ButtonStop"), Bundle.getMessage("ShowContents")}, 1);
-            if (choice == 0) {
+            if (choice != 1) { // showcontents not selected
                 return;
             }
         }
@@ -418,6 +418,6 @@ public class PreviewDialog extends JDialog {
         log.debug("PreviewDialog disposed.");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PreviewDialog.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PreviewDialog.class);
 
 }

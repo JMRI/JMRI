@@ -12,6 +12,7 @@ import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * MVC Editor component for LevelXing objects.
@@ -167,9 +168,9 @@ public class LevelXingEditor extends LayoutTurntableEditor {
         }
         // check if a block exists to edit
         if (levelXing.getLayoutBlockAC() == null) {
-            JOptionPane.showMessageDialog(editLevelXingFrame,
+            JmriJOptionPane.showMessageDialog(editLevelXingFrame,
                     Bundle.getMessage("Error1"), // NOI18N
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);  // NOI18N
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);  // NOI18N
             return;
         }
         levelXing.getLayoutBlockAC().editLayoutBlock(editLevelXingFrame);
@@ -191,9 +192,9 @@ public class LevelXingEditor extends LayoutTurntableEditor {
         }
         // check if a block exists to edit
         if (levelXing.getLayoutBlockBD() == null) {
-            JOptionPane.showMessageDialog(editLevelXingFrame,
+            JmriJOptionPane.showMessageDialog(editLevelXingFrame,
                     Bundle.getMessage("Error1"), // NOI18N
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);  // NOI18N
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);  // NOI18N
             return;
         }
         levelXing.getLayoutBlockBD().editLayoutBlock(editLevelXingFrame);

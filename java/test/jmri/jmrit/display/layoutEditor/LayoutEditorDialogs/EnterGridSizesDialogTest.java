@@ -3,7 +3,6 @@ package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JTextField;
 
-import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
 

@@ -426,7 +426,7 @@ public class DecoderIndexFile extends XmlFile {
                 }
             }
         } else {
-            log.error("Could not access decoder definition directory {}{}", XmlFile.xmlDir(),DecoderFile.fileLocation);
+            log.error("Could not access decoder definition directory {}{}", XmlFile.xmlDir(), DecoderFile.fileLocation);
         }
         // copy the decoder entries to the final array
         String[] sbox = al.toArray(new String[al.size()]);
@@ -459,7 +459,8 @@ public class DecoderIndexFile extends XmlFile {
         }
 
         // Create a dialog with a progress bar and a cancel button
-        String message = Bundle.getMessage("DecoderProgressMessage"); // NOI18N
+        String message = Bundle.getMessage("DecoderProgressMessage", "..."); // NOI18N
+        String title = Bundle.getMessage("DecoderProgressMessage", "");
         String cancel = Bundle.getMessage("ButtonCancel"); // NOI18N
         // HACK: add long blank space to message to make dialog wider.
         JOptionPane pane = new JOptionPane(message + "                            \t",
@@ -470,13 +471,13 @@ public class DecoderIndexFile extends XmlFile {
         JProgressBar pb = new JProgressBar(0, sbox.length);
         pb.setValue(0);
         pane.add(pb, 1);
-        JDialog dialog = pane.createDialog(null, message);
+        JDialog dialog = pane.createDialog(null, title);
 
         ThreadingUtil.newThread(() -> {
             try {
                 index.writeFile(DECODER_INDEX_FILE_NAME,
                             InstanceManager.getDefault(DecoderIndexFile.class), sbox, pane, pb);
-            // catch all exceptions, so progess dialog will close
+            // catch all exceptions, so progress dialog will close
             } catch (Exception e) {
                 // TODO: show message in progress dialog?
                 log.error("Error writing new decoder index file: {}", e.getMessage());
@@ -485,6 +486,9 @@ public class DecoderIndexFile extends XmlFile {
             dialog.dispose();
         }, "decoderIndexer").start();
 
+        // improve visibility if any always on top frames present
+        dialog.setAlwaysOnTop(true);
+        dialog.toFront();
         // this will block until the thread completes, either by
         // finishing or by being cancelled
         dialog.setVisible(true);
@@ -499,9 +503,7 @@ public class DecoderIndexFile extends XmlFile {
      * @throws java.io.IOException     if unable to read decoder index file
      */
     void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("readFile {}",name);
-        }
+        log.debug("readFile {}", name);
 
         // read file, find root
         Element root = rootFromName(name);
@@ -779,8 +781,8 @@ public class DecoderIndexFile extends XmlFile {
                 // drop the decoder implementation content
                 family.removeAttribute("comment");
                 // don't remove "outputs" due to use by ESU function map pane
-                family.removeChildren("output");
-                family.removeChildren("functionlabels");
+                // family.removeChildren("output");
+                // family.removeChildren("functionlabels");
 
                 // and drop content of model elements
                 for (Element element : family.getChildren()) { // model elements
@@ -795,9 +797,10 @@ public class DecoderIndexFile extends XmlFile {
 
                     // element.removeContent();
                     element.removeChildren("size");
-                    // don't remove "output" due to use by ESU function map pane
-                    element.removeChildren("functionlabels");
 
+                    //element.removeChildren("functionlabels");
+
+                    // don't remove "output" due to use by ESU function map pane
                     for (Element output : element.getChildren()) {
                         output.removeAttribute("connection");
                         output.removeAttribute("maxcurrent");
@@ -851,6 +854,7 @@ public class DecoderIndexFile extends XmlFile {
     public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
+        @Nonnull
         public <T> Object getDefault(Class<T> type) {
             if (type.equals(DecoderIndexFile.class)) {
                 // create and load
@@ -881,10 +885,12 @@ public class DecoderIndexFile extends XmlFile {
         }
 
         @Override
+        @Nonnull
         public Set<Class<?>> getInitalizes() {
             Set<Class<?>> set = super.getInitalizes();
             set.add(DecoderIndexFile.class);
             return set;
         }
     }
+
 }

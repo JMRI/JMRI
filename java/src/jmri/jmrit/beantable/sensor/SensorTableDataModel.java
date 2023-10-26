@@ -27,8 +27,7 @@ import jmri.SensorManager;
 import jmri.managers.ProxySensorManager;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.util.swing.XTableColumnModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Data model for a SensorTable.
@@ -348,28 +347,28 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 try {
                     long activeDeBounce = (long) value;
                     if (activeDeBounce < 0 || activeDeBounce > Sensor.MAX_DEBOUNCE) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceActOutOfRange")
-                            + "\n\"" + Sensor.MAX_DEBOUNCE + "\"", Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceActOutOfRange")
+                            + "\n\"" + Sensor.MAX_DEBOUNCE + "\"", Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                     } else {
                         s.setSensorDebounceGoingActiveTimer(activeDeBounce);
                     }
                 } catch (NumberFormatException exActiveDeBounce) {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceActError")
-                        + "\n\"" + value  + "\"" + exActiveDeBounce.getLocalizedMessage(), Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceActError")
+                        + "\n\"" + value  + "\"" + exActiveDeBounce.getLocalizedMessage(), Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case INACTIVEDELAY:
                 try {
                     long inactiveDeBounce = (long) value;
                     if (inactiveDeBounce < 0 || inactiveDeBounce > Sensor.MAX_DEBOUNCE) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceInActOutOfRange") 
-                            + "\n\"" + Sensor.MAX_DEBOUNCE + "\"", Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceInActOutOfRange") 
+                            + "\n\"" + Sensor.MAX_DEBOUNCE + "\"", Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                     } else {
                         s.setSensorDebounceGoingInActiveTimer(inactiveDeBounce);
                     }
                 } catch (NumberFormatException exActiveDeBounce) {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceInActError")
-                        + "\n\"" + value + "\"" + exActiveDeBounce.getLocalizedMessage(), Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceInActError")
+                        + "\n\"" + value + "\"" + exActiveDeBounce.getLocalizedMessage(), Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case EDITCOL:
@@ -660,5 +659,6 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SensorTableDataModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SensorTableDataModel.class);
+
 }

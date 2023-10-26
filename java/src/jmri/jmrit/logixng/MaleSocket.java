@@ -18,7 +18,7 @@ import org.slf4j.Logger;
  */
 public interface MaleSocket extends Debugable {
 
-    public enum ErrorHandlingType {
+    enum ErrorHandlingType {
 
         Default(Bundle.getMessage("ErrorHandling_Default")),
         ShowDialogBox(Bundle.getMessage("ErrorHandling_ShowDialogBox")),
@@ -46,7 +46,7 @@ public interface MaleSocket extends Debugable {
      *
      * @param enable true if this male socket should be enabled, false otherwise
      */
-    public void setEnabled(boolean enable);
+    void setEnabled(boolean enable);
 
     /**
      * Set whenether this male socket is enabled or disabled, without activating
@@ -57,7 +57,7 @@ public interface MaleSocket extends Debugable {
      *
      * @param enable true if this male socket should be enabled, false otherwise
      */
-    public void setEnabledFlag(boolean enable);
+    void setEnabledFlag(boolean enable);
 
     /**
      * Determines whether this male socket is enabled.
@@ -65,78 +65,82 @@ public interface MaleSocket extends Debugable {
      * @return true if the male socket is enabled, false otherwise
      */
     @Override
-    public boolean isEnabled();
+    boolean isEnabled();
 
     /**
      * Get whenether the node should listen to changes or not.
      * @return true if listen, false if not listen
      */
-    public boolean getListen();
+    boolean getListen();
 
     /**
      * Set whenether the node should listen to changes or not.
      * @param listen true if listen, false if not listen
      */
-    public void setListen(boolean listen);
+    void setListen(boolean listen);
 
     /**
      * Is the node locked?
      * @return true if locked, false otherwise
      */
-    public boolean isLocked();
+    boolean isLocked();
 
     /**
      * Set if the node is locked or not.
      * @param locked true if locked, false otherwise
      */
-    public void setLocked(boolean locked);
+    void setLocked(boolean locked);
 
     /**
      * Is the node a system node?
      * @return true if system, false otherwise
      */
-    public boolean isSystem();
+    boolean isSystem();
 
     /**
      * Set if the node is system or not.
      * @param system true if system, false otherwise
      */
-    public void setSystem(boolean system);
+    void setSystem(boolean system);
 
     /**
      * Is the node catching AbortExecution or not?
      * @return true if catching, false otherwise
      */
-    public boolean getCatchAbortExecution();
+    boolean getCatchAbortExecution();
 
     /**
      * Set if the node should catch AbortExecution or not.
      * @param catchAbortExecution true if catch, false otherwise
      */
-    public void setCatchAbortExecution(boolean catchAbortExecution);
+    void setCatchAbortExecution(boolean catchAbortExecution);
 
-    public void addLocalVariable(
+    void addLocalVariable(
             String name,
             InitialValueType initialValueType,
             String initialValueData);
 
-    public void addLocalVariable(VariableData variableData);
+    void addLocalVariable(VariableData variableData);
 
-    public void clearLocalVariables();
+    void clearLocalVariables();
 
-    public List<VariableData> getLocalVariables();
+    List<VariableData> getLocalVariables();
+
+    default boolean isSupportingLocalVariables() {
+        return true;
+    }
 
     /**
      * Get the error handling type for this socket.
      * @return the error handling type
      */
-    public ErrorHandlingType getErrorHandlingType();
+    ErrorHandlingType getErrorHandlingType();
 
     /**
      * Set the error handling type for this socket.
      * @param errorHandlingType the error handling type
      */
-    public void setErrorHandlingType(ErrorHandlingType errorHandlingType);
+    void setErrorHandlingType(ErrorHandlingType errorHandlingType);
 
     /**
      * Handle an error that has happened during execution or evaluation of
@@ -148,7 +152,7 @@ public interface MaleSocket extends Debugable {
      * @throws JmriException  if the male socket is configured to
      *                        throw an exception
      */
-    public void handleError(
+    void handleError(
             Base item,
             String message,
             JmriException e,
@@ -166,7 +170,7 @@ public interface MaleSocket extends Debugable {
      * @throws JmriException  if the male socket is configured to
      *                        throw an exception
      */
-    public void handleError(
+    void handleError(
             Base item,
             String message,
             List<String> messageList,
@@ -184,7 +188,7 @@ public interface MaleSocket extends Debugable {
      * @throws JmriException  if the male socket is configured to
      *                        throw an exception
      */
-    public void handleError(
+    void handleError(
             Base item,
             String message,
             RuntimeException e,
@@ -198,7 +202,7 @@ public interface MaleSocket extends Debugable {
      * @return the object this male socket holds
      */
     @Nonnull
-    public Base getObject();
+    Base getObject();
 
     /**
      * Get the manager that stores this socket.
@@ -206,11 +210,11 @@ public interface MaleSocket extends Debugable {
      *
      * @return the manager
      */
-    public BaseManager<? extends NamedBean> getManager();
+    BaseManager<? extends NamedBean> getManager();
 
     /** {@inheritDoc} */
     @Override
-    default public void setup() {
+    default void setup() {
         getObject().setup();
     }
 
@@ -221,7 +225,7 @@ public interface MaleSocket extends Debugable {
      * @param clazz the type of the male socket we are looking for
      * @return the found male socket or null if not found
      */
-    public default MaleSocket find(Class<?> clazz) {
+    default MaleSocket find(Class<?> clazz) {
 
         if (! MaleSocket.class.isAssignableFrom(clazz)) {
             throw new IllegalArgumentException("clazz is not a MaleSocket");

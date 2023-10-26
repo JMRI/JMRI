@@ -2,9 +2,10 @@ package jmri.jmrix.can.cbus.swing.eventrequestmonitor;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JOptionPane;
+
 import java.util.ArrayList;
 import java.util.Date;
+
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
@@ -15,10 +16,8 @@ import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusEvent;
 import jmri.util.swing.TextAreaFIFO;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.ThreadingUtil;
-
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 
 /**
  * Table data model for display of Cbus request events
@@ -380,10 +379,10 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
             + Bundle.getMessage("DelConfirmTwo");
             Object[] params = {message, checkbox};
 
-            if (JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(
+            if (JmriJOptionPane.OK_OPTION == JmriJOptionPane.showConfirmDialog(
                     null, params, Bundle.getMessage("DelEvPopTitle"),
-                    JOptionPane.OK_CANCEL_OPTION,
-                    JOptionPane.WARNING_MESSAGE)) {
+                    JmriJOptionPane.OK_CANCEL_OPTION,
+                    JmriJOptionPane.WARNING_MESSAGE)) {
                     boolean dontShow = checkbox.isSelected();
                     if (dontShow) {
                         sessionConfirmDeleteRow=false;
@@ -431,5 +430,6 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
         return tablefeedback;
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusEventRequestDataModel.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusEventRequestDataModel.class);
+
 }

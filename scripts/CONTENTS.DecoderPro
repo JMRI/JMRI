@@ -16,7 +16,7 @@ Contents of this folder:
 	prefs			    folder of preference and configuration files created by the program
 	
 	DecoderPro.jar	    The program in executable form
-	default.lcf		    Logging control file
+	default_lcf.xml     Logging Configuration file
 	
 	javax.comm.properties	Configures Windows systems for communication
 	win32com.dll			Windows communications library

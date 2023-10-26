@@ -3,8 +3,10 @@ package jmri.jmrix;
 import java.util.Enumeration;
 import java.util.Vector;
 import jmri.SystemConnectionMemo;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import purejavacomm.CommPortIdentifier;
 import purejavacomm.NoSuchPortException;
 import purejavacomm.PortInUseException;
@@ -43,8 +45,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     @Override
     public String handlePortBusy(PortInUseException p, String portName, Logger log) {
         log.error("{} port is in use: {}", portName, p.getMessage());
-        /*JOptionPane.showMessageDialog(null, "Port is in use",
-         "Error", JOptionPane.ERROR_MESSAGE);*/
+        /*JmriJOptionPane.showMessageDialog(null, "Port is in use",
+         "Error", JmriJOptionPane.ERROR_MESSAGE);*/
         ConnectionStatus.instance().setConnectionState(this.getSystemPrefix(), portName, ConnectionStatus.CONNECTION_DOWN);
         return Bundle.getMessage("SerialPortInUse", portName);
     }
@@ -58,8 +60,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      */
     public String handlePortNotFound(NoSuchPortException p, String portName, Logger log) {
         log.error("Serial port {} not found", portName);
-        /*JOptionPane.showMessageDialog(null, "Serial port "+portName+" not found",
-         "Error", JOptionPane.ERROR_MESSAGE);*/
+        /*JmriJOptionPane.showMessageDialog(null, "Serial port "+portName+" not found",
+         "Error", JmriJOptionPane.ERROR_MESSAGE);*/
         ConnectionStatus.instance().setConnectionState(this.getSystemPrefix(), portName, ConnectionStatus.CONNECTION_DOWN);
         return Bundle.getMessage("SerialPortNotFound", portName);
     }
@@ -509,6 +511,6 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractSerialPortController.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractSerialPortController.class);
 
 }

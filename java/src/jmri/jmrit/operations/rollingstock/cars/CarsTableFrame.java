@@ -1,15 +1,11 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
-import java.text.MessageFormat;
 import java.util.List;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumnModel;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
@@ -21,6 +17,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.tools.TrainsByCarTypeAction;
 import jmri.swing.JTablePersistenceManager;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for adding and editing the car roster for operations.
@@ -32,7 +29,7 @@ import jmri.swing.JTablePersistenceManager;
 public class CarsTableFrame extends OperationsFrame implements TableModelListener {
 
     public CarsTableModel carsTableModel;
-    JTable carsTable;
+    public JTable carsTable;
     boolean showAllCars;
     String locationName;
     String trackName;
@@ -357,9 +354,9 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         if (ae.getSource() == findButton) {
             int rowindex = carsTableModel.findCarByRoadNumber(findCarTextBox.getText());
             if (rowindex < 0) {
-                JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carWithRoadNumNotFound"),
-                        new Object[]{findCarTextBox.getText()}), Bundle.getMessage("carCouldNotFind"),
-                        JOptionPane.INFORMATION_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carWithRoadNumNotFound",
+                        findCarTextBox.getText()), Bundle.getMessage("carCouldNotFind"),
+                        JmriJOptionPane.INFORMATION_MESSAGE);
                 return;
             }
             // clear any sorts by column
@@ -426,6 +423,6 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         numCars.setText(showNumber + "/" + totalNumber);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarsTableFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CarsTableFrame.class);
 
 }

@@ -27,7 +27,7 @@ public interface BaseManager<E extends NamedBean> extends Manager<E> {
      *                                                system name is already registered in
      *                                                the manager
      */
-    public E registerBean(@Nonnull E maleSocket);
+    E registerBean(@Nonnull E maleSocket);
     
     /**
      * Method for a UI to delete a bean.
@@ -48,24 +48,24 @@ public interface BaseManager<E extends NamedBean> extends Manager<E> {
      * @throws java.beans.PropertyVetoException If the recipients wishes the
      *                                          delete to be aborted (see above)
      */
-    public void deleteBean(@Nonnull MaleSocket maleSocket, @Nonnull String property) throws PropertyVetoException;
+    void deleteBean(@Nonnull MaleSocket maleSocket, @Nonnull String property) throws PropertyVetoException;
     
     /**
      * Get the default male socket class
      * @return the class
      */
-    public Class<? extends MaleSocket> getMaleSocketClass();
+    Class<? extends MaleSocket> getMaleSocketClass();
     
     /**
      * Get the last item registered in the mananger.
      * @return the last item
      */
-    public MaleSocket getLastRegisteredMaleSocket();
+    MaleSocket getLastRegisteredMaleSocket();
     
     /**
      * Register a male socket factory.
      * @param factory the factory
      */
-    public void registerMaleSocketFactory(MaleSocketFactory<E> factory);
+    void registerMaleSocketFactory(MaleSocketFactory<E> factory);
     
 }

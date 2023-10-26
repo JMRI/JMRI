@@ -16,13 +16,13 @@ public interface NetworkPortAdapter extends PortAdapter {
      * @param port network port.
      * @throws java.io.IOException on connection error.
      */
-    public void connect(String host, int port) throws java.io.IOException;
+    void connect(String host, int port) throws java.io.IOException;
 
     /**
      * Configure all of the other jmrix widgets needed to work with this adapter
      */
     @Override
-    public void configure();
+    void configure();
 
     /**
      * Query the status of this connection.
@@ -30,55 +30,55 @@ public interface NetworkPortAdapter extends PortAdapter {
      * @return true if all is OK, at least as far as known.
      */
     @Override
-    public boolean status();
+    boolean status();
 
     /**
      * Remember the associated port name.
      *
      * @param s port name.
      */
-    public void setPort(String s);
+    void setPort(String s);
 
-    public void setPort(int s);
+    void setPort(int s);
 
-    public int getPort();
+    int getPort();
 
     @Override
-    public String getCurrentPortName();
+    String getCurrentPortName();
 
-    public void setHostName(String hostname);
+    void setHostName(String hostname);
 
-    public String getHostName();
+    String getHostName();
 
     /*
      * Set whether or not this adapter should be
      * configured automatically via MDNS.
      */
-    public void setMdnsConfigure(boolean autoconfig);
+    void setMdnsConfigure(boolean autoconfig);
 
     /*
      * Get whether or not this adapter is configured
      * to use autoconfiguration via MDNS
      */
-    public boolean getMdnsConfigure();
+    boolean getMdnsConfigure();
 
     /*
      * Perform the automatic configuration.
      */
-    public void autoConfigure();
+    void autoConfigure();
 
     /*
      * Get and set the ZeroConf/mDNS advertisement name.
      */
-    public void setAdvertisementName(String AdName);
+    void setAdvertisementName(String AdName);
 
-    public String getAdvertisementName();
+    String getAdvertisementName();
 
     /*
      * Get and set the ZeroConf/mDNS service type.
      */
-    public void setServiceType(String ServiceType);
+    void setServiceType(String ServiceType);
 
-    public String getServiceType();
+    String getServiceType();
 
 }

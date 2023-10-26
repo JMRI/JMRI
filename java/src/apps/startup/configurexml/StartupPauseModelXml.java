@@ -5,8 +5,6 @@ import apps.startup.StartupPauseModel;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistence for {@link apps.startup.StartupPauseModel} objects.

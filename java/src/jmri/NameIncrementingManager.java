@@ -27,7 +27,7 @@ public interface NameIncrementingManager {
      * @return true if possible; false otherwise
      */
     @CheckReturnValue
-    public default boolean allowMultipleAdditions(@Nonnull String systemName) {
+    default boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false;
     }
 
@@ -55,7 +55,7 @@ public interface NameIncrementingManager {
      */
     @Nonnull
     @CheckReturnValue
-    public default String getNextValidSystemName(@Nonnull NamedBean currentBean) throws JmriException {
+    default String getNextValidSystemName(@Nonnull NamedBean currentBean) throws JmriException {
         if (!allowMultipleAdditions(currentBean.getSystemName())) throw new UnsupportedOperationException("Not supported");
 
         String currentName = currentBean.getSystemName();

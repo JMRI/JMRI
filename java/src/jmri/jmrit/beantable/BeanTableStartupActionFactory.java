@@ -41,6 +41,8 @@ public final class BeanTableStartupActionFactory extends AbstractStartupActionFa
             return Bundle.getMessage(locale, "StartupMemoryTableAction"); // NOI18N
         } else if (clazz.equals(OBlockTableAction.class)) {
             return Bundle.getMessage(locale, "StartupOBlockTableAction"); // NOI18N
+        } else if (clazz.equals(RailComTableAction.class)) {
+            return Bundle.getMessage(locale, "StartupRailComTableAction"); // NOI18N
         } else if (clazz.equals(ReporterTableAction.class)) {
             return Bundle.getMessage(locale, "StartupReporterTableAction"); // NOI18N
         } else if (clazz.equals(RouteTableAction.class)) {
@@ -79,6 +81,7 @@ public final class BeanTableStartupActionFactory extends AbstractStartupActionFa
             MemoryTableAction.class,
             OBlockTableAction.class,
             ReporterTableAction.class,
+            RailComTableAction.class,
             RouteTableAction.class,
             SectionTableAction.class,
             SensorTableAction.class,

@@ -457,46 +457,55 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
         return NONE;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification="I18N of Info Message")
     @Override
     public int getMaxNameLength() {
         if (maxNameLength == 0) {
             maxName = "";
             maxNameLength = MIN_NAME_LENGTH;
+            String carTypeName = "";
             Enumeration<String> en = listCarLoads.keys();
             while (en.hasMoreElements()) {
-                String key = en.nextElement();
-                List<CarLoad> loads = listCarLoads.get(key);
+                String cartype = en.nextElement();
+                List<CarLoad> loads = listCarLoads.get(cartype);
                 for (CarLoad load : loads) {
                     if (load.getName().split(TrainCommon.HYPHEN)[0].length() > maxNameLength) {
                         maxName = load.getName().split(TrainCommon.HYPHEN)[0];
                         maxNameLength = load.getName().split(TrainCommon.HYPHEN)[0].length();
+                        carTypeName = cartype;
                     }
                 }
             }
-            log.info("Max car load name ({}) length {}", maxName, maxNameLength);
+            log.info(Bundle.getMessage("InfoMaxLoad", maxName, maxNameLength, carTypeName));
         }
         return maxNameLength;
     }
     
     int maxCommentLength = 0;
     
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification = "I18N of Info Message")
     public int getMaxLoadCommentLength() {
         if (maxCommentLength == 0) {
             String maxComment = "";
+            String carTypeName = "";
             String carLoadName = "";
             Enumeration<String> en = listCarLoads.keys();
             while (en.hasMoreElements()) {
-                String key = en.nextElement();
-                List<CarLoad> loads = listCarLoads.get(key);
+                String carType = en.nextElement();
+                List<CarLoad> loads = listCarLoads.get(carType);
                 for (CarLoad load : loads) {
                     if (load.getDropComment().length() > maxCommentLength) {
                         maxComment = load.getDropComment();
                         maxCommentLength = load.getDropComment().length();
+                        carTypeName = carType;
                         carLoadName = load.getName();
                     }
                     if (load.getPickupComment().length() > maxCommentLength) {
                         maxComment = load.getPickupComment();
                         maxCommentLength = load.getPickupComment().length();
+                        carTypeName = carType;
                         carLoadName = load.getName();
                     }
                 }
@@ -507,7 +516,8 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
             if (maxCommentLength < TrainManifestHeaderText.getStringHeader_Pickup_Comment().length()) {
                 maxCommentLength = TrainManifestHeaderText.getStringHeader_Pickup_Comment().length();
             }
-            log.info("Max car load comment ({}) length {}, load name ({})", maxComment, maxCommentLength, carLoadName);
+            log.info(Bundle.getMessage("InfoMaxLoadMessage", maxComment, maxCommentLength,
+                    carTypeName, carLoadName));
         }
         return maxCommentLength;
     }

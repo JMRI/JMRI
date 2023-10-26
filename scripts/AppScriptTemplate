@@ -590,17 +590,27 @@ fi
 
 RESTART_CODE=100
 EXIT_STATUS=${RESTART_CODE}
+
 while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ] ; do
-
+ 
+    trap 'kill -TERM $PID' TERM INT
+    trap 'kill -HUP $PID' HUP
+    
     if [ "$OS" = "macosx" ] ; then
-        "${JAVACMD}" "${DOCK_OPTIONS[@]}" ${OPTIONS} ${ALTPORTS} ${CONFIGFILE} -cp "${CP}" "${CLASSNAME}" ${ARGS}
+        "${JAVACMD}" "${DOCK_OPTIONS[@]}" ${OPTIONS} ${ALTPORTS} ${CONFIGFILE} -cp "${CP}" "${CLASSNAME}" ${ARGS} &
+        PID=$!
     else
-        "${JAVACMD}" ${OPTIONS} ${ALTPORTS} ${CONFIGFILE} -cp "${CP}" "${CLASSNAME}" ${ARGS}
+        "${JAVACMD}" ${OPTIONS} ${ALTPORTS} ${CONFIGFILE} -cp "${CP}" "${CLASSNAME}" ${ARGS} &
+        PID=$!
     fi
-
+    
+    wait $PID
+    trap - TERM INT HUP
+    wait $PID
     EXIT_STATUS=$?
     [ -n "${DEBUG}" ] && echo Exit Status: "${EXIT_STATUS}" | tee -a ${launcher_log}
 done
+
 if [ $EXIT_STATUS -eq 200 ] ; then
     sudo shutdown -h now
 fi

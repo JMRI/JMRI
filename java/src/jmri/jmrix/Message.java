@@ -34,11 +34,11 @@ public interface Message {
     String toString();
 
 
-    /*
-     * @return a human readable representation of the message.
+    /**
+     * @return a human-readable representation of the message.
      */
-    public default String toMonitorString(){
-          return toString();
+    default String toMonitorString() {
+        return toString();
     }
 
 }
