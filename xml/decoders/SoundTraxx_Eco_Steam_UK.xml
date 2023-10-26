@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <copyright xmlns="http://docbook.org/ns/docbook">
         <year>2018</year>
         <holder>JMRI</holder>
@@ -61,6 +61,12 @@
             <authorinitials>JE</authorinitials>
             <revremark>chg includes TSU2PaneLighting, TSU2PaneASCdiesel</revremark>
         </revision>
+        <revision>
+            <revnumber>4</revnumber>
+            <date>2023-10-09</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>productID change for 11 bit Soundtraxx ID</revremark>
+        </revision>
     </revhistory>
     <version author="Alain Le Marchand" version="1" lastUpdated="20180105"/>
     <!-- Specific Econami UK information as per http://soundtraxxuk.com/ web site -->
@@ -72,147 +78,50 @@
          Add 256 to Product Code of CV256 to get productID value                  -->
     <!-- Decoder Model information follows -->
     <decoder>
-        <family name="Econami Steam UK" mfg="SoundTraxx (Throttle-Up)" comment="These are the UK retail version Econami Steam decoders">
-            <model model="ECO-100 UK Steam" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="Wires" productID="300" comment="Model 881101">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Main|Whistle">
-                    <label xml:lang="it">Fischio|Primario</label>
-                </output>
-                <output name="6" label="Shunt|Whistle">
-                    <label xml:lang="it">Fischio|Manovra</label>
-                </output>
-                <output name="7" label="Dynamo| ">
-                    <label xml:lang="it">Dynamo| </label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Cylinder|Cocks">
-                    <label xml:lang="it">Cilindro|Cazzi</label>
-                </output>
-                <output name="10" label="Water|Stop">
-                    <label xml:lang="it">Acqua|Stop</label>
-                </output>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
+        <family name="Econami Steam UK" mfg="SoundTraxx (Throttle-Up)" lowVersionID="70" comment="These are the UK retail version Econami Steam decoders">
+            <model model="ECO-100 UK Steam" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="Wires" productID="2092" comment="Model 881101">
                 <size length="27" width="10.5" height="5" units="mm"/>
             </model>
-            <model model="ECO-200 UK Steam" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="302" comment="Model 881102">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Main|Whistle">
-                    <label xml:lang="it">Fischio|Primario</label>
-                </output>
-                <output name="6" label="Shunt|Whistle">
-                    <label xml:lang="it">Fischio|Manovra</label>
-                </output>
-                <output name="7" label="Dynamo| ">
-                    <label xml:lang="it">Dynamo| </label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Cylinder|Cocks">
-                    <label xml:lang="it">Cilindro|Cazzi</label>
-                </output>
-                <output name="10" label="Water|Stop">
-                    <label xml:lang="it">Acqua|Stop</label>
-                </output>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
+            <model model="ECO-200 UK Steam" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="2094" comment="Model 881102">
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="ECO-21PNEM UK Steam" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21pin" productID="304" comment="Model 881106 with NEM 21-pin plug">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Main|Whistle">
-                    <label xml:lang="it">Fischio|Primario</label>
-                </output>
-                <output name="6" label="Shunt|Whistle">
-                    <label xml:lang="it">Fischio|Manovra</label>
-                </output>
-                <output name="7" label="Dynamo| ">
-                    <label xml:lang="it">Dynamo| </label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Cylinder|Cocks">
-                    <label xml:lang="it">Cilindro|Cazzi</label>
-                </output>
-                <output name="10" label="Water|Stop">
-                    <label xml:lang="it">Acqua|Stop</label>
-                </output>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
+            <model model="ECO-21PNEM UK Steam" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2096" comment="Model 881106 with NEM 21-pin plug">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
-            <model model="ECO-400 UK Steam" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="306" comment="Model 881105">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Main|Whistle">
-                    <label xml:lang="it">Fischio|Primario</label>
-                </output>
-                <output name="6" label="Shunt|Whistle">
-                    <label xml:lang="it">Fischio|Manovra</label>
-                </output>
-                <output name="7" label="Dynamo| ">
-                    <label xml:lang="it">Dynamo| </label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Cylinder|Cocks">
-                    <label xml:lang="it">Cilindro|Cazzi</label>
-                </output>
-                <output name="10" label="Water|Stop">
-                    <label xml:lang="it">Acqua|Stop</label>
-                </output>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
+            <model model="ECO-400 UK Steam" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="2098" comment="Model 881105">
                 <size length="69" width="30.5" height="14" units="mm"/>
             </model>
+            <output name="3" label="  FX3  "/>
+            <output name="4" label="  FX4  "/>
+            <output name="5" label="Main|Whistle">
+                <label xml:lang="it">Fischio|Primario</label>
+            </output>
+            <output name="6" label="Shunt|Whistle">
+                <label xml:lang="it">Fischio|Manovra</label>
+            </output>
+            <output name="7" label="Dynamo| ">
+                <label xml:lang="it">Dynamo| </label>
+            </output>
+            <output name="8" label="Short|Horn">
+                <label xml:lang="it">Breve|Tromba</label>
+            </output>
+            <output name="9" label="Cylinder|Cocks">
+                <label xml:lang="it">Cilindro|Cazzi</label>
+            </output>
+            <output name="10" label="Water|Stop">
+                <label xml:lang="it">Acqua|Stop</label>
+            </output>
+            <output name="11" label="Dimming| ">
+                <label xml:lang="it">Smorzam| </label>
+            </output>
+            <output name="12" label="Mute| ">
+                <label xml:lang="it">Silenzio| </label>
+            </output>
+            <output name="13" label="|"/>	<!-- Not used for for this decoder -->
+            <output name="14" label="Brake| "/>
+            <output name="15" label="Coupler| ">
+                <label xml:lang="it">Accoppiatore| </label>
+            </output>
             <functionlabels>
                 <functionlabel num="0" lockable="true">Headlight</functionlabel>
                 <functionlabel num="1" lockable="true">Shunt Whistle</functionlabel>
