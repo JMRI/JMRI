@@ -141,6 +141,8 @@
                     </ul>
                 </li>
                 <li>Added Window and Help menus to the Configure Node window.
+                <li>The Configure Nodes window will now remember your selected sort order
+                    from one run to the next. </li>
             </ul>
 
         <h4>Powerline</h4>
