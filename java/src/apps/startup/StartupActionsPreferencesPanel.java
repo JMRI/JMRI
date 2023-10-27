@@ -346,6 +346,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
                         StartupModel model = this.manager.getActions(rowIndex);
                         model.setEnabled((boolean)aValue);
                     }
+                    break;
                 default:
                     // Do nothing
             }
