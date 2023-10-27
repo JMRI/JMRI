@@ -345,6 +345,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
                     if (aValue instanceof Boolean) {
                         StartupModel model = this.manager.getActions(rowIndex);
                         model.setEnabled((boolean)aValue);
+                        this.manager.setRestartRequired();
                     }
                     break;
                 default:
