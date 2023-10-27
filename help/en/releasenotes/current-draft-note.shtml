@@ -140,7 +140,9 @@
                             to not open for certain nodes, including the DCC-LCC Gateway.
                     </ul>
                 </li>
-                <li>Added Window and Help menus to the Configure Node window.
+                <li>Added Window and Help menus to the Configure Node window.</li>
+                <li>Added support for multiple OpenLCB connections in Signal Masts add/edit dialog.</li>
+                <li>Added GUI Icons for OpenLCB signal masts in the add/edit dialog.</li>
             </ul>
 
         <h4>Powerline</h4>
