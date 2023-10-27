@@ -515,7 +515,8 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>Each startup action now has an <strong>Enabled</strong> checkbox
+            so that each startup action can be enabled/disabled.</li>
         </ul>
 
     <h3>Resources</h3>
