@@ -498,6 +498,12 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
+            <li>It's now possible to select an icon below another icon. Right-click on
+            the icon to open the popup menu of the icon. If there are any icons at the
+            mouse position below this icon, the sub menu <strong>Icons below</strong>
+            will appear at the end of the popup menu. The sub menu will contain all
+            the icons below this icon. These menu items will open the popup menu for
+            for its icon.</li>
             <li>A new <strong>Audio</strong> icon has been added to Panel Editor.
             It can be used to play audio on a web panel, or let the user start
             playing sound in JMRI by clicking on the Audio icon. When editing the
