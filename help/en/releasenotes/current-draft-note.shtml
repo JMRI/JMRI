@@ -472,6 +472,11 @@
 
           <li>Add the <strong>GET_BLOCK_WARRANT</strong> and <strong>GET_BLOCK_TRAIN_NAME</strong>
           OBlock actions to the OBlock Logix import.</li>
+
+          <li>The action <strong>Audio icon on web panel</strong> is added to the category
+          <strong>Display</strong>. This action can tell an <strong>Audio</strong> icon on
+          a Panel editor to play the sound when the panel is shown in a web browser, for
+          example on a tablet or mobile phone.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -493,7 +498,20 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>A new <strong>Audio</strong> icon has been added to Panel Editor.
+            It can be used to play audio on a web panel, or let the user start
+            playing sound in JMRI by clicking on the Audio icon. When editing the
+            panel, the popup menu for the icon has a new sub menu <strong>Web
+            panels</strong> that sets the options for how the icon should act on
+            a web panel.<br>
+            If the icon is used to play sound on a web panel, the option
+            <strong>Hide when not editing</strong> might be useful if the user
+            shouldn't see the icon. The icon plays the sound even if it's not
+            visible.<br>
+            The LogixNG action <strong>Audio icon on web panel</strong> can be
+            used to tell the <strong>Audio</strong> icon to play the sound when
+            it is displayed on a web browser, for example on a tablet or mobile
+            phone.</li>
         </ul>
 
     <h3>Control Panel Editor</h3>
