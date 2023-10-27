@@ -1,17 +1,19 @@
 package apps.startup.configurexml;
 
-import jmri.util.startup.StartupActionsManager;
 import apps.startup.ScriptButtonModel;
-import jmri.util.startup.StartupModel;
+
 import java.io.FileNotFoundException;
 import java.util.Locale;
+
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.util.FileUtil;
 import jmri.util.prefs.InitializationException;
+import jmri.util.startup.StartupActionsManager;
+import jmri.util.startup.StartupModel;
+
+import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistence for {@link apps.startup.ScriptButtonModel} objects and
@@ -24,7 +26,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ScriptButtonModelXml extends AbstractXmlAdapter {
 
-    private final static Logger log = LoggerFactory.getLogger(ScriptButtonModelXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ScriptButtonModelXml.class);
 
     public ScriptButtonModelXml() {
     }
@@ -40,6 +42,7 @@ public class ScriptButtonModelXml extends AbstractXmlAdapter {
         Element element = new Element("perform"); // NOI18N
         element.setAttribute("name", ((StartupModel) o).getName()); // NOI18N
         element.setAttribute("type", "Button"); // NOI18N
+        element.setAttribute("enabled", ((StartupModel) o).isEnabled() ? "yes" : "no");
         element.setAttribute("class", this.getClass().getName()); // NOI18N
         Element property = new Element("property"); // NOI18N
         property.setAttribute("name", "script"); // NOI18N
@@ -66,6 +69,14 @@ public class ScriptButtonModelXml extends AbstractXmlAdapter {
         boolean result = false;
         ScriptButtonModel model = new ScriptButtonModel();
         model.setName(shared.getAttribute("name").getValue()); // NOI18N
+
+        Attribute enabled = shared.getAttribute("enabled");
+        if (enabled != null) {
+            model.setEnabled("yes".equals(enabled.getValue()));
+        } else {
+            model.setEnabled(true);
+        }
+
         for (Element child : shared.getChildren("property")) { // NOI18N
             if (child.getAttributeValue("name").equals("script") // NOI18N
                     && child.getAttributeValue("value") != null) { // NOI18N
