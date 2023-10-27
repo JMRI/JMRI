@@ -85,6 +85,12 @@ public class AudioIcon extends PositionableLabel {
         return super.finishClone(pos);
     }
 
+    @Override
+    @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_AudioIcon");
+    }
+
     public int getIdentity() {
         return _identity;
     }

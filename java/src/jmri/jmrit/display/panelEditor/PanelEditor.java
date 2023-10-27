@@ -594,9 +594,12 @@ public class PanelEditor extends Editor implements ItemListener {
      * Create popup for a Positionable object. Popup items common to all
      * positionable objects are done before and after the items that pertain
      * only to specific Positionable types.
+     *
+     * @param p           the item containing or requiring the context menu
+     * @param event       the event triggering the menu
+     * @param selections  the list of all Positionables at this position
      */
-    @Override
-    protected void showPopUp(Positionable p, JmriMouseEvent event) {
+    protected void showPopUp(Positionable p, JmriMouseEvent event, List<Positionable> selections) {
         if (!((JComponent) p).isVisible()) {
             return;     // component must be showing on the screen to determine its location
         }
@@ -664,6 +667,28 @@ public class PanelEditor extends Editor implements ItemListener {
                 util.setAdditionalViewPopUpMenu(popup);
             }
         }
+
+        if (selections.size() > 1) {
+            boolean found = false;
+            JMenu iconsBelowMenu = new JMenu(Bundle.getMessage("MenuItemIconsBelow"));
+            for (int i=0; i < selections.size(); i++) {
+                Positionable pos = selections.get(i);
+                if (found) {
+                    iconsBelowMenu.add(new AbstractAction(Bundle.getMessage(
+                            "PositionableTypeAndName", pos.getTypeString(), pos.getNameString())) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            showPopUp(pos, event, new ArrayList<>());
+                        }
+                    });
+                } else {
+                    if (p == pos) found = true;
+                }
+            }
+            popup.addSeparator();
+            popup.add(iconsBelowMenu);
+        }
+
         popup.show((Component) p, p.getWidth() / 2, p.getHeight() / 2);
     }
 
@@ -703,7 +728,7 @@ public class PanelEditor extends Editor implements ItemListener {
                         //Will show the copy option only
                         showMultiSelectPopUp(event, _currentSelection);
                     } else {
-                        showPopUp(_currentSelection, event);
+                        showPopUp(_currentSelection, event, selections);
                     }
                 }
             } else if (!event.isControlDown()) {
@@ -790,7 +815,7 @@ public class PanelEditor extends Editor implements ItemListener {
                 showMultiSelectPopUp(event, _currentSelection);
 
             } else {
-                showPopUp(_currentSelection, event);
+                showPopUp(_currentSelection, event, selections);
             }
         } else {
             if (_currentSelection != null && !_dragging && !event.isControlDown()) {
@@ -930,7 +955,7 @@ public class PanelEditor extends Editor implements ItemListener {
             if (_selectionGroup != null) {
                 showMultiSelectPopUp(event, _currentSelection);
             } else {
-                showPopUp(_currentSelection, event);
+                showPopUp(_currentSelection, event, selections);
             }
             // _selectionGroup = null; // Show popup only works for a single item
 

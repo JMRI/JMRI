@@ -3826,8 +3826,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     /**
      * Select the menu items to display for the Positionable's popup.
+     * @param p     the item containing or requiring the context menu
+     * @param event the event triggering the menu
      */
-    @Override
     public void showPopUp(@Nonnull Positionable p, @Nonnull JmriMouseEvent event) {
         assert p != null;
 

@@ -1,7 +1,10 @@
 package jmri.jmrit.display;
 
 import java.awt.event.ActionListener;
+
+import javax.annotation.Nonnull;
 import javax.swing.JPopupMenu;
+
 import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.NamedBean.DisplayOptions;
@@ -97,6 +100,12 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
             log.debug("property change: {} is now {}", e.getPropertyName(), e.getNewValue());
         }
         displayState();
+    }
+
+    @Override
+    @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_ReporterIcon");
     }
 
     @Override

@@ -290,6 +290,12 @@ public class PositionableLabel extends JLabel implements Positionable {
 
     @Override
     @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_PositionableLabel");
+    }
+
+    @Override
+    @Nonnull
     public  String getNameString() {
         if (_icon && _displayLevel > Editor.BKG) {
             return "Icon";

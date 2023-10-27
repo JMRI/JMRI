@@ -3,6 +3,7 @@ package jmri.jmrit.display;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
@@ -179,6 +180,12 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         log.debug("property change: {} current state: {}", e.getPropertyName(), mastState());
         displayState(mastState());
         _editor.getTargetPanel().repaint();
+    }
+
+    @Override
+    @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_SignalMastIcon");
     }
 
 //    public String getPName() { return namedMast.getName(); }
