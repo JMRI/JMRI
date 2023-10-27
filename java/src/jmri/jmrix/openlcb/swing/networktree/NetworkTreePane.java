@@ -71,8 +71,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                 } catch (IllegalArgumentException e) {
                     order = SortOrder.BY_NAME;
                 }
-                if (order == null) order = SortOrder.BY_NAME;
-                super.setSortOrder((SortOrder)order);
+                super.setSortOrder(order);
             }
             
             // This overrides setOrder to preserve the order
