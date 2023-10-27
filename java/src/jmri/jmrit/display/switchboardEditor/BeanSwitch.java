@@ -23,11 +23,9 @@ import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrit.beantable.AddNewDevicePanel;
-import jmri.jmrit.display.Positionable;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemType;
 import jmri.util.swing.JmriJOptionPane;
-import jmri.util.swing.JmriMouseEvent;
 
 /**
  * Class for a switchboard interface object.
