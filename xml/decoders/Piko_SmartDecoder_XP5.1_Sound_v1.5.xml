@@ -17,7 +17,7 @@
 	<!-- Supported decoder: PIKO46505-18 = decoder neutral, PIKO46550-18 = BR 83 TT -->
 	<!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
 	<decoder>
-		<family name="PIKO SmartDecoder XP5.1 (version 1.5+)" mfg="PIKO" lowVersionID="2" highVersionID="5" comment="Decoders not sorted (necessarily) in numerical order">
+		<family name="PIKO SmartDecoder XP5.1 (version 1.5+)" mfg="PIKO" lowVersionID="3" highVersionID="5" comment="Decoders not sorted (necessarily) in numerical order">
 			<model model="PIKO46505-18 XP5.1 V1.5" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46505-18" lowVersionID="5" comment="Piko SmartDecoder XP5.1 Sound allgemein (FW 1.5.0)" replacementModel="PIKO46505-18 XP5.1 V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8)">
 				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
 				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>

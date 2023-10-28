@@ -25,26 +25,52 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalExpression_TimerType">
+    <xs:complexType name="LogixNG_DigitalAction_DisplayActionAudioIconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a Timer class.
+          Define the XML stucture for storing the contents of a ActionTurnout class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.TimerXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.display.logixng.configurexml.ActionAudioIconXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
-
+        
             <xs:sequence>
+
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
+              <xs:element name="editorName" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="audioIconName" type="xs:string" minOccurs="0" maxOccurs="1"/>
+
+              <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+              <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="stateAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="operation" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:token">
+                    <xs:enumeration value="Play"/>
+                    <xs:enumeration value="Stop"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <xs:element name="stateReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="stateLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="stateFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+<!--              <xs:element name="enabled" type="yesNoType" /> -->
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
+            
             <xs:attribute name="class" type="classType" use="required"/>
-
+        
     </xs:complexType>
 
 </xs:schema>

@@ -2271,6 +2271,27 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        jmri.jmrit.display.logixng.ActionAudioIcon actionAudioIcon =
+                new jmri.jmrit.display.logixng.ActionAudioIcon(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionAudioIcon);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionAudioIcon =
+                new jmri.jmrit.display.logixng.ActionAudioIcon(digitalActionManager.getAutoSystemName(), null);
+        actionAudioIcon.setOperation(jmri.jmrit.display.logixng.ActionAudioIcon.Operation.Play);
+        maleSocket = digitalActionManager.registerAction(actionAudioIcon);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionAudioIcon =
+                new jmri.jmrit.display.logixng.ActionAudioIcon(digitalActionManager.getAutoSystemName(), null);
+        actionAudioIcon.setOperation(jmri.jmrit.display.logixng.ActionAudioIcon.Operation.Stop);
+        maleSocket = digitalActionManager.registerAction(actionAudioIcon);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         jmri.jmrit.logixng.actions.ActionRequestUpdateAllSensors actionRequestUpdateAllSensors =
                 new jmri.jmrit.logixng.actions.ActionRequestUpdateAllSensors(digitalActionManager.getAutoSystemName(), null, _locoNetMemo);
         maleSocket = digitalActionManager.registerAction(actionRequestUpdateAllSensors);
@@ -4330,6 +4351,41 @@ public class CreateLogixNGTreeScaffold {
         expressionSignalMast.setAspectLocalVariable("index3");
         expressionSignalMast.setAspectReference("{IM3}");
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+
+        jmri.jmrit.logixng.expressions.Timer expressionTimer =
+                new jmri.jmrit.logixng.expressions.Timer(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(expressionTimer);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionTimer = new jmri.jmrit.logixng.expressions.Timer(digitalExpressionManager.getAutoSystemName(), null);
+        expressionTimer.setComment("A comment");
+        expressionTimer.setDelayAddressing(NamedBeanAddressing.Direct);
+        expressionTimer.setDelay(100);
+        maleSocket = digitalExpressionManager.registerExpression(expressionTimer);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionTimer = new jmri.jmrit.logixng.expressions.Timer(digitalExpressionManager.getAutoSystemName(), null);
+        expressionTimer.setComment("A comment");
+        expressionTimer.setDelayAddressing(NamedBeanAddressing.LocalVariable);
+        expressionTimer.setDelayLocalVariable("MyVar");
+        maleSocket = digitalExpressionManager.registerExpression(expressionTimer);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionTimer = new jmri.jmrit.logixng.expressions.Timer(digitalExpressionManager.getAutoSystemName(), null);
+        expressionTimer.setComment("A comment");
+        expressionTimer.setDelayAddressing(NamedBeanAddressing.Reference);
+        expressionTimer.setDelayReference("{MyMemory}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionTimer);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionTimer = new jmri.jmrit.logixng.expressions.Timer(digitalExpressionManager.getAutoSystemName(), null);
+        expressionTimer.setComment("A comment");
+        expressionTimer.setDelayAddressing(NamedBeanAddressing.Formula);
+        expressionTimer.setDelayFormula("MyVar + 10");
+        maleSocket = digitalExpressionManager.registerExpression(expressionTimer);
         and.getChild(indexExpr++).connect(maleSocket);
 
 

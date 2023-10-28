@@ -140,7 +140,9 @@
                             to not open for certain nodes, including the DCC-LCC Gateway.
                     </ul>
                 </li>
-                <li>Added Window and Help menus to the Configure Node window.
+                <li>Added Window and Help menus to the Configure Node window.</li>
+                <li>Added support for multiple OpenLCB connections in Signal Masts add/edit dialog.</li>
+                <li>Added GUI Icons for OpenLCB signal masts in the add/edit dialog.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -416,7 +418,8 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Check each section against reserved sections for conflicting blocks.</li>
+             <li>Do not turn off block alternate colour when it has already be reallocated.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -452,6 +455,14 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>The expression <strong>Timer</strong> has been added. It returns <strong>False</strong>
+          until some time has passed. It then returns <strong>True</strong> once and the timer starts
+          again. This expression is intended to be used together with the action <strong>Sequence</strong></li>.
+
+          <li>The action <strong>Sequence</strong> is now safe to use in LogixNG modules. The action
+          had a bug which made it sometimes fail if it was used in a module and that module was called
+          from several ConditionalNGs at once.</li>
+
           <li>When a LogixNG was created and ConditionalNGs
           was created for that LogixNG, the ConditionalNGs
           wasn't executing until restart of JMRI if the
@@ -469,7 +480,12 @@
           timers in the Timer action.<br>
           To use the Timer action in a LogixNG module, have an <strong>Always true</strong>
           expression as <strong>Start</strong> expression for the Timer action, together with the
-          option <strong>Start/Stop by Start expression</strong> selected.</strong>
+          option <strong>Start/Stop by Start expression</strong> selected.</strong></li>
+
+          <li>The action <strong>Audio icon on web panel</strong> is added to the category
+          <strong>Display</strong>. This action can tell an <strong>Audio</strong> icon on
+          a Panel editor to play the sound when the panel is shown in a web browser, for
+          example on a tablet or mobile phone.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -491,7 +507,20 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>A new <strong>Audio</strong> icon has been added to Panel Editor.
+            It can be used to play audio on a web panel, or let the user start
+            playing sound in JMRI by clicking on the Audio icon. When editing the
+            panel, the popup menu for the icon has a new sub menu <strong>Web
+            panels</strong> that sets the options for how the icon should act on
+            a web panel.<br>
+            If the icon is used to play sound on a web panel, the option
+            <strong>Hide when not editing</strong> might be useful if the user
+            shouldn't see the icon. The icon plays the sound even if it's not
+            visible.<br>
+            The LogixNG action <strong>Audio icon on web panel</strong> can be
+            used to tell the <strong>Audio</strong> icon to play the sound when
+            it is displayed on a web browser, for example on a tablet or mobile
+            phone.</li>
         </ul>
 
     <h3>Control Panel Editor</h3>
@@ -657,4 +686,5 @@
         <ul>
             <li>(For developers) Our CI process has been updated to require the
             @Override annotation on overriding methods and removal of unused import statements.</li>
+            <li>Fixed a validation errors in the xml/schema/auxiliary-configuration.xsd  file.</li>
         </ul>
