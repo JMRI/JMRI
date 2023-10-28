@@ -24818,6 +24818,8 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <runContinuously>no</runContinuously>
       <startAndStopByStartExpression>no</startAndStopByStartExpression>
       <unit>MilliSeconds</unit>
+      <delayByLocalVariables>no</delayByLocalVariables>
+      <delayLocalVariablePrefix />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -24909,6 +24911,8 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <runContinuously>yes</runContinuously>
       <startAndStopByStartExpression>no</startAndStopByStartExpression>
       <unit>MilliSeconds</unit>
+      <delayByLocalVariables>no</delayByLocalVariables>
+      <delayLocalVariablePrefix />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -25008,6 +25012,8 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <runContinuously>no</runContinuously>
       <startAndStopByStartExpression>no</startAndStopByStartExpression>
       <unit>MilliSeconds</unit>
+      <delayByLocalVariables>no</delayByLocalVariables>
+      <delayLocalVariablePrefix />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">

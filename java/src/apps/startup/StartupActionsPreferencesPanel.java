@@ -1,8 +1,11 @@
 package apps.startup;
 
 import jmri.util.startup.StartupModel;
+
 import apps.ConfigBundle;
+
 import jmri.util.startup.StartupActionsManager;
+
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,23 +15,17 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javax.swing.GroupLayout;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.LayoutStyle;
-import javax.swing.ListSelectionModel;
+
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumn;
+
 import jmri.InstanceManager;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
+
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -42,11 +39,21 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = PreferencesPanel.class)
 public class StartupActionsPreferencesPanel extends JPanel implements PreferencesPanel {
 
+    private static final int COLUMN_NAME = 0;
+    private static final int COLUMN_TYPE = 1;
+    private static final int COLUMN_ENABLED = 2;
+
     /**
      * Creates new form StartupActionsPreferencesPanel
      */
     public StartupActionsPreferencesPanel() {
         initComponents();
+
+        JButton testButton = new JButton("XXXXXX");  // NOI18N
+        TableColumn enableColumn = this.actionsTbl.getColumnModel().getColumn(COLUMN_ENABLED);
+        enableColumn.setMinWidth(testButton.getPreferredSize().width);
+        enableColumn.setMaxWidth(testButton.getPreferredSize().width);
+
         this.actionsTbl.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
             int row = this.actionsTbl.getSelectedRow();
             this.upBtn.setEnabled(row != 0 && row != -1);
@@ -310,7 +317,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
 
         @Override
         public int getColumnCount() {
-            return 2;
+            return 3;
         }
 
         @Override
@@ -319,10 +326,12 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
             switch (columnIndex) {
                 case -1: // tooltip
                     return model.toString();
-                case 0:
+                case COLUMN_NAME:
                     return model;
-                case 1:
+                case COLUMN_TYPE:
                     return this.manager.getFactories(model.getClass()).getDescription();
+                case COLUMN_ENABLED:
+                    return model.isEnabled();
                 default:
                     return null;
             }
@@ -330,12 +339,29 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         }
 
         @Override
+        public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+            switch (columnIndex) {
+                case COLUMN_ENABLED:
+                    if (aValue instanceof Boolean) {
+                        StartupModel model = this.manager.getActions(rowIndex);
+                        model.setEnabled((boolean)aValue);
+                        this.manager.setRestartRequired();
+                    }
+                    break;
+                default:
+                    // Do nothing
+            }
+        }
+
+        @Override
         public String getColumnName(int columnIndex) {
             switch (columnIndex) {
-                case 0:
+                case COLUMN_NAME:
                     return Bundle.getMessage("StartupActionsTableModel.name"); // NOI18N
-                case 1:
+                case COLUMN_TYPE:
                     return Bundle.getMessage("StartupActionsTableModel.type"); // NOI18N
+                case COLUMN_ENABLED:
+                    return Bundle.getMessage("StartupActionsTableModel.enabled"); // NOI18N
                 default:
                     return null;
             }
@@ -344,10 +370,12 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         @Override
         public Class<?> getColumnClass(int columnIndex) {
             switch (columnIndex) {
-                case 0:
+                case COLUMN_NAME:
                     return StartupModel.class;
-                case 1:
+                case COLUMN_TYPE:
                     return String.class;
+                case COLUMN_ENABLED:
+                    return Boolean.class;
                 default:
                     return null;
             }
@@ -355,7 +383,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
 
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return columnIndex == 0;
+            return columnIndex != COLUMN_TYPE;
         }
 
         @Override

@@ -711,6 +711,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         if (useStaging && !Setup.isCarRoutingViaStagingEnabled())
             return false; // routing via staging is disabled
 
+        if (_addtoReportVeryDetailed) {
+            addLine(_buildReport, SEVEN, BLANK_LINE);
+        }
         if (_lastLocationTracks.isEmpty()) {
             if (useStaging) {
                 addLine(_buildReport, SEVEN, Bundle.getMessage("RouterCouldNotFindStaging",

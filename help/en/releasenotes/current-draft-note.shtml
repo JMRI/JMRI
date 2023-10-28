@@ -143,6 +143,9 @@
                 <li>Added Window and Help menus to the Configure Node window.
                 <li>The Configure Nodes window will now remember your selected sort order
                     from one run to the next. </li>
+                <li>Added Window and Help menus to the Configure Node window.</li>
+                <li>Added support for multiple OpenLCB connections in Signal Masts add/edit dialog.</li>
+                <li>Added GUI Icons for OpenLCB signal masts in the add/edit dialog.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -475,6 +478,13 @@
           <li>Add the <strong>GET_BLOCK_WARRANT</strong> and <strong>GET_BLOCK_TRAIN_NAME</strong>
           OBlock actions to the OBlock Logix import.</li>
 
+          <li>The action <strong>Timer</strong> has been improved. It can now be used within a
+          LogixNG module. It also supports local variables to tell the different delays for the
+          timers in the Timer action.<br>
+          To use the Timer action in a LogixNG module, have an <strong>Always true</strong>
+          expression as <strong>Start</strong> expression for the Timer action, together with the
+          option <strong>Start/Stop by Start expression</strong> selected.</strong></li>
+
           <li>The action <strong>Audio icon on web panel</strong> is added to the category
           <strong>Display</strong>. This action can tell an <strong>Audio</strong> icon on
           a Panel editor to play the sound when the panel is shown in a web browser, for
@@ -535,7 +545,8 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>Each startup action now has an <strong>Enabled</strong> checkbox
+            so that each startup action can be enabled/disabled.</li>
         </ul>
 
     <h3>Resources</h3>
