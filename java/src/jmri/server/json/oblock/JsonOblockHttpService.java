@@ -148,7 +148,7 @@ public class JsonOblockHttpService extends JsonNamedBeanHttpService<OBlock> {
     }
 
     @Override
-    protected ProvidingManager<OBlock> getManager() {
+    protected ProvidingManager<OBlock> getProvidingManager() {
         return InstanceManager.getDefault(OBlockManager.class);
     }
 

@@ -122,7 +122,7 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService<Route> {
     }
 
     @Override
-    protected ProvidingManager<Route> getManager() {
+    protected ProvidingManager<Route> getProvidingManager() {
         return InstanceManager.getDefault(RouteManager.class);
     }
 }

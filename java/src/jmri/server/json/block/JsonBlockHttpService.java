@@ -191,7 +191,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
     }
 
     @Override
-    protected ProvidingManager<Block> getManager() {
+    protected ProvidingManager<Block> getProvidingManager() {
         return InstanceManager.getDefault(BlockManager.class);
     }
 

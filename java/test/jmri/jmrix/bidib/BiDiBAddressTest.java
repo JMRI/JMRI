@@ -2,6 +2,7 @@ package jmri.jmrix.bidib;
 
 import static org.junit.Assert.*;
 
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.bidib.jbidibc.messages.enums.LcOutputType;
 import org.junit.After;
@@ -15,14 +16,14 @@ import org.junit.Test;
  */
 
 public class BiDiBAddressTest {
-    
+
     BiDiBSystemConnectionMemo memo;
     String p;
     char t;
     char s;
     char l;
     char r;
-    
+
     private void checkAddr(String aString, char typeLetter, char expectedAddressType) {
         BiDiBAddress addr = new BiDiBAddress(p + typeLetter + aString, typeLetter, memo);
         assertTrue("invalid address", addr.isValid());
@@ -31,14 +32,14 @@ public class BiDiBAddressTest {
         if (expectedAddressType == 'p') assertTrue("not a port address", addr.isPortAddr());
         if (expectedAddressType == 'f') assertTrue("not a feedback address", addr.isFeedbackAddr());
     }
-    
+
     private void checkPortAddr(String aString, char typeLetter, LcOutputType expectedPortType) {
         BiDiBAddress addr = new BiDiBAddress(p + typeLetter + aString, typeLetter, memo);
         assertTrue("invalid address", addr.isValid());
         if (expectedPortType == LcOutputType.SWITCHPORT) assertTrue("not a SWITCHPORT", addr.getPortType() == LcOutputType.SWITCHPORT);
-        
+
     }
-    
+
     @Test
     public void testAddressOK() {
         checkAddr("20", t, 't'); // no node - assume root node which is a command station -> is DCC address
@@ -60,7 +61,7 @@ public class BiDiBAddressTest {
         checkAddr("Test1:a7", t, 'a');
         checkAddr("Test1:p7", t, 'p');
         checkAddr("01.02-03_04:a7", t, 'a'); //username starts with a number and contains all allowed special characters
-        
+
         //   Lights
         checkAddr("Test0:t7", l, 't');
         checkAddr("Test1:p7", l, 'p');
@@ -85,7 +86,7 @@ public class BiDiBAddressTest {
         checkPortAddr("Test2:p1I", s, LcOutputType.INPUTPORT);
         checkPortAddr("Test2:p1", s, LcOutputType.INPUTPORT);
     }
-    
+
     @Test
     public void testAddressNotOK() {
         // syntax
@@ -112,8 +113,29 @@ public class BiDiBAddressTest {
         assertFalse("Turnout as input port", new BiDiBAddress(p + "T" + "Test1:p20I", t, memo).isValid());
         assertFalse("Light as input port", new BiDiBAddress(p + "L" + "Test1:p20I", t, memo).isValid());
         assertFalse("Sensor as non input port", new BiDiBAddress(p + "S" + "Test1:p20S", t, memo).isValid());
+
+        JUnitAppender.assertWarnMessage("*** BiDiB system name \"BT:20\" is invalid");
+        JUnitAppender.assertWarnMessage("*** BiDiB system name \"BT 20\" is invalid");
+        JUnitAppender.assertWarnMessage("*** BiDiB system name \"BTx0 :20\" is invalid");
+        JUnitAppender.assertWarnMessage("*** BiDiB system name \"BTx0: 20\" is invalid");
+        JUnitAppender.assertWarnMessage("*** BiDiB system name \"BTy20\" is invalid");
+        JUnitAppender.assertWarnMessage("*** BiDiB system name \"BTTest1:p20Y\" is invalid");
+        JUnitAppender.assertWarnMessage("*** BiDiB system name \"BSt20\" is invalid");
+        JUnitAppender.assertWarnMessage("*** BiDiB system name \"BSa20\" is invalid");
+        JUnitAppender.assertWarnMessage("*** BiDiB system name \"BLa20\" is invalid");
+        JUnitAppender.assertWarnMessage("*** BiDiB system name \"BLf20\" is invalid");
+        JUnitAppender.assertWarnMessage("*** BiDiB system name \"BTf20\" is invalid");
+        JUnitAppender.assertWarnMessage("*** BiDiB system name \"BRt20\" is invalid");
+        JUnitAppender.assertWarnMessage("*** BiDiB system name \"BRa20\" is invalid");
+        JUnitAppender.assertWarnMessage("*** BiDiB system name \"BRp20\" is invalid");
+        JUnitAppender.assertWarnMessage("*** BiDiB system name \"BTTest0:t20L\" is invalid");
+        JUnitAppender.assertWarnMessage("*** BiDiB system name \"BTTest1:a20L\" is invalid");
+        JUnitAppender.assertWarnMessage("*** BiDiB system name \"BLTest0:t20L\" is invalid");
+        JUnitAppender.assertWarnMessage("*** BiDiB system name \"BTTest1:p20I\" is invalid");
+        JUnitAppender.assertWarnMessage("*** BiDiB system name \"BLTest1:p20I\" is invalid");
+        JUnitAppender.assertWarnMessage("*** BiDiB system name \"BSTest1:p20S\" is invalid");
     }
-    
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -125,11 +147,11 @@ public class BiDiBAddressTest {
         l = new BiDiBLightManager(memo).typeLetter();
         r = new BiDiBReporterManager(memo).typeLetter();
     }
-    
+
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
     }
 
-    
+
 }
