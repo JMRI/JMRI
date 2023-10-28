@@ -138,6 +138,7 @@
                             <a href="https://jmri.org/jython/LCC/ChangeDefaultBackupFileName.py">jython/LCC/ChangeDefaultBackupFileName.py</a>
                         <li>Fixes a problem that could cause the configuration dialog
                             to not open for certain nodes, including the DCC-LCC Gateway.
+                        <li>Fixes the display of the "Simple Protocol" availability bit
                     </ul>
                 </li>
                 <li>Added Window and Help menus to the Configure Node window.
