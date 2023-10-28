@@ -12,6 +12,7 @@ import javax.annotation.Nonnull;
 public abstract class AbstractStartupModel implements StartupModel {
 
     private String name;
+    private boolean enabled = true;
     private final List<Exception> exceptions = new ArrayList<>();
 
     protected AbstractStartupModel() {
@@ -50,6 +51,18 @@ public abstract class AbstractStartupModel implements StartupModel {
     public boolean isValid() {
         String s = this.getName();
         return s != null && !s.isEmpty();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setEnabled(boolean value) {
+        enabled = value;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isEnabled() {
+        return enabled;
     }
 
     @Override

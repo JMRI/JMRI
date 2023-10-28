@@ -30,6 +30,7 @@ public abstract class AbstractActionModel implements StartupModel {
 
     private String systemPrefix = ""; // NOI18N
     private String className = ""; // NOI18N
+    private boolean enabled = true;
     private final List<Exception> exceptions = new ArrayList<>();
     private static final Logger log = LoggerFactory.getLogger(AbstractActionModel.class);
 
@@ -94,6 +95,18 @@ public abstract class AbstractActionModel implements StartupModel {
             }
         }
         return false;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setEnabled(boolean value) {
+        enabled = value;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isEnabled() {
+        return enabled;
     }
 
     @Override

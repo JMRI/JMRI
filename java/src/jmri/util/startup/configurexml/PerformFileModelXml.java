@@ -6,6 +6,7 @@ import jmri.util.startup.StartupActionsManager;
 import jmri.InstanceManager;
 import jmri.util.FileUtil;
 
+import org.jdom2.Attribute;
 import org.jdom2.Element;
 
 /**
@@ -33,6 +34,7 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
         e.setAttribute("name", FileUtil.getPortableFilename(g.getFileName()));
         e.setAttribute("type", "XmlFile");
+        e.setAttribute("enabled", g.isEnabled() ? "yes" : "no");
         e.setAttribute("class", this.getClass().getName());
         return e;
     }
@@ -54,6 +56,14 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
         boolean result = true;
         String fileName = FileUtil.getAbsoluteFilename(shared.getAttribute("name").getValue());
         PerformFileModel m = new PerformFileModel();
+
+        Attribute enabled = shared.getAttribute("enabled");
+        if (enabled != null) {
+            m.setEnabled("yes".equals(enabled.getValue()));
+        } else {
+            m.setEnabled(true);
+        }
+
         m.setFileName(fileName);
         InstanceManager.getDefault(StartupActionsManager.class).addAction(m);
         return result;

@@ -1,16 +1,17 @@
 package apps.startup.configurexml;
 
-import jmri.util.startup.StartupActionsManager;
 import apps.startup.TriggerRouteModel;
+
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
+import jmri.util.startup.StartupActionsManager;
+
+import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistence for {@link apps.startup.TriggerRouteModel} objects
- * and set the defined {@link jmri.Route} during application start. 
+ * and set the defined {@link jmri.Route} during application start.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Ken Cameron Copyright: 2014(c)
@@ -19,7 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TriggerRouteModelXml extends AbstractXmlAdapter {
 
-    private final static Logger log = LoggerFactory.getLogger(TriggerRouteModelXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TriggerRouteModelXml.class);
 
     public TriggerRouteModelXml() {
     }
@@ -35,6 +36,7 @@ public class TriggerRouteModelXml extends AbstractXmlAdapter {
         Element e = new Element("perform"); // NOI18N
         e.setAttribute("name", ((TriggerRouteModel) o).getName());
         e.setAttribute("type", "Action");
+        e.setAttribute("enabled", ((TriggerRouteModel) o).isEnabled() ? "yes" : "no");
         e.setAttribute("class", this.getClass().getName());
         return e;
     }
@@ -58,6 +60,13 @@ public class TriggerRouteModelXml extends AbstractXmlAdapter {
 
         TriggerRouteModel m = new TriggerRouteModel();
         m.setUserName(userName);
+
+        Attribute enabled = shared.getAttribute("enabled");
+        if (enabled != null) {
+            m.setEnabled("yes".equals(enabled.getValue()));
+        } else {
+            m.setEnabled(true);
+        }
 
         // store the model
         InstanceManager.getDefault(StartupActionsManager.class).addAction(m);

@@ -140,7 +140,9 @@
                             to not open for certain nodes, including the DCC-LCC Gateway.
                     </ul>
                 </li>
-                <li>Added Window and Help menus to the Configure Node window.
+                <li>Added Window and Help menus to the Configure Node window.</li>
+                <li>Added support for multiple OpenLCB connections in Signal Masts add/edit dialog.</li>
+                <li>Added GUI Icons for OpenLCB signal masts in the add/edit dialog.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -539,7 +541,8 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>Each startup action now has an <strong>Enabled</strong> checkbox
+            so that each startup action can be enabled/disabled.</li>
         </ul>
 
     <h3>Resources</h3>
