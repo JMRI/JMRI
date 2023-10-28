@@ -109,7 +109,7 @@
 		<tooltip xml:lang="cs">0 = žádná chyba (reset registru chyb)</tooltip>
 	</variable>
 	<!-- Piko Smart Decoder XP5.1 -->
-	<variable item="Error register" CV="30" default="0" include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18">
+	<variable item="Error register" CV="30" default="0" include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16">
 		<enumVal>
 			<enumChoice choice="No error" value="0">
 				<choice>No error</choice>
