@@ -2,6 +2,7 @@ package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
 
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenuItem;
@@ -60,6 +61,12 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
     public void setErrorIcon(NamedIcon i) {
         error = i;
         displayState();
+    }
+
+    @Override
+    @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_RpsPositionIcon");
     }
 
     @Override
@@ -264,7 +271,7 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         }
 
         // remember this measurement for last position, e.g. for
-        // alignment    
+        // alignment
         lastMeasurement = m;
 
         // update state based on if valid measurement, fiducial volume

@@ -3742,6 +3742,52 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         requestFocusInWindow();
     }   // mouseReleased
 
+    public void addPopupItems(@Nonnull JPopupMenu popup, @Nonnull JmriMouseEvent event) {
+
+        List<LayoutTrack> tracks = getLayoutTracks().stream().filter(layoutTrack -> {  // != means can't (yet) loop over Views
+            HitPointType hitPointType = getLayoutTrackView(layoutTrack).findHitPointType(dLoc, false, false);
+            return (HitPointType.NONE != hitPointType);
+        }).collect(Collectors.toList());
+
+        List<Positionable> selections = getSelectedItems(event);
+
+        if ((tracks.size() > 1) || (selections.size() > 1)) {
+            JMenu iconsBelowMenu = new JMenu(Bundle.getMessage("MenuItemIconsBelow"));
+
+            JMenuItem mi = new JMenuItem(Bundle.getMessage("MenuItemIconsBelow_InfoNotInOrder"));
+            mi.setEnabled(false);
+            iconsBelowMenu.add(mi);
+
+            if (tracks.size() > 1) {
+                for (int i=0; i < tracks.size(); i++) {
+                    LayoutTrack t = tracks.get(i);
+                    iconsBelowMenu.add(new AbstractAction(Bundle.getMessage(
+                            "LayoutTrackTypeAndName", t.getTypeName(), t.getName())) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            LayoutTrackView ltv = getLayoutTrackView(t);
+                            ltv.showPopup(event);
+                        }
+                    });
+                }
+            }
+            if (selections.size() > 1) {
+                for (int i=0; i < selections.size(); i++) {
+                    Positionable pos = selections.get(i);
+                    iconsBelowMenu.add(new AbstractAction(Bundle.getMessage(
+                            "PositionableTypeAndName", pos.getTypeString(), pos.getNameString())) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            showPopUp(pos, event, new ArrayList<>());
+                        }
+                    });
+                }
+            }
+            popup.addSeparator();
+            popup.add(iconsBelowMenu);
+        }
+    }
+
     private void showEditPopUps(@Nonnull JmriMouseEvent event) {
         if (findLayoutTracksHitPoint(dLoc)) {
             if (HitPointType.isBezierHitType(foundHitPointType)) {
@@ -3826,8 +3872,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     /**
      * Select the menu items to display for the Positionable's popup.
+     * @param p     the item containing or requiring the context menu
+     * @param event the event triggering the menu
      */
-    @Override
     public void showPopUp(@Nonnull Positionable p, @Nonnull JmriMouseEvent event) {
         assert p != null;
 
@@ -3921,6 +3968,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 util.setAdditionalViewPopUpMenu(popup);
             }
         }
+
+        addPopupItems(popup, event);
+
         popup.show((Component) p, p.getWidth() / 2 + (int) ((getZoom() - 1.0) * p.getX()),
                 p.getHeight() / 2 + (int) ((getZoom() - 1.0) * p.getY()));
 

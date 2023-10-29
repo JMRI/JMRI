@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
@@ -184,6 +185,12 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
                 }
             }
         }
+    }
+
+    @Override
+    @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_MemoryIcon");
     }
 
     @Override
@@ -573,11 +580,11 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
     }
 
     protected void editMemoryValue() {
-    
+
         String reval = (String)JmriJOptionPane.showInputDialog(this,
                                      Bundle.getMessage("EditCurrentMemoryValue", namedMemory.getName()),
                                      getMemory().getValue());
-    
+
         setValue(reval);
         updateSize();
     }

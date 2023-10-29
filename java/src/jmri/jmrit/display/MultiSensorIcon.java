@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JPopupMenu;
 
@@ -174,6 +175,12 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
             displayState();
             _editor.repaint();
         }
+    }
+
+    @Override
+    @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_MultiSensorIcon");
     }
 
     @Override

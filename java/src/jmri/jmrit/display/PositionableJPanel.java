@@ -264,6 +264,12 @@ public class PositionableJPanel extends JPanel implements Positionable, JmriMous
     }
 
     @Override
+    @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_PositionableJPanel");
+    }
+
+    @Override
     public String getNameString() {
         return getName();
     }

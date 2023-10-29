@@ -305,6 +305,12 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     @Override
     @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_SensorIcon");
+    }
+
+    @Override
+    @Nonnull
     public String getNameString() {
         String name;
         if (namedSensor == null) {
