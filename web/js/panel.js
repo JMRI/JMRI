@@ -1639,7 +1639,7 @@ function $drawIcon($widget) {
     // add the image to the panel area, with appropriate css classes and id (skip any unsupported)
     if (isDefined($widget['icon' + $indicator + $state])) {
         $imgHtml = "<img id=" + $widget.id + " class='" + $widget.classes +
-                "' src='" + $widget["icon" + $indicator + $state] + "' " + $hoverText + "/>"
+                "' src='" + $widget["icon" + $indicator + $state].replaceAll("'","&apos;") + "' " + $hoverText + "/>"
 
         $("#panel-area").append($imgHtml); // put the html in the panel
 
