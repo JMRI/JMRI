@@ -107,6 +107,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.ActionSignalMast.class);
         classes.add(jmri.jmrit.logixng.actions.ActionSound.class);
         classes.add(jmri.jmrit.logixng.actions.ActionThrottle.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionThrottleFunction.class);
         classes.add(jmri.jmrit.logixng.actions.ActionTurnout.class);
         classes.add(jmri.jmrit.logixng.actions.ActionTurnoutLock.class);
         classes.add(jmri.jmrit.logixng.actions.ActionWarrant.class);

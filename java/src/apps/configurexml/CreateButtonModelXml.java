@@ -1,14 +1,17 @@
 package apps.configurexml;
 
 import apps.CreateButtonModel;
+
 import jmri.util.startup.StartupActionsManager;
+
 import java.lang.reflect.InvocationTargetException;
+
 import jmri.InstanceManager;
 import jmri.SystemConnectionMemo;
 import jmri.jmrix.swing.SystemConnectionAction;
+
+import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistence of CreateButtonModel objects.
@@ -34,6 +37,7 @@ public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
         element.setAttribute("name", g.getClassName());
         element.setAttribute("type", "Button");
+        element.setAttribute("enabled", g.isEnabled() ? "yes" : "no");
         element.setAttribute("class", this.getClass().getName());
         Element property = new Element("property"); // NOI18N
         property.setAttribute("name", "systemPrefix"); // NOI18N
@@ -59,6 +63,14 @@ public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
         boolean result = true;
         String className = shared.getAttribute("name").getValue();
         CreateButtonModel model = new CreateButtonModel();
+
+        Attribute enabled = shared.getAttribute("enabled");
+        if (enabled != null) {
+            model.setEnabled("yes".equals(enabled.getValue()));
+        } else {
+            model.setEnabled(true);
+        }
+
         model.setClassName(className);
         shared.getChildren("property").forEach(child -> { // NOI18N
             String value = child.getAttributeValue("value"); // NOI18N
@@ -105,8 +117,8 @@ public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
     public void load(Element element, Object o) {
         log.error("Unexpected call of load(Element, Object)");
     }
-    
+
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(CreateButtonModelXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CreateButtonModelXml.class);
 
 }

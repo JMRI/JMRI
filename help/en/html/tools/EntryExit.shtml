@@ -24,7 +24,7 @@
 
       <p>NX Routing builds a dynamic valid path between two locations on a Layout Editor panel. The
       path can traverse a number of Turnouts and different <a href="Blocks.shtml">Blocks</a>.
-      The Entry and Exit locations on the Layout Editor are defined by the placement of 
+      The Entry and Exit locations on the Layout Editor are defined by the placement of
       <a href="Sensors.shtml">Sensors</a> at various Block boundaries. When
       two Sensors are activated and a clear and valid route is found between them, then the
       Turnouts in the route will automatically be set accordingly. If the path between the two
@@ -199,13 +199,16 @@
 
       <p><strong>Auto Generate Entry-Exit Pairs</strong> will discover all the valid Entry Exit
       pairs on the Layout Editor layout. Using the combo boxes it is also possible to manually add
-      in additional Entry Exit pairs.<br>
-      In all cases when the <strong>From</strong> Sensor is set active followed by the
-      <strong>To</strong> Sensor, the route will be set between those two points and the two
-      Sensors will return back to the "Inactive" state. If the <strong>Both Way</strong> option is
-      ticked, then it is possible to activate the route in either direction, i.e. you can select
-      the <strong>To</strong> Sensor prior to the <strong>From</strong> Sensor and the same route
-      will be set.</p>
+      in additional Entry Exit pairs.</p>
+
+      <p>In all cases when the <strong>Entry</strong> Sensor is set active followed by the
+      <strong>Exit</strong> Sensor, the route will be set between those two points and the two
+      Sensors will return back to the "Inactive" state.</p>
+
+      <p>If the <strong>Both Way</strong> option is ticked, a <strong>reversed</strong> route can be
+      selected by clicking on the <strong>Exit</strong> sensor and then the <strong>Entry</strong>
+      sensor.  Both Way cannot be selected if either block boundary also has a signal assigned or
+      the destination is at an end bumper.</p>
 
       <p>With the manual method, it is possible to create invalid pairs. Invalid pairs will never
       be used.</p>

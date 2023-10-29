@@ -76,8 +76,9 @@
 
         <li><strong>Clear</strong> &mdash; If the entry is active, cancel the route segment.</li>
 
-        <li><strong>Both Way</strong> &mdash; Enable the ability to press the entry and exit buttons in
-        either order.</li>
+        <li><strong>Both Way</strong> &mdash; Enable the ability to press the entry and exit buttons
+        in reversed sequence to create a reversed route.  This option is not available if signals
+        are attached to the related block boundaries or the destination is at an end bumper.</li>
 
         <li><strong>Delete</strong> &mdash; Delete the NX sensor pair.</li>
 

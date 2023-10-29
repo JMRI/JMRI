@@ -89,6 +89,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/table-for-each-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/timeout-4.25.7.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/throttle-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/throttle-function-5.5.6.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/trigger-route-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/web-browser-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/web-request-5.3.5.xsd"/>
@@ -171,6 +172,7 @@
             <xs:element name="SimulateTurnoutFeedback"  type="LogixNG_DigitalAction_SimulateTurnoutFeedbackType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="TableForEach"      type="LogixNG_DigitalAction_TableForEachType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="Throttle"          type="LogixNG_DigitalAction_ThrottleType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ThrottleFunction"  type="LogixNG_DigitalAction_ThrottleFunctionType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="Timeout"           type="LogixNG_DigitalAction_TimeoutType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="TriggerRoute"      type="LogixNG_DigitalAction_TriggerRouteType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="WebBrowser"        type="LogixNG_DigitalAction_WebBrowserType" minOccurs="0" maxOccurs="unbounded" />

@@ -112,7 +112,9 @@ public class StartupActionsManager extends AbstractPreferencesManager {
             if (perform) {
                 this.actions.stream().filter(action -> action.isValid()).forEachOrdered(action -> {
                     try {
-                        action.performAction();
+                        if (action.isEnabled()) {
+                            action.performAction();
+                        }
                     } catch (JmriException ex) {
                         this.addInitializationException(profile, ex);
                     }
