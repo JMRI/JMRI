@@ -462,6 +462,10 @@
           until some time has passed. It then returns <strong>True</strong> once and the timer starts
           again. This expression is intended to be used together with the action <strong>Sequence</strong></li>.
 
+          <li>The action <strong>Throttle function</strong> has been added. It's similar to the action
+          <strong>Throttle</strong>, except that it only sets a function, not speed or direction, and
+          that it doesn't have any child actions.</li>
+
           <li>The action <strong>Sequence</strong> is now safe to use in LogixNG modules. The action
           had a bug which made it sometimes fail if it was used in a module and that module was called
           from several ConditionalNGs at once.</li>

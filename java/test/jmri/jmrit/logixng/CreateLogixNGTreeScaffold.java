@@ -1784,6 +1784,30 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        ActionThrottleFunction actionThrottleFunction = new ActionThrottleFunction(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionThrottleFunction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionThrottleFunction = new ActionThrottleFunction(digitalActionManager.getAutoSystemName(), null);
+        actionThrottleFunction.setComment("A comment");
+        actionThrottleFunction.setMemo(_locoNetMemo);
+        actionThrottleFunction.getSelectAddress().setValue(1234);
+        actionThrottleFunction.getSelectFunction().setValue(15);
+        actionThrottleFunction.getSelectOnOff().setEnum(ActionThrottleFunction.FunctionState.On);
+        maleSocket = digitalActionManager.registerAction(actionThrottleFunction);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionThrottleFunction = new ActionThrottleFunction(digitalActionManager.getAutoSystemName(), null);
+        actionThrottleFunction.setComment("A comment");
+        actionThrottleFunction.setMemo(null);
+        actionThrottleFunction.getSelectAddress().setValue(9);
+        actionThrottleFunction.getSelectFunction().setValue(120);
+        actionThrottleFunction.getSelectOnOff().setEnum(ActionThrottleFunction.FunctionState.Off);
+        maleSocket = digitalActionManager.registerAction(actionThrottleFunction);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         ActionTimer actionTimer = new ActionTimer(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionTimer);
         maleSocket.setEnabled(false);
