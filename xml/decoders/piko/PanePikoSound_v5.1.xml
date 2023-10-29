@@ -56,7 +56,7 @@
     <name xml:lang="de">Sound Lautstärke</name>
     <name xml:lang="fr">Volume des Sons</name>
     <name xml:lang="it">Livelli dei Suoni</name>
-    <name xml:lang="nl">Geluidvolume</name>>
+    <name xml:lang="nl">Geluidvolume</name>
 	<group exclude="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16">
 		<!--Piko SmartDecoder XP5.1-->
 		<label>
