@@ -993,7 +993,7 @@
                 <decVal/>
                 <label>Master Brightness Level (0-255)</label>
             </variable>
-            <xi:include href="http://jmri.org/xml/decoders/Soundtraxx/TSUspeedTableDefaultGenesis.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUspeedTableDefaultGenesis.xml"/>
             <variable CV="112" mask="XXXXXXXV" item="Sound Option 14" default="1">
                 <enumVal>
                     <enumChoice>
