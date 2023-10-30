@@ -136,7 +136,7 @@
 				</column>
 			</row>
 		</group>
-		<group include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18">
+		<group include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16">
 			<!--Piko SmartDecoder XP5.1-->
 			<row>
 				<column>
