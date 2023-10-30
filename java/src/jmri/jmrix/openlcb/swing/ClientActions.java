@@ -52,7 +52,7 @@ public class ClientActions {
             // override and extend window closing behavior
             @Override
             protected void targetWindowClosingEvent(WindowEvent evt) { // evt is ignored here
-                System.err.println("overridden targetWindowClosingEvent runs");
+                log.trace("overridden targetWindowClosingEvent runs");
                 super.targetWindowClosingEvent(evt);
             }
             // when actually closing the window, also deregister the safety shutdown class
@@ -74,7 +74,7 @@ public class ClientActions {
                 public String getName() { return "CDI Window Check"; }
                 @Override
                 public Boolean call() {
-                    System.err.println("call( checks contents)");
+                    log.trace("call( checks contents)");
                     boolean result = cdiPanel.checkOnWindowClosing(); // true to continue shutdown, false to not
                     if (result) {
                         // you don't want a second check on automatic window closing during shutdown
