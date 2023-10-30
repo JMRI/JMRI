@@ -29,6 +29,12 @@
                 <surname>Exler</surname>
             </personname>
         </author>
+        <author>
+            <personname>
+                <firstname>Michael</firstname>
+                <surname>Mosher</surname>
+            </personname>
+        </author>
     </authorgroup>
     <revhistory xmlns="http://docbook.org/ns/docbook">
         <revision>
@@ -43,127 +49,25 @@
             <authorinitials>JE</authorinitials>
             <revremark>rev names for FX3-FX4, rename cv63 dimmer level, chg includes TSU2PaneLighting, TSU2PaneASCdiesel</revremark>
         </revision>
+        <revision>
+            <revnumber>4</revnumber>
+            <date>2023-10-19</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>productID change for 11 bit Soundtraxx ID</revremark>
+        </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
         <family name="Econami Diesel OEM Bachmann Sound Value" mfg="SoundTraxx (Throttle-Up)" lowVersionID="70">
-            <model model="ECO-SoundValue EMD SD9" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="1028" comment="">
+            <model model="ECO-SoundValue EMD SD9" numOuts="2" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="8196" comment="AE32075">
             </model>
-            <output name="3" label="  FX3  "/>
-            <output name="4" label="  FX4  "/>
-            <output name="5" label="Airhorn| ">
-                <label xml:lang="it">Tromba| </label>
-            </output>
-            <output name="6" label="Bell| ">
-                <label xml:lang="it">Campana| </label>
-            </output>
-            <output name="7" label="Dynamic|Brakes">
-                <label xml:lang="it">Freni|Dinamici</label>
-            </output>
-            <output name="8" label="Short|Horn">
-                <label xml:lang="it">Breve|Tromba</label>
-            </output>
-            <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-            <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-            <output name="11" label="Dimming| ">
-                <label xml:lang="it">Smorzam| </label>
-            </output>
-            <output name="12" label="Mute| ">
-                <label xml:lang="it">Silenzio| </label>
-            </output>
-            <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-            <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-            <output name="15" label="Coupler| ">
-                <label xml:lang="it">Accoppiatore| </label>
-            </output>
-			<model model="ECO-SoundValue EMD GP38-2" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="GP38" comment="">
+			<model model="ECO-SoundValue EMD GP38-2" numOuts="2" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="GP38" comment="">
             </model>
-			<output name="3" label="  FX3  "/>
-            <output name="4" label="  FX4  "/>
-            <output name="5" label="Airhorn| ">
-                <label xml:lang="it">Tromba| </label>
-            </output>
-            <output name="6" label="Bell| ">
-                <label xml:lang="it">Campana| </label>
-            </output>
-            <output name="7" label="Dynamic|Brakes">
-                <label xml:lang="it">Freni|Dinamici</label>
-            </output>
-            <output name="8" label="Short|Horn">
-                <label xml:lang="it">Breve|Tromba</label>
-            </output>
-            <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-            <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-            <output name="11" label="Dimming| ">
-                <label xml:lang="it">Smorzam| </label>
-            </output>
-            <output name="12" label="Mute| ">
-                <label xml:lang="it">Silenzio| </label>
-            </output>
-            <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-            <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-            <output name="15" label="Coupler| ">
-                <label xml:lang="it">Accoppiatore| </label>
-            </output>
-			<model model="ECO-SoundValue EMD GP40" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="GP40" comment="">
+			<model model="ECO-SoundValue EMD GP40" numOuts="2" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="8198" comment="AE32081">
             </model>
-			<output name="3" label="  FX3  "/>
-            <output name="4" label="  FX4  "/>
-            <output name="5" label="Airhorn| ">
-                <label xml:lang="it">Tromba| </label>
-            </output>
-            <output name="6" label="Bell| ">
-                <label xml:lang="it">Campana| </label>
-            </output>
-            <output name="7" label="Dynamic|Brakes">
-                <label xml:lang="it">Freni|Dinamici</label>
-            </output>
-            <output name="8" label="Short|Horn">
-                <label xml:lang="it">Breve|Tromba</label>
-            </output>
-            <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-            <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-            <output name="11" label="Dimming| ">
-                <label xml:lang="it">Smorzam| </label>
-            </output>
-            <output name="12" label="Mute| ">
-                <label xml:lang="it">Silenzio| </label>
-            </output>
-            <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-            <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-            <output name="15" label="Coupler| ">
-                <label xml:lang="it">Accoppiatore| </label>
-            </output>
-			<model model="ECO-SoundValue EMD SD45" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="SD45" comment="">
+			<model model="ECO-SoundValue EMD SD45" numOuts="2" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="SD45" comment="">
             </model>
-			<output name="3" label="  FX3  "/>
-            <output name="4" label="  FX4  "/>
-            <output name="5" label="Airhorn| ">
-                <label xml:lang="it">Tromba| </label>
-            </output>
-            <output name="6" label="Bell| ">
-                <label xml:lang="it">Campana| </label>
-            </output>
-            <output name="7" label="Dynamic|Brakes">
-                <label xml:lang="it">Freni|Dinamici</label>
-            </output>
-            <output name="8" label="Short|Horn">
-                <label xml:lang="it">Breve|Tromba</label>
-            </output>
-            <output name="9" label="|"/>	<!-- Not used for for this decoder -->
-            <output name="10" label="|"/>	<!-- Not used for for this decoder -->
-            <output name="11" label="Dimming| ">
-                <label xml:lang="it">Smorzam| </label>
-            </output>
-            <output name="12" label="Mute| ">
-                <label xml:lang="it">Silenzio| </label>
-            </output>
-            <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-            <output name="14" label="|"/>	<!-- Not used for for this decoder -->
-            <output name="15" label="Coupler| ">
-                <label xml:lang="it">Accoppiatore| </label>
-            </output>
-			<model model="ECO-SoundValue GE Dash 8-40CW" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="GED" comment="">
+			<model model="ECO-SoundValue GE Dash 8-40CW" numOuts="2" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="8195" comment="AE32072">
             </model>
 			<output name="3" label="  FX3  "/>
             <output name="4" label="  FX4  "/>
@@ -336,23 +240,23 @@
                 <label>Emergency Stop</label>
             </variable>
             <!-- Sound Selection follows -->
-            <variable CV="120" mask="XXVVVVVV" item="Sound Option 6" default="0" exclude="GP40" tooltip="Selects which airhorn to use">
-                <defaultItem default="4" include="1028"/>
-				<defaultItem default="0" include="GED"/>
+            <variable CV="120" mask="XXVVVVVV" item="Sound Option 6" default="0" exclude="8198" tooltip="Selects which airhorn to use">
+                <defaultItem default="0" include="8195"/>
+                <defaultItem default="4" include="8196"/>
                 <enumVal>
                     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumChoiceDieselAirHornBachmann.xml"/>
                 </enumVal>
                 <label>Airhorn Select</label>
             </variable>
-			<variable CV="120" mask="XXVVVVVV" item="Sound Option 6" default="0" include="GP40" tooltip="Selects which airhorn to use">
-                <defaultItem default="0" include="GP40"/>
+			<variable CV="120" mask="XXVVVVVV" item="Sound Option 6" default="0" include="8198" tooltip="Selects which airhorn to use">
+                <defaultItem default="0" include="8198"/>
                 <enumVal>
                     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumChoiceDieselAirHornBachmann1.xml"/>
                 </enumVal>
                 <label>Airhorn Select</label>
             </variable>
 
-			<variable CV="121" mask="XXVVVVVV" item="Sound Option 7" default="0" exclude="GP40" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
+			<variable CV="121" mask="XXVVVVVV" item="Sound Option 7" default="0" exclude="8198" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
                 <enumVal>
                     <enumChoice>
                         <choice>Short Horn</choice>
@@ -362,7 +266,7 @@
                 <label>Auxiliary Airhorn Select</label>
             </variable>
 
-			<variable CV="121" mask="XXVVVVVV" item="Sound Option 7" default="0" include="GP40" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
+			<variable CV="121" mask="XXVVVVVV" item="Sound Option 7" default="0" include="8198" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
                 <enumVal>
                     <enumChoice>
                         <choice>Short Horn</choice>
@@ -372,29 +276,25 @@
                 <label>Auxiliary Airhorn Select</label>
             </variable>
 
-            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" default="0" exclude="GP40" tooltip="Bell sound effect and ring-rate">
-                <defaultItem default="2" include="1028"/>
-				<defaultItem default="6" include="GED"/>
+            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" default="0" tooltip="Bell sound effect and ring-rate">
+                <defaultItem default="1" include="8198"/>
+                <defaultItem default="2" include="8196"/>
+                <defaultItem default="6" include="8195"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumDieselBellBachmann.xml"/>
                 <label>Bell Select</label>
             </variable>
-			<variable CV="122" mask="XXVVVVVV" item="Sound Option 8" default="0" include="GP40" tooltip="Bell sound effect and ring-rate">
-                <defaultItem default="1" include="GP40"/>
-                <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumDieselBellBachmann1.xml"/>
-                <label>Bell Select</label>
-            </variable>
-
 			<variable CV="123" mask="XXXXVVVV" item="Sound Option 5" default="0">
-                <defaultItem default="0" include="1028"/>
-				<defaultItem default="1" include="GP40"/>
-				<defaultItem default="3" include="GED"/>
+                <defaultItem default="0" include="8196"/>
+                <defaultItem default="1" include="8198,SD45"/>
+                <defaultItem default="3" include="8195"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumPrimeMover1Bachmann.xml"/>
                 <label>Prime Mover Select</label>
                 <tooltip>Select one of prime mover sound effects</tooltip>
             </variable>
 
 			<variable CV="124" mask="XXXXXXVV" item="Sound Option 10" default="0" tooltip="Select one of air compressor sound effects">
-                <defaultItem default="0" include="1028"/>
+                <defaultItem default="0" include="8196,8198"/>
+                <defaultItem default="1" include="8195"/>
 				<enumVal>
                     <enumChoice>
                         <choice>Engine Driven</choice>
@@ -416,12 +316,14 @@
                 <label>Airhorn Volume</label>
             </variable>
             <variable CV="130" mask="VVVVVVVV" item="Sound Setting 3" default="85" tooltip="Sets the volume of the bell">
-                <defaultItem default="125" include="GED"/>
+                <defaultItem default="85" include="8196,8198"/>
+                <defaultItem default="125" include="8195"/>
                 <decVal/>
                 <label>Bell Volume</label>
             </variable>
             <variable CV="131" mask="VVVVVVVV" item="Sound Setting 4" default="255" tooltip="Sets the volume of the prime mover">
-                <defaultItem default="150" include="GED"/>
+                <defaultItem default="150" include="8195"/>
+                <defaultItem default="225" include="8196,8198"/>
                 <decVal/>
                 <label>Prime Mover Volume</label>
             </variable>
