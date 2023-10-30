@@ -899,7 +899,7 @@ public class SwitchboardEditor extends Editor {
                 // if new defaultTextColor matches bgColor, ask user as labels will become unreadable
                 if (desiredColor.equals(defaultBackgroundColor)) {
                     int retval = JmriJOptionPane.showOptionDialog(this,
-                    Bundle.getMessage("ColorIdenticalWarningF"), Bundle.getMessage("WarningTitle"), 
+                    Bundle.getMessage("ColorIdenticalWarningF"), Bundle.getMessage("WarningTitle"),
                 JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.INFORMATION_MESSAGE, null,
                     new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonInvert"),
                     Bundle.getMessage("ButtonCancel")}, Bundle.getMessage("ButtonCancel"));
@@ -927,7 +927,7 @@ public class SwitchboardEditor extends Editor {
                 // if new bgColor matches the defaultTextColor, ask user as labels will become unreadable
                 if (desiredColor.equals(defaultTextColor)) {
                     int retval = JmriJOptionPane.showOptionDialog(this,
-                        Bundle.getMessage("ColorIdenticalWarningR"), Bundle.getMessage("WarningTitle"), 
+                        Bundle.getMessage("ColorIdenticalWarningR"), Bundle.getMessage("WarningTitle"),
                         JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.INFORMATION_MESSAGE, null,
                         new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonInvert"), Bundle.getMessage("ButtonCancel")},
                         Bundle.getMessage("ButtonCancel"));
@@ -982,7 +982,7 @@ public class SwitchboardEditor extends Editor {
                 // if new InactiveColor matches ActiveColor, ask user as state will become unreadable
                 if (desiredColor.equals(defaultInactiveColor)) {
                     int retval = JmriJOptionPane.showOptionDialog(this,
-                        Bundle.getMessage("ColorIdenticalWarningF"), Bundle.getMessage("WarningTitle"), 
+                        Bundle.getMessage("ColorIdenticalWarningF"), Bundle.getMessage("WarningTitle"),
                         JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.INFORMATION_MESSAGE, null,
                         new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonInvert"), Bundle.getMessage("ButtonCancel")}, Bundle.getMessage("ButtonCancel"));
                     if (retval == 1) { // array position 1 invert the other color
@@ -1803,18 +1803,6 @@ public class SwitchboardEditor extends Editor {
      */
     @Override
     public void setNextLocation(Positionable obj) {
-    }
-
-    /**
-     * Create popup for a Positionable object.
-     * <p>
-     * Not used on switchboards but has to override Editor.
-     *
-     * @param p     the item on the Panel
-     * @param event JmriMouseEvent heard
-     */
-    @Override
-    protected void showPopUp(Positionable p, JmriMouseEvent event) {
     }
 
     protected ArrayList<Positionable> getSelectionGroup() {

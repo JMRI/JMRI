@@ -3570,15 +3570,6 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
     abstract protected void setNextLocation(Positionable obj);
 
     /**
-     * Editor Views should make calls to this class (Editor) to set popup menu
-     * items. See 'Popup Item Methods' above for the calls.
-     *
-     * @param p     the item containing or requiring the context menu
-     * @param event the event triggering the menu
-     */
-    abstract protected void showPopUp(Positionable p, JmriMouseEvent event);
-
-    /**
      * After construction, initialize all the widgets to their saved config
      * settings.
      */

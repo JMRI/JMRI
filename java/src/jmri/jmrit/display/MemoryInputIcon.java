@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.annotation.Nonnull;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -149,6 +150,12 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         if (e.getPropertyName().equals("value")) {
             displayState();
         }
+    }
+
+    @Override
+    @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_MemoryInputIcon");
     }
 
     @Override

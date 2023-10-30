@@ -129,6 +129,12 @@ public class BlockContentsIcon extends MemoryIcon {
 
     @Override
     @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_BlockContentsIcon");
+    }
+
+    @Override
+    @Nonnull
     public String getNameString() {
         String name;
         if (namedBlock == null) {
@@ -296,11 +302,11 @@ public class BlockContentsIcon extends MemoryIcon {
     }
 
     protected void editBlockValue() {
-    
+
         String reval = (String)JmriJOptionPane.showInputDialog(this,
                                      Bundle.getMessage("EditCurrentBlockValue", namedBlock.getName()),
                                      getBlock().getValue());
-    
+
         setValue(reval);
         updateSize();
     }

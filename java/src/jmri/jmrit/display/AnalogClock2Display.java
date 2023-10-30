@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
 import java.util.Date;
 
+import javax.annotation.Nonnull;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -187,6 +188,12 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         popup.add(colorMenuItem);
 
         return true;
+    }
+
+    @Override
+    @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_");
     }
 
     @Override
