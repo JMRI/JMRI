@@ -1012,7 +1012,7 @@
             <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim128.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2userId.xml"/>
-            <xi:include href="http://jmri.org/xml/decoders/Soundtraxx/TSUspeedTableDefault.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUspeedTableDefault.xml"/>
             <!-- Sound Selection follows -->
             <variable CV="112" mask="XXXXXXVV" item="Sound Option 14" default="2">
                 <defaultItem default="3" include="6321"/>
