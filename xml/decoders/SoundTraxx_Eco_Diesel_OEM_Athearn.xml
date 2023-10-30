@@ -399,7 +399,7 @@
                 <decVal/>
                 <label>Dimmer Level (0-255)</label>
             </variable>
-            <xi:include href="http://jmri.org/xml/decoders/Soundtraxx/ECOspeedTableDefaultAthearn.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOspeedTableDefaultAthearn.xml"/>
             <variable CV="112" mask="XXXXXXXV" item="Sound Option 14" default="0">
                 <enumVal>
                     <enumChoice>
