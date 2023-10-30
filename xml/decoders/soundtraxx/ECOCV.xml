@@ -325,7 +325,7 @@
     <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2userId.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/Soundtraxx/TSUspeedTableDefault.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUspeedTableDefault.xml"/>
     <variable CV="113" item="Sound Group 3 Option 1" default="0">
         <decVal/>
         <label>Quiet Mode Timeout Period (Seconds)</label>
