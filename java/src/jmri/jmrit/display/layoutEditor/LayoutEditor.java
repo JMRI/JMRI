@@ -7023,7 +7023,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             String uname = xAudio.getDisplayName();
             if (!uname.equals(audioName)) {
                 // put the system name in the memory field
-                leToolBarPanel.textMemoryComboBox.setSelectedItem(xAudio);
+                leToolBarPanel.textAudioComboBox.setSelectedItem(xAudio);
             }
         }
 
