@@ -672,6 +672,21 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h4>Throttle function<span class="since">since 5.5.6</span></h4>
+
+
+      <p>The <strong>Throttle function</strong> action is similar to the <strong>Throttle</strong>
+       action, except that it only sets a throttle function <strong>On</strong> or <strong>Off</strong>.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/throttle_function.png"><img src="images/chapter5/throttle_function.png"
+        alt="Chapter 5 throttle function"></a>
+      </div>
+
+      <p>The <strong>Connection</strong> drop down can be used to specify the connection to be used.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h4>Turnout</h4>
 
       <p>The delayed options are handled by <a href="#ExecuteDelayed">Execute Delayed</a>.</p>
