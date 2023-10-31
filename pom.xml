@@ -1490,6 +1490,9 @@
                     <artifactId>xml-apis</artifactId>
                 </exclusion>
             </exclusions>
+            <!-- the next two lines force use of the local lib/openlcb.jar file -->
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/openlcb.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.usb4java</groupId>

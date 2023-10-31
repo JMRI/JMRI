@@ -147,6 +147,8 @@
                 <li>Added Window and Help menus to the Configure Node window.</li>
                 <li>Added support for multiple OpenLCB connections in Signal Masts add/edit dialog.</li>
                 <li>Added GUI Icons for OpenLCB signal masts in the add/edit dialog.</li>
+                <li>Fixed a bug where doing Quit while a CDI window is open with changes
+                    didn't properly handle user response to the Cancel/Quit dialog box.</li>
             </ul>
 
         <h4>Powerline</h4>
