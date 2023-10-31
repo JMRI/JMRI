@@ -121,52 +121,58 @@
             <authorinitials>JE</authorinitials>
             <revremark>rev FX3-4 names, rename CV63=Dimmer Level, chg includes TSU2PaneLighting, TSU2PaneASCdiesel</revremark>
          </revision>
+        <revision>
+            <revnumber>12</revnumber>
+            <date>2023-10-09</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>productID change for 11 bit Soundtraxx ID</revremark>
+        </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
         <family name="Econami Diesel OEM Athearn" mfg="SoundTraxx (Throttle-Up)" lowVersionID="70">
-            <model model="ECO-RTR F59PHI" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="825" comment="Model E5000.001BR">
+            <model model="ECO-RTR F59PHI" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="6201" comment="Model E5000.001BR">
             </model>
-            <model model="ECO-RTR F59PHI 2" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="923" comment="Model ?">
+            <model model="ECO-RTR F59PHI 2" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="6299" comment="Model ?">
             </model>
-            <model model="ECO-200 SD38" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="774" comment="Model E9900.001B">
+            <model model="ECO-200 SD38" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="6150" comment="Model E9900.001B">
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="ECO-RTR SD38" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="774" comment="Model E0101.001B">
+            <model model="ECO-RTR SD38" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="6226" comment="Model E0101.001B">
             </model>
-            <model model="ECO-200 SD38 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="775" comment="Model E9900.002B">
+            <model model="ECO-200 SD38 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="6151" comment="Model E9900.002B">
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="ECO-RTR SD38 w/strobe" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="780" comment="Model E0101.004B">
+            <model model="ECO-RTR SD38 w/strobe" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="6156" comment="Model E0101.004B">
             </model>
-            <model model="ECO-RTR SD38 w/strobe 2" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="851" comment="Model E0101.002B">
+            <model model="ECO-RTR SD38 w/strobe 2" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="6227" comment="Model E0101.002B">
             </model>
-            <model model="ECO-21PNEM SD38 1" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="21pin" productID="786" comment="Model 21E0101.001">
+            <model model="ECO-21PNEM SD38 1" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="21pin" productID="6418" comment="Model 21E0101.001">
             </model>
-            <model model="ECO-21PNEM SD38 3" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="21pin" productID="787" comment="Model 21E0101.003">
+            <model model="ECO-21PNEM SD38 3" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="21pin" productID="6419" comment="Model 21E0101.003">
             </model>
-            <model model="ECO-21PNEM SD38 5" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="21pin" productID="788" comment="Model 21E0101.005">
+            <model model="ECO-21PNEM SD38 5" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="21pin" productID="6120" comment="Model 21E0101.005">
             </model>
-            <model model="ECO-RTR SD40" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="862" comment="Model E0102.001">
+            <model model="ECO-RTR SD40" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="6238" comment="Model E0102.001">
             </model>
-            <model model="ECO-21PNEM SD40" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="21pin" productID="1008" comment="Model 21E0102.xxx">
+            <model model="ECO-21PNEM SD40" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="21pin" productID="6384" comment="Model 21E0102.xxx">
             </model>
-            <model model="ECO-RTR SD40 w/ditch" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="975" comment="Model E0102.011">
+            <model model="ECO-RTR SD40 w/ditch" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="6351" comment="Model E0102.011">
             </model>
-            <model model="ECO-RTR SD40 w/gyra" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="863" comment="Model E0102.005">
+            <model model="ECO-RTR SD40 w/gyra" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="6239" comment="Model E0102.005">
             </model>
-            <model model="ECO-RTR SD40-2" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="801" comment="Model E0102.???B">
+            <model model="ECO-RTR SD40-2" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="6177" comment="Model E0102.???B">
             </model>
-            <model model="ECO-RTR SD40-2 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="789" comment="Model E0102.002B">
+            <model model="ECO-RTR SD40-2 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="6165" comment="Model E0102.002B">
             </model>
-            <model model="ECO-RTR SD40T-2 w/gyra" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="864" comment="Model E????.???">
+            <model model="ECO-RTR SD40T-2 w/gyra" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="6240" comment="Model E????.???">
             </model>
-            <model model="ECO-RTR SD45 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="781" comment="Model E0103.001B">
+            <model model="ECO-RTR SD45 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="6157" comment="Model E0103.001B">
             </model>
-            <model model="ECO-200 SD45 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="773" comment="Model E9901.001B">
+            <model model="ECO-200 SD45 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="6149" comment="Model E9901.001B">
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="ECO-RTR SD50 w/beacon" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="846" comment="Model E???">
+            <model model="ECO-RTR SD50 w/beacon" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="6222" comment="Model E???">
             </model>
             <output name="3" label="  FX3  "/>
             <output name="4" label="  FX4  "/>
@@ -224,7 +230,7 @@
         <variables>
             <xi:include href="http://jmri.org/xml/decoders/soundtraxx/OEMAthearnCV.xml"/>
             <variable item="Locomotive Direction" CV="29" mask="XXXXXXXV" default="0" >
-                <defaultItem default="1" include="975"/>
+                <defaultItem default="1" include="6351"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
                 <label>Locomotive Direction</label>
                 <label xml:lang="cs">Směr lokomotivy</label>
@@ -238,52 +244,52 @@
                 <tooltip xml:lang="it">Stabilisce la direzione di marcia relativa quando la loco è in marcia avanti</tooltip>
             </variable>
             <variable item="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" default="0" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
-                <defaultItem default="1" include="786,787,788,862,863,864,975,1008"/>
+                <defaultItem default="1" include="6238,6239,6240,6351,6384,6418,6419,6420"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
                 <label>Headlight F0(f) Light Type</label>
             </variable>
             <variable item="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" default="0"  tooltip="Provides special compensation for lighting effect contrast when using LEDs">
-                <defaultItem default="1" include="786,787,788,862,863,864,975,1008"/>
+                <defaultItem default="1" include="6238,6239,6240,6351,6384,6418,6419,6420"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
                 <label>Backup Light F0(r) Light Type</label>
             </variable>
             <variable item="FX3 Effect Selection" CV="51" mask="XXXVVVVV" default="0" minOut="3" tooltip="Determines the effect generated from the FX3 light output">
-                <defaultItem default="3" include="787,863,864"/>
-                <defaultItem default="5" include="780,788,789,846,851"/>
-                <defaultItem default="9" include="825,923,975"/>
+                <defaultItem default="3" include="6239,6240,6419"/>
+                <defaultItem default="5" include="6156,6165,6222,6227,6420"/>
+                <defaultItem default="9" include="6201,6299,6351"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
                 <label>FX3 Effect Selection</label>
             </variable>
             <variable item="FX3 Grade Crossing Logic" CV="51" mask="XVXXXXXX" default="0" minOut="3" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
-                <defaultItem default="1" include="825,923,975"/>
+                <defaultItem default="1" include="6201,6299,6351"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX3 Grade Crossing Logic</label>
             </variable>
             <variable item="FX3 Light Type" CV="51" mask="VXXXXXXX" default="0" minOut="3" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
-                <defaultItem default="1" include="786,787,788,862,863,864,975,1008"/>
+                <defaultItem default="1" include="6238,6239,6240,6351,6384,6418,6419,6420"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
                 <label>FX3 Light Type</label>
             </variable>
             <variable item="FX4 Effect Selection" CV="52" mask="XXXVVVVV" default="0" minOut="4" tooltip="Determines the effect generated from the FX4 light output">
-                <defaultItem default="3" include="846,863"/>
-                <defaultItem default="7" include="789"/>
-                <defaultItem default="8" include="864"/>
-                <defaultItem default="9" include="825,923,975"/>
+                <defaultItem default="3" include="6222,6239"/>
+                <defaultItem default="7" include="6165"/>
+                <defaultItem default="8" include="6240"/>
+                <defaultItem default="9" include="6201,6299,6351"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
                 <label>FX4 Effect Selection</label>
             </variable>
             <variable item="FX4 Phase Selection" CV="52" mask="XXVXXXXX" default="0" minOut="4" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
-                <defaultItem default="1" include="825,923,975"/>
+                <defaultItem default="1" include="6201,6299,6351"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
                 <label>FX4 Phase Selection</label>
             </variable>
             <variable item="FX4 Grade Crossing Logic" CV="52" mask="XVXXXXXX" default="0" minOut="4" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
-                <defaultItem default="1" include="825,923,975"/>
+                <defaultItem default="1" include="6201,6299,6351"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX4 Grade Crossing Logic</label>
             </variable>
             <variable item="FX4 Light Type" CV="52" mask="VXXXXXXX" default="0" minOut="4" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
-                <defaultItem default="1" include="786,787,788,862,863,864,975,1008"/>
+                <defaultItem default="1" include="6238,6239,6240,6351,6384,6418,6419,6420"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
                 <label>FX4 Light Type</label>
             </variable>
@@ -328,12 +334,12 @@
                 <label>Backup Light F0(r) Forward Directional Control</label>
             </variable>
             <variable item="FX3 Forward Directional Control" CV="57" mask="XXXXXVXX" default="1" minOut="3" tooltip="Check to enable FX3 function output in Forward direction">
-                <defaultItem default="0" include="975"/>
+                <defaultItem default="0" include="6351"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX3 Forward Directional Control</label>
             </variable>
             <variable item="FX4 Forward Directional Control" CV="57" mask="XXXXVXXX" default="1" minOut="4" tooltip="Check to enable FX4 function output in Forward direction">
-                <defaultItem default="0" include="801,862,863,975,1008"/>
+                <defaultItem default="0" include="6177,6238,6239,6351,6384"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX4 Forward Directional Control</label>
             </variable>
@@ -354,12 +360,12 @@
                 <label>Backup Light F0(r) Reverse Directional Control</label>
             </variable>
             <variable item="FX3 Reverse Directional Control" CV="58" mask="XXXXXVXX" default="1" minOut="3" tooltip="Check to enable FX3 function output in Reverse direction">
-                <defaultItem default="0" include="781,787,801,825,862,863,864,923,1008"/>
+                <defaultItem default="0" include="6157,6177,6201,6238,6239,6240,6299,6384,6419"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX3 Reverse Directional Control</label>
             </variable>
             <variable item="FX4 Reverse Directional Control" CV="58" mask="XXXXVXXX" default="1" minOut="4" tooltip="Check to enable FX4 function output in Reverse direction">
-                <defaultItem default="0" include="825,846,923"/>
+                <defaultItem default="0" include="6201,6222,6299"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX4 Reverse Directional Control</label>
             </variable>
@@ -372,7 +378,7 @@
                 <label>FX6 Reverse Directional Control</label>
             </variable>
             <variable item="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="7" tooltip="Sets the overall flash rate of the Hyperlight effects, 0 is fast, 15 is slow">
-                <defaultItem default="5" include="786,787,788,789,801,862,863,864,975,1008"/>
+                <defaultItem default="5" include="6165,6177,6238,6239,6240,6351,6384,6418,6419,6420"/>
                 <decVal max="15"/>
                 <label>Hyperlight Flash Rate (0-15)</label>
             </variable>
@@ -389,10 +395,11 @@
                 <label>Brightness 2 Level (0-255)</label>
             </variable>
             <variable CV="63" item="Dimmer Level" default="153" tooltip="Adjust the brightness level of the on/off dimmable headlight effect">
-                <defaultItem default="130" include="786,787,788,862,863,864,975,1008"/>
+                <defaultItem default="130" include="6238,6239,6240,6351,6384,6418,6419,6420"/>
                 <decVal/>
                 <label>Dimmer Level (0-255)</label>
             </variable>
+            <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOspeedTableDefaultAthearn.xml"/>
             <variable CV="112" mask="XXXXXXXV" item="Sound Option 14" default="0">
                 <enumVal>
                     <enumChoice>
@@ -406,11 +413,11 @@
             </variable>
             <!-- Sound Selection follows -->
             <variable CV="120" mask="XXVVVVVV" item="Sound Option 6" default="12" tooltip="Selects which airhorn to use">
-                <defaultItem default="2" include="825,923"/>
-                <defaultItem default="4" include="788"/>
-                <defaultItem default="6" include="863,864,975"/>
-                <defaultItem default="7" include="851"/>
-                <defaultItem default="10" include="846"/>
+                <defaultItem default="2" include="6201,6299"/>
+                <defaultItem default="4" include="6420"/>
+                <defaultItem default="6" include="6239,6240,6351"/>
+                <defaultItem default="7" include="6227"/>
+                <defaultItem default="10" include="6222"/>
                 <enumVal>
                     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumChoiceDieselAirHornAthearn.xml"/>
                 </enumVal>
@@ -426,21 +433,20 @@
                 <label>Auxiliary Airhorn Select</label>
             </variable>
             <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" default="0" tooltip="Bell sound effect and ring-rate">
-                <defaultItem default="2" include="825,923"/>
-                <defaultItem default="21" include="788"/>
+                <defaultItem default="2" include="6201,6299"/>
+                <defaultItem default="21" include="6420"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumDieselBellAthearn.xml"/>
                 <label>Bell Select</label>
             </variable>
-            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" default="2" exclude="825">
-                <defaultItem default="0" include="774,775,780,786,787,788,850,851,923"/>
-                <defaultItem default="2" include="773,781,789,801,862,863,864,975,1008"/>
-                <defaultItem default="3" include="846"/>
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" default="0" exclude="6201">
+                <defaultItem default="2" include="6149,6157,6165,6177,6238,6239,6240,6351,6384"/>
+                <defaultItem default="3" include="6222"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumPrimeMover1Athearn.xml"/>
                 <label>Prime Mover Select</label>
                 <tooltip>Select one of prime mover sound effects</tooltip>
             </variable>
-            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" default="0" include="825">
-                <defaultItem default="0" include="825"/>
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" default="0" include="6201">
+                <defaultItem default="0" include="6201"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumPrimeMover2Athearn.xml"/>
                 <label>Prime Mover Select</label>
                 <tooltip>Select one of prime mover sound effects</tooltip>
@@ -459,26 +465,26 @@
             <!-- End Sound Selection -->
             <!-- Volume Controls follow -->
             <variable CV="128" mask="VVVVVVVV" item="Sound Setting 1" default="199" tooltip="Sets the overall volume of all sound channels">
-                <defaultItem default="150" include="786,787,788,862,863,864,975,1008"/>
-                <defaultItem default="215" include="825,923"/>
+                <defaultItem default="150" include="6238,6239,6240,6351,6384,6418,6419,6420"/>
+                <defaultItem default="215" include="6201,6299"/>
                 <decVal/>
                 <label>Master Volume Control</label>
             </variable>
             <variable CV="129" mask="VVVVVVVV" item="Sound Setting 2" default="100" tooltip="Sets the volume of the airhorn">
-                <defaultItem default="75" include="786,787,788,862,863,864,975,1008"/>
+                <defaultItem default="75" include="6238,6239,6240,6351,6384,6418,6419,6420"/>
                 <decVal/>
                 <label>Airhorn Volume</label>
             </variable>
             <variable CV="130" mask="VVVVVVVV" item="Sound Setting 3" default="58" tooltip="Sets the volume of the bell">
-                <defaultItem default="40" include="786,787,788,862,863,864,975,1008"/>
-                <defaultItem default="80" include="825"/>
-                <defaultItem default="215" include="923"/>
+                <defaultItem default="40" include="6238,6239,6240,6351,6384,6418,6419,6420"/>
+                <defaultItem default="80" include="6201"/>
+                <defaultItem default="215" include="6299"/>
                 <decVal/>
                 <label>Bell Volume</label>
             </variable>
             <variable CV="131" mask="VVVVVVVV" item="Sound Setting 4" default="135" tooltip="Sets the volume of the prime mover">
-                <defaultItem default="200" include="825"/>
-                <defaultItem default="215" include="923"/>
+                <defaultItem default="200" include="6201"/>
+                <defaultItem default="215" include="6299"/>
                 <decVal/>
                 <label>Prime Mover Volume</label>
             </variable>
@@ -487,7 +493,7 @@
                 <label>Air Compressor Volume</label>
             </variable>
             <variable CV="133" mask="VVVVVVVV" item="Sound Setting 6" default="100" tooltip="Sets the volume of the dynamic brakes">
-                <defaultItem default="0" include="774,786,788,850"/>
+                <defaultItem default="0" include="6150,6226,6418,6420"/>
                 <decVal/>
                 <label>Dynamic Brake Volume</label>
             </variable>
@@ -495,47 +501,55 @@
                 <decVal/>
                 <label>Radiator Fans Volume</label>
             </variable>
+            <variable CV="139" mask="VVVVVVVV" item="Sound Setting 12" default="100" tooltip="Sets the volume of the brakes squealing">
+                <decVal/>
+                <label>Independent Brake Apply Volume</label>
+            </variable>
             <variable CV="143" mask="VVVVVVVV" item="Sound Setting 16" default="16" tooltip="Sets the volume of the air reservoir poppet valve releasing">
                 <decVal/>
                 <label>Poppet Valve Volume</label>
             </variable>
+            <variable CV="200" item="Sound Group 3 Option 2" default="90" tooltip="Adjust the duration that occurs between each subsequent pop! of the automatic poppet valve sound effect">
+                <decVal/>
+                <label>Poppet Valve Release Rate</label>
+            </variable>
             <variable item="Equalizer Control" CV="225" mask="XXXXXVVV" default="3" tooltip="Selects one of six equalizer presets or selects a user adjustable profile">
-                <defaultItem default="7" include="786,787,788,862,863,864,975,1008"/>
+                <defaultItem default="7" include="6238,6239,6240,6351,6384,6418,6419,6420"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumEQ.xml"/>
                 <label>Equalizer Control</label>
             </variable>
             <variable item="62 Hz Cut/Boost" CV="226" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
-                <defaultItem default="0" include="786,787,788,862,863,864,975,1008"/>
+                <defaultItem default="0" include="6238,6239,6240,6351,6384,6418,6419,6420"/>
                 <decVal/>
                 <label>62 Hz Cut/Boost</label>
             </variable>
             <variable item="125 Hz Cut/Boost" CV="227" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
-                <defaultItem default="0" include="786,787,788,862,863,864,975,1008"/>
+                <defaultItem default="0" include="6238,6239,6240,6351,6384,6418,6419,6420"/>
                 <decVal/>
                 <label>125 Hz Cut/Boost</label>
             </variable>
             <variable item="250 Hz Cut/Boost" CV="228" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
-                <defaultItem default="150" include="786,787,788,862,863,864,975,1008"/>
+                <defaultItem default="150" include="6238,6239,6240,6351,6384,6418,6419,6420"/>
                 <decVal/>
                 <label>250 Hz Cut/Boost</label>
             </variable>
             <variable item="500 Hz Cut/Boost" CV="229" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
-                <defaultItem default="175" include="786,787,788,862,863,864,975,1008"/>
+                <defaultItem default="175" include="6238,6239,6240,6351,6384,6418,6419,6420"/>
                 <decVal/>
                 <label>500 Hz Cut/Boost</label>
             </variable>
             <variable item="1K Hz Cut/Boost" CV="230" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
-                <defaultItem default="100" include="786,787,788,862,863,864,975,1008"/>
+                <defaultItem default="100" include="6238,6239,6240,6351,6384,6418,6419,6420"/>
                 <decVal/>
                 <label>1K Hz Cut/Boost</label>
             </variable>
             <variable item="2K Hz Cut/Boost" CV="231" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
-                <defaultItem default="150" include="786,787,788,862,863,864,975,1008"/>
+                <defaultItem default="150" include="6238,6239,6240,6351,6384,6418,6419,6420"/>
                 <decVal/>
                 <label>2K Hz Cut/Boost</label>
             </variable>
             <variable item="4K Hz Cut/Boost" CV="232" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
-                <defaultItem default="150" include="786,787,788,862,863,864,975,1008"/>
+                <defaultItem default="150" include="6238,6239,6240,6351,6384,6418,6419,6420"/>
                 <decVal/>
                 <label>4K Hz Cut/Boost</label>
             </variable>
@@ -737,7 +751,7 @@
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="16.1.260" item="Extended Function Map FX4 Effect" default="6" minOut="4">
-                <defaultItem default="5" include="825,923"/>
+                <defaultItem default="5" include="6201,6299"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>FX4 Effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
@@ -755,6 +769,11 @@
             <variable CV="16.1.275" item="Extended Function Map Brake" default="11">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>Brake</label>
+                <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+            </variable>
+            <variable CV="16.1.299" item="Extended Function Map Dynamic Brake" default="4">
+                <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Dynamic Brake</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="16.1.387" mask="XXXXXXXV" item="FX3 Effect Automatic Effects - FWDD" default="0" minOut="3">

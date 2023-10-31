@@ -147,6 +147,8 @@
                 <li>Added Window and Help menus to the Configure Node window.</li>
                 <li>Added support for multiple OpenLCB connections in Signal Masts add/edit dialog.</li>
                 <li>Added GUI Icons for OpenLCB signal masts in the add/edit dialog.</li>
+                <li>Fixed a bug where doing Quit while a CDI window is open with changes
+                    didn't properly handle user response to the Cancel/Quit dialog box.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -318,7 +320,8 @@
 
         <h4>Piko decoders</h4>
             <ul>
-                <li>Add Decoders for Piko BR 93 TT XP 5.1 Sound, Piko BR 55 TT XP 5.1 Sound, Support of Decoder XP5.1 FW 1.8.x, Changing pane layout</li>
+                <li>Add Decoders for Piko BR 93 TT XP 5.1 Sound, Piko BR 55 TT XP 5.1 Sound, Piko Smart Decoder XP 5.1 Sound Blank 
+                <li>Support of Decoder XP5.1 FW 1.1 to FW 1.9 and Update Decoder Definitions, Changing pane layout</li>
             </ul>
 
         <h4>Public Domain and DIY decoders</h4>
@@ -343,7 +346,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li></li>
+                <li>TSU2/BLU/ECO ID update with some model additions</li>
             </ul>
 
         <h4>Tam Valley Depot</h4>

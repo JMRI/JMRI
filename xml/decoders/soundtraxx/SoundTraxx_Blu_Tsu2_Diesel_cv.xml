@@ -189,6 +189,12 @@
             <authorinitials>MM</authorinitials>
             <revremark>Split vars to include file to reuse with Blunami w/ a few default values corrected</revremark>
         </revision>
+        <revision>
+            <revnumber>19</revnumber>
+            <date>2023-10-09</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>productID change for 11 bit Soundtraxx ID</revremark>
+        </revision>
     </revhistory>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOCV.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOCVFnMap.xml"/>
@@ -719,7 +725,7 @@
     </variable>
     <!-- Sound Selection follows -->
     <variable CV="120" mask="XXVVVVVV" item="Sound Option 6" default="0" tooltip="Selects which airhorn to use">
-        <defaultItem default="10" include="310,311,312,313,314,323,329,337,351"/>       <!-- EMD-2 -->
+        <defaultItem default="10" include="2102,2103,2104,2105,2106,2115,2121,2129,2143,2150,2156"/>       <!-- EMD-2 -->
         <enumVal>
             <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumChoiceDieselAirHorn.xml"/>
         </enumVal>
@@ -735,16 +741,16 @@
         <label>Auxiliary Airhorn Select</label>
     </variable>
     <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" tooltip="Bell sound effect and ring-rate">
-        <defaultItem default="18" include="276,280,284,288,292,319,325,333,343,347"/>       <!-- EMD   -->
-        <defaultItem default="36" include="277,281,285,289,293,320,326,324,344,348"/>       <!-- GE    -->
-        <defaultItem default="10" include="278,282,286,290,294,321,327,335,345,349"/>       <!-- Alco  -->
-        <defaultItem default="47" include="279,283,287,291,295,322,328,336,350"/>           <!-- Bald  -->
-        <defaultItem default="14" include="310,311,312,313,314,323,329,337,351"/>           <!-- EMD-2 -->
-        <defaultItem default="17" include="331"/>               <!-- EMD   -->
+        <defaultItem default="18" include="2068,2072,2076,2080,2084,2111,2117,2125,2135,2139,2146,2152"/>     <!-- EMD   -->
+        <defaultItem default="36" include="2069,2073,2077,2081,2085,2112,2118,2126,2136,2140,2147,2153"/>     <!-- GE    -->
+        <defaultItem default="10" include="2070,2074,2078,2082,2086,2113,2119,2127,2137,2141,2148,2154"/>     <!-- Alco  -->
+        <defaultItem default="47" include="2071,2075,2079,2083,2087,2114,2120,2128,2142,2149,2155"/>          <!-- Bald  -->
+        <defaultItem default="14" include="2102,2103,2104,2105,2106,2115,2121,2129,2143,2150,2156"/>          <!-- EMD-2 -->
+        <defaultItem default="17" include="2123"/>                                                            <!-- KN1   -->
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselBell.xml"/>
         <label>Bell Select</label>
     </variable>
-<variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="276,280,284,288,292,319,325,333,343,347" default="0" tooltip="Select one of prime mover sound effects">
+<variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="2068,2072,2076,2080,2084,2111,2117,2125,2135,2139,2146,2152" default="0" tooltip="Select one of prime mover sound effects">
         <enumVal>
             <enumChoice>
                 <choice>EMD 567 (No Transition)</choice>
@@ -776,7 +782,7 @@
         </enumVal>
         <label>Prime Mover Select</label>
     </variable>
-    <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="310,311,312,313,314,323,329,337,351" default="4" tooltip="Select one of prime mover sound effects">
+    <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="2102,2103,2104,2105,2106,2115,2121,2129,2143,2150,2156" default="4" tooltip="Select one of prime mover sound effects">
         <enumVal>
             <enumChoice>
                 <choice>EMD 567 12 Cylinder No Transition</choice>
@@ -805,12 +811,12 @@
         </enumVal>
         <label>Prime Mover Select</label>
     </variable>
-<variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="331" default="0" tooltip="Select one of prime mover sound effects">
+<variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="2123" default="0" tooltip="Select one of prime mover sound effects">
         <enumVal>
             <enumChoice>
                 <choice>EMD 567C 16 Cylinder Non-Turbo</choice>
             </enumChoice>
-    <enumChoice>
+            <enumChoice>
                 <choice>EMD Dual 567 (E-Units)</choice>
             </enumChoice>
             <enumChoice>
@@ -834,7 +840,7 @@
         </enumVal>
         <label>Prime Mover Select</label>
     </variable>
-<variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="277,281,285,289,293,320,326,324,344,348" default="2" tooltip="Select one of prime mover sound effects">
+<variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="2069,2073,2077,2081,2085,2112,2118,2126,2136,2140,2147,2153" default="2" tooltip="Select one of prime mover sound effects">
         <enumVal>
             <enumChoice>
                 <choice>FDL-12</choice>
@@ -863,7 +869,7 @@
         </enumVal>
         <label>Prime Mover Select</label>
     </variable>
-    <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="278,282,286,290,294,321,327,335,345,349" default="0" tooltip="Select one of prime mover sound effects">
+    <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="2070,2074,2078,2082,2086,2113,2119,2127,2137,2141,2148,2154" default="0" tooltip="Select one of prime mover sound effects">
         <enumVal>
             <enumChoice>
                 <choice>ALCO 539 Turbo</choice>
@@ -895,7 +901,7 @@
         </enumVal>
         <label>Prime Mover Select</label>
     </variable>
-    <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="279,283,287,291,295,322,328,336,350" default="0">
+    <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="2071,2075,2079,2083,2087,2114,2120,2128,2142,2149,2155" default="0">
         <enumVal>
             <enumChoice>
                 <choice>Baldwin VO</choice>
@@ -941,9 +947,9 @@
                 &lt;/html&gt;</tooltip>
     </variable>
     <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" tooltip="Select one of air compressor sound effects">
-        <defaultItem default="3" include="276,280,284,288,292,319,325,333,343,310,311,312,313,314,323,329,331,337,347,351"/>    <!-- EMD & EMD-2 -->
-        <defaultItem default="1" include="277,281,285,289,293,320,326,324,344,348"/>                                    <!-- GE -->
-        <defaultItem default="0" include="278,282,286,290,294,321,327,335,345,279,283,287,291,295,322,328,336,349,350"/>        <!-- Alco & Baldwin -->
+        <defaultItem default="3" include="2068,2072,2076,2080,2084,2111,2117,2125,2135,2139,2146,2152,2102,2103,2104,2105,2106,2115,2121,2129,2143,2150,2156"/>    <!-- EMD & EMD-2 -->
+        <defaultItem default="1" include="2069,2073,2077,2081,2085,2112,2118,2126,2136,2140,2147,2153"/>                                                           <!-- GE -->
+        <defaultItem default="0" include="2070,2074,2078,2082,2086,2113,2119,2127,2137,2141,2148,2154,2071,2075,2079,2083,2087,2114,2120,2128,2142,2149,2155"/>    <!-- Alco & Baldwin -->
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselComp.xml"/>
         <label>Air Compressor Select</label>
     </variable>
@@ -994,14 +1000,14 @@
         <label>Alarm Bell Volume</label>
     </variable>
     <!-- Only when Gas Turbine selected in models for Baldwin and Other Diesel Prototypes -->
-    <variable CV="136" mask="VVVVVVVV" item="Sound Setting 36" default="200" include="279,283,287,291,295,322,328,336,350">
+    <variable CV="136" mask="VVVVVVVV" item="Sound Setting 36" default="200" include="2071,2075,2079,2083,2087,2114,2120,2128,2142,2149,2155">
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>ge</relation>
           <value>7</value>
         </qualifier>
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>le</relation>
           <value>10</value>
         </qualifier>
@@ -1013,9 +1019,9 @@
                 &lt;/html&gt;</tooltip>
     </variable>
     <!-- Only when Cummins QSK19C x3 GenSet selected in models for Baldwin and Other Diesel Prototypes -->
-    <variable CV="141" mask="VVVVVVVV" item="Sound Setting 37" default="185" include="279,283,287,291,295,322,328,336,350">
+    <variable CV="141" mask="VVVVVVVV" item="Sound Setting 37" default="185" include="2071,2075,2079,2083,2087,2114,2120,2128,2142,2149,2155">
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>eq</relation>
           <value>11</value>
         </qualifier>
@@ -1026,9 +1032,9 @@
                 Sets the volume of the 2nd Prime Mover
                 &lt;/html&gt;</tooltip>
     </variable>
-    <variable CV="142" mask="VVVVVVVV" item="Sound Setting 38" default="220" include="279,283,287,291,295,322,328,336,350">
+    <variable CV="142" mask="VVVVVVVV" item="Sound Setting 38" default="220" include="2071,2075,2079,2083,2087,2114,2120,2128,2142,2149,2155">
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>eq</relation>
           <value>11</value>
         </qualifier>
@@ -1093,14 +1099,14 @@
         <label>Alarm Bell Reverb Level</label>
     </variable>
     <!-- Only when Gas Turbine selected in models for Baldwin and Other Diesel Prototypes -->
-    <variable CV="168" mask="VVVVVVVV" item="Reverb200" default="0" include="279,283,287,291,295,322,328,336,350">
+    <variable CV="168" mask="VVVVVVVV" item="Reverb200" default="0" include="2071,2075,2079,2083,2087,2114,2120,2128,2142,2149,2155">
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>ge</relation>
           <value>7</value>
         </qualifier>
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>le</relation>
           <value>10</value>
         </qualifier>
@@ -1112,9 +1118,9 @@
                 &lt;/html&gt;</tooltip>
     </variable>
     <!-- Only when Cummins QSK19C x3 GenSet selected in models for Baldwin and Other Diesel Prototypes -->
-    <variable CV="173" mask="VVVVVVVV" item="Reverb201" default="0" include="279,283,287,291,295,322,328,336,350">
+    <variable CV="173" mask="VVVVVVVV" item="Reverb201" default="0" include="2071,2075,2079,2083,2087,2114,2120,2128,2142,2149,2155">
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>eq</relation>
           <value>11</value>
         </qualifier>
@@ -1125,9 +1131,9 @@
                 Sets the Reverb Level of the 2nd Prime Mover
                 &lt;/html&gt;</tooltip>
     </variable>
-    <variable CV="174" mask="VVVVVVVV" item="Reverb202" default="0" include="279,283,287,291,295,322,328,336,350">
+    <variable CV="174" mask="VVVVVVVV" item="Reverb202" default="0" include="2071,2075,2079,2083,2087,2114,2120,2128,2142,2149,2155">
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>eq</relation>
           <value>11</value>
         </qualifier>
@@ -1269,14 +1275,14 @@
         <label>HEP Mode</label>
         <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
     </variable>
-    <variable CV="16.1.303" item="Extended Function Map Turbine Start-Stop" default="16" include="279,283,287,291,295,322,328,336,350">
+    <variable CV="16.1.303" item="Extended Function Map Turbine Start-Stop" default="16" include="2071,2075,2079,2083,2087,2114,2120,2128,2142,2149,2155">
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>ge</relation>
           <value>7</value>
         </qualifier>
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>le</relation>
           <value>10</value>
         </qualifier>
@@ -1286,9 +1292,9 @@
     </variable>
     <!-- Programming note: need to break in two parts for HEP mode, as there is no OR logic with qualifiers
          and a diffrent item label must be used (unlike include/exclude) -->
-    <variable CV="16.1.303" item="Extended Function Map HEP Mode" default="16" include="279,283,287,291,295,322,328,336,350">
+    <variable CV="16.1.303" item="Extended Function Map HEP Mode" default="16" include="2071,2075,2079,2083,2087,2114,2120,2128,2142,2149,2155">
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>lt</relation>
           <value>7</value>
         </qualifier>
@@ -1296,9 +1302,9 @@
         <label>HEP Mode</label>
         <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
     </variable>
-    <variable CV="16.1.303" item="Extended Function Map HEP Mode2" default="16" include="279,283,287,291,295,322,328,336,350">
+    <variable CV="16.1.303" item="Extended Function Map HEP Mode2" default="16" include="2071,2075,2079,2083,2087,2114,2120,2128,2142,2149,2155">
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>gt</relation>
           <value>10</value>
         </qualifier>
@@ -1708,14 +1714,14 @@
         <label>Alarm Bell Alt Volume</label>
     </variable>
     <!-- Only when Gas Turbine selected in models for Baldwin and Other Diesel Prototypes -->
-    <variable CV="16.2.296" mask="VVVVVVVV" item="Alt Sound Setting 36" default="100" include="279,283,287,291,295,322,328,336,350">
+    <variable CV="16.2.296" mask="VVVVVVVV" item="Alt Sound Setting 36" default="100" include="2071,2075,2079,2083,2087,2114,2120,2128,2142,2149,2155">
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>ge</relation>
           <value>7</value>
         </qualifier>
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>le</relation>
           <value>10</value>
         </qualifier>
@@ -1727,9 +1733,9 @@
                 &lt;/html&gt;</tooltip>
     </variable>
     <!-- Only when Cummins QSK19C x3 GenSet selected in models for Baldwin and Other Diesel Prototypes -->
-    <variable CV="16.2.301" mask="VVVVVVVV" item="Alt Sound Setting 37" default="92" include="279,283,287,291,295,322,328,336,350">
+    <variable CV="16.2.301" mask="VVVVVVVV" item="Alt Sound Setting 37" default="92" include="2071,2075,2079,2083,2087,2114,2120,2128,2142,2149,2155">
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>eq</relation>
           <value>11</value>
         </qualifier>
@@ -1740,9 +1746,9 @@
                 Sets the alternative volume of the 2nd Prime Mover
                 &lt;/html&gt;</tooltip>
     </variable>
-    <variable CV="16.2.302" mask="VVVVVVVV" item="Alt Sound Setting 38" default="110" include="279,283,287,291,295,322,328,336,350">
+    <variable CV="16.2.302" mask="VVVVVVVV" item="Alt Sound Setting 38" default="110" include="2071,2075,2079,2083,2087,2114,2120,2128,2142,2149,2155">
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>eq</relation>
           <value>11</value>
         </qualifier>
@@ -1811,14 +1817,14 @@
         <label>Load Sensitivity</label>
     </variable>
     <!-- Only when Gas Turbine selected in models for Baldwin and Other Diesel Prototypes -->
-    <variable CV="16.3.270" mask="XXXXXXVV" item="Sound Group 1 Option 9" default="1" include="279,283,287,291,295,322,328,336,350">
+    <variable CV="16.3.270" mask="XXXXXXVV" item="Sound Group 1 Option 9" default="1" include="2071,2075,2079,2083,2087,2114,2120,2128,2142,2149,2155">
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>ge</relation>
           <value>7</value>
         </qualifier>
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>le</relation>
           <value>10</value>
         </qualifier>
@@ -1846,14 +1852,14 @@
                 a successful startup sequence and function normally.&lt;br&gt;
                 &lt;/html&gt;</tooltip>
     </variable>
-    <variable CV="16.3.271" mask="XVVVVVVV" item="Sound Group 4 Option 1" default="8" include="279,283,287,291,295,322,328,336,350">
+    <variable CV="16.3.271" mask="XVVVVVVV" item="Sound Group 4 Option 1" default="8" include="2071,2075,2079,2083,2087,2114,2120,2128,2142,2149,2155">
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>ge</relation>
           <value>7</value>
         </qualifier>
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>le</relation>
           <value>10</value>
         </qualifier>
@@ -1865,14 +1871,14 @@
                 at which point the turbine will turn on.&lt;br&gt;
                 &lt;/html&gt;</tooltip>
     </variable>
-    <variable CV="16.3.272" mask="XVVVVVVV" item="Sound Group 4 Option 2" default="8" include="279,283,287,291,295,322,328,336,350">
+    <variable CV="16.3.272" mask="XVVVVVVV" item="Sound Group 4 Option 2" default="8" include="2071,2075,2079,2083,2087,2114,2120,2128,2142,2149,2155">
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>ge</relation>
           <value>7</value>
         </qualifier>
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>le</relation>
           <value>10</value>
         </qualifier>
@@ -1885,14 +1891,14 @@
                 A value of 0 is selected, the locomotive speed is not limited.&lt;br&gt;
                 &lt;/html&gt;</tooltip>
     </variable>
-    <variable CV="16.3.273" mask="VVVVVVVV" item="Sound Group 4 Option 3" default="128" include="279,283,287,291,295,322,328,336,350">
+    <variable CV="16.3.273" mask="VVVVVVVV" item="Sound Group 4 Option 3" default="128" include="2071,2075,2079,2083,2087,2114,2120,2128,2142,2149,2155">
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>ge</relation>
           <value>7</value>
         </qualifier>
         <qualifier>
-          <variableref>Prime Mover Select</variableref>
+          <variableref>Sound Option 5</variableref> <!-- Prime mover select -->
           <relation>le</relation>
           <value>10</value>
         </qualifier>

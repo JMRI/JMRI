@@ -38,32 +38,67 @@
             <revremark>New file, based on TSU2 Diesel file with var changed to linked file for both BLU and TSU2</revremark>
         </revision>
         <revision>
-            <revnumber>1</revnumber>
+            <revnumber>2</revnumber>
             <date>2023-10-01</date>
             <authorinitials>BJ</authorinitials>
             <revremark>Added Blunami PNP8</revremark>
+        </revision>
+        <revision>
+            <revnumber>3</revnumber>
+            <date>2023-10-09</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>Added Blunami PNP8 and 4408 models with productID change for 11 bit Soundtraxx ID</revremark>
         </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
         <family name="Blunami Diesel" mfg="SoundTraxx (Throttle-Up)" lowVersionID="72" comment="These are the -retail- version Blunami Diesel decoders">
-            <model model="BLU-2200 Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="349" comment="Model 885607">
+            <model model="BLU-2200 Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="2141" comment="Model 885607">
                 <size length="41.9" width="18.8" height="6.8" units="mm"/>
             </model>
-            <model model="BLU-2200 Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="350" comment="Model 885608">
+            <model model="BLU-2200 Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="2142" comment="Model 885608">
                 <size length="41.9" width="18.8" height="6.8" units="mm"/>
             </model>
-            <model model="BLU-2200 EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="347" comment="Model 885605">
+            <model model="BLU-2200 EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="2139" comment="Model 885605">
                 <size length="41.9" width="18.8" height="6.8" units="mm"/>
             </model>
-            <model model="BLU-2200 EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="351" comment="Model 886022">
+            <model model="BLU-2200 EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="2143" comment="Model 886022">
                 <size length="41.9" width="18.8" height="6.8" units="mm"/>
             </model>
-            <model model="BLU-2200 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="348" comment="Model 885606">
+            <model model="BLU-2200 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="2140" comment="Model 885606">
                 <size length="41.9" width="18.8" height="6.8" units="mm"/>
+            </model>
+            <model model="BLU-4408 Alco Diesels" numOuts="8" numFns="30" maxMotorCurrent="4A" connector="other" productID="2148" comment="Model 885619">
+                <size length="69" width="30.5" height="14" units="mm"/>
+            </model>
+            <model model="BLU-4408 Baldwin Diesels" numOuts="8" numFns="30" maxMotorCurrent="4A" connector="other" productID="2149" comment="Model 885620">
+                <size length="69" width="30.5" height="14" units="mm"/>
+            </model>
+            <model model="BLU-4408 EMD Diesels" numOuts="8" numFns="30" maxMotorCurrent="4A" connector="other" productID="2146" comment="Model 885617">
+                <size length="69" width="30.5" height="14" units="mm"/>
+            </model>
+            <model model="BLU-4408 EMD-2 Diesels" numOuts="8" numFns="30" maxMotorCurrent="4A" connector="other" productID="2150" comment="Model 886025">
+                <size length="69" width="30.5" height="14" units="mm"/>
+            </model>
+            <model model="BLU-4408 GE Diesels" numOuts="8" numFns="30" maxMotorCurrent="4A" connector="other" productID="2147" comment="Model 885618">
+                <size length="69" width="30.5" height="14" units="mm"/>
+            </model>
+            <model model="BLU-PNP8 Alco Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="2154" comment="Model 885615">
+                <size length="74" width="17" height="5" units="mm"/>
+            </model>
+            <model model="BLU-PNP8 Baldwin Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="2155" comment="Model 885616">
+                <size length="74" width="17" height="5" units="mm"/>
+            </model>
+            <model model="BLU-PNP8 EMD Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="2152" comment="Model 885613">
+                <size length="74" width="17" height="5" units="mm"/>
+            </model>
+            <model model="BLU-PNP8 EMD-2 Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="2156" comment="Model 885624">
+                <size length="74" width="17" height="5" units="mm"/>
+            </model>
+            <model model="BLU-PNP8 GE Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="2153" comment="Model 885614">
+                <size length="74" width="17" height="5" units="mm"/>
             </model>
             <model model="BLU PNP8" numOuts="8" numFns="30"  productID="16910442" /> <!-- CV 253-256 contents observed in a decoder -->
-
             <output name="3" label="  FX3  "/>
             <output name="4" label="  FX4  "/>
             <output name="5" label="Airhorn| ">

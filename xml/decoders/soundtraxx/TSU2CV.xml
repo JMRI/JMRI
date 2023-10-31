@@ -62,6 +62,12 @@
           <authorinitials>JE</authorinitials>
           <revremark>edit the CV49-58 FX text to match TSU2 values. chg CV63 name to Dimmer Level.</revremark>
       </revision>
+        <revision>
+            <revnumber>3</revnumber>
+            <date>2023-10-09</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>productID change for 11 bit Soundtraxx ID</revremark>
+        </revision>
     </revhistory>
     <!-- Specific CVs for Tsunami2 decoders -->
     <variable item="FX7 Phase Selection" CV="55" mask="XXVXXXXX" default="0" minOut="7" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
@@ -108,11 +114,11 @@
         <label>Train Brake Rate Sign</label>
     </variable>
     <!-- Start Sound Selection -->
-    <variable CV="138" mask="VVVVVVVV" item="Sound Setting 11" default="128" exclude="296,297,298"> <!-- should this be ="Tsunami2 Electric"? -->
+    <variable CV="138" mask="VVVVVVVV" item="Sound Setting 11" default="128" exclude="2051,2054,2057,2060,2063"> <!-- should this be ="Tsunami2 Electric"? -->
         <decVal/>
         <label>Train Brake Apply/Release Volume</label>
     </variable>
-    <variable CV="138" mask="VVVVVVVV" item="Sound Setting 11" default="65" include="296,297,298"> <!-- should this be ="Tsunami2 Electric"? --> <!-- Steam -->
+    <variable CV="138" mask="VVVVVVVV" item="Sound Setting 11" default="65" include="2051,2054,2057,2060,2063"> <!-- should this be ="Tsunami2 Electric"? --> <!-- Steam -->
         <decVal/>
         <label>Train Brake Apply/Release Volume</label>
     </variable>
@@ -124,11 +130,11 @@
         <decVal/>
         <label>Sander Valve Volume</label>
     </variable>
-    <variable CV="155" mask="VVVVVVVV" item="Sound Setting 28" default="50" exclude="296,297,298,299"> <!-- should this be ="Tsunami2 Electric"? -->
+    <variable CV="155" mask="VVVVVVVV" item="Sound Setting 28" default="50" exclude="2051,2054,2057,2060,2063"> <!-- should this be ="Tsunami2 Electric"? -->
         <decVal/>
         <label>Fuel Loading Volume</label>
     </variable>
-    <variable CV="155" mask="VVVVVVVV" item="Sound Setting 28" default="55" include="296,297,298,299"> <!-- should this be ="Tsunami2 Electric"? --> <!-- Electrical -->
+    <variable CV="155" mask="VVVVVVVV" item="Sound Setting 28" default="55" include="2051,2054,2057,2060,2063"> <!-- should this be ="Tsunami2 Electric"? --> <!-- Electrical -->
         <decVal/>
         <label>Electrical Arcing</label>
     </variable>
@@ -181,11 +187,11 @@
         <decVal/>
         <label>Sander Valve Reverb Level</label>
     </variable>
-    <variable CV="187" mask="VVVVVVVV" item="Reverb187" default="0" exclude="296,297,298"> <!-- should this be ="Tsunami2 Electric"? -->
+    <variable CV="187" mask="VVVVVVVV" item="Reverb187" default="0" exclude="2051,2054,2057,2060,2063"> <!-- should this be ="Tsunami2 Electric"? -->
         <decVal/>
         <label>Fuel Loading Reverb Level</label>
     </variable>
-    <variable CV="187" mask="VVVVVVVV" item="Reverb187" default="0" include="296,297,298"> <!-- should this be ="Tsunami2 Electric"? --> <!-- Electrical -->
+    <variable CV="187" mask="VVVVVVVV" item="Reverb187" default="0" include="2051,2054,2057,2060,2063"> <!-- should this be ="Tsunami2 Electric"? --> <!-- Electrical -->
         <decVal/>
         <label>Electrical Arcing Reverb Level</label>
     </variable>
@@ -193,7 +199,7 @@
         <decVal/>
         <label>Wrenches Reverb Level</label>
     </variable>
-    <variable CV="190" mask="VVVVVVVV" item="Reverb190" default="0" exclude="296,297,298"> <!-- should this be ="Tsunami2 Electric"? --> <!-- exclude Electrical -->
+    <variable CV="190" mask="VVVVVVVV" item="Reverb190" default="0" exclude="2051,2054,2057,2060,2063"> <!-- should this be ="Tsunami2 Electric"? --> <!-- exclude Electrical -->
         <decVal/>
         <label>Pneumatic Oilers Reverb Level</label>
     </variable>

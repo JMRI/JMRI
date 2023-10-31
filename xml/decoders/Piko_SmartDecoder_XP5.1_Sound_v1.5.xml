@@ -12,20 +12,42 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-	<version author="Ulrich Gerlach" version="1" lastUpdated="2023-10-20"/>
+	<version author="Ulrich Gerlach" version="2" lastUpdated="2023-10-28"/>
 	<!-- Version 1 - For Piko SmartDecoder XP5.1 Sound FW 1.5.x with SUSI Decoder on board -->
-	<!-- Supported decoder: PIKO46505-18 = decoder neutral, PIKO46550-18 = BR 83 TT -->
+	<!--             Supported decoder: PIKO46505-18 = Next18 decoder neutral, PIKO46550-18 = BR83-TT -->
+	<!-- Version 2 - Supported decoder: PIKO56505-22 = PluX22 decoder neutral, PIKO56508-16 = PluX16 decoder neutral -->
 	<!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
 	<decoder>
 		<family name="PIKO SmartDecoder XP5.1 (version 1.5+)" mfg="PIKO" lowVersionID="3" highVersionID="5" comment="Decoders not sorted (necessarily) in numerical order">
-			<model model="PIKO46505-18 XP5.1 V1.5" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46505-18" lowVersionID="5" comment="Piko SmartDecoder XP5.1 Sound allgemein (FW 1.5.0)" replacementModel="PIKO46505-18 XP5.1 V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8)">
+			<model model="PIKO46505-18 XP5.1 V1.5" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46505-18" comment="Piko SmartDecoder XP5.1 Sound allgemein Next18 (FW 1.5.0)" replacementModel="PIKO46505-18 XP5.1 V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
 				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
 				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
 				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
 				<output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
 				<size length="21.5" width="10.5" height="3.7" units="mm"/>
 			</model>
-			<model model="PIKO46550-18 BR83-TT V1.5" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46550-18" lowVersionID="5" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 plug and RailCom(R) (Plus) (FW 1.5.0)" replacementModel="PIKO46550-18 BR83-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8)">
+			<model model="PIKO56505-22 XP5.1 V1.5" numOuts="9" numFns="68" maxMotorCurrent="1.2A" formFactor="N" connector="PluX22" productID="PIKO56505-22"  comment="Piko SmartDecoder XP5.1 Sound allgemein PluX22 (FW 1.5.0)" replacementModel="PIKO56505-22 XP5.1 V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
+				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+				<output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+				<output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
+				<output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
+				<output name="7" label=". A5 ." connection="plug" maxcurrent="400 mA"/>
+				<output name="8" label=". A6 ." connection="plug" maxcurrent="400 mA"/>
+				<output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA"/>
+				<size length="21.5" width="10.5" height="3.7" units="mm"/>
+			</model>
+			<model model="PIKO56508-16 XP5.1 V1.5" numOuts="6" numFns="68" maxMotorCurrent="1.2A" formFactor="N" connector="PluX16" productID="PIKO56508-16"  comment="Piko SmartDecoder XP5.1 Sound allgemein PluX16 (FW 1.5.0)" replacementModel="PIKO56508-16 XP5.1 V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
+				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+				<output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+				<output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
+				<output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
+				<size length="21.5" width="10.5" height="3.7" units="mm"/>
+			</model>
+			<model model="PIKO46550-18 BR83-TT V1.5" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46550-18" lowVersionID="5" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 plug and RailCom(R) (Plus) (FW 1.5.0)" replacementModel="PIKO46550-18 BR83-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
 				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
 				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
 				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
@@ -134,7 +156,7 @@
 			</variable>
 			<variable item="SUSI Bit 2" CV="47" default="0" mask="XXXXXVXX" minOut="7">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-				<label>A4 für Digitalkupplung</label>
+				<label>Digital coupling AUX4</label>
 				<label xml:lang="de">A4 für Digitalkupplung</label>
 			</variable>
 			<variable item="Coupling option 1" CV="47" default="0" mask="XXXXXVXX">
@@ -153,17 +175,17 @@
 			</variable>
 			<variable item="SUSI Bit 3" CV="47" default="0" mask="XXXXVXXX" minOut="7">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-				<label>A5 für Digitalkupplung</label>
+				<label>Digital coupling AUX5</label>
 				<label xml:lang="de">A5 für Digitalkupplung</label>
 			</variable>
 			<variable item="SUSI Bit 4" CV="47" default="0" mask="XXXVXXXX" minOut="7">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-				<label>Kupplungsausgänge A4 und A5 tauschen</label>
+				<label>Switch coupling outputs AUX4 and AUX5</label>
 				<label xml:lang="de">Kupplungsausgänge A4 und A5 tauschen</label>
 			</variable>
 			<variable item="Coupling option 3" default="0" CV="47" mask="XXXVXXXX">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-				<label>Sweitch coupling outputs AUX4 and AUX5</label>
+				<label>Switch coupling outputs AUX4 and AUX5</label>
 				<label xml:lang="de">Kupplungsausgänge A4 und A5 tauschen</label>
 			</variable>
 			<variable item="SUSI Bit 5" CV="47" mask="XXVXXXXX">
