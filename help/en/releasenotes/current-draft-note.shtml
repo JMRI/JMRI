@@ -510,8 +510,10 @@
         <ul>
             <li>Improvements to the car, locomotive, and train preview and print tools.</li>
             <li>Minor improvement to the train build report when routing.</li>
+            <li>Improvements to the router when determining a valid route where multiple trains are using the same route.</li>
+            <li>Updates to the OperationsPro help.</li>
             <li>To see all changes to OperationsPro, use the link below</li>
-            <li><a href="https://github.com/pulls?q=is%3Apr+author%3ADanielBoudreau+archived%3Afalse+is%3Aclosed">OperationsPro Changes</a></li>
+            <li><a href="https://github.com/pulls?q=is%3Apr+author%3ADanielBoudreau+archived%3Afalse+is%3Amerged">OperationsPro Changes</a></li>
             <li>Script to update Car/Locomotive Tables on update to Id Tag Table User Name</li>
         </ul>
 
