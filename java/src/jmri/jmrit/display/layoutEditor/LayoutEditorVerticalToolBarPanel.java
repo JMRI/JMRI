@@ -211,6 +211,8 @@ public class LayoutEditorVerticalToolBarPanel extends LayoutEditorToolBarPanel {
         JPanel vTop22Panel = new JPanel(verticalContentLayout);
         vTop22Panel.add(iconLabelButton);
         vTop22Panel.add(logixngButton);
+        vTop22Panel.add(audioButton);
+        vTop22Panel.add(textAudioComboBox);
         vTop22Panel.add(shapeButton);
         vTop22Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop22Panel.getPreferredSize().height));
         iconsBorderPanel.add(vTop22Panel);

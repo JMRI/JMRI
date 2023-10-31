@@ -190,6 +190,8 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
         JPanel iconGroup5 = new JPanel(floatContentLayout);
         iconGroup5.add(iconLabelButton);
         iconGroup5.add(logixngButton);
+        iconGroup5.add(audioButton);
+        iconGroup5.add(textAudioComboBox);
         iconGroup5.add(shapeButton);
         floatEditIcon.add(iconGroup5);
 

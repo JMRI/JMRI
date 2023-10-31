@@ -3566,6 +3566,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     addIcon();
                 } else if (leToolBarPanel.logixngButton.isSelected()) {
                     addLogixNGIcon();
+                } else if (leToolBarPanel.audioButton.isSelected()) {
+                    addAudioIcon();
                 } else if (leToolBarPanel.shapeButton.isSelected()) {
                     LayoutShape ls = (LayoutShape) selectedObject;
                     if (ls == null) {
@@ -6986,6 +6988,45 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      */
     void addLogixNGIcon() {
         LogixNGIcon l = new LogixNGIcon(leToolBarPanel.logixngEditor.getIcon(0), this);
+        setNextLocation(l);
+        l.setDisplayLevel(Editor.ICONS);
+        unionToPanelBounds(l.getBounds());
+        l.updateSize();
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
+    }
+
+    /**
+     * Add a LogixNG icon to the target
+     */
+    void addAudioIcon() {
+        String audioName = leToolBarPanel.textAudioComboBox.getSelectedItemDisplayName();
+        if (audioName == null) {
+            audioName = "";
+        }
+
+        if (audioName.isEmpty()) {
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error11d"),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        AudioIcon l = new AudioIcon(leToolBarPanel.audioEditor.getIcon(0), this);
+        l.setAudio(audioName);
+        Audio xAudio = l.getAudio();
+
+        if (xAudio != null) {
+            String uname = xAudio.getDisplayName();
+            if (!uname.equals(audioName)) {
+                // put the system name in the memory field
+                leToolBarPanel.textMemoryComboBox.setSelectedItem(xAudio);
+            }
+        }
+
         setNextLocation(l);
         l.setDisplayLevel(Editor.ICONS);
         unionToPanelBounds(l.getBounds());

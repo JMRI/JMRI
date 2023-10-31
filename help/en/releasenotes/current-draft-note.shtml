@@ -443,6 +443,9 @@
         <ul>
 	        <li>The LogixNG Icon has been added to the toolbars.  The LogixNG Icon can run inline
 	        LogixNGs by clicking on the icon or text label when converted to text.</li>
+
+	        <li>The Audio Icon has been added to the toolbars.  The Audio Icon can play a sound
+          on a web panel, for example a Tablet.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
