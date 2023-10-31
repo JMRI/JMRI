@@ -326,7 +326,7 @@
 
         <h4>Public Domain and DIY decoders</h4>
             <ul>
-                <li></li>
+                <li>Cleanup; Removed obsolete (leftover) settings from one of the sub-files</li>
             </ul>
 
         <h4>QSI</h4>
