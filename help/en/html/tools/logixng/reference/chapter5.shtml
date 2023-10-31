@@ -1109,11 +1109,12 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>Sequence</h4>
+      <h4 id="sequence_id">Sequence</h4>
 
       <p>The Sequence action executes a series of action/expression pairs. For each pair, the
       action will be performed and then the expression will wait until it becomes true. When it is
-      true, the next action/expression pair will be started.</p>
+      true, the next action/expression pair will be started.  The <a href="chapter6#timer_id">Timer</a>
+      expression can be used to do a time based step instead of an event based step.</p>
 
       <div style="margin-left: 2em">
         <a href="images/chapter5/action_sequence_options.png"><img src=
