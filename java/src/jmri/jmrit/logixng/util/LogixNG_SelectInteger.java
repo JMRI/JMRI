@@ -81,6 +81,10 @@ public class LogixNG_SelectInteger implements VetoableChangeListener {
         parseFormula();
     }
 
+    public boolean isDirectAddressing() {
+        return _addressing == NamedBeanAddressing.Direct;
+    }
+
     public NamedBeanAddressing getAddressing() {
         return _addressing;
     }

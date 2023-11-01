@@ -37,7 +37,7 @@ public class VirtualLCDAction extends DCCppSystemConnectionAction {
         VirtualLCDFrame f = new VirtualLCDFrame(memo);
         try {
             DCCppTrafficController tc = memo.getDCCppTrafficController();
-            tc.addDCCppListener(DCCppInterface.ALL, f);  // TODO: This should be restricted to the proper selection class
+            tc.addDCCppListener(DCCppInterface.CS_INFO, f);
             f.initComponents();
         } catch (Exception ex) {
             log.error("Exception",ex);

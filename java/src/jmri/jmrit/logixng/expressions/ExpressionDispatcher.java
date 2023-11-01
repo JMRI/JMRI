@@ -8,8 +8,7 @@ import javax.annotation.Nonnull;
 import jmri.*;
 import jmri.jmrit.dispatcher.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.util.DispatcherActiveTrainManager;
-import jmri.jmrit.logixng.util.ReferenceUtil;
+import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
@@ -33,15 +32,11 @@ public class ExpressionDispatcher extends AbstractDigitalExpression
     private String _formula = "";
     private ExpressionNode _expressionNode;
 
-    private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
-    private String _stateReference = "";
-    private String _stateLocalVariable = "";
-    private String _stateFormula = "";
-    private ExpressionNode _stateExpressionNode;
+    private final LogixNG_SelectEnum<DispatcherState> _selectEnum =
+            new LogixNG_SelectEnum<>(this, DispatcherState.values(), DispatcherState.Mode, this);
 
     private String _trainInfoFileName = "";
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
-    private DispatcherState _dispatcherState = DispatcherState.Mode;
 
     private final DispatcherActiveTrainManager _atManager;
     private boolean _activeTrainListeners = false;
@@ -69,9 +64,7 @@ public class ExpressionDispatcher extends AbstractDigitalExpression
         copy.setComment(getComment());
 
         copy.setTrainInfoFileName(_trainInfoFileName);
-        copy.setBeanState(getBeanState());
 
-        copy.setBeanState(_dispatcherState);
         copy.setAddressing(_addressing);
         copy.setFormula(_formula);
         copy.setLocalVariable(_localVariable);
@@ -79,15 +72,14 @@ public class ExpressionDispatcher extends AbstractDigitalExpression
 
         copy.set_Is_IsNot(_is_IsNot);
 
-        copy.setStateAddressing(_stateAddressing);
-        copy.setStateFormula(_stateFormula);
-        copy.setStateLocalVariable(_stateLocalVariable);
-        copy.setStateReference(_stateReference);
-
+        _selectEnum.copy(copy._selectEnum);
 
         return manager.registerExpression(copy);
     }
 
+    public LogixNG_SelectEnum<DispatcherState> getSelectEnum() {
+        return _selectEnum;
+    }
 
     public void setTrainInfoFileName(@Nonnull String fileName) {
         _trainInfoFileName = fileName;
@@ -156,64 +148,6 @@ public class ExpressionDispatcher extends AbstractDigitalExpression
     }
 
 
-    public void setStateAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _stateAddressing = addressing;
-        parseStateFormula();
-    }
-
-    public NamedBeanAddressing getStateAddressing() {
-        return _stateAddressing;
-    }
-
-    public void setStateReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _stateReference = reference;
-    }
-
-    public String getStateReference() {
-        return _stateReference;
-    }
-
-    public void setStateLocalVariable(@Nonnull String localVariable) {
-        _stateLocalVariable = localVariable;
-    }
-
-    public String getStateLocalVariable() {
-        return _stateLocalVariable;
-    }
-
-    public void setStateFormula(@Nonnull String formula) throws ParserException {
-        _stateFormula = formula;
-        parseStateFormula();
-    }
-
-    public String getStateFormula() {
-        return _stateFormula;
-    }
-
-    private void parseStateFormula() throws ParserException {
-        if (_stateAddressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _stateExpressionNode = parser.parseExpression(_stateFormula);
-        } else {
-            _stateExpressionNode = null;
-        }
-    }
-
-
-    public void setBeanState(DispatcherState state) {
-        _dispatcherState = state;
-    }
-
-    public DispatcherState getBeanState() {
-        return _dispatcherState;
-    }
-
-
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -245,45 +179,18 @@ public class ExpressionDispatcher extends AbstractDigitalExpression
         }
     }
 
-    private String getNewState() throws JmriException {
-
-        switch (_stateAddressing) {
-            case Reference:
-                return ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _stateReference);
-
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                return TypeConversionUtil
-                        .convertToString(symbolTable.getValue(_stateLocalVariable), false);
-
-            case Formula:
-                return _stateExpressionNode != null
-                        ? TypeConversionUtil.convertToString(
-                                _stateExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false)
-                        : null;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _stateAddressing.name());
-        }
-    }
-
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() throws JmriException {
+        ConditionalNG conditionalNG = getConditionalNG();
+
         String trainInfoFileName = getSelectedFileName();
 
         if (trainInfoFileName.isEmpty()) {
             return false;
         }
 
-        DispatcherState checkDispatcherState;
-        if ((_stateAddressing == NamedBeanAddressing.Direct)) {
-            checkDispatcherState = _dispatcherState;
-        } else {
-            checkDispatcherState = DispatcherState.valueOf(getNewState());
-        }
+        DispatcherState checkDispatcherState = _selectEnum.evaluateEnum(conditionalNG);
 
         boolean result = false;
 
@@ -349,7 +256,6 @@ public class ExpressionDispatcher extends AbstractDigitalExpression
     @Override
     public String getLongDescription(Locale locale) {
         String fileName;
-        String state;
 
         switch (_addressing) {
             case Direct:
@@ -372,26 +278,7 @@ public class ExpressionDispatcher extends AbstractDigitalExpression
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
 
-        switch (_stateAddressing) {
-            case Direct:
-                state = Bundle.getMessage(locale, "AddressByDirect", _dispatcherState._text);
-                break;
-
-            case Reference:
-                state = Bundle.getMessage(locale, "AddressByReference", _stateReference);
-                break;
-
-            case LocalVariable:
-                state = Bundle.getMessage(locale, "AddressByLocalVariable", _stateLocalVariable);
-                break;
-
-            case Formula:
-                state = Bundle.getMessage(locale, "AddressByFormula", _stateFormula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _stateAddressing state: " + _stateAddressing.name());
-        }
+        String state = _selectEnum.getDescription(locale);
 
         return Bundle.getMessage(locale, "Dispatcher_Long", fileName, _is_IsNot.toString(), state);
     }
@@ -407,6 +294,7 @@ public class ExpressionDispatcher extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (! _listenersAreRegistered) {
             _atManager.addPropertyChangeListener(this);
+            _selectEnum.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -416,6 +304,7 @@ public class ExpressionDispatcher extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _atManager.removePropertyChangeListener(this);
+            _selectEnum.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }

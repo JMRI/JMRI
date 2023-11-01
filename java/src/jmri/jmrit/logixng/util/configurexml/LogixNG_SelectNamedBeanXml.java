@@ -17,6 +17,8 @@ import org.jdom2.Element;
  */
 public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
 
+    public enum StoreNamedBean { Name, SystemName }
+
     /**
      * Default implementation for storing the contents of a LogixNG_SelectNamedBean
      *
@@ -25,12 +27,11 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
      * @return Element containing the complete info
      */
     public Element store(LogixNG_SelectNamedBean<E> selectNamedBean, String tagName) {
-        return store(selectNamedBean, tagName, (handle) -> handle.getName());
+        return store(selectNamedBean, tagName, StoreNamedBean.Name);
     }
 
     public Element store(LogixNG_SelectNamedBean<E> selectNamedBean,
-            String tagName,
-            GetNameFromNamedBeanHandle<E> getNameFromNamedBeanHandle) {
+            String tagName, StoreNamedBean storeNamedBean) {
         Element namedBeanElement = new Element(tagName);
 
         LogixNG_SelectTableXml selectTableXml = new LogixNG_SelectTableXml();
@@ -38,7 +39,21 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
         namedBeanElement.addContent(new Element("addressing").addContent(selectNamedBean.getAddressing().name()));
         NamedBeanHandle<E> namedBeanHandle = selectNamedBean.getNamedBean();
         if (namedBeanHandle != null) {
-            namedBeanElement.addContent(new Element("name").addContent(getNameFromNamedBeanHandle.get(namedBeanHandle)));
+            String name;
+            switch (storeNamedBean) {
+                case Name:
+                    name = namedBeanHandle.getName();
+                    break;
+                case SystemName:
+                    name = namedBeanHandle.getBean() != null
+                            ? namedBeanHandle.getBean().getSystemName() : null;
+                    break;
+                default:
+                    throw new IllegalArgumentException("storeNamedBean has unknown value: "+storeNamedBean.name());
+            }
+            if (name != null) {
+                namedBeanElement.addContent(new Element("name").addContent(name));
+            }
         }
         if (selectNamedBean.getReference() != null && !selectNamedBean.getReference().isEmpty()) {
             namedBeanElement.addContent(new Element("reference").addContent(selectNamedBean.getReference()));

@@ -590,7 +590,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             case DCCppConstants.TRACKMANAGER_CMD:
                 text = "Request TrackManager Config: '" + toString() + "'";
                 break;
-            case DCCppConstants.LCD_MESSAGE_CMD:
+            case DCCppConstants.LCD_TEXT_CMD:
                 text = "Request LCD Messages: '" + toString() + "'";
                 break;
             default:
@@ -3108,18 +3108,15 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * Format: {@code <@>}
      * <p>
      * tells EX_CommandStation to send any LCD message updates to this instance of JMRI
-     *
-     * @return series of status messages that can be read by an interface to
-     * determine status of DCC++ Base Station and important settings
      */
     public static DCCppMessage makeLCDRequestMsg() {
-        return (new DCCppMessage(DCCppConstants.LCD_MESSAGE_CMD, DCCppConstants.LCD_MESSAGE_CMD_REGEX));
+        return (new DCCppMessage(DCCppConstants.LCD_TEXT_CMD, DCCppConstants.LCD_TEXT_CMD_REGEX));
     }
 
 
     /**
      * This implementation of equals is targeted to the background function
-     * refreshing in SerialDCCppPacketizer. To keep only one function group in
+     * refreshing in SerialDCCppPacketizer. To keep only one function group inF
      * the refresh queue the logic is as follows. Two messages are equal if they
      * are:
      * <ul>

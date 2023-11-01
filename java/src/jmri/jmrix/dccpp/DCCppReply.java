@@ -306,8 +306,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             case DCCppConstants.TRACKMANAGER_CMD:
                 text = "TrackManager:" + toString();
                 break;
-            case DCCppConstants.LCD_MESSAGE_CMD:
-                text = "LCD Msg '" + getLCDMessageString() + "', disp " + getLCDDisplayNumString() + ", line " + getLCDLineNumString();
+            case DCCppConstants.LCD_TEXT_CMD:
+                text = "LCD Msg '" + getLCDTextString() + "', disp " + getLCDDisplayNumString() + ", line " + getLCDLineNumString();
                 break;
                 
             default:
@@ -541,9 +541,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     r.myRegex = DCCppConstants.DIAG_REPLY_REGEX;
                 }
                 return (r);
-            case DCCppConstants.LCD_MESSAGE_REPLY:
-                if (s.matches(DCCppConstants.LCD_MESSAGE_REPLY_REGEX)) {
-                    r.myRegex = DCCppConstants.LCD_MESSAGE_REPLY_REGEX;
+            case DCCppConstants.LCD_TEXT_REPLY:
+                if (s.matches(DCCppConstants.LCD_TEXT_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.LCD_TEXT_REPLY_REGEX;
                 }
                 return (r);
             case DCCppConstants.WRITE_EEPROM_REPLY:
@@ -1620,24 +1620,23 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         return (Integer.parseInt(this.getClockRateString()));
     }
 
-    
     // <@ 123 123 message text>
-    public boolean isLCDMessageReply() {
-        return (this.matches(DCCppConstants.LCD_MESSAGE_REPLY_REGEX));
+    public boolean isLCDTextReply() {
+        return (this.matches(DCCppConstants.LCD_TEXT_REPLY_REGEX));
     }   
-    public String getLCDMessageString() {
-        if (this.isLCDMessageReply()) {
+    public String getLCDTextString() {
+        if (this.isLCDTextReply()) {
             return (this.getValueString(3));
         } else {
-            log.error("getLCDMessageString Parser called on non-LCDMessageString message type {}", this.getOpCodeChar());
+            log.error("getLCDTextString Parser called on non-LCDTextString message type {}", this.getOpCodeChar());
             return ("error");
         }
     }
     public String getLCDDisplayNumString() {
-        if (this.isLCDMessageReply()) {
+        if (this.isLCDTextReply()) {
             return (this.getValueString(1));
         } else {
-            log.error("getLCDDisplayNumString Parser called on non-LCDMessageString message type {}", this.getOpCodeChar());
+            log.error("getLCDDisplayNumString Parser called on non-LCDTextString message type {}", this.getOpCodeChar());
             return ("error");
         }
     }
@@ -1645,10 +1644,10 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         return (Integer.parseInt(this.getLCDDisplayNumString()));
     }
     public String getLCDLineNumString() {
-        if (this.isLCDMessageReply()) {
+        if (this.isLCDTextReply()) {
             return (this.getValueString(2));
         } else {
-            log.error("getLCDLineNumString Parser called on non-LCDMessageString message type {}", this.getOpCodeChar());
+            log.error("getLCDLineNumString Parser called on non-LCDTextString message type {}", this.getOpCodeChar());
             return ("error");
         }
     }

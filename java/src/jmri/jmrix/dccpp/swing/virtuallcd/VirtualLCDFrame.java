@@ -38,8 +38,8 @@ public class VirtualLCDFrame extends JmriJFrame implements DCCppListener  {
      */
     @Override
     public void message(DCCppReply msg) {
-        if (msg.isLCDMessageReply()) {
-            lines.get(msg.getLCDLineNumInt()).setText(msg.getLCDMessageString());
+        if (msg.isLCDTextReply()) {
+            lines.get(msg.getLCDLineNumInt()).setText(msg.getLCDTextString());
         }
     }
     

@@ -623,7 +623,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 reply = DCCppReply.parseDCCppReply("= B PROG");
                 break;
 
-            case DCCppConstants.LCD_MESSAGE_CMD:
+            case DCCppConstants.LCD_TEXT_CMD:
                 log.debug("LCD_MESSAGE_CMD detected");
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss a");
                 LocalDateTime now = LocalDateTime.now();
