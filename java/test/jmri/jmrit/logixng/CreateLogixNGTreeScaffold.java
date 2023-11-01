@@ -6,6 +6,10 @@ import java.util.*;
 
 import jmri.*;
 import jmri.implementation.VirtualSignalHead;
+import jmri.jmrit.entryexit.DestinationPoints;
+import jmri.jmrit.entryexit.EntryExitPairs;
+import jmri.jmrit.entryexit.PointDetails;
+import jmri.jmrit.entryexit.Source;
 import jmri.jmrit.logix.BlockOrder;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
@@ -59,6 +63,8 @@ public class CreateLogixNGTreeScaffold {
     private Memory memory1;
     private Memory memory2;
     private Memory memory3;
+    private DestinationPoints dp1;
+    private DestinationPoints dp2;
     private NamedTable csvTable;
 
     private LogixManager logixManager = InstanceManager.getDefault(LogixManager.class);
@@ -145,6 +151,16 @@ public class CreateLogixNGTreeScaffold {
         memory2 = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
         memory2.setUserName("Some memory");
         memory3 = InstanceManager.getDefault(MemoryManager.class).provide("IM3");
+
+        dp1 = InstanceManager.getDefault(EntryExitPairs.class).getBySystemName("DP1");
+        if (!( dp1 instanceof TransitScaffold.MyDestinationPoints )) {
+            Assert.fail("Destination point not MyDestinationPoints");
+        }
+
+        dp2 = InstanceManager.getDefault(EntryExitPairs.class).getBySystemName("DP2");
+        if (!( dp2 instanceof TransitScaffold.MyDestinationPoints )) {
+            Assert.fail("Destination point not MyDestinationPoints");
+        }
 
         logixManager = InstanceManager.getDefault(LogixManager.class);
         conditionalManager = InstanceManager.getDefault(ConditionalManager.class);
@@ -2527,6 +2543,7 @@ public class CreateLogixNGTreeScaffold {
         entryExit = new ActionEntryExit(digitalActionManager.getAutoSystemName(), null);
         entryExit.setComment("A comment");
         entryExit.getSelectEnum().setEnum(ActionEntryExit.Operation.SetNXPairDisabled);
+        entryExit.getSelectNamedBean().setNamedBean(dp1);
         entryExit.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
         entryExit.getSelectNamedBean().setFormula("\"IT\"+index");
         entryExit.getSelectNamedBean().setLocalVariable("index");
@@ -2541,6 +2558,7 @@ public class CreateLogixNGTreeScaffold {
         entryExit = new ActionEntryExit(digitalActionManager.getAutoSystemName(), null);
         entryExit.setComment("A comment");
         entryExit.getSelectEnum().setEnum(ActionEntryExit.Operation.SetNXPairEnabled);
+        entryExit.getSelectNamedBean().setNamedBean(dp2);
         entryExit.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
         entryExit.getSelectNamedBean().setFormula("\"IT\"+index");
         entryExit.getSelectNamedBean().setLocalVariable("index");
@@ -3583,6 +3601,7 @@ public class CreateLogixNGTreeScaffold {
         expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setComment("A comment");
         expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Inactive);
+        expressionEntryExit.getSelectNamedBean().setNamedBean(dp1);
         expressionEntryExit.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
         expressionEntryExit.getSelectNamedBean().setFormula("\"IT\"+index");
         expressionEntryExit.getSelectNamedBean().setLocalVariable("index");
@@ -3598,6 +3617,7 @@ public class CreateLogixNGTreeScaffold {
         expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setComment("A comment");
         expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Inactive);
+        expressionEntryExit.getSelectNamedBean().setNamedBean(dp2);
         expressionEntryExit.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
         expressionEntryExit.getSelectNamedBean().setFormula("\"IT\"+index");
         expressionEntryExit.getSelectNamedBean().setLocalVariable("index");
@@ -5328,6 +5348,8 @@ public class CreateLogixNGTreeScaffold {
         _mqttMemo = new MqttSystemConnectionMemo();
         InstanceManager.setDefault(MqttSystemConnectionMemo.class, _mqttMemo);
         InstanceManager.store(_mqttMemo, SystemConnectionMemo.class);
+
+        TransitScaffold.initTransits();
 
 //        JUnitUtil.initLogixNGManager();
 
