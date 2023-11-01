@@ -500,6 +500,9 @@
           <strong>Display</strong>. This action can tell an <strong>Audio</strong> icon on
           a Panel editor to play the sound when the panel is shown in a web browser, for
           example on a tablet or mobile phone.</li>
+
+          <li>The action <strong>Block</strong> and the expressions <strong>Block</strong>,
+          <strong>Dispatcher</strong> and <strong>Sensor</strong> has been refactored.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>

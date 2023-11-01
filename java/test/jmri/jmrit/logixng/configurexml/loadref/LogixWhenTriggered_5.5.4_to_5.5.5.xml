@@ -45,6 +45,11 @@
       <systemName>IMRATEFACTOR</systemName>
     </memory>
   </memories>
+  <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IHTransitScaffold</systemName>
+    </signalhead>
+  </signalheads>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
@@ -132,11 +137,11 @@
         <listenToMemory>no</listenToMemory>
       </namedBean>
       <is_isNot>Is</is_isNot>
-      <stateAddressing>Direct</stateAddressing>
-      <sensorState>Active</sensorState>
-      <stateReference />
-      <stateLocalVariable />
-      <stateFormula />
+      <state>
+        <addressing>Direct</addressing>
+        <enum>Active</enum>
+        <listenToMemory>no</listenToMemory>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -152,11 +157,11 @@
         <listenToMemory>no</listenToMemory>
       </namedBean>
       <is_isNot>Is</is_isNot>
-      <stateAddressing>Direct</stateAddressing>
-      <sensorState>Active</sensorState>
-      <stateReference />
-      <stateLocalVariable />
-      <stateFormula />
+      <state>
+        <addressing>Direct</addressing>
+        <enum>Active</enum>
+        <listenToMemory>no</listenToMemory>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -172,11 +177,11 @@
         <listenToMemory>no</listenToMemory>
       </namedBean>
       <is_isNot>Is</is_isNot>
-      <stateAddressing>Direct</stateAddressing>
-      <sensorState>Active</sensorState>
-      <stateReference />
-      <stateLocalVariable />
-      <stateFormula />
+      <state>
+        <addressing>Direct</addressing>
+        <enum>Active</enum>
+        <listenToMemory>no</listenToMemory>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">

@@ -42,7 +42,7 @@ public class ActionEntryExitXml extends jmri.managers.configurexml.AbstractNamed
         element.addContent(selectNamedBeanXml.store(
                 p.getSelectNamedBean(),
                 "namedBean",
-                (handle) -> handle.getBean() != null ? handle.getBean().getSystemName() : null));
+                LogixNG_SelectNamedBeanXml.StoreNamedBean.SystemName));
         element.addContent(selectEnumXml.store(p.getSelectEnum(), "operation"));
 
         return element;
