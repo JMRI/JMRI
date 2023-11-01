@@ -8,8 +8,6 @@ import jmri.*;
 import jmri.implementation.VirtualSignalHead;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.entryexit.EntryExitPairs;
-import jmri.jmrit.entryexit.PointDetails;
-import jmri.jmrit.entryexit.Source;
 import jmri.jmrit.logix.BlockOrder;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;

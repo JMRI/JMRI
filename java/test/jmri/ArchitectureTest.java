@@ -435,8 +435,6 @@ public class ArchitectureTest {
             .resideInAPackage("jmri.jmrit.logixng.expressions")
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionAudio")    // Not converted to Select... yet
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionAudio$1")   // Not converted to Select... yet
-            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionBlock")    // Not converted to Select... yet
-            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionBlock$1")   // Not converted to Select... yet
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionConditional")    // Not converted to Select... yet
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionConditional$1")   // Not converted to Select... yet
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionDispatcher")    // Not converted to Select... yet
@@ -449,14 +447,10 @@ public class ArchitectureTest {
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionOBlock$1")  // Not converted to Select... yet
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionScript")    // Not converted to Select... yet
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionScript$1")  // Not converted to Select... yet
-            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionSection")    // Not converted to Select... yet
-            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionSection$1")  // Not converted to Select... yet
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionSignalHead")    // Not converted to Select... yet
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionSignalHead$1")  // Not converted to Select... yet
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionSignalMast")    // Not converted to Select... yet
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionSignalMast$1")  // Not converted to Select... yet
-            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionTransit")    // Not converted to Select... yet
-            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionTransit$1")  // Not converted to Select... yet
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionTurnout")    // Not converted to Select... yet
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionTurnout$1")  // Not converted to Select... yet
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionWarrant")    // Not converted to Select... yet

@@ -85,6 +85,9 @@
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
       <systemName>IH2</systemName>
     </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IHTransitScaffold</systemName>
+    </signalhead>
   </signalheads>
   <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
     <signalmast class="jmri.implementation.configurexml.SignalHeadSignalMastXml">

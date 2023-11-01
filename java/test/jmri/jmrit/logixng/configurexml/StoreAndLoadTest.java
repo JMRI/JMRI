@@ -146,8 +146,6 @@ public class StoreAndLoadTest {
 //        }
 
 
-        JUnitAppender.assertErrorMessage("Signal not found at point");
-        JUnitAppender.assertErrorMessage("Signal not found at point");
         JUnitAppender.assertErrorMessage("systemName is already registered: IH1");
         JUnitAppender.assertErrorMessage("systemName is already registered: IH2");
         JUnitAppender.assertWarnMessage("No state variables found for conditional IX1C1");

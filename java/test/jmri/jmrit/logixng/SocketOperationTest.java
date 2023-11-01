@@ -77,9 +77,6 @@ public class SocketOperationTest {
                 testSockets(addRemoveChildren, testSocketOperations);
             }
         }
-
-        JUnitAppender.assertErrorMessage("Signal not found at point");
-        JUnitAppender.assertErrorMessage("Signal not found at point");
     }
 
     private void testSockets(boolean addRemoveChildren, boolean testSocketOperations) throws SocketAlreadyConnectedException {

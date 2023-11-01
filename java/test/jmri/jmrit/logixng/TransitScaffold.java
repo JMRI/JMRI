@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng;
 
-import jmri.InstanceManager;
+import jmri.*;
+import jmri.implementation.VirtualSignalHead;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.entryexit.PointDetails;
@@ -36,6 +37,12 @@ public class TransitScaffold {
         public String getDisplayName() {
             return "DisplayName";
         }
+
+        @Override
+        public NamedBean getRefObject() {
+            return InstanceManager.getDefault(SignalHeadManager.class)
+                    .getBySystemName("IHTransitScaffold");
+        }
     }
 
     private static class MyEntryExitPairs extends EntryExitPairs {
@@ -46,6 +53,8 @@ public class TransitScaffold {
         final MyDestinationPoints myBeanEntryExit;
 
         public MyEntryExitPairs() {
+            InstanceManager.getDefault(SignalHeadManager.class)
+                    .register(new VirtualSignalHead("IHTransitScaffold"));
             point = new MyPointDetails();
             src = new Source(point);
             dp1 = new MyDestinationPoints(new MyPointDetails(), "DP1", src);

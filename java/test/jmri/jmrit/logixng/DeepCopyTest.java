@@ -82,9 +82,6 @@ public class DeepCopyTest {
                 }
             }
         }
-
-        JUnitAppender.assertErrorMessage("Signal not found at point");
-        JUnitAppender.assertErrorMessage("Signal not found at point");
     }
 
 

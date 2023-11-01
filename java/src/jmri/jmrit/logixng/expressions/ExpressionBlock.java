@@ -170,32 +170,22 @@ public class ExpressionBlock extends AbstractDigitalExpression
         String namedBean = _selectNamedBean.getDescription(locale);
         String state;
 
-        switch (_selectEnum.getAddressing()) {
-            case Direct:
-                BlockState blockState = _selectEnum.getEnum();
+        if (_selectEnum.isDirectAddressing()) {
+            BlockState blockState = _selectEnum.getEnum();
 
-                if (blockState == BlockState.ValueMatches) {
-                    String bundleKey = "Block_Long_Value";
-                    String equalsString = _is_IsNot == Is_IsNot_Enum.Is ? Bundle.getMessage("Block_Equal") : Bundle.getMessage("Block_NotEqual");
-                    return Bundle.getMessage(locale, bundleKey, namedBean, equalsString, _selectBlockValue.getDescription(locale));
-                } else if (blockState == BlockState.Other) {
-                    state = Bundle.getMessage(locale, "AddressByDirect", blockState._text);
-                    return Bundle.getMessage(locale, "Block_Long", namedBean, "", state);
-                } else {
-                    state = Bundle.getMessage(locale, "AddressByDirect", blockState._text);
-                }
-               break;
-
-            case Reference:
-            case LocalVariable:
-            case Formula:
-                state = _selectEnum.getDescription(locale);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _stateAddressing state: " + _selectEnum.getAddressing().name());
+            if (blockState == BlockState.ValueMatches) {
+                String bundleKey = "Block_Long_Value";
+                String equalsString = _is_IsNot == Is_IsNot_Enum.Is ? Bundle.getMessage("Block_Equal") : Bundle.getMessage("Block_NotEqual");
+                return Bundle.getMessage(locale, bundleKey, namedBean, equalsString, _selectBlockValue.getDescription(locale));
+            } else if (blockState == BlockState.Other) {
+                state = Bundle.getMessage(locale, "AddressByDirect", blockState._text);
+                return Bundle.getMessage(locale, "Block_Long", namedBean, "", state);
+            } else {
+                state = Bundle.getMessage(locale, "AddressByDirect", blockState._text);
+            }
+        } else {
+            state = _selectEnum.getDescription(locale);
         }
-
 
         return Bundle.getMessage(locale, "Block_Long", namedBean, _is_IsNot.toString(), state);
     }
