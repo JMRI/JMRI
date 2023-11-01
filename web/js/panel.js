@@ -686,10 +686,22 @@ function processPanelXML($returnedData, $success, $xhr) {
                     $widget['styles'] = $getTextCSSFromObj($widget);
                     switch ($widget.widgetType) {
                         case "audioicon" :
-                            $widget.jsonType = "audioicon"; // JSON object type
+                            $widget.jsonType = 'audio'; // JSON object type
                             $widget['identity'] = $(this).find('Identity').text();
+                            audioIconIDs['audioicon:'+$widget['identity']] = $widget;   // Ensure the key is a string, not a number
+                            $widget['sound'] = $(this).attr('sound');
+                            $widget['onClickOperation'] = $(this).attr('onClickOperation');
+                            $widget['audio_widget'] = new Audio($widget['sound']);
+                            $widget['playSoundWhenJmriPlays'] = $(this).attr('playSoundWhenJmriPlays') == "yes";
+                            $widget['stopSoundWhenJmriStops'] = $(this).attr('stopSoundWhenJmriStops') == "yes";
                             $widget.styles['user-select'] = "none";
                             $widget.classes += " " + $widget.jsonType + " clickable ";
+                            if (!$('#' + $widget.id).hasClass('clickable')) {
+                                $('#' + $widget.id).addClass("clickable");
+                                $('#' + $widget.id).bind(UPEVENT, $handleClick);
+                            }
+                            jmri.getAudio($widget.systemName);
+                            jmri.getAudioIcon($widget['identity']);
                             break;
                         case "logixngicon" :
                             $widget.jsonType = "logixngicon"; // JSON object type

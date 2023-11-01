@@ -7,6 +7,7 @@ import jmri.*;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultClockControl;
 import jmri.jmrit.audio.DefaultAudioManager;
+import jmri.jmrit.audio.DefaultAudioSourceManager;
 import jmri.jmrit.simpleclock.SimpleTimebase;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
@@ -50,6 +51,10 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
 
         if (type == AudioManager.class) {
             return new DefaultAudioManager(memo);
+        }
+
+        if (type == AudioSourceManager.class) {
+            return new DefaultAudioSourceManager();
         }
 
         if (type == ClockControl.class) {
@@ -159,6 +164,7 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
         set.addAll(Arrays.asList(
                 AnalogIOManager.class,
                 AudioManager.class,
+                AudioSourceManager.class,
                 ClockControl.class,
                 ConditionalManager.class,
                 IdTagManager.class,

@@ -7,6 +7,7 @@ import java.util.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.Base.PrintTreeSettings;
+
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import org.junit.*;

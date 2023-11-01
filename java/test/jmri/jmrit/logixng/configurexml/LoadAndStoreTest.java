@@ -7,8 +7,13 @@ import java.io.IOException;
 import java.util.stream.Stream;
 
 import jmri.InstanceManager;
+import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
 import jmri.SystemConnectionMemo;
+import jmri.jmrit.entryexit.DestinationPoints;
+import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.TransitScaffold;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
 import jmri.util.JUnitUtil;
@@ -54,12 +59,20 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
     @Override
     protected void postLoadProcessing() {
         InstanceManager.getDefault(LogixNG_Manager.class).setupAllLogixNGs();
+
+        // We do this to test that DestinationPoints are stored in the file
+        // as system name, not as user name.
+        DestinationPoints dp1 = InstanceManager.getDefault(EntryExitPairs.class).getBySystemName("DP1");
+        NamedBeanHandleManager nbm = InstanceManager.getDefault(NamedBeanHandleManager.class);
+        NamedBeanHandle nb = nbm.getNamedBeanHandle(dp1.getSystemName(), dp1);
+        nb.setName(dp1.getUserName());
     }
 
     @BeforeEach
     @Override
     public void setUp(@TempDir java.io.File tempDir) throws IOException  {
         super.setUp(tempDir);
+//        super.setUp(new File("F:\\Projekt\\Java\\GitHub\\JMRI\\temp\\temp"));
 
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initDebugCommandStation();
@@ -75,6 +88,8 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
         MqttSystemConnectionMemo mqttMemo = new MqttSystemConnectionMemo();
         InstanceManager.store(mqttMemo, SystemConnectionMemo.class);
         InstanceManager.setDefault(MqttSystemConnectionMemo.class, mqttMemo);
+
+        TransitScaffold.initTransits();
     }
 
     @AfterEach

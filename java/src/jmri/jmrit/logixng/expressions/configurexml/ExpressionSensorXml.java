@@ -4,8 +4,8 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionSensor;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
-import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
 
@@ -37,15 +37,10 @@ public class ExpressionSensorXml extends jmri.managers.configurexml.AbstractName
         storeCommon(p, element);
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Sensor>();
+        var selectEnumXml = new LogixNG_SelectEnumXml<ExpressionSensor.SensorState>();
         element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
-
         element.addContent(new Element("is_isNot").addContent(p.get_Is_IsNot().name()));
-
-        element.addContent(new Element("stateAddressing").addContent(p.getStateAddressing().name()));
-        element.addContent(new Element("sensorState").addContent(p.getBeanState().name()));
-        element.addContent(new Element("stateReference").addContent(p.getStateReference()));
-        element.addContent(new Element("stateLocalVariable").addContent(p.getStateLocalVariable()));
-        element.addContent(new Element("stateFormula").addContent(p.getStateFormula()));
+        element.addContent(selectEnumXml.store(p.getSelectEnum(), "state"));
 
         return element;
     }
@@ -59,6 +54,7 @@ public class ExpressionSensorXml extends jmri.managers.configurexml.AbstractName
         loadCommon(h, shared);
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Sensor>();
+        var selectEnumXml = new LogixNG_SelectEnumXml<ExpressionSensor.SensorState>();
         selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
         selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "sensor");
 
@@ -67,29 +63,14 @@ public class ExpressionSensorXml extends jmri.managers.configurexml.AbstractName
             h.set_Is_IsNot(Is_IsNot_Enum.valueOf(is_IsNot.getTextTrim()));
         }
 
-        try {
-            Element elem = shared.getChild("stateAddressing");
-            if (elem != null) {
-                h.setStateAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            Element sensorState = shared.getChild("sensorState");
-            if (sensorState != null) {
-                h.setBeanState(ExpressionSensor.SensorState.valueOf(sensorState.getTextTrim()));
-            }
-
-            elem = shared.getChild("stateReference");
-            if (elem != null) h.setStateReference(elem.getTextTrim());
-
-            elem = shared.getChild("stateLocalVariable");
-            if (elem != null) h.setStateLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("stateFormula");
-            if (elem != null) h.setStateFormula(elem.getTextTrim());
-
-        } catch (ParserException e) {
-            throw new JmriConfigureXmlException(e);
-        }
+        selectEnumXml.load(shared.getChild("state"), h.getSelectEnum());
+        selectEnumXml.loadLegacy(
+                shared, h.getSelectEnum(),
+                "stateAddressing",
+                "sensorState",
+                "stateReference",
+                "stateLocalVariable",
+                "stateFormula");
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
         return true;

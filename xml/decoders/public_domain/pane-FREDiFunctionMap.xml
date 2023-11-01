@@ -86,14 +86,6 @@
             </label>
         </griditem>
 
-        <griditem gridx="0" gridy="12">
-            <display item="CV44:Enable OPC-IMM for high functions" />
-        </griditem>
-
-        <griditem gridx="0" gridy="14">
-            <display item="SV43:Break Function active" />
-        </griditem>
-
         <griditem gridx="1" gridy="0">
             <label>
                 <text>&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;</text>
