@@ -138,7 +138,7 @@ public class WhereUsedTest {
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
 
         expressionSensor.getSelectNamedBean().setNamedBean(sensor);
-        expressionSensor.setBeanState(ExpressionSensor.SensorState.Active);
+        expressionSensor.getSelectEnum().setEnum(ExpressionSensor.SensorState.Active);
 
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.activate();
@@ -171,7 +171,7 @@ public class WhereUsedTest {
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
 
         expressionSensor.getSelectNamedBean().setNamedBean(sensor);
-        expressionSensor.setBeanState(ExpressionSensor.SensorState.Active);
+        expressionSensor.getSelectEnum().setEnum(ExpressionSensor.SensorState.Active);
 
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.activate();
@@ -204,7 +204,7 @@ public class WhereUsedTest {
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
 
 //        expressionSensor.getSelectNamedBean().setNamedBean(sensor);
-        expressionSensor.setBeanState(ExpressionSensor.SensorState.Active);
+        expressionSensor.getSelectEnum().setEnum(ExpressionSensor.SensorState.Active);
 
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.activate();

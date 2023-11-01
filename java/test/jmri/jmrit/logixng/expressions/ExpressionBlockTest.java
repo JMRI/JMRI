@@ -170,11 +170,11 @@ public class ExpressionBlockTest extends AbstractDigitalExpressionTestBase {
         Assert.assertEquals("Block \"''\" is Occupied", expressionBlock.getLongDescription());
         expressionBlock.getSelectNamedBean().setNamedBean(block);
         expressionBlock.set_Is_IsNot(Is_IsNot_Enum.Is);
-        expressionBlock.setBeanState(ExpressionBlock.BlockState.NotOccupied);
+        expressionBlock.getSelectEnum().setEnum(ExpressionBlock.BlockState.NotOccupied);
         Assert.assertEquals("Block \"IB1\" is not Occupied", expressionBlock.getLongDescription());
         expressionBlock.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         Assert.assertEquals("Block \"IB1\" is not not Occupied", expressionBlock.getLongDescription());
-        expressionBlock.setBeanState(ExpressionBlock.BlockState.Other);
+        expressionBlock.getSelectEnum().setEnum(ExpressionBlock.BlockState.Other);
         Assert.assertEquals("Block \"IB1\"  some other state", expressionBlock.getLongDescription());
     }
 
@@ -222,7 +222,7 @@ public class ExpressionBlockTest extends AbstractDigitalExpressionTestBase {
 
         expressionBlock.getSelectNamedBean().setNamedBean(block);
         expressionBlock.set_Is_IsNot(Is_IsNot_Enum.Is);
-        expressionBlock.setBeanState(ExpressionBlock.BlockState.Occupied);
+        expressionBlock.getSelectEnum().setEnum(ExpressionBlock.BlockState.Occupied);
 
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());

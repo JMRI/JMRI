@@ -3,16 +3,10 @@ package jmri.jmrit.logixng.expressions;
 import java.beans.*;
 import java.util.*;
 
-import javax.annotation.Nonnull;
-
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
-import jmri.jmrit.logixng.util.ReferenceUtil;
+import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.*;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
-import jmri.util.TypeConversionUtil;
 
 /**
  * This expression sets the state of a sensor.
@@ -25,13 +19,12 @@ public class ExpressionSensor extends AbstractDigitalExpression
     private final LogixNG_SelectNamedBean<Sensor> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
                     this, Sensor.class, InstanceManager.getDefault(SensorManager.class), this);
+
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
-    private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
-    private SensorState _sensorState = SensorState.Active;
-    private String _stateReference = "";
-    private String _stateLocalVariable = "";
-    private String _stateFormula = "";
-    private ExpressionNode _stateExpressionNode;
+
+    private final LogixNG_SelectEnum<SensorState> _selectEnum =
+            new LogixNG_SelectEnum<>(this, SensorState.values(), SensorState.Active, this);
+
 
     public ExpressionSensor(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -47,12 +40,8 @@ public class ExpressionSensor extends AbstractDigitalExpression
         ExpressionSensor copy = new ExpressionSensor(sysName, userName);
         copy.setComment(getComment());
         _selectNamedBean.copy(copy._selectNamedBean);
-        copy.setBeanState(_sensorState);
         copy.set_Is_IsNot(_is_IsNot);
-        copy.setStateAddressing(_stateAddressing);
-        copy.setStateFormula(_stateFormula);
-        copy.setStateLocalVariable(_stateLocalVariable);
-        copy.setStateReference(_stateReference);
+        _selectEnum.copy(copy._selectEnum);
         return manager.registerExpression(copy);
     }
 
@@ -68,90 +57,14 @@ public class ExpressionSensor extends AbstractDigitalExpression
         return _is_IsNot;
     }
 
-    public void setStateAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _stateAddressing = addressing;
-        parseStateFormula();
-    }
-
-    public NamedBeanAddressing getStateAddressing() {
-        return _stateAddressing;
-    }
-
-    public void setBeanState(SensorState state) {
-        _sensorState = state;
-    }
-
-    public SensorState getBeanState() {
-        return _sensorState;
-    }
-
-    public void setStateReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _stateReference = reference;
-    }
-
-    public String getStateReference() {
-        return _stateReference;
-    }
-
-    public void setStateLocalVariable(@Nonnull String localVariable) {
-        _stateLocalVariable = localVariable;
-    }
-
-    public String getStateLocalVariable() {
-        return _stateLocalVariable;
-    }
-
-    public void setStateFormula(@Nonnull String formula) throws ParserException {
-        _stateFormula = formula;
-        parseStateFormula();
-    }
-
-    public String getStateFormula() {
-        return _stateFormula;
-    }
-
-    private void parseStateFormula() throws ParserException {
-        if (_stateAddressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _stateExpressionNode = parser.parseExpression(_stateFormula);
-        } else {
-            _stateExpressionNode = null;
-        }
+    public LogixNG_SelectEnum<SensorState> getSelectEnum() {
+        return _selectEnum;
     }
 
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
         return Category.ITEM;
-    }
-
-    private String getNewState() throws JmriException {
-
-        switch (_stateAddressing) {
-            case Reference:
-                return ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _stateReference);
-
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                return TypeConversionUtil
-                        .convertToString(symbolTable.getValue(_stateLocalVariable), false);
-
-            case Formula:
-                return _stateExpressionNode != null
-                        ? TypeConversionUtil.convertToString(
-                                _stateExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false)
-                        : null;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _stateAddressing.name());
-        }
     }
 
     /** {@inheritDoc} */
@@ -161,14 +74,7 @@ public class ExpressionSensor extends AbstractDigitalExpression
 
         if (sensor == null) return false;
 
-        SensorState checkSensorState;
-
-        if ((_stateAddressing == NamedBeanAddressing.Direct)) {
-            checkSensorState = _sensorState;
-        } else {
-            checkSensorState = SensorState.valueOf(getNewState());
-        }
-
+        SensorState checkSensorState = _selectEnum.evaluateEnum(getConditionalNG());
         SensorState currentSensorState = SensorState.get(sensor.getKnownState());
         if (_is_IsNot == Is_IsNot_Enum.Is) {
             return currentSensorState == checkSensorState;
@@ -195,28 +101,7 @@ public class ExpressionSensor extends AbstractDigitalExpression
     @Override
     public String getLongDescription(Locale locale) {
         String namedBean = _selectNamedBean.getDescription(locale);
-        String state;
-
-        switch (_stateAddressing) {
-            case Direct:
-                state = Bundle.getMessage(locale, "AddressByDirect", _sensorState._text);
-                break;
-
-            case Reference:
-                state = Bundle.getMessage(locale, "AddressByReference", _stateReference);
-                break;
-
-            case LocalVariable:
-                state = Bundle.getMessage(locale, "AddressByLocalVariable", _stateLocalVariable);
-                break;
-
-            case Formula:
-                state = Bundle.getMessage(locale, "AddressByFormula", _stateFormula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _stateAddressing state: " + _stateAddressing.name());
-        }
+        String state = _selectEnum.getDescription(locale);
 
         return Bundle.getMessage(locale, "Sensor_Long", namedBean, _is_IsNot.toString(), state);
     }
@@ -299,7 +184,7 @@ public class ExpressionSensor extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-        log.debug("getUsageReport :: ExpressionBlock: bean = {}, report = {}", cdl, report);
+        log.debug("getUsageReport :: ExpressionSensor: bean = {}, report = {}", cdl, report);
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Expression);
     }
 

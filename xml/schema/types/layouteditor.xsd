@@ -63,6 +63,7 @@
         <xs:element name="LightIcon"          type="EditorLightIconType"         minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="layoutShape"        type="EditorLayoutShapeType"       minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="logixngicon"        type="EditorLogixNGIconType"       minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="audioicon"          type="EditorAudioIconType"         minOccurs="0" maxOccurs="unbounded" />
       </xs:sequence>
 
       <xs:attribute name="class" type="classType" use="required" />

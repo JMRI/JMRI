@@ -114,22 +114,12 @@ public class ExpressionTransit extends AbstractDigitalExpression
         String namedBean = _selectNamedBean.getDescription(locale);
         String state;
 
-        switch (_selectEnum.getAddressing()) {
-            case Direct:
-                TransitState transitState = _selectEnum.getEnum();
-                state = Bundle.getMessage(locale, "AddressByDirect", transitState._text);
-                break;
-
-            case Reference:
-            case LocalVariable:
-            case Formula:
-                state = _selectEnum.getDescription(locale);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _stateAddressing state: " + _selectEnum.getAddressing().name());
+        if (_selectEnum.isDirectAddressing()) {
+            TransitState transitState = _selectEnum.getEnum();
+            state = Bundle.getMessage(locale, "AddressByDirect", transitState._text);
+        } else {
+            state = _selectEnum.getDescription(locale);
         }
-
 
         return Bundle.getMessage(locale, "Transit_Long", namedBean, _is_IsNot.toString(), state);
     }

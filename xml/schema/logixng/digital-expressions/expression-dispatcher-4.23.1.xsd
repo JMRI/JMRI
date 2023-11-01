@@ -49,8 +49,10 @@
 
               <xs:element name="is_isNot" type="LogixNG_Is_IsNot_Type" minOccurs="0" maxOccurs="1"/>
 
-              <xs:element name="stateAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+              <xs:element name="state" type="LogixNG_SelectEnumType" minOccurs="0" maxOccurs="1" />
 
+              <!-- These are for backwards compability up until JMRI 5.3.2 -->
+              <xs:element name="stateAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
               <xs:element name="dispatcherState" minOccurs="0" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
@@ -69,10 +71,10 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-
               <xs:element name="stateReference" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="stateLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="stateFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <!-- These are for backwards compability up until JMRI 5.3.2 -->
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 

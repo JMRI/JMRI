@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.expressions.configurexml;
 
-import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
 
 import jmri.*;
@@ -8,8 +7,8 @@ import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionBlock;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
-import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.JmriJOptionPane;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectStringXml;
 
 import org.jdom2.Element;
 
@@ -44,22 +43,15 @@ public class ExpressionBlockXml extends jmri.managers.configurexml.AbstractNamed
         storeCommon(p, element);
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Block>();
+        var selectEnumXml = new LogixNG_SelectEnumXml<ExpressionBlock.BlockState>();
+        var selectStringXml = new LogixNG_SelectStringXml();
+
         element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
 
         element.addContent(new Element("is_isNot").addContent(p.get_Is_IsNot().name()));
 
-        element.addContent(new Element("stateAddressing").addContent(p.getStateAddressing().name()));
-        element.addContent(new Element("blockState").addContent(p.getBeanState().name()));
-        element.addContent(new Element("stateReference").addContent(p.getStateReference()));
-        element.addContent(new Element("stateLocalVariable").addContent(p.getStateLocalVariable()));
-        element.addContent(new Element("stateFormula").addContent(p.getStateFormula()));
-
-        element.addContent(new Element("dataAddressing").addContent(p.getDataAddressing().name()));
-        element.addContent(new Element("dataReference").addContent(p.getDataReference()));
-        element.addContent(new Element("dataLocalVariable").addContent(p.getDataLocalVariable()));
-        element.addContent(new Element("dataFormula").addContent(p.getDataFormula()));
-
-        element.addContent(new Element("blockValue").addContent(p.getBlockValue()));
+        element.addContent(selectEnumXml.store(p.getSelectEnum(), "blockStateData"));
+        element.addContent(selectStringXml.store(p.getSelectBlockValue(), "blockValueData"));
 
         return element;
     }
@@ -73,6 +65,9 @@ public class ExpressionBlockXml extends jmri.managers.configurexml.AbstractNamed
         loadCommon(h, shared);
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Block>();
+        var selectEnumXml = new LogixNG_SelectEnumXml<ExpressionBlock.BlockState>();
+            var selectStringXml = new LogixNG_SelectStringXml();
+
         selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
         selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "block");
 
@@ -81,71 +76,25 @@ public class ExpressionBlockXml extends jmri.managers.configurexml.AbstractNamed
             h.set_Is_IsNot(Is_IsNot_Enum.valueOf(is_IsNot.getTextTrim()));
         }
 
-        try {
-            Element elem = shared.getChild("stateAddressing");
-            if (elem != null) {
-                h.setStateAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
+        selectEnumXml.load(shared.getChild("blockStateData"), h.getSelectEnum());
+        selectEnumXml.loadLegacy(
+                shared,
+                h.getSelectEnum(),
+                "stateAddressing",
+                "blockState",
+                "stateReference",
+                "stateLocalVariable",
+                "stateFormula");
 
-            Element blockState = shared.getChild("blockState");
-            if (blockState != null) {
-
-                String state = blockState.getTextTrim();
-                // deprecated 4.23.5 remove 4.25.1
-                if (state.equals("MemoryMatches")) {
-                    state = "ValueMatches";
-                }
-                h.setBeanState(ExpressionBlock.BlockState.valueOf(state));
-            }
-
-            elem = shared.getChild("stateReference");
-            if (elem != null) h.setStateReference(elem.getTextTrim());
-
-            elem = shared.getChild("stateLocalVariable");
-            if (elem != null) h.setStateLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("stateFormula");
-            if (elem != null) h.setStateFormula(elem.getTextTrim());
-
-
-            elem = shared.getChild("dataAddressing");
-            if (elem != null) {
-                h.setDataAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            elem = shared.getChild("dataReference");
-            if (elem != null) h.setDataReference(elem.getTextTrim());
-
-            elem = shared.getChild("dataLocalVariable");
-            if (elem != null) h.setDataLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("dataFormula");
-            if (elem != null) h.setDataFormula(elem.getTextTrim());
-
-            elem = shared.getChild("blockValue");
-            if (elem != null) h.setBlockValue(elem.getTextTrim());
-
-            // deprecated 4.23.5 remove 4.25.1
-            elem = shared.getChild("blockConstant");
-            if (elem != null) h.setBlockValue(elem.getTextTrim());
-
-            // deprecated 4.23.5 remove 4.25.1
-            elem = shared.getChild("blockMemory");
-//             if (elem != null) h.setBlockMemory(elem.getTextTrim());
-            if (elem != null) {
-                String memoryName = elem.getTextTrim();
-                h.setBlockValue(">>> " + elem.getTextTrim() + " <<<");
-                if (!GraphicsEnvironment.isHeadless() && !Boolean.getBoolean("jmri.test.no-dialogs")) {
-                    JmriJOptionPane.showMessageDialog(null,
-                            rb.getString("ActionBlock_MemoryChange"),
-                            rb.getString("ActionBlock_MemoryTitle") + " " + memoryName,
-                            JmriJOptionPane.WARNING_MESSAGE);
-                }
-            }
-
-        } catch (ParserException e) {
-            throw new JmriConfigureXmlException(e);
-        }
+        selectStringXml.load(shared.getChild("blockValueData"), h.getSelectBlockValue());
+        selectStringXml.loadLegacy(
+                shared,
+                h.getSelectBlockValue(),
+                "dataAddressing",
+                "blockValue",
+                "dataReference",
+                "dataLocalVariable",
+                "dataFormula");
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
         return true;
