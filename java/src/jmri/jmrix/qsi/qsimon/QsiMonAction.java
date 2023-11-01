@@ -4,8 +4,6 @@ import java.awt.event.ActionEvent;
 import jmri.InstanceManager;
 import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 import jmri.jmrix.qsi.swing.QsiSystemConnectionAction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a QsiMonFrame object.
@@ -32,16 +30,11 @@ public class QsiMonAction extends QsiSystemConnectionAction {
         if (memo != null) {
             // create a QsiMonFrame
             QsiMonFrame f = new QsiMonFrame(memo);
-            try {
-                f.initComponents();
-            }
-            catch (Exception ex) {
-                log.warn("QsiMonAction starting QsiMonFrame: Exception: ", ex);
-            }
+            f.initComponents();
             f.setVisible(true);
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(QsiMonAction.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(QsiMonAction.class);
 
 }

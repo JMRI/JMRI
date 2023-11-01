@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2015</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Ronald</firstname>
+        <surname>Kuhn</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2023-07-23</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>Creation</revremark>
+    </revision>
+  </revhistory>
+  <variable item="Function assignment automatic idle" CV="978" tooltip="CV978" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+    <label>Function assignment automatic idle</label>
+    <label xml:lang="de">Funktionszuordnung automatischer Leerlauf</label>
+  </variable>
+  <variable item="Function assignment forced acceleration" CV="979" tooltip="CV979" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+    <label>Function assignment forced acceleration</label>
+    <label xml:lang="de">Funktionszuordnung Zwangsbeschleunigung</label>
+  </variable>
+</variables>

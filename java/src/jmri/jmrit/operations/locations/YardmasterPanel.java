@@ -16,9 +16,7 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCommon;
-import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.*;
 
 /**
  * Yardmaster Frame. Shows work at one location.
@@ -196,8 +194,7 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
                 List<RouteLocation> routeList = _train.getRoute().getLocationsBySequenceList();
                 int visitNumber = 0;
                 for (int i = 0; i < routeList.size(); i++) {
-                    if (TrainCommon.splitString(routeList.get(i).getName())
-                            .equals(TrainCommon.splitString(_location.getName()))) {
+                    if (routeList.get(i).getSplitName().equals(_location.getSplitName())) {
                         visitNumber++;
                         if (visitNumber == _visitNumber) {
                             rl = routeList.get(i);

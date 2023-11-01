@@ -4,8 +4,6 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionPower;
-import jmri.jmrit.logixng.util.parser.ParserException;
-
 import org.jdom2.Element;
 
 /**

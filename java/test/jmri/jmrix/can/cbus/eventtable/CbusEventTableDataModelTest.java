@@ -407,6 +407,7 @@ public class CbusEventTableDataModelTest {
         tcis.terminateThreads();
         memo = null;
         tcis = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

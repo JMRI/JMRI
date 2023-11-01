@@ -41,8 +41,7 @@ import jmri.util.swing.DrawSquares;
 import jmri.util.swing.ImagePanel;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Create a JPanel containing trees of resources to replace default icons. The
@@ -839,9 +838,7 @@ public class CatalogPanel extends JPanel {
         if (node == null) {
             return;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("delete icon {} from node {}", icon.getName(), node);
-        }
+        log.debug("delete icon {} from node {}", icon.getName(), node);
         node.deleteLeaf(icon.getName(), icon.getURL());
         _model.nodeChanged(node);
         updatePanel();
@@ -853,13 +850,10 @@ public class CatalogPanel extends JPanel {
         if (node == null) {
             return;
         }
-        String name = JOptionPane.showInputDialog(getParentFrame(this),
-                Bundle.getMessage("newIconName"), icon.getName(),
-                JOptionPane.QUESTION_MESSAGE);
+        String name = JmriJOptionPane.showInputDialog(getParentFrame(this),
+                Bundle.getMessage("newIconName"), icon.getName());
         if (name != null && name.length() > 0) {
-            if (log.isDebugEnabled()) {
-                log.debug("rename icon {} to {} from node {}", icon.getName(), name, node);
-            }
+            log.debug("rename icon {} to {} from node {}", icon.getName(), name, node);
             CatalogTreeLeaf leaf = node.getLeaf(icon.getName(), icon.getURL());
             if (leaf != null) {
                 leaf.setName(name);
@@ -1109,7 +1103,6 @@ public class CatalogPanel extends JPanel {
         }
     }
 
-
-    private static final Logger log = LoggerFactory.getLogger(CatalogPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CatalogPanel.class);
 
 }

@@ -22,6 +22,7 @@ public class AbstractMessageTest extends AbstractMessageTestBase {
         };
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = null;

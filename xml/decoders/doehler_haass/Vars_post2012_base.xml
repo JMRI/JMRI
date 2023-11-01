@@ -29,8 +29,20 @@
         <surname>Le Marchand</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Ronald</firstname>
+        <surname>Kuhn</surname>
+      </personname>
+    </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>4</revnumber>
+      <date>2023-07-19</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>disable unimplemented CV for PD06A</revremark>
+    </revision>
     <revision>
       <revnumber>3</revnumber>
       <date>2019-07-28</date>
@@ -55,7 +67,7 @@
     </revision>
   </revhistory>
   <!-- Brake options (in DH Options panel) -->
-  <variable item="Brake on asymmetrical signal (normal)" CV="27" mask="XXXXXXXV" tooltip="CV27 Bit 0">
+  <variable item="Brake on asymmetrical signal (normal)" CV="27" mask="XXXXXXXV" tooltip="CV27 Bit 0" exclude="132">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Brake on asymmetrical signal (normal)</label>
     <label xml:lang="it">Freni con segnale asimmetrico (normale)</label>
@@ -63,7 +75,7 @@
     <label xml:lang="de">Bremsen - Asymmetrie (normal)</label>
     <label xml:lang="ca">Frena amb senyal assimètrica (normal)</label>
   </variable>
-  <variable item="Brake on asymmetrical signal (inverted)" CV="27" mask="XXXXXXVX" tooltip="CV27 Bit 1">
+  <variable item="Brake on asymmetrical signal (inverted)" CV="27" mask="XXXXXXVX" tooltip="CV27 Bit 1" exclude="132">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Brake on asymmetrical signal (inverted)</label>
     <label xml:lang="it">Freni con segnale asimmetrico (invertito)</label>
@@ -140,7 +152,7 @@
     <label xml:lang="de">Funktion für AUX 1 und AUX 2 ein</label>
     <label xml:lang="ca">Funció per engegar AUX 1 i AUX 2</label>
   </variable>
-  <variable item="Reduced speed in braking zones" CV="123" default="63" tooltip="CV123 (0-127)">
+  <variable item="Reduced speed in braking zones" CV="123" default="63" tooltip="CV123 (0-127)" exclude="132">
     <decVal min="0" max="127"/>
     <label>Reduced speed in braking zones</label>
     <label xml:lang="it">Riduzione velocità in zone frenate</label>
@@ -148,7 +160,7 @@
     <label xml:lang="de">Langsamfahrt Geschw. bei bremsen</label>
     <label xml:lang="ca">Velocitat reduïda en zones de frenada</label>
   </variable>
-  <variable item="Threshold for asymmetric behavior" CV="134" default="6" tooltip="CV134 (0-15)">
+  <variable item="Threshold for asymmetric behavior" CV="134" default="6" tooltip="CV134 (0-15)" exclude="132">
     <decVal min="0" max="15"/>
     <label>Threshold for asymmetric behavior</label>
     <label xml:lang="it">Soglia per segnale asimmetrico</label>

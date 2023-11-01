@@ -14,26 +14,26 @@ public interface FunctionFactory {
      * "Conversion".
      * @return the module name
      */
-    public String getModule();
+    String getModule();
     
     /**
      * Get a set of classes that implements the Function interface.
      * 
      * @return a set of functions
      */
-    public Set<Function> getFunctions();
+    Set<Function> getFunctions();
     
     /**
      * Get a set of classes that implements the Constant interface.
      * 
      * @return a set of constants
      */
-    public Set<Constant> getConstants();
+    Set<Constant> getConstants();
     
     /**
      * Get the description of the constants in Markdown format
      * @return the description of the constants
      */
-    public String getConstantDescription();
+    String getConstantDescription();
     
 }

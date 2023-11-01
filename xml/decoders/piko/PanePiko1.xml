@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2022 All rights reserved                            -->
+<!-- Copyright (C) JMRI 2022, 2023 All rights reserved                      -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -106,13 +106,10 @@
 		</row>
 	</column>
 	<column>
-		<group include="PIKO46550-18">
-			<!--Piko SmartDecoder XP5.1-->
-			<label>
-				<text>Load detection</text>
-				<text xml:lang="de">&gt;&gt; Lasterkennung zur Soundansteuerung &lt;&lt;</text>
-			</label>
-		</group>
+		<label>
+			<text>Load detection</text>
+			<text xml:lang="de">&gt;&gt; Lasterkennung zur Soundansteuerung &lt;&lt;</text>
+		</label>
 		<label>
 			<text>  </text>
 		</label>
@@ -122,15 +119,13 @@
 		<label>
 			<text>  </text>
 		</label>
-		<group exclude="PIKO46550-18">
-			<!--Piko SmartDecoder XP5.1-->		
-			<label>
-				<text>Coupling</text>
-				<text xml:lang="de">&gt;&gt; Elektrische Kupplung &lt;&lt;                 </text>
-				<text xml:lang="nl">Elektr. koppeling</text>
-				<text xml:lang="cs">Spřahování</text>
-			</label>
-		</group>
+		<separator/>
+		<label>
+			<text>Coupling</text>
+			<text xml:lang="de">&gt;&gt; Elektrische Kupplung &lt;&lt;                 </text>
+			<text xml:lang="nl">Elektr. koppeling</text>
+			<text xml:lang="cs">Spřahování</text>
+		</label>
 		<label>
 			<text>  </text>
 		</label>
@@ -177,7 +172,7 @@
 		<label>
 			<text>  </text>
 		</label>
-		<group include="PIKO46550-18">
+		<group include="PIKO46550-18,PIKO46551-18">
 			<!--Piko SmartDecoder XP5.1-->
 			<label>
 				<text>Smoke Generator</text>
@@ -206,9 +201,6 @@
 			<text>  </text>
 		</label>
 		<display item="Short circuit supervision"/>
-		<!--	<label>
-			<text>  </text>
-		</label>-->
 		<display item="Shutdown Temperature"/>
 		<display item="Function Outputs Short Constant"/>
 		<display item="Motor Output Short Constant"/>
@@ -219,13 +211,5 @@
 		<row>
 			<display item="Error register"/>
 		</row>
-		<!--		<label>
-			<text>  </text>
-		</label>
-		<display item="Offset Register"/>
-		<display item="Page Register"/>
-		<label>
-			<text>  </text>
-		</label>-->
 	</column>
 </pane>

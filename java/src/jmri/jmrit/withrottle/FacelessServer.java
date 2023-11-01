@@ -140,7 +140,7 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
 //    }
     /**
      * Received an UDID, filter out any duplicate.
-     * <p>
+     *
      * @param device the device to filter for duplicates
      */
     @Override

@@ -19,8 +19,7 @@ import jmri.util.IntlUtilities;
 import jmri.util.NamedBeanComparator;
 import jmri.util.ThreadingUtil;
 import jmri.util.gui.GuiLafPreferencesManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * GUI to define OBlocks.
@@ -397,8 +396,8 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
             switch (col) {
                 case SYSNAMECOL:
                     if (!_manager.isValidSystemNameFormat((String) value)) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNameOBlock"),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("BadNameOBlock"),
+                                Bundle.getMessage("ErrorTitle"), JmriJOptionPane.WARNING_MESSAGE);
                         return;
                     }
                     OBlock block = _manager.createNewOBlock((String) value, tempRow[USERNAMECOL]);
@@ -413,14 +412,14 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                                 name = block.getDisplayName();
                             }
                         }
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("CreateDuplBlockErr", name),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("CreateDuplBlockErr", name),
+                                Bundle.getMessage("ErrorTitle"), JmriJOptionPane.WARNING_MESSAGE);
                         return;
                     }
                     if (tempRow[SENSORCOL] != null) {
                         if (!sensorExists(tempRow[SENSORCOL])) {
-                            JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchSensorErr", tempRow[SENSORCOL]),
-                                    Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchSensorErr", tempRow[SENSORCOL]),
+                                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.WARNING_MESSAGE);
                         }
                     }
                     block.setComment(tempRow[COMMENTCOL]);
@@ -428,8 +427,8 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                     try {
                         len = IntlUtilities.floatValue(tempRow[LENGTHCOL]);
                     } catch (ParseException e) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]),
+                                Bundle.getMessage("ErrorTitle"), JmriJOptionPane.WARNING_MESSAGE);
                     }
                     if (tempRow[UNITSCOL].equals(Bundle.getMessage("cm"))) {
                         block.setLength(len * 10.0f);
@@ -445,8 +444,8 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                     if (tempRow[ERR_SENSORCOL] != null) {
                         if (tempRow[ERR_SENSORCOL].trim().length() > 0) {
                             if (!sensorExists(tempRow[ERR_SENSORCOL])) {
-                                JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchSensorErr", tempRow[ERR_SENSORCOL]),
-                                        Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                                JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchSensorErr", tempRow[ERR_SENSORCOL]),
+                                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.WARNING_MESSAGE);
                             }
                         }
                     }
@@ -462,8 +461,8 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                             log.error("No Reporter named \"{}\" found. threw exception", tempRow[REPORTERCOL], ex);
                         }
                         if (rep == null) {
-                            JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchReporterErr", tempRow[REPORTERCOL]),
-                                    Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchReporterErr", tempRow[REPORTERCOL]),
+                                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.WARNING_MESSAGE);
                         }
                         block.setReporter(rep);
                     }
@@ -483,8 +482,8 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                             _tempLen *= 25.4f;
                         }
                     } catch (ParseException e) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]),
+                                Bundle.getMessage("ErrorTitle"), JmriJOptionPane.WARNING_MESSAGE);
                     }
                     return;
                 case UNITSCOL:
@@ -528,8 +527,8 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
             case USERNAMECOL:
                 OBlock b = _manager.getOBlock((String) value);
                 if (b != null) {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("CreateDuplBlockErr", block.getDisplayName()),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("CreateDuplBlockErr", block.getDisplayName()),
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.WARNING_MESSAGE);
                     return;
                 }
                 block.setUserName((String) value);
@@ -541,8 +540,8 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                 return;
             case SENSORCOL:
                 if (!block.setSensor((String) value)) {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchSensorErr", value),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchSensorErr", value),
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 }
                 fireTableRowsUpdated(row, row);
                 return;
@@ -556,8 +555,8 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                     }
                     fireTableRowsUpdated(row, row);
                 } catch (ParseException e) {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", value),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", value),
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 }
                 return;
             case UNITSCOL:
@@ -586,8 +585,8 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                     log.error("getSensor({}) threw exception", value, ex);
                 }
                 if (!ok) {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchSensorErr", value),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchSensorErr", value),
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 }
                 fireTableRowsUpdated(row, row);
                 return;
@@ -603,8 +602,8 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                     log.error("No Reporter named \"{}\" found. threw exception", value, ex);
                 }
                 if (rep == null) {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchReporterErr", tempRow[REPORTERCOL]),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchReporterErr", tempRow[REPORTERCOL]),
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 }
                 block.setReporter(rep);
                 fireTableRowsUpdated(row, row);
@@ -935,6 +934,6 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         return jmri.jmrit.beantable.OBlockTableAction.class.getName();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OBlockTableModel.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OBlockTableModel.class);
 
 }

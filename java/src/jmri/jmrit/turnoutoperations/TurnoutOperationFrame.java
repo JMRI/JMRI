@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 
 import jmri.*;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * @author John Harper
@@ -91,8 +91,8 @@ public class TurnoutOperationFrame extends JDialog {
                 query = Bundle.getMessage("DeleteOperationInUse", currentOperation.getName())
                         + Bundle.getMessage("DeleteRevert");
             }
-            if (JOptionPane.showConfirmDialog(this, query + Bundle.getMessage("DeleteOperationDialog", currentOperation.getName()),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            if (JmriJOptionPane.showConfirmDialog(this, query + Bundle.getMessage("DeleteOperationDialog", currentOperation.getName()),
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                 currentOperation.dispose();
                 populateTabs();
             }
@@ -101,17 +101,17 @@ public class TurnoutOperationFrame extends JDialog {
 
     private void doRenameOrCopy(ActionEvent e) {
         log.debug("CopyOr clicked {}", e);
-        String newName = JOptionPane.showInputDialog(this,
+        String newName = JmriJOptionPane.showInputDialog(this,
             Bundle.getMessage("EnterNewName"), Bundle.getMessage("EnterNewNameTitle"),
-            JOptionPane.QUESTION_MESSAGE);
+            JmriJOptionPane.QUESTION_MESSAGE);
         
         if (newName != null && !newName.isEmpty()) {
             if ( currentOperation.isDefinitive() ) {
                 currentOperation.makeCopy(newName);
             } else {
                 if (!currentOperation.rename(newName)) {
-                    JOptionPane.showMessageDialog(this, ("TurnoutErrorDuplicate"),
-                            Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(this, ("TurnoutErrorDuplicate"),
+                            Bundle.getMessage("WarningTitle"), JmriJOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 for ( Turnout t : InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet()) {

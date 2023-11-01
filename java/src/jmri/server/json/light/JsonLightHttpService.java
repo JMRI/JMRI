@@ -98,7 +98,7 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService<Light> {
     }
 
     @Override
-    protected ProvidingManager<Light> getManager() {
+    protected ProvidingManager<Light> getProvidingManager() {
         return InstanceManager.getDefault(LightManager.class);
     }
 }

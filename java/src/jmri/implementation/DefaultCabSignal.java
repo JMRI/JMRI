@@ -44,6 +44,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      * A method for cleaning up the cab signal 
      */
     @Override
+    @javax.annotation.OverridingMethodsMustInvokeSuper // to remove Signal Listener
     public void dispose(){
         if (_nextMast != null) {
             _nextMast.removePropertyChangeListener(_cconSignalMastListener);

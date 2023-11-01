@@ -1,12 +1,15 @@
 package jmri.swing;
 
 import java.awt.Component;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Vector;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -21,7 +24,7 @@ import javax.swing.text.JTextComponent;
 import com.alexandriasoftware.swing.JInputValidatorPreferences;
 import com.alexandriasoftware.swing.JInputValidator;
 import com.alexandriasoftware.swing.Validation;
-import java.awt.event.ActionListener;
+
 import javax.swing.ComboBoxEditor;
 
 import org.slf4j.Logger;
@@ -80,6 +83,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
 
     private final transient Manager<B> manager;
     private DisplayOptions displayOptions;
+    private Predicate<B> filter;
     private boolean allowNull = false;
     private boolean providing = true;
     private boolean validatingInput = true;
@@ -121,10 +125,25 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      * @param displayOrder the sorting scheme for NamedBeans
      */
     public NamedBeanComboBox(Manager<B> manager, B selection, DisplayOptions displayOrder) {
+        this(manager, selection, displayOrder, null);
+    }
+
+    /**
+     * Create a ComboBox with an existing selection using the specified display
+     * order to sort NamedBeans.
+     *
+     * @param manager      the Manager backing the ComboBox
+     * @param selection    the NamedBean that is selected or null to specify no
+     *                     selection
+     * @param displayOrder the sorting scheme for NamedBeans
+     * @param filter       the filter or null if no filter
+     */
+    public NamedBeanComboBox(Manager<B> manager, B selection, DisplayOptions displayOrder, Predicate<B> filter) {
         // uses NamedBeanComboBox.this... to prevent overridden methods from being
         // called in constructor
         super();
         this.manager = manager;
+        this.filter = filter;
         super.setToolTipText(
                 Bundle.getMessage("NamedBeanComboBoxDefaultToolTipText", this.manager.getBeanTypeHandled(true)));
         setDisplayOrder(displayOrder);
@@ -343,7 +362,13 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
             comparator = new NamedBeanUserNameComparator<>();
         }
         TreeSet<B> set = new TreeSet<>(comparator);
-        set.addAll(manager.getNamedBeanSet());
+
+        if (filter != null) {
+            set.addAll(manager.getNamedBeanSet().stream().filter(filter)
+                    .collect(Collectors.toSet()));
+        } else {
+            set.addAll(manager.getNamedBeanSet());
+        }
         set.removeAll(excludedItems);
         Vector<B> vector = new Vector<>(set);
         if (allowNull) {

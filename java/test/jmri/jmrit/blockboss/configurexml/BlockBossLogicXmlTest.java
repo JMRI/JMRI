@@ -6,8 +6,6 @@ import jmri.implementation.*;
 import jmri.*;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
-
 import org.junit.jupiter.api.AfterEach;
 
 import org.jdom2.*;

@@ -33,8 +33,9 @@ public class DCCppListenerScaffold implements jmri.jmrix.dccpp.DCCppListener {
         timeOutMsg = m;
     }
 
-    int rcvCount;
-    DCCppReply rcvdRply;
-    DCCppMessage timeOutMsg;
-    DCCppMessage rcvdMsg;
+    public int rcvCount;
+    public DCCppReply rcvdRply;
+    public DCCppMessage timeOutMsg;
+    public DCCppMessage rcvdMsg;
+
 }

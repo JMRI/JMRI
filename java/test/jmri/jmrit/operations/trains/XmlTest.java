@@ -5,21 +5,15 @@ import java.io.IOException;
 
 import org.jdom2.JDOMException;
 import org.junit.Assert;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
@@ -150,6 +144,13 @@ public class XmlTest extends OperationsTestCase {
         Engine e1 = eManager.newRS("UP", "1");
         Engine e2 = eManager.newRS("UP", "2");
         Engine e3 = eManager.newRS("UP", "3");
+        
+        // save train manager
+        manager.setRowColorNameForBuildFailed("Orange"); // should become "orange"
+        manager.setRowColorNameForBuilt("Yellow"); // should become "yellow"
+        manager.setRowColorNameForTerminated("Gray"); // should become "gray"
+        manager.setRowColorNameForTrainEnRoute("White"); // should become white
+        manager.setRowColorNameForReset("Green"); // should become green
 
         // save in backup file
         t3.setBuildEnabled(true);
@@ -217,6 +218,8 @@ public class XmlTest extends OperationsTestCase {
         t1.setLocoRoadOption("t1 loco road option");
         t1.addLocoRoadName("t1 loco road name 1");
         t1.setRoute(C);
+        t1.setTableRowColorName("Red"); // should change to "red" when reloading
+        t1.setTableRowColorNameReset("Blue"); // should change to "blue" when reloading
         t1.setTerminationTrack(trackWestford);
         t1.setSecondLegCabooseRoad("t1 second leg caboose road");
         t1.setSecondLegEndRouteLocation(midC);
@@ -292,6 +295,12 @@ public class XmlTest extends OperationsTestCase {
         InstanceManager.getDefault(TrainManagerXml.class).writeOperationsFile();
 
         // perform data check before dispose
+        Assert.assertEquals("Row color", "Orange", manager.getRowColorNameForBuildFailed());
+        Assert.assertEquals("Row color", "Yellow", manager.getRowColorNameForBuilt());
+        Assert.assertEquals("Row color", "Green", manager.getRowColorNameForReset());
+        Assert.assertEquals("Row color", "Gray", manager.getRowColorNameForTerminated());
+        Assert.assertEquals("Row color", "White", manager.getRowColorNameForTrainEnRoute());
+        
         Assert.assertEquals("t1 build", true, t1.isBuildEnabled());
         Assert.assertEquals("t1 build failed", true, t1.isBuildFailed());
         Assert.assertEquals("t1 build normal", true, t1.isBuildTrainNormalEnabled());
@@ -322,6 +331,8 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 loco road option", "t1 loco road option", t1.getLocoRoadOption());
         Assert.assertEquals("t1 loco road name", "t1 loco road name 1", t1.getLocoRoadNames()[0]);
         Assert.assertEquals("t1 route", C, t1.getRoute());
+        Assert.assertEquals("t1 color", "Red", t1.getTableRowColorName());
+        Assert.assertEquals("t1 color reset", "Blue", t1.getTableRowColorNameReset());
         Assert.assertEquals("t1 termination track", trackWestford, t1.getTerminationTrack());
         Assert.assertEquals("t1 second leg caboose road", "t1 second leg caboose road", t1
                 .getSecondLegCabooseRoad());
@@ -448,6 +459,13 @@ public class XmlTest extends OperationsTestCase {
         // now reload train data from file
         InstanceManager.getDefault(TrainManagerXml.class).readFile(InstanceManager.getDefault(TrainManagerXml.class).getDefaultOperationsFilename());
 
+        // after read colors are changed to lower case
+        Assert.assertEquals("Row color", "orange", manager.getRowColorNameForBuildFailed());
+        Assert.assertEquals("Row color", "yellow", manager.getRowColorNameForBuilt());
+        Assert.assertEquals("Row color", "green", manager.getRowColorNameForReset());
+        Assert.assertEquals("Row color", "gray", manager.getRowColorNameForTerminated());
+        Assert.assertEquals("Row color", "white", manager.getRowColorNameForTrainEnRoute());
+
         Assert.assertEquals("Number of Trains", 6, manager.getTrainsByIdList().size());
 
         t1 = manager.getTrainByName("Test Number 1");
@@ -494,6 +512,8 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 loco road option", "t1 loco road option", t1.getLocoRoadOption());
         Assert.assertEquals("t1 loco road name", "t1 loco road name 1", t1.getLocoRoadNames()[0]);
         Assert.assertEquals("t1 route", C, t1.getRoute());
+        Assert.assertEquals("t1 color", "red", t1.getTableRowColorName());
+        Assert.assertEquals("t1 color", "blue", t1.getTableRowColorNameReset());
         Assert.assertEquals("t1 termination track", trackWestford, t1.getTerminationTrack());
         Assert.assertEquals("t1 second leg caboose road", "t1 second leg caboose road", t1
                 .getSecondLegCabooseRoad());

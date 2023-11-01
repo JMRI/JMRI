@@ -37,6 +37,6 @@ public interface ProvidingManager<E extends NamedBean> extends Manager<E> {
      *                                  be parsed.
      */
     @Nonnull
-    public E provide(@Nonnull String name) throws IllegalArgumentException;
+    E provide(@Nonnull String name) throws IllegalArgumentException;
 
 }

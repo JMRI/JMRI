@@ -1,7 +1,6 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import javax.swing.JPanel;
-import jmri.GlobalProgrammerManager;
 import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;

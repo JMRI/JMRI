@@ -25,6 +25,12 @@ public class OlcbSystemConnectionMemoScaffold extends jmri.jmrix.can.CanSystemCo
         InstanceManager.store(this, OlcbSystemConnectionMemoScaffold.class); // also register as specific type
     }
 
+    public OlcbSystemConnectionMemoScaffold(String prefix) {
+        super(prefix);
+        register(); // registers general type
+        InstanceManager.store(this, OlcbSystemConnectionMemoScaffold.class); // also register as specific type
+    }
+
     final jmri.jmrix.swing.ComponentFactory cf = null;
 
     /**

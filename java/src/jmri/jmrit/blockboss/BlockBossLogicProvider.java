@@ -55,6 +55,7 @@ public class BlockBossLogicProvider implements Disposable, InstanceManagerAutoDe
         return headToBlockBossLogicMap.values();
     }
 
+    @Override
     public void dispose(){
         for (BlockBossLogic b : headToBlockBossLogicMap.values()) {
             b.stop();

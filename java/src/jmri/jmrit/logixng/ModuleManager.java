@@ -25,7 +25,7 @@ public interface ModuleManager extends Manager<Module> {
      * @param socketType the socket type
      * @return a new Module or null if unable to create
      */
-    public Module createModule(String systemName, String userName,
+    Module createModule(String systemName, String userName,
             FemaleSocketManager.SocketType socketType)
             throws IllegalArgumentException;
     
@@ -37,7 +37,7 @@ public interface ModuleManager extends Manager<Module> {
      * @param socketType the socket type
      * @return a new Module or null if unable to create
      */
-    public Module createModule(String userName, FemaleSocketManager.SocketType socketType)
+    Module createModule(String userName, FemaleSocketManager.SocketType socketType)
             throws IllegalArgumentException;
     
     /**
@@ -47,21 +47,21 @@ public interface ModuleManager extends Manager<Module> {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    public Module getModule(String name);
+    Module getModule(String name);
     
     /** {@inheritDoc} */
     @Override
-    public Module getByUserName(String name);
+    Module getByUserName(String name);
     
     /** {@inheritDoc} */
     @Override
-    public Module getBySystemName(String name);
+    Module getBySystemName(String name);
     
     /**
      * Create a new system name for a Module.
      * @return a new system name
      */
-    public String getAutoSystemName();
+    String getAutoSystemName();
     
     /**
      * Resolve all the Module trees.
@@ -72,13 +72,13 @@ public interface ModuleManager extends Manager<Module> {
      * @param errors a list of potential errors
      * @return true if success, false otherwise
      */
-    public boolean resolveAllTrees(List<String> errors);
+    boolean resolveAllTrees(List<String> errors);
 
     /**
      * Setup all Modules. This method is called after a configuration file is
      * loaded.
      */
-    public void setupAllModules();
+    void setupAllModules();
 
     /*.*
      * Activate all Modules, starts Module processing by connecting all
@@ -87,7 +87,7 @@ public interface ModuleManager extends Manager<Module> {
      * A Module must be activated before it will calculate any of its
      * ConditionalNGs.
      *./
-    public void activateAllModules();
+    void activateAllModules();
 */    
     /**
      * Delete Module by removing it from the manager. The Module must first
@@ -102,7 +102,7 @@ public interface ModuleManager extends Manager<Module> {
      * 
      * @param s true if Module should be disabled when loaded
      *./
-    public void setLoadDisabled(boolean s);
+    void setLoadDisabled(boolean s);
 */    
     /**
      * Print the tree to a stream.
@@ -112,7 +112,7 @@ public interface ModuleManager extends Manager<Module> {
      * @param indent the indentation of each level
      * @param lineNumber the line number
      */
-    public void printTree(
+    void printTree(
             PrintTreeSettings settings,
             PrintWriter writer,
             String indent,
@@ -127,7 +127,7 @@ public interface ModuleManager extends Manager<Module> {
      * @param indent the indentation of each level
      * @param lineNumber the line number
      */
-    public void printTree(
+    void printTree(
             PrintTreeSettings settings,
             Locale locale,
             PrintWriter writer,
@@ -143,7 +143,7 @@ public interface ModuleManager extends Manager<Module> {
      * @param systemName the system name
      * @return enum indicating current validity, which might be just as a prefix
      */
-    public static NameValidity validSystemNameFormat(String subSystemNamePrefix, String systemName) {
+    static NameValidity validSystemNameFormat(String subSystemNamePrefix, String systemName) {
         // System names with digits. :AUTO: is generated system names
         if (systemName.matches(subSystemNamePrefix+"(:AUTO:)?\\d+")) {
             return NameValidity.VALID;
@@ -176,7 +176,7 @@ public interface ModuleManager extends Manager<Module> {
      * {@link #getSystemNamePrefix() } and "DA";
      */
     @Override
-    public default String getSubSystemNamePrefix() {
+    default String getSubSystemNamePrefix() {
         return getSystemNamePrefix() + "M";
     }
     

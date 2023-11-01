@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.actions.swing;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -38,6 +39,8 @@ public class ActionAudioSwing extends AbstractDigitalActionSwing {
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionAudio action = (ActionAudio)object;
 
+        Predicate<Audio> filter = (bean) -> { return bean.getSubType() != Audio.BUFFER; };
+
         _selectNamedBeanSwing = new LogixNG_SelectNamedBeanSwing<>(
                 InstanceManager.getDefault(AudioManager.class), getJDialog(), this);
 
@@ -49,10 +52,10 @@ public class ActionAudioSwing extends AbstractDigitalActionSwing {
         JPanel _tabbedPaneOperation;
 
         if (action != null) {
-            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(action.getSelectNamedBean());
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(action.getSelectNamedBean(), filter);
             _tabbedPaneOperation = _selectOperationSwing.createPanel(action.getSelectEnum(), Operation.values());
         } else {
-            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(null);
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(null, filter);
             _tabbedPaneOperation = _selectOperationSwing.createPanel(null, Operation.values());
         }
 

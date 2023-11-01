@@ -9,6 +9,6 @@ import java.util.EventObject;
  */
 public interface AboutHandler {
 
-    abstract public void handleAbout(EventObject eo);
+    void handleAbout(EventObject eo);
 
 }

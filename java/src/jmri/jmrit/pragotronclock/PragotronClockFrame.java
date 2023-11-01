@@ -160,14 +160,14 @@ public class PragotronClockFrame extends JmriJFrame implements java.beans.Proper
             iconHeightDot = (int) (iconWidthDot / iconAspectDot);
         }
         for (int i = 0; i < 10; i++) {
-            Image scaledImage = baseFoldingSheets10[i].getImage().getScaledInstance(iconWidth10, iconHeight10, Image.SCALE_SMOOTH);
+            Image scaledImage = baseFoldingSheets10[i].getImage().getScaledInstance(Math.max(1,iconWidth10), Math.max(1,iconHeight10), Image.SCALE_SMOOTH);
             foldingSheets10[i].setImage(scaledImage);
         }
         for (int i = 0; i < 24; i++) {
-            Image scaledImage = baseFoldingSheets24[i].getImage().getScaledInstance(iconWidth24, iconHeight24, Image.SCALE_SMOOTH);
+            Image scaledImage = baseFoldingSheets24[i].getImage().getScaledInstance(Math.max(1,iconWidth24), Math.max(1,iconHeight24), Image.SCALE_SMOOTH);
             foldingSheets24[i].setImage(scaledImage);
         }
-        Image scaledImage = baseColon.getImage().getScaledInstance(iconWidthDot , iconHeightDot, Image.SCALE_SMOOTH);
+        Image scaledImage = baseColon.getImage().getScaledInstance(Math.max(1,iconWidthDot) , Math.max(1,iconHeightDot), Image.SCALE_SMOOTH);
         colonIcon.setImage(scaledImage);
 
         // update the images on screen

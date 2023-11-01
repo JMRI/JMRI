@@ -2,25 +2,27 @@ package jmri.jmrit.audio.swing;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.vecmath.Vector3f;
+
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
 import jmri.InstanceManager;
 import jmri.jmrit.audio.AudioSource;
 import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Defines a GUI for editing AudioSource objects.
@@ -256,8 +258,9 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         JButton ok;
         p.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
         ok.addActionListener((ActionEvent e) -> {
-            applyPressed(e);
-            frame.dispose();
+            if (applyPressed(e)) {
+                frame.dispose();
+            }
         });
         JButton cancel;
         p.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
@@ -350,10 +353,10 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         });
     }
 
-    private void applyPressed(ActionEvent e) {
+    private boolean applyPressed(ActionEvent e) {
         String sName = sysName.getText();
         if (entryError(sName, PREFIX, "" + counter)) {
-            return;
+            return false;
         }
         String user = userName.getText();
         if (user.equals("")) {
@@ -362,17 +365,20 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         AudioSource s;
         try {
             AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
+            if (newSource && am.getBySystemName(sName) != null) {
+                throw new AudioException(Bundle.getMessage("DuplicateSystemName"));
+            }
             try {
                 s = (AudioSource) am.provideAudio(sName);
             } catch (IllegalArgumentException ex) {
-                throw new AudioException("Problem creating source");
+                throw new AudioException(Bundle.getMessage("ProblemCreatingSource"));
             }
             if ((user != null) && (newSource) && (am.getByUserName(user) != null)) {
                 am.deregister(s);
                 synchronized (lock) {
                     prevCounter();
                 }
-                throw new AudioException("Duplicate user name - please modify");
+                throw new AudioException(Bundle.getMessage("DuplicateUserName"));
             }
             s.setUserName(user);
             if (assignedBuffer.getSelectedIndex() > 0) {
@@ -402,8 +408,12 @@ public class AudioSourceFrame extends AbstractAudioFrame {
             // Notify changes
             model.fireTableDataChanged();
         } catch (AudioException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("AudioCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, ex.getMessage(),
+                Bundle.getMessage("AudioCreateErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+            return false;
         }
+        newSource = false;  // If the user presses Apply, the dialog stays visible.
+        return true;
     }
 
     private static int nextCounter() {

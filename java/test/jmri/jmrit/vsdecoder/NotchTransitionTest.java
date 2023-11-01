@@ -22,7 +22,7 @@ public class NotchTransitionTest {
         Assert.assertEquals("system name", "sysname", uut.getSystemName());
         Assert.assertEquals("user name", "uname", uut.getUserName());
         Assert.assertTrue("initialized", uut.isInitialized());
-        Assert.assertFalse("is playing", uut.isPlaying());
+        Assert.assertFalse("is playing", uut.getSource().getState() == jmri.Audio.STATE_PLAYING);
     }
 
     @Test

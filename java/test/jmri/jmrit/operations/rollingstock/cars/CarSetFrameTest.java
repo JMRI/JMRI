@@ -167,16 +167,16 @@ public class CarSetFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.editLoadButton);
         // confirm edit boxcar loads frame creation
         JUnitUtil.waitFor(() -> {
-            return JmriJFrame.getFrame("Edit Boxcar Loads") != null;
+            return JmriJFrame.getFrame("Edit Car Loads") != null;
         }, "ebl not null");
-        JmriJFrame lef = JmriJFrame.getFrame("Edit Boxcar Loads");
+        JmriJFrame lef = JmriJFrame.getFrame("Edit Car Loads");
         Assert.assertNotNull(lef);
 
         // for test coverage
         JemmyUtil.enterClickAndLeave(f.editLoadButton);
 
         JUnitUtil.dispose(f);
-        lef = JmriJFrame.getFrame("Edit Boxcar Loads");
+        lef = JmriJFrame.getFrame("Edit Car Loads");
         Assert.assertNull(lef);
     }
 

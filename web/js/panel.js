@@ -37,6 +37,7 @@ var $gWidgets = {};         //array of all widget objects, key=CSSId
 var $gPanelList = {};       //store list of available panels
 var $gPanel = {};           //store overall panel info
 var whereUsed = {};         //associative array of array of elements indexed by systemName or userName
+var audioIconIDs = {};      //associative array of audio icons
 var occupancyNames = {};    //associative array of array of elements indexed by occupancy sensor name
 var $oblockNames = {};      //associative array of array of elements indexed by occupancy block name (CPE panels)
 var $gPts = {};             //array of all points, key="pointname.pointtype" (used for layoutEditor panels)
@@ -154,6 +155,8 @@ var requestPanelXML = function(panelName) {
         success: function(data, textStatus, jqXHR) {
             processPanelXML(data, textStatus, jqXHR);
             setTitle($gPanel["name"]);  // set final title once load completes, helps with testing
+            // set new attribute data-panel-name on the panel-area div to the panel name so that a user's css can use it.
+            $("#panel-area").attr("data-panel-name", $gPanel["name"]);
         },
         error: function( jqXHR, textStatus, errorThrown) {
             alert("Error retrieving panel xml from server.  Please press OK to retry.\n\nDetails: " +
@@ -291,6 +294,39 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['rotation'] = $(this).find('icon').find('rotation').text() * 1;
                             $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($widget.rotation * 90);
                             $widget['scale'] = $(this).find('icon').attr('scale');
+                            break;
+                        case "audioicon" :
+                            $widget.jsonType = 'audio'; // JSON object type
+                            $widget['identity'] = $(this).find('Identity').text();
+                            audioIconIDs['audioicon:'+$widget['identity']] = $widget;   // Ensure the key is a string, not a number
+                            $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
+                            $widget['sound'] = $(this).attr('sound');
+                            $widget['onClickOperation'] = $(this).attr('onClickOperation');
+                            $widget['audio_widget'] = new Audio($widget['sound']);
+                            $widget['playSoundWhenJmriPlays'] = $(this).attr('playSoundWhenJmriPlays') == "yes";
+                            $widget['stopSoundWhenJmriStops'] = $(this).attr('stopSoundWhenJmriStops') == "yes";
+                            $widget['rotation'] = $(this).find('icon').find('rotation').text() * 1;
+                            $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($widget.rotation * 90);
+                            $widget['scale'] = $(this).find('icon').attr('scale');
+                            $widget.classes += " " + $widget.jsonType + " clickable"; //make it clickable
+                            if (!$('#' + $widget.id).hasClass('clickable')) {
+                                $('#' + $widget.id).addClass("clickable");
+                                $('#' + $widget.id).bind(UPEVENT, $handleClick);
+                            }
+                            jmri.getAudio($widget.systemName);
+                            jmri.getAudioIcon($widget['identity']);
+                            break;
+                        case "logixngicon" :
+                            $widget['identity'] = $(this).find('Identity').text();
+                            $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
+                            $widget['rotation'] = $(this).find('icon').find('rotation').text() * 1;
+                            $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($widget.rotation * 90);
+                            $widget['scale'] = $(this).find('icon').attr('scale');
+                            $widget.classes += " " + $widget.jsonType + " clickable"; //make it clickable
+                            if (!$('#' + $widget.id).hasClass('clickable')) {
+                                $('#' + $widget.id).addClass("clickable");
+                                $('#' + $widget.id).bind(UPEVENT, $handleClick);
+                            }
                             break;
                         case "linkinglabel" :
                             $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
@@ -649,6 +685,18 @@ function processPanelXML($returnedData, $success, $xhr) {
                 case "text" :
                     $widget['styles'] = $getTextCSSFromObj($widget);
                     switch ($widget.widgetType) {
+                        case "audioicon" :
+                            $widget.jsonType = "audioicon"; // JSON object type
+                            $widget['identity'] = $(this).find('Identity').text();
+                            $widget.styles['user-select'] = "none";
+                            $widget.classes += " " + $widget.jsonType + " clickable ";
+                            break;
+                        case "logixngicon" :
+                            $widget.jsonType = "logixngicon"; // JSON object type
+                            $widget['identity'] = $(this).find('Identity').text();
+                            $widget.styles['user-select'] = "none";
+                            $widget.classes += " " + $widget.jsonType + " clickable ";
+                            break;
                         case "sensoricon" :
                             $widget['name'] = $widget.sensor; //normalize name
                             $widget.jsonType = "sensor"; // JSON object type
@@ -1144,11 +1192,11 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['cornerRadius'] = $(this).find('size').attr('cornerRadius');
                             lc = $(this).find('lineColor');
                             $widget['lineColor'] = 
-                            	'rgba('+lc.attr('red')+','+lc.attr('green')+',' +
+                                'rgba('+lc.attr('red')+','+lc.attr('green')+',' +
                                 lc.attr('blue')+','+lc.attr('alpha')/256+')';
                             fc = $(this).find('fillColor');
                             $widget['fillColor'] = 
-                             	'rgba('+fc.attr('red')+','+fc.attr('green')+',' +
+                                 'rgba('+fc.attr('red')+','+fc.attr('green')+',' +
                                 fc.attr('blue')+','+fc.attr('alpha')/256+')';
                             //store this widget in persistent array, with ident as key
                             $widget['id'] = $widget.ident;
@@ -1422,6 +1470,30 @@ function $handleClick(e) {
             sendElementChange($widget.jsonType, $widget.turnoutLowerEast, $turnoutWestNewState); // note: same as turnoutEast
         }
         return;
+    } else if (this.className.startsWith('audioicon ')) {
+        // special handling of audioicon
+        var $widget = $gWidgets[this.id];
+        switch ($widget['onClickOperation']) {
+            case "PlaySoundLocally":
+                if ($widget['audio_widget'].paused) {   // Sound is stopped
+                    $widget['audio_widget'].play();
+                } else {                                // Sound is playing
+                    $widget['audio_widget'].pause();
+                    $widget['audio_widget'].currentTime = 0;
+                }
+                break;
+            case "PlaySoundGlobally":
+                if ($widget['state'] == 16) {           // Sound is stopped
+                    jmri.setAudio($widget.systemName, "Play");
+                } else if ($widget['state'] == 17) {    // Sound is playing
+                    jmri.setAudio($widget.systemName, "Stop");
+                }
+                break;
+        }
+    } else if (this.className.startsWith('logixngicon ')) {
+        // special handling of logixngicon
+        var $widget = $gWidgets[this.id];
+        jmri.clickLogixNGIcon($widget['identity']);
     } else {
         var $widget = $gWidgets[this.id];
         var $newState = $getNextState($widget); // determine next state from current state
@@ -1567,7 +1639,7 @@ function $drawIcon($widget) {
     // add the image to the panel area, with appropriate css classes and id (skip any unsupported)
     if (isDefined($widget['icon' + $indicator + $state])) {
         $imgHtml = "<img id=" + $widget.id + " class='" + $widget.classes +
-                "' src='" + $widget["icon" + $indicator + $state] + "' " + $hoverText + "/>"
+                "' src='" + $widget["icon" + $indicator + $state].replaceAll("'","&apos;") + "' " + $hoverText + "/>"
 
         $("#panel-area").append($imgHtml); // put the html in the panel
 
@@ -1579,6 +1651,9 @@ function $drawIcon($widget) {
             ovlCSS = {position:'absolute', left: $widget.x + 'px', top: $widget.y + 'px', zIndex: $widget.level*1 + 1, pointerEvents: 'none'};
             $.extend(ovlCSS, $widget.styles); // append the styles from the widget
             delete ovlCSS['background-color'];  // clear the background color
+            if (isDefined($widget.fixedHeight)) {
+                $.extend(ovlCSS, {lineHeight: $widget.fixedHeight + 'px'}); // add lineheight for vertical centering (if set)
+            }
             $("#panel-area>#" + $widget.id + "-overlay").css(ovlCSS);
         }
     } else {
@@ -1629,8 +1704,8 @@ var $getTextCSSFromObj = function($widget) {
     if (isDefined($widget.size)) {
         $retCSS['font-size'] = $widget.size + "px ";
     }
-    if (isDefined($widget.fontname)) {
-        $retCSS['font-family'] = $widget.fontname;
+    if (isDefined($widget.fontFamily)) {
+        $retCSS['font-family'] = $widget.fontFamily;
     }
     if (isDefined($widget.margin)) {
         $retCSS['padding'] = $widget.margin + "px ";
@@ -2259,7 +2334,8 @@ var $preloadWidgetImages = function($widget) {
 // note: not-yet-supported widgets are commented out here so as to return undefined
 var $getWidgetFamily = function($widget, $element) {
 
-    if (($widget.widgetType == "positionablelabel" || $widget.widgetType == "linkinglabel")
+    if (($widget.widgetType == "positionablelabel" || $widget.widgetType == "linkinglabel"
+            || $widget.widgetType == "audioicon" || $widget.widgetType == "logixngicon")
             && isDefined($widget.text)) {
         return "text";  //special case to distinguish text vs. icon labels
     }
@@ -2280,6 +2356,8 @@ var $getWidgetFamily = function($widget, $element) {
             return "text";
             break;
         case "positionablelabel" :
+        case "audioicon" :
+        case "logixngicon" :
         case "linkinglabel" :
         case "turnouticon" :
         case "sensoricon" :
@@ -2401,6 +2479,29 @@ $(document).ready(function() {
                 // simplest method to refresh every object in the panel
                 log.log("Reloading at reconnect");
                 location.reload(false);
+            },
+            audio: function(name, state, data) {
+                $.each(whereUsed[name], function(index, widgetId) {
+                    $widget = $gWidgets[widgetId];
+                    $widget['state'] = state;
+
+                    if (state == 16 && $widget['stopSoundWhenJmriStops']) {         // Sound is stopped
+                        $widget['audio_widget'].pause();
+                        $widget['audio_widget'].currentTime = 0;
+                    } else if (state == 17 && $widget['playSoundWhenJmriPlays']) {  // Sound is playing
+                        $widget['audio_widget'].currentTime = 0;
+                        $widget['audio_widget'].play();
+                    }
+                });
+            },
+            audioicon: function(identity, command) {
+                $widget = audioIconIDs['audioicon:'+identity];
+                if (command == "Play") {
+                    $widget['audio_widget'].play();
+                } else if (command == "Stop") {
+                    $widget['audio_widget'].pause();
+                    $widget['audio_widget'].currentTime = 0;
+                }
             },
             light: function(name, state, data) {
                 updateWidgets(name, state, data);
@@ -3464,9 +3565,9 @@ function $drawPositionableRoundRect($widget) {
     }
 
     $gCtx.beginPath();
-	$gCtx.roundRect($widget.x, $widget.y, $widget.width, $widget.height, $widget.cornerRadius);
-	$gCtx.stroke()
-	$gCtx.fill()
+    $gCtx.roundRect($widget.x, $widget.y, $widget.width, $widget.height, $widget.cornerRadius);
+    $gCtx.stroke()
+    $gCtx.fill()
     $gCtx.restore();        // restore color and width back to default
 
 }   // function $drawPositionableRoundRect($widget)
@@ -4955,13 +5056,13 @@ class BumperDecoration extends Decoration {
         var halfLength = bumperLength / 2;
         // common points
         if ((this.end == "start") || (this.end == "both")) {
-	        var p1 = [0, -halfLength], p2 = [0, +halfLength];
+            var p1 = [0, -halfLength], p2 = [0, +halfLength];
             var p1 = $point_add($point_rotate(p1, startAngleRAD), this.ep1);
             var p2 = $point_add($point_rotate(p2, startAngleRAD), this.ep1);
             $drawLineP(p1, p2);   // draw cross tie
         }
         if ((this.end == "stop") || (this.end == "both")) {
-	        var p1 = [0, -halfLength], p2 = [0, +halfLength];
+            var p1 = [0, -halfLength], p2 = [0, +halfLength];
             var p1 = $point_add($point_rotate(p1, stopAngleRAD), this.ep2);
             var p2 = $point_add($point_rotate(p2, stopAngleRAD), this.ep2);
             $drawLineP(p1, p2);   // draw cross tie

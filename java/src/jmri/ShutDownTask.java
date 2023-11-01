@@ -30,7 +30,7 @@ public interface ShutDownTask extends Callable<Boolean>, Runnable, PropertyChang
      * @throws Exception if there is an exception
      */
     @Override
-    public Boolean call() throws Exception;
+    Boolean call() throws Exception;
 
     /**
      * Take the necessary action. This method cannot abort the shutdown, and
@@ -38,7 +38,7 @@ public interface ShutDownTask extends Callable<Boolean>, Runnable, PropertyChang
      * will be run in parallel to other ShutDownTasks, but will be executed
      * before any of the {@code run() } methods are executed.
      */
-    public default void runEarly() {
+    default void runEarly() {
     }
 
     /**
@@ -47,7 +47,7 @@ public interface ShutDownTask extends Callable<Boolean>, Runnable, PropertyChang
      * will be run in parallel to other ShutDownTasks.
      */
     @Override
-    public void run();
+    void run();
 
     /**
      * Name to be provided to the user when information about this task is
@@ -55,5 +55,5 @@ public interface ShutDownTask extends Callable<Boolean>, Runnable, PropertyChang
      *
      * @return the name
      */
-    public String getName();
+    String getName();
 }

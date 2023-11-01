@@ -3,14 +3,12 @@ package jmri.jmrit.operations.trains.tools;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainEditFrame;
-import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.*;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 
@@ -36,8 +34,17 @@ public class TrainScriptFrameTest extends OperationsTestCase {
         
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(tef);
-        
-
+    }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        TrainScriptFrame f = new TrainScriptFrame();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        Train train = tmanager.newTrain("Test");
+        TrainEditFrame trainEditFrame = new TrainEditFrame(train);
+        f.initComponents(trainEditFrame);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainScriptFrameTest.class);

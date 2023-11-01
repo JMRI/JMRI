@@ -14,9 +14,7 @@ import jmri.UserPreferencesManager;
 import jmri.swing.ManagerComboBox;
 import jmri.swing.SystemNameValidator;
 import jmri.util.JmriJFrame;
-
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Swing action to create and register a ReporterTable GUI.
@@ -159,13 +157,12 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         if (rangeCheckBox.isSelected()) {
             numberOfReporters = (Integer) numberToAddSpinner.getValue();
         }
-        if (numberOfReporters >= 65) { // limited by JSpinnerModel to 100
-            if (JOptionPane.showConfirmDialog(addFrame,
-                    Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("Reporters"), numberOfReporters),
-                    Bundle.getMessage("WarningTitle"),
-                    JOptionPane.YES_NO_OPTION) == 1) {
-                return;
-            }
+        if (numberOfReporters >= 65 // limited by JSpinnerModel to 100
+            && JmriJOptionPane.showConfirmDialog(addFrame,
+                Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("Reporters"), numberOfReporters),
+                Bundle.getMessage("WarningTitle"),
+                JmriJOptionPane.YES_NO_OPTION ) != JmriJOptionPane.YES_OPTION ) {
+            return;
         }
         String rName;
         String reporterPrefix = prefixBox.getSelectedItem().getSystemPrefix(); // Add "R" later
@@ -283,8 +280,8 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         statusBarLabel.setForeground(Color.red);
         String err = Bundle.getMessage("ErrorBeanCreateFailed",
             InstanceManager.getDefault(ReporterManager.class).getBeanTypeHandled(),sysName);
-        JOptionPane.showMessageDialog(addFrame, err + "\n" + ex.getLocalizedMessage(),
-                err, JOptionPane.ERROR_MESSAGE);
+        JmriJOptionPane.showMessageDialog(addFrame, err + "\n" + ex.getLocalizedMessage(),
+                err, JmriJOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -303,6 +300,6 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         return Bundle.getMessage("TitleReporterTable");
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ReporterTableAction.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ReporterTableAction.class);
 
 }

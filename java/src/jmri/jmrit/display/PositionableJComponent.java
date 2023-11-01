@@ -1,7 +1,10 @@
 package jmri.jmrit.display;
 
 import java.util.Objects;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.annotation.Nonnull;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
@@ -25,6 +28,7 @@ public class PositionableJComponent extends JComponent implements Positionable {
     protected Editor _editor = null;
 
     private String _id;            // user's Id or null if no Id
+    private final Set<String> _classes = new HashSet<>(); // user's classes
 
     private ToolTip _tooltip;
     private boolean _showTooltip = true;
@@ -33,6 +37,7 @@ public class PositionableJComponent extends JComponent implements Positionable {
     private boolean _viewCoordinates = false;
     private boolean _controlling = true;
     private boolean _hidden = false;
+    private boolean _emptyHidden = false;
     private int _displayLevel;
     private double _scale;         // user's scaling factor
 
@@ -78,6 +83,35 @@ public class PositionableJComponent extends JComponent implements Positionable {
     @Override
     public String getId() {
         return _id;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void addClass(String className) {
+        _editor.positionalAddClass(this, className);
+        _classes.add(className);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void removeClass(String className) {
+        _editor.positionalRemoveClass(this, className);
+        _classes.remove(className);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void removeAllClasses() {
+        for (String className : _classes) {
+            _editor.positionalRemoveClass(this, className);
+        }
+        _classes.clear();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Set<String> getClasses() {
+        return java.util.Collections.unmodifiableSet(_classes);
     }
 
     @Override
@@ -151,6 +185,16 @@ public class PositionableJComponent extends JComponent implements Positionable {
         }
     }
 
+    @Override
+    public void setEmptyHidden(boolean hide) {
+        _emptyHidden = hide;
+    }
+
+    @Override
+    public boolean isEmptyHidden() {
+        return _emptyHidden;
+    }
+
     /**
      * Delayed setDisplayLevel for DnD.
      *
@@ -213,6 +257,12 @@ public class PositionableJComponent extends JComponent implements Positionable {
     @Override
     public int getDegrees() {
         return 0;
+    }
+
+    @Override
+    @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_PositionableJComponent");
     }
 
     @Override

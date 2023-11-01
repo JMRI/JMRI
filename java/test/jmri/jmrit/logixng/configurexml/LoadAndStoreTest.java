@@ -7,11 +7,9 @@ import java.io.IOException;
 import java.util.stream.Stream;
 
 import jmri.InstanceManager;
-import jmri.SensorManager;
 import jmri.SystemConnectionMemo;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrix.loconet.*;
-import jmri.jmrix.mqtt.MqttSensorManager;
 import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 

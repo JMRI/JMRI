@@ -1,13 +1,7 @@
 package jmri.jmrit.operations.locations.tools;
 
 import java.io.*;
-import java.text.MessageFormat;
 import java.util.Locale;
-
-import javax.swing.JOptionPane;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.*;
@@ -15,7 +9,7 @@ import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.locations.divisions.DivisionManager;
 import jmri.jmrit.operations.rollingstock.ImportRollingStock;
 import jmri.jmrit.operations.setup.Setup;
-
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * This routine will import Locations from a CSV file into the operations database. The field order is: Location, Track,
@@ -331,13 +325,15 @@ public class ImportLocations extends ImportRollingStock {
             }
         }
         if (importOkay) {
-            JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportTracksAdded"), new Object[]{tracksAdded}), Bundle.getMessage("SuccessfulImport"), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ImportTracksAdded", tracksAdded),
+                Bundle.getMessage("SuccessfulImport"), JmriJOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportTracksAdded"), new Object[]{tracksAdded}), Bundle.getMessage("ImportFailed"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ImportTracksAdded", tracksAdded),
+                Bundle.getMessage("ImportFailed"), JmriJOptionPane.ERROR_MESSAGE);
         }
         fstatus.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ImportLocations.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImportLocations.class);
 
 }

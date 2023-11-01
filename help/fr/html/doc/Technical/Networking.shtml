@@ -58,16 +58,6 @@
           <ul>
             <li>
               <a href=
-              "../../hardware/loconet/LocoNetServer.shtml">Connexion
-              serveur client LocoNet</a>
-
-              <p>Celui-ci utilise Java RMI pour fournir un
-              acc&egrave;s client-serveur pour le flux de messages
-              LocoNet.</p>
-            </li>
-
-            <li>
-              <a href=
               "../../hardware/loconet/LbServer.shtml">LocoNetOverTcp
               to LbServer</a>
 
@@ -169,13 +159,6 @@
       Enterprise Java Bean</a>
 
       <ul>
-        <li>Via la fourniture d'un serveur RMI <a href=
-        "../../hardware/loconet/LocoNetServer.shtml">LocoNet</a>.
-
-          <p>C'est annonc&eacute; sur Bonjour/Zeroconf comme un
-          service &laquo;_jmri-locormi._tcp.local.".</p>
-        </li>
-
         <li>Via la fourniture d'une impl&eacute;mentation
           <a href="http://loconetovertcp.sourceforge.net/">LbServer</a>.
 

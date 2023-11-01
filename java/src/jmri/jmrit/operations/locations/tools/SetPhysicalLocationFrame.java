@@ -2,12 +2,8 @@ package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 
 import javax.swing.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
@@ -18,6 +14,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.PhysicalLocation;
 import jmri.util.PhysicalLocationPanel;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for setting train physical location coordinates for a location.
@@ -122,8 +119,8 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
     public void saveButtonActionPerformed(java.awt.event.ActionEvent ae) {
         // check to see if a location has been selected
         if (locationBox.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationToEdit"),
-                    Bundle.getMessage("NoLocationSelected"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationToEdit"),
+                    Bundle.getMessage("NoLocationSelected"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         Location l = (Location) locationBox.getSelectedItem();
@@ -131,10 +128,10 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
             return;
         }
         if (ae.getSource() == saveButton) {
-            int value = JOptionPane.showConfirmDialog(this, MessageFormat.format(
-                    Bundle.getMessage("UpdatePhysicalLocation"), new Object[]{l.getName()}),
-                    Bundle.getMessage("UpdateDefaults"), JOptionPane.YES_NO_OPTION);
-            if (value == JOptionPane.YES_OPTION) {
+            int value = JmriJOptionPane.showConfirmDialog(this, 
+                    Bundle.getMessage("UpdatePhysicalLocation", l.getName()),
+                    Bundle.getMessage("UpdateDefaults"), JmriJOptionPane.YES_NO_OPTION);
+            if (value == JmriJOptionPane.YES_OPTION) {
                 saveSpinnerValues(l);
             }
             OperationsXml.save();
@@ -188,5 +185,5 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SetPhysicalLocationFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SetPhysicalLocationFrame.class);
 }

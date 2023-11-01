@@ -2,8 +2,6 @@ package jmri.jmrix.openlcb.configurexml;
 
 import jmri.jmrix.openlcb.OlcbSystemConnectionMemoScaffold;
 import jmri.configurexml.LoadAndStoreTestBase;
-import jmri.jmrix.openlcb.*;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

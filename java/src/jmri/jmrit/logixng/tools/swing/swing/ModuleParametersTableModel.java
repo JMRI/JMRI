@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.tools.swing.swing;
 
-import jmri.jmrit.logixng.tools.swing.*;
-
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

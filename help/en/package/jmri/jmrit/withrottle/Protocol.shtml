@@ -82,10 +82,9 @@
       or a carriage return followed by a newline. (0D 0A hex) Clients and servers should accept any
       newline sequence as a command termination.</p>
 
-      <p>You can see these messages by enabling DEBUG for the JMRI package jmri.jmrit.withrottle.
-      Add the line "<strong>log4j.category.jmri.jmrit.withrottle=DEBUG</strong>" to your
-      default.lcf file and restart JMRI. All messages (both directions) will be added to your JMRI
-      System Console and the session.log file.</p>
+      <p>You can see these messages by enabling DEBUG for the Logging Category &quot;jmri.jmrit.withrottle&quot;
+      , see <a href="../../../../html/apps/Debug.shtml">Debugging and System Logging</a>.
+      All messages (both directions) will be added to your JMRI System Console and the session.log file.</p>
 
       <h2 id="StringParsing">String Parsing <a class="to-top" href="#top">^Top</a></h2>
 

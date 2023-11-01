@@ -1,6 +1,14 @@
 package jmri.jmrit.vsdecoder.swing;
 
-/*
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import javax.swing.JFrame;
+import jmri.jmrit.vsdecoder.VSDecoderManager;
+import jmri.util.JmriJFrame;
+
+/**
+ * VSD Preferences Action.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -14,14 +22,8 @@ package jmri.jmrit.vsdecoder.swing;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
-import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
-import javax.swing.JFrame;
-import jmri.jmrit.vsdecoder.VSDecoderManager;
-import jmri.util.JmriJFrame;
-
 public class VSDPreferencesAction extends AbstractAction {
 
     /**

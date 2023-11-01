@@ -72,6 +72,10 @@
             </li>
 
             <li>
+              <a href="hardware/rfid/GettingStartedWithRFID.shtml">Getting Started with RFID</a>
+            </li>
+
+            <li>
               <a href="tools/scripting/HowTo.shtml">Scripting "How To"</a>
             </li>
 

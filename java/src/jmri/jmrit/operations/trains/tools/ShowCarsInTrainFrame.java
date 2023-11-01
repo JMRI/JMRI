@@ -16,10 +16,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCommon;
-import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.TrainManifestText;
+import jmri.jmrit.operations.trains.*;
 
 /**
  * Show Cars In Train Frame. This frame lists all cars assigned to a train in
@@ -139,7 +136,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
             RouteLocation rl = _train.getCurrentRouteLocation();
             if (rl != null) {
                 textLocationName.setText(trainManager.isShowLocationHyphenNameEnabled()
-                        ? rl.getLocation().getName() : TrainCommon.splitString(rl.getLocation().getName()));
+                        ? rl.getLocation().getName() : rl.getLocation().getSplitName());
                 textNextLocationName.setText(trainManager.isShowLocationHyphenNameEnabled()
                         ? _train.getNextLocationName() : TrainCommon.splitString(_train.getNextLocationName()));
                 // add header
@@ -190,12 +187,12 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
         if (Setup.isPrintLoadsAndEmptiesEnabled()) {
             int emptyCars = _train.getNumberEmptyCarsInTrain(rl);
             return MessageFormat.format(TrainManifestText.getStringTrainDepartsLoads(), new Object[]{
-                    TrainCommon.splitString(rl.getName()), rl.getTrainDirectionString(),
+                    rl.getSplitName(), rl.getTrainDirectionString(),
                     _train.getNumberCarsInTrain(rl) - emptyCars, emptyCars, _train.getTrainLength(rl),
                     Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl)});
         } else {
             return MessageFormat.format(TrainManifestText.getStringTrainDepartsCars(),
-                    new Object[]{rl.getName(), rl.getTrainDirectionString(), _train.getNumberCarsInTrain(),
+                    new Object[]{rl.getSplitName(), rl.getTrainDirectionString(), _train.getNumberCarsInTrain(),
                             _train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(),
                             _train.getTrainWeight(rl)});
         }

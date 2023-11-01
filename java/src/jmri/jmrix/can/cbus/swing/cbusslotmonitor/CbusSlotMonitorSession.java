@@ -11,15 +11,15 @@ import jmri.jmrix.can.cbus.CbusOpCodes;
  * @author Steve Young Copyright (C) 2019
  */
 public class CbusSlotMonitorSession  {
-    
+
     private final DccLocoAddress _locoAddr;
     private int _sessionId;
     private int _speed;
     private String _speedSteps;
-    private final boolean[] _function;
+    private boolean[] function;
     private int _flags;
     private int _consistId;
-    
+
     /**
      * The table provides and maintains 1 row per loco address
      *
@@ -30,15 +30,15 @@ public class CbusSlotMonitorSession  {
         _sessionId = -1; // unset
         _speed = 0;
         _speedSteps="";
-        _function = new boolean[29];
+        function = new boolean[29];
         _flags = -1; // unset
         _consistId = 0;
     }
-    
+
     protected DccLocoAddress getLocoAddr(){
         return _locoAddr;
     }
-    
+
     protected void setSessionId( int session ) {
         _sessionId = session;
     }
@@ -46,7 +46,7 @@ public class CbusSlotMonitorSession  {
     protected int getSessionId() {
         return _sessionId;
     }
-    
+
     protected void setDccSpeed( int speed) {
         _speed = speed;
     }
@@ -62,7 +62,7 @@ public class CbusSlotMonitorSession  {
     protected void setSpeedSteps ( String steps ) {
         _speedSteps = steps;
     }
-    
+
     protected String getSpeedSteps() {
         if ( _speedSteps.isEmpty() ) {
             return ("128");
@@ -73,20 +73,25 @@ public class CbusSlotMonitorSession  {
     }
 
     protected void setFunction( int fn, boolean tof ) {
-        _function[fn] = tof;
+        if (fn >= function.length) {
+            boolean[] newArray = new boolean[fn+1];
+            System.arraycopy(function, 0, newArray, 0, function.length);
+            function = newArray;
+        }
+        function[fn] = tof;
     }
-    
+
     protected String getFunctionString() {
         StringBuilder buf = new StringBuilder();
-        for (int i=0; i<29; i++) {
-            if ( _function[i] ==true ) {
+        for (int i=0; i<function.length; i++) {
+            if ( function[i] ) {
                 buf.append(i);
                 buf.append(" ");
             }
         }
-        return buf.toString();
+        return buf.toString().trim();
     }
-    
+
     protected void setFlags( int flags ){
         _flags = flags;
         int mask = 0b11; // last 2 bits
@@ -104,7 +109,7 @@ public class CbusSlotMonitorSession  {
                 _speedSteps="128";
         }
     }
-    
+
     protected String getFlagString() {
         
         if ( _flags < 0 ){
@@ -142,7 +147,7 @@ public class CbusSlotMonitorSession  {
     protected void setConsistId( int consistid ) {
         _consistId = consistid;
     }
-    
+
     protected int getConsistId() {
         return _consistId;
     }

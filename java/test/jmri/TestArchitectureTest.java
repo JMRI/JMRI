@@ -54,7 +54,8 @@ public class TestArchitectureTest {
     public static final ArchRule junit4TestRule = noClasses().that()
         .doNotHaveFullyQualifiedName("jmri.util.junit.rules.RetryRuleTest").and()
         .doNotHaveFullyQualifiedName("jmri.jmrit.display.logixng.ActionPositionableTest").and()
-        .resideOutsideOfPackage("jmri.jmrit.logixng..")
+        .resideOutsideOfPackage("jmri.jmrit.logixng..").and()
+        .resideOutsideOfPackage("jmri.jmrix.bidib..")
         .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Test");
 
     /**
@@ -64,7 +65,8 @@ public class TestArchitectureTest {
     public static final ArchRule junit4BeforeRule = noClasses().that()
         .doNotHaveFullyQualifiedName("jmri.util.junit.rules.RetryRuleTest").and()
         .doNotHaveFullyQualifiedName("jmri.jmrit.display.logixng.ActionPositionableTest").and()
-        .resideOutsideOfPackage("jmri.jmrit.logixng..")
+        .resideOutsideOfPackage("jmri.jmrit.logixng..").and()
+        .resideOutsideOfPackage("jmri.jmrix.bidib..")
         .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Before");
     
     /**
@@ -74,6 +76,19 @@ public class TestArchitectureTest {
     public static final ArchRule junit4AfterRule = noClasses().that()
         .doNotHaveFullyQualifiedName("jmri.util.junit.rules.RetryRuleTest").and()
         .doNotHaveFullyQualifiedName("jmri.jmrit.display.logixng.ActionPositionableTest").and()
-        .resideOutsideOfPackage("jmri.jmrit.logixng..")
+        .resideOutsideOfPackage("jmri.jmrit.logixng..").and()
+        .resideOutsideOfPackage("jmri.jmrix.bidib..")
         .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.After");
+
+    /**
+     * jmri should not reference org.apache.log4j to allow jmri
+     * to be used as library in applications that choose not to use Log4J.
+     */
+    @ArchTest
+    public static final ArchRule noLog4JinJmriTestsRule = noClasses()
+        .that().doNotHaveFullyQualifiedName("jmri.util.JUnitAppender")
+        .and().doNotHaveFullyQualifiedName("jmri.util.TestingLoggerConfiguration")
+        .and().doNotHaveFullyQualifiedName("apps.jmrit.log.Log4JTreePaneTest")
+        .should().dependOnClassesThat().resideInAPackage("org.apache.logging.log4j");
+
 }

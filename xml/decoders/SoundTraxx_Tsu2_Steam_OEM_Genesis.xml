@@ -73,13 +73,17 @@
             <authorinitials>JE</authorinitials>
             <revremark>Revise CV51-56 FX references, set TSU2PaneLighting.xml, Chg CV63 item name to "Dimmer Level" to avoid conflict with Dimmer as a function name</revremark>
          </revision>
+        <revision>
+            <revnumber>6</revnumber>
+            <date>2023-10-12</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>New models and productID change for 11 bit Soundtraxx ID</revremark>
+        </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
         <family name="Tsunami2 Steam OEM Genesis" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71" comment="These are the - OEM - version Tsunami2 Steam decoders">
-            <model model="TSU-21PNEM Big Boy, HO" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="946" comment="Model ATHG04014">
-                <size length="30.5" width="15.5" height="6.5" units="mm"/>
-            </model>
+            <model model="TSU-21PNEM Big Boy, Challenger" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="6321" comment="Model 6T4884.001">
             <output name="3" label="  FX3  "/>
             <output name="4" label="  FX4  "/>
             <output name="5" label="Whistle| ">
@@ -111,9 +115,9 @@
             <output name="15" label="Coupler| ">
                 <label xml:lang="it">Accoppiatore| </label>
             </output>
-            <model model="TSU-21PNEM Big Boy, N" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="983" comment="Model ATH04014">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
+            <model model="TSU-21PNEM Big Boy, HO" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="6322" comment="Model 6T4884.003">
             <output name="3" label="  FX3  "/>
             <output name="4" label="  FX4  "/>
             <output name="5" label="Whistle| ">
@@ -145,6 +149,144 @@
             <output name="15" label="Coupler| ">
                 <label xml:lang="it">Accoppiatore| </label>
             </output>
+                <size length="30.5" width="15.5" height="6.5" units="mm"/>
+            </model>
+            <model model="TSU-21PNEM Big Boy, N" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="6359" comment="Model ">
+            <output name="3" label="  FX3  "/>
+            <output name="4" label="  FX4  "/>
+            <output name="5" label="Whistle| ">
+                <label xml:lang="it">Fischio| </label>
+            </output>
+            <output name="6" label="Bell| ">
+                <label xml:lang="it">Campana| </label>
+            </output>
+            <output name="7" label="Dynamo| ">
+                <label xml:lang="it">Dynamo| </label>
+            </output>
+            <output name="8" label="Short|Whistle">
+                <label xml:lang="it">Breve|Tromba</label>
+            </output>
+            <output name="9" label="Cylinder|Cocks">
+                <label xml:lang="it">Cilindro|Cazzi</label>
+            </output>
+            <output name="10" label="Water|Stop">
+                <label xml:lang="it">Acqua|Stop</label>
+            </output>
+            <output name="11" label="Dimming| ">
+                <label xml:lang="it">Smorzam| </label>
+            </output>
+            <output name="12" label="Mute| ">
+                <label xml:lang="it">Silenzio| </label>
+            </output>
+            <output name="13" label="|"/>	<!-- Not used for for this decoder -->
+            <output name="14" label="Brakes| "/>
+            <output name="15" label="Coupler| ">
+                <label xml:lang="it">Accoppiatore| </label>
+            </output>
+                <size length="30.5" width="15.5" height="6.5" units="mm"/>
+            </model>
+            <model model="TSU-21PNEM8 MT-4" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="6412" comment="Model 8T482.001">
+            <output name="3" label="  FX3  "/>
+            <output name="4" label="  FX4  "/>
+            <output name="5" label="Whistle| ">
+                <label xml:lang="it">Fischio| </label>
+            </output>
+            <output name="6" label="Bell| ">
+                <label xml:lang="it">Campana| </label>
+            </output>
+            <output name="7" label="Dynamo| ">
+                <label xml:lang="it">Dynamo| </label>
+            </output>
+            <output name="8" label="Short|Whistle">
+                <label xml:lang="it">Breve|Tromba</label>
+            </output>
+            <output name="9" label="Cylinder|Cocks">
+                <label xml:lang="it">Cilindro|Cazzi</label>
+            </output>
+            <output name="10" label="Water|Stop">
+                <label xml:lang="it">Acqua|Stop</label>
+            </output>
+            <output name="11" label="Dimming| ">
+                <label xml:lang="it">Smorzam| </label>
+            </output>
+            <output name="12" label="Mute| ">
+                <label xml:lang="it">Silenzio| </label>
+            </output>
+            <output name="13" label="|"/>	<!-- Not used for for this decoder -->
+            <output name="14" label="Brakes| "/>
+            <output name="15" label="Coupler| ">
+                <label xml:lang="it">Accoppiatore| </label>
+            </output>
+                <size length="30.5" width="15.5" height="6.5" units="mm"/>
+            </model>
+            <model model="TSU-21PNEM8 FEF-2" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="6413" comment="Model 8TFEF.001">
+            <output name="3" label="  FX3  "/>
+            <output name="4" label="  FX4  "/>
+            <output name="5" label="Whistle| ">
+                <label xml:lang="it">Fischio| </label>
+            </output>
+            <output name="6" label="Bell| ">
+                <label xml:lang="it">Campana| </label>
+            </output>
+            <output name="7" label="Dynamo| ">
+                <label xml:lang="it">Dynamo| </label>
+            </output>
+            <output name="8" label="Short|Whistle">
+                <label xml:lang="it">Breve|Tromba</label>
+            </output>
+            <output name="9" label="Cylinder|Cocks">
+                <label xml:lang="it">Cilindro|Cazzi</label>
+            </output>
+            <output name="10" label="Water|Stop">
+                <label xml:lang="it">Acqua|Stop</label>
+            </output>
+            <output name="11" label="Dimming| ">
+                <label xml:lang="it">Smorzam| </label>
+            </output>
+            <output name="12" label="Mute| ">
+                <label xml:lang="it">Silenzio| </label>
+            </output>
+            <output name="13" label="|"/>	<!-- Not used for for this decoder -->
+            <output name="14" label="Brakes| "/>
+            <output name="15" label="Coupler| ">
+                <label xml:lang="it">Accoppiatore| </label>
+            </output>
+                <size length="30.5" width="15.5" height="6.5" units="mm"/>
+            </model>
+            <model model="TSU-21PNEM8 FEF-3" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="6414" comment="Model 8TFEF.002">
+            <output name="3" label="  FX3  "/>
+            <output name="4" label="  FX4  "/>
+            <output name="5" label="Whistle| ">
+                <label xml:lang="it">Fischio| </label>
+            </output>
+            <output name="6" label="Bell| ">
+                <label xml:lang="it">Campana| </label>
+            </output>
+            <output name="7" label="Dynamo| ">
+                <label xml:lang="it">Dynamo| </label>
+            </output>
+            <output name="8" label="Short|Whistle">
+                <label xml:lang="it">Breve|Tromba</label>
+            </output>
+            <output name="9" label="Cylinder|Cocks">
+                <label xml:lang="it">Cilindro|Cazzi</label>
+            </output>
+            <output name="10" label="Water|Stop">
+                <label xml:lang="it">Acqua|Stop</label>
+            </output>
+            <output name="11" label="Dimming| ">
+                <label xml:lang="it">Smorzam| </label>
+            </output>
+            <output name="12" label="Mute| ">
+                <label xml:lang="it">Silenzio| </label>
+            </output>
+            <output name="13" label="|"/>	<!-- Not used for for this decoder -->
+            <output name="14" label="Brakes| "/>
+            <output name="15" label="Coupler| ">
+                <label xml:lang="it">Accoppiatore| </label>
+            </output>
+                <size length="30.5" width="15.5" height="6.5" units="mm"/>
+            </model>
             <functionlabels>
                 <functionlabel num="0" lockable="true">Headlight</functionlabel>
                 <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -701,8 +843,9 @@
                 <label>FX3 Light Type</label>
             </variable>
             <variable item="FX4 Effect Selection" CV="52" mask="XXXVVVVV" default="0" minOut="4" tooltip="Determines the effect generated from the FX4 light output">
-              <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
-              <label>FX4 Effect Selection</label>
+                <defaultItem default="21" include="6412,6413,6414"/>
+                <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
+                <label>FX4 Effect Selection</label>
             </variable>
             <variable item="FX4 Phase Selection" CV="52" mask="XXVXXXXX" minOut="4" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
@@ -717,8 +860,9 @@
                 <label>FX4 Light Type</label>
             </variable>
             <variable item="FX5 Effect Selection" CV="53" mask="XXXVVVVV" default="0" minOut="5" tooltip="Determines the second effect associated with the FX5 light output">
-              <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
-              <label>FX5 Effect Selection</label>
+                <defaultItem default="20" include="6414"/>
+                <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
+                <label>FX5 Effect Selection</label>
             </variable>
             <variable item="FX5 Phase Selection" CV="53" mask="XXVXXXXX" default="0" minOut="5"  tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
@@ -733,8 +877,9 @@
                 <label>FX5 Light Type</label>
             </variable>
             <variable item="FX6 Effect Selection" CV="54" mask="XXXVVVVV" default="21" minOut="6"  tooltip="Determines the second effect associated with the FX6 light output">
-              <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
-              <label>FX6 Effect Selection</label>
+                <defaultItem default="21" include="6321,6322,6359"/>
+                <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
+                <label>FX6 Effect Selection</label>
             </variable>
             <variable item="FX6 Phase Selection" CV="54" mask="XXVXXXXX" default="0" minOut="6"  tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
@@ -758,6 +903,7 @@
               <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
             </variable>
             <variable item="FX7 Light Type" CV="55" mask="VXXXXXXX" default="0" minOut="7" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+                <defaultItem default="1" include="6412,6413,6414"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
             </variable>
             <variable item="FX8 Effect Selection" CV="56" mask="XXXVVVVV" default="15" minOut="8" tooltip="Determines the second effect associated with the FX8 light output">
@@ -770,6 +916,7 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
             </variable>
             <variable item="FX8 Light Type" CV="56" mask="VXXXXXXX" default="0" minOut="8" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+                <defaultItem default="1" include="6412,6413,6414"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
             </variable>
             <variable item="Headlight F0(f) Forward Directional Control" CV="57" mask="XXXXXXXV" default="1" minOut="1" tooltip="Check to enable F0(f) function output in Forward direction">
@@ -797,9 +944,11 @@
                 <label>FX6 Forward Directional Control</label>
             </variable>
             <variable item="FX7 Forward Directional Control" CV="57" mask="XVXXXXXX" default="1" minOut="7" tooltip="Check to enable FX7 function output in Forward direction">
+                <defaultItem default="0" include="6321,6322,6359"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
             </variable>
             <variable item="FX8 Forward Directional Control" CV="57" mask="VXXXXXXX" default="1" minOut="8" tooltip="Check to enable FX8 function output in Forward direction">
+                <defaultItem default="0" include="6321,6322,6359"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
             </variable>
             <variable item="Headlight F0(f) Reverse Directional Control" CV="58" mask="XXXXXXXV" default="0" minOut="1" tooltip="Check to enable F0(f) function output in Reverse direction">
@@ -827,9 +976,11 @@
                 <label>FX6 Reverse Directional Control</label>
             </variable>
             <variable item="FX7 Reverse Directional Control" CV="58" mask="XVXXXXXX" default="1" minOut="7" tooltip="Check to enable FX7 function output in Reverse direction">
+                <defaultItem default="0" include="6321,6322,6359"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
             </variable>
             <variable item="FX8 Reverse Directional Control" CV="58" mask="VXXXXXXX" default="1" minOut="8" tooltip="Check to enable FX8 function output in Reverse direction">
+                <defaultItem default="0" include="6321,6322,6359"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
             </variable>
             <variable item="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="3" tooltip="Sets the overall flash rate of the Hyperlight effects, 0 is fast, 15 is slow">
@@ -861,8 +1012,10 @@
             <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim128.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2userId.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUspeedTableDefault.xml"/>
             <!-- Sound Selection follows -->
             <variable CV="112" mask="XXXXXXVV" item="Sound Option 14" default="2">
+                <defaultItem default="3" include="6321"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Hand shoveled Coal</choice>
@@ -880,6 +1033,7 @@
                 <label>Fuel Type Select</label>
             </variable>
             <variable CV="112" mask="XXXXXVXX" item="Sound Option 15" default="1">
+                <defaultItem default="0" include="6412,6413,6414"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Non-lifting injector</choice>
@@ -906,10 +1060,12 @@
                 <label>3-cylinder exhaust</label>
             </variable>
             <variable CV="112" mask="XVVXXXXX" item="Sound Option 2" default="2" tooltip="&lt;html&gt;Control the variation or timing syncopation when articulated exhaust&lt;br&gt;      is enabled to simulate slipping drive wheels or a double-header.&lt;/html&gt;">
+                <defaultItem default="0" include="6412,6413,6414"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumSlip.xml"/>
                 <label>Slip Rate Control</label>
             </variable>
             <variable CV="112" mask="VXXXXXXX" item="Sound Option 3" default="1" tooltip="Alters the exhaust timing to sound like a simple articulated engine when Auto Exhaust is activated">
+                <defaultItem default="0" include="6412,6413,6414"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumExhaust.xml"/>
                 <label>Articulated Exhaust Control</label>
             </variable>
@@ -950,6 +1106,8 @@
                         &lt;/html&gt;</tooltip>
             </variable>
             <variable CV="120" mask="VVVVVVVV" item="Sound Option 6" default="64" tooltip="Selects which Whistle to use">
+                <defaultItem default="25" include="6413,6414"/>
+                <defaultItem default="49" include="6412"/>
                 <enumVal>
                     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumChoiceSteamWhistle.xml"/>
                     <enumChoice>
@@ -977,6 +1135,7 @@
                 <label>Auxiliary Whistle Select</label>
             </variable>
             <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" default="58" tooltip="Bell sound effect and ring-rate">
+                <defaultItem default="25" include="6412,6413,6414"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Heavy Brass: slow</choice>
@@ -1164,6 +1323,7 @@
                 <tooltip>The selected bell to ring during the crossing-timer countdown when Grade-Crossing Logic is activated</tooltip>
             </variable>
             <variable CV="123" mask="XXXXVVVV" item="Sound Option 1" default="9" tooltip="Select one of chuff sound effects">
+                <defaultItem default="7" include="6412,6413,6414"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Light 1</choice>
@@ -1199,6 +1359,7 @@
                 <label>Exhaust Select</label>
             </variable>
             <variable CV="124" mask="XXXXVVVV" item="Sound Option 10" default="10" tooltip="Select the air compressor sound effects">
+                <defaultItem default="8" include="6412,6413,6414"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Single-phase 1</choice>
@@ -1237,6 +1398,7 @@
                 <label>Air Compressor Select</label>
             </variable>
             <variable CV="125" mask="XXXXXVVV" item="Sound Option 5" default="7" tooltip="Select one of four dynamo sound effects">
+                <defaultItem default="3" include="6412,6413,6414"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Dynamo 1</choice>
@@ -1387,6 +1549,7 @@
                 <label>Valve Packing Volume</label>
             </variable>
             <variable CV="153" mask="VVVVVVVV" item="Sound Setting 26" default="15">
+                <defaultItem default="0" include="6412,6413,6414"/>
                 <decVal/>
                 <label>Clickety Clack Volume</label>
             </variable>
@@ -1420,14 +1583,17 @@
             </variable>
             <!-- Individual Reverb Output Level Controls follow -->
             <variable item="Whistle Reverb Level" CV="161" mask="VVVVVVVV" default="75" tooltip="Sets the percentage of the whistle signal level to mix into the reverb input">
+                <defaultItem default="20" include="6321"/>
                 <decVal/>
                 <label>Whistle Reverb Level</label>
             </variable>
             <variable CV="162" mask="VVVVVVVV" item="Bell Reverb Level" default="100">
+                <defaultItem default="50" include="6321"/>
                 <decVal/>
                 <label>Bell Reverb Level</label>
             </variable>
             <variable item="Exhaust Reverb Level" CV="163" mask="VVVVVVVV" default="20" tooltip="Sets the percentage of the locomotive exhaust signal level to mix into the reverb input">
+                <defaultItem default="100" include="6321"/>
                 <decVal/>
                 <label>Exhaust Reverb Level</label>
             </variable>
@@ -1719,6 +1885,7 @@
                 <label>Constant Brake Distance (0-255)</label>
             </variable>
             <variable CV="224" mask="VVVVVVVV" item="High-Pass Filter Cutoff Frequency" default="20" tooltip="adjust the cutoff frequency of the decoder’s high-pass output filter 1=20Hz, 255=1kHz, 0=disabled">
+                <defaultItem default="50" include="6321"/>
                 <decVal/>
                 <label>High-Pass Filter Cutoff Frequency</label>
             </variable>
@@ -1729,34 +1896,42 @@
             </variable>
             <!-- Individual Cut/Boost Controls follow -->
             <variable item="62 Hz Cut/Boost" CV="226" mask="VVVVVVVV" default="25" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
+                <defaultItem default="0" include="6321"/>
                 <decVal/>
                 <label>62 Hz Cut/Boost</label>
             </variable>
             <variable item="125 Hz Cut/Boost" CV="227" mask="VVVVVVVV" default="55" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
+                <defaultItem default="0" include="6321"/>
                 <decVal/>
                 <label>125 Hz Cut/Boost</label>
             </variable>
             <variable item="250 Hz Cut/Boost" CV="228" mask="VVVVVVVV" default="135" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
+                <defaultItem default="75" include="6321"/>
                 <decVal/>
                 <label>250 Hz Cut/Boost</label>
             </variable>
             <variable item="500 Hz Cut/Boost" CV="229" mask="VVVVVVVV" default="175" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
+                <defaultItem default="150" include="6321"/>
                 <decVal/>
                 <label>500 Hz Cut/Boost</label>
             </variable>
             <variable item="1K Hz Cut/Boost" CV="230" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
+                <defaultItem default="150" include="6321"/>
                 <decVal/>
                 <label>1K Hz Cut/Boost</label>
             </variable>
             <variable item="2K Hz Cut/Boost" CV="231" mask="VVVVVVVV" default="85" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
+                <defaultItem default="150" include="6321"/>
                 <decVal/>
                 <label>2K Hz Cut/Boost</label>
             </variable>
             <variable item="4K Hz Cut/Boost" CV="232" mask="VVVVVVVV" default="50" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
+                <defaultItem default="100" include="6321"/>
                 <decVal/>
                 <label>4K Hz Cut/Boost</label>
             </variable>
             <variable CV="233" item="Reverb Control" mask="XXXXXVVV" default="4" tooltip="Selects one of the reverb presets or selects a user adjustable profile">
+                <defaultItem default="5" include="6321"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumReverb.xml"/>
                 <label>Reverb Control</label>
             </variable>
@@ -1870,6 +2045,7 @@
                 <tooltip>Check to enable function F24 when the unit is operating in analog power mode</tooltip>
             </variable>
             <variable item="Analog Mode Function Status - F25" CV="242" mask="XXXVXXXX" default="0" minFn="25">
+                <defaultItem default="1" include="6321,6412,6413,6414"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label xml:lang="it">Stato Funzioni in analogico - F25</label>
                 <label xml:lang="fr">État de la fonction en analogique - F25</label>
@@ -1922,6 +2098,7 @@
             <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOCVconsistF13-28.xml"/>
             <!-- Consist automatic effects -->
             <variable CV="247" mask="XXXXXXXV" item="Consist Automatic Effects - FWDD" default="0">
+                <defaultItem default="1" include="6321"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Effect Function Controlled</choice>
@@ -1933,6 +2110,7 @@
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
             <variable CV="247" mask="XXXXXXVX" item="Consist Automatic Effects - REVD" default="0">
+                <defaultItem default="1" include="6321"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Effect Function Controlled</choice>
@@ -1944,6 +2122,7 @@
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
             <variable CV="247" mask="XXXXXVXX" item="Consist Automatic Effects - FWDS" default="0">
+                <defaultItem default="1" include="6321"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Effect Function Controlled</choice>
@@ -1955,6 +2134,7 @@
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
             <variable CV="247" mask="XXXXVXXX" item="Consist Automatic Effects - REVS" default="0">
+                <defaultItem default="1" include="6321"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Effect Function Controlled</choice>
@@ -2019,23 +2199,43 @@
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="16.1.259" item="Extended Function Map FX3 Effect" default="255" minOut="3">
+                <defaultItem default="5" include="6412,6413,6414"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>FX3 Effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="16.1.260" item="Extended Function Map FX4 Effect" default="5" minOut="4">
+                <defaultItem default="255" include="6412,6413,6414"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>FX4 Effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="16.1.261" item="Extended Function Map FX5 Effect" default="6" minOut="5">
+                <defaultItem default="5" include="6412"/>
+                <defaultItem default="21" include="6413"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>FX5 Effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="16.1.262" item="Extended Function Map FX6 Effect" default="255" minOut="6">
+                <defaultItem default="5" include="6412"/>
+                <defaultItem default="21" include="6413,6414"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>FX6 Effect</label>
+                <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+            </variable>
+            <variable CV="16.1.263" item="Extended Function Map FX7 Effect" default="255" minOut="7">
+                <defaultItem default="5" include="6412"/>
+                <defaultItem default="22" include="6413,6414"/>
+                <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>FX7 Effect</label>
+                <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+            </variable>
+            <variable CV="16.1.264" item="Extended Function Map FX8 Effect" default="255" minOut="8">
+                <defaultItem default="5" include="6412"/>
+                <defaultItem default="24" include="6413,6414"/>
+                <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>FX8 Effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="16.1.273" item="Extended Function Map Dimmer" default="7">
@@ -2240,22 +2440,27 @@
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
             <variable CV="16.1.387" mask="XXXXXXXV" item="FX3 Effect Automatic Effects - FWDD" default="1" minOut="3">
+                <defaultItem default="0" include="6412,6413,6414"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
             <variable CV="16.1.387" mask="XXXXXXVX" item="FX3 Effect Automatic Effects - REVD" default="1" minOut="3">
+                <defaultItem default="0" include="6412,6413,6414"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
             <variable CV="16.1.387" mask="XXXXXVXX" item="FX3 Effect Automatic Effects - FWDS" default="1" minOut="3">
+                <defaultItem default="0" include="6412,6413,6414"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
             <variable CV="16.1.387" mask="XXXXVXXX" item="FX3 Effect Automatic Effects - REVS" default="1" minOut="3">
+                <defaultItem default="0" include="6412,6413,6414"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
             <variable CV="16.1.387" mask="XXXVXXXX" item="FX3 Effect Automatic Effects - ESTP" default="1" minOut="3">
+                <defaultItem default="0" include="6412,6413,6414"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
@@ -2276,6 +2481,7 @@
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
             <variable CV="16.1.388" mask="XXXVXXXX" item="FX4 Effect Automatic Effects - ESTP" default="0" minOut="4">
+                <defaultItem default="1" include="6412,6413,6414"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
@@ -2312,6 +2518,7 @@
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
             <variable CV="16.1.390" mask="XXXXVXXX" item="FX6 Effect Automatic Effects - REVS" default="0" minOut="6">
+                <defaultItem default="1" include="6321,6322,6359"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
@@ -3027,7 +3234,8 @@
                 <decVal/>
                 <label>Side Rod Clank Alt Volume</label>
             </variable>
-            <variable CV="16.2.296" mask="VVVVVVVV" item="Alt Sound Setting 8" default="50" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.296" mask="VVVVVVVV" item="Alt Sound Setting 8" default="0" tooltip="Set the alternate volume levels of each sound effect">
+                <defaultItem default="50" include="6359"/>
                 <decVal/>
                 <label>Cylinder Cocks Alt Volume</label>
             </variable>
@@ -3043,7 +3251,8 @@
                 <decVal/>
                 <label>Independent Brake Apply Alt Volume</label>
             </variable>
-            <variable CV="16.2.300" mask="VVVVVVVV" item="Alt Sound Setting 13" default="35" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.300" mask="VVVVVVVV" item="Alt Sound Setting 13" default="0" tooltip="Set the alternate volume levels of each sound effect">
+                <defaultItem default="35" include="6359"/>
                 <decVal/>
                 <label>Independent Brake Release Alt Volume</label>
             </variable>
@@ -3083,11 +3292,13 @@
                 <decVal/>
                 <label>All Aboard!/Coach Doors Alt Volume</label>
             </variable>
-            <variable CV="16.2.312" mask="VVVVVVVV" item="Alt Sound Setting 25" default="7" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="16.2.312" mask="VVVVVVVV" item="Alt Sound Setting 25" default="0" tooltip="Set the alternate volume levels of each sound effect">
+                <defaultItem default="7" include="6359"/>
                 <decVal/>
                 <label>Valve Packing Alt Volume</label>
             </variable>
             <variable CV="16.2.313" mask="VVVVVVVV" item="Alt Sound Setting 26" default="7" tooltip="Set the alternate volume levels of each sound effect">
+                <defaultItem default="0" include="6412,6413,6414"/>
                 <decVal/>
                 <label>Clickety-Clack Alt Volume</label>
             </variable>
@@ -3157,6 +3368,7 @@
                 <label>Throttle Sensitivity</label>
             </variable>
             <variable item="Motor Load Gain" CV="16.2.512" mask="VVVVVVVV" default="50" tooltip="&lt;html&gt;to adjust the correlation between the throttle setting and motor load sensing&lt;br&gt;      sets how much the load signal is affected by the model accelerating/decelerating&lt;/html&gt;">
+                <defaultItem default="80" include="6321"/>
                 <decVal/>
                 <label>Load Sensitivity</label>
             </variable>

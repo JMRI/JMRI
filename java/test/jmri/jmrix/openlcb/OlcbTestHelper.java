@@ -233,6 +233,7 @@ public class OlcbTestHelper {
                 this.frame = frame;
             }
 
+            @Override
             public boolean matches(Message message) {
                 MessageBuilder d = new MessageBuilder(aliasMap);
                 List<? extends CanFrame> actualFrames = d.processMessage(message);
@@ -247,6 +248,7 @@ public class OlcbTestHelper {
                 return frame.equals(r);
             }
 
+            @Override
             public String toString() {
                 //printed in verification errors
                 return "[OpenLCB message with CAN rendering of " + frame + "][actual " + actual + "]";

@@ -347,8 +347,7 @@ log.debug("The process failed account of user error"); // NOI18N
         Copy <code>java/test/jmri/jmrit/BundleTest.java</code> to
         <code>java/test/jmri/mypackage/BundleTest.java</code> and then edit the "package" statement
         in that file to point to your package, adding a few of your strings for testing (including
-        ones you reference from parent bundles, if any), and including a reference in your
-        PackageTest class.</li>
+        ones you reference from parent bundles, if any).</li>
       </ul>
 
       <h4>Older code</h4>

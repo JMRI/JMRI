@@ -4,14 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.util.TimerTask;
+
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.text.DefaultFormatter;
+
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -20,11 +22,8 @@ import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.CbusSend;
-import java.util.TimerTask;
 import jmri.util.TimerUtil;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 public class CbusAllocateNodeNumber implements CanListener {
 
@@ -121,12 +120,12 @@ public class CbusAllocateNodeNumber implements CanListener {
             send.nodeRequestParamSetup();
         }
 
-        int option = JOptionPane.showOptionDialog(null,
+        int option = JmriJOptionPane.showConfirmDialog(null,
             rqNNpane,
             popuplabel,
-            JOptionPane.OK_CANCEL_OPTION,
-            JOptionPane.QUESTION_MESSAGE, null, null, null);
-        if (option == JOptionPane.OK_OPTION) {
+            JmriJOptionPane.OK_CANCEL_OPTION);
+
+        if (option == JmriJOptionPane.OK_OPTION) {
             int newval = (Integer) rqnnSpinner.getValue();
             baseNodeNum = newval;
             setSendSNNTimeout();
@@ -182,9 +181,9 @@ public class CbusAllocateNodeNumber implements CanListener {
             public void run() {
                 sendSNNTask = null;
                 log.error("No confirmation from node when setting node number {}", baseNodeNum );
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("NnAllocError",baseNodeNum), Bundle.getMessage("WarningTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
                 clearSendSNNTimeout();
             }
         };
@@ -319,6 +318,6 @@ public class CbusAllocateNodeNumber implements CanListener {
         removeTc(_memo);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusAllocateNodeNumber.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusAllocateNodeNumber.class);
 
 }

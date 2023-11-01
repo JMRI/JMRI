@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2012</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>7</revnumber>
+      <date>2016-10-09</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>6</revnumber>
+      <date>2012-12-27</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2005-08-14</date>
+      <authorinitials>BJ</authorinitials>
+	<!--<revremark>Revision in original Lenz_Gold.xml file</revremark>--> 
+
+    </revision>
+  </revhistory>
+  
+	<variable CV="15" item="Switching Mode Affichage no 0" default="0" minOut="1">
+	    <xi:include href="file:/xml/decoders/leb/enum-Signal_Options.xml"/> 
+		<label>CV 15/527 Choix Allumage Led no  1</label>
+		<tooltip>Led  1</tooltip>
+	</variable>
+	<variable CV="16" item="Switching Mode Affichage no 1" default="4" minOut="1">
+	    <xi:include href="file:/xml/decoders/leb/enum-Signal_Options.xml"/> 
+		<label>CV 16/528 Choix Allumage Led no  2</label>
+		<tooltip>Led  2</tooltip>
+	</variable>
+	<variable CV="17" item="Switching Mode Affichage no 2" default="8" minOut="1">
+	    <xi:include href="file:/xml/decoders/leb/enum-Signal_Options.xml"/> 
+		<label>CV 17/529 Choix Allumage Led no  3</label>
+		<tooltip>Led  3</tooltip>
+	</variable>
+	<variable CV="18" item="Switching Mode Affichage no 3" default="12" minOut="1">
+	    <xi:include href="file:/xml/decoders/leb/enum-Signal_Options.xml"/> 
+		<label>CV 18/530 Choix Allumage Led no  4</label>
+		<tooltip>Led 4</tooltip>
+	</variable>
+	<variable CV="19" item="Switching Mode Affichage no 4" default="0" minOut="1">
+	    <xi:include href="file:/xml/decoders/leb/enum-Signal_Options.xml"/> 
+		<label>CV 19/531 Choix Allumage Led no  5</label>
+		<tooltip>Led 5</tooltip>
+	</variable>
+	<variable CV="20" item="Switching Mode Affichage no 5" default="4" minOut="1">
+	    <xi:include href="file:/xml/decoders/leb/enum-Signal_Options.xml"/> 
+		<label>CV 20/532 Choix Allumage Led no  6</label>
+		<tooltip>Led 6</tooltip>
+	</variable>
+	<variable CV="21" item="Switching Mode Affichage no 6" default="3" minOut="1">
+	    <xi:include href="file:/xml/decoders/leb/enum-Signal_Options.xml"/> 
+		<label>CV 21/533 Choix Allumage Led no  7</label>
+		<tooltip>Led 7</tooltip>
+	</variable>
+	<!--
+	<variable CV="534" item="Switching Mode Affichage no 7" default="2" minOut="1">
+	    <xi:include href="file:/xml/decoders/leb/enum-Signal_Options.xml"/> 
+		<label>CV 22/534 Choix Allumage Led no  8</label>
+		<tooltip>Led 8</tooltip>
+	</variable>
+	<variable CV="535" item="Switching Mode Affichage no 8" default="0" minOut="1">
+	    <xi:include href="file:/xml/decoders/leb/enum-Signal_Options.xml"/> 
+		<label>CV 23/535 Choix Allumage Led no  9</label>
+		<tooltip>Led 9</tooltip>
+	</variable>
+		<variable CV="536" item="Switching Mode Affichage no 9" default="4" minOut="1">
+	    <xi:include href="file:/xml/decoders/leb/enum-Signal_Options.xml"/> 
+		<label>CV 24/536 Choix Allumage Led no 10</label>
+		<tooltip>Led 10</tooltip>
+	</variable>
+	<variable CV="537" item="Switching Mode Affichage no 10" default="4" minOut="1">
+	    <xi:include href="file:/xml/decoders/leb/enum-Signal_Options.xml"/> 
+		<label>CV 25/537 Choix Allumage Led no 11</label>
+		<tooltip>Led 11</tooltip>
+	</variable>
+	--> 
+
+</variables>

@@ -6,8 +6,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import jmri.*;
+import jmri.jmrit.display.logixng.ActionAudioIcon;
 import jmri.jmrit.display.logixng.ActionLayoutTurnout;
 import jmri.jmrit.display.logixng.ActionPositionable;
+import jmri.jmrit.display.logixng.ActionPositionableByClass;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.jmrit.logixng.actions.DigitalMany;
@@ -91,20 +93,38 @@ public class StoreAndLoadTest {
         maleSocket = digitalActionManager.registerAction(digitalMany);
         ifThenElse.getChild(1).connect(maleSocket);
 
+        int index = 0;
+        ActionAudioIcon actionAudioIcon = new ActionAudioIcon(digitalActionManager.getAutoSystemName(), null);
+        actionAudioIcon.setComment("A comment");
+        maleSocket = digitalActionManager.registerAction(actionAudioIcon);
+        digitalMany.getChild(index++).connect(maleSocket);
+
+        actionAudioIcon = new ActionAudioIcon(digitalActionManager.getAutoSystemName(), null);
+        actionAudioIcon.setComment("A comment");
+        actionAudioIcon.setOperation(ActionAudioIcon.Operation.Play);
+        maleSocket = digitalActionManager.registerAction(actionAudioIcon);
+        digitalMany.getChild(index++).connect(maleSocket);
+
+        actionAudioIcon = new ActionAudioIcon(digitalActionManager.getAutoSystemName(), null);
+        actionAudioIcon.setComment("A comment");
+        actionAudioIcon.setOperation(ActionAudioIcon.Operation.Stop);
+        maleSocket = digitalActionManager.registerAction(actionAudioIcon);
+        digitalMany.getChild(index++).connect(maleSocket);
+
         ActionLayoutTurnout actionLayoutTurnout = new ActionLayoutTurnout(digitalActionManager.getAutoSystemName(), null);
         actionLayoutTurnout.setComment("A comment");
         maleSocket = digitalActionManager.registerAction(actionLayoutTurnout);
-        digitalMany.getChild(0).connect(maleSocket);
+        digitalMany.getChild(index++).connect(maleSocket);
 
         ActionPositionable actionPositionable = new ActionPositionable(digitalActionManager.getAutoSystemName(), null);
         actionPositionable.setComment("A comment");
         maleSocket = digitalActionManager.registerAction(actionPositionable);
-        digitalMany.getChild(1).connect(maleSocket);
+        digitalMany.getChild(index++).connect(maleSocket);
 
-//        ActionClearSlots actionClearSlots = new ActionClearSlots(digitalActionManager.getAutoSystemName(), null, null);
-//        actionClearSlots.setComment("A comment");
-//        maleSocket = digitalActionManager.registerAction(actionClearSlots);
-//        ifThenElse.getChild(2).connect(maleSocket);
+        ActionPositionableByClass actionPositionableByClass = new ActionPositionableByClass(digitalActionManager.getAutoSystemName(), null);
+        actionPositionableByClass.setComment("A comment");
+        maleSocket = digitalActionManager.registerAction(actionPositionableByClass);
+        digitalMany.getChild(index++).connect(maleSocket);
 
 /*
         if (1==1) {

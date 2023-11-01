@@ -1,8 +1,0 @@
-The jmrix.loconet Java package defines loconet-specific implementations 
-for the JMRI interfaces.  The jmrix.loconet.locormi package implements
-remote communication between a "LocoNet server" and a "LocoNet client"
-process.
-
-The JMRI web page is located at http://jmri.org/
-
-This package is the work of Alex Shepherd.

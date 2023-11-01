@@ -1,13 +1,12 @@
 package jmri.jmrit.beantable;
 
+import javax.annotation.Nonnull;
+import javax.swing.*;
+
 import jmri.*;
 import jmri.jmrit.beantable.routetable.RouteEditFrame;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nonnull;
-import javax.swing.*;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * TableDataModel for the Route Table.
@@ -121,7 +120,7 @@ public class RouteTableDataModel extends BeanTableDataModel<Route> {
                         log.error("User Name is not unique {}", value);
                         String msg;
                         msg = Bundle.getMessage("WarningUserName", ("" + value));
-                        JOptionPane.showMessageDialog(null, msg, Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(null, msg, Bundle.getMessage("WarningTitle"), JmriJOptionPane.ERROR_MESSAGE);
                         return;
                     }
                 }
@@ -215,6 +214,6 @@ public class RouteTableDataModel extends BeanTableDataModel<Route> {
         //Title of Set button in Route table
     }
 
-    private static final Logger log = LoggerFactory.getLogger(RouteTableDataModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RouteTableDataModel.class);
 
 }

@@ -10,17 +10,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.vsdecoder.LoadVSDFileAction;
@@ -29,8 +30,7 @@ import jmri.jmrit.vsdecoder.VSDConfig;
 import jmri.jmrit.vsdecoder.VSDecoder;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Main frame for the GUI VSDecoder Manager.
@@ -88,7 +88,7 @@ public class VSDManagerFrame extends JmriJFrame {
     public VSDManagerFrame() {
         super(true, true);
         this.addPropertyChangeListener(VSDecoderManager.instance());
-        is_auto_loading = VSDecoderManager.instance().getVSDecoderPreferences().isAutoLoadingDefaultVSDFile();
+        is_auto_loading = VSDecoderManager.instance().getVSDecoderPreferences().isAutoLoadingVSDFile();
         is_viewing = VSDecoderManager.instance().getVSDecoderList().isEmpty() ? false : true;
         initGUI();
     }
@@ -212,7 +212,7 @@ public class VSDManagerFrame extends JmriJFrame {
                 msg = "Roster Group \"" + vsdRosterGroup + "\" not found";
             }
             if (!msg.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Auto-Loading: " + msg);
+                JmriJOptionPane.showMessageDialog(null, "Auto-Loading: " + msg);
                 log.warn("Auto-Loading VSDecoder aborted");
             }
         }
@@ -238,7 +238,7 @@ public class VSDManagerFrame extends JmriJFrame {
         // If the maximum number of VSDecoders (Controls) is reached, don't create a new Control
         // In Viewing Mode up to 4 existing VSDecoders are possible, so skip the check
         if (! is_viewing && VSDecoderManager.instance().getVSDecoderList().size() >= VSDecoderManager.max_decoder) {
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     "VSDecoder cannot be created. Maximal number is " + String.valueOf(VSDecoderManager.max_decoder));
         } else {
             config = new VSDConfig(); // Create a new Config for the new VSDecoder.
@@ -264,7 +264,7 @@ public class VSDManagerFrame extends JmriJFrame {
         // If this decoder already exists, don't create a new Control
         // In Viewing Mode up to 4 existing VSDecoders are possible, so skip the check
         if (! is_viewing && VSDecoderManager.instance().getVSDecoderByAddress(config.getLocoAddress().toString()) != null) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("MgrAddDuplicateMessage"));
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("MgrAddDuplicateMessage"));
         } else {
             VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
             if (newDecoder == null) {
@@ -319,7 +319,7 @@ public class VSDManagerFrame extends JmriJFrame {
                 return;
             }
             if (vsd.getEngineSound().isEngineStarted()) {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("MgrDeleteWhenEngineStopped"));
+                JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("MgrDeleteWhenEngineStopped"));
                 return;
             } else {
                 this.removePropertyChangeListener(vsd);
@@ -378,6 +378,6 @@ public class VSDManagerFrame extends JmriJFrame {
         this.addHelpMenu("package.jmri.jmrit.vsdecoder.swing.VSDManagerFrame", true);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(VSDManagerFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VSDManagerFrame.class);
 
 }

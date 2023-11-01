@@ -1,8 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JPopupMenu;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.Reportable;
 

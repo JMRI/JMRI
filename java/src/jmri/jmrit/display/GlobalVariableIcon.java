@@ -5,11 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
-import javax.swing.JTextField;
 
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
@@ -18,10 +17,8 @@ import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logixng.GlobalVariable;
 import jmri.jmrit.logixng.GlobalVariableManager;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display a status of a GlobalVariable.
@@ -179,6 +176,12 @@ public class GlobalVariableIcon extends MemoryOrGVIcon implements java.beans.Pro
                 }
             }
         }
+    }
+
+    @Override
+    @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_GlobalVariableIcon");
     }
 
     @Override
@@ -463,20 +466,12 @@ public class GlobalVariableIcon extends MemoryOrGVIcon implements java.beans.Pro
     }
 
     protected void editGlobalVariableValue() {
-        JTextField newGlobalVariable = new JTextField(20);
-        if (getGlobalVariable().getValue() != null) {
-            newGlobalVariable.setText(getGlobalVariable().getValue().toString());
-        }
-        Object[] options = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), newGlobalVariable};
-        int retval = JOptionPane.showOptionDialog(this,
-                "Edit Current GlobalVariable Value", namedGlobalVariable.getName(),
-                0, JOptionPane.INFORMATION_MESSAGE, null,
-                options, options[2]);
 
-        if (retval != 1) {
-            return;
-        }
-        setValue(newGlobalVariable.getText());
+        String reval = (String)JmriJOptionPane.showInputDialog(this,
+                                     Bundle.getMessage("EditCurrentGlobalVariableValue", namedGlobalVariable.getName()),
+                                     getGlobalVariable().getValue());
+
+        setValue(reval);
         updateSize();
     }
 
@@ -491,6 +486,6 @@ public class GlobalVariableIcon extends MemoryOrGVIcon implements java.beans.Pro
         getGlobalVariable().setValue(val);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(GlobalVariableIcon.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(GlobalVariableIcon.class);
 
 }

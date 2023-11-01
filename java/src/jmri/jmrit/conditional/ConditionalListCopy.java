@@ -9,12 +9,9 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 import jmri.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.NamedBean.DisplayOptions;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  *
@@ -140,10 +137,10 @@ public class ConditionalListCopy extends ConditionalList {
     void editButtonPressed() {
         Conditional conditional = _conditionalList.getSelectedValue();
         if (conditional == null) {
-            JOptionPane.showMessageDialog(_editLogixFrame,
+            JmriJOptionPane.showMessageDialog(_editLogixFrame,
                     Bundle.getMessage("SelectCopyConditional"),
                     Bundle.getMessage("ReminderTitle"), // NOI18N
-                    JOptionPane.INFORMATION_MESSAGE);
+                    JmriJOptionPane.INFORMATION_MESSAGE);
             return;
         }
         // make copy
@@ -248,7 +245,7 @@ public class ConditionalListCopy extends ConditionalList {
 
     /**
      * Respond to the Done button in the Edit Logix window.
-     * <p>
+     *
      * @param e The event heard
      */
     void donePressed(ActionEvent e) {
@@ -314,7 +311,7 @@ public class ConditionalListCopy extends ConditionalList {
         return ConditionalListEdit.class.getName();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConditionalListCopy.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConditionalListCopy.class);
 
 }
 

@@ -44,10 +44,64 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-      <revnumber>2</revnumber>
+      <revnumber>11</revnumber>
+      <date>2023-07-22</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>Exclude Sound Decoders 2022, correction for FH-series</revremark>
+    </revision>
+    <revision>
+      <revnumber>10</revnumber>
+      <date>2023-07-17</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>disable unimplemented CV by PD-series</revremark>
+    </revision>
+    <revision>
+      <revnumber>9</revnumber>
+      <date>2020-12-12</date>
+      <authorinitials>WK</authorinitials>
+      <revremark>Excluded similar CV9xx for Sound Decoder 2020</revremark>
+    </revision>
+    <revision>
+      <revnumber>8</revnumber>
+      <date>2020-05-02</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>disable CV50 and CV63 for Sound-Decoder</revremark>
+    </revision>
+    <revision>
+      <revnumber>7</revnumber>
       <date>2019-07-28</date>
       <authorinitials>ALM</authorinitials>
       <revremark>CV53: changed label from Alternative to Dimmed + Add minOut + CV9 update</revremark>
+    </revision>
+    <revision>
+      <revnumber>6</revnumber>
+      <date>2019-01-03</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>CV9 as enum</revremark>
+    </revision>
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2017-08-16</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>German translation extended</revremark>
+    </revision>
+    <revision>
+      <revnumber>4</revnumber>
+      <date>2015-03-05</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>CV50-63 shouldn't be excluded for combo sound decoders. Spelling change to match new DH def pane for start and brake options</revremark>
+    </revision>
+    <revision>
+      <revnumber>3</revnumber>
+      <date>2014-10-13</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>CV50-63 exclude for combo sound decoders</revremark>
+    </revision>
+    <revision>
+      <revnumber>2</revnumber>
+      <date>2014-05-17</date>
+      <authorinitials>EF</authorinitials>
+      <revremark>Italian translation 2014</revremark>
     </revision>
     <revision>
       <revnumber>1</revnumber>
@@ -57,48 +111,6 @@
         This file containts only variables that are common to ALL D&amp;H decoders,
         in ALL versions, and in ALL firmware versions from fw3.02 and up.
       </revremark>
-    </revision>
-    <revision>
-      <revnumber>2</revnumber>
-      <date>2014-05-17</date>
-      <authorinitials>EF</authorinitials>
-      <revremark>Italian translation 2014</revremark>
-    </revision>
-    <revision>
-      <revnumber>3</revnumber>
-      <date>2014-10-13</date>
-      <authorinitials>PB</authorinitials>
-      <revremark>CV50-63 exclude for combo sound decoders</revremark>
-    </revision>
-    <revision>
-      <revnumber>4</revnumber>
-      <date>2015-03-05</date>
-      <authorinitials>PB</authorinitials>
-      <revremark>CV50-63 shouldn't be excluded for combo sound decoders. Spelling change to match new DH def pane for start and brake options</revremark>
-    </revision>
-    <revision>
-      <revnumber>5</revnumber>
-      <date>2017-08-16</date>
-      <authorinitials>RK</authorinitials>
-      <revremark>German translation extended</revremark>
-    </revision>
-    <revision>
-      <revnumber>6</revnumber>
-      <date>2019-01-03</date>
-      <authorinitials>ALM</authorinitials>
-      <revremark>CV9 as enum</revremark>
-    </revision>
-    <revision>
-      <revnumber>7</revnumber>
-      <date>2020-05-02</date>
-      <authorinitials>RK</authorinitials>
-      <revremark>disable CV50 and CV63 for Sound-Decoder</revremark>
-    </revision>
-    <revision>
-      <revnumber>8</revnumber>
-      <date>2020-12-12</date>
-      <authorinitials>WK</authorinitials>
-      <revremark>Excluded similar CV9xx for Sound Decoder 2020</revremark>
     </revision>
   </revhistory>
   <!-- Calls to std NMRA templates   -->
@@ -905,11 +917,11 @@
     <label xml:lang="de">Bremsverzögerung</label>
     <label xml:lang="ca">Desacceleració</label>
   </variable>
-  <variable CV="9" default="0" item="Motor PWM Frequency" mask="XXXXXXVV" comment="0:32KHz, 1:16KHz, 2:low">
+  <variable CV="9" default="0" item="Motor PWM Frequency" mask="XXXXXXVV" comment="0:32KHz, 1:16KHz, 2:low" exclude="Function Decoders (2023)">
     <enumVal>
         <enumChoice choice="32KHz"/>
         <enumChoice choice="16KHz"/>
-        <enumChoice choice="low" exclude="PD05A,PD12A">
+        <enumChoice choice="low" exclude="130,131,132,133,134">
             <choice>Low frequency</choice>
             <choice xml:lang="de">Niederfrequent</choice>
             <choice xml:lang="fr">Basse fréquence</choice>
@@ -922,7 +934,7 @@
     <label xml:lang="ca">Freqüència del motor </label>
   </variable>
   <!-- EMF equivalent for Doehler und Haass -->
-  <variable CV="50" default="2" item="Load Control" tooltip="0=CV56, 1=hard, 2=soft, 3=very soft" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020)">
+  <variable CV="50" default="2" item="Load Control" tooltip="0=CV56, 1=hard, 2=soft, 3=very soft" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020),Sound Decoders (2022),Function Decoders (2023)">
     <enumVal>
       <enumChoice choice="According to CV56" value="0">
         <choice>According to CV56</choice>
@@ -959,7 +971,7 @@
     <label xml:lang="de">Regelvariante</label>
     <label xml:lang="ca">Regulació Variable</label>
   </variable>
-  <variable CV="56" default="3" item="EMF Option 1" tooltip="CV56 (0-7)">
+  <variable CV="56" default="3" item="EMF Option 1" tooltip="CV56 (0-7)" exclude="Function Decoders (2023)">
     <decVal min="0" max="7"/>
     <label>Motor proportional controller</label>
     <label xml:lang="it">Controllo Motore proporzionale</label>
@@ -967,7 +979,7 @@
     <label xml:lang="de">Motorregelung Proportionalteil</label>
     <label xml:lang="ca">Control Proporcional de Motor</label>
   </variable>
-  <variable CV="57" default="3" item="EMF Option 2" tooltip="CV57 (0-3)">
+  <variable CV="57" default="3" item="EMF Option 2" tooltip="CV57 (0-3)" exclude="Function Decoders (2023)">
     <decVal min="0" max="3"/>
     <label>Motor integral controller</label>
     <label xml:lang="it">Controllo Motore integrale</label>
@@ -975,7 +987,7 @@
     <label xml:lang="de">Motorregelung Integralteil</label>
     <label xml:lang="ca">Control Integral del Motor</label>
   </variable>
-  <variable CV="58" default="1" item="EMF Option 3" tooltip="CV58 (0-3)">
+  <variable CV="58" default="1" item="EMF Option 3" tooltip="CV58 (0-3)" exclude="Function Decoders (2023)">
     <decVal min="0" max="3"/>
     <label>Motor measurement period</label>
     <label xml:lang="it">Misura periodo Motore</label>
@@ -983,7 +995,7 @@
     <label xml:lang="de">Motorregelung Messzeit</label>
     <label xml:lang="ca">Mesura el període del Motor</label>
   </variable>
-  <variable CV="59" default="3" item="EMF Option 4" tooltip="CV59 (0-7)">
+  <variable CV="59" default="3" item="EMF Option 4" tooltip="CV59 (0-7)" exclude="Function Decoders (2023)">
     <decVal min="0" max="7"/>
     <label>Motor impulse width</label>
     <label xml:lang="it">Larghezza impulsi Motore</label>
@@ -1000,7 +1012,7 @@
     <label xml:lang="de">Kennlinie</label>
     <label xml:lang="ca">Tipus de corba de velocitat</label>
   </variable>
-  <variable CV="63" default="0" item="Start delay for speed step 1" tooltip="CV63 (0-250)" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020)">
+  <variable CV="63" default="0" item="Start delay for speed step 1" tooltip="CV63 (0-250)" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020),Sound Decoders (2022)">
     <decVal min="0" max="250"/>
     <label>Start delay for speed step 1</label>
     <label xml:lang="it">Inizio ritardo velocità step 1</label>
@@ -1009,7 +1021,7 @@
     <label xml:lang="ca">Retard d'inici per al pas 1</label>
   </variable>
   <!-- Advanced others -->
-  <variable CV="51" mask="XXXXXXXV" item="Advanced Group 2 Option 11">
+  <variable CV="51" mask="XXXXXXXV" item="Advanced Group 2 Option 11" exclude="Function Decoders (2023)">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Invert motor pins</label>
     <label xml:lang="it">inversione connessione motore</label>
@@ -1195,7 +1207,7 @@
     <label>AUX 1 Auto-off timer</label>
     <label xml:lang="it">AUX1 tempo auto-spegnimento</label>
     <label xml:lang="fr">AUX 1 minuteur (off)</label>
-    <label xml:lang="de">AUX 1 Timer für Ausschlaten</label>
+    <label xml:lang="de">AUX 1 Timer für Ausschalten</label>
     <label xml:lang="ca">Temps d'apagada automàtica de AUX1</label>
   </variable>
   <variable item="AUX 2 Auto-off timer" CV="118" default="0" minOut="4" tooltip="CV118 (0-250, 1=100ms)">
@@ -1203,7 +1215,7 @@
     <label>AUX 2 Auto-off timer</label>
     <label xml:lang="it">AUX2 tempo auto-spegnimento</label>
     <label xml:lang="fr">AUX 2 minuteur (off)</label>
-    <label xml:lang="de">AUX 2 Timer für Ausschlaten</label>
+    <label xml:lang="de">AUX 2 Timer für Ausschalten</label>
     <label xml:lang="ca">Temps d'apagada automàtica de AUX2</label>
   </variable>
   <variable item="AUX 3 Auto-off timer" CV="119" default="0" minOut="5" tooltip="CV119 (0-250, 1=100ms)">
@@ -1211,7 +1223,7 @@
     <label>AUX 3 Auto-off timer</label>
     <label xml:lang="it">AUX3 tempo auto-spegnimento</label>
     <label xml:lang="fr">AUX 3 minuteur (off)</label>
-    <label xml:lang="de">AUX 3 Timer für Ausschlaten</label>
+    <label xml:lang="de">AUX 3 Timer für Ausschalten</label>
     <label xml:lang="ca">Temps d'apagada automàtica de AUX3</label>
   </variable>
   <variable item="AUX 4 Auto-off timer" CV="120" default="0" minOut="6" tooltip="CV120 (0-250, 1=100ms)">
@@ -1219,7 +1231,7 @@
     <label>AUX 4 Auto-off timer</label>
     <label xml:lang="it">AUX4 tempo auto-spegnimento</label>
     <label xml:lang="fr">AUX 4 minuteur (off)</label>
-    <label xml:lang="de">AUX 4 Timer für Ausschlaten</label>
+    <label xml:lang="de">AUX 4 Timer für Ausschalten</label>
     <label xml:lang="ca">Temps d'apagada automàtica de AUX4</label>
   </variable>
   <!-- D&H Function 'Preclusion' -->

@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import jmri.util.PhysicalLocation;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Steam Sound initial version.
@@ -15,21 +13,19 @@ import org.slf4j.LoggerFactory;
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
  * @author Klaus Killinger Copyright (C) 2018-2021
  */
-// Usage:
-// SteamSound() : constructor
 class SteamSound extends EngineSound {
 
     // Inner class for handling steam RPM sounds
@@ -74,7 +70,9 @@ class SteamSound extends EngineSound {
         }
 
         public void stopChuff() {
-            t.stop();
+            if (t.isRunning()) {
+                t.stop();
+            }
         }
     }
 
@@ -84,7 +82,6 @@ class SteamSound extends EngineSound {
     private int driver_diameter;
     private int num_cylinders;
     RPMSound current_rpm_sound;
-    private float exponent;
 
     public SteamSound(String name) {
         super(name);
@@ -93,7 +90,7 @@ class SteamSound extends EngineSound {
     // Responds to throttle loco direction key (see EngineSound.java and EngineSoundEvent.java)
     @Override
     public void changeLocoDirection(int d) {
-        // If loco direction was changed we need to set topspeed of the loco to new value 
+        // If loco direction was changed we need to set topspeed of the loco to new value
         // (this is necessary, when topspeed-forward and topspeed-reverse differs)
         log.debug("loco direction: {}", d);
     }
@@ -121,6 +118,8 @@ class SteamSound extends EngineSound {
                     engine_pane.setThrottle(i);
                 }
                 return rps;
+            } else if (rpm > rpm_sounds.get(rpm_sounds.size() - 1).max_rpm) {
+                return rpm_sounds.get(rpm_sounds.size() - 1);
             }
             i++;
         }
@@ -132,13 +131,9 @@ class SteamSound extends EngineSound {
         // Speed = % of top_speed (mph)
         // RPM = speed * ((inches/mile) / (minutes/hour)) / (pi * driver_diameter)
         double rpm_f = speedCurve(t) * top_speed * 1056 / (Math.PI * driver_diameter);
-        log.debug("RPM Calculated: {}, (int) {}", rpm_f, (int) Math.round(rpm_f));
+        setActualSpeed((float) speedCurve(t));
+        log.debug("RPM Calculated: {}, rounded: {}, actual speed: {}, speedCurve(t): {}", rpm_f, (int) Math.round(rpm_f), getActualSpeed(), speedCurve(t));
         return (int) Math.round(rpm_f);
-    }
-
-    @Override
-    double speedCurve(float t) {
-        return Math.pow(t, exponent) / 1.0;
     }
 
     private int calcChuffInterval(int rpm) {
@@ -152,6 +147,7 @@ class SteamSound extends EngineSound {
             if (t < 0.0f) {
                 // DO something to shut down
                 //t = 0.0f;
+                setActualSpeed(0.0f);
                 current_rpm_sound.sound.fadeOut();
                 if (current_rpm_sound.use_chuff) {
                     current_rpm_sound.stopChuff();
@@ -185,7 +181,7 @@ class SteamSound extends EngineSound {
                         }
                     }
                 } else {
-                    log.warn("No adequate sound file found for RPM = {}", calcRPM(t));
+                    log.warn("No adequate sound file found for {}, RPM = {}", this, calcRPM(t));
                 }
                 log.debug("RPS: {}, RPM: {}, current_RPM: {}", rps, calcRPM(t), current_rpm_sound);
             }
@@ -263,15 +259,6 @@ class SteamSound extends EngineSound {
         }
         log.debug("exponent: {}", exponent);
 
-        // For now, num_rpms is not used.  
-        /*
-         n = e.getChild("rpm-steps").getValue();
-         if (n != null) {
-         num_rpms = Integer.parseInt(n);
-         //log.debug("Number of rpm steps: {}", num_rpms);
-         }
-         */
-
         is_auto_start = setXMLAutoStart(e);
         log.debug("config auto-start: {}", is_auto_start);
 
@@ -303,24 +290,10 @@ class SteamSound extends EngineSound {
             i++;
         }
 
-        /*
-         // Get the start and stop sounds
-         el = e.getChild("start-sound");
-         if (el != null) {
-         fn = el.getChild("file").getValue();
-         log.debug("Start sound: {}", fn);
-         start_sound = new SoundBite(vf, fn, "Engine_start", 
-         "Engine_Start");
-         // Handle gain
-         start_sound.setGain(setXMLGain(el));
-         start_sound.setLooped(false);
-         }
-         */
-
         // Check auto-start setting
         autoStartCheck();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(SteamSound.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SteamSound.class);
 
 }

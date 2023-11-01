@@ -16,7 +16,7 @@ import jmri.jmrit.operations.locations.Location;
 public class ModifyLocationsCarLoadsAction extends AbstractAction {
 
     public ModifyLocationsCarLoadsAction(Location location) {
-        this();
+        super(Bundle.getMessage("TitleModifyLocationLoad"));
         _location = location;
     }
 

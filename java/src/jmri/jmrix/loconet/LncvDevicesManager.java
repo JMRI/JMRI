@@ -2,6 +2,8 @@ package jmri.jmrix.loconet;
 
 import java.util.List;
 
+import javax.annotation.concurrent.GuardedBy;
+
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.beans.PropertyChangeSupport;
@@ -13,13 +15,7 @@ import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 import jmri.jmrix.loconet.uhlenbrock.LncvDevice;
 import jmri.jmrix.loconet.uhlenbrock.LncvDevices;
 import jmri.managers.DefaultProgrammerManager;
-
-//import jmri.progdebugger.ProgDebugger;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.concurrent.GuardedBy;
-import javax.swing.*;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * LocoNet LNCV Devices Manager
@@ -85,6 +81,7 @@ public class LncvDevicesManager extends PropertyChangeSupport
      *            be presented to multiple users. It should not be modified
      *            here.
      */
+    @Override
     public void message(LocoNetMessage m) {
         if (LncvMessageContents.isSupportedLncvMessage(m)) {
             if ((LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY) ||
@@ -120,9 +117,9 @@ public class LncvDevicesManager extends PropertyChangeSupport
                                             log.debug("Matching roster entry found");
                                             dev.setRosterEntry(l.get(0)); // link this device to the entry
                                         } else {
-                                            JOptionPane.showMessageDialog(null,
+                                            JmriJOptionPane.showMessageDialog(null,
                                                     Bundle.getMessage("WarnMultipleLncvModsFound", art, addr, l.size()),
-                                                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                                                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                                             log.info("Found multiple matching roster entries. " + "Cannot associate any one to this device.");
                                         }
                                     }
@@ -218,6 +215,6 @@ public class LncvDevicesManager extends PropertyChangeSupport
         FAIL_NO_LNCV_PROGRAMMER
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LncvDevicesManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LncvDevicesManager.class);
 
 }

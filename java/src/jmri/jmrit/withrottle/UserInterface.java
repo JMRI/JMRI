@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.net.InetAddress;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import java.util.Set;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -37,7 +36,6 @@ import jmri.util.zeroconf.ZeroConfServiceManager;
 /**
  * UserInterface.java Create a window for WiThrottle information and and create
  * a FacelessServer thread to handle jmdns and device requests
- * <p>
  *
  * @author Brett Hoffman Copyright (C) 2009, 2010
  * @author Randall Wood Copyright (C) 2013
@@ -298,7 +296,6 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
 
     /**
      * Received an UDID, update the device list
-     * <p>
      * @param device the device to update for
      */
     @Override

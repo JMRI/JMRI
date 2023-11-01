@@ -1,11 +1,6 @@
 package jmri.jmrit.logixng;
 
-import java.util.Locale;
-
 import jmri.*;
-import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
-import jmri.jmrit.logixng.actions.DigitalMany;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;

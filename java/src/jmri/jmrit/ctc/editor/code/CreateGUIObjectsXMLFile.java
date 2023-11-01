@@ -10,7 +10,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.TreeMap;
 import jmri.InstanceManager;
 import jmri.jmrit.ctc.CtcManager;

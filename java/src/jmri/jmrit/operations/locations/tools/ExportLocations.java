@@ -2,15 +2,10 @@ package jmri.jmrit.operations.locations.tools;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.text.MessageFormat;
 import java.util.List;
-
-import javax.swing.JOptionPane;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
@@ -21,6 +16,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Exports the location roster into a comma delimited file (CSV).
@@ -96,6 +92,7 @@ public class ExportLocations extends XmlFile {
                     Bundle.getMessage("MenuItemDestinations"),
                     Bundle.getMessage("Destinations"),
                     Bundle.getMessage("HoldCarsWithCustomLoads"),
+                    Bundle.getMessage("DisableLoadChange"),
                     Bundle.getMessage("SwapCarLoads"),
                     Bundle.getMessage("EmptyDefaultCarLoads"),
                     Bundle.getMessage("EmptyCarLoads"),
@@ -266,6 +263,7 @@ public class ExportLocations extends XmlFile {
                             Bundle.getMessage(track.getDestinationOption().equals(Track.ALL_DESTINATIONS) ? "All" : "Include"),
                             destinationNames.toString(),
                             (track.isHoldCarsWithCustomLoadsEnabled() ? Bundle.getMessage("ButtonYes") : ""),
+                            (track.isDisableLoadChangeEnabled() ? Bundle.getMessage("ButtonYes") : ""),
                             (track.isLoadSwapEnabled() ? Bundle.getMessage("ButtonYes") : ""),
                             (track.isLoadEmptyEnabled() ? Bundle.getMessage("ButtonYes") : ""),
                             (track.isRemoveCustomLoadsEnabled() ? Bundle.getMessage("ButtonYes") : ""),
@@ -283,18 +281,14 @@ public class ExportLocations extends XmlFile {
             fileOut.flush();
             fileOut.close();
             log.info("Exported {} locations to file {}", locations.size(), defaultOperationsFilename());
-            JOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("ExportedLocationsToFile"), new Object[]{
-                locations.size(), defaultOperationsFilename()}),
-                    Bundle.getMessage("ExportComplete"),
-                    JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("ExportedLocationsToFile", locations.size(), defaultOperationsFilename()),
+                    Bundle.getMessage("ExportComplete"), JmriJOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
             log.error("Can not open export locations CSV file: {}", file.getName());
-            JOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("ExportedLocationsToFile"), new Object[]{
-                0, defaultOperationsFilename()}),
-                    Bundle.getMessage("ExportFailed"),
-                    JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("ExportedLocationsToFile", 0, defaultOperationsFilename()),
+                    Bundle.getMessage("ExportFailed"), JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -316,6 +310,6 @@ public class ExportLocations extends XmlFile {
 
     private static String operationsFileName = "ExportOperationsLocationRoster.csv"; // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(ExportLocations.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExportLocations.class);
 
 }

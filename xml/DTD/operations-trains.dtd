@@ -37,6 +37,7 @@
 <!ATTLIST rowColorOptions rowColorBuilt 		CDATA #IMPLIED>
 <!ATTLIST rowColorOptions rowColorTrainEnRoute 	CDATA #IMPLIED>
 <!ATTLIST rowColorOptions rowColorTerminated 	CDATA #IMPLIED>
+<!ATTLIST rowColorOptions rowColorReset		 	CDATA #IMPLIED>
 
 <!ATTLIST trainScheduleOptions activeId		CDATA #IMPLIED>
 
@@ -82,7 +83,7 @@
 <!ELEMENT schedule EMPTY>
 
 <!ATTLIST train id					CDATA #REQUIRED>          
-<!ATTLIST train name				CDATA #IMPLIED>
+<!ATTLIST train name				CDATA #REQUIRED>
 <!ATTLIST train description			CDATA #IMPLIED>       
 <!ATTLIST train route				CDATA #IMPLIED> 
 <!ATTLIST train routeId				CDATA #IMPLIED> 
@@ -118,7 +119,7 @@
 <!ATTLIST train showTimes			(true | false) "true">
 <!ATTLIST train buildFailedMessage	CDATA #IMPLIED>
 <!ATTLIST train switchListStatus	CDATA #IMPLIED>
-<!ATTLIST train mrStatus                CDATA #IMPLIED>
+<!ATTLIST train mrStatus            CDATA #IMPLIED>
 <!ATTLIST train status				CDATA #IMPLIED>
 <!ATTLIST train current				CDATA #IMPLIED>
 <!ATTLIST train departureTrack		CDATA #IMPLIED>
@@ -145,7 +146,7 @@
 <!ATTLIST train TerminationDate		CDATA #IMPLIED>
 <!ATTLIST train RequestedCars		CDATA #IMPLIED>
 <!ATTLIST train statusCode			CDATA #IMPLIED>
-<!ATTLIST train oldStatusCode			CDATA #IMPLIED>
+<!ATTLIST train oldStatusCode		CDATA #IMPLIED>
 
 <!ATTLIST rowColor name				CDATA #IMPLIED>
 <!ATTLIST rowColor resetRowColor	CDATA #IMPLIED>
@@ -183,16 +184,15 @@
 <!ELEMENT messageOk EMPTY>
 <!ELEMENT messageFail EMPTY>
 
-
 <!ATTLIST automation id				CDATA #REQUIRED>
 <!ATTLIST automation name			CDATA #REQUIRED>
 <!ATTLIST automation comment		CDATA #REQUIRED>
-<!ATTLIST automation currentItem	CDATA #REQUIRED>
+<!ATTLIST automation currentItem	CDATA #IMPLIED>
 
 <!ATTLIST item id					CDATA #REQUIRED>          
-<!ATTLIST item sequenceId			CDATA #IMPLIED>
-<!ATTLIST item name					CDATA #IMPLIED>
-<!ATTLIST item actionCode			CDATA #IMPLIED>
+<!ATTLIST item sequenceId			CDATA #REQUIRED>
+<!ATTLIST item name					CDATA #REQUIRED>
+<!ATTLIST item actionCode			CDATA #REQUIRED>
 <!ATTLIST item trainId				CDATA #IMPLIED>
 <!ATTLIST item routeLocationId		CDATA #IMPLIED>
 <!ATTLIST item automationId			CDATA #IMPLIED>

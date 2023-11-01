@@ -3,13 +3,10 @@ package jmri.jmrit.operations.rollingstock.engines.tools;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.JOptionPane;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * This routine will remove all engines from the operation database.
@@ -24,12 +21,12 @@ public class DeleteEngineRosterAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("engineSureDelete"),
-                Bundle.getMessage("engineDeleteAll"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+        if (JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("engineSureDelete"),
+                Bundle.getMessage("engineDeleteAll"), JmriJOptionPane.OK_CANCEL_OPTION) == JmriJOptionPane.OK_OPTION) {
             log.debug("removing all engines from roster");
             InstanceManager.getDefault(EngineManager.class).deleteAll();
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DeleteEngineRosterAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DeleteEngineRosterAction.class);
 }

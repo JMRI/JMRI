@@ -18036,6 +18036,8 @@
       <runContinuously>no</runContinuously>
       <startAndStopByStartExpression>no</startAndStopByStartExpression>
       <unit>MilliSeconds</unit>
+      <delayByLocalVariables>no</delayByLocalVariables>
+      <delayLocalVariablePrefix />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -18112,6 +18114,8 @@
       <runContinuously>yes</runContinuously>
       <startAndStopByStartExpression>no</startAndStopByStartExpression>
       <unit>MilliSeconds</unit>
+      <delayByLocalVariables>no</delayByLocalVariables>
+      <delayLocalVariablePrefix />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -18196,6 +18200,8 @@
       <runContinuously>no</runContinuously>
       <startAndStopByStartExpression>no</startAndStopByStartExpression>
       <unit>MilliSeconds</unit>
+      <delayByLocalVariables>no</delayByLocalVariables>
+      <delayLocalVariablePrefix />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -21652,7 +21658,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </IfThenElse>
-    <Logix class="jmri.jmrit.logixng.actions.configurexml.LogixXml">
+    <Logix class="jmri.jmrit.logixng.actions.configurexml.LogixXml" executeType="ExecuteOnChange">
       <systemName>IQDA:AUTO:0161</systemName>
       <ExpressionSocket>
         <socketName>stokvn5ays</socketName>
@@ -21717,7 +21723,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </Logix>
-    <Logix class="jmri.jmrit.logixng.actions.configurexml.LogixXml">
+    <Logix class="jmri.jmrit.logixng.actions.configurexml.LogixXml" executeType="ExecuteOnChange">
       <systemName>IQDA:AUTO:0162</systemName>
       <comment>A comment</comment>
       <ExpressionSocket>
@@ -25600,7 +25606,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </DigitalBooleanMany>
-    <OnChange class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanOnChangeXml" trigger="CHANGE">
+    <LogixAction class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanLogixActionXml" trigger="Either">
       <systemName>IQDB:AUTO:0003</systemName>
       <Socket>
         <socketName>gi7k5cdexk</socketName>
@@ -25661,8 +25667,8 @@
           </LocalVariable>
         </AbstractMaleSocket>
       </MaleSocket>
-    </OnChange>
-    <OnChange class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanOnChangeXml" trigger="CHANGE_TO_FALSE">
+    </LogixAction>
+    <LogixAction class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanLogixActionXml" trigger="False">
       <systemName>IQDB:AUTO:0004</systemName>
       <comment>A comment</comment>
       <Socket>
@@ -25724,7 +25730,7 @@
           </LocalVariable>
         </AbstractMaleSocket>
       </MaleSocket>
-    </OnChange>
+    </LogixAction>
   </LogixNGDigitalBooleanActions>
   <LogixNGAnalogExpressions class="jmri.jmrit.logixng.implementation.configurexml.DefaultAnalogExpressionManagerXml">
     <AnalogExpressionMemory class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml">

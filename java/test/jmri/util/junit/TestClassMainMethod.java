@@ -12,7 +12,6 @@ import org.junit.platform.launcher.listeners.TestExecutionSummary;
 import java.io.PrintWriter;
 import java.lang.reflect.*;
 
-import static org.junit.platform.engine.discovery.ClassNameFilter.includeClassNamePatterns;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.*;
 
 /**

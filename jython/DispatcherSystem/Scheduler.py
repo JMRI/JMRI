@@ -109,11 +109,10 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         for train in trains_to_be_scheduled:
             if scheduled[train] == False:
                 if self.logLevel > 0: print "train",train,"scheduled[train]",scheduled[train]
-                RunTrain_instance[train] = RunTrain()
                 if "stopping" in train.getDescription():
-                    run_train_dict[train] = RunTrain_instance[train].RunTrain(train, g.g_stopping)
+                    run_train_dict[train] = RunTrain(train, g.g_stopping)
                 else:
-                    run_train_dict[train] = RunTrain_instance[train].RunTrain(train, g.g_express)
+                    run_train_dict[train] = RunTrain(train, g.g_express)
                 run_train_dict[train].setName("schedule_" + train.getName())
                 run_train_dict[train].start()
                 scheduled[train] = True
@@ -199,8 +198,10 @@ class TimeListener(java.beans.PropertyChangeListener):
         tListener.cancel()
 
     def process_operations_trains(self, event ):
+        global timebase
 
-        self.curr_time = event.newValue
+        hour = timebase.getTime().getHours()
+        self.curr_time = event.newValue + hour * 60
         self.prev_time = self.curr_time -1
 
         if self.logLevel > 1: print "TimeListener: process_operations_trains"
@@ -343,6 +344,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
             station_list_locations = self.route.getLocationsBySequenceList()
             #convert station_list to strings
             station_list = [location.getName() for location in station_list_locations]
+            station_comment_list = [location.getComment()  for location in station_list_locations]
             self.initial_station_in_route = station_list[0]
 
             # prepend station_from if required
@@ -352,6 +354,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                 pass
             elif self.station_from != station_list[0]:
                 station_list.insert(0,self.station_from)
+                station_comment_list.insert(0, None)
                 self.prepended = True                           # we have to remove this initial station if we are repeating
             if self.logLevel > 0: print "station_list",station_list
 
@@ -360,6 +363,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                 pass
             elif self.station_to != station_list[-1]:
                 station_list.append(self.station_to)
+                station_comment_list.insert(None)
             if self.logLevel > 0: print "station_list",station_list
 
             # if repeating append initial station in route
@@ -367,16 +371,18 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                 if self.station_to != self.initial_station_in_route:
                     if station_list[-1] != self.initial_station_in_route:
                         station_list.append(self.initial_station_in_route)
+                        station_comment_list.append(None)
             if self.logLevel > 0: print "station_list after", station_list
 
             self.station_list = station_list
+            self.station_comment_list = station_comment_list
 
             # ignore the number of repetitions if station_to was not set to station_from
             if self.station_list[0] != self.station_list[-1]:
                 self.no_repetitions = 0
 
     def handle(self):
-        #print "in handle", self.mycount
+        if self.logLevel > 0: print "in handle", self.mycount
         if self.delay > 0 and self.mycount == 0:  # only delay on the first iteration
             self.waitMsec(self.delay)
         if int(self.mycount) <= int(self.no_repetitions):
@@ -386,6 +392,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
             if self.mycount == 0 and self.prepended:
                 if self.logLevel > 0: print "station_list before pop", self.station_list
                 self.station_list.pop(0)
+                self.station_comment_list.pop(0)
                 if self.logLevel > 0: print "station_list after pop", self.station_list
             if self.logLevel > 0: print "returning true", "train_name", self.train_name, "mycount", self.mycount, "reps" , self.no_repetitions
 
@@ -401,7 +408,8 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0:  print "!     start run_route"
 
         station_from = None
-        for station in self.station_list:
+        for i, station in enumerate(self.station_list):
+            station_comment = self.station_comment_list[i]
             # print "station", station
 
             if self.station_is_action(station):  #if the station_name is a python_file
@@ -429,7 +437,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                     if self.logLevel > 0: print "train_to_move", train_to_move
                     if train_to_move != None:
                         if self.logLevel > 0: print "************************************moving train******************",train_to_move
-                        move_train = MoveTrain(station_from, station_to, train_to_move, self.graph)
+                        move_train = MoveTrain(station_from, station_to, train_to_move, self.graph, station_comment)
                         #if self.check_train_in_start_block(train_to_move, station_from)
                         move_train.move_between_stations(station_from, station_to, train_to_move, self.graph)
                         move_train = None

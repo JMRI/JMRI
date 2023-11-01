@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import jmri.Sensor;
 import jmri.jmrit.display.controlPanelEditor.shape.LocoLabel;
 import jmri.jmrit.logix.OBlock;
-import jmri.util.ThreadingUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -23,11 +23,11 @@ import javax.annotation.Nonnull;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public interface SignalHeadManager extends Manager<SignalHead> {
+public interface SignalHeadManager extends Manager<SignalHead>, Disposable {
 
     /** {@inheritDoc} */
     @Override
-    public void dispose();
+    void dispose();
 
     /**
      * Get an existing SignalHead or return null if it doesn't exist. 
@@ -39,7 +39,7 @@ public interface SignalHeadManager extends Manager<SignalHead> {
      */
     @CheckReturnValue
     @CheckForNull
-    public SignalHead getSignalHead(@Nonnull String name);
+    SignalHead getSignalHead(@Nonnull String name);
 
     /**
      * Get an existing SignalHead or return null if it doesn't exist. 
@@ -52,7 +52,7 @@ public interface SignalHeadManager extends Manager<SignalHead> {
     @CheckReturnValue
     @CheckForNull
     @Override
-    public SignalHead getByUserName(@Nonnull String name);
+    SignalHead getByUserName(@Nonnull String name);
 
     /**
      * Get an existing SignalHead or return null if it doesn't exist. 
@@ -65,6 +65,6 @@ public interface SignalHeadManager extends Manager<SignalHead> {
     @CheckReturnValue
     @CheckForNull
     @Override
-    public SignalHead getBySystemName(@Nonnull String name);
+    SignalHead getBySystemName(@Nonnull String name);
 
 }

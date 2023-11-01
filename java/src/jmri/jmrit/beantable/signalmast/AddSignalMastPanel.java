@@ -15,6 +15,7 @@ import jmri.implementation.*;
 import jmri.jmrit.XmlFile;
 import jmri.util.*;
 import jmri.util.swing.JComboBoxUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 import org.jdom2.Element;
 
@@ -446,9 +447,9 @@ public class AddSignalMastPanel extends JPanel {
         log.error("User Name \"{}\" is already in use", nam); // NOI18N
         if (!GraphicsEnvironment.isHeadless()) {
             String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + nam)}); // NOI18N
-            JOptionPane.showMessageDialog(null, msg,
+            JmriJOptionPane.showMessageDialog(this, msg,
                     Bundle.getMessage("WarningTitle"), // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -456,9 +457,9 @@ public class AddSignalMastPanel extends JPanel {
         log.error("User Name \"{}\" already exists as a System name", nam);
         if (!GraphicsEnvironment.isHeadless()) {
             String msg = Bundle.getMessage("WarningUserNameAsSystem", new Object[]{("" + nam)});
-            JOptionPane.showMessageDialog(null, msg,
+            JmriJOptionPane.showMessageDialog(this, msg,
                     Bundle.getMessage("WarningTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -506,18 +507,18 @@ public class AddSignalMastPanel extends JPanel {
     }
 
     int issueNoUserNameGiven() {
-        return JOptionPane.showConfirmDialog(null, Bundle.getMessage("SignalMastEmptyUserNameDialog"),  // NOI18N
+        return JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("SignalMastEmptyUserNameDialog"),  // NOI18N
                 Bundle.getMessage("SignalMastEmptyUserNameDialogTitle"),  // NOI18N
-                JOptionPane.YES_NO_OPTION);
+                JmriJOptionPane.YES_NO_OPTION);
     }
 
     void issueDialogFailMessage(RuntimeException ex) {
         // This is intrinsically swing, so pop a dialog
         log.error("Failed during createMast", ex); // NOI18N
-        JOptionPane.showMessageDialog(this,
+        JmriJOptionPane.showMessageDialog(this,
             Bundle.getMessage("DialogFailMessage", ex.toString()), // NOI18N
             Bundle.getMessage("DialogFailTitle"),  // title of box // NOI18N
-            JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.ERROR_MESSAGE);
     }
 
     /**

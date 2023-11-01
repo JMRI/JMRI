@@ -12,7 +12,6 @@ import javax.annotation.Nonnull;
 import jmri.implementation.AbstractShutDownTask;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.display.layoutEditor.BlockValueFile;
-import jmri.jmrit.roster.RosterEntry;
 import jmri.managers.AbstractManager;
 
 /**

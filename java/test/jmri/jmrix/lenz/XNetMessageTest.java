@@ -1541,6 +1541,7 @@ public class XNetMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         m = msg = new XNetMessage(3);
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = msg = null;

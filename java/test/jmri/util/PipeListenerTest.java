@@ -42,6 +42,39 @@ public class PipeListenerTest {
         t.stop();
     }
 
+    @SuppressWarnings("deprecation")        // Thread.stop()
+    @Test
+    public void testWriteGuiThread() throws java.io.IOException {
+        JTextArea jta = new JTextArea();
+        PipedWriter wr = new PipedWriter();
+        PipedReader pr = new PipedReader(wr,1);
+        PipeListener t = new PipeListener(pr,jta);
+        t.setName("PipeListenerTest thread");
+        t.start();
+
+        var ref = new jmri.Reference<java.io.IOException>();
+
+        String testString = "Test String";
+
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
+            try {
+                wr.write(testString);
+                wr.flush();
+            } catch (java.io.IOException e) {
+                ref.set(e);
+            }
+        });
+
+        if (ref.get() != null) {
+            throw ref.get();
+        }
+
+        JUnitUtil.waitFor(()->{return !(pr.ready());},"buffer empty");
+
+        JUnitUtil.waitFor(()->{return testString.equals(jta.getText());}, "find text after character write");
+        t.stop();
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

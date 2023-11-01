@@ -14,13 +14,14 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.apache.log4j.Level;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JLabelOperator;
+import org.slf4j.event.Level;
 
 /**
  * Test simple functioning of MemoryIcon.

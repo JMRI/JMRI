@@ -14,7 +14,6 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;

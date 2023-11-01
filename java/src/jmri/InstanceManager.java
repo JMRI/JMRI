@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ServiceLoader;
+import java.util.Set;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -586,6 +587,14 @@ public final class InstanceManager {
         return retval.toString();
     }
 
+    /**
+     * Get a list of stored types
+     * @return A unmodifiable list of the currently stored types
+     */
+    public static Set<Class<?>> getInstanceClasses() {
+        return Collections.unmodifiableSet(getDefault().managerLists.keySet());
+    }
+    
     /**
      * Remove notification on changes to specific types.
      *

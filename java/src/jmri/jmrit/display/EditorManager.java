@@ -2,24 +2,13 @@ package jmri.jmrit.display;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.awt.Component;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
-import jmri.UserPreferencesManager;
 import jmri.beans.Bean;
 
 /**

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Table Allumage Led </name>
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2012</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Jeffrey</firstname>
+        <surname>Schmaltz</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>9</revnumber>
+      <date>2016-12-22</date>
+      <authorinitials>JCA</authorinitials>
+      <revremark>Catalan translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>8</revnumber>
+      <date>2016-10-22</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>7</revnumber>
+      <date>2013-07-30</date>
+      <authorinitials>JS</authorinitials>
+      <revremark>Added external contact items for Gold maxi</revremark>
+    </revision>
+    <revision>
+      <revnumber>6</revnumber>
+      <date>2012-12-27</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2005-08-14</date>
+      <authorinitials>BJ</authorinitials>
+	<!--<revremark>Revision in original Lenz_Gold.xml file</revremark>--> 
+
+    </revision>
+  </revhistory>
+  
+
+    <column>
+         <display item="CV 15/527 Choix Allumage Led no  1"/>
+         <display item="CV 16/528 Choix Allumage Led no  2"/>
+         <display item="CV 17/529 Choix Allumage Led no  3"/>
+         <display item="CV 18/530 Choix Allumage Led no  4"/>
+         <display item="CV 19/531 Choix Allumage Led no  5"/>
+         <display item="CV 20/532 Choix Allumage Led no  6"/>
+         <display item="CV 21/533 Choix Allumage Led no  7"/>
+  <!--   reserve version 14pin
+	     <display item="CV 22/534 Choix Allumage Led no  8"/>
+         <display item="CV 23/535 Choix Allumage Led no  9"/>
+         <display item="CV 24/536 Choix Allumage Led no 10"/>
+         <display item="CV 25/537 Choix Allumage Led no 11"/> -->
+    </column>
+</pane>

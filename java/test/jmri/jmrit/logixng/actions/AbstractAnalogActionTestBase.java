@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.util.Locale;
 import jmri.AnalogIO;
 import jmri.JmriException;
 import jmri.NamedBean;

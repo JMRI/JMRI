@@ -1,12 +1,12 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.FlowLayout;
+
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 import jmri.jmrit.catalog.NamedIcon;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Icons may be added or deleted from a family.
@@ -81,13 +81,13 @@ public class MultiSensorIconDialog extends IconDialog {
             log.debug("addNewIcon Action: iconMap.size()= {}", _iconMap.size());
         }
         if (name == null || name.length() == 0) {
-            JOptionPane.showMessageDialog(_parent._frame, Bundle.getMessage("NoIconName"),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(_parent._frame, Bundle.getMessage("NoIconName"),
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             return false;
         } else if (_iconMap.get(name) != null) {
-            JOptionPane.showMessageDialog(_parent._frame,
+            JmriJOptionPane.showMessageDialog(_parent._frame,
                     Bundle.getMessage("DuplicateIconName", name),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             return false;
         }
         String fileName = "resources/icons/misc/X-red.gif";
@@ -111,6 +111,6 @@ public class MultiSensorIconDialog extends IconDialog {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MultiSensorIconDialog.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MultiSensorIconDialog.class);
 
 }

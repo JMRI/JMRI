@@ -14,6 +14,7 @@ import jmri.*;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * MVC Editor component for LayoutTurnout objects.
@@ -270,9 +271,9 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
         }
         // check if a block exists to edit
         if (layoutTurnout.getLayoutBlock() == null) {
-            JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
+            JmriJOptionPane.showMessageDialog(editLayoutTurnoutFrame,
                     Bundle.getMessage("Error1"), // NOI18N
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);  // NOI18N
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);  // NOI18N
             return;
         }
         layoutTurnout.getLayoutBlock().editLayoutBlock(editLayoutTurnoutFrame);
@@ -294,9 +295,9 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
         }
         // check if a block exists to edit
         if (layoutTurnout.getLayoutBlockB() == null) {
-            JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
+            JmriJOptionPane.showMessageDialog(editLayoutTurnoutFrame,
                     Bundle.getMessage("Error1"), // NOI18N
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);  // NOI18N
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);  // NOI18N
             return;
         }
         layoutTurnout.getLayoutBlockB().editLayoutBlock(editLayoutTurnoutFrame);
@@ -318,9 +319,9 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
         }
         // check if a block exists to edit
         if (layoutTurnout.getLayoutBlockC() == null) {
-            JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
+            JmriJOptionPane.showMessageDialog(editLayoutTurnoutFrame,
                     Bundle.getMessage("Error1"), // NOI18N
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);  // NOI18N
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);  // NOI18N
             return;
         }
         layoutTurnout.getLayoutBlockC().editLayoutBlock(editLayoutTurnoutFrame);
@@ -342,9 +343,9 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
         }
         // check if a block exists to edit
         if (layoutTurnout.getLayoutBlockD() == null) {
-            JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
+            JmriJOptionPane.showMessageDialog(editLayoutTurnoutFrame,
                     Bundle.getMessage("Error1"), // NOI18N
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);  // NOI18N
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);  // NOI18N
             return;
         }
         layoutTurnout.getLayoutBlockD().editLayoutBlock(editLayoutTurnoutFrame);

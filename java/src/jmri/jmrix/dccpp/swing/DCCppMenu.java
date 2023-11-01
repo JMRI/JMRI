@@ -36,6 +36,7 @@ public class DCCppMenu extends JMenu {
             add(new jmri.jmrix.dccpp.swing.ConfigBaseStationAction(rb.getString("MenuItemConfigBaseStation"), memo));
         }
         add(new jmri.jmrit.swing.meter.MeterAction());
+        add(new jmri.jmrix.dccpp.swing.DCCppRosterExportAction(rb.getString("DCCppRosterExportTitle")));
         add(new javax.swing.JSeparator());
         add(new jmri.jmrix.dccpp.dccppovertcp.ServerAction(rb.getString("MenuItemDCCppOverTCPServer")));
     }

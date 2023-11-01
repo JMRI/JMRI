@@ -56,7 +56,7 @@ public interface IdTagManager extends ProvidingManager<IdTag> {
      *                                  be parsed.
      */
     @Nonnull
-    public IdTag provideIdTag(@Nonnull String name) throws IllegalArgumentException;
+    IdTag provideIdTag(@Nonnull String name) throws IllegalArgumentException;
 
     /**
      * Locate via tag ID, then by user name, and finally system name if needed.
@@ -67,7 +67,7 @@ public interface IdTagManager extends ProvidingManager<IdTag> {
      */
     @CheckReturnValue
     @CheckForNull
-    public IdTag getIdTag(@Nonnull String name);
+    IdTag getIdTag(@Nonnull String name);
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
@@ -79,7 +79,7 @@ public interface IdTagManager extends ProvidingManager<IdTag> {
     @Override
     @CheckReturnValue
     @CheckForNull
-    public IdTag getBySystemName(@Nonnull String systemName);
+    IdTag getBySystemName(@Nonnull String systemName);
 
     /**
      * Locate an instance based on a user name. Returns null if no instance
@@ -91,7 +91,7 @@ public interface IdTagManager extends ProvidingManager<IdTag> {
     @Override
     @CheckReturnValue
     @CheckForNull
-    public IdTag getByUserName(@Nonnull String userName);
+    IdTag getByUserName(@Nonnull String userName);
 
     /**
      * Locate an instance based on a tag ID. Returns null if no instance already
@@ -102,7 +102,7 @@ public interface IdTagManager extends ProvidingManager<IdTag> {
      */
     @CheckReturnValue
     @CheckForNull
-    public IdTag getByTagID(@Nonnull String tagID);
+    IdTag getByTagID(@Nonnull String tagID);
 
     /**
      * Return an instance with the specified system and user names. Note that
@@ -134,7 +134,7 @@ public interface IdTagManager extends ProvidingManager<IdTag> {
      *                                  parsed.
      */
     @Nonnull
-    public IdTag newIdTag(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
+    IdTag newIdTag(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
     /**
      * Get a list of all IdTags seen by a specified Reporter within a specific
@@ -146,7 +146,7 @@ public interface IdTagManager extends ProvidingManager<IdTag> {
      */
     @CheckReturnValue
     @Nonnull
-    public List<IdTag> getTagsForReporter(@Nonnull Reporter reporter, long threshold);
+    List<IdTag> getTagsForReporter(@Nonnull Reporter reporter, long threshold);
 
     /**
      * Define if the manager should persist details of when and where all known
@@ -154,7 +154,7 @@ public interface IdTagManager extends ProvidingManager<IdTag> {
      *
      * @param state True to store; False to omit
      */
-    public void setStateStored(boolean state);
+    void setStateStored(boolean state);
 
     /**
      * Determines if the state of known IdTags should be stored.
@@ -162,7 +162,7 @@ public interface IdTagManager extends ProvidingManager<IdTag> {
      * @return True to store state; False to discard state
      */
     @CheckReturnValue
-    public boolean isStateStored();
+    boolean isStateStored();
 
     /**
      * Define if the manager should use the fast clock when setting the times
@@ -171,7 +171,7 @@ public interface IdTagManager extends ProvidingManager<IdTag> {
      * @param fastClock True to use the fast clock; False to use the system
      *                  clock
      */
-    public void setFastClockUsed(boolean fastClock);
+    void setFastClockUsed(boolean fastClock);
 
     /**
      * Determines if fast clock times should be recorded for when a given IdTag
@@ -180,12 +180,12 @@ public interface IdTagManager extends ProvidingManager<IdTag> {
      * @return True to use the fast clock; False to use the system clock
      */
     @CheckReturnValue
-    public boolean isFastClockUsed();
+    boolean isFastClockUsed();
 
     /**
      * Perform initialization.
      */
-    public void init();
+    void init();
 
     /**
      * Determines if the manager has been initialized.
@@ -193,6 +193,6 @@ public interface IdTagManager extends ProvidingManager<IdTag> {
      * @return state of initialization
      */
     @CheckReturnValue
-    public boolean isInitialised();
+    boolean isInitialised();
 
 }

@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.HashSet;
 
 import jmri.Turnout;
-import jmri.jmrit.ctc.CTCFiles;
-import jmri.jmrit.ctc.NBHTurnout;
 
 /**
  *

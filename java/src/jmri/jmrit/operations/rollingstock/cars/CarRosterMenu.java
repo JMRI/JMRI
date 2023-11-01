@@ -10,7 +10,6 @@ import jmri.jmrit.operations.rollingstock.cars.tools.*;
 
 /**
  * Provides a context-specific menu for handling the Roster.
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Dennis Miller Copyright (C) 2005

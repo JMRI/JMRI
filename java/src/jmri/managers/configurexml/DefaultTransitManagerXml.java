@@ -13,8 +13,6 @@ import jmri.TransitSectionAction;
 
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides the functionality for configuring a TransitManager.
@@ -60,11 +58,16 @@ public class DefaultTransitManagerXml extends jmri.managers.configurexml.Abstrac
                     elem.setAttribute("userName", uName);
                 }
 
+                ArrayList<TransitSection> tsList = transit.getTransitSectionList();
+                if ( tsList.isEmpty() ){
+                    log.warn("Not Storing Transit \"{}\" as it has no TransitSections", transit.getDisplayName());
+                    continue;
+                }
+
                 // store common part
                 storeCommon(transit, elem);
 
                 // save child transitsection entries
-                ArrayList<TransitSection> tsList = transit.getTransitSectionList();
                 Element tsElem;
                 for (TransitSection ts : tsList) {
                     if ((ts != null) && !ts.isTemporary()) {
@@ -232,6 +235,6 @@ public class DefaultTransitManagerXml extends jmri.managers.configurexml.Abstrac
         return InstanceManager.getDefault(TransitManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultTransitManagerXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultTransitManagerXml.class);
 
 }

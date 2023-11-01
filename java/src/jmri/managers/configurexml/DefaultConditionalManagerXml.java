@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.SortedSet;
 
 import javax.annotation.Nonnull;
-import javax.swing.JOptionPane;
 
 import jmri.Conditional;
 import jmri.ConditionalAction;
@@ -18,9 +17,9 @@ import jmri.Logix;
 import jmri.implementation.DefaultConditional;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.managers.DefaultConditionalManager;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides the functionality for configuring ConditionalManagers.
@@ -406,10 +405,10 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
             // for notifying users of multiple changes that can be silenced as part of
             // normal operations
             if (!GraphicsEnvironment.isHeadless() && !Boolean.getBoolean("jmri.test.no-dialogs")) {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage(namesChanged > 1 ? "ConditionalManager.SystemNamesChanged.Message" : "ConditionalManager.SystemNameChanged.Message", namesChanged),
                         Bundle.getMessage("Manager.SystemNamesChanged.Title", namesChanged, cm.getBeanTypeHandled(namesChanged > 1)),
-                        JOptionPane.WARNING_MESSAGE);
+                        JmriJOptionPane.WARNING_MESSAGE);
             }
             log.warn("System names for {} Conditionals changed; this may have operational impacts.", namesChanged);
         }
@@ -443,6 +442,6 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
         return InstanceManager.getDefault(jmri.ConditionalManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultConditionalManagerXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditionalManagerXml.class);
 
 }

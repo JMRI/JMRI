@@ -3,8 +3,8 @@ package jmri.jmrit.logixng.implementation.configurexml;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.DigitalBooleanActionManager;
-import jmri.jmrit.logixng.actions.DigitalBooleanOnChange;
-import jmri.jmrit.logixng.actions.configurexml.DigitalBooleanOnChangeXml;
+import jmri.jmrit.logixng.actions.DigitalBooleanLogixAction;
+import jmri.jmrit.logixng.actions.configurexml.DigitalBooleanLogixActionXml;
 import jmri.jmrit.logixng.implementation.DefaultDigitalBooleanActionManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -195,10 +195,10 @@ public class DefaultDigitalBooleanActionManagerXmlTest {
 
 
 
-    private class MyDigitalBooleanAction extends DigitalBooleanOnChange {
+    private class MyDigitalBooleanAction extends DigitalBooleanLogixAction {
 
         MyDigitalBooleanAction() {
-            super("IQDB9999", null, DigitalBooleanOnChange.Trigger.CHANGE);
+            super("IQDB9999", null, DigitalBooleanLogixAction.When.Either);
         }
 
     }
@@ -206,7 +206,7 @@ public class DefaultDigitalBooleanActionManagerXmlTest {
 
     // This class is loaded by reflection. The class cannot be private since
     // Spotbugs will in that case flag it as "is never used locally"
-    class PrivateConstructorXml extends DigitalBooleanOnChangeXml {
+    class PrivateConstructorXml extends DigitalBooleanLogixActionXml {
         private PrivateConstructorXml() {
         }
     }

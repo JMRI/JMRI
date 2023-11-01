@@ -13,6 +13,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.managers.DefaultSignalMastLogicManager;
 import jmri.util.ThreadingUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriJOptionPane;
 
 public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLogic> {
 
@@ -82,16 +83,16 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
         item.addActionListener((ActionEvent e) -> {
             ((DefaultSignalMastLogicManager) InstanceManager.getDefault(SignalMastLogicManager.class)).generateSection();
             InstanceManager.getDefault(SectionManager.class).generateBlockSections();
-            JOptionPane.showMessageDialog(finalF, Bundle.getMessage("SectionGenerationComplete"));
+            JmriJOptionPane.showMessageDialog(finalF, Bundle.getMessage("SectionGenerationComplete"));
         });
         JMenuItem setSMLDirSensors = new JMenuItem(Bundle.getMessage("MenuItemAddDirectionSensors"));
         pathMenu.add(setSMLDirSensors);
         setSMLDirSensors.addActionListener((ActionEvent e) -> {
             int n = InstanceManager.getDefault(SignalMastLogicManager.class).setupSignalMastsDirectionSensors();
             if (n > 0) {
-                JOptionPane.showMessageDialog(finalF, java.text.MessageFormat.format(
+                JmriJOptionPane.showMessageDialog(finalF, java.text.MessageFormat.format(
                         Bundle.getMessage("MenuItemAddDirectionSensorsErrorCount"), n),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -123,11 +124,11 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
 
     void autoCreatePairs(JmriJFrame f) {
         if (!InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
-            int response = JOptionPane.showConfirmDialog(f, Bundle.getMessage("EnableLayoutBlockRouting"),
-                    Bundle.getMessage("TitleBlockRouting"), JOptionPane.YES_NO_OPTION);
+            int response = JmriJOptionPane.showConfirmDialog(f, Bundle.getMessage("EnableLayoutBlockRouting"),
+                    Bundle.getMessage("TitleBlockRouting"), JmriJOptionPane.YES_NO_OPTION);
             if (response == 0) {
                 InstanceManager.getDefault(LayoutBlockManager.class).enableAdvancedRouting(true);
-                JOptionPane.showMessageDialog(f, Bundle.getMessage("LayoutBlockRoutingEnabled"));
+                JmriJOptionPane.showMessageDialog(f, Bundle.getMessage("LayoutBlockRoutingEnabled"));
             } else {
                 return;
             }
@@ -144,10 +145,10 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
         final JCheckBox genSect = new JCheckBox(Bundle.getMessage("AutoGenSectionAfterLogic"));
         genSect.setToolTipText(Bundle.getMessage("AutoGenSectionAfterLogicToolTip"));
         Object[] params = {Bundle.getMessage("AutoGenSignalMastLogicMessage"), " ", genSect};
-        int retval = JOptionPane.showConfirmDialog(f, params, Bundle.getMessage("AutoGenSignalMastLogicTitle"),
-                JOptionPane.YES_NO_OPTION);
+        int retval = JmriJOptionPane.showConfirmDialog(f, params, Bundle.getMessage("AutoGenSignalMastLogicTitle"),
+                JmriJOptionPane.YES_NO_OPTION);
 
-        if (retval == 0) {
+        if ( retval == JmriJOptionPane.YES_OPTION ) {
             InstanceManager.getDefault(SignalMastLogicManager.class).addPropertyChangeListener(propertyGenerateListener);
             // This process can take some time, so we do split it off then return to Swing/AWT
             Runnable r = () -> {
@@ -160,7 +161,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                     try {
                         SwingUtilities.invokeAndWait(() -> {
                             InstanceManager.getDefault(SignalMastLogicManager.class).removePropertyChangeListener(propertyGenerateListener);
-                            JOptionPane.showMessageDialog(null, e.toString());
+                            JmriJOptionPane.showMessageDialog(f, e.toString());
                             signalMastLogicFrame.setVisible(false);
                         });
                     } catch (java.lang.reflect.InvocationTargetException ex) {
@@ -203,7 +204,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                     signalMastLogicFrame.setVisible(false);
                 }
                 InstanceManager.getDefault(SignalMastLogicManager.class).removePropertyChangeListener(this);
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("SignalMastPairGenerationComplete"));
+                JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("SignalMastPairGenerationComplete"));
             } else if (evt.getPropertyName().equals("autoGenerateUpdate")) {// NOI18N
                 sourceLabel.setText((String) evt.getNewValue());
                 signalMastLogicFrame.pack();

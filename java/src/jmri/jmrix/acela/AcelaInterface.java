@@ -9,9 +9,9 @@ package jmri.jmrix.acela;
  */
 public interface AcelaInterface {
 
-    public void addAcelaListener(AcelaListener l);
+    void addAcelaListener(AcelaListener l);
 
-    public void removeAcelaListener(AcelaListener l);
+    void removeAcelaListener(AcelaListener l);
 
     boolean status();   // true if the implementation is operational
 

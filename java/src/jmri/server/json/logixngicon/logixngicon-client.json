@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-logixngicon-client-message",
+    "type": "object",
+    "description": "Schema data object in message from client to JMRI for type \"logixngicon\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Always the string 'logixngicon'"
+        },
+        "data": {
+            "type": "array",
+            "description": "Data for the logixngicon",
+            "items": {
+                "identity": "integer",
+                "description": "The identity of the 'logixngicon'"
+            }
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name"]
+}

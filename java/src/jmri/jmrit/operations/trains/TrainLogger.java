@@ -2,28 +2,21 @@ package jmri.jmrit.operations.trains;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.jmrit.XmlFile;
-import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.setup.Setup;
+import java.util.*;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
+import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.setup.*;
 
 /**
  * Logs train movements and status to a file.
@@ -169,9 +162,9 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
         return loggingDirectory + File.separator + getFileName();
     }
 
-    private String operationsDirectory
-            = OperationsSetupXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName();
-    private String loggingDirectory = operationsDirectory + File.separator + "logger"; // NOI18N
+    private String operationsDirectory =
+            OperationsSetupXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName();
+    private String loggingDirectory = operationsDirectory + File.separator + "logger" + File.separator + "trains"; // NOI18N
 
     public String getDirectoryName() {
         return loggingDirectory;

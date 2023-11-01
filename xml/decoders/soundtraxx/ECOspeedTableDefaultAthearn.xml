@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013, 2016 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!--                                                                        -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+      <year>2016</year>
+      <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+      <author>
+          <personname>
+              <firstname>Michael</firstname>
+              <surname>Mosher</surname>
+          </personname>
+      </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+      <revision>
+          <revnumber>1</revnumber>
+          <date>2023-10-16</date>
+          <authorinitials>MM</authorinitials>
+          <revremark>New file</revremark>
+      </revision>
+    </revhistory>
+    <!-- Specific CVs for Tsunami2 decoders -->
+    <variable item="CV67 default" CV="67" default="11">
+        <decVal/>
+    </variable>
+    <variable item="CV68 default" CV="68" default="21">
+        <decVal/>
+    </variable>
+    <variable item="CV69 default" CV="69" default="30">
+        <decVal/>
+    </variable>
+    <variable item="CV70 default" CV="70" default="40">
+        <decVal/>
+    </variable>
+    <variable item="CV71 default" CV="71" default="50">
+        <decVal/>
+    </variable>
+    <variable item="CV72 default" CV="72" default="60">
+        <decVal/>
+    </variable>
+    <variable item="CV73 default" CV="73" default="70">
+        <decVal/>
+    </variable>
+    <variable item="CV74 default" CV="74" default="80">
+        <decVal/>
+    </variable>
+    <variable item="CV75 default" CV="75" default="89">
+        <decVal/>
+    </variable>
+    <variable item="CV76 default" CV="76" default="98">
+        <decVal/>
+    </variable>
+    <variable item="CV77 default" CV="77" default="109">
+        <decVal/>
+    </variable>
+    <variable item="CV78 default" CV="78" default="120">
+        <decVal/>
+    </variable>
+    <variable item="CV79 default" CV="79" default="130">
+        <decVal/>
+    </variable>
+    <variable item="CV80 default" CV="80" default="140">
+        <decVal/>
+    </variable>
+    <variable item="CV81 default" CV="81" default="152">
+        <decVal/>
+    </variable>
+    <variable item="CV82 default" CV="82" default="154">
+        <decVal/>
+    </variable>
+    <variable item="CV83 default" CV="83" default="159">
+        <decVal/>
+    </variable>
+    <variable item="CV84 default" CV="84" default="166">
+        <decVal/>
+    </variable>
+    <variable item="CV85 default" CV="85" default="171">
+        <decVal/>
+    </variable>
+    <variable item="CV86 default" CV="86" default="177">
+        <decVal/>
+    </variable>
+    <variable item="CV87 default" CV="87" default="182">
+        <decVal/>
+    </variable>
+    <variable item="CV88 default" CV="88" default="187">
+        <decVal/>
+    </variable>
+    <variable item="CV89 default" CV="89" default="192">
+        <decVal/>
+    </variable>
+    <variable item="CV90 default" CV="90" default="198">
+        <decVal/>
+    </variable>
+    <variable item="CV91 default" CV="91" default="205">
+        <decVal/>
+    </variable>
+    <variable item="CV92 default" CV="92" default="210">
+        <decVal/>
+    </variable>
+    <variable item="CV93 default" CV="93" default="215">
+        <decVal/>
+    </variable>
+    <variable item="CV94 default" CV="94" default="220">
+        <decVal/>
+    </variable>
+</variables>

@@ -12,6 +12,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.schedules.SchedulesTableAction;
 import jmri.jmrit.operations.locations.tools.*;
+import jmri.jmrit.operations.routes.tools.ShowRoutesServingLocationAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.swing.JTablePersistenceManager;
@@ -82,19 +83,23 @@ public class LocationsTableFrame extends OperationsFrame {
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        toolMenu.add(new LocationCopyAction());
+        toolMenu.add(new LocationCopyAction(null));
         toolMenu.add(new TrackCopyAction());
+        toolMenu.addSeparator();
         toolMenu.add(new SchedulesTableAction());
+        toolMenu.addSeparator();
         toolMenu.add(new ModifyLocationsAction());
         toolMenu.add(new ModifyLocationsCarLoadsAction());
-        toolMenu.add(new ShowCarsByLocationAction(false, null, null));
+        toolMenu.addSeparator();
         toolMenu.add(new ExportLocationsRosterAction());
         toolMenu.add(new ImportLocationsRosterAction() );
         if (Setup.isVsdPhysicalLocationEnabled()) {
             toolMenu.add(new SetPhysicalLocationAction(null));
         }
         toolMenu.addSeparator();
+        toolMenu.add(new ShowCarsByLocationAction(false, null, null));
         toolMenu.add(new ShowTrainsServingLocationAction(null, null));
+        toolMenu.add(new ShowRoutesServingLocationAction(null));
         toolMenu.addSeparator();
         toolMenu.add(new PrintLocationsAction(false));
         toolMenu.add(new PrintLocationsAction(true));

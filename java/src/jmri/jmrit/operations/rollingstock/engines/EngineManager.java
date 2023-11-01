@@ -1,20 +1,18 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
+import java.beans.PropertyChangeEvent;
+import java.util.*;
 
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.InstanceManagerAutoInitialize;
+import jmri.*;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManifestHeaderText;
 
 /**
  * Manages the engines.
@@ -75,9 +73,9 @@ public class EngineManager extends RollingStockManager<Engine>
     }
 
     // The special sort options for engines
-    private static final int BY_MODEL = 4;
-    private static final int BY_CONSIST = 5;
-    private static final int BY_HP = 13;
+    private static final int BY_MODEL = 30;
+    private static final int BY_CONSIST = 31;
+    private static final int BY_HP = 32;
 
     // add engine options to sort comparator
     @Override
@@ -146,6 +144,29 @@ public class EngineManager extends RollingStockManager<Engine>
         return names;
     }
 
+    int _commentLength = 0;
+
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification="I18N of Info Message")
+    public int getMaxCommentLength() {
+        if (_commentLength == 0) {
+            _commentLength = TrainManifestHeaderText.getStringHeader_Comment().length();
+            String comment = "";
+            Engine engineMax = null;
+            for (Engine engine : getList()) {
+                if (engine.getComment().length() > _commentLength) {
+                    _commentLength = engine.getComment().length();
+                    comment = engine.getComment();
+                    engineMax = engine;
+                }
+            }
+            if (engineMax != null) {
+                log.info(Bundle.getMessage("InfoMaxComment", engineMax.toString(), comment, _commentLength));
+            }
+        }
+        return _commentLength;
+    }
+
     public void load(Element root) {
         if (root.getChild(Xml.ENGINES) != null) {
             List<Element> engines = root.getChild(Xml.ENGINES).getChildren(Xml.ENGINE);
@@ -177,6 +198,14 @@ public class EngineManager extends RollingStockManager<Engine>
         // Set dirty
         InstanceManager.getDefault(EngineManagerXml.class).setDirty(true);
         super.firePropertyChange(p, old, n);
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals(Engine.COMMENT_CHANGED_PROPERTY)) {
+            _commentLength = 0;
+        }
+        super.propertyChange(evt);
     }
 
     private final static Logger log = LoggerFactory.getLogger(EngineManager.class);

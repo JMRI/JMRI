@@ -2,12 +2,8 @@ package jmri.jmrit.operations.automation;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 
 import javax.swing.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
@@ -16,6 +12,7 @@ import jmri.jmrit.operations.automation.actions.Action;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.swing.JTablePersistenceManager;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user edit of a automation
@@ -228,9 +225,10 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
         }
         if (ae.getSource() == deleteAutomationButton) {
             log.debug("automation delete button activated");
-            if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
-                    Bundle.getMessage("DoYouWantToDeleteAutomation"), new Object[]{automationNameTextField.getText()}),
-                    Bundle.getMessage("DeleteAutomation?"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+            if (JmriJOptionPane.showConfirmDialog(this,
+                    Bundle.getMessage("DoYouWantToDeleteAutomation", automationNameTextField.getText()),
+                    Bundle.getMessage("DeleteAutomation?"),
+                    JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                 return;
             }
             Automation automation = automationManager.getAutomationByName(automationNameTextField.getText());
@@ -314,21 +312,17 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
             return false;
         }
         if (automationNameTextField.getText().length() > MAX_NAME_LENGTH) {
-            JOptionPane.showMessageDialog(this, MessageFormat.format(
-                    Bundle.getMessage("AutomationNameLengthMax"),
-                    new Object[]{Integer.toString(MAX_NAME_LENGTH)}), MessageFormat.format(
-                    Bundle.getMessage("CanNotAutomation"), new Object[]{s}),
-                    JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("AutomationNameLengthMax", Integer.toString(MAX_NAME_LENGTH)),
+                    Bundle.getMessage("CanNotAutomation", s), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
     }
 
     private void reportAutomationExists(String s) {
-        log.info("Can not {} automation already exists", s);
-        JOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"),
-                MessageFormat.format(Bundle.getMessage("CanNotAutomation"), new Object[]{s}),
-                JOptionPane.ERROR_MESSAGE);
+        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"),
+                Bundle.getMessage("CanNotAutomation", s), JmriJOptionPane.ERROR_MESSAGE);
     }
 
     private void enableButtons(boolean enabled) {
@@ -377,5 +371,5 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutomationTableFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AutomationTableFrame.class);
 }

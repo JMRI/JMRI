@@ -14,11 +14,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 import jmri.*;
 import jmri.jmrit.dispatcher.ActiveTrain;
 import jmri.jmrit.dispatcher.DispatcherFrame;
@@ -29,10 +30,8 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.ThreadingUtil;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
@@ -191,19 +190,28 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             }
             int now = ((Integer) e.getNewValue());
 
+            LayoutBlock lBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(blk);
+            if (lBlock == null){
+                log.error("Unable to get layout block from block {}",blk);
+                return;
+            }
+
             if (now == Block.OCCUPIED) {
-                LayoutBlock lBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(blk);
                 //If the block was previously active or inactive then we will
                 //reset the useExtraColor, but not if it was previously unknown or inconsistent.
-                if (lBlock==null){
-                    log.error("Unable to get layout block from block {}",blk);
-                    return;
-                }
                 lBlock.setUseExtraColor(false);
                 blk.removePropertyChangeListener(propertyBlockListener); //was this
                 removeBlockFromRoute(lBlock);
             } else {
-                log.debug("state was {} and did not go through reset",now);  // NOI18N
+                if (src.getStart() == lBlock) {
+                    // Remove listener when the start block becomes unoccupied.
+                    // When the start block is occupied when the route is created, the normal
+                    // removal does not occur.
+                    lBlock.getBlock().removePropertyChangeListener(propertyBlockListener);
+                    log.debug("Remove listener from start block {} for {}", lBlock.getDisplayName(), this.getDisplayName());
+                } else {
+                    log.debug("state was {} and did not go through reset",now);  // NOI18N
+                }
             }
         }
     }
@@ -977,7 +985,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         }
 
         if (!isEnabled()) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("RouteDisabled", getDisplayName()));  // NOI18N
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("RouteDisabled", getDisplayName()));  // NOI18N
             src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
             point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
             return;
@@ -1065,10 +1073,12 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                         toadd.setErrorMessage(errorMessage);
                         pathList.add(toadd);
                     } else {
-                        startlBlock = srcProLBlock;
-                        protectLBlock = getFacing();
+                        // Handle reversed direction - Only used when Both Way is enabled.
+                        // The controlling block references are flipped
+                        startlBlock = point.getProtecting().get(0);
+                        protectLBlock = point.getFacing();
 
-                        destinationLBlock = src.getStart();
+                        destinationLBlock = src.getSourceProtecting().get(0);
                         if (log.isDebugEnabled()) {
                             log.debug("reverse set destination is set going for {} {} {}", startlBlock.getDisplayName(), destinationLBlock.getDisplayName(), protectLBlock.getDisplayName());  // NOI18N
                         }
@@ -1083,7 +1093,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                                 }
                                 if (!InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(startlBlock, protectLBlock, srcPro, src.getStart(), LayoutBlockConnectivityTools.Routing.SENSORTOSENSOR)) {
                                     log.error("No route found");  // NOI18N
-                                    JOptionPane.showMessageDialog(null, "No Valid path found");  // NOI18N
+                                    JmriJOptionPane.showMessageDialog(null, "No Valid path found");  // NOI18N
                                     src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                                     point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                                     return;
@@ -1136,7 +1146,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                         } catch (JmriException ex) {
                             log.error("Exception {}", ex.getMessage());  // NOI18N
                             if (showMessage) {
-                                JOptionPane.showMessageDialog(null, ex.getMessage());
+                                JmriJOptionPane.showMessageDialog(null, ex.getMessage());
                             }
                             src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                             point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
@@ -1215,16 +1225,16 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             Object[] options = {
                     Bundle.getMessage("ButtonYes"),  // NOI18N
                     Bundle.getMessage("ButtonNo")};  // NOI18N
-            int ans = JOptionPane.showOptionDialog(null,
+            int ans = JmriJOptionPane.showOptionDialog(null,
                     message + "\n" + Bundle.getMessage("StackRouteAsk"), Bundle.getMessage("RouteNotClear"), // NOI18N
-                    JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
+                    JmriJOptionPane.DEFAULT_OPTION,
+                    JmriJOptionPane.QUESTION_MESSAGE,
                     null,
                     options,
                     options[1]);
-            if (ans == 0) {
+            if (ans == 0) { // array position 0 Yes
                 opt = EntryExitPairs.OVERLAP_STACK;
-            } else {
+            } else { // array position 1 or Dialog closed
                 opt = EntryExitPairs.OVERLAP_CANCEL;
             }
         }
@@ -1318,6 +1328,6 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         return report;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DestinationPoints.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DestinationPoints.class);
 
 }

@@ -13,7 +13,6 @@ import javax.swing.JComboBox;
 
 import jmri.InstanceManager;
 import jmri.TurnoutManager;
-import jmri.jmrit.ctc.NBHSensor;
 import jmri.jmrit.ctc.NBHTurnout;
 import jmri.jmrit.ctc.ctcserialdata.*;
 

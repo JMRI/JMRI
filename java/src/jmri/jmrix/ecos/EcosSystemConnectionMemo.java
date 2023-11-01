@@ -4,7 +4,6 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import jmri.*;
-import jmri.managers.DefaultProgrammerManager;
 import jmri.util.NamedBeanComparator;
 
 

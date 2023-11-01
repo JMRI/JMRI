@@ -3,14 +3,10 @@ package jmri.jmrit.operations.trains.schedules;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.MessageFormat;
 import java.util.Enumeration;
 import java.util.List;
 
 import javax.swing.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
@@ -23,6 +19,7 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.swing.JTablePersistenceManager;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for adding and editing train schedules for operations.
@@ -270,21 +267,21 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
                 log.warn("Manifest creator file not found!, directory name: {}, file name: {}",
                         InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(),
                         InstanceManager.getDefault(TrainCustomManifest.class).getFileName()); // NOI18N
-                JOptionPane.showMessageDialog(this,
-                        MessageFormat.format(Bundle.getMessage("LoadDirectoryNameFileName"),
-                                new Object[] { InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(),
-                                        InstanceManager.getDefault(TrainCustomManifest.class).getFileName() }),
-                        Bundle.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("LoadDirectoryNameFileName",
+                                InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(),
+                                        InstanceManager.getDefault(TrainCustomManifest.class).getFileName()),
+                        Bundle.getMessage("ManifestCreatorNotFound"), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
             List<Train> trains = getSortByList();
             for (Train train : trains) {
                 if (train.isBuildEnabled()) {
                     if (!train.isBuilt()) {
-                        JOptionPane.showMessageDialog(this,
-                                MessageFormat.format(Bundle.getMessage("NeedToBuildBeforeRunFile"),
-                                        new Object[] { train.getName() }),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(this,
+                                Bundle.getMessage("NeedToBuildBeforeRunFile",
+                                        train.getName()),
+                                Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                     } else {
                         // Add csv manifest file to our collection to be processed.
                         InstanceManager.getDefault(TrainCustomManifest.class).addCsvFile(train.createCsvManifestFile());
@@ -528,5 +525,5 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainsScheduleTableFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrainsScheduleTableFrame.class);
 }

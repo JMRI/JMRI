@@ -41,6 +41,12 @@
        <authorinitials>PDB</authorinitials>
        <revremark>Second version for Italian Signal System</revremark>
    </revision>
+   <revision>
+       <revnumber>3</revnumber>
+       <date>2023-08-23</date>
+       <authorinitials>PDB</authorinitials>
+       <revremark>Third version for Italian Signal System - amended aspect mapping</revremark>
+   </revision>
   </revhistory>
 
 <aspecttable>FS 1987</aspecttable>
@@ -183,16 +189,58 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
 
   </specificappearances>
 
+
   <aspectMappings>
+    
+    <aspectMapping>
+      <advancedAspect>Verde</advancedAspect>
+      <ourAspect>Verde</ourAspect>
+    </aspectMapping>
+
     <aspectMapping>
       <advancedAspect>Giallo</advancedAspect>
+      <ourAspect>Giallo Lampeggiante</ourAspect>
       <ourAspect>Verde</ourAspect>
-
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Rosso</advancedAspect>
       <ourAspect>Giallo</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Rosso-Giallo</advancedAspect>
+      <ourAspect>Giallo-Verde</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante Alt.</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Rosso-Verde</advancedAspect>
+      <ourAspect>Giallo-Verde</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante Alt.</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Giallo-Giallo</advancedAspect>
+     <ourAspect>Giallo-Verde</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante Alt.</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Rosso-Giallo-Giallo</advancedAspect>
+      <ourAspect>Giallo-Verde</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante Alt.</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Rosso-Giallo-Verde</advancedAspect>
+     <ourAspect>Giallo-Verde</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante Alt.</ourAspect>
     </aspectMapping>
 
   </aspectMappings>

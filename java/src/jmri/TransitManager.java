@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
-import jmri.managers.AbstractManager;
-
 /**
  * Implementation of a Transit Manager
  * <p>
@@ -44,7 +42,7 @@ public interface TransitManager extends Manager<Transit> {
      *         Transit.
      */
     @Nonnull
-    public Transit createNewTransit(@CheckForNull String systemName, String userName) throws NamedBean.BadNameException;
+    Transit createNewTransit(@CheckForNull String systemName, String userName) throws NamedBean.BadNameException;
 
     /**
      * For use with User GUI, to allow the auto generation of systemNames, where
@@ -60,7 +58,7 @@ public interface TransitManager extends Manager<Transit> {
      *         another Transit
      */
     @Nonnull
-    public Transit createNewTransit(String userName) throws NamedBean.BadNameException;
+    Transit createNewTransit(String userName) throws NamedBean.BadNameException;
 
     /**
      * Get an existing Transit.
@@ -72,14 +70,14 @@ public interface TransitManager extends Manager<Transit> {
      * @return null if no match found
      */
     @CheckForNull
-    public Transit getTransit(String name);
+    Transit getTransit(String name);
 
     /**
      * Remove an existing Transit.
      *
      * @param z the transit to remove
      */
-    public void deleteTransit(Transit z);
+    void deleteTransit(Transit z);
 
     /**
      * Get a list of Transits which use a specified Section.
@@ -88,12 +86,12 @@ public interface TransitManager extends Manager<Transit> {
      * @return a list, possibly empty, of Transits using section s.
      */
     @Nonnull
-    public ArrayList<Transit> getListUsingSection(Section s);
+    ArrayList<Transit> getListUsingSection(Section s);
 
     @Nonnull
-    public ArrayList<Transit> getListUsingBlock(Block b);
+    ArrayList<Transit> getListUsingBlock(Block b);
 
     @Nonnull
-    public ArrayList<Transit> getListEntryBlock(Block b);
+    ArrayList<Transit> getListEntryBlock(Block b);
 
 }

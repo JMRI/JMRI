@@ -6,11 +6,8 @@ import java.util.*;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-//import javax.annotation.concurrent.GuardedBy;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-
-//import com.alexandriasoftware.swing.Validation;
 
 import jmri.*;
 import jmri.jmrit.display.CoordinateEdit;
@@ -19,17 +16,14 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableJComponent;
 import jmri.jmrix.SystemConnectionMemoManager;
 import jmri.swing.ManagerComboBox;
-//import jmri.swing.SystemNameValidator;
 import jmri.util.ColorUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseAdapter;
 import jmri.util.swing.JmriMouseListener;
 import jmri.util.swing.JmriMouseMotionListener;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static jmri.util.ColorUtil.contrast;
 
@@ -487,12 +481,12 @@ public class SwitchboardEditor extends Editor {
         if (range > rangeSizeWarning) {
             // ask user if range is indeed desired
             log.debug("Warning for big range");
-            int retval = JOptionPane.showOptionDialog(null,
+            int retval = JmriJOptionPane.showOptionDialog(this,
                     Bundle.getMessage("LargeRangeWarning", range, Bundle.getMessage("CheckBoxHideUnconnected")),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.INFORMATION_MESSAGE, null,
                     new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonCancel")}, null);
             log.debug("Retval: {}", retval);
-            if (retval != 0) {
+            if (retval != 0) { // NOT array position 0 ButtonYes
                 return;
             }
         }
@@ -828,6 +822,7 @@ public class SwitchboardEditor extends Editor {
                     int maxW = (super.getTargetFrame().getWidth() - 10) / colNum; // int division, subtract 2x3px for border
                     int maxH = (super.getTargetFrame().getHeight() - verticalMargin) / Math.max(rows, 1); // for footer
                     _tileSize = Math.min(maxW, maxH); // store for tile graphics
+                    log.debug("_tileSize {} from {}, {}", _tileSize, maxW, maxH);
                 }
             //tmp }
         });
@@ -903,13 +898,15 @@ public class SwitchboardEditor extends Editor {
             if (desiredColor != null && !defaultTextColor.equals(desiredColor)) {
                 // if new defaultTextColor matches bgColor, ask user as labels will become unreadable
                 if (desiredColor.equals(defaultBackgroundColor)) {
-                    int retval = JOptionPane.showOptionDialog(null,
-                    Bundle.getMessage("ColorIdenticalWarningF"), Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                    new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonInvert"), Bundle.getMessage("ButtonCancel")}, null);
-                    if (retval == 1) { // invert the other color
+                    int retval = JmriJOptionPane.showOptionDialog(this,
+                    Bundle.getMessage("ColorIdenticalWarningF"), Bundle.getMessage("WarningTitle"),
+                JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.INFORMATION_MESSAGE, null,
+                    new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonInvert"),
+                    Bundle.getMessage("ButtonCancel")}, Bundle.getMessage("ButtonCancel"));
+                    if (retval == 1) { // array position 1, invert the other color
                         setDefaultBackgroundColor(contrast(defaultBackgroundColor));
-                    } else if (retval != 0) {
-                        return; // cancel
+                    } else if (retval != 0) { // NOT ButtonOK, ie cancel or Dialog closed
+                        return;
                     }
                 }
                 defaultTextColor = desiredColor;
@@ -929,14 +926,16 @@ public class SwitchboardEditor extends Editor {
             if (desiredColor != null && !defaultBackgroundColor.equals(desiredColor)) {
                 // if new bgColor matches the defaultTextColor, ask user as labels will become unreadable
                 if (desiredColor.equals(defaultTextColor)) {
-                    int retval = JOptionPane.showOptionDialog(null,
-                            Bundle.getMessage("ColorIdenticalWarningR"), Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                            new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonInvert"), Bundle.getMessage("ButtonCancel")}, null);
+                    int retval = JmriJOptionPane.showOptionDialog(this,
+                        Bundle.getMessage("ColorIdenticalWarningR"), Bundle.getMessage("WarningTitle"),
+                        JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.INFORMATION_MESSAGE, null,
+                        new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonInvert"), Bundle.getMessage("ButtonCancel")},
+                        Bundle.getMessage("ButtonCancel"));
                     if (retval == 1) { // invert the other color
                         defaultTextColor = contrast(defaultTextColor);
                         border.setTitleColor(defaultTextColor);
-                    } else if (retval != 0) {
-                        return; // cancel
+                    } else if (retval != 0) {  // cancel or close Dialog
+                        return;
                     }
                 }
                 defaultBackgroundColor = desiredColor;
@@ -956,12 +955,13 @@ public class SwitchboardEditor extends Editor {
             if (desiredColor != null && !defaultActiveColor.equals(desiredColor)) {
                 // if new ActiveColor matches InactiveColor, ask user as state will become unreadable
                 if (desiredColor.equals(defaultInactiveColor)) {
-                    int retval = JOptionPane.showOptionDialog(null,
-                            Bundle.getMessage("ColorIdenticalWarningF"), Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                            new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonInvert"), Bundle.getMessage("ButtonCancel")}, null);
-                    if (retval == 1) { // invert the other color
+                    int retval = JmriJOptionPane.showOptionDialog(this,
+                        Bundle.getMessage("ColorIdenticalWarningF"), Bundle.getMessage("WarningTitle"),
+                        JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.INFORMATION_MESSAGE, null,
+                        new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonInvert"), Bundle.getMessage("ButtonCancel")}, Bundle.getMessage("ButtonCancel"));
+                    if (retval == 1) { // array position 1 invert the other color
                         setDefaultInactiveColor(contrast(defaultInactiveColor));
-                    } else if (retval != 0) {
+                    } else if (retval != 0) { // Cancel or Dialog closed
                         return; // cancel
                     }
                 }
@@ -981,12 +981,13 @@ public class SwitchboardEditor extends Editor {
             if (desiredColor != null && !defaultInactiveColor.equals(desiredColor)) {
                 // if new InactiveColor matches ActiveColor, ask user as state will become unreadable
                 if (desiredColor.equals(defaultInactiveColor)) {
-                    int retval = JOptionPane.showOptionDialog(null,
-                            Bundle.getMessage("ColorIdenticalWarningF"), Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                            new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonInvert"), Bundle.getMessage("ButtonCancel")}, null);
-                    if (retval == 1) { // invert the other color
+                    int retval = JmriJOptionPane.showOptionDialog(this,
+                        Bundle.getMessage("ColorIdenticalWarningF"), Bundle.getMessage("WarningTitle"),
+                        JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.INFORMATION_MESSAGE, null,
+                        new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonInvert"), Bundle.getMessage("ButtonCancel")}, Bundle.getMessage("ButtonCancel"));
+                    if (retval == 1) { // array position 1 invert the other color
                         setDefaultActiveColor(contrast(defaultActiveColor));
-                    } else if (retval != 0) {
+                    } else if (retval != 0) { // cancel or Dialog closed
                         return; // cancel
                     }
                 }
@@ -1256,9 +1257,10 @@ public class SwitchboardEditor extends Editor {
         // rows = (total + columns - 1) / columns (int roundup) to account for unused tiles in grid:
         // for 23 switches we need at least 24 tiles (4x6, 3x8, 2x12 etc)
         // similar calculations repeated in panel.js for web display
-        //log.debug("CELL SIZE optimum found: CxR = {}x{}, tileSize = {}", ((totalDisplayed + rowsNum - 1) / rowsNum), rowsNum, tileSize);
+        log.debug("CELL SIZE optimum found: CxR = {}x{} for {} x {} pixels", ((totalDisplayed + rowsNum - 1) / rowsNum), rowsNum, super.getTargetFrame().getWidth(), super.getTargetFrame().getHeight());
 
         _tileSize = Math.round((float) paneHeight / Math.max(rowsNum, 1)); // recalculate tileSize from rowNum, store for tile graphics
+        log.debug("_tileSize {} from {} / {}", _tileSize, paneHeight, rowsNum);
         return rowsNum;
     }
 
@@ -1803,18 +1805,6 @@ public class SwitchboardEditor extends Editor {
     public void setNextLocation(Positionable obj) {
     }
 
-    /**
-     * Create popup for a Positionable object.
-     * <p>
-     * Not used on switchboards but has to override Editor.
-     *
-     * @param p     the item on the Panel
-     * @param event JmriMouseEvent heard
-     */
-    @Override
-    protected void showPopUp(Positionable p, JmriMouseEvent event) {
-    }
-
     protected ArrayList<Positionable> getSelectionGroup() {
         return null;
     }
@@ -1930,9 +1920,9 @@ public class SwitchboardEditor extends Editor {
     }
 
     public int getIconScale() {
-    return _iconSquare;
+        return _iconSquare;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SwitchboardEditor.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SwitchboardEditor.class);
 
 }

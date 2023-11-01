@@ -212,7 +212,7 @@ public class VSDGeoFile extends XmlFile {
         // Setup array to save the block parameters
         blockParameter = new float[num_setups][max_geodatasets][5];
 
-        // Go through all setups and their geodatasets 
+        // Go through all setups and their geodatasets
         //  - get the PhysicalLocation (position) from the parameter file
         //  - make checks which are not covered by the schema validation
         //  - make some basic checks for not validated VSDGeoData.xml files (avoid NPEs)
@@ -232,15 +232,13 @@ public class VSDGeoFile extends XmlFile {
                     np = c1.getChildText("reporter-systemname");
                     Reporter rep = jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getBySystemName(np);
                     if (rep != null) {
-                        String repNumber = np.substring(2); // connection prefix 3 signs?
-                        // An internal Reporter System Name can have non-numeric parts - do not allow here
-                        if (org.apache.commons.lang3.StringUtils.isNumeric(repNumber)) {
-                            rep_int = Integer.parseInt(repNumber);
-                            reporterlist[setup_index].add(rep_int);
-                        } else {
-                            log.warn("File {}: Reporter System Name {} is not valid for VSD", VSDGeoDataFileName, np);
+                        try {
+                            rep_int = Integer.parseInt(jmri.Manager.getSystemSuffix(rep.getSystemName()));
+                        } catch (java.lang.NumberFormatException e) {
+                            log.warn("File {}: Reporter System Name '{}' is not valid for VSD", VSDGeoDataFileName, np);
                             num_issues++;
                         }
+                        reporterlist[setup_index].add(rep_int);
                         n = c1.getChildText("position");
                         // An element "position" is required and a XML schema and a XML schema is not yet in place
                         if (n != null) {
@@ -296,7 +294,7 @@ public class VSDGeoFile extends XmlFile {
                     n = c1.getChildText("rotate-ypos");
                     if (n != null) {
                         blockParameter[setup_index][j][3] = Float.parseFloat(n);
-                        log.debug(" rotate-ypos: {}", n); 
+                        log.debug(" rotate-ypos: {}", n);
                     } else {
                         // If a radius is defined (radius > 0), rotate-ypos must exist!
                         if (blockParameter[setup_index][j][0] > 0.0f) {

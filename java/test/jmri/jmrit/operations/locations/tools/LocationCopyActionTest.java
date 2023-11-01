@@ -19,14 +19,14 @@ public class LocationCopyActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        LocationCopyAction t = new LocationCopyAction();
+        LocationCopyAction t = new LocationCopyAction(null);
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LocationCopyAction a = new LocationCopyAction();
+        LocationCopyAction a = new LocationCopyAction(null);
         Assert.assertNotNull("exists", a);
         
         a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));

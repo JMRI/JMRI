@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
@@ -143,6 +144,12 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
     @Override
     public void stateChanged(ChangeEvent e) {
         spinnerUpdated();
+    }
+
+    @Override
+    @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_MemorySpinnerIcon");
     }
 
     @Override

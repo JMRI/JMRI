@@ -30,29 +30,29 @@ import org.jdom2.Element;
  */
 public interface BasicRosterEntry {
 
-    public String getId();
+    String getId();
 
-    public String getDccAddress();
+    String getDccAddress();
 
-    public boolean isLongAddress();
+    boolean isLongAddress();
 
-    public DccLocoAddress getDccLocoAddress();
+    DccLocoAddress getDccLocoAddress();
 
-    public String getShuntingFunction();
+    String getShuntingFunction();
 
-    public void setOpen(boolean boo);
+    void setOpen(boolean boo);
 
-    public boolean isOpen();
+    boolean isOpen();
 
-    public void putAttribute(String key, String value);
+    void putAttribute(String key, String value);
 
-    public String getAttribute(String key);
+    String getAttribute(String key);
 
-    public void deleteAttribute(String key);
+    void deleteAttribute(String key);
 
-    public String[] getAttributeList();
+    String[] getAttributeList();
 
-    public int getMaxSpeedPCT();
+    int getMaxSpeedPCT();
 
     /**
      * Create an XML element to represent this Entry. This member has to remain
@@ -61,15 +61,15 @@ public interface BasicRosterEntry {
      *
      * @return Contents in a JDOM Element
      */
-    public Element store();
+    Element store();
 
-    public String titleString();
+    String titleString();
 
     @Override
-    public String toString();
+    String toString();
 
-    public void addPropertyChangeListener(java.beans.PropertyChangeListener l);
+    void addPropertyChangeListener(java.beans.PropertyChangeListener l);
 
-    public void removePropertyChangeListener(java.beans.PropertyChangeListener l);
+    void removePropertyChangeListener(java.beans.PropertyChangeListener l);
 
 }

@@ -1,7 +1,6 @@
 package jmri.jmrix.loconet.uhlenbrock.usb_63120.configurexml;
 
 import jmri.jmrix.loconet.uhlenbrock.usb_63120.ConnectionConfig;
-import jmri.jmrix.loconet.uhlenbrock.usb_63120.UsbUhlenbrock63120Adapter;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;

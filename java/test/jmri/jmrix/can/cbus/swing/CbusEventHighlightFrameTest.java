@@ -49,9 +49,11 @@ public class CbusEventHighlightFrameTest extends jmri.util.JmriJFrameTestBase{
     
     @Test
     public void testEnableWithCanReplyAndConsole() {
-        
+
+        jmri.jmrix.can.TrafficControllerScaffold tc = new jmri.jmrix.can.TrafficControllerScaffold();
         CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        
+        memo.setTrafficController(tc);
+
         CbusConsolePane pane = new CbusConsolePane();
         pane.initComponents(memo,false);
         CbusEventHighlightFrame cbframe = new CbusEventHighlightFrame(pane,null);
@@ -73,6 +75,7 @@ public class CbusEventHighlightFrameTest extends jmri.util.JmriJFrameTestBase{
         assertEquals("Node 0 Event 1 On Received by JMRI OR sent by JMRI\n",pane.monTextPaneCbus.getText(),"console updated");
         
         pane.dispose();
+        tc.terminateThreads();
         memo.dispose();
     
     }

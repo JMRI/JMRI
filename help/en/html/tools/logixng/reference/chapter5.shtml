@@ -103,7 +103,7 @@
 
       <p>For some actions, for example Signal head, you need to first select the item and then you
       can select the action to do on that item. For example, for Signal head, you first select the
-      signal head to act on and then you can select the appearence to set for that signal head.</p>
+      signal head to act on and then you can select the appearance to set for that signal head.</p>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/typical_action.png"><img src="images/chapter5/typical_action.png"
@@ -148,22 +148,14 @@
           These are explained in the <a href="chapter9.shtml">Formula</a> chapter.
         </dd>
 
-        <dd>
-        </dd>
-
         <dt>Cancel</dt>
 
         <dd>Close the dialog without applying any changes.</dd>
-
-        <dd>
-        </dd>
 
         <dt>Create/OK</dt>
 
         <dd>Save the new action or the changes to an existing action.</dd>
 
-        <dd>
-        </dd>
       </dl>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -836,7 +828,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>Timer</h4>
+      <h4 id="timeraction">Timer</h4>
 
       <p><strong>Timer</strong> has a number of actions, each executed after a period of time. The
       time to wait can be 0, which means the related action is executed immediately.</p>
@@ -1162,9 +1154,47 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h4>Icon/Label by class on panel<span class="since">since 5.5.4</span></h4>
+
+      <p>Disable/Enable/Hide/Show all of the icons or labels on a specific panel that been assigned
+      a class name.</p>
+
+      <p>Icons and labels don't have names.  To identify the icon or label, the <strong>Edit Classes...
+      </strong> menu item in the right click context menu is used to assign a class name.  A class
+      name cannot have a comma.  Multiple classes separated by commas can be assigned.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/layout_icon_label_classes.png"><img src=
+        "images/chapter5/layout_icon_label_classes.png" alt="Chapter 5 layout icon/label classes"></a>
+      </div>
+
+      <p>Select the panel and one of the classes.  Select the desired action.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/layout_icon_label_class.png"><img src=
+        "images/chapter5/layout_icon_label_class.png" alt="Chapter 5 layout icon/label class action"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h4>Icon/Label on panel</h4>
 
       <p>Disable/Enable/Hide/Show an icon or label on a specific panel.</p>
+
+      <p>Icons and labels don't have names.  To identify the icon or label, the <strong>Edit Id...
+      </strong> menu item in the right click context menu is used to assign a name.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/layout_icon_label_id.png"><img src=
+        "images/chapter5/layout_icon_label_id.png" alt="Chapter 5 layout icon/label id"></a>
+      </div>
+
+      <p>Select the panel and one of the ids.  Select the desired action.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/layout_icon_label.png"><img src=
+        "images/chapter5/layout_icon_label.png" alt="Chapter 5 layout icon/label action"></a>
+      </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -1390,12 +1420,37 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>Logix</h4>
+      <h4 id="common_logix_action">Logix</h4>
 
-      <p>LogixNG has an action called Logix that emulates how JMRI Logix works. The action Logix
-      has one expression and a number of boolean actions. A boolean action is an action that takes
-      a boolean value (true/false) and then decides what to do. The action Logix was added mainly
-      to support import of JMRI Logix to LogixNG.</p>
+      <p>LogixNG has an action called <strong>Logix</strong> that emulates how JMRI Logix works. The
+      action Logix has one expression and a <a href="#boolean_logix_action">Logix Action</a>.  The
+      digital boolean <strong>Many</strong> action can be used to support multiple
+      <strong>Logix Actions</strong> as shown in the example.  A Logix Action responds to
+      <strong>True</strong>, <strong>False</strong>, or <strong>Either</strong> Logix evaluation
+      states.  The action Logix was added mainly to support import of JMRI Logix to LogixNG.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/other_logix_action.png"><img class="image-border" src=
+        "images/chapter5/other_logix_action.png" alt=
+        "Chapter 5 other logix action"></a>
+      </div>
+
+      <p>The Logix action supports <strong>On Change</strong> and <strong>When Triggered</strong>.</p>
+
+      <p>An example Logix within LogixNG.  This is a tweaked import from Logix.  The <strong>Log data</strong> actions
+      were added and the individual <strong>True</strong> LogixNG actions were combined within a
+      standard Many.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/logix_example.png"><img class="image-border" src=
+        "images/chapter5/logix_example.png" alt=
+        "Chapter 5 logix example"></a>
+      </div>
+
+      <p>This example uses <strong>When Triggered</strong>.  This means that one or more actions
+      will be executed when either IS101 or IS102 changes.  The <strong>On Change</strong> option
+      only executes the actions when the evaluation of the expression <strong>changes</strong>
+      between true and false.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -1522,8 +1577,8 @@
 
       <h4>Shutdown</h4>
 
-      <p>The ShutdownComputer action can either shutdown or restart the computer, or shutdown or
-      restart JMRI.</p>
+      <p>The <strong>Shutdown</strong> action can either shutdown or restart the computer, or
+      shutdown or restart JMRI.  The default action is <strong>Shut down JMRI</strong>.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -1688,16 +1743,31 @@
 
       <h2 id="digital_boolean_action_common">Digital boolean action :: Common</h2>
 
-      <p>To make import from Logix to LogixNG easier, LogixNG has a special action, Logix, that
+      <p>To make import from Logix to LogixNG easier, LogixNG has a special action, <a href="#common_logix_action">Logix</a>, that
       works similar to a Conditional in Logix. The LogixNG Logix action has a digital expression
       socket and a digital boolean action socket. The usual setup in LogixNG is a Logix action with
-      a Many child with a number of OnChange children.</p>
+      a Many child with a number of <strong>Logix Action</strong> children.</p>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/digital_boolean_action_common.png"><img class="image-border" src=
         "images/chapter5/digital_boolean_action_common.png" alt=
         "Chapter 5 digital boolean action common list"></a>
       </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4 id="boolean_logix_action">Logix Action</h4>
+
+      <p>When a Logix expression is evaluated, a <strong>Logix Action</strong> is invoked to
+      perform the LogixNG actions if its state matches the result of the expression evaluation.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/logix_action.png"><img class="image-border" src=
+        "images/chapter5/logix_action.png" alt=
+        "Chapter 5 logix action"></a>
+      </div>
+
+      <p>See the example at <a href="#common_logix_action">Logix</a>.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -1708,20 +1778,6 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>On change</h4>
-
-      <p>This action is used together with the LogixNG Logix action and gives you the option to
-      decide if the child action should be executed. The options are:</p>
-
-      <ul>
-        <li>On change to true</li>
-
-        <li>On change to false</li>
-
-        <li>On change</li>
-      </ul>
-
-      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h2 id="analog_action_item">Analog action :: Item</h2>
 

@@ -12,7 +12,6 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -22,6 +21,7 @@ import javax.swing.event.ListSelectionListener;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  *
@@ -138,8 +138,8 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
         if (portal != null) {
             List<PortalIcon> piArray = _parent.getPortalIcons(portal);
             if (piArray.isEmpty()) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("portalHasNoIcon", portal.getName()),
-                        Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("portalHasNoIcon", portal.getName()),
+                        Bundle.getMessage("incompleteCircuit"), JmriJOptionPane.INFORMATION_MESSAGE);
                 clearListSelection();
             } else {
                 for (PortalIcon icon : piArray) {

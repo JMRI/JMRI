@@ -5,6 +5,7 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
@@ -16,10 +17,10 @@ import javax.swing.JTable;
 import javax.swing.border.Border;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+
 import jmri.jmrix.acela.AcelaNode;
 import jmri.jmrix.acela.AcelaSystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user configuration of Acela nodes
@@ -1218,12 +1219,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      * Method to handle add button
      */
     public void addButtonActionPerformed() {
-        javax.swing.JOptionPane.showMessageDialog(this,
+        JmriJOptionPane.showMessageDialog(this,
                 Bundle.getMessage("NotSupported1") + "\n" + Bundle.getMessage("NotSupported2"),
                 Bundle.getMessage("NotSupportedTitle"),
-                javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                JmriJOptionPane.INFORMATION_MESSAGE);
         resetNotes();
-        return;
     }
 
     /**
@@ -1461,12 +1461,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */
     public void deleteButtonActionPerformed() {
 
-        javax.swing.JOptionPane.showMessageDialog(this,
+        JmriJOptionPane.showMessageDialog(this,
                 Bundle.getMessage("NotSupported1") + "\n" + Bundle.getMessage("NotSupported2"),
                 Bundle.getMessage("NotSupportedTitle"),
-                javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                JmriJOptionPane.INFORMATION_MESSAGE);
         resetNotes();
-        return;
     }
 
     /**
@@ -1492,10 +1491,10 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         }
         if (changedNode && !checkEnabled) {
             // Remind user to Save new configuration
-            javax.swing.JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("ReminderNode1") + "\n" + Bundle.getMessage("Reminder2"),
                     Bundle.getMessage("ReminderTitle"),
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                    JmriJOptionPane.INFORMATION_MESSAGE);
         }
         setVisible(false);
         dispose();
@@ -2046,6 +2045,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     private String[] outputType = new String[16];
     private String[] outputLength = new String[16];
 
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NodeConfigFrame.class);
 
 }

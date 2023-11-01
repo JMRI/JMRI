@@ -4,9 +4,7 @@ import jmri.jmrit.ctc.editor.gui.FrmCB;
 import jmri.jmrit.ctc.editor.gui.FrmCO;
 import jmri.jmrit.ctc.editor.gui.FrmIL;
 import jmri.jmrit.ctc.editor.gui.FrmSIDI;
-import jmri.jmrit.ctc.editor.gui.FrmSIDL;
 import jmri.jmrit.ctc.editor.gui.FrmSWDI;
-import jmri.jmrit.ctc.editor.gui.FrmSWDL;
 import jmri.jmrit.ctc.editor.gui.FrmTRL;
 import jmri.jmrit.ctc.editor.gui.FrmTUL;
 import java.awt.Color;
@@ -19,7 +17,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
-import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 import jmri.jmrit.ctc.ctcserialdata.TrafficLockingData;
 
 /**

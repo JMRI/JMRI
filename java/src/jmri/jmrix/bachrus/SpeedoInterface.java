@@ -8,9 +8,9 @@ package jmri.jmrix.bachrus;
  */
 public interface SpeedoInterface {
 
-    public void addSpeedoListener(SpeedoListener l);
+    void addSpeedoListener(SpeedoListener l);
 
-    public void removeSpeedoListener(SpeedoListener l);
+    void removeSpeedoListener(SpeedoListener l);
 
     /**
      * Test operational status of interface.

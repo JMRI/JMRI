@@ -1,8 +1,6 @@
 package jmri.jmrix.loconet.uhlenbrock;
 
 import jmri.jmrix.loconet.LnSystemConnectionMemoTestBase;
-import jmri.util.JUnitUtil;
-
 import org.junit.jupiter.api.*;
 
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;

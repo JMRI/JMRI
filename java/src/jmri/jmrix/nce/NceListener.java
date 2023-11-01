@@ -8,9 +8,9 @@ package jmri.jmrix.nce;
  */
 public interface NceListener extends jmri.jmrix.AbstractMRListener {
 
-    public void message(NceMessage m);
+    void message(NceMessage m);
 
-    public void reply(NceReply m);
+    void reply(NceReply m);
 }
 
 

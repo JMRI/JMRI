@@ -30,8 +30,7 @@ public class DoubleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
         NamedBeanHandle<Turnout> green = new NamedBeanHandle<>("green handle", it);
         Turnout it2 = (InstanceManager.getDefault(TurnoutManager.class)).provideTurnout("IT1"); // deliberately use same system name?
         NamedBeanHandle<Turnout> red = new NamedBeanHandle<>("red handle", it2);
-        new DoubleTurnoutSignalHead("Test Head", green, red);
-        //Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(new DoubleTurnoutSignalHead("Test Head", green, red));
     }
 
     void createHead() {
@@ -45,10 +44,7 @@ public class DoubleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
     void waitForTimer() {
         if (mHead.readUpdateTimer == null) return;
         while (mHead.readUpdateTimer.isRunning()) {
-            try {
-                Thread.sleep(60);
-            } catch (InterruptedException e) {
-            }
+            JUnitUtil.waitFor(60);
         }
         // Makes sure that the timer's callback is not still pending in the Swing execution
         // thread by scheduling an execution there and waiting for it.
@@ -90,14 +86,14 @@ public class DoubleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
         mHead.addPropertyChangeListener(l);
 
         mHead.setAppearance(SignalHead.YELLOW);
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); } );
+        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); }, "prop change to yellow triggered" );
         Assert.assertEquals("called once",1,l.getCallCount());
 
         waitForTimer();
         Assert.assertEquals("called once",1,l.getCallCount());
 
         mHead.setAppearance(SignalHead.GREEN);
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); } );
+        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); }, "prop change to green triggered" );
         Assert.assertEquals("called twice",2,l.getCallCount());
 
         waitForTimer();
@@ -119,14 +115,14 @@ public class DoubleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
         Assert.assertNotNull(mHead.readUpdateTimer); // Should be running.
 
         waitForTimer();
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); } );
+        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); }, "prop change to green triggered" );
         Assert.assertEquals(SignalHead.GREEN, mHead.getAppearance());
         l.resetPropertyChanged();
 
         mRedTurnout.setCommandedState(Turnout.THROWN);
         Assert.assertEquals("not called",0,l.getCallCount());
         waitForTimer();
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); } );
+        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); }, "prop change to yellow triggered" );
         Assert.assertEquals(SignalHead.YELLOW, mHead.getAppearance());
         Assert.assertEquals("called once",1,l.getCallCount());
 
@@ -134,7 +130,7 @@ public class DoubleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
         mGreenTurnout.setCommandedState(Turnout.CLOSED);
         Assert.assertEquals("called once",1,l.getCallCount());
         waitForTimer();
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); } );
+        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); }, "prop change triggered");
     }
 
     @Test
@@ -183,6 +179,7 @@ public class DoubleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
 
     @AfterEach
     public void tearDown() {
+        l = null;
         JUnitUtil.tearDown();
     }
 

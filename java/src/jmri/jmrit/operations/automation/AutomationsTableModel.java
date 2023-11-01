@@ -3,21 +3,16 @@ package jmri.jmrit.operations.automation;
 import java.awt.Frame;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.MessageFormat;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -265,9 +260,9 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
     private void deleteAutomation(int row) {
         log.debug("Delete automation");
         Automation automation = _sysList.get(row);
-        if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("DoYouWantToDeleteAutomation"),
-                new Object[]{automation.getName()}), Bundle.getMessage("DeleteAutomation?"),
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if (JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("DoYouWantToDeleteAutomation",
+                automation.getName()), Bundle.getMessage("DeleteAutomation?"),
+                JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
             automationManager.deregister(automation);
             OperationsXml.save();
         }
@@ -314,5 +309,6 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutomationsTableModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AutomationsTableModel.class);
+
 }

@@ -22,6 +22,7 @@ import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
 import jmri.jmrit.logixng.tools.swing.DeleteBean;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Swing action to create and register a LogixNG Table.
@@ -30,7 +31,6 @@ import jmri.util.JmriJFrame;
  <p>
  * Most of the text used in this GUI is in BeanTableBundle.properties, accessed
  * via Bundle.getMessage().
- * <p>
  *
  * @author Dave Duchamp Copyright (C) 2007 (LogixTableAction)
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011 (LogixTableAction)
@@ -312,7 +312,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         Runnable t = new Runnable() {
             @Override
             public void run() {
-//                JOptionPane.showMessageDialog(null, "Copy is not implemented yet.", "Error", JOptionPane.ERROR_MESSAGE);
+//                JmriJOptionPane.showMessageDialog(null, "Copy is not implemented yet.", "Error", JmriJOptionPane.ERROR_MESSAGE);
 
                 JPanel panel5 = makeAddFrame("TitleCopyLogixNG", "Copy");    // NOI18N
                 // Create bean
@@ -381,11 +381,11 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             boolean createLogix = true;
             targetBean = getManager().getBySystemName(sName);
             if (targetBean != null) {
-                int result = JOptionPane.showConfirmDialog(f,
+                int result = JmriJOptionPane.showConfirmDialog(f,
                         Bundle.getMessage("ConfirmLogixDuplicate", sName, _logixNGSysName), // NOI18N
-                        Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,    // NOI18N
-                        JOptionPane.QUESTION_MESSAGE);
-                if (JOptionPane.NO_OPTION == result) {
+                        Bundle.getMessage("QuestionTitle"), JmriJOptionPane.YES_NO_OPTION,    // NOI18N
+                        JmriJOptionPane.QUESTION_MESSAGE);
+                if (JmriJOptionPane.NO_OPTION == result) {
                     return;
                 }
                 createLogix = false;
@@ -430,9 +430,9 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             E x = getManager().getByUserName(uName);
             if (x != null) {
                 // A bean with this user name already exists
-                JOptionPane.showMessageDialog(addLogixNGFrame,
+                JmriJOptionPane.showMessageDialog(addLogixNGFrame,
                         Bundle.getMessage("LogixNGError3"), Bundle.getMessage("ErrorTitle"), // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -450,9 +450,9 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         String sName = _systemName.getText();
         if ((sName.length() < 1)) {
             // Entered system name is blank or too short
-            JOptionPane.showMessageDialog(addLogixNGFrame,
+            JmriJOptionPane.showMessageDialog(addLogixNGFrame,
                     Bundle.getMessage("LogixNGError8"), Bundle.getMessage("ErrorTitle"), // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         if ((sName.length() < 2) || (sName.charAt(0) != 'I')
@@ -475,10 +475,10 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     boolean checkFlags(String sName) {
         if (_inEditMode) {
             // Already editing a bean, ask for completion of that edit
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("LogixNGError32", _curNamedBean.getSystemName()),
                     Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             if (_editor != null) {
                 _editor.bringToFront();
             }
@@ -487,10 +487,10 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
         if (_inCopyMode) {
             // Already editing a bean, ask for completion of that edit
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("LogixNGError31", _logixNGSysName),
                     Bundle.getMessage("ErrorTitle"), // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -500,10 +500,10 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             if (x == null) {
                 // bean does not exist, so cannot be edited
                 log.error("No bean with system name: {}", sName);
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("LogixNGError5"),
                         Bundle.getMessage("ErrorTitle"), // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -530,9 +530,9 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             try {
                 _curNamedBean = createBean(uName);
             } catch (BadSystemNameException | BadUserNameException ex) {
-                JOptionPane.showMessageDialog(addLogixNGFrame, ex.getLocalizedMessage(),
+                JmriJOptionPane.showMessageDialog(addLogixNGFrame, ex.getLocalizedMessage(),
                         Bundle.getMessage("ErrorTitle"), // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
             if (_curNamedBean == null) {
@@ -557,9 +557,9 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             }
             if (x != null) {
                 // bean already exists
-                JOptionPane.showMessageDialog(addLogixNGFrame, Bundle.getMessage("LogixNGError1"),
+                JmriJOptionPane.showMessageDialog(addLogixNGFrame, Bundle.getMessage("LogixNGError1"),
                         Bundle.getMessage("ErrorTitle"), // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
             if (!checkLogixNGUserName(uName)) {
@@ -582,10 +582,10 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     }
 
     void handleCreateException(String sysName) {
-        JOptionPane.showMessageDialog(addLogixNGFrame,
+        JmriJOptionPane.showMessageDialog(addLogixNGFrame,
                 Bundle.getMessage("ErrorLogixAddFailed", sysName), // NOI18N
                 Bundle.getMessage("ErrorTitle"), // NOI18N
-                JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.ERROR_MESSAGE);
     }
 
     // ------------ Methods for Edit bean Pane ------------
@@ -772,10 +772,10 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         JButton helpBrowse = new JButton(Bundle.getMessage("MenuHelp"));   // NOI18N
         bottomPanel.add(helpBrowse, BorderLayout.WEST);
         helpBrowse.addActionListener((ActionEvent e) -> {
-            JOptionPane.showMessageDialog(condBrowserFrame,
+            JmriJOptionPane.showMessageDialog(condBrowserFrame,
                     Bundle.getMessage("LogixNG_Browse_HelpText"),   // NOI18N
                     Bundle.getMessage("BrowserHelpTitle"),  // NOI18N
-                    JOptionPane.INFORMATION_MESSAGE);
+                    JmriJOptionPane.INFORMATION_MESSAGE);
         });
 
         JPanel settingsPanel = getSettingsPanel();
@@ -817,11 +817,11 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             Object[] options = {Bundle.getMessage("BrowserSaveDuplicateReplace"),  // NOI18N
                     Bundle.getMessage("BrowserSaveDuplicateAppend"),  // NOI18N
                     Bundle.getMessage("ButtonCancel")};               // NOI18N
-            int selectedOption = JOptionPane.showOptionDialog(null,
+            int selectedOption = JmriJOptionPane.showOptionDialog(null,
                     Bundle.getMessage("BrowserSaveDuplicatePrompt", file.getName()), // NOI18N
                     Bundle.getMessage("BrowserSaveDuplicateTitle"),   // NOI18N
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.WARNING_MESSAGE,
+                    JmriJOptionPane.DEFAULT_OPTION,
+                    JmriJOptionPane.WARNING_MESSAGE,
                     null, options, options[0]);
             if (selectedOption == 2 || selectedOption == -1) {
                 log.debug("Save browser content stopped, file replace/append cancelled");  // NOI18N

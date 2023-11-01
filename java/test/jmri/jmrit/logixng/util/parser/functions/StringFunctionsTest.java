@@ -3,7 +3,6 @@ package jmri.jmrit.logixng.util.parser.functions;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.jmrit.logixng.SymbolTable;

@@ -172,7 +172,7 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
     }
 
     @Override
-    protected ProvidingManager<Turnout> getManager() {
+    protected ProvidingManager<Turnout> getProvidingManager() {
         return InstanceManager.getDefault(TurnoutManager.class);
     }
 }

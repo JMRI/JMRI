@@ -1,20 +1,12 @@
 package jmri.jmrit.logixng.actions.configurexml;
 
-import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
-
-import javax.swing.JOptionPane;
 
 import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
-import jmri.Block;
-import jmri.BlockManager;
 import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.actions.ActionBlock;
-import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.jmrit.logixng.util.configurexml.*;
-import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
 

@@ -12,13 +12,13 @@ public interface FieldSection<To extends Enum<To>, From extends Enum<From>> {
      * Provide the transferred value to the field unit at the end of the code-send operation.
      * @param value transfer value.
      */
-    public void codeValueDelivered(To value);    
+    void codeValueDelivered(To value);
     
     /**
      * Inform field part of section that an indication operation (from field to machine)
      * has started and obtain the value to be conveyed to the central CTC machine.
      * @return The value to be conveyed to the central CTC machine.
      */
-    public From indicationStart();
+    From indicationStart();
     
 }

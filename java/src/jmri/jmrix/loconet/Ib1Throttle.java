@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet;
 
-import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

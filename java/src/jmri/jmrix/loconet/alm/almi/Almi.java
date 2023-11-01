@@ -3,7 +3,6 @@ package jmri.jmrix.loconet.alm.almi;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.messageinterp.LocoNetMessageInterpret;
-import jmri.jmrix.loconet.alm.Alm;
 
 
 /**

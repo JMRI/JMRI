@@ -1,14 +1,14 @@
 package jmri.jmrit.display.layoutEditor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+
+import jmri.Reportable;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.Reportable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * An icon to display a status of a Memory.
@@ -211,19 +211,19 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         Object[] options = {"Facing " + jmri.Path.decodeDirection(dirB),
             "Facing " + jmri.Path.decodeDirection(dirA),
             "Do Not Add"};
-        int n = JOptionPane.showOptionDialog(this,
+        int n = JmriJOptionPane.showOptionDialog(this,
                 "Would you like to assign loco "
                 + roster.titleString() + " to this location",
                 "Assign Loco",
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
+                JmriJOptionPane.DEFAULT_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE,
                 null,
                 options,
                 options[2]);
-        if (n == 2) {
+        if (n == 2 || n==JmriJOptionPane.CLOSED_OPTION ) { // array position 2, Do Not Add
             return;
         }
-        if (n == 0) {
+        if (n == 0) { // array position 0, facing DirB
             flipRosterIcon = true;
             if (updateBlockValue) {
                 lBlock.getBlock().setDirection(dirB);
