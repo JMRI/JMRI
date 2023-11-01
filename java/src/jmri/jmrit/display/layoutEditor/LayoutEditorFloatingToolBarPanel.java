@@ -193,6 +193,11 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
         iconGroup5.add(shapeButton);
         floatEditIcon.add(iconGroup5);
 
+        JPanel iconGroup6 = new JPanel(floatContentLayout);
+        iconGroup6.add(audioButton);
+        iconGroup6.add(textAudioComboBox);
+        floatEditIcon.add(iconGroup6);
+
         floatEditTabsPane.addTab(Bundle.getMessage("TabIcon"), null, floatEditIcon, null);
         floatEditTabsPanel.add(floatEditTabsPane);
         add(floatEditTabsPanel);
