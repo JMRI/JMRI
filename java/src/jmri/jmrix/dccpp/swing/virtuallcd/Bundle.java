@@ -1,4 +1,4 @@
-package jmri.jmrix.dccpp.swing.lcd;
+package jmri.jmrix.dccpp.swing.virtuallcd;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 

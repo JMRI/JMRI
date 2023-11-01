@@ -306,6 +306,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             case DCCppConstants.TRACKMANAGER_CMD:
                 text = "TrackManager:" + toString();
                 break;
+            case DCCppConstants.LCD_MESSAGE_CMD:
+                text = "LCD Msg '" + getLCDMessageString() + "', disp " + getLCDDisplayNumString() + ", line " + getLCDLineNumString();
+                break;
                 
             default:
                 text = "Unrecognized reply: '" + toString() + "'";

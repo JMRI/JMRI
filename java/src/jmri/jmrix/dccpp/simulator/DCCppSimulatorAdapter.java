@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
@@ -22,6 +24,7 @@ import jmri.jmrix.dccpp.DCCppTrafficController;
 import jmri.util.ImmediatePipedOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 /**
  * Provide access to a simulated DCC++ system.
@@ -60,6 +63,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     //keep track of speed, direction and functions for each loco address
     private LinkedHashMap<Integer,Integer> locoSpeedByte = new LinkedHashMap<Integer,Integer>();
     private LinkedHashMap<Integer,Integer> locoFunctions = new LinkedHashMap<Integer,Integer>();
+
 
     public DCCppSimulatorAdapter() {
         setPort(Bundle.getMessage("None"));
@@ -610,6 +614,27 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             case DCCppConstants.READ_TRACK_CURRENT:
                 log.debug("READ_TRACK_CURRENT detected");
                 generateMeterReplies();
+                break;
+
+            case DCCppConstants.TRACKMANAGER_CMD:
+                log.debug("TRACKMANAGER_CMD detected");
+                reply = DCCppReply.parseDCCppReply("= A MAIN");
+                writeReply(reply);
+                reply = DCCppReply.parseDCCppReply("= B PROG");
+                break;
+
+            case DCCppConstants.LCD_MESSAGE_CMD:
+                log.debug("LCD_MESSAGE_CMD detected");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss a");
+                LocalDateTime now = LocalDateTime.now();
+                String dateTimeString = now.format(formatter);
+                reply = DCCppReply.parseDCCppReply("@ 0 0 Welcome to DCC-EX -- " + dateTimeString);
+                writeReply(reply);
+                reply = DCCppReply.parseDCCppReply("@ 0 1 LCD Line 1");
+                writeReply(reply);
+                reply = DCCppReply.parseDCCppReply("@ 0 2 LCD Line 2");
+                writeReply(reply);
+                reply = DCCppReply.parseDCCppReply("@ 0 3 1234567890123456789012345678901234567890");
                 break;
 
             case DCCppConstants.READ_CS_STATUS:
