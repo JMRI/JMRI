@@ -36,8 +36,9 @@ public class DisplayFrame extends JmriJFrame implements DCCppListener  {
      */
     @Override
     public void message(DCCppReply msg) {
-        // TODO: This needs to parse the message, decide whether to display, and put on right lines
-        lines.get(0).setText(msg.toString());
+        if (msg.isLCDMessageReply()) {
+            lines.get(msg.getLCDLineNumInt()).setText(msg.getLCDMessageString());
+        }
     }
     
     /** 
@@ -48,7 +49,7 @@ public class DisplayFrame extends JmriJFrame implements DCCppListener  {
     }
     
     final static int TEXTFIELDLENGTH = 40;
-    final static int TOTALLINES = 5;
+    final static int TOTALLINES = 8;
     ArrayList<JTextField> lines;
     
     /**
@@ -61,7 +62,7 @@ public class DisplayFrame extends JmriJFrame implements DCCppListener  {
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         
         // initialize the list of display lines
-        lines = new ArrayList<>(5);
+        lines = new ArrayList<>(9);
         for (int i = 0; i<TOTALLINES; i++) {
             lines.add(new JTextField(TEXTFIELDLENGTH));
             this.add(lines.get(i));

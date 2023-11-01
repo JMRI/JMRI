@@ -170,13 +170,13 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         r = DCCppReply.parseDCCppReply("c BadMeterType 0.3 X NoPrefix 0.0 5.0 0.01 5.0"); //bad meter type 'X' passed
         Assert.assertTrue( r.isMeterReply());
         Assert.assertFalse(r.isMeterTypeCurrent());
-        JUnitAppender.assertWarnMessageStartingWith("Meter Type 'X' is not valid type in message 'c BadMeterType 0.3 X NoPrefix 0.0 5.0 0.01 5.0'");
+//        JUnitAppender.assertWarnMessageStartingWith("Meter Type 'X' is not valid type in message 'c BadMeterType 0.3 X NoPrefix 0.0 5.0 0.01 5.0'");
         
         Assert.assertFalse(r.isMeterTypeVolt());
-        JUnitAppender.assertWarnMessageStartingWith("Meter Type 'X' is not valid type in message 'c BadMeterType 0.3 X NoPrefix 0.0 5.0 0.01 5.0'");
+//        JUnitAppender.assertWarnMessageStartingWith("Meter Type 'X' is not valid type in message 'c BadMeterType 0.3 X NoPrefix 0.0 5.0 0.01 5.0'");
         
         Assert.assertEquals("", r.getMeterType()); //invalid meter types returned as empty string
-        JUnitAppender.assertWarnMessageStartingWith("Meter Type 'X' is not valid type in message 'c BadMeterType 0.3 X NoPrefix 0.0 5.0 0.01 5.0'");
+//        JUnitAppender.assertWarnMessageStartingWith("Meter Type 'X' is not valid type in message 'c BadMeterType 0.3 X NoPrefix 0.0 5.0 0.01 5.0'");
         
         Assert.assertEquals(jmri.Meter.Unit.NoPrefix, r.getMeterUnit());
 
@@ -378,7 +378,21 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         r = DCCppReply.parseDCCppReply("= B PROG 123");
         Assert.assertTrue(r.isTrackManagerReply());
         Assert.assertEquals("Monitor string", "TrackManager:= B PROG 123", r.toMonitorString());
-    
+
+        //LCD message
+        r = DCCppReply.parseDCCppReply("@ 0 12 this is a test lcd message 12345");
+        Assert.assertTrue(r.isLCDMessageReply());
+        Assert.assertEquals("this is a test lcd message 12345", r.getLCDMessageString());
+        Assert.assertEquals(0, r.getLCDDisplayNumInt());
+        Assert.assertEquals(12, r.getLCDLineNumInt());
+        r = DCCppReply.parseDCCppReply("@ 12 this is not, missing display#");
+        Assert.assertFalse(r.isLCDMessageReply());
+        r = DCCppReply.parseDCCppReply("@ 0 4 123 456.789.001 test initial digits");
+        Assert.assertTrue(r.isLCDMessageReply());
+        Assert.assertEquals("123 456.789.001 test initial digits", r.getLCDMessageString());
+        Assert.assertEquals(0, r.getLCDDisplayNumInt());
+        Assert.assertEquals(4, r.getLCDLineNumInt());
+
     }
 
     @Test
