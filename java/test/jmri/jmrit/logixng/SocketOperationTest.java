@@ -7,6 +7,7 @@ import java.util.*;
 import jmri.*;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.swing.SwingTools;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.*;
@@ -76,6 +77,9 @@ public class SocketOperationTest {
                 testSockets(addRemoveChildren, testSocketOperations);
             }
         }
+
+        JUnitAppender.assertErrorMessage("Signal not found at point");
+        JUnitAppender.assertErrorMessage("Signal not found at point");
     }
 
     private void testSockets(boolean addRemoveChildren, boolean testSocketOperations) throws SocketAlreadyConnectedException {

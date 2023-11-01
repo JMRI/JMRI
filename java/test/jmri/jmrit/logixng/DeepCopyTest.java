@@ -7,6 +7,8 @@ import java.util.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.Base.PrintTreeSettings;
+import jmri.util.JUnitAppender;
+
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import org.junit.*;
@@ -80,6 +82,9 @@ public class DeepCopyTest {
                 }
             }
         }
+
+        JUnitAppender.assertErrorMessage("Signal not found at point");
+        JUnitAppender.assertErrorMessage("Signal not found at point");
     }
 
 
