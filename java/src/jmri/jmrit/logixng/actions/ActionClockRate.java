@@ -129,12 +129,12 @@ public class ActionClockRate extends AbstractDigitalAction
     @Override
     public String getLongDescription(Locale locale) {
         String value;
-        if (_selectSpeed.getAddressing() == NamedBeanAddressing.Direct) {
+        if (_selectSpeed.isDirectAddressing()) {
             value = formatSpeed(_selectSpeed.getValue());
         } else {
             value = _selectSpeed.getDescription(locale);
         }
-        if (_selectEnum.getAddressing() == NamedBeanAddressing.Direct) {
+        if (_selectEnum.isDirectAddressing()) {
             if (_selectEnum.getEnum() == ClockState.SetClockRate) {
                 return Bundle.getMessage(locale, "ActionClockRate_LongTo", _selectEnum.getDescription(locale), value);
             }

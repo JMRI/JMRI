@@ -17,7 +17,7 @@ import org.jdom2.Element;
  */
 public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
 
-    public enum StoreNamedBean { Name, SystemName };
+    public enum StoreNamedBean { Name, SystemName }
 
     /**
      * Default implementation for storing the contents of a LogixNG_SelectNamedBean

@@ -128,12 +128,12 @@ public class ActionClock extends AbstractDigitalAction
     @Override
     public String getLongDescription(Locale locale) {
         String value;
-        if (_selectValue.getAddressing() == NamedBeanAddressing.Direct) {
+        if (_selectValue.isDirectAddressing()) {
             value = formatTime(_selectValue.getValue());
         } else {
             value = _selectValue.getDescription(locale);
         }
-        if (_selectEnum.getAddressing() == NamedBeanAddressing.Direct) {
+        if (_selectEnum.isDirectAddressing()) {
             if (_selectEnum.getEnum() == ClockState.SetClock) {
                 return Bundle.getMessage(locale, "ActionClock_LongTime", _selectEnum.getDescription(locale), value);
             }
