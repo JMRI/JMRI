@@ -1,21 +1,16 @@
 package jmri.jmrit.catalog;
 
-import java.awt.Component;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.MediaTracker;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.MemoryImageSource;
 import java.awt.image.PixelGrabber;
 import java.awt.image.RenderedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.util.Iterator;
+
 import javax.annotation.CheckForNull;
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -28,11 +23,16 @@ import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 import javax.swing.ImageIcon;
+
 import jmri.jmrit.display.PositionableLabel;
 import jmri.util.FileUtil;
 import jmri.util.MathUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
+import org.apache.batik.transcoder.*;
+import org.apache.batik.transcoder.image.ImageTranscoder;
+import org.apache.batik.util.XMLResourceDescriptor;
+import org.w3c.dom.Document;
 
 /**
  * Extend an ImageIcon to remember the name from which it was created and
@@ -49,7 +49,11 @@ import org.slf4j.LoggerFactory;
  *
  * Modified by Joe Comuzzi and Larry Allen to rotate animated GIFs
  */
-public class NamedIcon extends ImageIcon {
+//public class NamedIcon extends ImageIcon {
+public class NamedIcon implements javax.swing.Icon {
+
+    private final ImageIcon imageIcon;
+    private Document svgImage = null;   // a place to store the original document if is a vector image (svg file)
 
     /**
      * Create a NamedIcon that is a complete copy of an existing NamedIcon
@@ -70,8 +74,8 @@ public class NamedIcon extends ImageIcon {
      */
     public NamedIcon(NamedIcon pOld, Component comp) {
         this(pOld.mURL, pOld.mName, pOld.mGifInfo);
-        setLoad(pOld._degrees, pOld._scale, comp);
-        setRotation(pOld.mRotation, comp);
+        NamedIcon.this.setLoad(pOld._degrees, pOld._scale, comp);
+        NamedIcon.this.setRotation(pOld.mRotation, comp);
     }
 
     /**
@@ -86,52 +90,54 @@ public class NamedIcon extends ImageIcon {
     public NamedIcon(String pUrl, String pName) {
         this(pUrl, pName, null);
 
-        // See if this is a GIF file and if it is, see if it's animated. If it is,
-        // breakout the metadata and individual frames. Also collect the max sizes in case the
-        // frames aren't all the same.
-        try {
-            GIFMetadataImages gifState = new GIFMetadataImages();
-            Iterator<ImageReader> rIter = ImageIO.getImageReadersByFormatName("gif");
-            ImageReader gifReader = rIter.next();
+        if ( !pUrl.toUpperCase().endsWith(".SVG") ) {
+            // See if this is a GIF file and if it is, see if it's animated. If it is,
+            // breakout the metadata and individual frames. Also collect the max sizes in case the
+            // frames aren't all the same.
+            try {
+                GIFMetadataImages gifState = new GIFMetadataImages();
+                Iterator<ImageReader> rIter = ImageIO.getImageReadersByFormatName("gif");
+                ImageReader gifReader = rIter.next();
 
-            InputStream is = FileUtil.findInputStream(pUrl);
-            // findInputStream can return null, which has to be handled.
-            if (is == null) {
-                log.warn("NamedIcon can't scan {} for animated status", pUrl);
-                return;
-            }
-
-            ImageInputStream iis = ImageIO.createImageInputStream(is);
-            gifReader.setInput(iis, false);
-
-            ImageReaderSpi spiProv = gifReader.getOriginatingProvider();
-            if (spiProv != null && spiProv.canDecodeInput(iis)) {
-
-                int numFrames = gifReader.getNumImages(true);
-
-                // No need to keep the GIF info if it's not animated, the old code works
-                // in that case.
-                if (numFrames > 1) {
-                    gifState.mStreamMd = gifReader.getStreamMetadata();
-                    gifState.mFrames = new IIOImage[numFrames];
-                    gifState.mWidth = 0;
-                    gifState.mHeight = 0;
-                    for (int i = 0; i < numFrames; i++) {
-                        gifState.mFrames[i] = gifReader.readAll(i, null);
-                        RenderedImage image = gifState.mFrames[i].getRenderedImage();
-                        gifState.mHeight = Math.max(gifState.mHeight, image.getHeight());
-                        gifState.mWidth = Math.max(gifState.mWidth, image.getWidth());
-                    }
-
-                    mGifInfo = gifState;
+                InputStream is = FileUtil.findInputStream(pUrl);
+                // findInputStream can return null, which has to be handled.
+                if (is == null) {
+                    log.warn("NamedIcon can't scan {} for animated status", pUrl);
+                    return;
                 }
+
+                ImageInputStream iis = ImageIO.createImageInputStream(is);
+                gifReader.setInput(iis, false);
+
+                ImageReaderSpi spiProv = gifReader.getOriginatingProvider();
+                if (spiProv != null && spiProv.canDecodeInput(iis)) {
+
+                    int numFrames = gifReader.getNumImages(true);
+
+                    // No need to keep the GIF info if it's not animated, the old code works
+                    // in that case.
+                    if (numFrames > 1) {
+                        gifState.mStreamMd = gifReader.getStreamMetadata();
+                        gifState.mFrames = new IIOImage[numFrames];
+                        gifState.mWidth = 0;
+                        gifState.mHeight = 0;
+                        for (int i = 0; i < numFrames; i++) {
+                            gifState.mFrames[i] = gifReader.readAll(i, null);
+                            RenderedImage image = gifState.mFrames[i].getRenderedImage();
+                            gifState.mHeight = Math.max(gifState.mHeight, image.getHeight());
+                            gifState.mWidth = Math.max(gifState.mWidth, image.getWidth());
+                        }
+
+                        mGifInfo = gifState;
+                    }
+                }
+            } catch (IOException ioe) {
+                // If we get an exception here it's probably because the image isn't really
+                // a GIF. Unfortunately, there's no guarantee that it is a GIF just because
+                // canDecodeInput returns true.
+                log.debug("Exception extracting GIF Info: ", ioe);
+                mGifInfo = null;
             }
-        } catch (IOException ioe) {
-            // If we get an exception here it's probably because the image isn't really
-            // a GIF. Unfortunately, there's no guarantee that it is a GIF just because
-            // canDecodeInput returns true.
-            log.debug("Exception extracting GIF Info: ", ioe);
-            mGifInfo = null;
         }
     }
 
@@ -145,13 +151,35 @@ public class NamedIcon extends ImageIcon {
      * @param pName Human-readable name for the icon
      * @param pGifState  Breakdown of GIF Image metadata and frames
      */
-    public NamedIcon(String pUrl, String pName, GIFMetadataImages pGifState) {
-        super(substituteDefaultUrl(pUrl));
+    private NamedIcon(String pUrl, String pName, GIFMetadataImages pGifState) {
+
+        URL url = substituteDefaultUrl(pUrl);
+        if ( url.getFile().toUpperCase().endsWith(".SVG") ) {
+            ImageIcon icon;
+            try {
+                svgImage = createSVGDocument(url.toString());
+
+                MyTranscoder transcoder = new MyTranscoder();
+                try {
+                    transcoder.transcode(new TranscoderInput(svgImage), null);
+                } catch (TranscoderException ex) {
+                    log.debug("Exception while transposing svg : {}", ex.getMessage());
+                }
+                icon = new ImageIcon(transcoder.getImage());
+            } catch (IOException e) {
+                log.error("Cannot open svg image file: {}", e.getMessage());
+                icon = new ImageIcon("Error");
+            }
+            imageIcon = icon;
+        } else {
+            imageIcon = new ImageIcon(url);
+        }
+
         URL u = FileUtil.findURL(pUrl);
         if (u == null) {
             log.warn("Could not load image from {} (file does not exist)", pUrl);
         }
-        mDefaultImage = getImage();
+        mDefaultImage = NamedIcon.this.getImage();
         if (mDefaultImage == null) {
             log.warn("Could not load image from {} (image is null)", pUrl);
         }
@@ -171,16 +199,6 @@ public class NamedIcon extends ImageIcon {
         return url;
     }
 
-    /**
-     * Create a named icon that includes an image to be loaded from a URL.
-     *
-     * @param pUrl  String-form URL of image file to load
-     * @param pName Human-readable name for the icon
-     */
-    public NamedIcon(URL pUrl, String pName) {
-        this(pUrl.toString(), pName);
-    }
-
 
     /**
      * Create a named icon from an Image. N.B. NamedIcon's create
@@ -188,8 +206,8 @@ public class NamedIcon extends ImageIcon {
      * @param im Image to use
      */
     public NamedIcon(Image im) {
-        super(im);
-        mDefaultImage = getImage();
+        imageIcon = new ImageIcon(im);
+        mDefaultImage = NamedIcon.this.getImage();
     }
 
     /**
@@ -661,6 +679,65 @@ public class NamedIcon extends ImageIcon {
         transformImage(w, h, _transformF, null);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NamedIcon.class);
+    /** {@inheritDoc} */
+    @Override
+    public void paintIcon(Component c, Graphics g, int x, int y) {
+        imageIcon.paintIcon(c, g, x, y);
+    }
+
+    public Image getImage() {
+        return imageIcon.getImage();
+    }
+
+    public void setImage(Image image) {
+        imageIcon.setImage(image);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getIconWidth() {
+        return imageIcon.getIconWidth();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getIconHeight() {
+        return imageIcon.getIconHeight();
+    }
+
+    /**
+     * Read vector image
+     * Use the SAXSVGDocumentFactory to parse the given URI into a DOM.
+     *
+     * @param uri The path to the SVG file to read.
+     * @return A Document instance that represents the SVG file.
+     * @throws IOException The file could not be read.
+     */
+    private Document createSVGDocument( String uri ) throws IOException {
+      String parser = XMLResourceDescriptor.getXMLParserClassName();
+      SAXSVGDocumentFactory factory = new SAXSVGDocumentFactory( parser );
+      return factory.createDocument( uri );
+    }
+
+
+    // to handle svg transformation to displayable images
+    private static class MyTranscoder extends ImageTranscoder {
+        private BufferedImage image = null;
+        @Override
+        public BufferedImage createImage(int w, int h) {
+            image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+            return image;
+        }
+        public BufferedImage getImage() {
+            return image;
+        }
+        @Override
+        public void writeImage(BufferedImage bi, TranscoderOutput to) throws TranscoderException {
+            //not required here, do nothing
+        }
+    }
+
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NamedIcon.class);
 
 }

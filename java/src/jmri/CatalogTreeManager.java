@@ -104,7 +104,7 @@ public interface CatalogTreeManager extends Manager<CatalogTree> {
 
     @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY",
             justification = "with existing code structure, just have to accept these exposed arrays. Someday...")
-    String[] IMAGE_FILTER = {"gif", "jpg", "jpeg", "png"};
+    String[] IMAGE_FILTER = {"gif", "jpg", "jpeg", "png", "svg"};
 
     @SuppressFBWarnings(value = "MS_OOI_PKGPROTECT",
             justification = "with existing code structure, just have to accept these exposed arrays. Someday...")
