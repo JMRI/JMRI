@@ -672,6 +672,21 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h4>Throttle function<span class="since">since 5.5.6</span></h4>
+
+
+      <p>The <strong>Throttle function</strong> action is similar to the <strong>Throttle</strong>
+       action, except that it only sets a throttle function <strong>On</strong> or <strong>Off</strong>.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/throttle_function.png"><img src="images/chapter5/throttle_function.png"
+        alt="Chapter 5 throttle function"></a>
+      </div>
+
+      <p>The <strong>Connection</strong> drop down can be used to specify the connection to be used.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h4>Turnout</h4>
 
       <p>The delayed options are handled by <a href="#ExecuteDelayed">Execute Delayed</a>.</p>
@@ -854,6 +869,11 @@
 
         <dt>Combo Box</dt>
         <dd>Select the time unit.</dd>
+
+        <dt>Delay by local variables</dt>
+        <dd>Instead of using fixed delay times, it is possible to assign delay times to local
+        variables.  The timer step number will be appended to the prefix value, such as delay1,
+        delay2, etc.</dd>
       </dl>
 
       <div style="margin-left: 2em;">
@@ -883,6 +903,21 @@
       a Light action that toggles the light on/off. If you want different times for on and off,
       create a Timer with two sockets where the first socket turns the light on and the second
       socket turns the light off.</p>
+
+      <p>The <strong>Timer</strong> action can be used in LogixNG Modules.  Due to the nature of
+      repetitive timer events, there are some restrictions.</p>
+
+      <ul>
+        <li>The calling LogixNG and the Module run all of their actions with each Timer step.
+        Avoid including any other logic in the calling LogixNG or the Module.</li>
+
+        <li>The trigger event for the LogixNG can be either a if-then-else with the expression
+        set for <strong>Always execute</strong> or a <strong>Listen on beans</strong> item.</li>
+
+        <li><strong>Start/Stop by Start expression</strong> is selected.</li>
+
+        <li>The <strong>Start</strong> expression for the Timer should be the <strong>Always true</strong> expression.</li>
+      </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -1094,11 +1129,12 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>Sequence</h4>
+      <h4 id="sequence_id">Sequence</h4>
 
       <p>The Sequence action executes a series of action/expression pairs. For each pair, the
       action will be performed and then the expression will wait until it becomes true. When it is
-      true, the next action/expression pair will be started.</p>
+      true, the next action/expression pair will be started.  The <a href="chapter6#timer_id">Timer</a>
+      expression can be used to do a time based step instead of an event based step.</p>
 
       <div style="margin-left: 2em">
         <a href="images/chapter5/action_sequence_options.png"><img src=
@@ -1242,7 +1278,7 @@
       <h4>Subscribe</h4>
 
       <p>This action subscribes to a topic. When someone publishes a message, this action triggers
-      the execution of the CondtionalNG. It can also optionally put the topic and the message into
+      the execution of the ConditionalNG. It can also optionally put the topic and the message into
       local variables. The topic can use wildcard, like loco/# where # is the wildcard.</p>
 
       <div style="margin-left: 2em;">
