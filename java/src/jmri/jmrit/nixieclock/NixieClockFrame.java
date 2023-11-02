@@ -35,8 +35,11 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
 
     double aspect;
     double iconAspect;
+    int runPauseButtonWidth;
 
     Timebase clock;
+
+    JButton runPauseButton;
 
     NamedIcon tubes[] = new NamedIcon[10];
     NamedIcon baseTubes[] = new NamedIcon[10];
@@ -64,16 +67,19 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
         Image scaledImage = baseColon.getImage().getScaledInstance(12, 32, Image.SCALE_SMOOTH);
         colonIcon.setImage(scaledImage);
 
+        // create the run/pause button and get it's size
+        runPauseButton = new JButton(Bundle.getMessage("ButtonPauseClock"));
+        runPauseButton.setText( Bundle.getMessage( "ButtonPauseClock") );
+        runPauseButtonWidth = runPauseButton.getPreferredSize().width;
+
         // determine aspect ratio of a single digit graphic
         iconAspect = 24. / 32.;
 
         // determine the aspect ratio of the 4 digit base graphic plus a half digit for the colon
-        // this DOES NOT allow space for the Run/Stop button, if it is
-        // enabled.  When the Run/Stop button is enabled, the layout will have to be changed
         if (!clock.getShowStopButton()) {
             aspect = (4.5 * 24.) / 32.; // pick up clock prefs choice: no button
         } else {
-            aspect = (4.5 * 24. + 20.) / 32.; // pick up clock prefs choice: add 20. for a stop/start button
+            aspect = (4.5 * 24. + runPauseButtonWidth) / 32.; // pick up clock prefs choice: add width of a stop/start button
         }
 
         // listen for changes to the Timebase parameters
@@ -93,10 +99,10 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
         getContentPane().add(m1);
         getContentPane().add(m2);
 
-        getContentPane().add(b = new JButton(Bundle.getMessage("ButtonPauseClock")));
-        b.addActionListener(new ButtonListener());
+        getContentPane().add(runPauseButton);
+        runPauseButton.addActionListener(new ButtonListener());
         // since Run/Stop button looks crummy, user may turn it on in clock prefs
-        b.setVisible(clock.getShowStopButton()); // pick up clock prefs choice
+        runPauseButton.setVisible(clock.getShowStopButton()); // pick up clock prefs choice
         updateButtonText();
         update();
         pack();
@@ -128,9 +134,10 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
             iconHeight = frameHeight;
             iconWidth = (int) (iconAspect * iconHeight);
         } else {
-            // this DOES NOT allow space for the Run/Stop button, if it is enabled.
-            // When the Run/Stop button is enabled, the layout will change accordingly.
-            iconWidth = (int) (frameWidth / 4.5);
+            // allow space in width for run stop button
+            int workingWidth = frameWidth;
+            if (clock.getShowStopButton()) workingWidth = frameWidth - runPauseButtonWidth;
+            iconWidth = (int) (workingWidth / 4.5);
             iconHeight = (int) (iconWidth / iconAspect);
         }
         for (int i = 0; i < 10; i++) {
@@ -155,7 +162,7 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
         m2.setIcon(tubes[minutes - (minutes / 10) * 10]);
     }
 
-        /**
+    /**
      * Handle a change to clock properties.
      * @param e unused.
      */
@@ -168,10 +175,8 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
      * Update clock button text.
      */
     private void updateButtonText(){
-        b.setText( Bundle.getMessage( clock.getRun() ? "ButtonPauseClock" : "ButtonRunClock") );
+        runPauseButton.setText( Bundle.getMessage( clock.getRun() ? "ButtonPauseClock" : "ButtonRunClock") );
     }
-
-    JButton b;
 
     private class ButtonListener implements ActionListener {
         @Override

@@ -713,4 +713,6 @@
             <li>(For developers) Our CI process has been updated to require the
             @Override annotation on overriding methods and removal of unused import statements.</li>
             <li>Fixed a validation errors in the xml/schema/auxiliary-configuration.xsd  file.</li>
+            <li>Fixed a problem where the run/pause button would not properly show when the
+                Nixie, LCD or Pragotron clocks were resized.</li>
         </ul>
