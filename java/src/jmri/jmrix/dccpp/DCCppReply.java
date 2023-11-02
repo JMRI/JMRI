@@ -307,7 +307,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 text = "TrackManager:" + toString();
                 break;
             case DCCppConstants.LCD_TEXT_CMD:
-                text = "LCD Msg '" + getLCDTextString() + "', disp " + getLCDDisplayNumString() + ", line " + getLCDLineNumString();
+                text = "LCD Text '" + getLCDTextString() + "', disp " + getLCDDisplayNumString() + ", line " + getLCDLineNumString();
                 break;
                 
             default:

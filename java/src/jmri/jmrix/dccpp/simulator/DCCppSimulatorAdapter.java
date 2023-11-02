@@ -25,7 +25,6 @@ import jmri.util.ImmediatePipedOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * Provide access to a simulated DCC++ system.
  *
@@ -63,7 +62,6 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     //keep track of speed, direction and functions for each loco address
     private LinkedHashMap<Integer,Integer> locoSpeedByte = new LinkedHashMap<Integer,Integer>();
     private LinkedHashMap<Integer,Integer> locoFunctions = new LinkedHashMap<Integer,Integer>();
-
 
     public DCCppSimulatorAdapter() {
         setPort(Bundle.getMessage("None"));
@@ -624,7 +622,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 break;
 
             case DCCppConstants.LCD_TEXT_CMD:
-                log.debug("LCD_MESSAGE_CMD detected");
+                log.debug("LCD_TEXT_CMD detected");
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss a");
                 LocalDateTime now = LocalDateTime.now();
                 String dateTimeString = now.format(formatter);

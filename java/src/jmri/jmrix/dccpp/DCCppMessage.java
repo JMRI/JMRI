@@ -3116,7 +3116,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
 
     /**
      * This implementation of equals is targeted to the background function
-     * refreshing in SerialDCCppPacketizer. To keep only one function group inF
+     * refreshing in SerialDCCppPacketizer. To keep only one function group in
      * the refresh queue the logic is as follows. Two messages are equal if they
      * are:
      * <ul>
