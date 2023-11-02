@@ -15,9 +15,9 @@ import org.junit.jupiter.api.*;
  */
 public class DCCppPredefinedMetersTest {
 
-    private DCCppInterfaceScaffold tc = null;
-    private DCCppPredefinedMeters mm = null;
-
+    private DCCppInterfaceScaffold tc;
+    private DCCppPredefinedMeters mm;
+    
     @Test
     public void testMeterReplies() {
         mm.message(DCCppReply.parseDCCppReply("a10")); // a syntactically valid current reply
