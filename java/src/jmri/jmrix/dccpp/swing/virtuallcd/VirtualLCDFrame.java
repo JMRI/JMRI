@@ -15,15 +15,20 @@ import jmri.util.JmriJFrame;
  */
 public class VirtualLCDFrame extends JmriJFrame implements DCCppListener  {
 
-    // private data
+    final static int TEXTFIELDLENGTH = 40;
+    final static int TOTALLINES = 8;
+
     private DCCppTrafficController _tc = null;
     private DCCppSystemConnectionMemo _memo;
 
+    private ArrayList<JTextField> lines;
+    
     public VirtualLCDFrame(DCCppSystemConnectionMemo memo) {
         super();
         _tc = memo.getDCCppTrafficController();
         _memo = memo;
         _tc.sendDCCppMessage(DCCppMessage.makeLCDRequestMsg(), null);        
+        lines = new ArrayList<>(TOTALLINES + 1);
     }
 
     /** 
@@ -50,10 +55,6 @@ public class VirtualLCDFrame extends JmriJFrame implements DCCppListener  {
     public void notifyTimeout(DCCppMessage msg) {
     }
     
-    final static int TEXTFIELDLENGTH = 40;
-    final static int TOTALLINES = 8;
-    ArrayList<JTextField> lines;
-    
     /**
      * {@inheritDoc}
      */
@@ -63,7 +64,6 @@ public class VirtualLCDFrame extends JmriJFrame implements DCCppListener  {
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         
         // initialize the list of display lines
-        lines = new ArrayList<>(9);
         for (int i = 0; i<TOTALLINES; i++) {
             lines.add(new JTextField(TEXTFIELDLENGTH));
             this.add(lines.get(i));
