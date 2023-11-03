@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2022 All rights reserved                            -->
+<!-- Copyright (C) JMRI 2022, 2023 All rights reserved                      -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,14 +14,28 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 	<version author="Ulrich Gerlach" version="1" lastUpdated="2022-11-11"/>
 	<version author="Peter Ulvestad" version="2" lastUpdated="2023-05-16"/>
-	<!-- Version 1 - For Piko SmartDecoder XP5.1 Sound. Copied and adapted from PIKO40501-18.xml Uses common parts -->
+	<version author="Ulrich Gerlach" version="3" lastUpdated="2023-10-10"/>
+	<version author="Ulrich Gerlach" version="4" lastUpdated="2023-10-20"/>
+	<version author="Ulrich Gerlach" version="5" lastUpdated="2023-10-20"/>
+	<!-- Version 1 - For Piko SmartDecoder XP5.1 Sound from FW 1.2.0. Copied and adapted from PIKO40501-18.xml Uses common parts -->
 	<!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
 	<!-- Version 2 - Updated lowVersionID, changed CV7-8 to use include file -->
 	<!-- Version 2.1 - Updated lowVersionID, This decoder definition is valid from VersionID=2 -->
+	<!-- Version 3 - For Piko SmartDecoder XP5.1 Sound. Add PIKO46551-18 decoder (BR 93) -->
+	<!-- Version 4 - For Piko SmartDecoder XP5.1 Sound. Add PIKO46505-18 decoder neutral (FW 1.8.0) -->
+	<!-- Version 5 - Obsolete, replaced by Piko_SmartDecoder_XP5.1_Sound_v1.5 or Piko_SmartDecoder_XP5.1_Sound_v1.8 -->
+	<!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
 	<decoder>
-		<family name="PIKO SmartDecoder XP5.1" mfg="PIKO" lowVersionID="2" highVersionID="15" comment="Decoders not sorted (necessarily) in numerical order">
+		<family name="PIKO SmartDecoder XP5.1 (old - not use)" mfg="PIKO" lowVersionID="3" highVersionID="15" comment="Decoders not sorted (necessarily) in numerical order">
 			<!-- to be checked by hardware owner -->
-			<model model="PIKO46550-18" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46550-18" lowVersionID="5" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 plug and RailCom(R) (Plus)">
+			<model model="PIKO46550-18" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46550-18" lowVersionID="5" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 plug (Plus) (FW 1.5.0)" replacementModel="PIKO46550-18 BR83-TT V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
+				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+				<output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+				<size length="21.5" width="10.5" height="3.7" units="mm"/>
+			</model>
+			<model model="PIKO46551-18" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46551-18" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 93 TT Next18 plug (Plus) (FW 1.8.0)" replacementModel="PIKO46551-18 BR93-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
 				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
 				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
 				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
@@ -29,7 +43,7 @@
 				<size length="21.5" width="10.5" height="3.7" units="mm"/>
 			</model>
 		</family>
-		<programming direct="yes" paged="yes" register="yes" ops="yes">
+		<programming direct="yes" paged="no" register="no" ops="yes">
 			<capability>
 				<name>Indexed CV access</name>
 				<parameter name="PI">31</parameter>
@@ -102,14 +116,14 @@
 			<!-- CVs 33-46 nrma function mapping -->
 			<xi:include href="http://jmri.org/xml/decoders/nmra/functionmap.xml"/>
 			<!-- CV 47 -->
-			<variable item="Spezialfunktionen" CV="47" default="1" minOut="4" include="PIKO46550-18">
+			<variable item="Spezialfunktionen" CV="47" default="1" minOut="4" include="PIKO46505-18,PIKO46550-18,PIKO46551-18">
 				<!-- Next-18 Decoder -->
 				<decVal max="63"/>
 				<label>Spezialfunktionen</label>
 				<label xml:lang="de">Spezialfunktionen Zuordnung (CV 47)</label>
 			</variable>
 			<variable item="Spezialfunktionen" CV="47" default="44" minOut="7" include="PIKO56554-22">
-				<!-- Next-22 Decoder mit Digitalkupplung-->
+				<!-- Next-22 Decoder with digital coupling-->
 				<decVal max="63"/>
 				<label>Spezialfunktionen</label>
 				<label xml:lang="de">Spezialfunktionen Zuordnung (CV 47)</label>
@@ -121,26 +135,45 @@
 				<tooltip>0 = Logik1 und Logik2, 1 = SUSI</tooltip>
 				<tooltip xml:lang="de">0 = Logik1 und Logik2, 1 = SUSI</tooltip>
 			</variable>
-			<variable item="SUSI Bit 1" CV="47" mask="XXXXXXVX">
+			<variable item="SUSI Bit 1" CV="47" default="0" mask="XXXXXXVX">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 				<label>SUSI CV 47 Bit 1</label>
 				<label xml:lang="de">SUSI CV 47 Bit 1</label>
 				<tooltip>0 = Logik1 und Logik2, 1 = Servo1 und Servo2</tooltip>
 				<tooltip xml:lang="de">0 = Logik1 und Logik2, 1 = Servo1 und Servo2</tooltip>
 			</variable>
-			<variable item="SUSI Bit 2" CV="47" default="1" mask="XXXXXVXX" minOut="7">
+			<variable item="SUSI Bit 2" CV="47" default="0" mask="XXXXXVXX" minOut="7">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 				<label>A4 für Digitalkupplung</label>
 				<label xml:lang="de">A4 für Digitalkupplung</label>
 			</variable>
-			<variable item="SUSI Bit 3" CV="47" default="1" mask="XXXXVXXX" minOut="7">
+			<variable item="Coupling option 1" CV="47" default="0" mask="XXXXXVXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>Digital coupling AUX4</label>
+				<label xml:lang="de">Digitalkupplung A4 vorn</label>
+				<tooltip>Activation coupling sequenz reverse</tooltip>
+				<tooltip xml:lang="de">Auch zur Aktivierung Kupplungswalzer rückwärts</tooltip>
+			</variable>
+			<variable item="Coupling option 2" CV="47" default="0" mask="XXXXVXXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>Digital coupling AUX5</label>
+				<label xml:lang="de">Digitalkupplung A5 hinten</label>
+				<tooltip>Activation coupling sequenz forward</tooltip>
+				<tooltip xml:lang="de">Auch zur Aktivierung Kupplungswalzer vorwärts</tooltip>
+			</variable>
+			<variable item="SUSI Bit 3" CV="47" default="0" mask="XXXXVXXX" minOut="7">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 				<label>A5 für Digitalkupplung</label>
 				<label xml:lang="de">A5 für Digitalkupplung</label>
 			</variable>
-			<variable item="SUSI Bit 4" CV="47" mask="XXXVXXXX" minOut="7">
+			<variable item="SUSI Bit 4" CV="47" default="0" mask="XXXVXXXX" minOut="7">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 				<label>Kupplungsausgänge A4 und A5 tauschen</label>
+				<label xml:lang="de">Kupplungsausgänge A4 und A5 tauschen</label>
+			</variable>
+			<variable item="Coupling option 3" default="0" CV="47" mask="XXXVXXXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>Sweitch coupling outputs AUX4 and AUX5</label>
 				<label xml:lang="de">Kupplungsausgänge A4 und A5 tauschen</label>
 			</variable>
 			<variable item="SUSI Bit 5" CV="47" mask="XXVXXXXX">
@@ -276,36 +309,50 @@
 			</variable>
 			<!-- CV 66 -->
 			<xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim128.xml"/>
-			<!-- CV66 -->
+			<!-- CV 66 -->
 			<!-- CV 95 -->
 			<xi:include href="http://jmri.org/xml/decoders/nmra/revTrim128.xml"/>
-			<!-- CV95 -->
+			<!-- CV 95 -->
 			<!-- CV 67 - 94 -->
 			<xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
-			<!-- CV 96 -->
-			<variable item="Advanced Function Mapping" CV="96" default="2">
-				<decVal/>
+			<variable item="Advanced Function Mapping" CV="96" default="2" include="PIKO46550-18">
+				<enumVal>
+					<enumChoice choice="1" value="1">
+						<choice>Advanced Function Mapping off</choice>
+						<choice xml:lang="de">Einfaches Funktionsmapping</choice>
+					</enumChoice>
+					<enumChoice choice="2" value="2">
+						<choice>Advanced Function Mapping on</choice>
+						<choice xml:lang="de">Erweitertes Funktionsmapping</choice>
+					</enumChoice>
+				</enumVal>
 				<label>Use Advanced Function Mapping</label>
-				<label xml:lang="de">Art des Funktionsmapping 1=einfach / 2=erweitert</label>
+				<label xml:lang="de">Art des Funktionsmapping</label>
 				<label xml:lang="nl">Uitgebreide Functiemapping actief</label>
 				<label xml:lang="cs">Použití mapování pokročilých funkcí</label>
+				<tooltip>simple value=1 / extended value=2 (up to V1.5)</tooltip>
+				<tooltip xml:lang="de">einfach Wert=1 / erweitert Wert=2 (bis V1.5)</tooltip>
+			</variable>
+			<variable item="Advanced Function Mapping" CV="96" default="6" include="PIKO46505-18,PIKO46551-18">
+				<enumVal>
+					<enumChoice choice="1" value="1">
+						<choice>Advanced Function Mapping off</choice>
+						<choice xml:lang="de">Einfaches Funktionsmapping</choice>
+					</enumChoice>
+					<enumChoice choice="2" value="6">
+						<choice>Advanced Function Mapping on</choice>
+						<choice xml:lang="de">Erweitertes Funktionsmapping</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Use Advanced Function Mapping</label>
+				<label xml:lang="de">Art des Funktionsmapping</label>
+				<label xml:lang="nl">Uitgebreide Functiemapping actief</label>
+				<label xml:lang="cs">Použití mapování pokročilých funkcí</label>
+				<tooltip>simple value=1 / extended value=6 (from V1.8)</tooltip>
+				<tooltip xml:lang="de">einfach Wert=1 / erweitert Wert=6 (ab V1.8)</tooltip>
 			</variable>
 			<!-- CV 97 - 98 -->
 			<xi:include href="http://jmri.org/xml/decoders/piko/cv97-98_v5.1.xml"/>
-<!--			<variable item="Ausgänge vorwärts" CV="97" default="0">
-				<decVal/>
-				<label>Funktionsausgänge "Aus" vorwärts</label>
-				<label xml:lang="de">Funktionsausgänge "Aus" vorwärts</label>
-				<tooltip>Bit 0 bis 7 -> A1 bis A8, Bit = 1 Ausgang aus</tooltip>
-				<tooltip xml:lang="de">Bit 0 bis 7 -> A1 bis A8, Bit = 1 Ausgang aus</tooltip>
-			</variable>
-			<variable item="Ausgänge rückwärts" CV="98" default="0">
-				<decVal/>
-				<label>Funktionsausgänge "Aus" rückwärts</label>
-				<label xml:lang="de">Funktionsausgänge "Aus" rückwärts</label>
-				<tooltip>Bit 0 bis 7 -> A1 bis A8, Bit = 1 Ausgang aus</tooltip>
-				<tooltip xml:lang="de">Bit 0 bis 7 -> A1 bis A8, Bit = 1 Ausgang aus</tooltip>
-			</variable>-->
 			<!-- CV 101 - 104 -->
 			<variable item="Analog Control slider 1" CV="101" default="100">
 				<decVal max="255"/>
@@ -897,8 +944,7 @@
 			<xi:include href="http://jmri.org/xml/decoders/piko/cv257-512_bank16_v5.1.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/piko/cv257-512_bank17_v5.1.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/piko/cv257-512_bank18_v5.1.xml"/>
-			<!--		<xi:include href="http://jmri.org/xml/decoders/piko/cv257-512_bank1-4_v5.1.xml"/> -->
-			<!-- Interner Lichtdecoder CV807 - 1024 -->
+			<!-- Interner Lichtdecoder CV897 - 1024 -->
 			<xi:include href="http://jmri.org/xml/decoders/piko/cv897-1024_v5.1.xml"/>
 		</variables>
 		<xi:include href="http://jmri.org/xml/decoders/piko/cv8factReset_v5.1.xml"/>
@@ -909,8 +955,9 @@
 	<xi:include href="http://jmri.org/xml/decoders/piko/PanePiko1.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/piko/PanePiko2_v5.1.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoMotor.xml"/>
-	<!--	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoExtendedFmap_v5.1.xml"/>-->
 	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoLichtDecoder_v5.1.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoSound_v5.1.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoExtendedFmap_v5.1.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoConfigOutput_v5.1.xml"/>
 </decoder-config>
 

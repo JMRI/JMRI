@@ -672,6 +672,21 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h4>Throttle function<span class="since">since 5.5.6</span></h4>
+
+
+      <p>The <strong>Throttle function</strong> action is similar to the <strong>Throttle</strong>
+       action, except that it only sets a throttle function <strong>On</strong> or <strong>Off</strong>.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/throttle_function.png"><img src="images/chapter5/throttle_function.png"
+        alt="Chapter 5 throttle function"></a>
+      </div>
+
+      <p>The <strong>Connection</strong> drop down can be used to specify the connection to be used.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h4>Turnout</h4>
 
       <p>The delayed options are handled by <a href="#ExecuteDelayed">Execute Delayed</a>.</p>
@@ -854,6 +869,11 @@
 
         <dt>Combo Box</dt>
         <dd>Select the time unit.</dd>
+
+        <dt>Delay by local variables</dt>
+        <dd>Instead of using fixed delay times, it is possible to assign delay times to local
+        variables.  The timer step number will be appended to the prefix value, such as delay1,
+        delay2, etc.</dd>
       </dl>
 
       <div style="margin-left: 2em;">
@@ -883,6 +903,21 @@
       a Light action that toggles the light on/off. If you want different times for on and off,
       create a Timer with two sockets where the first socket turns the light on and the second
       socket turns the light off.</p>
+
+      <p>The <strong>Timer</strong> action can be used in LogixNG Modules.  Due to the nature of
+      repetitive timer events, there are some restrictions.</p>
+
+      <ul>
+        <li>The calling LogixNG and the Module run all of their actions with each Timer step.
+        Avoid including any other logic in the calling LogixNG or the Module.</li>
+
+        <li>The trigger event for the LogixNG can be either a if-then-else with the expression
+        set for <strong>Always execute</strong> or a <strong>Listen on beans</strong> item.</li>
+
+        <li><strong>Start/Stop by Start expression</strong> is selected.</li>
+
+        <li>The <strong>Start</strong> expression for the Timer should be the <strong>Always true</strong> expression.</li>
+      </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -1094,11 +1129,12 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>Sequence</h4>
+      <h4 id="sequence_id">Sequence</h4>
 
       <p>The Sequence action executes a series of action/expression pairs. For each pair, the
       action will be performed and then the expression will wait until it becomes true. When it is
-      true, the next action/expression pair will be started.</p>
+      true, the next action/expression pair will be started.  The <a href="chapter6#timer_id">Timer</a>
+      expression can be used to do a time based step instead of an event based step.</p>
 
       <div style="margin-left: 2em">
         <a href="images/chapter5/action_sequence_options.png"><img src=
@@ -1242,7 +1278,7 @@
       <h4>Subscribe</h4>
 
       <p>This action subscribes to a topic. When someone publishes a message, this action triggers
-      the execution of the CondtionalNG. It can also optionally put the topic and the message into
+      the execution of the ConditionalNG. It can also optionally put the topic and the message into
       local variables. The topic can use wildcard, like loco/# where # is the wildcard.</p>
 
       <div style="margin-left: 2em;">
@@ -1420,12 +1456,37 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>Logix</h4>
+      <h4 id="common_logix_action">Logix</h4>
 
-      <p>LogixNG has an action called Logix that emulates how JMRI Logix works. The action Logix
-      has one expression and a number of boolean actions. A boolean action is an action that takes
-      a boolean value (true/false) and then decides what to do. The action Logix was added mainly
-      to support import of JMRI Logix to LogixNG.</p>
+      <p>LogixNG has an action called <strong>Logix</strong> that emulates how JMRI Logix works. The
+      action Logix has one expression and a <a href="#boolean_logix_action">Logix Action</a>.  The
+      digital boolean <strong>Many</strong> action can be used to support multiple
+      <strong>Logix Actions</strong> as shown in the example.  A Logix Action responds to
+      <strong>True</strong>, <strong>False</strong>, or <strong>Either</strong> Logix evaluation
+      states.  The action Logix was added mainly to support import of JMRI Logix to LogixNG.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/other_logix_action.png"><img class="image-border" src=
+        "images/chapter5/other_logix_action.png" alt=
+        "Chapter 5 other logix action"></a>
+      </div>
+
+      <p>The Logix action supports <strong>On Change</strong> and <strong>When Triggered</strong>.</p>
+
+      <p>An example Logix within LogixNG.  This is a tweaked import from Logix.  The <strong>Log data</strong> actions
+      were added and the individual <strong>True</strong> LogixNG actions were combined within a
+      standard Many.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/logix_example.png"><img class="image-border" src=
+        "images/chapter5/logix_example.png" alt=
+        "Chapter 5 logix example"></a>
+      </div>
+
+      <p>This example uses <strong>When Triggered</strong>.  This means that one or more actions
+      will be executed when either IS101 or IS102 changes.  The <strong>On Change</strong> option
+      only executes the actions when the evaluation of the expression <strong>changes</strong>
+      between true and false.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -1718,16 +1779,31 @@
 
       <h2 id="digital_boolean_action_common">Digital boolean action :: Common</h2>
 
-      <p>To make import from Logix to LogixNG easier, LogixNG has a special action, Logix, that
+      <p>To make import from Logix to LogixNG easier, LogixNG has a special action, <a href="#common_logix_action">Logix</a>, that
       works similar to a Conditional in Logix. The LogixNG Logix action has a digital expression
       socket and a digital boolean action socket. The usual setup in LogixNG is a Logix action with
-      a Many child with a number of OnChange children.</p>
+      a Many child with a number of <strong>Logix Action</strong> children.</p>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/digital_boolean_action_common.png"><img class="image-border" src=
         "images/chapter5/digital_boolean_action_common.png" alt=
         "Chapter 5 digital boolean action common list"></a>
       </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4 id="boolean_logix_action">Logix Action</h4>
+
+      <p>When a Logix expression is evaluated, a <strong>Logix Action</strong> is invoked to
+      perform the LogixNG actions if its state matches the result of the expression evaluation.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/logix_action.png"><img class="image-border" src=
+        "images/chapter5/logix_action.png" alt=
+        "Chapter 5 logix action"></a>
+      </div>
+
+      <p>See the example at <a href="#common_logix_action">Logix</a>.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -1738,20 +1814,6 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>On change</h4>
-
-      <p>This action is used together with the LogixNG Logix action and gives you the option to
-      decide if the child action should be executed. The options are:</p>
-
-      <ul>
-        <li>On change to true</li>
-
-        <li>On change to false</li>
-
-        <li>On change</li>
-      </ul>
-
-      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h2 id="analog_action_item">Analog action :: Item</h2>
 

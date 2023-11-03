@@ -4,13 +4,9 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.actions.ActionEntryExit;
-import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
-import jmri.jmrit.logixng.util.parser.ParserException;
-
 import org.jdom2.Element;
 
 /**
@@ -46,7 +42,7 @@ public class ActionEntryExitXml extends jmri.managers.configurexml.AbstractNamed
         element.addContent(selectNamedBeanXml.store(
                 p.getSelectNamedBean(),
                 "namedBean",
-                (handle) -> handle.getBean() != null ? handle.getBean().getSystemName() : null));
+                LogixNG_SelectNamedBeanXml.StoreNamedBean.SystemName));
         element.addContent(selectEnumXml.store(p.getSelectEnum(), "operation"));
 
         return element;

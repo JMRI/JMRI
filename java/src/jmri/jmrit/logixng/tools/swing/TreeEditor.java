@@ -1891,7 +1891,10 @@ public class TreeEditor extends TreeViewer {
                 menuItemLock.setEnabled(isAnyUnlocked.get());
                 menuItemUnlock.setEnabled(isAnyLocked.get());
 
-                menuItemLocalVariables.setEnabled(femaleSocket.isConnected() && !_isLocked);
+                menuItemLocalVariables.setEnabled(
+                        femaleSocket.isConnected()
+                        && femaleSocket.getConnectedSocket().isSupportingLocalVariables()
+                        && !_isLocked);
 
                 menuItemChangeUsername.setEnabled(femaleSocket.isConnected() && !_isLocked);
 

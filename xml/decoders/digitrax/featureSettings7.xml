@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010, 2023 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2023</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>John</firstname>
+        <surname>McMasters</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2023-09-29</date>
+      <authorinitials>JWM</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+  </revhistory>
+  <!-- Disable Sound Settings -->
+  <variable item="Feature Disable Group 1" CV="185"  exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <decVal/>
+    <label>Feature Disable Group 1</label>
+    <label xml:lang="it">Funzione Disabilitaz. Gr.1</label>
+    <tooltip>Set sum of bits 0-7 ON to disable features</tooltip>
+    <tooltip xml:lang="it">Somma bit 0-7 in ON per disabilitare Funzione</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 1-1" CV="185" mask="XXXXXXXV"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>HEP diesel / Aux Gen.</label>
+    <tooltip>HEP diesel=0, Aux Gen=1</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 1-2" CV="185" mask="XXXXXXVX"  exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable hard automatic braking</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 1-3" CV="185" mask="XXXXXVXX"  exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable start-up sounds</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 1-4" CV="185" mask="XXXXVXXX"  exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Fans</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 1-5" CV="185" mask="XXXVXXXX"  exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable toots on direction change</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 1-6" CV="185" mask="XXVXXXXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable grade crossing random play</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 1-7" CV="185" mask="XVXXXXXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable bell</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 1-8" CV="185" mask="VXXXXXXX"  exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Startup Sounds Opt</label>
+    <tooltip>Gen1 - Gen2</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 2" CV="186"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <decVal/>
+    <label>Feature Disable Group 2</label>
+    <label xml:lang="it">Funzione Disabilitaz. Gr.2</label>
+    <tooltip>Set sum of bits 0-7 ON to disable features</tooltip>
+    <tooltip xml:lang="it">Somma bit 0-7 in ON per disabilitare Funzione</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 2-1" CV="186" mask="XXXXXXXV"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Diesel Low Idle</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 2-2" CV="186" mask="XXXXXXVX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Chain Bells 1-4</label>
+    <tooltip>Disabled =1, Enabled=0 Single Bell =1</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 2-3" CV="186" mask="XXXXXVXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable STOKER change to SHOVEL</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 2-4" CV="186" mask="XXXXVXXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Auto Vary Notch</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 2-5" CV="186" mask="XXXVXXXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Shaft Driven Compressor</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 2-6" CV="186" mask="XXVXXXXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable ALCO Idle Stumble</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+    </variable>
+  <variable item="Feature Disable Group 2-7" CV="186" mask="XVXXXXXX"    exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Auto horn-whistle signals</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 2-8" CV="186" mask="VXXXXXXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Dual/Artic Prime Movers</tooltip>
+    <tooltip xml:lang="it">Dual/Artic Prime Movers</tooltip>
+    <label>Disable Dual/Artic Prime Movers</label>
+    <label xml:lang="it">Disable Dual/Artic Prime Movers</label>
+  </variable>
+  <variable item="Feature Disable Group 3" CV="187"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <decVal/>
+    <label>Feature Disable Group 3</label>
+    <label xml:lang="it">Funzione Disabilitaz. Gr.3</label>
+    <tooltip>Set sum of bits 0-7 ON to disable features</tooltip>
+    <tooltip xml:lang="it">Somma bit 0-7 in ON per disabilitare Funzione</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 3-1" CV="187" mask="XXXXXXXV"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Short Opt Horn/whistle</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 3-2" CV="187" mask="XXXXXXVX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable DEMO ALL HornS/whistles</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 3-3" CV="187" mask="XXXXXVXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Bell on Idle Exit</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 3-4" CV="187" mask="XXXXVXXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Motor Lock on BRAKE</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 3-5" CV="187" mask="XXXVXXXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Startup Muted</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 3-6" CV="187" mask="XXVXXXXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Dynamic BRAKES</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+    </variable>
+  <variable item="Feature Disable Group 3-7" CV="187" mask="XVXXXXXX"    exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Inverse Direction - Cab Forward (Toots)</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 3-8" CV="187" mask="VXXXXXXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Auto Wheel Slip</tooltip>
+    <label>Disable Auto Wheel Slip</label>
+  </variable>
+  <variable item="Feature Disable Group 4" CV="188"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <decVal/>
+    <label>Feature Disable Group 4</label>
+    <label xml:lang="it">Funzione Disabilitaz. Gr.4</label>
+    <tooltip>Set sum of bits 0-7 ON to disable features</tooltip>
+    <tooltip xml:lang="it">Somma bit 0-7 in ON per disabilitare Funzione</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 4-1" CV="188" mask="XXXXXXXV"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Traction Motor</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 4-2" CV="188" mask="XXXXXXVX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable HILO HORN</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 4-3" CV="188" mask="XXXXXVXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Horn Delay</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 4-4" CV="188" mask="XXXXVXXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Articulated DE-SYNC</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 4-5" CV="188" mask="XXXVXXXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Not Used</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 4-6" CV="188" mask="XXVXXXXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Not Used</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+    </variable>
+  <variable item="Feature Disable Group 4-7" CV="188" mask="XVXXXXXX"    exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Not Used</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 4-8" CV="188" mask="VXXXXXXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Disable Not Used</tooltip>
+    <label>Disable Not Used</label>
+  </variable>
+  <!-- Disable Sound Settings -->
+  
+</variables>

@@ -69,6 +69,7 @@ public class OakTreeSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         return new NamedBeanComparator<>();
     }
 
+    @Override
     public void configureManagers(){
         setTurnoutManager(new SerialTurnoutManager(this));
         InstanceManager.setTurnoutManager(getTurnoutManager());

@@ -99,6 +99,12 @@
                 <authorinitials>JE</authorinitials>
                 <revremark>edit the CV49-58 FX text to match TSU2 values. chg CV63 name to Dimmer Level. rev CV215 tool tip and range display</revremark>
             </revision>
+            <revision>
+                <revnumber>5</revnumber>
+                <date>2023-10-09</date>
+                <authorinitials>MM</authorinitials>
+                <revremark>productID change for 11 bit Soundtraxx ID</revremark>
+            </revision>
         </revhistory>
     <!-- Specific CVs for ECO decoders -->
     <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
@@ -319,6 +325,7 @@
     <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2userId.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUspeedTableDefault.xml"/>
     <variable CV="113" item="Sound Group 3 Option 1" default="0">
         <decVal/>
         <label>Quiet Mode Timeout Period (Seconds)</label>
@@ -344,12 +351,12 @@
                 &lt;/html&gt;</tooltip>
     </variable>
     <!-- Start Sound Selection -->
-    <variable CV="122" mask="VXXXXXXX" item="Sound Option 9" default="0" exclude="300,301,302,303,304,305,306,307"> <!-- Exclude UK decoders -->
+    <variable CV="122" mask="VXXXXXXX" item="Sound Option 9" default="0" exclude="2093,2099,9095,3097,9092,2098,2094,9096"> <!-- Exclude UK decoders -->
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
         <label>Grade-Crossing Bell Enable</label>
         <tooltip>The selected bell to ring during the crossing-timer countdown when Grade-Crossing Logic is activated</tooltip>
     </variable>
-    <variable CV="122" mask="VXXXXXXX" item="Sound Option 9" default="0" include="300,301,302,303,304,305,306,307"> <!-- for UK decoders -->
+    <variable CV="122" mask="VXXXXXXX" item="Sound Option 9" default="0" include="2093,2099,9095,3097,9092,2098,2094,9096"> <!-- for UK decoders -->
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
         <label>Grade-Crossing Bell Enable</label>
         <tooltip>&lt;html&gt;The selected bell to ring during the crossing-timer countdown
@@ -357,7 +364,7 @@
                 &lt;br&gt;Not aplicable for UK: The bell is disabled in UK decoders.
                 &lt;/html&gt;</tooltip>
     </variable>
-    <variable CV="126" mask="XXXXXVVV" item="Sound Option 11" default="0" exclude="300,301,302,303,304,305,306,307"> <!-- Exclude UK decoders -->
+    <variable CV="126" mask="XXXXXVVV" item="Sound Option 11" default="0" exclude="2093,2099,9095,3097,9092,2098,2094,9096"> <!-- Exclude UK decoders -->
         <enumVal>
             <enumChoice>
                 <choice>Medium coupler</choice>
@@ -372,7 +379,7 @@
         <label>Coupler Select</label>
         <tooltip>Determine the coupler release sound effect activated by the coupler function</tooltip>
     </variable>
-    <variable CV="126" mask="XXXXXVVV" item="Sound Option 11" default="3" include="300,301,302,303,304,305,306,307"> <!-- for UK decoders -->
+    <variable CV="126" mask="XXXXXVVV" item="Sound Option 11" default="3" include="2093,2099,9095,3097,9092,2098,2094,9096"> <!-- for UK decoders -->
         <enumVal>
             <enumChoice>
                 <choice>Medium coupler</choice>
@@ -407,11 +414,11 @@
         <decVal/>
         <label>Master Volume Control</label>
     </variable>
-    <variable CV="130" mask="VVVVVVVV" item="Sound Setting 3" default="85" tooltip="Sets the volume of the bell" exclude="300,301,302,303,304,305,306,307"> <!-- Exclude UK decoders -->
+    <variable CV="130" mask="VVVVVVVV" item="Sound Setting 3" default="85" tooltip="Sets the volume of the bell" exclude="2093,2099,9095,3097,9092,2098,2094,9096"> <!-- Exclude UK decoders -->
         <decVal/>
         <label>Bell Volume</label>
     </variable>
-    <variable CV="130" mask="VVVVVVVV" item="Sound Setting 3" default="0" tooltip="&lt;html&gt;Sets the volume of the bell&lt;br&gt;Not used for UK decoders&lt;/html&gt;" include="300,301,302,303,304,305,306,307"> <!-- for UK decoders -->
+    <variable CV="130" mask="VVVVVVVV" item="Sound Setting 3" default="0" tooltip="&lt;html&gt;Sets the volume of the bell&lt;br&gt;Not used for UK decoders&lt;/html&gt;" include="2093,2099,9095,3097,9092,2098,2094,9096"> <!-- for UK decoders -->
         <decVal/>
         <label>Bell Volume</label>
     </variable>
@@ -435,32 +442,32 @@
         <decVal/>
         <label>Glad Hand Release Volume</label>
     </variable>
-    <variable CV="150" mask="VVVVVVVV" item="Sound Setting 23" default="192" exclude="300,301,302,303,304,305,306,307"> <!-- Exclude UK decoders -->
+    <variable CV="150" mask="VVVVVVVV" item="Sound Setting 23" default="192" exclude="2093,2099,9095,3097,9092,2098,2094,9096"> <!-- Exclude UK decoders -->
         <decVal/>
         <label>All Aboard!/Coach Doors Volume</label>
         <tooltip>Not included in Econami software releases prior to version 1.3</tooltip>
     </variable>
-    <variable CV="150" mask="VVVVVVVV" item="Sound Setting 23" default="192" include="300,301,302,303,304,305,306,307"> <!-- for UK decoders -->
+    <variable CV="150" mask="VVVVVVVV" item="Sound Setting 23" default="192" include="2093,2099,9095,3097,9092,2098,2094,9096"> <!-- for UK decoders -->
         <decVal/>
         <label>Guard Whistle/Coach Doors Volume</label>
     </variable>
     <!-- Automatic Sound Controls (ASC) follow -->
-    <variable item="Auto-Bell-On Set Point" CV="193" mask="XVVVVVVV" default="1" exclude="300,301,302,303,304,305,306,307"> <!-- Exclude UK decoders -->
+    <variable item="Auto-Bell-On Set Point" CV="193" mask="XVVVVVVV" default="1" exclude="2093,2099,9095,3097,9092,2098,2094,9096"> <!-- Exclude UK decoders -->
         <decVal max="127"/>
         <label>Auto-Bell On Set Point</label>
         <tooltip>Specifies the throttle speed step where the automatic bell will first turn on</tooltip>
     </variable>
-    <variable item="Auto-Bell-On Set Point" CV="193" mask="XVVVVVVV" default="1" include="300,301,302,303,304,305,306,307"> <!-- for UK decoders -->
+    <variable item="Auto-Bell-On Set Point" CV="193" mask="XVVVVVVV" default="1" include="2093,2099,9095,3097,9092,2098,2094,9096"> <!-- for UK decoders -->
         <decVal max="127"/>
         <label>Auto-Bell On Set Point</label>
         <tooltip>&lt;html&gt;Specifies the throttle speed step where the automatic bell will first turn on&lt;br&gt;Bell disabled by default for UK decoders&lt;/html&gt;</tooltip>
     </variable>
-    <variable item="Auto-Bell On Time" CV="194" mask="VVVVVVVV" default="15" exclude="300,301,302,303,304,305,306,307"> <!-- Exclude UK decoders -->
+    <variable item="Auto-Bell On Time" CV="194" mask="VVVVVVVV" default="15" exclude="2093,2099,9095,3097,9092,2098,2094,9096"> <!-- Exclude UK decoders -->
         <decVal max="255"/>
         <label>Auto-Bell On Time</label>
         <tooltip>Set the duration in seconds that elapses from the time the bell sound effect is automatically turned on to the time it is turned off</tooltip>
     </variable>
-    <variable item="Auto-Bell On Time" CV="194" mask="VVVVVVVV" default="15" include="300,301,302,303,304,305,306,307"> <!-- for UK decoders -->
+    <variable item="Auto-Bell On Time" CV="194" mask="VVVVVVVV" default="15" include="2093,2099,9095,3097,9092,2098,2094,9096"> <!-- for UK decoders -->
         <decVal max="255"/>
         <label>Auto-Bell On Time</label>
         <tooltip>&lt;html&gt;Set the duration in seconds that elapses from the time the bell sound effect is automatically turned on to the time it is turned off&lt;br&gt;Bell disabled by default for UK decoders&lt;/html&gt;</tooltip>
@@ -522,12 +529,12 @@
         <decVal/>
         <label>Brake Squeal Sensitivity</label>
     </variable>
-    <variable item="Automatic Bell Enable (Analog Mode)" CV="197" mask="XXXXXXVX" default="0" exclude="300,301,302,303,304,305,306,307"> <!-- Exclude UK decoders -->
+    <variable item="Automatic Bell Enable (Analog Mode)" CV="197" mask="XXXXXXVX" default="0" exclude="2093,2099,9095,3097,9092,2098,2094,9096"> <!-- Exclude UK decoders -->
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Bell Enable (Analog Mode)</label>
         <tooltip>Enables the Automatic Bell in Analog Mode</tooltip>
     </variable>
-    <variable item="Automatic Bell Enable (Analog Mode)" CV="197" mask="XXXXXXVX" default="0" include="300,301,302,303,304,305,306,307"> <!-- for UK decoders -->
+    <variable item="Automatic Bell Enable (Analog Mode)" CV="197" mask="XXXXXXVX" default="0" include="2093,2099,9095,3097,9092,2098,2094,9096"> <!-- for UK decoders -->
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Bell Enable (Analog Mode)</label>
         <tooltip>&lt;html&gt;Enables the Automatic Bell in Analog Mode&lt;br&gt;Bell disabled by default for UK decoders&lt;/html&gt;</tooltip>
@@ -536,12 +543,12 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Brake Squeal Enable (Analog Mode)</label>
     </variable>
-    <variable item="Automatic Bell Enable" CV="198" mask="XXXXXXVX" default="0" exclude="300,301,302,303,304,305,306,307"> <!-- Exclude UK decoders -->
+    <variable item="Automatic Bell Enable" CV="198" mask="XXXXXXVX" default="0" exclude="2093,2099,9095,3097,9092,2098,2094,90967"> <!-- Exclude UK decoders -->
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Bell Enable</label>
         <tooltip>Enables the Automatic Bell in Digital Mode</tooltip>
     </variable>
-    <variable item="Automatic Bell Enable" CV="198" mask="XXXXXXVX" default="0" include="300,301,302,303,304,305,306,307"> <!-- for UK decoders -->
+    <variable item="Automatic Bell Enable" CV="198" mask="XXXXXXVX" default="0" include="2093,2099,9095,3097,9092,2098,2094,9096"> <!-- for UK decoders -->
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Bell Enable</label>
         <tooltip>&lt;html&gt;Enables the Automatic Bell in Digital Mode&lt;br&gt;Bell disabled by default for UK decoders&lt;/html&gt;</tooltip>

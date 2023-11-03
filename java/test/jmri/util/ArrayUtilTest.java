@@ -4,7 +4,6 @@ import java.awt.geom.Point2D;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.python.modules.math;
 
 /**
  * Test simple functioning of ArrayUtil

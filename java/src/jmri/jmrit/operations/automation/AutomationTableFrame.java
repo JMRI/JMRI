@@ -225,7 +225,7 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
         }
         if (ae.getSource() == deleteAutomationButton) {
             log.debug("automation delete button activated");
-            if (JOptionPane.showConfirmDialog(this,
+            if (JmriJOptionPane.showConfirmDialog(this,
                     Bundle.getMessage("DoYouWantToDeleteAutomation", automationNameTextField.getText()),
                     Bundle.getMessage("DeleteAutomation?"),
                     JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
@@ -321,7 +321,6 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
     }
 
     private void reportAutomationExists(String s) {
-        log.info("Can not {} automation already exists", s);
         JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"),
                 Bundle.getMessage("CanNotAutomation", s), JmriJOptionPane.ERROR_MESSAGE);
     }

@@ -220,8 +220,13 @@
         <p>Start up action order is important. In most cases, scripts should be the last items in
         the start up order. Start up order can be changed by selecting a start up item and moving
         it <em>up</em> or <em>down</em> in the list.</p>
-        <a href="images/PrefsStartup4_15.png"><img src="images/PrefsStartup4_15.png" height="232"
-        width="466" class="floatRight" alt="JMRI v4.2 Roster Prefs tab"></a>
+
+        <p>Individual start up actions can be enabled or disabled.  The default is
+        <strong>Enabled</strong>.<span class="since">since 5.5.6</span></p>
+
+        <a href="images/PrefsStartUp.png"><img src="images/PrefsStartUp.png"
+        class="floatRight" alt="JMRI Start Up Prefs tab"></a>
+
         <p>There are seven types of start up actions:</p>
 
         <dl>

@@ -11,9 +11,6 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
 import jmri.server.json.JsonRequest;
-import jmri.server.json.idtag.JsonIdTagHttpService;
-import jmri.server.json.reporter.JsonReporterHttpService;
-import jmri.server.json.roster.JsonRosterHttpService;
 import jmri.server.json.sensor.JsonSensor;
 
 import javax.servlet.http.HttpServletResponse;
@@ -21,11 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static jmri.server.json.JSON.VALUE;
-import static jmri.server.json.idtag.JsonIdTag.IDTAG;
 import static jmri.server.json.oblock.JsonOblock.OBLOCK;
 import static jmri.server.json.oblock.JsonOblock.OBLOCKS;
-import static jmri.server.json.reporter.JsonReporter.REPORTER;
 
 /**
  * Copied from jmri/server/json/blocks.java
@@ -154,7 +148,7 @@ public class JsonOblockHttpService extends JsonNamedBeanHttpService<OBlock> {
     }
 
     @Override
-    protected ProvidingManager<OBlock> getManager() {
+    protected ProvidingManager<OBlock> getProvidingManager() {
         return InstanceManager.getDefault(OBlockManager.class);
     }
 

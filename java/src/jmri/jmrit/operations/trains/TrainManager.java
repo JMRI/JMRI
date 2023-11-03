@@ -410,7 +410,6 @@ public class TrainManager extends PropertyChangeSupport
             _id = id;
         }
         setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(getNumEntries()));
-        // listen for name and state changes to forward
     }
 
     /**
@@ -498,18 +497,19 @@ public class TrainManager extends PropertyChangeSupport
      *         destination.
      */
     public Train getTrainForCar(Car car, List<Train> excludeTrains, PrintWriter buildReport) {
-//        log.debug("Find train for car ({}) location ({}, {}) destination ({}, {})", car.toString(),
-//                car.getLocationName(), car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName()); // NOI18N
-        if (Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED)) {
-            TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED, TrainCommon.BLANK_LINE);
-            TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED,
-                    Bundle.getMessage("trainFindForCar",
-                            car.toString(), car.getLocationName(), car.getTrackName(),
-                                    car.getDestinationName(), car.getDestinationTrackName()));
-        }
-        for (Train train : getTrainsByIdList()) {
+        addLine(buildReport, TrainCommon.BLANK_LINE);
+        addLine(buildReport, Bundle.getMessage("trainFindForCar", car.toString(), car.getLocationName(),
+                car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName()));
+
+        main: for (Train train : getTrainsByIdList()) {
             if (excludeTrains.contains(train)) {
                 continue;
+            }
+            for (Train t : excludeTrains) {
+                if (t != null && train.getRoute() == t.getRoute()) {
+                    addLine(buildReport, Bundle.getMessage("trainHasSameRoute", train, t));
+                    continue main;
+                }
             }
             if (Setup.isOnlyActiveTrainsEnabled() && !train.isBuildEnabled()) {
                 continue;
@@ -523,6 +523,14 @@ public class TrainManager extends PropertyChangeSupport
             }
         }
         return null;
+    }
+
+    protected static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
+
+    private void addLine(PrintWriter buildReport, String string) {
+        if (Setup.getRouterBuildReportLevel().equals(SEVEN)) {
+            TrainCommon.addLine(buildReport, SEVEN, string);
+        }
     }
 
     /**
@@ -1051,6 +1059,24 @@ public class TrainManager extends PropertyChangeSupport
             if (train.isBuildFailed())
                 train.reset();
         }
+    }
+
+    int _maxTrainNameLength = 0;
+
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification="I18N of Info Message")
+    public int getMaxTrainNameLength() {
+        String trainName = "";
+        if (_maxTrainNameLength == 0) {
+            for (Train train : getList()) {
+                if (train.getName().length() > _maxTrainNameLength) {
+                    trainName = train.getName();
+                    _maxTrainNameLength = train.getName().length();
+                }
+            }
+            log.info(Bundle.getMessage("InfoMaxName", trainName, _maxTrainNameLength));
+        }
+        return _maxTrainNameLength;
     }
 
     public void load(Element root) {

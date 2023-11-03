@@ -179,8 +179,8 @@ public class Timeout extends AbstractDigitalAction
     public String getLongDescription(Locale locale) {
         String delay = _selectDelay.getDescription(locale);
 
-        if ((_selectDelay.getAddressing() == NamedBeanAddressing.Direct)
-                && (_selectTimerUnit.getAddressing() == NamedBeanAddressing.Direct)) {
+        if ((_selectDelay.isDirectAddressing())
+                && (_selectTimerUnit.isDirectAddressing())) {
 
             return Bundle.getMessage(locale,
                     "Timeout_Long",

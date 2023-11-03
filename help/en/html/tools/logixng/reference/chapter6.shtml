@@ -715,6 +715,21 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h5 id="timer_id">Timer</h5>
+
+      <p>The <strong>Timer</strong> expression returns <strong>False</strong> until some time has
+      passed. It then returns <strong>True</strong> once and the timer starts again. This expression
+      is intended to be used together with the <a href="chapter5#sequence_id">Sequence</a> action.
+      This makes it possible to have sequence steps based on time durations.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/timer_expression.png"><img class="image-border" src=
+        "images/chapter6/timer_expression.png"
+        alt="Chapter 6 timer expression"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h3 id="digital_expression_flow_control">Digital expression :: Flow Control
       <span class="since">since 5.1.3</span></h3>
 

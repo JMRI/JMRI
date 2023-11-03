@@ -2,7 +2,6 @@ package jmri.beans;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import javax.swing.SwingUtilities;
 
 /**
  * If constructed with {@code SwingPropertyChangeListener(listener, true)} this

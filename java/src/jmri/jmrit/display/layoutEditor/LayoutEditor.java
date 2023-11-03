@@ -2879,6 +2879,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     /**
      * Allow external trigger of re-drawHidden
      */
+    @Override
     public void redrawPanel() {
         repaint();
     }
@@ -2915,6 +2916,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         panelChanged = val;
     }
 
+    @Override
     public void setDirty() {
         setDirty(true);
     }
@@ -2924,6 +2926,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      *
      * @return true if panel has changed
      */
+    @Override
     public boolean isDirty() {
         return panelChanged;
     }
@@ -3561,6 +3564,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     addBlockContents();
                 } else if (leToolBarPanel.iconLabelButton.isSelected()) {
                     addIcon();
+                } else if (leToolBarPanel.logixngButton.isSelected()) {
+                    addLogixNGIcon();
+                } else if (leToolBarPanel.audioButton.isSelected()) {
+                    addAudioIcon();
                 } else if (leToolBarPanel.shapeButton.isSelected()) {
                     LayoutShape ls = (LayoutShape) selectedObject;
                     if (ls == null) {
@@ -3737,6 +3744,52 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         requestFocusInWindow();
     }   // mouseReleased
 
+    public void addPopupItems(@Nonnull JPopupMenu popup, @Nonnull JmriMouseEvent event) {
+
+        List<LayoutTrack> tracks = getLayoutTracks().stream().filter(layoutTrack -> {  // != means can't (yet) loop over Views
+            HitPointType hitPointType = getLayoutTrackView(layoutTrack).findHitPointType(dLoc, false, false);
+            return (HitPointType.NONE != hitPointType);
+        }).collect(Collectors.toList());
+
+        List<Positionable> selections = getSelectedItems(event);
+
+        if ((tracks.size() > 1) || (selections.size() > 1)) {
+            JMenu iconsBelowMenu = new JMenu(Bundle.getMessage("MenuItemIconsBelow"));
+
+            JMenuItem mi = new JMenuItem(Bundle.getMessage("MenuItemIconsBelow_InfoNotInOrder"));
+            mi.setEnabled(false);
+            iconsBelowMenu.add(mi);
+
+            if (tracks.size() > 1) {
+                for (int i=0; i < tracks.size(); i++) {
+                    LayoutTrack t = tracks.get(i);
+                    iconsBelowMenu.add(new AbstractAction(Bundle.getMessage(
+                            "LayoutTrackTypeAndName", t.getTypeName(), t.getName())) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            LayoutTrackView ltv = getLayoutTrackView(t);
+                            ltv.showPopup(event);
+                        }
+                    });
+                }
+            }
+            if (selections.size() > 1) {
+                for (int i=0; i < selections.size(); i++) {
+                    Positionable pos = selections.get(i);
+                    iconsBelowMenu.add(new AbstractAction(Bundle.getMessage(
+                            "PositionableTypeAndName", pos.getTypeString(), pos.getNameString())) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            showPopUp(pos, event, new ArrayList<>());
+                        }
+                    });
+                }
+            }
+            popup.addSeparator();
+            popup.add(iconsBelowMenu);
+        }
+    }
+
     private void showEditPopUps(@Nonnull JmriMouseEvent event) {
         if (findLayoutTracksHitPoint(dLoc)) {
             if (HitPointType.isBezierHitType(foundHitPointType)) {
@@ -3821,8 +3874,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     /**
      * Select the menu items to display for the Positionable's popup.
+     * @param p     the item containing or requiring the context menu
+     * @param event the event triggering the menu
      */
-    @Override
     public void showPopUp(@Nonnull Positionable p, @Nonnull JmriMouseEvent event) {
         assert p != null;
 
@@ -3916,6 +3970,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 util.setAdditionalViewPopUpMenu(popup);
             }
         }
+
+        addPopupItems(popup, event);
+
         popup.show((Component) p, p.getWidth() / 2 + (int) ((getZoom() - 1.0) * p.getX()),
                 p.getHeight() / 2 + (int) ((getZoom() - 1.0) * p.getY()));
 
@@ -5980,7 +6037,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                         Bundle.getMessage("ButtonNo"));
 
                 // array position 1, ButtonNo , or Dialog Closed.
-                if (selectedValue == 1 || selectedValue == JmriJOptionPane.CLOSED_OPTION ) { 
+                if (selectedValue == 1 || selectedValue == JmriJOptionPane.CLOSED_OPTION ) {
                     return false; // return without creating if "No" response
                 }
 
@@ -6141,7 +6198,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     Bundle.getMessage("ButtonNo"));
 
              // array position 1 Button No, or Dialog closed.
-            if (selectedValue == 1 || selectedValue==JmriJOptionPane.CLOSED_OPTION ) { 
+            if (selectedValue == 1 || selectedValue==JmriJOptionPane.CLOSED_OPTION ) {
                 return false;
             }
 
@@ -6927,6 +6984,62 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     /**
+     * Add a LogixNG icon to the target
+     */
+    void addLogixNGIcon() {
+        LogixNGIcon l = new LogixNGIcon(leToolBarPanel.logixngEditor.getIcon(0), this);
+        setNextLocation(l);
+        l.setDisplayLevel(Editor.ICONS);
+        unionToPanelBounds(l.getBounds());
+        l.updateSize();
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
+    }
+
+    /**
+     * Add a LogixNG icon to the target
+     */
+    void addAudioIcon() {
+        String audioName = leToolBarPanel.textAudioComboBox.getSelectedItemDisplayName();
+        if (audioName == null) {
+            audioName = "";
+        }
+
+        if (audioName.isEmpty()) {
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error11d"),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        AudioIcon l = new AudioIcon(leToolBarPanel.audioEditor.getIcon(0), this);
+        l.setAudio(audioName);
+        Audio xAudio = l.getAudio();
+
+        if (xAudio != null) {
+            String uname = xAudio.getDisplayName();
+            if (!uname.equals(audioName)) {
+                // put the system name in the memory field
+                leToolBarPanel.textAudioComboBox.setSelectedItem(xAudio);
+            }
+        }
+
+        setNextLocation(l);
+        l.setDisplayLevel(Editor.ICONS);
+        unionToPanelBounds(l.getBounds());
+        l.updateSize();
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
+    }
+
+    /**
      * Add a loco marker to the target
      */
     @Override
@@ -7107,6 +7220,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     private LayoutEditorAuxTools auxTools = null;
 
+    @Override
     @Nonnull
     public LayoutEditorAuxTools getLEAuxTools() {
         if (auxTools == null) {
@@ -7994,6 +8108,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     return getLayoutTracksOfClass(PositionablePoint);
     }
      */
+    @Override
     public @Nonnull
     Stream<LayoutTrack> getLayoutTracksOfClass(Class<? extends LayoutTrack> layoutTrackClass) {
         return getLayoutTracks().stream()
@@ -8001,6 +8116,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .map(layoutTrackClass::cast);
     }
 
+    @Override
     public @Nonnull
     Stream<LayoutTrackView> getLayoutTrackViewsOfClass(Class<? extends LayoutTrackView> layoutTrackViewClass) {
         return getLayoutTrackViews().stream()
@@ -8008,6 +8124,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .map(layoutTrackViewClass::cast);
     }
 
+    @Override
     public @Nonnull
     List<PositionablePointView> getPositionablePointViews() {
         return getLayoutTrackViewsOfClass(PositionablePointView.class)
@@ -8015,6 +8132,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<PositionablePoint> getPositionablePoints() {
         return getLayoutTracksOfClass(PositionablePoint.class)
@@ -8029,6 +8147,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<LayoutSlip> getLayoutSlips() {
         return getLayoutTracksOfClass(LayoutSlip.class)
@@ -8036,6 +8155,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<TrackSegmentView> getTrackSegmentViews() {
         return getLayoutTrackViewsOfClass(TrackSegmentView.class)
@@ -8043,6 +8163,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<TrackSegment> getTrackSegments() {
         return getLayoutTracksOfClass(TrackSegment.class)
@@ -8058,6 +8179,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<LayoutTurnout> getLayoutTurnouts() { // this specifically does not include slips
         return getLayoutTracks().stream() // next line excludes LayoutSlips
@@ -8066,6 +8188,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<LayoutTurntable> getLayoutTurntables() {
         return getLayoutTracksOfClass(LayoutTurntable.class)
@@ -8080,6 +8203,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<LevelXing> getLevelXings() {
         return getLayoutTracksOfClass(LevelXing.class)
@@ -8087,6 +8211,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<LevelXingView> getLevelXingViews() {
         return getLayoutTrackViewsOfClass(LevelXingView.class)
@@ -8101,6 +8226,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      *
      * @return unmodifiable copy of layout track list.
      */
+    @Override
     @Nonnull
     final public List<LayoutTrack> getLayoutTracks() {
         return Collections.unmodifiableList(layoutTrackList);
@@ -8114,6 +8240,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
     public @Nonnull
     List<LayoutTurnout> getLayoutTurnoutsAndSlips() {
         return getLayoutTracksOfClass(LayoutTurnout.class
@@ -8129,6 +8256,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      *
      * @return unmodifiable copy of track views.
      */
+    @Override
     @Nonnull
     final public List<LayoutTrackView> getLayoutTrackViews() {
         return Collections.unmodifiableList(layoutTrackViewList);
@@ -8140,6 +8268,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private final Map<LayoutTrackView, LayoutTrack> viewToTrk = new HashMap<>();
 
     // temporary
+    @Override
     final public LayoutTrackView getLayoutTrackView(LayoutTrack trk) {
         LayoutTrackView lv = trkToView.get(trk);
         if (lv == null) {
@@ -8150,6 +8279,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     // temporary
+    @Override
     final public LevelXingView getLevelXingView(LevelXing xing) {
         LayoutTrackView lv = trkToView.get(xing);
         if (lv == null) {
@@ -8165,6 +8295,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     // temporary
+    @Override
     final public LayoutTurnoutView getLayoutTurnoutView(LayoutTurnout to) {
         LayoutTrackView lv = trkToView.get(to);
         if (lv == null) {
@@ -8180,6 +8311,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     // temporary
+    @Override
     final public LayoutTurntableView getLayoutTurntableView(LayoutTurntable to) {
         LayoutTrackView lv = trkToView.get(to);
         if (lv == null) {
@@ -8210,6 +8342,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     // temporary
+    @Override
     final public TrackSegmentView getTrackSegmentView(TrackSegment to) {
         LayoutTrackView lv = trkToView.get(to);
         if (lv == null) {
@@ -8225,6 +8358,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     // temporary
+    @Override
     final public PositionablePointView getPositionablePointView(PositionablePoint to) {
         LayoutTrackView lv = trkToView.get(to);
         if (lv == null) {
@@ -8245,6 +8379,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      *
      * @param trk the layout track to add.
      */
+    @Override
     final public void addLayoutTrack(@Nonnull LayoutTrack trk, @Nonnull LayoutTrackView v) {
         log.trace("addLayoutTrack {}", trk);
         if (layoutTrackList.contains(trk)) {
@@ -8286,6 +8421,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      *
      * @param trk the layout track to remove.
      */
+    @Override
     final public void removeLayoutTrack(@Nonnull LayoutTrack trk) {
         log.trace("removeLayoutTrack {}", trk);
         layoutTrackList.remove(trk);
@@ -8306,6 +8442,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         viewToTrk.clear();
     }
 
+    @Override
     public @Nonnull
     List<LayoutShape> getLayoutShapes() {
         return layoutShapes;

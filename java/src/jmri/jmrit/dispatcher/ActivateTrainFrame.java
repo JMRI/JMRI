@@ -719,9 +719,9 @@ public class ActivateTrainFrame extends JmriJFrame {
 
     private void handleInTransitClick(ActionEvent e) {
         if (!inTransitBox.isSelected() && selectedTransit.getEntryBlocksList().isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(initiateFrame, Bundle
+            JmriJOptionPane.showMessageDialog(initiateFrame, Bundle
                     .getMessage("NoEntryBlocks"), Bundle.getMessage("MessageTitle"),
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                    JmriJOptionPane.INFORMATION_MESSAGE);
             inTransitBox.setSelected(true);
         }
         initializeStartingBlockCombo();
@@ -778,9 +778,9 @@ public class ActivateTrainFrame extends JmriJFrame {
         if ((!reverseAtEndBox.isSelected()) && resetWhenDoneBox.isSelected()
                 && (!selectedTransit.canBeResetWhenDone())) {
             resetWhenDoneBox.setSelected(false);
-            javax.swing.JOptionPane.showMessageDialog(initiateFrame, Bundle
+            JmriJOptionPane.showMessageDialog(initiateFrame, Bundle
                     .getMessage("NoResetMessage"), Bundle.getMessage("MessageTitle"),
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                    JmriJOptionPane.INFORMATION_MESSAGE);
             return false;
         }
         return true;

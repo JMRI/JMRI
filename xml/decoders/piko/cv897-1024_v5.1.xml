@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2022,2023 All rights reserved                       -->
+<!-- Copyright (C) JMRI 2022, 2023 All rights reserved                      -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -37,8 +37,20 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Extended for all outputs A1 to A6, add CV1018 for output test</revremark>
 		</revision>
+		<revision>
+			<revnumber>3</revnumber>
+			<date>2023-10-10</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Extended CVs for PWM outputs A1 to A6</revremark>
+		</revision>
+		<revision>
+			<revnumber>4</revnumber>
+			<date>2023-10-20</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add CV Fade-in-out</revremark>
+		</revision>
 	</revhistory>
-	<!-- Interner Lichtdecoder CVs -->
+	<!-- Interner Zusatzcontroller CVs -->
 	<!-- Declaration of the "switch" CV, not for direct use but for checking value -->
 	<variable item="SUSI_Bank_Switch" CV="1021" default="0">
 		<enumVal>
@@ -126,7 +138,7 @@
 		<label xml:lang="de">F2	ein</label>
 		<tooltip xml:lang="de">Ausgang 1 Funktion Vorwärts Ein</tooltip>
 	</variable>
-	<variable item="A1_F3_fw_On" CV="982.1021=0" mask="XXXXVXXX" default="1">
+	<variable item="A1_F3_fw_On" CV="982.1021=0" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F3 on</label>
 		<label xml:lang="de">F3 ein</label>
@@ -171,7 +183,7 @@
 	<variable item="A1_F10_fw_On" CV="983.1021=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F10 on</label>
-		<label xml:lang="de">F10	ein</label>
+		<label xml:lang="de">F10 ein</label>
 		<tooltip xml:lang="de">Ausgang 1 Funktion Vorwärts Ein</tooltip>
 	</variable>
 	<variable item="A1_F11_fw_On" CV="983.1021=0" mask="XXXXVXXX" default="0">
@@ -219,7 +231,7 @@
 	<variable item="A1_F18_fw_On" CV="984.1021=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F18 on</label>
-		<label xml:lang="de">F18	ein</label>
+		<label xml:lang="de">F18 ein</label>
 		<tooltip xml:lang="de">Ausgang 1 Funktion Vorwärts Ein</tooltip>
 	</variable>
 	<variable item="A1_F19_fw_On" CV="984.1021=0" mask="XXXXVXXX" default="0">
@@ -297,7 +309,7 @@
 		<label xml:lang="de">F2	ein</label>
 		<tooltip xml:lang="de">Ausgang 1 Funktion Rückwärts Ein</tooltip>
 	</variable>
-	<variable item="A1_F3_bw_On" CV="986.1021=0" mask="XXXXVXXX" default="1">
+	<variable item="A1_F3_bw_On" CV="986.1021=0" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F3 on</label>
 		<label xml:lang="de">F3 ein</label>
@@ -390,7 +402,7 @@
 	<variable item="A1_F18_bw_On" CV="988.1021=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F18 on</label>
-		<label xml:lang="de">F18	ein</label>
+		<label xml:lang="de">F18 ein</label>
 		<tooltip xml:lang="de">Ausgang 1 Funktion Rückwärts Ein</tooltip>
 	</variable>
 	<variable item="A1_F19_bw_On" CV="988.1021=0" mask="XXXXVXXX" default="0">
@@ -513,7 +525,7 @@
 	<variable item="A1_F10_fw_Off" CV="991.1021=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F10 off</label>
-		<label xml:lang="de">F10	ein</label>
+		<label xml:lang="de">F10 ein</label>
 		<tooltip xml:lang="de">Ausgang 1 Funktion Vorwärts Aus</tooltip>
 	</variable>
 	<variable item="A1_F11_fw_Off" CV="991.1021=0" mask="XXXXVXXX" default="0">
@@ -674,7 +686,7 @@
 	<variable item="A1_F10_bw_Off" CV="995.1021=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F10 off</label>
-		<label xml:lang="de">F10	ein</label>
+		<label xml:lang="de">F10 ein</label>
 		<tooltip xml:lang="de">Ausgang 1 Funktion Rückwärts Aus</tooltip>
 	</variable>
 	<variable item="A1_F11_bw_Off" CV="995.1021=0" mask="XXXXVXXX" default="0">
@@ -771,13 +783,13 @@
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<tooltip xml:lang="de">Ausgang 1 Funktion Rückwärts Aus</tooltip>
 	</variable>
-	<variable item="A1_Fade_in" CV="998.1021=0" mask="XXXXXXXV" default="1">
+	<variable item="A1_Fade_in" CV="998.1021=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>A1 Fade in</label>
 		<label xml:lang="de">Ausgang A1 einblenden</label>
 		<tooltip xml:lang="de">Effekt Flag A1 "Einblenden"</tooltip>
 	</variable>
-	<variable item="A1_Fade_out" CV="998.1021=0" mask="XXXXXXVX" default="1">
+	<variable item="A1_Fade_out" CV="998.1021=0" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>A1 Fade out</label>
 		<label xml:lang="de">Ausgang A1 ausblenden</label>
@@ -848,7 +860,7 @@
 	<variable item="A2_F10_fw_On" CV="1001.1021=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F10 on</label>
-		<label xml:lang="de">F10	ein</label>
+		<label xml:lang="de">F10 ein</label>
 		<tooltip xml:lang="de">Ausgang 2 Funktion Vorwärts Ein</tooltip>
 	</variable>
 	<variable item="A2_F11_fw_On" CV="1001.1021=0" mask="XXXXVXXX" default="0">
@@ -896,7 +908,7 @@
 	<variable item="A2_F18_fw_On" CV="1002.1021=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F18 on</label>
-		<label xml:lang="de">F18	ein</label>
+		<label xml:lang="de">F18 ein</label>
 		<tooltip xml:lang="de">Ausgang 2 Funktion Vorwärts Ein</tooltip>
 	</variable>
 	<variable item="A2_F19_fw_On" CV="1002.1021=0" mask="XXXXVXXX" default="0">
@@ -1067,7 +1079,7 @@
 	<variable item="A2_F18_bw_On" CV="1006.1021=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F18 on</label>
-		<label xml:lang="de">F18	ein</label>
+		<label xml:lang="de">F18 ein</label>
 		<tooltip xml:lang="de">Ausgang 2 Funktion Rückwärts Ein</tooltip>
 	</variable>
 	<variable item="A2_F19_bw_On" CV="1006.1021=0" mask="XXXXVXXX" default="0">
@@ -1190,7 +1202,7 @@
 	<variable item="A2_F10_fw_Off" CV="1009.1021=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F10 off</label>
-		<label xml:lang="de">F10	ein</label>
+		<label xml:lang="de">F10 ein</label>
 		<tooltip xml:lang="de">Ausgang 2 Funktion Vorwärts Aus</tooltip>
 	</variable>
 	<variable item="A2_F11_fw_Off" CV="1009.1021=0" mask="XXXXVXXX" default="0">
@@ -1351,7 +1363,7 @@
 	<variable item="A2_F10_bw_Off" CV="1013.1021=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F10 off</label>
-		<label xml:lang="de">F10	ein</label>
+		<label xml:lang="de">F10 ein</label>
 		<tooltip xml:lang="de">Ausgang 2 Funktion Rückwärts Aus</tooltip>
 	</variable>
 	<variable item="A2_F11_bw_Off" CV="1013.1021=0" mask="XXXXVXXX" default="0">
@@ -1510,7 +1522,7 @@
 		<label xml:lang="de">F7 ein</label>
 		<tooltip xml:lang="de">Ausgang 3 Funktion Vorwärts Ein</tooltip>
 	</variable>
-	<variable item="A3_F8_fw_On" CV="983.1021=1" mask="XXXXXXXV" default="1">
+	<variable item="A3_F8_fw_On" CV="983.1021=1" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F8 on</label>
 		<label xml:lang="de">F8 ein</label>
@@ -1525,7 +1537,7 @@
 	<variable item="A3_F10_fw_On" CV="983.1021=1" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F10 on</label>
-		<label xml:lang="de">F10	ein</label>
+		<label xml:lang="de">F10 ein</label>
 		<tooltip xml:lang="de">Ausgang 3 Funktion Vorwärts Ein</tooltip>
 	</variable>
 	<variable item="A3_F11_fw_On" CV="983.1021=1" mask="XXXXVXXX" default="0">
@@ -1573,7 +1585,7 @@
 	<variable item="A3_F18_fw_On" CV="984.1021=1" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F18 on</label>
-		<label xml:lang="de">F18	ein</label>
+		<label xml:lang="de">F18 ein</label>
 		<tooltip xml:lang="de">Ausgang 3 Funktion Vorwärts Ein</tooltip>
 	</variable>
 	<variable item="A3_F19_fw_On" CV="984.1021=1" mask="XXXXVXXX" default="0">
@@ -1681,7 +1693,7 @@
 		<label xml:lang="de">F7 ein</label>
 		<tooltip xml:lang="de">Ausgang 3 Funktion Rückwärts Ein</tooltip>
 	</variable>
-	<variable item="A3_F8_bw_On" CV="987.1021=1" mask="XXXXXXXV" default="1">
+	<variable item="A3_F8_bw_On" CV="987.1021=1" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F8 on</label>
 		<label xml:lang="de">F8 ein</label>
@@ -1744,7 +1756,7 @@
 	<variable item="A3_F18_bw_On" CV="988.1021=1" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F18 on</label>
-		<label xml:lang="de">F18	ein</label>
+		<label xml:lang="de">F18 ein</label>
 		<tooltip xml:lang="de">Ausgang 3 Funktion Rückwärts Ein</tooltip>
 	</variable>
 	<variable item="A3_F19_bw_On" CV="988.1021=1" mask="XXXXVXXX" default="0">
@@ -1867,7 +1879,7 @@
 	<variable item="A3_F10_fw_Off" CV="991.1021=1" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F10 off</label>
-		<label xml:lang="de">F10	ein</label>
+		<label xml:lang="de">F10 ein</label>
 		<tooltip xml:lang="de">Ausgang 3 Funktion Vorwärts Aus</tooltip>
 	</variable>
 	<variable item="A3_F11_fw_Off" CV="991.1021=1" mask="XXXXVXXX" default="0">
@@ -2028,7 +2040,7 @@
 	<variable item="A3_F10_bw_Off" CV="995.1021=1" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F10 off</label>
-		<label xml:lang="de">F10	ein</label>
+		<label xml:lang="de">F10 ein</label>
 		<tooltip xml:lang="de">Ausgang 3 Funktion Rückwärts Aus</tooltip>
 	</variable>
 	<variable item="A3_F11_bw_Off" CV="995.1021=1" mask="XXXXVXXX" default="0">
@@ -2125,13 +2137,13 @@
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<tooltip xml:lang="de">Ausgang 3 Funktion Rückwärts Aus</tooltip>
 	</variable>
-	<variable item="A3_Fade_in" CV="998.1021=1" mask="XXXXXXXV" default="1">
+	<variable item="A3_Fade_in" CV="998.1021=1" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>A3 Fade in</label>
 		<label xml:lang="de">Ausgang A3 einblenden</label>
 		<tooltip xml:lang="de">Effekt Flag A3 "Einblenden"</tooltip>
 	</variable>
-	<variable item="A3_Fade_out" CV="998.1021=1" mask="XXXXXXVX" default="1">
+	<variable item="A3_Fade_out" CV="998.1021=1" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>A3 Fade out</label>
 		<label xml:lang="de">Ausgang A3 ausblenden</label>
@@ -2202,7 +2214,7 @@
 	<variable item="A4_F10_fw_On" CV="1001.1021=1" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F10 on</label>
-		<label xml:lang="de">F10	ein</label>
+		<label xml:lang="de">F10 ein</label>
 		<tooltip xml:lang="de">Ausgang 4 Funktion Vorwärts Ein</tooltip>
 	</variable>
 	<variable item="A4_F11_fw_On" CV="1001.1021=1" mask="XXXXVXXX" default="0">
@@ -2250,7 +2262,7 @@
 	<variable item="A4_F18_fw_On" CV="1002.1021=1" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F18 on</label>
-		<label xml:lang="de">F18	ein</label>
+		<label xml:lang="de">F18 ein</label>
 		<tooltip xml:lang="de">Ausgang 4 Funktion Vorwärts Ein</tooltip>
 	</variable>
 	<variable item="A4_F19_fw_On" CV="1002.1021=1" mask="XXXXVXXX" default="0">
@@ -2421,7 +2433,7 @@
 	<variable item="A4_F18_bw_On" CV="1006.1021=1" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F18 on</label>
-		<label xml:lang="de">F18	ein</label>
+		<label xml:lang="de">F18 ein</label>
 		<tooltip xml:lang="de">Ausgang 4 Funktion Rückwärts Ein</tooltip>
 	</variable>
 	<variable item="A4_F19_bw_On" CV="1006.1021=1" mask="XXXXVXXX" default="0">
@@ -2544,7 +2556,7 @@
 	<variable item="A4_F10_fw_Off" CV="1009.1021=1" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F10 off</label>
-		<label xml:lang="de">F10	ein</label>
+		<label xml:lang="de">F10 ein</label>
 		<tooltip xml:lang="de">Ausgang 4 Funktion Vorwärts Aus</tooltip>
 	</variable>
 	<variable item="A4_F11_fw_Off" CV="1009.1021=1" mask="XXXXVXXX" default="0">
@@ -2705,7 +2717,7 @@
 	<variable item="A4_F10_bw_Off" CV="1013.1021=1" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F10 off</label>
-		<label xml:lang="de">F10	ein</label>
+		<label xml:lang="de">F10 ein</label>
 		<tooltip xml:lang="de">Ausgang 4 Funktion Rückwärts Aus</tooltip>
 	</variable>
 	<variable item="A4_F11_bw_Off" CV="1013.1021=1" mask="XXXXVXXX" default="0">
@@ -2879,7 +2891,7 @@
 	<variable item="A5_F10_fw_On" CV="983.1021=2" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F10 on</label>
-		<label xml:lang="de">F10	ein</label>
+		<label xml:lang="de">F10 ein</label>
 		<tooltip xml:lang="de">Ausgang 5 Funktion Vorwärts Ein</tooltip>
 	</variable>
 	<variable item="A5_F11_fw_On" CV="983.1021=2" mask="XXXXVXXX" default="0">
@@ -2927,7 +2939,7 @@
 	<variable item="A5_F18_fw_On" CV="984.1021=2" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F18 on</label>
-		<label xml:lang="de">F18	ein</label>
+		<label xml:lang="de">F18 ein</label>
 		<tooltip xml:lang="de">Ausgang 5 Funktion Vorwärts Ein</tooltip>
 	</variable>
 	<variable item="A5_F19_fw_On" CV="984.1021=2" mask="XXXXVXXX" default="0">
@@ -3098,7 +3110,7 @@
 	<variable item="A5_F18_bw_On" CV="988.1021=2" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F18 on</label>
-		<label xml:lang="de">F18	ein</label>
+		<label xml:lang="de">F18 ein</label>
 		<tooltip xml:lang="de">Ausgang 5 Funktion Rückwärts Ein</tooltip>
 	</variable>
 	<variable item="A5_F19_bw_On" CV="988.1021=2" mask="XXXXVXXX" default="0">
@@ -3221,7 +3233,7 @@
 	<variable item="A5_F10_fw_Off" CV="991.1021=2" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F10 off</label>
-		<label xml:lang="de">F10	ein</label>
+		<label xml:lang="de">F10 ein</label>
 		<tooltip xml:lang="de">Ausgang 5 Funktion Vorwärts Aus</tooltip>
 	</variable>
 	<variable item="A5_F11_fw_Off" CV="991.1021=2" mask="XXXXVXXX" default="0">
@@ -3382,7 +3394,7 @@
 	<variable item="A5_F10_bw_Off" CV="995.1021=2" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F10 off</label>
-		<label xml:lang="de">F10	ein</label>
+		<label xml:lang="de">F10 ein</label>
 		<tooltip xml:lang="de">Ausgang 5 Funktion Rückwärts Aus</tooltip>
 	</variable>
 	<variable item="A5_F11_bw_Off" CV="995.1021=2" mask="XXXXVXXX" default="0">
@@ -3556,7 +3568,7 @@
 	<variable item="A6_F10_fw_On" CV="1001.1021=2" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F10 on</label>
-		<label xml:lang="de">F10	ein</label>
+		<label xml:lang="de">F10 ein</label>
 		<tooltip xml:lang="de">Ausgang 6 Funktion Vorwärts Ein</tooltip>
 	</variable>
 	<variable item="A6_F11_fw_On" CV="1001.1021=2" mask="XXXXVXXX" default="0">
@@ -3604,7 +3616,7 @@
 	<variable item="A6_F18_fw_On" CV="1002.1021=2" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F18 on</label>
-		<label xml:lang="de">F18	ein</label>
+		<label xml:lang="de">F18 ein</label>
 		<tooltip xml:lang="de">Ausgang 6 Funktion Vorwärts Ein</tooltip>
 	</variable>
 	<variable item="A6_F19_fw_On" CV="1002.1021=2" mask="XXXXVXXX" default="0">
@@ -3775,7 +3787,7 @@
 	<variable item="A6_F18_bw_On" CV="1006.1021=2" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F18 on</label>
-		<label xml:lang="de">F18	ein</label>
+		<label xml:lang="de">F18 ein</label>
 		<tooltip xml:lang="de">Ausgang 6 Funktion Rückwärts Ein</tooltip>
 	</variable>
 	<variable item="A6_F19_bw_On" CV="1006.1021=2" mask="XXXXVXXX" default="0">
@@ -3898,7 +3910,7 @@
 	<variable item="A6_F10_fw_Off" CV="1009.1021=2" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F10 off</label>
-		<label xml:lang="de">F10	ein</label>
+		<label xml:lang="de">F10 ein</label>
 		<tooltip xml:lang="de">Ausgang 6 Funktion Vorwärts Aus</tooltip>
 	</variable>
 	<variable item="A6_F11_fw_Off" CV="1009.1021=2" mask="XXXXVXXX" default="0">
@@ -4059,7 +4071,7 @@
 	<variable item="A6_F10_bw_Off" CV="1013.1021=2" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>F10 off</label>
-		<label xml:lang="de">F10	ein</label>
+		<label xml:lang="de">F10 ein</label>
 		<tooltip xml:lang="de">Ausgang 6 Funktion Rückwärts Aus</tooltip>
 	</variable>
 	<variable item="A6_F11_bw_Off" CV="1013.1021=2" mask="XXXXVXXX" default="0">
@@ -4167,6 +4179,68 @@
 		<label>A6 Fade out</label>
 		<label xml:lang="de">Ausgang A6 ausblenden</label>
 		<tooltip xml:lang="de">Effekt Flag A6 "Ausblenden"</tooltip>
+	</variable>
+	<!--Ausgang 7 Wert = F-Taste - nur Ein - CV1018-->
+	<variable item="A7_F_Key" CV="1018.1021=2" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF68Off255.xml"/>
+		<label>Key to activate A7:</label>
+		<label xml:lang="de">Ausgang 7 Ein </label>
+	</variable>
+	<!-- PWM Dimmung A1 - A6 -->
+	<variable item="PWM1_A1" CV="982.1021=3" default="255">
+		<decVal/>
+		<label>PWM1 A1</label>
+		<label xml:lang="de">Dimmung Ausgang 1</label>
+		<tooltip>0 - 255</tooltip>
+	</variable>
+	<variable item="PWM1_A2" CV="985.1021=3" default="255">
+		<decVal/>
+		<label>PWM1 A2</label>
+		<label xml:lang="de">Dimmung Ausgang 2</label>
+		<tooltip>0 - 255</tooltip>
+	</variable>
+	<variable item="PWM1_A3" CV="988.1021=3" default="255">
+		<decVal/>
+		<label>PWM1 A3</label>
+		<label xml:lang="de">Dimmung Ausgang 3</label>
+		<tooltip>0 - 255</tooltip>
+	</variable>
+	<variable item="PWM1_A4" CV="991.1021=3" default="255">
+		<decVal/>
+		<label>PWM1 A4</label>
+		<label xml:lang="de">Dimmung Ausgang 4</label>
+		<tooltip>0 - 255</tooltip>
+	</variable>
+	<variable item="PWM1_A5" CV="994.1021=3" default="255">
+		<decVal/>
+		<label>PWM1 A5</label>
+		<label xml:lang="de">Dimmung Ausgang 5</label>
+		<tooltip>0 - 255</tooltip>
+	</variable>
+	<variable item="PWM1_A6" CV="997.1021=3" default="255">
+		<decVal/>
+		<label>PWM1 A6</label>
+		<label xml:lang="de">Dimmung Ausgang 6</label>
+		<tooltip>0 - 255</tooltip>
+	</variable>
+	<!-- Ein- und Ausblenddauer alle Ausgänge -->
+	<variable item="PWM_Time" CV="1012.1021=3" default="0">
+		<decVal/>
+		<label>PWM Time</label>
+		<label xml:lang="de">Zeitstufen zum Ein- und Ausblenden der Ausgänge</label>
+		<tooltip>0 - 255</tooltip>
+	</variable>
+	<variable CV="1012.1021=3" mask="XXXXVVVV" item="Fade_in_time" default="0">
+		<decVal max="15"/>
+		<label>Fade In  A1 to A6</label>
+		<label xml:lang="de">Einblenden A1 bis A6</label>
+		<tooltip>0 - 15 Zeitstufen</tooltip>
+	</variable>
+	<variable CV="1012.1021=3" mask="VVVVXXXX" item="Fade_out_time" default="0">
+		<decVal max="15"/>
+		<label>Fade Out A1 to A6</label>
+		<label xml:lang="de">Ausblenden A1 bis A6</label>
+		<tooltip>0 - 15 Zeitstufen</tooltip>
 	</variable>
 </variables>
 

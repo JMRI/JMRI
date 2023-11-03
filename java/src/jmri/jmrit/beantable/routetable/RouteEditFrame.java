@@ -2,9 +2,6 @@ package jmri.jmrit.beantable.routetable;
 
 import jmri.InstanceManager;
 import jmri.Route;
-import jmri.Sensor;
-import jmri.Turnout;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

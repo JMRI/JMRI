@@ -489,13 +489,13 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         }
         int count = location.getNumberRS();
         if (count > 0) {
-            if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("ThereAreCars", Integer.toString(count)),
+            if (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("ThereAreCars", Integer.toString(count)),
                     Bundle.getMessage("deletelocation?"),
                     JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                 return;
             }
         } else {
-            if (JOptionPane.showConfirmDialog(this,
+            if (JmriJOptionPane.showConfirmDialog(this,
                     Bundle.getMessage("DoYouWantToDeleteLocation", locationNameTextField.getText()),
                     Bundle.getMessage("deletelocation?"),
                     JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
@@ -593,7 +593,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     }
 
     private void reportLocationExists(String s) {
-        // log.info("Can not " + s + ", location already exists");
         JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("LocationAlreadyExists"),
                 Bundle.getMessage("CanNotLocation", s), JmriJOptionPane.ERROR_MESSAGE);
     }

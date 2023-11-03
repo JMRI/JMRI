@@ -10,9 +10,7 @@ import javax.annotation.CheckForNull;
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.roster.RosterEntry;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * This class holds information and options for an ActiveTrain when it is
@@ -325,9 +323,9 @@ public class AutoActiveTrain implements ThrottleListener {
     public void notifyThrottleFound(DccThrottle t) {
         _throttle = t;
         if (_throttle == null) {
-            javax.swing.JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(Bundle.getMessage(
+            JmriJOptionPane.showMessageDialog(null, java.text.MessageFormat.format(Bundle.getMessage(
                     "Error28"), new Object[]{_activeTrain.getTrainName()}), Bundle.getMessage("MessageTitle"),
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                    JmriJOptionPane.INFORMATION_MESSAGE);
             log.warn("null throttle returned for train '{}' during automatic initialization.", _activeTrain.getTrainName());
             _activeTrain.setMode(ActiveTrain.DISPATCHED);
             return;
@@ -2111,5 +2109,5 @@ public class AutoActiveTrain implements ThrottleListener {
         return RAMP_NONE;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutoActiveTrain.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AutoActiveTrain.class);
 }

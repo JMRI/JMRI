@@ -781,8 +781,8 @@ public class DecoderIndexFile extends XmlFile {
                 // drop the decoder implementation content
                 family.removeAttribute("comment");
                 // don't remove "outputs" due to use by ESU function map pane
-                family.removeChildren("output");
-                family.removeChildren("functionlabels");
+                // family.removeChildren("output");
+                // family.removeChildren("functionlabels");
 
                 // and drop content of model elements
                 for (Element element : family.getChildren()) { // model elements
@@ -797,9 +797,10 @@ public class DecoderIndexFile extends XmlFile {
 
                     // element.removeContent();
                     element.removeChildren("size");
-                    // don't remove "output" due to use by ESU function map pane
-                    element.removeChildren("functionlabels");
 
+                    //element.removeChildren("functionlabels");
+
+                    // don't remove "output" due to use by ESU function map pane
                     for (Element output : element.getChildren()) {
                         output.removeAttribute("connection");
                         output.removeAttribute("maxcurrent");

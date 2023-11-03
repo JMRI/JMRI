@@ -10,8 +10,6 @@ import jmri.Consist;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.implementation.AbstractConsistManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import javax.annotation.Nonnull;
 
 public class MqttConsistManager extends AbstractConsistManager {

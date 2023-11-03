@@ -1,7 +1,6 @@
 package jmri.jmrit.display.logixng;
 
 import java.util.AbstractMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,6 +27,7 @@ public class ActionFactory implements DigitalActionFactory {
     public Set<Map.Entry<Category, Class<? extends DigitalActionBean>>> getActionClasses() {
         Set<Map.Entry<Category, Class<? extends DigitalActionBean>>> actionClasses =
                 Set.of(
+                        new AbstractMap.SimpleEntry<>(CategoryDisplay.DISPLAY, ActionAudioIcon.class),
                         new AbstractMap.SimpleEntry<>(CategoryDisplay.DISPLAY, ActionLayoutTurnout.class),
                         new AbstractMap.SimpleEntry<>(CategoryDisplay.DISPLAY, ActionPositionable.class),
                         new AbstractMap.SimpleEntry<>(CategoryDisplay.DISPLAY, ActionPositionableByClass.class)

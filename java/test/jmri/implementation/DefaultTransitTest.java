@@ -1,6 +1,5 @@
 package jmri.implementation;
 
-import jmri.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;

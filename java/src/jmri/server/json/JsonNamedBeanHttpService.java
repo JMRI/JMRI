@@ -6,10 +6,10 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
-import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 import javax.servlet.http.HttpServletResponse;
+import jmri.Manager;
 import jmri.NamedBean;
 import jmri.ProvidingManager;
 
@@ -75,7 +75,7 @@ public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends Json
     public JsonNode doPut(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data, @Nonnull JsonRequest request)
             throws JsonException {
         try {
-            getManager().provide(name);
+            getProvidingManager().provide(name);
         } catch (IllegalArgumentException ex) {
             throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
                     Bundle.getMessage(request.locale, "ErrorInvalidSystemName", name, getType()), request.id);
@@ -227,5 +227,18 @@ public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends Json
      * @return the manager
      */
     @Nonnull
-    protected abstract ProvidingManager<T> getManager();
+    protected Manager<T> getManager() {
+        return getProvidingManager();
+    }
+
+    /**
+     * Get the expected providing manager for the supported JSON type. This
+     * should normally be the default manager.
+     *
+     * @return the providing manager
+     * @throws UnsupportedOperationException if a providing manager isn't available
+     */
+    protected abstract ProvidingManager<T> getProvidingManager()
+            throws UnsupportedOperationException;
+
 }

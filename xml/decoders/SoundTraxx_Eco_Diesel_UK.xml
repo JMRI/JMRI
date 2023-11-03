@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <copyright xmlns="http://docbook.org/ns/docbook">
         <year>2018</year>
         <holder>JMRI</holder>
@@ -61,6 +61,12 @@
             <authorinitials>JE</authorinitials>
             <revremark>chg includes TSU2PaneLighting, TSU2PaneASCdiesel</revremark>
         </revision>
+        <revision>
+            <revnumber>4</revnumber>
+            <date>2023-10-09</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>productID change for 11 bit Soundtraxx ID</revremark>
+        </revision>
     </revhistory>
     <version author="Alain Le Marchand" version="1" lastUpdated="20180103"/>
     <!-- Specific Econami UK information as per http://soundtraxxuk.com/ web site -->
@@ -73,7 +79,7 @@
     <!-- Decoder Model information follows -->
     <decoder>
         <family name="Econami Diesel UK" mfg="SoundTraxx (Throttle-Up)" comment="These are the UK retail version Econami Diesel decoders">
-            <model model="ECO-100 UK Diesel" numOuts="4" numFns="20" maxMotorCurrent="1A" connector="Wires" productID="301" comment="Model 882101">
+            <model model="ECO-100 UK Diesel" numOuts="4" numFns="20" maxMotorCurrent="1A" connector="Wires" productID="2093" comment="Model 882101">
                 <versionCV lowVersionID="70"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -102,7 +108,7 @@
                 </output>
                 <size length="27" width="10.5" height="5" units="mm"/>
             </model>
-            <model model="ECO-200 UK Diesel" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="Wires" productID="303" comment="Model 882102">
+            <model model="ECO-200 UK Diesel" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="Wires" productID="2095" comment="Model 882102">
                 <versionCV lowVersionID="70"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -131,7 +137,7 @@
                 </output>
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="ECO-21PNEM UK Diesel" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21pin" productID="305" comment="Model 882106 with NEM 21-pin plug">
+            <model model="ECO-21PNEM UK Diesel" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21pin" productID="2097" comment="Model 882106 with NEM 21-pin plug">
                 <versionCV lowVersionID="70"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -160,7 +166,7 @@
                 </output>
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
-            <model model="ECO-400 UK Diesel" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="Wires" productID="307" comment="Model 882105">
+            <model model="ECO-400 UK Diesel" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="Wires" productID="2099" comment="Model 882105">
                 <versionCV lowVersionID="70"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>

@@ -75,10 +75,10 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService<SignalMa
             }
         }
         if (data.path(LIT).isTextual()) {
-            signalMast.setLit(data.path(LIT).asBoolean());            
+            signalMast.setLit(data.path(LIT).asBoolean());
         }
         if (data.path(TOKEN_HELD).isTextual()) {
-            signalMast.setHeld(data.path(TOKEN_HELD).asBoolean());            
+            signalMast.setHeld(data.path(TOKEN_HELD).asBoolean());
         }
         return this.doGet(signalMast, name, type, request);
     }
@@ -104,7 +104,7 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService<SignalMa
     }
 
     @Override
-    protected ProvidingManager<SignalMast> getManager() {
+    protected ProvidingManager<SignalMast> getProvidingManager() {
         return InstanceManager.getDefault(SignalMastManager.class);
     }
 }

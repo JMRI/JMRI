@@ -97,6 +97,7 @@ public class DirectSystemConnectionMemo extends DefaultSystemConnectionMemo impl
         return new NamedBeanComparator<>();
     }
 
+    @Override
     public void configureManagers(){
         setThrottleManager(new ThrottleManager(this));
         register();

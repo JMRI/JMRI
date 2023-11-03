@@ -34,6 +34,7 @@ public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
      * Number of turnout to test. Made a separate method so it can be overridden
      * in subclasses that do or don't support various numbers
      */
+    @Override
     protected int getNumToTest1() {
         return 0;
     }

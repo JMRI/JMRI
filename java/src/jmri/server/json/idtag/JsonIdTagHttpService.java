@@ -91,7 +91,7 @@ public class JsonIdTagHttpService extends JsonNamedBeanHttpService<IdTag> {
     }
 
     @Override
-    protected ProvidingManager<IdTag> getManager() {
+    protected ProvidingManager<IdTag> getProvidingManager() {
         return InstanceManager.getDefault(IdTagManager.class);
     }
 }

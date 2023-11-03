@@ -55,7 +55,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         load is provided by an industry in a foreign division.
       </p>
 
-      <p>OperationsPro&trade; is included in the JMRI suite of tools and can be found under the
+      <p>OperationsPro&trade; is included in the JMRI suite of Tools and can be found under the
         main menu heading "Tools&rArr;OperationsPro".</p>
 
       <p>
@@ -77,7 +77,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
         <li><a href="#QuickStartHelp">Quick Start Help</a></li>
 
-        <li><a href="#TroubleShooting">Trouble Shooting</a></li>
+        <li><a href="#TroubleShooting">Trouble Shooting and Diagnostic Tools</a></li>
 
         <li><a href="#Settings">Settings</a>
           <ul>
@@ -825,15 +825,39 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         you will find many useful functions, like the ability to print the contents of the window.
       </p>
 
-      <h3 id="TroubleShooting">Trouble Shooting</h3>
+      <h3 id="TroubleShooting">Trouble Shooting and Diagnostic Tools</h3>
       The best tool for trouble shooting train build problems is the <a href="#BuildReports">Train
         Build Report</a>.
       <p>
         If you want to determine which trains can service a location or track, use the the <a
           href="#ShowTrainsServicingThisLocation">Show Trains Servicing this Location</a> or <a
           href="#ShowTrainsServicingThisTrack">Show Trains Servicing this track</a> tools. The "Show
-        trains Serving this track" tool can be found under "Tools" in the edit track window. The
+        trains Serving this track" tool can be found under "Tools" in the edit track menu bar. The
         tool also allows you to see how a specific car type will be serviced.
+      </p>
+      
+      <p>
+        To understand which car types a train can service, and which tracks will accept those car
+        types, use the <a href="#TrainShowCarTypesServiced">Show Car Types Serviced</a> tool.
+      </p>
+
+      <p>
+        If you wish to see or modify which trains can service a car type, use the <a
+          href="#ModifyTrainsByCarType">Modify Trains by Car Type</a> tool found under "Tools" in the
+        <a href="#Trains">Trains</a> window.  Select the car type and you can quickly see and modify
+        which trains can service that car type.
+      </p>
+
+      <p>
+        To review and modify which routes can service a location, you can use the <a
+          href="#ShowRoutesServicingThisLocation">Show Routes Servicing Location</a> tool found
+        under "Tools" in the <a href="#Locations">Locations</a> window.
+      </p>
+
+      <p>
+        You can see or modify which locations or tracks can service a car type, use the <a
+          href="#ModifylocationsByCarType">Modify Locations by Car Type</a> tool found under "Tools"
+        in the <a href="#Locations">Locations</a> window.
       </p>
 
       <p>
@@ -849,11 +873,6 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <p>
-        To understand which car types a train can service, and which tracks will accept those car
-        types, use the <a href="#TrainShowCarTypesServiced">Show Car Types Serviced</a> tool.
-      </p>
-
-      <p>
         If you decide to use schedules, the <a href="#ShowSchedulesByCarTypeAndLoad">Show
           Schedules by Car Type and Load</a> tool can show you which car types and loads will be
         serviced by your spurs.  You can also see which loads will be generated out of staging
@@ -861,11 +880,20 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         Staging and Schedules by Car Type and Load</a> tool.
       </p>
 
+      <p>
+        To determine why a car isn't being routed correctly, you can use a <a
+          href="#BuildReportDetails">train build report</a> with the router set to "Detailed" or
+        "Very Detailed". You can also use the <a href="#CarsSet">Set Car</a> tool found in the <a
+          href="#Cars">Cars</a> window. You'll need to set the car's final destination to get a
+        mini-build routing report.
+      </p>
+
       <p>OperationsPro&trade; will send messages to the system console when there are errors or
         problems with the program. You can access the system console from any menu bar under
         "Help".</p>
 
       <p style="page-break-after: always"><a href="#toc">[Click to go back to TOC]</a></p>
+      
       <h2 id="Settings">Settings</h2>
       The Settings window contains general parameters for the Operations application. Select from
       the JMRI main window "Tools&rArr;Operations&rArr;Settings" to open the Settings window. The
@@ -1002,7 +1030,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>
         You can quickly set the <a href="#SetTrainIconCoordinates">train icon coordinates</a> for
-        your panel using tools in the Routes and <a href="#EditRoute">Edit Route</a> windows.
+        your panel using "Tools" in the Routes and <a href="#EditRoute">Edit Route</a> windows.
       </p>
 
       <p>
@@ -1742,12 +1770,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       OperationsPro&trade; will save the current train Manifest before creating a new one. The
       program will store the old Manifests in a directory called "manifestBackups" located in the
       "operations" directory. You can review your old Manifest using the <a
-        href="#PrintSavedTrainManifests">Print or Preview Saved Train Manifests</a> under tools in
+        href="#PrintSavedTrainManifests">Print or Preview Saved Train Manifests</a> under "Tools" in
       the <a href="#Trains">Trains</a> or <a href="#TrainEdit">Edit Train</a> windows.
       <p>
         The program will also store a copy of each train's build report in a directory called
         "buildStatusBackups" also located in the "operations" directory. You can access old build
-        reports from the <a href="#TrainEdit">Edit Train</a> window under tools.
+        reports from the <a href="#TrainEdit">Edit Train</a> window under "Tools".
       </p>
 
       <p>This option also makes backup copies of any switch list that you create. They are
@@ -1791,14 +1819,17 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       OperationsPro&trade; supports several types of fonts for printing. Select the desired font and
       size using the pull down menus. You can also select which printer to use when printing out a
       Manifest or switch list. See <a href="#SwitchList">Switch Lists</a> for more details.
+
       <h3>Format</h3>
       If you would like your Manifest and switch lists printed in a tabular (columns) format select
       the "Tabular" checkbox. The program uses the longest character length for each of the
-      attribute's names (Road, Number, Type, Length, Color, Load, etc.) to set the width of each
-      column. Location names and track names can be up to 25 characters, so you might want to
-      consider shorter length names when using the "Tabular" feature. FYI, the program reports the
-      longest attribute, track and location names to the system console when creating Manifests. You
-      can access the system console from any menu bar under "Help".
+      attribute's names (Road, Number, Type, Load, Hazardous, Color, Kernel, Owner, Division, Track,
+      Location, Comment, Set Out and Pick Up Messages) to set the width of each column. Location
+      names and track names can be up to 25 characters, so you might want to consider shorter length
+      names when using the "Tabular" feature. FYI, the program reports the longest attribute names
+      to the system console when creating Manifests. You can access the system console from any menu
+      bar under "Help".
+
       <p>
         There are three options with regards to how your Manifests and switch lists are formated.
         "Standard" provides one line for each car pick up or set out. The "Two Column" format
@@ -2138,7 +2169,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>
         For a train to service a location, there must be at least one track for that location. See
-        below for more information on how to add <a href="#Yards">tracks</a> to your location.
+        below for more information on how to add <a href="#Yards">tracks</a> to your location. Once you've
+        created a track for a location, you can use the "Edit" button in the table to modify the track.
       </p>
 
       <p>The tables show the length of the tracks, the amount of track that is occupied (Used)
@@ -2250,7 +2282,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <p>
-        The Yardmaster tools provides another window called "Yardmaster by Track". This window lists
+        The Yardmaster "Tools" provides another window called "Yardmaster by Track". This window lists
         the work for each track at the location. The other two tools are "Print" and "Preview" which
         provide switch lists for the location but are only available when running in <a
           href="#SwitchList">Real Time</a>.
@@ -2971,7 +3003,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>
         You can also create a classification yard that sorts cars by destinations. Again using the
-        C/I track type, there's an option under tools in the edit track window to set <a
+        C/I track type, there's an option under "Tools" in the edit track window to set <a
           href="#TrackDestinations">Track Destinations</a>. So for example if your classification
         yard serviced four destinations, you could create four tracks, one for each destination, and
         the program would sort cars in your yard to each of those destinations for you. With regards
@@ -3267,7 +3299,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <h3 id="TrackTools">Track Tools</h3>
 
-      <p>You can access some very useful tools for your tracks from the tools menu when editing
+      <p>You can access some very useful tools for your tracks from the "Tools" menu when editing
         a track.</p>
 
       <h4 id="LoadOptions">Load Options</h4>
@@ -3557,7 +3589,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h3 id="LocationsTools">Locations Tools</h3>
 
       <p>OperationsPro&trade; provides several tools that can be accessed from the "Locations"
-        tools menu.</p>
+        "Tools" menu.</p>
 
       <h4 id="CopyLocation">Copy Location</h4>
 
@@ -3573,7 +3605,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4 id="LocationSchedules">Schedules</h4>
 
       <p>
-        You can access all of your schedules directly from the "Locations" tools menu. The
+        You can access all of your schedules directly from the "Locations" Tools menu. The
         "Schedules" window lists all of the available schedules by name. The table includes the
         status of the <a href="#Schedules">schedule</a>, the number of spurs the schedule is
         assigned to, a drop down menu showing each spur that is using the schedule, the schedule's
@@ -3643,11 +3675,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       mark), number, type, and length. The program will automatically calculate the car's maximum
       weight based on length and the scale your modeling. You can optionally add the car's color,
       built date, load and owner. If you want a group of cars to be switched as a unit, you can
-      create a "kernel". You can assign any number of cars to a kernel but the type of the first car
-      assigned will be used by the program to determine if the kernel is allowed at a location. The
-      entire length of the kernel is used to determine if the cars in the kernel will fit. Note that
-      the program also includes space for the car's couplers when calculating the length of a
-      kernel.
+      create a <a href="#Kernel">kernel</a>.
+      
       <p>
         <img src="images/Cars.png" alt="">
       </p>
@@ -3656,26 +3685,39 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       additional columns for "Reported Location", "Reported Date", and "RFID" will be displayed.</p>
 
 
-      <h3>Table Sort</h3>
+      <h4>Table Sort</h4>
       To sort cars by a particular attribute, select any of the radio buttons in the "Sort by" list.
-      One of the more useful sorts is by location. You can under "Tools&rArr;Car Roster" print a list
-      of cars by their location and track when the radio button "Location" is selected. You can also
-      sort the table by clicking on any of the column headings. To perform a double sort, select the
-      first sort by selecting one of the "Sort by" radio buttons, then click on the final sort by
-      clicking on one of the column headings.
-      <h3>Add, Find, Save Buttons</h3>
-      There are three buttons located at the bottom of the Cars window. The "Add" button allows you
-      to add a car to your roster. The "Save" button stores the cars roster to a file. The "Find"
-      button and the adjacent text window can be used to find a car by its road number. You can use
-      the wild card "*" when entering a car number. For example if you want to find all cars with
-      numbers that end with 345, enter *345, and press find. Each time you press find, the next
-      car with a road number ending with "345" will be highlighted.
+      One of the more useful sorts is by location. You can under "Tools&rArr;Car Roster" print a
+      list of cars by their location and track when the radio button "Location" is selected. You can
+      also sort the table by clicking on any of the column headings. To perform a double sort,
+      select the first sort by selecting one of the "Sort by" radio buttons, then click on the final
+      sort by clicking on one of the column headings.
 
-      <h3>Moves, Wait and Last Time Moved</h3>
+      <h4>Final Destination or FD</h4>
+      A car when assigned to a train is given a destination or the location where the car is to be
+      delivered. When a car is to be
+      <a href="#CarRouting">routed</a>, it is given a final destination, where the car going to be
+      delivered using two or more trains. A
+      <a href="#Schedules">schedule</a> is used to give a car a final destination, in addition to
+      the use of <a
+        href="#LocationDivision">Railroad Divisions</a> and <a href="#EditCarLoads">custom
+        car loads</a>. In the Cars table, a car's final destination has the prefix "->" in the
+      "Destination" or "Final Destination" columns.
+      
+      <h4>Moves, Wait and Last Time Moved</h4>
       You can edit the number of times a car has been moved by the program and the car's wait count
       directly from the "Cars" window. Double click on the cell in the Cars window to change. The
       built and owner fields can be found in the <a href="#CarsEdit">Edit Car</a> window. The last
       time moved is set by the program.
+
+      <h4>Add, Find, Save Buttons</h4>
+      There are three buttons located at the bottom of the Cars window. The
+      <a href="#CarsEdit">Add</a> button allows you to add a car to your roster. The "Save" button
+      stores the cars roster to a file. The "Find" button and the adjacent text window can be used
+      to find a car by its road number. You can use the wild card "*" when entering a car number.
+      For example if you want to find all cars with numbers that end with 345, enter *345, and press
+      find. Each time you press find, the next car with a road number ending with "345" will be
+      highlighted.
 
       <h3 id="ImportingCars">Importing Cars from a File</h3>
       If you already have a list of cars in a database, you can import the cars into the program.
@@ -3888,10 +3930,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       can accept the kernel. However, the program does use the entire length of the kernel to
       determine if the group of cars will fit on the destination track. Picking up or dropping off a
       kernel is regarded as one "move" when defining the number of moves in a train's route.
+      
       <p>
         Kernels are shown on Manifests and switch lists in the order they are entered, with the lead
         car being the first one entered. You can modify the order the cars in a kernel are printed
-        by changing their blocking order in the <a href="#CarsEdit">Edit Car</a> window.
+        by changing their blocking order in the <a href="#CarsEdit">Edit Car</a> window.  A negative 
+        blocking number will place the car before positive numbers.
       </p>
 
       <h4>Built</h4>
@@ -3905,7 +3949,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <a href="#TrainBuildOptions">configured</a> to only accept certain owner names.
 
       <h4>Comment</h4>
-      You can enter a comment for this car. The comment isn't shown on Manifests or switch lists.
+      You can enter a comment for this car. If you want to see the car's comment on the Train's Manifest
+      or switch lists, make an adjust to the <a href="#MessageFormats">Message Formats</a>.
 
       <h4 id="CARIDTAG">Id Tag
             [only if <a href="#EnableIdentificationTagFields">Enable ID Tag</a> option has been selected]</h4>
@@ -4128,9 +4173,18 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       track that the final destination specifies happens to be full, the program will search for a
       yard to place the car. When the track becomes available, the program will move the car from
       the yard to the track specified.
-      <p>When selecting a final destination, you don't have to specify a track. And when
-        selecting a destination that is staging, you shouldn't select a destination track, let the
-        program do that for you.</p>
+
+      <p>
+        When selecting a final destination, you don't have to specify a track. And when selecting a
+        destination that is staging, you shouldn't select a destination track, let the program do
+        that for you. The program will confirm after pressing "Save" that the program can route the
+        car from the car's current location to the final destination that you've specified. You can
+        review a "mini" build report for the car by using the Set Car tool "Preview or Print car
+        routing report". The program when creating the report uses the settings in the <a
+          href="#BuildReportDetails">Build Report Options</a> window. It is recommended that you set
+        the router level to "Detailed" or "Very Detailed" when trying to determine why a route
+        fails.
+      </p>
 
       <h4>Train</h4>
 
@@ -4186,7 +4240,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4>Show Checkboxes</h4>
 
       <p>You can if you wish add or remove a checkbox for each car in your roster by selecting
-        "Show Checkboxes" from the "Cars" tools menu. The checkboxes are useful when performing an
+        "Show Checkboxes" from the "Cars" Tools menu. The checkboxes are useful when performing an
         audit using a PC or other electronic device. There's also a "Reset Checkboxes" tool to
         return all checkboxes to their unselected state.</p>
 
@@ -5161,7 +5215,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         In the upper left side of the "Trains" window is the "Tools" menu. The first three items; <a
           href="#SettingsOptions">Options</a>, <a href="#PrintOptions">Manifest Print Options</a>,
         and <a href="#BuildReportDetails">Build Report Options</a> can also be accessed from the <a
-          href="#Settings">Settings</a> tools menu.
+          href="#Settings">Settings</a> Tools menu.
       </p>
 
       <h4 id="ModifyTrainsByCarType">Modify Trains by Car Type</h4>

@@ -3,18 +3,11 @@ package jmri.jmrit.logixng.expressions;
 import java.beans.*;
 import java.util.*;
 
-import javax.annotation.Nonnull;
-
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
-import jmri.jmrit.logixng.util.LogixNG_SelectString;
-import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
-import jmri.util.TypeConversionUtil;
 
 /**
  * This expression evaluates the state of a Section.
@@ -122,22 +115,12 @@ public class ExpressionSection extends AbstractDigitalExpression
         String namedBean = _selectNamedBean.getDescription(locale);
         String state;
 
-        switch (_selectEnum.getAddressing()) {
-            case Direct:
-                SectionState sectionState = _selectEnum.getEnum();
-                state = Bundle.getMessage(locale, "AddressByDirect", sectionState._text);
-                break;
-
-            case Reference:
-            case LocalVariable:
-            case Formula:
-                state = _selectEnum.getDescription(locale);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _stateAddressing state: " + _selectEnum.getAddressing().name());
+        if (_selectEnum.isDirectAddressing()) {
+            SectionState sectionState = _selectEnum.getEnum();
+            state = Bundle.getMessage(locale, "AddressByDirect", sectionState._text);
+        } else {
+            state = _selectEnum.getDescription(locale);
         }
-
 
         return Bundle.getMessage(locale, "Section_Long", namedBean, _is_IsNot.toString(), state);
     }

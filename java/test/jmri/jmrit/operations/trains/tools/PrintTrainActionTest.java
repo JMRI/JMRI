@@ -12,11 +12,8 @@ import org.junit.jupiter.api.Test;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainEditFrame;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
+import jmri.util.*;
 
 /**
  *
@@ -28,10 +25,8 @@ public class PrintTrainActionTest extends OperationsTestCase {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
-        TrainEditFrame tef = new TrainEditFrame(train1);
-        PrintTrainAction t = new PrintTrainAction(true, tef);
+        PrintTrainAction t = new PrintTrainAction(true, train1);
         Assert.assertNotNull("exists", t);
-        JUnitUtil.dispose(tef);
     }
 
     @Test
@@ -43,8 +38,7 @@ public class PrintTrainActionTest extends OperationsTestCase {
         Train train1 = tmanager.getTrainById("1");
         Assert.assertNotNull(train1);
 
-        TrainEditFrame tef = new TrainEditFrame(train1);
-        PrintTrainAction pta = new PrintTrainAction(true, tef);
+        PrintTrainAction pta = new PrintTrainAction(true, train1);
         Assert.assertNotNull("exists", pta);
 
         pta.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
@@ -59,9 +53,6 @@ public class PrintTrainActionTest extends OperationsTestCase {
         Assert.assertNotNull("exists", printPreviewFrame);
 
         JUnitUtil.dispose(printPreviewFrame);
-        JUnitUtil.dispose(tef);
-        
-
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintTrainActionTest.class);

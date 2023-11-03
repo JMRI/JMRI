@@ -31,12 +31,21 @@
             <authorinitials>MM</authorinitials>
             <revremark>New file, based on TSU2 Electric file with var changed to linked file for both BLU and TSU2</revremark>
         </revision>
+        <revision>
+            <revnumber>2</revnumber>
+            <date>2023-10-09</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>Added Blunami 4408 model with productID change for 11 bit Soundtraxx ID</revremark>
+        </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
         <family name="Blunami Electric" mfg="SoundTraxx (Throttle-Up)" lowVersionID="72" comment="These are the -retail- version Blunami Electric decoders">
-            <model model="BLU-2200 Electric" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="352" comment="Model 886602">
+            <model model="BLU-2200 Electric" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="2144" comment="Model 886602">
                 <size length="41.9" width="18.8" height="6.8" units="mm"/>
+            </model>
+            <model model="BLU-4408 Electric" numOuts="8" numFns="30" maxMotorCurrent="4A" connector="other" productID="2151" comment="Model 886604">
+                <size length="69" width="30.5" height="14" units="mm"/>
             </model>
             <output name="3" label="  FX3  "/>
             <output name="4" label="  FX4  "/>

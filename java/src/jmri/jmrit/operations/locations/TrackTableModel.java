@@ -496,7 +496,7 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
         int size = track.getDestinationListSize();
         if (track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
             size = InstanceManager.getDefault(LocationManager.class).getNumberOfLocations() - size;
-        } else if (size == 1) {
+        } else if (size == 1 && track.getDestinationOption().equals(Track.INCLUDE_DESTINATIONS)) {
             // if there's only one destination return the destination name
             Location loc =
                     InstanceManager.getDefault(LocationManager.class).getLocationById(track.getDestinationIds()[0]);

@@ -59,6 +59,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/break-5.1.3.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/continue-5.1.3.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/digital-call-module-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/display-action-audio-icon-5.5.6.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/display-action-layout-turnout-5.3.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/display-action-positionable-4.23.4.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/display-action-positionable-by-class-5.5.4.xsd"/>
@@ -88,6 +89,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/table-for-each-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/timeout-4.25.7.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/throttle-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/throttle-function-5.5.6.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/trigger-route-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/web-browser-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/web-request-5.3.5.xsd"/>
@@ -143,6 +145,7 @@
             <xs:element name="Continue"          type="LogixNG_DigitalAction_ContinueType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="CallModule"        type="LogixNG_DigitalAction_CallModuleType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="DigitalFormula"    type="LogixNG_DigitalAction_FormulaType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="DisplayActionAudioIcon"  type="LogixNG_DigitalAction_DisplayActionAudioIconType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="DisplayActionLayoutTurnout"  type="LogixNG_DigitalAction_DisplayActionLayoutTurnoutType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="DisplayActionPositionable"  type="LogixNG_DigitalAction_DisplayActionPositionableType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="DisplayActionPositionableByClass"  type="LogixNG_DigitalAction_DisplayActionPositionableByClassType" minOccurs="0" maxOccurs="unbounded" />
@@ -169,6 +172,7 @@
             <xs:element name="SimulateTurnoutFeedback"  type="LogixNG_DigitalAction_SimulateTurnoutFeedbackType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="TableForEach"      type="LogixNG_DigitalAction_TableForEachType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="Throttle"          type="LogixNG_DigitalAction_ThrottleType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ThrottleFunction"  type="LogixNG_DigitalAction_ThrottleFunctionType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="Timeout"           type="LogixNG_DigitalAction_TimeoutType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="TriggerRoute"      type="LogixNG_DigitalAction_TriggerRouteType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="WebBrowser"        type="LogixNG_DigitalAction_WebBrowserType" minOccurs="0" maxOccurs="unbounded" />

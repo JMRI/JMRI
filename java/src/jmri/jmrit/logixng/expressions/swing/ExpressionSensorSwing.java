@@ -11,7 +11,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.expressions.ExpressionSensor.SensorState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
-import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;
 import jmri.util.swing.JComboBoxUtil;
 
@@ -23,18 +23,9 @@ import jmri.util.swing.JComboBoxUtil;
 public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
 
     private LogixNG_SelectNamedBeanSwing<Sensor> _selectNamedBeanSwing;
+    private LogixNG_SelectEnumSwing<SensorState> _selectEnumSwing;
 
     private JComboBox<Is_IsNot_Enum> _is_IsNot_ComboBox;
-
-    private JTabbedPane _tabbedPaneSensorState;
-    private JComboBox<SensorState> _stateComboBox;
-    private JPanel _panelSensorStateDirect;
-    private JPanel _panelSensorStateReference;
-    private JPanel _panelSensorStateLocalVariable;
-    private JPanel _panelSensorStateFormula;
-    private JTextField _sensorStateReferenceTextField;
-    private JTextField _sensorStateLocalVariableTextField;
-    private JTextField _sensorStateFormulaTextField;
 
 
     public ExpressionSensorSwing() {
@@ -53,11 +44,17 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
         _selectNamedBeanSwing = new LogixNG_SelectNamedBeanSwing<>(
                 InstanceManager.getDefault(SensorManager.class), getJDialog(), this);
 
+        _selectEnumSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
+
         JPanel _tabbedPaneNamedBean;
+        JPanel _tabbedPaneEnum;
+
         if (expression != null) {
             _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(expression.getSelectNamedBean());
+            _tabbedPaneEnum = _selectEnumSwing.createPanel(expression.getSelectEnum(), SensorState.values());
         } else {
             _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(null);
+            _tabbedPaneEnum = _selectEnumSwing.createPanel(null, SensorState.values());
         }
 
 
@@ -68,58 +65,14 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
         JComboBoxUtil.setupComboBoxMaxRows(_is_IsNot_ComboBox);
 
 
-        _tabbedPaneSensorState = new JTabbedPane();
-        _panelSensorStateDirect = new javax.swing.JPanel();
-        _panelSensorStateReference = new javax.swing.JPanel();
-        _panelSensorStateLocalVariable = new javax.swing.JPanel();
-        _panelSensorStateFormula = new javax.swing.JPanel();
-
-        _tabbedPaneSensorState.addTab(NamedBeanAddressing.Direct.toString(), _panelSensorStateDirect);
-        _tabbedPaneSensorState.addTab(NamedBeanAddressing.Reference.toString(), _panelSensorStateReference);
-        _tabbedPaneSensorState.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelSensorStateLocalVariable);
-        _tabbedPaneSensorState.addTab(NamedBeanAddressing.Formula.toString(), _panelSensorStateFormula);
-
-        _stateComboBox = new JComboBox<>();
-        for (SensorState e : SensorState.values()) {
-            _stateComboBox.addItem(e);
-        }
-        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
-
-        _panelSensorStateDirect.add(_stateComboBox);
-
-        _sensorStateReferenceTextField = new JTextField();
-        _sensorStateReferenceTextField.setColumns(30);
-        _panelSensorStateReference.add(_sensorStateReferenceTextField);
-
-        _sensorStateLocalVariableTextField = new JTextField();
-        _sensorStateLocalVariableTextField.setColumns(30);
-        _panelSensorStateLocalVariable.add(_sensorStateLocalVariableTextField);
-
-        _sensorStateFormulaTextField = new JTextField();
-        _sensorStateFormulaTextField.setColumns(30);
-        _panelSensorStateFormula.add(_sensorStateFormulaTextField);
-
-
         if (expression != null) {
             _is_IsNot_ComboBox.setSelectedItem(expression.get_Is_IsNot());
-
-            switch (expression.getStateAddressing()) {
-                case Direct: _tabbedPaneSensorState.setSelectedComponent(_panelSensorStateDirect); break;
-                case Reference: _tabbedPaneSensorState.setSelectedComponent(_panelSensorStateReference); break;
-                case LocalVariable: _tabbedPaneSensorState.setSelectedComponent(_panelSensorStateLocalVariable); break;
-                case Formula: _tabbedPaneSensorState.setSelectedComponent(_panelSensorStateFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + expression.getStateAddressing().name());
-            }
-            _stateComboBox.setSelectedItem(expression.getBeanState());
-            _sensorStateReferenceTextField.setText(expression.getStateReference());
-            _sensorStateLocalVariableTextField.setText(expression.getStateLocalVariable());
-            _sensorStateFormulaTextField.setText(expression.getStateFormula());
         }
 
         JComponent[] components = new JComponent[]{
             _tabbedPaneNamedBean,
             _is_IsNot_ComboBox,
-            _tabbedPaneSensorState};
+            _tabbedPaneEnum};
 
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
                 Bundle.getMessage("ExpressionSensor_Components"), components);
@@ -134,14 +87,7 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
         ExpressionSensor expression = new ExpressionSensor("IQDE1", null);
 
         _selectNamedBeanSwing.validate(expression.getSelectNamedBean(), errorMessages);
-
-        try {
-            if (_tabbedPaneSensorState.getSelectedComponent() == _panelSensorStateReference) {
-                expression.setStateReference(_sensorStateReferenceTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-        }
+        _selectEnumSwing.validate(expression.getSelectEnum(), errorMessages);
 
         return errorMessages.isEmpty();
     }
@@ -169,28 +115,9 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
         ExpressionSensor expression = (ExpressionSensor)object;
 
         _selectNamedBeanSwing.updateObject(expression.getSelectNamedBean());
+        _selectEnumSwing.updateObject(expression.getSelectEnum());
 
-        try {
-            expression.set_Is_IsNot((Is_IsNot_Enum)_is_IsNot_ComboBox.getSelectedItem());
-
-            if (_tabbedPaneSensorState.getSelectedComponent() == _panelSensorStateDirect) {
-                expression.setStateAddressing(NamedBeanAddressing.Direct);
-                expression.setBeanState((SensorState)_stateComboBox.getSelectedItem());
-            } else if (_tabbedPaneSensorState.getSelectedComponent() == _panelSensorStateReference) {
-                expression.setStateAddressing(NamedBeanAddressing.Reference);
-                expression.setStateReference(_sensorStateReferenceTextField.getText());
-            } else if (_tabbedPaneSensorState.getSelectedComponent() == _panelSensorStateLocalVariable) {
-                expression.setStateAddressing(NamedBeanAddressing.LocalVariable);
-                expression.setStateLocalVariable(_sensorStateLocalVariableTextField.getText());
-            } else if (_tabbedPaneSensorState.getSelectedComponent() == _panelSensorStateFormula) {
-                expression.setStateAddressing(NamedBeanAddressing.Formula);
-                expression.setStateFormula(_sensorStateFormulaTextField.getText());
-            } else {
-                throw new IllegalArgumentException("_tabbedPaneSensorState has unknown selection");
-            }
-        } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
-        }
+        expression.set_Is_IsNot((Is_IsNot_Enum)_is_IsNot_ComboBox.getSelectedItem());
     }
 
     /** {@inheritDoc} */

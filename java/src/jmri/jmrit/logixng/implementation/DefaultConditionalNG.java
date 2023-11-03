@@ -2,8 +2,6 @@ package jmri.jmrit.logixng.implementation;
 
 import java.util.*;
 
-import static jmri.NamedBean.UNKNOWN;
-
 import javax.annotation.Nonnull;
 
 import jmri.InstanceManager;
@@ -398,14 +396,20 @@ public class DefaultConditionalNG extends AbstractBase
 
     /** {@inheritDoc} */
     @Override
-    public void registerListenersForThisClass() {
-        // Do nothing
+    public synchronized boolean isListenersRegistered() {
+        return _listenersAreRegistered;
     }
 
     /** {@inheritDoc} */
     @Override
-    public void unregisterListenersForThisClass() {
-        // Do nothing
+    public synchronized void registerListenersForThisClass() {
+        _listenersAreRegistered = true;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public synchronized void unregisterListenersForThisClass() {
+        _listenersAreRegistered = false;
     }
 
     @Override

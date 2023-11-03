@@ -4,16 +4,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
 
-import javax.annotation.Nonnull;
-
 import jmri.*;
 import jmri.Logix;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.*;
-import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.util.ThreadingUtil;
-import jmri.util.TypeConversionUtil;
 
 /**
  * This action enables/disables a Logix.

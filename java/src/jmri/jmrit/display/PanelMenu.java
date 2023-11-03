@@ -3,7 +3,6 @@ package jmri.jmrit.display;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.ServiceLoader;
 import java.util.Set;
@@ -11,9 +10,7 @@ import java.util.stream.StreamSupport;
 import javax.annotation.CheckForNull;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JSeparator;
 import jmri.InstanceManager;
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
 /**
  * Create the "Panels" menu for use in a menubar.

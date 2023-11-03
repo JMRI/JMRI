@@ -90,6 +90,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
         try {
             if (SystemType.isMacOSX() || SystemType.isLinux()) {
                 SignalHandler handler = new SignalHandler () {
+                    @Override
                     public void handle(Signal sig) {
                         shutdown();
                     }
@@ -98,6 +99,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
                 Signal.handle(new Signal("INT"), handler);
                 
                 handler = new SignalHandler () {
+                    @Override
                     public void handle(Signal sig) {
                         restart();
                     }
@@ -107,6 +109,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
             
             else if (SystemType.isWindows()) {
                 SignalHandler handler = new SignalHandler () {
+                    @Override
                     public void handle(Signal sig) {
                         shutdown();
                     }

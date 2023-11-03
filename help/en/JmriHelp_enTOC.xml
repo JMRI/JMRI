@@ -35,6 +35,8 @@
 
   <tocitem text="Bachrus Speedo " target="package.jmri.jmrix.bachrus.SpeedoConsoleFrame"/>
 
+  <tocitem text="BiDiB " target="html.hardware.bidib.index"/>
+
   <tocitem text="CAN Bus Overview " target="html.hardware.can.index"/>
 
   <tocitem text="CBUS " target="html.hardware.can.cbus.index"/>
@@ -626,6 +628,10 @@
   </tocitem>
   <tocitem text="Bachrus " target="html.hardware.bachrus.index">
    <tocitem text="Speedo Console " target="package.jmri.jmrix.bachrus.SpeedoConsoleFrame"/>
+
+  </tocitem>
+  <tocitem text="BiDiB " target="html.hardware.bidib.index">
+   <tocitem text="Signal Masts " target="html.hardware.bidib.BiDiB-SignalMast"/>
 
   </tocitem>
   <tocitem text="C/MRI ">

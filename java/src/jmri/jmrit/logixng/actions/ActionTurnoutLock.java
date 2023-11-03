@@ -4,15 +4,11 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
 
-import javax.annotation.Nonnull;
-
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.*;
-import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.util.ThreadingUtil;
-import jmri.util.TypeConversionUtil;
 
 /**
  * This action sets the lock of a turnout.

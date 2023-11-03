@@ -1,6 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -187,6 +186,9 @@ public class LayoutEditorHorizontalToolBarPanel extends LayoutEditorToolBarPanel
         hTop6Left.add(signalHeadComboBox);
         hTop6Left.add(new JLabel(" "));
         hTop6Left.add(iconLabelButton);
+        hTop6Left.add(logixngButton);
+        hTop6Left.add(audioButton);
+        hTop6Left.add(textAudioComboBox);
         hTop6Left.add(shapeButton);
 
         hTop6Panel.add(hTop6Left);

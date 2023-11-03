@@ -53,6 +53,12 @@ public class LogixNGIcon extends PositionableLabel {
         // createLogixNGIconImage();
     }
 
+    @Override
+    @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_LogixNGIcon");
+    }
+
     public int getIdentity() {
         return _identity;
     }

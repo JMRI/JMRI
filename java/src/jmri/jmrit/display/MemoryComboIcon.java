@@ -3,9 +3,9 @@ package jmri.jmrit.display;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -156,6 +156,12 @@ public class MemoryComboIcon extends MemoryOrGVComboIcon
         if (e.getPropertyName().equals("value")) {
             displayState();
         }
+    }
+
+    @Override
+    @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_MemoryComboIcon");
     }
 
     @Override

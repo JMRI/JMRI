@@ -56,14 +56,15 @@
         INACTIVE. Each Reporter is associated with a specific source of information on the
         layout and makes that device's information available to the rest of JMRI.</p>
         
-        <p>Reporters are created automatically in certain cases, such as when an RFID Reader sees
+        <p>Reporters are created automatically in certain cases, such as when an 
+        <a href="../hardware/rfid/GettingStartedWithRFID.shtml">RFID Reader</a> sees
         a tag referencing a specific reader for the first time. For all other uses, they must be
         created manually by updating the <a href="../../package/jmri/jmrit/beantable/ReporterTable.shtml">
         Reporter Table</a> or via a <a href="scripting/index.shtml">script</a>.
 
         <p>Reporters are populated automatically as noted below or manually by updating the
         <a href="../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table</a>,
-        using a <a href="../tools/logixng/reference/chapter5.shtml#digital_action_item">LogixNG</a>
+        using a <a href="logixng/reference/chapter5.shtml#digital_action_item">LogixNG</a>
         or via a <a href="scripting/index.shtml">script</a>.
         
         <h2>The Reporter Table</h2>
@@ -75,7 +76,7 @@
         transponders</a> and <a href="../hardware/rfid/index.shtml">RFID readers</a>).
         There is also an <a href="../../package/jmri/jmrit/beantable/ReporterAddEdit.shtml">"Add..." button</a>
         for creating your own Reporters, either "internal" or for any 
-        <a href="https://www.jmri.org/help/en/html/hardware/mqtt/index.shtml#objects">MQTT connections</a>.</p>
+        <a href="../hardware/mqtt/index.shtml#objects">MQTT connections</a>.</p>
 
         <h2>Creating and Updating Reporters</h2>
 

@@ -3,7 +3,6 @@ package jmri.jmrit.logixng.implementation;
 import java.util.Arrays;
 import java.util.Set;
 import jmri.InstanceInitializer;
-import jmri.InstanceManager;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrit.logixng.*;
 import org.openide.util.lookup.ServiceProvider;

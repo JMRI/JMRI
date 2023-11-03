@@ -26,7 +26,7 @@ public class DispatcherAction extends AbstractAction {
         // check that Transits have been defined and are available
         if (InstanceManager.getDefault(jmri.TransitManager.class).getNamedBeanSet().size() == 0) {
             // Inform the user that there are no Transits available, and don't open the window
-            javax.swing.JOptionPane.showMessageDialog(null, Bundle.getMessage("NoTransitsMessage"));
+            jmri.util.swing.JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("NoTransitsMessage"));
             return;
         }
         // create a Dispatcher window or activate the existing one

@@ -243,13 +243,12 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
 
     /**
      * Checks to see if a single train can transport car to its final
-     * destination.
+     * destination. Special case if car is departing staging.
      *
      * @return true if single train can transport car to its final destination.
      */
     private boolean checkForSingleTrain(Car car, Car clone) {
-        boolean trainServicesCar = false; // true the specified train can
-                                          // service the car
+        boolean trainServicesCar = false; // true the specified train can service the car
         Train testTrain = null;
         if (_train != null) {
             trainServicesCar = _train.isServiceable(_buildReport, clone);
@@ -257,15 +256,22 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         if (trainServicesCar) {
             testTrain = _train; // use the specified train
             log.debug("Train ({}) can service car ({})", _train.getName(), car.toString());
-        } else if (!car.getTrack().isStaging() &&
-                _train != null &&
-                !_train.isServiceAllCarsWithFinalDestinationsEnabled() &&
-                !_train.getServiceStatus().equals(Train.NONE)) {
+        } else if (_train != null && !_train.getServiceStatus().equals(Train.NONE)) {
+            // _train isn't able to service car
+            // determine if car was attempting to go to the train's termination staging
+            String trackName = car.getFinalDestinationTrackName();
+            if (car.getFinalDestinationTrack() == null &&
+                    car.getFinalDestinationName().equals(_train.getTrainTerminatesName()) &&
+                    _train.getTerminationTrack() != null) {
+                trackName = _train.getTerminationTrack().getName(); // use staging track
+            }
+            // report that train can't service car
             addLine(_buildReport, SEVEN, Bundle.getMessage("RouterTrainCanNotDueTo", _train.getName(), car.toString(),
-                    car.getFinalDestinationName(), car.getFinalDestinationTrackName(),
-                    _train.getServiceStatus()));
-            return true; // temporary issue with train moves, length, or
-                         // destination track length
+                    car.getFinalDestinationName(), trackName, _train.getServiceStatus()));
+            if (!car.getTrack().isStaging() &&
+                    !_train.isServiceAllCarsWithFinalDestinationsEnabled()) {
+                return true; // temporary issue with train moves, length, or destination track length
+            }
         }
         // Determines if specified train can service car out of staging.
         // Note that the router code will try to route the car using
@@ -285,16 +291,16 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             List<Train> excludeTrains = new ArrayList<>(Arrays.asList(_train));
             testTrain = tmanager.getTrainForCar(clone, excludeTrains, _buildReport);
         }
+        // report that another train could transport the car
         if (testTrain != null &&
                 _train != null &&
                 !trainServicesCar &&
                 _train.isServiceAllCarsWithFinalDestinationsEnabled()) {
-            // log.debug("Option to service all cars with a final destination is
-            // enabled");
+            // log.debug("Option to service all cars with a final destination is enabled");
             addLine(_buildReport, SEVEN, Bundle.getMessage("RouterOptionToCarry",
                     _train.getName(), testTrain.getName(), car.toString(),
                     clone.getDestinationName(), clone.getDestinationTrackName()));
-            testTrain = null;
+            testTrain = null; // return false
         }
         if (testTrain != null) {
             return finishRouteUsingOneTrain(testTrain, car, clone);
@@ -528,8 +534,13 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                                 track.getName(), testCar.getDestinationName(),
                                 testCar.getDestinationTrackName()));
                     }
-                    continue;
+
+                } else if (_addtoReportVeryDetailed) {
+                    addLine(_buildReport, SEVEN, Bundle.getMessage("RouterSameInterchange", secondTrain.getName(),
+                            track.getLocation().getName(), track.getName()));
+
                 }
+                continue;
             }
             if (debugFlag) {
                 log.debug("Train ({}) can service car ({}) from {} ({}, {}) to final destination ({}, {})",
@@ -570,7 +581,10 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             } else {
                 firstTrain = tmanager.getTrainForCar(testCar, _buildReport);
             }
-            if (firstTrain == secondTrain && track.isInterchange() && track.getPickupOption().equals(Track.ANY)) {
+            if (firstTrain != null &&
+                    firstTrain.getRoute() == secondTrain.getRoute() &&
+                    track.isInterchange() &&
+                    track.getPickupOption().equals(Track.ANY)) {
                 if (_addtoReportVeryDetailed) {
                     addLine(_buildReport, SEVEN, Bundle.getMessage("RouterSameInterchange", firstTrain.getName(),
                             track.getLocation().getName(), track.getName()));
@@ -697,12 +711,15 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         if (useStaging && !Setup.isCarRoutingViaStagingEnabled())
             return false; // routing via staging is disabled
 
+        if (_addtoReportVeryDetailed) {
+            addLine(_buildReport, SEVEN, BLANK_LINE);
+        }
         if (_lastLocationTracks.isEmpty()) {
             if (useStaging) {
                 addLine(_buildReport, SEVEN, Bundle.getMessage("RouterCouldNotFindStaging",
                         car.getFinalDestinationName()));
             } else {
-                addLine(_buildReport, SEVEN, Bundle.getMessage("RouterCouldNotFind",
+                addLine(_buildReport, SEVEN, Bundle.getMessage("RouterCouldNotFindLast",
                         car.getFinalDestinationName()));
             }
             return false;

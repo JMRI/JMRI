@@ -1,12 +1,13 @@
 package apps.startup.configurexml;
 
-import jmri.util.startup.StartupActionsManager;
 import apps.startup.StartupPauseModel;
+
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
+import jmri.util.startup.StartupActionsManager;
+
+import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistence for {@link apps.startup.StartupPauseModel} objects.
@@ -16,7 +17,7 @@ import org.slf4j.LoggerFactory;
  */
 public class StartupPauseModelXml extends AbstractXmlAdapter {
 
-//    private final static Logger log = LoggerFactory.getLogger(StartupPauseModelXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StartupPauseModelXml.class);
 
     public StartupPauseModelXml() {
     }
@@ -26,6 +27,7 @@ public class StartupPauseModelXml extends AbstractXmlAdapter {
         Element element = new Element("perform"); // NOI18N
         element.setAttribute("name", "Pause");
         element.setAttribute("type", "Pause");
+        element.setAttribute("enabled", ((StartupPauseModel) o).isEnabled() ? "yes" : "no");
         element.setAttribute("class", this.getClass().getName());
         Element property = new Element("property"); // NOI18N
         property.setAttribute("name", "delay"); // NOI18N
@@ -43,6 +45,14 @@ public class StartupPauseModelXml extends AbstractXmlAdapter {
     public boolean load(Element shared, Element perNode) {
         boolean result = false;
         StartupPauseModel model = new StartupPauseModel();
+
+        Attribute enabled = shared.getAttribute("enabled");
+        if (enabled != null) {
+            model.setEnabled("yes".equals(enabled.getValue()));
+        } else {
+            model.setEnabled(true);
+        }
+
         int delay = 0;
         for (Element child : shared.getChildren("property")) { // NOI18N
             if (child.getAttributeValue("name").equals("delay") // NOI18N

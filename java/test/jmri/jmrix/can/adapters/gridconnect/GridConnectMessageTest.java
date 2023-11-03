@@ -66,6 +66,7 @@ public class GridConnectMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         m = g = new GridConnectMessage(msg);
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = g = null;

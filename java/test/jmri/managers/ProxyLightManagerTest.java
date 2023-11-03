@@ -1,7 +1,5 @@
 package jmri.managers;
 
-import java.beans.PropertyChangeListener;
-
 import jmri.*;
 import jmri.jmrix.internal.InternalLightManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;

@@ -2,14 +2,8 @@ package jmri.jmrix.openlcb.configurexml;
 
 import jmri.InstanceManager;
 import jmri.Reporter;
-import jmri.Sensor;
-import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.openlcb.OlcbReporter;
 import jmri.jmrix.openlcb.OlcbReporterManager;
-import jmri.jmrix.openlcb.OlcbSensor;
-import jmri.jmrix.openlcb.OlcbSensorManager;
 import jmri.jmrix.openlcb.OlcbTestInterface;
-import jmri.jmrix.openlcb.OlcbUtils;
 import jmri.util.JUnitUtil;
 import org.jdom2.Element;
 import org.junit.Assert;

@@ -4,13 +4,15 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
+
+import javax.annotation.Nonnull;
+
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.controlPanelEditor.shape.LocoLabel;
 import jmri.jmrit.display.palette.IndicatorTOItemPanel;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.picker.PickListModel;
@@ -372,6 +374,12 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     }
 
     @Override
+    @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_IndicatorTurnoutIcon");
+    }
+
+    @Override
     public String getNameString() {
         String str = "";
         if (namedOccBlock != null) {
@@ -456,7 +464,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
             }
         }
         _itemPanel.initUpdate(updateAction, iconMaps);
-        
+
         if (namedOccSensor != null) {
             _itemPanel.setOccDetector(namedOccSensor.getBean().getDisplayName());
         }
@@ -466,7 +474,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         _itemPanel.setShowTrainName(_pathUtil.showTrain());
         _itemPanel.setPaths(_pathUtil.getPaths());
         _itemPanel.setSelection(getTurnout());  // do after all other params set - calls resize()
-        
+
         initPaletteFrame(_paletteFrame, _itemPanel);
     }
 

@@ -1,8 +1,6 @@
 package jmri.jmrix.loconet;
 
 import java.util.Date;
-import jmri.JmriException;
-
 import jmri.PowerManager;
 import jmri.implementation.DefaultClockControl;
 

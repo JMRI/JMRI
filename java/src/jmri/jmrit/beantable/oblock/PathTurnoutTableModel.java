@@ -234,7 +234,7 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
                 fireTableRowsUpdated(row, row);
                 break;
             case DELETE_COL:
-                if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("DeleteTurnoutConfirm"),
+                if (JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("DeleteTurnoutConfirm"),
                         Bundle.getMessage("WarningTitle"),
                         JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.QUESTION_MESSAGE)
                         == JmriJOptionPane.YES_OPTION) {

@@ -146,6 +146,8 @@ public class EngineManager extends RollingStockManager<Engine>
 
     int _commentLength = 0;
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification="I18N of Info Message")
     public int getMaxCommentLength() {
         if (_commentLength == 0) {
             _commentLength = TrainManifestHeaderText.getStringHeader_Comment().length();
@@ -159,7 +161,7 @@ public class EngineManager extends RollingStockManager<Engine>
                 }
             }
             if (engineMax != null) {
-                log.info("Max engine comment ({}) ({}) length {}", engineMax.toString(), comment, _commentLength);
+                log.info(Bundle.getMessage("InfoMaxComment", engineMax.toString(), comment, _commentLength));
             }
         }
         return _commentLength;

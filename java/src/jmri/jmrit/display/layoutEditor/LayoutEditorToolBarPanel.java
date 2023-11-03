@@ -121,6 +121,10 @@ public class LayoutEditorToolBarPanel extends JPanel {
             InstanceManager.getDefault(SignalHeadManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
 
     protected JRadioButton iconLabelButton = new JRadioButton(Bundle.getMessage("IconLabel"));
+    protected JRadioButton logixngButton = new JRadioButton(Bundle.getMessage("LogixNGIcon"));
+    protected JRadioButton audioButton = new JRadioButton(Bundle.getMessage("AudioIcon"));
+    protected NamedBeanComboBox<Audio> textAudioComboBox = new NamedBeanComboBox<>(
+            InstanceManager.getDefault(AudioSourceManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
     protected JRadioButton shapeButton = new JRadioButton(Bundle.getMessage("LayoutShape"));
 
     protected JButton changeIconsButton = new JButton(Bundle.getMessage("ChangeIcons") + "...");
@@ -133,6 +137,12 @@ public class LayoutEditorToolBarPanel extends JPanel {
 
     protected MultiIconEditor iconEditor = null;
     protected JFrame iconFrame = null;
+
+    protected MultiIconEditor logixngEditor = null;
+    protected JFrame logixngFrame = null;
+
+    protected MultiIconEditor audioEditor = null;
+    protected JFrame audioFrame = null;
 
     protected MultiSensorIconFrame multiSensorFrame = null;
 
@@ -194,6 +204,8 @@ public class LayoutEditorToolBarPanel extends JPanel {
         itemGroup.add(globalVariableButton);
         itemGroup.add(blockContentsButton);
         itemGroup.add(iconLabelButton);
+        itemGroup.add(logixngButton);
+        itemGroup.add(audioButton);
         itemGroup.add(shapeButton);
 
         // This is used to enable/disable property controls depending on which (radio) button is selected
@@ -271,6 +283,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
             textMemoryComboBox.setEnabled(memoryButton.isSelected());
             textGlobalVariableComboBox.setEnabled(globalVariableButton.isSelected());
             blockContentsComboBox.setEnabled(blockContentsButton.isSelected());
+            textAudioComboBox.setEnabled(audioButton.isSelected());
 
             // enable/disable signal mast, sensor & signal head text fields
             signalMastComboBox.setEnabled(signalMastButton.isSelected());
@@ -280,7 +293,9 @@ public class LayoutEditorToolBarPanel extends JPanel {
             // changeIconsButton
             e = (sensorButton.isSelected()
                     || signalButton.isSelected()
-                    || iconLabelButton.isSelected());
+                    || iconLabelButton.isSelected()
+                    || logixngButton.isSelected()
+                    || audioButton.isSelected());
             log.debug("changeIconsButton is {}", e ? "enabled" : "disabled");
             changeIconsButton.setEnabled(e);
         };
@@ -307,6 +322,8 @@ public class LayoutEditorToolBarPanel extends JPanel {
         globalVariableButton.addActionListener(selectionListAction);
         blockContentsButton.addActionListener(selectionListAction);
         iconLabelButton.addActionListener(selectionListAction);
+        logixngButton.addActionListener(selectionListAction);
+        audioButton.addActionListener(selectionListAction);
         shapeButton.addActionListener(selectionListAction);
 
         // first row of edit tool bar items
@@ -467,6 +484,9 @@ public class LayoutEditorToolBarPanel extends JPanel {
         setupComboBox(textGlobalVariableComboBox, true, false, false);
         textGlobalVariableComboBox.setToolTipText(Bundle.getMessage("GlobalVariableToolTip"));
 
+        setupComboBox(textAudioComboBox, true, false, false);
+        textAudioComboBox.setToolTipText(Bundle.getMessage("AudioToolTip"));
+
         blockContentsButton.setToolTipText(Bundle.getMessage("BlockContentsButtonToolTip"));
 
         setupComboBox(blockContentsComboBox, true, false, false);
@@ -543,6 +563,8 @@ public class LayoutEditorToolBarPanel extends JPanel {
 
         // icon label
         iconLabelButton.setToolTipText(Bundle.getMessage("IconLabelToolTip"));
+        logixngButton.setToolTipText(Bundle.getMessage("LogixNGIconToolTip"));
+        audioButton.setToolTipText(Bundle.getMessage("AudioIconToolTip"));
         shapeButton.setToolTipText(Bundle.getMessage("LayoutShapeToolTip"));
 
         // change icons...
@@ -554,6 +576,10 @@ public class LayoutEditorToolBarPanel extends JPanel {
                 signalFrame.setVisible(true);
             } else if (iconLabelButton.isSelected()) {
                 iconFrame.setVisible(true);
+            } else if (logixngButton.isSelected()) {
+                logixngFrame.setVisible(true);
+            } else if (audioButton.isSelected()) {
+                audioFrame.setVisible(true);
             } else {
                 //explain to the user why nothing happens
                 JmriJOptionPane.showMessageDialog(changeIconsButton, Bundle.getMessage("ChangeIconNotApplied"),
@@ -564,13 +590,29 @@ public class LayoutEditorToolBarPanel extends JPanel {
         changeIconsButton.setToolTipText(Bundle.getMessage("ChangeIconToolTip"));
         changeIconsButton.setEnabled(false);
 
-        // ??
+        // Default icon icon
         iconEditor = new MultiIconEditor(1);
         iconEditor.setIcon(0, "", "resources/icons/smallschematics/tracksegments/block.gif");
         iconEditor.complete();
         iconFrame = new JFrame(Bundle.getMessage("EditIcon"));
         iconFrame.getContentPane().add(iconEditor);
         iconFrame.pack();
+
+        // LogixNG Icon
+        logixngEditor = new MultiIconEditor(1);
+        logixngEditor.setIcon(0, "", "resources/icons/logixng/logixng_icon.gif");
+        logixngEditor.complete();
+        logixngFrame = new JFrame(Bundle.getMessage("EditIcon"));
+        logixngFrame.getContentPane().add(logixngEditor);
+        logixngFrame.pack();
+
+        // Audio Icon
+        audioEditor = new MultiIconEditor(1);
+        audioEditor.setIcon(0, "", "resources/icons/audio_icon.gif");
+        audioEditor.complete();
+        audioFrame = new JFrame(Bundle.getMessage("EditIcon"));
+        audioFrame.getContentPane().add(audioEditor);
+        audioFrame.pack();
     }
 
     /*=========================*\
@@ -722,6 +764,8 @@ public class LayoutEditorToolBarPanel extends JPanel {
             put(signalMastButton, Bundle.getMessage("SignalMast_QuickKeys"));
             put(signalButton, Bundle.getMessage("Signal_QuickKeys"));
             put(iconLabelButton, Bundle.getMessage("IconLabel_QuickKeys"));
+            put(logixngButton, Bundle.getMessage("LogixNGIcon_QuickKeys"));
+            put(audioButton, Bundle.getMessage("AudioIcon_QuickKeys"));
             put(shapeButton, Bundle.getMessage("Shape_QuickKeys"));
         }
     };

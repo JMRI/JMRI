@@ -3,7 +3,6 @@ package jmri.spi;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.annotation.Nonnull;
 
-import jmri.server.json.JSON;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonSocketService;

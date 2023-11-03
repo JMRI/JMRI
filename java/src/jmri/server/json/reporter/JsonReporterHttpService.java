@@ -60,7 +60,7 @@ public class JsonReporterHttpService extends JsonNamedBeanHttpService<Reporter> 
             }
             data.put(REPORT, report);
             //value matches text displayed on panel
-            data.put(JSON.VALUE, (report.isEmpty() ? Bundle.getMessage(request.locale, "Blank") : report));            
+            data.put(JSON.VALUE, (report.isEmpty() ? Bundle.getMessage(request.locale, "Blank") : report));
         } else {
             data.putNull(REPORT);
             data.put(JSON.VALUE, Bundle.getMessage(request.locale, "NoReport"));
@@ -99,9 +99,9 @@ public class JsonReporterHttpService extends JsonNamedBeanHttpService<Reporter> 
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
     }
-    
+
     @Override
-    protected ReporterManager getManager() {
+    protected ReporterManager getProvidingManager() {
         return InstanceManager.getDefault(ReporterManager.class);
     }
     

@@ -151,6 +151,13 @@ public interface Positionable extends Cloneable, InlineLogixNG {
     Positionable deepClone();
 
     /**
+     * Get the type of the positional as a String.
+     *
+     * @return the type to display
+     */
+    String getTypeString();
+
+    /**
      * Get the name of the positional as a String. This is often the display
      * name of the NamedBean being positioned.
      *
@@ -286,8 +293,10 @@ public interface Positionable extends Cloneable, InlineLogixNG {
 
     boolean contains(int x, int y);
 
+    @Override
     int getX();
 
+    @Override
     int getY();
 
     Point getLocation();

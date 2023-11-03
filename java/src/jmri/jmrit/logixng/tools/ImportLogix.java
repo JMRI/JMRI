@@ -49,6 +49,7 @@ public class ImportLogix {
             if (logixNG == null) throw new RuntimeException("Cannot create new LogixNG with name: \"Logix: " + logix.getDisplayName()+"\"");
 
             logixNG.activate();
+            logixNG.clearStartup();
 
             log.debug("Import Logix {} to LogixNG {}", logix.getSystemName(), logixNG.getSystemName());
         }

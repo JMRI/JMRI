@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
@@ -18,8 +17,6 @@ import jmri.*;
 import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
-import jmri.util.table.ButtonEditor;
-import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

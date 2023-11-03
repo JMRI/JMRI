@@ -20,7 +20,6 @@ import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.JTextComponent;
 
 import jmri.*;
-import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.jython.*;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.LogixNGPreferences;

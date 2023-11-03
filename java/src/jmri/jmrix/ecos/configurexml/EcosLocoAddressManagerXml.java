@@ -1,8 +1,6 @@
 package jmri.jmrix.ecos.configurexml;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This class is here to prevent error messages being presented to the user on

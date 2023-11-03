@@ -739,7 +739,7 @@
         Tsunami Steam definitions</li>
 
         <li>John McMasters, <!-- SPJMaker -->
-        who provided definitions for his Digitrax Sound projects</li>
+        who provided definitions for his Digitrax Sound projects and the Digitrax Series 7 decoders.</li>
 
         <li>Dave McMorran, <!-- davemc8992 -->
          who worked on the MQTT JSON coding</li>
@@ -747,7 +747,8 @@
         <li>Larry Meaney provided decoder ID for the Digitrax DN163K0b decoder</li>
 
         <li>Eckart Meyer, <!-- emey05 -->
-         who updated the aspect controls in the DB HV 1969 signals.</li>
+         who updated the aspect controls in the DB HV 1969 signals
+         and provided the BiDiB implementation.</li>
 
         <li>Philip Middlemiss provided a decoder definition Hornby R8215 decoder.</li>
 
@@ -838,6 +839,9 @@
 
         <li>Rob Plevier, who provided instructions for running JMRI on OpenSUSE GNU/Linux</li>
 
+        <li>Jean-Francois Plisson, <!-- Speedjf37 -->
+        who provided the LEB decoder definitions.
+        
         <li>John Plocher, who make good suggestions on XML DTD items, created the infrastructure
         for this website, lead the construction of the demo layout for the JavaOne show, worked on
         GUI updates, and built a replacement RXTX library for Mac OS X 10.4.</li>

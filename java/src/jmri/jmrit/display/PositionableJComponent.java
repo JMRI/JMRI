@@ -4,6 +4,7 @@ import java.util.Objects;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
@@ -256,6 +257,12 @@ public class PositionableJComponent extends JComponent implements Positionable {
     @Override
     public int getDegrees() {
         return 0;
+    }
+
+    @Override
+    @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_PositionableJComponent");
     }
 
     @Override

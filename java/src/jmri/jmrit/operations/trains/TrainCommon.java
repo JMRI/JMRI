@@ -34,7 +34,7 @@ public class TrainCommon {
 
     protected static final String TAB = "    "; // NOI18N
     protected static final String NEW_LINE = "\n"; // NOI18N
-    protected static final String SPACE = " ";
+    public static final String SPACE = " ";
     protected static final String BLANK_LINE = " ";
     protected static final String HORIZONTAL_LINE_CHAR = "-";
     protected static final String BUILD_REPORT_CHAR = "-";

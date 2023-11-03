@@ -34,466 +34,466 @@
 	</revhistory>
 	<!-- Bank 4 variables -->
 	<!--CVs 257.18, 296.18-->
-	<variable item="Ausgang F0v Effekt A" CV="257.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang F0v Effekt A" CV="257.31=18.32=0" default="0" tooltip="0-255">
 		<xi:include href="http://jmri.org/xml/decoders/piko/enumEffekteChoice.xml"/>
 		<label>Ausgang F0v Effekt A</label>
 		<label xml:lang="de">Ausgang F0v Effekt A</label>
 	</variable>
-	<variable item="Ausgang F0v PWM A" CV="258.31=18" default="64" tooltip="0-64">
+	<variable item="Ausgang F0v PWM A" CV="258.31=18.32=0" default="64" tooltip="0-64">
 		<decVal max="64"/>
 		<label>Ausgang F0v PWM A</label>
 		<label xml:lang="de">Ausgang F0v PWM A</label>
 	</variable>
-	<variable item="Ausgang F0v Flags A" CV="259.31=18" default="192" tooltip="0-255">
+	<variable item="Ausgang F0v Flags A" CV="259.31=18.32=0" default="192" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang F0v Flags A</label>
 		<label xml:lang="de">Ausgang F0v Flags A</label>
 	</variable>
 	<!-- Flags F0v_A -->
-	<variable item="F0vA.0" CV="259.31=18" mask="XXXXXXXV" default="0">
+	<variable item="F0vA.0" CV="259.31=18.32=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus rückwärts</label>
 	</variable>
-	<variable item="F0vA.1" CV="259.31=18" mask="XXXXXXVX" default="0">
+	<variable item="F0vA.1" CV="259.31=18.32=0" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus vorwärts</label>
 	</variable>
-	<variable item="F0vA.2" CV="259.31=18" mask="XXXXXVXX" default="0">
+	<variable item="F0vA.2" CV="259.31=18.32=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus Stop</label>
 	</variable>
-	<variable item="F0vA.3" CV="259.31=18" mask="XXXXVXXX" default="0">
+	<variable item="F0vA.3" CV="259.31=18.32=0" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus langsam</label>
 	</variable>
-	<variable item="F0vA.4" CV="259.31=18" mask="XXXVXXXX" default="0">
+	<variable item="F0vA.4" CV="259.31=18.32=0" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus schnell</label>
 	</variable>
-	<variable item="F0vA.5" CV="259.31=18" mask="XXVXXXXX" default="0">
+	<variable item="F0vA.5" CV="259.31=18.32=0" mask="XXVXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Ein</label>
 	</variable>
-	<variable item="F0vA.6" CV="259.31=18" mask="XVXXXXXX" default="1">
+	<variable item="F0vA.6" CV="259.31=18.32=0" mask="XVXXXXXX" default="1">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Einblenden</label>
 	</variable>
-	<variable item="F0vA.7" CV="259.31=18" mask="VXXXXXXX" default="1">
+	<variable item="F0vA.7" CV="259.31=18.32=0" mask="VXXXXXXX" default="1">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Ausblenden</label>
 	</variable>
-	<variable item="Ausgang F0v Parameter 1 A" CV="260.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang F0v Parameter 1 A" CV="260.31=18.32=0" default="0" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang F0v Parameter 1 A</label>
 		<label xml:lang="de">Ausgang F0v Parameter 1 A</label>
 	</variable>
-	<variable item="Ausgang F0v Parameter 2 A" CV="261.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang F0v Parameter 2 A" CV="261.31=18.32=0" default="0" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang F0v Parameter 2 A</label>
 		<label xml:lang="de">Ausgang F0v Parameter 2 A</label>
 	</variable>
-	<variable item="Ausgang F0v Effekt B" CV="262.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang F0v Effekt B" CV="262.31=18.32=0" default="0" tooltip="0-255">
 		<xi:include href="http://jmri.org/xml/decoders/piko/enumEffekteChoice.xml"/>
 		<label>Ausgang F0v Effekt B</label>
 		<label xml:lang="de">Ausgang F0v Effekt B</label>
 	</variable>
 	<!-- Flags F0v_B -->
-	<variable item="F0vB.0" CV="264.31=18" mask="XXXXXXXV" default="0">
+	<variable item="F0vB.0" CV="264.31=18.32=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus rückwärts</label>
 	</variable>
-	<variable item="F0vB.1" CV="264.31=18" mask="XXXXXXVX" default="0">
+	<variable item="F0vB.1" CV="264.31=18.32=0" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus vorwärts</label>
 	</variable>
-	<variable item="F0vB.2" CV="264.31=18" mask="XXXXXVXX" default="0">
+	<variable item="F0vB.2" CV="264.31=18.32=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus Stop</label>
 	</variable>
-	<variable item="F0vB.3" CV="264.31=18" mask="XXXXVXXX" default="0">
+	<variable item="F0vB.3" CV="264.31=18.32=0" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus langsam</label>
 	</variable>
-	<variable item="F0vB.4" CV="264.31=18" mask="XXXVXXXX" default="0">
+	<variable item="F0vB.4" CV="264.31=18.32=0" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus schnell</label>
 	</variable>
-	<variable item="F0vB.5" CV="264.31=18" mask="XXVXXXXX" default="0">
+	<variable item="F0vB.5" CV="264.31=18.32=0" mask="XXVXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Ein</label>
 	</variable>
-	<variable item="F0vB.6" CV="264.31=18" mask="XVXXXXXX" default="0">
+	<variable item="F0vB.6" CV="264.31=18.32=0" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Einblenden</label>
 	</variable>
-	<variable item="F0vB.7" CV="264.31=18" mask="VXXXXXXX" default="0">
+	<variable item="F0vB.7" CV="264.31=18.32=0" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Ausblenden</label>
 	</variable>
-	<variable item="Ausgang F0v PWM B" CV="263.31=18" default="64" tooltip="0-64">
+	<variable item="Ausgang F0v PWM B" CV="263.31=18.32=0" default="64" tooltip="0-64">
 		<decVal max="64"/>
 		<label>Ausgang F0v PWM B</label>
 		<label xml:lang="de">Ausgang F0v PWM B</label>
 	</variable>
-	<variable item="Ausgang F0v Flags B" CV="264.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang F0v Flags B" CV="264.31=18.32=0" default="0" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang F0v Flags B</label>
 		<label xml:lang="de">Ausgang F0v Flags B</label>
 	</variable>
-	<variable item="Ausgang F0v Parameter 1 B" CV="265.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang F0v Parameter 1 B" CV="265.31=18.32=0" default="0" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang F0v Parameter 1 B</label>
 		<label xml:lang="de">Ausgang F0v Parameter 1 B</label>
 	</variable>
-	<variable item="Ausgang F0v Parameter 2 B" CV="266.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang F0v Parameter 2 B" CV="266.31=18.32=0" default="0" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang F0v Parameter 2 B</label>
 		<label xml:lang="de">Ausgang F0v Parameter 2 B</label>
 	</variable>
-	<variable item="Ausgang F0h Effekt A" CV="267.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang F0h Effekt A" CV="267.31=18.32=0" default="0" tooltip="0-255">
 		<xi:include href="http://jmri.org/xml/decoders/piko/enumEffekteChoice.xml"/>
 		<label>Ausgang F0h Effekt A</label>
 		<label xml:lang="de">Ausgang F0h Effekt A</label>
 	</variable>
 	<!-- Flags F0h_A -->
-	<variable item="F0hA.0" CV="269.31=18" mask="XXXXXXXV" default="0">
+	<variable item="F0hA.0" CV="269.31=18.32=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus rückwärts</label>
 	</variable>
-	<variable item="F0hA.1" CV="269.31=18" mask="XXXXXXVX" default="0">
+	<variable item="F0hA.1" CV="269.31=18.32=0" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus vorwärts</label>
 	</variable>
-	<variable item="F0hA.2" CV="269.31=18" mask="XXXXXVXX" default="0">
+	<variable item="F0hA.2" CV="269.31=18.32=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus Stop</label>
 	</variable>
-	<variable item="F0hA.3" CV="269.31=18" mask="XXXXVXXX" default="0">
+	<variable item="F0hA.3" CV="269.31=18.32=0" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus langsam</label>
 	</variable>
-	<variable item="F0hA.4" CV="269.31=18" mask="XXXVXXXX" default="0">
+	<variable item="F0hA.4" CV="269.31=18.32=0" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus schnell</label>
 	</variable>
-	<variable item="F0hA.5" CV="269.31=18" mask="XXVXXXXX" default="0">
+	<variable item="F0hA.5" CV="269.31=18.32=0" mask="XXVXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Ein</label>
 	</variable>
-	<variable item="F0hA.6" CV="269.31=18" mask="XVXXXXXX" default="1">
+	<variable item="F0hA.6" CV="269.31=18.32=0" mask="XVXXXXXX" default="1">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Einblenden</label>
 	</variable>
-	<variable item="F0hA.7" CV="269.31=18" mask="VXXXXXXX" default="1">
+	<variable item="F0hA.7" CV="269.31=18.32=0" mask="VXXXXXXX" default="1">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Ausblenden</label>
 	</variable>
-	<variable item="Ausgang F0h PWM A" CV="268.31=18" default="64" tooltip="0-64">
+	<variable item="Ausgang F0h PWM A" CV="268.31=18.32=0" default="64" tooltip="0-64">
 		<decVal max="64"/>
 		<label>Ausgang F0h PWM A</label>
 		<label xml:lang="de">Ausgang F0h PWM A</label>
 	</variable>
-	<variable item="Ausgang F0h Flags A" CV="269.31=18" default="192" tooltip="0-255">
+	<variable item="Ausgang F0h Flags A" CV="269.31=18.32=0" default="192" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang F0h Flags A</label>
 		<label xml:lang="de">Ausgang F0h Flags A</label>
 	</variable>
-	<variable item="Ausgang F0h Parameter 1 A" CV="270.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang F0h Parameter 1 A" CV="270.31=18.32=0" default="0" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang F0h Parameter 1 A</label>
 		<label xml:lang="de">Ausgang F0h Parameter 1 A</label>
 	</variable>
-	<variable item="Ausgang F0h Parameter 2 A" CV="271.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang F0h Parameter 2 A" CV="271.31=18.32=0" default="0" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang F0h Parameter 2 A</label>
 		<label xml:lang="de">Ausgang F0h Parameter 2 A</label>
 	</variable>
-	<variable item="Ausgang F0h Effekt B" CV="272.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang F0h Effekt B" CV="272.31=18.32=0" default="0" tooltip="0-255">
 		<xi:include href="http://jmri.org/xml/decoders/piko/enumEffekteChoice.xml"/>
 		<label>Ausgang F0h Effekt B</label>
 		<label xml:lang="de">Ausgang F0h Effekt B</label>
 	</variable>
 	<!-- Flags F0h_B -->
-	<variable item="F0hB.0" CV="274.31=18" mask="XXXXXXXV" default="0">
+	<variable item="F0hB.0" CV="274.31=18.32=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus rückwärts</label>
 	</variable>
-	<variable item="F0hB.1" CV="274.31=18" mask="XXXXXXVX" default="0">
+	<variable item="F0hB.1" CV="274.31=18.32=0" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus vorwärts</label>
 	</variable>
-	<variable item="F0hB.2" CV="274.31=18" mask="XXXXXVXX" default="0">
+	<variable item="F0hB.2" CV="274.31=18.32=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus Stop</label>
 	</variable>
-	<variable item="F0hB.3" CV="274.31=18" mask="XXXXVXXX" default="0">
+	<variable item="F0hB.3" CV="274.31=18.32=0" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus langsam</label>
 	</variable>
-	<variable item="F0hB.4" CV="274.31=18" mask="XXXVXXXX" default="0">
+	<variable item="F0hB.4" CV="274.31=18.32=0" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus schnell</label>
 	</variable>
-	<variable item="F0hB.5" CV="274.31=18" mask="XXVXXXXX" default="0">
+	<variable item="F0hB.5" CV="274.31=18.32=0" mask="XXVXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Ein</label>
 	</variable>
-	<variable item="F0hB.6" CV="274.31=18" mask="XVXXXXXX" default="0">
+	<variable item="F0hB.6" CV="274.31=18.32=0" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Einblenden</label>
 	</variable>
-	<variable item="F0hB.7" CV="274.31=18" mask="VXXXXXXX" default="0">
+	<variable item="F0hB.7" CV="274.31=18.32=0" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Ausblenden</label>
 	</variable>
-	<variable item="Ausgang F0h PWM B" CV="273.31=18" default="64" tooltip="0-64">
+	<variable item="Ausgang F0h PWM B" CV="273.31=18.32=0" default="64" tooltip="0-64">
 		<decVal max="64"/>
 		<label>Ausgang F0h PWM B</label>
 		<label xml:lang="de">Ausgang F0h PWM B</label>
 	</variable>
-	<variable item="Ausgang F0h Flags B" CV="274.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang F0h Flags B" CV="274.31=18.32=0" default="0" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang F0h Flags B</label>
 		<label xml:lang="de">Ausgang F0h Flags B</label>
 	</variable>
-	<variable item="Ausgang F0h Parameter 1 B" CV="275.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang F0h Parameter 1 B" CV="275.31=18.32=0" default="0" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang F0h Parameter 1 B</label>
 		<label xml:lang="de">Ausgang F0h Parameter 1 B</label>
 	</variable>
-	<variable item="Ausgang F0h Parameter 2 B" CV="276.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang F0h Parameter 2 B" CV="276.31=18.32=0" default="0" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang F0h Parameter 2 B</label>
 		<label xml:lang="de">Ausgang F0h Parameter 2 B</label>
 	</variable>
-	<variable item="Ausgang A1 Effekt A" CV="277.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang A1 Effekt A" CV="277.31=18.32=0" default="0" tooltip="0-255">
 		<xi:include href="http://jmri.org/xml/decoders/piko/enumEffekteChoice.xml"/>
 		<label>Ausgang A1 Effekt A</label>
 		<label xml:lang="de">Ausgang A1 Effekt A</label>
 	</variable>
 	<!-- Flags A1_A -->
-	<variable item="A1A.0" CV="279.31=18" mask="XXXXXXXV" default="0">
+	<variable item="A1A.0" CV="279.31=18.32=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus rückwärts</label>
 	</variable>
-	<variable item="A1A.1" CV="279.31=18" mask="XXXXXXVX" default="0">
+	<variable item="A1A.1" CV="279.31=18.32=0" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus vorwärts</label>
 	</variable>
-	<variable item="A1A.2" CV="279.31=18" mask="XXXXXVXX" default="0">
+	<variable item="A1A.2" CV="279.31=18.32=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus Stop</label>
 	</variable>
-	<variable item="A1A.3" CV="279.31=18" mask="XXXXVXXX" default="0">
+	<variable item="A1A.3" CV="279.31=18.32=0" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus langsam</label>
 	</variable>
-	<variable item="A1A.4" CV="279.31=18" mask="XXXVXXXX" default="0">
+	<variable item="A1A.4" CV="279.31=18.32=0" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus schnell</label>
 	</variable>
-	<variable item="A1A.5" CV="279.31=18" mask="XXVXXXXX" default="0">
+	<variable item="A1A.5" CV="279.31=18.32=0" mask="XXVXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Ein</label>
 	</variable>
-	<variable item="A1A.6" CV="279.31=18" mask="XVXXXXXX" default="1">
+	<variable item="A1A.6" CV="279.31=18.32=0" mask="XVXXXXXX" default="1">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Einblenden</label>
 	</variable>
-	<variable item="A1A.7" CV="279.31=18" mask="VXXXXXXX" default="1">
+	<variable item="A1A.7" CV="279.31=18.32=0" mask="VXXXXXXX" default="1">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Ausblenden</label>
 	</variable>
-	<variable item="Ausgang A1 PWM A" CV="278.31=18" default="64" tooltip="0-64">
+	<variable item="Ausgang A1 PWM A" CV="278.31=18.32=0" default="64" tooltip="0-64">
 		<decVal max="64"/>
 		<label>Ausgang A1 PWM A</label>
 		<label xml:lang="de">Ausgang A1 PWM A</label>
 	</variable>
-	<variable item="Ausgang A1 Flags A" CV="279.31=18" default="192" tooltip="0-255">
+	<variable item="Ausgang A1 Flags A" CV="279.31=18.32=0" default="192" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang A1 Flags A</label>
 		<label xml:lang="de">Ausgang A1 Flags A</label>
 	</variable>
-	<variable item="Ausgang A1 Parameter 1 A" CV="280.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang A1 Parameter 1 A" CV="280.31=18.32=0" default="0" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang A1 Parameter 1 A</label>
 		<label xml:lang="de">Ausgang A1 Parameter 1 A</label>
 	</variable>
-	<variable item="Ausgang A1 Parameter 2 A" CV="281.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang A1 Parameter 2 A" CV="281.31=18.32=0" default="0" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang A1 Parameter 2 A</label>
 		<label xml:lang="de">Ausgang A1 Parameter 2 A</label>
 	</variable>
-	<variable item="Ausgang A1 Effekt B" CV="282.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang A1 Effekt B" CV="282.31=18.32=0" default="0" tooltip="0-255">
 		<xi:include href="http://jmri.org/xml/decoders/piko/enumEffekteChoice.xml"/>
 		<label>Ausgang A1 Effekt B</label>
 		<label xml:lang="de">Ausgang A1 Effekt B</label>
 	</variable>
 	<!-- Flags A1_B-->
-	<variable item="A1B.0" CV="284.31=18" mask="XXXXXXXV" default="0">
+	<variable item="A1B.0" CV="284.31=18.32=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus rückwärts</label>
 	</variable>
-	<variable item="A1B.1" CV="284.31=18" mask="XXXXXXVX" default="0">
+	<variable item="A1B.1" CV="284.31=18.32=0" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus vorwärts</label>
 	</variable>
-	<variable item="A1B.2" CV="284.31=18" mask="XXXXXVXX" default="0">
+	<variable item="A1B.2" CV="284.31=18.32=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus Stop</label>
 	</variable>
-	<variable item="A1B.3" CV="284.31=18" mask="XXXXVXXX" default="0">
+	<variable item="A1B.3" CV="284.31=18.32=0" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus langsam</label>
 	</variable>
-	<variable item="A1B.4" CV="284.31=18" mask="XXXVXXXX" default="0">
+	<variable item="A1B.4" CV="284.31=18.32=0" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus schnell</label>
 	</variable>
-	<variable item="A1B.5" CV="284.31=18" mask="XXVXXXXX" default="0">
+	<variable item="A1B.5" CV="284.31=18.32=0" mask="XXVXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Ein</label>
 	</variable>
-	<variable item="A1B.6" CV="284.31=18" mask="XVXXXXXX" default="0">
+	<variable item="A1B.6" CV="284.31=18.32=0" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Einblenden</label>
 	</variable>
-	<variable item="A1B.7" CV="284.31=18" mask="VXXXXXXX" default="0">
+	<variable item="A1B.7" CV="284.31=18.32=0" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Ausblenden</label>
 	</variable>
-	<variable item="Ausgang A1 PWM B" CV="283.31=18" default="64" tooltip="0-64">
+	<variable item="Ausgang A1 PWM B" CV="283.31=18.32=0" default="64" tooltip="0-64">
 		<decVal max="64"/>
 		<label>Ausgang A1 PWM B</label>
 		<label xml:lang="de">Ausgang A1 PWM B</label>
 	</variable>
-	<variable item="Ausgang A1 Flags B" CV="284.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang A1 Flags B" CV="284.31=18.32=0" default="0" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang A1 Flags B</label>
 		<label xml:lang="de">Ausgang A1 Flags B</label>
 	</variable>
-	<variable item="Ausgang A1 Parameter 1 B" CV="285.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang A1 Parameter 1 B" CV="285.31=18.32=0" default="0" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang A1 Parameter 1 B</label>
 		<label xml:lang="de">Ausgang A1 Parameter 1 B</label>
 	</variable>
-	<variable item="Ausgang A1 Parameter 2 B" CV="286.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang A1 Parameter 2 B" CV="286.31=18.32=0" default="0" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang A1 Parameter 2 B</label>
 		<label xml:lang="de">Ausgang A1 Parameter 2 B</label>
 	</variable>
-	<variable item="Ausgang A2 Effekt A" CV="287.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang A2 Effekt A" CV="287.31=18.32=0" default="0" tooltip="0-255">
 		<xi:include href="http://jmri.org/xml/decoders/piko/enumEffekteChoice.xml"/>
 		<label>Ausgang A2 Effekt A</label>
 		<label xml:lang="de">Ausgang A2 Effekt A</label>
 	</variable>
 	<!-- Flags A2_A-->
-	<variable item="A2A.0" CV="289.31=18" mask="XXXXXXXV" default="0">
+	<variable item="A2A.0" CV="289.31=18.32=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus rückwärts</label>
 	</variable>
-	<variable item="A2A.1" CV="289.31=18" mask="XXXXXXVX" default="0">
+	<variable item="A2A.1" CV="289.31=18.32=0" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus vorwärts</label>
 	</variable>
-	<variable item="A2A.2" CV="289.31=18" mask="XXXXXVXX" default="0">
+	<variable item="A2A.2" CV="289.31=18.32=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus Stop</label>
 	</variable>
-	<variable item="A2A.3" CV="289.31=18" mask="XXXXVXXX" default="0">
+	<variable item="A2A.3" CV="289.31=18.32=0" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus langsam</label>
 	</variable>
-	<variable item="A2A.4" CV="289.31=18" mask="XXXVXXXX" default="0">
+	<variable item="A2A.4" CV="289.31=18.32=0" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus schnell</label>
 	</variable>
-	<variable item="A2A.5" CV="289.31=18" mask="XXVXXXXX" default="0">
+	<variable item="A2A.5" CV="289.31=18.32=0" mask="XXVXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Ein</label>
 	</variable>
-	<variable item="A2A.6" CV="289.31=18" mask="XVXXXXXX" default="1">
+	<variable item="A2A.6" CV="289.31=18.32=0" mask="XVXXXXXX" default="1">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Einblenden</label>
 	</variable>
-	<variable item="A2A.7" CV="289.31=18" mask="VXXXXXXX" default="1">
+	<variable item="A2A.7" CV="289.31=18.32=0" mask="VXXXXXXX" default="1">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Ausblenden</label>
 	</variable>
-	<variable item="Ausgang A2 PWM A" CV="288.31=18" default="64" tooltip="0-64">
+	<variable item="Ausgang A2 PWM A" CV="288.31=18.32=0" default="64" tooltip="0-64">
 		<decVal max="64"/>
 		<label>Ausgang A2 PWM A</label>
 		<label xml:lang="de">Ausgang A2 PWM A</label>
 	</variable>
-	<variable item="Ausgang A2 Flags A" CV="289.31=18" default="192" tooltip="0-255">
+	<variable item="Ausgang A2 Flags A" CV="289.31=18.32=0" default="192" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang A2 Flags A</label>
 		<label xml:lang="de">Ausgang A2 Flags A</label>
 	</variable>
-	<variable item="Ausgang A2 Parameter 1 A" CV="290.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang A2 Parameter 1 A" CV="290.31=18.32=0" default="0" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang A2 Parameter 1 A</label>
 		<label xml:lang="de">Ausgang A2 Parameter 1 A</label>
 	</variable>
-	<variable item="Ausgang A2 Parameter 2 A" CV="291.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang A2 Parameter 2 A" CV="291.31=18.32=0" default="0" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang A2 Parameter 2 A</label>
 		<label xml:lang="de">Ausgang A2 Parameter 2 A</label>
 	</variable>
-	<variable item="Ausgang A2 Effekt B" CV="292.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang A2 Effekt B" CV="292.31=18.32=0" default="0" tooltip="0-255">
 		<xi:include href="http://jmri.org/xml/decoders/piko/enumEffekteChoice.xml"/>
 		<label>Ausgang A2 Effekt B</label>
 		<label xml:lang="de">Ausgang A2 Effekt B</label>
 	</variable>
 	<!-- Flags A2_B -->
-	<variable item="A2B.0" CV="294.31=18" mask="XXXXXXXV" default="0">
+	<variable item="A2B.0" CV="294.31=18.32=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus rückwärts</label>
 	</variable>
-	<variable item="A2B.1" CV="294.31=18" mask="XXXXXXVX" default="0">
+	<variable item="A2B.1" CV="294.31=18.32=0" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus vorwärts</label>
 	</variable>
-	<variable item="A2B.2" CV="294.31=18" mask="XXXXXVXX" default="0">
+	<variable item="A2B.2" CV="294.31=18.32=0" mask="XXXXXVXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus Stop</label>
 	</variable>
-	<variable item="A2B.3" CV="294.31=18" mask="XXXXVXXX" default="0">
+	<variable item="A2B.3" CV="294.31=18.32=0" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus langsam</label>
 	</variable>
-	<variable item="A2B.4" CV="294.31=18" mask="XXXVXXXX" default="0">
+	<variable item="A2B.4" CV="294.31=18.32=0" mask="XXXVXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Aus schnell</label>
 	</variable>
-	<variable item="A2B.5" CV="294.31=18" mask="XXVXXXXX" default="0">
+	<variable item="A2B.5" CV="294.31=18.32=0" mask="XXVXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto-Ein</label>
 	</variable>
-	<variable item="A2B.6" CV="294.31=18" mask="XVXXXXXX" default="0">
+	<variable item="A2B.6" CV="294.31=18.32=0" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Einblenden</label>
 	</variable>
-	<variable item="A2B.7" CV="294.31=18" mask="VXXXXXXX" default="0">
+	<variable item="A2B.7" CV="294.31=18.32=0" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Ausblenden</label>
 	</variable>
-	<variable item="Ausgang A2 PWM B" CV="293.31=18" default="64" tooltip="0-64">
+	<variable item="Ausgang A2 PWM B" CV="293.31=18.32=0" default="64" tooltip="0-64">
 		<decVal max="64"/>
 		<label>Ausgang A2 PWM B</label>
 		<label xml:lang="de">Ausgang A2 PWM B</label>
 	</variable>
-	<variable item="Ausgang A2 Flags B" CV="294.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang A2 Flags B" CV="294.31=18.32=0" default="0" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang A2 Flags B</label>
 		<label xml:lang="de">Ausgang A2 Flags B</label>
 	</variable>
-	<variable item="Ausgang A2 Parameter 1 B" CV="295.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang A2 Parameter 1 B" CV="295.31=18.32=0" default="0" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang A2 Parameter 1 B</label>
 		<label xml:lang="de">Ausgang A2 Parameter 1 B</label>
 	</variable>
-	<variable item="Ausgang A2 Parameter 2 B" CV="296.31=18" default="0" tooltip="0-255">
+	<variable item="Ausgang A2 Parameter 2 B" CV="296.31=18.32=0" default="0" tooltip="0-255">
 		<decVal/>
 		<label>Ausgang A2 Parameter 2 B</label>
 		<label xml:lang="de">Ausgang A2 Parameter 2 B</label>

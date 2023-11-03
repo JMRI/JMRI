@@ -1490,6 +1490,9 @@
                     <artifactId>xml-apis</artifactId>
                 </exclusion>
             </exclusions>
+            <!-- the next two lines force use of the local lib/openlcb.jar file -->
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/openlcb.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.usb4java</groupId>
@@ -1677,6 +1680,103 @@
                 </exclusion>
             </exclusions>
         </dependency>
+		<!-- //BiDiB client library -->
+		<!-- jbidibc 2.0.13 -->
+        <dependency>
+            <groupId>org.bidib.jbidib</groupId>
+            <artifactId>jbidibc-core</artifactId>
+            <version>2.0.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bidib.jbidib</groupId>
+            <artifactId>jbidibc-serial</artifactId>
+            <version>2.0.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bidib.jbidib</groupId>
+            <artifactId>jbidibc-simulation</artifactId>
+            <version>2.0.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bidib.jbidib</groupId>
+            <artifactId>jbidibc-purejavacomm</artifactId>
+            <version>2.0.13</version>
+            <exclusions>
+				<!-- don't use special purejavacomm mentioned in jbidibc-purejavacomm -->
+                <exclusion>
+                    <groupId>org.bidib.com.github.purejavacomm</groupId>
+                    <artifactId>purejavacomm</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.bidib.jbidib</groupId>
+            <artifactId>jbidibc-messages</artifactId>
+            <version>2.0.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bidib.jbidib</groupId>
+            <artifactId>jbidibc-net-serial-over-tcp</artifactId>
+            <version>2.0.13</version>
+        </dependency>
+		<!-- BiDiB Wizard Simulation 2.0.13 -->
+       <dependency>
+            <groupId>org.bidib.jbidib</groupId>
+            <artifactId>bidibwizard-common</artifactId>
+            <version>2.0.13</version>
+        </dependency>
+       <dependency>
+            <groupId>org.bidib.jbidib</groupId>
+            <artifactId>bidibwizard-model</artifactId>
+            <version>2.0.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bidib.jbidib</groupId>
+            <artifactId>bidibwizard-simulation</artifactId>
+            <version>2.0.13</version>
+        </dependency>
+        <!--  dependencies from jbidibc and bidibwizard -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bushe</groupId>
+            <artifactId>eventbus</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>javax.activation-api</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version> <!-- should be 2.3.1 for compatibility -->
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-core</artifactId>
+            <version>2.3.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.3.2</version> <!-- should be 2.3.2 for compatibility -->
+        </dependency>
+        <dependency>
+            <groupId>com.jgoodies</groupId>
+            <artifactId>jgoodies-binding</artifactId>
+            <version>2.13.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jgoodies</groupId>
+            <artifactId>jgoodies-common</artifactId>
+            <version>1.8.1</version>
+        </dependency>
+ 		<!-- //BiDiB -->
     </dependencies>
 
     <repositories>

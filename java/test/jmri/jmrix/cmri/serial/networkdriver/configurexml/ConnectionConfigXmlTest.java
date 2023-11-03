@@ -1,8 +1,6 @@
 package jmri.jmrix.cmri.serial.networkdriver.configurexml;
 
 import jmri.util.JUnitUtil;
-import jmri.util.JUnitAppender;
-
 import org.junit.jupiter.api.*;
 
 import jmri.jmrix.cmri.serial.networkdriver.ConnectionConfig;

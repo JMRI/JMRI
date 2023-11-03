@@ -2,7 +2,6 @@ package jmri.managers;
 
 import java.beans.PropertyChangeListener;
 
-import jmri.JmriException;
 import jmri.Reporter;
 import jmri.ReporterManager;
 

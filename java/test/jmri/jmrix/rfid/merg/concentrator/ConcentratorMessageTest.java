@@ -25,6 +25,7 @@ public class ConcentratorMessageTest extends jmri.jmrix.AbstractMessageTestBase 
         };
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = null;

@@ -2,7 +2,6 @@ package jmri.jmrix.ieee802154.xbee.configurexml;
 
 import com.digi.xbee.api.XBeeDevice;
 import jmri.jmrix.ieee802154.xbee.XBeeNode;
-import jmri.jmrix.ieee802154.xbee.XBeeNodeManager;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
 import jmri.util.JUnitUtil;
 

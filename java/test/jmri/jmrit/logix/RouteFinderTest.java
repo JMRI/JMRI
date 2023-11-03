@@ -9,7 +9,6 @@ import jmri.ShutDownManager;
 import jmri.ShutDownTask;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.Assume;
 

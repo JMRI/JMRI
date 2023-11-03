@@ -200,6 +200,14 @@ public class LogixNG_SelectStringSwing {
         return errorMessages.isEmpty();
     }
 
+    public void setEnabled(boolean value) {
+        _tabbedPane.setEnabled(value);
+        _valueTextField.setEnabled(value);
+        _referenceTextField.setEnabled(value);
+        _localVariableTextField.setEnabled(value);
+        _formulaTextField.setEnabled(value);
+    }
+
     public void updateObject(@Nonnull LogixNG_SelectString selectStr) {
 
         if (_tabbedPane.getSelectedComponent() == _panelDirect) {

@@ -78,12 +78,14 @@ public class NceConsistTest extends jmri.implementation.AbstractConsistTestBase 
         Assert.assertFalse("Direction in Advanced Consist",c.getLocoDirection(B));
     }
 
+    @Override
     @Test
     @Disabled("Remove requires response from command station")
     @ToDo("re-write parent class test here and include simulated command station response") 
     public void checkRemoveWithGetRosterIDAdvanced(){
     }
 
+    @Override
     @Test
     @Disabled("Remove requires response from command station")
     @ToDo("re-write parent class test here and include simulated command station response") 
