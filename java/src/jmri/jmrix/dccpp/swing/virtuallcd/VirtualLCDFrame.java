@@ -53,8 +53,7 @@ public class VirtualLCDFrame extends JmriJFrame implements DCCppListener  {
     public void notifyTimeout(DCCppMessage msg) {
     }
     
-    final static int TEXTFIELDLENGTH = 40;
-    final static int TOTALLINES = 8;
+    final static int TOTALLINES = 64;  // max DCC-EX will reference
     ArrayList<JLabel> lines;
     
     /**
