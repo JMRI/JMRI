@@ -17,11 +17,10 @@ import jmri.util.JmriJFrame;
  */
 public class VirtualLCDFrame extends JmriJFrame implements DCCppListener  {
 
-    final static int TOTALLINES = 64;
-
     private DCCppTrafficController _tc = null;
     private DCCppSystemConnectionMemo _memo;
 
+    final static int TOTALLINES = 64;
     private ArrayList<JLabel> lines;
     
     public VirtualLCDFrame(DCCppSystemConnectionMemo memo) {
