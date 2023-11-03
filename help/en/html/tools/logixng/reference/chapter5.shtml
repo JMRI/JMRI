@@ -1190,6 +1190,27 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h4 id="layout_audio_icon">Audio icon on web panel<span class="since">since 5.5.6</span></h4>
+
+      <p>The Audio Icons on JMRI panels can be used to play sounds on devices displaying JMRI panels
+      using a web browser.  The <strong>Audio icon on web panel</strong> action can be used to start
+      and stop the audio source assigned to the audio icon.  For example, LogixNG can play notification
+      sounds on a dispatcher panel.</p>
+
+      <p>Before creating the action, assign an id to the Audio Icon using <strong>Edit Id</strong>.</p>
+
+      <p>Select the panel, the id for the Audio Icon and whether to <strong>Play</strong> or
+      <strong>Stop</strong> the sound.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/layout_audio_icon.png"><img src=
+        "images/chapter5/layout_audio_icon.png" alt="Chapter 5 layout audio icon"></a>
+      </div>
+
+      <p>If the Audio Icon is to be used only by the action, the icon can be hidden.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h4>Icon/Label by class on panel<span class="since">since 5.5.4</span></h4>
 
       <p>Disable/Enable/Hide/Show all of the icons or labels on a specific panel that been assigned
