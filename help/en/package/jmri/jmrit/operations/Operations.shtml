@@ -856,7 +856,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>
         You can see or modify which locations or tracks can service a car type, use the <a
-          href="#ModifylocationsByCarType">Modify Locations by Car Type</a> tool found under "Tools"
+          href="#ModifyLocationsByCarType">Modify Locations by Car Type</a> tool found under "Tools"
         in the <a href="#Locations">Locations</a> window.
       </p>
 
