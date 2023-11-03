@@ -3108,6 +3108,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * Format: {@code <@>}
      * <p>
      * tells EX_CommandStation to send any LCD message updates to this instance of JMRI
+     * @return the formatted message to send
      */
     public static DCCppMessage makeLCDRequestMsg() {
         return (new DCCppMessage(DCCppConstants.LCD_TEXT_CMD, DCCppConstants.LCD_TEXT_CMD_REGEX));

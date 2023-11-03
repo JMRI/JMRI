@@ -17,15 +17,19 @@ import jmri.util.JmriJFrame;
  */
 public class VirtualLCDFrame extends JmriJFrame implements DCCppListener  {
 
-    // private data
+    final static int TOTALLINES = 64;
+
     private DCCppTrafficController _tc = null;
     private DCCppSystemConnectionMemo _memo;
 
+    private ArrayList<JLabel> lines;
+    
     public VirtualLCDFrame(DCCppSystemConnectionMemo memo) {
         super();
         _tc = memo.getDCCppTrafficController();
         _memo = memo;
         _tc.sendDCCppMessage(DCCppMessage.makeLCDRequestMsg(), null);        
+        lines = new ArrayList<>(TOTALLINES + 1);
     }
 
     /** 
@@ -53,9 +57,6 @@ public class VirtualLCDFrame extends JmriJFrame implements DCCppListener  {
     public void notifyTimeout(DCCppMessage msg) {
     }
     
-    final static int TOTALLINES = 64;  // max DCC-EX will reference
-    ArrayList<JLabel> lines;
-    
     /**
      * {@inheritDoc}
      */
@@ -76,7 +77,6 @@ public class VirtualLCDFrame extends JmriJFrame implements DCCppListener  {
         var pane = new JPanel();
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         // initialize the list of display lines
-        lines = new ArrayList<>(9);
         for (int i = 0; i<TOTALLINES; i++) {
             var label = new JLabel();
             if (font != null) label.setFont(font);
