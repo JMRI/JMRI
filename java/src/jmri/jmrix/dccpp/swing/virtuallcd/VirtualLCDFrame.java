@@ -13,7 +13,8 @@ import jmri.util.JmriJFrame;
  * Frame to image the DCC-EX command station's OLED display
  *   Also sends request to DCC-EX to send copies of all LCD messages to this instance of JMRI
  *
- * @author Bob Jacobsen Copyright (C) 2023
+ * @author BobJacobsen  Copyright (C) 2023
+ * @author MSteveTodd   Copyright (C) 2023
  */
 public class VirtualLCDFrame extends JmriJFrame implements DCCppListener  {
 
@@ -44,8 +45,14 @@ public class VirtualLCDFrame extends JmriJFrame implements DCCppListener  {
     @Override
     public void message(DCCppReply msg) {
         if (msg.isLCDTextReply()) {
-            lines.get(msg.getLCDLineNumInt()).setText(msg.getLCDTextString()+"   ");
-            pack();
+            int lineNumber = msg.getLCDLineNumInt();
+            if (lineNumber < TOTALLINES) {
+                lines.get(lineNumber).setText(msg.getLCDTextString()+"   "); // padding for appearance
+                pack(); 
+            } else {
+                log.warn("Received LCD message for line {}, but configured for TOTALLINES limit of {}", 
+                            lineNumber, TOTALLINES-1);
+            }
         }
     }
     
