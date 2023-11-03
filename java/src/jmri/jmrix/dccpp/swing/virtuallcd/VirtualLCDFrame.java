@@ -1,8 +1,10 @@
 package jmri.jmrix.dccpp.swing.virtuallcd;
 
+import java.awt.*;
+import java.io.*;
 import java.util.ArrayList;
-import javax.swing.BoxLayout;
-import javax.swing.JTextField;
+
+import javax.swing.*;
 
 import jmri.jmrix.dccpp.*;
 import jmri.util.JmriJFrame;
@@ -39,7 +41,8 @@ public class VirtualLCDFrame extends JmriJFrame implements DCCppListener  {
     @Override
     public void message(DCCppReply msg) {
         if (msg.isLCDTextReply()) {
-            lines.get(msg.getLCDLineNumInt()).setText(msg.getLCDTextString());
+            lines.get(msg.getLCDLineNumInt()).setText(msg.getLCDTextString()+"   ");
+            pack();
         }
     }
     
@@ -52,7 +55,7 @@ public class VirtualLCDFrame extends JmriJFrame implements DCCppListener  {
     
     final static int TEXTFIELDLENGTH = 40;
     final static int TOTALLINES = 8;
-    ArrayList<JTextField> lines;
+    ArrayList<JLabel> lines;
     
     /**
      * {@inheritDoc}
@@ -62,12 +65,31 @@ public class VirtualLCDFrame extends JmriJFrame implements DCCppListener  {
         super.initComponents();
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         
+        Font font = null;
+        // load the custom 5x8 found
+        try { 
+            InputStream stream = new FileInputStream(new File("resources/fonts/5x8_lcd_hd44780u_a02.ttf"));
+            font = Font.createFont(Font.TRUETYPE_FONT, stream).deriveFont(16f).deriveFont(Font.BOLD);
+        } catch (IOException e1) { log.error("failed to find or open font file");
+        } catch (FontFormatException e2) { log.error("font file not valid");
+        }
+        
+        var pane = new JPanel();
+        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         // initialize the list of display lines
         lines = new ArrayList<>(9);
         for (int i = 0; i<TOTALLINES; i++) {
-            lines.add(new JTextField(TEXTFIELDLENGTH));
-            this.add(lines.get(i));
+            var label = new JLabel();
+            if (font != null) label.setFont(font);
+            label.setOpaque(true);
+            label.setBackground(Color.BLACK);
+            label.setForeground(Color.WHITE);
+            lines.add(label);
+            pane.add(lines.get(i));
         }
+        pane.setOpaque(true);
+        pane.setBackground(Color.BLACK);
+        this.add(pane);
         
         // set the title, include prefix in event of multiple connections 
         setTitle(Bundle.getMessage("VirtualLCDFrameTitle") + " (" + _memo.getSystemPrefix() + ")");
