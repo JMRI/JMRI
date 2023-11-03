@@ -432,6 +432,7 @@
              <li>Add TransitAction TERMINATE</li>
              <li>Add TransitAction LOADTRAININFO</li>
              <li>Process Delays for Active/InActive sensor actions</li>
+             <li>Process delays for OnTrainStop</li>
              <li>Remove delays for Exit Section as they cannot be processed</li>
         </ul>
 
