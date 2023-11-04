@@ -169,31 +169,16 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>Audio</h4>
+      <h4 id="audio_action">Audio</h4>
 
-      <p>Control the selected Audio item.</p>
+      <p>Control an Audio source.</p>
 
-      <ul>
-        <li>Play</li>
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/audio_action.png"><img src=
+        "images/chapter5/audio_action.png" alt="Chapter 5 audio action"></a>
+      </div>
 
-        <li>Play toggle</li>
-
-        <li>Pause</li>
-
-        <li>Pause toggle</li>
-
-        <li>Resume</li>
-
-        <li>Stop</li>
-
-        <li>Fade in</li>
-
-        <li>Fade out</li>
-
-        <li>Rewind</li>
-
-        <li>Reset position</li>
-      </ul>
+      <p>Select an audio source from the list and the action to be performed.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -1197,7 +1182,11 @@
       and stop the audio source assigned to the audio icon.  For example, LogixNG can play notification
       sounds on a dispatcher panel.</p>
 
-      <p>Before creating the action, assign an id to the Audio Icon using <strong>Edit Id</strong>.</p>
+      <p>Note: The sound will not be played on the computer running JMRI. If desired, use the
+      <strong>Audio</strong> action to play the sound locally.</p>
+
+      <p>Before creating the action, assign an id to the Audio Icon using <strong>Edit Id</strong>
+      from the icon context menu.</p>
 
       <p>Select the panel, the id for the Audio Icon and whether to <strong>Play</strong> or
       <strong>Stop</strong> the sound.</p>

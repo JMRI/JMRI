@@ -150,9 +150,10 @@
       <p>Unless modified by changing the 'Meters per unit' parameter of the Audio Listener, all
       distance and velocity units are measured in real-world meters.</p>
 
-      <h2 id="using">Using Audio Objects with Logix and Scripts</h2>
-      A Logix can be defined to control audio objects. Currently, it is possible to play, pause,
-      stop, rewind, fade-in and fade-out audio sources.<br>
+      <h2 id="using">Using Audio Objects with Logix, LogixNG and Scripts</h2>
+      A Logix or <a href="logixng/reference/chapter5.shtml#audio_action">LogixNG</a> can be defined
+      to control audio objects. Currently, it is possible to play, pause, stop, rewind, fade-in and
+      fade-out audio sources.<br>
       You can also directly manipulate Audio Objects with scripts. There's an <a href=
       "https://jmri.org/jython/AudioExample.py">example script</a> in the distribution, along with
       documentation for the <a href=
