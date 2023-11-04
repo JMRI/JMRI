@@ -119,5 +119,11 @@
         <!-- <Logger name="jmri.jmrit.display.layoutEditor.LayoutBlock" level="DEBUG"/> -->
         <!-- <Logger name="jmri.jmrit.operations" level="DEBUG"/> -->
 
+        <!-- //Mey -->
+        <Logger name="jmri.jmrix.bidib" level="INFO"/>
+        <Logger name="org.bidib.wizard" level="WARN"/>
+        <Logger name="org.bidib.jbidibc" level="WARN"/>
+        <Logger name="myScripts" level="INFO"/>
+
     </Loggers>
 </Configuration>
