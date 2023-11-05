@@ -580,7 +580,7 @@ public interface AudioSource extends Audio {
     int getNumLoops();
 
     /**
-     * Get the last value returned by {@link getNumLoops() }
+     * Get the last value returned by {@link #getNumLoops() }
      * @return the number of loops
      */
     int getLastNumLoops();
