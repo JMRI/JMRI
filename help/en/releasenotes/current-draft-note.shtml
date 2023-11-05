@@ -241,6 +241,12 @@
             <ul>
                 <li>Updated the Series 7 SFX decoder definition.</li>
             </ul>
+            <ul>
+                <li>Fix NPE, and decode Extended Accessory Signal Aspect IMM commands</li>
+            </ul>
+            <ul>
+                <li>Fix LnSendTool.py to correctly send signal aspects up to 255 NMRA 2.4.3</li>
+            </ul>
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
