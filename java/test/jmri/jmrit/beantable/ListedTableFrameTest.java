@@ -48,6 +48,7 @@ public class ListedTableFrameTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initRosterConfigManager();
         frame = new ListedTableFrame<>();
     }
 

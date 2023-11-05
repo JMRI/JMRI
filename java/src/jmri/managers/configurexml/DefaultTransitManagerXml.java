@@ -98,6 +98,7 @@ public class DefaultTransitManagerXml extends jmri.managers.configurexml.Abstrac
                                     tsaElem.setAttribute("whatdata1", Integer.toString(tsa.getDataWhat1()));
                                     tsaElem.setAttribute("whatdata2", Integer.toString(tsa.getDataWhat2()));
                                     tsaElem.setAttribute("whatstring", tsa.getStringWhat());
+                                    tsaElem.setAttribute("whatstring2", tsa.getStringWhat2());
                                     tsElem.addContent(tsaElem);
                                 }
                             }
@@ -212,6 +213,10 @@ public class DefaultTransitManagerXml extends jmri.managers.configurexml.Abstrac
                     int tWhatData1 = 0;
                     int tWhatData2 = 0;
                     String tWhatString = elemx.getAttribute("whatstring").getValue();
+                    String tWhatString2 = "";
+                    if (elemx.getAttribute("whatstring").getValue() != null) {
+                        tWhatString2=elemx.getAttribute("whatstring").getValue();
+                    }
                     try {
                         tWhen = elemx.getAttribute("whencode").getIntValue();
                         tWhat = elemx.getAttribute("whatcode").getIntValue();
@@ -222,7 +227,7 @@ public class DefaultTransitManagerXml extends jmri.managers.configurexml.Abstrac
                         log.error("Data Conversion Exception when loading transit section action - ", e);
                     }
                     TransitSectionAction tsa = new TransitSectionAction(tWhen, tWhat, tWhenData,
-                            tWhatData1, tWhatData2, tWhenString, tWhatString);
+                            tWhatData1, tWhatData2, tWhenString, tWhatString, tWhatString2);
                     ts.addAction(tsa);
                 }
             }

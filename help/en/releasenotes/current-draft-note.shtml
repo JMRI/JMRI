@@ -428,6 +428,13 @@
              <li>Check each section against reserved sections for conflicting blocks.</li>
              <li>Do not turn off block alternate colour when it has already be reallocated.</li>
         </ul>
+        <ul>
+             <li>Add TransitAction TERMINATE</li>
+             <li>Add TransitAction LOADTRAININFO</li>
+             <li>Process Delays for Active/InActive sensor actions</li>
+             <li>Process delays for OnTrainStop</li>
+             <li>Remove delays for Exit Section as they cannot be processed</li>
+        </ul>
 
     <h3>Dispatcher System</h3>
         <a id="Dispatcher_System" name="Dispatcher_System"></a>

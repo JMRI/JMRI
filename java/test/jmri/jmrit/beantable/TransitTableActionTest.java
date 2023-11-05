@@ -109,6 +109,7 @@ public class TransitTableActionTest extends AbstractTableActionBase<Transit> {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
         helpTarget = "package.jmri.jmrit.beantable.TransitTable";
         InstanceManager.setDefault(jmri.BlockManager.class, new jmri.BlockManager());
         JUnitUtil.initSectionManager();
