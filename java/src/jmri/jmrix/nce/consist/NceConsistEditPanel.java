@@ -48,7 +48,7 @@ import jmri.util.swing.JmriJOptionPane;
  *
  * @author Dan Boudreau Copyright (C) 2007 2008 Cloned from NceConsistEditFrame
  * by
- * @author kcameron Copyright (C) 2010
+ * @author kcameron Copyright (C) 2010, 2023
  */
 public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implements
         jmri.jmrix.nce.NceListener {
@@ -856,12 +856,12 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
      */
     private void readConsistMemory(int consistNum, int engPosition) {
         locoPosition = engPosition;
-        int nceMemAddr = (consistNum * 2) + NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM;
+        int nceMemAddr = (consistNum * 2) + tc.getCmdStaMemBaseConsist();
         if (locoPosition == REAR) {
-            nceMemAddr = (consistNum * 2) + NceCmdStationMemory.CabMemorySerial.CS_CON_MEM_REAR;
+            nceMemAddr = (consistNum * 2) + tc.getCmdStaMemBaseConsistRear();
         }
         if (locoPosition == MID) {
-            nceMemAddr = (consistNum * 8) + NceCmdStationMemory.CabMemorySerial.CS_CON_MEM_MID;
+            nceMemAddr = (consistNum * 8) + tc.getCmdStaMemBaseConsistMid();
         }
         log.debug("Read consist ({}) position ({}) NCE memory address ({})", consistNum, engPosition, Integer.toHexString(nceMemAddr));
         byte[] bl = NceBinaryCommand.accMemoryRead(nceMemAddr);

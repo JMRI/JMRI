@@ -25,7 +25,7 @@ import jmri.util.swing.TextFilter;
  * Backups NCE Macros to a text file format defined by NCE.
  * <p>
  * NCE "Backup macros" dumps the macros into a text file. Each line contains the
- * contents of one macro. The first macro, 0 starts at address xC800. The last
+ * contents of one macro. The first macro, 0 starts at address xC800 (PH5 0x6000). The last
  * macro 255 is at address xDBEC.
  * <p>
  * NCE file format:
@@ -57,10 +57,10 @@ import jmri.util.swing.TextFilter;
  * This backup routine uses the same macro data format as NCE.
  *
  * @author Dan Boudreau Copyright (C) 2007
+ * @author Ken Cameron Copyright (C) 2023
  */
 public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener {
 
-    private static final int CS_MACRO_MEM = 0xC800; // start of NCE CS Macro memory
     private static final int NUM_MACRO = 256;  // there are 256 possible macros
     private static final int MACRO_LNTH = 20;  // 20 bytes per macro
     private static final int REPLY_16 = 16;   // reply length of 16 byte expected
@@ -156,7 +156,7 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
                 }
                 if (fileValid) {
                     StringBuilder buf = new StringBuilder();
-                    buf.append(":").append(Integer.toHexString(CS_MACRO_MEM + (macroNum * MACRO_LNTH)));
+                    buf.append(":").append(Integer.toHexString(tc.getCmdStaMemBaseMacro() + (macroNum * MACRO_LNTH)));
 
                     for (int i = 0; i < MACRO_LNTH; i++) {
                         buf.append(" ").append(StringUtil.twoHexFromInt(NCE_MACRO_DATA[i++]));
@@ -237,7 +237,7 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
     // Reads 16 bytes of NCE macro memory, and adjusts for second read
     private NceMessage readMacroMemory(int macroNum, boolean second) {
         secondRead = second;   // set flag for receive
-        int nceMacroAddr = (macroNum * MACRO_LNTH) + CS_MACRO_MEM;
+        int nceMacroAddr = (macroNum * MACRO_LNTH) + tc.getCmdStaMemBaseMacro();
         if (second) {
             nceMacroAddr += REPLY_16;  // adjust for second memory read
         }

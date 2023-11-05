@@ -17,6 +17,7 @@ import jmri.implementation.DccConsist;
  *
  * @author Paul Bender Copyright (C) 2011
  * @author Daniel Boudreau Copyright (C) 2012
+ * @author Ken Cameron Copyright (C) 2023
  */
 public class NceConsist extends jmri.implementation.DccConsist implements jmri.jmrix.nce.NceListener {
 
@@ -328,10 +329,6 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
         private static final int REAR = 1;
         private static final int MID = 2;
 
-        private static final int CS_CONSIST_MEM = 0xF500;  // start of NCE CS Consist memory
-        private static final int CS_CON_MEM_REAR = 0xF600;  // address of rear consist locos
-        private static final int CS_CON_MEM_MID = 0xF700;  // address of mid consist locos
-
         public void setConsist(int number) {
             _consistNum = number;
         }
@@ -373,12 +370,12 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
                 return;
             }
             _locoNum = eNum;
-            int nceMemAddr = (consistNum * 2) + CS_CONSIST_MEM;
+            int nceMemAddr = (consistNum * 2) + tc.getCmdStaMemBaseConsist();
             if (eNum == REAR) {
-                nceMemAddr = (consistNum * 2) + CS_CON_MEM_REAR;
+                nceMemAddr = (consistNum * 2) + tc.getCmdStaMemBaseConsistRear();
             }
             if (eNum == MID) {
-                nceMemAddr = (consistNum * 8) + CS_CON_MEM_MID;
+                nceMemAddr = (consistNum * 8) + tc.getCmdStaMemBaseConsistMid();
             }
             if (eNum == LEAD || _validConsist) {
                 byte[] bl = NceBinaryCommand.accMemoryRead(nceMemAddr);

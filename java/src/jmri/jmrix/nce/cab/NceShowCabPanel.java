@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Each cab has a 256 byte "context page" in system RAM These pages start at
  * 0x8000 in system RAM with Cab 0 at 0x8800, cab 1 at 0x8900, Cab 2 at 0x8a00,
- * etc.
+ * etc. (PH5 0x3C00)
  * <p>
  * Below is a list of offsets (in decimal) into the cab context page for useful
  * memory locations.
@@ -107,7 +107,7 @@ import org.slf4j.LoggerFactory;
  * remove the cab from the 'active' list
  *
  * @author Dan Boudreau Copyright (C) 2009, 2010
- * @author Ken Cameron Copyright (C) 2012, 2013
+ * @author Ken Cameron Copyright (C) 2012, 2013, 2023
  */
 public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
 
@@ -1443,9 +1443,9 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     private int getNceCabAddr(int cabNum, int offset) {
         int nceCabAddr;
         if (cabNum < CAB_MAX_PRO) {
-            nceCabAddr = (cabNum * CabMemorySerial.CAB_SIZE) + CabMemorySerial.CS_CAB_MEM_PRO + offset;
+            nceCabAddr = (cabNum * CabMemorySerial.CAB_SIZE) + tc.getCmdStaMemBaseCab() + offset;
         } else {
-            nceCabAddr = CabMemorySerial.CS_COMP_CAB_MEM_PRO + offset;
+            nceCabAddr = tc.getCmdStaMemBaseCab() + offset;
         }
         return nceCabAddr;
     }

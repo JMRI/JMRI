@@ -41,6 +41,7 @@ import jmri.util.swing.TextFilter;
  * This backup routine uses the same consist data format as NCE.
  *
  * @author Dan Boudreau Copyright (C) 2007
+ * @author Ken Cameron Copyright (C) 2023
  */
 public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListener {
 
@@ -144,7 +145,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
                 if (fileValid) {
                     StringBuilder buf = new StringBuilder();
                     buf.append(":").append(Integer.toHexString(
-                            NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM + (consistNum * CONSIST_LNTH)));
+                            tc.getCmdStaMemBaseConsist() + (consistNum * CONSIST_LNTH)));
 
                     for (int i = 0; i < CONSIST_LNTH; i++) {
                         buf.append(" ").append(StringUtil.twoHexFromInt(nceConsistData[i++]));
@@ -219,7 +220,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
     // Reads 16 bytes of NCE consist memory
     private NceMessage readConsistMemory(int consistNum) {
 
-        int nceConsistAddr = (consistNum * CONSIST_LNTH) + NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM;
+        int nceConsistAddr = (consistNum * CONSIST_LNTH) + tc.getCmdStaMemBaseConsist();
         replyLen = NceMessage.REPLY_16; // Expect 16 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.accMemoryRead(nceConsistAddr);

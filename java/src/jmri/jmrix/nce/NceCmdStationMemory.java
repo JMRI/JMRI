@@ -4,15 +4,50 @@ package jmri.jmrix.nce;
 /**
  * Contains the map for the command station and memory parts
  *
- * @author Ken Cameron Copyright (C) 2013
+ * @author Ken Cameron Copyright (C) 2013, 2023
  * 
  */
 public class NceCmdStationMemory {
 
     /**
      * Memory offsets for cab info in a serial connected command station
-     *
-     * @author kcameron
+     */
+    public static class CabMemorySerialPH5 {
+
+        public final static int CS_CAB_MEM_PRO = 0x0000; // start of NCE CS cab context page for cab 0, PowerPro/CS2
+        public final static int CS_COMP_CAB_MEM_PRO = 0x3C00; // start of computer cab context page, PowerPro/CS2
+        public final static int CS_CONSIST_MEM = 0x4e00;  // start of NCE CS Consist memory
+        public final static int CS_CON_MEM_REAR = 0x4F00;  // start of rear consist locos
+        public final static int CS_CON_MEM_MID = 0x5000;  // start of mid consist locos
+        public final static int CS_CON_MIN = 1;
+        public final static int CS_CON_MAX = 127;
+        public final static int CS_MACRO_MEM = 0x6000; // start of NCE CS Macro memory 
+        public final static int CS_MAX_MACRO = 255;  // there are 256 possible macros
+        public final static int CS_MACRO_SIZE = 20;  // 20 bytes per macro
+        public final static int CS_ACCY_MEM = 0x5400;   // start of NCE CS Accessory memory
+        public final static int CS_ACCY_SIZE = 0x100;   // 256 bytes for the accessory range
+        public static final int CS_CLOCK_MEM_ADDR = 0x3E00; // base for clock values
+        public static final int CS_AIU_FLAG_MEM = 0x3E15;   // addr for AIU broadcast flag
+
+        public static final int NUM_CONSIST = 96;   // number of lines in the file
+
+        public final static int CAB_LINE_1 = 0;  // start of first line for cab display
+        public final static int CAB_LINE_2 = 16;  // start of second line for cab display
+        public final static int CAB_SIZE = 256;  // Each cab has 256 bytes
+        public final static int CAB_CURR_SPEED = 32; // NCE cab speed
+        public final static int CAB_ADDR_H = 33;   // loco address, high byte
+        public final static int CAB_ADDR_L = 34;   // loco address, low byte
+        public final static int CAB_FLAGS = 35;  // FLAGS
+        public final static int CAB_FUNC_L = 36;  // Function keys low
+        public final static int CAB_FUNC_H = 37;  // Function keys high
+        public final static int CAB_ALIAS = 38;  // Consist address
+        public final static int CAB_FUNC_13_20 = 82; // Function keys 13 - 30
+        public final static int CAB_FUNC_21_28 = 83; // Function keys 21 - 28
+        public final static int CAB_FLAGS1 = 101;  // NCE flag 1
+    }
+
+    /**
+     * Memory offsets for cab info in a serial connected command station
      *
      */
     public static class CabMemorySerial {
@@ -22,11 +57,16 @@ public class NceCmdStationMemory {
         public final static int CS_CONSIST_MEM = 0xF500;  // start of NCE CS Consist memory
         public final static int CS_CON_MEM_REAR = 0xF600;  // start of rear consist locos
         public final static int CS_CON_MEM_MID = 0xF700;  // start of mid consist locos
+        public final static int CS_CONSIST_SIZE = 0x0600;  // size of NCE CS Consist memory
         public final static int CS_CON_MIN = 1;
         public final static int CS_CON_MAX = 127;
         public final static int CS_MACRO_MEM = 0xC800; // start of NCE CS Macro memory 
         public final static int CS_MAX_MACRO = 255;  // there are 256 possible macros
         public final static int CS_MACRO_SIZE = 20;  // 20 bytes per macro
+        public final static int CS_ACCY_MEM = 0xEC00;   // start of NCE CS Accessory memory
+        public final static int CS_ACCY_SIZE = 0x100;   // 256 bytes for the accessory range
+        public static final int CS_CLOCK_MEM_ADDR = 0xDC00; // base for clock values
+        public static final int CS_AIU_FLAG_MEM = 0xDC15;   // addr for AIU broadcast flag
 
         public static final int NUM_CONSIST = 96;   // number of lines in the file
 
@@ -47,8 +87,6 @@ public class NceCmdStationMemory {
 
     /**
      * Memory offsets for cab info in a usb connected command station
-     *
-     * @author kcameron
      *
      */
     public static class CabMemoryUsb {

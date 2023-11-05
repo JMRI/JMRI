@@ -87,6 +87,7 @@ import jmri.util.ImmediatePipedOutputStream;
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Paul Bender, Copyright (C) 2009
  * @author Daniel Boudreau Copyright (C) 2010
+ * @author Ken Cameron Copyright (C) 2023
  */
 public class SimulatorAdapter extends NcePortController implements Runnable {
 
@@ -421,8 +422,8 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
      * command station memory.  There are three memory blocks that are
      * supported, turnout status, macros, and consists.  The turnout status
      * memory is 256 bytes and starts at memory address 0xEC00. The macro memory
-     * is 256*20 or 5120 bytes and starts at memory address 0xC800. The consist
-     * memory is 256*6 or 1536 bytes and starts at memory address 0xF500.
+     * is 256*20 or 5120 bytes and starts at memory address 0xC800 (PH5 0x6000). The consist
+     * memory is 256*6 or 1536 bytes and starts at memory address 0xF500 (PH5 0x4E00).
      *
      */
     private NceReply readMemory(NceMessage m, NceReply reply, int num) {
@@ -430,8 +431,9 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
             log.error("Nce read memory command was greater than 16");
             return null;
         }
+        NceTrafficController tc = this.getSystemConnectionMemo().getNceTrafficController();
         int nceMemoryAddress = getNceAddress(m);
-        if (nceMemoryAddress >= NceTurnoutMonitor.CS_ACCY_MEMORY && nceMemoryAddress < NceTurnoutMonitor.CS_ACCY_MEMORY + 256) {
+        if (nceMemoryAddress >= tc.getCmdStaMemBaseAccy() && nceMemoryAddress < tc.getCmdStaMemBaseAccy() + tc.getCmdStaMemSizeAccy()) {
             log.debug("Reading turnout memory: {}", Integer.toHexString(nceMemoryAddress));
             int offset = m.getElement(2);
             for (int i = 0; i < num; i++) {
@@ -439,17 +441,17 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
             }
             return reply;
         }
-        if (nceMemoryAddress >= NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM && nceMemoryAddress < NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM + 256 * 6) {
+        if (nceMemoryAddress >= tc.getCmdStaMemBaseConsist() && nceMemoryAddress < tc.getCmdStaMemBaseConsist() + tc.getCmdStaMemSizeConsist()) {
             log.debug("Reading consist memory: {}", Integer.toHexString(nceMemoryAddress));
-            int offset = nceMemoryAddress - NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM;
+            int offset = nceMemoryAddress - tc.getCmdStaMemBaseConsist();
             for (int i = 0; i < num; i++) {
                 reply.setElement(i, consistMemory[offset + i]);
             }
             return reply;
         }
-        if (nceMemoryAddress >= NceCmdStationMemory.CabMemorySerial.CS_MACRO_MEM && nceMemoryAddress < NceCmdStationMemory.CabMemorySerial.CS_MACRO_MEM + 256 * 20) {
+        if (nceMemoryAddress >= tc.getCmdStaMemBaseMacro() && nceMemoryAddress < tc.getCmdStaMemBaseMacro() + tc.getCmdStaMemSizeMacro()) {
             log.debug("Reading macro memory: {}", Integer.toHexString(nceMemoryAddress));
-            int offset = nceMemoryAddress - NceCmdStationMemory.CabMemorySerial.CS_MACRO_MEM;
+            int offset = nceMemoryAddress - tc.getCmdStaMemBaseMacro();
             log.debug("offset: {}", offset);
             for (int i = 0; i < num; i++) {
                 reply.setElement(i, macroMemory[offset + i]);
@@ -472,23 +474,23 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
         if (skipbyte) {
             byteDataBegins++;
         }
-        if (nceMemoryAddress >= NceTurnoutMonitor.CS_ACCY_MEMORY && nceMemoryAddress < NceTurnoutMonitor.CS_ACCY_MEMORY + 256) {
+        if (nceMemoryAddress >= this.getSystemConnectionMemo().getNceTrafficController().getCmdStaMemBaseAccy() && nceMemoryAddress < this.getSystemConnectionMemo().getNceTrafficController().getCmdStaMemBaseAccy() + 256) {
             log.debug("Writing turnout memory: {}", Integer.toHexString(nceMemoryAddress));
             int offset = m.getElement(2);
             for (int i = 0; i < num; i++) {
                 turnoutMemory[offset + i] = (byte) m.getElement(i + byteDataBegins);
             }
         }
-        if (nceMemoryAddress >= NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM && nceMemoryAddress < NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM + 256 * 6) {
+        if (nceMemoryAddress >= this.getSystemConnectionMemo().getNceTrafficController().getCmdStaMemBaseMacro() && nceMemoryAddress < NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM + 256 * 6) {
             log.debug("Writing consist memory: {}", Integer.toHexString(nceMemoryAddress));
-            int offset = nceMemoryAddress - NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM;
+            int offset = nceMemoryAddress - this.getSystemConnectionMemo().getNceTrafficController().getCmdStaMemBaseMacro();
             for (int i = 0; i < num; i++) {
                 consistMemory[offset + i] = (byte) m.getElement(i + byteDataBegins);
             }
         }
-        if (nceMemoryAddress >= NceCmdStationMemory.CabMemorySerial.CS_MACRO_MEM && nceMemoryAddress < NceCmdStationMemory.CabMemorySerial.CS_MACRO_MEM + 256 * 20) {
+        if (nceMemoryAddress >= NceCmdStationMemory.CabMemorySerial.CS_MACRO_MEM && nceMemoryAddress < this.getSystemConnectionMemo().getNceTrafficController().getCmdStaMemBaseMacro() + 256 * 20) {
             log.debug("Writing macro memory: {}", Integer.toHexString(nceMemoryAddress));
-            int offset = nceMemoryAddress - NceCmdStationMemory.CabMemorySerial.CS_MACRO_MEM;
+            int offset = nceMemoryAddress - this.getSystemConnectionMemo().getNceTrafficController().getCmdStaMemBaseMacro();
             log.debug("offset: {}", offset);
             for (int i = 0; i < num; i++) {
                 macroMemory[offset + i] = (byte) m.getElement(i + byteDataBegins);

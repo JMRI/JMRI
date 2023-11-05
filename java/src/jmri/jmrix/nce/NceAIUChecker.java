@@ -10,12 +10,10 @@ import jmri.util.swing.JmriJOptionPane;
  * AIU broadcasts, 0 = disabled, 1 = enabled.
  *  
  * @author Daniel Boudreau (C) 2007
- * 
- * 
+ * @author Ken Cameron Copyright (C) 2023
  */
 public class NceAIUChecker implements NceListener {
-
-    private static final int MEM_AIU = 0xDC15;  // NCE CS AIU memory address 
+ 
     private static final int REPLY_LEN = 1;  // number of bytes read
     private boolean EXPECT_REPLY = false;   // flag 
 
@@ -38,7 +36,7 @@ public class NceAIUChecker implements NceListener {
         }
 
         // read one byte from NCE memory to determine if AIU broadcasts are enabled
-        byte[] bl = NceBinaryCommand.accMemoryRead1(MEM_AIU);
+        byte[] bl = NceBinaryCommand.accMemoryRead1(tc.getCmdStaMemBaseAiuFlag());
         NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_LEN);
         EXPECT_REPLY = true;
         return m;

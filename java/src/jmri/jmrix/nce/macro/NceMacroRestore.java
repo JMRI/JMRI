@@ -23,7 +23,7 @@ import jmri.util.swing.TextFilter;
  * Restores NCE Macros from a text file defined by NCE.
  * <p>
  * NCE "Backup macros" dumps the macros into a text file. Each line contains the
- * contents of one macro. The first macro, 0 starts at address xC800. The last
+ * contents of one macro. The first macro, 0 starts at address xC800 (PH5 0x6000). The last
  * macro 255 is at address xDBEC.
  * <p>
  * NCE file format:
@@ -56,10 +56,11 @@ import jmri.util.swing.TextFilter;
  * appropriate macro address.
  *
  * @author Dan Boudreau Copyright (C) 2007
+ * @author Ken Cameron Copyright (C) 2023
  */
 public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListener {
 
-    private static final int CS_MACRO_MEM = 0xC800; // start of NCE CS Macro memory
+    private int cs_macro_mem; // start of NCE CS Macro memory
     private static final int MACRO_LNTH = 20;  // 20 bytes per macro
     private static final int REPLY_1 = 1;   // reply length of 1 byte expected
     private int replyLen = 0;    // expected byte length
@@ -74,6 +75,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
     public NceMacroRestore(NceTrafficController t) {
         super();
         this.tc = t;
+        cs_macro_mem = tc.getCmdStaMemBaseMacro();
     }
 
     @Override
@@ -111,7 +113,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
             waiting = 0;
             fileValid = false;     // in case we break out early
             int macroNum = 0;     // for user status messages
-            int curMacro = CS_MACRO_MEM;  // load the start address of the NCE macro memory
+            int curMacro = cs_macro_mem;  // load the start address of the NCE macro memory
             byte[] macroAccy = new byte[20];  // NCE Macro data
             String line;
 
@@ -146,7 +148,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
                 }
 
                 // macro file found, give the user the choice to continue
-                if (curMacro == CS_MACRO_MEM) {
+                if (curMacro == cs_macro_mem) {
                     if (JmriJOptionPane
                             .showConfirmDialog(
                                     null,

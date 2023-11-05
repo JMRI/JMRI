@@ -26,7 +26,7 @@ import jmri.util.swing.JmriJOptionPane;
  * Frame for user edit of NCE macros
  *
  * NCE macros are stored in Command Station (CS) memory starting at address
- * xC800. Each macro consists of 20 bytes. The last macro 255 is at address
+ * xC800 (PH5 0x6000). Each macro consists of 20 bytes. The last macro 255 is at address
  * xDBEC.
  *
  * Macro addr 0 xC800 1 xC814 2 xC828 3 xC83C . . . . 255 xDBEC
@@ -69,14 +69,14 @@ import jmri.util.swing.JmriJOptionPane;
  *
  *
  * @author Dan Boudreau Copyright (C) 2007
- * @author Ken Cameron Copyright (C) 2013
+ * @author Ken Cameron Copyright (C) 2013, 2023
  */
 public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
     
     private NceTrafficController tc = null;
+    private int memBase;
     private int maxNumMacros = CabMemorySerial.CS_MAX_MACRO;
     private int macroSize = CabMemorySerial.CS_MACRO_SIZE;
-    private int memBase = CabMemorySerial.CS_MACRO_MEM;
     private boolean isUsb = false;
 
     private int macroNum = 0; // macro being worked
@@ -248,6 +248,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     public void initComponents(NceSystemConnectionMemo memo) {
         this.memo = memo;
         this.tc = memo.getNceTrafficController();
+        memBase = tc.getCmdStaMemBaseMacro();
 
         if ((tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) &&
                 (tc.getCmdGroups() & NceTrafficController.CMDS_MEM) != 0) {
@@ -920,7 +921,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
                     deleteButton8);
             return entriesRead;
         } else {
-            int memPtr = CabMemorySerial.CS_MACRO_MEM + (mN * macroSize);
+            int memPtr = tc.getCmdStaMemBaseMacro() + (mN * macroSize);
             int readPtr = 0;
             int[] workBuf = new int[2];
             // 1st word of macro
