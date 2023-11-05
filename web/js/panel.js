@@ -1488,6 +1488,8 @@ function $handleClick(e) {
         switch ($widget['onClickOperation']) {
             case "PlaySoundLocally":
                 if ($widget['audio_widget'].paused) {   // Sound is stopped
+                    $widget['audio_widget'].loop = false;
+//                    $widget['audio_widget'].loop = (playNumLoops == -1);
                     $widget['audio_widget'].play();
                 } else {                                // Sound is playing
                     $widget['audio_widget'].pause();
@@ -2502,13 +2504,15 @@ $(document).ready(function() {
                         $widget['audio_widget'].currentTime = 0;
                     } else if (state == 17 && $widget['playSoundWhenJmriPlays']) {  // Sound is playing
                         $widget['audio_widget'].currentTime = 0;
+                        $widget['audio_widget'].loop = (data.playNumLoops == -1);
                         $widget['audio_widget'].play();
                     }
                 });
             },
-            audioicon: function(identity, command) {
+            audioicon: function(identity, command, playNumLoops) {
                 $widget = audioIconIDs['audioicon:'+identity];
                 if (command == "Play") {
+                    $widget['audio_widget'].loop = (playNumLoops == -1);
                     $widget['audio_widget'].play();
                 } else if (command == "Stop") {
                     $widget['audio_widget'].pause();

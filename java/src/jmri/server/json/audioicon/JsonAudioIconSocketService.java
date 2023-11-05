@@ -7,10 +7,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.http.HttpServletResponse;
 
+import jmri.Audio;
 import jmri.JmriException;
+import jmri.jmrit.audio.AudioSource;
 import jmri.jmrit.display.AudioIcon;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonConnection;
@@ -78,9 +81,25 @@ public class JsonAudioIconSocketService extends JsonSocketService<JsonAudioIconH
 
             try {
                 String command;
+                int numLoops = 0;
                 switch (evt.getNewValue().toString()) {
                     case AudioIcon.PROPERTY_COMMAND_PLAY:
                         command = JSON.AUDIO_COMMAND_PLAY;
+                        Audio audio = _audioIcon.getAudio();
+                        if (audio instanceof AudioSource) {
+                            AudioSource source = (AudioSource)audio;
+                            if (source.isLooped()) {
+                                if (source.getMinLoops() != source.getMaxLoops()) {
+                                    numLoops = source.getMinLoops()
+                                            + ThreadLocalRandom.current().nextInt(
+                                                    source.getMaxLoops() - source.getMinLoops());
+                                } else {
+                                    numLoops = source.getMinLoops();
+                                }
+                            } else {
+                                numLoops = 1;
+                            }
+                        }
                         break;
                     case AudioIcon.PROPERTY_COMMAND_STOP:
                         command = JSON.AUDIO_COMMAND_STOP;
@@ -101,6 +120,7 @@ public class JsonAudioIconSocketService extends JsonSocketService<JsonAudioIconH
                 ObjectNode data = root.with(JSON.DATA);
                 data.put(JSON.AUDIO_ICON_IDENTITY, _audioIcon.getIdentity());
                 data.put(JSON.AUDIO_COMMAND, command);
+                data.put(JSON.AUDIO_COMMAND_PLAY_NUM_LOOPS, numLoops);
                 connection.sendMessage(root, 0);
             } catch (IOException ex) {
                 // if we get an error, unregister as listener

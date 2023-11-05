@@ -34,11 +34,16 @@ public class JsonAudioHttpService extends JsonNamedBeanHttpService<Audio> {
 
     @Override
     public ObjectNode doGet(Audio audio, String name, String type, JsonRequest request) throws JsonException {
+        if (audio.getSubType() != Audio.SOURCE || (!(audio instanceof AudioSource))) {
+            throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorAudioNotSource", AUDIO, audio.getSubType()), request.id);
+        }
+        AudioSource audioSource = (AudioSource) audio;
         ObjectNode root = this.getNamedBean(audio, name, getType(), request); // throws JsonException if audio == null
         ObjectNode data = root.with(JSON.DATA);
         switch (audio.getState()) {
             case Audio.STATE_PLAYING:
                 data.put(JSON.STATE, JSON.AUDIO_PLAYING);
+                data.put(JSON.AUDIO_COMMAND_PLAY_NUM_LOOPS, audioSource.getLastNumLoops());
                 break;
             case Audio.STATE_STOPPED:
                 data.put(JSON.STATE, JSON.AUDIO_STOPPED);
