@@ -1681,26 +1681,26 @@
             </exclusions>
         </dependency>
 		<!-- //BiDiB client library -->
-		<!-- jbidibc 2.0.13 -->
+		<!-- jbidibc 2.0.15 -->
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-core</artifactId>
-            <version>2.0.13</version>
+            <version>2.0.15</version>
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-serial</artifactId>
-            <version>2.0.13</version>
+            <version>2.0.15</version>
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-simulation</artifactId>
-            <version>2.0.13</version>
+            <version>2.0.15</version>
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-purejavacomm</artifactId>
-            <version>2.0.13</version>
+            <version>2.0.15</version>
             <exclusions>
 				<!-- don't use special purejavacomm mentioned in jbidibc-purejavacomm -->
                 <exclusion>
@@ -1712,28 +1712,28 @@
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-messages</artifactId>
-            <version>2.0.13</version>
+            <version>2.0.15</version>
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-net-serial-over-tcp</artifactId>
-            <version>2.0.13</version>
+            <version>2.0.15</version>
         </dependency>
-		<!-- BiDiB Wizard Simulation 2.0.13 -->
+		<!-- BiDiB Wizard Simulation 2.0.15 -->
        <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>bidibwizard-common</artifactId>
-            <version>2.0.13</version>
+            <version>2.0.15</version>
         </dependency>
        <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>bidibwizard-model</artifactId>
-            <version>2.0.13</version>
+            <version>2.0.15</version>
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>bidibwizard-simulation</artifactId>
-            <version>2.0.13</version>
+            <version>2.0.15</version>
         </dependency>
         <!--  dependencies from jbidibc and bidibwizard -->
         <dependency>
