@@ -306,6 +306,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             case DCCppConstants.TRACKMANAGER_CMD:
                 text = "TrackManager:" + toString();
                 break;
+            case DCCppConstants.LCD_TEXT_CMD:
+                text = "LCD Text '" + getLCDTextString() + "', disp " + getLCDDisplayNumString() + ", line " + getLCDLineNumString();
+                break;
                 
             default:
                 text = "Unrecognized reply: '" + toString() + "'";
@@ -536,6 +539,11 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             case DCCppConstants.DIAG_REPLY:
                 if (s.matches(DCCppConstants.DIAG_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.DIAG_REPLY_REGEX;
+                }
+                return (r);
+            case DCCppConstants.LCD_TEXT_REPLY:
+                if (s.matches(DCCppConstants.LCD_TEXT_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.LCD_TEXT_REPLY_REGEX;
                 }
                 return (r);
             case DCCppConstants.WRITE_EEPROM_REPLY:
@@ -1610,6 +1618,41 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
     public int getClockRateInt() {
         return (Integer.parseInt(this.getClockRateString()));
+    }
+
+    // <@ 123 123 message text>
+    public boolean isLCDTextReply() {
+        return (this.matches(DCCppConstants.LCD_TEXT_REPLY_REGEX));
+    }   
+    public String getLCDTextString() {
+        if (this.isLCDTextReply()) {
+            return (this.getValueString(3));
+        } else {
+            log.error("getLCDTextString Parser called on non-LCDTextString message type {}", this.getOpCodeChar());
+            return ("error");
+        }
+    }
+    public String getLCDDisplayNumString() {
+        if (this.isLCDTextReply()) {
+            return (this.getValueString(1));
+        } else {
+            log.error("getLCDDisplayNumString Parser called on non-LCDTextString message type {}", this.getOpCodeChar());
+            return ("error");
+        }
+    }
+    public int getLCDDisplayNumInt() {
+        return (Integer.parseInt(this.getLCDDisplayNumString()));
+    }
+    public String getLCDLineNumString() {
+        if (this.isLCDTextReply()) {
+            return (this.getValueString(2));
+        } else {
+            log.error("getLCDLineNumString Parser called on non-LCDTextString message type {}", this.getOpCodeChar());
+            return ("error");
+        }
+    }
+    public int getLCDLineNumInt() {
+        return (Integer.parseInt(this.getLCDLineNumString()));
     }
 
     // -------------------------------------------------------------------

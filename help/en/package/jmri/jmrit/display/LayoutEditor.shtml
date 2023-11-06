@@ -326,11 +326,16 @@
 
         <li><strong>Icon Label</strong> - selects a general purpose icon</li>
 
+        <li><strong>LogixNG Icon</strong> (see <a href="../logixng/InlineLogixNG.shtml#logixng_icon">LogixNG Icon</a>)</li>
+
+        <li><strong>Audio Icon</strong> - selects an Audio icon that can play a sound when clicked.
+        (see <a href="AudioIcon.shtml">Audio Icon</a>)</li>
+
         <li><strong>Shape</strong> - Create an arbitrary shape</li>
       </ul>
 
       <p>The top 13 items are used to create a track diagram, and are new with Layout Editor. The
-      next nine items are icon-based and are similar to corresponding icon items in Panel
+      next 11 items are icon-based and are similar to corresponding icon items in Panel
       Editor.  <strong>Shape</strong> is used to create an image using two to nine
       points connected by lines, such as four points to create a rectangle.</p>
 

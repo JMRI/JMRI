@@ -590,6 +590,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             case DCCppConstants.TRACKMANAGER_CMD:
                 text = "Request TrackManager Config: '" + toString() + "'";
                 break;
+            case DCCppConstants.LCD_TEXT_CMD:
+                text = "Request LCD Messages: '" + toString() + "'";
+                break;
             default:
                 text = "Unknown Message: '" + toString() + "'";
         }
@@ -3099,6 +3102,18 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         return (new DCCppMessage(DCCppConstants.LIST_REGISTER_CONTENTS,
                 DCCppConstants.LIST_REGISTER_CONTENTS_REGEX));
     }
+    /**
+     * Request LCD Messages used for Virtual LCD Display
+     * <p>
+     * Format: {@code <@>}
+     * <p>
+     * tells EX_CommandStation to send any LCD message updates to this instance of JMRI
+     * @return the formatted message to send
+     */
+    public static DCCppMessage makeLCDRequestMsg() {
+        return (new DCCppMessage(DCCppConstants.LCD_TEXT_CMD, DCCppConstants.LCD_TEXT_CMD_REGEX));
+    }
+
 
     /**
      * This implementation of equals is targeted to the background function

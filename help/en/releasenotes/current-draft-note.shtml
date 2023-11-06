@@ -40,7 +40,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>New Virtual LCD window</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -241,6 +241,12 @@
             <ul>
                 <li>Updated the Series 7 SFX decoder definition.</li>
             </ul>
+            <ul>
+                <li>Fix NPE, and decode Extended Accessory Signal Aspect IMM commands</li>
+            </ul>
+            <ul>
+                <li>Fix LnSendTool.py to correctly send signal aspects up to 255 NMRA 2.4.3</li>
+            </ul>
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
@@ -428,6 +434,13 @@
              <li>Check each section against reserved sections for conflicting blocks.</li>
              <li>Do not turn off block alternate colour when it has already be reallocated.</li>
         </ul>
+        <ul>
+             <li>Add TransitAction TERMINATE</li>
+             <li>Add TransitAction LOADTRAININFO</li>
+             <li>Process Delays for Active/InActive sensor actions</li>
+             <li>Process delays for OnTrainStop</li>
+             <li>Remove delays for Exit Section as they cannot be processed</li>
+        </ul>
 
     <h3>Dispatcher System</h3>
         <a id="Dispatcher_System" name="Dispatcher_System"></a>
@@ -465,6 +478,10 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li><strong>Note:</strong> If tables and panels are stored with this JMRI version, the file
+          might not load in a previous version of JMRI if it includes LogixNG. This is because JMRI
+          now stores some LogixNG data in a different way than before.</li>
+
           <li>The expression <strong>Timer</strong> has been added. It returns <strong>False</strong>
           until some time has passed. It then returns <strong>True</strong> once and the timer starts
           again. This expression is intended to be used together with the action <strong>Sequence</strong></li>.
@@ -713,4 +730,6 @@
             <li>(For developers) Our CI process has been updated to require the
             @Override annotation on overriding methods and removal of unused import statements.</li>
             <li>Fixed a validation errors in the xml/schema/auxiliary-configuration.xsd  file.</li>
+            <li>Fixed a problem where the run/pause button would not properly show when the
+                Nixie, LCD or Pragotron clocks were resized.</li>
         </ul>

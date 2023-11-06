@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.schedules.*;
-import jmri.jmrit.operations.locations.tools.*;
+import jmri.jmrit.operations.locations.tools.AlternateTrackAction;
+import jmri.jmrit.operations.locations.tools.ChangeTrackTypeAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -140,7 +141,7 @@ public class SpurEditFrame extends TrackEditFrame {
 
     @Override
     protected void enableButtons(boolean enabled) {
-        autoSelectButton.setEnabled(enabled);
+        autoSelectButton.setEnabled(enabled && _track.getSchedule() != null);
         editScheduleButton.setEnabled(enabled);
         comboBoxSchedules.setEnabled(enabled);
         if (!enabled) {

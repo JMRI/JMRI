@@ -32,6 +32,7 @@ public class DCCppMenu extends JMenu {
 
         if (memo != null) {
             add(new jmri.jmrix.dccpp.swing.mon.DCCppMonAction(rb.getString("DCCppMonFrameTitle"), memo));
+            add(new jmri.jmrix.dccpp.swing.virtuallcd.VirtualLCDAction(rb.getString("MenuItemVirtualLCDDisplay"), memo));
             add(new jmri.jmrix.dccpp.swing.packetgen.PacketGenAction(rb.getString("MenuItemSendDCCppCommand"), memo));
             add(new jmri.jmrix.dccpp.swing.ConfigBaseStationAction(rb.getString("MenuItemConfigBaseStation"), memo));
         }

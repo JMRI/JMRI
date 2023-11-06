@@ -169,31 +169,16 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>Audio</h4>
+      <h4 id="audio_action">Audio</h4>
 
-      <p>Control the selected Audio item.</p>
+      <p>Control an Audio source.</p>
 
-      <ul>
-        <li>Play</li>
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/audio_action.png"><img src=
+        "images/chapter5/audio_action.png" alt="Chapter 5 audio action"></a>
+      </div>
 
-        <li>Play toggle</li>
-
-        <li>Pause</li>
-
-        <li>Pause toggle</li>
-
-        <li>Resume</li>
-
-        <li>Stop</li>
-
-        <li>Fade in</li>
-
-        <li>Fade out</li>
-
-        <li>Rewind</li>
-
-        <li>Reset position</li>
-      </ul>
+      <p>Select an audio source from the list and the action to be performed.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -1187,6 +1172,31 @@
         <a href="images/chapter5/digital_action_display.png"><img class="image-border" src=
         "images/chapter5/digital_action_display.png" alt="Chapter 5 digital action display list"></a>
       </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4 id="layout_audio_icon">Audio icon on web panel<span class="since">since 5.5.6</span></h4>
+
+      <p>The Audio Icons on JMRI panels can be used to play sounds on devices displaying JMRI panels
+      using a web browser.  The <strong>Audio icon on web panel</strong> action can be used to start
+      and stop the audio source assigned to the audio icon.  For example, LogixNG can play notification
+      sounds on a dispatcher panel.</p>
+
+      <p>Note: The sound will not be played on the computer running JMRI. If desired, use the
+      <strong>Audio</strong> action to play the sound locally.</p>
+
+      <p>Before creating the action, assign an id to the Audio Icon using <strong>Edit Id</strong>
+      from the icon context menu.</p>
+
+      <p>Select the panel, the id for the Audio Icon and whether to <strong>Play</strong> or
+      <strong>Stop</strong> the sound.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/layout_audio_icon.png"><img src=
+        "images/chapter5/layout_audio_icon.png" alt="Chapter 5 layout audio icon"></a>
+      </div>
+
+      <p>If the Audio Icon is to be used only by the action, the icon can be hidden.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 

@@ -4100,16 +4100,20 @@ public class LocoNetMessageInterpret {
                     if ((packetInt[0] & 0xC0) == 0x80 ) {
                         /*
                         * 2.4.7 Extended Decoder Control Packet address for 
-                        * operations mode programming
+                        * operations mode programming and Aspect Setting.
                         * 10AAAAAA 0 0AAA0AA1
+                        * Packets 3 bytes in length are Accessory Aspect packets (2.4.3)
+                        *  {preamble} 10AAAAAA 0 0AAA0AA1 0 XXXXXXXX 0 EEEEEEEE 1
                         * Please note that the use of 0 in bit 3 of byte 2 is to 
                         * ensure that this packet cannot be confused with the 
                         * legacy accessory-programming packets. The resulting packet 
                         * would be:
                         * {preamble} 10AAAAAA 0 0AAA0AA1 0 (1110CCVV 0 VVVVVVVV 0 DDDDDDDD) 0 EEEEEEEE 1
+                        * A5 43 00
+                        * 10100101 0010011 00000000
                         * Signal Decoder Address (Configuration Variable Access Instruction) Error Byte
                         */
-                        log.debug("Is an Extended Accessory Ops-mode CV access");
+                        log.debug("Is an Extended Accessory Ops-mode CV access or Set Signal Aspect");
                         log.debug("   LocoNet message: {} {} {} {} {} {} {} {} {} {} {}",
                                 StringUtil.twoHexFromInt(l.getElement(0)),
                                 StringUtil.twoHexFromInt(l.getElement(1)),
@@ -4123,14 +4127,24 @@ public class LocoNetMessageInterpret {
                                 StringUtil.twoHexFromInt(l.getElement(9)),
                                 StringUtil.twoHexFromInt(l.getElement(10))
                                 );
-                        log.debug("   NMRA packet: {} {} {} {} {}",
-                                StringUtil.twoHexFromInt(packetInt[0]),
-                                StringUtil.twoHexFromInt(packetInt[1]),
-                                StringUtil.twoHexFromInt(packetInt[2]),
-                                StringUtil.twoHexFromInt(packetInt[3]),
-                                StringUtil.twoHexFromInt(packetInt[4])
-                                );
-                        
+                        if (packetInt.length == 5) {
+                            log.debug("   NMRA packet: {} {} {} {} {}",
+                                    StringUtil.twoHexFromInt(packetInt[0]),
+                                    StringUtil.twoHexFromInt(packetInt[1]),
+                                    StringUtil.twoHexFromInt(packetInt[2]),
+                                    StringUtil.twoHexFromInt(packetInt[3]),
+                                    StringUtil.twoHexFromInt(packetInt[4])
+                                    );
+                        } else if (packetInt.length == 3) {
+                            log.debug("   NMRA packet: {} {} {}",
+                                    StringUtil.twoHexFromInt(packetInt[0]),
+                                    StringUtil.twoHexFromInt(packetInt[1]),
+                                    StringUtil.twoHexFromInt(packetInt[2])
+                                    );
+                        } else {
+                            log.warn(" Unknown Extended Accessory Packet length [{}])",packetInt.length);
+                            return "";
+                        }
                         if ((packetInt[2] & 0xF0) == 0xF0) {
                             /*
                             * 2.3.7.2 Configuration Variable Access Instruction - Short Form
@@ -4167,9 +4181,7 @@ public class LocoNetMessageInterpret {
                             *       GG=11 Write byte
                             *       GG=10 Bit manipulation
                             * */
-                            int addr = 1 + ((packetInt[0] & 0x3F) << 2) + 
-                                    ((( ~ packetInt[1]) & 0x70) << 4)
-                                    + ((packetInt[1] & 0x06) >> 1);
+                            int addr = getExtendedAccessoryAddressFromDCCPacket(packetInt);
                             log.debug("Long-format Extended Accessory Ops-mode CV access: Extended Acceccory Address {}", addr);
                             int cvnum = 1 + ((packetInt[2] & 0x03) << 2) + (packetInt[3] & 0xff);
                             switch (packetInt[2] & 0x0C) {
@@ -4253,6 +4265,10 @@ public class LocoNetMessageInterpret {
                                     // GG=00 Reserved for future use
                                     log.debug("CV # {}, Reserved (GG=0); {}", cvnum, packetInt[4]);    
                             }
+                        } else if (packetInt.length == 3) {
+                            int addr = getExtendedAccessoryAddressFromDCCPacket(packetInt);
+                            return Bundle.getMessage("LN_MSG_EXTEND_ACCY_SET_ASPECT",
+                                    addr, addr - 4, packetInt[2] );
                         }
                     }
                     return Bundle.getMessage("LN_MSG_OPC_IMM_PKT_GENERIC",
@@ -4312,7 +4328,14 @@ public class LocoNetMessageInterpret {
         return ""; // not an understood message.
     }
 
-    
+    /*
+     * Returns the Digitrax Extended Accessory Packet Address
+     */
+    private static int getExtendedAccessoryAddressFromDCCPacket(int[] packetInt) {
+        return ( 1 + ((packetInt[0] & 0x3F) << 2) +
+                ((( ~ packetInt[1]) & 0x70) << 4)
+                + ((packetInt[1] & 0x06) >> 1));
+    }
     
     private static String interpretOpcPr3Mode(LocoNetMessage l) {
         /*
