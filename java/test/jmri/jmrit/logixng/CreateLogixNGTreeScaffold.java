@@ -780,6 +780,11 @@ public class CreateLogixNGTreeScaffold {
         actionLight.getSelectEnum().setFormula("\"IT\"+index2");
         actionLight.getSelectEnum().setLocalVariable("index2");
         actionLight.getSelectEnum().setReference("{IM2}");
+        actionLight.setDataAddressing(NamedBeanAddressing.Direct);
+        actionLight.setLightValue(10);
+        actionLight.setDataReference("{MyRef}");
+        actionLight.setDataLocalVariable("MyLocalVariable");
+        actionLight.setDataFormula("a+b-c");
         maleSocket = digitalActionManager.registerAction(actionLight);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortExecution);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -796,6 +801,11 @@ public class CreateLogixNGTreeScaffold {
         actionLight.getSelectEnum().setFormula("\"IT\"+index2");
         actionLight.getSelectEnum().setLocalVariable("index2");
         actionLight.getSelectEnum().setReference("{IM2}");
+        actionLight.setDataAddressing(NamedBeanAddressing.Formula);
+        actionLight.setLightValue(15);
+        actionLight.setDataReference("{MyOtherRef}");
+        actionLight.setDataLocalVariable("MyOtherLocalVariable");
+        actionLight.setDataFormula("a+b*c");
         maleSocket = digitalActionManager.registerAction(actionLight);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogError);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
