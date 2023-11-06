@@ -19,6 +19,7 @@ public class NceCmdStationMemory {
         public final static int CS_CONSIST_MEM = 0x4e00;  // start of NCE CS Consist memory
         public final static int CS_CON_MEM_REAR = 0x4F00;  // start of rear consist locos
         public final static int CS_CON_MEM_MID = 0x5000;  // start of mid consist locos
+        public final static int CS_CONSIST_SIZE = 0x0600;  // size of NCE CS Consist memory
         public final static int CS_CON_MIN = 1;
         public final static int CS_CON_MAX = 127;
         public final static int CS_MACRO_MEM = 0x6000; // start of NCE CS Macro memory 

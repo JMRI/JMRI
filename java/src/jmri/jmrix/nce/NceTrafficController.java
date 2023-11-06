@@ -11,6 +11,7 @@ import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
 import jmri.jmrix.nce.NceCmdStationMemory.CabMemorySerial;
+import jmri.jmrix.nce.NceCmdStationMemory.CabMemorySerialPH5;
 
 /**
  * Converts Stream-based I/O to/from NCE messages. The "NceInterface" side
@@ -170,6 +171,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     private boolean pwrProVer060203orLater = false;
     private final int[] pwrProVers = new int[3];
     private boolean simulatorRunning = false; // true if simulator is running
+    private boolean ncePH5 = false;
 
     /**
      * Return the Power Pro firmware version as user-friendly hex text.
@@ -703,7 +705,11 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      */
     public int getCmdStaMemBaseCab()
     {
-        return CabMemorySerial.CS_COMP_CAB_MEM_PRO;
+        if (ncePH5) {
+            return CabMemorySerialPH5.CS_COMP_CAB_MEM_PRO;
+        } else {
+            return CabMemorySerial.CS_COMP_CAB_MEM_PRO;
+        }
     }
     
     /*
@@ -711,7 +717,11 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      */
     public int getCmdStaMemBaseClock()
     {
-        return CabMemorySerial.CS_CLOCK_MEM_ADDR;
+        if (ncePH5) {
+            return CabMemorySerialPH5.CS_CLOCK_MEM_ADDR;
+        } else {
+            return CabMemorySerial.CS_CLOCK_MEM_ADDR;
+        }
     }
     
     /*
@@ -719,7 +729,11 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      */
     public int getCmdStaMemBaseMacro()
     {
-        return CabMemorySerial.CS_MACRO_MEM;
+        if (ncePH5) {
+            return CabMemorySerialPH5.CS_MACRO_MEM;
+        } else {
+            return CabMemorySerial.CS_MACRO_MEM;
+        }
     }
 
     /*
@@ -727,7 +741,11 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      */
     public int getCmdStaMemSizeMacro()
     {
-        return CabMemorySerial.CS_MACRO_SIZE;
+        if (ncePH5) {
+            return CabMemorySerialPH5.CS_MACRO_SIZE;
+        } else {
+            return CabMemorySerial.CS_MACRO_SIZE;
+        }
     }
     
     /*
@@ -735,7 +753,11 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      */
     public int getCmdStaMemBaseConsist()
     {
-        return CabMemorySerial.CS_CONSIST_MEM;
+        if (ncePH5) {
+            return CabMemorySerialPH5.CS_CONSIST_MEM;
+        } else {
+            return CabMemorySerial.CS_CONSIST_MEM;
+        }
     }
 
     /*
@@ -743,7 +765,11 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      */
     public int getCmdStaMemBaseConsistRear()
     {
-        return CabMemorySerial.CS_CON_MEM_REAR;
+        if (ncePH5) {
+            return CabMemorySerialPH5.CS_CON_MEM_REAR;
+        } else {
+            return CabMemorySerial.CS_CON_MEM_REAR;
+        }
     }
 
     /*
@@ -751,7 +777,11 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      */
     public int getCmdStaMemBaseConsistMid()
     {
-        return CabMemorySerial.CS_CON_MEM_MID;
+        if (ncePH5) {
+            return CabMemorySerialPH5.CS_CON_MEM_MID;
+        } else {
+            return CabMemorySerial.CS_CON_MEM_MID;
+        }
     }
 
     /*
@@ -759,7 +789,11 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      */
     public int getCmdStaMemSizeConsist()
     {
-        return CabMemorySerial.CS_CONSIST_SIZE;
+        if (ncePH5) {
+            return CabMemorySerialPH5.CS_CONSIST_SIZE;
+        } else {
+            return CabMemorySerial.CS_CONSIST_SIZE;
+        }
     }
 
     /*
@@ -767,7 +801,11 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      */
     public int getCmdStaMemBaseAccy()
     {
-        return CabMemorySerial.CS_ACCY_MEM;
+        if (ncePH5) {
+            return CabMemorySerialPH5.CS_ACCY_MEM;
+        } else {
+            return CabMemorySerial.CS_ACCY_MEM;
+        }
     }
 
     /*
@@ -775,7 +813,11 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      */
     public int getCmdStaMemSizeAccy()
     {
-        return CabMemorySerial.CS_ACCY_SIZE;
+        if (ncePH5) {
+            return CabMemorySerialPH5.CS_ACCY_SIZE;
+        } else {
+            return CabMemorySerial.CS_ACCY_SIZE;
+        }
     }
 
     /*
@@ -783,7 +825,11 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      */
     public int getCmdStaMemBaseAiuFlag()
     {
-        return CabMemorySerial.CS_AIU_FLAG_MEM;
+        if (ncePH5) {
+            return CabMemorySerialPH5.CS_AIU_FLAG_MEM;
+        } else {
+            return CabMemorySerial.CS_AIU_FLAG_MEM;
+        }
     }
     
     private final static Logger log = LoggerFactory.getLogger(NceTrafficController.class);
