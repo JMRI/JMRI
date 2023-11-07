@@ -171,7 +171,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     private boolean pwrProVer060203orLater = false;
     private final int[] pwrProVers = new int[3];
     private boolean simulatorRunning = false; // true if simulator is running
-    private boolean ncePH5 = false;
+    private boolean ncePH5 = true;
 
     /**
      * Return the Power Pro firmware version as user-friendly hex text.
@@ -704,6 +704,18 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * return memory base offset for Cab data block
      */
     public int getCmdStaMemBaseCab()
+    {
+        if (ncePH5) {
+            return CabMemorySerialPH5.CS_CAB_MEM_PRO;
+        } else {
+            return CabMemorySerial.CS_CAB_MEM_PRO;
+        }
+    }
+    
+    /*
+     * return memory base offset for Cab data block
+     */
+    public int getCmdStaMemBaseCompCab()
     {
         if (ncePH5) {
             return CabMemorySerialPH5.CS_COMP_CAB_MEM_PRO;
