@@ -112,7 +112,7 @@
             };
             jmri.audios = function (data) {
             };
-            jmri.audioicon = function (identity, command) {
+            jmri.audioicon = function (identity, command, playNumLoops) {
             };
             jmri.block = function (name, value, data) {
             };
@@ -235,7 +235,7 @@
                     jmri.socket.send("audio", { name: name });
                 } else {
                     $.getJSON(jmri.url + "audio/" + name, function (json) {
-                        jmri.audio(json.data.name, json.data.identity, json.data.command);
+                        jmri.audio(json.data.name, json.data.state, json.data);
                     });
                 }
             };
@@ -260,7 +260,7 @@
                     jmri.socket.send("audioicon", { identity: identity });
                 } else {
                     $.getJSON(jmri.url + "audioicon/" + identity, function (json) {
-                        jmri.audioicon(json.data.identity, json.data.command);
+                        jmri.audioicon(json.data.identity, json.data.command, json.data.playNumLoops);
                     });
                 }
             };
@@ -878,7 +878,7 @@
                     jmri.audio(e.data.name, e.data.state, e.data);
                 },
                 audioicon: function (e) {
-                    jmri.audioicon(e.data.identity, e.data.command);
+                    jmri.audioicon(e.data.identity, e.data.command, e.data.playNumLoops);
                 },
                 block: function (e) {
                     jmri.block(e.data.name, e.data.value, e.data);

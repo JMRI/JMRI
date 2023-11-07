@@ -579,6 +579,12 @@ public interface AudioSource extends Audio {
      */
     int getNumLoops();
 
+    /**
+     * Get the last value returned by {@link #getNumLoops() }
+     * @return the number of loops
+     */
+    int getLastNumLoops();
+
 //    /**
 //     * Set the minimum length of time in milliseconds to wait before
 //     * playing a subsequent loop of this source.
