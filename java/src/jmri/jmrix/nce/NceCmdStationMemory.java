@@ -41,9 +41,14 @@ public class NceCmdStationMemory {
         public final static int CAB_FLAGS = 35;  // FLAGS
         public final static int CAB_FUNC_L = 36;  // Function keys low
         public final static int CAB_FUNC_H = 37;  // Function keys high
-        public final static int CAB_ALIAS = 38;  // Consist address
-        public final static int CAB_FUNC_13_20 = 82; // Function keys 13 - 30
-        public final static int CAB_FUNC_21_28 = 83; // Function keys 21 - 28
+        public final static int CAB_FUNC_13_20 = 39; // Function keys 13 - 30
+        public final static int CAB_FUNC_21_28 = 40; // Function keys 21 - 28
+        public final static int CAB_FUNC_29_36 = 40; // Function keys 29 - 36
+        public final static int CAB_FUNC_37_44 = 40; // Function keys 37 - 44
+        public final static int CAB_FUNC_45_52 = 40; // Function keys 45 - 52
+        public final static int CAB_FUNC_53_60 = 40; // Function keys 53 - 60
+        public final static int CAB_FUNC_61_68 = 40; // Function keys 61 - 68
+        public final static int CAB_ALIAS = 58;  // Consist address
         public final static int CAB_FLAGS1 = 101;  // NCE flag 1
     }
 
