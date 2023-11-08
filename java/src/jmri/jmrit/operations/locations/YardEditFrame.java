@@ -17,7 +17,7 @@ public class YardEditFrame extends TrackEditFrame {
     
     @Override
     public void initComponents(Track track) {
-        setTitle(Bundle.getMessage("EditYard"));
+        setTitle(Bundle.getMessage("EditYard", track.getLocation().getName()));
         initComponents(track.getLocation(), track);
     }
 
