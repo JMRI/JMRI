@@ -11,7 +11,7 @@
   <!--#include virtual="/Header.shtml" -->
 
   <div id="mBody">
-    <!--#include virtual="Sidebar.shtml" -->
+    <!--#include virtual="../SidebarUp.shtml" -->
 
     <div id="mainContent">
       <h1>Hardware Unterstützung: BiDiB</h1>

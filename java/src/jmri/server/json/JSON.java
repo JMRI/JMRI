@@ -689,6 +689,10 @@ public final class JSON {
      */
     public static final String AUDIO_COMMAND_PLAY = "Play";
     /**
+     * {@value #AUDIO_COMMAND_PLAY_NUM_LOOPS}
+     */
+    public static final String AUDIO_COMMAND_PLAY_NUM_LOOPS = "playNumLoops";
+    /**
      * {@value #AUDIO_COMMAND_STOP}
      */
     public static final String AUDIO_COMMAND_STOP = "Stop";

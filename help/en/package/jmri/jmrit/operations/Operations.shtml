@@ -730,7 +730,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         produce a <a href="#PrintingManifests">Manifest</a> for your train depending on the state of "Preview" checkbox at the bottom
         of the <a href="#Trains">Trains</a> window. Review the Manifest and you should see that the
         train serviced all car types. If you examine the <a href="#Cars">Cars</a> window you can see
-        that cars are now assigned to your train.
+        that cars are now assigned to your train. Once cars are assigned to a train, they are no longer
+        available to other trains until the cars are delivered to their new location.
       </p>
 
    <p>
@@ -4189,7 +4190,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4>Train</h4>
 
       <p>The last field is the train assignment. You can manually decide which train to use
-        before or after build your trains.</p>
+        before or after building your trains.</p>
 
       <h3 id="CarsTools">Cars Tools</h3>
       The cars window "Tools" menu allows you to perform some useful functions to your car roster.
@@ -4281,14 +4282,18 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>After making your changes, be sure to press "Save" in the Cars window if you want to
         keep your changes.</p>
 
-      <p style="page-break-after: always"><a href="#toc">[Click to go back to TOC]</a></p>
+      <p style="page-break-after: always">
+        <a href="#toc">[Click to go back to TOC]</a>
+      </p>
+      
       <h2 id="Locomotives">Locomotives</h2>
       The locomotives window allows you to edit your locomotive roster. You can enter a locomotive's
-      number, road (reporting mark), model, type, and length. You can optionally add the
+      number, road (reporting mark), <a href="#LocomotiveModels">model</a>, type, and length. You can optionally add the
       locomotive's built date and owner. If you want a group of locomotives to be assigned as a
-      unit, you can create a "consist". The locomotive type is used by the program to determine
-      where locomotives are picked up and or stored at the various locations on your layout. Some of
-      default locomotive types are electric, diesel, gas turbine, and steam.
+      unit, you can create a
+      <a href="#LocomotiveConsists">consist</a>. The locomotive type is used by the program to
+      determine where locomotives are picked up and or stored at the various locations on your
+      layout. Some of default locomotive types are electric, diesel, gas turbine, and steam.
       <p>
         <img src="images/Locomotives.png" alt="">
       </p>
@@ -5163,8 +5168,6 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         several examples of operation oriented scripts. These scripts are included in the JMRI
         download and can be found in the jmri&rArr;jython&rArr;operations directory.
       </p>
-
-
 
       <h4 id="TrainConductor">Train Conductor</h4>
       The train conductor window provides a train manifest for each location that the train visits.
@@ -6069,9 +6072,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <p>When building a train only rolling stock at locations that are part of the train's
-        route are used. With regards to cars, in addition to the number of moves a car has
-        experienced, the car's load priority is also considered. The program will try and find
-        destinations for cars with higher priority loads before low priority loads.</p>
+        route are used. Rolling stock already assigned to trains are ignored when building new
+        trains. With regards to cars, in addition to the number of moves a car has experienced, the
+        car's load priority is also considered. The program will try and find destinations for cars
+        with higher priority loads before low priority loads.</p>
 
       <p>
         The next step in the build process is to optionally assign a <a href="#CabooseFredHazardous">caboose</a>
