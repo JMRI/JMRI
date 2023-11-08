@@ -189,14 +189,12 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
     class RcvHandler implements Runnable {
 
         /**
-         * Remember the DCCppPacketizer object.
+         * nothing to do here
          *
          * @param lt the DCCppOverTcpPacketizer trafficController to run over
          */
         public RcvHandler(DCCppOverTcpPacketizer lt) {
-            //trafficController = lt;
         }
-        //DCCppOverTcpPacketizer trafficController;
 
         // readline is deprecated, but there are no problems
         // with multi-byte characters here.
@@ -255,8 +253,6 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     //  Note: the substring call below also strips off the "< >"
                     DCCppReply msg = DCCppReply.parseDCCppReply(rxLine.substring(rxLine.indexOf("<") + 1,
                                                                                  rxLine.lastIndexOf(">")));
-                    //DCCppReply msg = new DCCppReply(rxLine.substring(rxLine.indexOf("<") + 1,
-                    //                                rxLine.lastIndexOf(">")));
 
                     if (!msg.isValidReplyFormat()) {
                         log.warn("Invalid Reply Format: {}", msg.toString());
