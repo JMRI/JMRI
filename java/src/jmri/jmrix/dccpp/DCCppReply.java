@@ -1804,6 +1804,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     public boolean isValidReplyFormat() {
         if ((this.matches(DCCppConstants.THROTTLE_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.MAXNUMSLOTS_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.TURNOUT_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.PROGRAM_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.PROGRAM_REPLY_V4_REGEX)) ||
@@ -1819,6 +1820,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 (this.matches(DCCppConstants.SENSOR_INACTIVE_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.SENSOR_ACTIVE_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.OUTPUT_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.OUTPUT_DEF_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.MADC_FAIL_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.MADC_SUCCESS_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.STATUS_REPLY_REGEX)) ||
@@ -1826,8 +1828,18 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 (this.matches(DCCppConstants.STATUS_REPLY_ESP32_REGEX)) ||
                 (this.matches(DCCppConstants.STATUS_REPLY_DCCEX_REGEX)) ||
                 (this.matches(DCCppConstants.LOCO_STATE_REGEX)) ||
-                (this.matches(DCCppConstants.TURNOUT_IDS_REGEX)) ||
-                (this.matches(DCCppConstants.TURNOUT_ID_REGEX))) {
+                (this.matches(DCCppConstants.TURNOUT_IDS_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_ID_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_IMPL_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_DEF_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_DEF_DCC_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_DEF_SERVO_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_DEF_VPIN_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_DEF_LCN_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.LCD_TEXT_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.CLOCK_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.DIAG_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.TRACKMANAGER_REPLY_REGEX))) {
             return (true);
         } else {
             return (false);
