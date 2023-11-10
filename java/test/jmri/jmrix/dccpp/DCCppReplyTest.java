@@ -380,18 +380,23 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("Monitor string", "TrackManager:= B PROG 123", r.toMonitorString());
 
         //LCD message
-        r = DCCppReply.parseDCCppReply("@ 0 12 this is a test lcd message 12345");
+        r = DCCppReply.parseDCCppReply("@ 0 12 \"this is a test lcd message 12345\"");
         Assert.assertTrue(r.isLCDTextReply());
         Assert.assertEquals("this is a test lcd message 12345", r.getLCDTextString());
         Assert.assertEquals(0, r.getLCDDisplayNumInt());
         Assert.assertEquals(12, r.getLCDLineNumInt());
-        r = DCCppReply.parseDCCppReply("@ 12 this is not, missing display#");
+        r = DCCppReply.parseDCCppReply("@ 12 \"this is not, missing display#\"");
         Assert.assertFalse(r.isLCDTextReply());
-        r = DCCppReply.parseDCCppReply("@ 0 4 123 456.789.001 test initial digits");
+        r = DCCppReply.parseDCCppReply("@ 0 4 \"123 456.789.001 test initial digits\"");
         Assert.assertTrue(r.isLCDTextReply());
         Assert.assertEquals("123 456.789.001 test initial digits", r.getLCDTextString());
         Assert.assertEquals(0, r.getLCDDisplayNumInt());
         Assert.assertEquals(4, r.getLCDLineNumInt());
+        r = DCCppReply.parseDCCppReply("@ 0 4 test without quotes");
+        Assert.assertFalse(r.isLCDTextReply());
+        r = DCCppReply.parseDCCppReply("@ 0 4 \"    test leading and trailing spaces   \"");
+        Assert.assertTrue(r.isLCDTextReply());
+        Assert.assertEquals("    test leading and trailing spaces   ", r.getLCDTextString());
 
     }
 
