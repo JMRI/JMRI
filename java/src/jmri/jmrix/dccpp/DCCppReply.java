@@ -1620,7 +1620,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         return (Integer.parseInt(this.getClockRateString()));
     }
 
-    // <@ 123 123 message text>
+    // <@ 0 8 "message text">
     public boolean isLCDTextReply() {
         return (this.matches(DCCppConstants.LCD_TEXT_REPLY_REGEX));
     }   

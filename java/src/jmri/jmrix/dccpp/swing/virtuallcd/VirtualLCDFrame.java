@@ -44,15 +44,19 @@ public class VirtualLCDFrame extends JmriJFrame implements DCCppListener  {
      */
     @Override
     public void message(DCCppReply msg) {
-        if (msg.isLCDTextReply()) {
-            int lineNumber = msg.getLCDLineNumInt();
-            if (lineNumber < TOTALLINES) {
-                lines.get(lineNumber).setText(msg.getLCDTextString()+"   "); // padding for appearance
-                pack(); 
-            } else {
-                log.warn("Received LCD message for line {}, but configured for TOTALLINES limit of {}", 
-                            lineNumber, TOTALLINES-1);
-            }
+        if (msg.isLCDTextReply()) { // <@ display# line# "message text">
+            int displayNumber = msg.getLCDDisplayNumInt();
+            if (displayNumber == 0) {  //TODO: add support for multiple LCD displays
+                int lineNumber = msg.getLCDLineNumInt();
+                if (lineNumber < TOTALLINES) {
+                    lines.get(lineNumber).setText(msg.getLCDTextString()+"   "); // padding for appearance
+                    pack(); 
+                } else {
+                    log.warn("Received LCD message for line {}, but configured for TOTALLINES limit of {}", 
+                                lineNumber, TOTALLINES-1);
+                }
+                log.debug("Received LCD message for display# {}, only display 0 supported at this time.", displayNumber);
+            } 
         }
     }
     
