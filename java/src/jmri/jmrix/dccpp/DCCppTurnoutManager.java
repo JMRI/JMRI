@@ -3,6 +3,8 @@ package jmri.jmrix.dccpp;
 import static jmri.jmrix.dccpp.DCCppConstants.MAX_TURNOUT_ADDRESS;
 
 import java.util.Locale;
+import java.util.ArrayList;
+
 import javax.annotation.Nonnull;
 import jmri.Turnout;
 import org.slf4j.Logger;
@@ -36,6 +38,10 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
         tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this);
         // request list of outputs
         tc.sendDCCppMessage(DCCppMessage.makeOutputListMsg(), this);
+        // request list of Turnout IDs if needed
+        if (tc.getCommandStation().isTurnoutIDsMessageRequired()) {
+            tc.sendDCCppMessage(DCCppMessage.makeTurnoutIDsMsg(), this);
+        }
     }
 
     /**
@@ -89,7 +95,6 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
                     //  and send the message on to the newly created object.
                     DCCppTurnout t = (DCCppTurnout) provideTurnout(s);
                     t.setFeedbackMode(Turnout.MONITORING);
-//                    t.setComment(l.toComment());  //removed to avoid confusion since this is only set, not updated 
                     t.initmessage(l);
                 } else {
                     // The turnout exists, forward this message to the 
@@ -114,12 +119,40 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
                     // to the newly created object.
                     DCCppTurnout t = (DCCppTurnout) provideTurnout(s);
                     t.setFeedbackMode(Turnout.EXACT);
-//                  t.setComment(l.toComment());  //removed to avoid confusion since this is only set, not updated 
                     t.initmessage(l);
                 } else {
                     // The turnout exists, forward this message to the 
                     // turnout
                     found.message(l);
+                }
+            }
+        } else if (l.isTurnoutIDsReply()) {
+            log.debug("received Turnout ID List message: '{}'", l);
+            ArrayList<Integer> ids = l.getTurnoutIDList();
+            for (Integer id : ids) { //request details for each id included in this message
+                tc.sendDCCppMessage(DCCppMessage.makeTurnoutIDMsg(id), this);
+                tc.sendDCCppMessage(DCCppMessage.makeTurnoutImplMsg(id), this);
+            }
+        } else if (l.isTurnoutIDReply()) {
+            log.debug("received Turnout ID Detail message: '{}'", l);
+            // parse message type
+            int addr = l.getTOIDInt();
+            if (addr >= 0) {
+                log.debug("message has address: {}", addr);
+                String s = getSystemNamePrefix() + addr;
+                DCCppTurnout found = (DCCppTurnout) getBySystemName(s);
+                if ( found == null) { //create new turnout
+                    DCCppTurnout t = (DCCppTurnout) provideTurnout(s);
+                    t.setFeedbackMode(Turnout.MONITORING);
+                    if (!l.getTurnoutDescString().isEmpty()) {
+                        t.setUserName(l.getTurnoutDescString()); //add username if available
+                    }
+                    t.initmessage(l); //forward message to turnout
+                } else { // The turnout already exists                    
+                    if (!l.getTurnoutDescString().isEmpty() && found.getUserName()==null) {
+                        found.setUserName(l.getTurnoutDescString()); //set userName if needed and available
+                    }
+                    found.message(l); //forward message to turnout
                 }
             }
         }

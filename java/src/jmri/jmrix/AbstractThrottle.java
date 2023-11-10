@@ -60,6 +60,20 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     private final boolean[] FUNCTION_MOMENTARY_BOOLEAN_ARRAY;
 
     /**
+     * Constants to represent Function Groups.
+     * <p>
+     * The are the same groupings for both normal Functions and Momentary.
+     */
+    protected static final int[] FUNCTION_GROUPS = new int[]{
+        1, 1, 1, 1, 1, /** 0-4 */
+        2, 2, 2, 2, /** 5-8 */   3, 3, 3, 3, /** 9-12 */
+        4, 4, 4, 4, 4, 4, 4, 4, /** 13-20 */ 5, 5, 5, 5, 5, 5, 5, 5, /** 21-28 */
+        6, 6, 6, 6, 6, 6, 6, 6, /** 29-36 */ 7, 7, 7, 7, 7, 7, 7, 7, /** 37-44 */
+        8, 8, 8, 8, 8, 8, 8, 8, /** 45-52 */ 9, 9, 9, 9, 9, 9, 9, 9, /** 53-60 */
+        10, 10, 10, 10, 10, 10, 10, 10,  /** 61-68 */
+    };
+
+    /**
      * Is this object still usable? Set false after dispose, this variable is
      * used to check for incorrect usage.
      */
@@ -303,11 +317,16 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      */
     @Override
     public void addPropertyChangeListener(PropertyChangeListener l) {
+        if (l == null) {
+            return;
+        }        
+        log.debug("addPropertyChangeListener(): Adding property change {} to {}", l.getClass().getSimpleName(), getLocoAddress());
         if ( Arrays.asList(getPropertyChangeListeners()).contains(l) ){
-            log.warn("Preventing {} adding duplicate PCL to {}", l, this.getClass().getName());
+            log.warn("Preventing {} adding duplicate PCL to {}",  l.getClass().getSimpleName(), this.getClass().getName());
             return;
         }
         super.addPropertyChangeListener(l);
+        log.debug("addPropertyChangeListener(): throttle: {} listeners size is {}", getLocoAddress(), getPropertyChangeListeners().length);
     }
 
     /**
@@ -315,11 +334,14 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      */
     @Override
     public void removePropertyChangeListener(PropertyChangeListener l) {
-        log.debug("Removing property change {}", l);
+        if (l == null) {
+            return;
+        }
+        log.debug("removePropertyChangeListener(): Removing property change {} from {}", l.getClass().getSimpleName(), getLocoAddress());
         super.removePropertyChangeListener(l);
-        log.debug("remove listeners size is {}", getPropertyChangeListeners().length);
+        log.debug("removePropertyChangeListener(): throttle: {} listeners size is {}", getLocoAddress(), getPropertyChangeListeners().length);
         if (getPropertyChangeListeners().length == 0) {
-            log.debug("No listeners so calling ThrottleManager.dispose with an empty ThrottleListener");
+            log.debug("No listeners so calling ThrottleManager.dispose with an empty ThrottleListener for {}",getLocoAddress());
             InstanceManager.throttleManagerInstance().disposeThrottle(this, new ThrottleListener() {
                 @Override
                 public void notifyFailedThrottleRequest(LocoAddress address, String reason) {

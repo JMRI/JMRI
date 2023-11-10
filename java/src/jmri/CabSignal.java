@@ -24,33 +24,33 @@ public interface CabSignal {
     /**
      * A method for cleaning up the cab signal 
      */
-    public void dispose();
+    void dispose();
 
     /**
      * Get the LocoAddress associated with the consist
      *
      * @return the cab signal address
      */
-    public LocoAddress getCabSignalAddress();
+    LocoAddress getCabSignalAddress();
 
     /**
      * Set the Block of the locomotive by searching the block list.
      */
-    public void setBlock();
+    void setBlock();
 
     /**
      * Set the Block of the locomotive
      *
      * @param position is a Block the locomotive is in.
      */
-    public void setBlock(Block position);
+    void setBlock(Block position);
 
     /**
      * Get the Block position of the locomotive associated with the cab signal.
      *
      * @return The current Block position
      */
-    public Block getBlock();
+    Block getBlock();
 
     /**
      * Get the Next Block the locomotive is expected to enter.
@@ -59,7 +59,7 @@ public interface CabSignal {
      *
      * @return The next Block position
      */
-    public Block getNextBlock();
+    Block getNextBlock();
 
     /**
      * Get the Next Signal Mast the locomotive is expected to pass.
@@ -68,46 +68,46 @@ public interface CabSignal {
      *
      * @return The next SignalMast position
      */
-    public SignalMast getNextMast();
+    SignalMast getNextMast();
 
     /**
      * Forward the current cab signal value to the layout.
      */
-    public void forwardCabSignalToLayout();
+    void forwardCabSignalToLayout();
 
     /*
      * get whether this cab signal is on or off
      *
      * @return true if on, false if off
      */
-    public boolean isCabSignalActive();
+    boolean isCabSignalActive();
 
     /*
      * set whether this cab signal is on or off
      *
      * @param active true if on, false if off
      */
-    public void setCabSignalActive(boolean active);
+    void setCabSignalActive(boolean active);
 
     /*
      * set whether a Master Cab signal button is on or off
      *
      * @param active true if on, false if off
      */
-    public void setMasterCabSigPauseActive(boolean active);
+    void setMasterCabSigPauseActive(boolean active);
 
     /**
      * Add a listener for consist events
      *
      * @param listener is a PropertyChangeListener object
      */
-    public void addPropertyChangeListener(java.beans.PropertyChangeListener listener);
+    void addPropertyChangeListener(java.beans.PropertyChangeListener listener);
 
     /**
      * Remove a listener for cab signal events
      *
      * @param listener is a PropertyChangeListener object
      */
-    public void removePropertyChangeListener(java.beans.PropertyChangeListener listener);
+    void removePropertyChangeListener(java.beans.PropertyChangeListener listener);
 
 }

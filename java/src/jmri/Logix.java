@@ -31,17 +31,17 @@ package jmri;
  */
 public interface Logix extends NamedBean {
 
-    public static final int LISTENER_TYPE_SENSOR = 1;
-    public static final int LISTENER_TYPE_TURNOUT = 2;
-    public static final int LISTENER_TYPE_LIGHT = 3;
-    public static final int LISTENER_TYPE_CONDITIONAL = 4;
-    public static final int LISTENER_TYPE_SIGNALHEAD = 5;
-    public static final int LISTENER_TYPE_MEMORY = 6;
-    public static final int LISTENER_TYPE_FASTCLOCK = 7;
-    public static final int LISTENER_TYPE_WARRANT = 8;
-    public static final int LISTENER_TYPE_SIGNALMAST = 9;
-    public static final int LISTENER_TYPE_OBLOCK = 10;
-    public static final int LISTENER_TYPE_ENTRYEXIT = 11;
+    int LISTENER_TYPE_SENSOR = 1;
+    int LISTENER_TYPE_TURNOUT = 2;
+    int LISTENER_TYPE_LIGHT = 3;
+    int LISTENER_TYPE_CONDITIONAL = 4;
+    int LISTENER_TYPE_SIGNALHEAD = 5;
+    int LISTENER_TYPE_MEMORY = 6;
+    int LISTENER_TYPE_FASTCLOCK = 7;
+    int LISTENER_TYPE_WARRANT = 8;
+    int LISTENER_TYPE_SIGNALMAST = 9;
+    int LISTENER_TYPE_OBLOCK = 10;
+    int LISTENER_TYPE_ENTRYEXIT = 11;
 
     /**
      * Set enabled status. Enabled is a bound property All conditionals are set
@@ -50,21 +50,21 @@ public interface Logix extends NamedBean {
      *
      * @param state true if Logix should be enabled; false otherwise
      */
-    public void setEnabled(boolean state);
+    void setEnabled(boolean state);
 
     /**
      * Get enabled status.
      *
      * @return true if enabled; false otherwise
      */
-    public boolean getEnabled();
+    boolean getEnabled();
 
     /**
      * Get number of Conditionals for this Logix.
      *
      * @return the number of conditionals
      */
-    public int getNumConditionals();
+    int getNumConditionals();
 
     /**
      * Move 'row' to 'nextInOrder' and shift all between 'nextInOrder' and 'row'
@@ -73,7 +73,7 @@ public interface Logix extends NamedBean {
      * @param nextInOrder target order for Conditional at row
      * @param row         position of Conditional to move
      */
-    public void swapConditional(int nextInOrder, int row);
+    void swapConditional(int nextInOrder, int row);
 
     /**
      * Returns the system name of the conditional that will calculate in the
@@ -84,7 +84,7 @@ public interface Logix extends NamedBean {
      * @param order order in which the Conditional calculates
      * @return system name of conditional or an empty String
      */
-    public String getConditionalByNumberOrder(int order);
+    String getConditionalByNumberOrder(int order);
 
     /**
      * Add a Conditional name and sequence number to this Logix.
@@ -93,10 +93,8 @@ public interface Logix extends NamedBean {
      * @param order      the order this conditional should calculate in if
      *                   order is negative, the conditional is added at the end
      *                   of current group of conditionals
-     * @return true if the Conditional was added, false otherwise (most likely
-     *         false indicates that maximum number of Conditionals was exceeded)
      */
-    public boolean addConditional(String systemName, int order);
+    void addConditional(String systemName, int order);
 
     /**
      * Add a child Conditional to the parent Logix.
@@ -106,7 +104,7 @@ public interface Logix extends NamedBean {
      * @param conditional The Conditional object.
      * @return true if the Conditional was added, false otherwise.
      */
-    public boolean addConditional(String systemName, Conditional conditional);
+    boolean addConditional(String systemName, Conditional conditional);
 
     /**
      * Get a Conditional belonging to this Logix.
@@ -115,7 +113,7 @@ public interface Logix extends NamedBean {
      * @param systemName The name of the Conditional object.
      * @return the Conditional object or null if not found.
      */
-    public Conditional getConditional(String systemName);
+    Conditional getConditional(String systemName);
 
     /**
      * Delete a Conditional from this Logix.
@@ -130,13 +128,13 @@ public interface Logix extends NamedBean {
      * @return names of objects blocking deletion or null; note that null does
      *         not exclusively indicate successful deletion
      */
-    public String[] deleteConditional(String systemName);
+    String[] deleteConditional(String systemName);
 
     /**
      * Calculate all Conditionals, triggering action if the user specified
      * conditions are met, and the Logix is enabled.
      */
-    public void calculateConditionals();
+    void calculateConditionals();
 
     /**
      * Activate the Logix, starts Logix processing by connecting all inputs that
@@ -145,7 +143,7 @@ public interface Logix extends NamedBean {
      * A Logix must be activated before it will calculate any of its
      * Conditionals.
      */
-    public void activateLogix();
+    void activateLogix();
 
     /**
      * Deactivate the Logix. This method disconnects the Logix from all input
@@ -153,7 +151,7 @@ public interface Logix extends NamedBean {
      * <p>
      * A Logix must be deactivated before its Conditionals are changed.
      */
-    public void deActivateLogix();
+    void deActivateLogix();
 
     /**
      * ConditionalVariables only have a single name field.  For user interface purposes
@@ -165,21 +163,21 @@ public interface Logix extends NamedBean {
      * for conditional references.  It does not affect other objects such as sensors, turnouts, etc.
      * @since 4.7.4
      */
-    public void setGuiNames();
+    void setGuiNames();
 
     /**
      * Assemble a list of state variables that both trigger the Logix, and are
      * changed by it. Returns true if any such variables were found. Returns
      * false otherwise.
      */
-    //public boolean checkLoopCondition();
+    //boolean checkLoopCondition();
     /**
      * Assembles a string listing state variables that might result in a loop.
      * Returns an empty string if there are none, probably because
      * "checkLoopConditioncheckLoopCondition" was not invoked before the call,
      * or returned false.
      */
-    //public ArrayList <String[]> getLoopGremlins();
+    //ArrayList <String[]> getLoopGremlins();
     /**
      * Assembles and returns a list of state variables that are used by
      * conditionals of this Logix including the number of occurances of each
@@ -194,6 +192,6 @@ public interface Logix extends NamedBean {
      * the correspondeing variable suppresses Calculation. Note this method must
      * not modify the supplied variable list in any way.
      */
-    //public void getStateVariableList(ArrayList <ConditionalVariable> varList, ArrayList <int[]> triggerPair);
+    //void getStateVariableList(ArrayList <ConditionalVariable> varList, ArrayList <int[]> triggerPair);
     
 }

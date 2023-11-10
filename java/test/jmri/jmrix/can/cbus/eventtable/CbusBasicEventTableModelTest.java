@@ -37,6 +37,7 @@ public class CbusBasicEventTableModelTest {
     public void tearDown() {
         Assertions.assertNotNull(memo);
         memo.dispose();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

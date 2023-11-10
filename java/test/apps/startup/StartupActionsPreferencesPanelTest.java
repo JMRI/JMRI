@@ -4,8 +4,6 @@ import jmri.swing.PreferencesPanelTestBase;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**

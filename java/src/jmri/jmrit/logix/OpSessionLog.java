@@ -8,12 +8,12 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+
 import jmri.util.FileUtil;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.TextFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 class OpSessionLog {
 
@@ -25,7 +25,7 @@ class OpSessionLog {
 
     public static synchronized boolean makeLogFile(java.awt.Component parent) {
 
-        JFileChooser fileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+        JFileChooser fileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
         fileChooser.setDialogTitle(Bundle.getMessage("logSession"));
         fileChooser.setFileFilter(new TextFilter());
         int retVal = fileChooser.showDialog(parent, Bundle.getMessage("logFile"));
@@ -42,9 +42,9 @@ class OpSessionLog {
         }
         // check for possible overwrite
         if (file.exists()) {
-            if (JOptionPane.showConfirmDialog(parent,
+            if (JmriJOptionPane.showConfirmDialog(parent,
                     Bundle.getMessage("overWritefile", fileName), Bundle.getMessage("QuestionTitle"),
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE) != JOptionPane.OK_OPTION) {
+                    JmriJOptionPane.OK_CANCEL_OPTION, JmriJOptionPane.QUESTION_MESSAGE) != JmriJOptionPane.OK_OPTION) {
                 return false;
             }
         }
@@ -53,8 +53,8 @@ class OpSessionLog {
             _outBuff = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
             writeHeader(fileName);
         } catch (FileNotFoundException fnfe) {
-            JOptionPane.showMessageDialog(parent, fnfe.getMessage(),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(parent, fnfe.getMessage(),
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             return false;
         }
         return true;
@@ -118,5 +118,6 @@ class OpSessionLog {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(OpSessionLog.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OpSessionLog.class);
+
 }

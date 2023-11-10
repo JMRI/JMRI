@@ -1,23 +1,21 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import java.beans.PropertyChangeEvent;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
 
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.InstanceManagerAutoInitialize;
+import jmri.*;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManifestHeaderText;
 
 /**
  * Manages the cars.
@@ -61,7 +59,9 @@ public class CarManager extends RollingStockManager<Car>
      */
     @Override
     public List<Car> getByLocationList() {
-        return getByList(getByKernelList(), BY_LOCATION);
+        List<Car> byFinal = getByList(getByNumberList(), BY_FINAL_DEST);
+        List<Car> byKernel = getByList(byFinal, BY_KERNEL);
+        return getByList(byKernel, BY_LOCATION);
     }
 
     /**
@@ -117,15 +117,20 @@ public class CarManager extends RollingStockManager<Car>
     }
 
     // The special sort options for cars
-    private static final int BY_LOAD = 4;
-    private static final int BY_KERNEL = 5;
-    private static final int BY_RWE = 13; // Return When Empty
-    private static final int BY_FINAL_DEST = 14;
-    private static final int BY_WAIT = 16;
-    private static final int BY_PICKUP = 19;
-    private static final int BY_HAZARD = 21;
-    private static final int BY_RWL = 22; // Return When loaded
-    private static final int BY_DIVISION = 23;
+    private static final int BY_LOAD = 30;
+    private static final int BY_KERNEL = 31;
+    private static final int BY_RWE = 32; // Return When Empty
+    private static final int BY_FINAL_DEST = 33;
+    private static final int BY_WAIT = 34;
+    private static final int BY_PICKUP = 35;
+    private static final int BY_HAZARD = 36;
+    private static final int BY_RWL = 37; // Return When loaded
+    private static final int BY_DIVISION = 38;
+    
+    // the name of the location and track is "split"
+    private static final int BY_SPLIT_FINAL_DEST = 40;
+    private static final int BY_SPLIT_LOCATION = 41;
+    private static final int BY_SPLIT_DESTINATION = 42;
 
     // add car options to sort comparator
     @Override
@@ -136,13 +141,16 @@ public class CarManager extends RollingStockManager<Car>
             case BY_KERNEL:
                 return (c1, c2) -> (c1.getKernelName().compareToIgnoreCase(c2.getKernelName()));
             case BY_RWE:
-                return (c1,
-                        c2) -> (c1.getReturnWhenEmptyDestName().compareToIgnoreCase(c2.getReturnWhenEmptyDestName()));
+                return (c1, c2) -> (c1.getReturnWhenEmptyDestinationName() + c1.getReturnWhenEmptyDestTrackName())
+                        .compareToIgnoreCase(
+                                c2.getReturnWhenEmptyDestinationName() + c2.getReturnWhenEmptyDestTrackName());
             case BY_RWL:
-                return (c1,
-                        c2) -> (c1.getReturnWhenLoadedDestName().compareToIgnoreCase(c2.getReturnWhenLoadedDestName()));
+                return (c1, c2) -> (c1.getReturnWhenLoadedDestinationName() + c1.getReturnWhenLoadedDestTrackName())
+                        .compareToIgnoreCase(
+                                c2.getReturnWhenLoadedDestinationName() + c2.getReturnWhenLoadedDestTrackName());
             case BY_FINAL_DEST:
-                return (c1, c2) -> (c1.getFinalDestinationName().compareToIgnoreCase(c2.getFinalDestinationName()));
+                return (c1, c2) -> (c1.getFinalDestinationName() + c1.getFinalDestinationTrackName())
+                        .compareToIgnoreCase(c2.getFinalDestinationName() + c2.getFinalDestinationTrackName());
             case BY_DIVISION:
                 return (c1, c2) -> (c1.getDivisionName().compareToIgnoreCase(c2.getDivisionName()));
             case BY_WAIT:
@@ -151,6 +159,16 @@ public class CarManager extends RollingStockManager<Car>
                 return (c1, c2) -> (c1.getPickupScheduleName().compareToIgnoreCase(c2.getPickupScheduleName()));
             case BY_HAZARD:
                 return (c1, c2) -> ((c1.isHazardous() ? 1 : 0) - (c2.isHazardous() ? 1 : 0));
+            case BY_SPLIT_FINAL_DEST:
+                return (c1, c2) -> (c1.getSplitFinalDestinationName() + c1.getSplitFinalDestinationTrackName())
+                        .compareToIgnoreCase(
+                                c2.getSplitFinalDestinationName() + c2.getSplitFinalDestinationTrackName());
+            case BY_SPLIT_LOCATION:
+                return (c1, c2) -> (c1.getStatus() + c1.getSplitLocationName() + c1.getSplitTrackName())
+                        .compareToIgnoreCase(c2.getStatus() + c2.getSplitLocationName() + c2.getSplitTrackName());
+            case BY_SPLIT_DESTINATION:
+                return (c1, c2) -> (c1.getSplitDestinationName() + c1.getSplitDestinationTrackName())
+                        .compareToIgnoreCase(c2.getSplitDestinationName() + c2.getSplitDestinationTrackName());
             default:
                 return super.getComparator(attribute);
         }
@@ -241,11 +259,11 @@ public class CarManager extends RollingStockManager<Car>
      * <p>
      * The sort priority is as follows:
      * <ol>
-     * <li>Caboose or car with FRED to the end of the list
-     * <li>Passenger cars with positive blocking numbers to the end of the list,
-     * but before cabooses or car with FRED. Passenger cars with negative
-     * blocking numbers are placed at the front of the train. Passenger cars
-     * have blocking numbers which places them relative to each other.
+     * <li>Caboose or car with FRED to the end of the list, unless passenger.
+     * <li>Passenger cars have blocking numbers which places them relative to
+     * each other. Passenger cars with positive blocking numbers to the end of
+     * the list, but before cabooses or car with FRED. Passenger cars with
+     * negative blocking numbers are placed at the front of the train.
      * <li>Car's destination (alphabetical by location and track name or by
      * track blocking order)
      * <li>Car is hazardous (hazardous placed after a non-hazardous car)
@@ -253,8 +271,9 @@ public class CarManager extends RollingStockManager<Car>
      * <li>Car's final destination (alphabetical by location and track name)
      * </ol>
      * <p>
-     * Cars in a kernel are placed together by their kernel blocking numbers.
-     * The kernel's position in the list is based on the lead car in the kernel.
+     * Cars in a kernel are placed together by their kernel blocking numbers,
+     * except if they are type passenger. The kernel's position in the list is
+     * based on the lead car in the kernel.
      * <p>
      * If the train is to be blocked by track blocking order, all of the tracks
      * at that location need a blocking number greater than 0.
@@ -263,16 +282,16 @@ public class CarManager extends RollingStockManager<Car>
      * @return Ordered list of cars assigned to the train
      */
     public List<Car> getByTrainDestinationList(Train train) {
-        List<Car> byFinal = getByList(getList(train), BY_FINAL_DEST);
-        List<Car> byLocation = getByList(byFinal, BY_LOCATION);
+        List<Car> byFinal = getByList(getList(train), BY_SPLIT_FINAL_DEST);
+        List<Car> byLocation = getByList(byFinal, BY_SPLIT_LOCATION);
         List<Car> byHazard = getByList(byLocation, BY_HAZARD);
-        List<Car> byDestination = getByList(byHazard, BY_DESTINATION);
+        List<Car> byDestination = getByList(byHazard, BY_SPLIT_DESTINATION);
         // now place cabooses, cars with FRED, and passenger cars at the rear of the
         // train
         List<Car> out = new ArrayList<>();
         int lastCarsIndex = 0; // incremented each time a car is added to the end of the list
         for (Car car : byDestination) {
-            if (car.getKernel() != null && !car.isLead()) {
+            if (car.getKernel() != null && !car.isLead() && !car.isPassenger()) {
                 continue; // not the lead car, skip for now.
             }
             if (!car.isCaboose() && !car.hasFred() && !car.isPassenger()) {
@@ -305,9 +324,6 @@ public class CarManager extends RollingStockManager<Car>
                 if (!out.contains(car)) {
                     out.add(out.size() - lastCarsIndex, car);
                 }
-            } else if (car.isCaboose() || car.hasFred()) {
-                out.add(car); // place at end of list
-                lastCarsIndex++;
             } else if (car.isPassenger()) {
                 if (car.getBlocking() < 0) {
                     // block passenger cars with negative blocking numbers at
@@ -337,13 +353,16 @@ public class CarManager extends RollingStockManager<Car>
                     out.add(out.size() - index, car);
                     lastCarsIndex++;
                 }
+            } else if (car.isCaboose() || car.hasFred()) {
+                out.add(car); // place at end of list
+                lastCarsIndex++;
             }
-            // group the cars in the kernel together
+            // group the cars in the kernel together, except passenger
             if (car.isLead()) {
                 int index = out.indexOf(car);
                 int numberOfCars = 1; // already added the lead car to the list
                 for (Car kcar : car.getKernel().getCars()) {
-                    if (car != kcar) {
+                    if (car != kcar && !kcar.isPassenger()) {
                         // Block cars in kernel
                         for (int j = 0; j < numberOfCars; j++) {
                             if (kcar.getBlocking() < out.get(index + j).getBlocking()) {
@@ -461,6 +480,43 @@ public class CarManager extends RollingStockManager<Car>
         nf.setMaximumFractionDigits(1);
         return nf.format(doubleCarWeight); // car weight in ounces.
     }
+    
+    /**
+     * Used to determine if any car has been assigned a division
+     * 
+     * @return true if any car has been assigned a division, otherwise false
+     */
+    public boolean isThereDivisions() {
+        for (Car car : getList()) {
+            if (car.getDivision() != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    int _commentLength = 0;
+    
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification="I18N of Info Message")
+    public int getMaxCommentLength() {
+        if (_commentLength == 0) {
+            _commentLength = TrainManifestHeaderText.getStringHeader_Comment().length();
+            String comment = "";
+            Car carMax = null;
+            for (Car car : getList()) {
+                if (car.getComment().length() > _commentLength) {
+                    _commentLength = car.getComment().length();
+                    comment = car.getComment();
+                    carMax = car;
+                }
+            }
+            if (carMax != null) {
+                log.info(Bundle.getMessage("InfoMaxComment", carMax.toString(), comment, _commentLength));
+            }
+        }
+        return _commentLength;
+    }
 
     public void load(Element root) {
         if (root.getChild(Xml.CARS) != null) {
@@ -496,6 +552,14 @@ public class CarManager extends RollingStockManager<Car>
         // Set dirty
         InstanceManager.getDefault(CarManagerXml.class).setDirty(true);
         super.firePropertyChange(p, old, n);
+    }
+    
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals(Car.COMMENT_CHANGED_PROPERTY)) {
+            _commentLength = 0;
+        }
+        super.propertyChange(evt);
     }
 
     private final static Logger log = LoggerFactory.getLogger(CarManager.class);

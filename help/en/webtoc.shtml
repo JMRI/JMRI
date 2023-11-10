@@ -108,6 +108,11 @@
                     </li>
                       
                     <li>
+                        <a href="html/hardware/bidib/index.shtml">BiDiB </a>
+                        <ul></ul>
+                    </li>
+                      
+                    <li>
                         <a href="html/hardware/can/index.shtml">CAN Bus Overview </a>
                         <ul></ul>
                     </li>
@@ -1686,6 +1691,18 @@
                     </li>
                       
                     <li>
+                        <a href="html/hardware/bidib/index.shtml">BiDiB </a>
+                        <ul>
+                               
+                            <li>
+                                <a href="html/hardware/bidib/BiDiB-SignalMast.shtml">Signal Masts </a>
+                                <ul></ul>
+                            </li>
+                              
+                        </ul>
+                    </li>
+                      
+                    <li>
                         C/MRI 
                         <ul>
                                
@@ -2069,24 +2086,34 @@
                     <li>
                         <a href="html/hardware/openlcb/index.shtml">OpenLCB </a>
                         <ul>
-                               
-                            <li>
-                                <a href="html/hardware/openlcb/Names.shtml">Names </a>
-                                <ul></ul>
-                            </li>
-                               
-                            <li>
-                                <a href="html/hardware/openlcb/OlcbSignalMast.shtml">Signal Masts </a>
-                                <ul></ul>
-                            </li>
-                               
+                                  
                             <li>
                                 <a href="package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml">Configure Nodes </a>
                                 <ul></ul>
                             </li>
-                               
+                                  
                             <li>
-                                <a href="package/jmri/jmrix/openlcb/swing/send/OpenLcbCanSendFrame.shtml">Send OpenLCB Frame </a>
+                                <a href="package/jmri/jmrix/openlcb/swing/eventtable/EventTablePane.shtml">Event Table</a>
+                                <ul></ul>
+                            </li>
+                                  
+                            <li>
+                                <a href="package/jmri/jmrix/openlcb/swing/memtool/MemoryToolPane.shtml">Memory Tool</a>
+                                <ul></ul>
+                            </li>
+                                  
+                            <li>
+                                <a href="html/hardware/openlcb/Names.shtml">Names </a>
+                                <ul></ul>
+                            </li>
+                                  
+                            <li>
+                                <a href="html/hardware/openlcb/OlcbSignalMast.shtml">Signal Masts </a>
+                                <ul></ul>
+                            </li>
+                                  
+                            <li>
+                                <a href="package/jmri/jmrix/openlcb/swing/send/OpenLcbCanSendFrame.shtml">Send Frame</a>
                                 <ul></ul>
                             </li>
                               

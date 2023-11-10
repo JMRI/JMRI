@@ -185,7 +185,7 @@ public class ProxyTurnoutManager extends AbstractProvidingProxyManager<Turnout> 
     public String[] getValidOperationTypes() {
         List<String> typeList = new LinkedList<>();
         getManagerList().forEach(m -> typeList.addAll(Arrays.asList(((TurnoutManager) m).getValidOperationTypes())));
-        return TurnoutOperationManager.concatenateTypeLists(typeList.toArray(new String[0]));
+        return TurnoutOperationManager.concatenateTypeLists(typeList.toArray(String[]::new));
     }
 
     /**

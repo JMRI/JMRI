@@ -60,9 +60,9 @@ public class CbusNodeTableDataModelTest {
         t.setBackgroundAllocateListener(false);
         Assert.assertNotNull("exists",t);
 
-        Assert.assertTrue("listener attached",1 == tcis.numListeners());
+        Assert.assertTrue("listener attached",2 == tcis.numListeners());
         t.dispose();
-        Assert.assertTrue("no listener to finish with",0 == tcis.numListeners());
+        Assert.assertTrue("programmer listener remaining",1 == tcis.numListeners());
 
     }
 

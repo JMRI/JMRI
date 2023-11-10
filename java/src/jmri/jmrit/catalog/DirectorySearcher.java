@@ -1,26 +1,28 @@
 package jmri.jmrit.catalog;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
+
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.util.ThreadingUtil;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.apache.commons.io.FilenameUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A file system directory searcher to locate Image files to include in an Image
@@ -57,7 +59,7 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
     @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification="false postive, guarded by logic")
     private File getDirectory(String msg, boolean recurse) {
         if (_directoryChooser == null) {
-            _directoryChooser = new JFileChooser(FileSystemView.getFileSystemView());
+            _directoryChooser = new jmri.util.swing.JmriJFileChooser(FileSystemView.getFileSystemView());
             _directoryChooser.setFileFilter(new FileNameExtensionFilter("Graphics Files", CatalogTreeManager.IMAGE_FILTER)); // NOI18N
         }
         _directoryChooser.setDialogTitle(Bundle.getMessage(msg));
@@ -78,14 +80,14 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
                 if (cnt > 0) {
                     return dir;
                 } else {
-                    int choice = JOptionPane.showOptionDialog(null,
+                    int choice = JmriJOptionPane.showOptionDialog(null,
                             Bundle.getMessage("NoImagesInDir", dir), Bundle.getMessage("QuestionTitle"),
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                            JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null,
                             new String[]{Bundle.getMessage("ButtonStop"), Bundle.getMessage("ButtonKeepLooking")}, 1);
                     switch (choice) {
-                        case 0:
+                        case 0: // stop
                             return null;
-                        case 1:
+                        case 1: // keep looking
                             _directoryChooser.setCurrentDirectory(dir);
                             break;
                         default:
@@ -186,8 +188,8 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
             _previewDialog.dispose();
         }
         closeWaitFrame();
-        JOptionPane.showMessageDialog(null, Bundle.getMessage("numFound", count, dir.getAbsolutePath()),
-                Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("numFound", count, dir.getAbsolutePath()),
+                Bundle.getMessage("MessageTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
     }
 
     class Seacher extends Thread {
@@ -378,5 +380,5 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
         cancelLooking();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DirectorySearcher.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DirectorySearcher.class);
 }

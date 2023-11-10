@@ -7,13 +7,7 @@
 
   <style>
     .dp-center {text-align: center;}
-    .dp-middle {text-align: middle;}
     .dp-right {text-align: right;}
-    .dp-none {list-style-type: none;}
-    .dp-square {list-style-type: square;}
-    .dp-upper-alpha {ist-style-type: upper-alpha;}
-    .dp-lower-alpha {list-style-type: lower-alpha;}
-    .dp-border-2 {border: 2px solid;}
   </style>
 </head>
 <body>
@@ -41,7 +35,7 @@
       <p>At this point, you've created a new configuration file! You can check it for syntax by
       selecting the <a href="Main_Debug.shtml#ValidateXML">Validate XML File</a> item from the
       <a href="Main_Debug.shtml">Debug menu</a>. The <strong>Open</strong> dialog is displayed;
-      select your file and click <input name="button" id="button" value="Open" type="submit"> . If
+      select your file and click the <span class="textbutton">Open</span> button. If
       all is well, a dialog box will display that says "OK". If not, you'll get a completely
       incomprehensible error message. About the only useful part of that message is the line
       number. Re-open the editor to that line and try to see what's wrong with the syntax.</p>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022, 2023 All rights reserved                      -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<version author="Ulrich Gerlach" version="1" lastUpdated="2023-05-01"/>
+	<version author="Ulrich Gerlach" version="2" lastUpdated="2023-05-10"/>
+	<version author="Ulrich Gerlach" version="3" lastUpdated="2023-10-10"/>
+	<version author="Ulrich Gerlach" version="4" lastUpdated="2023-10-20"/>
+	<!-- Version 1 - Only for Piko SUSI Decoder BR 83.10 TT and BR 93 TT -->
+	<!-- Version 2 - Add Decoder Reset and CV1018 for Decoder Test -->
+	<!-- Version 3 - Add Decoder S 499 TT and PWM Programming -->
+	<!-- Version 4 - Add neutral PIKO SUSI Decoder -->
+	<!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
+	<decoder>
+		<family name="PIKO SUSI Lichtdekoder (XP5.1)" mfg="PIKO" lowVersionID="0" highVersionID="15" comment="Decoders not sorted (necessarily) in numerical order">
+			<!-- to be checked by hardware owner -->
+			<model model="PIKO SUSI Decoder" numOuts="7" numFns="31" maxMotorCurrent="1.0A" formFactor="N" connector="SUSI" productID="PIKO_SUSI_Decoder" lowVersionID="0" comment="Piko BR 83 SUSI Lichtdekoder (XP5.1)">
+				<output name="1" label="A1" connection="plug" maxcurrent="50 mA"/>
+				<output name="2" label="A2" connection="plug" maxcurrent="50 mA"/>
+				<output name="3" label="A3" connection="plug" maxcurrent="50 mA"/>
+				<output name="4" label="A4" connection="plug" maxcurrent="50 mA"/>
+				<output name="5" label="A5" connection="plug" maxcurrent="50 mA"/>
+				<output name="6" label="A6" connection="plug" maxcurrent="50 mA"/>
+				<output name="7" label="A7" connection="plug" maxcurrent="50 mA"/>
+				<size length="1" width="1" height="1" units="mm"/>
+			</model>
+			<model model="PIKO BR 83 SUSI Decoder" numOuts="6" numFns="31" maxMotorCurrent="1.0A" formFactor="N" connector="SUSI" productID="PIKO_BR83_SUSI_Decoder" lowVersionID="0" comment="Piko BR 83 SUSI Lichtdekoder (XP5.1)">
+				<output name="1" label="A1" connection="plug" maxcurrent="50 mA"/>
+				<output name="2" label="A2" connection="plug" maxcurrent="50 mA"/>
+				<output name="3" label="A3" connection="plug" maxcurrent="50 mA"/>
+				<output name="4" label="A4" connection="plug" maxcurrent="50 mA"/>
+				<output name="5" label="A5" connection="plug" maxcurrent="50 mA"/>
+				<output name="6" label="A6" connection="plug" maxcurrent="50 mA"/>
+				<size length="1" width="1" height="1" units="mm"/>
+			</model>
+			<model model="PIKO BR 93 SUSI Decoder" numOuts="6" numFns="31" maxMotorCurrent="1.0A" formFactor="N" connector="SUSI" productID="PIKO_BR93_SUSI_Decoder" lowVersionID="0" comment="Piko BR 93 SUSI Lichtdekoder (XP5.1)">
+				<output name="1" label="A1" connection="plug" maxcurrent="50 mA"/>
+				<output name="2" label="A2" connection="plug" maxcurrent="50 mA"/>
+				<output name="3" label="A3" connection="plug" maxcurrent="50 mA"/>
+				<output name="4" label="A4" connection="plug" maxcurrent="50 mA"/>
+				<output name="5" label="A5" connection="plug" maxcurrent="50 mA"/>
+				<output name="6" label="A6" connection="plug" maxcurrent="50 mA"/>
+				<size length="1" width="1" height="1" units="mm"/>
+			</model>
+			<model model="PIKO S 499 SUSI Decoder" numOuts="7" numFns="31" maxMotorCurrent="1.0A" formFactor="N" connector="SUSI" productID="PIKO_S499_SUSI_Decoder" lowVersionID="0" comment="Piko S 499 SUSI Lichtdekoder (XP5.1)">
+				<output name="1" label="A1" connection="plug" maxcurrent="50 mA"/>
+				<output name="2" label="A2" connection="plug" maxcurrent="50 mA"/>
+				<output name="3" label="A3" connection="plug" maxcurrent="50 mA"/>
+				<output name="4" label="A4" connection="plug" maxcurrent="50 mA"/>
+				<output name="5" label="A5" connection="plug" maxcurrent="50 mA"/>
+				<output name="6" label="A6" connection="plug" maxcurrent="50 mA"/>
+				<output name="7" label="A7" connection="plug" maxcurrent="50 mA"/>
+				<size length="1" width="1" height="1" units="mm"/>
+			</model>
+		</family>
+		<programming direct="yes" paged="no" register="no" ops="yes">
+			<capability>
+				<name>Indexed CV access</name>
+				<parameter name="PI">1021</parameter>
+				<parameter name="cvFirst">true</parameter>
+			</capability>
+			<capability>
+				<name>Ops Mode Delayed Programming</name>
+				<parameter name="Delay">1000</parameter>
+			</capability>
+		</programming>
+		<variables>
+			<!-- CV 1, 17, 29 bit 5 -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+			<variable item="Manufacturer" CV="980.1021=0" readOnly="yes" default="162">
+				<decVal/>
+				<label>"Manufacturer ID:" </label>
+				<label xml:lang="it">ID Costruttore: </label>
+				<label xml:lang="fr">ID constructeur: </label>
+				<label xml:lang="de">Hersteller ID: </label>
+				<label xml:lang="nl">Fabrikant-ID: </label>
+				<label xml:lang="cs">ID výrobce: </label>
+			</variable>
+			<variable item="Decoder Version" CV="981.1021=0" readOnly="yes" default="0">
+				<decVal/>
+				<label>Manufacturer Version No: </label>
+				<label xml:lang="it">Versione Decoder: </label>
+				<label xml:lang="fr">Version décodeur: </label>
+				<label xml:lang="de">Decoder Version: </label>
+				<label xml:lang="nl">Versie van decoder: </label>
+				<label xml:lang="cs">Verze dekodéru: </label>
+			</variable>
+			<!-- Interner Lichtdecoder CV897 - 1024 -->
+			<xi:include href="http://jmri.org/xml/decoders/piko/cv897-1024_v5.1.xml"/>
+		</variables>
+		<resets>
+			<factReset label="Reset Default SUSI Light Controller" CV="1019.1021=0" default="255">
+				<label xml:lang="de">Reset Werkseinstellungen SUSI Lichtdecoder (CV1019 = 255)</label>
+				<label xml:lang="cs">Reset</label>
+			</factReset>
+			<factReset label="Outputs Test Mode" CV="1018.1021=0" default="128">
+				<label xml:lang="de">Test Modus: Alle Ausgänge ein- und ausschalten (CV1018 = 128)</label>
+				<label xml:lang="cs">Test</label>
+			</factReset>
+		</resets>
+	</decoder>
+	<!-- special panes -->
+	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoLichtDecoder_v5.1.xml"/>
+</decoder-config>
+

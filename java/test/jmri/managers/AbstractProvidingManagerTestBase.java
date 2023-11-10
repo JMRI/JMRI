@@ -5,7 +5,7 @@ import jmri.*;
 import java.beans.PropertyVetoException;
 import java.lang.reflect.Field;
 import jmri.util.JUnitAppender;
-import org.apache.log4j.Level;
+import org.slf4j.event.Level;
 
 import org.junit.Assert;
 import org.junit.Assume;

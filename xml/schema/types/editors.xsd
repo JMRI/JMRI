@@ -110,11 +110,13 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:attribute name="id" type="xs:string"></xs:attribute>
+      <xs:attribute name="classes" type="xs:string"></xs:attribute>
       <xs:attribute name="x" type="xs:int" use="required"></xs:attribute>
       <xs:attribute name="y" type="xs:int" use="required"></xs:attribute>
       <xs:attribute name="level" type="xs:int"></xs:attribute>
       <xs:attribute name="forcecontroloff" type="trueFalseType" default="false"></xs:attribute>
       <xs:attribute name="hidden" type="yesNoType" default="no"></xs:attribute>
+      <xs:attribute name="emptyHidden" type="yesNoType"></xs:attribute>
       <xs:attribute name="positionable" type="trueFalseType"></xs:attribute>
       <xs:attribute name="showtooltip" type="trueFalseType" default="true"></xs:attribute>
       <xs:attribute name="editable" type="trueFalseType" default="true"></xs:attribute>
@@ -129,6 +131,7 @@
           jmri.jmrit.display.configurexml.PositionableLabelXml#storeTextInfo
         </xs:appinfo>
       </xs:annotation>
+      <xs:attribute name="fontFamily" type="xs:string"></xs:attribute>
       <xs:attribute name="fontname" type="xs:string"></xs:attribute>
       <xs:attribute name="size" type="xs:string"></xs:attribute>
       <xs:attribute name="style" type="xs:string"></xs:attribute>
@@ -1285,6 +1288,73 @@
 
     </xs:complexType>
 
+    <xs:complexType name="EditorAudioIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a AudioIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.AudioIconXml
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="Identity" type="xs:integer" minOccurs="1" maxOccurs="1" />
+        <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+
+      <xs:attribute name="sound" type="xs:string"></xs:attribute>
+      <xs:attribute name="icon" type="xs:string"></xs:attribute>
+      <xs:attribute name="text" type="xs:string"></xs:attribute>
+
+      <xs:attribute name="onClickOperation" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="PlaySoundGlobally"></xs:enumeration>
+            <xs:enumeration value="PlaySoundLocally"></xs:enumeration>
+            <xs:enumeration value="DoNothing"></xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+
+      <xs:attribute name="audio" type="beanNameType"></xs:attribute>
+
+      <xs:attribute name="playSoundWhenJmriPlays" type="yesNoType" use="required"></xs:attribute>
+      <xs:attribute name="stopSoundWhenJmriStops" type="yesNoType" use="required"></xs:attribute>
+
+    </xs:complexType>
+
+    <xs:complexType name="EditorLogixNGIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a LogixNGIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.LogixNGIconXml
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="Identity" type="xs:integer" minOccurs="1" maxOccurs="1" />
+        <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+
+      <xs:attribute name="icon" type="xs:string"></xs:attribute>
+      <xs:attribute name="text" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
 
     <xs:simpleType name="LayoutTurnoutType">
       <xs:annotation>
@@ -1360,6 +1430,7 @@
       <xs:attribute name="hidden" type="yesNoType"></xs:attribute>
       <xs:attribute name="disabled" type="yesNoType"></xs:attribute>
       <xs:attribute name="disableWhenOccupied" type="yesNoType"></xs:attribute>
+      <xs:attribute name="showtooltip" type="yesNoType"></xs:attribute>
 
       <xs:attribute name="turnoutname" type="beanNameType"></xs:attribute>
       <xs:attribute name="blockname" type="beanNameType"></xs:attribute>
@@ -1472,6 +1543,7 @@
       <xs:attribute name="hidden" type="yesNoType"></xs:attribute>
       <xs:attribute name="disabled" type="yesNoType"></xs:attribute>
       <xs:attribute name="disableWhenOccupied" type="yesNoType"></xs:attribute>
+      <xs:attribute name="showtooltip" type="yesNoType"></xs:attribute>
 
       <xs:attribute name="blockname" type="beanNameType"></xs:attribute>
       <xs:attribute name="blockbname" type="beanNameType"></xs:attribute>

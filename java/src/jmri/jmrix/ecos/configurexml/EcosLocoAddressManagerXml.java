@@ -1,14 +1,11 @@
 package jmri.jmrix.ecos.configurexml;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This class is here to prevent error messages being presented to the user on
  * opening JMRI or saving the panel file, when connected to an Ecos. It
  * currently serves no other function.
- * <p>
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2009
  */

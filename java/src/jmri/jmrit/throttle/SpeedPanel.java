@@ -67,6 +67,7 @@ public class SpeedPanel extends JInternalFrame implements java.beans.PropertyCha
     public void destroy() {
         if (addressPanel != null) {
             addressPanel.removeAddressListener(this);
+            addressPanel = null;
         }
         if (throttle != null) {
             throttle.removePropertyChangeListener(this);
@@ -134,17 +135,23 @@ public class SpeedPanel extends JInternalFrame implements java.beans.PropertyCha
 
     @Override
     public void notifyAddressReleased(LocoAddress la) {
+        if (throttle == null) {
+            log.debug("notifyAddressReleased() throttle alreaday null, called for loc {}",la);
+            return;
+        }        
         this.setEnabled(false);
-        if (throttle != null) {
-            throttle.removePropertyChangeListener(this);
-        }
+        throttle.removePropertyChangeListener(this);
         throttle = null;
     }
 
     @Override
     public void notifyAddressThrottleFound(DccThrottle t) {
+        if (throttle != null) {
+            log.debug("notifyAddressThrottleFound() throttle non null, called for loc {}",t.getLocoAddress());
+            return;
+        }        
         if (log.isDebugEnabled()) {
-            log.debug("control panel received new throttle");
+            log.debug("control panel received new throttle {}",t);
         }
         this.throttle = t;
 
@@ -164,11 +171,13 @@ public class SpeedPanel extends JInternalFrame implements java.beans.PropertyCha
     }
 
     @Override
-    public void notifyConsistAddressChosen(int newAddress, boolean isLong) {
+    public void notifyConsistAddressChosen(LocoAddress l) {
+        notifyAddressChosen(l);
     }
 
     @Override
-    public void notifyConsistAddressReleased(int address, boolean isLong) {
+    public void notifyConsistAddressReleased(LocoAddress l) {
+        notifyAddressReleased(l);
     }
 
     @Override

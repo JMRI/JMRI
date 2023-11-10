@@ -70,7 +70,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                 printHeader(fileOut);
                 fileOut.printRecord("SWL", Bundle.getMessage("csvSwitchList")); // NOI18N
                 printRailroadName(fileOut, Setup.getRailroadName());
-                printLocationName(fileOut, splitString(location.getName()));
+                printLocationName(fileOut, location.getSplitName());
                 printPrinterName(fileOut, location.getDefaultPrinterName());
                 printLocationSwitchListComment(fileOut, location);
                 printLocationComment(fileOut, location);
@@ -103,7 +103,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                 RouteLocation rlPrevious = null;
                 // need to know where in the route we are for the various comments
                 for (RouteLocation rl : routeList) {
-                    if (!splitString(rl.getName()).equals(splitString(location.getName()))) {
+                    if (!rl.getSplitName().equals(location.getSplitName())) {
                         rlPrevious = rl;
                         continue;
                     }
@@ -132,24 +132,24 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                             printEstimatedTimeEnRoute(fileOut, expectedArrivalTime);
                         } else {
                             fileOut.printRecord("DL", Bundle.getMessage("csvDepartureLocationName"),
-                                    splitString(splitString(train.getTrainDepartsName()))); // NOI18N
+                                    splitString(train.getTrainDepartsName())); // NOI18N
                             printDepartureTime(fileOut, train.getFormatedDepartureTime());
                             if (rl == train.getTrainDepartsRouteLocation() && !train.isLocalSwitcher()) {
-                                printTrainDeparts(fileOut, splitString(rl.getName()), rl.getTrainDirectionString());
+                                printTrainDeparts(fileOut, rl.getSplitName(), rl.getTrainDirectionString());
                             }
                             if (rl != train.getTrainDepartsRouteLocation()) {
                                 printExpectedTimeArrival(fileOut, expectedArrivalTime);
-                                printTrainArrives(fileOut, splitString(rl.getName()), rl.getTrainDirectionString());
+                                printTrainArrives(fileOut, rl.getSplitName(), rl.getTrainDirectionString());
                             }
                         }
                         if (rl == train.getTrainTerminatesRouteLocation()) {
-                            printTrainTerminates(fileOut, splitString(rl.getName()));
+                            printTrainTerminates(fileOut, rl.getSplitName());
                         }
                     }
                     if (stops > 1) {
                         // Print visit number, etc. only if previous location wasn't the same
                         if (rlPrevious == null ||
-                                !splitString(rl.getName()).equals(splitString(rlPrevious.getName()))) {
+                                !rl.getSplitName().equals(rlPrevious.getSplitName())) {
                             // After the first time a train stops at a location provide:
                             // if the train has started its route
                             // the arrival time or relative time if the train has started its route
@@ -162,9 +162,9 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                             } else {
                                 printExpectedTimeArrival(fileOut, expectedArrivalTime);
                             }
-                            printTrainArrives(fileOut, splitString(rl.getName()), rl.getTrainDirectionString());
+                            printTrainArrives(fileOut, rl.getSplitName(), rl.getTrainDirectionString());
                             if (rl == train.getTrainTerminatesRouteLocation()) {
-                                printTrainTerminates(fileOut, splitString(rl.getName()));
+                                printTrainTerminates(fileOut, rl.getSplitName());
                             }
                         } else {
                             stops--; // don't bump stop count, same location
@@ -259,7 +259,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                 List<Car> carList = new ArrayList<>();
                 for (Car rs : rsByLocation) {
                     if (rs.getLocation() != null &&
-                            splitString(rs.getLocation().getName()).equals(splitString(location.getName())) &&
+                            rs.getLocation().getSplitName().equals(location.getSplitName()) &&
                             rs.getRouteLocation() == null) {
                         carList.add(rs);
                     }

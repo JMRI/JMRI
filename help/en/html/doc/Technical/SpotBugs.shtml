@@ -222,7 +222,14 @@ it.
 
           <pre style="font-family: monospace;">
     ant spotbugs
-    </pre>which will create a <code>spotbugs.html</code> file that you can open in a browser.
+    </pre>
+
+        or for the test code
+    <pre style="font-family: monospace;">
+    ant tests-spotbugs
+    </pre>
+
+    which will create a <code>spotbugs.html</code> or <code>tests-spotbugs.html</code> file in the JMRI base directory that you can open in a browser.
         </li>
       </ul>
       The <code>ant spotbugs-ci</code> target is similar, except it creates the output as a
@@ -306,7 +313,9 @@ it.
 
       <h4>Status and Counts</h4>
 
-      <p>We've been making slow but continuous progress on removing these:</p>
+      <p>We've been making slow but continuous progress on removing these, although new Bug patterns are constantly being added to Spotbugs:</p>
+      
+      <h4>Main JMRI Codebase</h4>
 
       <table border="1">
         <tr>
@@ -314,40 +323,39 @@ it.
           <th>JMRI 2.5.4</th>
           <th>JMRI 4.13.3</th>
           <th>JMRI 4.17.3</th>
+          <th>JMRI 5.5.3</th>
         </tr>
 
         <tr>
           <td>Bad practice Warnings</td>
           <td>164</td>
           <td>13</td>
-          <td>
-          </td>
+          <td>0</td>
+          <td>0</td>
         </tr>
 
         <tr>
           <td>Correctness Warnings</td>
           <td>77</td>
-          <td>
-          </td>
-          <td>
-          </td>
+          <td></td>
+          <td>25</td>
+          <td>25</td>
         </tr>
 
         <tr>
           <td>Experimental Warnings</td>
           <td>7</td>
-          <td>
-          </td>
-          <td>
-          </td>
+          <td></td>
+          <td></td>
+          <td></td>
         </tr>
 
         <tr>
           <td>Malicious code vulnerability Warnings</td>
           <td>221</td>
           <td>(disabled)</td>
-          <td>
-          </td>
+          <td></td>
+          <td></td>
         </tr>
 
         <tr>
@@ -355,6 +363,7 @@ it.
           <td>90</td>
           <td>175</td>
           <td>165</td>
+          <td>198</td>
         </tr>
 
         <tr>
@@ -362,6 +371,7 @@ it.
           <td>459</td>
           <td>15</td>
           <td>1</td>
+          <td>0</td>
         </tr>
 
         <tr>
@@ -369,6 +379,7 @@ it.
           <td>304</td>
           <td>406</td>
           <td>127</td>
+          <td>295</td>
         </tr>
 
         <tr>
@@ -376,34 +387,86 @@ it.
           <th>1322</th>
           <th>636</th>
           <th>293</th>
+          <th>518</th>
         </tr>
 
         <tr>
           <th>Medium Priority</th>
-          <th>
-          </th>
+          <th></th>
           <th>199</th>
           <th>79</th>
+          <th>427</th>
         </tr>
 
         <tr>
           <th>Low Priority</th>
-          <th>
-          </th>
+          <th></th>
           <th>437</th>
           <th>214</th>
+          <th>128</th>
         </tr>
 
         <tr>
-          <th>@SuppressFBWarnings<br>
-          Lines</th>
-          <th>
-          </th>
-          <th>
-          </th>
+          <th>@SuppressFBWarnings<br> Lines</th>
+          <th></th>
+          <th></th>
           <th>868</th>
+          <th>873</th>
         </tr>
       </table>
+
+      <h4>JMRI Test Code</h4>
+
+        <table border="1">
+        <tr><th></th>
+        <th>JMRI 5.1.1<br>SB 4.7.0</th>
+        <th>JMRI 5.5.3<br>SB 4.7.3</th>
+        </tr>
+
+        <tr><td>High Priority Total</td>
+        <td>251</td>
+        <td>4</td>
+        </tr>
+
+        <tr><td>Medium Priority Total</td>
+        <td>4692</td>
+        <td>328</td>
+        </tr>
+
+        <tr><td>Low Priority Total</td>
+        <td>988</td>
+        <td>371</td>
+        </tr>
+
+        <tr><td><strong>Total Warnings</strong></td>
+        <td><strong>5931</strong></td>
+        <td><strong>703</strong></td>
+        </tr>
+
+        <tr><td></td><td></td><td></td></tr>
+
+        <tr><td>High Priority Density</td>
+        <td>0.95</td>
+        <td>0.01</td>
+        </tr>
+
+        <tr><td>Medium Priority Density</td>
+        <td>17.77</td>
+        <td>1.19</td>
+        </tr>
+
+        <tr><td>Low Priority Density</td>
+        <td>3.74</td>
+        <td>1.35</td>
+        </tr>
+
+        <tr><td><strong>Total Density</strong></td>
+        <td><strong>22.46</strong></td>
+        <td><strong>2.55</strong></td>
+        </tr>
+        </table>
+
+        <p>Density - Defects per Thousand lines of non-commenting source statements.</p>
 
       <p>A lot of work has gone into JMRI cycle to bring the bug count down. The <a href=
       "ContinuousIntegration.shtml">Continuous Integration server</a> runs SpotBugs twice a day,

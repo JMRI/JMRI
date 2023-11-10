@@ -2,18 +2,15 @@ package jmri.jmrit.operations.locations.divisions;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 
 import javax.swing.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user edit of a division
@@ -137,10 +134,10 @@ public class DivisionEditFrame extends OperationsFrame implements java.beans.Pro
             if (division == null) {
                 return;
             }
-            if (JOptionPane.showConfirmDialog(this,
-                    MessageFormat.format(Bundle.getMessage("DoYouWantToDeleteDivision"),
-                            new Object[] { divisionNameTextField.getText() }),
-                    Bundle.getMessage("DeleteDivision"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+            if (JmriJOptionPane.showConfirmDialog(this,
+                    Bundle.getMessage("DoYouWantToDeleteDivision",
+                            divisionNameTextField.getText()),
+                    Bundle.getMessage("DeleteDivision"), JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                 return;
             }
             divisionManager.deregister(division);
@@ -186,20 +183,17 @@ public class DivisionEditFrame extends OperationsFrame implements java.beans.Pro
             return false;
         }
         if (divisionNameTextField.getText().length() > MAX_NAME_LENGTH) {
-            JOptionPane.showMessageDialog(this,
-                    MessageFormat.format(Bundle.getMessage("DivisionNameLengthMax"),
-                            new Object[] { Integer.toString(MAX_NAME_LENGTH + 1) }),
-                    MessageFormat.format(Bundle.getMessage("CanNotDivision"), new Object[] { s }),
-                    JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("DivisionNameLengthMax", Integer.toString(MAX_NAME_LENGTH + 1)),
+                    Bundle.getMessage("CanNotDivision", s), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
     }
 
     private void reportDivisionExists(String s) {
-        JOptionPane.showMessageDialog(this, Bundle.getMessage("ReportDivisionExists"),
-                MessageFormat.format(Bundle.getMessage("CanNotDivision"), new Object[] { s }),
-                JOptionPane.ERROR_MESSAGE);
+        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ReportDivisionExists"),
+                Bundle.getMessage("CanNotDivision", s), JmriJOptionPane.ERROR_MESSAGE);
     }
 
     private void enableButtons(boolean enabled) {
@@ -215,5 +209,5 @@ public class DivisionEditFrame extends OperationsFrame implements java.beans.Pro
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DivisionEditFrame.class.getName());
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DivisionEditFrame.class.getName());
 }

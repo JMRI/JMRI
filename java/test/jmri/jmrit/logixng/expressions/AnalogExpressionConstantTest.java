@@ -17,7 +17,6 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -259,6 +258,7 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
 //        JUnitAppender.clearBacklog();
         _base.dispose();
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -222,8 +222,8 @@ public class FileUtilTest {
 
     @Test
     public void testCopyFile() throws FileNotFoundException {
-        File src = FileUtil.getFile(FileUtil.getAbsoluteFilename("program:default.lcf"));
-        File dest = new File(FileUtil.getAbsoluteFilename("program:fileUtilTest.lcf"));
+        File src = FileUtil.getFile(FileUtil.getAbsoluteFilename("program:default_lcf.xml"));
+        File dest = new File(FileUtil.getAbsoluteFilename("program:fileUtilTest_lcf.xml"));
         ArrayList<String> sl = new ArrayList<>();
         ArrayList<String> dl = new ArrayList<>();
         try {
@@ -264,7 +264,7 @@ public class FileUtilTest {
     @Test
     public void testDeleteFile() throws IOException {
         File file = File.createTempFile("FileUtilTest", null);
-        FileUtil.copy(FileUtil.getFile(FileUtil.getAbsoluteFilename("program:default.lcf")), file);
+        FileUtil.copy(FileUtil.getFile(FileUtil.getAbsoluteFilename("program:default_lcf.xml")), file);
         FileUtil.delete(file);
         Assert.assertFalse(file.exists());
     }

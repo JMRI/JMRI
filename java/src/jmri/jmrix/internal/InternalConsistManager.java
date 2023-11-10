@@ -55,6 +55,7 @@ public class InternalConsistManager extends AbstractConsistManager {
         }
         if (consist != null) {
            consistTable.put(address, consist);
+           notifyConsistListChanged();
         }
         return (consist); 
     }

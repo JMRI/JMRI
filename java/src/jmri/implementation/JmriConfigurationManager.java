@@ -14,19 +14,15 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.Action;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
 import javax.swing.TransferHandler;
 import javax.swing.event.ListSelectionEvent;
 
 import jmri.util.prefs.JmriPreferencesActionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.Application;
 import jmri.ConfigureManager;
@@ -43,6 +39,7 @@ import jmri.util.SystemType;
 import jmri.util.com.sun.TransferActionListener;
 import jmri.util.prefs.HasConnectionButUnableToConnectException;
 import jmri.util.prefs.InitializationException;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  *
@@ -50,7 +47,6 @@ import jmri.util.prefs.InitializationException;
  */
 public class JmriConfigurationManager implements ConfigureManager {
 
-    private final static Logger log = LoggerFactory.getLogger(JmriConfigurationManager.class);
     private final ConfigXmlManager legacy = new ConfigXmlManager();
     private final HashMap<PreferencesManager, InitializationException> initializationExceptions = new HashMap<>();
     /*
@@ -271,7 +267,7 @@ public class JmriConfigurationManager implements ConfigureManager {
     }
 
     protected void displayErrorListDialog(Object list) {
-        JOptionPane.showMessageDialog(null,
+        JmriJOptionPane.showMessageDialog(null,
                 new Object[]{
                     (list instanceof JList) ? Bundle.getMessage("InitExMessageListHeader") : null,
                     list,
@@ -280,7 +276,7 @@ public class JmriConfigurationManager implements ConfigureManager {
                     Bundle.getMessage("InitExMessagePrefs"), // NOI18N
                 },
                 Bundle.getMessage("InitExMessageTitle", Application.getApplicationName()), // NOI18N
-                JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.ERROR_MESSAGE);
             InstanceManager.getDefault(JmriPreferencesActionFactory.class)
                     .getDefaultAction().actionPerformed(new ActionEvent(this,ActionEvent.ACTION_PERFORMED,""));
     }
@@ -311,24 +307,21 @@ public class JmriConfigurationManager implements ConfigureManager {
             ((JList<?>) list).addListSelectionListener((ListSelectionEvent e) -> copyMenuItem.setEnabled(((JList<?>)e.getSource()).getSelectedIndex() != -1));
         }
 
-        JOptionPane pane = getjOptionPane(list, options);
+        handleRestartSelection(getjOptionPane(list, options));
 
-        JDialog dialog = pane.createDialog(null, Bundle.getMessage("InitExMessageTitle", Application.getApplicationName())); // NOI18N
-        dialog.setVisible(true);
-        Object selectedValue = pane.getValue();
-
-        handleRestartSelection(selectedValue);
     }
 
-    private void handleRestartSelection(Object selectedValue) {
-        if (Bundle.getMessage("ErrorDialogButtonQuitProgram", Application.getApplicationName()).equals(selectedValue)) {
+    // see order of generateErrorDialogButtonOptions()
+    // -1 - dialog closed, 0 - quit, 1 - continue, 2 - editconns
+    private void handleRestartSelection(int selectedValue) {
+        if (selectedValue == 0) {
             // Exit program
             handleQuit();
 
-        } else if (Bundle.getMessage("ErrorDialogButtonContinue").equals(selectedValue)) {
+        } else if (selectedValue == 1 || selectedValue == -1 ) {
             // Do nothing. Let the program continue
 
-        } else if (Bundle.getMessage("ErrorDialogButtonEditConnections").equals(selectedValue)) {
+        } else if (selectedValue == 2) {
            if (isEditDialogRestart()) {
                handleRestart();
            } else {
@@ -356,20 +349,21 @@ public class JmriConfigurationManager implements ConfigureManager {
     }
 
 
-    private JOptionPane getjOptionPane(Object list, Object[] options) {
-        return new JOptionPane(
-                    new Object[] {
-                        (list instanceof JList) ? Bundle.getMessage("InitExMessageListHeader") : null,
-                        list,
-                        "<html><br></html>", // Add a visual break between list of errors and notes // NOI18N
-                        Bundle.getMessage("InitExMessageLogs"), // NOI18N
-                        Bundle.getMessage("ErrorDialogConnectLayout"), // NOI18N
-                    },
-                    JOptionPane.ERROR_MESSAGE,
-                    JOptionPane.DEFAULT_OPTION,
-                    null,
-                    options
-            );
+    private int getjOptionPane(Object list, Object[] options) {
+        return JmriJOptionPane.showOptionDialog(
+            null, 
+            new Object[] {
+                (list instanceof JList) ? Bundle.getMessage("InitExMessageListHeader") : null,
+                list,
+                "<html><br></html>", // Add a visual break between list of errors and notes
+                Bundle.getMessage("InitExMessageLogs"),
+                Bundle.getMessage("ErrorDialogConnectLayout")}, 
+            Bundle.getMessage("InitExMessageTitle", Application.getApplicationName()), 
+            JmriJOptionPane.DEFAULT_OPTION, 
+            JmriJOptionPane.ERROR_MESSAGE, 
+            null, 
+            options, 
+            null);
     }
 
     private JMenuItem buildCopyAllMenuItem(JList<?> list) {
@@ -478,5 +472,7 @@ public class JmriConfigurationManager implements ConfigureManager {
     public XmlFile.Validate getValidate() {
         return legacy.getValidate();
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriConfigurationManager.class);
 
 }

@@ -7,7 +7,6 @@ import java.util.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
-import javax.swing.JOptionPane;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
@@ -16,6 +15,7 @@ import jmri.jmrit.logixng.Module;
 import jmri.managers.AbstractManager;
 import jmri.util.LoggingUtil;
 import jmri.util.ThreadingUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
@@ -32,6 +32,8 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     private final Map<String, Manager<? extends MaleSocket>> _managers = new HashMap<>();
     private final Clipboard _clipboard = new DefaultClipboard();
     private boolean _isActive = false;
+    private boolean _startLogixNGsOnLoad = true;
+    private boolean _loadDisabled = false;
     private final List<Runnable> _setupTasks = new ArrayList<>();
 
 
@@ -157,6 +159,24 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
 
     /** {@inheritDoc} */
     @Override
+    public void setLoadDisabled(boolean value) {
+        _loadDisabled = value;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void startLogixNGsOnLoad(boolean value) {
+        _startLogixNGsOnLoad = value;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isStartLogixNGsOnLoad() {
+        return _startLogixNGsOnLoad;
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public void setupAllLogixNGs() {
         List<String> errors = new ArrayList<>();
         boolean result = true;
@@ -196,10 +216,10 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                 sb.append(Bundle.getMessage(helpKey));
             }
             sb.append("/<html>");
-            JOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(null,
                     sb.toString(),
                     Bundle.getMessage(titleKey),
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -266,6 +286,13 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
 
         _isActive = true;
 
+        if (_loadDisabled) {
+            for (LogixNG logixNG : _tsys.values()) {
+                logixNG.setEnabled(false);
+            }
+            _loadDisabled = false;
+        }
+
         // This may take a long time so it must not be done on the GUI thread.
         // Therefore we create a new thread for this task.
         Runnable runnable = () -> {
@@ -316,6 +343,11 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     logixNG.unregisterListeners();
                 }
             });
+
+            // Clear the startup flag of the LogixNGs.
+            _tsys.values().stream().forEach((logixNG) -> {
+                logixNG.clearStartup();
+            });
         };
 
         if (runOnSeparateThread) new Thread(runnable).start();
@@ -343,12 +375,6 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         // delete the LogixNG
         deregister(x);
         x.dispose();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void setLoadDisabled(boolean s) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     /** {@inheritDoc} */

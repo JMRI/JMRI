@@ -46,7 +46,9 @@
                   <li>
                     <a href="#LocoNetAddressing">LocoNet Device Addressing</a>
                   </li>
-
+                  <li>
+                    <a href="#SE74link">Using the SE74 with JMRI</a>
+                  </li>
                   <li>
                     <a href="#LocoNetTools">LocoNet Tools</a>
                   </li>
@@ -494,6 +496,9 @@
       outputs on a DS54, or the individual block detection inputs on a BDL16x. For more information
       on how to find those addresses, see <a href="Addressing.shtml">this page</a>.</p>
 
+      <h3 id="SE74link">Using the SE74 with JMRI</h3>
+      <p>Several aspects of using the SE74 with JMRI are described <a href="SE74.shtml">here</a>. 
+                                                                      
       <h3 id="LocoNetTools">LocoNet Tools</h3>
 
       <p>JMRI provides a variety of LocoNet-related tools. These primarily allow configuration of
@@ -1045,11 +1050,6 @@
                 <li>
                   <a href="LbServer.shtml">Connecting Multiple Computers to LocoNet&reg; via
                   LBServer</a>
-                </li>
-
-                <li>
-                  <a href="LocoNetServer.shtml">Connecting Multiple Computers to LocoNet via
-                  LocoNet&reg; Server</a>
                 </li>
               </ul>
             </li>

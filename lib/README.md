@@ -119,21 +119,32 @@ which checks the dates of the control files to make sure they've been updated wh
 - version 2.03
 - from <http://java.sun.com/javase/technologies/desktop/javahelp/>
 
-##### log4j.jar
-- version 1.2.17
+##### log4j-api-2.20.0.jar, log4j-core-2.20.0.jar
+- version 2.20.0
+- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api/2.20.0
+- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core/2.20.0
 
-##### slf4j-api-1.7.25.jar, slf4j-log4j12-1.7.25.jar, jul-to-slf4j-1.7.25.jar
-- slf4j logging interface to log4j
-- from http://www.slf4j.org
+##### log4j-slf4j2-impl.jar
+- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j2-impl/2.20.0
+- slf4j bridge to log4j2
+
+##### slf4j-api-2.0.7.jar
+- slf4j API
+- from https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+
+##### jul-to-slf4j-2.0.7.jar
+- java.util.logging to slf4j
+- from https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j/2.0.7
 
 ##### openlcb.jar
- - 0.7.31 from https://github.com/openlcb/OpenLCB_Java
+ - 0.7.32 from https://github.com/openlcb/OpenLCB_Java
+ - Through PR#239 included as of 2023-10-29
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
 
 ##### purejavacomm-1.0.5.jar
-- version 1.0.5
+- version 1.0.5 plus custom change to the Mac M1 support (only)
 - from https://search.maven.org/artifact/org.opensmarthouse/purejavacomm/1.0.5/jar
 - formerly from http://www.sparetimelabs.com/maven2/com/sparetimelabs/purejavacomm/1.0.1/
 - javadoc still at https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE
@@ -145,7 +156,7 @@ which checks the dates of the control files to make sure they've been updated wh
 - version 2.0.6
 - from <jdom.org>
 
-##### jackson-annotations-2.13.4.jar, jackson-core-2.13.4.jar, jackson-databind-2.13.4.1.jar
+##### jackson-annotations-2.13.4.jar, jackson-core-2.13.4.jar, jackson-databind-2.13.4.2.jar
 - JSON processing library com.fasterxml.jackson
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
 
@@ -191,13 +202,13 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### jinput (including jinput.jar, three jinput DLLs, and two libjinputs)
 - from <https://jinput.dev.java.net/> jinput_dist_20090401
 - (most recent as of 2010-Jan-02)
+- libjinput-osx.jnilib is a custom version lipo'd from the x86 version above and a custom arm64 build from https://shadowfacts.net/2022/lwjgl-arm64/ and https://github.com/shadowfacts/jinput-arm64
 
 ##### JavaMail 1.4.1 (used to validate email address formats)
 - mailapi.jar
 
 ##### Joal 2.4.0-rc-20210111
-- from <https://jogamp.org/deployment/archive/rc/v2.4.0-rc-20210111/jar/>
-- -javadoc at https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/
+- -javadoc at https://jogamp.org/deployment/archive/rc/v2.5.0-rc-20230507/jar/
 - cross-platform .jar files
     joal.jar
     gluegen-rt.jar
@@ -209,6 +220,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
       libopenal.dylib
     extracted from gluegen-rt-natives-macosx-universal.jar
       libgluegen_rt.dylib
+
+Windows and Linux libraries from <https://jogamp.org/deployment/archive/rc/v2.4.0-rc-20210111/jar/>
 
 - for Windows x86
     extracted from joal-natives-windows-i586.jar
@@ -263,14 +276,14 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Version 3.5.5 (2018-12-04)
 - from https://github.com/jmdns/jmdns/releases
 
-##### jna-5.9.0.jar
+##### jna-5.13.0.jar
 - Java Native Access library
-- from https://mvnrepository.com/artifact/net.java.dev.jna/jna/5.9.0
+- from https://mvnrepository.com/artifact/net.java.dev.jna/jna/5.13.0
 - See also https://github.com/java-native-access/jna
 
-##### jna-platform-5.9.0.jar
+##### jna-platform-5.13.0.jar
 - Java Native Access platform-specific utilities library
-- from https://mvnrepository.com/artifact/net.java.dev.jna/jna-platform/5.9.0
+- from https://mvnrepository.com/artifact/net.java.dev.jna/jna-platform/5.13.0
 
 
 ##### pi4j-core-1.2.jar, pi4j-device-1.2.jar, pi4j-gpio-extension-1.2.jar
@@ -447,8 +460,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 
 ##### PlantUML
 - plantuml.jar
-    was from plantuml.org, now from https://github.com/plantuml/plantuml.git
-    pulled July 14, 2022 post PR-1057
+    from plantuml.org
+    1.2023.1
 - umldoclet.jar
     downloaded as umldoclet-2.0.10-javadoc.jar
     from https://github.com/talsma-ict/umldoclet/releases

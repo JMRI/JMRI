@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -28,7 +29,6 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
@@ -46,15 +46,15 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
 import jmri.jmrit.roster.Roster;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
 import jmri.util.prefs.InitializationException;
+import jmri.util.swing.JmriJOptionPane;
 
 import org.jdom2.JDOMException;
 import org.openide.util.lookup.ServiceProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A JPanel suitable for managing {@link jmri.profile.Profile}s within a
@@ -64,8 +64,6 @@ import org.slf4j.LoggerFactory;
  */
 @ServiceProvider(service = PreferencesPanel.class)
 public final class ProfilePreferencesPanel extends JPanel implements PreferencesPanel {
-
-    private static final Logger log = LoggerFactory.getLogger(ProfilePreferencesPanel.class);
 
     /**
      * Creates new form ProfilePreferencesPanel
@@ -136,11 +134,14 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 }};
 
                 profilesPopupMenu.addPopupMenuListener(new PopupMenuListener() {
+                    @Override
                     public void popupMenuWillBecomeVisible(PopupMenuEvent evt) {
                         profilesPopupMenuPopupMenuWillBecomeVisible(evt);
                     }
+                    @Override
                     public void popupMenuWillBecomeInvisible(PopupMenuEvent evt) {
                     }
+                    @Override
                     public void popupMenuCanceled(PopupMenuEvent evt) {
                     }
                 });
@@ -148,6 +149,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 ResourceBundle bundle = ResourceBundle.getBundle("jmri/profile/Bundle"); // NOI18N
                 renameMI.setText(bundle.getString("ProfilePreferencesPanel.renameMI.text")); // NOI18N
                 renameMI.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
                         renameMIActionPerformed(evt);
                     }
@@ -175,6 +177,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 btnOpenExistingProfile.setText(bundle.getString("ProfilePreferencesPanel.btnOpenExistingProfile.text")); // NOI18N
                 btnOpenExistingProfile.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnOpenExistingProfile.toolTipText")); // NOI18N
                 btnOpenExistingProfile.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
                         btnOpenExistingProfileActionPerformed(evt);
                     }
@@ -183,6 +186,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 btnDeleteProfile.setText(bundle.getString("ProfilePreferencesPanel.btnDeleteProfile.text")); // NOI18N
                 btnDeleteProfile.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnDeleteProfile.toolTipText")); // NOI18N
                 btnDeleteProfile.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
                         btnDeleteProfileActionPerformed(evt);
                     }
@@ -191,6 +195,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 btnCreateNewProfile.setText(bundle.getString("ProfilePreferencesPanel.btnCreateNewProfile.text")); // NOI18N
                 btnCreateNewProfile.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnCreateNewProfile.toolTipText")); // NOI18N
                 btnCreateNewProfile.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
                         btnCreateNewProfileActionPerformed(evt);
                     }
@@ -199,6 +204,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 btnActivateProfile.setText(bundle.getString("ProfilePreferencesPanel.btnActivateProfile.text")); // NOI18N
                 btnActivateProfile.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnActivateProfile.toolTipText")); // NOI18N
                 btnActivateProfile.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
                         btnActivateProfileActionPerformed(evt);
                     }
@@ -207,6 +213,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 btnExportProfile.setText(bundle.getString("ProfilePreferencesPanel.btnExportProfile.text")); // NOI18N
                 btnExportProfile.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnExportProfile.toolTipText")); // NOI18N
                 btnExportProfile.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
                         btnExportProfileActionPerformed(evt);
                     }
@@ -214,6 +221,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
 
                 btnCopyProfile.setText(bundle.getString("ProfilePreferencesPanel.btnCopyProfile.text")); // NOI18N
                 btnCopyProfile.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
                         btnCopyProfileActionPerformed(evt);
                     }
@@ -221,6 +229,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
 
                 spinnerTimeout.setModel(new SpinnerNumberModel(10, 0, 500, 1));
                 spinnerTimeout.addChangeListener(new ChangeListener() {
+                    @Override
                     public void stateChanged(ChangeEvent evt) {
                         spinnerTimeoutStateChanged(evt);
                     }
@@ -231,6 +240,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 grpStartWithSelectors.add(rdoStartWithActiveProfile);
                 rdoStartWithActiveProfile.setText(bundle.getString("ProfilePreferencesPanel.rdoStartWithActiveProfile.text")); // NOI18N
                 rdoStartWithActiveProfile.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
                         rdoStartWithActiveProfileActionPerformed(evt);
                     }
@@ -239,6 +249,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 grpStartWithSelectors.add(rdoStartWithProfileSelector);
                 rdoStartWithProfileSelector.setText(bundle.getString("ProfilePreferencesPanel.rdoStartWithProfileSelector.text")); // NOI18N
                 rdoStartWithProfileSelector.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
                         rdoStartWithProfileSelectorActionPerformed(evt);
                     }
@@ -301,6 +312,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 btnRemoveSearchPath.setText(bundle.getString("ProfilePreferencesPanel.btnRemoveSearchPath.text")); // NOI18N
                 btnRemoveSearchPath.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnRemoveSearchPath.toolTipText")); // NOI18N
                 btnRemoveSearchPath.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
                         btnRemoveSearchPathActionPerformed(evt);
                     }
@@ -309,6 +321,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 btnAddSearchPath.setText(bundle.getString("ProfilePreferencesPanel.btnAddSearchPath.text")); // NOI18N
                 btnAddSearchPath.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnAddSearchPath.toolTipText")); // NOI18N
                 btnAddSearchPath.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
                         btnAddSearchPathActionPerformed(evt);
                     }
@@ -368,7 +381,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
     }//GEN-LAST:event_profilesPopupMenuPopupMenuWillBecomeVisible
 
     private void btnAddSearchPathActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnAddSearchPathActionPerformed
-        JFileChooser chooser = new JFileChooser(FileUtil.getHomePath());
+        JFileChooser chooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getHomePath());
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooser.setFileFilter(new ProfileFileFilter());
         chooser.setFileView(new ProfileFileView());
@@ -380,12 +393,12 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 this.searchPathsTbl.setRowSelectionInterval(index, index);
             } catch (IOException ex) {
                 log.warn("Unable to write profiles while adding search path {}", chooser.getSelectedFile().getPath(), ex);
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ProfilePreferencesPanel.btnAddSearchPath.errorMessage",
                                 chooser.getSelectedFile().getPath(),
                                 ex.getLocalizedMessage()),
                         Bundle.getMessage("ProfilePreferencesPanel.btnAddSearchPath.errorTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnAddSearchPathActionPerformed
@@ -400,10 +413,10 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 ProfileManager.getDefault().removeSearchPath(path);
             } catch (IOException ex) {
                 log.warn("Unable to write profiles while removing search path {}", path.getPath(), ex);
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ProfilePreferencesPanel.btnRemoveSearchPath.errorMessage", path.getPath(), ex.getLocalizedMessage()),
                         Bundle.getMessage("ProfilePreferencesPanel.btnRemoveSearchPath.errorTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnRemoveSearchPathActionPerformed
@@ -414,7 +427,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
             // abort if selection does not match an existing profile
             return;
         }
-        JFileChooser chooser = new JFileChooser();
+        JFileChooser chooser = new jmri.util.swing.JmriJFileChooser();
         chooser.setFileFilter(new FileNameExtensionFilter("ZIP Archives", "zip"));
         chooser.setFileView(new ProfileFileView());
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -422,21 +435,21 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
         if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             try {
                 if (chooser.getSelectedFile().exists()) {
-                    int result = JOptionPane.showConfirmDialog(this,
+                    int result = JmriJOptionPane.showConfirmDialog(this,
                             Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.overwriteMessage",
                                     chooser.getSelectedFile().getName(),
                                     chooser.getSelectedFile().getParentFile().getName()),
                             Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.overwriteTitle"),
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.WARNING_MESSAGE);
-                    if (result == JOptionPane.YES_OPTION) {
+                            JmriJOptionPane.YES_NO_OPTION,
+                            JmriJOptionPane.WARNING_MESSAGE);
+                    if (result == JmriJOptionPane.YES_OPTION) {
                         if (!chooser.getSelectedFile().delete()) {
-                            JOptionPane.showMessageDialog(this,
+                            JmriJOptionPane.showMessageDialog(this,
                                     Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.failureToDeleteMessage",
                                             chooser.getSelectedFile().getName(),
                                             chooser.getSelectedFile().getParentFile().getName()),
                                     Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.failureToDeleteTitle"),
-                                    JOptionPane.ERROR_MESSAGE);
+                                    JmriJOptionPane.ERROR_MESSAGE);
                         }
                     } else {
                         this.btnExportProfileActionPerformed(evt);
@@ -446,23 +459,23 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 boolean exportExternalUserFiles = false;
                 boolean exportExternalRoster = false;
                 if (!(new File(FileUtil.getUserFilesPath())).getCanonicalPath().startsWith(p.getPath().getCanonicalPath())) {
-                    int result = JOptionPane.showConfirmDialog(this,
+                    int result = JmriJOptionPane.showConfirmDialog(this,
                             Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.externalUserFilesMessage"),
                             Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.externalUserFilesTitle"),
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE);
-                    if (result == JOptionPane.YES_OPTION) {
+                            JmriJOptionPane.YES_NO_OPTION,
+                            JmriJOptionPane.QUESTION_MESSAGE);
+                    if (result == JmriJOptionPane.YES_OPTION) {
                         exportExternalUserFiles = true;
                     }
                 }
                 if (!(new File(Roster.getDefault().getRosterLocation())).getCanonicalPath().startsWith(p.getPath().getCanonicalPath())
                         && !Roster.getDefault().getRosterLocation().startsWith(FileUtil.getUserFilesPath())) {
-                    int result = JOptionPane.showConfirmDialog(this,
+                    int result = JmriJOptionPane.showConfirmDialog(this,
                             Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.externalRosterMessage"),
                             Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.externalRosterTitle"),
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE);
-                    if (result == JOptionPane.YES_OPTION) {
+                            JmriJOptionPane.YES_NO_OPTION,
+                            JmriJOptionPane.QUESTION_MESSAGE);
+                    if (result == JmriJOptionPane.YES_OPTION) {
                         exportExternalRoster = true;
                     }
                 }
@@ -471,20 +484,20 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 //}
                 ProfileManager.getDefault().export(p, chooser.getSelectedFile(), exportExternalUserFiles, exportExternalRoster);
                 log.info("Profile \"{}\" exported to \"{}\"", p.getName(), chooser.getSelectedFile().getName());
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.successMessage",
                                 p.getName(), chooser.getSelectedFile().getName()),
                         Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.successTitle"),
-                        JOptionPane.INFORMATION_MESSAGE);
+                        JmriJOptionPane.INFORMATION_MESSAGE);
             } catch (IOException | JDOMException | InitializationException ex) {
                 log.warn("Unable to export profile \"{}\" to {}", p.getName(), chooser.getSelectedFile().getPath(), ex);
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.errorMessage",
                                 p.getName(),
                                 chooser.getSelectedFile().getPath(),
                                 ex.getLocalizedMessage()),
                         Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.errorTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnExportProfileActionPerformed
@@ -496,7 +509,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
             ProfileManager.getDefault().saveActiveProfile(p, ProfileManager.getDefault().isAutoStartActiveProfile());
         } catch (IOException ex) {
             log.error("Unable to save profile preferences", ex);
-            JOptionPane.showMessageDialog(this, "Usable to save profile preferences.\n" + ex.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, "Usable to save profile preferences.\n" + ex.getLocalizedMessage(), "Error", JmriJOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnActivateProfileActionPerformed
 
@@ -512,27 +525,27 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
             profiles.add(ProfileManager.getDefault().getAllProfiles().get(row));
         }
         for (Profile deletedProfile : profiles) {
-            int result = JOptionPane.showOptionDialog(this,
+            int result = JmriJOptionPane.showOptionDialog(this,
                     Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.dlgMessage", deletedProfile.getName()), // NOI18N
                     Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.dlgTitle", deletedProfile.getName()), // NOI18N
-                    JOptionPane.OK_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
+                    JmriJOptionPane.OK_CANCEL_OPTION,
+                    JmriJOptionPane.QUESTION_MESSAGE,
                     null, // use default icon
                     new String[]{
                         Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.text"), // NOI18N
                         Bundle.getMessage("AddProfileDialog.btnCancel.text") // NOI18N
                     },
-                    JOptionPane.CANCEL_OPTION
+                    JmriJOptionPane.CANCEL_OPTION
             );
-            if (result == JOptionPane.OK_OPTION) {
+            if (result == JmriJOptionPane.OK_OPTION) {
                 this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                 if (!FileUtil.delete(deletedProfile.getPath())) {
                     log.warn("Unable to delete profile directory {}", deletedProfile.getPath());
                     this.setCursor(Cursor.getDefaultCursor());
-                    JOptionPane.showMessageDialog(this,
+                    JmriJOptionPane.showMessageDialog(this,
                             Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.errorMessage", deletedProfile.getPath()),
                             Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.errorMessage"),
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                     this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                 }
                 ProfileManager.getDefault().removeProfile(deletedProfile);
@@ -544,7 +557,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
     }//GEN-LAST:event_btnDeleteProfileActionPerformed
 
     private void btnOpenExistingProfileActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnOpenExistingProfileActionPerformed
-        JFileChooser chooser = new JFileChooser(FileUtil.getHomePath());
+        JFileChooser chooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getHomePath());
         chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         chooser.setFileFilter(new ProfileFileFilter());
         chooser.setFileView(new ProfileFileView());
@@ -557,10 +570,10 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 profilesTbl.setRowSelectionInterval(index, index);
             } catch (IOException ex) {
                 log.warn("{} is not a profile directory", chooser.getSelectedFile());
-                JOptionPane.showMessageDialog(this,
+                JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ProfilePreferencesPanel.btnOpenExistingProfile.errorMessage", chooser.getSelectedFile().getPath()),
                         Bundle.getMessage("ProfilePreferencesPanel.btnOpenExistingProfile.errorMessage"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnOpenExistingProfileActionPerformed
@@ -786,4 +799,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
             ProfilePreferencesPanel.this.profilesTblValueChanged(e);
         }
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProfilePreferencesPanel.class);
+
 }

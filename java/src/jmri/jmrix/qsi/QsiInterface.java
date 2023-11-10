@@ -8,9 +8,9 @@ package jmri.jmrix.qsi;
  */
 public interface QsiInterface {
 
-    public void addQsiListener(QsiListener l);
+    void addQsiListener(QsiListener l);
 
-    public void removeQsiListener(QsiListener l);
+    void removeQsiListener(QsiListener l);
 
     /**
      * Test operational status of interface.

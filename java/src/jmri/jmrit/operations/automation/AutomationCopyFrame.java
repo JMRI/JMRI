@@ -2,16 +2,13 @@ package jmri.jmrit.operations.automation;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 
 import javax.swing.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for making a new copy of a automation.
@@ -65,13 +62,12 @@ public class AutomationCopyFrame extends OperationsFrame {
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_CopyAutomation", true); // NOI18N
 
-        pack();
-        setMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight200));
-
         setTitle(Bundle.getMessage("TitleAutomationCopy"));
 
         // setup buttons
         addButtonAction(copyButton);
+        
+        initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight200));
     }
 
     @Override
@@ -104,13 +100,13 @@ public class AutomationCopyFrame extends OperationsFrame {
     }
 
     private void reportAutomationExists() {
-        JOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"), Bundle
-                .getMessage("CanNotCopyAutomation"), JOptionPane.ERROR_MESSAGE);
+        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"), Bundle
+                .getMessage("CanNotCopyAutomation"), JmriJOptionPane.ERROR_MESSAGE);
     }
 
     private void reportAutomationDoesNotExist() {
-        JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectAutomation"), Bundle
-                .getMessage("CanNotCopyAutomation"), JOptionPane.ERROR_MESSAGE);
+        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("SelectAutomation"), Bundle
+                .getMessage("CanNotCopyAutomation"), JmriJOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -119,14 +115,14 @@ public class AutomationCopyFrame extends OperationsFrame {
      */
     private boolean checkName() {
         if (automationNameTextField.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("EnterAutomationName"), Bundle
-                    .getMessage("CanNotCopyAutomation"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("EnterAutomationName"), Bundle
+                    .getMessage("CanNotCopyAutomation"), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (automationNameTextField.getText().length() > Control.max_len_string_automation_name) {
-            JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("AutomationNameLengthMax"),
-                    new Object[]{Control.max_len_string_automation_name}), Bundle
-                            .getMessage("CanNotCopyAutomation"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("AutomationNameLengthMax", Control.max_len_string_automation_name),
+                    Bundle.getMessage("CanNotCopyAutomation"), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -137,5 +133,6 @@ public class AutomationCopyFrame extends OperationsFrame {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutomationCopyFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AutomationCopyFrame.class);
+
 }

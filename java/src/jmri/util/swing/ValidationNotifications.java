@@ -1,10 +1,6 @@
 package jmri.util.swing;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 
 /**
  * Utilities for displaying Validation Messages.
@@ -73,12 +69,12 @@ public class ValidationNotifications {
             errText = Bundle.getMessage("ErrorConvertNumberTooBig",data,limit);
         }
         if (!errText.isEmpty()) {
-            JOptionPane.showMessageDialog(comp, errMsg + "\n" + errText,
-                errMsg, JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(comp, errMsg + "\n" + errText,
+                errMsg, JmriJOptionPane.ERROR_MESSAGE);
             data = -1;
         }
         return data;
     }
 
-    // private static final Logger log = LoggerFactory.getLogger(ValidationNotifications.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ValidationNotifications.class);
 }

@@ -18,10 +18,11 @@ audio       = jmri.InstanceManager.getNullableDefault(java.type('jmri.AudioManag
 shutdown    = jmri.InstanceManager.getNullableDefault(java.type('jmri.ShutDownManager'))
 layoutblocks    = jmri.InstanceManager.getNullableDefault(java.type('jmri.jmrit.display.layoutEditor.LayoutBlockManager'))
 warrants    = jmri.InstanceManager.getNullableDefault(java.type('jmri.jmrit.logix.WarrantManager'))
+sections    = jmri.InstanceManager.getNullableDefault(java.type('jmri.SectionManager'))
+transits    = jmri.InstanceManager.getNullableDefault(java.type('jmri.TransitManager'))
+beans       = jmri.InstanceManager.getNullableDefault(java.type('jmri.NamedBeanHandleManager'))
 
 THROWN = jmri.Turnout.THROWN
-
-
 CLOSED  = jmri.Turnout.CLOSED
 THROWN  = jmri.Turnout.THROWN
 CABLOCKOUT = jmri.Turnout.CABLOCKOUT

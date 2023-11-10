@@ -55,15 +55,12 @@ import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
 import jmri.jmrit.display.palette.ColorDialog;
 import jmri.jmrit.display.palette.ItemPalette;
-//import jmri.jmrit.display.palette.DecoratorPanel.AJSpinner;
 import jmri.jmrit.logix.WarrantTableAction;
 import jmri.util.HelpUtil;
 import jmri.util.SystemType;
 import jmri.util.gui.GuiLafPreferencesManager;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides a simple editor for adding jmri.jmrit.display items to a captive
@@ -1025,8 +1022,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                             selects[i++] = pos.getNameString();
                         }
                     }
-                    Object select = JOptionPane.showInputDialog(this, Bundle.getMessage("multipleSelections"),
-                            Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE,
+                    Object select = JmriJOptionPane.showInputDialog(this, Bundle.getMessage("multipleSelections"),
+                            Bundle.getMessage("QuestionTitle"), JmriJOptionPane.QUESTION_MESSAGE,
                             null, selects, null);
                     if (select != null) {
                         iter = selections.iterator();
@@ -1572,8 +1569,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
      * Create popup for a Positionable object. Popup items common to all
      * positionable objects are done before and after the items that pertain
      * only to specific Positionable types.
+     *
+     * @param p     the item containing or requiring the context menu
+     * @param event the event triggering the menu
      */
-    @Override
     protected void showPopUp(Positionable p, JmriMouseEvent event) {
         if (!((JComponent) p).isVisible()) {
             return;     // component must be showing on the screen to determine its location
@@ -1592,7 +1591,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 }
                 setDisplayLevelMenu(p, popup);
                 setHiddenMenu(p, popup);
+                setEmptyHiddenMenu(p, popup);
                 setEditIdMenu(p, popup);
+                setEditClassesMenu(p, popup);
                 popup.addSeparator();
                 setLogixNGPositionableMenu(p, popup);
                 popup.addSeparator();
@@ -1925,5 +1926,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ControlPanelEditor.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ControlPanelEditor.class);
+
 }

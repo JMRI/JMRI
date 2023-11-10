@@ -2,9 +2,6 @@ package jmri.jmrit.beantable.routetable;
 
 import jmri.InstanceManager;
 import jmri.Route;
-import jmri.Sensor;
-import jmri.Turnout;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,6 +21,10 @@ import java.awt.event.ActionEvent;
 public class RouteEditFrame extends AbstractRouteAddEditFrame {
 
     private final String systemName;
+
+    public RouteEditFrame() {
+        this(Bundle.getMessage("TitleEditRoute"));
+    }
 
     public RouteEditFrame(String systemName) {
         this(Bundle.getMessage("TitleEditRoute"), systemName);

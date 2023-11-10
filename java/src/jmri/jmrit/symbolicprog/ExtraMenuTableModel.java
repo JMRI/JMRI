@@ -6,10 +6,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
@@ -72,7 +70,7 @@ public class ExtraMenuTableModel extends AbstractTableModel implements ActionLis
 
     protected void flagIfOpsMode(String mode) {
         log.trace(" flagIfOpsMode {}", mode);
-        if (mode.startsWith("OPS")) {
+        if (mode.contains("OPS")) {
             hasOpsModeFlag = true;
         }
     }
@@ -258,7 +256,7 @@ public class ExtraMenuTableModel extends AbstractTableModel implements ActionLis
                     }
                 }
 
-                if (mProgrammer.getMode().getStandardName().startsWith("OPS")) {
+                if (mProgrammer.getMode().getStandardName().contains("OPS")) {
                     if (!opsResetOk()) {
                         return;
                     }

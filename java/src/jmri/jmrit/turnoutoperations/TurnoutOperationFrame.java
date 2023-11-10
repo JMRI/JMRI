@@ -5,16 +5,16 @@ import java.awt.Container;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 
 import jmri.*;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * @author John Harper
@@ -27,6 +27,7 @@ public class TurnoutOperationFrame extends JDialog {
     String previousSelectionName = "";
     JTabbedPane tabPane;
     private JButton deleteButton;
+    private JButton renameOrCopyButton;
 
     public TurnoutOperationFrame(Frame parent) {
         super(parent, Bundle.getMessage("TurnoutOperationEditorTitle"));
@@ -44,6 +45,15 @@ public class TurnoutOperationFrame extends JDialog {
         outerBox.add(tabPane);
         Box bottomBox = Box.createHorizontalBox();
         bottomBox.add(Box.createHorizontalGlue());
+
+        renameOrCopyButton = new JButton("RenameOrCopy");
+        renameOrCopyButton.addActionListener(this::doRenameOrCopy);
+        bottomBox.add(renameOrCopyButton);
+
+        deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
+        deleteButton.addActionListener(this::doDelete);
+        bottomBox.add(deleteButton);
+
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener((ActionEvent a) -> {
             this.dispose();
@@ -53,9 +63,6 @@ public class TurnoutOperationFrame extends JDialog {
         okButton.addActionListener(this::doOK);
         bottomBox.add(okButton);
         outerBox.add(bottomBox);
-
-        deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
-        deleteButton.addActionListener(this::doDelete);
 
         populateTabs();
         InstanceManager.getDefault(TurnoutOperationManager.class).addPropertyChangeListener(pcl);
@@ -69,6 +76,7 @@ public class TurnoutOperationFrame extends JDialog {
     };
 
     private void doOK(ActionEvent e) {
+        log.debug("OK clicked {}", e);
         for(Component tab : tabPane.getComponents()) {
             ((TurnoutOperationConfig)tab).endConfigure();
         }
@@ -76,17 +84,44 @@ public class TurnoutOperationFrame extends JDialog {
     }
 
     private void doDelete(ActionEvent e) {
+        log.debug("Delete clicked {}", e);
         String query = "";
         if (currentOperation != null && !currentOperation.isDefinitive()) {
             if (currentOperation.isInUse()) {
                 query = Bundle.getMessage("DeleteOperationInUse", currentOperation.getName())
                         + Bundle.getMessage("DeleteRevert");
             }
-            if (JOptionPane.showConfirmDialog(this, query + Bundle.getMessage("DeleteOperationDialog", currentOperation.getName()),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            if (JmriJOptionPane.showConfirmDialog(this, query + Bundle.getMessage("DeleteOperationDialog", currentOperation.getName()),
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                 currentOperation.dispose();
                 populateTabs();
             }
+        }
+    }
+
+    private void doRenameOrCopy(ActionEvent e) {
+        log.debug("CopyOr clicked {}", e);
+        String newName = JmriJOptionPane.showInputDialog(this,
+            Bundle.getMessage("EnterNewName"), Bundle.getMessage("EnterNewNameTitle"),
+            JmriJOptionPane.QUESTION_MESSAGE);
+        
+        if (newName != null && !newName.isEmpty()) {
+            if ( currentOperation.isDefinitive() ) {
+                currentOperation.makeCopy(newName);
+            } else {
+                if (!currentOperation.rename(newName)) {
+                    JmriJOptionPane.showMessageDialog(this, ("TurnoutErrorDuplicate"),
+                            Bundle.getMessage("WarningTitle"), JmriJOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                for ( Turnout t : InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet()) {
+                    if ( currentOperation.equivalentTo(t.getTurnoutOperation()) ) {
+                        t.setTurnoutOperation(null);
+                        t.setTurnoutOperation(currentOperation);
+                    }
+                }
+            }
+            populateTabs();
         }
     }
 
@@ -96,21 +131,24 @@ public class TurnoutOperationFrame extends JDialog {
 
         Component firstPane = null;
         tabPane.removeAll();
-        Vector<TurnoutOperation> definitiveOperations = new Vector<>(10);
-        Vector<TurnoutOperation> namedOperations = new Vector<>(50);
-        for (int i = 0; i < operations.length; ++i) {
-            if (operations[i].isDefinitive()) {
-                definitiveOperations.addElement(operations[i]);
-            } else if (!operations[i].isNonce()) {
-                namedOperations.addElement(operations[i]);
+        ArrayList<TurnoutOperation> definitiveOperations = new ArrayList<>(10);
+        ArrayList<TurnoutOperation> namedOperations = new ArrayList<>(50);
+
+        for (TurnoutOperation operation : operations) {
+            if (operation.isDefinitive()) {
+                definitiveOperations.add(operation);
+            } else if (!operation.isNonce()) {
+                namedOperations.add(operation);
             }
         }
-        java.util.Collections.sort(definitiveOperations);
-        java.util.Collections.sort(namedOperations);
+
+        definitiveOperations.sort(null);
+        namedOperations.sort(null);
+
         TurnoutOperationConfig pane;
         TurnoutOperation op;
         for (int j = 0; j < definitiveOperations.size(); ++j) {
-            op = definitiveOperations.elementAt(j);
+            op = definitiveOperations.get(j);
             pane = TurnoutOperationConfig.getConfigPanel(op);
             if (pane != null) {
                 if (firstPane == null) {
@@ -123,10 +161,9 @@ public class TurnoutOperationFrame extends JDialog {
             }
         }
         for (int k = 0; k < namedOperations.size(); ++k) {
-            op = namedOperations.elementAt(k);
+            op = namedOperations.get(k);
             pane = TurnoutOperationConfig.getConfigPanel(op);
             if (pane != null) {
-                pane.add(deleteButton);
                 tabPane.add(op.getName(), pane);
                 if (op.getName().equals(previousSelectionName)) {
                     tabPane.setSelectedComponent(pane);
@@ -141,6 +178,7 @@ public class TurnoutOperationFrame extends JDialog {
     }
 
     private void changeTab( ChangeEvent e) {
+        log.debug("tab changed {}", e);
         currentConfig = (TurnoutOperationConfig) tabPane.getSelectedComponent();
         if (currentConfig == null) {
             currentOperation = null;
@@ -149,6 +187,10 @@ public class TurnoutOperationFrame extends JDialog {
             currentOperation = currentConfig.getOperation();
             previousSelectionName = currentOperation.getName();
         }
+        deleteButton.setEnabled( currentConfig!=null && !currentConfig.getOperation().isDefinitive() );
+        renameOrCopyButton.setText( currentConfig!=null && !currentConfig.getOperation().isDefinitive()
+            ? Bundle.getMessage("Rename") : Bundle.getMessage("MenuItemCopy")
+        );
     }
 
     @Override

@@ -1,7 +1,8 @@
 package apps.gui3;
 
-import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
 import apps.*;
+import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
+import apps.swing.AboutDialog;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -13,14 +14,11 @@ import java.util.EventObject;
 
 import javax.swing.*;
 
+import jmri.InstanceManager;
+import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.profile.*;
-
-import apps.swing.AboutDialog;
-
 import jmri.util.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Base class for GUI3 JMRI applications.
@@ -170,8 +168,10 @@ public abstract class Apps3 extends AppsBase {
                          and the if the debugFired hasn't been set, this allows us to ensure that we don't
                          miss the user pressing F8, while we are checking*/
                         debugmsg = true;
-                        if (e.getID() == KeyEvent.KEY_PRESSED && e instanceof KeyEvent && ((KeyEvent) e).getKeyCode() == 119) {
+                        if (e.getID() == KeyEvent.KEY_PRESSED && e instanceof KeyEvent && ((KeyEvent) e).getKeyCode() == 119) {     // F8
                             startupDebug();
+                        } else if (e.getID() == KeyEvent.KEY_PRESSED && e instanceof KeyEvent && ((KeyEvent) e).getKeyCode() == 120) {  // F9
+                            InstanceManager.getDefault(LogixNG_Manager.class).startLogixNGsOnLoad(false);
                         } else {
                             debugmsg = false;
                         }
@@ -196,10 +196,14 @@ public abstract class Apps3 extends AppsBase {
     }
 
     static protected JPanel splashDebugMsg() {
-        JLabel panelLabel = new JLabel(Bundle.getMessage("PressF8ToDebug"));
-        panelLabel.setFont(panelLabel.getFont().deriveFont(9f));
+        JLabel panelLabelDisableLogix = new JLabel(Bundle.getMessage("PressF8ToDebug"));
+        panelLabelDisableLogix.setFont(panelLabelDisableLogix.getFont().deriveFont(9f));
+        JLabel panelLabelDisableLogixNG = new JLabel(Bundle.getMessage("PressF9ToDisableLogixNG"));
+        panelLabelDisableLogixNG.setFont(panelLabelDisableLogix.getFont().deriveFont(9f));
         JPanel panel = new JPanel();
-        panel.add(panelLabel);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.add(panelLabelDisableLogix);
+        panel.add(panelLabelDisableLogixNG);
         return panel;
     }
 
@@ -256,16 +260,16 @@ public abstract class Apps3 extends AppsBase {
                 if (ProfileManager.getDefault().migrateToProfiles(getConfigFileName())) { // migration or first use
                     // notify user of change only if migration occurred
                     // TODO: a real migration message
-                    JOptionPane.showMessageDialog(sp,
+                    JmriJOptionPane.showMessageDialog(sp,
                             Bundle.getMessage("ConfigMigratedToProfile"),
                             jmri.Application.getApplicationName(),
-                            JOptionPane.INFORMATION_MESSAGE);
+                            JmriJOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (IOException | IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(sp,
+                JmriJOptionPane.showMessageDialog(sp,
                         ex.getLocalizedMessage(),
                         jmri.Application.getApplicationName(),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 log.error("Exception: ", ex);
             }
         }
@@ -304,14 +308,14 @@ public abstract class Apps3 extends AppsBase {
             // this was logged in the super method
             String name = ProfileManager.getDefault().getActiveProfileName();
             if (!GraphicsEnvironment.isHeadless()) {
-                JOptionPane.showMessageDialog(sp,
+                JmriJOptionPane.showMessageDialog(sp,
                         Bundle.getMessage("SingleConfigMigratedToSharedConfig", name),
                         jmri.Application.getApplicationName(),
-                        JOptionPane.INFORMATION_MESSAGE);
+                        JmriJOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Apps3.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Apps3.class);
 
 }

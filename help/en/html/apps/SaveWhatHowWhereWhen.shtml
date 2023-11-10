@@ -6,11 +6,11 @@
   <title>JMRI: Redirected Page</title>
   <meta http-equiv="PRAGMA" content="NO-CACHE">
   <!-- CHANGE FOLLOWING LINE TO POINT TO NEW LOCATION -->
-  <meta http-equiv="Refresh" content="5; URL=/help/en/html/apps/DataManagement.shtml">
+  <meta http-equiv="Refresh" content="5; URL=DataManagement.shtml">
 </head>
 <body>
   This page has been moved to another location (<a href=
-  "/help/en/html/apps/DataManagement.shtml">/help/en/html/apps/DataManagement.shtml</a>) as part of
+  "DataManagement.shtml">DataManagement.shtml</a>) as part of
   updating our website.<br>
   Please update your bookmarks.<br>
   If you got to this page from another JMRI page, please let us know so we can fix it.<br>

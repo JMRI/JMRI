@@ -3,6 +3,8 @@ package jmri.jmrit.beantable;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -15,9 +17,7 @@ import jmri.UserPreferencesManager;
 import jmri.jmrit.beantable.block.BlockTableDataModel;
 import jmri.BlockManager;
 import jmri.util.JmriJFrame;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Swing action to create and register a BlockTable GUI.
@@ -39,7 +39,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         super(actionName);
 
         // disable ourself if there is no primary Block manager available
-        if (jmri.InstanceManager.getNullableDefault(jmri.BlockManager.class) == null) {
+        if (InstanceManager.getNullableDefault(BlockManager.class) == null) {
             BlockTableAction.this.setEnabled(false);
         }
     }
@@ -115,7 +115,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
      */
     @Override
     public void setMenuBar(BeanTableFrame<Block> f) {
-        final jmri.util.JmriJFrame finalF = f; // needed for anonymous ActionListener class
+        final JmriJFrame finalF = f; // needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
         int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenus before 'Window' and 'Help'
         int offset = 1;
@@ -127,6 +127,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                 }
             }
         }
+        _restoreRule = getRestoreRule();
 
         JMenu pathMenu = new JMenu(Bundle.getMessage("MenuPaths"));
         JMenuItem item = new JMenuItem(Bundle.getMessage("MenuItemDeletePaths"));
@@ -143,6 +144,74 @@ public class BlockTableAction extends AbstractTableAction<Block> {
             ((BlockTableDataModel)m).setDefaultSpeeds(finalF);
         });
         menuBar.add(speedMenu, pos + offset + 1); // put it to the right of the Paths menu
+
+        JMenu valuesMenu = new JMenu(Bundle.getMessage("ValuesMenu"));
+        ButtonGroup valuesButtonGroup = new ButtonGroup();
+        JRadioButtonMenuItem jrbmi = new JRadioButtonMenuItem(Bundle.getMessage("ValuesMenuRestoreAlways"));  // NOI18N
+        jrbmi.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                setRestoreRule(RestoreRule.RESTOREALWAYS);
+            }
+        });
+        valuesButtonGroup.add(jrbmi);
+        valuesMenu.add(jrbmi);
+        jrbmi.setSelected(_restoreRule == RestoreRule.RESTOREALWAYS);
+
+        jrbmi = new JRadioButtonMenuItem(Bundle.getMessage("ValuesMenuRestoreOccupiedOnly"));  // NOI18N
+        jrbmi.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                setRestoreRule(RestoreRule.RESTOREOCCUPIEDONLY);
+            }
+        });
+        valuesButtonGroup.add(jrbmi);
+        valuesMenu.add(jrbmi);
+        jrbmi.setSelected(_restoreRule == RestoreRule.RESTOREOCCUPIEDONLY);
+
+        jrbmi = new JRadioButtonMenuItem(Bundle.getMessage("ValuesMenuRestoreOnlyIfAllOccupied"));  // NOI18N
+        jrbmi.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                setRestoreRule(RestoreRule.RESTOREONLYIFALLOCCUPIED);
+            }
+        });
+        valuesButtonGroup.add(jrbmi);
+        valuesMenu.add(jrbmi);
+        jrbmi.setSelected(_restoreRule == RestoreRule.RESTOREONLYIFALLOCCUPIED);
+
+        menuBar.add(valuesMenu, pos + offset + 2); // put it to the right of the Speed menu
+    
+    }
+
+    /**
+     * Save the restore rule selection. Called by menu item change events.
+     *
+     * @param newRule The RestoreRule enum constant
+     */
+    void setRestoreRule(RestoreRule newRule) {
+        _restoreRule = newRule;
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                setProperty(getClassName(), "Restore Rule", newRule.name());  // NOI18N
+    }
+    
+    /**
+     * Retrieve the restore rule selection from user preferences
+     *
+     * @return restoreRule 
+     */
+    public static RestoreRule getRestoreRule() {
+        RestoreRule rr = RestoreRule.RESTOREONLYIFALLOCCUPIED; //default to previous JMRI behavior 
+        Object rro = InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                getProperty("jmri.jmrit.beantable.BlockTableAction", "Restore Rule");   // NOI18N
+        if (rro != null) {
+            try {
+                rr = RestoreRule.valueOf(rro.toString());
+            } catch (IllegalArgumentException ignored) {
+                log.warn("Invalid Block Restore Rule value '{}' ignored", rro);  // NOI18N
+            }
+        }
+        return rr;
     }
     
     private void metricSelectionChanged(ActionEvent e) {
@@ -168,6 +237,16 @@ public class BlockTableAction extends AbstractTableAction<Block> {
     JCheckBox _autoSystemNameCheckBox = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     JLabel statusBar = new JLabel(Bundle.getMessage("AddBeanStatusEnter"), JLabel.LEADING);
     private JButton newButton = null;
+
+    /**
+     * Rules for restoring block values     *
+     */
+    public enum RestoreRule {
+        RESTOREALWAYS,
+        RESTOREOCCUPIEDONLY,
+        RESTOREONLYIFALLOCCUPIED;
+    }
+    RestoreRule _restoreRule;
 
     @Override
     protected void addPressed(ActionEvent e) {
@@ -220,10 +299,10 @@ public class BlockTableAction extends AbstractTableAction<Block> {
             numberOfBlocks = (Integer) numberToAddSpinner.getValue();
         }
         if (numberOfBlocks >= 65) { // limited by JSpinnerModel to 100
-            if (JOptionPane.showConfirmDialog(addFrame,
+            if (JmriJOptionPane.showConfirmDialog(addFrame,
                     Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("Blocks"), numberOfBlocks),
                     Bundle.getMessage("WarningTitle"),
-                    JOptionPane.YES_NO_OPTION) == 1) {
+                    JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                 return;
             }
         }
@@ -258,7 +337,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     while (true) {
                         system = nextName(system);
                         // log.warn("Trying " + system);
-                        Block blk = InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(system);
+                        Block blk = InstanceManager.getDefault(BlockManager.class).getBySystemName(system);
                         if (blk == null) {
                             sName = system;
                             break;
@@ -270,7 +349,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     while (true) {
                         user = nextName(user);
                         //log.warn("Trying " + user);
-                        Block blk = InstanceManager.getDefault(jmri.BlockManager.class).getByUserName(user);
+                        Block blk = InstanceManager.getDefault(BlockManager.class).getByUserName(user);
                         if (blk == null) {
                             uName = user;
                             break;
@@ -282,13 +361,13 @@ public class BlockTableAction extends AbstractTableAction<Block> {
             String xName = "";
             try {
                 if (_autoSystemNameCheckBox.isSelected()) {
-                    blk = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(uName);
+                    blk = InstanceManager.getDefault(BlockManager.class).createNewBlock(uName);
                     if (blk == null) {
                         xName = uName;
                         throw new java.lang.IllegalArgumentException();
                     }
                 } else {
-                    blk = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(sName, uName);
+                    blk = InstanceManager.getDefault(BlockManager.class).createNewBlock(sName, uName);
                     if (blk == null) {
                         xName = sName;
                         throw new java.lang.IllegalArgumentException();
@@ -321,29 +400,29 @@ public class BlockTableAction extends AbstractTableAction<Block> {
     }
 
     void handleCreateException(String sysName) {
-        JOptionPane.showMessageDialog(addFrame,
+        JmriJOptionPane.showMessageDialog(addFrame,
                 Bundle.getMessage("ErrorBlockAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.ERROR_MESSAGE);
     }
     //private boolean noWarn = false;
 
-    void deletePaths(jmri.util.JmriJFrame f) {
+    void deletePaths(JmriJFrame f) {
         // Set option to prevent the path information from being saved.
 
         Object[] options = {Bundle.getMessage("ButtonRemove"),
             Bundle.getMessage("ButtonKeep")};
 
-        int retval = JOptionPane.showOptionDialog(f,
+        int retval = JmriJOptionPane.showOptionDialog(f,
                 Bundle.getMessage("BlockPathMessage"),
                 Bundle.getMessage("BlockPathSaveTitle"),
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+                JmriJOptionPane.YES_NO_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE, null, options, options[1]);
         if (retval != 0) {
-            InstanceManager.getDefault(jmri.BlockManager.class).setSavedPathInfo(true);
+            InstanceManager.getDefault(BlockManager.class).setSavedPathInfo(true);
             log.info("Requested to save path information via Block Menu.");
         } else {
-            InstanceManager.getDefault(jmri.BlockManager.class).setSavedPathInfo(false);
+            InstanceManager.getDefault(BlockManager.class).setSavedPathInfo(false);
             log.info("Requested not to save path information via Block Menu.");
         }
     }
@@ -358,6 +437,6 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         return BlockTableAction.class.getName();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockTableAction.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockTableAction.class);
 
 }

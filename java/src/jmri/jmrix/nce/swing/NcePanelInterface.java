@@ -20,6 +20,6 @@ public interface NcePanelInterface {
      *
      * @param memo the system connection memo for this connection
      */
-    public void initComponents(NceSystemConnectionMemo memo);
+    void initComponents(NceSystemConnectionMemo memo);
 
 }

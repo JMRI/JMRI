@@ -1,10 +1,5 @@
 package jmri.jmrit.logixng;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
-
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -14,7 +9,7 @@ import org.junit.Test;
 
 /**
  * Test SymbolTable
- * 
+ *
  * @author Daniel Bergqvist 2021
  */
 public class SymbolTableTest {
@@ -29,7 +24,7 @@ public class SymbolTableTest {
         Assert.assertTrue(SymbolTable.validateName("Abc___"));
         Assert.assertTrue(SymbolTable.validateName("Abc___fsdffs"));
         Assert.assertTrue(SymbolTable.validateName("Abc3123__2341fsdf"));
-        
+
         // Invalid names
         Assert.assertFalse(SymbolTable.validateName("12Abc"));  // Starts with a digit
         Assert.assertFalse(SymbolTable.validateName("_Abc"));   // Starts with an underscore
@@ -38,7 +33,7 @@ public class SymbolTableTest {
         Assert.assertFalse(SymbolTable.validateName("A{bc"));   // Has a character that's not letter, digit or underscore
         Assert.assertFalse(SymbolTable.validateName("A+bc"));   // Has a character that's not letter, digit or underscore
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -51,6 +46,7 @@ public class SymbolTableTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

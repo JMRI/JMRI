@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2023 All rights reserved -->
+<!-- Panes for 8 servos -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <name>Setup</name>
+    <column>
+        <grid ipadx="10" ipady="2">  
+            <griditem gridx="0" gridy="0" weightx="1" anchor="LINE_END">
+                <label> 
+                    <text> Servo 1</text> 
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="1" weightx="1" anchor="LINE_END">
+                <display item="rep1" format="checkbox" label="Continuous" tooltip="Select continuous for output 1" />
+            </griditem>
+            <griditem gridx="1" gridy="1" weightx="1" anchor="LINE_END">
+                <display item="width1" label="Pulse Width (x 20 ms)" layout="above" tooltip="Pulse width in 20 ms increments for output 1" />
+            </griditem>
+            <griditem gridx="2" gridy="1" weightx="1" anchor="LINE_END">
+                <display item="startupActtion1" label="Startup Action" layout="above" tooltip="Select startup action for servo 1" />
+            </griditem>
+                
+            <griditem gridx="0" gridy="2" weightx="1" anchor="LINE_END">
+                <display item="rep2" format="checkbox" label="Continuous" tooltip="Select continuous for output 2" />
+            </griditem>
+            <griditem gridx="1" gridy="2" weightx="1" anchor="LINE_END">
+                <display item="width2" label="Pulse Width (x 20 ms)" layout="above" tooltip="Pulse width in 20 ms increments for output 2" />
+            </griditem>
+            <griditem gridx="2" gridy="2" weightx="1" anchor="LINE_END">
+                <display item="startupActtion2" label="Startup Action" layout="above" tooltip="Select startup action for output 2" />
+            </griditem>
+
+            <griditem gridx="0" gridy="3" weightx="1" anchor="LINE_END">
+                <display item="rep3" format="checkbox" label="Continuous" tooltip="Select continuous for output 3" />
+            </griditem>
+            <griditem gridx="1" gridy="3" weightx="1" anchor="LINE_END">
+                <display item="width3" label="Pulse Width (x 20 ms)" layout="above" tooltip="Pulse width in 20 ms increments for output 3" />
+            </griditem>
+            <griditem gridx="2" gridy="3" weightx="1" anchor="LINE_END">
+                <display item="startupActtion3" label="Startup Action" layout="above" tooltip="Select startup action for output 3" />
+            </griditem>
+                
+            <griditem gridx="0" gridy="4" weightx="1" anchor="LINE_END">
+                <display item="rep4" format="checkbox" label="Continuous" tooltip="Select continuous for output 4" />
+            </griditem>
+            <griditem gridx="1" gridy="4" weightx="1" anchor="LINE_END">
+                <display item="width4" label="Pulse Width (x 20 ms)" layout="above" tooltip="Pulse width in 20 ms increments for output 4" />
+            </griditem>
+            <griditem gridx="2" gridy="4" weightx="1" anchor="LINE_END">
+                <display item="startupActtion4" label="Startup Action" layout="above" tooltip="Select startup action for output 4" />
+            </griditem>
+
+            <griditem gridx="0" gridy="5" weightx="1" anchor="LINE_END">
+                <display item="rep5" format="checkbox" label="Continuous" tooltip="Select continuous for output 5" />
+            </griditem>
+            <griditem gridx="1" gridy="5" weightx="1" anchor="LINE_END">
+                <display item="width5" label="Pulse Width (x 20 ms)" layout="above" tooltip="Pulse width in 20 ms increments for output 5" />
+            </griditem>
+            <griditem gridx="2" gridy="5" weightx="1" anchor="LINE_END">
+                <display item="startupActtion5" label="Startup Action" layout="above" tooltip="Select startup action for output 5" />
+            </griditem>
+                
+            <griditem gridx="0" gridy="6" weightx="1" anchor="LINE_END">
+                <display item="rep6" format="checkbox" label="Continuous" tooltip="Select continuous for output 6" />
+            </griditem>
+            <griditem gridx="1" gridy="6" weightx="1" anchor="LINE_END">
+                <display item="width6" label="Pulse Width (x 20 ms)" layout="above" tooltip="Pulse width in 20 ms increments for output 6" />
+            </griditem>
+            <griditem gridx="2" gridy="6" weightx="1" anchor="LINE_END">
+                <display item="startupActtion6" label="Startup Action" layout="above" tooltip="Select startup action for output 6" />
+            </griditem>
+
+            <griditem gridx="0" gridy="7" weightx="1" anchor="LINE_END">
+                <display item="rep7" format="checkbox" label="Continuous" tooltip="Select continuous for output 7" />
+            </griditem>
+            <griditem gridx="1" gridy="7" weightx="1" anchor="LINE_END">
+                <display item="width7" label="Pulse Width (x 20 ms)" layout="above" tooltip="Pulse width in 20 ms increments for output 7" />
+            </griditem>
+            <griditem gridx="2" gridy="7" weightx="1" anchor="LINE_END">
+                <display item="startupActtion7" label="Startup Action" layout="above" tooltip="Select startup action for output 7" />
+            </griditem>
+                
+            <griditem gridx="0" gridy="8" weightx="1" anchor="LINE_END">
+                <display item="rep8" format="checkbox" label="Continuous" tooltip="Select continuous for output 8" />
+            </griditem>
+            <griditem gridx="1" gridy="8" weightx="1" anchor="LINE_END">
+                <display item="width8" label="Pulse Width (x 20 ms)" layout="above" tooltip="Pulse width in 20 ms increments for output 8" />
+            </griditem>
+            <griditem gridx="2" gridy="8" weightx="1" anchor="LINE_END">
+                <display item="startupActtion8" label="Startup Action" layout="above" tooltip="Select startup action for output 8" />
+            </griditem>
+
+            <griditem gridx="1" gridy="9" weightx="3" anchor="LINE_END">
+                <display item="delay" label="Feedback Delay (x 0.5 ms)" layout="above" tooltip="Feedback delay in 0.5 ms increments" />
+            </griditem>
+        </grid>
+    </column>
+</pane>

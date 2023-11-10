@@ -3,14 +3,13 @@ package jmri.jmrix.ecos.utilities;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
+
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrix.ecos.EcosLocoAddress;
 import jmri.jmrix.ecos.EcosLocoAddressManager;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Add a Roster Entry to the Ecos
@@ -18,8 +17,6 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2009
  */
 public class AddRosterEntryToEcos extends AbstractAction {
-
-    private EcosLocoAddressManager objEcosLocoManager;
 
     /**
      * @param s Name of this action, e.g. in menus.
@@ -31,10 +28,10 @@ public class AddRosterEntryToEcos extends AbstractAction {
         objEcosLocoManager = adaptermemo.getLocoAddressManager();
     }
 
-    EcosSystemConnectionMemo adaptermemo;
-    JComboBox<String> rosterEntry = new JComboBox<String>();
-    JComboBox<String> selections;
-    Roster roster;
+    private final EcosSystemConnectionMemo adaptermemo;
+    private final EcosLocoAddressManager objEcosLocoManager;
+    private final JComboBox<String> rosterEntry = new JComboBox<>();
+    private Roster roster;
 
     @Override
     public void actionPerformed(ActionEvent event) {
@@ -43,13 +40,12 @@ public class AddRosterEntryToEcos extends AbstractAction {
 
         rosterEntryUpdate();
 
-        int retval = JOptionPane.showOptionDialog(null,
-                Bundle.getMessage("AddToEcosDialog"),
+        int retval = JmriJOptionPane.showConfirmDialog(null,
+                new Object[]{Bundle.getMessage("AddToEcosDialog"), rosterEntry},
                 Bundle.getMessage("AddToEcosTitle"),
-                0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), rosterEntry}, null);
+                JmriJOptionPane.OK_CANCEL_OPTION );
         log.debug("Dialog value {} selected, {}:{}", retval, rosterEntry.getSelectedIndex(), rosterEntry.getSelectedItem());
-        if (retval != 1 || rosterEntry.getItemCount() == 0) {
+        if (retval != JmriJOptionPane.OK_OPTION || rosterEntry.getItemCount() == 0) {
             return;
         }
 
@@ -61,32 +57,27 @@ public class AddRosterEntryToEcos extends AbstractAction {
     }
 
     void rosterEntryUpdate() {
-        if (rosterEntry != null) {
-            rosterEntry.removeAllItems();
-        }
+        rosterEntry.removeAllItems();
         for (RosterEntry r : roster.getAllEntries()) {
             // Add only those locos to the drop-down list that are in the JMRI Roster but not in the ECoS
-            String DccAddress = r.getDccAddress();
-            EcosLocoAddress EcosAddress = null;
-            if (DccAddress != null) {
-                log.debug("DccAddress={}", DccAddress);
+            String dccAddress = r.getDccAddress();
+            EcosLocoAddress ecosAddress = null;
+            if (dccAddress != null) {
+                log.debug("DccAddress={}", dccAddress);
                 try {
-                    EcosAddress = objEcosLocoManager.getByDccAddress(Integer.parseInt(DccAddress));
+                    ecosAddress = objEcosLocoManager.getByDccAddress(Integer.parseInt(dccAddress));
                 } catch (NullPointerException npe) {
-                    log.warn("Could not connect to ECoS roster via objEcosLocoManager to loop up Loco {}", DccAddress);
+                    log.warn("Could not connect to ECoS roster via objEcosLocoManager to loop up Loco {}", dccAddress);
                     return;
                 }
             }
-            if (EcosAddress == null) {
+            if ( ecosAddress == null && r.getProtocol() != jmri.LocoAddress.Protocol.MFX ) {
                 // It is not possible to create MFX locomotives in the ECoS. They are auto-discovered.
-                if (r.getProtocol() != jmri.LocoAddress.Protocol.MFX) {
-                    rosterEntry.addItem(r.titleString());
-                }
+                rosterEntry.addItem(r.titleString());
             }
         }
     }
 
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(AddRosterEntryToEcos.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AddRosterEntryToEcos.class);
 
 }

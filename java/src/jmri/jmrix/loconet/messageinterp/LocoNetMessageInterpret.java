@@ -22,8 +22,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.jmrix.loconet.alm.Alm;
-
 /**
  * A utility class for formatting LocoNet packets into human-readable text.
  * <p>
@@ -685,6 +683,7 @@ public class LocoNetMessageInterpret {
                 break;
             }
 
+            //                   0xE4
             case LnConstants.OPC_LISSY_UPDATE: {
                 result = interpretOpcLissyUpdate(l);
                 if (result.length() > 0) {
@@ -693,6 +692,7 @@ public class LocoNetMessageInterpret {
                 break;
             }
 
+            //                    0xED
             case LnConstants.OPC_IMM_PACKET: {
                 result = interpretOpcImmPacket(l);
                 if (result.length() > 0) {
@@ -701,6 +701,7 @@ public class LocoNetMessageInterpret {
                 break;
             }
 
+            //                     0xD3
             case LnConstants.RE_OPC_PR3_MODE: {
                 result = interpretOpcPr3Mode(l);
                 if (result.length() > 0) {
@@ -709,6 +710,7 @@ public class LocoNetMessageInterpret {
                 break;
             }
 
+            //                      0xA3
             case LnConstants.RE_OPC_IB2_F9_F12: {
                 result = interpretIb2F9_to_F12(l);
                 if (result.length() > 0) {
@@ -719,7 +721,8 @@ public class LocoNetMessageInterpret {
 
 //          TODO: put this back for intellibox cmd station.
 //            it conflicts with loconet speed/dir etc.
-            case LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL: { // 0xD4
+            //                        0xD4
+            case LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL: {
                 result = interpretIb2Special(l);
                 if (result.length() > 0) {
                     return result;
@@ -2597,7 +2600,7 @@ public class LocoNetMessageInterpret {
         if (sensor != null) {
             String uname = sensor.getUserName();
             if ((uname != null) && (!uname.isEmpty())) {
-                sensorUserName = uname;
+                sensorUserName = " ("+uname+")";
             }
         }
 
@@ -3060,14 +3063,22 @@ public class LocoNetMessageInterpret {
     private static String interpretProgSlot(LocoNetMessage l, String mode, int id1, int id2, int command) {
         /*
          * ********************************************************************************************
-         * Programmer track: * ================= * The programmer track is
-         * accessed as Special slot #124 ( $7C, 0x7C). It is a full *
-         * asynchronous shared system resource. * * To start Programmer task,
-         * write to slot 124. There will be an immediate LACK acknowledge * that
-         * indicates what programming will be allowed. If a valid programming
-         * task is started, * then at the final (asynchronous) programming
-         * completion, a Slot read <E7> from slot 124 * will be sent. This is
-         * the final task status reply. * * Programmer Task Start: *
+         * Programmer track:
+         * =================
+         * The programmer track is
+         * accessed as Special slot #124 ( $7C, 0x7C). It is a full
+         * asynchronous shared system resource.
+         *
+         * To start Programmer task,
+         * write to slot 124. There will be an immediate LACK acknowledge
+         * that indicates what programming will be allowed. If a valid programming
+         * task is started,
+         * then at the final (asynchronous) programming
+         * completion, a Slot read <E7> from slot 124 will be sent. This is
+         * the final task status reply.
+         *
+         * Programmer Task Start:
+         *
          * ----------------------
          * <p>
          * <0xEF>,<0E>,<7C>,<PCMD>,<0>,<HOPSA>,<LOPSA>,<TRK>;<CVH>,<CVL>,
@@ -3094,13 +3105,23 @@ public class LocoNetMessageInterpret {
          * the master will also contain the Programmer Busy status in bit 3 of
          * the <TRK> byte. * * A <PCMD> value of
          * <00> will abort current SERVICE mode programming task and will echo
-         * with * an <E6> RD the command string that was aborted. * * <PCMD>
-         * Programmer Command: * -------------------------- * Defined as * D7 -0
-         * * D6 -Write/Read 1= Write, * 0=Read * D5 -Byte Mode 1= Byte
-         * operation, * 0=Bit operation (if possible) * D4 -TY1 Programming Type
-         * select bit * D3 -TY0 Prog type select bit * D2 -Ops Mode 1=Ops Mode
-         * on Mainlines, * 0=Service Mode on Programming Track * D1 -0 reserved
-         * * D0 -0-reserved * * Type codes: * ----------- * Byte Mode Ops Mode
+         * with an <E6> RD the command string that was aborted.
+         *
+         * <PCMD>
+         * Programmer Command:
+         * --------------------------
+         * Defined as
+         * D7 -0
+         * D6 -Write/Read 1= Write, 0=Read
+         * D5 -Byte Mode 1= Byte operation, 0=Bit operation (if possible)
+         * D4 -TY1 Programming Type select bit
+         * D3 -TY0 Prog type select bit
+         * D2 -Ops Mode 1=Ops Mode on Mainlines, 0=Service Mode on Programming Track
+         * D1 -0 reserved
+         * D0 -0-reserved
+         *
+         * Type codes:
+         * ----------- * Byte Mode Ops Mode
          * TY1 TY0 Meaning * 1 0 0 0 Paged mode byte Read/Write on Service Track
          * * 1 0 0 0 Paged mode byte Read/Write on Service Track * 1 0 0 1
          * Direct mode byteRead/Write on Service Track * 0 0 0 1 Direct mode bit
@@ -3781,8 +3802,8 @@ public class LocoNetMessageInterpret {
          * All documentation appears to be in German.
          */
         log.debug("Message from LISSY: {}", Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString()));
-        switch (l.getElement(1)) {           
-            case 0x08: // Format LISSY message              
+        switch (l.getElement(1)) {
+            case 0x08: // Format LISSY message
                 int unit = (l.getElement(4) & 0x7F);
                 if ((l.getElement(3) & 0x40) != 0) { // Loco movement
                     int category = l.getElement(2) + 1;
@@ -3793,7 +3814,7 @@ public class LocoNetMessageInterpret {
                           Integer.toString(category),
                           ((l.getElement(3) & 0x20) == 0
                           ? Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_NORTH")
-                          : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_SOUTH")));  
+                          : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_SOUTH")));
                 } else { // other messages
                     switch (l.getElement(2)) {
                       case 0x00: // Loco speed
@@ -3807,10 +3828,10 @@ public class LocoNetMessageInterpret {
                                 unit,
                                 ((l.getElement(6) & 0x01) == 0
                                 ? Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_BLOCK_FREE")
-                                : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_BLOCK_OCCUPIED")));   
+                                : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_BLOCK_OCCUPIED")));
                       default:
                           break;
-                    }   
+                    }
                 }
                 break;
 
@@ -3857,12 +3878,15 @@ public class LocoNetMessageInterpret {
     }
 
     private static String interpretOpcImmPacket(LocoNetMessage l) {
+        String result;
+        result = "";
+
         /*
          * OPC_IMM_PACKET   0xED
          */
         if (l.getElement(1) == 0x0F) { // length = 15
             // check for a specific type - Uhlenbrock LNSV Programming messages format
-            String result = interpretLncvMessage(l);
+            result = interpretLncvMessage(l);
             if (result.length() > 0) {
                 return result;
             }
@@ -4073,6 +4097,180 @@ public class LocoNetMessageInterpret {
                             Bundle.getMessage(((packetInt[1] & 0x08) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
                 } else {
                     // Unknown
+                    if ((packetInt[0] & 0xC0) == 0x80 ) {
+                        /*
+                        * 2.4.7 Extended Decoder Control Packet address for 
+                        * operations mode programming and Aspect Setting.
+                        * 10AAAAAA 0 0AAA0AA1
+                        * Packets 3 bytes in length are Accessory Aspect packets (2.4.3)
+                        *  {preamble} 10AAAAAA 0 0AAA0AA1 0 XXXXXXXX 0 EEEEEEEE 1
+                        * Please note that the use of 0 in bit 3 of byte 2 is to 
+                        * ensure that this packet cannot be confused with the 
+                        * legacy accessory-programming packets. The resulting packet 
+                        * would be:
+                        * {preamble} 10AAAAAA 0 0AAA0AA1 0 (1110CCVV 0 VVVVVVVV 0 DDDDDDDD) 0 EEEEEEEE 1
+                        * A5 43 00
+                        * 10100101 0010011 00000000
+                        * Signal Decoder Address (Configuration Variable Access Instruction) Error Byte
+                        */
+                        log.debug("Is an Extended Accessory Ops-mode CV access or Set Signal Aspect");
+                        log.debug("   LocoNet message: {} {} {} {} {} {} {} {} {} {} {}",
+                                StringUtil.twoHexFromInt(l.getElement(0)),
+                                StringUtil.twoHexFromInt(l.getElement(1)),
+                                StringUtil.twoHexFromInt(l.getElement(2)),
+                                StringUtil.twoHexFromInt(l.getElement(3)),
+                                StringUtil.twoHexFromInt(l.getElement(4)),
+                                StringUtil.twoHexFromInt(l.getElement(5)),
+                                StringUtil.twoHexFromInt(l.getElement(6)),
+                                StringUtil.twoHexFromInt(l.getElement(7)),
+                                StringUtil.twoHexFromInt(l.getElement(8)),
+                                StringUtil.twoHexFromInt(l.getElement(9)),
+                                StringUtil.twoHexFromInt(l.getElement(10))
+                                );
+                        if (packetInt.length == 5) {
+                            log.debug("   NMRA packet: {} {} {} {} {}",
+                                    StringUtil.twoHexFromInt(packetInt[0]),
+                                    StringUtil.twoHexFromInt(packetInt[1]),
+                                    StringUtil.twoHexFromInt(packetInt[2]),
+                                    StringUtil.twoHexFromInt(packetInt[3]),
+                                    StringUtil.twoHexFromInt(packetInt[4])
+                                    );
+                        } else if (packetInt.length == 3) {
+                            log.debug("   NMRA packet: {} {} {}",
+                                    StringUtil.twoHexFromInt(packetInt[0]),
+                                    StringUtil.twoHexFromInt(packetInt[1]),
+                                    StringUtil.twoHexFromInt(packetInt[2])
+                                    );
+                        } else {
+                            log.warn(" Unknown Extended Accessory Packet length [{}])",packetInt.length);
+                            return "";
+                        }
+                        if ((packetInt[2] & 0xF0) == 0xF0) {
+                            /*
+                            * 2.3.7.2 Configuration Variable Access Instruction - Short Form
+                            * This instruction has the format of:
+                            * {instruction bytes} = 1111GGGG 0 DDDDDDDD 0 DDDDDDDD
+                            * The 8 bit data DDDDDDDD is placed in the configuration 
+                            * variable identified by GGGG according
+                            */
+                            log.debug("Is an Short-form Extended Accessory Ops-mode CV access");
+                        }
+                        if ((packetInt[2] & 0xf0) == 0xe0) {
+                            /*
+                            * 2.3.7.3 Configuration Variable Access Instruction - Long Form
+                            * The long form allows the direct manipulation of all CVs8. This 
+                            * instruction is valid both when the Digital Decoder has its 
+                            * long address active and short address active. Digital Decoders 
+                            * shall not act on this instruction if sent to its consist 
+                            * address. 
+                            *
+                            * The format of the instructions using Direct CV 
+                            * addressing is:
+                            *   {instruction bytes}= 1110GGVV 0 VVVVVVVV 0 DDDDDDDD
+                            *
+                            * The actual Configuration Variable desired is selected 
+                            * via the 10-bit address with the 2-bit address (VV) in 
+                            * the first data byte being the most significant bits of 
+                            * the address. The Configuration variable being addressed 
+                            * is the provided 10-bit address plus 1. For example, to 
+                            * address CV1 the 10 bit address is “00 00000000”.
+                            *
+                            * The defined values for Instruction type (CC) are:
+                            *       GG=00 Reserved for future use
+                            *       GG=01 Verify byte 505
+                            *       GG=11 Write byte
+                            *       GG=10 Bit manipulation
+                            * */
+                            int addr = getExtendedAccessoryAddressFromDCCPacket(packetInt);
+                            log.debug("Long-format Extended Accessory Ops-mode CV access: Extended Acceccory Address {}", addr);
+                            int cvnum = 1 + ((packetInt[2] & 0x03) << 2) + (packetInt[3] & 0xff);
+                            switch (packetInt[2] & 0x0C) {
+                                case 0x04:
+                                    //  GG=01 Verify byte
+                                    /*
+                                     * Type = "01" VERIFY BYTE
+                                     *
+                                     * The contents of the Configuration Variable as indicated 
+                                     * by the 10-bit address are compared with the data byte 
+                                     * (DDDDDDDD). If the decoder successfully receives this 
+                                     * packet and the values are identical, the Digital 
+                                     * Decoder shall respond with the contents of the CV as 
+                                     * the Decoder Response Transmission, if enabled.
+                                    */
+                                    log.debug("CV # {}, Verify Byte: {}", cvnum, packetInt[4]);
+                                    return Bundle.getMessage("LN_MSG_EXTEND_ACCY_CV_VERIFY",
+                                            addr, cvnum, packetInt[4] );
+                                case 0x08:
+                                    // GG=10 Bit manipulation
+                                    /*
+                                     * Type = "10" BIT MANIPULATION.
+                                     *
+                                     * The bit manipulation instructions use a special 
+                                     * format for the data byte (DDDDDDDD): 111FDBBB, where 
+                                     * BBB represents the bit position within the CV, 
+                                     * D contains the value of the bit to be verified 
+                                     * or written, and F describes whether the 
+                                     * operation is a verify bit or a write bit 
+                                     * operation.
+                                     * 
+                                     * F = "1" : WRITE BIT
+                                     * F = "0" : VERIFY BIT
+                                     * The VERIFY BIT and WRITE BIT instructions operate 
+                                     * in a manner similar to the VERIFY BYTE and WRITE 
+                                     * BYTE instructions (but operates on a single bit). 
+                                     * Using the same criteria as the VERIFY BYTE 
+                                     * instruction, an operations mode acknowledgment 
+                                     * will be generated in response to a VERIFY BIT 
+                                     * instruction if appropriate. Using the same 
+                                     * criteria as the WRITE BYTE instruction, a 
+                                     * configuration variable access acknowledgment 
+                                     * will be generated in response to the second 
+                                     * identical WRITE BIT instruction if appropriate.
+                                     */
+                                    if ((packetInt[4]& 0xE0) != 0xE0) {
+                                        break;
+                                    }
+                                    log.debug("CV # {}, Bit Manipulation: {} {} (of bits 0-7) with {}", 
+                                            cvnum, (packetInt[4] & 0x10) == 0x10 ? "Write" : "Verify",
+                                            (packetInt[4] & 0x7),
+                                            (packetInt[4] >> 3) & 0x1);
+                                    
+                                    // "Extended Accessory Decoder CV Bit {} bit, 
+                                    // Address {}, CV {}, bit # {} (of bits 0-7) 
+                                    // with value {}.\n"
+                                    return Bundle.getMessage("LN_MSG_EXTEND_ACCY_CV_BIT_ACCESS",
+                                            ((packetInt[4] & 0x10) == 0x10 ? "Write" : "Verify"),
+                                            addr, cvnum, (packetInt[4] & 0x7),
+                                            ((packetInt[4] >>3) & 0x1) );
+                                case 0x0c:
+                                    // GG=11 Write byte
+                                    /*
+                                     * Type = "11" WRITE BYTE
+                                     *
+                                     * The contents of the Configuration Variable as indicated by the 10-bit
+                                     * address are replaced by the data byte (DDDDDDDD). Two identical 
+                                     * packets are needed before the decoder shall modify a 
+                                     * configuration variable. These two packets need not be back
+                                     * to back on the track. However any other packet to the same 
+                                     * decoder will invalidate the write operation. (This includes 
+                                     * broadcast packets.) If the decoder successfully receives 
+                                     * this second identical packet, it shall respond with a 
+                                     * configuration variable access acknowledgment.
+                                     */
+                                    log.debug("CV # {}, Write Byte: {}", cvnum, packetInt[4]);
+                                    return Bundle.getMessage("LN_MSG_EXTEND_ACCY_CV_WRITE",
+                                            addr, cvnum, packetInt[4] );
+                                case 0x0:
+                                default:
+                                    // GG=00 Reserved for future use
+                                    log.debug("CV # {}, Reserved (GG=0); {}", cvnum, packetInt[4]);    
+                            }
+                        } else if (packetInt.length == 3) {
+                            int addr = getExtendedAccessoryAddressFromDCCPacket(packetInt);
+                            return Bundle.getMessage("LN_MSG_EXTEND_ACCY_SET_ASPECT",
+                                    addr, addr - 4, packetInt[2] );
+                        }
+                    }
                     return Bundle.getMessage("LN_MSG_OPC_IMM_PKT_GENERIC",
                             ((reps & 0x70) >> 4),
                             (reps & 0x07),
@@ -4130,6 +4328,15 @@ public class LocoNetMessageInterpret {
         return ""; // not an understood message.
     }
 
+    /*
+     * Returns the Digitrax Extended Accessory Packet Address
+     */
+    private static int getExtendedAccessoryAddressFromDCCPacket(int[] packetInt) {
+        return ( 1 + ((packetInt[0] & 0x3F) << 2) +
+                ((( ~ packetInt[1]) & 0x70) << 4)
+                + ((packetInt[1] & 0x06) >> 1));
+    }
+    
     private static String interpretOpcPr3Mode(LocoNetMessage l) {
         /*
          * Sets the operating mode of the PR3 device, if present.
@@ -4624,7 +4831,7 @@ public class LocoNetMessageInterpret {
      */
     public static String interpretAlm(LocoNetMessage l) {
         if (l.getElement(1) == 0x10) {
-        String ret;
+            String ret;
             ret = jmri.jmrix.loconet.alm.almi.Almi.interpretAlm(l);
             if (ret.length() > 1) {
                 return ret;
@@ -4834,10 +5041,10 @@ public class LocoNetMessageInterpret {
      */
     private static String interpretExtendedSlot_StatusData_Base(LocoNetMessage l, int slot) {
         String hwType = LnConstants.IPL_NAME(l.getElement(16));
-        int hwSerial = ((l.getElement(19) & 0x0f) * 128 ) + l.getElement(18);
+        int hwSerial = ((l.getElement(19) & 0x3f) * 128 ) + l.getElement(18);
         return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_BASE",
                 hwType,
-                hwSerial);
+                hwSerial + "(" + Integer.toHexString(hwSerial).toUpperCase() + ")");
     }
 
     /**
@@ -4851,12 +5058,15 @@ public class LocoNetMessageInterpret {
         double swVersion ;
         int hwSerial;
         String hwType = LnConstants.IPL_NAME(l.getElement(14));
-        hwSerial = ((l.getElement(19) & 0x0f) * 128 ) + l.getElement(18);
+        if ((l.getElement(19) & 0x40) == 0x40) {
+            hwType = hwType + Bundle.getMessage("LN_MSG_COMMAND_STATION");
+        }
+        hwSerial = ((l.getElement(19) & 0x3f) * 128 ) + l.getElement(18);
         hwVersion = ((double)(l.getElement(17) & 0x78) / 8 ) + ((double)(l.getElement(17) & 0x07) / 10 ) ;
         swVersion = ((double)(l.getElement(16) & 0x78) / 8 ) + ((double)(l.getElement(16) & 0x07) / 10 ) ;
         return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_BASEDETAIL",
                 hwType,
-                hwSerial,
+                hwSerial + "(" + Integer.toHexString(hwSerial).toUpperCase() + ")",
                 hwVersion,
                 swVersion);
     }
@@ -4908,7 +5118,17 @@ public class LocoNetMessageInterpret {
 
     private static String interpretExtendedSlot_StatusData_Flags(LocoNetMessage l, int slot) {
         //TODO need more sample data
-        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_FLAGS");
+        String msgRsyncMax = Bundle.getMessage("LN_MSG_OFF");
+        if ((l.getElement(4) & 0x80) == 0x80) {
+            msgRsyncMax = Bundle.getMessage("LN_MSG_ON");
+        }
+        String msgUSB = Bundle.getMessage("LN_MSG_OFF");
+        if ((l.getElement(5) & 0x20) == 0x20) {
+            msgUSB = Bundle.getMessage("LN_MSG_ON");
+        }
+        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_FLAGS",
+                msgRsyncMax,
+                msgUSB );
     }
 
     /**

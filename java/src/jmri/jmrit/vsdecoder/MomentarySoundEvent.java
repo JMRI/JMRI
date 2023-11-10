@@ -1,5 +1,12 @@
 package jmri.jmrit.vsdecoder;
 
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import jmri.util.swing.JmriMouseListener;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Momentary Sound Event.
  *
@@ -16,17 +23,8 @@ package jmri.jmrit.vsdecoder;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
-import javax.swing.JButton;
-import javax.swing.JComponent;
-
-import jmri.util.swing.JmriMouseListener;
-
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class MomentarySoundEvent extends SoundEvent {
 
     JButton button;

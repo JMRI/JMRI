@@ -6,19 +6,20 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.*;
+
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.nodeiolist.NodeIOListFrame;
 import jmri.util.davidflanagan.HardcopyWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
- * 
+ *
  * Frames for a table view to manage CMRInet node configuration management. c2
  * Created a table view for node configuration operations. Add, Edit, Delete and
  * Update are executed from the NodeTableManager. This class was derived from
@@ -822,7 +823,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         nodeTypeBox.addItem("USIC_SUSIC");
         nodeTypeBox.addItem("CPNODE");
         nodeTypeBox.addItem("CPMEGA");
-     
+
         /*
          * Here add code for other types of nodes
          */
@@ -1292,8 +1293,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         // curNode can never be null at this point. Was this intended to catch
         // an exception?
         if (curNode != null) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("Error1", Integer.toString(nodeAddress)),
-                    "", JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error1", Integer.toString(nodeAddress)),
+                "", JmriJOptionPane.ERROR_MESSAGE);
 
             statusText1.setText(Bundle.getMessage("Error1", Integer.toString(nodeAddress)));
             statusText1.setVisible(true);
@@ -1586,11 +1587,11 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     public void deleteNodeButtonActionConfirm() {
         // confirm deletion with the user
 
-        if (JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(
+        if (JmriJOptionPane.OK_OPTION == JmriJOptionPane.showConfirmDialog(
                 this, Bundle.getMessage("ConfirmDelete1") + "\n"
                 + Bundle.getMessage("ConfirmDelete2"), Bundle.getMessage("ConfirmDeleteTitle"),
-                JOptionPane.OK_CANCEL_OPTION,
-                JOptionPane.WARNING_MESSAGE)) {
+                JmriJOptionPane.OK_CANCEL_OPTION,
+                JmriJOptionPane.WARNING_MESSAGE)) {
 
             // delete this node
             _memo.getTrafficController().deleteNode(deleteNodeAddress);
@@ -1670,15 +1671,15 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             nodeAddrStatic.setVisible(false);
         }
         if (changedNode) {
-            JOptionPane.showMessageDialog(this,
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("Reminder1") + "\n" + Bundle.getMessage("Reminder2"),
                     Bundle.getMessage("ReminderTitle"),
-                    JOptionPane.INFORMATION_MESSAGE);
+                    JmriJOptionPane.INFORMATION_MESSAGE);
         }
         changedNode = false;
 
         setVisible(false);
-        dispose();        
+        dispose();
     }
 
     /**
@@ -1762,9 +1763,6 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                 if (numSet != num2LSearchLights) {
                     log.error("Inconsistent numbers of 2-lead searchlights. numSet = {}, num2LSearchLights = {}", Integer.toString(numSet), Integer.toString(num2LSearchLights));
                 }
-
-                // Force created node to be polled as the default
-                curNode.setOptNet_AUTOPOLL(1);
                 break;
 
             // USIC/SUSIC
@@ -1943,7 +1941,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 //            statusText1.setText(Bundle.getMessage("Error6"));
 //            statusText1.setVisible(true);
             errorInStatus1 = true;
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("Error6"), "", JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error6"), "", JmriJOptionPane.ERROR_MESSAGE);
             resetNotes2();
             return -1;
         }
@@ -1963,7 +1961,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         } catch (NumberFormatException e) {
             statusText1.setText(Bundle.getMessage("Error7"));
             statusText1.setVisible(true);
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("Error7"), "", JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error7"),
+                "", JmriJOptionPane.ERROR_MESSAGE);
             receiveDelay = 0;
             errorInStatus1 = true;
             resetNotes2();
@@ -1972,7 +1971,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         if (receiveDelay < 0) {
             statusText1.setText(Bundle.getMessage("Error8"));
             statusText1.setVisible(true);
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("Error8"), "", JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error8"),
+                "", JmriJOptionPane.ERROR_MESSAGE);
             receiveDelay = 0;
             errorInStatus1 = true;
             resetNotes2();
@@ -1981,7 +1981,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         if (receiveDelay > 65535) {
             statusText1.setText(Bundle.getMessage("Error9"));
             statusText1.setVisible(true);
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("Error9"), "", JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error9"),
+                "", JmriJOptionPane.ERROR_MESSAGE);
             receiveDelay = 0;
             errorInStatus1 = true;
             resetNotes2();
@@ -2004,7 +2005,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         } catch (NumberFormatException e) {
             statusText1.setText(Bundle.getMessage("Error18"));
             statusText1.setVisible(true);
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("Error18"), "", JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error18"),
+                "", JmriJOptionPane.ERROR_MESSAGE);
             pulseWidth = 500;
             errorInStatus1 = true;
             resetNotes2();
@@ -2013,7 +2015,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         if (pulseWidth < 100) {
             statusText1.setText(Bundle.getMessage("Error16"));
             statusText1.setVisible(true);
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("Error16"), "", JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error16"),
+                "", JmriJOptionPane.ERROR_MESSAGE);
             pulseWidth = 100;
             pulseWidthField.setText(Integer.toString(pulseWidth));
             errorInStatus1 = true;
@@ -2023,7 +2026,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         if (pulseWidth > 10000) {
             statusText1.setText(Bundle.getMessage("Error17"));
             statusText1.setVisible(true);
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("Error17"), "", JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error17"),
+                "", JmriJOptionPane.ERROR_MESSAGE);
             pulseWidth = 500;
             pulseWidthField.setText(Integer.toString(pulseWidth));
             errorInStatus1 = true;
@@ -2053,7 +2057,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                 if ((2 * num2LSearchLights) != numBits) {
                     statusText1.setText(Bundle.getMessage("Error10"));
                     statusText1.setVisible(true);
-                    JOptionPane.showMessageDialog(this, Bundle.getMessage("Error10"), "", JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error10"),
+                        "", JmriJOptionPane.ERROR_MESSAGE);
                     errorInStatus1 = true;
                     resetNotes2();
                     return (false);
@@ -2071,7 +2076,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                             statusText1.setText(Bundle.getMessage("Error11"));
                             statusText1.setVisible(true);
                             statusText2.setText(Bundle.getMessage("Error12"));
-                            JOptionPane.showMessageDialog(this, Bundle.getMessage("Error11") + Bundle.getMessage("Error12"), "", JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error11") + Bundle.getMessage("Error12"),
+                                "", JmriJOptionPane.ERROR_MESSAGE);
                             errorInStatus1 = true;
                             errorInStatus2 = true;
                             return (false);
@@ -2088,7 +2094,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                     statusText1.setText(Bundle.getMessage("Error13"));
                     statusText2.setText(Bundle.getMessage("Error14"));
                     statusText1.setVisible(true);
-                    JOptionPane.showMessageDialog(this, Bundle.getMessage("Error13") + Bundle.getMessage("Error14"), "", JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error13") + Bundle.getMessage("Error14"),
+                        "", JmriJOptionPane.ERROR_MESSAGE);
                     errorInStatus1 = true;
                     errorInStatus2 = true;
                     return (false);
@@ -2099,7 +2106,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                     statusText1.setText(Bundle.getMessage("Error15"));
                     statusText1.setVisible(true);
                     errorInStatus1 = true;
-                    JOptionPane.showMessageDialog(this, Bundle.getMessage("Error15"), "", JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error15"),
+                        "", JmriJOptionPane.ERROR_MESSAGE);
                     resetNotes2();
                     return (false);
                 }
@@ -2110,14 +2118,14 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                     int numInput = curNode.numInputCards();
                     // will the number of cards be reduced by this edit?
                     if (numCards < (numOutput + numInput)) {
-                        if (JOptionPane.NO_OPTION == JOptionPane.showConfirmDialog(this,
+                        if ( JmriJOptionPane.YES_OPTION != JmriJOptionPane.showConfirmDialog(this,
                                 Bundle.getMessage("ConfirmUpdate1") + "\n"
                                 + Bundle.getMessage("ConfirmUpdate2") + "\n"
                                 + Bundle.getMessage("ConfirmUpdate3"),
                                 Bundle.getMessage("ConfirmUpdateTitle"),
-                                JOptionPane.YES_NO_OPTION,
-                                JOptionPane.WARNING_MESSAGE)) {
-                            // user said don't update - cancel the update
+                                JmriJOptionPane.YES_NO_OPTION,
+                                JmriJOptionPane.WARNING_MESSAGE)) {
+                            // user did not click yes - cancel the update
                             return (false);
                         }
                     }
@@ -2462,6 +2470,6 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     private final int[] cpnodeOpts = new int[16];  // Local storage for node options
     private final int[] cmrinetOpts = new int[16];  // Local storage for node options
 
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigManagerFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NodeConfigManagerFrame.class);
 
 }

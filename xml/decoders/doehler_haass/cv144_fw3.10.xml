@@ -29,19 +29,37 @@
         <surname>Kok</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Ronald</firstname>
+        <surname>Kuhn</surname>
+      </personname>
+    </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-      <revnumber>1</revnumber>
-      <date>2019-07-28</date>
-      <authorinitials>ALM</authorinitials>
-      <revremark>CV144 addtional bits from fw version 3.10+</revremark>
+      <revnumber>4</revnumber>
+      <date>2023-07-22</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>Include Sound Decoders 2022</revremark>
+    </revision>
+    <revision>
+      <revnumber>3</revnumber>
+      <date>2023-07-17</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>disable Bit 2 for DH06A and PD05A</revremark>
     </revision>
     <revision>
       <revnumber>2</revnumber>
       <date>2020-12-12</date>
       <authorinitials>WK</authorinitials>
       <revremark>Include Sound Decoders 2020</revremark>
+    </revision>
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2019-07-28</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>CV144 addtional bits from fw version 3.10+</revremark>
     </revision>
   </revhistory>
   <variable item="Advanced Group 1 Option 1" CV="144" mask="XXXXXXVX" default="0">
@@ -50,7 +68,7 @@
     <label xml:lang="de">Sofortiges Anfahren nach Stromunterbrechung</label>
     <label xml:lang="fr">Démarrage immédiat après interruption courant</label>
   </variable>
-  <variable item="Radio Power Conversion" CV="144" mask="XXXXXVXX" default="0">
+  <variable item="Radio Power Conversion" CV="144" mask="XXXXXVXX" default="0" exclude="60,131">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Lighting in analog operation</label>
     <label xml:lang="de">Beleuchtung im Analogbetrieb</label>
@@ -59,7 +77,7 @@
     <tooltip xml:lang="de">Spezielles Bit für Beleuchtung im Analogbetrieb</tooltip>
     <tooltip xml:lang="fr">Bit Spécial Lumières en mode Analogique</tooltip>
   </variable>
-  <variable item="Brake Section Output" CV="144" mask="XXXXVXXX" default="0" include="DH21A_2018_04,DH21A_2018_09,DH22A_2018_04,DH22A_2018_09,FH22A_2018_04,FH22A_2018_09,Sound Decoders (2020)">
+  <variable item="Brake Section Output" CV="144" mask="XXXXVXXX" default="0" include="DH21A_2018_04,DH21A_2018_09,DH22A_2018_04,DH22A_2018_09,FH22A_2018_04,FH22A_2018_09,Sound Decoders (2020),Sound Decoders (2022)">
       <enumVal>
         <enumChoice choice="Braking">
             <choice>Braking</choice>
@@ -76,7 +94,7 @@
     <label xml:lang="de">Bremsstreckenausgabe an "GPIO"</label>
     <label xml:lang="fr">Sortie Section Freinage</label>
   </variable>
-  <variable item="Brake with GPIO" CV="144" mask="XXXVXXXX" default="0" include="DH21A_2018_04,DH21A_2018_09,DH22A_2018_04,DH22A_2018_09,FH22A_2018_04,FH22A_2018_09,Sound Decoders (2020)">
+  <variable item="Brake with GPIO" CV="144" mask="XXXVXXXX" default="0" include="DH21A_2018_04,DH21A_2018_09,DH22A_2018_04,DH22A_2018_09,FH22A_2018_04,FH22A_2018_09,Sound Decoders (2020),Sound Decoders (2022)">
       <enumVal>
         <enumChoice choice="Braking">
             <choice>Braking</choice>

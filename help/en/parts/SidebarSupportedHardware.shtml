@@ -9,6 +9,7 @@
 				<li><a href="/help/en/html/hardware/arduino/index.shtml">Arduinos</a>
 				<li><a href="/help/en/html/hardware/XPressNet/index.shtml">Atlas Commander</a>
 				<li><a href="/help/en/html/hardware/bachrus/index.shtml">Bachrus</a>
+				<li><a href="/help/en/html/hardware/bidib/index.shtml">BiDiB</a>
 				<li><a href="/help/en/html/hardware/can/index.shtml">CAN Bus Networks</a>
 				<li><a href="/help/en/html/hardware/can/cbus/index.shtml">CBUS&reg;</a>
 				<li><a href="/help/en/html/hardware/cmri/CMRI.shtml">C/MRI</a>
@@ -20,6 +21,7 @@
 				<li><a href="/help/en/html/hardware/XBee/index.shtml">Digi XBee</a>
 				<li><a href="/help/en/html/hardware/digirails/index.shtml">Digikeijs (Digirails)</a>
 				<li><a href="/help/en/html/hardware/loconet/Digitrax.shtml">Digitrax</a>
+                <li><a href="/help/en/html/hardware/powerline/Compatibility.shtml">DMX 512 (Powerline)</a>
 				<li><a href="/help/en/html/hardware/ecos/index.shtml">ESU ECoS</a>
 				<li><a href="/help/en/html/hardware/loconet/Fleischmann.shtml">Fleischmann</a>
 				<li><a href="/help/en/html/hardware/XPressNet/index.shtml">Hornby</a>

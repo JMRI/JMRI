@@ -6,9 +6,8 @@ import jmri.util.startup.StartupActionsManager;
 import jmri.InstanceManager;
 import jmri.util.FileUtil;
 
+import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistence of PerformScriptModel objects
@@ -35,6 +34,7 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
 
         e.setAttribute("name", FileUtil.getPortableFilename(g.getFileName()));
         e.setAttribute("type", "ScriptFile");
+        e.setAttribute("enabled", g.isEnabled() ? "yes" : "no");
         e.setAttribute("class", this.getClass().getName());
         return e;
     }
@@ -57,6 +57,14 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
         String fileName = shared.getAttribute("name").getValue();
         fileName = FileUtil.getAbsoluteFilename(fileName);
         PerformScriptModel m = new PerformScriptModel();
+
+        Attribute enabled = shared.getAttribute("enabled");
+        if (enabled != null) {
+            m.setEnabled("yes".equals(enabled.getValue()));
+        } else {
+            m.setEnabled(true);
+        }
+
         m.setFileName(fileName);
         InstanceManager.getDefault(StartupActionsManager.class).addAction(m);
         return result;

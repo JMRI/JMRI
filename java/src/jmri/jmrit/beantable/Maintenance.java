@@ -20,13 +20,10 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
-
 import jmri.jmrit.picker.PickListModel;
 
 import jmri.util.ThreadingUtil;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * A collection of static utilities to provide cross referencing information
@@ -155,10 +152,10 @@ public class Maintenance {
             public void actionPerformed(ActionEvent e) {
                 int index = list.getMaxSelectionIndex();
                 if (index < 0) {
-                    javax.swing.JOptionPane.showMessageDialog(null,
+                    JmriJOptionPane.showMessageDialog(null,
                             rbm.getString("OrphanDeleteHint"),
                             rbm.getString("DeleteTitle"),
-                            javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                            JmriJOptionPane.INFORMATION_MESSAGE);
                     return;
                 }
                 int min = list.getMinSelectionIndex();
@@ -290,10 +287,10 @@ public class Maintenance {
             public void actionPerformed(ActionEvent e) {
                 int index = list.getMaxSelectionIndex();
                 if (index < 0) {
-                    javax.swing.JOptionPane.showMessageDialog(null,
+                    JmriJOptionPane.showMessageDialog(null,
                             rbm.getString("OrphanDeleteHint"),
                             rbm.getString("DeleteTitle"),
-                            javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                            JmriJOptionPane.INFORMATION_MESSAGE);
                     return;
                 }
                 int min = list.getMinSelectionIndex();
@@ -1237,12 +1234,12 @@ public class Maintenance {
                     names[0] = "Unknown Type?";
                 }
                 /*
-                 JOptionPane.showMessageDialog(null,
+                 JmriJOptionPane.showMessageDialog(null,
                  MessageFormat.format(rbm.getString("OrphanName"), (Object[])names)+" has "+numListeners+
                  " listeners installed and only "+referenceCount+
                  " references found.\n"+names[0]+
                  " Tables are listeneners.  Check that the table is closed.",
-                 rbm.getString("infoTitle"), JOptionPane.INFORMATION_MESSAGE);
+                 rbm.getString("infoTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
                  */
                 if (text != null) {
                     text.append(MessageFormat.format(rbm.getString("OrphanName"), (Object[]) names) + " has " + numListeners
@@ -1307,5 +1304,5 @@ public class Maintenance {
         });
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Maintenance.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Maintenance.class);
 }

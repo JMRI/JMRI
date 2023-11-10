@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2019 All rights reserved -->
+<!-- Copyright (C) JMRI 2019,2023 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,6 +14,8 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 	<version author="Egbert Broerse" version="1" lastUpdated="20190304"/>
 	<!-- Version 1 - For new 2017-18 decoders. Copied and adapted from Uhlenbrock_76560.xml Uses common parts -->
+	<version author="Ulrich Gerlach" version="2" lastUpdated="20230510"/>
+	<!-- Version 2 - Extension with additional CVs for the Extended Function Mapping -->
 	<!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
 	<decoder>
 		<family name="IntelliDrive2" mfg="Uhlenbrock Elektronik" comment="Decoders not sorted (necessarily) in numerical order">
@@ -37,6 +39,10 @@
 				<!-- Not used, but need to be declared for cvFirst to be read -->
 				<parameter name="cvFirst">true</parameter>
 			</capability>
+			<capability>
+				<name>Ops Mode Delayed Programming</name>
+				<parameter name="Delay">600</parameter>
+			</capability>	
 		</programming>
 		<variables>
 			<xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
@@ -489,11 +495,10 @@
 				<tooltip xml:lang="nl">tijdens Analoog rijden</tooltip>
 			</variable>
 			<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv115lissy.xml"/>
-			<!-- CVs 116-118 (CVs 116-123 for Piko) -->
+			<!-- CVs 109-114, 116-118 (CVs 116-123 for Piko), 150-157 -->
 			<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/optionVars7outputs.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv124.129coupling.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv130.134smoke.xml"/>
-			<!-- SmartSound 4.1 variables, CVs 109 - 111 are on Lights tab -->
 			<!--Rangiertango-->
 			<variable item="Rangiertango Step" CV="135" default="0">
 				<decVal/>
@@ -945,7 +950,7 @@
 				<label xml:lang="de">mit CROSS</label>
 				<label xml:lang="nl">met CROSS</label>
 				<tooltip>only when CROSS-bit is set</tooltip>
-				<tooltip xml:lang="de">nur aktif wenn CROSS-Ausgabebit gesetzt</tooltip>
+				<tooltip xml:lang="de">nur aktiv wenn CROSS-Ausgabebit gesetzt</tooltip>
 			</variable>
 			<variable item="PWM Modulation on A6" CV="176" mask="XVVVVVVV" minOut="8">
 				<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumPwm.xml"/>

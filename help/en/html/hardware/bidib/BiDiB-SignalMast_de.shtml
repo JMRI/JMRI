@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Unterstützung - BiDiB Signalmasten</title>
+  <meta name="author" content="Eckart Meyer">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp.shtml" -->
+
+    <div id="mainContent">
+      <h1>Hardware Unterstützung: BiDiB Signal Masten</h1>
+      (englische Version <a href="BiDiB-SignalMast.shtml">hier</a>)<br/>
+      <p>Diese Seite beschreibt die Unterstützung von JMRI für BiDiB-native Signalmasten. Es ist Teil von JMRIs
+      <a href="index_de.shtml">Dokumentation der BiDiB-Unterstützung</a>.</p>
+       
+      <h2>BiDiB Signalmasten</h2>
+
+      <h3>BiDiB-Signalmasten hinzufügen und bearbeiten</h3>
+        <p>
+        Anfangs gab (und gibt) es in JMRI dafür Signal-Heads, dort definiert man einzelne Lampen, die ihrerseits "Turnouts" steuern, denen dann BiDiB-Ports zugeordnet werden können.
+        </p><p>
+        In BiDiB sind für Signale allerdings Accessories vorgesehen, die nicht nur Ein und Aus können, sondern die eine Anzahl von "Aspects" haben und über Macros eingestellt werden kann, welche Lampen bei welchen Aspect leuchten sollen. Nebenbei wird bei Accessories auch die Übertragung zur Hardware mittels Bestätigungs-Meldungen gesichert. Die Programmierung solcher Accessories und Macros geht mit dem BiDiBWizard, bitte die Doku dazu dort lesen.
+        </p><p>
+        In JMRI wurden dann "Signal Masts" erfunden, die ein eigenes Objekt darstellen, der Systemname wird von JMRI allerdings vorgegeben, enthält aber in Klammern eine Connection-spezifische Adresse (ein Connection ist das Bindeglied zur jeweiligen Hardware, man könnte auch "Treiber" sagen). Es muss daher eine explizite Unterstützung für BiDiB geben. Es gibt ein extra SignalMast Objekt "BiDiB Accessory Aspect", das ein BiDiB-Accessory unterstützt.
+        </p><p>
+        Wie legt man also ein Signal Mast an? Man öffnet die Tabelle "Signal Masts" unter Tools->Tables und klickt "Add" rechts unten.
+        </p>
+        <p><a href="images/BiDiB_Add_BiDiB_SignalMast.png"><img src="images/BiDiB_Add_BiDiB_SignalMast.png" alt="Add Signal Mast Dialog" height="487" ></a></p>
+        <p>
+        Der Benutzername ist frei wählbar, es muss ein Signalsystem ausgewählt werden (hier DB-HV-1969), da dieses die Aspekte des Signals definiert. In Mast Type wird dadurch eine Liste erstellt, die die Signaltypen im HV-System darstellt. In diesem Fall ein Ausfahrtsignal mit Vorsignal. Als Mast Driver muss natürlich "BiDiB Accessory Aspect" gewählt werden, die Connection ist BiDiB und unter Accessory Address wird die BiDiB-Adresse des Accessories eingestellt, wie man sie von den anderen Objekten kennt, in diesem Fall ist es ein BiDiB-Knoten mit dem Username "N210" und dort Accessory 3 (man kann auch explizit "N210:a3" schreiben, aber bei Knoten, die Accessories haben, ist "a" default).
+        </p>
+        <p>
+        Die folgenden Felder geben die möglichen Aspekts eines solchen Signals an, es ist die Aspekt-Nummer einzutragen, die man mit dem BiDiBWizard in der Hardware definiert hat. Im Beispiel wurden die Aspekte einfach von oben nach unten durchnummeriert, nur der STOP Aspekt (hier Hp00) sollte immer Aspekt 0 haben.
+
+        Der Button "Create" erzeugt das Signal und die Tabelle enthält einen neuen Eintrag:
+        </p>
+        <p><a href="images/BiDiB_Table_SignalMasts.png"><img src="images/BiDiB_Table_SignalMasts.png" alt="Signal Mast Table" height="500" ></a></p>
+        <p>
+        Die Aspekte können nun manuell aus der Liste in der Spalte „Aspect“ eingestellt werden. Der Signalmast kann nun in Panels verwendet werden.
+        
+      <h4>BiDiB Signalmast Systemnamen</h4>
+      Gültige Systemnamen sehen folgendermassen aus:
+      <ul>
+        <li>BF$bsm:DB-HV-1969:exit_distant_short(N210:3)</li>
+      </ul>
+      wobei die einzelnen Felder bedeuten:
+      <ul>
+        <li>B - Der Systemverbindungsbuchstabe</li>
+
+        <li>F - Zeigt einen Signalmast an</li>
+
+        <li>$bsm - Zeigt einen BiDiB Signalmast an</li>
+
+        <li>DB-HV-1969 - Signal System, das deutsche DB HV 1969 System in diesem Fall</li>
+
+        <li>exit_distant_short - Signaltyp, kombiniertes Ausfahrtsignal mit Vorsignal in diesem Fall</li>
+
+        <li>N210:3 - BiDiB Accessory Adresse, Accessory 3 des BiDiB Knotens N210 in diesem Fall</li>
+      </ul>
+
+      <h3>JMRI Hilfe</h3>
+
+      <p>Zurück zur <a href="index.shtml">Hauptseite der BiDiB-Hilfe</a></p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

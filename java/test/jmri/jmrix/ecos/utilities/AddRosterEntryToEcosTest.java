@@ -1,12 +1,13 @@
 package jmri.jmrix.ecos.utilities;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-
-import jmri.util.JUnitUtil;
 import jmri.jmrix.ecos.EcosInterfaceScaffold;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import jmri.jmrix.ecos.EcosTrafficController;
+import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
+
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
@@ -19,7 +20,25 @@ public class AddRosterEntryToEcosTest {
         EcosTrafficController tc = new EcosInterfaceScaffold();
         EcosSystemConnectionMemo memo = new EcosSystemConnectionMemo(tc);
         AddRosterEntryToEcos t = new AddRosterEntryToEcos("Add Roster Entry Test",memo);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
+        tc.terminateThreads();
+        memo.dispose();
+    }
+
+    @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    public void testAddRosterEntryToEcosActionPerformed(){
+        
+        EcosTrafficController tc = new EcosInterfaceScaffold();
+        EcosSystemConnectionMemo memo = new EcosSystemConnectionMemo(tc);
+        AddRosterEntryToEcos t = new AddRosterEntryToEcos("Add Roster Entry Test",memo);
+        Assertions.assertNotNull(t);
+        Thread tr = JemmyUtil.createModalDialogOperatorThread(
+            Bundle.getMessage("AddToEcosTitle"), Bundle.getMessage("ButtonCancel"));
+        t.actionPerformed(null);
+        JUnitUtil.waitFor(() -> !tr.isAlive(), "AddToEcos dialog found and clicked Cancel");
+        tc.terminateThreads();
+        memo.dispose();
     }
 
     @BeforeEach
@@ -32,10 +51,7 @@ public class AddRosterEntryToEcosTest {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
-
-    // private final static Logger log = LoggerFactory.getLogger(AddRosterEntryToEcosTest.class.getName());
 
 }

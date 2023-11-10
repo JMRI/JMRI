@@ -4,7 +4,8 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: NCE Clock Monitor</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Route Add Edit"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI NCE clock monitor fastclock source">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->

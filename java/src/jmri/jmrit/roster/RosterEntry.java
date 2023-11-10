@@ -1,6 +1,7 @@
 package jmri.jmrit.roster;
 
 import com.fasterxml.jackson.databind.util.StdDateFormat;
+
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.io.File;
@@ -9,11 +10,12 @@ import java.io.IOException;
 import java.io.Writer;
 import java.text.*;
 import java.util.*;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+
 import jmri.BasicRosterEntry;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -26,11 +28,11 @@ import jmri.util.FileUtil;
 import jmri.util.StringUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.jdom.LocaleSelector;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * RosterEntry represents a single element in a locomotive roster, including
@@ -137,7 +139,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      *
      * @see "http://normen.railcommunity.de/RCN-212.pdf"
      */
-    public int getMAXFNNUM() {
+    public int getMaxFnNumAsInt() {
         return Integer.parseInt(getMaxFnNum());
     }
 
@@ -1373,11 +1375,11 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         } catch (Exception e) {
             log.error("error during locomotive file output", e);
             try {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("ErrorSavingText") + "\n"
                         + e.getMessage(),
                         Bundle.getMessage("ErrorSavingTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
             } catch (HeadlessException he) {
                 // silently ignore inability to display dialog
             }
@@ -1415,11 +1417,11 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         } catch (Exception e) {
             log.error("error during locomotive file output", e);
             try {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("ErrorSavingText") + "\n"
                         + e.getMessage(),
                         Bundle.getMessage("ErrorSavingTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
             } catch (HeadlessException he) {
                 // silently ignore inability to display dialog
             }
@@ -1464,10 +1466,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         } catch (Exception ex) {
             log.error("Error reading roster entry", ex);
             try {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("ErrorReadingText") + "\n" + _fileName,
                         Bundle.getMessage("ErrorReadingTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
             } catch (HeadlessException he) {
                 // silently ignore inability to display dialog
             }
@@ -1892,6 +1894,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RosterEntry.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RosterEntry.class);
 
 }

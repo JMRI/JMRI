@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - BiDiB Signal Masts</title>
+  <meta name="author" content="Eckart Meyer">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp.shtml" -->
+
+    <div id="mainContent">
+      <h1>Hardware Support: BiDiB Signal Masts</h1>
+      (german version <a href="BiDiB-SignalMast_de.shtml">here</a>)<br/>
+      <p>This page describes JMRI's support for BiDiB-native Signal Masts. It's part of JMRI's
+      <a href="index.shtml">documentation of its BiDiB support</a>.</p>
+
+      <h2>BiDiB Signal Masts</h2>
+
+      <h3>Adding and Editing BiDiB Signal Masts</h3>
+        <p>
+        Initially there were (and are) signal heads in JMRI, where you define individual lamps, which in turn control "turnouts", to which BiDiB ports can then be assigned.
+        </p><p>
+        In BiDiB, however, accessories are provided for signals that can not only be turned on and off, but also have a number of "aspects" and macros can be used to set which lamps should light up for a specific aspect. In addition, with Accessories the transfer to the hardware is secured using confirmation messages. The programming of such accessories and macros can be done with the BiDiBWizard, please read the documentation there.
+        </p><p>
+        In JMRI, "signal masts" were then invented, which represent their own object, although the system name is specified by JMRI, but contains a connection-specific address in brackets (a connection is the link to the respective hardware, you could also say "driver"). This means that explicit support for BiDiB has to be provided. There is an extra SignalMast object "BiDiB Accessory Aspect" that supports a BiDiB accessory.
+        </p><p>
+        So how do you set up a signal mast? Open the "Signal Masts" table under Tools->Tables and click "Add" at the bottom right.
+        </p>
+        <p><a href="images/BiDiB_Add_BiDiB_SignalMast.png"><img src="images/BiDiB_Add_BiDiB_SignalMast.png" alt="Add Signal Mast Dialog" height="487" ></a></p>
+        <p>
+        User name can be freely selected, a signal system must be selected (DB-HV-1969 in this case), as this defines the aspects of the signal. This creates a list in Mast Type that represents the signal types in the signal system. In this case the signal type is an exit signal with a distant signal. Of course, "BiDiB Accessory Aspect" must be selected as the Mast Driver, the connection is BiDiB and the BiDiB address of the accessory is set under Accessory Address, as is known from the other objects, in this case it is Accessory 3 at a BiDiB node with the Username "N210" (you can also explicitly write "N210:a3", but for nodes that have accessories, "a" is default).
+        </p>
+        <p>
+        The following fields indicate the possible aspects of such a signal. The aspect number that has been defined in the hardware with the BiDiBWizard must be entered. In the example, the aspects were simply numbered from top to bottom, only the STOP aspect (Hp00 in this case) should always have aspect 0.
+
+        The "Create" button creates the signal and the table contains a new entry:
+        </p>
+        <p><a href="images/BiDiB_Table_SignalMasts.png"><img src="images/BiDiB_Table_SignalMasts.png" alt="Signal Mast Table" height="500" ></a></p>
+        <p>
+        The aspects can now be set manually from the list in column "Aspect". The signal mast can now be used in the panels.
+        
+      <h4>BiDiB Signal Mast System Names</h4>
+      Valid BiDiB Signal Mast system names look like:
+      <ul>
+        <li>BF$bsm:DB-HV-1969:exit_distant_short(N210:3)</li>
+      </ul>
+      where the parts are
+      <ul>
+        <li>B - The system connection letter</li>
+
+        <li>F - Indicates signal mast</li>
+
+        <li>$bsm - indicates an BiDiB mast</li>
+
+        <li>DB-HV-1969 - signal system, german DB HV 1969 in this case</li>
+
+        <li>exit_distant_short - mast type, combined exit and distance signal in this case</li>
+
+        <li>N210:3 - BiDiB Accessory address, Accessory 3 at BiDiB node N210 in this case</li>
+      </ul>
+
+      <h3>JMRI Help</h3>
+
+      <p>Back to the <a href="index.shtml">main BiDiB Help page</a></p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

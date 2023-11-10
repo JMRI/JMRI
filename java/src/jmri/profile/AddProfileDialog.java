@@ -24,20 +24,20 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
+
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.WindowConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+
 import jmri.util.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Add a new {@link Profile} to JMRI.
@@ -266,7 +266,7 @@ public class AddProfileDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_profileNameActionPerformed
 
     private void btnBrowseActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnBrowseActionPerformed
-        JFileChooser chooser = new JFileChooser(this.profileLocation.getText());
+        JFileChooser chooser = new jmri.util.swing.JmriJFileChooser(this.profileLocation.getText());
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         // TODO: Use NetBeans OpenDialog if its availble
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -318,7 +318,7 @@ public class AddProfileDialog extends javax.swing.JDialog {
             this.dispose();
         } catch (IOException | IllegalArgumentException ex) {
             this.setCursor(Cursor.getDefaultCursor());
-            JOptionPane.showMessageDialog(this, ex.getLocalizedMessage(), "Error Creating Profile", JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, ex.getLocalizedMessage(), "Error Creating Profile", JmriJOptionPane.ERROR_MESSAGE);
             log.error("Error saving profile", ex);
         }
     }//GEN-LAST:event_btnOkActionPerformed
@@ -353,7 +353,7 @@ public class AddProfileDialog extends javax.swing.JDialog {
     private JTextField profileLocation;
     private JTextField profileName;
     // End of variables declaration//GEN-END:variables
-    private static final Logger log = LoggerFactory.getLogger(AddProfileDialog.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AddProfileDialog.class);
 
     void setSourceProfile(Profile profile) {
         this.source = profile;

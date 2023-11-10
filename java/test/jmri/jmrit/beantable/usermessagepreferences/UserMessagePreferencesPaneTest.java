@@ -4,8 +4,6 @@ import jmri.swing.PreferencesPanelTestBase;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -20,6 +18,7 @@ public class UserMessagePreferencesPaneTest extends PreferencesPanelTestBase<Use
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDefaultUserMessagePreferences();
         prefsPanel = new UserMessagePreferencesPane();
     }

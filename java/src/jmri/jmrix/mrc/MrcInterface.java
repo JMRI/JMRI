@@ -7,57 +7,57 @@ package jmri.jmrix.mrc;
  */
 public interface MrcInterface {
 
-    public void sendMrcMessage(MrcMessage msg);
+    void sendMrcMessage(MrcMessage msg);
 
-    public void addTrafficListener(int Mask, MrcTrafficListener l);
+    void addTrafficListener(int Mask, MrcTrafficListener l);
 
-    public void removeTrafficListener(int Mask, MrcTrafficListener l);
+    void removeTrafficListener(int Mask, MrcTrafficListener l);
 
-    public void changeTrafficListener(int Mask, MrcTrafficListener l);
+    void changeTrafficListener(int Mask, MrcTrafficListener l);
 
     boolean status();   // true if the implementation is operational
 
     /**
      * Mask value to request notification of all incoming messages
      */
-    public static final int ALL = ~0;
+    int ALL = ~0;
 
     /**
      * Mask value to request notification of messages effecting throttle changes
      */
-    public static final int THROTTLEINFO = 1;
+    int THROTTLEINFO = 1;
 
     /**
      * (MrcInter Mask value to request notification of messages associated with
      * programming
      */
-    public static final int PROGRAMMING = 2;
+    int PROGRAMMING = 2;
 
     /**
      * Mask value to request notification of messages indicating changes in
      * turnout status
      */
-    public static final int TURNOUTS = 4;
+    int TURNOUTS = 4;
 
     /**
      * Mask value to request notification of messages indicating changes in
      * sensor status
      */
-    public static final int SENSORS = 8;
+    int SENSORS = 8;
 
     /**
      * Mask value to request notification of messages associated with layout
      * power
      */
-    public static final int POWER = 16;
+    int POWER = 16;
 
     /**
      * Mask value to request notification of messages associated with layout
      * power
      */
-    public static final int CLOCK = 32;
+    int CLOCK = 32;
 
-    public static final int POLL = 64;
+    int POLL = 64;
 }
 
 

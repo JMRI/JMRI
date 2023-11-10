@@ -27,6 +27,7 @@ public class IEEE802154MessageTest extends jmri.jmrix.AbstractMessageTestBase {
         m = new IEEE802154Message(3);
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = null;

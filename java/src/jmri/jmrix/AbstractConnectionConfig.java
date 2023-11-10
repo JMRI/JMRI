@@ -13,6 +13,7 @@ import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.ValidatedTextField;
 
 /**
@@ -282,14 +283,14 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
             systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
         }
         if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) { // in use
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
             systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
         }
     }
 
     private void checkNameEntry(@Nonnull PortAdapter adapter) {
         if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
     }

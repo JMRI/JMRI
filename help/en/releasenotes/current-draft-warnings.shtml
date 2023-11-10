@@ -1,7 +1,7 @@
 
     <!-- contains new warnings for the release under development -->
     <li>
-        None yet
+        MQTT Connection - Version 5.5.5 used the incorrect default MQTT topics for Throttle Direction and Function - they had the same topic instead of individual ones.  The documentation was correct but the code wasn't.
     </li>
     <li>
     </li>

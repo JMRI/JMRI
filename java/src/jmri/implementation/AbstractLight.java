@@ -4,7 +4,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
-import jmri.JmriException;
 import jmri.Light;
 import jmri.LightControl;
 

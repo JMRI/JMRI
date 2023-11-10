@@ -10,8 +10,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.*;
 
-import javax.swing.*;
-import javax.swing.text.Document;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
@@ -442,30 +440,6 @@ public class SplitEnumVariableValue extends VariableValue
         return (Long.toUnsignedString(v));
     }
 
-    /*
-    int[] getCvValsFromTextField() {
-        long newEntry;  // entered value
-        try {
-            newEntry = Long.parseLong((String)_value.getSelectedItem());
-        } catch (java.lang.NumberFormatException ex) {
-            newEntry = 0;
-        }
-
-        // calculate resulting number
-        long newVal = (newEntry - mOffset) / mFactor;
-        log.debug("Variable={};newEntry={};newVal={} with Offset={} + Factor={} applied", _name, newEntry, newVal, mOffset, mFactor);
-
-        int[] retVals = new int[cvCount];
-
-        // extract individual values via masks
-        for (int i = 0; i < cvCount; i++) {
-            retVals[i] = (((int) (newVal >>> cvList.get(i).startOffset))
-                    & (maskValAsInt(cvList.get(i).cvMask) >>> offsetVal(cvList.get(i).cvMask)));
-        }
-        return retVals;
-    }
-    */
-
     /**
      * Contains numeric-value specific code.
      * <br><br>
@@ -480,7 +454,8 @@ public class SplitEnumVariableValue extends VariableValue
             long newVal = 0;
             for (int i = 0; i < intVals.length; i++) {
                 newVal = newVal | (((long) intVals[i]) << cvList.get(i).startOffset);
-                log.debug("Variable={}; i={}; newVal={}", _name, i, getTextFromValue(newVal));
+                log.debug("Variable={}; i={}; intVals={}; startOffset={}; newVal={}",
+                    _name, i, intVals[i], cvList.get(i).startOffset, getTextFromValue(newVal));
             }
             log.debug("Variable={}; set value to {}", _name, newVal);
             setLongValue(newVal);  // check for duplicate is done inside setLongValue
@@ -503,6 +478,7 @@ public class SplitEnumVariableValue extends VariableValue
      */
     void exitField(){
         // there may be a lost focus event left in the queue when disposed so protect
+        log.trace("exitField starts");
         if (_value != null && !oldContents.equals(_value.getSelectedItem())) {
             long newFieldVal = 0;
             try {
@@ -520,45 +496,13 @@ public class SplitEnumVariableValue extends VariableValue
                 prop.firePropertyChange("Value", oldVal, newVal);
             }
         }
+        log.trace("exitField ends");
     }
 
     boolean _fieldShrink = false;
 
-    /*
-    @Override
-    void updatedTextField() {
-        //log.debug("Variable='{}'; enter updatedTextField in {} with TextField='{}'", _name, (this.getClass().getSimpleName()), _textField.getText());
-        // called for new values in text field - set the CVs as needed
-
-        int[] retVals = getCvValsFromTextField();
-
-        // combine with existing values via mask
-        for (int j = 0; j < cvCount; j++) {
-            int i = j;
-            // special care needed if _textField is shrinking
-            if (_fieldShrink) {
-                i = (cvCount - 1) - j; // reverse CV updating order
-            }
-            log.debug("retVals[{}]={};cvList.get({}).cvMask{};offsetVal={}", i, retVals[i], i, cvList.get(i).cvMask, offsetVal(cvList.get(i).cvMask));
-            int cvMask = maskValAsInt(cvList.get(i).cvMask);
-            CvValue thisCV = cvList.get(i).thisCV;
-            int oldCvVal = thisCV.getValue();
-            int newCvVal = (oldCvVal & ~cvMask)
-                    | ((retVals[i] << offsetVal(cvList.get(i).cvMask)) & cvMask);
-            log.debug("{};cvMask={};oldCvVal={};retVals[{}]={};newCvVal={}", cvList.get(i).cvName, cvMask, oldCvVal, i, retVals[i], newCvVal);
-
-            // cv updates here trigger updated property changes, which means
-            // we're going to get notified sooner or later.
-            if (newCvVal != oldCvVal) {
-                thisCV.setValue(newCvVal);
-            }
-        }
-        log.debug("Variable={}; exit updatedTextField", _name);
-    }
-    */
-
     void updatedDropDown() {
-        log.debug("Variable='{}'; enter updatedDropDown in {} with DropDownValue='{}'", _name, (this.getClass().getSimpleName()), _value);
+        log.debug("Variable='{}'; enter updatedDropDown in {} with DropDownValue='{}'", _name, (this.getClass().getSimpleName()), _value.getSelectedIndex());
         // called for new values in text field - set the CVs as needed
 
         int[] retVals = getCvValsFromSingleInt(getIntValue());
@@ -586,20 +530,23 @@ public class SplitEnumVariableValue extends VariableValue
     int[] getCvValsFromSingleInt(long newEntry) {
         // calculate resulting number
         long newVal = (newEntry - mOffset) / mFactor;
-        log.debug("Variable={};newEntry={};newVal={} with Offset={} + Factor={} applied", _name, newEntry, newVal, mOffset, mFactor);
+        log.debug("getCvValsFromSingleInt Variable={};newEntry={};newVal={} with Offset={} + Factor={} applied", _name, newEntry, newVal, mOffset, mFactor);
 
         int[] retVals = new int[cvCount];
 
         // extract individual values via masks
         for (int i = 0; i < cvCount; i++) {
+            log.trace("      Starting with newVal={} startOffset={} mask={} offsetVal={}",
+                        newVal, cvList.get(i).startOffset, maskValAsInt(cvList.get(i).cvMask), offsetVal(cvList.get(i).cvMask));
             retVals[i] = (((int) (newVal >>> cvList.get(i).startOffset))
                     & (maskValAsInt(cvList.get(i).cvMask) >>> offsetVal(cvList.get(i).cvMask)));
+            log.trace("      Calculated {} entry is {}", i, retVals[i]);
         }
         return retVals;
     }
 
     /**
-     * ActionListener implementation.
+     * ActionListener implementation. Called by new selection in the JComboBox representation.
      * <p>
      * Invokes {@link #exitField exitField()}
      *
@@ -611,14 +558,13 @@ public class SplitEnumVariableValue extends VariableValue
         // if from an alternate rep, it will contain the value to select
         if (e != null){
             if (log.isDebugEnabled()) {
-                log.debug("{} start action event: {}", label(), e);
+                log.debug("Variable = {} start action event cmd={}", label(), e.getActionCommand());
             }
             if (!(e.getActionCommand().equals(""))) {
                 // is from alternate rep
+                log.debug("{} action event {} was from alternate rep", label(), e.getActionCommand());
                 _value.setSelectedItem(e.getActionCommand());
-                if (log.isDebugEnabled()) {
-                    log.debug("{} action event was from alternate rep", label());
-                }
+
                 // match and select in tree
                 if (_nstored > 0) {
                     for (int i = 0; i < _nstored; i++) {
@@ -636,8 +582,6 @@ public class SplitEnumVariableValue extends VariableValue
                 }
             }
 
-            int oldVal = getIntValue();
-
             // called for new values - set the CV as needed
             CvValue cv = _cvMap.get(getCvNum());
             if (cv == null) {
@@ -645,19 +589,8 @@ public class SplitEnumVariableValue extends VariableValue
                 return;
             }
 
-            int oldCv = cv.getValue();
-            int newVal = getIntValue();
-            int max = (int)_maxVal;
-            int newCv = setValueInCV(oldCv, newVal, getMask(), max-1);
-            if (newCv != oldCv) {
-                cv.setValue(newCv);  // to prevent CV going EDITED during loading of decoder file
+            updatedDropDown();
 
-                // notify  (this used to be before setting the values)
-                log.debug("{} about to firePropertyChange", label());
-                prop.firePropertyChange("Value", null, oldVal);
-                log.debug("{} returned to from firePropertyChange", label());
-            }
-            log.debug("{} end action event saw oldCv={} newVal={} newCv={}", label(), oldCv, newVal, newCv);
         }
         exitField();
     }
@@ -712,7 +645,7 @@ public class SplitEnumVariableValue extends VariableValue
         if (_value.getSelectedIndex() >= _valueArray.length || _value.getSelectedIndex() < 0) {
             log.error("trying to get value {} too large for array length {} in var {}", _value.getSelectedIndex(), _valueArray.length, label());
         }
-        log.debug("SelectedIndex={}", _value.getSelectedIndex());
+        log.debug("SelectedIndex={} value={}", _value.getSelectedIndex(), _valueArray[_value.getSelectedIndex()]);
         return _valueArray[_value.getSelectedIndex()];
     }
 
@@ -751,6 +684,35 @@ public class SplitEnumVariableValue extends VariableValue
         }
     }
 
+    private void addReservedEntry(long value) {
+        log.warn("Variable \"{}\" had to add reserved entry for {}", _name, value);
+        // We can be commanded to a number that hasn't been defined.
+        // But that's OK for certain applications.
+        // When this happens, we add enum values as needed
+        log.debug("Create new item with value {} count was {} in {}", value, _value.getItemCount(), label());
+
+        // lengthen arrays
+        _valueArray = java.util.Arrays.copyOf(_valueArray, _valueArray.length + 1);
+
+        _itemArray = java.util.Arrays.copyOf(_itemArray, _itemArray.length + 1);
+
+        _pathArray = java.util.Arrays.copyOf(_pathArray, _pathArray.length + 1);
+
+        addItem("Reserved value " + value, (int)value);
+
+        // update the JComboBox
+        _value.addItem(_itemArray[_nstored - 1]);
+        _value.setSelectedItem(_itemArray[_nstored - 1]);
+
+        // tell trees to redisplay & select
+        for (JTree tree : trees) {
+            ((DefaultTreeModel) tree.getModel()).reload();
+            tree.setSelectionPath(_pathArray[_nstored - 1]);
+            // ensure selection is in visible portion of JScrollPane
+            tree.scrollPathToVisible(_pathArray[_nstored - 1]);
+        }
+    }
+
     public void setLongValue(long value) {
         log.debug("Variable={}; enter setLongValue {}", _name, value);
         long oldVal;
@@ -763,19 +725,18 @@ public class SplitEnumVariableValue extends VariableValue
 
         int lengthOfArray = this._valueArray.length;
 
+        boolean foundIt = false; // did we find entry? If not, have to add one
         for (int i = 0; i < lengthOfArray; i++) {
-          if(this._valueArray[i] == value){
+          if (this._valueArray[i] == value){
+              log.trace("{} setLongValue setSelectedIndex to {}", _name, i);
               _value.setSelectedIndex(i);
+              foundIt = true;
           }
         }
-       /*
-        for (int i = 0; i < num; i++) {
-          Object item = _value.getItemAt(i);
-          if(Long.parseLong((String)item) == value){
-              _value.setSelectedIndex(i);
-          }
+        if (!foundIt) {
+            addReservedEntry(value);
         }
-        */
+
         if (oldVal != value || getState() == ValueState.UNKNOWN) {
             actionPerformed(null);
         }
@@ -865,11 +826,17 @@ public class SplitEnumVariableValue extends VariableValue
         }
     }
 
+    /**
+     * Select a specific value in the JComboBox display
+     * or, if need be, create another one
+     * @param value The new numerical value for the complete enum variable.
+     */
     protected void selectValue(int value) {
         if (_nstored > 0 && value != 0) {
             for (int i = 0; i < _nstored; i++) {
                 if (_valueArray[i] == value) {
                     //found it, select it
+                    log.debug("{}: selectValue sets to {}", _name, i);
                     _value.setSelectedIndex(i);
 
                     // now select in the tree
@@ -883,15 +850,20 @@ public class SplitEnumVariableValue extends VariableValue
                 }
             }
         }
+
+        // if we got to here, we need to add a new reserved value entry
+        addReservedEntry(value);
     }
 
     java.util.List<Component> reps = new java.util.ArrayList<>();
 
-    public int retry = 0;
-    int _progState = 0;
+    public int retry = 0; // counts retrys of a single CV
+
+    int _progState = 0; // coded by the following
     static final int IDLE = 0;
-    static final int READING_FIRST = 1;
-    static final int WRITING_FIRST = -1;
+    static final int READING_FIRST = 1; // positive values are reading, i.e. 2 is read 2nd CV
+    static final int WRITING_FIRST = -1; // negative values are writing, i.e. -2 is write 2nd CV
+
     static final int bitCount = Long.bitCount(~0);
     static final long intMask = Integer.toUnsignedLong(~0);
 
@@ -961,14 +933,14 @@ public class SplitEnumVariableValue extends VariableValue
         setBusy(true);  // will be reset when value changes
         //super.setState(READ);
         //_value.setSelectedIndex(0); // start with a clean slate
-        for (int i = 0; i < cvCount; i++) { // mark all Cvs as unknown otherwise problems occur
-            cvList.get(i).thisCV.setState(ValueState.UNKNOWN);
+        for (int i = 0; i < cvCount; i++) { // mark all Cvs as to be read
+            cvList.get(i).thisCV.setState(ValueState.READ);
         }
         //super.setState(READING_FIRST);
         _progState = READING_FIRST;
         retry = 0;
-        log.info("Variable={}; Start CV read", _name);
-        log.info("Reading CV={}", cvList.get(0).cvName);
+        log.debug("Variable={}; Start CV read", _name);
+        log.debug("    Reading CV={}", cvList.get(0).cvName);
         (cvList.get(0).thisCV).read(_status); // kick off the read sequence
     }
 
@@ -983,9 +955,14 @@ public class SplitEnumVariableValue extends VariableValue
         if (_progState != IDLE) {
             log.warn("Variable={}; Programming state {}, not IDLE, in write()", _name, _progState);
         }
-        _progState = WRITING_FIRST;
-        log.info("Variable={}; Start CV write", _name);
-        log.info("Writing CV={}", cvList.get(0).cvName);
+
+         for (int i = 0; i < cvCount; i++) { // mark all Cvs as to be written
+            cvList.get(i).thisCV.setState(ValueState.STORED);
+        }
+
+       _progState = WRITING_FIRST;
+        log.debug("Variable={}; Start CV write", _name);
+        log.debug("     Writing CV={}", cvList.get(0).cvName);
         (cvList.get(0).thisCV).write(_status); // kick off the write sequence
     }
 
@@ -1021,36 +998,45 @@ public class SplitEnumVariableValue extends VariableValue
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // notification from CV; check for Value being changed
+        log.trace("propertyChange for {} {} _progState = {} from {}", e.getPropertyName(), e.getNewValue(), _progState, e.getSource());
         switch (e.getPropertyName()) {
             case "Busy":
+
                 if (((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
-                    if ( 0 >= _progState){
-                        setToRead(false);
-                        setToWrite(false);  // some programming operation just finished
-                        setBusy(false);
+
+                    // check for expected cv
+                    if ( (_progState >= READING_FIRST || _progState <= WRITING_FIRST ) && e.getSource() != cvList.get(Math.abs(_progState) - 1).thisCV ) {
+                        log.trace("From \"{}\" but expected \"{}\", ignoring",
+                            e.getSource(), cvList.get(Math.abs(_progState) - 1).thisCV );
+                        break;
                     }
+
                     if (_progState >= READING_FIRST){
                         ValueState curState = (cvList.get(Math.abs(_progState) - 1).thisCV).getState();
+                        log.trace("propertyChange Busy _progState={} curState={}", _progState, curState);
                         if (curState == ValueState.READ) {   // was the last read successful?
                             retry = 0;
+                            log.debug("   Variable={}; Busy finds ValueState.READ cvCount={}", _name, cvCount);
                             if (Math.abs(_progState) < cvCount) {   // read next CV
                                 _progState++;
-                                log.info("Reading CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
+                                log.debug("Increment _progState to {}, reading CV={}", _progState, cvList.get(Math.abs(_progState) - 1).cvName);
                                 (cvList.get(Math.abs(_progState) - 1).thisCV).read(_status);
                             } else {  // finally done, set not busy
-                                log.info("Variable={}; Busy goes false with success READING _progState {}", _name, _progState);
+                                log.debug("Variable={}; Busy goes false with success READING _progState {}", _name, _progState);
                                 _progState = IDLE;
                                 setToRead(false);
                                 setBusy(false);
                             }
                         } else {   // read failed
-                            log.info("Variable={}; Busy goes false with failure READING _progState {}", _name, _progState);
+                            log.debug("   Variable={}; Busy finds other than ValueState.READ _progState {}", _name, _progState);
                             if (retry < RETRY_COUNT) { //have we exhausted retry count?
                                 retry++;
-                                _progState++;
+                                // stay on same sequence number for retry, don't update _progState
                                 (cvList.get(Math.abs(_progState) - 1).thisCV).read(_status);
                             } else {
+                                log.warn("Retry failed for CV{}" ,(cvList.get(Math.abs(_progState) - 1).thisCV).toString());
                                 _progState = IDLE;
+                                setToRead(false);
                                 setBusy(false);
                                 if (RETRY_COUNT > 0) {
                                     for (int i = 0; i < cvCount; i++) { // mark all CVs as unknown otherwise problems may occur
@@ -1063,26 +1049,27 @@ public class SplitEnumVariableValue extends VariableValue
                         if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == ValueState.STORED) {   // was the last read successful?
                             if (Math.abs(_progState) < cvCount) {   // write next CV
                                 _progState--;
-                                log.info("Writing CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
+                                log.debug("Writing CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
                                 (cvList.get(Math.abs(_progState) - 1).thisCV).write(_status);
                             } else {  // finally done, set not busy
-                                log.info("Variable={}; Busy goes false with success WRITING _progState {}", _name, _progState);
+                                log.debug("Variable={}; Busy goes false with success WRITING _progState {}", _name, _progState);
                                 _progState = IDLE;
                                 setBusy(false);
                                 setToWrite(false);
                             }
-                        } else {   // read failed we're done!
-                            log.info("Variable={}; Busy goes false with failure WRITING _progState {}", _name, _progState);
+                        } else {   // write failed we're done!
+                            log.debug("Variable={}; Busy goes false with failure WRITING _progState {}", _name, _progState);
                             _progState = IDLE;
+                            setToWrite(false);
                             setBusy(false);
                         }
                     }
                 }
                 break;
             case "State": {
-                log.info("Possible {} variable state change due to CV state change, so propagate that", _name);
+                log.debug("Possible {} variable state change due to CV state change, so propagate that", _name);
                 ValueState varState = getState(); // AbstractValue.SAME;
-                log.info("{} variable state was {}", _name, varState.getName());
+                log.debug("{} variable state was {}", _name, varState.getName());
                 for (int i = 0; i < cvCount; i++) {
                     ValueState state = cvList.get(i).thisCV.getState();
                     if (i == 0) {
@@ -1097,24 +1084,25 @@ public class SplitEnumVariableValue extends VariableValue
                     tree.setBackground(_value.getBackground());
                     //tree.setOpaque(true);
                 }
-                log.info("{} variable state set to {}", _name, varState.getName());
+                log.debug("{} variable state set to {}", _name, varState.getName());
                 break;
             }
             case "Value": {
                 // update value of Variable
 
                 //setLongValue(Long.parseLong((String)_value.getSelectedItem()));  // check for duplicate done inside setValue
-                log.info("update value of Variable {}", _name);
+                log.debug("update value of Variable {} cvCount={}", _name, cvCount);
 
                 int[] intVals = new int[cvCount];
 
                 for (int i = 0; i < cvCount; i++) {
                     intVals[i] = (cvList.get(i).thisCV.getValue() & maskValAsInt(cvList.get(i).cvMask)) >>> offsetVal(cvList.get(i).cvMask);
+                    log.trace("   with intVal[{}] = {}", i, intVals[i]);
                 }
 
                 updateVariableValue(intVals);
 
-                log.info("state change due to CV value change, so propagate that");
+                log.debug("state change due to CV value change, so propagate that");
                 ValueState varState = ValueState.SAME;
                 for (int i = 0; i < cvCount; i++) {
                     ValueState state = cvList.get(i).thisCV.getState();
@@ -1124,10 +1112,8 @@ public class SplitEnumVariableValue extends VariableValue
                 }
                 setState(varState);
 
-                int intMax = (int)_maxVal;
-                CvValue cv = _cvMap.get(getCvNum());
-                int newVal = getValueInCV(cv.getValue(), getMask(), intMax-1); // _maxVal value is count of possibles, i.e. radix
-                setValue(newVal);
+                updatedDropDown();
+
                 break;
             }
             default:

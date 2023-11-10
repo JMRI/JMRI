@@ -10,7 +10,6 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.AnalogActionMemory;
 import jmri.jmrit.logixng.actions.DoAnalogAction;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
-import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.JUnitUtil;
 
@@ -43,7 +42,7 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
         return logixNG;
     }
 
-    private static int beanID = 901;
+    private int beanID = 901;
 
     @Override
     public MaleSocket getConnectableChild() {
@@ -734,6 +733,7 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

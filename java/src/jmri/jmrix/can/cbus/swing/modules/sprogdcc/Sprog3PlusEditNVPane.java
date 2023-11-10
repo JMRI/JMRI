@@ -9,8 +9,6 @@ import javax.swing.event.TableModelEvent;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
 import jmri.jmrix.can.cbus.swing.modules.*;
-import static jmri.jmrix.can.cbus.node.CbusNodeConstants.*;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -132,16 +130,8 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             Bundle.getMessage("ReservedTt")
         }};
 
-    protected int _fwMaj = -1;
-    protected int _fwMin = -1;
-    protected int _fwBuild = -1;
-
     protected Sprog3PlusEditNVPane(CbusNodeNVTableDataModel dataModel, CbusNode node) {
         super(dataModel, node);
-        _fwMaj = node.getNodeParamManager().getParameter(MAJOR_VER_IDX);
-        _fwMin = node.getNodeParamManager().getParameter(MINOR_VER_IDX);
-        _fwBuild = node.getNodeParamManager().getParameter(BETA_REV_IDX);
-        
     }
     
     /** {@inheritDoc} */
@@ -169,7 +159,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         if (e.getType() == TableModelEvent.UPDATE) {
             int row = e.getFirstRow();
             int nv = row + 1;
-            int value = getSelectValue(nv);
+            int value = getSelectValue8(nv);
             log.debug("sprog3plus gui table changed NV: {} Value: {}", nv, value);
             
             switch (nv) {
@@ -221,8 +211,8 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                     
                 case Sprog3PlusPaneProvider.NN_MAP_DCC_HI:
                 case Sprog3PlusPaneProvider.NN_MAP_DCC_LO:
-                    nnMapDccSpinner.setValue(getSelectValue(Sprog3PlusPaneProvider.NN_MAP_DCC_HI,
-                            Sprog3PlusPaneProvider.NN_MAP_DCC_LO, 0));
+                    nnMapDccSpinner.setValue(getSelectValue16(Sprog3PlusPaneProvider.NN_MAP_DCC_HI,
+                            Sprog3PlusPaneProvider.NN_MAP_DCC_LO, 0, 65535));
                     break;
                     
                 case Sprog3PlusPaneProvider.SETUP:
@@ -235,8 +225,10 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                     
                 case Sprog3PlusPaneProvider.NN_HI:
                 case Sprog3PlusPaneProvider.NN_LO:
-                    nodeNumberSpinner.setValue(getSelectValue(Sprog3PlusPaneProvider.NN_HI,
-                            Sprog3PlusPaneProvider.NN_LO, 0));
+                    nodeNumberSpinner.setValue(getSelectValue16(Sprog3PlusPaneProvider.NN_HI, 
+                            Sprog3PlusPaneProvider.NN_LO,
+                            Sprog3PlusPaneProvider.MIN_NN,
+                            Sprog3PlusPaneProvider.MAX_NN));
                     break;
                     
                 case Sprog3PlusPaneProvider.DCC_PREAMBLE:
@@ -447,7 +439,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             
             for (int i = 0; i < flagPanels; i++) {
                 csFlags[i] = new CmdStaFlags(i, flagNvs[i], flagTitleStrings[i], flagStrings[i], flagTtStrings[i], flagUpdateFn);
-                csFlags[i].setFlags(getSelectValue(flagNvs[i]));
+                csFlags[i].setFlags(getSelectValue8(flagNvs[i]));
                 flagPane[i] = csFlags[i].getContents();
             }
             
@@ -470,7 +462,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             
             c.gridwidth = flagPanels;
             powerModeList = new JComboBox<>(powerModeStrings);
-            powerModeList.setSelectedIndex(getSelectValue(Sprog3PlusPaneProvider.PROG_TRACK_POWER_MODE));
+            powerModeList.setSelectedIndex(getSelectValue8(Sprog3PlusPaneProvider.PROG_TRACK_POWER_MODE));
             powerModeList.addActionListener((ActionEvent e) -> {
                 pwrModeActionListener(e);
             });
@@ -489,13 +481,13 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             
             mainSpinner = new TitledSpinner(Bundle.getMessage("MainLimit"), Sprog3PlusPaneProvider.MAIN_TRACK_CURRENT_LIMIT, currentLimitUpdateFn);
             mainSpinner.setToolTip(Bundle.getMessage("MainLimitTt"));
-            mainSpinner.init(getSelectValue(Sprog3PlusPaneProvider.MAIN_TRACK_CURRENT_LIMIT, 100)/100.0, 1.0, 2.5, 0.01);
+            mainSpinner.init(getSelectValue8(Sprog3PlusPaneProvider.MAIN_TRACK_CURRENT_LIMIT, 100)/100.0, 1.0, 2.5, 0.01);
             gridPane.add(mainSpinner, c);
             c.gridx++;
             
             progSpinner = new TitledSpinner(Bundle.getMessage("ProgLimit"), Sprog3PlusPaneProvider.PROG_TRACK_CURRENT_LIMIT, currentLimitUpdateFn);
             progSpinner.setToolTip(Bundle.getMessage("ProgLimitTt"));
-            progSpinner.init(getSelectValue(Sprog3PlusPaneProvider.PROG_TRACK_CURRENT_LIMIT, 100)/100.0, 1.0, 2.5, 0.01);
+            progSpinner.init(getSelectValue8(Sprog3PlusPaneProvider.PROG_TRACK_CURRENT_LIMIT, 100)/100.0, 1.0, 2.5, 0.01);
             gridPane.add(progSpinner, c);
             
             c.gridy++;
@@ -547,13 +539,13 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             
             accyPktSpinner = new TitledSpinner(Bundle.getMessage("AccyPktCnt"), Sprog3PlusPaneProvider.ACCY_PACKET_REPEAT_COUNT, accyPktUpdateFn);
             accyPktSpinner.setToolTip(Bundle.getMessage("AccyPktCntTt"));
-            accyPktSpinner.init(getSelectValue(Sprog3PlusPaneProvider.ACCY_PACKET_REPEAT_COUNT, 1), 1, 7, 1);
+            accyPktSpinner.init(getSelectValue8(Sprog3PlusPaneProvider.ACCY_PACKET_REPEAT_COUNT, 1), 1, 7, 1);
             gridPane.add(accyPktSpinner, c);
             c.gridy++;
             
             nnMapDccSpinner = new TitledSpinner(Bundle.getMessage("NnMapDcc"), Sprog3PlusPaneProvider.NN_MAP_DCC_HI, nnMapUpdateFn);
             nnMapDccSpinner.setToolTip(Bundle.getMessage("NnMapDccTt"));
-            int nn = getSelectValue(Sprog3PlusPaneProvider.NN_MAP_DCC_HI, Sprog3PlusPaneProvider.NN_MAP_DCC_LO, 0);
+            int nn = getSelectValue16(Sprog3PlusPaneProvider.NN_MAP_DCC_HI, Sprog3PlusPaneProvider.NN_MAP_DCC_LO, 0, 65535);
             nnMapDccSpinner.init(nn, 0, 65535, 1);
             gridPane.add(nnMapDccSpinner, c);
             c.gridy++;
@@ -563,7 +555,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
 
             preambleSpinner = new TitledSpinner(Bundle.getMessage("DccPreambles"), Sprog3PlusPaneProvider.DCC_PREAMBLE, preambleUpdateFn);
             preambleSpinner.setToolTip(Bundle.getMessage("DccPreamblesTt"));
-            preambleSpinner.init(getSelectValue(Sprog3PlusPaneProvider.DCC_PREAMBLE, 14), 14, 32, 1);
+            preambleSpinner.init(getSelectValue8(Sprog3PlusPaneProvider.DCC_PREAMBLE, 14), 14, 32, 1);
             gridPane.add(preambleSpinner, c);
                     
             add(gridPane);
@@ -588,13 +580,13 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
 
             canIdSpinner = new TitledSpinner(Bundle.getMessage("CanId"), Sprog3PlusPaneProvider.CANID, canIdUpdateFn);
             canIdSpinner.setToolTip(Bundle.getMessage("CanIdTt"));
-            canIdSpinner.init(getSelectValue(Sprog3PlusPaneProvider.CANID, 100), 100, 127, 1);
+            canIdSpinner.init(getSelectValue8(Sprog3PlusPaneProvider.CANID, Sprog3PlusPaneProvider.MIN_CANID, Sprog3PlusPaneProvider.MAX_CANID), 100, 127, 1);
             gridPane.add(canIdSpinner, c);
             c.gridy++;
 
             nodeNumberSpinner = new TitledSpinner(Bundle.getMessage("NodeNumber"), Sprog3PlusPaneProvider.NN_HI, nodeNumberUpdateFn);
             nodeNumberSpinner.setToolTip(Bundle.getMessage("NodeNumberTt"));
-            int nn = getSelectValue(Sprog3PlusPaneProvider.NN_HI, Sprog3PlusPaneProvider.NN_LO, 65520);
+            int nn = getSelectValue16(Sprog3PlusPaneProvider.NN_HI, Sprog3PlusPaneProvider.NN_LO, Sprog3PlusPaneProvider.MIN_NN, Sprog3PlusPaneProvider.MAX_NN);
             nodeNumberSpinner.init(nn, 65520, 65534, 1);
             gridPane.add(nodeNumberSpinner, c);
             c.gridy++;

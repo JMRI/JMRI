@@ -3,7 +3,6 @@ package jmri.jmrit.logixng.expressions.configurexml;
 import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logix.Warrant;
-import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionWarrant;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;

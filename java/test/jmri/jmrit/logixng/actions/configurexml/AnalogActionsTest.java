@@ -13,7 +13,7 @@ import org.junit.Test;
 
 /**
  * Test ActionTurnoutXml
- * 
+ *
  * @author Daniel Bergqvist 2019
  */
 public class AnalogActionsTest {
@@ -21,18 +21,18 @@ public class AnalogActionsTest {
     @Test
     public void testLoad() throws JmriConfigureXmlException {
         AbstractNamedBeanManagerConfigXML b;
-        
+
         b = new AnalogActionMemoryXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
-        
+
         b = new AnalogManyXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -48,7 +48,8 @@ public class AnalogActionsTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }

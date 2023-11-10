@@ -1,13 +1,7 @@
 package jmri.jmrit.operations.locations.tools;
 
 import java.io.*;
-import java.text.MessageFormat;
 import java.util.Locale;
-
-import javax.swing.JOptionPane;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.*;
@@ -15,7 +9,7 @@ import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.locations.divisions.DivisionManager;
 import jmri.jmrit.operations.rollingstock.ImportRollingStock;
 import jmri.jmrit.operations.setup.Setup;
-
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * This routine will import Locations from a CSV file into the operations database. The field order is: Location, Track,
@@ -51,24 +45,26 @@ public class ImportLocations extends ImportRollingStock {
     protected static final int FIELD_RESTRICTIONS_2 = 17;
     protected static final int FIELD_SCHEDULE_NAME = 18;
     protected static final int FIELD_SCHEDULE_MODE = 19;
-    protected static final int FIELD_ALTERNATE_TRACK = 20;
-    protected static final int FIELD_POOL_NAME = 21;
-    protected static final int FIELD_IGNORE_MINIMUM = 22;
-    protected static final int FIELD_TRACK_BLOCKING_ORDER = 23;
-    protected static final int FIELD_PLANNED_PICK_UPS = 24;
-    protected static final int FIELD_TRACK_DESTINATIONS = 25;
-    protected static final int FIELD_DESTINATIONS = 26;
-    protected static final int FIELD_SWAP_DEFAULT = 27;
-    protected static final int FIELD_EMPTY_DEFAULT_LOADS = 28;
-    protected static final int FIELD_EMPTY_CUSTOM_LOADS = 29;
-    protected static final int FIELD_GENERATE_SPUR = 30;
-    protected static final int FIELD_GENERATE_ANY_SPUR = 31;
-    protected static final int FIELD_GENERATE_STAGING = 32;
-    protected static final int FIELD_BLOCK_CARS_BY_PICKUP = 33;
-    protected static final int FIELD_COMMENT = 34;
-    protected static final int FIELD_COMMENT_BOTH = 35;
-    protected static final int FIELD_COMMENT_PICKUPS = 36;            // not used
-    protected static final int FIELD_COMMENT_SETOUTS = 37;            // not used
+    protected static final int FIELD_PERCENT_STAGING = 20;
+    protected static final int FIELD_ALTERNATE_TRACK = 21;
+    protected static final int FIELD_POOL_NAME = 22;
+    protected static final int FIELD_IGNORE_MINIMUM = 23;
+    protected static final int FIELD_TRACK_BLOCKING_ORDER = 24;
+    protected static final int FIELD_PLANNED_PICK_UPS = 25;
+    protected static final int FIELD_TRACK_DESTINATIONS = 26;
+    protected static final int FIELD_DESTINATIONS = 27;
+    protected static final int FIELD_HOLD_CARS_CUSTOM_LOADS = 28;
+    protected static final int FIELD_SWAP_DEFAULT = 29;
+    protected static final int FIELD_EMPTY_DEFAULT_LOADS = 30;
+    protected static final int FIELD_EMPTY_CUSTOM_LOADS = 31;
+    protected static final int FIELD_GENERATE_SPUR = 32;
+    protected static final int FIELD_GENERATE_ANY_SPUR = 33;
+    protected static final int FIELD_GENERATE_STAGING = 34;
+    protected static final int FIELD_BLOCK_CARS_BY_PICKUP = 35;
+    protected static final int FIELD_COMMENT = 36;
+    protected static final int FIELD_COMMENT_BOTH = 37;
+    protected static final int FIELD_COMMENT_PICKUPS = 38;
+    protected static final int FIELD_COMMENT_SETOUTS = 39;
 
     @Override
     public void run() {
@@ -267,6 +263,7 @@ public class ImportLocations extends ImportRollingStock {
 
             }
 
+            // TODO import fields 12 through 22
 
             if (inputLine.length >= FIELD_IGNORE_MINIMUM) {
                 String ignoreMin = inputLine[FIELD_IGNORE_MINIMUM].trim();
@@ -305,6 +302,8 @@ public class ImportLocations extends ImportRollingStock {
                     }
                 }
             }
+            // TODO import fields 26 though 35
+            
             if (inputLine.length >= FIELD_COMMENT) {
                 String fieldComment = inputLine[FIELD_COMMENT].trim();
                 if (fieldComment.length() > 0) {
@@ -326,13 +325,15 @@ public class ImportLocations extends ImportRollingStock {
             }
         }
         if (importOkay) {
-            JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportTracksAdded"), new Object[]{tracksAdded}), Bundle.getMessage("SuccessfulImport"), JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ImportTracksAdded", tracksAdded),
+                Bundle.getMessage("SuccessfulImport"), JmriJOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportTracksAdded"), new Object[]{tracksAdded}), Bundle.getMessage("ImportFailed"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ImportTracksAdded", tracksAdded),
+                Bundle.getMessage("ImportFailed"), JmriJOptionPane.ERROR_MESSAGE);
         }
         fstatus.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ImportLocations.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImportLocations.class);
 
 }

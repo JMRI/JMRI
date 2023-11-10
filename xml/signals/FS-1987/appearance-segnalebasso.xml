@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year>
+    <year>2010</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Dick</firstname>
+        <surname>Bronson</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+      <email>jake@physics.berkeley.edu</email>
+    </author>
+    <author>
+      <personname>
+        <firstname>Pino</firstname>
+        <surname>Di Biasi</surname>
+      </personname>
+      <email>pinodib@yahoo.com</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+     <revision>
+        <revnumber>1</revnumber>
+       <date>2023-01-01</date>
+       <authorinitials>PDB</authorinitials>
+       <revremark>First version for Italian Signal System</revremark>
+     </revision>
+     <revision>
+        <revnumber>2</revnumber>
+       <date>2023-02-01</date>
+       <authorinitials>PDB</authorinitials>
+       <revremark>Second version for Italian Signal System</revremark>
+     </revision>
+     <revision>
+       <revnumber>3</revnumber>
+       <date>2023-08-23</date>
+       <authorinitials>PDB</authorinitials>
+       <revremark>Third version for Italian Signal System - amended aspect mapping</revremark>
+     </revision>
+  </revhistory>
+
+<aspecttable>FS 1987</aspecttable>
+  <name>Segnale basso</name>
+  <reference>As described in Il Treno Company book “Inserimento in linea dei segnali FS” according to the
+Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovie dello Stato”, FS today RFI).</reference>
+  <description>Appearances for a Dwarf signal head</description>
+
+  <appearances>
+
+    <appearance>
+      <aspectname>Fermata</aspectname>
+      <show>red</show>
+      <reference />
+      <comment>Stop - Segnale manovra chiuso</comment>
+      <imagelink type="vertical">../../../resources/icons/ItalianSignals/Manovra/vsegnalebassochiuso.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/ItalianSignals/Manovra/lsegnalebassochiuso.gif</imagelink>
+      <imagelink type="right">../../../resources/icons/ItalianSignals/Manovra/rsegnalebassochiuso.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Libero Passaggio</aspectname>
+      <show>green</show>
+      <reference />
+      <comment>Segnale manovra aperto</comment>
+      <imagelink type="vertical">../../../resources/icons/ItalianSignals/Manovra/vsegnalebassoaperto.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/ItalianSignals/Manovra/lsegnalebassoaperto.gif</imagelink>
+      <imagelink type="right">../../../resources/icons/ItalianSignals/Manovra/rsegnalebassoaperto.gif</imagelink>
+    </appearance>
+
+  </appearances>
+
+  <specificappearances>
+    <danger>
+      <aspect>Fermata</aspect>
+    </danger>
+  </specificappearances>
+
+</appearancetable>

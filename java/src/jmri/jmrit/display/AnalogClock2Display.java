@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
 import java.util.Date;
 
+import javax.annotation.Nonnull;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -187,6 +188,12 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         popup.add(colorMenuItem);
 
         return true;
+    }
+
+    @Override
+    @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_");
     }
 
     @Override
@@ -389,15 +396,30 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         minuteAngle = minutes * 6.;
         hourAngle = hours * 30. + 30. * minuteAngle / 360.;
         if (hours < 12) {
-            amPm = "AM " + (int) clock.userGetRate() + ":1";
+            amPm = Bundle.getMessage("ClockAM");
         } else {
-            amPm = "PM " + (int) clock.userGetRate() + ":1";
+            amPm = Bundle.getMessage("ClockPM");
         }
         if (hours == 12 && minutes == 0) {
-            amPm = "Noon";
+            amPm = Bundle.getMessage("ClockNoon");
         }
         if (hours == 0 && minutes == 0) {
-            amPm = "Midnight";
+            amPm = Bundle.getMessage("ClockMidnight");
+        }
+
+        // show either "Stopped" or rate, depending on state
+        if (! clock.getRun()) {
+            amPm = amPm + " "+Bundle.getMessage("ClockStopped");
+        } else {
+            // running, display rate
+            String rate = ""+(int)clock.userGetRate();
+            if (Math.floor(clock.userGetRate()) != clock.userGetRate()) {
+                var format = new java.text.DecimalFormat("0.###");  // no trailing zeros
+                rate = format.format(clock.userGetRate());
+            }
+
+            // add rate to amPm string for display
+            amPm = amPm + " " + rate + ":1";
         }
         repaint();
     }

@@ -1,11 +1,15 @@
 package jmri;
 
-import org.junit.jupiter.api.*;
-
 import com.tngtech.archunit.lang.*;
 import com.tngtech.archunit.junit.*;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
+
+import java.io.File;
+
+import jmri.util.FileUtil;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Check the architecture of the JMRI library
@@ -269,8 +273,7 @@ public class ArchitectureTest {
     @ArchTest
     public static final ArchRule noLog4JinJmri = noClasses()
             .that().resideInAPackage("jmri..")
-            .and().areNotAnnotatedWith(Deprecated.class)
-            .should().dependOnClassesThat().resideInAPackage("org.apache.log4j");
+            .should().dependOnClassesThat().resideInAPackage("org.apache.logging.log4j");
 
     /**
      * Confine JDOM to configurexml packages.
@@ -340,7 +343,6 @@ public class ArchitectureTest {
     public static final ArchRule checkLogixNGActionsXmlNotUsingNamedBeanHandle = noClasses()
             .that()
             .resideInAPackage("jmri.jmrit.logixng.actions.configurexml")
-            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.configurexml.ActionEntryExitXml")    // This class needs to use NamedBeanHandle
             .should()
             .dependOnClassesThat().haveFullyQualifiedName("jmri.NamedBeanHandle");
 
@@ -363,7 +365,6 @@ public class ArchitectureTest {
     public static final ArchRule checkLogixNGExpressionsXmlNotUsingNamedBeanHandle = noClasses()
             .that()
             .resideInAPackage("jmri.jmrit.logixng.expressions.configurexml")
-            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.configurexml.ExpressionEntryExitXml")    // This class needs to use NamedBeanHandle
             .should()
             .dependOnClassesThat().haveFullyQualifiedName("jmri.NamedBeanHandle");
 
@@ -389,4 +390,119 @@ public class ArchitectureTest {
             .should()
             .dependOnClassesThat().haveFullyQualifiedName("jmri.util.swing.BeanSelectPanel");
 */
+
+    /**
+     * No classes in jmri.jmrit.logixng.actions should access jmri.jmrit.logixng.NamedBeanAddressing.
+     * They should use jmri.jmrit.logixng.util.LogixNG_Select* instead.
+     */
+    @ArchTest
+    public static final ArchRule checkLogixNGActionsNotUsingNamedBeanAddressing = noClasses()
+            .that()
+            .resideInAPackage("jmri.jmrit.logixng.actions")
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionDispatcher")   // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionDispatcher$1") // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionLight")        // Data not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionLight$1")      // Data not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionOBlock")       // Data not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionOBlock$1")     // Data not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionReporter")     // Data not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionReporter$1")   // Data not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionScript")       // Oper and data not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionScript$1")     // Oper and data not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionSignalHead")   // Oper and data not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionSignalHead$1") // Oper and data not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionSignalMast")   // Oper and data not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionSignalMast$1") // Oper and data not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionSound")        // "Sound" not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionSound$1")      // "Sound" not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionWarrant")      // Data not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionWarrant$1")    // Data not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ExecuteDelayed")     // State not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ExecuteDelayed$1")   // State not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ExecuteDelayed$2")   // State not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.TableForEach")       // "Row or column converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.TableForEach$1")     // "Row or column converted to Select... yet
+            .should()
+            .dependOnClassesThat().haveFullyQualifiedName("jmri.jmrit.logixng.NamedBeanAddressing");
+
+    /**
+     * No classes in jmri.jmrit.logixng.actions should access jmri.jmrit.logixng.NamedBeanAddressing.
+     * They should use jmri.jmrit.logixng.util.LogixNG_Select* instead.
+     */
+    @ArchTest
+    public static final ArchRule checkLogixNGExpressionsNotUsingNamedBeanAddressing = noClasses()
+            .that()
+            .resideInAPackage("jmri.jmrit.logixng.expressions")
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionAudio")    // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionAudio$1")   // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionConditional")    // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionConditional$1")   // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionDispatcher")    // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionDispatcher$1")  // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionEntryExit")    // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionEntryExit$1")  // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionLight")    // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionLight$1")  // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionOBlock")    // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionOBlock$1")  // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionScript")    // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionScript$1")  // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionSignalHead")    // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionSignalHead$1")  // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionSignalMast")    // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionSignalMast$1")  // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionTurnout")    // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionTurnout$1")  // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionWarrant")    // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.ExpressionWarrant$1")  // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.Timer")    // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.Timer$1")  // Not converted to Select... yet
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.Timer$2")  // Not converted to Select... yet
+            .should()
+            .dependOnClassesThat().haveFullyQualifiedName("jmri.jmrit.logixng.NamedBeanAddressing");
+
+
+    @Test
+    public void testHelpFileNamesUseShtml(){
+        String path = FileUtil.getExternalFilename(FileUtil.PROGRAM + "help");
+
+        // allow
+        // local/index.html
+        // local/stub_template.html
+        // /local/stub/
+
+        String[] allowList = {"local"+File.separator+ "index.html",
+            "local"+File.separator+ "stub_template.html",
+            File.separator + "local" + File.separator + "stub" + File.separator };
+        recursivelyCheckFiles(new File(path), allowList, ".html");
+    }
+
+    private void recursivelyCheckFiles(File directory, String[] allowList, String deniedsuffix) {
+        File[] files = directory.listFiles();
+        if (files == null) {
+            Assertions.fail("Failed to list files in the directory: " + directory.getAbsolutePath());
+            return;
+        }
+        for (File file : files) {
+            if (file.isDirectory()) {
+                recursivelyCheckFiles(file, allowList, deniedsuffix);
+            } else {
+                String fname = file.getAbsolutePath();
+                if (fname.endsWith(deniedsuffix) && notOnAllowList(fname,allowList)) {
+                    // System.out.println("Incorrect fileType: "+fname);
+                    Assertions.fail("filename " +fname+ " should not end with "+deniedsuffix);
+                }
+            }
+        }
+    }
+
+    private boolean notOnAllowList(@javax.annotation.Nonnull String filePath, String[] allowList) {
+        for (String allowed : allowList) {
+            if ( filePath.contains(allowed) ) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

@@ -6,8 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
 
-import jmri.NamedBean;
-
 /**
  * Implements Tooltips for Positionable objects.
  *
@@ -145,7 +143,10 @@ public class ToolTip {
 
     public String getTextToDisplay() {
         String tipText = _tip != null ? _tip.trim() : "";
-        String displayName = _positionable.getNameString();
+        var displayName = "";
+        if (_positionable != null) {    // LE turnout tooltips do not have a positional
+            displayName = _positionable.getNameString();
+        }
 
         if (tipText.isEmpty()) {
             tipText = displayName;
@@ -176,4 +177,6 @@ public class ToolTip {
         g2d.setColor(color);
         g2d.setFont(font);
     }
+
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ToolTip.class);
 }

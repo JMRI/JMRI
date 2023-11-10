@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 6 - Ronald Kuhn - exclude Pane for PD*-series -->
+<!-- version 5 - Ronald Kuhn - add CV158 & CV159 for DH21B/DH22B -->
 <!-- version 4 - Alain Le Marchand - add CV157 + Simplified productID for PD05 and PD12: no more version indicated -->
 <!-- version 3 - Alain Le Marchand - redesigned for split CVs with enums -->
 <!-- version 2 - 2016-12-14 - RK - exclude for PD12A -->
 <!-- version 1 - for Unified Software -->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" exclude="PD05A,PD12A">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" exclude="130,131,132,133,134">
     <name>Conditions for Outputs</name>
     <name xml:lang="it">Condizioni per Uscite</name>
     <name xml:lang="de">Bedingungen für Ausgänge</name>
@@ -208,6 +210,40 @@
             </griditem>
             <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX6 D" label=""></display>
+            </griditem>
+
+            <griditem gridx="0" gridy="NEXT" anchor="LINE_END">
+                <display item="Condition AUX7"></display>
+<!--                <display item="Condition AUX6 enum" label=""></display>-->
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+                <display item="Condition AUX7 A" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+                <display item="Condition AUX7 B" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+                <display item="Condition AUX7 C" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+                <display item="Condition AUX7 D" label=""></display>
+            </griditem>
+
+            <griditem gridx="0" gridy="NEXT" anchor="LINE_END">
+                <display item="Condition AUX8"></display>
+<!--                <display item="Condition AUX6 enum" label=""></display>-->
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+                <display item="Condition AUX8 A" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+                <display item="Condition AUX8 B" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+                <display item="Condition AUX8 C" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+                <display item="Condition AUX8 D" label=""></display>
             </griditem>
 
             <griditem gridx="0" gridy="NEXT" anchor="LINE_END">

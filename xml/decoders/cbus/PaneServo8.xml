@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2023 All rights reserved -->
+<!-- Panes for 8 servos -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <name>Servo Setup</name>
+    <column>
+        <grid ipadx="10" ipady="2">  
+            <griditem gridx="0" gridy="0" weightx="1" anchor="LINE_END">
+                <label> 
+                    <text> Servo 1</text> 
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="1" weightx="1" anchor="LINE_END">
+                <display item="onPos1" label="ON Position" tooltip="Sets ON endpoint of servo 1" />
+            </griditem>
+            <griditem gridx="1" gridy="1" weightx="1" anchor="LINE_END">
+                <display item="onPos1" format="hslider" label="" tooltip="Sets ON endpoint of servo 1" />
+            </griditem>
+            <griditem gridx="2" gridy="1" weightx="1" anchor="LINE_END">
+                <display item="onSpd1" label="ON Speed" tooltip="Sets ON speed of servo 1" />
+            </griditem>
+            <griditem gridx="0" gridy="2" weightx="1" anchor="LINE_END">
+                <display item="offPos1" label="ON Position" tooltip="Sets OFF endpoint of servo 1" />
+            </griditem>
+            <griditem gridx="1" gridy="2" weightx="1" anchor="LINE_END">
+                <display item="offPos1" format="hslider" label="" tooltip="Sets OFF endpoint of servo 1" />
+            </griditem>
+            <griditem gridx="2" gridy="2" weightx="1" anchor="LINE_END">
+                <display item="offSpd1" label="ON Speed" tooltip="Sets OFF speed of servo 1" />
+            </griditem>
+            <griditem gridx="0" gridy="3" weightx="1" anchor="LINE_END">
+                <display item="cutoff1" format="checkbox" label="1s Cutoff" tooltip="Enables control pulse cut off after 1s for servo 1" />
+            </griditem>
+            <griditem gridx="1" gridy="3" weightx="1" anchor="LINE_END">
+                <display item="startupPosition1" label="Startup Position" tooltip="Startup position option for servo 1" />
+            </griditem>
+            <griditem gridx="2" gridy="3" weightx="1" anchor="LINE_END">
+                <display item="wait1" format="checkbox" label="Sequential" tooltip="Enables sequential movement for servo 1" />
+            </griditem>
+        
+            <griditem gridx="0" gridy="4" weightx="1" anchor="LINE_END">
+                <label> 
+                    <text> Servo 2</text> 
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="5" weightx="1" anchor="LINE_END">
+                <display item="onPos2" label="ON Position" tooltip="Sets ON endpoint of servo 2" />
+            </griditem>
+            <griditem gridx="1" gridy="5" weightx="1" anchor="LINE_END">
+                <display item="onPos2" format="hslider" label="" tooltip="Sets ON endpoint of servo 2" />
+            </griditem>
+            <griditem gridx="2" gridy="5" weightx="1" anchor="LINE_END">
+                <display item="onSpd2" label="ON Speed" tooltip="Sets ON speed of servo 2" />
+            </griditem>
+            <griditem gridx="0" gridy="6" weightx="1" anchor="LINE_END">
+                <display item="offPos2" label="ON Position" tooltip="Sets OFF endpoint of servo 2" />
+            </griditem>
+            <griditem gridx="1" gridy="6" weightx="1" anchor="LINE_END">
+                <display item="offPos2" format="hslider" label="" tooltip="Sets OFF endpoint of servo 2" />
+            </griditem>
+            <griditem gridx="2" gridy="6" weightx="1" anchor="LINE_END">
+                <display item="offSpd2" label="ON Speed" tooltip="Sets OFF speed of servo 2" />
+            </griditem>
+            <griditem gridx="0" gridy="7" weightx="1" anchor="LINE_END">
+                <display item="cutoff2" format="checkbox" label="1s Cutoff" tooltip="Enables control pulse cut off after 1s for servo 2" />
+            </griditem>
+            <griditem gridx="1" gridy="7" weightx="1" anchor="LINE_END">
+                <display item="startupPosition2" label="Startup Position" tooltip="Startup position option for servo 2" />
+            </griditem>
+            <griditem gridx="2" gridy="7" weightx="1" anchor="LINE_END">
+                <display item="wait2" format="checkbox" label="Sequential" tooltip="Enables sequential movement for servo 2" />
+            </griditem>        
+        
+            <griditem gridx="0" gridy="8" weightx="1" anchor="LINE_END">
+                <label> 
+                    <text> Servo 3</text> 
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="9" weightx="1" anchor="LINE_END">
+                <display item="onPos3" label="ON Position" tooltip="Sets ON endpoint of servo 3" />
+            </griditem>
+            <griditem gridx="1" gridy="9" weightx="1" anchor="LINE_END">
+                <display item="onPos3" format="hslider" label="" tooltip="Sets ON endpoint of servo 3" />
+            </griditem>
+            <griditem gridx="2" gridy="9" weightx="1" anchor="LINE_END">
+                <display item="onSpd3" label="ON Speed" tooltip="Sets ON speed of servo 3" />
+            </griditem>
+            <griditem gridx="0" gridy="10" weightx="1" anchor="LINE_END">
+                <display item="offPos3" label="ON Position" tooltip="Sets OFF endpoint of servo 3" />
+            </griditem>
+            <griditem gridx="1" gridy="10" weightx="1" anchor="LINE_END">
+                <display item="offPos3" format="hslider" label="" tooltip="Sets OFF endpoint of servo 3" />
+            </griditem>
+            <griditem gridx="2" gridy="10" weightx="1" anchor="LINE_END">
+                <display item="offSpd3" label="ON Speed" tooltip="Sets OFF speed of servo 3" />
+            </griditem>
+            <griditem gridx="0" gridy="11" weightx="1" anchor="LINE_END">
+                <display item="cutoff3" format="checkbox" label="1s Cutoff" tooltip="Enables control pulse cut off after 1s for servo 3" />
+            </griditem>
+            <griditem gridx="1" gridy="11" weightx="1" anchor="LINE_END">
+                <display item="startupPosition3" label="Startup Position" tooltip="Startup position option for servo 3" />
+            </griditem>
+            <griditem gridx="2" gridy="11" weightx="1" anchor="LINE_END">
+                <display item="wait3" format="checkbox" label="Sequential" tooltip="Enables sequential movement for servo 3" />
+            </griditem>        
+        
+            <griditem gridx="0" gridy="12" weightx="1" anchor="LINE_END">
+                <label> 
+                    <text> Servo 4</text> 
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="13" weightx="1" anchor="LINE_END">
+                <display item="onPos4" label="ON Position" tooltip="Sets ON endpoint of servo 4" />
+            </griditem>
+            <griditem gridx="1" gridy="13" weightx="1" anchor="LINE_END">
+                <display item="onPos4" format="hslider" label="" tooltip="Sets ON endpoint of servo 4" />
+            </griditem>
+            <griditem gridx="2" gridy="13" weightx="1" anchor="LINE_END">
+                <display item="onSpd4" label="ON Speed" tooltip="Sets ON speed of servo 4" />
+            </griditem>
+            <griditem gridx="0" gridy="14" weightx="1" anchor="LINE_END">
+                <display item="offPos4" label="ON Position" tooltip="Sets OFF endpoint of servo 4" />
+            </griditem>
+            <griditem gridx="1" gridy="14" weightx="1" anchor="LINE_END">
+                <display item="offPos4" format="hslider" label="" tooltip="Sets OFF endpoint of servo 4" />
+            </griditem>
+            <griditem gridx="2" gridy="14" weightx="1" anchor="LINE_END">
+                <display item="offSpd4" label="ON Speed" tooltip="Sets OFF speed of servo 4" />
+            </griditem>
+            <griditem gridx="0" gridy="15" weightx="1" anchor="LINE_END">
+                <display item="cutoff4" format="checkbox" label="1s Cutoff" tooltip="Enables control pulse cut off after 1s for servo 4" />
+            </griditem>
+            <griditem gridx="1" gridy="15" weightx="1" anchor="LINE_END">
+                <display item="startupPosition4" label="Startup Position" tooltip="Startup position option for servo 4" />
+            </griditem>
+            <griditem gridx="2" gridy="15" weightx="1" anchor="LINE_END">
+                <display item="wait4" format="checkbox" label="Sequential" tooltip="Enables sequential movement for servo 4" />
+            </griditem>        
+        
+            <griditem gridx="0" gridy="16" weightx="1" anchor="LINE_END">
+                <label> 
+                    <text> Servo 5</text> 
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="17" weightx="1" anchor="LINE_END">
+                <display item="onPos5" label="ON Position" tooltip="Sets ON endpoint of servo 5" />
+            </griditem>
+            <griditem gridx="1" gridy="17" weightx="1" anchor="LINE_END">
+                <display item="onPos5" format="hslider" label="" tooltip="Sets ON endpoint of servo 5" />
+            </griditem>
+            <griditem gridx="2" gridy="17" weightx="1" anchor="LINE_END">
+                <display item="onSpd5" label="ON Speed" tooltip="Sets ON speed of servo 5" />
+            </griditem>
+            <griditem gridx="0" gridy="18" weightx="1" anchor="LINE_END">
+                <display item="offPos5" label="ON Position" tooltip="Sets OFF endpoint of servo 5" />
+            </griditem>
+            <griditem gridx="1" gridy="18" weightx="1" anchor="LINE_END">
+                <display item="offPos5" format="hslider" label="" tooltip="Sets OFF endpoint of servo 5" />
+            </griditem>
+            <griditem gridx="2" gridy="18" weightx="1" anchor="LINE_END">
+                <display item="offSpd5" label="ON Speed" tooltip="Sets OFF speed of servo 5" />
+            </griditem>
+            <griditem gridx="0" gridy="19" weightx="1" anchor="LINE_END">
+                <display item="cutoff5" format="checkbox" label="1s Cutoff" tooltip="Enables control pulse cut off after 1s for servo 5" />
+            </griditem>
+            <griditem gridx="1" gridy="19" weightx="1" anchor="LINE_END">
+                <display item="startupPosition5" label="Startup Position" tooltip="Startup position option for servo 5" />
+            </griditem>
+            <griditem gridx="2" gridy="19" weightx="1" anchor="LINE_END">
+                <display item="wait5" format="checkbox" label="Sequential" tooltip="Enables sequential movement for servo 5" />
+            </griditem>        
+        
+            <griditem gridx="0" gridy="20" weightx="1" anchor="LINE_END">
+                <label> 
+                    <text> Servo 6</text> 
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="21" weightx="1" anchor="LINE_END">
+                <display item="onPos6" label="ON Position" tooltip="Sets ON endpoint of servo 6" />
+            </griditem>
+            <griditem gridx="1" gridy="21" weightx="1" anchor="LINE_END">
+                <display item="onPos6" format="hslider" label="" tooltip="Sets ON endpoint of servo 6" />
+            </griditem>
+            <griditem gridx="2" gridy="21" weightx="1" anchor="LINE_END">
+                <display item="onSpd6" label="ON Speed" tooltip="Sets ON speed of servo 6" />
+            </griditem>
+            <griditem gridx="0" gridy="22" weightx="1" anchor="LINE_END">
+                <display item="offPos6" label="ON Position" tooltip="Sets OFF endpoint of servo 6" />
+            </griditem>
+            <griditem gridx="1" gridy="22" weightx="1" anchor="LINE_END">
+                <display item="offPos6" format="hslider" label="" tooltip="Sets OFF endpoint of servo 6" />
+            </griditem>
+            <griditem gridx="2" gridy="22" weightx="1" anchor="LINE_END">
+                <display item="offSpd6" label="ON Speed" tooltip="Sets OFF speed of servo 6" />
+            </griditem>
+            <griditem gridx="0" gridy="23" weightx="1" anchor="LINE_END">
+                <display item="cutoff6" format="checkbox" label="1s Cutoff" tooltip="Enables control pulse cut off after 1s for servo 6" />
+            </griditem>
+            <griditem gridx="1" gridy="23" weightx="1" anchor="LINE_END">
+                <display item="startupPosition6" label="Startup Position" tooltip="Startup position option for servo 6" />
+            </griditem>
+            <griditem gridx="2" gridy="23" weightx="1" anchor="LINE_END">
+                <display item="wait6" format="checkbox" label="Sequential" tooltip="Enables sequential movement for servo 6" />
+            </griditem>        
+        
+            <griditem gridx="0" gridy="24" weightx="1" anchor="LINE_END">
+                <label> 
+                    <text> Servo 7</text> 
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="25" weightx="1" anchor="LINE_END">
+                <display item="onPos7" label="ON Position" tooltip="Sets ON endpoint of servo 7" />
+            </griditem>
+            <griditem gridx="1" gridy="25" weightx="1" anchor="LINE_END">
+                <display item="onPos7" format="hslider" label="" tooltip="Sets ON endpoint of servo 7" />
+            </griditem>
+            <griditem gridx="2" gridy="25" weightx="1" anchor="LINE_END">
+                <display item="onSpd7" label="ON Speed" tooltip="Sets ON speed of servo 7" />
+            </griditem>
+            <griditem gridx="0" gridy="26" weightx="1" anchor="LINE_END">
+                <display item="offPos7" label="ON Position" tooltip="Sets OFF endpoint of servo 7" />
+            </griditem>
+            <griditem gridx="1" gridy="26" weightx="1" anchor="LINE_END">
+                <display item="offPos7" format="hslider" label="" tooltip="Sets OFF endpoint of servo 7" />
+            </griditem>
+            <griditem gridx="2" gridy="26" weightx="1" anchor="LINE_END">
+                <display item="offSpd7" label="ON Speed" tooltip="Sets OFF speed of servo 7" />
+            </griditem>
+            <griditem gridx="0" gridy="27" weightx="1" anchor="LINE_END">
+                <display item="cutoff7" format="checkbox" label="1s Cutoff" tooltip="Enables control pulse cut off after 1s for servo 7" />
+            </griditem>
+            <griditem gridx="1" gridy="27" weightx="1" anchor="LINE_END">
+                <display item="startupPosition7" label="Startup Position" tooltip="Startup position option for servo 7" />
+            </griditem>
+            <griditem gridx="2" gridy="27" weightx="1" anchor="LINE_END">
+                <display item="wait7" format="checkbox" label="Sequential" tooltip="Enables sequential movement for servo 7" />
+            </griditem>        
+        
+            <griditem gridx="0" gridy="28" weightx="1" anchor="LINE_END">
+                <label> 
+                    <text> Servo 8</text> 
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="29" weightx="1" anchor="LINE_END">
+                <display item="onPos8" label="ON Position" tooltip="Sets ON endpoint of servo 8" />
+            </griditem>
+            <griditem gridx="1" gridy="29" weightx="1" anchor="LINE_END">
+                <display item="onPos8" format="hslider" label="" tooltip="Sets ON endpoint of servo 8" />
+            </griditem>
+            <griditem gridx="2" gridy="29" weightx="1" anchor="LINE_END">
+                <display item="onSpd8" label="ON Speed" tooltip="Sets ON speed of servo 8" />
+            </griditem>
+            <griditem gridx="0" gridy="30" weightx="1" anchor="LINE_END">
+                <display item="offPos8" label="ON Position" tooltip="Sets OFF endpoint of servo 8" />
+            </griditem>
+            <griditem gridx="1" gridy="30" weightx="1" anchor="LINE_END">
+                <display item="offPos8" format="hslider" label="" tooltip="Sets OFF endpoint of servo 8" />
+            </griditem>
+            <griditem gridx="2" gridy="30" weightx="1" anchor="LINE_END">
+                <display item="offSpd8" label="ON Speed" tooltip="Sets OFF speed of servo 8" />
+            </griditem>
+            <griditem gridx="0" gridy="31" weightx="1" anchor="LINE_END">
+                <display item="cutoff8" format="checkbox" label="1s Cutoff" tooltip="Enables control pulse cut off after 1s for servo 8" />
+            </griditem>
+            <griditem gridx="1" gridy="31" weightx="1" anchor="LINE_END">
+                <display item="startupPosition8" label="Startup Position" tooltip="Startup position option for servo 8" />
+            </griditem>
+            <griditem gridx="2" gridy="31" weightx="1" anchor="LINE_END">
+                <display item="wait8" format="checkbox" label="Sequential" tooltip="Enables sequential movement for servo 8" />
+            </griditem>        
+        </grid>
+    </column>
+</pane>

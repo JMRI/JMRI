@@ -1,7 +1,6 @@
 package jmri.jmrit.conditional;
 
 import java.awt.event.ActionEvent;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.Box;

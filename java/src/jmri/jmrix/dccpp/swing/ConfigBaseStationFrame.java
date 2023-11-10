@@ -1,6 +1,7 @@
 package jmri.jmrix.dccpp.swing;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -19,7 +21,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -41,8 +42,7 @@ import jmri.jmrix.dccpp.DCCppReply;
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import jmri.jmrix.dccpp.DCCppTrafficController;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /*
  * <hr>
@@ -379,6 +379,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                 _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.SENSOR_CMD)), null); 
                 _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.TURNOUT_CMD)), null); 
                 _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.OUTPUT_CMD)), null); 
+                _tc.sendDCCppMessage(DCCppMessage.makeTurnoutIDsMsg(), null); 
             }
         });
         mSend.add(iRequestDefs);
@@ -418,6 +419,15 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             }
         });
         mSend.add(iReadLocoId);
+
+        JMenuItem iTrackManagerCmd = new JMenuItem(Bundle.getMessage("TrackManagerCmd"));       
+        iTrackManagerCmd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                _tc.sendDCCppMessage(DCCppMessage.makeTrackManagerRequestMsg(), null); 
+            }
+        });
+        mSend.add(iTrackManagerCmd);
 
         this.getJMenuBar().add(mSend);
 
@@ -519,10 +529,10 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             int sel = table.convertRowIndexToModel(row);
             int idx = (int) model.getValueAt(sel, 0);
             log.debug("idx = {}", sel);
-            int value = JOptionPane.showConfirmDialog(null, Bundle.getMessage("DeleteWarningMessage", Integer.toString(idx)),
+            int value = JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("DeleteWarningMessage", Integer.toString(idx)),
                     Bundle.getMessage("WarningTitle"),
-                    JOptionPane.OK_CANCEL_OPTION);
-            if (value == JOptionPane.OK_OPTION) {
+                    JmriJOptionPane.OK_CANCEL_OPTION);
+            if (value == JmriJOptionPane.OK_OPTION) {
                if (null != cTab) {
                     switch (cTab) {
                         case SENSOR:
@@ -626,9 +636,9 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
      * @param e the button press event
      */
     private void saveButtonPressed(ActionEvent e) {
-        int value = JOptionPane.showConfirmDialog(null, Bundle.getMessage("FieldMCFSaveDialogConfirmMessage"),
+        int value = JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("FieldMCFSaveDialogConfirmMessage"),
                 Bundle.getMessage("ConfirmSaveDialogTitle"),
-                JOptionPane.YES_NO_OPTION);
+                JmriJOptionPane.YES_NO_OPTION);
         if (sensorTable.getCellEditor() != null) {
             sensorTable.getCellEditor().stopCellEditing();
         }
@@ -644,7 +654,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         if (outputTable.getCellEditor() != null) {
             outputTable.getCellEditor().stopCellEditing();
         }
-        if (value == JOptionPane.YES_OPTION) {
+        if (value == JmriJOptionPane.YES_OPTION) {
             saveTableValues();
         }
     }
@@ -712,7 +722,12 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                             dccTurnoutModel.setDirtyRow(row, false);
                         }
                     }
-                    _tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); //request updated definitions list 
+                    //request updated definitions list
+                    if (_tc.getCommandStation().isTurnoutIDsMessageRequired()) {
+                        _tc.sendDCCppMessage(DCCppMessage.makeTurnoutIDsMsg(), this);
+                    } else {
+                        _tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); 
+                    }                    
                     break;
                 case SERVOTURNOUT:
                     for (int i = 0; i < servoTurnoutModel.getRowData().size(); i++) {
@@ -744,7 +759,12 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                             servoTurnoutModel.setDirtyRow(row, false);
                         }
                     }
-                    _tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); //request updated definitions list 
+                    //request updated definitions list
+                    if (_tc.getCommandStation().isTurnoutIDsMessageRequired()) {
+                        _tc.sendDCCppMessage(DCCppMessage.makeTurnoutIDsMsg(), this);
+                    } else {
+                        _tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); 
+                    }                    
                     break;
                 case VPINTURNOUT:
                     for (int i = 0; i < vpinTurnoutModel.getRowData().size(); i++) {
@@ -774,7 +794,12 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                             vpinTurnoutModel.setDirtyRow(row, false);
                         }
                     }
-                    _tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); //request updated definitions list 
+                    //request updated definitions list
+                    if (_tc.getCommandStation().isTurnoutIDsMessageRequired()) {
+                        _tc.sendDCCppMessage(DCCppMessage.makeTurnoutIDsMsg(), this);
+                    } else {
+                        _tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); 
+                    }                    
                     break;
                 case OUTPUT:
                     for (int i = 0; i < outputModel.getRowData().size(); i++) {
@@ -815,11 +840,11 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         }
 
         // Offer to write the changes to EEPROM
-        int value = JOptionPane.showConfirmDialog(null, Bundle.getMessage("FieldMCFCloseDialogConfirmMessage"),
+        int value = JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("FieldMCFCloseDialogConfirmMessage"),
                 Bundle.getMessage("FieldMCFCloseDialogTitle"),
-                JOptionPane.YES_NO_OPTION);
+                JmriJOptionPane.YES_NO_OPTION);
 
-        if (value == JOptionPane.YES_OPTION) {
+        if (value == JmriJOptionPane.YES_OPTION) {
             _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.WRITE_TO_EEPROM_CMD)), this);
             log.debug("Sending: <E> (Write To EEPROM)");
         }
@@ -852,32 +877,32 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         // the option of saving.
         if (sensorModel.isDirty() || dccTurnoutModel.isDirty() || servoTurnoutModel.isDirty() 
                 || vpinTurnoutModel.isDirty() || outputModel.isDirty()) {
-            int value = JOptionPane.showConfirmDialog(null, Bundle.getMessage("FieldMCFSaveDialogConfirmMessage"),
+            int value = JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("FieldMCFSaveDialogConfirmMessage"),
                     Bundle.getMessage("ConfirmSaveDialogTitle"),
-                    JOptionPane.YES_NO_OPTION);
-            if (value == JOptionPane.YES_OPTION) {
+                    JmriJOptionPane.YES_NO_OPTION);
+            if (value == JmriJOptionPane.YES_OPTION) {
                 saveTableValues();
             }
 
             // Offer to write the changes to EEPROM
-            value = JOptionPane.showConfirmDialog(null, Bundle.getMessage("FieldMCFCloseDialogConfirmMessage"),
+            value = JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("FieldMCFCloseDialogConfirmMessage"),
                     Bundle.getMessage("FieldMCFCloseDialogTitle"),
-                    JOptionPane.YES_NO_OPTION);
+                    JmriJOptionPane.YES_NO_OPTION);
 
-            if (value == JOptionPane.YES_OPTION) {
+            if (value == JmriJOptionPane.YES_OPTION) {
                 _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.WRITE_TO_EEPROM_CMD)), this);
                 log.debug("Sending: <E> (Write To EEPROM)");
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("FieldMCFCloseNoChangesDialog"));
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("FieldMCFCloseNoChangesDialog"));
         }
 
         // Close the window
         dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConfigBaseStationFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConfigBaseStationFrame.class);
 
     /**
      * Private class to serve as TableModel for Sensors.

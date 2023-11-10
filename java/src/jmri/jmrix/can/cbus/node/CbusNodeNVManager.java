@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Class to represent a Processing of CAN Frames for a CbusNode.
+ * Class to manage Node Variables for a CbusNode.
  *
  * @author Steve Young Copyright (C) 2019,2020
  */
@@ -56,9 +56,10 @@ public class CbusNodeNVManager {
         
         _nvArray = new int [(newnvs.length)]; // no need to compensate for index 0 being total
         for (int i = 0; i < newnvs.length; i++) {
-            setNV(i,newnvs[i]);
+            setNV(i,newnvs[i]);     // will notify SINGLENVUPDATE
         }
         
+        // Now ensure anyone only listening for ALLNVUPDATE sees the change
         _node.notifyPropertyChangeListener("ALLNVUPDATE", null, null);
     }
     
@@ -96,7 +97,10 @@ public class CbusNodeNVManager {
             return;
         }
         _nvArray[index]=newnv;
-        _node.notifyPropertyChangeListener("SINGLENVUPDATE",null,( index -1));
+        if (index > 0) {
+            // Ignore index 0 (number of NVs) as this would pass a negative value in the property change
+            _node.notifyPropertyChangeListener("SINGLENVUPDATE",null,( index -1));
+        }
         
     }
     

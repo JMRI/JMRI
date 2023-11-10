@@ -9,7 +9,6 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.AnalogActionMemory;
 import jmri.jmrit.logixng.actions.DoAnalogAction;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
-import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -385,6 +384,7 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
     public void tearDown() {
         _base.dispose();
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

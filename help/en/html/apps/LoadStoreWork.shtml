@@ -67,11 +67,12 @@
       data from one run of JMRI to the next. For example, saving changes to roster entries is
       separate from storing away your layout configuration.</p>
 
-      <p>Unfortunately, JMRI does not always notify you if there is unsaved data when it exits
-      (although the community of developers is constantly working to improve this). For example,
-      when you create a Sensor in the Sensor Table, it will appear in the Sensor Table Window, but
-      it will be gone if you close JMRI - unless you take one of the actions listed below to save
-      it.</p>
+      <p>As of JMRI 5.1.1, PanelPro will check for changes to tables and panels that have not been
+      stored.  This occurs when <strong>Quit</strong> has been selected and provides an opportunity
+      to store the changes. For details, see <a href=
+      "https://www.jmri.org/help/en/package/apps/TabbedPreferences.shtml#Shutdown">Preferences &rArr;
+      Shutdown</a>.  Previously some of the tables would have reminders, but there was no consistent
+      checking.  This meant there was the possibility of losing changes to tables and panels.</p>
 
       <p>To ensure that data you create (or is created and updated for you) is kept as you require,
       you should understand when and how the different kinds of data get saved to a disk file, or

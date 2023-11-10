@@ -1,12 +1,6 @@
 package jmri.jmrix.loconet.bluetooth;
 
-import java.io.IOException;
 import java.util.Vector;
-import javax.bluetooth.DiscoveryAgent;
-import javax.bluetooth.LocalDevice;
-import javax.bluetooth.RemoteDevice;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Definition of objects to handle configuring a LocoNet Bluetooth layout
@@ -73,16 +67,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     protected Vector<String> getPortNames() {
-        Vector<String> portNameVector = new Vector<String>();
-        try {
-            RemoteDevice[] devices = LocalDevice.getLocalDevice().getDiscoveryAgent().retrieveDevices(DiscoveryAgent.PREKNOWN);
-            for (RemoteDevice device : devices) {
-                portNameVector.add(device.getFriendlyName(false));
-            }
-        } catch (IOException ex) {
-            log.error("Unable to use bluetooth device", ex);
-        }
-        return portNameVector;
+        return LocoNetBluetoothAdapter.discoverPortNames();
     }
 
     @Override
@@ -90,6 +75,6 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return new String[]{};
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConnectionConfig.class);
 
 }

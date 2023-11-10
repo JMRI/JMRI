@@ -64,7 +64,7 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
         Assert.assertEquals("outbound message",m,tc.outbound.elementAt(0));
         op.message(new XNetReply("01 04 05")); // send "OK" message to the programmer.
         // and now we need to check the status is right
-        Assert.assertEquals("written value",5,lastValue);
+        jmri.util.JUnitUtil.waitFor( ()->{ return lastValue == 5; }, "written value" );
         Assert.assertEquals("status",jmri.ProgListener.OK,lastStatus);
     }
 
@@ -75,12 +75,12 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
         Assert.assertEquals("outbound message sent",1,tc.outbound.size());
         Assert.assertEquals("outbound message",m,tc.outbound.elementAt(0));
         // and now we need to check the status is right
-        Assert.assertEquals("written value",29,lastValue);
+        jmri.util.JUnitUtil.waitFor( ()->{ return lastValue == 29; }, "written value" );
         Assert.assertEquals("status",jmri.ProgListener.NotImplemented,lastStatus);
         // send a message reply
         op.message(new XNetReply("01 04 05")); // send "OK" message to the programmer.
         // and verify the status is the same.
-        Assert.assertEquals("written value",29,lastValue);
+        jmri.util.JUnitUtil.waitFor( ()->{ return lastValue == 29; }, "written value" );
         Assert.assertEquals("status",jmri.ProgListener.NotImplemented,lastStatus);
     }
 
@@ -91,12 +91,12 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
         Assert.assertEquals("outbound message sent",1,tc.outbound.size());
         Assert.assertEquals("outbound message",m,tc.outbound.elementAt(0));
         // and now we need to check the status is right
-        Assert.assertEquals("written value",5,lastValue);
+        jmri.util.JUnitUtil.waitFor( ()->{ return lastValue == 5; }, "written value" );
         Assert.assertEquals("status",jmri.ProgListener.NotImplemented,lastStatus);
         // send a message reply
         op.message(new XNetReply("01 04 05")); // send "OK" message to the programmer.
         // and verify the status is the same.
-        Assert.assertEquals("written value",5,lastValue);
+        jmri.util.JUnitUtil.waitFor( ()->{ return lastValue == 5; }, "written value" );
         Assert.assertEquals("status",jmri.ProgListener.NotImplemented,lastStatus);
     }
 
@@ -108,7 +108,7 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
         Assert.assertEquals("outbound message",m,tc.outbound.elementAt(0));
         op.message(new XNetReply("61 82 E3")); // send "Not Supported" message to the programmer.
         // and now we need to check the status is right
-        Assert.assertEquals("written value",5,lastValue);
+        jmri.util.JUnitUtil.waitFor( ()->{ return lastValue == 5; }, "written value" );
         Assert.assertEquals("status",jmri.ProgListener.NotImplemented,lastStatus);
     }
 
@@ -128,7 +128,7 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
         // then finish without an error (tc will retransmit).
         op.message(new XNetReply("01 04 05")); // send "OK" message to the programmer.
         // and now we need to check the status is right
-        Assert.assertEquals("written value",5,lastValue);
+        jmri.util.JUnitUtil.waitFor( ()->{ return lastValue == 5; }, "written value" );
         Assert.assertEquals("status",jmri.ProgListener.OK,lastStatus);
     }
 
@@ -140,7 +140,7 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
         Assert.assertEquals("outbound message",m,tc.outbound.elementAt(0));
         op.message(new XNetReply("61 02 63")); // send "Service Mode Entry" message to the programmer, which is an error here.
         // and now we need to check the status is right
-        Assert.assertEquals("written value",5,lastValue);
+        jmri.util.JUnitUtil.waitFor( ()->{ return lastValue == 5; }, "written value" );
         Assert.assertEquals("status",jmri.ProgListener.UnknownError,lastStatus);
     }
 

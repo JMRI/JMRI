@@ -45,7 +45,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
     JButton saveMetricsButton = new JButton(Bundle.getMessage("SaveMetricsButtonText"));
     JButton resetAllMetricsButton = new JButton(Bundle.getMessage("ResetAllMetricsButtonText"));
 
-    final JFileChooser metricsSaveChooser = new JFileChooser();
+    final JFileChooser metricsSaveChooser = new jmri.util.swing.JmriJFileChooser();
 
     CMRInetMetricsFrame curFrame;
     private CMRISystemConnectionMemo _memo = null;

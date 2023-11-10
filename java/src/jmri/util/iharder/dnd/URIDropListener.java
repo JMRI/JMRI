@@ -20,6 +20,6 @@ public interface URIDropListener extends java.util.EventListener {
      * @param evt The {@link URIDropEvent} associated with this event
      * @since 1.1
      */
-    public abstract void urisDropped(URIDropEvent evt);
+    void urisDropped(URIDropEvent evt);
 
 }   // end interface FileDropListener

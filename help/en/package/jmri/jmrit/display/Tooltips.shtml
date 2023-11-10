@@ -68,8 +68,8 @@
             <a href="images/tooltips-le.png"><img src="images/tooltips-le.png" alt="LE Tooltips"
             width="469" height="182"></a>
           </div>
-          Note: Layout Editor does not display tooltips for track components such as turnouts.
-          These are drawn using a set of lines.  They are not icons.
+          Note: Layout Editor does not display tooltips for track components except for turnouts and
+          slips (as of JMRI 5.3.6).  These are drawn using a set of lines.  They are not icons.
        </dd>
       </dl>
 
@@ -83,7 +83,8 @@
       </div>
 
       <p>The icon context menu (right click) has an entry for <strong>Tooltips</strong> with 3 menu
-      items.</p>
+      items.  Note:  The Layout Editor turnout and slip context menus do not have a tooltips sub menu
+      even though they show tooltips as of JMRI 5.3.6. </p>
 
       <div style="margin-left: 2em">
         <a href="images/tooltips-menu.png"><img src="images/tooltips-menu.png" alt="Tooltip menu"

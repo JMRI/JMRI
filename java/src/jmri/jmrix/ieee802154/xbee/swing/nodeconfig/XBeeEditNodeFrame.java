@@ -11,8 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrix.ieee802154.xbee.XBeeNode;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for Editing Nodes

@@ -9,9 +9,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import javax.swing.*;
 import jmri.util.FileUtil;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Pane for CBUS Console Logging to File Options
@@ -36,7 +34,7 @@ public class CbusConsoleLoggingPane extends javax.swing.JPanel {
         super();
         _mainPane = mainPane;
         // set file chooser to a default
-        logFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+        logFileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
         logFileChooser.setSelectedFile(new File(FileUtil.getUserFilesPath()+"monitorLog.txt"));
 
         startStopLogButton = new JToggleButton();
@@ -189,10 +187,9 @@ public class CbusConsoleLoggingPane extends javax.swing.JPanel {
             dirToOpen = logFileChooser.getSelectedFile();
             desktop.open(dirToOpen);
         } catch (IllegalArgumentException iae) {
-            // log.info("Merg Cbus Console Log File Not Found");
-            JOptionPane.showMessageDialog(_mainPane,
+            JmriJOptionPane.showMessageDialog(_mainPane,
                 (Bundle.getMessage("NoOpenLogFile")), Bundle.getMessage("WarningTitle"),
-                JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -222,5 +219,6 @@ public class CbusConsoleLoggingPane extends javax.swing.JPanel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusConsoleLoggingPane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusConsoleLoggingPane.class);
+
 }

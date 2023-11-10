@@ -318,6 +318,7 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         memo = null;
         tcis = null;
         JUnitUtil.resetWindows(false,false);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();
     }    
     

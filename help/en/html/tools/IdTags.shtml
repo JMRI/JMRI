@@ -4,6 +4,7 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: ID Tag Documentation</title>
   <meta name="author" content="Matthew Harris">
+  <meta name="author" content="Jerry Grochow">
   <meta name="keywords" content="rfid tag ID tag model railroad JMRI decoderpro panelpro">
   <!--#include virtual="/Style.shtml" -->
 </head>
@@ -22,27 +23,28 @@
 
       <p>An ID Tag is JMRI's way of representing information about ID Tags that can be attached to,
       for example, various items of rolling stock.</p>
-
-      <p>When an ID Tag is read by a suitable reader, this is notified via both a <a href=
-      "Sensors.shtml">Sensor</a> becoming ACTIVE and a <a href="Reporters.shtml">Reporter</a> being
-      set to the value of the ID Tag. The ID Tag will also record both by which Reporter it was
-      last seen by, as well as the time it was last seen.</p>
-
-      <p>If an unknown ID Tag is detected by a reader, details of this tag will be automatically
+ 
+      <p>When an ID Tag is read by a suitable reader (such as a transponder or a connected 
+      <a href="../hardware/rfid/index.shtml">RFID reader</a>): </p>
+      
+      <ul>
+      <li>If the ID Tag is detected for the first time, details of this tag will be automatically
       entered into the <a href="../../package/jmri/jmrit/beantable/IdTagTable.shtml">ID Tag
-      Table</a>.</p>
+      Table</a>.</li>
+      <li>JMRI will also put the value read into a <a href="Reporters.shtml">Reporter</a> and
+      set a <a href="Sensors.shtml">Sensor</a> to ACTIVE.</li>
+      <li>The ID Tag Table entry will also record which Reporter it was last seen by as well as
+      the time it was last seen.</li>
+      </ul>
 
-      <p>At system shutdown, the details of all ID Tags known to the system are written to a file
-      stored in the <strong>idtags</strong> sub-directory of the <strong>user files
-      location</strong>. The storage of details when and where a given ID Tag was last seen is
-      configurable by setting the option at the bottom of the ID Tag Table.</p>
+      <p>There are other ways of getting information into the JMRI ID Tag Table, including 
+      manually (see below) and via <a href="../hardware/mqtt/index.shtml">MQTT</a>
+      messages and <a href="scripting/index.shtml">scripts.</a>]
+      </p>
 
-      <p>Current implementations are for CORE-ID based readers. These are supported in stand-alone
-      mode via the 'Generic Stand-alone' protocol and as an up-to 8-way Concentrator using <a href=
-      "http://www.merg.org.uk/">MERG</a> hardware via the 'MERG Concentrator' protocol.<br>
-      Note: The <a href="http://www.merg.org.uk/">MERG</a> starter kit as supplied should be
-      configured using the 'Generic Stand-alone' protocol - only when extending the kit with the
-      additional concentrator components should the 'MERG Concentrator' protocol be used.</p>
+      
+      <p>For general information on using ID Tags with RFID Readers, see <a href="../hardware/rfid/GettingStartedWithRFID.shtml">
+      Getting Started With RFID</a>.</p>
 
       <h2>How to setup ID Tags</h2>
 
@@ -53,22 +55,29 @@
 
       <h3>ID Tag Table Controls</h3>
 
-      <p>Below the table there's an <a href=
-      "../../package/jmri/jmrit/beantable/IdTagAddEdit.shtml">"Add..." button</a> for creating your
-      own ID Tags; JMRI automatically creates ID Tag objects for tags detected on the layout.</p>
-
-      <p>Next to it, two check boxes let you activate:</p>
+      <p>Id Tags may be entered manually as well as automatically as noted above.</p>  
+      
+      <p>At the bottom of 
+      the table window there is an <a href="../../package/jmri/jmrit/beantable/IdTagAddEdit.shtml">
+      <strong>"Add..."</strong> button</a> for creating your own ID Tags. Next to this button, two
+      check boxes let you activate:</p>
 
       <ul>
         <li>Save when and where last seen</li>
-
         <li>Use Fast Clock Time</li>
       </ul>
 
       <h3>Displaying ID Tags on Panels</h3>
 
-      <p>An ID Tag can be displayed on a Panel via the use of the Reporter Icon associated with a
-      given reader. To do this:</p>
+      <p>
+      There are several ways to display the contents of ID Tags on Layout Editor and Panel Editor Panels.
+      See the references for these editors for details, and <a href="GettingStartedWithRFID.shtml#_Toc135">
+      Getting Started with RFID</a> for an introduction to this topic (also applicable to other types of 
+      ID Tags).
+      </p>
+      
+      <p>An ID Tag can be displayed on a Panel Editor Panel via the use of the Reporter Icon associated
+      with a given reader. To do this:</p>
 
       <ul>
         <li>On the Panel Editor window for your Panel, find the "Add Reporter" button.</li>
@@ -90,8 +99,12 @@
 
       <h3>Saving ID Tags to disk</h3>
 
-      <p>ID Tags are not stored with the other tables. They have their own storage location as
-      described in the first section.</p>
+      <p>ID Tags are not stored with the other tables. Whenever an ID Tag is changed, the details of
+      all ID Tags known to the system are automatically written to a file stored in the <em>idtags</em>
+      sub-directory of the <em>user files location</em>. The storage of when and where a given ID Tag
+      was last seen is configurable by checking the box at the bottom of the ID Tag Table window.
+      </p>
+      
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

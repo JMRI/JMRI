@@ -71,6 +71,8 @@
 <mapID target="html.hardware.arduino.index_connect" url="html/hardware/arduino/index.shtml#connect"/>
 <mapID target="html.hardware.arduino.index_using" url="html/hardware/arduino/index.shtml#using"/>
 <mapID target="html.hardware.bachrus.index" url="html/hardware/bachrus/index.shtml"/>
+<mapID target="html.hardware.bidib.BiDiB-SignalMast" url="html/hardware/bidib/BiDiB-SignalMast.shtml"/>
+<mapID target="html.hardware.bidib.index" url="html/hardware/bidib/index.shtml"/>
 <mapID target="html.hardware.can.cbus.CbusMeters" url="html/hardware/can/cbus/CbusMeters.shtml"/>
 <mapID target="html.hardware.can.cbus.Names" url="html/hardware/can/cbus/Names.shtml"/>
 <mapID target="html.hardware.can.cbus.index" url="html/hardware/can/cbus/index.shtml"/>
@@ -431,6 +433,8 @@
 <mapID target="package.jmri.jmrix.nce.packetgen.NcePacketGenFrame" url="package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml"/>
 <mapID target="package.jmri.jmrix.nce.usbinterface.UsbInterfacePanel" url="package/jmri/jmrix/nce/usbinterface/UsbInterfacePanel.shtml"/>
 <mapID target="package.jmri.jmrix.oaktree.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/oaktree/nodeconfig/NodeConfigFrame.shtml"/>
+<mapID target="package.jmri.jmrix.openlcb.swing.eventtable.EventTablePane" url="package/jmri/jmrix/openlcb/swing/eventtable/EventTablePane.shtml"/>
+<mapID target="package.jmri.jmrix.openlcb.swing.memtool.MemoryToolPane" url="package/jmri/jmrix/openlcb/swing/memtool/MemoryToolPane.shtml"/>
 <mapID target="package.jmri.jmrix.openlcb.swing.networktree.NetworkTreePane" url="package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml"/>
 <mapID target="package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendFrame" url="package/jmri/jmrix/openlcb/swing/send/OpenLcbCanSendFrame.shtml"/>
 <mapID target="package.jmri.jmrix.powerline.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/powerline/nodeconfig/NodeConfigFrame.shtml"/>

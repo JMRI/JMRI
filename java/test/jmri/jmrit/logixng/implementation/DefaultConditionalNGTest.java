@@ -5,7 +5,6 @@ import java.util.*;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.AbstractDigitalAction;
-import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -95,6 +94,7 @@ public class DefaultConditionalNGTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

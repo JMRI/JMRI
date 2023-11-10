@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2023 All rights reserved -->
+<!-- Variables for 8 solenoids -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <variable item="cutoff1" CV="10001" mask="XXXXXXXV" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    </variable>
+    <variable item="cutoff2" CV="10001" mask="XXXXXXVX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    </variable>
+    <variable item="cutoff3" CV="10001" mask="XXXXXVXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    </variable>
+    <variable item="cutoff4" CV="10001" mask="XXXXVXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    </variable>
+    <variable item="cutoff5" CV="10001" mask="XXXVXXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    </variable>
+    <variable item="cutoff6" CV="10001" mask="XXVXXXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    </variable>
+    <variable item="cutoff7" CV="10001" mask="XVXXXXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    </variable>
+    <variable item="cutoff8" CV="10001" mask="VXXXXXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    </variable>
+</variables>

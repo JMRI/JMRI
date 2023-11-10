@@ -9,6 +9,7 @@ import jmri.Audio;
 import jmri.implementation.AbstractAudio;
 import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Abstract GUI to edit Audio objects
@@ -112,8 +113,8 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
      */
     protected boolean entryError(String entry, String prefix, String counter) {
         if (!entry.startsWith(prefix)) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("AudioCreateError", prefix),
-                    Bundle.getMessage("AudioCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("AudioCreateError", prefix),
+                    Bundle.getMessage("AudioCreateErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             sysName.setText(prefix + counter);
             return true;
         }

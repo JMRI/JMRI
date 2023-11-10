@@ -39,6 +39,7 @@ public class SpecificReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         m = msg = new SpecificReply(t);
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         memo = null;

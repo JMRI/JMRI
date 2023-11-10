@@ -4,16 +4,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.util.Date;
 
-import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
-import static jmri.Light.INTERMEDIATE;
-import static jmri.Light.TRANSITIONINGHIGHER;
-import static jmri.Light.TRANSITIONINGLOWER;
-import static jmri.Light.TRANSITIONINGTOFULLOFF;
-import static jmri.Light.TRANSITIONINGTOFULLON;
-import static jmri.DigitalIO.OFF;
-import static jmri.DigitalIO.ON;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Timebase;
@@ -181,7 +173,7 @@ public abstract class AbstractVariableLight
      * Values at or below the minIntensity property will result in the Light
      * going to the OFF state immediately. Values at or above the maxIntensity
      * property will result in the Light going to the ON state immediately.
-     * <p>
+     *
      * @throws IllegalArgumentException when intensity is less than 0.0 or more
      *                                  than 1.0
      */
@@ -246,7 +238,7 @@ public abstract class AbstractVariableLight
             nextState = TRANSITIONING;  // not expected
         }
         notifyStateChange(mState, nextState);
-        // make sure clocks running to handle it   
+        // make sure clocks running to handle it
         initClocks();
     }
 
@@ -414,7 +406,6 @@ public abstract class AbstractVariableLight
      * vice-versa.
      * <p>
      * Bound property
-     * <p>
      * @throws IllegalArgumentException if minutes is not valid
      */
     @Override
@@ -428,7 +419,7 @@ public abstract class AbstractVariableLight
     /**
      * Get the number of fastclock minutes taken by a transition from full ON to
      * full OFF or vice versa.
-     * <p>
+     *
      * @return 0.0 if the output intensity transition is instantaneous
      */
     @Override
@@ -485,11 +476,43 @@ public abstract class AbstractVariableLight
         return mCurrentIntensity;
     }
 
+    /**
+     * Used when current state comes from layout
+     * @param value Observed current state
+     */
+    protected void setObservedAnalogValue(double value) {
+        int origState = mState;
+        double origCurrent = mCurrentIntensity;
+
+        if (value >= getMaxIntensity()) {
+            mState = ON;
+            mCurrentIntensity = getMaxIntensity();
+        } else if (value <= getMinIntensity()) {
+            mState = OFF;
+            mCurrentIntensity = getMinIntensity();
+        } else {
+            mState = INTERMEDIATE;
+            mCurrentIntensity = value;
+        }
+
+        mTransitionTargetIntensity = mCurrentIntensity;
+
+        firePropertyChange("CurrentIntensity", origCurrent, mCurrentIntensity);
+
+        if (origState != mState) {
+            firePropertyChange("KnownState", origState, mState);
+            if (log.isDebugEnabled()) {
+                log.debug("firePropertyChange intensity {} -> {}", origCurrent, mCurrentIntensity);
+            }
+        }
+
+    }
+
     @Override
     public void setCommandedAnalogValue(double value) throws JmriException {
         int origState = mState;
         double origCurrent = mCurrentIntensity;
-        
+
         if (mCurrentIntensity >= getMaxIntensity()) {
             mState = ON;
             mCurrentIntensity = getMaxIntensity();
@@ -500,23 +523,23 @@ public abstract class AbstractVariableLight
             mState = INTERMEDIATE;
             mCurrentIntensity = value;
         }
-        
+
         mTransitionTargetIntensity = mCurrentIntensity;
-        
+
         // first, send the on command
         sendOnOffCommand(mState);
-        
+
         // command new intensity
         sendIntensity(mCurrentIntensity);
         if (log.isDebugEnabled()) {
             log.debug("set analog value: {}", value);
         }
-        
+
         firePropertyChange("CurrentIntensity", origCurrent, mCurrentIntensity);
         if (log.isDebugEnabled()) {
             log.debug("firePropertyChange intensity {} -> {}", origCurrent, mCurrentIntensity);
         }
-        
+
         if (origState != mState) {
             firePropertyChange("KnownState", origState, mState);
             if (log.isDebugEnabled()) {

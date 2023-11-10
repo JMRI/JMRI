@@ -37,8 +37,11 @@ public class PragotronClockFrame extends JmriJFrame implements java.beans.Proper
     double iconAspect10;
     double iconAspectDot;
     double iconAspect24;
+    int runPauseButtonWidth;
 
     Timebase clock;
+
+    JButton runPauseButton;
 
     NamedIcon[] foldingSheets10 = new NamedIcon[10];
     NamedIcon[] baseFoldingSheets10 = new NamedIcon[10];
@@ -78,18 +81,21 @@ public class PragotronClockFrame extends JmriJFrame implements java.beans.Proper
         Image scaledImage = baseColon.getImage().getScaledInstance(10, 48, Image.SCALE_SMOOTH);  // 40 / 192
         colonIcon.setImage(scaledImage);
 
+        // create the run/pause button and get it's size
+        runPauseButton = new JButton(Bundle.getMessage("ButtonPauseClock"));
+        runPauseButton.setText( Bundle.getMessage( "ButtonPauseClock") );
+        runPauseButtonWidth = runPauseButton.getPreferredSize().width;
+
         // determine aspect ratio of a single digit graphic
         iconAspect10 = 152.0 / 192.0;       // 152 : 192
         iconAspect24 = 320.0 / 192.0;       // 320 : 192
         iconAspectDot = 40.0 / 192.0;       // 40 : 192
 
         // determine the aspect ratio of the 1 hour digit, dot and 2 minutes digit
-        // this DOES NOT allow space for the Run/Stop button, if it is
-        // enabled.  When the Run/Stop button is enabled, the layout will have to be changed
         if (!clock.getShowStopButton()) {
             aspect = (320.0 + 40.0 + 2 * 152.0) / 192.0; // pick up clock prefs choice: no button
         } else {
-            aspect = (320.0 + 40.0 + 2 * 152.0 + 152.0) / 192.0; // pick up clock prefs choice: add 20. for a stop/start button
+            aspect = (320.0 + 40.0 + 2 * 152.0 + runPauseButtonWidth) / 192.0; // pick up clock prefs choice: add width of a stop/start button
         }
 
         // listen for changes to the Timebase parameters
@@ -107,10 +113,10 @@ public class PragotronClockFrame extends JmriJFrame implements java.beans.Proper
         getContentPane().add(m1);
         getContentPane().add(m2);
 
-        getContentPane().add(b = new JButton(Bundle.getMessage("ButtonPauseClock")));
-        b.addActionListener(new ButtonListener());
+        getContentPane().add(runPauseButton);
+        runPauseButton.addActionListener(new ButtonListener());
         // since Run/Stop button looks crummy, user may turn it on in clock prefs
-        b.setVisible(clock.getShowStopButton()); // pick up clock prefs choice
+        runPauseButton.setVisible(clock.getShowStopButton()); // pick up clock prefs choice
         updateButtonText();
         update();
         pack();
@@ -150,24 +156,25 @@ public class PragotronClockFrame extends JmriJFrame implements java.beans.Proper
             iconHeightDot = frameHeight;
             iconWidthDot = (int) (iconAspectDot * iconHeightDot);
         } else {
-            // this DOES NOT allow space for the Run/Stop button, if it is enabled.
-            // When the Run/Stop button is enabled, the layout will change accordingly.
-            iconWidth10 = (int) (frameWidth / 664.0 * 152.0);
+            // allow space in width for run stop button
+            int workingWidth = frameWidth;
+            if (clock.getShowStopButton()) workingWidth = frameWidth - runPauseButtonWidth;
+            iconWidth10 = (int) (workingWidth / 664.0 * 152.0);
             iconHeight10 = (int) (iconWidth10 / iconAspect10);
-            iconWidth24 = (int) (frameWidth / 664.0 * 320.0);
+            iconWidth24 = (int) (workingWidth / 664.0 * 320.0);
             iconHeight24 = (int) (iconWidth24 / iconAspect24);
-            iconWidthDot = (int) (frameWidth / 664.0 * 40.0);
+            iconWidthDot = (int) (workingWidth / 664.0 * 40.0);
             iconHeightDot = (int) (iconWidthDot / iconAspectDot);
         }
         for (int i = 0; i < 10; i++) {
-            Image scaledImage = baseFoldingSheets10[i].getImage().getScaledInstance(iconWidth10, iconHeight10, Image.SCALE_SMOOTH);
+            Image scaledImage = baseFoldingSheets10[i].getImage().getScaledInstance(Math.max(1,iconWidth10), Math.max(1,iconHeight10), Image.SCALE_SMOOTH);
             foldingSheets10[i].setImage(scaledImage);
         }
         for (int i = 0; i < 24; i++) {
-            Image scaledImage = baseFoldingSheets24[i].getImage().getScaledInstance(iconWidth24, iconHeight24, Image.SCALE_SMOOTH);
+            Image scaledImage = baseFoldingSheets24[i].getImage().getScaledInstance(Math.max(1,iconWidth24), Math.max(1,iconHeight24), Image.SCALE_SMOOTH);
             foldingSheets24[i].setImage(scaledImage);
         }
-        Image scaledImage = baseColon.getImage().getScaledInstance(iconWidthDot , iconHeightDot, Image.SCALE_SMOOTH);
+        Image scaledImage = baseColon.getImage().getScaledInstance(Math.max(1,iconWidthDot) , Math.max(1,iconHeightDot), Image.SCALE_SMOOTH);
         colonIcon.setImage(scaledImage);
 
         // update the images on screen
@@ -198,10 +205,8 @@ public class PragotronClockFrame extends JmriJFrame implements java.beans.Proper
      * Update clock button text.
      */
     private void updateButtonText(){
-        b.setText( Bundle.getMessage( clock.getRun() ? "ButtonPauseClock" : "ButtonRunClock") );
+        runPauseButton.setText( Bundle.getMessage( clock.getRun() ? "ButtonPauseClock" : "ButtonRunClock") );
     }
-
-    JButton b;
 
     private class ButtonListener implements ActionListener {
         @Override

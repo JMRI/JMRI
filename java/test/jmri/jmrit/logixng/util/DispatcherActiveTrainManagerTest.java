@@ -1,9 +1,5 @@
 package jmri.jmrit.logixng.util;
 
-import jmri.InstanceManager;
-import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
-import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -39,6 +35,7 @@ public class DispatcherActiveTrainManagerTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

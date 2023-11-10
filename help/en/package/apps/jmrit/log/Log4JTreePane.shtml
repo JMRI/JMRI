@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>JMRI: Display / Edit Log Categories</title>
+  <meta name="author" content="Steve Young">
+  <meta name="keywords" content="JMRI help display view edit update debug log logging category categories log4j log4j2 slf4j">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>JMRI: Display / Edit Log Categories</h1>
+      
+      <p>This tool can be opened via Debug <strong>&rArr;</strong> Display / Edit Log Categories</p>
+
+      <p>This screen displays a list of the current Logging Categories in use by JMRI.</p>
+      <p>Clicking the <span class="textbutton">Refresh Categories</span> button updates the 
+      main category list (and the category selection box under the category list).</p>
+      
+      <img src="Log4JTreePane.png" alt="JMRI Display / Edit Log Categories Tool">
+      
+      <p>An entry such as</p>
+      <code>apps.jmrit.log.Log4JTreePane  &lbrace; INFO &rbrace;</code>
+
+      <p> means that any logging statements produced by Log4JTreePane of INFO,
+      or the higher levels WARN and ERROR level will be logged.
+
+      <p>The Logging levels are :</p>
+        <ul>
+        <li>TRACE ( + DEBUG + INFO + WARN + ERROR )</li>
+        <li>DEBUG ( + INFO + WARN + ERROR ) </li>
+        <li>INFO ( + WARN + ERROR )</li>
+        <li>WARN ( + ERROR )</li>
+        <li>ERROR</li>
+        <li>OFF</li>
+        </ul>
+
+      <p>Levels within &lbrack; &rbrack; brackets have been set within the Logging configuration.
+      <br>Levels within &lbrace; &rbrace; braces indicate that the Level has been inherited.</p>
+
+        <code>apps.jmrit.log.Log4JTreePane  &lbrace; INFO &rbrace;</code>
+
+      <p>Indicates that the INFO Level is inherited from one of these categories :</p>
+
+        <ul>
+        <li>apps.jmrit.log</li>
+        <li>apps.jmrit</li>
+        <li>apps</li>
+        <li>Root Logging Level</li>
+        </ul>
+
+      <p>Categories can be created by entering a new name in the Category selection box and then editing the Logging Level.</p>
+
+      <p>It can sometimes be useful to change the Level for a Category.</p>
+      <p>At the bottom of the screen, select the category, the new level and click <span class="textbutton">Set new Logging Level for this session</span>.</p>
+
+      <p>Changes made to Logging reporting levels using this screen will last for the remainder of the JMRI session.
+      <br>Changes affect all logs, i.e., the live console log and logging to Files.</p>
+      
+      <p>The TRACE debug level may produce a LOT of output, expect system freezes if this is set for the Default Logging Level.</p>
+      
+      <p>To make permanent changes to the logging levels, see <a href="../../../../html/apps/Debug.shtml">JMRI Debugging and Logging</a>
+      which discusses the Logging Configuration File, (default_lcf.xml) options.</p>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,899 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2006 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Bob Jacobsen" version="2" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
+  <version author="Michael@Povel-Walsrode.de" version="0.2" lastUpdated="20100109"/>
+  <!-- 0.2 2010/01/09 MCP Added item entries for all variables -->
+  <!-- 0.1 2010/01/08 MCP Copied from LD-G-21 -->
+  <version author="optonix@gmail.com" version="1.1" lastUpdated="20191110" />
+  <!--2019/11/10 V1.1 Small fixes for X3 in Lights section-->
+  <!--2019/11/09 V1.0 Initial version based on LD-G-32-->
+  <version author="warnerthuis@yahoo.com" version="1.1" lastUpdated="20230718" />
+  <!-- 2023/07/16 V1.1 Fixes in number of outputs -->
+  <!-- 2023/07/16 V1.0 Rebuild to LD-G-9  based on LD-G-32.2 -->
+  <decoder>
+    <family name="Multiprotocol Decoder" mfg="Tams Elektronik GmbH" lowVersionID="10" highVersionID="10">
+      <model model="LD-G-9" numOuts="8" numFns="9">
+        <output name="4" label="X4" />
+        <output name="5" label="X5" />
+        <output name="6" label="X6" />
+        <output name="7" label="X7" />
+        <output name="8" label="X8" />
+        <output name="9" label="X9" />
+        <output name="10" label="X10" />
+        <output name="11" label="X11" />
+      </model>
+    </family>
+    <programming direct="yes" paged="no" register="no" ops="no" />
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml" />
+      <variable CV="2" comment="Sets the output voltage to the motor at speed level 1" item="Vstart" default="10">
+        <decVal max="255" />
+        <label>Start Voltage</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Startspannung</label>
+        <label xml:lang="nl">Startspanning</label>
+        <comment>Sets the output voltage to the motor at speed level 1</comment>
+      </variable>
+      <variable CV="3" comment="Sets the acceleration rate (delay)" item="Accel" default="16">
+        <decVal max="255" />
+        <label>Acceleration Rate</label>
+        <label xml:lang="it">Accellerazione (0-255)</label>
+        <label xml:lang="fr">Accelération (0-255)</label>
+        <label xml:lang="de">Anfahr0verzögerung (0-255)</label>
+        <label xml:lang="nl">Optrekconstante (0-255)</label>
+        <comment>Sets the acceleration rate (delay)</comment>
+      </variable>
+      <variable CV="4" comment="Sets the deceleration rate (delay)" item="Decel" default="16">
+        <decVal max="255" />
+        <label>Braking Rate</label>
+        <label xml:lang="it">Decellerazione (0-255)</label>
+        <label xml:lang="fr">Décélération (0-255)</label>
+        <label xml:lang="de">Bremszeit (0-255)</label>
+        <label xml:lang="nl">Afremconstante (0-255)</label>
+        <comment>Sets the deceleration rate (delay)</comment>
+      </variable>
+      <variable CV="5" comment="Sets the motor voltage at top Speed Step" item="Vhigh" default="0">
+        <decVal max="255" />
+        <label>Top Voltage</label>
+        <label xml:lang="it">Volt Massimi (0-255):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
+        <label xml:lang="nl">Maximale spanning (0-255):</label>
+        <comment>Sets the motor voltage at top Speed Step</comment>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml" />
+      <variable CV="9" item="Total PWM Period" comment="Range 0-23" default="0">
+        <decVal min="0" max="23"/>
+        <label>Motor frequency</label>
+        <label xml:lang="de">Motorfrequenz</label>
+        <label xml:lang="nl">Motor-frequentie</label>
+        <tooltip>&lt;html&gt;Frequency controlling the motor:&lt;br&gt;
+                             0 = 400 Hz&lt;br&gt;
+                             23 = 40 Hz&lt;br&gt;
+                             (Range: 0-23, Default: 0) &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Frequenz, mit der der Motor angesteuert wird.&lt;br&gt;
+                                           0 = 400 Hz&lt;br&gt;
+                                           23 = 40 Hz&lt;br&gt;
+                                           (Bereich: 0-23, voreingestellt: 0) &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Frequentie, waarmee de motor wordt aangestuurd.&lt;br&gt;
+                                           0 = 400 Hz&lt;br&gt;
+                                           23 = 40 Hz&lt;br&gt;
+                                           (Bereik: 0-23, standaardinstelling: 0) &lt;/html&gt;</tooltip>
+        <comment>Range 0-23</comment>
+      </variable>
+      <!-- CV=29 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml" />
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml" />
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml" />
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml" />
+      <!-- CV39-43 -->
+      <variable CV="39" mask="XXXXXXXV" item="F5 controls output 4" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F5 controls X4</label>
+      </variable>
+      <variable CV="40" mask="XXXXXXXV" item="F5 controls output 5" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F5 controls X5</label>
+      </variable>
+      <variable CV="41" mask="XXXXXXXV" item="F5 controls output 6" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F5 controls X6</label>
+      </variable>
+      <variable CV="42" mask="XXXXXXXV" item="F5 controls output 7" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F5 controls X7</label>
+      </variable>
+      <variable CV="43" mask="XXXXXXXV" item="F5 controls output 8" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F5 controls X8</label>
+      </variable>
+      <variable CV="39" mask="XXXXXXVX" item="F6 controls output 4" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F6 controls X4</label>
+      </variable>
+      <variable CV="40" mask="XXXXXXVX" item="F6 controls output 5" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F6 controls X5</label>
+      </variable>
+      <variable CV="41" mask="XXXXXXVX" item="F6 controls output 6" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F6 controls X6</label>
+      </variable>
+      <variable CV="42" mask="XXXXXXVX" item="F6 controls output 7" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F6 controls X7</label>
+      </variable>
+      <variable CV="43" mask="XXXXXXVX" item="F6 controls output 8" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F6 controls X8</label>
+      </variable>
+      <variable CV="39" mask="XXXXXVXX" item="F7 controls output 4" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F7 controls X4</label>
+      </variable>
+      <variable CV="40" mask="XXXXXVXX" item="F7 controls output 5" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F7 controls X5</label>
+      </variable>
+      <variable CV="41" mask="XXXXXVXX" item="F7 controls output 6" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F7 controls X6</label>
+      </variable>
+      <variable CV="42" mask="XXXXXVXX" item="F7 controls output 7" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F7 controls X7</label>
+      </variable>
+      <variable CV="43" mask="XXXXXVXX" item="F7 controls output 8" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F7 controls X8</label>
+      </variable>
+      <variable CV="39" mask="XXXXVXXX" item="F8 controls output 4" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F8 controls X4</label>
+      </variable>
+      <variable CV="40" mask="XXXXVXXX" item="F8 controls output 5" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F8 controls X5</label>
+      </variable>
+      <variable CV="41" mask="XXXXVXXX" item="F8 controls output 6" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F8 controls X6</label>
+      </variable>
+      <variable CV="42" mask="XXXXVXXX" item="F8 controls output 7" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F8 controls X7</label>
+      </variable>
+      <variable CV="43" mask="XXXXVXXX" item="F8 controls output 8" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F8 controls X8</label>
+      </variable>
+      <!-- cv49 -->
+      <variable CV="49" mask="XXXXXXVX" item="Emergency stop at change of direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml" />
+        <label>Emergency stop at change of direction</label>
+      </variable>
+      <variable CV="49" mask="XXXXXVXX" item="Emergency stop at F1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml" />
+        <label>Emergency stop at F1</label>
+      </variable>
+      <variable CV="49" mask="XXXXVXXX" item="F1 controls Shunting gear mode">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml" />
+        <label>Shunting gear mode on F3</label>
+      </variable>
+      <variable CV="49" mask="XXXVXXXX" item="F2 controls Shunting gear mode">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml" />
+        <label>Shunting gear mode on F4</label>
+      </variable>
+      <variable CV="49" mask="XXVXXXXX" item="F3 controls Shunting gear mode">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml" />
+        <label>Shunting gear mode on F5</label>
+      </variable>
+      <variable CV="49" mask="XVXXXXXX" item="F4 controls Shunting gear mode">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml" />
+        <label>Shunting gear mode on F6</label>
+      </variable>
+      <!-- CV50-54 -->
+      <variable CV="50" mask="XXXXVVVV" item="Global lighting option 1" default="8" tooltip="Sets intensity of output X4 (larger number = brighter light)">
+        <decVal min="0" max="8"/>
+        <label>Dimming Intensity, Output X4 (0-8)</label>
+      </variable>
+      <variable CV="51" mask="XXXXVVVV" item="Global lighting option 2" default="8" tooltip="Sets intensity of output X5 (larger number = brighter light)">
+        <decVal min="0" max="8"/>
+        <label>Dimming Intensity, Output X5 (0-8)</label>
+      </variable>
+      <variable CV="52" mask="XXXXVVVV" item="Global lighting option 3" default="8" tooltip="Sets intensity of output X6 (larger number = brighter light)">
+        <decVal min="0" max="8"/>
+        <label>Dimming Intensity, Output X6 (0-8)</label>
+      </variable>
+      <variable CV="53" mask="XXXXVVVV" item="Global lighting option 4" default="8" tooltip="Sets intensity of output X7 (larger number = brighter light)">
+        <decVal min="0" max="8"/>
+        <label>Dimming Intensity, Output X7 (0-8)</label>
+      </variable>
+      <variable CV="54" mask="XXXXVVVV" item="Global lighting option 5" default="8" tooltip="Sets intensity of output X8 (larger number = brighter light)">
+        <decVal min="0" max="8"/>
+        <label>Dimming Intensity, Output X8 (0-8)</label>
+      </variable>
+      <!-- CV55-59 -->
+      <variable CV="55" mask="XXXXXXXV" item="F1 controls output 4" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F1 controls X4</label>
+      </variable>
+      <variable CV="56" mask="XXXXXXXV" item="F1 controls output 5" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F1 controls X5</label>
+      </variable>
+      <variable CV="57" mask="XXXXXXXV" item="F1 controls output 6" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F1 controls X6</label>
+      </variable>
+      <variable CV="58" mask="XXXXXXXV" item="F1 controls output 7" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F1 controls X7</label>
+      </variable>
+      <variable CV="59" mask="XXXXXXXV" item="F1 controls output 8" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F1 controls X8</label>
+      </variable>
+      <variable CV="55" mask="XXXXXXVX" item="F2 controls output 4" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F2 controls X4</label>
+      </variable>
+      <variable CV="56" mask="XXXXXXVX" item="F2 controls output 5" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F2 controls X5</label>
+      </variable>
+      <variable CV="57" mask="XXXXXXVX" item="F2 controls output 6" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F2 controls X6</label>
+      </variable>
+      <variable CV="58" mask="XXXXXXVX" item="F2 controls output 7" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F2 controls X7</label>
+      </variable>
+      <variable CV="59" mask="XXXXXXVX" item="F2 controls output 8" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F2 controls X8</label>
+      </variable>
+      <variable CV="55" mask="XXXXXVXX" item="F3 controls output 4" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F3 controls X4</label>
+      </variable>
+      <variable CV="56" mask="XXXXXVXX" item="F3 controls output 5" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F3 controls X5</label>
+      </variable>
+      <variable CV="57" mask="XXXXXVXX" item="F3 controls output 6" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F3 controls X6</label>
+      </variable>
+      <variable CV="58" mask="XXXXXVXX" item="F3 controls output 7" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F3 controls X7</label>
+      </variable>
+      <variable CV="59" mask="XXXXXVXX" item="F3 controls output 8" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F3 controls X8</label>
+      </variable>
+      <variable CV="55" mask="XXXXVXXX" item="F4 controls output 4" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F4 controls X4</label>
+      </variable>
+      <variable CV="56" mask="XXXXVXXX" item="F4 controls output 5" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F4 controls X5</label>
+      </variable>
+      <variable CV="57" mask="XXXXVXXX" item="F4 controls output 6" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F4 controls X6</label>
+      </variable>
+      <variable CV="58" mask="XXXXVXXX" item="F4 controls output 7" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F4 controls X7</label>
+      </variable>
+      <variable CV="59" mask="XXXXVXXX" item="F4 controls output 8" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F4 controls X8</label>
+      </variable>
+      <variable CV="55" mask="XXXVXXXX" item="F0 controls output 4" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F0 controls X4</label>
+      </variable>
+      <variable CV="56" mask="XXXVXXXX" item="F0 controls output 5" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F0 controls X5</label>
+      </variable>
+      <variable CV="57" mask="XXXVXXXX" item="F0 controls output 6" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F0 controls X6</label>
+      </variable>
+      <variable CV="58" mask="XXXVXXXX" item="F0 controls output 7" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F0 controls X7</label>
+      </variable>
+      <variable CV="59" mask="XXXVXXXX" item="F0 controls output 8" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F0 controls X8</label>
+      </variable>
+      <!-- CV60-64 -->
+      <variable item="Output 1 effect generated" CV="60" mask="XXXXXVVV" default="0">
+        <enumVal>
+          <enumChoice choice="NONE" value="0">
+            <choice>NONE</choice>
+          </enumChoice>
+           <enumChoice choice="Flickering" value="1">
+            <choice>Flickering</choice>
+          </enumChoice>
+          <enumChoice choice="Strobe" value="2">
+            <choice>Strobe</choice>
+          </enumChoice>
+          <enumChoice choice="MARS" value="4">
+            <choice>MARS</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X4 output effect</label>
+      </variable>
+      <variable item="Output 1 behavior" CV="60" mask="XXXVVXXX" default="0">
+        <enumVal>
+          <enumChoice choice="always on" value="0">
+            <choice>always on</choice>
+          </enumChoice>
+          <enumChoice choice="backward inactive" value="1">
+            <choice>backward inactive</choice>
+          </enumChoice>
+          <enumChoice choice="forward inactive" value="2">
+            <choice>forward inactive</choice>
+          </enumChoice>
+          <enumChoice choice="always off" value="3">
+            <choice>always off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X4 output mode</label>
+      </variable>
+      <variable item="Output 1 options" CV="60" mask="VVVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="NONE" value="0">
+            <choice>NONE</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 2 Hz phase A" value="1">
+            <choice>Flashing 2 Hz phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 2 Hz phase B" value="2">
+            <choice>Flashing 2 Hz phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 1 Hz" value="4">
+            <choice>Flashing 1 Hz</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X4 output options</label>
+      </variable>
+       <variable item="Output 2 effect generated" CV="61" mask="XXXXXVVV" default="0">
+        <enumVal>
+          <enumChoice choice="NONE" value="0">
+            <choice>NONE</choice>
+          </enumChoice>
+           <enumChoice choice="Flickering" value="1">
+            <choice>Flickering</choice>
+          </enumChoice>
+          <enumChoice choice="Strobe" value="2">
+            <choice>Strobe</choice>
+          </enumChoice>
+          <enumChoice choice="MARS" value="4">
+            <choice>MARS</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X5 output effect</label>
+      </variable>
+      <variable item="Output 2 behavior" CV="61" mask="XXXVVXXX" default="0">
+        <enumVal>
+          <enumChoice choice="always on" value="0">
+            <choice>always on</choice>
+          </enumChoice>
+          <enumChoice choice="backward inactive" value="1">
+            <choice>backward inactive</choice>
+          </enumChoice>
+          <enumChoice choice="forward inactive" value="2">
+            <choice>forward inactive</choice>
+          </enumChoice>
+          <enumChoice choice="always off" value="3">
+            <choice>always off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X5 output mode</label>
+      </variable>
+      <variable item="Output 2 options" CV="61" mask="VVVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="NONE" value="0">
+            <choice>NONE</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 2 Hz phase A" value="1">
+            <choice>Flashing 2 Hz phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 2 Hz phase B" value="2">
+            <choice>Flashing 2 Hz phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 1 Hz" value="4">
+            <choice>Flashing 1 Hz</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X5 output options</label>
+      </variable>
+      <variable item="Output 3 effect generated" CV="62" mask="XXXXXVVV" default="0">
+        <enumVal>
+          <enumChoice choice="NONE" value="0">
+            <choice>NONE</choice>
+          </enumChoice>
+           <enumChoice choice="Flickering" value="1">
+            <choice>Flickering</choice>
+          </enumChoice>
+          <enumChoice choice="Strobe" value="2">
+            <choice>Strobe</choice>
+          </enumChoice>
+          <enumChoice choice="MARS" value="4">
+            <choice>MARS</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X6 output effect</label>
+      </variable>
+      <variable item="Output 3 behavior" CV="62" mask="XXXVVXXX" default="0">
+        <enumVal>
+          <enumChoice choice="always on" value="0">
+            <choice>always on</choice>
+          </enumChoice>
+          <enumChoice choice="backward inactive" value="1">
+            <choice>backward inactive</choice>
+          </enumChoice>
+          <enumChoice choice="forward inactive" value="2">
+            <choice>forward inactive</choice>
+          </enumChoice>
+          <enumChoice choice="always off" value="3">
+            <choice>always off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X6 output mode</label>
+      </variable>
+      <variable item="Output 3 options" CV="62" mask="VVVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="NONE" value="0">
+            <choice>NONE</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 2 Hz phase A" value="1">
+            <choice>Flashing 2 Hz phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 2 Hz phase B" value="2">
+            <choice>Flashing 2 Hz phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 1 Hz" value="4">
+            <choice>Flashing 1 Hz</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X6 output options</label>
+      </variable>
+      <variable item="Output 4 effect generated" CV="63" mask="XXXXXVVV" default="0">
+        <enumVal>
+          <enumChoice choice="NONE" value="0">
+            <choice>NONE</choice>
+          </enumChoice>
+           <enumChoice choice="Flickering" value="1">
+            <choice>Flickering</choice>
+          </enumChoice>
+          <enumChoice choice="Strobe" value="2">
+            <choice>Strobe</choice>
+          </enumChoice>
+          <enumChoice choice="MARS" value="4">
+            <choice>MARS</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X6 output effect</label>
+      </variable>
+      <variable item="Output 4 behavior" CV="63" mask="XXXVVXXX" default="0">
+        <enumVal>
+          <enumChoice choice="always on" value="0">
+            <choice>always on</choice>
+          </enumChoice>
+          <enumChoice choice="backward inactive" value="1">
+            <choice>backward inactive</choice>
+          </enumChoice>
+          <enumChoice choice="forward inactive" value="2">
+            <choice>forward inactive</choice>
+          </enumChoice>
+          <enumChoice choice="always off" value="3">
+            <choice>always off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X6 output mode</label>
+      </variable>
+      <variable item="Output 4 options" CV="63" mask="VVVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="NONE" value="0">
+            <choice>NONE</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 2 Hz phase A" value="1">
+            <choice>Flashing 2 Hz phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 2 Hz phase B" value="2">
+            <choice>Flashing 2 Hz phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 1 Hz" value="4">
+            <choice>Flashing 1 Hz</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X6 output options</label>
+      </variable>
+      <variable item="Output 5 effect generated" CV="64" mask="XXXXXVVV" default="0">
+        <enumVal>
+          <enumChoice choice="NONE" value="0">
+            <choice>NONE</choice>
+          </enumChoice>
+           <enumChoice choice="Flickering" value="1">
+            <choice>Flickering</choice>
+          </enumChoice>
+          <enumChoice choice="Strobe" value="2">
+            <choice>Strobe</choice>
+          </enumChoice>
+          <enumChoice choice="MARS" value="4">
+            <choice>MARS</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X6 output effect</label>
+      </variable>
+      <variable item="Output 5 behavior" CV="64" mask="XXXVVXXX" default="0">
+        <enumVal>
+          <enumChoice choice="always on" value="0">
+            <choice>always on</choice>
+          </enumChoice>
+          <enumChoice choice="backward inactive" value="1">
+            <choice>backward inactive</choice>
+          </enumChoice>
+          <enumChoice choice="forward inactive" value="2">
+            <choice>forward inactive</choice>
+          </enumChoice>
+          <enumChoice choice="always off" value="3">
+            <choice>always off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X6 output mode</label>
+      </variable>
+      <variable item="Output 5 options" CV="64" mask="VVVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="NONE" value="0">
+            <choice>NONE</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 2 Hz phase A" value="1">
+            <choice>Flashing 2 Hz phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 2 Hz phase B" value="2">
+            <choice>Flashing 2 Hz phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 1 Hz" value="4">
+            <choice>Flashing 1 Hz</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X6 output options</label>
+      </variable>
+      <!-- CV67 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml" />
+      <variable item="Speed Table" CV="67">
+        <speedTableVal>
+          <speedTableEntry step="1" value="0" />
+          <speedTableEntry step="2" value="6" />
+          <speedTableEntry step="3" value="12" />
+          <speedTableEntry step="4" value="18" />
+          <speedTableEntry step="5" value="24" />
+          <speedTableEntry step="6" value="30" />
+          <speedTableEntry step="7" value="36" />
+          <speedTableEntry step="8" value="42" />
+          <speedTableEntry step="9" value="48" />
+          <speedTableEntry step="10" value="54" />
+          <speedTableEntry step="11" value="60" />
+          <speedTableEntry step="12" value="66" />
+          <speedTableEntry step="13" value="72" />
+          <speedTableEntry step="14" value="78" />
+          <speedTableEntry step="15" value="84" />
+          <speedTableEntry step="16" value="90" />
+          <speedTableEntry step="17" value="96" />
+          <speedTableEntry step="18" value="102" />
+          <speedTableEntry step="19" value="108" />
+          <speedTableEntry step="20" value="114" />
+          <speedTableEntry step="21" value="120" />
+          <speedTableEntry step="22" value="126" />
+          <speedTableEntry step="23" value="132" />
+          <speedTableEntry step="24" value="138" />
+          <speedTableEntry step="25" value="144" />
+          <speedTableEntry step="26" value="150" />
+          <speedTableEntry step="27" value="156" />
+          <speedTableEntry step="28" value="162" />
+        </speedTableVal>
+        <label>Speed Table</label>
+      </variable>
+      <!-- CV112-114 -->
+      <variable CV="112" mask="XXXXXXXV" item="F1 controls output 9" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F1 controls X9</label>
+      </variable>
+      <variable CV="113" mask="XXXXXXXV" item="F1 controls output 10" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F1 controls X10</label>
+      </variable>
+      <variable CV="114" mask="XXXXXXXV" item="F1 controls output 11" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F1 controls X11</label>
+      </variable>
+      <variable CV="112" mask="XXXXXXVX" item="F2 controls output 9" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F2 controls X9</label>
+      </variable>
+      <variable CV="113" mask="XXXXXXVX" item="F2 controls output 10" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F2 controls X10</label>
+      </variable>
+      <variable CV="114" mask="XXXXXXVX" item="F2 controls output 11" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F2 controls X11</label>
+      </variable>
+      <variable CV="112" mask="XXXXXVXX" item="F3 controls output 9" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F3 controls X9</label>
+      </variable>
+      <variable CV="113" mask="XXXXXVXX" item="F3 controls output 10" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F3 controls X10</label>
+      </variable>
+      <variable CV="114" mask="XXXXXVXX" item="F3 controls output 11" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F3 controls X11</label>
+      </variable>
+      <variable CV="112" mask="XXXXVXXX" item="F4 controls output 9" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F4 controls X9</label>
+      </variable>
+      <variable CV="113" mask="XXXXVXXX" item="F4 controls output 10" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F4 controls X10</label>
+      </variable>
+      <variable CV="114" mask="XXXXVXXX" item="F4 controls output 11" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F4 controls X11</label>
+      </variable>
+      <variable CV="112" mask="XXXVXXXX" item="F0 controls output 9" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F0 controls X9</label>
+      </variable>
+      <variable CV="113" mask="XXXVXXXX" item="F0 controls output 10" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F0 controls X10</label>
+      </variable>
+      <variable CV="114" mask="XXXVXXXX" item="F0 controls output 11" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F0 controls X11</label>
+      </variable>
+      <!-- CV115-117 -->
+      <variable CV="115" mask="XXXXXXXV" item="F5 controls output 9" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F5 controls X9</label>
+      </variable>
+      <variable CV="116" mask="XXXXXXXV" item="F5 controls output 10" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F5 controls X10</label>
+      </variable>
+      <variable CV="117" mask="XXXXXXXV" item="F5 controls output 11" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F15 controls X11</label>
+      </variable>
+      <variable CV="115" mask="XXXXXXVX" item="F6 controls output 9" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F6 controls X9</label>
+      </variable>
+      <variable CV="116" mask="XXXXXXVX" item="F6 controls output 10" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F6 controls X10</label>
+      </variable>
+      <variable CV="117" mask="XXXXXXVX" item="F6 controls output 11" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F6 controls X11</label>
+      </variable>
+      <variable CV="115" mask="XXXXXVXX" item="F7 controls output 9" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F7 controls X9</label>
+      </variable>
+      <variable CV="116" mask="XXXXXVXX" item="F7 controls output 10" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F7 controls X10</label>
+      </variable>
+      <variable CV="117" mask="XXXXXVXX" item="F7 controls output 11" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F7 controls X11</label>
+      </variable>
+      <variable CV="115" mask="XXXXVXXX" item="F8 controls output 9" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F8 controls X9</label>
+      </variable>
+      <variable CV="116" mask="XXXXVXXX" item="F8 controls output 10" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F8 controls X10</label>
+      </variable>
+      <variable CV="117" mask="XXXXVXXX" item="F8 controls output 11" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
+        <label>F8 controls X11</label>
+      </variable>
+      <!-- CV118-120 -->
+      <variable CV="118" mask="XXXXVVVV" item="Global lighting option 6" default="8" tooltip="Sets intensity of output X9 (larger number = brighter light)">
+        <decVal min="0" max="8"/>
+        <label>Dimming Intensity, Output X9 (0-8)</label>
+      </variable>
+      <variable CV="119" mask="XXXXVVVV" item="Global lighting option 7" default="8" tooltip="Sets intensity of output X10 (larger number = brighter light)">
+        <decVal min="0" max="8"/>
+        <label>Dimming Intensity, Output X10 (0-8)</label>
+      </variable>
+      <variable CV="120" mask="XXXXVVVV" item="Global lighting option 8" default="8" tooltip="Sets intensity of output X11 (larger number = brighter light)">
+        <decVal min="0" max="8"/>
+        <label>Dimming Intensity, Output X11 (0-8)</label>
+      </variable>
+      <!-- CV121-123 -->
+      <variable item="Output 6 effect generated" CV="121" mask="XXXXXVVV" default="0">
+        <enumVal>
+          <enumChoice choice="NONE" value="0">
+            <choice>NONE</choice>
+          </enumChoice>
+           <enumChoice choice="Flickering" value="1">
+            <choice>Flickering</choice>
+          </enumChoice>
+          <enumChoice choice="Strobe" value="2">
+            <choice>Strobe</choice>
+          </enumChoice>
+          <enumChoice choice="MARS" value="4">
+            <choice>MARS</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X9 output effect</label>
+      </variable>
+      <variable item="Output 6 behavior" CV="121" mask="XXXVVXXX" default="0">
+        <enumVal>
+          <enumChoice choice="always on" value="0">
+            <choice>always on</choice>
+          </enumChoice>
+          <enumChoice choice="backward inactive" value="1">
+            <choice>backward inactive</choice>
+          </enumChoice>
+          <enumChoice choice="forward inactive" value="2">
+            <choice>forward inactive</choice>
+          </enumChoice>
+          <enumChoice choice="always off" value="3">
+            <choice>always off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X9 output mode</label>
+      </variable>
+      <variable item="Output 6 options" CV="121" mask="VVVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="NONE" value="0">
+            <choice>NONE</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 2 Hz phase A" value="1">
+            <choice>Flashing 2 Hz phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 2 Hz phase B" value="2">
+            <choice>Flashing 2 Hz phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 1 Hz" value="4">
+            <choice>Flashing 1 Hz</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X9 output options</label>
+      </variable>
+       <variable item="Output 7 effect generated" CV="122" mask="XXXXXVVV" default="0">
+        <enumVal>
+          <enumChoice choice="NONE" value="0">
+            <choice>NONE</choice>
+          </enumChoice>
+           <enumChoice choice="Flickering" value="1">
+            <choice>Flickering</choice>
+          </enumChoice>
+          <enumChoice choice="Strobe" value="2">
+            <choice>Strobe</choice>
+          </enumChoice>
+          <enumChoice choice="MARS" value="4">
+            <choice>MARS</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X10 output effect</label>
+      </variable>
+      <variable item="Output 7 behavior" CV="122" mask="XXXVVXXX" default="0">
+        <enumVal>
+          <enumChoice choice="always on" value="0">
+            <choice>always on</choice>
+          </enumChoice>
+          <enumChoice choice="backward inactive" value="1">
+            <choice>backward inactive</choice>
+          </enumChoice>
+          <enumChoice choice="forward inactive" value="2">
+            <choice>forward inactive</choice>
+          </enumChoice>
+          <enumChoice choice="always off" value="3">
+            <choice>always off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X10 output mode</label>
+      </variable>
+      <variable item="Output 7 options" CV="122" mask="VVVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="NONE" value="0">
+            <choice>NONE</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 2 Hz phase A" value="1">
+            <choice>Flashing 2 Hz phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 2 Hz phase B" value="2">
+            <choice>Flashing 2 Hz phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 1 Hz" value="4">
+            <choice>Flashing 1 Hz</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X10 output options</label>
+      </variable>
+      <variable item="Output 8 effect generated" CV="123" mask="XXXXXVVV" default="0">
+        <enumVal>
+          <enumChoice choice="NONE" value="0">
+            <choice>NONE</choice>
+          </enumChoice>
+           <enumChoice choice="Flickering" value="1">
+            <choice>Flickering</choice>
+          </enumChoice>
+          <enumChoice choice="Strobe" value="2">
+            <choice>Strobe</choice>
+          </enumChoice>
+          <enumChoice choice="MARS" value="4">
+            <choice>MARS</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X11 output effect</label>
+      </variable>
+      <variable item="Output 8 behavior" CV="123" mask="XXXVVXXX" default="0">
+        <enumVal>
+          <enumChoice choice="always on" value="0">
+            <choice>always on</choice>
+          </enumChoice>
+          <enumChoice choice="backward inactive" value="1">
+            <choice>backward inactive</choice>
+          </enumChoice>
+          <enumChoice choice="forward inactive" value="2">
+            <choice>forward inactive</choice>
+          </enumChoice>
+          <enumChoice choice="always off" value="3">
+            <choice>always off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X11 output mode</label>
+      </variable>
+      <variable item="Output 8 options" CV="123" mask="VVVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="NONE" value="0">
+            <choice>NONE</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 2 Hz phase A" value="1">
+            <choice>Flashing 2 Hz phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 2 Hz phase B" value="2">
+            <choice>Flashing 2 Hz phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing 1 Hz" value="4">
+            <choice>Flashing 1 Hz</choice>
+          </enumChoice>
+        </enumVal>
+        <label>X11 output options</label>
+      </variable>
+    </variables>
+  </decoder>
+</decoder-config>

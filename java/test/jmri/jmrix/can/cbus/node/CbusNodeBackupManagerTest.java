@@ -342,12 +342,12 @@ public class CbusNodeBackupManagerTest {
         
         t.doLoad();
         
-        JUnitAppender.assertErrorMessageStartsWith("Incorrect Event Variable Length in Backup");
+        JUnitAppender.assertWarnMessageStartsWith("Incorrect Event Variable Length in Backup");
         JUnitAppender.assertErrorMessageStartsWith("NO datetimestamp in a backup log entry");
         JUnitAppender.assertErrorMessageStartsWith("NO result in a backup log entry");
         JUnitAppender.assertErrorMessageStartsWith("Unable to parse date NOT A DATE");
-        JUnitAppender.assertErrorMessageStartsWith("Incorrect Event Variable Length in Backup");
-        JUnitAppender.assertErrorMessageStartsWith("Incorrect Node / Event Number in Backup");
+
+        JUnitAppender.assertWarnMessageStartsWith("Incorrect Node / Event Number in Backup");
         JUnitAppender.assertErrorMessageStartsWith("Node / Event Number Missing in Backup");
         JUnitAppender.assertErrorMessageStartsWith("Node / Event Number Missing in Backup");
         JUnitAppender.assertErrorMessageStartsWith("NO result in a backup log entry");
@@ -387,7 +387,7 @@ public class CbusNodeBackupManagerTest {
             java.nio.file.StandardCopyOption.REPLACE_EXISTING);
         
         t.doLoad();
-        JUnitAppender.assertErrorMessageStartsWith("File invalid: org.jdom2.input.JDOMParseException: Error on line 6:");
+        JUnitAppender.assertErrorMessageStartsWith("File invalid: 41378.xml");
         
     }
 
@@ -407,6 +407,7 @@ public class CbusNodeBackupManagerTest {
         Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

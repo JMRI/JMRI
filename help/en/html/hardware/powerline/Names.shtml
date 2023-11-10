@@ -52,13 +52,14 @@
       letters; this is no longer available, because it caused way too much confusion)</p>
 
       <h3>Insteon</h3>
-      Insteon Adapters are labelled with a three-part number that looks like "01.2A.B4". These are
+      <p>
+      Insteon Adapters are labeled with a three-part number that looks like "01.2A.B4". These are
       just random strings as far as the user and the program is concerned, and we don't make any
       effort to subdivide them. You should enter these exactly as they appear on the device you
       want to address. Do not delete or add leading zeros, etc.
-      <p>For example, if the device is labelled "01.2A.B4", the corresponding JMRI Light System
+      <p>For example, if the device is labeled "01.2A.B4", the corresponding JMRI Light System
       Name is "PL01.2A.B4".</p>
-
+      
       <h3 id="documentation">Adding an item to the table</h3>
 
       <p>When you add an item to one of the tables, many times you only have to fill in the numbers
@@ -102,7 +103,21 @@
       <!-- this table is an excerpt from the table in the help/en/html/doc/Technical/Names.shtml
       based on information from the Hardware help pages
       by Egbert Broerse @silverailscolo July 2017 -->
-
+      
+      <h3>DMX512</h3>
+      <p>
+      The DMX universe uses a array of 512 bytes for all the devices on that connection.
+      Each device has an intensity of 0 to 255. In JMRI, this is expressed as a value of 0.0 to 1.0.
+      </p>
+      <p>
+      Only lights are supported from JMRI. Each lamp may have a ramp rate to control the rate of change.
+      This works from the fast clock. If the clock is not running, the effects are immediate.
+      </p>
+      <p>
+      The USB interface device must support a serial port for connecting to the USB device.
+      Most of these are FTDI driver devices. The Anyma DMX device uses a USB device driver that
+      is not currently supported on Windows. That device will work for Linux and Mac systems.
+      
       <h2>Documentation</h2>
 
       <h3>Third Party info</h3>

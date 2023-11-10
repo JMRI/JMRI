@@ -1,22 +1,22 @@
 package jmri.jmrit.audio.swing;
 
-//import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.io.File;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
@@ -24,8 +24,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.audio.AudioBuffer;
 import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
 import jmri.util.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Defines a GUI to edit AudioBuffer objects.
@@ -171,8 +170,9 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         JButton ok;
         p.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
         ok.addActionListener((ActionEvent e) -> {
-            applyPressed(e);
-            frame.dispose();
+            if (applyPressed(e)) {
+                frame.dispose();
+            }
         });
         JButton cancel;
         p.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
@@ -227,7 +227,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
 
     void browsePressed(ActionEvent e) {
         if (fileChooser == null) {
-            fileChooser = new JFileChooser("resources" + File.separator + "sounds" + File.separator); // NOI18N
+            fileChooser = new jmri.util.swing.JmriJFileChooser("resources" + File.separator + "sounds" + File.separator); // NOI18N
             fileChooser.setFileFilter(new FileNameExtensionFilter("Audio Files (*.wav)", "wav")); // NOI18N
         }
 
@@ -243,18 +243,18 @@ public class AudioBufferFrame extends AbstractAudioFrame {
                 url.setText(fileName);
 //                try {
 //                    WaveFileReader wfr = new WaveFileReader(FileUtil.getExternalFilename(fileName));
-//                    JOptionPane.showMessageDialog(null, wfr.toString(), wfr.toString(), JOptionPane.INFORMATION_MESSAGE);
+//                    JmriJOptionPane.showMessageDialog(null, wfr.toString(), wfr.toString(), JmriJOptionPane.INFORMATION_MESSAGE);
 //                } catch (AudioException ex) {
-//                    JOptionPane.showMessageDialog(null, ex.getMessage(), rba.getString("TitleReadError"), JOptionPane.ERROR_MESSAGE);
+//                    JmriJOptionPane.showMessageDialog(this, ex.getMessage(), rba.getString("TitleReadError"), JmriJOptionPane.ERROR_MESSAGE);
 //                }
             }
         }
     }
 
-    void applyPressed(ActionEvent e) {
+    boolean applyPressed(ActionEvent e) {
         String sName = sysName.getText();
         if (entryError(sName, PREFIX, "" + counter)) {
-            return;
+            return false;
         }
         String user = userName.getText();
         if (user.equals("")) {
@@ -263,17 +263,20 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         AudioBuffer b;
         try {
             AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
+            if (newBuffer && am.getBySystemName(sName) != null) {
+                throw new AudioException(Bundle.getMessage("DuplicateSystemName"));
+            }
             try {
                 b = (AudioBuffer) am.provideAudio(sName);
             } catch (IllegalArgumentException ex) {
-                throw new AudioException("Problem creating buffer");
+                throw new AudioException(Bundle.getMessage("ProblemCreatingBuffer"));
             }
-            if (newBuffer && am.getByUserName(user) != null) {
+            if ((user != null) && newBuffer && am.getByUserName(user) != null) {
                 am.deregister(b);
                 synchronized (lock) {
                     prevCounter();
                 }
-                throw new AudioException("Duplicate user name - please modify");
+                throw new AudioException(Bundle.getMessage("DuplicateUserName"));
             }
             b.setUserName(user);
             b.setStreamed(stream.isSelected());
@@ -296,8 +299,12 @@ public class AudioBufferFrame extends AbstractAudioFrame {
             // Notify changes
             model.fireTableDataChanged();
         } catch (AudioException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("AudioCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, ex.getMessage(),
+                Bundle.getMessage("AudioCreateErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+            return false;
         }
+        newBuffer = false;  // If the user presses Apply, the dialog stays visible.
+        return true;
     }
 
     private static int nextCounter() {
@@ -308,6 +315,6 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         counter--;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AudioBufferFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AudioBufferFrame.class);
 
 }

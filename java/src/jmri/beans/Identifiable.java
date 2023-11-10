@@ -17,5 +17,5 @@ public interface Identifiable {
      * @return the identity
      */
     @Nonnull
-    public abstract String getId();
+    String getId();
 }

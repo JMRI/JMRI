@@ -2,7 +2,8 @@ package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import javax.swing.JOptionPane;
+
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Start a Panel Editor or a Layout Editor for a new Panel.
@@ -27,24 +28,32 @@ public class NewPanelAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         // allow user to choose a panel editor
-        int response = JOptionPane.showOptionDialog(null,
+        int response = JmriJOptionPane.showOptionDialog(null,
                 Bundle.getMessage("ChoiceText1") + "\n" + Bundle.getMessage("ChoiceText2") + "\n"
                 + Bundle.getMessage("ChoiceText3") + "\n" + Bundle.getMessage("ChoiceText4") + "\n"
                         + Bundle.getMessage("ChoiceText5"),
                 Bundle.getMessage("ChooseEditor"),
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null,
                 new Object[]{Bundle.getMessage("SwitchboardEditor"), Bundle.getMessage("LayoutEditor"),
                         Bundle.getMessage("ControlPanelEditor"), Bundle.getMessage("PanelEditor"),
                         Bundle.getMessage("ButtonCancel")},
                 Bundle.getMessage("PanelEditor")); // title
-        if (response == 3) {
-            new jmri.jmrit.display.panelEditor.PanelEditorAction().actionPerformed(null);
-        } else if (response == 2) {
-            new jmri.jmrit.display.controlPanelEditor.ControlPanelEditorAction().actionPerformed(null);
-        } else if (response == 1) {
-            new jmri.jmrit.display.layoutEditor.LayoutEditorAction().actionPerformed(null);
-        } else if (response == 0) {
-            new jmri.jmrit.display.switchboardEditor.SwitchboardEditorAction().actionPerformed(null);
+        switch (response) {
+            case 3: // PanelEditor
+                new jmri.jmrit.display.panelEditor.PanelEditorAction().actionPerformed(null);
+                break;
+            case 2: // ControlPanelEditor
+                new jmri.jmrit.display.controlPanelEditor.ControlPanelEditorAction().actionPerformed(null);
+                break;
+            case 1: // LayoutEditor
+                new jmri.jmrit.display.layoutEditor.LayoutEditorAction().actionPerformed(null);
+                break;
+            case 0: // SwitchboardEditor
+                new jmri.jmrit.display.switchboardEditor.SwitchboardEditorAction().actionPerformed(null);
+                break;
+            case JmriJOptionPane.CLOSED_OPTION: // Dialog closed
+            default:
+                break;
         }
     }
 

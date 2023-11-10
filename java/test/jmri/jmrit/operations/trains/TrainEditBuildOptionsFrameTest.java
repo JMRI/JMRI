@@ -4,9 +4,7 @@ import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -286,6 +284,17 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(trainEditFrame);
         JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        Train train = tmanager.newTrain("Test");
+        TrainEditFrame trainEditFrame = new TrainEditFrame(train);
+        TrainEditBuildOptionsFrame f = new TrainEditBuildOptionsFrame();
+        f.initComponents(trainEditFrame);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
     @Override

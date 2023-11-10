@@ -11,9 +11,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
@@ -25,6 +22,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.*;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Common elements for the Conductor and Yardmaster Frames.
@@ -265,9 +263,9 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     }
 
     private void addCarToTrain() {
-        if (JOptionPane.showConfirmDialog(this,
-                MessageFormat.format(Bundle.getMessage("WantAddCarsToTrain?"), new Object[] { _train.getName() }),
-                Bundle.getMessage("AddCarsToTrain?"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if (JmriJOptionPane.showConfirmDialog(this,
+                Bundle.getMessage("WantAddCarsToTrain?", _train.getName()),
+                Bundle.getMessage("AddCarsToTrain?"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
             new CarsTableFrame(false, _train.getCurrentRouteLocation().getName(), null);
         }
     }
@@ -590,8 +588,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                                 text = trainCommon.pickupUtilityCars(carList, car, isManifest,
                                         !TrainCommon.IS_TWO_COLUMN_TRACK);
                                 if (text == null) {
-                                    continue; // this car type has already been
-                                              // processed
+                                    continue; // this car type has already been processed
                                 }
                             } else {
                                 text = trainCommon.pickupCar(car, isManifest, !TrainCommon.IS_TWO_COLUMN_TRACK);
@@ -759,7 +756,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 text = TrainSwitchListText.getStringTrainDepartsLoads();
             }
             return MessageFormat.format(text,
-                    new Object[] { TrainCommon.splitString(rl.getName()), rl.getTrainDirectionString(),
+                    new Object[] { rl.getSplitName(), rl.getTrainDirectionString(),
                             _train.getNumberCarsInTrain(rl) - emptyCars, emptyCars, _train.getTrainLength(rl),
                             Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl),
                             _train.getTrainTerminatesName(), _train.getName() });
@@ -771,7 +768,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 text = TrainSwitchListText.getStringTrainDepartsCars();
             }
             return MessageFormat.format(text,
-                    new Object[] { TrainCommon.splitString(rl.getName()), rl.getTrainDirectionString(),
+                    new Object[] { rl.getSplitName(), rl.getTrainDirectionString(),
                             _train.getNumberCarsInTrain(rl), _train.getTrainLength(rl),
                             Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl),
                             _train.getTrainTerminatesName(), _train.getName() });
@@ -817,5 +814,5 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 e.getNewValue()); // NOI18N
     }
 
-    private static final Logger log = LoggerFactory.getLogger(CommonConductorYardmasterPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CommonConductorYardmasterPanel.class);
 }

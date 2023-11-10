@@ -36,7 +36,7 @@
         <li>Two text fields, <strong>x:</strong> and <strong>y:</strong>, specifying where (in
         pixels) new components will be inserted on the panel. You can generally ignore these, as
         once the components has been inserted you can drag it around by holding the meta (Apple,
-        command; Linux & Windows, right button) key down.</li>
+        command; Linux &amp; Windows, right button) key down.</li>
 
         <li>A button to set the title of the Panel you are editing. Press the button and you will
         be prompted to enter the text.</li>
@@ -81,6 +81,10 @@
             <li>Fast Clock</li>
 
             <li>Global Variable (LogixNG)</li>
+
+            <li>Audio (see <a href="AudioIcon.shtml">Audio Icon</a>)</li>
+
+            <li>LogixNG (see <a href="../logixng/InlineLogixNG.shtml#logixng_icon">LogixNG Icon</a>)</li>
 
             <li>Icon (unassociated to any JMRI device)</li>
           </ul>

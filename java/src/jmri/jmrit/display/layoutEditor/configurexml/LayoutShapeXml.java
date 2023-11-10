@@ -11,8 +11,6 @@ import jmri.util.ColorUtil;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This module handles configuration for LayoutShape objects for a LayoutEditor.
@@ -143,7 +141,7 @@ public class LayoutShapeXml extends AbstractXmlAdapter {
         if (pointsElement != null) {
             List<Element> elementList = pointsElement.getChildren("point");
             if (elementList != null) {
-                if (elementList.size() > 0) {
+                if (!elementList.isEmpty()) {
                     for (int i = 0; i < elementList.size(); i++) {
                         Element relem = elementList.get(i);
 
@@ -170,6 +168,7 @@ public class LayoutShapeXml extends AbstractXmlAdapter {
             log.error("Layout Shape points element not found.");
         }
         p.getLayoutShapes().add(s);
+        p.unionToPanelBounds(s.getBounds());
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutShapeXml.class);

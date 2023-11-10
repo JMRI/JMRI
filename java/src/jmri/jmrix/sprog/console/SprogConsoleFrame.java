@@ -1,15 +1,17 @@
 package jmri.jmrix.sprog.console;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+
 import jmri.jmrix.sprog.SprogConstants;
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
@@ -19,8 +21,7 @@ import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.update.SprogType;
 import jmri.jmrix.sprog.update.SprogVersion;
 import jmri.jmrix.sprog.update.SprogVersionListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for Sprog Console
@@ -285,14 +286,14 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
             currentLimit = Integer.parseInt(currentTextField.getText());
         }
         catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("CurrentLimitDialogString", currentRange),
-                    Bundle.getMessage("SprogConsoleTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("CurrentLimitDialogString", currentRange),
+                    Bundle.getMessage("SprogConsoleTitle"), JmriJOptionPane.ERROR_MESSAGE);
             currentLimit = validLimit;
             return;
         }
         if ((currentLimit > validLimit) || (currentLimit < 200)) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("CurrentLimitDialogString", currentRange),
-                    Bundle.getMessage("SprogConsoleTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("CurrentLimitDialogString", currentRange),
+                    Bundle.getMessage("SprogConsoleTitle"), JmriJOptionPane.ERROR_MESSAGE);
             currentLimit = validLimit;
         }
     }
@@ -363,8 +364,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         log.debug("Found: {}", sv );
         if (sv.sprogType.isSprog() == false) {
             // Didn't recognize a SPROG so check if it is in boot mode already
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("TypeNoSprogPromptFound"),
-                    Bundle.getMessage("SprogConsoleTitle"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("TypeNoSprogPromptFound"),
+                    Bundle.getMessage("SprogConsoleTitle"), JmriJOptionPane.ERROR_MESSAGE);
         } else {
             if ((sv.sprogType.sprogType > SprogType.SPROGIIv3) && (sv.sprogType.sprogType < SprogType.NANO)) {
                 currentTextField.setToolTipText(Bundle.getMessage("CurrentLimitFieldTooltip2500"));
@@ -458,8 +459,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                         currentLimitFromHardware = Integer.parseInt(tmpString);
                     }
                     catch (NumberFormatException e) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorFrameDialogLimit"),
-                                Bundle.getMessage("SprogConsoleTitle"), JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorFrameDialogLimit"),
+                                Bundle.getMessage("SprogConsoleTitle"), JmriJOptionPane.ERROR_MESSAGE);
                         state = State.IDLE;
                         return;
                     }
@@ -490,8 +491,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                         modeWord = Integer.parseInt(tmpString, 16);
                     }
                     catch (NumberFormatException e) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorFrameDialogWord"),
-                                Bundle.getMessage("SprogConsoleTitle"), JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorFrameDialogWord"),
+                                Bundle.getMessage("SprogConsoleTitle"), JmriJOptionPane.ERROR_MESSAGE);
                         state = State.IDLE;
                         return;
                     }
@@ -569,8 +570,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
      * Internal routine to handle a timeout.
      */
     synchronized protected void timeout() {
-        JOptionPane.showMessageDialog(null, Bundle.getMessage("TypeTimeoutTalkingToSPROG"),
-                Bundle.getMessage("Timeout"), JOptionPane.ERROR_MESSAGE);
+        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("TypeTimeoutTalkingToSPROG"),
+                Bundle.getMessage("Timeout"), JmriJOptionPane.ERROR_MESSAGE);
         state = State.IDLE;
     }
 
@@ -611,6 +612,6 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         timer.start();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogConsoleFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SprogConsoleFrame.class);
 
 }

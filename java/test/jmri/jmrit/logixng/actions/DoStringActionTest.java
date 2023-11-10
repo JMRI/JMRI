@@ -8,7 +8,6 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.StringExpressionMemory;
 import jmri.jmrit.logixng.expressions.StringExpressionConstant;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
-import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -301,6 +300,7 @@ public class DoStringActionTest extends AbstractDigitalActionTestBase {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

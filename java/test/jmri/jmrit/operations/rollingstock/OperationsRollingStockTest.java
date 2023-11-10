@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.rollingstock;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
@@ -78,15 +79,13 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         e.setAttribute(Xml.OUT_OF_SERVICE, Xml.FALSE);
         e.setAttribute(Xml.BLOCKING, "5");
         e.setAttribute(Xml.COMMENT, "Test Comment");
-        Car rs1 = null;
-        try {
-            rs1 = new Car(e);
+
+        Assertions.assertDoesNotThrow( () ->  {
+            Car rs1 = new Car(e);
             Assert.assertNotNull("Xml Element Constructor", rs1);
-        } catch (java.lang.NullPointerException npe) {
-            Assert.fail("Null Pointer Exception while executing Xml Element Constructor");
-        }
-        Assert.assertNotNull(rs1);
-        Assert.assertEquals("Tag 12345", "ID12345", rs1.getRfid() );
+            Assert.assertEquals("Tag 12345", "ID12345", rs1.getRfid() );
+        }, "Exception while executing Xml Element Constructor");
+
     }
 
     // test creation

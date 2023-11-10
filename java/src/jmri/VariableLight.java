@@ -63,13 +63,13 @@ public interface VariableLight extends Light, AnalogIO {
     /** {@inheritDoc} */
     @Override
     @InvokeOnLayoutThread
-    default public void requestUpdateFromLayout() {
+    default void requestUpdateFromLayout() {
         // Do nothing
     }
 
     /** {@inheritDoc} */
     @Override
-    default public boolean isConsistentState() {
+    default boolean isConsistentState() {
         return (getState() == DigitalIO.ON)
                 || (getState() == DigitalIO.OFF)
                 || (getState() == INTERMEDIATE);
@@ -77,7 +77,7 @@ public interface VariableLight extends Light, AnalogIO {
     
     /** {@inheritDoc} */
     @Override
-    default public boolean isConsistentValue() {
+    default boolean isConsistentValue() {
         // Assume that the value is consistent if the state is consistent.
         return isConsistentState();
     }
@@ -119,7 +119,7 @@ public interface VariableLight extends Light, AnalogIO {
      *                                  MinIntensity
      */
     @InvokeOnLayoutThread
-    public void setTargetIntensity(double intensity);
+    void setTargetIntensity(double intensity);
 
     /**
      * Get the current intensity value. If the Light is currently transitioning,
@@ -130,7 +130,7 @@ public interface VariableLight extends Light, AnalogIO {
      *
      * @return the current brightness
      */
-    public double getCurrentIntensity();
+    double getCurrentIntensity();
 
     /**
      * Get the target intensity value for the current transition, if any. If the
@@ -144,7 +144,7 @@ public interface VariableLight extends Light, AnalogIO {
      *
      * @return the desired brightness
      */
-    public double getTargetIntensity();
+    double getTargetIntensity();
 
     /**
      * Set the value of the maxIntensity property.
@@ -162,7 +162,7 @@ public interface VariableLight extends Light, AnalogIO {
      *                                  property
      */
     @InvokeOnLayoutThread
-    public void setMaxIntensity(double intensity);
+    void setMaxIntensity(double intensity);
 
     /**
      * Get the current value of the maxIntensity property.
@@ -172,7 +172,7 @@ public interface VariableLight extends Light, AnalogIO {
      *
      * @return the maximum brightness
      */
-    public double getMaxIntensity();
+    double getMaxIntensity();
 
     /**
      * Set the value of the minIntensity property.
@@ -190,7 +190,7 @@ public interface VariableLight extends Light, AnalogIO {
      *                                  property
      */
     @InvokeOnLayoutThread
-    public void setMinIntensity(double intensity);
+    void setMinIntensity(double intensity);
 
     /**
      * Get the current value of the minIntensity property.
@@ -200,7 +200,7 @@ public interface VariableLight extends Light, AnalogIO {
      *
      * @return the minimum brightness
      */
-    public double getMinIntensity();
+    double getMinIntensity();
 
     /**
      * Can the Light change its intensity setting slowly?
@@ -213,7 +213,7 @@ public interface VariableLight extends Light, AnalogIO {
      *
      * @return true if brightness can fade between two states; false otherwise
      */
-    public boolean isTransitionAvailable();
+    boolean isTransitionAvailable();
 
     /**
      * Set the fast-clock duration for a transition from full ON to full OFF or
@@ -225,22 +225,21 @@ public interface VariableLight extends Light, AnalogIO {
      * fixed duration regardless of the size of the intensity change.
      * <p>
      * Bound property
-     * <p>
      * @param minutes time to fade
      * @throws IllegalArgumentException if isTransitionAvailable() is false and
      *                                  minutes is not 0.0
      * @throws IllegalArgumentException if minutes is negative
      */
     @InvokeOnLayoutThread
-    public void setTransitionTime(double minutes);
+    void setTransitionTime(double minutes);
 
     /**
      * Get the number of fastclock minutes taken by a transition from full ON to
      * full OFF or vice versa.
-     * <p>
+     *
      * @return 0.0 if the output intensity transition is instantaneous
      */
-    public double getTransitionTime();
+    double getTransitionTime();
 
     /**
      * Convenience method for checking if the intensity of the light is
@@ -251,6 +250,6 @@ public interface VariableLight extends Light, AnalogIO {
      *
      * @return true if light is between two states; false otherwise
      */
-    public boolean isTransitioning();
+    boolean isTransitioning();
 
 }

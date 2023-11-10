@@ -109,7 +109,7 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService<Sensor> {
     }
 
     @Override
-    protected ProvidingManager<Sensor> getManager() {
+    protected ProvidingManager<Sensor> getProvidingManager() {
         return InstanceManager.getDefault(SensorManager.class);
     }
 

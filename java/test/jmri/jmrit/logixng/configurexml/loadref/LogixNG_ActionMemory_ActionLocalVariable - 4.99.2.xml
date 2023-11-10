@@ -3,8 +3,8 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
   <jmriversion>
     <major>5</major>
-    <minor>1</minor>
-    <test>2</test>
+    <minor>3</minor>
+    <test>1</test>
     <modifier>plus</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -25,6 +25,11 @@
       <systemName>IMRATEFACTOR</systemName>
     </memory>
   </memories>
+  <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IHTransitScaffold</systemName>
+    </signalhead>
+  </signalheads>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
@@ -406,14 +411,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Sun Aug 07 01:54:09 CEST 2022</date>
+      <date>Sat Dec 31 14:40:11 CET 2022</date>
       <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG_ActionMemory_ActionLocalVariable%20-%204.99.2.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sun Aug 07 01:54:09 CEST 2022</date>
+      <date>Sat Dec 31 14:40:11 CET 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 5.1.2plus+daniel+2022-08-06T23:53:23Z+R7533a8a on Sun Aug 07 01:54:09 CEST 2022-->
+  <!--Written by JMRI version 5.3.1plus+daniel+2022-12-31T13:35:16Z+Re863d9a on Sat Dec 31 14:40:11 CET 2022-->
 </layout-config>

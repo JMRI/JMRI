@@ -89,7 +89,7 @@ public class ExpressionSensorSwingTest extends SwingConfiguratorInterfaceTestBas
         JUnitUtil.waitFor(() -> {return expression.getSelectNamedBean().getNamedBean() != null;});
 
         Assert.assertEquals("IS1", expression.getSelectNamedBean().getNamedBean().getBean().getSystemName());
-        Assert.assertEquals(ExpressionSensor.SensorState.Inactive, expression.getBeanState());
+        Assert.assertEquals(ExpressionSensor.SensorState.Inactive, expression.getSelectEnum().getEnum());
     }
 
     // The minimal setup for log4J
@@ -107,6 +107,7 @@ public class ExpressionSensorSwingTest extends SwingConfiguratorInterfaceTestBas
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

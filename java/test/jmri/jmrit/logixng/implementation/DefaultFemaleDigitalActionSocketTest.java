@@ -107,6 +107,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.ActionSignalMast.class);
         classes.add(jmri.jmrit.logixng.actions.ActionSound.class);
         classes.add(jmri.jmrit.logixng.actions.ActionThrottle.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionThrottleFunction.class);
         classes.add(jmri.jmrit.logixng.actions.ActionTurnout.class);
         classes.add(jmri.jmrit.logixng.actions.ActionTurnoutLock.class);
         classes.add(jmri.jmrit.logixng.actions.ActionWarrant.class);
@@ -139,8 +140,10 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         map.put(Category.FLOW_CONTROL, classes);
 
         classes = new ArrayList<>();
+        classes.add(jmri.jmrit.display.logixng.ActionAudioIcon.class);
         classes.add(jmri.jmrit.display.logixng.ActionLayoutTurnout.class);
         classes.add(jmri.jmrit.display.logixng.ActionPositionable.class);
+        classes.add(jmri.jmrit.display.logixng.ActionPositionableByClass.class);
         map.put(CategoryDisplay.DISPLAY, classes);
 
         classes = new ArrayList<>();
@@ -158,6 +161,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.ShutdownComputer.class);
         classes.add(jmri.jmrit.logixng.actions.SimulateTurnoutFeedback.class);
         classes.add(jmri.jmrit.logixng.actions.WebBrowser.class);
+        classes.add(jmri.jmrit.logixng.actions.WebRequest.class);
         map.put(Category.OTHER, classes);
 
         Assert.assertTrue("maps are equal",

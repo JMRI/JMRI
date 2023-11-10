@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  * Test Category
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public class LogixNGCategoryTest {
@@ -19,7 +19,7 @@ public class LogixNGCategoryTest {
         Assert.assertTrue("COMMON".equals(Category.COMMON.name()));
         Assert.assertTrue("OTHER".equals(Category.OTHER.name()));
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -35,7 +35,8 @@ public class LogixNGCategoryTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }

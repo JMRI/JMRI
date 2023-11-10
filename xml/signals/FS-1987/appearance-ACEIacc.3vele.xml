@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
 <appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
@@ -29,19 +29,40 @@
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
-    <revision>
-      <revnumber>1</revnumber>
-      <date>2023-01-01</date>
-      <authorinitials>PDB</authorinitials>
-      <revremark>First version for Italian Signal System</revremark>
-    </revision>
+     <revision>
+        <revnumber>1</revnumber>
+       <date>2023-01-01</date>
+       <authorinitials>PDB</authorinitials>
+       <revremark>First version for Italian Signal System</revremark>
+   </revision>
+   <revision>
+       <revnumber>2</revnumber>
+       <date>2023-02-01</date>
+       <authorinitials>PDB</authorinitials>
+       <revremark>Second version for Italian Signal System</revremark>
+     </revision>
+     <revision>
+       <revnumber>3</revnumber>
+       <date>2023-08-23</date>
+       <authorinitials>PDB</authorinitials>
+       <revremark>Third version for Italian Signal System - amended aspect mapping</revremark>
+     </revision>
+     <revision>
+       <revnumber>4</revnumber>
+       <date>2023-10-01</date>
+       <authorinitials>PDB</authorinitials>
+       <revremark>Fourth version for Italian Signal System - amended aspect mapping</revremark>
+     </revision>
   </revhistory>
-  <aspecttable>FS 1987</aspecttable>
-  <name>ACEI Segnale accoppiato 3 vele</name>
+
+<aspecttable>FS 1987</aspecttable>
+  <name>Segnale accoppiato 3 vele</name>
   <reference>As described in Il Treno Company book “Inserimento in linea dei segnali FS” according to the
 Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovie dello Stato”, FS today RFI).</reference>
-  <description>Appearances for a "coupled" triple-searchlight signal head without other badging</description>
+  <description>Appearances for a Main+Distant triple-searchlight signal without other badging</description>
+
   <appearances>
+
     <appearance>
       <aspectname>Rosso</aspectname>
       <show>red</show>
@@ -49,8 +70,18 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <show>dark</show>
       <reference />
       <comment>Stop</comment>
-      <imagelink>../../../resources/icons/ItalianSignals/ACEI/ACEI_Acc_3_vele_rosso.gif</imagelink>
+      <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velerosso.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velerosso.gif</imagelink>
+      <imagelink type="right">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/r3velerosso.gif</imagelink>
+      <imagelink type="vertical squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/vq3velerosso.gif</imagelink>
+      <imagelink type="left squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/lq3velerosso.gif</imagelink>
+      <imagelink type="right squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/rq3velerosso.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velerosso.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/r3velerosso.gif</imagelink>
+      <imagelink type="left squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/lq3velerosso.gif</imagelink>
+      <imagelink type="right squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/rq3velerosso.gif</imagelink>
     </appearance>
+
     <appearance>
       <aspectname>Giallo</aspectname>
       <show>yellow</show>
@@ -58,17 +89,37 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <show>dark</show>
       <reference />
       <comment>Approach</comment>
-      <imagelink>../../../resources/icons/ItalianSignals/ACEI/ACEI_Acc_3_vele_giallo.gif</imagelink>
+      <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velegiallo.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velegiallo.gif</imagelink>
+      <imagelink type="right">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/r3velegiallo.gif</imagelink>
+      <imagelink type="vertical squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/vq3velegiallo.gif</imagelink>
+      <imagelink type="left squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/lq3velegiallo.gif</imagelink>
+      <imagelink type="right squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/rq3velegiallo.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velegiallo.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/r3velegiallo.gif</imagelink>
+      <imagelink type="left squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/lq3velegiallo.gif</imagelink>
+      <imagelink type="right squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/rq3velegiallo.gif</imagelink>
     </appearance>
+
     <appearance>
-      <aspectname>Giallo-Verde</aspectname>
-      <show>yellow</show>
-      <show>green</show>
+      <aspectname>Giallo Lampeggiante</aspectname>
+      <show>flashyellow</show>
+      <show>dark</show>
       <show>dark</show>
       <reference />
       <comment>Approach</comment>
-      <imagelink>../../../resources/icons/ItalianSignals/ACEI/ACEI_Acc_3_vele_giallo-verde.gif</imagelink>
+      <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velegiallolamp.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velegiallolamp.gif</imagelink>
+      <imagelink type="right">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/r3velegiallolamp.gif</imagelink>
+      <imagelink type="vertical squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/vq3velegiallolamp.gif</imagelink>
+      <imagelink type="left squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/lq3velegiallolamp.gif</imagelink>
+      <imagelink type="right squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/rq3velegiallolamp.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/l3velegiallolampLE.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/r3velegiallolampLE.gif</imagelink>
+      <imagelink type="left squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/lq3velegiallolampLE.gif</imagelink>
+      <imagelink type="right squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/rq3velegiallolampLE.gif</imagelink>
     </appearance>
+
     <appearance>
       <aspectname>Verde</aspectname>
       <show>green</show>
@@ -76,8 +127,75 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <show>dark</show>
       <reference />
       <comment>Normal speed</comment>
-      <imagelink>../../../resources/icons/ItalianSignals/ACEI/ACEI_Acc_3_vele_verde.gif</imagelink>
+      <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3veleverde.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3veleverde.gif</imagelink>
+      <imagelink type="right">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/r3veleverde.gif</imagelink>
+      <imagelink type="vertical squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/vq3veleverde.gif</imagelink>
+      <imagelink type="left squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/lq3veleverde.gif</imagelink>
+      <imagelink type="right squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/rq3veleverde.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3veleverde.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/r3veleverde.gif</imagelink>
+      <imagelink type="left squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/lq3veleverde.gif</imagelink>
+      <imagelink type="right squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/rq3veleverde.gif</imagelink>
     </appearance>
+
+    <appearance>
+      <aspectname>Giallo-Verde</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <show>dark</show>
+      <reference />
+      <comment>Approach</comment>
+      <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velegiallo-verde.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velegiallo-verde.gif</imagelink>
+      <imagelink type="right">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/r3velegiallo-verde.gif</imagelink>
+      <imagelink type="vertical squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/vq3velegiallo-verde.gif</imagelink>
+      <imagelink type="left squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/lq3velegiallo-verde.gif</imagelink>
+      <imagelink type="right squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/rq3velegiallo-verde.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velegiallo-verde.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/r3velegiallo-verde.gif</imagelink>
+      <imagelink type="left squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/lq3velegiallo-verde.gif</imagelink>
+      <imagelink type="right squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/rq3velegiallo-verde.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Giallo-Verde Lampeggiante</aspectname>
+      <show>flashyellow</show>
+      <show>flashgreen</show>
+      <show>dark</show>
+      <reference />
+      <comment>Approach</comment>
+      <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velegiallo-verdelamp.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velegiallo-verdelamp.gif</imagelink>
+      <imagelink type="right">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/r3velegiallo-verdelamp.gif</imagelink>
+      <imagelink type="vertical squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/vq3velegiallo-verdelamp.gif</imagelink>
+      <imagelink type="left squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/lq3velegiallo-verdelamp.gif</imagelink>
+      <imagelink type="right squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/rq3velegiallo-verdelamp.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/l3velegiallo-verdelampLE.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/r3velegiallo-verdelampLE.gif</imagelink>
+      <imagelink type="left squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/lq3velegiallo-verdelampLE.gif</imagelink>
+      <imagelink type="right squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/rq3velegiallo-verdelampLE.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Giallo-Verde Lampeggiante Alt.</aspectname>
+      <show>flashyellow</show>
+      <show>flashgreen</show>
+      <show>dark</show>
+      <reference />
+      <comment>Approach</comment>
+      <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velegiallo-verdelampalt.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velegiallo-verdelampalt.gif</imagelink>
+      <imagelink type="right">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/r3velegiallo-verdelampalt.gif</imagelink>
+      <imagelink type="vertical squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/vq3velegiallo-verdelampalt.gif</imagelink>
+      <imagelink type="left squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/lq3velegiallo-verdelampalt.gif</imagelink>
+      <imagelink type="right squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/rq3velegiallo-verdelampalt.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/l3velegiallo-verdelampaltLE.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/r3velegiallo-verdelampaltLE.gif</imagelink>
+      <imagelink type="left squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/lq3velegiallo-verdelampaltLE.gif</imagelink>
+      <imagelink type="right squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/rq3velegiallo-verdelampaltLE.gif</imagelink>
+    </appearance>
+
     <appearance>
       <aspectname>Rosso-Giallo</aspectname>
       <show>red</show>
@@ -85,8 +203,37 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <show>dark</show>
       <reference />
       <comment>Normal speed</comment>
-      <imagelink>../../../resources/icons/ItalianSignals/ACEI/ACEI_Acc_3_vele_rosso-giallo.gif</imagelink>
+      <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velerosso-giallo.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velerosso-giallo.gif</imagelink>
+      <imagelink type="right">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/r3velerosso-giallo.gif</imagelink>
+      <imagelink type="vertical squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/vq3velerosso-giallo.gif</imagelink>
+      <imagelink type="left squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/lq3velerosso-giallo.gif</imagelink>
+      <imagelink type="right squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/rq3velerosso-giallo.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velerosso-giallo.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/r3velerosso-giallo.gif</imagelink>
+      <imagelink type="left squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/lq3velerosso-giallo.gif</imagelink>
+      <imagelink type="right squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/rq3velerosso-giallo.gif</imagelink>
     </appearance>
+
+    <appearance>
+      <aspectname>Rosso-Giallo Lampeggiante</aspectname>
+      <show>red</show>
+      <show>flashyellow</show>
+      <show>dark</show>
+      <reference />
+      <comment>Normal speed</comment>
+      <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velerosso-giallolamp.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velerosso-giallolamp.gif</imagelink>
+      <imagelink type="right">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/r3velerosso-giallolamp.gif</imagelink>
+      <imagelink type="vertical squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/vq3velerosso-giallolamp.gif</imagelink>
+      <imagelink type="left squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/lq3velerosso-giallolamp.gif</imagelink>
+      <imagelink type="right squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/rq3velerosso-giallolamp.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/l3velerosso-giallolampLE.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/r3velerosso-giallolampLE.gif</imagelink>
+      <imagelink type="left squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/lq3velerosso-giallolampLE.gif</imagelink>
+      <imagelink type="right squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/rq3velerosso-giallolampLE.gif</imagelink>
+    </appearance>
+
     <appearance>
       <aspectname>Rosso-Verde</aspectname>
       <show>red</show>
@@ -94,8 +241,18 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <show>dark</show>
       <reference />
       <comment>Normal speed</comment>
-      <imagelink>../../../resources/icons/ItalianSignals/ACEI/ACEI_Acc_3_vele_rosso-verde.gif</imagelink>
+      <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velerosso-verde.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velerosso-verde.gif</imagelink>
+      <imagelink type="right">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/r3velerosso-verde.gif</imagelink>
+      <imagelink type="vertical squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/vq3velerosso-verde.gif</imagelink>
+      <imagelink type="left squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/lq3velerosso-verde.gif</imagelink>
+      <imagelink type="right squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/rq3velerosso-verde.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velerosso-verde.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/r3velerosso-verde.gif</imagelink>
+      <imagelink type="left squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/lq3velerosso-verde.gif</imagelink>
+      <imagelink type="right squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/rq3velerosso-verde.gif</imagelink>
     </appearance>
+
     <appearance>
       <aspectname>Rosso-Giallo-Giallo</aspectname>
       <show>red</show>
@@ -103,8 +260,18 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <show>yellow</show>
       <reference />
       <comment>Restricted speed</comment>
-      <imagelink>../../../resources/icons/ItalianSignals/ACEI/ACEI_Acc_3_vele_rosso-giallo-giallo.gif</imagelink>
+      <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velerosso-giallo-giallo.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velerosso-giallo-giallo.gif</imagelink>
+      <imagelink type="right">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/r3velerosso-giallo-giallo.gif</imagelink>
+      <imagelink type="vertical squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/vq3velerosso-giallo-giallo.gif</imagelink>
+      <imagelink type="left squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/lq3velerosso-giallo-giallo.gif</imagelink>
+      <imagelink type="right squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/rq3velerosso-giallo-giallo.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velerosso-giallo-giallo.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/r3velerosso-giallo-giallo.gif</imagelink>
+      <imagelink type="left squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/lq3velerosso-giallo-giallo.gif</imagelink>
+      <imagelink type="right squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/rq3velerosso-giallo-giallo.gif</imagelink>
     </appearance>
+
     <appearance>
       <aspectname>Rosso-Giallo-Verde</aspectname>
       <show>red</show>
@@ -112,30 +279,134 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <show>green</show>
       <reference />
       <comment>Normal speed</comment>
-      <imagelink>../../../resources/icons/ItalianSignals/ACEI/ACEI_Acc_3_vele_rosso-giallo-verde.gif</imagelink>
+      <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velerosso-giallo-verde.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velerosso-giallo-verde.gif</imagelink>
+      <imagelink type="right">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/r3velerosso-giallo-verde.gif</imagelink>
+      <imagelink type="vertical squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/vq3velerosso-giallo-verde.gif</imagelink>
+      <imagelink type="left squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/lq3velerosso-giallo-verde.gif</imagelink>
+      <imagelink type="right squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/rq3velerosso-giallo-verde.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velerosso-giallo-verde.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/r3velerosso-giallo-verde.gif</imagelink>
+      <imagelink type="left squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/lq3velerosso-giallo-verde.gif</imagelink>
+      <imagelink type="right squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/rq3velerosso-giallo-verde.gif</imagelink>
     </appearance>
+
+    <appearance>
+      <aspectname>Rosso-Giallo-Verde Lampeggiante</aspectname>
+      <show>red</show>
+      <show>flashyellow</show>
+      <show>flashgreen</show>
+      <reference />
+      <comment>Normal speed</comment>
+      <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velerosso-giallo-verdelamp.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velerosso-giallo-verdelamp.gif</imagelink>
+      <imagelink type="right">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/r3velerosso-giallo-verdelamp.gif</imagelink>
+      <imagelink type="vertical squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/vq3velerosso-giallo-verdelamp.gif</imagelink>
+      <imagelink type="left squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/lq3velerosso-giallo-verdelamp.gif</imagelink>
+      <imagelink type="right squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/rq3velerosso-giallo-verdelamp.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/l3velerosso-giallo-verdelampLE.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/r3velerosso-giallo-verdelampLE.gif</imagelink>
+      <imagelink type="left squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/lq3velerosso-giallo-verdelampLE.gif</imagelink>
+      <imagelink type="right squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/rq3velerosso-giallo-verdelampLE.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rosso-Giallo-Verde Lampeggiante Alt.</aspectname>
+      <show>red</show>
+      <show>flashyellow</show>
+      <show>flashgreen</show>
+      <reference />
+      <comment>Normal speed</comment>
+      <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velerosso-giallo-verdelampalt.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velerosso-giallo-verdelampalt.gif</imagelink>
+      <imagelink type="right">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/r3velerosso-giallo-verdelampalt.gif</imagelink>
+      <imagelink type="vertical squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/vq3velerosso-giallo-verdelampalt.gif</imagelink>
+      <imagelink type="left squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/lq3velerosso-giallo-verdelampalt.gif</imagelink>
+      <imagelink type="right squared">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/Velaquadrata/rq3velerosso-giallo-verdelampalt.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/l3velerosso-giallo-verdelampaltLE.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/r3velerosso-giallo-verdelampaltLE.gif</imagelink>
+      <imagelink type="left squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/lq3velerosso-giallo-verdelampaltLE.gif</imagelink>
+      <imagelink type="right squared Layout Editor">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/LayoutEditor/rq3velerosso-giallo-verdelampaltLE.gif</imagelink>
+    </appearance>
+
   </appearances>
   <specificappearances>
     <danger>
       <aspect>Rosso</aspect>
     </danger>
   </specificappearances>
-  <aspectMappings>
+
+   <aspectMappings>
     <aspectMapping>
       <advancedAspect>Giallo</advancedAspect>
       <ourAspect>Verde</ourAspect>
+      <ourAspect>Rosso-Verde</ourAspect>  
+      <ourAspect>Rosso-Giallo Lampeggiante</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde Lampeggiante</ourAspect>
     </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Verde</advancedAspect>
+      <ourAspect>Verde</ourAspect>
+      <ourAspect>Rosso-Verde</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde Lampeggiante</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Giallo-Verde</advancedAspect>
+      <ourAspect>Verde</ourAspect>
+      <ourAspect>Rosso-Verde</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde Lampeggiante Alt.</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Giallo-Verde Lampeggiante</advancedAspect>
+      <ourAspect>Verde</ourAspect>
+      <ourAspect>Rosso-Verde</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde Lampeggiante Alt.</ourAspect>
+    </aspectMapping>
+
     <aspectMapping>
       <advancedAspect>Rosso</advancedAspect>
       <ourAspect>Giallo</ourAspect>
+      <ourAspect>Rosso-Giallo</ourAspect>  
+      <ourAspect>Rosso-Giallo-Giallo</ourAspect>
     </aspectMapping>
+
     <aspectMapping>
       <advancedAspect>Rosso-Giallo</advancedAspect>
       <ourAspect>Giallo-Verde</ourAspect>
+      <ourAspect>Rosso-Verde</ourAspect>  
+      <ourAspect>Rosso-Giallo-Verde</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde Lampeggiante Alt.</ourAspect>
     </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Rosso-Giallo Lampeggiante</advancedAspect>
+      <ourAspect>Giallo-Verde</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante Alt.</ourAspect>
+    </aspectMapping>   
+
     <aspectMapping>
       <advancedAspect>Rosso-Verde</advancedAspect>
       <ourAspect>Giallo-Verde</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde Lampeggiante Alt.</ourAspect>
     </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Rosso-Giallo-Giallo</advancedAspect>
+      <ourAspect>Rosso-Giallo-Verde</ourAspect>
+    </aspectMapping>
+
   </aspectMappings>
 </appearancetable>

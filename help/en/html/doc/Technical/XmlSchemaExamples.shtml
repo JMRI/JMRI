@@ -23,14 +23,12 @@
 
       <h2>Element with just text content, no attributes</h2>
 
-      <pre>
-<code>
+<code class="block">
 &lt;xs:element name="someData" minOccurs="0" maxOccurs="1"&gt;
 </code>
-</pre>That doesn't specify any typing. If you want e.g. to enforce integer:
+That doesn't specify any typing. If you want e.g. to enforce integer:
 
-      <pre>
-<code>
+<code class="block">
 &lt;xs:element name="someIntThing" &gt;
   &lt;xs:complexType&gt;
     &lt;xs:simpleContent&gt;
@@ -39,12 +37,11 @@
   &lt;/xs:complexType&gt;
 &lt;/xs:element&gt;
 </code>
-</pre>
+
       <h2>Element with just attributes, no content</h2>
       Preferred Venetion-blind form:
 
-      <pre>
-<code>
+<code class="block">
 &lt;xs:element name="sample" type="SampleType" 
     minOccurs="0" maxOccurs="unbounded" /&gt;
 
@@ -53,10 +50,10 @@
   &lt;xs:attribute name="bar" /&gt;
 &lt;/xs:complexType&gt;
 </code>
-</pre>Can also be combined if you think it's unlikely to be used elsewhere:
 
-      <pre>
-<code>
+Can also be combined if you think it's unlikely to be used elsewhere:
+
+<code class="block">
 &lt;xs:element name="sample" 
     minOccurs="0" maxOccurs="unbounded" /&gt;
   &lt;xs:complexType&gt;
@@ -65,12 +62,11 @@
   &lt;/xs:complexType&gt;
 &lt;/xs:element&gt;
 </code>
-</pre>
+
       <h2>Element with text content and attributes</h2>
       Restricting the content of the element to just an integer:
 
-      <pre>
-<code>
+<code class="block">
 &lt;xs:element name="someIntThing" &gt;
   &lt;xs:complexType&gt;
     &lt;xs:simpleContent&gt;
@@ -82,13 +78,12 @@
   &lt;/xs:complexType&gt;
 &lt;/xs:element&gt;
 </code>
-</pre>
+
       <h2>Limiting an attribute to some specific values</h2>
       If you want to do this, it's worth it to define a general type that can be reused. These live
       in xml/schema/types/general.xsd.
 
-      <pre>
-<code>
+<code class="block">
 &lt;xs:simpleType name="yesNoType"&gt;
   &lt;xs:annotation&gt;
     &lt;xs:documentation&gt;
@@ -101,18 +96,17 @@
   &lt;/xs:restriction&gt;
 &lt;/xs:simpleType&gt;
 </code>
-</pre>Then putting it on an attribute is simple:
 
-      <pre>
-<code>
+Then putting it on an attribute is simple:
+
+<code class="block">
 &lt;xs:attribute name="opsOnly" type="yesNoType"/&gt;
 </code>
-</pre>
+
       <h2>Element with restricted text content</h2>
       Not an attribute, an element:
 
-      <pre>
-<code>
+<code class="block">
 &lt;xs:element name="relation"&gt;
   &lt;xs:simpleType&gt;
     &lt;xs:restriction base="xs:string"&gt;
@@ -124,13 +118,12 @@
   &lt;/xs:simpleType&gt;
 &lt;/xs:element&gt;
 </code>
-</pre>
+
       <h2>Attribute Groups</h2>
       Attribute Groups are good for representing a set of attributes read and written together by a
       common service routine. Example definition:
 
-      <pre>
-<code>
+<code class="block">
 &lt;xs:attributeGroup name="EditorCommonAttributesGroup"&gt;
   &lt;xs:annotation&gt;
     &lt;xs:documentation&gt;
@@ -146,13 +139,15 @@
   &lt;xs:attribute name="forcecontroloff" type="trueFalseType" default="false" /&gt;
 &lt;/xs:attributeGroup&gt;
 </code>
-</pre>and example use in some later type:
 
-      <pre>
-<code>
+and example use in some later type:
+
+
+<code class="block">
 &lt;xs:attributeGroup ref="EditorCommonAttributesGroup" /&gt;
 </code>
-</pre><!--#include virtual="/Footer.shtml" -->
+
+<!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

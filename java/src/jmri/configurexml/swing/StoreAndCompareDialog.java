@@ -14,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import jmri.configurexml.ShutdownPreferences;
-import jmri.configurexml.ShutdownPreferences.DialogDisplayOptions;
 
 /**
  * Swing dialog notify that there is un-stored PanelPro data changes.
@@ -53,14 +52,12 @@ public class StoreAndCompareDialog {
 
             noButton.addActionListener((ActionEvent e) -> {
                 dialog.dispose();
-                return;
             });
 
             yesButton.addActionListener((ActionEvent e) -> {
                 dialog.setVisible(false);
                 performStore();
                 dialog.dispose();
-                return;
             });
 
             container.setAlignmentX(Component.CENTER_ALIGNMENT);

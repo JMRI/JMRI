@@ -14,6 +14,7 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.script.JmriScriptEngineManager;
 import jmri.script.swing.ScriptFileChooser;
 import jmri.util.FileUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user edit of startup and shutdown operation scripts.
@@ -223,8 +224,8 @@ public class TrainsScriptFrame extends OperationsFrame {
             if (file.exists()) {
                 JmriScriptEngineManager.getDefault().runScript(file);
             } else {
-                JOptionPane.showMessageDialog(this, script, Bundle.getMessage("ScriptFileNotFound"),
-                        JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, script, Bundle.getMessage("ScriptFileNotFound"),
+                        JmriJOptionPane.ERROR_MESSAGE);
             }
 
         }

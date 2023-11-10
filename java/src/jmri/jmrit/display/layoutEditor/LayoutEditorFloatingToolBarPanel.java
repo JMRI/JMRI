@@ -1,6 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.FlowLayout;
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -190,8 +189,14 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
 
         JPanel iconGroup5 = new JPanel(floatContentLayout);
         iconGroup5.add(iconLabelButton);
+        iconGroup5.add(logixngButton);
         iconGroup5.add(shapeButton);
         floatEditIcon.add(iconGroup5);
+
+        JPanel iconGroup6 = new JPanel(floatContentLayout);
+        iconGroup6.add(audioButton);
+        iconGroup6.add(textAudioComboBox);
+        floatEditIcon.add(iconGroup6);
 
         floatEditTabsPane.addTab(Bundle.getMessage("TabIcon"), null, floatEditIcon, null);
         floatEditTabsPanel.add(floatEditTabsPane);

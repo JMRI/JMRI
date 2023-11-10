@@ -3,20 +3,20 @@ package jmri.jmrix.tams.swing.locodatabase;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableRowSorter;
+
 import jmri.jmrix.tams.TamsMessage;
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame providing access to the loco database on the Tams MC
@@ -89,8 +89,8 @@ public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
     void addLoco() {
         if (addr.getText() == null || addr.getText().equals("")) {
             log.error("Require an address to be entered");
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorNullAddress"), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(addr, Bundle.getMessage("ErrorNullAddress"), Bundle.getMessage("ErrorTitle"),
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
 
         }
@@ -98,8 +98,8 @@ public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
             Integer.valueOf(addr.getText());
         } catch (NumberFormatException nx) {
             log.error("Unable to convert {} to a number", addr.getText());
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorNotNumber"), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(addr, Bundle.getMessage("ErrorNotNumber"), Bundle.getMessage("ErrorTitle"),
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         StringBuilder sb = new StringBuilder();
@@ -149,6 +149,6 @@ public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoDataPane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LocoDataPane.class);
 
 }

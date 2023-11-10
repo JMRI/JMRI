@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * :XhhhhhhhhNd0d1d2d3d4d5d6d7; The X indicates an extended CAN frame N or R
  * indicates a normal or remote frame, in position 6 or 10 d0 - d7 are the (up
  * to) 8 data bytes
- * <p>
  *
  * @author Andrew Crosland Copyright (C) 2008, 2009
  * @author Bob Jacobsen Copyright (C) 2008

@@ -38,6 +38,21 @@
       <model model="Life Like 2-8-4 Berkshire w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="317"/>
       <model model="Life Like 2-8-4 Berkshire wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="318"/>
       <model model="Walthers 0-6-0 Switcher" lowVersionID="6" numFns="14" numOuts="14" productID="319"/>
+      <functionlabels>
+        <functionlabel num="0" lockable="true">Light</functionlabel>
+        <functionlabel num="1" lockable="true">Bell</functionlabel>
+        <functionlabel num="2" lockable="false">Whistle</functionlabel>
+        <functionlabel num="3" lockable="true">Coupler</functionlabel>
+        <functionlabel num="4" lockable="true">Steam Blow Down</functionlabel>
+        <functionlabel num="5" lockable="true">Dynamic</functionlabel>
+        <functionlabel num="6" lockable="true">Doppler/Startup</functionlabel>
+        <functionlabel num="7" lockable="true">Brake Squeal</functionlabel>
+        <functionlabel num="8" lockable="true">Mute</functionlabel>
+        <functionlabel num="9" lockable="true">Short Air Let-off / Shutdown</functionlabel>
+        <functionlabel num="10" lockable="true">Status</functionlabel>
+        <functionlabel num="11" lockable="true">Number Board</functionlabel>
+        <functionlabel num="12" lockable="true">Cab Light</functionlabel>
+      </functionlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes">
       <capability>

@@ -1,7 +1,6 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import javax.swing.JPanel;
-import jmri.GlobalProgrammerManager;
 import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
@@ -26,17 +25,7 @@ public class PaneServiceProgFrame extends PaneProgFrame {
     protected JPanel getModePane() {
         // ensure initialization, even if invoked in ctor
         if (modePane == null) {
-            modePane = new jmri.jmrit.progsupport.ProgServiceModeComboBox() {
-                @Override
-                protected java.util.List<GlobalProgrammerManager> getMgrList() {
-                    return new java.util.ArrayList<GlobalProgrammerManager>();
-                }
-
-                @Override
-                public Programmer getProgrammer() {
-                    return mProgrammer;
-                }
-            };
+            modePane = new jmri.jmrit.progsupport.ProgServiceModeComboBox();
         }
         log.debug("invoked getModePane");
         return modePane;
@@ -45,7 +34,7 @@ public class PaneServiceProgFrame extends PaneProgFrame {
     /**
      * This invokes the parent ctor to do the real work.
      * <p>
-     * That will call back to get the programming mode panel (provided) 
+     * That will call back to get the programming mode panel (provided)
      * and to hear if there is read mode (depends).
      * <p>
      * Then, this sets the programming mode for the service

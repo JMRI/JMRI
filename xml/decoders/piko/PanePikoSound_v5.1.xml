@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) JMRI 2022 All rights reserved                            -->
+<!-- Copyright (C) JMRI 2022, 2023 All rights reserved                      -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -30,1804 +30,395 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
 		</revision>
+		<revision>
+			<revnumber>2</revnumber>
+			<date>2023-07-19</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Sound BR83TT,BR93TT</revremark>
+		</revision>
+		<revision>
+			<revnumber>3</revnumber>
+			<date>2023-10-10</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Expansion of sound slots and sound flags</revremark>
+		</revision>
+		<revision>
+			<revnumber>4</revnumber>
+			<date>2023-10-20</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add decoder</revremark>
+		</revision>
 	</revhistory>
-	<name>Sound</name>
-	<name xml:lang="ca">So XP5.1</name>
-	<name xml:lang="cs">Zvuk XP5.1</name>
-	<name xml:lang="da">Lyd XP5.1</name>
-	<name xml:lang="de">SUSI Bank XP5.1</name>
-	<name xml:lang="fr">Sons XP5.1</name>
-	<name xml:lang="it">Suoni XP5.1</name>
-	<name xml:lang="nl">Geluid XP5.1</name>
-	<group exclude="PIKO46550-18">
+    <name>Sound Levels</name>
+    <name xml:lang="ca">Volum de so</name>
+    <name xml:lang="cs">Hladiny zvuku</name>
+    <name xml:lang="da">Lydstyrker</name>
+    <name xml:lang="de">Sound Lautstärke</name>
+    <name xml:lang="fr">Volume des Sons</name>
+    <name xml:lang="it">Livelli dei Suoni</name>
+    <name xml:lang="nl">Geluidvolume</name>
+	<group exclude="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16">
 		<!--Piko SmartDecoder XP5.1-->
 		<label>
-			<text>SUSI Bank not available in this Piko SmartDecoder</text>
+			<text>CV Bank not available for this Piko SmartDecoder</text>
 		</label>
-		<!-- Leerzeile -->
 		<row>
 			<label>
-				<text> </text>
+				<text>    </text>
 			</label>
 		</row>
 	</group>
-	<group include="PIKO46550-18">
+	<group include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16">
 		<!--Piko SmartDecoder XP5.1-->
-		<row>
-			<column>
-				<display item="Advanced Function Mapping" format="checkbox"/>
-				<label>
-					<text>Extended Function Mapping - to be completed</text>
-					<text xml:lang="de">  - nicht komplett implementiert -</text>
-					<text xml:lang="nl">Uitgebreide Functiemapping - nog verder uit te breiden</text>
-					<text xml:lang="cs">Rozšířené mapování funkcí - bude dokončeno</text>
-				</label>
-				<label>
-					<text>   </text>
-				</label>
-				<!--				<display item="Intellimatic" format="checkbox"/>-->
-			</column>
-		</row>
-		<row>
+		<group include="PIKO SmartDecoder XP5.1 (version 1.1+)">
 			<label>
-				<text>SUSI Bank available in this Piko SmartDecoder XP 5.1</text>
+				<text>CV Bank not available for this Piko SmartDecoder Firmware version. Please update the decoder</text>
 			</label>
-			<!-- Leerspalte -->
+			<row>
+				<label>
+					<text>    </text>
+				</label>
+			</row>
+		</group>
+		<group exclude="PIKO SmartDecoder XP5.1 (version 1.1+)">
+			<row>
+				<label>
+					<text>CV Bank available for this Piko SmartDecoder XP 5.1</text>
+				</label>
+				<!-- Leerspalte -->
+				<column>
+					<label>
+						<text>     </text>
+					</label>
+				</column>
+				<display item="Bank_Switch_31"/>
+				<!-- Leerspalte -->
+				<column>
+					<label>
+						<text>    </text>
+					</label>
+				</column>
+				<display item="Bank_Switch_32"/>
+			</row>
+			<column>
+				<!--Bank 16-->
+				<label>
+					<text>Speed Step activating Switching Sound</text>
+					<text xml:lang="de">Lautstärke Sound</text>
+					<text xml:lang="nl">Snelheidsstap bij Schakelgeluid</text>
+					<text xml:lang="cs">Rychlostní krok pro přepnutí zvuku</text>
+				</label>
+				<label>
+					<text> </text>
+				</label>
+				<row>
+					<display item="Bank C Sound Setting 1" layout="above" label=""/>
+					<label>
+						<text>    </text>
+					</label>
+					<display item="Bank C Sound Setting 1" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank C Sound Setting 2" layout="above" label=""/>
+					<label>
+						<text>    </text>
+					</label>
+					<display item="Bank C Sound Setting 2" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank C Sound Setting 5" layout="above" label=""/>
+					<label>
+						<text>    </text>
+					</label>
+					<display item="Bank C Sound Setting 5" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank C Sound Setting 4" layout="above" label=""/>
+					<label>
+						<text>    </text>
+					</label>
+					<display item="Bank C Sound Setting 4" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank C Sound Setting 3" layout="above" label=""/>
+					<label>
+						<text>    </text>
+					</label>
+					<display item="Bank C Sound Setting 3" layout="above" format="hslider"/>
+				</row>
+				<label>
+					<text>  </text>
+				</label>
+				<display item="Bank C Sound Setting 6"/>
+				<display item="Bank C Sound Setting 6 Bit0" format="checkbox"/>
+				<display item="Bank C Sound Setting 6 Bit1" format="checkbox"/>
+				<display item="Bank C Sound Setting 6 Bit2" format="checkbox"/>
+				<display item="Bank C Sound Setting 6 Bit3" format="checkbox"/>
+				<display item="Bank C Sound Setting 6 Bit4" format="checkbox"/>
+				<display item="Bank C Sound Setting 6 Bit5" format="checkbox"/>
+				<label>
+					<text>     </text>
+				</label>
+				<display item="Bank C Sound Setting 7"/>
+				<display item="Bank C Sound Setting 8"/>
+			</column>
 			<column>
 				<label>
 					<text>     </text>
 				</label>
 			</column>
-			<display item="Bank_Switch_32"/>
-		</row>
-		<group>
-			<qualifier>
-				<variableref>Bank_Switch_32</variableref>
-				<relation>eq</relation>
-				<value>0</value>
-			</qualifier>
-			<row>
+			<column>
+				<label>
+					<text>     </text>
+				</label>
+				<label>
+					<text>Volume individual sound</text>
+					<text xml:lang="de">           Lautstärke Einzelsonds</text>
+				</label>
+				<label>
+					<text>     </text>
+				</label>
 				<row>
-					<label>
-						<text>     </text>
-					</label>
-				</row>
-				<display item="Bank_Switch_31"/>
-			</row>
-			<group>
-				<qualifier>
-					<variableref>Bank_Switch_31</variableref>
-					<relation>eq</relation>
-					<value>15</value>
-				</qualifier>
-				<column>
-					<!--Bank 15-->
-					<display item="Bank A Manufacturer ID"/>
-					<display item="Bank A Software version"/>
-					<display item="Bank A Reset"/>
-				</column>
-			</group>
-			<group>
-				<qualifier>
-					<variableref>Bank_Switch_31</variableref>
-					<relation>eq</relation>
-					<value>16</value>
-				</qualifier>
-				<column>
-					<!--Bank 16-->
-					<label>
-						<text>Speed Step activating Switching Sound</text>
-						<text xml:lang="de">Lautstärke Sound</text>
-						<text xml:lang="nl">Snelheidsstap bij Schakelgeluid</text>
-						<text xml:lang="cs">Rychlostní krok pro přepnutí zvuku</text>
-					</label>
-					<label>
-						<text> </text>
-					</label>
-					<row>
-						<display item="Bank C Sound Setting 1" layout="above" label=""/>
-						<label>
-							<text>    </text>
-						</label>
-						<display item="Bank C Sound Setting 1" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank C Sound Setting 2" layout="above" label=""/>
-						<label>
-							<text>    </text>
-						</label>
-						<display item="Bank C Sound Setting 2" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank C Sound Setting 5" layout="above" label=""/>
-						<label>
-							<text>    </text>
-						</label>
-						<display item="Bank C Sound Setting 5" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank C Sound Setting 4" layout="above" label=""/>
-						<label>
-							<text>    </text>
-						</label>
-						<display item="Bank C Sound Setting 4" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank C Sound Setting 3" layout="above" label=""/>
-						<label>
-							<text>    </text>
-						</label>
-						<display item="Bank C Sound Setting 3" layout="above" format="hslider"/>
-					</row>
+					<display item="Bank E Sound Setting 1" layout="above" label=""/>
 					<label>
 						<text>  </text>
 					</label>
-					<display item="Bank C Sound Setting 6"/>
-					<display item="Bank C Sound Setting 7"/>
-					<display item="Bank C Sound Setting 8"/>
-				</column>
-				<column>
+					<display item="Bank E Sound Setting 1" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 3" layout="above" label=""/>
 					<label>
-						<text>     </text>
+						<text>  </text>
 					</label>
-				</column>
-				<!--			<column>
+					<display item="Bank E Sound Setting 3" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 5" layout="above" label=""/>
+					<label>
+						<text>  </text>
+					</label>
+					<display item="Bank E Sound Setting 5" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 7" layout="above" label=""/>
+					<label>
+						<text>  </text>
+					</label>
+					<display item="Bank E Sound Setting 7" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 9" layout="above" label=""/>
+					<label>
+						<text>  </text>
+					</label>
+					<display item="Bank E Sound Setting 9" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 11" layout="above" label=""/>
+					<label>
+						<text>  </text>
+					</label>
+					<display item="Bank E Sound Setting 11" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 13" layout="above" label=""/>
+					<label>
+						<text>  </text>
+					</label>
+					<display item="Bank E Sound Setting 13" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 15" layout="above" label=""/>
+					<label>
+						<text>  </text>
+					</label>
+					<display item="Bank E Sound Setting 15" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 17" layout="above" label=""/>
+					<label>
+						<text>  </text>
+					</label>
+					<display item="Bank E Sound Setting 17" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 19" layout="above" label=""/>
+					<label>
+						<text>  </text>
+					</label>
+					<display item="Bank E Sound Setting 19" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 21" layout="above" label=""/>
+					<label>
+						<text>  </text>
+					</label>
+					<display item="Bank E Sound Setting 21" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 23" layout="above" label=""/>
+					<label>
+						<text>  </text>
+					</label>
+					<display item="Bank E Sound Setting 23" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 25" layout="above" label=""/>
+					<label>
+						<text>  </text>
+					</label>
+					<display item="Bank E Sound Setting 25" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 27" layout="above" label=""/>
+					<label>
+						<text>  </text>
+					</label>
+					<display item="Bank E Sound Setting 27" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 29" layout="above" label=""/>
+					<label>
+						<text>  </text>
+					</label>
+					<display item="Bank E Sound Setting 29" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 31" layout="above" label=""/>
+					<label>
+						<text>  </text>
+					</label>
+					<display item="Bank E Sound Setting 31" layout="above" format="hslider"/>
+				</row>
+			</column>
+			<column>
 				<label>
 					<text>     </text>
 				</label>
-			</column>-->
-				<column>
+			</column>
+			<column>
+				<label>
+					<text>     </text>
+				</label>
+				<label>
+					<text>     </text>
+				</label>
+				<label>
+					<text>     </text>
+				</label>
+				<row>
+					<display item="Bank E Sound Setting 2" layout="above" label=""/>
 					<label>
-						<text>     </text>
+						<text>  </text>
 					</label>
-					<row>
-						<display item="Bank E Sound Setting 1" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 1" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 2" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 2" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 3" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 3" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 4" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 4" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 5" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 5" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 6" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 6" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 7" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 7" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 8" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 8" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 9" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 9" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 10" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 10" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 11" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 11" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 12" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 12" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 13" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 13" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 14" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 14" layout="above" format="hslider"/>
-					</row>
-				</column>
-				<column>
+					<display item="Bank E Sound Setting 2" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 4" layout="above" label=""/>
 					<label>
-						<text>     </text>
+						<text>  </text>
 					</label>
-				</column>
-				<column>
+					<display item="Bank E Sound Setting 4" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 6" layout="above" label=""/>
 					<label>
-						<text>     </text>
+						<text>  </text>
 					</label>
-					<row>
-						<display item="Bank E Sound Setting 15" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 15" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 16" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 16" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 17" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 17" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 18" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 18" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 19" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 19" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 20" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 20" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 19" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 21" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 22" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 22" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 23" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 23" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 24" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 24" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 25" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 25" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 26" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 26" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 27" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 27" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Bank E Sound Setting 28" layout="above" label=""/>
-						<label>
-							<text>  </text>
-						</label>
-						<display item="Bank E Sound Setting 28" layout="above" format="hslider"/>
-					</row>
-				</column>
-			</group>
-			<group>
-				<qualifier>
-					<variableref>Bank_Switch_31</variableref>
-					<relation>eq</relation>
-					<value>17</value>
-				</qualifier>
-				<column>
-					<!--Bank 17-->
+					<display item="Bank E Sound Setting 6" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 8" layout="above" label=""/>
 					<label>
-						<text>Erweitertes Fkt.-Mapping #1 CV# Bit 0 - 7</text>
+						<text>  </text>
 					</label>
-					<row>
-						<display item="Bank_17_CV257"/>
-						<display item="CV257.0" format="checkbox" label=""/>
-						<display item="CV257.1" format="checkbox" label=""/>
-						<display item="CV257.2" format="checkbox" label=""/>
-						<display item="CV257.3" format="checkbox" label=""/>
-						<display item="CV257.4" format="checkbox" label=""/>
-						<display item="CV257.5" format="checkbox" label=""/>
-						<display item="CV257.6" format="checkbox" label=""/>
-						<display item="CV257.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV258"/>
-						<display item="CV258.0" format="checkbox" label=""/>
-						<display item="CV258.1" format="checkbox" label=""/>
-						<display item="CV258.2" format="checkbox" label=""/>
-						<display item="CV258.3" format="checkbox" label=""/>
-						<display item="CV258.4" format="checkbox" label=""/>
-						<display item="CV258.5" format="checkbox" label=""/>
-						<display item="CV258.6" format="checkbox" label=""/>
-						<display item="CV258.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV259"/>
-						<display item="CV259.0" format="checkbox" label=""/>
-						<display item="CV259.1" format="checkbox" label=""/>
-						<display item="CV259.2" format="checkbox" label=""/>
-						<display item="CV259.3" format="checkbox" label=""/>
-						<display item="CV259.4" format="checkbox" label=""/>
-						<display item="CV259.5" format="checkbox" label=""/>
-						<display item="CV259.6" format="checkbox" label=""/>
-						<display item="CV259.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV260"/>
-						<display item="CV260.0" format="checkbox" label=""/>
-						<display item="CV260.1" format="checkbox" label=""/>
-						<display item="CV260.2" format="checkbox" label=""/>
-						<display item="CV260.3" format="checkbox" label=""/>
-						<display item="CV260.4" format="checkbox" label=""/>
-						<display item="CV260.5" format="checkbox" label=""/>
-						<display item="CV260.6" format="checkbox" label=""/>
-						<display item="CV260.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV261"/>
-						<display item="CV261.0" format="checkbox" label=""/>
-						<display item="CV261.1" format="checkbox" label=""/>
-						<display item="CV261.2" format="checkbox" label=""/>
-						<display item="CV261.3" format="checkbox" label=""/>
-						<display item="CV261.4" format="checkbox" label=""/>
-						<display item="CV261.5" format="checkbox" label=""/>
-						<display item="CV261.6" format="checkbox" label=""/>
-						<display item="CV261.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV262"/>
-						<display item="CV262.0" format="checkbox" label=""/>
-						<display item="CV262.1" format="checkbox" label=""/>
-						<display item="CV262.2" format="checkbox" label=""/>
-						<display item="CV262.3" format="checkbox" label=""/>
-						<display item="CV262.4" format="checkbox" label=""/>
-						<display item="CV262.5" format="checkbox" label=""/>
-						<display item="CV262.6" format="checkbox" label=""/>
-						<display item="CV262.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV263"/>
-						<display item="CV263.0" format="checkbox" label=""/>
-						<display item="CV263.1" format="checkbox" label=""/>
-						<display item="CV263.2" format="checkbox" label=""/>
-						<display item="CV263.3" format="checkbox" label=""/>
-						<display item="CV263.4" format="checkbox" label=""/>
-						<display item="CV263.5" format="checkbox" label=""/>
-						<display item="CV263.6" format="checkbox" label=""/>
-						<display item="CV263.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV264"/>
-						<display item="CV264.0" format="checkbox" label=""/>
-						<display item="CV264.1" format="checkbox" label=""/>
-						<display item="CV264.2" format="checkbox" label=""/>
-						<display item="CV264.3" format="checkbox" label=""/>
-						<display item="CV264.4" format="checkbox" label=""/>
-						<display item="CV264.5" format="checkbox" label=""/>
-						<display item="CV264.6" format="checkbox" label=""/>
-						<display item="CV264.7" format="checkbox" label=""/>
-					</row>
+					<display item="Bank E Sound Setting 8" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 10" layout="above" label=""/>
 					<label>
-						<text> </text>
+						<text>  </text>
 					</label>
+					<display item="Bank E Sound Setting 10" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 12" layout="above" label=""/>
 					<label>
-						<text>Erweitertes Fkt.-Mapping #2 CV# Bit 0 - 7</text>
+						<text>  </text>
 					</label>
-					<row>
-						<display item="Bank_17_CV265"/>
-						<display item="CV265.0" format="checkbox" label=""/>
-						<display item="CV265.1" format="checkbox" label=""/>
-						<display item="CV265.2" format="checkbox" label=""/>
-						<display item="CV265.3" format="checkbox" label=""/>
-						<display item="CV265.4" format="checkbox" label=""/>
-						<display item="CV265.5" format="checkbox" label=""/>
-						<display item="CV265.6" format="checkbox" label=""/>
-						<display item="CV265.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV266"/>
-						<display item="CV266.0" format="checkbox" label=""/>
-						<display item="CV266.1" format="checkbox" label=""/>
-						<display item="CV266.2" format="checkbox" label=""/>
-						<display item="CV266.3" format="checkbox" label=""/>
-						<display item="CV266.4" format="checkbox" label=""/>
-						<display item="CV266.5" format="checkbox" label=""/>
-						<display item="CV266.6" format="checkbox" label=""/>
-						<display item="CV266.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV267"/>
-						<display item="CV267.0" format="checkbox" label=""/>
-						<display item="CV267.1" format="checkbox" label=""/>
-						<display item="CV267.2" format="checkbox" label=""/>
-						<display item="CV267.3" format="checkbox" label=""/>
-						<display item="CV267.4" format="checkbox" label=""/>
-						<display item="CV267.5" format="checkbox" label=""/>
-						<display item="CV267.6" format="checkbox" label=""/>
-						<display item="CV267.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV268"/>
-						<display item="CV268.0" format="checkbox" label=""/>
-						<display item="CV268.1" format="checkbox" label=""/>
-						<display item="CV268.2" format="checkbox" label=""/>
-						<display item="CV268.3" format="checkbox" label=""/>
-						<display item="CV268.4" format="checkbox" label=""/>
-						<display item="CV268.5" format="checkbox" label=""/>
-						<display item="CV268.6" format="checkbox" label=""/>
-						<display item="CV268.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV269"/>
-						<display item="CV269.0" format="checkbox" label=""/>
-						<display item="CV269.1" format="checkbox" label=""/>
-						<display item="CV269.2" format="checkbox" label=""/>
-						<display item="CV269.3" format="checkbox" label=""/>
-						<display item="CV269.4" format="checkbox" label=""/>
-						<display item="CV269.5" format="checkbox" label=""/>
-						<display item="CV269.6" format="checkbox" label=""/>
-						<display item="CV269.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV270"/>
-						<display item="CV270.0" format="checkbox" label=""/>
-						<display item="CV270.1" format="checkbox" label=""/>
-						<display item="CV270.2" format="checkbox" label=""/>
-						<display item="CV270.3" format="checkbox" label=""/>
-						<display item="CV270.4" format="checkbox" label=""/>
-						<display item="CV270.5" format="checkbox" label=""/>
-						<display item="CV270.6" format="checkbox" label=""/>
-						<display item="CV270.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV271"/>
-						<display item="CV271.0" format="checkbox" label=""/>
-						<display item="CV271.1" format="checkbox" label=""/>
-						<display item="CV271.2" format="checkbox" label=""/>
-						<display item="CV271.3" format="checkbox" label=""/>
-						<display item="CV271.4" format="checkbox" label=""/>
-						<display item="CV271.5" format="checkbox" label=""/>
-						<display item="CV271.6" format="checkbox" label=""/>
-						<display item="CV271.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV272"/>
-						<display item="CV272.0" format="checkbox" label=""/>
-						<display item="CV272.1" format="checkbox" label=""/>
-						<display item="CV272.2" format="checkbox" label=""/>
-						<display item="CV272.3" format="checkbox" label=""/>
-						<display item="CV272.4" format="checkbox" label=""/>
-						<display item="CV272.5" format="checkbox" label=""/>
-						<display item="CV272.6" format="checkbox" label=""/>
-						<display item="CV272.7" format="checkbox" label=""/>
-					</row>
+					<display item="Bank E Sound Setting 12" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 14" layout="above" label=""/>
 					<label>
-						<text> </text>
+						<text>  </text>
 					</label>
+					<display item="Bank E Sound Setting 14" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 16" layout="above" label=""/>
 					<label>
-						<text>Erweitertes Fkt.-Mapping #3 CV# Bit 0 - 7</text>
+						<text>  </text>
 					</label>
-					<row>
-						<display item="Bank_17_CV273"/>
-						<display item="CV273.0" format="checkbox" label=""/>
-						<display item="CV273.1" format="checkbox" label=""/>
-						<display item="CV273.2" format="checkbox" label=""/>
-						<display item="CV273.3" format="checkbox" label=""/>
-						<display item="CV273.4" format="checkbox" label=""/>
-						<display item="CV273.5" format="checkbox" label=""/>
-						<display item="CV273.6" format="checkbox" label=""/>
-						<display item="CV273.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV274"/>
-						<display item="CV274.0" format="checkbox" label=""/>
-						<display item="CV274.1" format="checkbox" label=""/>
-						<display item="CV274.2" format="checkbox" label=""/>
-						<display item="CV274.3" format="checkbox" label=""/>
-						<display item="CV274.4" format="checkbox" label=""/>
-						<display item="CV274.5" format="checkbox" label=""/>
-						<display item="CV274.6" format="checkbox" label=""/>
-						<display item="CV274.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV275"/>
-						<display item="CV275.0" format="checkbox" label=""/>
-						<display item="CV275.1" format="checkbox" label=""/>
-						<display item="CV275.2" format="checkbox" label=""/>
-						<display item="CV275.3" format="checkbox" label=""/>
-						<display item="CV275.4" format="checkbox" label=""/>
-						<display item="CV275.5" format="checkbox" label=""/>
-						<display item="CV275.6" format="checkbox" label=""/>
-						<display item="CV275.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV276"/>
-						<display item="CV276.0" format="checkbox" label=""/>
-						<display item="CV276.1" format="checkbox" label=""/>
-						<display item="CV276.2" format="checkbox" label=""/>
-						<display item="CV276.3" format="checkbox" label=""/>
-						<display item="CV276.4" format="checkbox" label=""/>
-						<display item="CV276.5" format="checkbox" label=""/>
-						<display item="CV276.6" format="checkbox" label=""/>
-						<display item="CV276.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV277"/>
-						<display item="CV277.0" format="checkbox" label=""/>
-						<display item="CV277.1" format="checkbox" label=""/>
-						<display item="CV277.2" format="checkbox" label=""/>
-						<display item="CV277.3" format="checkbox" label=""/>
-						<display item="CV277.4" format="checkbox" label=""/>
-						<display item="CV277.5" format="checkbox" label=""/>
-						<display item="CV277.6" format="checkbox" label=""/>
-						<display item="CV277.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV278"/>
-						<display item="CV278.0" format="checkbox" label=""/>
-						<display item="CV278.1" format="checkbox" label=""/>
-						<display item="CV278.2" format="checkbox" label=""/>
-						<display item="CV278.3" format="checkbox" label=""/>
-						<display item="CV278.4" format="checkbox" label=""/>
-						<display item="CV278.5" format="checkbox" label=""/>
-						<display item="CV278.6" format="checkbox" label=""/>
-						<display item="CV278.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV279"/>
-						<display item="CV279.0" format="checkbox" label=""/>
-						<display item="CV279.1" format="checkbox" label=""/>
-						<display item="CV279.2" format="checkbox" label=""/>
-						<display item="CV279.3" format="checkbox" label=""/>
-						<display item="CV279.4" format="checkbox" label=""/>
-						<display item="CV279.5" format="checkbox" label=""/>
-						<display item="CV279.6" format="checkbox" label=""/>
-						<display item="CV279.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV280"/>
-						<display item="CV280.0" format="checkbox" label=""/>
-						<display item="CV280.1" format="checkbox" label=""/>
-						<display item="CV280.2" format="checkbox" label=""/>
-						<display item="CV280.3" format="checkbox" label=""/>
-						<display item="CV280.4" format="checkbox" label=""/>
-						<display item="CV280.5" format="checkbox" label=""/>
-						<display item="CV280.6" format="checkbox" label=""/>
-						<display item="CV280.7" format="checkbox" label=""/>
-					</row>
-				</column>
-				<column>
+					<display item="Bank E Sound Setting 16" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 18" layout="above" label=""/>
 					<label>
-						<text>    </text>
+						<text>  </text>
 					</label>
-				</column>
-				<column>
+					<display item="Bank E Sound Setting 18" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 20" layout="above" label=""/>
 					<label>
-						<text>Erweitertes Fkt.-Mapping #4  CV# Bit 0 - 7 </text>
+						<text>  </text>
 					</label>
-					<row>
-						<display item="Bank_17_CV281"/>
-						<display item="CV281.0" format="checkbox" label=""/>
-						<display item="CV281.1" format="checkbox" label=""/>
-						<display item="CV281.2" format="checkbox" label=""/>
-						<display item="CV281.3" format="checkbox" label=""/>
-						<display item="CV281.4" format="checkbox" label=""/>
-						<display item="CV281.5" format="checkbox" label=""/>
-						<display item="CV281.6" format="checkbox" label=""/>
-						<display item="CV281.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV282"/>
-						<display item="CV282.0" format="checkbox" label=""/>
-						<display item="CV282.1" format="checkbox" label=""/>
-						<display item="CV282.2" format="checkbox" label=""/>
-						<display item="CV282.3" format="checkbox" label=""/>
-						<display item="CV282.4" format="checkbox" label=""/>
-						<display item="CV282.5" format="checkbox" label=""/>
-						<display item="CV282.6" format="checkbox" label=""/>
-						<display item="CV282.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV283"/>
-						<display item="CV283.0" format="checkbox" label=""/>
-						<display item="CV283.1" format="checkbox" label=""/>
-						<display item="CV283.2" format="checkbox" label=""/>
-						<display item="CV283.3" format="checkbox" label=""/>
-						<display item="CV283.4" format="checkbox" label=""/>
-						<display item="CV283.5" format="checkbox" label=""/>
-						<display item="CV283.6" format="checkbox" label=""/>
-						<display item="CV283.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV284"/>
-						<display item="CV284.0" format="checkbox" label=""/>
-						<display item="CV284.1" format="checkbox" label=""/>
-						<display item="CV284.2" format="checkbox" label=""/>
-						<display item="CV284.3" format="checkbox" label=""/>
-						<display item="CV284.4" format="checkbox" label=""/>
-						<display item="CV284.5" format="checkbox" label=""/>
-						<display item="CV284.6" format="checkbox" label=""/>
-						<display item="CV284.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV285"/>
-						<display item="CV285.0" format="checkbox" label=""/>
-						<display item="CV285.1" format="checkbox" label=""/>
-						<display item="CV285.2" format="checkbox" label=""/>
-						<display item="CV285.3" format="checkbox" label=""/>
-						<display item="CV285.4" format="checkbox" label=""/>
-						<display item="CV285.5" format="checkbox" label=""/>
-						<display item="CV285.6" format="checkbox" label=""/>
-						<display item="CV285.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV286"/>
-						<display item="CV286.0" format="checkbox" label=""/>
-						<display item="CV286.1" format="checkbox" label=""/>
-						<display item="CV286.2" format="checkbox" label=""/>
-						<display item="CV286.3" format="checkbox" label=""/>
-						<display item="CV286.4" format="checkbox" label=""/>
-						<display item="CV286.5" format="checkbox" label=""/>
-						<display item="CV286.6" format="checkbox" label=""/>
-						<display item="CV286.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV287"/>
-						<display item="CV287.0" format="checkbox" label=""/>
-						<display item="CV287.1" format="checkbox" label=""/>
-						<display item="CV287.2" format="checkbox" label=""/>
-						<display item="CV287.3" format="checkbox" label=""/>
-						<display item="CV287.4" format="checkbox" label=""/>
-						<display item="CV287.5" format="checkbox" label=""/>
-						<display item="CV287.6" format="checkbox" label=""/>
-						<display item="CV287.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV288"/>
-						<display item="CV288.0" format="checkbox" label=""/>
-						<display item="CV288.1" format="checkbox" label=""/>
-						<display item="CV288.2" format="checkbox" label=""/>
-						<display item="CV288.3" format="checkbox" label=""/>
-						<display item="CV288.4" format="checkbox" label=""/>
-						<display item="CV288.5" format="checkbox" label=""/>
-						<display item="CV288.6" format="checkbox" label=""/>
-						<display item="CV288.7" format="checkbox" label=""/>
-					</row>
+					<display item="Bank E Sound Setting 20" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 22" layout="above" label=""/>
 					<label>
-						<text> </text>
+						<text>  </text>
 					</label>
+					<display item="Bank E Sound Setting 22" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 24" layout="above" label=""/>
 					<label>
-						<text>Erweitertes Fkt.-Mapping #5 CV# Bit 0 - 7</text>
+						<text>  </text>
 					</label>
-					<row>
-						<display item="Bank_17_CV289"/>
-						<display item="CV289.0" format="checkbox" label=""/>
-						<display item="CV289.1" format="checkbox" label=""/>
-						<display item="CV289.2" format="checkbox" label=""/>
-						<display item="CV289.3" format="checkbox" label=""/>
-						<display item="CV289.4" format="checkbox" label=""/>
-						<display item="CV289.5" format="checkbox" label=""/>
-						<display item="CV289.6" format="checkbox" label=""/>
-						<display item="CV289.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV290"/>
-						<display item="CV290.0" format="checkbox" label=""/>
-						<display item="CV290.1" format="checkbox" label=""/>
-						<display item="CV290.2" format="checkbox" label=""/>
-						<display item="CV290.3" format="checkbox" label=""/>
-						<display item="CV290.4" format="checkbox" label=""/>
-						<display item="CV290.5" format="checkbox" label=""/>
-						<display item="CV290.6" format="checkbox" label=""/>
-						<display item="CV290.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV291"/>
-						<display item="CV291.0" format="checkbox" label=""/>
-						<display item="CV291.1" format="checkbox" label=""/>
-						<display item="CV291.2" format="checkbox" label=""/>
-						<display item="CV291.3" format="checkbox" label=""/>
-						<display item="CV291.4" format="checkbox" label=""/>
-						<display item="CV291.5" format="checkbox" label=""/>
-						<display item="CV291.6" format="checkbox" label=""/>
-						<display item="CV291.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV292"/>
-						<display item="CV292.0" format="checkbox" label=""/>
-						<display item="CV292.1" format="checkbox" label=""/>
-						<display item="CV292.2" format="checkbox" label=""/>
-						<display item="CV292.3" format="checkbox" label=""/>
-						<display item="CV292.4" format="checkbox" label=""/>
-						<display item="CV292.5" format="checkbox" label=""/>
-						<display item="CV292.6" format="checkbox" label=""/>
-						<display item="CV292.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV293"/>
-						<display item="CV293.0" format="checkbox" label=""/>
-						<display item="CV293.1" format="checkbox" label=""/>
-						<display item="CV293.2" format="checkbox" label=""/>
-						<display item="CV293.3" format="checkbox" label=""/>
-						<display item="CV293.4" format="checkbox" label=""/>
-						<display item="CV293.5" format="checkbox" label=""/>
-						<display item="CV293.6" format="checkbox" label=""/>
-						<display item="CV293.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV294"/>
-						<display item="CV294.0" format="checkbox" label=""/>
-						<display item="CV294.1" format="checkbox" label=""/>
-						<display item="CV294.2" format="checkbox" label=""/>
-						<display item="CV294.3" format="checkbox" label=""/>
-						<display item="CV294.4" format="checkbox" label=""/>
-						<display item="CV294.5" format="checkbox" label=""/>
-						<display item="CV294.6" format="checkbox" label=""/>
-						<display item="CV294.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV295"/>
-						<display item="CV295.0" format="checkbox" label=""/>
-						<display item="CV295.1" format="checkbox" label=""/>
-						<display item="CV295.2" format="checkbox" label=""/>
-						<display item="CV295.3" format="checkbox" label=""/>
-						<display item="CV295.4" format="checkbox" label=""/>
-						<display item="CV295.5" format="checkbox" label=""/>
-						<display item="CV295.6" format="checkbox" label=""/>
-						<display item="CV295.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV296"/>
-						<display item="CV296.0" format="checkbox" label=""/>
-						<display item="CV296.1" format="checkbox" label=""/>
-						<display item="CV296.2" format="checkbox" label=""/>
-						<display item="CV296.3" format="checkbox" label=""/>
-						<display item="CV296.4" format="checkbox" label=""/>
-						<display item="CV296.5" format="checkbox" label=""/>
-						<display item="CV296.6" format="checkbox" label=""/>
-						<display item="CV296.7" format="checkbox" label=""/>
-					</row>
+					<display item="Bank E Sound Setting 24" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 26" layout="above" label=""/>
 					<label>
-						<text> </text>
+						<text>  </text>
 					</label>
+					<display item="Bank E Sound Setting 26" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 28" layout="above" label=""/>
 					<label>
-						<text>Erweitertes Fkt.-Mapping #6 CV# Bit 0 - 7</text>
+						<text>  </text>
 					</label>
-					<row>
-						<display item="Bank_17_CV297"/>
-						<display item="CV297.0" format="checkbox" label=""/>
-						<display item="CV297.1" format="checkbox" label=""/>
-						<display item="CV297.2" format="checkbox" label=""/>
-						<display item="CV297.3" format="checkbox" label=""/>
-						<display item="CV297.4" format="checkbox" label=""/>
-						<display item="CV297.5" format="checkbox" label=""/>
-						<display item="CV297.6" format="checkbox" label=""/>
-						<display item="CV297.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV298"/>
-						<display item="CV298.0" format="checkbox" label=""/>
-						<display item="CV298.1" format="checkbox" label=""/>
-						<display item="CV298.2" format="checkbox" label=""/>
-						<display item="CV298.3" format="checkbox" label=""/>
-						<display item="CV298.4" format="checkbox" label=""/>
-						<display item="CV298.5" format="checkbox" label=""/>
-						<display item="CV298.6" format="checkbox" label=""/>
-						<display item="CV298.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV299"/>
-						<display item="CV299.0" format="checkbox" label=""/>
-						<display item="CV299.1" format="checkbox" label=""/>
-						<display item="CV299.2" format="checkbox" label=""/>
-						<display item="CV299.3" format="checkbox" label=""/>
-						<display item="CV299.4" format="checkbox" label=""/>
-						<display item="CV299.5" format="checkbox" label=""/>
-						<display item="CV299.6" format="checkbox" label=""/>
-						<display item="CV299.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV300"/>
-						<display item="CV300.0" format="checkbox" label=""/>
-						<display item="CV300.1" format="checkbox" label=""/>
-						<display item="CV300.2" format="checkbox" label=""/>
-						<display item="CV300.3" format="checkbox" label=""/>
-						<display item="CV300.4" format="checkbox" label=""/>
-						<display item="CV300.5" format="checkbox" label=""/>
-						<display item="CV300.6" format="checkbox" label=""/>
-						<display item="CV300.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV301"/>
-						<display item="CV301.0" format="checkbox" label=""/>
-						<display item="CV301.1" format="checkbox" label=""/>
-						<display item="CV301.2" format="checkbox" label=""/>
-						<display item="CV301.3" format="checkbox" label=""/>
-						<display item="CV301.4" format="checkbox" label=""/>
-						<display item="CV301.5" format="checkbox" label=""/>
-						<display item="CV301.6" format="checkbox" label=""/>
-						<display item="CV301.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV302"/>
-						<display item="CV302.0" format="checkbox" label=""/>
-						<display item="CV302.1" format="checkbox" label=""/>
-						<display item="CV302.2" format="checkbox" label=""/>
-						<display item="CV302.3" format="checkbox" label=""/>
-						<display item="CV302.4" format="checkbox" label=""/>
-						<display item="CV302.5" format="checkbox" label=""/>
-						<display item="CV302.6" format="checkbox" label=""/>
-						<display item="CV302.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV303"/>
-						<display item="CV303.0" format="checkbox" label=""/>
-						<display item="CV303.1" format="checkbox" label=""/>
-						<display item="CV303.2" format="checkbox" label=""/>
-						<display item="CV303.3" format="checkbox" label=""/>
-						<display item="CV303.4" format="checkbox" label=""/>
-						<display item="CV303.5" format="checkbox" label=""/>
-						<display item="CV303.6" format="checkbox" label=""/>
-						<display item="CV303.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV304"/>
-						<display item="CV304.0" format="checkbox" label=""/>
-						<display item="CV304.1" format="checkbox" label=""/>
-						<display item="CV304.2" format="checkbox" label=""/>
-						<display item="CV304.3" format="checkbox" label=""/>
-						<display item="CV304.4" format="checkbox" label=""/>
-						<display item="CV304.5" format="checkbox" label=""/>
-						<display item="CV304.6" format="checkbox" label=""/>
-						<display item="CV304.7" format="checkbox" label=""/>
-					</row>
-				</column>
-				<column>
+					<display item="Bank E Sound Setting 28" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 30" layout="above" label=""/>
 					<label>
-						<text>    </text>
+						<text>  </text>
 					</label>
-				</column>
-				<column>
+					<display item="Bank E Sound Setting 30" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Bank E Sound Setting 32" layout="above" label=""/>
 					<label>
-						<text>Erweitertes Fkt.-Mapping #7 CV# Bit 0 - 7 </text>
+						<text>  </text>
 					</label>
-					<row>
-						<display item="Bank_17_CV305"/>
-						<display item="CV305.0" format="checkbox" label=""/>
-						<display item="CV305.1" format="checkbox" label=""/>
-						<display item="CV305.2" format="checkbox" label=""/>
-						<display item="CV305.3" format="checkbox" label=""/>
-						<display item="CV305.4" format="checkbox" label=""/>
-						<display item="CV305.5" format="checkbox" label=""/>
-						<display item="CV305.6" format="checkbox" label=""/>
-						<display item="CV305.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV306"/>
-						<display item="CV306.0" format="checkbox" label=""/>
-						<display item="CV306.1" format="checkbox" label=""/>
-						<display item="CV306.2" format="checkbox" label=""/>
-						<display item="CV306.3" format="checkbox" label=""/>
-						<display item="CV306.4" format="checkbox" label=""/>
-						<display item="CV306.5" format="checkbox" label=""/>
-						<display item="CV306.6" format="checkbox" label=""/>
-						<display item="CV306.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV307"/>
-						<display item="CV307.0" format="checkbox" label=""/>
-						<display item="CV307.1" format="checkbox" label=""/>
-						<display item="CV307.2" format="checkbox" label=""/>
-						<display item="CV307.3" format="checkbox" label=""/>
-						<display item="CV307.4" format="checkbox" label=""/>
-						<display item="CV307.5" format="checkbox" label=""/>
-						<display item="CV307.6" format="checkbox" label=""/>
-						<display item="CV307.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV308"/>
-						<display item="CV308.0" format="checkbox" label=""/>
-						<display item="CV308.1" format="checkbox" label=""/>
-						<display item="CV308.2" format="checkbox" label=""/>
-						<display item="CV308.3" format="checkbox" label=""/>
-						<display item="CV308.4" format="checkbox" label=""/>
-						<display item="CV308.5" format="checkbox" label=""/>
-						<display item="CV308.6" format="checkbox" label=""/>
-						<display item="CV308.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV309"/>
-						<display item="CV309.0" format="checkbox" label=""/>
-						<display item="CV309.1" format="checkbox" label=""/>
-						<display item="CV309.2" format="checkbox" label=""/>
-						<display item="CV309.3" format="checkbox" label=""/>
-						<display item="CV309.4" format="checkbox" label=""/>
-						<display item="CV309.5" format="checkbox" label=""/>
-						<display item="CV309.6" format="checkbox" label=""/>
-						<display item="CV309.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV310"/>
-						<display item="CV310.0" format="checkbox" label=""/>
-						<display item="CV310.1" format="checkbox" label=""/>
-						<display item="CV310.2" format="checkbox" label=""/>
-						<display item="CV310.3" format="checkbox" label=""/>
-						<display item="CV310.4" format="checkbox" label=""/>
-						<display item="CV310.5" format="checkbox" label=""/>
-						<display item="CV310.6" format="checkbox" label=""/>
-						<display item="CV310.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV311"/>
-						<display item="CV311.0" format="checkbox" label=""/>
-						<display item="CV311.1" format="checkbox" label=""/>
-						<display item="CV311.2" format="checkbox" label=""/>
-						<display item="CV311.3" format="checkbox" label=""/>
-						<display item="CV311.4" format="checkbox" label=""/>
-						<display item="CV311.5" format="checkbox" label=""/>
-						<display item="CV311.6" format="checkbox" label=""/>
-						<display item="CV311.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV312"/>
-						<display item="CV312.0" format="checkbox" label=""/>
-						<display item="CV312.1" format="checkbox" label=""/>
-						<display item="CV312.2" format="checkbox" label=""/>
-						<display item="CV312.3" format="checkbox" label=""/>
-						<display item="CV312.4" format="checkbox" label=""/>
-						<display item="CV312.5" format="checkbox" label=""/>
-						<display item="CV312.6" format="checkbox" label=""/>
-						<display item="CV312.7" format="checkbox" label=""/>
-					</row>
-					<label>
-						<text> </text>
-					</label>
-					<label>
-						<text>Erweitertes Fkt.-Mapping #8 CV# Bit 0 - 7</text>
-					</label>
-					<row>
-						<display item="Bank_17_CV313"/>
-						<display item="CV313.0" format="checkbox" label=""/>
-						<display item="CV313.1" format="checkbox" label=""/>
-						<display item="CV313.2" format="checkbox" label=""/>
-						<display item="CV313.3" format="checkbox" label=""/>
-						<display item="CV313.4" format="checkbox" label=""/>
-						<display item="CV313.5" format="checkbox" label=""/>
-						<display item="CV313.6" format="checkbox" label=""/>
-						<display item="CV313.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV314"/>
-						<display item="CV314.0" format="checkbox" label=""/>
-						<display item="CV314.1" format="checkbox" label=""/>
-						<display item="CV314.2" format="checkbox" label=""/>
-						<display item="CV314.3" format="checkbox" label=""/>
-						<display item="CV314.4" format="checkbox" label=""/>
-						<display item="CV314.5" format="checkbox" label=""/>
-						<display item="CV314.6" format="checkbox" label=""/>
-						<display item="CV314.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV315"/>
-						<display item="CV315.0" format="checkbox" label=""/>
-						<display item="CV315.1" format="checkbox" label=""/>
-						<display item="CV315.2" format="checkbox" label=""/>
-						<display item="CV315.3" format="checkbox" label=""/>
-						<display item="CV315.4" format="checkbox" label=""/>
-						<display item="CV315.5" format="checkbox" label=""/>
-						<display item="CV315.6" format="checkbox" label=""/>
-						<display item="CV315.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV316"/>
-						<display item="CV316.0" format="checkbox" label=""/>
-						<display item="CV316.1" format="checkbox" label=""/>
-						<display item="CV316.2" format="checkbox" label=""/>
-						<display item="CV316.3" format="checkbox" label=""/>
-						<display item="CV316.4" format="checkbox" label=""/>
-						<display item="CV316.5" format="checkbox" label=""/>
-						<display item="CV316.6" format="checkbox" label=""/>
-						<display item="CV316.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV317"/>
-						<display item="CV317.0" format="checkbox" label=""/>
-						<display item="CV317.1" format="checkbox" label=""/>
-						<display item="CV317.2" format="checkbox" label=""/>
-						<display item="CV317.3" format="checkbox" label=""/>
-						<display item="CV317.4" format="checkbox" label=""/>
-						<display item="CV317.5" format="checkbox" label=""/>
-						<display item="CV317.6" format="checkbox" label=""/>
-						<display item="CV317.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV318"/>
-						<display item="CV318.0" format="checkbox" label=""/>
-						<display item="CV318.1" format="checkbox" label=""/>
-						<display item="CV318.2" format="checkbox" label=""/>
-						<display item="CV318.3" format="checkbox" label=""/>
-						<display item="CV318.4" format="checkbox" label=""/>
-						<display item="CV318.5" format="checkbox" label=""/>
-						<display item="CV318.6" format="checkbox" label=""/>
-						<display item="CV318.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV319"/>
-						<display item="CV319.0" format="checkbox" label=""/>
-						<display item="CV319.1" format="checkbox" label=""/>
-						<display item="CV319.2" format="checkbox" label=""/>
-						<display item="CV319.3" format="checkbox" label=""/>
-						<display item="CV319.4" format="checkbox" label=""/>
-						<display item="CV319.5" format="checkbox" label=""/>
-						<display item="CV319.6" format="checkbox" label=""/>
-						<display item="CV319.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV320"/>
-						<display item="CV320.0" format="checkbox" label=""/>
-						<display item="CV320.1" format="checkbox" label=""/>
-						<display item="CV320.2" format="checkbox" label=""/>
-						<display item="CV320.3" format="checkbox" label=""/>
-						<display item="CV320.4" format="checkbox" label=""/>
-						<display item="CV320.5" format="checkbox" label=""/>
-						<display item="CV320.6" format="checkbox" label=""/>
-						<display item="CV320.7" format="checkbox" label=""/>
-					</row>
-					<label>
-						<text> </text>
-					</label>
-					<label>
-						<text>Erweitertes Fkt.-Mapping #9 CV# Bit 0 - 7</text>
-					</label>
-					<row>
-						<display item="Bank_17_CV321"/>
-						<display item="CV321.0" format="checkbox" label=""/>
-						<display item="CV321.1" format="checkbox" label=""/>
-						<display item="CV321.2" format="checkbox" label=""/>
-						<display item="CV321.3" format="checkbox" label=""/>
-						<display item="CV321.4" format="checkbox" label=""/>
-						<display item="CV321.5" format="checkbox" label=""/>
-						<display item="CV321.6" format="checkbox" label=""/>
-						<display item="CV321.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV322"/>
-						<display item="CV322.0" format="checkbox" label=""/>
-						<display item="CV322.1" format="checkbox" label=""/>
-						<display item="CV322.2" format="checkbox" label=""/>
-						<display item="CV322.3" format="checkbox" label=""/>
-						<display item="CV322.4" format="checkbox" label=""/>
-						<display item="CV322.5" format="checkbox" label=""/>
-						<display item="CV322.6" format="checkbox" label=""/>
-						<display item="CV322.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV323"/>
-						<display item="CV323.0" format="checkbox" label=""/>
-						<display item="CV323.1" format="checkbox" label=""/>
-						<display item="CV323.2" format="checkbox" label=""/>
-						<display item="CV323.3" format="checkbox" label=""/>
-						<display item="CV323.4" format="checkbox" label=""/>
-						<display item="CV323.5" format="checkbox" label=""/>
-						<display item="CV323.6" format="checkbox" label=""/>
-						<display item="CV323.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV324"/>
-						<display item="CV324.0" format="checkbox" label=""/>
-						<display item="CV324.1" format="checkbox" label=""/>
-						<display item="CV324.2" format="checkbox" label=""/>
-						<display item="CV324.3" format="checkbox" label=""/>
-						<display item="CV324.4" format="checkbox" label=""/>
-						<display item="CV324.5" format="checkbox" label=""/>
-						<display item="CV324.6" format="checkbox" label=""/>
-						<display item="CV324.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV325"/>
-						<display item="CV325.0" format="checkbox" label=""/>
-						<display item="CV325.1" format="checkbox" label=""/>
-						<display item="CV325.2" format="checkbox" label=""/>
-						<display item="CV325.3" format="checkbox" label=""/>
-						<display item="CV325.4" format="checkbox" label=""/>
-						<display item="CV325.5" format="checkbox" label=""/>
-						<display item="CV325.6" format="checkbox" label=""/>
-						<display item="CV325.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV326"/>
-						<display item="CV326.0" format="checkbox" label=""/>
-						<display item="CV326.1" format="checkbox" label=""/>
-						<display item="CV326.2" format="checkbox" label=""/>
-						<display item="CV326.3" format="checkbox" label=""/>
-						<display item="CV326.4" format="checkbox" label=""/>
-						<display item="CV326.5" format="checkbox" label=""/>
-						<display item="CV326.6" format="checkbox" label=""/>
-						<display item="CV326.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV327"/>
-						<display item="CV327.0" format="checkbox" label=""/>
-						<display item="CV327.1" format="checkbox" label=""/>
-						<display item="CV327.2" format="checkbox" label=""/>
-						<display item="CV327.3" format="checkbox" label=""/>
-						<display item="CV327.4" format="checkbox" label=""/>
-						<display item="CV327.5" format="checkbox" label=""/>
-						<display item="CV327.6" format="checkbox" label=""/>
-						<display item="CV327.7" format="checkbox" label=""/>
-					</row>
-					<row>
-						<display item="Bank_17_CV328"/>
-						<display item="CV328.0" format="checkbox" label=""/>
-						<display item="CV328.1" format="checkbox" label=""/>
-						<display item="CV328.2" format="checkbox" label=""/>
-						<display item="CV328.3" format="checkbox" label=""/>
-						<display item="CV328.4" format="checkbox" label=""/>
-						<display item="CV328.5" format="checkbox" label=""/>
-						<display item="CV328.6" format="checkbox" label=""/>
-						<display item="CV328.7" format="checkbox" label=""/>
-					</row>
-				</column>
-				<!--	more cv here-->
-			</group>
-			<group>
-				<qualifier>
-					<variableref>Bank_Switch_31</variableref>
-					<relation>eq</relation>
-					<value>18</value>
-				</qualifier>
-				<column>
-					<!--Bank 18-->
-					<!-- Leerzeile -->
-					<row>
-						<label>
-							<text> </text>
-						</label>
-					</row>
-					<label>
-						<text>Effects for the function outputs</text>
-						<text xml:lang="de">Effekte für die Funktionsausgänge</text>
-						<text xml:lang="nl">Snelheidsstap bij Schakelgeluid</text>
-						<text xml:lang="cs">Rychlostní krok pro přepnutí zvuku</text>
-						<text>    </text>
-					</label>
-					<!-- Leerzeile -->
-					<row>
-						<label>
-							<text> </text>
-						</label>
-					</row>
-					<row>
-						<display item="Ausgang F0v Effekt A" layout="above"/>
-					</row>
-					<row>
-						<display item="Ausgang F0v Flags A"/>
-					</row>
-					<row>
-						<label>
-							<text> </text>
-						</label>
-					</row>
-					<row>
-						<display item="Ausgang F0v PWM A" layout="above" label=""/>
-						<display item="Ausgang F0v PWM A" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Ausgang F0v Parameter 1 A" layout="above" label=""/>
-						<display item="Ausgang F0v Parameter 1 A" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Ausgang F0v Parameter 2 A" layout="above" label=""/>
-						<display item="Ausgang F0v Parameter 2 A" layout="above" format="hslider"/>
-					</row>
-					<!-- Leerzeile -->
-					<row>
-						<label>
-							<text> </text>
-						</label>
-					</row>
-					<row>
-						<display item="Ausgang F0v Effekt B" layout="above"/>
-					</row>
-					<row>
-						<display item="Ausgang F0v Flags B"/>
-					</row>
-					<row>
-						<label>
-							<text> </text>
-						</label>
-					</row>
-					<row>
-						<display item="Ausgang F0v PWM B" layout="above" label=""/>
-						<display item="Ausgang F0v PWM B" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Ausgang F0v Parameter 1 B" layout="above" label=""/>
-						<display item="Ausgang F0v Parameter 1 B" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Ausgang F0v Parameter 2 B" layout="above" label=""/>
-						<display item="Ausgang F0v Parameter 2 B" layout="above" format="hslider"/>
-					</row>
-				</column>
-				<!-- Leerspalte -->
-				<column>
-					<label>
-						<text>     </text>
-					</label>
-				</column>
-				<column>
-					<label>
-						<text>     </text>
-					</label>
-					<!-- Leerzeile -->
-					<row>
-						<label>
-							<text> </text>
-						</label>
-					</row>
-					<!-- Leerzeile -->
-					<row>
-						<label>
-							<text> </text>
-						</label>
-					</row>
-					<row>
-						<display item="Ausgang F0h Effekt A" layout="above"/>
-					</row>
-					<row>
-						<display item="Ausgang F0h Flags A"/>
-					</row>
-					<row>
-						<label>
-							<text> </text>
-						</label>
-					</row>
-					<row>
-						<display item="Ausgang F0h PWM A" layout="above" label=""/>
-						<display item="Ausgang F0h PWM A" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Ausgang F0h Parameter 1 A" layout="above" label=""/>
-						<display item="Ausgang F0h Parameter 1 A" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Ausgang F0h Parameter 2 A" layout="above" label=""/>
-						<display item="Ausgang F0h Parameter 2 A" layout="above" format="hslider"/>
-					</row>
-					<!-- Leerzeile -->
-					<row>
-						<label>
-							<text> </text>
-						</label>
-					</row>
-					<row>
-						<display item="Ausgang F0h Effekt B" layout="above"/>
-					</row>
-					<row>
-						<display item="Ausgang F0h Flags B"/>
-					</row>
-					<row>
-						<label>
-							<text> </text>
-						</label>
-					</row>
-					<row>
-						<display item="Ausgang F0h PWM B" layout="above" label=""/>
-						<display item="Ausgang F0h PWM B" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Ausgang F0h Parameter 1 B" layout="above" label=""/>
-						<display item="Ausgang F0h Parameter 1 B" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Ausgang F0h Parameter 2 B" layout="above" label=""/>
-						<display item="Ausgang F0h Parameter 2 B" layout="above" format="hslider"/>
-					</row>
-				</column>
-				<!-- Leerspalte -->
-				<column>
-					<label>
-						<text>     </text>
-					</label>
-				</column>
-				<column>
-					<label>
-						<text>     </text>
-					</label>
-					<!-- Leerzeile -->
-					<row>
-						<label>
-							<text> </text>
-						</label>
-					</row>
-					<!-- Leerzeile -->
-					<row>
-						<label>
-							<text> </text>
-						</label>
-					</row>
-					<row>
-						<display item="Ausgang A1 Effekt A" layout="above"/>
-					</row>
-					<row>
-						<display item="Ausgang A1 Flags A"/>
-					</row>
-					<row>
-						<label>
-							<text> </text>
-						</label>
-					</row>
-					<row>
-						<display item="Ausgang A1 PWM A" layout="above" label=""/>
-						<display item="Ausgang A1 PWM A" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Ausgang A1 Parameter 1 A" layout="above" label=""/>
-						<display item="Ausgang A1 Parameter 1 A" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Ausgang A1 Parameter 2 A" layout="above" label=""/>
-						<display item="Ausgang A1 Parameter 2 A" layout="above" format="hslider"/>
-					</row>
-					<!-- Leerzeile -->
-					<row>
-						<label>
-							<text> </text>
-						</label>
-					</row>
-					<row>
-						<display item="Ausgang A1 Effekt B" layout="above"/>
-					</row>
-					<row>
-						<display item="Ausgang A1 Flags B"/>
-					</row>
-					<row>
-						<label>
-							<text> </text>
-						</label>
-					</row>
-					<row>
-						<display item="Ausgang A1 PWM B" layout="above" label=""/>
-						<display item="Ausgang A1 PWM B" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Ausgang A1 Parameter 1 B" layout="above" label=""/>
-						<display item="Ausgang A1 Parameter 1 B" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Ausgang A1 Parameter 2 B" layout="above" label=""/>
-						<display item="Ausgang A1 Parameter 2 B" layout="above" format="hslider"/>
-					</row>
-				</column>
-				<!-- Leerspalte -->
-				<column>
-					<label>
-						<text>     </text>
-					</label>
-				</column>
-				<column>
-					<label>
-						<text>     </text>
-					</label>
-					<!-- Leerzeile -->
-					<row>
-						<label>
-							<text> </text>
-						</label>
-					</row>
-					<!-- Leerzeile -->
-					<row>
-						<label>
-							<text> </text>
-						</label>
-					</row>
-					<row>
-						<display item="Ausgang A2 Effekt A" layout="above"/>
-					</row>
-					<row>
-						<display item="Ausgang A2 Flags A"/>
-					</row>
-					<row>
-						<label>
-							<text> </text>
-						</label>
-					</row>
-					<row>
-						<display item="Ausgang A2 PWM A" layout="above" label=""/>
-						<display item="Ausgang A2 PWM A" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Ausgang A2 Parameter 1 A" layout="above" label=""/>
-						<display item="Ausgang A2 Parameter 1 A" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Ausgang A2 Parameter 2 A" layout="above" label=""/>
-						<display item="Ausgang A2 Parameter 2 A" layout="above" format="hslider"/>
-					</row>
-					<!-- Leerzeile -->
-					<row>
-						<label>
-							<text> </text>
-						</label>
-					</row>
-					<row>
-						<display item="Ausgang A2 Effekt B" layout="above"/>
-					</row>
-					<row>
-						<display item="Ausgang A2 Flags B"/>
-					</row>
-					<row>
-						<label>
-							<text> </text>
-						</label>
-					</row>
-					<row>
-						<display item="Ausgang A2 PWM B" layout="above" label=""/>
-						<display item="Ausgang A2 PWM B" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Ausgang A2 Parameter 1 B" layout="above" label=""/>
-						<display item="Ausgang A2 Parameter 1 B" layout="above" format="hslider"/>
-					</row>
-					<row>
-						<display item="Ausgang A2 Parameter 2 B" layout="above" label=""/>
-						<display item="Ausgang A2 Parameter 2 B" layout="above" format="hslider"/>
-					</row>
-				</column>
-				<!-- Leerspalte -->
-				<column>
-					<label>
-						<text>     </text>
-					</label>
-				</column>
-				<column>
-					<!-- BEGIN - Flags Grid -->
-					<grid gridy="1" weightx="10" ipadx="1">
-						<!-- BEGIN - Row 1 (headers)-->
-						<griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END">
-							<label>
-								<text> F0v:A </text>
-							</label>
-						</griditem>
-						<griditem gridx="1" gridy="0" gridwidth="1" anchor="CENTER">
-							<label>
-								<text> F0v:B </text>
-							</label>
-						</griditem>
-						<griditem gridx="2" gridy="0" gridwidth="1" anchor="CENTER">
-							<label>
-								<text> F0h:A </text>
-							</label>
-						</griditem>
-						<griditem gridx="3" gridy="0" gridwidth="1" anchor="CENTER">
-							<label>
-								<text> F0h:B </text>
-							</label>
-						</griditem>
-						<griditem gridx="4" gridy="0" gridwidth="1" anchor="CENTER">
-							<label>
-								<text>  A1:A </text>
-							</label>
-						</griditem>
-						<griditem gridx="5" gridy="0" gridwidth="1" anchor="CENTER">
-							<label>
-								<text>  A1:B </text>
-							</label>
-						</griditem>
-						<griditem gridx="6" gridy="0" gridwidth="1" anchor="CENTER">
-							<label>
-								<text>  A2:A </text>
-							</label>
-						</griditem>
-						<griditem gridx="7" gridy="0" gridwidth="1" anchor="CENTER">
-							<label>
-								<text>  A2:B </text>
-							</label>
-						</griditem>
-						<!-- BEGIN - Row 2 (checkboxes)-->
-						<griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
-							<display item="F0vA.0" format="checkbox"/>
-						</griditem>
-						<griditem gridx="1" gridy="1" gridwidth="1" anchor="CENTER">
-							<display item="F0vB.0" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="2" gridy="1" gridwidth="1" anchor="CENTER">
-							<display item="F0hA.0" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="3" gridy="1" gridwidth="1" anchor="CENTER">
-							<display item="F0hB.0" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="4" gridy="1" gridwidth="1" anchor="CENTER">
-							<display item="A1A.0" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="5" gridy="1" gridwidth="1" anchor="CENTER">
-							<display item="A1B.0" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="6" gridy="1" gridwidth="1" anchor="CENTER">
-							<display item="A2A.0" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="7" gridy="1" gridwidth="1" anchor="CENTER">
-							<display item="A2B.0" format="checkbox" label=""/>
-						</griditem>
-						<!-- BEGIN - Row 3 (checkboxes)-->
-						<griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
-							<display item="F0vA.1" format="checkbox">
-					  </display>
-						</griditem>
-						<griditem gridx="1" gridy="2" gridwidth="1" anchor="CENTER">
-							<display item="F0vB.1" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="2" gridy="2" gridwidth="1" anchor="CENTER">
-							<display item="F0hA.1" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="3" gridy="2" gridwidth="1" anchor="CENTER">
-							<display item="F0hB.1" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="4" gridy="2" gridwidth="1" anchor="CENTER">
-							<display item="A1A.1" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="5" gridy="2" gridwidth="1" anchor="CENTER">
-							<display item="A1B.1" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="6" gridy="2" gridwidth="1" anchor="CENTER">
-							<display item="A2A.1" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="7" gridy="2" gridwidth="1" anchor="CENTER">
-							<display item="A2B.1" format="checkbox" label=""/>
-						</griditem>
-						<!-- BEGIN - Row 4 (checkboxes)-->
-						<griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
-							<display item="F0vA.2" format="checkbox">
-					  </display>
-						</griditem>
-						<griditem gridx="1" gridy="3" gridwidth="1" anchor="CENTER">
-							<display item="F0vB.2" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="2" gridy="3" gridwidth="1" anchor="CENTER">
-							<display item="F0hA.2" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="3" gridy="3" gridwidth="1" anchor="CENTER">
-							<display item="F0hB.2" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="4" gridy="3" gridwidth="1" anchor="CENTER">
-							<display item="A1A.2" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="5" gridy="3" gridwidth="1" anchor="CENTER">
-							<display item="A1B.2" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="6" gridy="3" gridwidth="1" anchor="CENTER">
-							<display item="A2A.2" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="7" gridy="3" gridwidth="1" anchor="CENTER">
-							<display item="A2B.2" format="checkbox" label=""/>
-						</griditem>
-						<!-- BEGIN - Row 5 (checkboxes)-->
-						<griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
-							<display item="F0vA.3" format="checkbox">
-					  </display>
-						</griditem>
-						<griditem gridx="1" gridy="4" gridwidth="1" anchor="CENTER">
-							<display item="F0vB.3" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="2" gridy="4" gridwidth="1" anchor="CENTER">
-							<display item="F0hA.3" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="3" gridy="4" gridwidth="1" anchor="CENTER">
-							<display item="F0hB.3" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="4" gridy="4" gridwidth="1" anchor="CENTER">
-							<display item="A1A.3" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="5" gridy="4" gridwidth="1" anchor="CENTER">
-							<display item="A1B.3" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="6" gridy="4" gridwidth="1" anchor="CENTER">
-							<display item="A2A.3" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="7" gridy="4" gridwidth="1" anchor="CENTER">
-							<display item="A2B.3" format="checkbox" label=""/>
-						</griditem>
-						<!-- BEGIN - Row 6 (checkboxes)-->
-						<griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
-							<display item="F0vA.4" format="checkbox">
-					  </display>
-						</griditem>
-						<griditem gridx="1" gridy="5" gridwidth="1" anchor="CENTER">
-							<display item="F0vB.4" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="2" gridy="5" gridwidth="1" anchor="CENTER">
-							<display item="F0hA.4" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="3" gridy="5" gridwidth="1" anchor="CENTER">
-							<display item="F0hB.4" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="4" gridy="5" gridwidth="1" anchor="CENTER">
-							<display item="A1A.4" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="5" gridy="5" gridwidth="1" anchor="CENTER">
-							<display item="A1B.4" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="6" gridy="5" gridwidth="1" anchor="CENTER">
-							<display item="A2A.4" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="7" gridy="5" gridwidth="1" anchor="CENTER">
-							<display item="A2B.4" format="checkbox" label=""/>
-						</griditem>
-						<!-- BEGIN - Row 7 (checkboxes)-->
-						<griditem gridx="0" gridy="6" gridwidth="1" anchor="LINE_END">
-							<display item="F0vA.5" format="checkbox">
-					  </display>
-						</griditem>
-						<griditem gridx="1" gridy="6" gridwidth="1" anchor="CENTER">
-							<display item="F0vB.5" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="2" gridy="6" gridwidth="1" anchor="CENTER">
-							<display item="F0hA.5" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="3" gridy="6" gridwidth="1" anchor="CENTER">
-							<display item="F0hB.5" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="4" gridy="6" gridwidth="1" anchor="CENTER">
-							<display item="A1A.5" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="5" gridy="6" gridwidth="1" anchor="CENTER">
-							<display item="A1B.5" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="6" gridy="6" gridwidth="1" anchor="CENTER">
-							<display item="A2A.5" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="7" gridy="6" gridwidth="1" anchor="CENTER">
-							<display item="A2B.5" format="checkbox" label=""/>
-						</griditem>
-						<!-- BEGIN - Row 8 (checkboxes)-->
-						<griditem gridx="0" gridy="7" gridwidth="1" anchor="LINE_END">
-							<display item="F0vA.6" format="checkbox">
-					  </display>
-						</griditem>
-						<griditem gridx="1" gridy="7" gridwidth="1" anchor="CENTER">
-							<display item="F0vB.6" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="2" gridy="7" gridwidth="1" anchor="CENTER">
-							<display item="F0hA.6" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="3" gridy="7" gridwidth="1" anchor="CENTER">
-							<display item="F0hB.6" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="4" gridy="7" gridwidth="1" anchor="CENTER">
-							<display item="A1A.6" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="5" gridy="7" gridwidth="1" anchor="CENTER">
-							<display item="A1B.6" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="6" gridy="7" gridwidth="1" anchor="CENTER">
-							<display item="A2A.6" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="7" gridy="7" gridwidth="1" anchor="CENTER">
-							<display item="A2B.6" format="checkbox" label=""/>
-						</griditem>
-						<!-- BEGIN - Row 9 (checkboxes)-->
-						<griditem gridx="0" gridy="8" gridwidth="1" anchor="LINE_END">
-							<display item="F0vA.7" format="checkbox">
-					  </display>
-						</griditem>
-						<griditem gridx="1" gridy="8" gridwidth="1" anchor="CENTER">
-							<display item="F0vB.7" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="2" gridy="8" gridwidth="1" anchor="CENTER">
-							<display item="F0hA.7" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="3" gridy="8" gridwidth="1" anchor="CENTER">
-							<display item="F0hB.7" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="4" gridy="8" gridwidth="1" anchor="CENTER">
-							<display item="A1A.7" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="5" gridy="8" gridwidth="1" anchor="CENTER">
-							<display item="A1B.7" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="6" gridy="8" gridwidth="1" anchor="CENTER">
-							<display item="A2A.7" format="checkbox" label=""/>
-						</griditem>
-						<griditem gridx="7" gridy="8" gridwidth="1" anchor="CENTER">
-							<display item="A2B.7" format="checkbox" label=""/>
-						</griditem>
-					</grid>
-				</column>
-			</group>
-		</group>
-		<group>
-			<qualifier>
-				<variableref>Bank_Switch_32</variableref>
-				<relation>eq</relation>
-				<value>1</value>
-			</qualifier>
-			<label>
-				<text>    </text>
-				<text>CV32=1: Bank 275-512 blocked</text>
-				<text xml:lang="de">CV32=1: Bank 275-512 gesperrt</text>
-				<text>    </text>
-			</label>
+					<display item="Bank E Sound Setting 32" layout="above" format="hslider"/>
+				</row>
+			</column>
 		</group>
 	</group>
 </pane>

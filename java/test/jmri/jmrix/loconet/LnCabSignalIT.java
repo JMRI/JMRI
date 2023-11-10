@@ -79,6 +79,7 @@ public class LnCabSignalIT extends jmri.implementation.DefaultCabSignalIT {
         cs = null;
 
         jmri.jmrit.display.EditorFrameOperator.clearEditorFrameOperatorThreads();
+        InstanceManager.getDefault(jmri.IdTagManager.class).dispose();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }

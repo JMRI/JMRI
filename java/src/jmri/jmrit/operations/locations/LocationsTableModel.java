@@ -5,10 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 
 import org.slf4j.Logger;
@@ -65,6 +62,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     public void setSort(int sort) {
         _sort = sort;
         updateList();
+        setColumnsVisible();
         fireTableDataChanged();
     }
 
@@ -129,6 +127,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 
     protected void setColumnsVisible() {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(ID_COLUMN), locationManager.isShowIdEnabled());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(DIVISION_COLUMN), locationManager.hasDivisions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(REPORTER_COLUMN),
                 Setup.isRfidEnabled() && locationManager.hasReporters());

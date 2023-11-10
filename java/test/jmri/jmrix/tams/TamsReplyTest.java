@@ -17,6 +17,7 @@ public class TamsReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         m = new TamsReply();
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = null;

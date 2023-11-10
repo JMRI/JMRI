@@ -2,7 +2,6 @@ package jmri.jmrit.logixng.expressions;
 
 import java.awt.GraphicsEnvironment;
 import java.beans.PropertyChangeEvent;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -24,8 +23,6 @@ import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.jmrit.logixng.util.DispatcherActiveTrainManager;
-import jmri.util.FileUtil;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.jdom2.JDOMException;
@@ -172,11 +169,11 @@ public class ExpressionDispatcherTest extends AbstractDigitalExpressionTestBase 
 //        Assert.assertEquals("Train \"null\" is Automatic mode", expressionDispatcher.getLongDescription());
         expressionDispatcher.setTrainInfoFileName(_myActiveTrainFileName);
         expressionDispatcher.set_Is_IsNot(Is_IsNot_Enum.Is);
-        expressionDispatcher.setBeanState(ExpressionDispatcher.DispatcherState.Dispatched);
+        expressionDispatcher.getSelectEnum().setEnum(ExpressionDispatcher.DispatcherState.Dispatched);
         Assert.assertEquals("Train \"MyActiveTrainFile.xml\" is Dispatched mode", expressionDispatcher.getLongDescription());
         expressionDispatcher.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         Assert.assertEquals("Train \"MyActiveTrainFile.xml\" is not Dispatched mode", expressionDispatcher.getLongDescription());
-        expressionDispatcher.setBeanState(ExpressionDispatcher.DispatcherState.Manual);
+        expressionDispatcher.getSelectEnum().setEnum(ExpressionDispatcher.DispatcherState.Manual);
         Assert.assertEquals("Train \"MyActiveTrainFile.xml\" is not Manual mode", expressionDispatcher.getLongDescription());
     }
 
@@ -301,7 +298,7 @@ public class ExpressionDispatcherTest extends AbstractDigitalExpressionTestBase 
         conditionalNG.getChild(0).connect(socketIfThenElse);
 
         expressionDispatcher = new ExpressionDispatcher("IQDE321", null);
-        expressionDispatcher.setBeanState(ExpressionDispatcher.DispatcherState.Automatic);
+        expressionDispatcher.getSelectEnum().setEnum(ExpressionDispatcher.DispatcherState.Automatic);
         MaleSocket maleSocket2 =
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionDispatcher);
         ifThenElse.getChild(0).connect(maleSocket2);

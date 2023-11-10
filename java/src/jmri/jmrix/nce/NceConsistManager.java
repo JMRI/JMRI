@@ -70,6 +70,7 @@ public class NceConsistManager extends AbstractConsistManager {
         log.debug("Add consist, address {}", locoAddress);
         NceConsist consist = new NceConsist((DccLocoAddress) locoAddress, memo);
         consistTable.put(locoAddress, consist);
+        notifyConsistListChanged();
         return consist;
     }
 
@@ -77,6 +78,7 @@ public class NceConsistManager extends AbstractConsistManager {
         log.debug("Add consist {}", consist.getConsistAddress());
         //delConsist(consist.getConsistAddress()); // remove consist if one exists
         consistTable.put(consist.getConsistAddress(), consist);
+        notifyConsistListChanged();
     }
 
     @Override

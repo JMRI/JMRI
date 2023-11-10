@@ -1,13 +1,9 @@
 package jmri.jmrix.pi;
 
 import java.awt.GraphicsEnvironment;
-import java.awt.event.ActionEvent;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.util.Date;
-import javax.swing.JOptionPane;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Handle configuring a Raspberry Pi layout connection.
@@ -102,10 +98,10 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
             // don't show more than once every 30 seconds
             if (!GraphicsEnvironment.isHeadless()
                     && (this.GPIOMessageShown == null || ((new Date().getTime() - this.GPIOMessageShown.getTime()) / 1000 % 60) > 30)) {
-                JOptionPane.showMessageDialog(this._details,
+                JmriJOptionPane.showMessageDialog(this._details,
                         Bundle.getMessage("NoGpioControllerMessage"),
                         Bundle.getMessage("NoGpioControllerTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 this.GPIOMessageShown = new Date();
             }
         }
@@ -153,6 +149,6 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
         this.disabled = disable;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RaspberryPiConnectionConfig.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RaspberryPiConnectionConfig.class);
 
 }

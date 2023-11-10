@@ -7,9 +7,6 @@ import jmri.jmrix.can.TrafficController;
 import jmri.LocoAddress;
 import jmri.SignalMast;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * CBUS implementation of a Cab Signal Object, describing the state of the 
  * track ahead relative to a locomotive with a given address.  This is 
@@ -49,7 +46,7 @@ public class CbusCabSignal extends DefaultCabSignal {
     protected void forwardAspectToLayout(){
         LocoAddress locoaddr = getCabSignalAddress();
         SignalMast mast = getNextMast();
-        
+
         int locoAddr = locoaddr.getNumber();
         if (locoaddr.getProtocol() == (LocoAddress.Protocol.DCC_LONG)) {
             locoAddr = locoAddr | 0xC000;
@@ -63,50 +60,51 @@ public class CbusCabSignal extends DefaultCabSignal {
         int sendSpeed = 0xff; // default case, unknown.
 
         if ( mast != null ) {
-            
             // String speed = (String) mast.getSignalSystem().getProperty(mast.getAspect(), "speed");
-           
-            switch( mast.getAspect() ) {
-                case "Danger": // NOI18N
-                case "On": // NOI18N
-                    sendAspect1 = 0;
-                    break;
-                case "Caution": // NOI18N
-                    sendAspect1 = 1;
-                    break;
-                case "Preliminary Caution": // NOI18N
-                    sendAspect1 = 2;
-                    break;
-                case "Proceed": // NOI18N
-                    sendAspect1 = 3;
-                    break;
-                case "Off": // NOI18N
-                    sendAspect1 = 4;
-                    break;
-                case "Flash Caution": // NOI18N
-                    sendAspect1 = 1;
-                    sendAspect2 = 1;
-                    break;
-                case "Flash Preliminary Caution": // NOI18N
-                    sendAspect1 = 2;
-                    sendAspect2 = 1;
-                    break;
-                default: {
-                    // if no matching speed in the list above, check for
-                    // the constant values in the SignalAppearanceMap.
-                    if(mast.getAspect().equals(mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE))){
-                    sendAspect1 = 0x04;
-                    } else if(mast.getAspect().equals(mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER))){
-                    sendAspect1 = 0x00;
-                    } else if(mast.getAspect().equals(mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD))){
-                    sendAspect1 = 0x00;
-                    } else if(mast.getAspect().equals(mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK))){
-                    sendAspect1 = 0x00; // show nothing;
+            String aspect = mast.getAspect();
+            if ( aspect != null ) {
+                switch( aspect ) { // in a future java, add null to switch case
+                    case "Danger": // NOI18N
+                    case "On": // NOI18N
+                        sendAspect1 = 0;
+                        break;
+                    case "Caution": // NOI18N
+                        sendAspect1 = 1;
+                        break;
+                    case "Preliminary Caution": // NOI18N
+                        sendAspect1 = 2;
+                        break;
+                    case "Proceed": // NOI18N
+                        sendAspect1 = 3;
+                        break;
+                    case "Off": // NOI18N
+                        sendAspect1 = 4;
+                        break;
+                    case "Flash Caution": // NOI18N
+                        sendAspect1 = 1;
+                        sendAspect2 = 1;
+                        break;
+                    case "Flash Preliminary Caution": // NOI18N
+                        sendAspect1 = 2;
+                        sendAspect2 = 1;
+                        break;
+                    default: {
+                        // if no matching speed in the list above, check for
+                        // the constant values in the SignalAppearanceMap.
+                        if(aspect.equals(mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE))){
+                            sendAspect1 = 0x04;
+                        } else if(aspect.equals(mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER))){
+                            sendAspect1 = 0x00;
+                        } else if(aspect.equals(mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD))){
+                            sendAspect1 = 0x00;
+                        } else if(aspect.equals(mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK))){
+                            sendAspect1 = 0x00; // show nothing;
+                        }
                     }
                 }
             }
         }
-        
+
         CanMessage m = new CanMessage(7,tc.getCanid());
         CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
         m.setElement(0, CbusConstants.CBUS_CABDAT);
@@ -117,7 +115,6 @@ public class CbusCabSignal extends DefaultCabSignal {
         m.setElement(5, ( sendAspect2 )); // aspect 2
         m.setElement(6, ( sendSpeed ) ); // speed
         tc.sendCanMessage(m, null);
-        
     }
 
     /**
@@ -145,9 +142,8 @@ public class CbusCabSignal extends DefaultCabSignal {
         m.setElement(5, ( 0 )); // aspect 2
         m.setElement(6, ( 0xff )); // speed
         tc.sendCanMessage(m, null);
-        
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusCabSignal.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusCabSignal.class);
 
 }

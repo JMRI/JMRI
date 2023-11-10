@@ -5,13 +5,11 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
 import jmri.util.swing.JmriPanel;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.WindowInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Make sure an XML file is readable, and validates OK against its schema and DTD.
@@ -78,7 +76,7 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
     }
 
     protected void showOkResults(Component who, String text) {
-        JOptionPane.showMessageDialog(who, text);
+        JmriJOptionPane.showMessageDialog(who, text);
     }
 
     protected void showFailResults(Component who, String fileName, String text) {
@@ -88,8 +86,8 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
         jta.setWrapStyleWord(true);
         jta.setEditable(false);
         jta.setText(text);
-        JOptionPane.showMessageDialog(who, jta, 
-            Bundle.getMessage("ValidationErrorInFile", fileName), JOptionPane.ERROR_MESSAGE);
+        JmriJOptionPane.showMessageDialog(who, jta, 
+            Bundle.getMessage("ValidationErrorInFile", fileName), JmriJOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -110,7 +108,6 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
         throw new IllegalArgumentException("Should not be invoked");
     }
 
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(XmlFileValidateAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(XmlFileValidateAction.class);
 
 }

@@ -1,6 +1,7 @@
 package jmri;
 
 import java.util.Vector;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 /**
@@ -54,7 +55,7 @@ public interface SignalMast extends Signal {
      * @param aspect the new aspect shown
      * @throws IllegalArgumentException if not a valid aspect name
      */
-    public void setAspect(@Nonnull String aspect);
+    void setAspect(@Nonnull String aspect);
 
     /**
      * Get current aspect name. Changes to this property can be listened to
@@ -62,7 +63,8 @@ public interface SignalMast extends Signal {
      *
      * @return the current aspect or null if not set
      */
-    public String getAspect();
+    @CheckForNull
+    String getAspect();
 
     /**
      * Get an alphabetically sorted list of valid aspects that have not been disabled.
@@ -70,11 +72,11 @@ public interface SignalMast extends Signal {
      * @return sorted list of valid aspects; may be empty
      */
     @Nonnull
-    public Vector<String> getValidAspects();
+    Vector<String> getValidAspects();
 
-    public SignalSystem getSignalSystem();
+    SignalSystem getSignalSystem();
 
-    public SignalAppearanceMap getAppearanceMap();
+    SignalAppearanceMap getAppearanceMap();
 
     /**
      * Set the specific mast type for this mast.
@@ -85,7 +87,7 @@ public interface SignalMast extends Signal {
      * definition.
      * @param type mast type.
      */
-    public void setMastType(@Nonnull String type);
+    void setMastType(@Nonnull String type);
 
     /**
      * Get the specific mast type for this mast.
@@ -96,7 +98,7 @@ public interface SignalMast extends Signal {
      * definition.
      * @return mast type.
      */
-    public String getMastType();
+    String getMastType();
 
     /**
      * Get if signal mast is lit or dark. Changes to this property can be
@@ -104,9 +106,11 @@ public interface SignalMast extends Signal {
      *
      * @return true if lit; false if dark
      */
-    public boolean getLit();
+    @Override
+    boolean getLit();
 
-    public void setLit(boolean newLit);
+    @Override
+    void setLit(boolean newLit);
 
     /**
      * Get the held state of the signal mast. It controls what mechanisms can
@@ -116,9 +120,11 @@ public interface SignalMast extends Signal {
      *
      * @return true if held; false otherwise
      */
-    public boolean getHeld();
+    @Override
+    boolean getHeld();
 
-    public void setHeld(boolean newHeld);
+    @Override
+    void setHeld(boolean newHeld);
 
     /**
      * Determine if the permissive SML logic should be disabled.  The default will be
@@ -126,11 +132,11 @@ public interface SignalMast extends Signal {
      * CTC designs frequently require an additional action, such as Call-On, to enable permissive aspects.
      * @return true if permissive SML is disabled.
      */
-    public boolean isPermissiveSmlDisabled();
+    boolean isPermissiveSmlDisabled();
 
-    public void setPermissiveSmlDisabled(boolean disabled);
+    void setPermissiveSmlDisabled(boolean disabled);
 
-    public boolean isAspectDisabled(String aspect);
+    boolean isAspectDisabled(String aspect);
 
     /**
      * Sets whether the Signal Mast is allowed or configured to show an unlit
@@ -139,7 +145,7 @@ public interface SignalMast extends Signal {
      * @param boo Set true to allow the UnLit to be used, set false it is not
      *            supported or allowed.
      */
-    public void setAllowUnLit(boolean boo);
+    void setAllowUnLit(boolean boo);
 
-    public boolean allowUnLit();
+    boolean allowUnLit();
 }

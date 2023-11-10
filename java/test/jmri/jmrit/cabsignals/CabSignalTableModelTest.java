@@ -70,11 +70,13 @@ public class CabSignalTableModelTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
 
     }
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
     

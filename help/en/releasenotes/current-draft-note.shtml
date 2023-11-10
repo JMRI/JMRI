@@ -9,12 +9,17 @@
                 <li></li>
             </ul>
 
-	    <h4>Anyma DMX512</h4>
+        <h4>Anyma DMX512</h4>
             <ul>
                 <li></li>
             </ul>
 
-	    <h4>Bachrus Speedo</h4>
+        <h4>Bachrus Speedo</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4><a href="http://bidib.org/index_e.html">BiDiB</a></h4>
             <ul>
                 <li></li>
             </ul>
@@ -74,6 +79,11 @@
                 <li></li>
             </ul>
 
+        <h4>Lenz XPressNet</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>LocoNet</h4>
             <ul>
                 <li></li>
@@ -115,6 +125,11 @@
             </ul>
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Powerline</h4>
             <ul>
                 <li></li>
             </ul>
@@ -314,7 +329,7 @@
                 <li></li>
             </ul>
 
-	    <h4>Team Digital</h4>
+        <h4>Team Digital</h4>
             <ul>
                 <li></li>
             </ul>
@@ -374,7 +389,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Fix allocating over occupied blocks in IntermediateSections</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -392,7 +407,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+            <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -421,8 +436,7 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Fixed a problem when a location has multiple spurs and the spur's schedule forwards the car to another spur
-            at the same location with a schedule.  The car's load can incorrectly change to the default "E" or "L" load.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -474,8 +488,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Cliff Anderson contributed a new TurnoutsMasterSlave.py script.
-            </li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -498,22 +511,22 @@
                 <li></li>
             </ul>
 
-    	<h4>Signal Groups</h4>
+        <h4>Signal Groups</h4>
             <ul>
                 <li></li>
             </ul>
 
-	    <h4>Cab Signals</h4>
+        <h4>Cab Signals</h4>
             <ul>
                 <li></li>
             </ul>
 
-    	<h4>Simple Signal Logic</h4>
+        <h4>Simple Signal Logic</h4>
             <ul>
                 <li></li>
             </ul>
 
-	    <h4>USS CTC Logic</h4>
+        <h4>USS CTC Logic</h4>
             <ul>
                 <li></li>
             </ul>
@@ -587,6 +600,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Added page breaks when printing panel XML files via browser (using XSLT)</li>
+            <li></li>
         </ul>
 

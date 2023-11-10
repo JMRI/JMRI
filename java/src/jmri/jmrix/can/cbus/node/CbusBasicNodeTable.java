@@ -1,12 +1,22 @@
 package jmri.jmrix.can.cbus.node;
 
+import java.io.File;
 import java.util.ArrayList;
-import javax.annotation.Nonnull;
-import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.util.ThreadingUtil;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.annotation.Nonnull;
+import javax.swing.*;
+
+import jmri.GlobalProgrammerManager;
+import jmri.InstanceManager;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.symbolicprog.tabbedframe.PaneServiceProgFrame;
+import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.cbus.*;
+import jmri.util.ThreadingUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Table data model for display of CBUS Nodes
@@ -18,27 +28,34 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
 
     protected ArrayList<CbusNode> _mainArray;
     protected final CanSystemConnectionMemo _memo;
+    protected CbusDccProgrammerManager progMan;
     
     // column order needs to match list in column tooltips
     static public final int NODE_NUMBER_COLUMN = 0; 
     static public final int NODE_TYPE_NAME_COLUMN = 1; 
     static public final int NODE_USER_NAME_COLUMN = 2;
     static public final int NODE_RESYNC_BUTTON_COLUMN = 3;
-    static public final int COMMAND_STAT_NUMBER_COLUMN = 4;
-    static public final int CANID_COLUMN = 5;
-    static public final int NODE_EVENTS_COLUMN = 6;
-    static public final int BYTES_REMAINING_COLUMN = 7;
-    static public final int NODE_TOTAL_BYTES_COLUMN = 8;
-    static public final int NODE_IN_LEARN_MODE_COLUMN = 9;
-    static public final int NODE_EVENT_INDEX_VALID_COLUMN = 10;
-    static public final int SESSION_BACKUP_STATUS_COLUMN = 11;
-    static public final int NUMBER_BACKUPS_COLUMN = 12;
-    static public final int LAST_BACKUP_COLUMN = 13;
-    static public final int MAX_COLUMN = 14;
+    static public final int NODE_EDIT_BUTTON_COLUMN = 4;
+    static public final int COMMAND_STAT_NUMBER_COLUMN = 5;
+    static public final int CANID_COLUMN = 6;
+    static public final int NODE_EVENTS_COLUMN = 7;
+    static public final int BYTES_REMAINING_COLUMN = 8;
+    static public final int NODE_TOTAL_BYTES_COLUMN = 9;
+    static public final int NODE_IN_LEARN_MODE_COLUMN = 10;
+    static public final int NODE_EVENT_INDEX_VALID_COLUMN = 11;
+    static public final int SESSION_BACKUP_STATUS_COLUMN = 12;
+    static public final int NUMBER_BACKUPS_COLUMN = 13;
+    static public final int LAST_BACKUP_COLUMN = 14;
+    static public final int MAX_COLUMN = 15;
 
     public CbusBasicNodeTable(@Nonnull CanSystemConnectionMemo memo, int row, int column) {
         _mainArray = new ArrayList<>();
         _memo = memo;
+        try {
+            progMan = memo.get(CbusConfigurationManager.class).get(GlobalProgrammerManager.class);
+        } catch (NullPointerException e) {
+            log.info("No Global Programmer available for NV programming");
+        }
     }
     
     /**
@@ -77,6 +94,8 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
                 return Bundle.getMessage("UserName");
             case NODE_RESYNC_BUTTON_COLUMN:
                 return Bundle.getMessage("ReSynchronizeButton");
+            case NODE_EDIT_BUTTON_COLUMN:
+                return Bundle.getMessage("EditButton");
             case NODE_TYPE_NAME_COLUMN:
                 return Bundle.getMessage("ColumnType");
             case COMMAND_STAT_NUMBER_COLUMN:
@@ -119,7 +138,8 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
      */
     @Override
     public boolean isCellEditable(int row, int col) {
-        return (col == NODE_USER_NAME_COLUMN || col == NODE_RESYNC_BUTTON_COLUMN);
+        return (col == NODE_USER_NAME_COLUMN || col == NODE_RESYNC_BUTTON_COLUMN
+                || col == NODE_EDIT_BUTTON_COLUMN);
     }
 
     /**
@@ -148,6 +168,8 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
                 return _mainArray.get(row).getNodeInLearnMode();
             case NODE_RESYNC_BUTTON_COLUMN:
                 return ("Re-Sync");
+            case NODE_EDIT_BUTTON_COLUMN:
+                return ("Edit");
             case NODE_EVENT_INDEX_VALID_COLUMN:
                 return _mainArray.get(row).getNodeEventManager().isEventIndexValid();
             case SESSION_BACKUP_STATUS_COLUMN:
@@ -180,6 +202,40 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
                     ((CbusNodeTableDataModel)this).startBackgroundFetch();
                 }
                 break;
+            case NODE_EDIT_BUTTON_COLUMN:
+                // Try to load a local xml file
+                String title = _mainArray.get(row).getName() + " (CBUS)";
+                DecoderFile decoderFile = InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(title);
+                String userName = _mainArray.get(row).getUserName();
+                String nodeNumber = "CBUS_Node_" + Integer.toString(_mainArray.get(row).getNodeNumber());
+                if (!userName.equals("")) {
+                    nodeNumber = nodeNumber.concat("_" + userName);
+                }
+                if ((decoderFile != null) && (progMan != null)) {
+                    log.debug("decoder file: {}", decoderFile.getFileName()); // NOI18N
+                    // Look for an existing roster entry
+                    RosterEntry re = Roster.getDefault().getEntryForId(nodeNumber);
+                    if (re == null) {
+                        // Or create one
+                        re = new RosterEntry(new RosterEntry(), nodeNumber);
+                        re.setDecoderFamily("CBUS");
+                        re.setMfg(decoderFile.getMfg());
+                        re.setDecoderModel(decoderFile.getModel());
+                        re.setRoadNumber(Integer.toString(_mainArray.get(row).getNodeNumber()));
+                        re.setRoadName(userName);
+                    }
+                    String progTitle = "CBUS NV Programmer";
+                    String progFile = "programmers" + File.separator + "Cbus" + ".xml";
+                    JFrame p = new PaneServiceProgFrame(decoderFile, re, progTitle, progFile, progMan.getGlobalProgrammer());
+                    p.pack();
+                    p.setVisible(true);
+                } else {
+                    log.info("No xml, or no programmer found for node {}", title);
+                    JmriJOptionPane.showMessageDialog(null,
+                        "<html><h3>No programmer or no decoder file</h3><p>Use Node Variables tab</p></html>",
+                        "No xml, or no programmer for " + title, JmriJOptionPane.INFORMATION_MESSAGE);
+                }
+                break;
             default:
                 log.debug("invalid column");
                 break;
@@ -195,6 +251,7 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
         null,
         null,
         null,
+        "Edit Node Variables",
         null,
         null,
         null,
@@ -207,6 +264,7 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
         null
 
     }; // Length = number of items in array should (at least) match number of columns
-    
-    private final static Logger log = LoggerFactory.getLogger(CbusBasicNodeTable.class);
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusBasicNodeTable.class);
+
 }

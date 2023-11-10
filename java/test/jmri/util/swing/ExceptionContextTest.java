@@ -2,7 +2,6 @@ package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,22 +14,22 @@ public class ExceptionContextTest {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",ec);
+        Assertions.assertNotNull(ec, "exists");
     }
 
     @Test
     public void testGetTitle() {
-        Assert.assertEquals("Title",Exception.class.getSimpleName(),ec.getTitle());
+        Assertions.assertEquals("Test",ec.getTitle(), "Title");
     }
 
     @Test
     public void testGetOperation() {
-        Assert.assertEquals("Operation","Test Op",ec.getOperation());
+        Assertions.assertEquals("Test Op",ec.getOperation(),"Operation");
     }
 
     @Test
     public void testGetHint() {
-        Assert.assertEquals("Hint","Test Hint",ec.getHint());
+        Assertions.assertEquals("Test Hint",ec.getHint(),"Hint");
     }
 
     @BeforeEach

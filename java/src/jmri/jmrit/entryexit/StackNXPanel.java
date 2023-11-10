@@ -4,13 +4,15 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Hashtable;
+
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
+import jmri.util.swing.JmriJOptionPane;
 
 public class StackNXPanel extends JPanel {
 
@@ -45,9 +47,9 @@ public class StackNXPanel extends JPanel {
                     // basic check to see if anything was selected
                 manager.cancelStackedRoute(listToDest.get(list.getSelectedValue()), false);
                 } else {
-                    JOptionPane.showMessageDialog(entryExitPanel,
-                            Bundle.getMessage("Error1", Bundle.getMessage("ButtonCancel")),  // NOI18N
-                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);  // NOI18N
+                    JmriJOptionPane.showMessageDialog(entryExitPanel,
+                            Bundle.getMessage("Error1", Bundle.getMessage("ButtonCancel")),
+                            Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                     // Keep Panel open
                 }
             }

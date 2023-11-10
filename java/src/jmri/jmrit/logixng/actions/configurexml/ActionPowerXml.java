@@ -4,7 +4,6 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.actions.ActionPower;
-import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
 
 import org.jdom2.Element;

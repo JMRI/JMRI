@@ -13,7 +13,6 @@ import jmri.MemoryManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
-import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -167,7 +166,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
 
         actionMemory.getSelectNamedBean().setNamedBean("A non existent memory");
         Assert.assertNull("memory handle is null", actionMemory.getSelectNamedBean().getNamedBean());
-        JUnitAppender.assertWarnMessage("Memory \"A non existent memory\" is not found");
+        JUnitAppender.assertErrorMessage("Memory \"A non existent memory\" is not found");
 
         actionMemory.getSelectNamedBean().setNamedBean(memory13.getSystemName());
         Assert.assertTrue("memory is correct", memory13 == actionMemory.getSelectNamedBean().getNamedBean().getBean());
@@ -339,6 +338,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

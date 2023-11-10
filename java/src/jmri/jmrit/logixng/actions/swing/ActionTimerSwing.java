@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.actions.swing;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
@@ -26,6 +27,10 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
     private JCheckBox _runContinuously;
     private JCheckBox _startAndStopByStartExpression;
     private JComboBox<TimerUnit> _unitComboBox;
+
+    private JCheckBox _delayByLocalVariables;
+    private JTextField _delayLocalVariablePrefix;
+
     private JTextField _numTimers;
     private JButton _addTimer;
     private JButton _removeTimer;
@@ -57,6 +62,11 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
 
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        JPanel optionsPanel = new JPanel();
+
+        JPanel leftOptionsPanel = new JPanel();
+        leftOptionsPanel.setLayout(new BoxLayout(leftOptionsPanel, BoxLayout.Y_AXIS));
         _startImmediately = new JCheckBox(Bundle.getMessage("ActionTimerSwing_StartImmediately"));
         _runContinuously = new JCheckBox(Bundle.getMessage("ActionTimerSwing_RunContinuously"));
         _startAndStopByStartExpression = new JCheckBox(Bundle.getMessage(
@@ -67,13 +77,35 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         JComboBoxUtil.setupComboBoxMaxRows(_unitComboBox);
         _unitComboBox.setSelectedItem(action.getUnit());
 
-        panel.add(_startImmediately);
-        panel.add(_runContinuously);
-        panel.add(_startAndStopByStartExpression);
+        leftOptionsPanel.add(_startImmediately);
+        leftOptionsPanel.add(_runContinuously);
+        leftOptionsPanel.add(_startAndStopByStartExpression);
 
         JPanel unitPanel = new JPanel();
+        unitPanel.add(new JLabel(Bundle.getMessage("ActionTimerSwing_Unit")));
         unitPanel.add(_unitComboBox);
-        panel.add(unitPanel);
+        leftOptionsPanel.add(unitPanel);
+
+        leftOptionsPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.GRAY));
+
+
+        JPanel rightOptionsPanel = new JPanel();
+        rightOptionsPanel.setLayout(new BoxLayout(rightOptionsPanel, BoxLayout.Y_AXIS));
+        _delayByLocalVariables = new JCheckBox(Bundle.getMessage("ActionTimerSwing_DelayByLocalVariables"));
+        _delayByLocalVariables.setSelected(action.isDelayByLocalVariables());
+        _delayByLocalVariables.addActionListener((evt)->{updateEnableDisabled();});
+
+        _delayLocalVariablePrefix = new JTextField(20);
+        _delayLocalVariablePrefix.setText(action.getDelayLocalVariablePrefix());
+
+        rightOptionsPanel.add(_delayByLocalVariables);
+        rightOptionsPanel.add(new JLabel(Bundle.getMessage("ActionTimerSwing_DelayLocalVariablePrefix")));
+        rightOptionsPanel.add(_delayLocalVariablePrefix);
+
+
+        optionsPanel.add(leftOptionsPanel);
+        optionsPanel.add(rightOptionsPanel);
+
 
         JPanel numActionsPanel = new JPanel();
         _numTimers = new JTextField(Integer.toString(numActions));
@@ -115,7 +147,6 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         numActionsPanel.add(_numTimers);
         numActionsPanel.add(_addTimer);
         numActionsPanel.add(_removeTimer);
-        panel.add(numActionsPanel);
 
         JPanel timerDelaysPanel = new JPanel();
         timerDelaysPanel.setLayout(new BoxLayout(timerDelaysPanel, BoxLayout.Y_AXIS));
@@ -144,12 +175,24 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
             }
         }
         timerDelaysPanel.add(timerDelaysSubPanel);
+
+        panel.add(optionsPanel);
+        panel.add(numActionsPanel);
         panel.add(timerDelaysPanel);
 
         _startImmediately.setSelected(action.isStartImmediately());
         _runContinuously.setSelected(action.isRunContinuously());
         _startAndStopByStartExpression.setSelected(action.isStartAndStopByStartExpression());
         _numTimers.setText(Integer.toString(action.getNumActions()));
+
+        updateEnableDisabled();
+    }
+
+    private void updateEnableDisabled() {
+        _delayLocalVariablePrefix.setEnabled(_delayByLocalVariables.isSelected());
+        for (int i=0; i < MAX_NUM_TIMERS; i++) {
+            _timerDelays[i].setEnabled(!_delayByLocalVariables.isSelected());
+        }
     }
 
     /** {@inheritDoc} */
@@ -188,6 +231,8 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         action.setRunContinuously(_runContinuously.isSelected());
         action.setStartAndStopByStartExpression(_startAndStopByStartExpression.isSelected());
         action.setUnit(_unitComboBox.getItemAt(_unitComboBox.getSelectedIndex()));
+        action.setDelayByLocalVariables(_delayByLocalVariables.isSelected());
+        action.setDelayLocalVariablePrefix(_delayLocalVariablePrefix.getText());
         action.setNumActions(numActions);
 
         for (int i=0; i < numActions; i++) {

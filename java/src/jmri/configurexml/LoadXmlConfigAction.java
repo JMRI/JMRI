@@ -1,12 +1,9 @@
 package jmri.configurexml;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -78,7 +75,8 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
                         jmri.jmrit.logixng.LogixNG_Manager logixNG_Manager =
                                 InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
                         logixNG_Manager.setupAllLogixNGs();
-                        if (InstanceManager.getDefault(LogixNGPreferences.class).getStartLogixNGOnStartup()) {
+                        if (InstanceManager.getDefault(LogixNGPreferences.class).getStartLogixNGOnStartup()
+                                && InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class).isStartLogixNGsOnLoad()) {
                             logixNG_Manager.activateAllLogixNGs();
                         }
                     }

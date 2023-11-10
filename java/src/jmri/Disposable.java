@@ -23,5 +23,5 @@ public interface Disposable {
      * application from ensuring that calling this method multiple times has no
      * unwanted side effects.
      */
-    public void dispose();
+    void dispose();
 }

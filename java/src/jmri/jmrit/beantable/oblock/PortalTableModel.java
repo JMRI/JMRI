@@ -6,12 +6,9 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import jmri.InstanceManager;
-import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.logix.*;
 import jmri.util.gui.GuiLafPreferencesManager;
-import jmri.util.swing.JmriMouseListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * GUI to define OBlock Portals.
@@ -183,8 +180,8 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
                 }
             }
             if (msg != null) {
-                JOptionPane.showMessageDialog(null, msg,
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                JmriJOptionPane.showMessageDialog(null, msg,
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
             }
             return;
         }
@@ -253,8 +250,8 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
                 break;
         }
         if (msg != null) {
-            JOptionPane.showMessageDialog(null, msg,
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            JmriJOptionPane.showMessageDialog(null, msg,
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -338,6 +335,6 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
         return (_parent.verifyWarning(message));
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PortalTableModel.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PortalTableModel.class);
 
 }

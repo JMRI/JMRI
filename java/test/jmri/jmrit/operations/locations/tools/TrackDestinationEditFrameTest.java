@@ -8,9 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
@@ -32,8 +30,11 @@ public class TrackDestinationEditFrameTest extends OperationsTestCase {
         
         Track track = loc.getTrackByName("NI Yard", null);
         
+        YardEditFrame yef = new YardEditFrame();
+        yef.initComponents(track);
+        
         TrackDestinationEditFrame t = new TrackDestinationEditFrame();
-        t.initComponents(track);
+        t.initComponents(yef);
         
         Assert.assertNotNull("exists",t);
         
@@ -52,8 +53,11 @@ public class TrackDestinationEditFrameTest extends OperationsTestCase {
         
         Track track = loc.addTrack("NI Interchange", Track.INTERCHANGE);
         
+        YardEditFrame yef = new YardEditFrame();
+        yef.initComponents(track);
+        
         TrackDestinationEditFrame tdef = new TrackDestinationEditFrame();
-        tdef.initComponents(track);
+        tdef.initComponents(yef);
         JemmyUtil.waitFor(tdef);
         
         JemmyUtil.enterClickAndLeaveThreadSafe(tdef.checkDestinationsButton);       
@@ -65,12 +69,23 @@ public class TrackDestinationEditFrameTest extends OperationsTestCase {
         Assert.assertFalse("Only cars with destinations", track.isOnlyCarsWithFinalDestinationEnabled());
         
         JemmyUtil.enterClickAndLeave(tdef.onlyCarsWithFD);
-        JemmyUtil.enterClickAndLeave(tdef.saveTrackButton); 
+        JemmyUtil.enterClickAndLeave(tdef.saveButton); 
         
         Assert.assertTrue("Only cars with destinations", track.isOnlyCarsWithFinalDestinationEnabled());
         
         JUnitUtil.dispose(tdef);
-
+    }
+    
+    @Test
+    public void testCloseWindowOnSave() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Location loc = JUnitOperationsUtil.createOneNormalLocation("Test Location");
+        Track track = loc.addTrack("Interchange", Track.INTERCHANGE);
+        YardEditFrame yef = new YardEditFrame();
+        yef.initComponents(track);
+        TrackDestinationEditFrame f = new TrackDestinationEditFrame();
+        f.initComponents(yef);
+        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrackDestinationEditFrameTest.class);

@@ -18,6 +18,6 @@ package jmri;
  */
 public interface IdTagListener {
 
-    public void notify(IdTag r);
+    void notify(IdTag r);
 
 }

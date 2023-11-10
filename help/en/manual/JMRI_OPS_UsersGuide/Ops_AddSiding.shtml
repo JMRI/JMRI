@@ -49,8 +49,7 @@
       <p>To add a Track as a Spur, in the <a href="Ops_AddLocations.shtml"><strong>Add/Edit
       Locations</strong></a> window select <strong>Tracks at this location</strong> <input name=
       "radio" id="radio" value="radio" checked="checked" type="radio"> <strong>Spurs</strong>, then
-      press <input name="button" id="button" value="Add Spur Track" type="submit"> at the bottom of
-      the window.<br>
+      press <span class="textbutton">Add Spur Track</span> at the bottom of the window.<br>
       This opens the <strong>Add Spur Track</strong> window. Note most of the pane is greyed out
       until the new Spur Track is added to the database.</p>
 
@@ -84,11 +83,11 @@
       move them to the town's Spur Tracks.</p>
 
       <p>Next <strong>Select the rolling stock serviced by this spur</strong> to control the
-      rolling stock a Spur can service. Note the handy <input name="button2" id="button2" value=
-      "Clear All" type="submit"> and <input name="button3" id="button3" value="Select All" type=
-      "submit"> buttons. Push <input name="button7" id="button7" value="Clear All" type="submit">
-      to deselect all Car types, or <input name="button8" id="button8" value="Select All" type=
-      "submit"> to select all types, then select or deselect rolling stock types you wish the Spur
+      rolling stock a Spur can service. Note the handy <span class="textbutton">Clear All</span> and 
+      <span class="textbutton">Select All</span> buttons.
+      Push <span class="textbutton">Clear All</span>
+      to deselect all Car types, or <span class="textbutton">Select All</span>
+      to select all types, then select or deselect rolling stock types you wish the Spur
       to accept.</p>
 
       <table>
@@ -107,7 +106,7 @@
               "text"> and the program will convert to the scale feet that you select during
               setup.</p>
 
-              <p>Press <input name="button10" id="button10" value="Add Spur Track" type="button">
+              <p>Press <span class="textbutton">Add Spur Track</span> ,
               the siding track is added and the greyed out features are activated.</p>
             </td>
           </tr>
@@ -124,10 +123,9 @@
       </h4>
 
       <p>Only the items selected in the Location of this Spur will be displayed. The program uses
-      those that are checked. <input name="button18" id="button18" value="Clear all" type="button">
-      unchecks all rolling stock. Now you may select any you require or press the <input name=
-      "button19" id="button19" value="Select all" type="button"> to check all rolling stock
-      types.</p>
+      those that are checked. The <span class="textbutton">Clear all</span> button
+      unchecks all rolling stock. Now you may select any you require or press the
+      <span class="textbutton">Select all</span> button to check all rolling stock types.</p>
 
       <p>We are setting up a spur for an Oil Co. so we will clear all and then select Tank for oil,
       kerosene and gas.</p>
@@ -143,10 +141,10 @@
         <p><input name="radio4" id="radio4" value="radio4" type="radio"> <strong>Accept
         only<br></strong> Allows you to list the railroads whose rolling stock you will accept.<br>
         <img src="images/Ops_Select_roads.png" alt="roads" height="171" width="759"> Select Road
-        you want to add from drop-down List the press <input name="button20" id="button20" value=
-        "Add Road" type="button"> repeat for each Road you would like to service this Spur. To
-        remove Road form the Spure select from the drop-down list then press <input name="button21"
-        id="button21" value="Delete Road" type="button"><br></p>
+        you want to add from drop-down List the press <span class="textbutton">Add Road</span>
+        repeat for each Road you would like to service this Spur. To
+        remove Road form the Spur select from the drop-down list then press
+        <span class="textbutton">Delete Road</span> .<br></p>
 
         <p><input name="radio5" id="radio5" value="radio5" type="radio">
         <strong>Exclude</strong><br>
@@ -166,11 +164,10 @@
         only<br></strong> Allows you to list the loads that this location will accept.<br>
         <img src="images/Ops_Select_loads.png" alt="loads" height="165" width="756"> Select type of
         load from first drop-down list (Based on the type of rolling stock accepted). From second
-        drop-down list select either Empty or Load, the press <input name="button22" id="button22"
-        value="Add Load" type="button"> to list of acceptable loads. Repeat as necessary. Select a
-        load then press <input name="button23" id="button23" value="Delete Load" type="button"> to
-        remove that load. You may remove all loads by pressing the <input name="button24" id=
-        "button24" value="Delete All" type="button"><br></p>
+        drop-down list select either Empty or Load, then press <span class="textbutton">Add Load</span>
+        to list of acceptable loads. Repeat as necessary.
+        Select a load then press <span class="textbutton">Delete Load</span> to remove that load.
+        You may remove all loads by pressing the <span class="textbutton">Delete All</span> button.<br></p>
 
         <p><input name="radio5" id="radio8" value="radio5" type="radio">
         <strong>Exclude</strong><br>
@@ -194,10 +191,9 @@
 
         <p><img src="images/Ops_Select_setOuts_train.png" alt="trains" height="113" width=
         "759"><br>
-        Select Train form the drop-down List then press <input name="button25" id="button25" value=
-        "Add" type="button"> to add Trains that may set out Cars at this Location. To remove a
-        Train from the list press <input name="button26" id="button26" value="Delete" type=
-        "button"></p>
+        Select Train from the drop-down List then press <span class="textbutton">Add</span>
+        to add Trains that may set out Cars at this Location. To remove a
+        Train from the list press <span class="textbutton">Delete</span> .</p>
 
         <p><input name="radio11" id="radio11" value="radio11" type="radio">
         <strong>Routes</strong><br>
@@ -235,22 +231,20 @@
 
       <blockquote>
         <p><img src="images/Ops_Select_schedule.png" alt="schedule" height="199" width="756"><br>
-        Optionally, a schedule may be selected from the drop-down list. Press <input name=
-        "button27" id="button27" value="Edit" type="button"> to open Add Schedule for Spur Tank
-        Facility. More detail on the <strong><a href="Ops_schedule.shtml">Schedule</a></strong>
-        page.</p>
+        Optionally, a schedule may be selected from the drop-down list.
+        Press <span class="textbutton">Edit</span> to open Add Schedule for Spur Tank Facility.
+        More detail on the <strong><a href="Ops_schedule.shtml">Schedule</a></strong> page.</p>
       </blockquote>
 
       <h4><strong>Comment</strong>
       </h4>
 
-      <p>You may now press <input name="button11" id="button11" value="Save Spur Track" type=
-      "button"> to add to the location or press <input name="button12" id="button12" value=
-      "Delete Spur Track" type="button"> if you do not want to store the Track.</p>
+      <p>You may now press <span class="textbutton">Save Spur Track</span>
+      to add to the location or press <span class="textbutton">Delete Spur Track</span>
+      if you do not want to store the Track.</p>
 
       <p>If you want to add another Spur Track to this Location, enter new data and press
-      <input name="button13" id="button13" value="Add Spur Track" type="button"> to add the
-      Track.</p>
+      <span class="textbutton">Add Spur Track</span> to add the Track.</p>
 
       <p>Close the window when done with this Spur Track.</p>
 
@@ -262,18 +256,16 @@
 
       <h3 id="editspur">Edit a Spur Track</h3>
 
-      <p>If you want to change information for any Track entry, press <input name="button14" id=
-      "button14" value="Edit" type="submit"> in the Tracks table on the Location pane to open the
-      <strong>Edit Spur Track</strong> window.</p>
+      <p>If you want to change information for any Track entry, press <span class="textbutton">Edit</span>
+      in the Tracks table on the Location pane to open the <strong>Edit Spur Track</strong> window.</p>
 
       <p><img src="images/Ops_EditTrack.png" alt="track" height="615" width="750"><br>
       </p>
 
       <p>Note that it is identical to the <strong>Add Spur Track</strong> pane except for the
-      title. Change any of the entries that you want to edit and then press the <input name=
-      "button15" id="button15" value="Save Spur Track" type="button"> to save the changes. You may
-      also <input name="button16" id="button16" value="Delete Spur Track" type="submit"> from your
-      database.</p>
+      title. Change any of the entries that you want to edit and then press the
+      <span class="textbutton">Save Spur Track</span> to save the changes. You may
+      also <span class="textbutton">Delete Spur Track</span> from your database.</p>
 
       <p>Note we changed the Length of the Spur Track to 200 scale feet.</p>
 

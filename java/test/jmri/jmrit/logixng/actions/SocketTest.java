@@ -3,7 +3,6 @@ package jmri.jmrit.logixng.actions;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket;
-import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -55,6 +54,7 @@ public class SocketTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -23,7 +23,7 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param userName   the user name
      * @return a new LogixNG or null if unable to create
      */
-    public LogixNG createLogixNG(String systemName, String userName)
+    LogixNG createLogixNG(String systemName, String userName)
             throws IllegalArgumentException;
 
     /**
@@ -34,7 +34,7 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param inline     true if this LogixNG is an inline LogixNG
      * @return a new LogixNG or null if unable to create
      */
-    public LogixNG createLogixNG(String systemName, String userName, boolean inline)
+    LogixNG createLogixNG(String systemName, String userName, boolean inline)
             throws IllegalArgumentException;
 
     /**
@@ -44,7 +44,7 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param userName the user name
      * @return a new LogixNG or null if unable to create
      */
-    public LogixNG createLogixNG(String userName)
+    LogixNG createLogixNG(String userName)
             throws IllegalArgumentException;
 
     /**
@@ -55,7 +55,7 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param inline    true if this LogixNG is an inline LogixNG
      * @return a new LogixNG or null if unable to create
      */
-    public LogixNG createLogixNG(String userName, boolean inline)
+    LogixNG createLogixNG(String userName, boolean inline)
             throws IllegalArgumentException;
 
     /**
@@ -65,27 +65,45 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    public LogixNG getLogixNG(String name);
+    LogixNG getLogixNG(String name);
 
     /** {@inheritDoc} */
     @Override
-    public LogixNG getByUserName(String name);
+    LogixNG getByUserName(String name);
 
     /** {@inheritDoc} */
     @Override
-    public LogixNG getBySystemName(String name);
+    LogixNG getBySystemName(String name);
 
     /**
      * Create a new system name for a LogixNG.
      * @return a new system name
      */
-    public String getAutoSystemName();
+    String getAutoSystemName();
+
+    /**
+     * Should the LogixNGs be disabled when the configuration file is loaded?
+     * @param value true if they should be disabled, false otherwise.
+     */
+    void setLoadDisabled(boolean value);
+
+    /**
+     * Should the LogixNGs be started when the configuration file is loaded?
+     * @param value true if they should be started, false otherwise.
+     */
+    void startLogixNGsOnLoad(boolean value);
+
+    /**
+     * Should the LogixNGs not be started when the configuration file is loaded?
+     * @return true if they should be started, false otherwise.
+     */
+    boolean isStartLogixNGsOnLoad();
 
     /**
      * Setup all LogixNGs. This method is called after a configuration file is
      * loaded.
      */
-    public void setupAllLogixNGs();
+    void setupAllLogixNGs();
 
     /**
      * Activate all LogixNGs, starts LogixNG processing by connecting all
@@ -94,7 +112,7 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * A LogixNG must be activated before it will calculate any of its
      * ConditionalNGs.
      */
-    public void activateAllLogixNGs();
+    void activateAllLogixNGs();
 
     /**
      * Activate all LogixNGs, starts LogixNG processing by connecting all
@@ -108,7 +126,7 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param runOnSeparateThread true if the activation should run on a
      *                            separate thread, false otherwise
      */
-    public void activateAllLogixNGs(boolean runDelayed, boolean runOnSeparateThread);
+    void activateAllLogixNGs(boolean runDelayed, boolean runOnSeparateThread);
 
     /**
      * DeActivate all LogixNGs, stops LogixNG processing by disconnecting all
@@ -117,13 +135,13 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * A LogixNG must be activated before it will calculate any of its
      * ConditionalNGs.
      */
-    public void deActivateAllLogixNGs();
+    void deActivateAllLogixNGs();
 
     /**
      * Is LogixNGs active?
      * @return true if LogixNGs are active, false otherwise
      */
-    public boolean isActive();
+    boolean isActive();
 
     /**
      * Delete LogixNG by removing it from the manager. The LogixNG must first
@@ -134,20 +152,13 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
     void deleteLogixNG(LogixNG x);
 
     /**
-     * Support for loading LogixNGs in a disabled state
-     *
-     * @param s true if LogixNG should be disabled when loaded
-     */
-    public void setLoadDisabled(boolean s);
-
-    /**
      * Print the tree to a stream.
      *
      * @param writer the stream to print the tree to
      * @param indent the indentation of each level
      * @param lineNumber the line number
      */
-    public default void printTree(
+    default void printTree(
             PrintWriter writer,
             String indent,
             MutableInt lineNumber) {
@@ -163,7 +174,7 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param indent the indentation of each level
      * @param lineNumber the line number
      */
-    public void printTree(
+    void printTree(
             PrintTreeSettings settings,
             PrintWriter writer,
             String indent,
@@ -177,7 +188,7 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param indent the indentation of each level
      * @param lineNumber the line number
      */
-    public default void printTree(
+    default void printTree(
             Locale locale,
             PrintWriter writer,
             String indent,
@@ -195,7 +206,7 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param indent the indentation of each level
      * @param lineNumber the line number
      */
-    public void printTree(
+    void printTree(
             PrintTreeSettings settings,
             Locale locale,
             PrintWriter writer,
@@ -211,7 +222,7 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param systemName the system name
      * @return enum indicating current validity, which might be just as a prefix
      */
-    public static NameValidity validSystemNameFormat(String subSystemNamePrefix, String systemName) {
+    static NameValidity validSystemNameFormat(String subSystemNamePrefix, String systemName) {
         // System names with digits. :AUTO: is generated system names
         if (systemName.matches(subSystemNamePrefix+"(:AUTO:)?\\d+")) {
             return NameValidity.VALID;
@@ -241,25 +252,25 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * Get the clipboard
      * @return the clipboard
      */
-    public Clipboard getClipboard();
+    Clipboard getClipboard();
 
     /**
      * Register a manager for later retrieval by getManager()
      * @param manager the manager
      */
-    public void registerManager(Manager<? extends MaleSocket> manager);
+    void registerManager(Manager<? extends MaleSocket> manager);
 
     /**
      * Get manager by class name
      * @param className the class name of the manager
      * @return the manager
      */
-    public Manager<? extends MaleSocket> getManager(String className);
+    Manager<? extends MaleSocket> getManager(String className);
 
     /**
      * Register a task to be run when setup LogixNGs
      * @param task the task
      */
-    public void registerSetupTask(Runnable task);
+    void registerSetupTask(Runnable task);
 
 }

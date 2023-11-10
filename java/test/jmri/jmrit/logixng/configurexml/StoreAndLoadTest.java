@@ -47,8 +47,8 @@ public class StoreAndLoadTest {
             FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
             File firstFile = new File(FileUtil.getUserFilesPath() + "temp/" + "LogixNG_temp.xml");
             File secondFile = new File(FileUtil.getUserFilesPath() + "temp/" + "LogixNG.xml");
-            log.info("Temporary first file: %s%n", firstFile.getAbsoluteFile());
-            log.info("Temporary second file: %s%n", secondFile.getAbsoluteFile());
+            log.info("Temporary first file: {}", firstFile.getAbsoluteFile());
+            log.info("Temporary second file: {}", secondFile.getAbsoluteFile());
 
             final String treeIndent = "   ";
             StringWriter stringWriter = new StringWriter();
@@ -75,7 +75,7 @@ public class StoreAndLoadTest {
             //**********************************
             // Delete all the LogixNGs, ConditionalNGs, and so on before reading the file.
             //**********************************
-            CreateLogixNGTreeScaffold.cleanup();
+            createLogixNGTreeScaffold.cleanup();
 
             LogixNG_Thread.stopAllLogixNGThreads();
             LogixNG_Thread.assertLogixNGThreadNotRunning();
@@ -118,14 +118,6 @@ public class StoreAndLoadTest {
                     log.error("XXX"+stringWriter.toString()+"XXX");
                     log.error("--------------------------------------------");
 
-                    System.out.println("--------------------------------------------");
-                    System.out.println("Old tree:");
-                    System.out.println("XXX"+originalTree+"XXX");
-                    System.out.println("--------------------------------------------");
-                    System.out.println("New tree:");
-                    System.out.println("XXX"+stringWriter.toString()+"XXX");
-                    System.out.println("--------------------------------------------");
-
 //                    log.error(conditionalNGManager.getBySystemName(originalTree).getChild(0).getConnectedSocket().getSystemName());
 
                     String[] originalTreeLines = originalTree.split(System.lineSeparator());
@@ -133,11 +125,12 @@ public class StoreAndLoadTest {
                     int line=0;
                     for (; line < Math.min(originalTreeLines.length, newTreeLines.length); line++) {
                         if (!originalTreeLines[line].equals(newTreeLines[line])) {
-                            System.out.format("Tree differs on line %d:%nOrig: %s%n New: %s%n", line+1, originalTreeLines[line], newTreeLines[line]);
+                            log.error("Tree differs on line {}:", line+1);
+                            log.error("Orig: {}", originalTreeLines[line]);
+                            log.error(" New: {}", newTreeLines[line]);
                             break;
                         }
                     }
-                    System.out.println("The tree has changed. The tree differs on line "+Integer.toString(line+1));
                     Assert.fail("The tree has changed. The tree differs on line "+Integer.toString(line+1));
 //                    throw new RuntimeException("tree has changed");
                 }
@@ -155,6 +148,7 @@ public class StoreAndLoadTest {
 
         JUnitAppender.assertErrorMessage("systemName is already registered: IH1");
         JUnitAppender.assertErrorMessage("systemName is already registered: IH2");
+        JUnitAppender.assertWarnMessage("No state variables found for conditional IX1C1");
     }
 
 

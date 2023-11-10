@@ -260,8 +260,8 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         protected void stopAll() {
             if (activeTrain.getStatus() != ActiveTrain.STOPPED &&
                     activeTrain.getStatus() != ActiveTrain.DONE) {
-                autoActiveTrain.getAutoEngineer().setHalt(true);
                 autoActiveTrain.saveSpeedAndDirection();
+                autoActiveTrain.getAutoEngineer().setHalt(true);
                 autoActiveTrain.setSavedStatus(activeTrain.getStatus());
                 activeTrain.setStatus(ActiveTrain.STOPPED);
             }
@@ -586,8 +586,8 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 } else {
                     log.trace("Process As Stop");
                     // stop
-                    autoActiveTrain.getAutoEngineer().setHalt(true);
                     autoActiveTrain.saveSpeedAndDirection();
+                    autoActiveTrain.getAutoEngineer().setHalt(true);
                     autoActiveTrain.setSavedStatus(at.getStatus());
                     at.setStatus(ActiveTrain.STOPPED);
                     speedSlider.setValue(0);

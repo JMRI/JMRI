@@ -123,20 +123,28 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         }
     }
 
+    @Override
     public boolean isAtStop() {
         if  (speed.equals("0")) return true;  // should this also include DANGER?
         return false;
     }
 
+    @Override
     public boolean isShowingRestricting() {
-        if (getAspect().equals(getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE))) return true;
+        String displayedAspect = getAspect();
+        if ( displayedAspect != null && displayedAspect.equals(getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE))) return true;
         return false;
     }
 
+    @Override
     public boolean isCleared() {
-        if (getAspect().equals(getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE))) return false;
-        if (getAspect().equals(getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD))) return false;
-        if (getAspect().equals(getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER))) return false;
+        String displayedAspect = getAspect();
+        if ( displayedAspect == null ) {
+            return false;
+        }
+        if (displayedAspect.equals(getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE))) return false;
+        if (displayedAspect.equals(getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD))) return false;
+        if (displayedAspect.equals(getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER))) return false;
         return true;
     }
 

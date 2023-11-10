@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.actions.configurexml;
 
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -90,6 +89,8 @@ public class ActionTimerXml extends jmri.managers.configurexml.AbstractNamedBean
         element.addContent(new Element("startAndStopByStartExpression")
                 .addContent(p.isStartAndStopByStartExpression()? "yes" : "no"));
         element.addContent(new Element("unit").addContent(p.getUnit().name()));
+        element.addContent(new Element("delayByLocalVariables").addContent(p.isDelayByLocalVariables() ? "yes" : "no"));
+        element.addContent(new Element("delayLocalVariablePrefix").addContent(p.getDelayLocalVariablePrefix()));
 
         return element;
     }
@@ -168,6 +169,20 @@ public class ActionTimerXml extends jmri.managers.configurexml.AbstractNamedBean
         Element unit = shared.getChild("unit");
         if (unit != null) {
             h.setUnit(TimerUnit.valueOf(unit.getTextTrim()));
+        }
+
+        Element delayByLocalVariables = shared.getChild("delayByLocalVariables");
+        if (delayByLocalVariables != null) {
+            h.setDelayByLocalVariables("yes".equals(delayByLocalVariables.getTextTrim()));
+        } else {
+            h.setDelayByLocalVariables(false);
+        }
+
+        Element delayLocalVariablePrefix = shared.getChild("delayLocalVariablePrefix");
+        if (delayLocalVariablePrefix != null) {
+            h.setDelayLocalVariablePrefix(delayLocalVariablePrefix.getTextTrim());
+        } else {
+            h.setDelayLocalVariablePrefix("");
         }
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);

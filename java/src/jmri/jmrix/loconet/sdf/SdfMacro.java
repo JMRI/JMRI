@@ -15,7 +15,6 @@ import java.util.List;
  * with a terminating newline
  * <dt>allInstructionString()<dd>The instruction and all those logically grouped
  * within it.
- * <dt>name()<dd>
  * </dl>
  *
  * SdfMacro and its subclasses don't do the notification needed to be Models in

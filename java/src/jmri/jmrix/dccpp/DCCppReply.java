@@ -1,6 +1,7 @@
 package jmri.jmrix.dccpp;
 
 import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
@@ -281,6 +282,34 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 text += " Speed:" + getSpeedInt();
                 text += " F0-28:" + getFunctionsString();
                 break;
+            case DCCppConstants.THROTTLE_COMMANDS_REPLY:
+                if (isTurnoutIDsReply()) {    
+                    text = "Turnout IDs:" + getTurnoutIDList();
+                    break;
+                } else if (isTurnoutIDReply()) {    
+                    text = "Turnout ID:" + getTOIDString();
+                    text += " State:" + getTurnoutStateString();
+                    text += " Desc:'" + getTurnoutDescString() + "'";
+                    break;
+                } else if (isClockReply()) {    
+                    String hhmm = String.format("%02d:%02d",
+                            getClockMinutesInt() / 60,
+                            getClockMinutesInt() % 60);
+                    text = "FastClock Reply: " + hhmm;
+                    if (!getClockRateString().isEmpty()) {
+                        text += ", Rate:" + getClockRateString();
+                    }
+                    break;
+                }
+                text = "Unknown Message: '" + toString() + "'";
+                break;
+            case DCCppConstants.TRACKMANAGER_CMD:
+                text = "TrackManager:" + toString();
+                break;
+            case DCCppConstants.LCD_TEXT_CMD:
+                text = "LCD Text '" + getLCDTextString() + "', disp " + getLCDDisplayNumString() + ", line " + getLCDLineNumString();
+                break;
+                
             default:
                 text = "Unrecognized reply: '" + toString() + "'";
         }
@@ -512,6 +541,11 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     r.myRegex = DCCppConstants.DIAG_REPLY_REGEX;
                 }
                 return (r);
+            case DCCppConstants.LCD_TEXT_REPLY:
+                if (s.matches(DCCppConstants.LCD_TEXT_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.LCD_TEXT_REPLY_REGEX;
+                }
+                return (r);
             case DCCppConstants.WRITE_EEPROM_REPLY:
                 if (s.matches(DCCppConstants.WRITE_EEPROM_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.WRITE_EEPROM_REPLY_REGEX;
@@ -540,6 +574,21 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 return (r);
             case DCCppConstants.LOCO_STATE_REPLY:
                 r.myRegex = DCCppConstants.LOCO_STATE_REGEX;
+                return (r);
+            case DCCppConstants.THROTTLE_COMMANDS_REPLY:
+                if (s.matches(DCCppConstants.TURNOUT_IDS_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.TURNOUT_IDS_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.TURNOUT_ID_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.TURNOUT_ID_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.CLOCK_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.CLOCK_REPLY_REGEX;
+                }
+                log.debug("Parsed Reply: '{}' length {}", r.toString(), r._nDataChars);
+                return (r);
+            case DCCppConstants.TRACKMANAGER_CMD:
+                if (s.matches(DCCppConstants.TRACKMANAGER_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.TRACKMANAGER_REPLY_REGEX;
+                }
                 return (r);
             default:
                 return (r);
@@ -888,7 +937,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     // Helper methods for Turnout Replies
 
     public String getTOIDString() {
-        if (this.isTurnoutReply()) {
+        if (this.isTurnoutReply() || this.isTurnoutIDReply()) {
             return (this.getValueString(1));
         } else {
             log.error("TurnoutReply Parser called on non-TurnoutReply message type {}", this.getOpCodeChar());
@@ -897,7 +946,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public int getTOIDInt() {
-        if (this.isTurnoutReply()) {
+        if (this.isTurnoutReply() || this.isTurnoutIDReply()) {
             return (this.getValueInt(1));
         } else {
             log.error("TurnoutReply Parser called on non-TurnoutReply message type {}", this.getOpCodeChar());
@@ -1517,6 +1566,95 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
+    public ArrayList<Integer> getTurnoutIDList() {
+        ArrayList<Integer> ids=new ArrayList<Integer>(); 
+        if (this.isTurnoutIDsReply()) {
+            String idList = this.getValueString(1);
+            if (!idList.isEmpty()) {
+                String[] idStrings = idList.split(" ");
+                for (String idString : idStrings) {
+                    ids.add(Integer.parseInt(idString));
+                }
+            }
+        } else {
+            log.error("TurnoutIDsReply Parser called on non-TurnoutIDsReply message type {}", this.getOpCodeChar());
+        }
+        return ids;
+    }
+    public String getTurnoutStateString() {
+        if (this.isTurnoutIDReply()) {
+            return (this.getValueString(2));
+        } else {
+            log.error("getTurnoutIDString Parser called on non-getTurnoutIDString message type {}", this.getOpCodeChar());
+            return ("0");
+        }
+    }
+    public String getTurnoutDescString() {
+        if (this.isTurnoutIDReply()) {
+            return (this.getValueString(3));
+        } else {
+            log.error("getTurnoutIDString Parser called on non-getTurnoutIDString message type {}", this.getOpCodeChar());
+            return ("0");
+        }
+    }
+    public String getClockMinutesString() {
+        if (this.isClockReply()) {
+            return (this.getValueString(1));
+        } else {
+            log.error("getClockTimeString Parser called on non-getClockTimeString message type {}", this.getOpCodeChar());
+            return ("0");
+        }
+    }
+    public int getClockMinutesInt() {
+        return (Integer.parseInt(this.getClockMinutesString()));
+    }
+    public String getClockRateString() {
+        if (this.isClockReply()) {
+            return (this.getValueString(2));
+        } else {
+            log.error("getClockRateString Parser called on non-getClockRateString message type {}", this.getOpCodeChar());
+            return ("0");
+        }
+    }
+    public int getClockRateInt() {
+        return (Integer.parseInt(this.getClockRateString()));
+    }
+
+    // <@ 0 8 "message text">
+    public boolean isLCDTextReply() {
+        return (this.matches(DCCppConstants.LCD_TEXT_REPLY_REGEX));
+    }   
+    public String getLCDTextString() {
+        if (this.isLCDTextReply()) {
+            return (this.getValueString(3));
+        } else {
+            log.error("getLCDTextString Parser called on non-LCDTextString message type {}", this.getOpCodeChar());
+            return ("error");
+        }
+    }
+    public String getLCDDisplayNumString() {
+        if (this.isLCDTextReply()) {
+            return (this.getValueString(1));
+        } else {
+            log.error("getLCDDisplayNumString Parser called on non-LCDTextString message type {}", this.getOpCodeChar());
+            return ("error");
+        }
+    }
+    public int getLCDDisplayNumInt() {
+        return (Integer.parseInt(this.getLCDDisplayNumString()));
+    }
+    public String getLCDLineNumString() {
+        if (this.isLCDTextReply()) {
+            return (this.getValueString(2));
+        } else {
+            log.error("getLCDLineNumString Parser called on non-LCDTextString message type {}", this.getOpCodeChar());
+            return ("error");
+        }
+    }
+    public int getLCDLineNumInt() {
+        return (Integer.parseInt(this.getLCDLineNumString()));
+    }
+
     // -------------------------------------------------------------------
 
     // Message Identification functions
@@ -1649,9 +1787,24 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isLocoStateReply() {
         return (this.getOpCodeChar() == DCCppConstants.LOCO_STATE_REPLY);
     }
+    
+    public boolean isTurnoutIDsReply() {
+        return (this.matches(DCCppConstants.TURNOUT_IDS_REPLY_REGEX));
+    }
+    public boolean isTurnoutIDReply() {
+        return (this.matches(DCCppConstants.TURNOUT_ID_REPLY_REGEX));
+    }
+    public boolean isClockReply() {
+        return (this.matches(DCCppConstants.CLOCK_REPLY_REGEX));
+    }
+
+    public boolean isTrackManagerReply() {
+        return (this.matches(DCCppConstants.TRACKMANAGER_REPLY_REGEX));
+    }
 
     public boolean isValidReplyFormat() {
         if ((this.matches(DCCppConstants.THROTTLE_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.MAXNUMSLOTS_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.TURNOUT_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.PROGRAM_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.PROGRAM_REPLY_V4_REGEX)) ||
@@ -1667,13 +1820,26 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 (this.matches(DCCppConstants.SENSOR_INACTIVE_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.SENSOR_ACTIVE_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.OUTPUT_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.OUTPUT_DEF_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.MADC_FAIL_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.MADC_SUCCESS_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.STATUS_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.STATUS_REPLY_BSC_REGEX)) ||
                 (this.matches(DCCppConstants.STATUS_REPLY_ESP32_REGEX)) ||
                 (this.matches(DCCppConstants.STATUS_REPLY_DCCEX_REGEX)) ||
-                (this.matches(DCCppConstants.LOCO_STATE_REGEX))) {
+                (this.matches(DCCppConstants.LOCO_STATE_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_IDS_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_ID_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_IMPL_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_DEF_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_DEF_DCC_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_DEF_SERVO_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_DEF_VPIN_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_DEF_LCN_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.LCD_TEXT_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.CLOCK_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.DIAG_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.TRACKMANAGER_REPLY_REGEX))) {
             return (true);
         } else {
             return (false);

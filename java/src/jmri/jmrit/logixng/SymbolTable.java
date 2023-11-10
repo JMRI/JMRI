@@ -35,41 +35,41 @@ public interface SymbolTable {
      * The list of symbols in the table
      * @return the symbols
      */
-    public Map<String, Symbol> getSymbols();
+    Map<String, Symbol> getSymbols();
 
     /**
      * The list of symbols and their values in the table
      * @return the name of the symbols and their values
      */
-    public Map<String, Object> getSymbolValues();
+    Map<String, Object> getSymbolValues();
 
     /**
      * Get the value of a symbol
      * @param name the name
      * @return the value
      */
-    public Object getValue(String name);
+    Object getValue(String name);
 
     /**
      * Is the symbol in the symbol table?
      * @param name the name
      * @return true if the symbol exists, false otherwise
      */
-    public boolean hasValue(String name);
+    boolean hasValue(String name);
 
     /**
      * Set the value of a symbol
      * @param name the name
      * @param value the value
      */
-    public void setValue(String name, Object value);
+    void setValue(String name, Object value);
 
     /**
      * Add new symbols to the symbol table
      * @param symbolDefinitions the definitions of the new symbols
      * @throws JmriException if an exception is thrown
      */
-    public void createSymbols(Collection<? extends VariableData> symbolDefinitions)
+    void createSymbols(Collection<? extends VariableData> symbolDefinitions)
             throws JmriException;
 
     /**
@@ -81,7 +81,7 @@ public interface SymbolTable {
      * @param symbolDefinitions the definitions of the new symbols
      * @throws JmriException if an exception is thrown
      */
-    public void createSymbols(
+    void createSymbols(
             SymbolTable symbolTable,
             Collection<? extends VariableData> symbolDefinitions)
             throws JmriException;
@@ -91,21 +91,21 @@ public interface SymbolTable {
      * @param symbolDefinitions the definitions of the symbols to be removed
      * @throws JmriException if an exception is thrown
      */
-    public void removeSymbols(Collection<? extends VariableData> symbolDefinitions)
+    void removeSymbols(Collection<? extends VariableData> symbolDefinitions)
             throws JmriException;
 
     /**
      * Print the symbol table on a stream
      * @param stream the stream
      */
-    public void printSymbolTable(java.io.PrintWriter stream);
+    void printSymbolTable(java.io.PrintWriter stream);
 
     /**
      * Validates the name of a symbol
      * @param name the name
      * @return true if the name is valid, false otherwise
      */
-    public static boolean validateName(String name) {
+    static boolean validateName(String name) {
         if (name.isEmpty()) return false;
         if (!Character.isLetter(name.charAt(0))) return false;
         for (int i=0; i < name.length(); i++) {
@@ -122,13 +122,13 @@ public interface SymbolTable {
      *
      * @return the stack
      */
-    public Stack getStack();
+    Stack getStack();
 
 
     /**
      * An enum that defines the types of initial value.
      */
-    public enum InitialValueType {
+    enum InitialValueType {
 
         None(Bundle.getMessage("InitialValueType_None"), true),
         Integer(Bundle.getMessage("InitialValueType_Integer"), true),
@@ -166,19 +166,19 @@ public interface SymbolTable {
     /**
      * The definition of the symbol
      */
-    public interface Symbol {
+    interface Symbol {
 
         /**
          * The name of the symbol
          * @return the name
          */
-        public String getName();
+        String getName();
 
         /**
          * The index on the stack for this symbol
          * @return the index
          */
-        public int getIndex();
+        int getIndex();
 
     }
 
@@ -186,7 +186,7 @@ public interface SymbolTable {
     /**
      * Data for a variable.
      */
-    public static class VariableData {
+    static class VariableData {
 
         public String _name;
         public InitialValueType _initialValueType = InitialValueType.None;
@@ -240,7 +240,7 @@ public interface SymbolTable {
      */
     @SuppressWarnings("unchecked")  // Checked cast is not possible due to type erasure
     @SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT", justification="The code prints a complex variable, like a map, to the log")
-    public static void printVariable(
+    static void printVariable(
             Logger log,
             String pad,
             String name,
@@ -335,7 +335,7 @@ public interface SymbolTable {
         return myMap;
     }
 
-    public static Object getInitialValue(
+    static Object getInitialValue(
             InitialValueType initialType,
             String initialData,
             SymbolTable symbolTable,
@@ -451,7 +451,7 @@ public interface SymbolTable {
 
 
 
-    public static class SymbolNotFound extends IllegalArgumentException {
+    static class SymbolNotFound extends IllegalArgumentException {
 
         public SymbolNotFound(String message) {
             super(message);
@@ -460,6 +460,6 @@ public interface SymbolTable {
 
 
     @SuppressFBWarnings(value="SLF4J_LOGGER_SHOULD_BE_PRIVATE", justification="Interfaces cannot have private fields")
-    final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SymbolTable.class);
+    org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SymbolTable.class);
 
 }

@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or   -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License    -->
 <!-- for more details.                                                       -->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" 
+<pane xmlns:xi="http://www.w3.org/2001/XInclude"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <name>FREDi Function Modes</name>
@@ -27,11 +27,17 @@
                 <surname>Schwichtenberg</surname>
             </personname>
         </author>
+        <author>
+            <personname>
+                <firstname>Pal A</firstname>
+                <surname>Olsen</surname>
+            </personname>
+        </author>
     </authorgroup>
     <revhistory xmlns="http://docbook.org/ns/docbook">
         <revision>
-            <revnumber>1</revnumber>
-            <date>2015-11-24</date>
+            <revnumber>2</revnumber>
+            <date>2023-04-12</date>
             <authorinitials>KS</authorinitials>
             <revremark>Initial release as separate file</revremark>
         </revision>
@@ -68,6 +74,17 @@
         <griditem gridx="0" gridy="8">
             <display item="SV24:Function Mode F6" />
         </griditem>
+        <griditem gridx="0" gridy="9">
+            <display item="SV25:Function Mode F7" />
+        </griditem>
+        <griditem gridx="0" gridy="10">
+            <display item="SV26:Function Mode F8" />
+        </griditem>
+        <griditem gridx="0" gridy="11">
+           <label>
+                <text>&#x0020;</text>
+            </label>
+        </griditem>
 
         <griditem gridx="1" gridy="0">
             <label>
@@ -90,23 +107,28 @@
             </label>
         </griditem>
         <griditem gridx="2" gridy="3">
-            <display item="SV25:Function Mode F7" />
-        </griditem>
-        <griditem gridx="2" gridy="4">
-            <display item="SV26:Function Mode F8" />
-        </griditem>
-        <griditem gridx="2" gridy="5">
             <display item="SV27:Function Mode F9" />
         </griditem>
-        <griditem gridx="2" gridy="6">
+        <griditem gridx="2" gridy="4">
             <display item="SV28:Function Mode F10" />
         </griditem>
-        <griditem gridx="2" gridy="7">
+        <griditem gridx="2" gridy="5">
             <display item="SV29:Function Mode F11" />
         </griditem>
-        <griditem gridx="2" gridy="8">
+        <griditem gridx="2" gridy="6">
             <display item="SV30:Function Mode F12" />
         </griditem>
-
+            <griditem gridx="2" gridy="7">
+            <display item="SV31:Function Mode F13" />
+        </griditem>
+        <griditem gridx="2" gridy="8">
+            <display item="SV32:Function Mode F14" />
+        </griditem>
+        <griditem gridx="2" gridy="9">
+            <display item="SV33:Function Mode F15" />
+        </griditem>
+        <griditem gridx="2" gridy="10">
+            <display item="SV34:Function Mode F16" />
+        </griditem>
     </grid>
 </pane>

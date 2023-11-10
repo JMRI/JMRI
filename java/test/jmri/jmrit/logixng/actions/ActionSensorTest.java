@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
-import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -180,7 +179,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
 
         actionSensor.getSelectNamedBean().setNamedBean("A non existent sensor");
         Assert.assertNull("sensor handle is null", actionSensor.getSelectNamedBean().getNamedBean());
-        JUnitAppender.assertWarnMessage("Sensor \"A non existent sensor\" is not found");
+        JUnitAppender.assertErrorMessage("Sensor \"A non existent sensor\" is not found");
 
         actionSensor.getSelectNamedBean().setNamedBean(sensor13.getSystemName());
         Assert.assertTrue("sensor is correct", sensor13 == actionSensor.getSelectNamedBean().getNamedBean().getBean());

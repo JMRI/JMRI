@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2022 All rights reserved                            -->
+<!-- Copyright (C) JMRI 2022, 2023 All rights reserved                      -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -31,6 +31,12 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Initial version for Piko SmartDecoder 4.1 and XP5.1</revremark>
 		</revision>
+		<revision>
+			<revnumber>2</revnumber>
+			<date>2023-10-20</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add decoder</revremark>
+		</revision>
 	</revhistory>
 	<variable item="RailCom channel 1 (Broadcast)" CV="28" default="1" mask="XXXXXXXV">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -48,11 +54,11 @@
 		<label xml:lang="de">RailCom Kanal 2 (Daten)</label>
 		<label xml:lang="nl">RailCom Kanaal 1 (Data)</label>
 	</variable>
-	<variable item="RailCom channel 1 auto" CV="28" default="1" mask="XXXXXVXX" include="PIKO46550-18">
+	<variable item="RailCom channel 1 auto" CV="28" default="1" mask="XXXXXVXX" include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>RailCom auto</label>
 	</variable>
-	<variable item="RailCom Broadcast" CV="28" default="1" mask="XXXVXXXX" include="PIKO46550-18">
+	<variable item="RailCom Broadcast" CV="28" default="1" mask="XXXVXXXX" include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>RailCom Broadcast Adresse</label>
 	</variable>

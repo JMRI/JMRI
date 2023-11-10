@@ -1,5 +1,15 @@
 package jmri.jmrit.vsdecoder.listener;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+import javax.vecmath.Vector3d;
+import javax.vecmath.Vector3f;
+import jmri.util.PhysicalLocation;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Represents a defined spot for viewing (and therefore listening to) a layout.
  *
@@ -18,16 +28,6 @@ package jmri.jmrit.vsdecoder.listener;
  *
  * @author Mark Underwood Copyright (C) 2012
  */
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
-import javax.vecmath.Vector3d;
-import javax.vecmath.Vector3f;
-import jmri.util.PhysicalLocation;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class ListeningSpot {
 
     private Vector3d _location;

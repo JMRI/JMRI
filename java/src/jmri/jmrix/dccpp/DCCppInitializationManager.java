@@ -46,6 +46,7 @@ public class DCCppInitializationManager {
         jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
         jmri.InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
         log.debug("PowerManager: {}", jmri.InstanceManager.getDefault(jmri.PowerManager.class));
+        systemMemo.setClockControl(new DCCppClockControl(systemMemo));
         predefinedMeters = new DCCppPredefinedMeters(systemMemo);
 
         systemMemo.register();

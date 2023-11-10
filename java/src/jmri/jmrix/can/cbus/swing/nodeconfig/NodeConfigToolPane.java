@@ -11,10 +11,12 @@ import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.util.*;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.*;
 
+import jmri.GlobalProgrammerManager;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.*;
@@ -23,9 +25,7 @@ import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.jmrix.can.cbus.swing.modules.CbusConfigPaneProvider;
 import jmri.util.ThreadingUtil;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Master Pane for CBUS node configuration incl. CBUS node table
@@ -71,6 +71,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
     private final JRadioButtonMenuItem fiveBackups;
     private final JRadioButtonMenuItem tenBackups;
     private final JRadioButtonMenuItem twentyBackups;
+    private CbusDccProgrammerManager progMan;
 
     /**
      * {@inheritDoc}
@@ -84,6 +85,11 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         _selectedNode = -1;
 
         preferences = memo.get(jmri.jmrix.can.cbus.CbusPreferences.class);
+        try {
+            progMan = memo.get(CbusConfigurationManager.class).get(GlobalProgrammerManager.class);
+        } catch (NullPointerException e) {
+            log.info("No Global Programmer available for NV programming");
+        }
         init();
 
     }
@@ -213,7 +219,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
     private final JFrame topFrame = (JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
 
     /**
-     * Create a non-modal dialogue box with node search results
+     * Create a document-modal Dialog with node search results.
      * @param csfound number of Command Stations
      * @param ndfound number of nodes
      */
@@ -221,12 +227,8 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         busy_dialog.finish();
         busy_dialog=null;
 
-        JOptionPane pane = new JOptionPane("<html><h3>Node Responses : " + ndfound +
-            "</h3><p>Of which Command Stations: " + csfound + "</p></html>");
-        pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = pane.createDialog(this, "Node Search Complete");
-        dialog.setModal(false);
-        dialog.setVisible(true);
+        JmriJOptionPane.showMessageDialog(this, "<html><h3>Node Responses : " + ndfound +
+            "</h3><p>Of which Command Stations: " + csfound + "</p></html>", "Node Search Complete", JmriJOptionPane.INFORMATION_MESSAGE);
         searchForNodesMenuItem.setEnabled(true);
     }
 
@@ -278,6 +280,11 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
 
             getTabs().get(tabindex).setNode( getNodeModel().getNodeByNodeNum(_selectedNode) );
 
+            try {
+                ((CbusDccProgrammer)(progMan.getGlobalProgrammer())).setNodeOfInterest(getNodeModel().getNodeByNodeNum(_selectedNode));
+            } catch(NullPointerException e) {
+                log.info("No programmer available fro NV programming");
+            }
         }
         else {
             tabbedPane.setEnabled(false);
@@ -691,8 +698,8 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
      * @param teachEvents true to teach events
      * @param frame the frame to which dialogue boxes can be attached to
      */
-    protected void showConfirmThenSave( CbusNode fromNode, CbusNode toNode,
-        boolean teachNVs, boolean clearEvents, boolean teachEvents, JFrame frame){
+    protected void showConfirmThenSave( @Nonnull CbusNode fromNode, @Nonnull CbusNode toNode,
+        boolean teachNVs, boolean clearEvents, boolean teachEvents, @CheckForNull JFrame frame){
 
         _clearEvents = clearEvents;
         _teachEvents = teachEvents;
@@ -726,12 +733,12 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         }
         buf.append("</html>");
 
-        int response = JOptionPane.showConfirmDialog(frame,
+        int response = JmriJOptionPane.showConfirmDialog(frame,
                 ( buf.toString() ),
                 ( ("Please Confirm Write to Node")),
-                JOptionPane.OK_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE);
-        if ( response == JOptionPane.OK_OPTION ) {
+                JmriJOptionPane.OK_CANCEL_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE);
+        if ( response == JmriJOptionPane.OK_OPTION ) {
             _toNode.addPropertyChangeListener(this);
             busy_dialog = new jmri.util.swing.BusyDialog(frame, "Write NVs "+_fromNode.toString(), false);
             busy_dialog.start();
@@ -769,9 +776,9 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
      */
     private void nVTeachComplete(int numErrors){
         if ( numErrors > 0 ) {
-            JOptionPane.showMessageDialog(_frame,
+            JmriJOptionPane.showMessageDialog(_frame,
                 Bundle.getMessage("NVSetFailTitle",numErrors), Bundle.getMessage("WarningTitle"),
-                JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.ERROR_MESSAGE);
         }
 
         if ( _clearEvents ){
@@ -829,9 +836,9 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         busy_dialog.finish();
         busy_dialog = null;
         if (numErrors != 0 ) {
-            JOptionPane.showMessageDialog(_frame,
+            JmriJOptionPane.showMessageDialog(_frame,
             Bundle.getMessage("NdEvVarWriteError"), Bundle.getMessage("WarningTitle"),
-            JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.ERROR_MESSAGE);
         }
         _frame = null;
         _toNode = null;
@@ -864,6 +871,6 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigToolPane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NodeConfigToolPane.class);
 
 }

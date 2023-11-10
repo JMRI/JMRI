@@ -1,10 +1,7 @@
 package jmri.jmrit.operations.locations;
 
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.JComboBox;
 
@@ -12,14 +9,10 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.InstanceManagerAutoInitialize;
-import jmri.Reporter;
+import jmri.*;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.trains.TrainCommon;
 
 /**
  * Manages locations.
@@ -30,6 +23,8 @@ import jmri.jmrit.operations.trains.TrainCommon;
 public class LocationManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "locationsListLength"; // NOI18N
+    
+    protected boolean _showId = false; // when true show location ids 
 
     public LocationManager() {
     }
@@ -103,6 +98,14 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
             }
         }
         return false;
+    }
+    
+    public void setShowIdEnabled(boolean showId) {
+        _showId = showId;
+    }
+    
+    public boolean isShowIdEnabled() {
+        return _showId;
     }
 
     /**
@@ -232,8 +235,8 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
         
         // also update the primary location for locations with similar names
         for (Location location : locations) {
-            String name = TrainCommon.splitString(location.getName());
-            if (mainLocation != null && TrainCommon.splitString(mainLocation.getName()).equals(name)) {
+            String name = location.getSplitName();
+            if (mainLocation != null && mainLocation.getSplitName().equals(name)) {
                 location.setSwitchListEnabled(mainLocation.isSwitchListEnabled());
                 if (mainLocation.isSwitchListEnabled() && location.getStatus().equals(Location.MODIFIED)) {
                     mainLocation.setStatus(Location.MODIFIED); // we need to update the primary location
@@ -451,6 +454,8 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
         return _maxLocationAndTrackNameLength;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification = "I18N of Info Message")
     private void calculateMaxNameLengths() {
         if (_maxLocationNameLength != 0) // only do this once
         {
@@ -461,25 +466,25 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
         String maxLocationName = "";
         String maxLocationAndTrackName = "";
         for (Track track : getTracks(null)) {
-            if (TrainCommon.splitString(track.getName()).length() > _maxTrackNameLength) {
+            if (track.getSplitName().length() > _maxTrackNameLength) {
                 maxTrackName = track.getName();
                 maxLocNameForTrack = track.getLocation().getName();
-                _maxTrackNameLength = TrainCommon.splitString(track.getName()).length();
+                _maxTrackNameLength = track.getSplitName().length();
             }
-            if (TrainCommon.splitString(track.getLocation().getName()).length() > _maxLocationNameLength) {
+            if (track.getLocation().getSplitName().length() > _maxLocationNameLength) {
                 maxLocationName = track.getLocation().getName();
-                _maxLocationNameLength = TrainCommon.splitString(track.getLocation().getName()).length();
+                _maxLocationNameLength = track.getLocation().getSplitName().length();
             }
-            if (TrainCommon.splitString(track.getLocation().getName()).length()
-                    + TrainCommon.splitString(track.getName()).length() > _maxLocationAndTrackNameLength) {
+            if (track.getLocation().getSplitName().length()
+                    + track.getSplitName().length() > _maxLocationAndTrackNameLength) {
                 maxLocationAndTrackName = track.getLocation().getName() + ", " + track.getName();
-                _maxLocationAndTrackNameLength = TrainCommon.splitString(track.getLocation().getName()).length()
-                        + TrainCommon.splitString(track.getName()).length();
+                _maxLocationAndTrackNameLength = track.getLocation().getSplitName().length()
+                        + track.getSplitName().length();
             }
         }
-        log.info("Max track name ({}) at ({}) length {}", maxTrackName, maxLocNameForTrack, _maxTrackNameLength);
-        log.info("Max location name ({}) length {}", maxLocationName, _maxLocationNameLength);
-        log.info("Max location and track name ({}) length {}", maxLocationAndTrackName, _maxLocationAndTrackNameLength);
+        log.info(Bundle.getMessage("InfoMaxTrackName", maxTrackName, _maxTrackNameLength, maxLocNameForTrack));
+        log.info(Bundle.getMessage("InfoMaxLocationName", maxLocationName, _maxLocationNameLength));
+        log.info(Bundle.getMessage("InfoMaxLocAndTrackName", maxLocationAndTrackName, _maxLocationAndTrackNameLength));
     }
 
     /**

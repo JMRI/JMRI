@@ -8,6 +8,6 @@ package jmri.jmrix.bachrus;
  */
 public interface SpeedoListener extends java.util.EventListener {
 
-    public void reply(SpeedoReply m);
+    void reply(SpeedoReply m);
 
 }

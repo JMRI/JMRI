@@ -1,12 +1,11 @@
 package jmri.managers;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+
 import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+
 import jmri.*;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultIdTag;
@@ -32,6 +31,8 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     private boolean storeState = false;
     private boolean useFastClock = false;
     private Runnable shutDownTask = null;
+
+    public final static String PROPERTY_INITIALISED = "initialised";
 
     public DefaultIdTagManager(SystemConnectionMemo memo) {
         super(memo);
@@ -62,6 +63,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
             dirty = false;
             initShutdownTask();
             initialised = true;
+            propertyChangeSupport.firePropertyChange(PROPERTY_INITIALISED, false, true);
         }
     }
 
@@ -102,6 +104,29 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     @Nonnull
     public IdTag provide(@Nonnull String name) throws IllegalArgumentException {
         return provideIdTag(name);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @CheckReturnValue
+    @Nonnull
+    public SortedSet<IdTag> getNamedBeanSet() {
+        // need to ensure that load has taken place before returning
+        if (!initialised && !loading) {
+            init();
+        }
+        return super.getNamedBeanSet();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @CheckReturnValue
+    public int getObjectCount() {
+        // need to ensure that load has taken place before returning
+        if (!initialised && !loading) {
+            init();
+        }
+        return super.getObjectCount();
     }
 
     /** {@inheritDoc} */
@@ -358,7 +383,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     @Override
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {
-        return Bundle.getMessage(plural ? "BeanNameReporters" : "BeanNameReporter");
+        return Bundle.getMessage(plural ? "BeanNameIdTags" : "BeanNameIdTag");
     }
 
     /**

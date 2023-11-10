@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.implementation;
 
-import static jmri.NamedBean.UNKNOWN;
-
 import java.io.PrintWriter;
 import java.util.*;
 
@@ -10,9 +8,7 @@ import jmri.JmriException;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.NamedBeanUsageReport;
-// import jmri.implementation.JmriSimplePropertyListener;
 import jmri.implementation.AbstractNamedBean;
-import jmri.jmrit.display.Positionable;
 import jmri.jmrit.logixng.*;
 
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -27,6 +23,7 @@ public class DefaultLogixNG extends AbstractNamedBean
         implements LogixNG {
 
     private final LogixNG_Manager _manager = InstanceManager.getDefault(LogixNG_Manager.class);
+    private boolean _startup = true;
     private boolean _inline = false;
     private InlineLogixNG _inlineLogixNG = null;
     private boolean _enabled = false;
@@ -132,6 +129,18 @@ public class DefaultLogixNG extends AbstractNamedBean
                 entry._conditionalNG.setup();
             }
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void clearStartup() {
+        _startup = false;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isStartup() {
+        return _startup;
     }
 
     /** {@inheritDoc} */

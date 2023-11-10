@@ -210,7 +210,7 @@
       <div>
         <p><em>Start Up</em> preferences allow windows and files to be opened, scripts to be run,
         and additional buttons to be placed on the main window when the application starts.<br>
-        A very common use is an Open File action (see below) to automatically load your last stored
+        A very common use is a load file action (see below) to automatically load your last stored
         <a href="../jmri/jmrit/display/PanelMenuHelp.shtml">layout configuration file</a> at
         startup, so all your turnouts, sensors, panels etc. are available again.</p>
 
@@ -220,8 +220,13 @@
         <p>Start up action order is important. In most cases, scripts should be the last items in
         the start up order. Start up order can be changed by selecting a start up item and moving
         it <em>up</em> or <em>down</em> in the list.</p>
-        <a href="images/PrefsStartup4_15.png"><img src="images/PrefsStartup4_15.png" height="232"
-        width="466" class="floatRight" alt="JMRI v4.2 Roster Prefs tab"></a>
+
+        <p>Individual start up actions can be enabled or disabled.  The default is
+        <strong>Enabled</strong>.<span class="since">since 5.5.6</span></p>
+
+        <a href="images/PrefsStartUp.png"><img src="images/PrefsStartUp.png"
+        class="floatRight" alt="JMRI Start Up Prefs tab"></a>
+
         <p>There are seven types of start up actions:</p>
 
         <dl>
@@ -234,11 +239,10 @@
 
           <dd>Add extra buttons to the main PanelPro window to start scripts.</dd>
 
-          <dt>Open file...</dt>
+          <dt>Load table content and panels...</dt>
 
           <dd>Automatically load a PanelPro xml data file or Configuration file when the program
-          starts up. You can load as many files as you'd like; each will be completely loaded
-          before the next is started.</dd>
+          starts up.</dd>
 
           <dt>Pause...</dt>
 
@@ -274,7 +278,8 @@
         have been changed since the last PanelPro store occurred.  This provides an opportunity to
         do a final store before shutdown.</p>
 
-        <p>The check process uses two shutdown preferences.</p>
+        <p>The check process uses two shutdown preferences and options for ignoring special cases
+        that can result in unnecessary store requests.</p>
 
         <div style="margin-left: 2em">
           <a href="images/PrefsShutdown.png"><img src="images/PrefsShutdown.png" alt="shutdown preferences"></a>
@@ -297,6 +302,20 @@
         <p>The default is to show the store request dialog and if <strong>Yes</strong> is selected,
         the actual store dialog will be displayed.  The <strong>Skip</strong> option can be selected
         to go directly to the store dialog.</p>
+
+        <h4>Ignore Options<span class="since">since 5.5.5</span></h4>
+
+        <dl>
+          <dt>Fast clock changes</dt>
+          <dd>Some fast clock changes are meant to be temporary, or come from external sources.  If
+          it is not necessary to retain the changes, this option will ignore the changes.</dd>
+
+          <dt>Sensor icon text color changes</dt>
+          <dd>When sensor icons have been changed to text labels, sensor state changes can change
+          the text and/or background colors.  These <strong><em>appear</em></strong> to be permanent
+          changes that should be stored but they are actually temporary changes until next sensor
+          state change.</dd>
+        </dl>
 
       </div>
 
@@ -333,6 +352,10 @@
             In addition, this tab lets you set:
             <ul>
               <li>Font size &mdash; The font size of the GUI.</li>
+
+              <li>File Chooser Dialog file view &mdash; Select the file view when using the file
+              dialogs.  The options are the <strong>Default</strong> view, the file name <strong>List
+              </strong> view and the file <strong>Detail</strong> view.</li>
 
               <li>Use non-standard release event for mouse click? &mdash; Provide alternate mouse
               behavior for specific hardware.</li>
@@ -535,7 +558,7 @@
 
               <li>Turnout Creation - Select whether mobile devices can create turnouts.</li>
 
-              <li>Consists - If selected, mobile devices can build & break "Advanced Consists".
+              <li>Consists - If selected, mobile devices can build &amp; break "Advanced Consists".
                 <ul>
                   <li>NMRA Format - These consists may perform better for building and controlling
                   with WiFi devices.</li>

@@ -5,6 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import jmri.*;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Container with a single PickList table
@@ -131,10 +132,10 @@ public class PickSinglePanel<T extends NamedBean> extends JPanel {
             try {
                 bean = _model.addBean(sysname, uname);
             } catch (IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(this.getRootPane(),
+                JmriJOptionPane.showMessageDialog(this.getRootPane(),
                     Bundle.getMessage("PickAddFailed", ex.getMessage()),  // NOI18N
                     Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
             }
             if (bean != null) {
                 int setRow = _model.getIndexOf(bean);

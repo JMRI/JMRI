@@ -6,16 +6,15 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import javax.swing.JComponent;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 import jmri.Reporter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.ReporterIcon;
 import jmri.jmrit.picker.PickListModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 public class ReporterItemPanel extends TableItemPanel<Reporter> {
 
@@ -77,8 +76,8 @@ public class ReporterItemPanel extends TableItemPanel<Reporter> {
         protected boolean okToDrag() {
             Reporter bean = getDeviceNamedBean();
             if (bean == null) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                 return false;
             }
             return true;
@@ -106,5 +105,6 @@ public class ReporterItemPanel extends TableItemPanel<Reporter> {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ReporterItemPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ReporterItemPanel.class);
+
 }

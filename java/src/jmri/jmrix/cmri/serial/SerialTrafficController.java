@@ -35,7 +35,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * Create a new C/MRI SerialTrafficController instance.
      */
     CMRInetMetricsCollector metricsCollector;
-    
+
     public SerialTrafficController() {
         super();
 
@@ -44,7 +44,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
         // entirely poll driven, so reduce interval
         mWaitBeforePoll = 5;  // default = 25
-        
+
         metricsCollector = new CMRInetMetricsCollector();
         addSerialListener(metricsCollector);
     }
@@ -83,7 +83,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         log.warn("enterProgMode doesn't make sense for C/MRI serial");
         return null;
     }
-    
+
     /**
      * Expose metrics data
      * @return metrics data
@@ -92,7 +92,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     {
       return metricsCollector.getMetricData();
     }
-    
+
     @Override
     protected AbstractMRMessage enterNormalMode() {
         // can happen during error recovery, null is OK
@@ -256,6 +256,31 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         if (curSerialNodeIndex >= getNumNodes()) {
             curSerialNodeIndex = 0;
         }
+    }
+
+    @Override
+    /**
+     * Log an error message for a message received in an unexpected state.
+     *
+     * The severity depends on whether this is a network connection or not.
+     *
+     * @param State message state.
+     * @param msgString message string.
+     */
+    protected void unexpectedReplyStateError(int State, String msgString) {
+        String[] packages = this.getClass().getName().split("\\.");
+        String name = (packages.length>=2 ? packages[packages.length-2]+"." :"")
+                     +(packages.length>=1 ? packages[packages.length-1] :"");
+        // determine the connection type
+        if (controller instanceof jmri.jmrix.cmri.serial.networkdriver.NetworkDriverAdapter) {
+            // these are probably normal
+            log.debug("reply complete in unexpected state: {} was {} in class {}", State, msgString, name);
+        } else {
+            // other types of connections, make visible
+            log.warn("reply complete in unexpected state: {} was {} in class {}", State, msgString, name);
+        }
+
+
     }
 
     @Override

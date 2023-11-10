@@ -21,7 +21,11 @@ public class DCCppInitializationManagerTest {
         // infrastructure objects
         DCCppInterfaceScaffold t = new DCCppInterfaceScaffold(new DCCppCommandStation());
         DCCppListenerScaffold l = new DCCppListenerScaffold();
-        
+        Assertions.assertNull(l.rcvdMsg);
+        Assertions.assertNull(l.rcvdRply);
+        Assertions.assertNull(l.timeOutMsg);
+        Assertions.assertEquals(0, l.rcvCount);
+
         DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(t);
         InstanceManager.setMeterManager(new jmri.managers.AbstractMeterManager(memo));
 

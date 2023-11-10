@@ -81,6 +81,11 @@ public class OlcbSignalMast extends AbstractSignalMast {
 
     NodeID node;
     Connection connection;
+    String systemPrefix;
+
+    public String getSystemPrefix() {
+        return systemPrefix;
+    }
 
     // not sure why this is a CanSystemConnectionMemo in simulator, but it is
     jmri.jmrix.can.CanSystemConnectionMemo systemMemo;
@@ -93,9 +98,10 @@ public class OlcbSignalMast extends AbstractSignalMast {
             throw new IllegalArgumentException("System name needs at least three parts: " + systemName);
         }
         if (!parts[0].endsWith(mastType)) {
+            systemPrefix = null;
             log.warn("First part of SignalMast system name is incorrect {} : {}",systemName,mastType);
         } else {
-            String systemPrefix = parts[0].substring(0, parts[0].indexOf('$') - 1);
+            systemPrefix = parts[0].substring(0, parts[0].indexOf('$') - 1);
             java.util.List<SystemConnectionMemo> memoList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
 
             for (SystemConnectionMemo memo : memoList) {
@@ -139,7 +145,12 @@ public class OlcbSignalMast extends AbstractSignalMast {
 
             litMachine = new StateMachine<>(connection, node, Boolean.TRUE);
             heldMachine = new StateMachine<>(connection, node, Boolean.FALSE);
-            aspectMachine = new StateMachine<>(connection, node, getAspect());
+            String configureAspect = getAspect();
+            if ( configureAspect == null ) {
+                log.debug("No Starting Aspect set for {}", getDisplayName());
+                configureAspect = "";
+            }
+            aspectMachine = new StateMachine<>(connection, node, configureAspect);
 
             systemMemo.get(OlcbInterface.class).registerMessageListener(new MessageDecoder(){
                 @Override

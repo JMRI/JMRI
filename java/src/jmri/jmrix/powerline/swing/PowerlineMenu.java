@@ -3,6 +3,7 @@ package jmri.jmrix.powerline.swing;
 import javax.annotation.Nonnull;
 import javax.swing.JMenu;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
+import jmri.jmrix.powerline.SerialSystemConnectionMemo.MenuItem;
 
 /**
  * Create a "Systems" menu containing the JMRI Powerline-specific tools.
@@ -26,13 +27,14 @@ public class PowerlineMenu extends JMenu {
 
         jmri.util.swing.WindowInterface wi = new jmri.util.swing.sdi.JmriJFrameInterface();
 
-        for (Item item : panelItems) {
+        // rely on list of menu items
+        for (MenuItem item : memo.provideMenuItemList()) {
             if (item == null) {
                 add(new javax.swing.JSeparator());
             } else {
                 PowerlineNamedPaneAction a = new PowerlineNamedPaneAction(Bundle.getMessage(item.name), wi, item.load, memo);
                 add(a);
-                a.setEnabled(item.enable.equals(ALL));
+                a.setEnabled(true);
             }
         }
 
@@ -40,26 +42,6 @@ public class PowerlineMenu extends JMenu {
         setEnabled(memo.getTrafficController() != null); // disable menu, no connection, no tools!
 
         add(new javax.swing.JSeparator());
-    }
-
-    // Enable or disable menu items based on system connection
-    private static final String ALL = "All Powerline connections"; // NOI18N
-
-    private Item[] panelItems = new Item[]{
-        new Item("MenuItemCommandMonitor", "jmri.jmrix.powerline.swing.serialmon.SerialMonPane", ALL),
-        new Item("MenuItemSendCommand", "jmri.jmrix.powerline.swing.packetgen.SerialPacketGenPane", ALL)
-    };
-
-    static class Item {
-
-        Item(String name, String load, String enable) {
-            this.name = name;
-            this.load = load;
-            this.enable = enable;
-        }
-        String name;
-        String load;
-        String enable;
     }
 
 }

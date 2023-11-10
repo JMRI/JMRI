@@ -1,9 +1,9 @@
 package jmri.jmrit.beantable;
 
-import java.text.DateFormat;
+import java.beans.PropertyChangeEvent;
 import java.util.Date;
-
 import jmri.*;
+import jmri.implementation.DefaultIdTag;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,10 +112,11 @@ public class IdTagTableDataModel extends BeanTableDataModel<IdTag> {
         switch (col) {
             case VALUECOL:
             case WHERECOL:
-            case WHENCOL:
                 return String.class;
             case CLEARCOL:
                 return JButton.class;
+            case WHENCOL:
+                return Date.class;
             default:
                 return super.getColumnClass(col);
         }
@@ -150,10 +151,8 @@ public class IdTagTableDataModel extends BeanTableDataModel<IdTag> {
                 }
                 return null;
             case WHENCOL:
-                Date d;
                 t = getBySystemName(sysNameList.get(row));
-                return (t != null) ? (((d = t.getWhenLastSeen()) != null)
-                        ? DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM).format(d) : null) : null;
+                return (t != null ?  t.getWhenLastSeen() : null);
             case CLEARCOL:
                 return Bundle.getMessage("ButtonClear");
             default:
@@ -183,9 +182,39 @@ public class IdTagTableDataModel extends BeanTableDataModel<IdTag> {
     }
 
     @Override
+    public void propertyChange(PropertyChangeEvent e) {
+        if (!(((IdTagManager)getManager()).isInitialised())) {
+            return;
+        }
+        switch (e.getPropertyName()) {
+            case DefaultIdTag.PROPERTY_WHEN_LAST_SEEN: // fire whole table update to ensure sorted view is updated
+                fireTableDataChanged();
+                break;
+            case jmri.managers.DefaultIdTagManager.PROPERTY_INITIALISED: // fire whole table update
+                updateNameList();
+                fireTableDataChanged();
+                break;
+            default:
+                super.propertyChange(e);
+                break;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * Do not update row on whereLastSeen as these are always followed
+     * by a whenLastSeen where we'll do a full data changed.
+     */
+    @Override
     protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-        return true;
-        // return (e.getPropertyName().indexOf("alue")>=0);
+        // log.debug("IdTag / Mgr matchPropertyName {} {}", e.getPropertyName(), e.getNewValue());
+        switch (e.getPropertyName()) {
+            case DefaultIdTag.PROPERTY_WHERE_LAST_SEEN:
+            case "beans":
+                return false;
+            default:
+                return true;
+        }
     }
 
     @Override
@@ -198,7 +227,14 @@ public class IdTagTableDataModel extends BeanTableDataModel<IdTag> {
     protected String getMasterClassName() {
         return IdTagTableAction.class.getName();
     }
-    
+
+    // TODO - further investigate why the TableRowSorter does not update on this
+    // @Override
+    // public void configureTable(JTable table) {
+       // super.configureTable(table);
+       // ((javax.swing.table.TableRowSorter)table.getRowSorter()).setSortsOnUpdates(true);
+    // }
+
     private static final Logger log = LoggerFactory.getLogger(IdTagTableDataModel.class);
 
 }

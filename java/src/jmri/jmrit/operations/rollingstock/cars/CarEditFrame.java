@@ -1,25 +1,19 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
+import java.text.*;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
-import jmri.jmrit.operations.rollingstock.RollingStockEditFrame;
+import jmri.jmrit.operations.rollingstock.*;
 import jmri.jmrit.operations.rollingstock.cars.tools.CarAttributeEditFrame;
 import jmri.jmrit.operations.rollingstock.cars.tools.CarLoadEditFrame;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user edit of car
@@ -91,12 +85,12 @@ public class CarEditFrame extends RollingStockEditFrame {
         builtTextField.setToolTipText(Bundle.getMessage("TipBuildDate"));
         valueTextArea.setToolTipText(Bundle.getMessage("TipValue"));
 
-        editColorButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
-                new Object[]{Bundle.getMessage("Color").toLowerCase()}));
-        editLoadButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
-                new Object[]{Bundle.getMessage("load")})); // initial caps for some languages i.e. German
-        editGroupButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
-                new Object[]{Bundle.getMessage("Kernel").toLowerCase()}));
+        editColorButton.setToolTipText(Bundle.getMessage("TipAddDeleteReplace",
+                Bundle.getMessage("Color").toLowerCase()));
+        editLoadButton.setToolTipText(Bundle.getMessage("TipAddDeleteReplace",
+                Bundle.getMessage("load"))); // initial caps for some languages i.e. German
+        editGroupButton.setToolTipText(Bundle.getMessage("TipAddDeleteReplace",
+                Bundle.getMessage("Kernel").toLowerCase()));
         
         deleteButton.setToolTipText(Bundle.getMessage("TipDeleteButton"));
         addButton.setToolTipText(Bundle.getMessage("TipAddButton"));
@@ -169,9 +163,9 @@ public class CarEditFrame extends RollingStockEditFrame {
         pBlocking.setVisible(car.isPassenger() || car.getKernel() != null);
 
         if (!InstanceManager.getDefault(CarLoads.class).containsName(car.getTypeName(), car.getLoadName())) {
-            if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("loadNameNotExist"),
-                    new Object[]{car.getLoadName()}), Bundle.getMessage("addLoad"),
-                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            if (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("loadNameNotExist",
+                    car.getLoadName()), Bundle.getMessage("addLoad"),
+                    JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                 InstanceManager.getDefault(CarLoads.class).addName(car.getTypeName(), car.getLoadName());
             }
         }
@@ -183,9 +177,9 @@ public class CarEditFrame extends RollingStockEditFrame {
 
         // only cars have color attribute
         if (!InstanceManager.getDefault(CarColors.class).containsName(car.getColor())) {
-            if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("colorNameNotExist"),
-                    new Object[]{car.getColor()}), Bundle.getMessage("carAddColor"),
-                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            if (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("colorNameNotExist",
+                    car.getColor()), Bundle.getMessage("carAddColor"),
+                    JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                 InstanceManager.getDefault(CarColors.class).addName(car.getColor());
             }
         }
@@ -247,14 +241,14 @@ public class CarEditFrame extends RollingStockEditFrame {
                 .getText());
         if (existingCar != null) {
             if (car == null) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("carRoadExists"), Bundle
-                        .getMessage("carCanNotAdd"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carRoadExists"), Bundle
+                        .getMessage("carCanNotAdd"), JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
             // old car with new road or number?
             if (!existingCar.getId().equals(car.getId())) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("carRoadExists"), Bundle
-                        .getMessage("carCanNotUpdate"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carRoadExists"), Bundle
+                        .getMessage("carCanNotUpdate"), JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -263,8 +257,8 @@ public class CarEditFrame extends RollingStockEditFrame {
             Number number = NumberFormat.getNumberInstance().parse(weightTextField.getText());
             log.debug("Car weight in oz: {}", number);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("carWeightFormat"), Bundle
-                    .getMessage("carActualWeight"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carWeightFormat"), Bundle
+                    .getMessage("carActualWeight"), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -284,11 +278,11 @@ public class CarEditFrame extends RollingStockEditFrame {
                 }
                 weightTonsTextField.setText(Integer.toString(tons));
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("carLengthMustBe"), Bundle
-                        .getMessage("carWeigthCanNot"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carLengthMustBe"), Bundle
+                        .getMessage("carWeigthCanNot"), JmriJOptionPane.ERROR_MESSAGE);
             } catch (ParseException ex) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("carWeightFormat"), Bundle
-                        .getMessage("carWeigthCanNot"), JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carWeightFormat"), Bundle
+                        .getMessage("carWeigthCanNot"), JmriJOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -307,12 +301,12 @@ public class CarEditFrame extends RollingStockEditFrame {
 
         // ask if all cars of this type should be passenger 
         if (isSave && car.isPassenger() ^ passengerCheckBox.isSelected()) {
-            if (JOptionPane.showConfirmDialog(this, MessageFormat.format(passengerCheckBox.isSelected() ? Bundle
+            if (JmriJOptionPane.showConfirmDialog(this, MessageFormat.format(passengerCheckBox.isSelected() ? Bundle
                     .getMessage("carModifyTypePassenger") : Bundle.getMessage("carRemoveTypePassenger"),
                     new Object[]{car.getTypeName()}),
-                    MessageFormat.format(Bundle.getMessage("carModifyAllType"),
-                            new Object[]{car.getTypeName()}),
-                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    Bundle.getMessage("carModifyAllType",
+                            car.getTypeName()),
+                    JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                 // go through the entire list and change the passenger setting
                 // for all cars of this type
                 for (Car c : carManager.getList()) {
@@ -326,11 +320,10 @@ public class CarEditFrame extends RollingStockEditFrame {
         int blocking = Integer.parseInt(blockingTextField.getText());
         // ask if blocking order should be the same
         if (isSave && car.getKernel() == null && passengerCheckBox.isSelected() && car.getBlocking() != blocking) {
-            if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("carChangeBlocking"),
-                    new Object[]{blocking, car.getTypeName()}),
-                    MessageFormat.format(Bundle
-                            .getMessage("carModifyAllType"), new Object[]{car.getTypeName()}),
-                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            if (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("carChangeBlocking",
+                    blocking, car.getTypeName()),
+                    Bundle.getMessage("carModifyAllType", car.getTypeName()),
+                    JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                 // go through the entire list and change the passenger setting
                 // for all cars of this type
                 for (Car c : carManager.getList()) {
@@ -343,12 +336,12 @@ public class CarEditFrame extends RollingStockEditFrame {
         car.setBlocking(blocking);
         // ask if all cars of this type should be caboose
         if (isSave && car.isCaboose() ^ cabooseCheckBox.isSelected()) {
-            if (JOptionPane.showConfirmDialog(this, MessageFormat.format(cabooseCheckBox.isSelected() ? Bundle
+            if (JmriJOptionPane.showConfirmDialog(this, MessageFormat.format(cabooseCheckBox.isSelected() ? Bundle
                     .getMessage("carModifyTypeCaboose") : Bundle.getMessage("carRemoveTypeCaboose"),
                     new Object[]{car.getTypeName()}),
-                    MessageFormat.format(Bundle.getMessage("carModifyAllType"),
-                            new Object[]{car.getTypeName()}),
-                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    Bundle.getMessage("carModifyAllType",
+                            car.getTypeName()),
+                    JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                 // go through the entire list and change the caboose setting for all cars of this type
                 for (Car c : carManager.getList()) {
                     if (c.getTypeName().equals(car.getTypeName())) {
@@ -360,12 +353,12 @@ public class CarEditFrame extends RollingStockEditFrame {
         car.setCaboose(cabooseCheckBox.isSelected());
         // ask if all cars of this type should be utility
         if (isSave && car.isUtility() ^ utilityCheckBox.isSelected()) {
-            if (JOptionPane.showConfirmDialog(this, MessageFormat.format(utilityCheckBox.isSelected() ? Bundle
+            if (JmriJOptionPane.showConfirmDialog(this, MessageFormat.format(utilityCheckBox.isSelected() ? Bundle
                     .getMessage("carModifyTypeUtility") : Bundle.getMessage("carRemoveTypeUtility"),
                     new Object[]{car.getTypeName()}),
-                    MessageFormat.format(Bundle.getMessage("carModifyAllType"),
-                            new Object[]{car.getTypeName()}),
-                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    Bundle.getMessage("carModifyAllType",
+                            car.getTypeName()),
+                    JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                 // go through the entire list and change the utility for all cars of this type
                 for (Car c : carManager.getList()) {
                     if (c.getTypeName().equals(car.getTypeName())) {
@@ -377,12 +370,12 @@ public class CarEditFrame extends RollingStockEditFrame {
         car.setUtility(utilityCheckBox.isSelected());
         // ask if all cars of this type should be hazardous
         if (isSave && car.isCarHazardous() ^ hazardousCheckBox.isSelected()) {
-            if (JOptionPane.showConfirmDialog(this, MessageFormat.format(hazardousCheckBox.isSelected() ? Bundle
+            if (JmriJOptionPane.showConfirmDialog(this, MessageFormat.format(hazardousCheckBox.isSelected() ? Bundle
                     .getMessage("carModifyTypeHazardous") : Bundle.getMessage("carRemoveTypeHazardous"),
                     new Object[]{car.getTypeName()}),
-                    MessageFormat.format(Bundle.getMessage("carModifyAllType"),
-                            new Object[]{car.getTypeName()}),
-                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    Bundle.getMessage("carModifyAllType",
+                            car.getTypeName()),
+                    JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                 // go through the entire list and change the hazardous setting for all cars of this type
                 for (Car c : carManager.getList()) {
                     if (c.getTypeName().equals(car.getTypeName())) {
@@ -396,6 +389,9 @@ public class CarEditFrame extends RollingStockEditFrame {
         if (groupComboBox.getSelectedItem() != null) {
             if (groupComboBox.getSelectedItem().equals(CarManager.NONE)) {
                 car.setKernel(null);
+                if (!car.isPassenger()) {
+                    car.setBlocking(Car.DEFAULT_BLOCKING_ORDER);
+                }
             } else if (!car.getKernelName().equals(groupComboBox.getSelectedItem())) {
                 car.setKernel(InstanceManager.getDefault(KernelManager.class).getKernelByName((String) groupComboBox.getSelectedItem()));
                 // if car has FRED or caboose make lead
@@ -407,20 +403,24 @@ public class CarEditFrame extends RollingStockEditFrame {
         }
         if (loadComboBox.getSelectedItem() != null && !car.getLoadName().equals(loadComboBox.getSelectedItem())) {
             car.setLoadName((String) loadComboBox.getSelectedItem());
+            car.setWait(0); // car could be at spur with schedule
+            car.setScheduleItemId(Car.NONE);
             // check to see if car is part of kernel, and ask if all the other cars in the kernel should be changed
             if (car.getKernel() != null) {
                 List<Car> cars = car.getKernel().getCars();
                 if (cars.size() > 1) {
-                    if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("carInKernelLoad"),
-                            new Object[]{car.toString(), car.getLoadName()}),
-                            MessageFormat.format(Bundle.getMessage("carPartKernel"),
-                                    new Object[]{car.getKernelName()}),
-                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    if (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("carInKernelLoad",
+                            car.toString(), car.getLoadName()),
+                            Bundle.getMessage("carPartKernel",
+                                    car.getKernelName()),
+                            JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                         // go through the entire list and change the loads for all cars
                         for (Car c : cars) {
                             if (InstanceManager.getDefault(CarLoads.class).containsName(c.getTypeName(),
                                     car.getLoadName())) {
                                 c.setLoadName(car.getLoadName());
+                                c.setWait(0); // car could be at spur with schedule
+                                c.setScheduleItemId(Car.NONE);
                             }
                         }
                     }
@@ -441,14 +441,13 @@ public class CarEditFrame extends RollingStockEditFrame {
             for (Car kcar : cars) {
                 if (kcar != car) {
                     if (kcar.getLocation() != car.getLocation() || kcar.getTrack() != car.getTrack()) {
-                        int results = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
-                                .getMessage("carInKernelLocation"),
-                                new Object[]{car.toString(), car.getLocationName(), car.getTrackName()}),
-                                MessageFormat
-                                        .format(Bundle.getMessage("carPartKernel"),
-                                                new Object[]{car.getKernelName()}),
-                                JOptionPane.YES_NO_OPTION);
-                        if (results == JOptionPane.YES_OPTION) {
+                        int results = JmriJOptionPane.showConfirmDialog(this, Bundle
+                                .getMessage("carInKernelLocation",
+                                car.toString(), car.getLocationName(), car.getTrackName()),
+                                Bundle.getMessage("carPartKernel",
+                                                car.getKernelName()),
+                                JmriJOptionPane.YES_NO_OPTION);
+                        if (results == JmriJOptionPane.YES_OPTION) {
                             // change the location for all cars in kernel
                             for (Car kcar2 : cars) {
                                 if (kcar2 != car) {
@@ -579,5 +578,5 @@ public class CarEditFrame extends RollingStockEditFrame {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarEditFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CarEditFrame.class);
 }

@@ -4,7 +4,6 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import jmri.*;
-import jmri.managers.DefaultProgrammerManager;
 import jmri.util.NamedBeanComparator;
 
 
@@ -59,17 +58,9 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnection
      */
     public void configureManagers() {
 
-        SensorManager sensorManager = new EcosSensorManager(this);
-        InstanceManager.setSensorManager(sensorManager);
-        store(sensorManager, SensorManager.class);
-
         PowerManager powerManager = new EcosPowerManager(getTrafficController());
         InstanceManager.store(powerManager, PowerManager.class);
         store(powerManager, PowerManager.class);
-
-        TurnoutManager turnoutManager = new EcosTurnoutManager(this);
-        InstanceManager.setTurnoutManager(turnoutManager);
-        store(turnoutManager,TurnoutManager.class);
 
         EcosLocoAddressManager locoManager = new EcosLocoAddressManager(this);
         store(locoManager,EcosLocoAddressManager.class);
@@ -87,6 +78,14 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnection
 
         InstanceManager.store(getProgrammerManager(), AddressedProgrammerManager.class);
         store(getProgrammerManager(), AddressedProgrammerManager.class);
+
+        SensorManager sensorManager = new EcosSensorManager(this);
+        InstanceManager.setSensorManager(sensorManager);
+        store(sensorManager, SensorManager.class);
+
+        TurnoutManager turnoutManager = new EcosTurnoutManager(this);
+        InstanceManager.setTurnoutManager(turnoutManager);
+        store(turnoutManager,TurnoutManager.class);
 
         register(); // registers general type
     }

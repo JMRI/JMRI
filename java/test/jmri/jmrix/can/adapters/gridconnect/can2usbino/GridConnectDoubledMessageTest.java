@@ -67,6 +67,7 @@ public class GridConnectDoubledMessageTest extends jmri.jmrix.AbstractMessageTes
         m = g = new GridConnectDoubledMessage(msg);
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = g = null;

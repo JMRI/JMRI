@@ -2,8 +2,6 @@ package jmri.jmrit.logixng.expressions;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.Category;
@@ -389,6 +387,7 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

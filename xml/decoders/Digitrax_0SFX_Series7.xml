@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2010, 2014 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.        -->
+  <!-- Version1 (John McMasters) Create Extended Series 7 base, EXT, Steam and Diesel within Family -->
+  <!-- Version2 revised from version1 of the file -->
+  <!-- Cleanup 9/29/23:
+		PaneDigitraxSoundExtSeries7
+		Plane SDH167 decoder
+						-->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="John McMasters" version="1" lastUpdated="20230404"/>
+  <version author="John McMasters" version="2" lastUpdated="20230929"/>
+   
+<decoder>
+    <family name="SFX Sound Decoders - Series 7" mfg="Digitrax" lowVersionID="203" highVersionID="203">
+      <model model="SDH167" numOuts="6" numFns="28" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH167" comment="H0-Scale Sound Decoder, wired">
+        <output name="1" label="White" connection="wire"/>
+        <output name="2" label="Yellow" connection="wire"/>
+        <output name="3" label="Green" connection="wire"/>
+        <output name="4" label="Violet" connection="wire"/>
+        <output name="5" label="F3-Brown" connection="wire"/>
+        <output name="6" label="F4-Yellow" connection="wire"/>
+        <size length="1.28" width="0.67" height="0.25" units="inches"/>
+        <functionlabels>
+        <functionlabel num="0" lockable="true">Lights</functionlabel>
+        <functionlabel num="1" lockable="true">Bell</functionlabel>
+        <functionlabel num="2" lockable="true">Horn/Whistle</functionlabel>
+        <functionlabel num="3" lockable="false">Coupler</functionlabel>
+        <functionlabel num="4" lockable="true">Air feat. disabled</functionlabel>
+        <functionlabel num="5" lockable="true">Dyn. Brakes Fans/Water Pump</functionlabel>
+        <functionlabel num="6" lockable="false">Notch UP/Blowdown</functionlabel>
+        <functionlabel num="7" lockable="false">Xing Gate Airhorn/Notch DOWN/Wheel Slip</functionlabel>
+        <functionlabel num="8" lockable="true">Mute</functionlabel>
+        <functionlabel num="9" lockable="false">Brake squeal</functionlabel>
+        <functionlabel num="10" lockable="false">Xing Gate Airhorn</functionlabel>
+        <functionlabel num="11" lockable="false">Greaser</functionlabel>
+        <functionlabel num="12" lockable="false">Safety Blow off</functionlabel>
+        </functionlabels>
+      </model>
+      <model model="SDXH167" numOuts="6" numFns="28" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" productID="SDH167,SDXH167" comment="H0-Scale Sound Decoder, wired">
+        <output name="1" label="White" connection="wire"/>
+        <output name="2" label="Yellow" connection="wire"/>
+        <output name="3" label="Green" connection="wire"/>
+        <output name="4" label="Violet" connection="wire"/>
+        <output name="5" label="F3-Brown" connection="wire"/>
+        <output name="6" label="F4-Yellow" connection="wire"/>
+        <size length="1.28" width="0.67" height="0.25" units="inches"/>
+        <functionlabels>
+        <functionlabel num="0" lockable="true">Lights</functionlabel>
+        <functionlabel num="1" lockable="true">Bell</functionlabel>
+        <functionlabel num="2" lockable="true">Horn/Whistle</functionlabel>
+        <functionlabel num="3" lockable="false">Coupler</functionlabel>
+        <functionlabel num="4" lockable="true">Air feat. disabled</functionlabel>
+        <functionlabel num="5" lockable="true">Dyn. Brakes Fans/Water Pump</functionlabel>
+        <functionlabel num="6" lockable="false">Notch UP/Blowdown</functionlabel>
+        <functionlabel num="7" lockable="false">Xing Gate Airhorn/Notch DOWN/Wheel Slip</functionlabel>
+        <functionlabel num="8" lockable="true">Mute</functionlabel>
+        <functionlabel num="9" lockable="false">Brake squeal</functionlabel>
+        <functionlabel num="10" lockable="false">Xing Gate Airhorn</functionlabel>
+        <functionlabel num="11" lockable="false">Greaser</functionlabel>
+        <functionlabel num="12" lockable="false">Safety Blow off</functionlabel>
+        </functionlabels>
+      </model>
+      <model model="Extended Series 7" numOuts="6" numFns="28" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH167Ext" comment="SDXH167 Extended Sound projects v7 by John McMasters">
+        <output name="1" label="White" connection="wire"/>
+        <output name="2" label="Yellow" connection="wire"/>
+        <output name="3" label="Green" connection="wire"/>
+        <output name="4" label="Violet" connection="wire"/>
+        <output name="5" label="F3-Brown" connection="wire"/>
+        <output name="6" label="F4-Yellow" connection="wire"/>
+        <size length="1.28" width="0.67" height="0.25" units="inches"/>
+        <functionlabels>
+          <functionlabel num="2" lockable="false">Horn / Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler (Short Horn/Whistle)</functionlabel>
+          <functionlabel num="4" lockable="true">Dyn Brakes / Open Cylinder Cocks / ( light function (turn on rear light, etc.)</functionlabel>
+          <functionlabel num="5" lockable="true">Emergency Lights / Steam BlowOff</functionlabel> <!--  Dyn. Brakes Fans level 1-3 (handbrake spd=0) -->
+          <functionlabel num="6" lockable="true">Ditchlights / Injector / Light function</functionlabel>
+          <functionlabel num="7" lockable="true">Wheel Flange</functionlabel>
+          <functionlabel num="8" lockable="true">Mute (full-half-silent)]</functionlabel>
+          <functionlabel num="9" lockable="true">UnCouple - Disconnect (Short Horn/Whistle)</functionlabel>
+          <functionlabel num="10" lockable="true">Independent Brake</functionlabel>   <!-- Xing Gate Whistle wBell / Steam Xing Gate Whistle wBell -->
+          <functionlabel num="11" lockable="true">Train Brake / Hand Brake</functionlabel>
+          <functionlabel num="12" lockable="true">Coupler disconnect (Long Horn/Whistle)</functionlabel>
+          <functionlabel num="13" lockable="true">Ditchlights / Coal Fill</functionlabel>
+          <functionlabel num="14" lockable="true">High Fan / Air Pump / Compressor</functionlabel>
+          <functionlabel num="15" lockable="true">Emerg. Stop Shutdown [disables motor movement when stopped]</functionlabel>
+          <functionlabel num="16" lockable="true">Air Dryer / Water Fill</functionlabel>
+          <functionlabel num="17" lockable="true">Brake Set / Steam Coal Stoker / Coal Shovel</functionlabel>
+          <functionlabel num="18" lockable="true">Sander</functionlabel>
+          <functionlabel num="19" lockable="true">Air LetOff</functionlabel> <!-- Steam SANDER, Manual Chuff 0 (0=CylOpn) -->
+          <functionlabel num="20" lockable="true">Compressor / Coal Grate Shaker - AshPan Empty</functionlabel>
+          <functionlabel num="21" lockable="true">Notch 1 / Steam Greaser</functionlabel>
+          <functionlabel num="22" lockable="true">Cab Sounds / Blower (F0 off)</functionlabel>
+          <functionlabel num="23" lockable="true">Grade Crossing</functionlabel>
+          <functionlabel num="24" lockable="true">Reverser</functionlabel>
+          <functionlabel num="25" lockable="true">AUX generator - HEP / Safety Blowdown</functionlabel>
+          <functionlabel num="26" lockable="true">Notch UP / Wheel Slip on start-up</functionlabel>
+          <functionlabel num="27" lockable="true">Notch down /(Override wheel slip)</functionlabel>
+          <functionlabel num="28" lockable="true">Notch 8 / Replace Whistle with Horn - de-Sync Articulated</functionlabel>
+        </functionlabels>
+      </model>
+       <model model="Extended Series 7 Steam" numOuts="6" numFns="28" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH167ExtS" comment="SDXH167ExtS Extended Steam Sound projects v7 by John McMasters">
+        <output name="1" label="White" connection="wire"/>
+        <output name="2" label="Yellow" connection="wire"/>
+        <output name="3" label="Green" connection="wire"/>
+        <output name="4" label="Violet" connection="wire"/>
+        <output name="5" label="F3-Brown" connection="wire"/>
+        <output name="6" label="F4-Yellow" connection="wire"/>
+        <size length="1.28" width="0.67" height="0.25" units="inches"/>
+        <functionlabels>
+          <functionlabel num="2" lockable="false">Whistle (Horn F28 On)</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler (Short Whistle)</functionlabel>
+          <functionlabel num="4" lockable="true">Open Cylinder Cocks / ( light function (turn on rear light, etc.)</functionlabel>
+          <functionlabel num="5" lockable="true">Steam Blowdown</functionlabel> <!--  Dyn. Brakes Fans level 1-3 (handbrake spd=0) -->
+          <functionlabel num="6" lockable="true">Injector - Light function</functionlabel>
+          <functionlabel num="7" lockable="true">Wheel Flange</functionlabel>
+          <functionlabel num="8" lockable="true">Mute (full-half-silent)</functionlabel>
+          <functionlabel num="9" lockable="true">UnCouple - Disconnect (Short Whistle)</functionlabel>
+          <functionlabel num="10" lockable="true">Independent Brake</functionlabel>   
+          <functionlabel num="11" lockable="true">Train Brake (trig F10)/ Hand Brake</functionlabel>
+          <functionlabel num="12" lockable="true">Coupler disconnect (Long Whistle)</functionlabel>
+          <functionlabel num="13" lockable="true">Coal Fill</functionlabel>
+          <functionlabel num="14" lockable="true">Air Pump / Compressor</functionlabel>
+          <functionlabel num="15" lockable="true">Emerg. Stop Shutdown [disables motor movement when stopped]</functionlabel>
+          <functionlabel num="16" lockable="true">Water Tank</functionlabel>
+          <functionlabel num="17" lockable="true">Steam Coal Stoker / Coal Shovel</functionlabel>
+          <functionlabel num="18" lockable="true">Sander</functionlabel>
+          <functionlabel num="19" lockable="true">Air LetOff</functionlabel> <!-- Steam SANDER, Manual Chuff 0 (0=CylOpn) -->
+          <functionlabel num="20" lockable="true">Coal Grate Shaker / AshPan Empty</functionlabel>
+          <functionlabel num="21" lockable="true">Steam Greaser</functionlabel>
+          <functionlabel num="22" lockable="true">Blower (F0 Off)</functionlabel>
+          <functionlabel num="23" lockable="true">Grade Xing</functionlabel>
+          <functionlabel num="24" lockable="true">Reverser</functionlabel>
+          <functionlabel num="25" lockable="true">Safety Blowdown</functionlabel>
+          <functionlabel num="26" lockable="true">Notch UP / Wheel Slip on start-up</functionlabel>
+          <functionlabel num="27" lockable="true">Notch down /(Override wheel slip)</functionlabel>
+          <functionlabel num="28" lockable="true">Replace Whistle with Horn</functionlabel>
+        </functionlabels>
+      </model>
+       <model model="Extended Series 7 Diesel" numOuts="6" numFns="28" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH167ExtD" comment="SDXH167ExtD Extended Diesel Sound projects v7 by John McMasters">
+        <output name="1" label="White" connection="wire"/>
+        <output name="2" label="Yellow" connection="wire"/>
+        <output name="3" label="Green" connection="wire"/>
+        <output name="4" label="Violet" connection="wire"/>
+        <output name="5" label="F3-Brown" connection="wire"/>
+        <output name="6" label="F4-Yellow" connection="wire"/>
+        <size length="1.28" width="0.67" height="0.25" units="inches"/>
+        <functionlabels>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler (Short Horn)</functionlabel>
+          <functionlabel num="4" lockable="true">Dynamic brake / Hand Brake</functionlabel> <!--  Dyn. Brakes Fans level 1-3 (handbrake spd=0) -->
+          <functionlabel num="5" lockable="true">Emergency Lights</functionlabel> 
+          <functionlabel num="6" lockable="true">Ditchlights - Light function</functionlabel>
+          <functionlabel num="7" lockable="true">Wheel Flange</functionlabel>
+          <functionlabel num="8" lockable="true">Mute (full-half-silent)</functionlabel>
+          <functionlabel num="9" lockable="true">UnCouple - Disconnect (Short Horn)</functionlabel>
+          <functionlabel num="10" lockable="true">Independent Brake</functionlabel>   
+          <functionlabel num="11" lockable="true">Train Brake (trig F10)</functionlabel>
+          <functionlabel num="12" lockable="true">Coupler Disconnect (Long Horn)</functionlabel>
+          <functionlabel num="13" lockable="true">Ditchlights </functionlabel>
+          <functionlabel num="14" lockable="true">High Fan</functionlabel>
+          <functionlabel num="15" lockable="true">Emerg. Stop Shutdown [disables motor movement when stopped]</functionlabel>
+          <functionlabel num="16" lockable="true">Air Dryer</functionlabel>
+          <functionlabel num="17" lockable="true">Brake Set</functionlabel>
+          <functionlabel num="18" lockable="true">Sander</functionlabel>
+          <functionlabel num="19" lockable="true">Air LetOff</functionlabel> <!-- Steam SANDER, Manual Chuff 0 (0=CylOpn) -->
+          <functionlabel num="20" lockable="true">Compressor</functionlabel>
+          <functionlabel num="21" lockable="true">Notch 1</functionlabel>
+          <functionlabel num="22" lockable="true">Cab Sounds</functionlabel>
+          <functionlabel num="23" lockable="true">Grade Xing</functionlabel>
+          <functionlabel num="24" lockable="true">Reverser</functionlabel>
+          <functionlabel num="25" lockable="true">AUX generator / HEP</functionlabel>
+          <functionlabel num="26" lockable="true">Notch UP / Wheel Slip on start-up</functionlabel>
+          <functionlabel num="27" lockable="true">Notch down /(Override wheel slip)</functionlabel>
+          <functionlabel num="28" lockable="true">Notch 8</functionlabel>
+        </functionlabels>
+      </model>
+     <functionlabels>
+        <functionlabel num="0" lockable="true">Lights</functionlabel>
+        <functionlabel num="1" lockable="true">Bell</functionlabel>
+        <functionlabel num="2" lockable="true">Horn/Whistle</functionlabel>
+        <functionlabel num="3" lockable="false">Coupler</functionlabel>
+        <functionlabel num="4" lockable="true">Air feat disabled</functionlabel>
+        <functionlabel num="5" lockable="true">Dyn. Brakes Fans/Water Pump</functionlabel>
+        <functionlabel num="6" lockable="false">Notch UP/Blowdown</functionlabel>
+        <functionlabel num="7" lockable="false">Xing Gate Airhorn/Notch DOWN/Wheel Slip</functionlabel>
+        <functionlabel num="8" lockable="true">Mute</functionlabel>
+        <functionlabel num="9" lockable="false">Brake squeal</functionlabel>
+        <functionlabel num="10" lockable="false">Xing Gate Airhorn</functionlabel>
+        <functionlabel num="11" lockable="false">Greaser</functionlabel>
+        <functionlabel num="12" lockable="false">Safety Blow off</functionlabel>
+      </functionlabels>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/vStartHighMid.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_31.xml"/>
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="203">
+        <decVal/>
+        <label>Version ID</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="129">
+        <decVal/>
+        <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/motorDriveFreq.xml"/>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv21.22.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv29NDOT.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/functionmap.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/fxCVs.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv54.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/bemf.xml"/>
+  	 <!-- version 1 - Sound Options  "include"   -->
+	  <xi:include href="http://jmri.org/xml/decoders/digitrax/soundOptions7.xml"/> 
+
+    <!-- Sound options -->
+
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv61Series6.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv62.63LightingOptions.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv64LogicLevel21MTC.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <!-- Software information - Read-only -->
+      <!-- Disabled for Series 6 - not documented in Digitrax Manual 2nd Edition
+      <variable label="Software Version" CV="121" readOnly="yes" default="3">
+        <decVal/>
+        <label>Software Version</label>
+      </variable>
+      <variable label="Product Type" CV="122" readOnly="yes" default="12" tooltip="12=Digitrax SFX sound decoder">
+        <decVal/>
+        <label>Product Type</label>
+      </variable>
+      <variable label="Hardware Version" CV="123" readOnly="yes" default="17">
+        <decVal/>
+        <label>Hardware Version</label>
+      </variable>
+      <variable label="Flash Signature" CV="124" readOnly="yes" default="2">
+        <decVal/>
+        <label>Flash Signature</label>
+      </variable>
+      <variable label="16KB free blocks" CV="125" readOnly="yes" default="0">
+        <decVal/>
+        <label>16KB free blocks</label>
+      </variable>
+      <variable label="FAT flags" CV="126" readOnly="yes" default="7">
+        <decVal/>
+        <label>FAT flags</label>
+      </variable>
+      <variable label="Internal Flags" CV="127" readOnly="yes" default="0">
+        <decVal/>
+        <label>Internal Flags</label>
+      </variable>
+      <variable label="IPL counter" CV="128" readOnly="yes" default="0">
+        <decVal/>
+        <label>IPL counter</label>
+      </variable>
+      -->
+    <variable CV="152" item="Sound Project Author ID" default="25" readOnly="no" tooltip="0x19(25) = John McMasters" include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <decVal/>
+    <label>Sound Project Author ID</label>
+    <label xml:lang="it">ID autore progetto Suono</label>
+    </variable>
+    <variable item="Sound Project Code Version" CV="152" default="70" readOnly="no" include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+        <decVal/>
+        <label>Sound Project Code Version</label>
+        <label xml:lang="it">Version Suono</label>
+        <tooltip>70= base version 7.0</tooltip>
+      </variable>
+      <variable item="Sound Project ID" CV="153" default="0" readOnly="no" include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+        <decVal/>
+        <label>Sound Project ID</label>
+        <label xml:lang="it">ID progetto Suono</label>
+        <tooltip>Code Project Identifier</tooltip>
+	  </variable>
+
+
+      <!-- Read-only variables -->
+      <variable item="Variant ID" CV="160" readOnly="no" default="4">
+        <decVal/>
+        <label>Variant ID</label>
+      </variable>
+      <!-- Sound Settings -->
+	 <!-- version 1 - Sound Settings  "include"
+                                    John McMasters (2023-04-4)          -->
+ <xi:include href="http://jmri.org/xml/decoders/digitrax/soundSettings7.xml"/> 
+      <!-- Sound Settings -->
+  <!-- Disable Feature Settings -->
+ <xi:include href="http://jmri.org/xml/decoders/digitrax/featureSettings7.xml"/>	
+  <!-- Disable Feature Settings -->
+  
+
+    </variables>
+	      <!-- end family    -->
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8">
+        <label>Reset All CVs</label>
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+      <factReset label="Reset All CVs except speed table" CV="8" default="9">
+        <label>Reset All CVs except speed table</label>
+        <label xml:lang="it">Ripristino di tutte le CV eccetto Tabella velocità</label>
+      </factReset>
+    </resets>
+  </decoder>
+  <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitrax.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitraxSoundInfo.xml"/>
+       <!-- inline sound levels and disables
+ <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitraxSoundExtSeries6.xml"/> -->
+ <!-- version 1 - Add new Sound Features  "include"
+                 only to show with SDXH167 Extended Series 7 sound projects
+                                    John McMasters (2023-04-4)          -->
+ <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitraxSoundFeaturesSeries7.xml"/> 
+<!--                                                                        -->
+</decoder-config>

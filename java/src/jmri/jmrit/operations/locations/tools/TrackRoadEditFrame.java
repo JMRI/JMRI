@@ -1,19 +1,9 @@
 package jmri.jmrit.operations.locations.tools;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
+import java.awt.*;
+
+import javax.swing.*;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -22,8 +12,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame for user edit of track roads
@@ -42,7 +31,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
     JScrollPane paneRoads = new JScrollPane(panelRoads);
 
     // major buttons
-    JButton saveTrackButton = new JButton(Bundle.getMessage("SaveTrack"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     JButton addRoadButton = new JButton(Bundle.getMessage("AddRoad"));
     JButton deleteRoadButton = new JButton(Bundle.getMessage("DeleteRoad"));
     JButton deleteAllRoadsButton = new JButton(Bundle.getMessage("DeleteAll"));
@@ -140,7 +129,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
         panelButtons.setMaximumSize(new Dimension(2000, 200));
 
         // row 13
-        addItem(panelButtons, saveTrackButton, 0, 0);
+        addItem(panelButtons, saveButton, 0, 0);
 
         getContentPane().add(p1);
         getContentPane().add(pane3);
@@ -148,7 +137,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
         getContentPane().add(panelButtons);
 
         // setup buttons
-        addButtonAction(saveTrackButton);
+        addButtonAction(saveButton);
 
         addButtonAction(deleteRoadButton);
         addButtonAction(deleteAllRoadsButton);
@@ -182,7 +171,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
         if (_track == null) {
             return;
         }
-        if (ae.getSource() == saveTrackButton) {
+        if (ae.getSource() == saveButton) {
             log.debug("track save button activated");
             checkForErrors();
             OperationsXml.save();
@@ -204,7 +193,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
     }
 
     protected void enableButtons(boolean enabled) {
-        saveTrackButton.setEnabled(enabled);
+        saveButton.setEnabled(enabled);
         roadNameAll.setEnabled(enabled);
         roadNameInclude.setEnabled(enabled);
         roadNameExclude.setEnabled(enabled);
@@ -287,8 +276,8 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 
     private void checkForErrors() {
         if (_track.getRoadOption().equals(Track.INCLUDE_ROADS) && _track.getRoadNames().length == 0) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNeedRoads"), Bundle.getMessage("ErrorNoRoads"),
-                    JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNeedRoads"), Bundle.getMessage("ErrorNoRoads"),
+                    JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -316,5 +305,5 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackRoadEditFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackRoadEditFrame.class);
 }

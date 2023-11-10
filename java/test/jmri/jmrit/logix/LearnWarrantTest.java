@@ -14,7 +14,6 @@ import jmri.ShutDownTask;
 //import jmri.ShutDownManager;
 //import jmri.ShutDownTask;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -122,7 +121,8 @@ public class LearnWarrantTest {
         JUnitUtil.waitFor(() -> oBlockOccupiedOrAllocated(block0), "Train 111 occupies first block ");
 
 //        (new JRadioButtonOperator(jfo,"ARun")).push();    // start play back
-        frame.runTrain();
+        jmri.util.ThreadingUtil.runOnGUIEventually(() -> {frame.runTrain();});
+//        confirmJOptionPane(jfo, Bundle.getMessage("WarningTitle"), "OK");
 
         sensor = NXFrameTest.runtimes(route, _OBlockMgr);
         assertThat(sensor).withFailMessage("Sensor not null").isNotNull();
@@ -132,7 +132,7 @@ public class LearnWarrantTest {
         NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.ACTIVE, block4);
 
         JUnitUtil.waitFor(() -> oBlockOccupiedOrAllocated(block4), "Train 111 occupies last block ");
-        
+
 /*
         JUnitAppender.assertWarnMessageStartsWith("block: OB2 Path distance or SpeedProfile unreliable! pathDist= 1270.0,");
         JUnitAppender.assertWarnMessageStartsWith("block: OB3 Path distance or SpeedProfile unreliable! pathDist= 762.0,");

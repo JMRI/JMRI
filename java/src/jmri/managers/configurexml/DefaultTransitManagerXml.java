@@ -13,8 +13,6 @@ import jmri.TransitSectionAction;
 
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides the functionality for configuring a TransitManager.
@@ -60,11 +58,16 @@ public class DefaultTransitManagerXml extends jmri.managers.configurexml.Abstrac
                     elem.setAttribute("userName", uName);
                 }
 
+                ArrayList<TransitSection> tsList = transit.getTransitSectionList();
+                if ( tsList.isEmpty() ){
+                    log.warn("Not Storing Transit \"{}\" as it has no TransitSections", transit.getDisplayName());
+                    continue;
+                }
+
                 // store common part
                 storeCommon(transit, elem);
 
                 // save child transitsection entries
-                ArrayList<TransitSection> tsList = transit.getTransitSectionList();
                 Element tsElem;
                 for (TransitSection ts : tsList) {
                     if ((ts != null) && !ts.isTemporary()) {
@@ -95,6 +98,7 @@ public class DefaultTransitManagerXml extends jmri.managers.configurexml.Abstrac
                                     tsaElem.setAttribute("whatdata1", Integer.toString(tsa.getDataWhat1()));
                                     tsaElem.setAttribute("whatdata2", Integer.toString(tsa.getDataWhat2()));
                                     tsaElem.setAttribute("whatstring", tsa.getStringWhat());
+                                    tsaElem.setAttribute("whatstring2", tsa.getStringWhat2());
                                     tsElem.addContent(tsaElem);
                                 }
                             }
@@ -209,6 +213,10 @@ public class DefaultTransitManagerXml extends jmri.managers.configurexml.Abstrac
                     int tWhatData1 = 0;
                     int tWhatData2 = 0;
                     String tWhatString = elemx.getAttribute("whatstring").getValue();
+                    String tWhatString2 = "";
+                    if (elemx.getAttribute("whatstring").getValue() != null) {
+                        tWhatString2=elemx.getAttribute("whatstring").getValue();
+                    }
                     try {
                         tWhen = elemx.getAttribute("whencode").getIntValue();
                         tWhat = elemx.getAttribute("whatcode").getIntValue();
@@ -219,7 +227,7 @@ public class DefaultTransitManagerXml extends jmri.managers.configurexml.Abstrac
                         log.error("Data Conversion Exception when loading transit section action - ", e);
                     }
                     TransitSectionAction tsa = new TransitSectionAction(tWhen, tWhat, tWhenData,
-                            tWhatData1, tWhatData2, tWhenString, tWhatString);
+                            tWhatData1, tWhatData2, tWhenString, tWhatString, tWhatString2);
                     ts.addAction(tsa);
                 }
             }
@@ -232,6 +240,6 @@ public class DefaultTransitManagerXml extends jmri.managers.configurexml.Abstrac
         return InstanceManager.getDefault(TransitManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultTransitManagerXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultTransitManagerXml.class);
 
 }

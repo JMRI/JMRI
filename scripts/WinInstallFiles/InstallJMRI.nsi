@@ -710,7 +710,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     File /a "${SRCDIR}\jmri.conf"
     File /a "${SRCDIR}\LaunchJMRI.exe"
     File /a "${SRCDIR}\*.bat"
-    File /a "${SRCDIR}\default.lcf"
+    File /a "${SRCDIR}\default_lcf.xml"
     File /a "${SRCDIR}\*.ico"
     File /a "${SRCDIR}\lib\security.policy"
     File /a "${SRCDIR}\python.properties"

@@ -63,6 +63,8 @@
         <xs:element name="PortalIcon" type="EditorPortalIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="LightIcon" type="EditorLightIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="BlockContentsIcon"  type="EditorBlockContentsIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="audioicon" type="EditorAudioIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="logixngicon" type="EditorLogixNGIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
 
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>

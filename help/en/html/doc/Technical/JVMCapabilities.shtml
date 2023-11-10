@@ -36,22 +36,14 @@
       <p>This section lists new Java capabilities, and which Java version they first appeared in.
       The "JDK" column shows the first Java Development Kit that could compile the feature; the
       "JRE" column lists the first runtime environment that could run the feature, including the
-      needed JVM and library support.</p>
+      needed JVM and library support. Not all updates are included, of course, just the
+      ones that JMRI developers have expressed interest in using or that will cause known problems.</p>
 
       <table style="width: 100%; padding: 10px 15px 10px 15px;" border="1">
         <tr>
           <th>Feature</th>
           <th>JDK</th>
           <th>JRE</th>
-        </tr>
-
-        <tr>
-          <td>HiDPI graphics support for Windows and Linux users. Probably "just works" with JRE
-          update, unless something in JMRI breaks on Java 9 on Windows (Currently support using
-          very large fonts as a workaround, but it quickly breaks as text overlaps widget
-          boundaries)</td>
-          <td>8</td>
-          <td>9</td>
         </tr>
 
         <tr>
@@ -64,16 +56,16 @@
         </tr>
 
         <tr>
+          <td>Java Platform Module System</td>
+          <td>9</td>
+          <td>9</td>
+        </tr>
+
+        <tr>
           <td>The Deprecated annotation can take "since" and "forRemoval" specifications, which
           simplifies our API migration management a lot.</td>
           <td>9</td>
           <td>8</td>
-        </tr>
-
-        <tr>
-          <td>Java Platform Module System</td>
-          <td>9</td>
-          <td>9</td>
         </tr>
 
         <tr>
@@ -101,8 +93,7 @@
 
         <tr>
           <td>var syntax - improves readability of code, use of generics</td>
-          <td>10<br>
-          11</td>
+          <td>11</td>
           <td>10</td>
         </tr>
 
@@ -128,21 +119,6 @@
           <td>Completion of Optional class: isEmpty()</td>
           <td>11</td>
           <td>11</td>
-        </tr>
-
-        <tr>
-          <td>Incompatible change in the MacOS X (macOS) App menu About, Preferences, and
-          (critically) Quit handling on that platform</td>
-          <td>&gt; 9</td>
-          <td>&gt; 9</td>
-        </tr>
-
-        <tr>
-          <td>Applescript support on MacOS X (macOS) removed from the JVM (Note that Java 7 and 8
-          included Applescript support but disabled it unless an additional JAR file enabling it
-          was added by the user).</td>
-          <td>&gt; 9</td>
-          <td>&gt; 9</td>
         </tr>
 
         <tr>
@@ -196,10 +172,9 @@
         </tr>
 
         <tr>
-          <td>JMRI uses several com.sun classes that will, at some point, no longer be accessible.
-          This was originally scheduled as part of JPMS for 1.9, but was later removed. At some
-          point, we will need to migrate away from these before using a more advanced JRE or
-          JDK. This can start once we're using Java 11, so that it's done before needed.</td>
+          <td>JMRI uses several com.sun classes that will no longer be accessible in Java 16.
+          At some point, we will need to migrate away from these.
+          This can start once we're using Java 11 so that it's done before needed.</td>
           <td>&gt; 11</td>
           <td>&gt; 11</td>
         </tr>
@@ -209,6 +184,20 @@
             The <a href="https://www.baeldung.com/jvm-zgc-garbage-collector">Z Garbage
             Collector</a> may provide better performance because of reduced garbage collection
             pauses.
+          </td>
+          <td>11</td>
+          <td>11</td>
+        </tr>
+
+        <tr>
+          <td>
+            A standard installation of
+            <a href="https://medium.com/graalvm/nashorn-removal-graalvm-to-the-rescue-d4da3605b6cb">GraalVM</a>
+            is available that can
+            <a href="https://www.graalvm.org/reference-manual/python/">run parts of Python 3.7</a>.
+            Although this is "far from complete", no other project appears to be emerging to
+            include Python 3 support in i.e. Jython. Having this available can let JMRI start a
+            gentler migration.
           </td>
           <td>11</td>
           <td>11</td>
@@ -242,16 +231,27 @@
 
         <tr>
           <td>
-            A standard installation of
-            <a href="https://medium.com/graalvm/nashorn-removal-graalvm-to-the-rescue-d4da3605b6cb">GraalVM</a>
-            is available that can
-            <a href="https://www.graalvm.org/reference-manual/python/">run parts of Python 3.7</a>.
-            Although this is "far from complete", no other project appears to be emerging to
-            include Python 3 support in i.e. Jython. Having this available can let JMRI start a
-            gentler migration.
+            Improvements to the String API: transform, indent
           </td>
-          <td>11</td>
-          <td>11</td>
+          <td>12</td>
+          <td>12</td>
+        </tr>
+
+        <tr>
+          <td>
+            Record types
+          </td>
+          <td>14, <br>improved in 15 and 16</td>
+          <td>14, <br>improved in 15 and 16</td>
+        </tr>
+
+        <tr>
+          <td>
+            Improved handling and reporting of NPE, which will help
+            debugging
+          </td>
+          <td>14</td>
+          <td>14</td>
         </tr>
 
         <tr>
@@ -263,6 +263,121 @@
           </td>
           <td>15</td>
           <td>15</td>
+        </tr>
+
+        <tr>
+          <td>
+            More improvements to the String API: formatter, text blocks.
+          </td>
+          <td>15</td>
+          <td>15</td>
+        </tr>
+
+        <tr>
+          <td>
+            GraalVM provides "complete" Python 3.7 and JavaScript.
+            At least this version will be required for Nashorn replacement.
+          </td>
+          <td>16</td>
+          <td>16</td>
+        </tr>
+
+        <tr>
+          <td>
+            Strong encapsulation by default.
+          </td>
+          <td>16</td>
+          <td>16</td>
+        </tr>
+
+        <tr>
+          <td>
+            The module system prevents LibUSB (ch.ntb.usb) from accessing the
+            hardware.  This is used in a few scripts.  Not clear if its
+            developers will be issuing an update or not; possibly JMRI will
+            have to switch to a different library.
+          </td>
+          <td>16</td>
+          <td>16</td>
+        </tr>
+
+        <tr>
+          <td>
+            <code>Objects</code> class has extensions for testing for
+            equality, handling null cases and index manipulation.
+          </td>
+          <td>16</td>
+          <td>16</td>
+        </tr>
+
+        <tr>
+          <td>
+            Improved rendering pipeline on macOS which reduces the
+            number of odd display artifacts. First appearance of fully-native
+            JDK on Apple Silicon.
+          </td>
+          <td>17</td>
+          <td>17</td>
+        </tr>
+
+        <tr>
+          <td>
+            The RMI activation API is removed, which in some cases will
+            break access for LocoNet Server (not LocoNet Over TCP) connections.
+          </td>
+          <td>17</td>
+          <td>17</td>
+        </tr>
+
+        <tr>
+          <td>
+            Java 17 is the next LTS version after Java 11.
+          </td>
+          <td>17</td>
+          <td>17</td>
+        </tr>
+
+        <tr>
+          <td>
+            The sun.misc package is replaced by jdk.internal.misc, access
+            to which requires the use of the module system.
+          </td>
+          <td>18</td>
+          <td>18</td>
+        </tr>
+
+        <tr>
+          <td>
+            Various elements of the Thread and Locale APIs are marked for deletion, 
+            resulting in about 50 compilation warnings.
+          </td>
+          <td>20</td>
+          <td>20</td>
+        </tr>
+
+        <tr>
+          <td>
+            JavaDoc improvements: better internal linking, better handling of external packages,
+            <a href="https://blogs.oracle.com/javamagazine/post/java-javadoc-snippet">code snippets</a>.
+          </td>
+          <td>20</td>
+          <td>20</td>
+        </tr>
+
+        <tr>
+          <td>
+            Sequenced collections (replaces existing non-standard workarounds)
+          </td>
+          <td>21</td>
+          <td>21</td>
+        </tr>
+
+        <tr>
+          <td>
+            Java 21 is the next LTS version after Java 17.
+          </td>
+          <td>21</td>
+          <td>21</td>
         </tr>
 
       </table>
@@ -697,6 +812,34 @@
           </tr>
         </tbody>
       </table>
+      
+      <a id="jdk17">
+      <h2>Running JMRI 5 on Java 17 or later</h2>
+      There are some known problems when running JMRI 
+      on Java versions later than the recommended Java 11.
+      Specifically, for JMRI 5 on Java 17 these include:
+      
+      <ol>
+        <li>There is no JavaScript (ECMAscript) interpreter available
+            so .js scripts can't be run within JMRI.  Note that this 
+            does not affect JavaScript run on a web browser, so that
+            JMRI's webserver capability will still work OK.
+        <li>The module system prevents LibUSB (ch.ntb.usb) from accessing the hardware. 
+            This is used in a few scripts. Not clear if its developers will 
+            be issuing an update or not; possibly JMRI will have to 
+            switch to a different library.
+        <li>The Java module system will in certain circumstances emit a large
+            number of "access violation" messages.  These are just advisory
+            with Java 17, but will become mandatory failures in some later
+            version of Java (Java 21?)
+        <li>(Development only) Improved error checking in the Javadoc
+            process generates hundreds of warnings that can hide real problems.
+            These will need to be cleaned up.
+        <li>(Development only) Deprecations that are marked for removal 
+            generate un-suppressible warning messages.
+            These will need to be cleaned up.
+      </ol>
+      
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

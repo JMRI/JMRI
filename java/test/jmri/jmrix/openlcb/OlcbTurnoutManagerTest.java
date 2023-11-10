@@ -63,6 +63,14 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertSame("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
+    @Test
+    public void testLeadingZeros() {
+        Assert.assertNotNull(l.provide("01.02.03.04.05.06.07.08;01.02.03.04.05.06.07.09"));
+        Assert.assertNotNull(l.provide("01.02.03.04.05.06.07.08;01.02.03.04.05.06.07.0A"));
+        Assert.assertNotNull(l.provide("1.02.03.04.05.06.07.08;01.02.03.04.05.06.07.0B"));
+        Assert.assertNotNull(l.provide("01.02.03.04.05.06.07.08;1.02.03.04.05.06.07.0C"));
+    }
+
     @Override
     @Test
     public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException,

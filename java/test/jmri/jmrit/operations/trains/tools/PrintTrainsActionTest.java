@@ -2,7 +2,6 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
 
 import org.junit.Assert;
 import org.junit.Assume;
@@ -10,9 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.trains.TrainsTableFrame;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
+import jmri.util.*;
 
 /**
  *
@@ -45,10 +42,7 @@ public class PrintTrainsActionTest extends OperationsTestCase {
         pta.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
 
         // confirm print preview window is showing
-        ResourceBundle rb = ResourceBundle
-                .getBundle("jmri.util.UtilBundle");
-        JmriJFrame printPreviewFrame = JmriJFrame.getFrame(rb.getString("PrintPreviewTitle") +
-                " " +  Bundle.getMessage("TitleTrainsTable"));
+        JmriJFrame printPreviewFrame = JmriJFrame.getFrame(Bundle.getMessage("MenuItemPreview"));
 
         Assert.assertNotNull("exists", printPreviewFrame);
 
@@ -56,9 +50,5 @@ public class PrintTrainsActionTest extends OperationsTestCase {
         JUnitUtil.dispose(ttf);
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-
     }
-
-    // private final static Logger log = LoggerFactory.getLogger(PrintTrainsActionTest.class);
-
 }

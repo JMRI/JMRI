@@ -1,9 +1,10 @@
 package jmri.jmrit.logix.configurexml;
 
+import java.awt.GraphicsEnvironment;
 import java.util.HashMap;
 import java.util.List;
 import java.util.SortedSet;
-import javax.swing.JOptionPane;
+
 import jmri.BeanSetting;
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -15,11 +16,10 @@ import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.PortalManager;
-import jmri.jmrit.logix.WarrantTableAction;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides the abstract base and store functionality for configuring the
@@ -321,7 +321,10 @@ public class OBlockManagerXml // extends XmlFile
             try {
                 block.setBlockSpeed(elem.getAttribute("speedNotch").getValue());
             } catch (jmri.JmriException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + elem.getAttribute("speedNotch").getValue());
+                log.error("Error setting SpeedNotch {} threw exception", elem.getAttribute("speedNotch").getValue(),  ex);
+                if (!GraphicsEnvironment.isHeadless()) {
+                    JmriJOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + elem.getAttribute("speedNotch").getValue());
+                }
             }
         }
 
@@ -526,6 +529,6 @@ public class OBlockManagerXml // extends XmlFile
         return InstanceManager.getDefault(OBlockManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OBlockManagerXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OBlockManagerXml.class);
 
 }

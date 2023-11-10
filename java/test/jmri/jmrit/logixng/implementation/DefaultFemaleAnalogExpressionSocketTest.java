@@ -9,7 +9,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.AnalogExpressionMemory;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -145,6 +144,7 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
     public void tearDown() {
 //        JUnitAppender.clearBacklog();   // REMOVE THIS!!!!
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

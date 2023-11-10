@@ -17,7 +17,6 @@ import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.ToDo;
 
 import org.junit.jupiter.api.io.TempDir;
-import org.picocontainer.behaviors.Stored;
 
 /**
  *

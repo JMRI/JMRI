@@ -4,7 +4,6 @@ import jmri.InstanceManager;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.actions.For;
 
-import org.jdom2.Attribute;
 import org.jdom2.Element;
 
 import jmri.jmrit.logixng.MaleSocket;

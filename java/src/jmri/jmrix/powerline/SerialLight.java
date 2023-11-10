@@ -13,6 +13,9 @@ import org.slf4j.LoggerFactory;
  * For Insteon devices, uses direct setting of intensity level unless the value
  * is 0.0 or 1.0, in which case it uses on/off commands only.
  * <p>
+ * For DMX devices, use direct setting of the intensity level. But an on/off
+ * will skip any stepping of the change.
+ * <p>
  * For X10, since the dim/bright step of the hardware is unknown then the Light
  * object is first created, the first time the intensity (not state) is set to
  * other than 0.0 or 1.0, the output is run to it's maximum dim or bright step
@@ -20,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * <p>
  * For X10, keeps track of the controller's "dim count", and if not certain
  * forces it to zero to be sure.
- * <p>
  *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008
@@ -65,13 +67,17 @@ abstract public class SerialLight extends AbstractVariableLight {
      */
     protected void initializeLight() {
         // Convert to the two-part X10 address
-        housecode = tc.getAdapterMemo().getSerialAddress().houseCodeAsValueFromSystemName(getSystemName());
-        devicecode = tc.getAdapterMemo().getSerialAddress().deviceCodeAsValueFromSystemName(getSystemName());
+        housecode = tc.getAdapterMemo().getSerialAddress().x10HouseCodeAsValueFromSystemName(getSystemName());
+        devicecode = tc.getAdapterMemo().getSerialAddress().x10DeviceCodeAsValueFromSystemName(getSystemName());
         // not an X10, try Insteon
         if (housecode == -1) {
-            idhighbyte = tc.getAdapterMemo().getSerialAddress().idHighCodeAsValueFromSystemName(getSystemName());
-            idmiddlebyte = tc.getAdapterMemo().getSerialAddress().idMiddleCodeAsValueFromSystemName(getSystemName());
-            idlowbyte = tc.getAdapterMemo().getSerialAddress().idLowCodeAsValueFromSystemName(getSystemName());
+            idhighbyte = tc.getAdapterMemo().getSerialAddress().insteonIdHighCodeAsValueFromSystemName(getSystemName());
+            idmiddlebyte = tc.getAdapterMemo().getSerialAddress().insteonIdMiddleCodeAsValueFromSystemName(getSystemName());
+            idlowbyte = tc.getAdapterMemo().getSerialAddress().insteonIdLowCodeAsValueFromSystemName(getSystemName());
+            // if not Insteon, try DMX
+            if (idhighbyte == -1) {
+                unitid = tc.getAdapterMemo().getSerialAddress().dmxUnitIdCodeAsValueFromSystemName(getSystemName());
+            }
         }
     }
 
@@ -92,6 +98,7 @@ abstract public class SerialLight extends AbstractVariableLight {
     protected int idhighbyte = -1;
     protected int idmiddlebyte = -1;
     protected int idlowbyte = -1;
+    protected int unitid = -1;
 
     /**
      * Send a On/Off Command to the hardware

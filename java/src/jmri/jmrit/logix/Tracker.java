@@ -16,18 +16,15 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JDialog;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import jmri.Block;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.JmriException;
 import jmri.jmrit.display.LocoIcon;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Track an occupied block to adjacent blocks becoming occupied.
@@ -532,9 +529,9 @@ public class Tracker {
             JButton recoverButton = new JButton(Bundle.getMessage("ButtonRecover"));
             recoverButton.addActionListener((ActionEvent a) -> {
                 if (_occupies.isEmpty()) {
-                    JOptionPane.showMessageDialog(this, 
+                    JmriJOptionPane.showMessageDialog(this, 
                             Bundle.getMessage("RecoverOrExit", _trainName, Bundle.getMessage("ButtonStop")),
-                            Bundle.getMessage("WarningTitle"), JOptionPane.INFORMATION_MESSAGE);                    
+                            Bundle.getMessage("WarningTitle"), JmriJOptionPane.INFORMATION_MESSAGE);                    
                 } else {
                     doAction();
                 }
@@ -561,8 +558,8 @@ public class Tracker {
                     }
                 }
                 if (msg != null) {
-                    JOptionPane.showMessageDialog(this, msg,
-                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.showMessageDialog(this, msg,
+                            Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                     _jList.removeListSelectionListener(this);
                     list.remove(blk);
                     if (list.isEmpty()) {
@@ -719,5 +716,6 @@ public class Tracker {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(Tracker.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Tracker.class);
+
 }

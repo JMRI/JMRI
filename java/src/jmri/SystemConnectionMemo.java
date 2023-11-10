@@ -2,7 +2,6 @@ package jmri;
 
 import java.util.Comparator;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
@@ -35,10 +34,12 @@ public interface SystemConnectionMemo extends jmri.beans.PropertyChangeProvider 
     @OverridingMethodsMustInvokeSuper
     <T> T get(Class<T> type);
 
-    public static final String DISABLED = "ConnectionDisabled";
-    public static final String USER_NAME = "ConnectionNameChanged";
-    public static final String SYSTEM_PREFIX = "ConnectionPrefixChanged";
-    public static final String INTERVAL = "OutputInterval";
+    String DISABLED = "ConnectionDisabled";
+    String USER_NAME = "ConnectionNameChanged";
+    String SYSTEM_PREFIX = "ConnectionPrefixChanged";
+    String INTERVAL = "OutputInterval";
+    String STORE = "Store";
+    String DEREGISTER = "Deregister";
 
     /**
      * Provide a factory for getting startup actions.

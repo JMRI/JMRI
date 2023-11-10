@@ -7,13 +7,13 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
@@ -21,8 +21,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import jmri.jmrit.MemoryContents;
 import jmri.util.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Pane for downloading .hex files and .dmf files to those LocoNet devices which
@@ -89,7 +88,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         {
-            /* Create panels for displaying a filename and for providing a file 
+            /* Create panels for displaying a filename and for providing a file
              * selection pushbutton
              */
             inputFileNamePanel = new JPanel();
@@ -201,7 +200,9 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         }
     }
 
-    private JFileChooser chooser;
+    // static so that the selection will be retained from
+    // one open LoaderPane to the next
+    private static JFileChooser chooser;
 
     /**
      * Add filter(s) for possible types to the input file chooser.
@@ -224,7 +225,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
             name = FileUtil.getUserFilesPath();
         }
         if (chooser == null) {
-            chooser = new JFileChooser(name);
+            chooser = new jmri.util.swing.JmriJFileChooser(name);
             addChooserFilters(chooser);
         }
         inputFileName.setText("");  // clear out in case of failure
@@ -276,9 +277,9 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         justification = "Passing I18N exception text through to log")
     protected void doRead(JFileChooser chooser) {
         if (inputFileName.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNoInputFile"),
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNoInputFile"),
                     Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -300,9 +301,9 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
             inputContent.readHex(new File(chooser.getSelectedFile().getPath()));
         } catch (FileNotFoundException f) {
             log.error(f.getLocalizedMessage());
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorFileNotFound"),
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorFileNotFound"),
                     Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             status.setText(Bundle.getMessage("StatusFileNotFound"));
             this.disableDownloadVerifyButtons();
             return;
@@ -502,7 +503,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
             disableDownloadVerifyButtons();
         }
     }
-    
+
     public void clearInputFileName() {
         inputFileName.setText("");
         inputFileName.setToolTipText("");
@@ -517,6 +518,6 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         log.info("ActionListener");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractLoaderPane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractLoaderPane.class);
 
 }

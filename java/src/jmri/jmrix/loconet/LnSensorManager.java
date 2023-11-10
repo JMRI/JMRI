@@ -6,7 +6,6 @@ import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.time.temporal.ChronoUnit;
 import java.time.Instant;
 
 /**

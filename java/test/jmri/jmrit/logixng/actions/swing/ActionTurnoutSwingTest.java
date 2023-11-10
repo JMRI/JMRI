@@ -11,7 +11,6 @@ import jmri.TurnoutManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterfaceTestBase;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -93,6 +92,7 @@ public class ActionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBase {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

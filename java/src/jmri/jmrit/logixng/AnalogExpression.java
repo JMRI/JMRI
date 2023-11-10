@@ -19,20 +19,20 @@ public interface AnalogExpression extends Base {
      * 
      * @throws jmri.JmriException when an exception occurs
      */
-    public double evaluate() throws JmriException;
+    double evaluate() throws JmriException;
     
     /**
      * Set whenether this expression should trigger the ConditionalNG if the
      * named beans it listens to changes state.
      * @param triggerOnChange true if trigger on change, false otherwise
      */
-    public void setTriggerOnChange(boolean triggerOnChange);
+    void setTriggerOnChange(boolean triggerOnChange);
     
     /**
      * Get whenether this expression should trigger the ConditionalNG if the
      * named beans it listens to changes state.
      * @return true if trigger on change, false otherwise
      */
-    public boolean getTriggerOnChange();
+    boolean getTriggerOnChange();
     
 }

@@ -37,7 +37,7 @@ public interface ShutDownManager extends PropertyChangeProvider {
      * @param task the task to execute
      * @throws NullPointerException if the task is null
      */
-    public void register(@Nonnull ShutDownTask task);
+    void register(@Nonnull ShutDownTask task);
 
     /**
      * Register a task for verification that JMRI should stop. An attempt to
@@ -46,7 +46,7 @@ public interface ShutDownManager extends PropertyChangeProvider {
      * @param task the verification task
      * @throws NullPointerException if the task is null
      */
-    public void register(@Nonnull Callable<Boolean> task);
+    void register(@Nonnull Callable<Boolean> task);
 
     /**
      * Register a task that runs when JMRI is stopping. An attempt to
@@ -55,7 +55,7 @@ public interface ShutDownManager extends PropertyChangeProvider {
      * @param task the execution task
      * @throws NullPointerException if the task is null
      */
-    public void register(@Nonnull Runnable task);
+    void register(@Nonnull Runnable task);
 
     /**
      * Deregister a task. Attempts to deregister a task that is not
@@ -63,7 +63,7 @@ public interface ShutDownManager extends PropertyChangeProvider {
      *
      * @param task the task not to execute
      */
-    public void deregister(@CheckForNull ShutDownTask task);
+    void deregister(@CheckForNull ShutDownTask task);
 
     /**
      * Deregister a task. Attempts to deregister a task that is not
@@ -71,7 +71,7 @@ public interface ShutDownManager extends PropertyChangeProvider {
      *
      * @param task the task not to call
      */
-    public void deregister(@CheckForNull Callable<Boolean> task);
+    void deregister(@CheckForNull Callable<Boolean> task);
 
     /**
      * Deregister a task. Attempts to deregister a task that is not
@@ -79,30 +79,13 @@ public interface ShutDownManager extends PropertyChangeProvider {
      *
      * @param task the task not to run
      */
-    public void deregister(@CheckForNull Runnable task);
+    void deregister(@CheckForNull Runnable task);
 
     @Nonnull
-    public List<Callable<Boolean>> getCallables();
+    List<Callable<Boolean>> getCallables();
 
     @Nonnull
-    public List<Runnable> getRunnables();
-
-    /**
-     * Run the shutdown tasks, and then terminate the program with status 100 if
-     * not aborted. Does not return under normal circumstances. Returns false if
-     * the shutdown was aborted by the user, in which case the program should
-     * continue to operate.
-     * <p>
-     * By exiting the program with status 100, the batch file (MS Windows) or
-     * shell script (Linux/macOS/UNIX) can catch the exit status and restart the
-     * java program.
-     * <p>
-     * <b>NOTE</b> If the macOS {@literal application->quit} menu item is used,
-     * this must return false to abort the shutdown.
-     *
-     * @return false if any shutdown task aborts restarting the application
-     */
-    public boolean restartOS();
+    List<Runnable> getRunnables();
 
     /**
      * Run the shutdown tasks, and then terminate the program with status 210 if
@@ -113,10 +96,20 @@ public interface ShutDownManager extends PropertyChangeProvider {
      * By exiting the program with status 210, the batch file (MS Windows) or
      * shell script (Linux/macOS/UNIX) can catch the exit status and tell the
      * operating system to restart.
-     *
-     * @return false if any shutdown task aborts restarting the application
      */
-    public boolean restart();
+    void restartOS();
+
+    /**
+     * Run the shutdown tasks, and then terminate the program with status 100 if
+     * not aborted. Does not return under normal circumstances. Returns false if
+     * the shutdown was aborted by the user, in which case the program should
+     * continue to operate.
+     * <p>
+     * By exiting the program with status 100, the batch file (MS Windows) or
+     * shell script (Linux/macOS/UNIX) can catch the exit status and restart the
+     * JMRI java program.
+     */
+    void restart();
 
     /**
      * Run the shutdown tasks, and then terminate the program with status 200 if
@@ -126,27 +119,16 @@ public interface ShutDownManager extends PropertyChangeProvider {
      * <p>
      * By exiting the program with status 200, the batch file (MS Windows) or
      * shell script (Linux/macOS/UNIX) can catch the exit status and shutdown the OS
-     * <p>
-     * <b>NOTE</b> If the macOS {@literal application->quit} menu item is used,
-     * this must return false to abort the shutdown.
-     *
-     * @return false if any shutdown task aborts restarting the application
      */
-    public boolean shutdownOS();
+    void shutdownOS();
 
     /**
      * Run the shutdown tasks, and then terminate the program with status 0 if
      * not aborted. Does not return under normal circumstances. Returns false if
      * the shutdown was aborted by the user, in which case the program should
      * continue to operate.
-     * <p>
-     * <b>NOTE</b> If the macOS {@literal application->quit} menu item is used,
-     * this must return false to abort the shutdown.
-     *
-     * @return false if any shutdown task aborts the shutdown or if anything
-     *         goes wrong.
      */
-    public boolean shutdown();
+    void shutdown();
 
     /**
      * Allow components that normally request confirmation to shutdown to
@@ -155,5 +137,5 @@ public interface ShutDownManager extends PropertyChangeProvider {
      *
      * @return true if shutting down or restarting
      */
-    public boolean isShuttingDown();
+    boolean isShuttingDown();
 }

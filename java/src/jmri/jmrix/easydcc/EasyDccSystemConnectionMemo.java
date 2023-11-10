@@ -87,6 +87,7 @@ public class EasyDccSystemConnectionMemo extends DefaultSystemConnectionMemo imp
      * common manager config in one place. This method is static so that it can
      * be referenced from classes that don't inherit.
      */
+    @Override
     public void configureManagers() {
 
         InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);

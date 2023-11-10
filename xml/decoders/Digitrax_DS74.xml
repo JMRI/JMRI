@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd"
+                showEmptyPanes="no"
+                suppressFunctionLabels="yes"
+                suppressRosterMedia="yes"
+                >
+
+    <version author="Bob Jacobsen" version="1" lastUpdated="20230205" />
+
+    <decoder>
+
+        <family name="Series 7 Boards" mfg="Digitrax">
+            <model model="DS74"/>
+        </family>
+
+        <programming direct="no" paged="yes" register="no" ops="no"><!-- paged yes allows initial setup and change of address -->
+            <mode>LOCONETBD7OPSWMODE</mode>
+        </programming>
+
+        <variables>
+
+          <variable CV="1" comment="Board address" item="Long Address" default="40" infoOnly="yes">
+            <!-- needed to set the board address value -->
+            <decVal min="1" max="2045" />
+            <label>Board Address</label>
+          </variable>
+
+           <variable CV="11" item="Output Type" default="0"
+                tooltip="OpSw1-4" mask="XXXXVVVV">
+            <enumVal>
+              <enumChoice>
+                <choice>pulse solenoid (4 outputs)</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>slow motion (4 outputs)</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice value="5">light mode (8 outputs)</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Output type: </label>
+          </variable>
+
+          <variable CV="11" item="Internal Routes" default="0"
+                tooltip="OpSw06" mask="XXVXXXXX">
+            <enumVal>
+              <enumChoice>
+                <choice>enabled</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>disabled</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Internal Routes are</label>
+          </variable>
+
+          <variable CV="12" item="Bushby" default="0"
+                tooltip="OpSw10" mask="XXXXXXVX">
+            <enumVal>
+              <enumChoice>
+                <choice>disabled</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>enabled</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Bushby Bit is</label>
+          </variable>
+
+          <variable CV="12" item="Input Lines" default="0"
+                tooltip="OpSw11" mask="XXXXXVXX">
+            <enumVal>
+              <enumChoice>
+                <choice>do turnout, sensor commands</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>trigger routes</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Input Lines</label>
+          </variable>
+
+          <variable CV="12" item="Command Source" default="0"
+                tooltip="OpSw14" mask="XXVXXXXX">
+            <enumVal>
+              <enumChoice>
+                <choice>Loconet switch commands</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>DCC switch commands only</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Command source is</label>
+          </variable>
+
+          <variable CV="12" item="Route Echo" default="0"
+                tooltip="OpSw15" mask="XVXXXXXX">
+            <enumVal>
+              <enumChoice>
+                <choice>echo to Loconet</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>do not echo to Loconet</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Route Switch Commands</label>
+          </variable>
+
+          <variable CV="13" item="Solenoid Pulse" default="0"
+                tooltip="OpSw16" mask="XXXXXXXV">
+            <enumVal>
+              <enumChoice>
+                <choice>normal</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>high CD voltage</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Solenoid Pulse</label>
+          </variable>
+
+        </variables>
+        <resets>
+            <mode>LOCONETBD7OPSWMODE</mode>
+            <factReset label="Factory Reset" CV="15" default="128">
+                <label>Reset All CVs</label>
+            </factReset>
+        </resets>
+    </decoder>
+  <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+    <name>CVs</name>
+    <column>
+        <row>
+            <cvtable/>
+        </row>
+        <row>
+            <column>
+                <label>
+                    <text>&lt;html&gt;The "CV" column in the table above shows CV
+                        numbers, not the Op Switch number.  To see those, hover
+                        your mouse over a variable on the OpSw Settings pane.
+                        &lt;p&gt;&lt;p&gt;The top-most row above reflects the Board
+                        Address configured on the "Basic" sheet.
+                    </text>
+                </label>
+                <label>
+                    <text> </text>
+                </label>
+            </column>
+        </row>
+    </column>
+
+  </pane>
+  <pane>
+      <name>Basic</name>
+      <column>
+          <display item="Long Address"/>
+          <label>
+              <text> </text>
+          </label>
+          <label>
+            <text>&lt;html&gt;&lt;p&gt;
+                &lt;p&gt;This roster entry will only access the specified
+                board if the Board Address (i.e. Board ID), specified above,
+                &lt;br&gt;was correctly entered when the roster entry was first created.
+                You cannot change it here.
+                &lt;p&gt;Note that some Digitrax documentation refers
+                to Board Address, while other documentation refers to
+                &lt;p&gt;Board ID.  These are equivalent concepts.
+            &lt;/html&gt;</text>
+          </label>
+      </column>
+  </pane>
+
+    <pane>
+        <name>OpSw Settings</name>
+        <column>
+            <display item="Output Type"/>
+            <display item="Internal Routes"/>
+            <display item="Bushby"/>
+
+            <display item="Input Lines"/>
+            <display item="Command Source"/>
+            <display item="Route Echo"/>
+            <display item="Solenoid Pulse"/>
+        </column>
+    </pane>
+
+</decoder-config>

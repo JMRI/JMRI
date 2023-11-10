@@ -29,7 +29,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
@@ -48,6 +47,7 @@ import jmri.jmrit.logixng.tools.ImportLogix;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriJOptionPane;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -993,12 +993,12 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
                 targetLogix = _logixManager.getByUserName(uName);
             }
             if (targetLogix != null) {
-                int result = JOptionPane.showConfirmDialog(f,
+                int result = JmriJOptionPane.showConfirmDialog(f,
                         Bundle.getMessage("ConfirmLogixDuplicate",
                                 targetLogix.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME), lgxName), // NOI18N
-                        Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,    // NOI18N
-                        JOptionPane.QUESTION_MESSAGE);
-                if (JOptionPane.NO_OPTION == result) {
+                        Bundle.getMessage("QuestionTitle"), JmriJOptionPane.YES_NO_OPTION,    // NOI18N
+                        JmriJOptionPane.QUESTION_MESSAGE);
+                if (JmriJOptionPane.YES_OPTION != result) {
                     return;
                 }
             }
@@ -1055,9 +1055,9 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             Logix x = _logixManager.getByUserName(uName);
             if (x != null) {
                 // Logix with this user name already exists
-                JOptionPane.showMessageDialog(getFrame(),
+                JmriJOptionPane.showMessageDialog(getFrame(),
                         Bundle.getMessage("LogixError3"), Bundle.getMessage("ErrorTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -1077,9 +1077,9 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         try {
             sName = InstanceManager.getDefault(jmri.LogixManager.class).makeSystemName(sName);
         } catch (jmri.NamedBean.BadSystemNameException ex) {
-            JOptionPane.showMessageDialog(getFrame(),
+            JmriJOptionPane.showMessageDialog(getFrame(),
                     Bundle.getMessage("LogixError8"), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
         _systemName.setText(sName);
@@ -1096,30 +1096,30 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     boolean checkFlags(String sName) {
         if (_inEditMode) {
             // Already editing a Logix, ask for completion of that edit
-            JOptionPane.showMessageDialog(getFrame(),
+            JmriJOptionPane.showMessageDialog(getFrame(),
                     Bundle.getMessage("LogixError32", _curLogix.getSystemName()),
                     Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             _baseEdit.bringToFront();
             return false;
         }
 
         if (_inAddMode) {
             // Adding a Logix, ask for completion of that edit
-            JOptionPane.showMessageDialog(getFrame(),
+            JmriJOptionPane.showMessageDialog(getFrame(),
                     Bundle.getMessage("LogixError33"),
                     Bundle.getMessage("ErrorTitle"), // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             addLogixFrame.toFront();
             return false;
         }
 
         if (_inCopyMode) {
             // Already copying a Logix, ask for completion of that edit
-            JOptionPane.showMessageDialog(getFrame(),
+            JmriJOptionPane.showMessageDialog(getFrame(),
                     Bundle.getMessage("LogixError31", _curLogix.getSystemName()),
                     Bundle.getMessage("ErrorTitle"), // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+                    JmriJOptionPane.ERROR_MESSAGE);
             _baseEdit.bringToFront();
             return false;
         }
@@ -1130,10 +1130,10 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             if (x == null) {
                 // Logix does not exist, so cannot be edited
                 log.error("No Logix with system name: {}", sName);
-                JOptionPane.showMessageDialog(getFrame(),
+                JmriJOptionPane.showMessageDialog(getFrame(),
                         Bundle.getMessage("LogixError5"),
                         Bundle.getMessage("ErrorTitle"), // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -1176,9 +1176,9 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             }
             if (x != null) {
                 // Logix already exists
-                JOptionPane.showMessageDialog(getFrame(), Bundle.getMessage("LogixError1"),
+                JmriJOptionPane.showMessageDialog(getFrame(), Bundle.getMessage("LogixError1"),
                         Bundle.getMessage("ErrorTitle"), // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
             if (!checkLogixUserName(uName)) {
@@ -1201,10 +1201,10 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     }
 
     void handleCreateException(String sysName) {
-        JOptionPane.showMessageDialog(getFrame(),
+        JmriJOptionPane.showMessageDialog(getFrame(),
                 Bundle.getMessage("ErrorLogixAddFailed", sysName), // NOI18N
                 Bundle.getMessage("ErrorTitle"), // NOI18N
-                JOptionPane.ERROR_MESSAGE);
+                JmriJOptionPane.ERROR_MESSAGE);
     }
 
     // ------------ Methods for Edit Logix Pane ------------
@@ -1221,10 +1221,10 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
 
         if (sName.equals(SensorGroupFrame.logixSysName)) {
             // Sensor group message
-            JOptionPane.showMessageDialog(getFrame(),
+            JmriJOptionPane.showMessageDialog(getFrame(),
                     Bundle.getMessage("LogixWarn8", SensorGroupFrame.logixUserName, SensorGroupFrame.logixSysName),
                     Bundle.getMessage("WarningTitle"), // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
             return;
         }
         _curLogix = _logixManager.getBySystemName(sName);
@@ -1422,13 +1422,13 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             try {
                 ImportLogix importLogix = new ImportLogix(logix, true, false);
                 importLogix.doImport();
-                JOptionPane.showMessageDialog(f, Bundle.getMessage("LogixIsExported", logix.getDisplayName()), Bundle.getMessage("TitleLogixExportSuccess"), JOptionPane.INFORMATION_MESSAGE);
+                JmriJOptionPane.showMessageDialog(f, Bundle.getMessage("LogixIsExported", logix.getDisplayName()), Bundle.getMessage("TitleLogixExportSuccess"), JmriJOptionPane.INFORMATION_MESSAGE);
             } catch (JmriException e) {
                 throw new RuntimeException("Unexpected error: "+e.getMessage(), e);
             }
         } else {
             errorMessage.append("</table></html>");
-            JOptionPane.showMessageDialog(f, errorMessage.toString(), Bundle.getMessage("TitleLogixExportError"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(f, errorMessage.toString(), Bundle.getMessage("TitleLogixExportError"), JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -1456,10 +1456,10 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             if (p != null) {
                 // Conditional with this user name already exists
                 log.error("Failure to update Conditional with Duplicate User Name: {}", uName);
-                JOptionPane.showMessageDialog(getFrame(),
+                JmriJOptionPane.showMessageDialog(getFrame(),
                         Bundle.getMessage("LogixError10"), // NOI18N
                         Bundle.getMessage("ErrorTitle"), // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -1519,11 +1519,11 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
                         // External references have to be removed before the Logix can be deleted.
                         Conditional c = x.getConditional(csName);
                         Conditional cRef = xRef.getConditional(refName);
-                        JOptionPane.showMessageDialog(getFrame(),
+                        JmriJOptionPane.showMessageDialog(getFrame(),
                                 Bundle.getMessage("LogixError11", c.getUserName(), c.getSystemName(), cRef.getUserName(),
                                         cRef.getSystemName(), xRef.getUserName(), xRef.getSystemName()), // NOI18N
                                 Bundle.getMessage("ErrorTitle"),
-                                JOptionPane.ERROR_MESSAGE);  // NOI18N
+                                JmriJOptionPane.ERROR_MESSAGE);  // NOI18N
                         return false;
                     }
                 }
@@ -1744,10 +1744,10 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         helpBrowse.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(condBrowserFrame,
+                JmriJOptionPane.showMessageDialog(condBrowserFrame,
                         Bundle.getMessage("BrowserHelpText"),   // NOI18N
                         Bundle.getMessage("BrowserHelpTitle"),  // NOI18N
-                        JOptionPane.INFORMATION_MESSAGE);
+                        JmriJOptionPane.INFORMATION_MESSAGE);
             }
         });
         JButton saveBrowse = new JButton(Bundle.getMessage("BrowserSaveButton"));   // NOI18N
@@ -1781,7 +1781,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             log.warn("Can't save browsed data, logix {} no longer exits", lgxName);
             return;
         }
-        JFileChooser userFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+        JFileChooser userFileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
         userFileChooser.setApproveButtonText(Bundle.getMessage("BrowserSaveDialogApprove"));  // NOI18N
         userFileChooser.setDialogTitle(Bundle.getMessage("BrowserSaveDialogTitle"));  // NOI18N
         userFileChooser.rescanCurrentDirectory();
@@ -1799,11 +1799,11 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             Object[] options = {Bundle.getMessage("BrowserSaveDuplicateReplace"),  // NOI18N
                     Bundle.getMessage("BrowserSaveDuplicateAppend"),  // NOI18N
                     Bundle.getMessage("ButtonCancel")};               // NOI18N
-            int selectedOption = JOptionPane.showOptionDialog(null,
+            int selectedOption = JmriJOptionPane.showOptionDialog(null,
                     Bundle.getMessage("BrowserSaveDuplicatePrompt", file.getName()), // NOI18N
                     Bundle.getMessage("BrowserSaveDuplicateTitle"),   // NOI18N
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.WARNING_MESSAGE,
+                    JmriJOptionPane.DEFAULT_OPTION,
+                    JmriJOptionPane.WARNING_MESSAGE,
                     null, options, options[0]);
             if (selectedOption == 2 || selectedOption == -1) {
                 log.debug("Save browser content stopped, file replace/append cancelled");  // NOI18N

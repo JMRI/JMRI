@@ -37,26 +37,32 @@ public class ProxyIdTagManager extends AbstractProvidingProxyManager<IdTag>
     @Override
     public void init() {
         if (!isInitialised()) {
-            getDefaultManager();
+            getDefaultManager().init();
         }
-    }
-
-    @Override
-    public boolean isInitialised() {
-        return defaultManager!= null &&
-                getManagerList().stream().noneMatch(o->((IdTagManager)o).isInitialised());
     }
 
     /**
      * {@inheritDoc}
+     * @return true if All IdTagManagers have initialised.
+     */
+    @Override
+    public boolean isInitialised() {
+        return defaultManager!= null &&
+                getManagerList().stream().allMatch(o->((IdTagManager)o).isInitialised());
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * This returns the specific IdTagManager type.
      */
     @Override
     @Nonnull
-    public Manager<IdTag> getDefaultManager() {
+    public IdTagManager getDefaultManager() {
         if(defaultManager != getInternalManager()){
            defaultManager = getInternalManager();
         }
-        return defaultManager;
+        return (IdTagManager) defaultManager;
     }
 
     @Override

@@ -1,13 +1,8 @@
 package jmri.jmrix.can.cbus.node;
 
-import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
-import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.CanSystemConnectionMemo;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
  * Table data model for display of Cbus Nodes imported from MERG FCU
@@ -16,7 +11,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  * @see CbusNodeFromBackup
  * 
  */
-public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
+public class CbusNodeFromFcuTableDataModel extends CbusBasicNodeTableOperations {
 
     // column order needs to match list in column tooltips
     static public final int FCU_NODE_NUMBER_COLUMN = 0; 
@@ -29,20 +24,9 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
 
     public CbusNodeFromFcuTableDataModel(CanSystemConnectionMemo memo, int row, int column) {
         super (memo, row, column);
-        
         _mainArray = new ArrayList<>();
-        
     }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent ev){
-        if (!(ev.getSource() instanceof CbusNode)) {
-            return;
-        }
-        this.fireTableDataChanged();
-    }
-    
+
     // order needs to match column list top of dtabledatamodel
     public static final String[] FCUTABLETIPS = {
         null,
@@ -57,7 +41,7 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
         null
 
     }; // Length = number of items in array should (at least) match number of columns
-    
+
     /**
      * {@inheritDoc}
      */
@@ -65,7 +49,15 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
     public int getRowCount() {
         return _mainArray.size();
     }
-    
+
+    /**
+     * Reset the Table Data.
+     */
+    public void resetData() {
+        _mainArray.clear();
+        fireTableDataChanged();
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -98,7 +90,7 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
                 return "unknown " + col; // NOI18N
         }
     } 
-    
+
     /**
      * {@inheritDoc}
      */
@@ -109,7 +101,7 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
         }
         return getValueAt(0, col).getClass();
     }
-    
+
     /**
      * Always False as backup Node.
      * {@inheritDoc}
@@ -141,7 +133,7 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
                 return null;
         }
     }
-    
+
     /**
      * Ignored as data from file.
      * {@inheritDoc}
@@ -150,22 +142,6 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
     public void setValueAt(Object value, int row, int col) {
     }
 
-    /**
-     * Ignored as data from file
-     * {@inheritDoc}
-     */
-    @Override
-    public void message(CanMessage m) { // outgoing cbus message
-    }
-    
-    /**
-     * Ignored as data from file
-     * {@inheritDoc}
-     */
-    @Override
-    public void reply(CanReply m) { // incoming cbus message
-    }
-    
     /**
      * Returns a new or existing Backup node by node number
      * @param nodenum Node Number
@@ -186,5 +162,5 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
         return cs;        
     }
     
-    // private final static Logger log = LoggerFactory.getLogger(CbusNodeFromFcuTableDataModel.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusNodeFromFcuTableDataModel.class);
 }

@@ -65,7 +65,7 @@
 		<label>Regelfaktor DC digital</label>
 		<label xml:lang="de">Regelfaktor DC digital</label>
 		<tooltip>Proportional decreasing Limit DC digital</tooltip>
-		<tooltip xml:lang="de">roportional fallend Limit DC digital (0-255)</tooltip>
+		<tooltip xml:lang="de">Proportional fallend Limit DC digital (0-255)</tooltip>
 	</variable>
 	<variable item="Motor Management 6" CV="245" default="220">
 		<decVal/>

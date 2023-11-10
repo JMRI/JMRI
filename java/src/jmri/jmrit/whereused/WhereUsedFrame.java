@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.*;
+
 import jmri.*;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.entryexit.EntryExitPairs;
@@ -15,6 +16,7 @@ import jmri.jmrit.logix.WarrantManager;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.FileUtil;
 import jmri.util.swing.JComboBoxUtil;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Create a where used report based on the selected bean.  The selection combo box is
@@ -206,7 +208,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
         repaint();
     }
 
-    JFileChooser userFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+    JFileChooser userFileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
 
     /**
      * Save the where used textarea content to a text file.
@@ -231,13 +233,13 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
             Object[] options = {Bundle.getMessage("SaveDuplicateReplace"),  // NOI18N
                     Bundle.getMessage("SaveDuplicateAppend"),  // NOI18N
                     Bundle.getMessage("ButtonCancel")};               // NOI18N
-            int selectedOption = JOptionPane.showOptionDialog(null,
+            int selectedOption = JmriJOptionPane.showOptionDialog(null,
                     Bundle.getMessage("SaveDuplicatePrompt", file.getName(),
                             Bundle.getMessage("SaveDuplicateAppend"),
                             Bundle.getMessage("SaveDuplicateReplace")), // NOI18N
                     Bundle.getMessage("SaveDuplicateTitle"),   // NOI18N
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.WARNING_MESSAGE,
+                    JmriJOptionPane.DEFAULT_OPTION,
+                    JmriJOptionPane.WARNING_MESSAGE,
                     null, options, options[0]);
             if (selectedOption == 2 || selectedOption == -1) {
                 log.debug("Save where used content stopped, file replace/append cancelled");  // NOI18N

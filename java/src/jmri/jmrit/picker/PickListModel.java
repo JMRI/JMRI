@@ -1,11 +1,9 @@
 package jmri.jmrit.picker;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.TreeSet;
+import java.util.*;
+
 import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -13,6 +11,7 @@ import javax.swing.SortOrder;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
+
 import jmri.*;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.entryexit.*;
@@ -22,6 +21,7 @@ import jmri.jmrit.logixng.GlobalVariableManager;
 import jmri.swing.RowSorterUtil;
 import jmri.util.*;
 import jmri.util.swing.XTableColumnModel;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -102,6 +102,10 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
         return -1;
     }
 
+    /**
+     * This method is overridden if only a limited set of the beans should be retrieved.
+     * @return the list of beans
+     */
     @Nonnull
     public List<E> getBeanList() {
         return _pickList;
@@ -115,6 +119,12 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
         makePickList();
     }
 
+    @CheckReturnValue
+    @Nonnull
+    protected SortedSet<E> getNamedBeanSet() {
+        return getManager().getNamedBeanSet();
+    }
+
     private void makePickList() {
         // Don't know who is added or deleted so remove all name change listeners
         if (_pickList != null) {
@@ -123,9 +133,9 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             }
         }
         TreeSet<E> ts = new TreeSet<>(new NamedBeanComparator<>());
-        ts.addAll(getManager().getNamedBeanSet());
+        ts.addAll(getNamedBeanSet());
 
-        _pickList = new ArrayList<>(getManager().getNamedBeanSet().size());
+        _pickList = new ArrayList<>(getNamedBeanSet().size());
 
         _pickList.addAll(ts);
         // add name change listeners
@@ -505,6 +515,17 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             _listMap.put("logix", 1);
         }
         return new LogixPickModel();
+    }
+
+    @Nonnull
+    public static PickListModel<Audio> audioPickModelInstance() {
+        Integer num = _listMap.get("audio");
+        if (num != null) {
+            _listMap.put("audio", num + 1);
+        } else {
+            _listMap.put("audio", 1);
+        }
+        return new AudioPickModel();
     }
 
     private final static Logger log = LoggerFactory.getLogger(PickListModel.class);
@@ -1006,6 +1027,60 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
         @Override
         public boolean canAddBean() {
             return false;
+        }
+    }
+
+    static class AudioPickModel extends PickListModel<Audio> {
+
+        AudioManager manager = InstanceManager.getDefault(AudioManager.class);
+
+        AudioPickModel() {
+            _name = rb.getString("TitleAudioTable");
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        @Nonnull
+        public Manager<Audio> getManager() {
+            manager = InstanceManager.getDefault(AudioManager.class);
+            return manager;
+        }
+
+        @CheckReturnValue
+        @Nonnull
+        @Override
+        protected SortedSet<Audio> getNamedBeanSet() {
+            java.util.function.Predicate<Audio> filter = (bean) -> { return bean.getSubType() == Audio.SOURCE; };
+            TreeSet<Audio> namedBeanSet = new TreeSet<>(new NamedBeanComparator<>());
+            namedBeanSet.addAll(manager.getNamedBeanSet().stream().filter(filter)
+                            .collect(java.util.stream.Collectors.toSet()));
+            return Collections.unmodifiableSortedSet(namedBeanSet);
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public Audio addBean(@Nonnull String name) throws IllegalArgumentException {
+            try {
+                return manager.provideAudio(name);
+            } catch (AudioException e) {
+                throw new IllegalArgumentException(e);
+            }
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public Audio addBean(@Nonnull String sysName, String userName) throws IllegalArgumentException {
+            try {
+                return manager.newAudio(sysName, userName);
+            } catch (AudioException e) {
+                throw new IllegalArgumentException(e);
+            }
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public boolean canAddBean() {
+            return true;
         }
     }
 

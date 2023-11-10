@@ -3,7 +3,6 @@ package apps.gui3.dp3;
 import java.io.File;
 import javax.swing.AbstractAction;
 import jmri.InstanceManager;
-import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -116,15 +115,14 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
             }
         }
 
-        Runnable r = () -> {
+        // kick off update of decoder index if needed
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
             try {
-                InstanceManager.getDefault(DecoderIndexFile.class);
-            } catch (Exception ex) {
-                log.error("Error in trying to initialize decoder index file {}", ex.toString());
+                jmri.jmrit.decoderdefn.DecoderIndexFile.updateIndexIfNeeded();
+            } catch (org.jdom2.JDOMException| java.io.IOException e) {
+                log.error("Exception trying to pre-load decoderIndex", e);
             }
-        };
-        Thread thr = new Thread(r, "initialize decoder index");
-        thr.start();
+        });
     }
 
     private final static Logger log = LoggerFactory.getLogger(DecoderPro3.class);

@@ -25,20 +25,16 @@ public class SignalMastTableDataModelTest extends jmri.jmrit.beantable.AbstractB
     }
     
     @Override
-    protected NamedBean createBean(){
+    protected SignalMast createBean(){
         
-        Manager<?> mgr = InstanceManager.getDefault(jmri.SignalMastManager.class);
+        Manager<SignalMast> mgr = InstanceManager.getDefault(jmri.SignalMastManager.class);
         Assert.assertNotNull("Table Bean Manager exists",mgr);
-        if (mgr instanceof ProvidingManager){
-            NamedBean b = ((ProvidingManager<?>) mgr).provide(mgr.getSystemNamePrefix()+"$vsm:basic:one-low($0001)");
-            Assert.assertNotNull("Bean created",b);
-            return b;
-        } else {
-            Assert.fail("Manager is not a providing manager, this test should be overridden to create a bean");
-            return null;
-        }
+
+        SignalMast b = ((ProvidingManager<SignalMast>) mgr).provide(mgr.getSystemNamePrefix()+"$vsm:basic:one-low($0001)");
+        Assertions.assertNotNull(b, "Bean created");
+        return b;
     }
-    
+
     @Test
     @Override
     public void testGetBaseColumnNames() {

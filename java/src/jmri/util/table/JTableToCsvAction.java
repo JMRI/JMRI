@@ -9,19 +9,19 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
+
 import jmri.util.FileUtil;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Save a JTable or AbstractTableModel to CSV file after prompting for filename.
@@ -63,7 +63,7 @@ public class JTableToCsvAction extends AbstractAction {
         _model = model;
         _defaultFileName = defaultFileName;
         _excludedCols = excludedCols;
-        _fileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+        _fileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
     }
     
     /**
@@ -89,11 +89,11 @@ public class JTableToCsvAction extends AbstractAction {
     }
     
     private boolean continueIfExisting(){
-        return !(_saveFile.isFile() && ( JOptionPane.showConfirmDialog(_table,
+        return !(_saveFile.isFile() && ( JmriJOptionPane.showConfirmDialog(_table,
             Bundle.getMessage("ConfirmOverwriteFile"),
-            Bundle.getMessage("ConfirmQuestion"), JOptionPane.YES_NO_OPTION,
-            JOptionPane.QUESTION_MESSAGE)
-            != JOptionPane.YES_OPTION));
+            Bundle.getMessage("ConfirmQuestion"), JmriJOptionPane.YES_NO_OPTION,
+            JmriJOptionPane.QUESTION_MESSAGE)
+            != JmriJOptionPane.YES_OPTION));
     }
 
     private void saveToCSV() {
@@ -166,15 +166,7 @@ public class JTableToCsvAction extends AbstractAction {
             list.add(modelCol);
         }
     }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-    
-    private final static Logger log = LoggerFactory.getLogger(JTableToCsvAction.class);
-    
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JTableToCsvAction.class);
+
 }

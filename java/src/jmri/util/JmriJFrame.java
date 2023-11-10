@@ -1,6 +1,5 @@
 package jmri.util;
 
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GraphicsConfiguration;
@@ -19,7 +18,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.swing.AbstractAction;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
@@ -27,6 +28,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
+
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
 import jmri.UserPreferencesManager;
@@ -34,11 +36,10 @@ import jmri.beans.BeanInterface;
 import jmri.beans.BeanUtil;
 import jmri.implementation.AbstractShutDownTask;
 import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
 import jmri.util.swing.sdi.JmriJFrameInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * JFrame extended for common JMRI use.
@@ -877,12 +878,12 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     protected void handleModified() {
         if (getModifiedFlag()) {
             this.setVisible(true);
-            int result = javax.swing.JOptionPane.showOptionDialog(this, Bundle.getMessage("WarnChangedMsg"),
-                    Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.YES_NO_OPTION,
-                    javax.swing.JOptionPane.WARNING_MESSAGE, null, // icon
+            int result = JmriJOptionPane.showOptionDialog(this, Bundle.getMessage("WarnChangedMsg"),
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.YES_NO_OPTION,
+                    JmriJOptionPane.WARNING_MESSAGE, null, // icon
                     new String[]{Bundle.getMessage("WarnYesSave"), Bundle.getMessage("WarnNoClose")}, Bundle
                     .getMessage("WarnYesSave"));
-            if (result == javax.swing.JOptionPane.YES_OPTION) {
+            if (result == 0 ) { // array option 0 , WarnYesSave
                 // user wants to save
                 storeValues();
             }
@@ -1172,6 +1173,6 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JmriJFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriJFrame.class);
 
 }

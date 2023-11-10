@@ -9,11 +9,10 @@ import java.io.IOException;
 import javax.swing.*;
 
 import jmri.InstanceManager;
+import jmri.util.swing.JmriJOptionPane;
 
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 
 /**
  * A preferences panel to display and edit JMRI throttle preferences
@@ -283,7 +282,8 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         } 
         if (isBad) {
             tfDefaultThrottleLocation.setText(null);
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("DefaultThrottleFileNotValid"), Bundle.getMessage("DefaultThrottleFile"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("DefaultThrottleFileNotValid"),
+                Bundle.getMessage("DefaultThrottleFile"), JmriJOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -332,5 +332,7 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
             checkDefaultThrottleFile();
         }
     }
+
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ThrottlesPreferencesUISettingsPane.class);
 
 }

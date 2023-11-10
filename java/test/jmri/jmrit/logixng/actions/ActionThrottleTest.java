@@ -19,7 +19,6 @@ import jmri.jmrit.logixng.expressions.AnalogExpressionMemory;
 import jmri.jmrit.logixng.expressions.ExpressionMemory;
 import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.ToDo;
 
@@ -754,6 +753,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

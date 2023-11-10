@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - BiDiB</title><!--#include virtual="/Style.shtml" -->
+  <meta name="author" content="Eckart Meyer">
+  <meta name="keywords" content="BiDiB java model railroad JMRI install">
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp.shtml" -->
+
+    <div id="mainContent">
+      <h1>Hardware Unterstützung: BiDiB</h1>
+
+      (englische Version <a href="index.shtml">hier</a>)<br/>
+      
+      <ul>
+        <!-- TOC -->
+
+        <li><a href="#summary">Zusammenfassung</a></li>
+
+        <li><a href="#hardware">Hardware</a></li>
+
+        <li><a href="#limitations">Einschränkungen</a></li>
+
+        <li><a href="#connecting">Verbindungen</a></li>
+
+        <li><a href="#tools">JMRI Tools</a></li>
+
+        <li><a href="#documentation">Dokumentation</a></li>
+      </ul>
+      
+      <img src="images/bidib_logo.png" class="floatRight" alt="BiDiB logo" height="48">
+      
+      <a name="summary" id="summary"></a>
+      <h2>Zusammenfassung</h2>
+
+	  <p>BiDiB&reg; steht für BiDirectional Bus zur digitalen Steuerung einer Modelleisenbahn. Der Begriff BiDiB&reg; selbst bezeichnet die Protokolltechnologie,
+	  die auf verschiedenen physikalischen Verbindungen implementiert werden kann, wie Ethernet, USB oder den BiDiBus, 
+	  der speziell auf die Bedürfnisse von Modellbahnern und Systemverkabelungen optimiert ist.</p>
+      
+	  <p>BiDiB ist kein kommerzielles Produkt und nicht an eine bestimmte Hardware gebunden. Es ist eine Protokolldefinition, die von jedem implementiert werden kann,
+	  einschließlich kommerzieller Hersteller.</p>
+      
+	  <p>BiDiB startete 2010 und wurde von Wolfgang Kufer (opendcc.de) entwickelt. Weitere Informationen zu BiDiB finden Sie unter <a href="http://bidib.org/index.html">bidib.org</a>.</p>   
+	  
+      <p>BiDiB Merkmale:</p>
+      
+	  <ul>
+         <li>Bidirektionale Datenübertragung. Somit geeignet zum Steuern von Loks, Accessories und Licht sowie zum Empfangen von Belegtmeldungen und anderen Eingaben.</li>
+         <li>Binäre Datenübertragung gesichert durch eine CRC-Prüfsumme.</li>
+         <li>Das Interface ("Root Node") eines BiDiB-Netzwerks wird direkt mit JMRI verbunden, indem eine Seriell-über-USB-Verbindung mit entweder 9600 Baud, 115200 Baud oder 1 MBaud verwendet wird.</li>
+         <li>Ein Knoten im Netzwerk kann verschiedene Funktionen implementieren. Ein Knoten kann die Zentrale sein, die das Gleissignal steuert (wahrscheinlich DCC).</li>
+         <li>Knoten, die Makrofunktionalität unterstützen, können konfiguriert werden, um z.B. ein komplettes Signal mit seinen verschiedenen Signalbildern zu implementieren.</li>
+         <li>BiDiB unterstützt die Rückmeldung von Lokadressen, wenn RailCom&reg; aktivierte Decoder verwendet werden (JMRI Melder - engl. Reporters).</li>
+         <li>BiDiB-Benachrichtigungen sind ereignisgesteuert. Es wird kein Polling verwendet.</li>
+	  </ul>
+      <a name="hardware" id="hardware"></a>
+
+      <h2>Unterstützte Hardware</h2>
+      
+      Jede Hardware, die BiDiB implementiert. Siehe "Informationen zu Drittanbietern" weiter unten.
+
+      <h2>Einschränkungen</h2>
+
+      <p>BiDiB für JMRI befindet sich derzeit in der Beta-Phase - einige Funktionen können fehlen und es gibt sicherlich noch Fehler.</p>
+      
+      <a name="connecting" id="connecting"></a>
+
+      <h2>Verbindungen</h2>
+
+      <h3>Anschlüsse</h3>
+
+	  <p>Derzeit unterstützt JMRI die Verbindung über USB, BiDiB über TCP, und es gibt einen BiDiB-Simulator, der durch eine XML-Datei konfiguriert wird.</p>
+
+      
+		Öffnen Sie die Registerkarte Verbindungen, wählen Sie „BiDiB“ aus dem Auswahlfeld Systemhersteller und wählen Sie aus den folgenden Setups.
+           Der <a href="../../../html/doc/Technical/Names.shtml">Systembuchstabe</a> für BiDiB-Verbindungen ist "B".<br>
+          
+           BiDiB unterstützt Hotplugging auf dem BiDiBus, dies wird auch in JMRI-BiDiB unterstützt. Geht ein Knoten verloren, werden alle Objekte, die darauf verweisen
+           als ungültig markiert aber nicht entfernt. Wenn ein neuer Knoten gefunden wurde, werden alle ungültigen Objekte überprüft, ob sie wieder aktiviert werden können.
+           
+	  <h4>Serial über USB</h4>
+
+	   <p>Um eine neue Verbindung zu erstellen, kann entweder der Portname (z. B. ttyUSB0 unter Linux oder COM1 unter Windows) ausgewählt oder die UID des Root-Knotens direkt eingegeben werden.
+           Da UIDs weltweit eindeutig sind und sich für eine bestimmte Hardware nie ändern, kann der passende Port automatisch gefunden werden, indem alle verwendbaren Ports gescannt werden.
+           Unter Windows werden alle Ports COMx gescannt, unter Linux und macOS kann ein Namensfilter verwendet werden (Standard ist "ttyUSB*"). Beim Herstellen der Verbindung durch Auswahl eines Ports
+           aus der Liste der verfügbaren Ports wird die vom Gerät ausgelesene UID angezeigt und gespeichert - sofern es sich bei dem Gerät um einen BiDiB-Knoten handelt. Dazu kann eine Checkbox (Autoscan) aktiviert werden -
+           wenn JMRI neu gestartet wird, kann der Port durch Scannen der verfügbaren Ports gefunden werden. Wenn also mehr als eine BiDiB-Verbindung verwendet wird, ist die Port-Bezeichnung des USB-Geräts
+           nicht relevant.
+       </p>      
+       
+      <h4>BiDiB über TCP</h4>
+	   <p>
+		In diesem Fall ist die Hardware nicht direkt mit JMRI verbunden, sondern JMRI verbindet sich mit einem TCP-Server, der sich wiederum mit der Hardware verbindet. Dies kann nützlich sein, wenn ein anderes Programm als Hauptsteuerprogramm verwendet wird und JMRI nur als CV-Programmierer (Decoder Pro). Die Parameter sind die IP-Adresse und die Portnummer des Servers, zu dem eine Verbindung hergestellt werden soll.
+		Die Standardportnummer ist 62875.
+       </p>    
+       
+      <h4>Simulator</h4>
+      
+		<p>Es steht ein BiDiB-Simulator zur Verfügung. Dieser Verbindungstyp hat ein Feld für eine XML-Datei mit der simulierten Konfiguration. Der Speicherort für diese Datei ist das Profilverzeichnis.</p>      
+		
+      <h3>Einstellungen</h3>
+      
+      <img src="images/BiDiB_Connection.png" alt="BiDiB Connection" height="480">
+      
+      <h4>BiDiB Namensgebung</h4>
+		<p>JMRI-Systemnamen bestehen im Allgemeinen aus einem Systemverbindungspräfix Xn, wobei X der Systemverbindungsbuchstabe ist und n entweder leer
+		oder bei Mehrfachverbindungen eine Zahl ist, gefolgt von dem Typbuchstaben ("T" für Weichen, "L" für Lampen, "S" für Detektoren und "R" für Melder (Lokadressenrückmeldung, Reporter) und die Systemadresse.</p>
+		<p>Für BiDiB ist der Systemverbindungsbuchstabe "B", die Systemadresse ist ein String mit der BiDiB-Adresse.</p>
+		<p>Die BiDiB-Adresse hat generell die Form:</p>
+		<code>Knoten:Adresse</code>
+       
+	   <p>Ein Knoten auf dem BiDiBus wird entweder durch seine weltweit eindeutige Kennung (UID) identifiziert, die eine 40-Bit-Hexadezimalzahl ist, oder durch einen im Knoten 
+		konfigurierten Benutzernamen (mit dem BiDiBWizard). Die hexadezimale UID muss mit einem „X“ beginnen, Benutzernamen müssen mit einem Buchstaben beginnen (besser nicht mit „X“) und
+		dürfen nur andere Buchstaben, Zahlen, Unterstriche („_“) oder Bindestriche („-“) enthalten. Dies ist eine Einschränkung von JMRI für BiDiB, nicht für BiDiB selbst. Die Knotenspezifikation ist unabhängig von Groß- und Kleinschreibung.
+	   </p>
+	   
+       <p>Der Knotenteil der Adresse kann weggelassen werden (einschließlich Doppelpunkt), in diesem Fall wird automatisch das Interface (Root Node, d. h. der direkt mit
+		JMRI verbundene BiDiB-Knoten) verwendet.
+	   </p>
+       
+	   <p>Der Adresse auf dem Knoten kann ein Adresstyp als Buchstabe vorangestellt werden, und – nur für Portadressen – kann ein Porttyp als Buchstabe folgen.
+	   Die Nummer ist erforderlich und die beiden Buchstaben sind optional. Werden sie weggelassen, werden geeignete Standardeinstellungen in Abhängigkeit von den Fähigkeiten des
+	   Knotens ausgewählt: Nur eine Zentrale hat DCC-Adressen, Weichen sind bevorzugt Accessories und Lichter sind bevorzugt Ports (digitale Pins des Geräts). 
+	   Die allgemeine Form einer Adresse auf einem Knoten ist also:</p>
+	   
+       <code>xny</code>      
+
+	  <p>wobei x der optionaler Adresstyp ist, n die numerische Adresse und y der optionale BiDiB-Porttyp.</p>   
+	  
+	  <p>In JMRI werden in deutscher Sprache Belegtmelder als Detektoren (engl. Sensors) bezeichnet, Railcom Rückmelder als "Melder".<p>
+	  
+	  <p>Die Bezeichnung "Weichen" (engl. Turnouts) in JMRI bezieht sich nicht unbedingt auf tatsächliche Weichen, sondern eher auf ein einen generellen I/O-Port der Hardware,
+		der die beiden Zustände An und Aus einnehmen kann. In BiDiB sollten Weichen aber nicht direkt über die Ports gesteuert werden, sondern als Accessories angesprochen werden.
+		Diese Auswahl geschieht über den Addresstyp-Buchstaben.</p>
+
+      <p>Liste der Adresstypen:</p>
+      <table border="1">
+        <tbody><tr>
+          <th>Buchstabe</th>
+          <th>Beschreibung</th>
+          <th>Standardtyp für:</th>
+        </tr>
+        <tr>
+          <td>t</td>
+          <td>DCC Accessory Adresse ("track")</td>
+          <td>Weichen und Belegtmelder wenn der Knoten eine Command Station (CS) ist. Ungültig bei Knoten ohne CS Funktion.</td>
+        </tr>
+        <tr>
+          <td>a</td>
+          <td>(non-DCC) Accessory Adresse</td>
+´          <td>Weichen und Detektoren wenn der Knoten keine Command Station ist und der Knoten BiDiB Accessories unterstützt.</td>
+        </tr>
+        <tr>
+          <td>f</td>
+          <td>Belegtmelder Nummer</td>
+          <td>Detektoren, wenn der Knoten BiDiB Belegtmelder unterstützt. Melder (Reporters) sind nur für Knoten relevant, die Belegtmelder unterstützen, daher immer Standard</td>
+        </tr>
+        <tr>
+          <td>p</td>
+          <td>Portnummer</td>
+          <td>Lampen (LEDs). Für Detektoren, wenn der Knoten keine Belegtmelder unterstützt.</td>
+        </tr>
+        </tbody>
+      </table>
+      
+      <p>Liste der BiDiB Porttypen:</p>
+      
+      <table border="1">
+        <tbody><tr>
+          <th>Buchstabe</th>
+          <th>Bezeichnung</th>
+          <th>Beschreibung</th>
+        </tr>
+        <tr>
+          <td>S</td>
+          <td>SWITCHPORT</td>
+		<td>Einfacher digitaler Ausgang. Entweder EIN oder AUS.</td>
+		</tr>
+        <tr>
+          <td>L</td>
+          <td>LIGHTPORT</td>
+		  <td>Steuerung eines digitalen Ausgangs mit diversen Funktionen wie Dimmen, Blinken etc. Gesteuert durch einen Zustandswert (ähnlich wie bei Signalen)</td>
+		</tr>
+        <tr>
+          <td>V</td>
+          <td>SERVOPORT</td>
+		  <td>Steuerung eines angeschlossenen Servos. Start- und Endposition werden im Knoten konfiguriert, ebenso die Umlaufgeschwindigkeit.</td>
+		</tr>
+        <tr>
+          <td>U</td>
+          <td>SOUNDPORT</td>
+          <td><i>derzeit nicht in JMRI unterstützt</i></td>
+        </tr>
+        <tr>
+          <td>M</td>
+          <td>MOTORPORT</td>
+          <td><i>derzeit nicht in JMRI unterstützt</i></td>
+        </tr>
+        <tr>
+          <td>A</td>
+          <td>ANALOGPORT</td>
+          <td><i>derzeit nicht in JMRI unterstützt</i></td>
+        </tr>
+        <tr>
+          <td>B</td>
+          <td>BACKLIGHTPORT</td>
+          <td><i>derzeit nicht in JMRI unterstützt</i></td>
+        </tr>
+        <tr>
+          <td>P</td>
+          <td>SWITCHPAIRPORT</td>
+          <td><i>derzeit nicht in JMRI unterstützt</i></td>
+        </tr>
+        <tr>
+          <td>I</td>
+          <td>INPUTPORT</td>
+          <td>Standard für Sensoren. Für andere ungültig</td>
+        </tr>
+        </tbody>
+      </table>
+        
+	  <p>Beispiele (das Interface (Rootnode) wird als Zentrale angenommen und hat die UID 0d68001234 und "MeinKnoten" ist der Nutzername):</p>
+	  <table border="1">
+        <tbody><tr>
+          <th>Systemname</th>
+          <th>Typ</th>
+          <th>Adresse Part</th>
+          <th>resultierende Knoten UID</th>
+          <th>resultierende Adresse</th>
+          <th>Bermerkungen</th>
+        </tr>
+        <tr>
+          <td>BSX0d68001234:20</td>
+          <td>Detektor</td>
+          <td>X0d68001234:20</td>
+          <td>0d68001234</td>
+          <td>f20 - Belegmelder 20</td>
+          <td>BiDiB Belegmelder 20 des (Interface-) Knoten 0d68001234</td>
+        </tr>
+        <tr>
+          <td>BSMyNode:42</td>
+          <td>Detektor</td>
+          <td>MeinKnoten:42</td>
+          <td>0d68001234</td>
+          <td>f42 - Belegmelder 42</td>
+          <td>BiDiB Belegmelder 42 des (Interface-) Knoten 0d68001234 mit dem Nutzernamen "MeinKnoten"</td>
+        </tr>
+        <tr>
+          <td>BT5</td>
+          <td>Weiche</td>
+          <td>5</td>
+          <td>0d68001234</td>
+          <td>t5 - DCC Adresse 5</td>
+          <td>Weiche mit der DCC address 5 über das Interface (CS Knoten) 0d68001234</td>
+        </tr>
+        <tr>
+          <td>BTN201:22</td>
+          <td>Weiche</td>
+          <td>N201:22</td>
+          <td>0d68006789</td>
+          <td>a22 - Accessory Adresse 22</td>
+          <td>Weiche mit der BiDiB Accessory Adresse 22 des Knoten 0d68006789 mit dem Nutzername "N201" (nicht die Command Station)</td>
+        </tr>
+        <tr>
+          <td>B1LLC6:8L</td>
+          <td>Lampe (Licht)</td>
+          <td>LC6:8</td>
+          <td>0d68004321</td>
+          <td>p8L - Port 8</td>
+          <td>Lampe am Ausgangsport 8 (typbasierendes Adressierungsmodell) des Knoten 0d68004321 mit dem Nutzername "LC6" auf der zweiten BiDiB Verbindung (B1)</td>
+        </tr>
+        <tr>
+          <td>BLN201:15</td>
+          <td>Lampe (Licht)</td>
+          <td>N201:15</td>
+          <td>0d68006789</td>
+          <td>p15L - Port 15</td>
+          <td>Licht am Ausgangsport 15 (flaches Adressierungsmodell) des Knotens 0d68006789 mit dem Namen "N201", Port muss als LIGHT konfiguriert werden</td>
+        </tr>
+        <tr>
+          <td>BSX0d68006789:3</td>
+          <td>Detektor</td>
+          <td>0d68006789:3</td>
+          <td>0d68006789</td>
+          <td>p3I - Port 3</td>
+          <td>Detektor am Eingangsport 3 (flaches Adressierungsmodell) des Knotens 0d68006789 (ohne Belegtmelder), Port muss als INPUT konfiguriert werden</td>
+        </tr>
+        <tr>
+          <td>BR42</td>
+          <td>Melder (Reporter)</td>
+          <td>42</td>
+          <td>0d68001234</td>
+          <td>f42 - Belegmelder 42</td>
+          <td>Railcom-Rückmeldung über Belegmelder 42 des Interface Knotens 0d68001234</td>
+        </tr>
+        </tbody>
+      </table>
+
+      
+      <h4>Detektoren</h4>
+      BiDiB Belegtmelder und Eingangsports werden Detektoren zugeordnet.
+      
+      <h4>Weichen</h4>
+      <p>BiDiB-Accessories sind das Äquivalent zu Weichen. Sowohl Signallampen als auch tatsächliche Weichen können sich auf JMRI-Weichen beziehen. Signale sollen aber über "Signalmasten"
+		bedient werden (siehe weiter unten)</p>
+      
+      <h4>Lampen</h4>
+      BiDiB-Ports werden normalerweise Lampen (Lichter, Lights) zugeordnet.
+      
+      <p>BiDiB-Ports unterstützen entweder ein flaches Adressierungsmodell oder ein typbasiertes Adressierungsmodell. Das Adressierungsmodell wird durch die Firmware des Knotens bestimmt.
+           Beim flachen Adressierungsmodell werden alle verfügbaren Ports einfach von 0 bis zur Anzahl der Ports minus 1 nummeriert.
+           Jeder Port muss im Knoten (z. B. mit dem BiDiBWizard) als einer der oben genannten Porttypen konfiguriert werden, der von der Hardware selbst unterstützt wird.
+           In diesem Fall ist der Buchstabe des Porttyps in der JMRI-Systemadresse nicht erforderlich, da der Typ vom Knoten gelesen wird.</p>
+          
+      <p>Wenn der Knoten das typbasierte Adressierungsmodell verwendet, sind Porttypen in der Firmware fest kodiert und können nicht geändert werden.
+           Jeder Porttyp hat einen eigenen Adressbereich beginnend bei 0 bis zur Anzahl der Ports für diesen Typ minus 1.
+           In diesem Fall ist der Porttyp Teil der Portadresse und der Porttypbuchstabe wird in der BiDiB-Adresse benötigt. Siehe die Beispiele oben.</p>
+      
+      <h4>BiDiB Signalmasten</h4>
+      Es wird ein <a href="BiDiB-SignalMast_de.shtml">Signalmasttyp für BiDiB-Accessories</a> bereitgestellt, bei dem ein JMRI-Aspekt direkt einem BiDiB-Accessories-Aspekt zugeordnet werden kann. Die Signalbilder können programmiert werden
+       in den BiDiB-Knoten mit Makros über den BiDiB-Wizard.
+       Andere Signalmasttypen (z. B. der Matrix-Typ) können "Weichen" zugeordnet werden.
+      
+      <h4>Melder (Reporters)</h4>
+      Belegtmelder, die die Rückmeldung von Lokadressen unterstützen, melden diese Adresse an einen JMRI-Melder. Jede Melderadresse hat eine Belegtmelderadresse mit der gleichen Nummer.
+      
+      <a name="tools" id="tools"></a>
+
+      <h2>JMRI BiDiB Tools</h2><img src="BiDiBMenu.png"
+      width="100" height="100" align="right" alt="Menu">
+
+      <p>Wenn JMRI über dieses System mit einer Anlage verbunden ist, wird ein
+       <b>BiDiB</b>-Menü wird angezeigt:</p>
+
+      <ul>
+        <li><b>Traffic Monitor</b><br>
+        <li><b>Start/Stopp BiDiB über TCP Server</b><br>Der Server hört auf Port 62875 auf eingehende Clients, leitet alle Nachrichten des Clients an die Systemverbindung weiter und sendet
+         alle von der Verbindung eingehenden Antwortnachrichten an alle verbundenen Clients. Das ist so etwas wie das Gegenteil der oben erwähnten „BiDiB over TCP“-Systemverbindung.<br>
+<!--
+        <a href="images/OpenLCBMonitor.png"><img src=
+        "images/OpenLCBMonitor.png" alt="Monitor Pane" width="488"
+        height="88"></a>
+-->
+        </li>
+      </ul>
+
+      <h3>BiDiB Wizard</h3>
+      BiDiB-Hardware kann normalerweise in vielen Aspekten konfiguriert werden, einschließlich der Definition von Makros. Dies ist nicht im Umfang von JMRI. Stattdessen gibt es den BiDiBWizard.
+      <p>Der BiDiBWizard ist ein externes Tool - ebenfalls in Java geschrieben und verwendet die gleiche zugrunde liegende BiDiB-Bibliothek (jbidibc - geschrieben von Andreas Kuhtz).</p>
+      <p>Mit diesem Tool werden alle Knotenparameter konfiguriert, z.B: der Knoten-Nutzername, die Portkonfigurationen und viele andere Parameter. Daher
+       ist kein weiteres Konfigurationstool in JMRI integriert. Der BiDiBWizard kann mit dem oben genannten BiDiB-über-TCP-Server verbunden werden.
+      </p>
+        
+
+
+      <h2>Dokumentation</h2>
+
+<!--
+      <h3>JMRI Help</h3>
+
+      <p>link to page 2, 3</p>
+-->
+      <h3>Third Party Info</h3>
+
+      <p>BiDiB home page: <a href="http://bidib.org/index_e.html">english</a> or <a href="http://bidib.org/index.html">german</a></p>
+      <p>BiDiBWizard: aktuell nur in <a href="http://forum.opendcc.de/wiki/doku.php?id=wizard">deutsch</a>.</p>
+      
+      <h4>BiDiB Hersteller</h4>
+      <p>Die Entwickler von BiDiB verkaufen Module im Shop <a href="https://fichtelbahn.de">Fichtelbahn</a>.</p>
+      <p>Es gibt einige andere Hersteller - siehe <a href="http://www.bidib.org/vendors.html">www.bidib.org/vendors.html</a></p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

@@ -65,6 +65,29 @@
       <p>If <strong>Yes</strong> is selected, the LogixNG will be deleted and the object remove
       process will continue.  If <strong>No</strong> is selected, the object remove will not occur.</p>
 
+      <h2 id="logixng_icon">LogixNG Icon<span class="since">since 5.5.5</span></h2>
+
+      <p class="noted">This feature is currently limited to Panel Editor panels.  For use with
+      Control Panel Editor panels, switch the view to Panel Editor, add the icon and then switch
+      back to Control Panel Editor.</p>
+
+      <p>The <strong>LogixNG Icon</strong> extends the Inline LogixNG feature to <strong>invoke</strong>
+      the attached Inline LogixNG when clicked.  The ConditionalNGs within the attached LogixNG will
+      be executed in sequence.</p>
+
+      <p>Since the normal trigger for the attached LogixNG is clicking on the icon, the ConditionalNGs
+      within the attached LogixNG should have the <a href="LogixNGTableEditor.shtml">Startup</a>
+      checkbox unchecked.</p>
+
+      <p>When the LogixNG Icon is added to the panel, it will have a default icon image.  The image
+      can be changed using the normal image processes.  It can also be converted to a text label.
+      The text label can be formatted using the text label options.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/InlineLogixNGIcon.png"><img class="image-border"
+        src="images/InlineLogixNGIcon.png" alt="Inline LogixNG Icon"></a>
+      </div>
+
       <h2>Inline LogixNG Table</h2>
 
       <p>A list of the Inline LogixNGs is displayed at <strong>Tools &rArr; LogixNG &rArr; Inline

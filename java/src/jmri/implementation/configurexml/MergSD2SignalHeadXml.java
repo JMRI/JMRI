@@ -7,8 +7,6 @@ import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.implementation.MergSD2SignalHead;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML configuration for MergSD2SignalHead objects.
@@ -56,19 +54,19 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
         //@TODO could re-arange this so that it falls through
         switch (aspects) {
             case 2:
-                element.addContent(addTurnoutElement(p.getInput1(), "input1"));
+                element.addContent(addTurnoutElement(p.getInput1(), "input1", p));
                 if (!p.getHome()) {
                     element.setAttribute("home", "no");
                 }
                 break;
             case 3:
-                element.addContent(addTurnoutElement(p.getInput1(), "input1"));
-                element.addContent(addTurnoutElement(p.getInput2(), "input2"));
+                element.addContent(addTurnoutElement(p.getInput1(), "input1", p));
+                element.addContent(addTurnoutElement(p.getInput2(), "input2", p));
                 break;
             case 4:
-                element.addContent(addTurnoutElement(p.getInput1(), "input1"));
-                element.addContent(addTurnoutElement(p.getInput2(), "input2"));
-                element.addContent(addTurnoutElement(p.getInput3(), "input3"));
+                element.addContent(addTurnoutElement(p.getInput1(), "input1", p));
+                element.addContent(addTurnoutElement(p.getInput2(), "input2", p));
+                element.addContent(addTurnoutElement(p.getInput3(), "input3", p));
                 break;
             default:
                 log.error("incorrect number of aspects {} for Signal {}", aspects, p.getDisplayName());
@@ -77,21 +75,13 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
         return element;
     }
 
-    Element addTurnoutElement(NamedBeanHandle<Turnout> to, String which) {
+    Element addTurnoutElement(NamedBeanHandle<Turnout> to, String which, SignalHead p) {
         Element el = new Element("turnoutname");
         el.setAttribute("defines", which);
-        el.addContent(to.getName());
-        return el;
-    }
-
-    Element addSingleTurnoutElement(Turnout to) {
-        String user = to.getUserName();
-        String sys = to.getSystemName();
-
-        Element el = new Element("turnout");
-        el.setAttribute("systemName", sys);
-        if (user != null) {
-            el.setAttribute("userName", user);
+        if ( to == null ) {
+            log.error("No Turnout found for MergSD2 Head {}",  p.getDisplayName());
+        } else {
+            el.addContent(to.getName());
         }
         return el;
     }
@@ -100,7 +90,7 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
     public boolean load(Element shared, Element perNode) {
         int aspects = 2;
         List<Element> l = shared.getChildren("turnoutname");
-        if (l.size() == 0) {
+        if (l.isEmpty()) {
             l = shared.getChildren("turnout");
             aspects = l.size() + 1;
         }
@@ -136,14 +126,16 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
                 home = false;
             }
         }
-        try {
-            aspects = shared.getAttribute("aspects").getIntValue();
-        } catch (org.jdom2.DataConversionException e) {
-            log.warn("Could not parse level attribute!");
-        } catch (NullPointerException e) {  // considered normal if the attribute not present
+
+        var aspectsAttr = shared.getAttribute("aspects");
+        if ( aspectsAttr != null ) {
+            try {
+                    aspects = aspectsAttr.getIntValue();
+            } catch (org.jdom2.DataConversionException e) {
+                log.warn("Could not parse aspects attribute! {}", e.getMessage());
+            }
         }
 
-        SignalHead h;
         //int aspects = l.size()+1;  //Number of aspects is equal to the number of turnouts used plus 1.
         //@TODO could re-arange this so that it falls through
         switch (aspects) {
@@ -162,6 +154,8 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
             default:
                 log.error("incorrect number of aspects {} when loading Signal {}", aspects, sys);
         }
+
+        SignalHead h;
         if (uname == null) {
             h = new MergSD2SignalHead(sys, aspects, input1, input2, input3, feather, home);
         } else {
@@ -218,6 +212,6 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
         log.error("Invalid method called");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MergSD2SignalHeadXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MergSD2SignalHeadXml.class);
 
 }

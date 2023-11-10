@@ -8,9 +8,6 @@ import javax.swing.WindowConstants;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JFrameInterface;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Base class for main frame (window) of traditional-style JMRI applications
  * <p>

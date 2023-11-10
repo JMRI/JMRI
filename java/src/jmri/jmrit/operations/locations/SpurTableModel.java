@@ -1,13 +1,17 @@
 package jmri.jmrit.operations.locations;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.setup.Control;
 
 /**
@@ -23,6 +27,7 @@ public class SpurTableModel extends TrackTableModel {
 
     public void initTable(JTable table, Location location) {
         super.initTable(table, location, Track.SPUR);
+        table.setDefaultRenderer(Object.class, new MyTableCellRenderer());
     }
 
     @Override
@@ -46,6 +51,28 @@ public class SpurTableModel extends TrackTableModel {
                 return Bundle.getMessage("SpurName");
             default:
                 return super.getColumnName(col);
+        }
+    }
+
+    protected Color getForegroundColor(int row) {
+        Track spur = _tracksList.get(row);
+        if (!spur.checkScheduleValid().equals(Schedule.SCHEDULE_OKAY)) {
+            return Color.red;
+        }
+        return Color.black;
+    }
+
+    class MyTableCellRenderer extends DefaultTableCellRenderer {
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+                int row, int column) {
+            Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            if (!isSelected) {
+                int modelRow = table.convertRowIndexToModel(row);
+                component.setForeground(getForegroundColor(modelRow));
+            }
+            return component;
         }
     }
 

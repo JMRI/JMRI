@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import jmri.managers.ProxyIdTagManager;
 
@@ -138,7 +139,7 @@ public class TranspondingTagManagerTest extends jmri.managers.DefaultIdTagManage
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
-        jmri.InstanceManager.setDefault(jmri.IdTagManager.class,new ProxyIdTagManager());
+        InstanceManager.setDefault(jmri.IdTagManager.class,new ProxyIdTagManager());
         l = getManager();
     }
 
@@ -146,6 +147,7 @@ public class TranspondingTagManagerTest extends jmri.managers.DefaultIdTagManage
     @Override
     public void tearDown() throws Exception {
         l = null;
+        InstanceManager.getDefault(jmri.IdTagManager.class).dispose();
         jmri.util.JUnitUtil.tearDown();
     }
 

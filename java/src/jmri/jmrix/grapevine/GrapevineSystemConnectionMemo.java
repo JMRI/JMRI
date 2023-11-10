@@ -80,6 +80,7 @@ public class GrapevineSystemConnectionMemo extends DefaultSystemConnectionMemo i
     * Configure the common managers for Grapevine connections. This puts the
     * common manager config in one place.
     */
+    @Override
     public void configureManagers() {
         setTurnoutManager(new SerialTurnoutManager(this));
         InstanceManager.setTurnoutManager(getTurnoutManager());

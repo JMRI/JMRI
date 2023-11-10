@@ -6,14 +6,13 @@ import java.awt.GridBagLayout;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.TrackEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Planned Pick ups.
@@ -27,22 +26,22 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
 
     // radio buttons
     JRadioButton zeroPercent = new JRadioButton(Bundle.getMessage("Disabled"));
-    JRadioButton twentyfivePercent = new JRadioButton("25%"); // NOI18N
-    JRadioButton fiftyPercent = new JRadioButton("50%");  // NOI18N
-    JRadioButton seventyfivePercent = new JRadioButton("75%"); // NOI18N
-    JRadioButton hundredPercent = new JRadioButton("100%");  // NOI18N
+    JRadioButton twentyfivePercent = new JRadioButton(Track.IGNORE_25+"%"); // NOI18N
+    JRadioButton fiftyPercent = new JRadioButton(Track.IGNORE_50+"%");  // NOI18N
+    JRadioButton seventyfivePercent = new JRadioButton(Track.IGNORE_75+"%"); // NOI18N
+    JRadioButton hundredPercent = new JRadioButton(Track.IGNORE_100+"%");  // NOI18N
 
     // major buttons
     JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     protected Track _track;
 
-    public IgnoreUsedTrackFrame(Track track) {
+    public IgnoreUsedTrackFrame(TrackEditFrame tef) {
         super();
 
         setTitle(Bundle.getMessage("MenuItemPlannedPickups"));
 
-        _track = track;
+        _track = tef._track;
         if (_track == null) {
             log.debug("track is null!");
             return;
@@ -60,13 +59,13 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
         JPanel pTrackName = new JPanel();
         pTrackName.setLayout(new GridBagLayout());
         pTrackName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Track")));
-        addItem(pTrackName, new JLabel(track.getName()), 0, 0);
+        addItem(pTrackName, new JLabel(_track.getName()), 0, 0);
 
         // row 1b
         JPanel pLocationName = new JPanel();
         pLocationName.setLayout(new GridBagLayout());
         pLocationName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Location")));
-        addItem(pLocationName, new JLabel(track.getLocation().getName()), 0, 0);
+        addItem(pLocationName, new JLabel(_track.getLocation().getName()), 0, 0);
 
         p1.add(pTrackName);
         p1.add(pLocationName);
@@ -75,9 +74,11 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
         p2.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("PrePlanedPickups")));
 
         p2.add(zeroPercent);
-        p2.add(twentyfivePercent);
-        p2.add(fiftyPercent);
-        p2.add(seventyfivePercent);
+        if (!_track.isStaging()) {
+            p2.add(twentyfivePercent);
+            p2.add(fiftyPercent);
+            p2.add(seventyfivePercent);
+        }
         p2.add(hundredPercent);
 
         ButtonGroup buttonGroup = new ButtonGroup();
@@ -89,11 +90,11 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
 
         // select the correct radio button
         int percentage = _track.getIgnoreUsedLengthPercentage();
-        zeroPercent.setSelected(percentage >= 0);
-        twentyfivePercent.setSelected(percentage >= 25);
-        fiftyPercent.setSelected(percentage >= 50);
-        seventyfivePercent.setSelected(percentage >= 75);
-        hundredPercent.setSelected(percentage >= 100);
+        zeroPercent.setSelected(percentage >= Track.IGNORE_0);
+        twentyfivePercent.setSelected(percentage >= Track.IGNORE_25);
+        fiftyPercent.setSelected(percentage >= Track.IGNORE_50);
+        seventyfivePercent.setSelected(percentage >= Track.IGNORE_75);
+        hundredPercent.setSelected(percentage >= Track.IGNORE_100);
         
         // warning text for planned pick ups.
         JPanel p3 = new JPanel();
@@ -123,20 +124,21 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
             // save percentage selected
             int percentage = 0;
             if (twentyfivePercent.isSelected()) {
-                percentage = 25;
+                percentage = Track.IGNORE_25;
             } else if (fiftyPercent.isSelected()) {
-                percentage = 50;
+                percentage = Track.IGNORE_50;
             } else if (seventyfivePercent.isSelected()) {
-                percentage = 75;
+                percentage = Track.IGNORE_75;
             } else if (hundredPercent.isSelected()) {
-                percentage = 100;
+                percentage = Track.IGNORE_100;
             }
             if (_track != null) {
                 _track.setIgnoreUsedLengthPercentage(percentage);
+                // issue error message if using an alternate track
                 if (_track.getAlternateTrack() != null && percentage > 0) {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("PPWarningAlternate"),
+                    JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("PPWarningAlternate"),
                             Bundle.getMessage("PPWarningConfiguration"),
-                            JOptionPane.ERROR_MESSAGE);
+                            JmriJOptionPane.ERROR_MESSAGE);
                 }
             }
             // save location file
@@ -147,5 +149,5 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IgnoreUsedTrackFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IgnoreUsedTrackFrame.class);
 }

@@ -11,6 +11,10 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Peter Ulvestad" version="9" lastUpdated="20230726"/>
+  <!-- Version 9 Added Excludes -->
+  <version author="Peter Ulvestad" version="9" lastUpdated="20230719"/>
+  <!-- Version 9 Added Function Labels -->
   <version author="jacobsen@mac.com" version="8" lastUpdated="20150628"/>
   <!-- Version 8 Using regular variable elements intead of ivariables -->
   <version author="Peter Ulvestad" version="7" lastUpdated="20100809"/>
@@ -63,6 +67,21 @@
       <model model="Life Like U28B/30B" lowVersionID="6" numFns="14" numOuts="14" productID="124"/>
       <model model="Life Like U30B" lowVersionID="6" numFns="14" numOuts="14" productID="124"/>
       <model model="Walthers GP30" lowVersionID="6" numFns="14" numOuts="14" productID="140"/>
+      <functionlabels>
+        <functionlabel num="0" lockable="true">Light</functionlabel>
+        <functionlabel num="1" lockable="true">Bell</functionlabel>
+        <functionlabel num="2" lockable="false">Horn</functionlabel>
+        <functionlabel num="3" lockable="true">Coupler</functionlabel>
+        <functionlabel num="4" lockable="true">Fans</functionlabel>
+        <functionlabel num="5" lockable="true">Dynamic</functionlabel>
+        <functionlabel num="6" lockable="true">Doppler</functionlabel>
+        <functionlabel num="7" lockable="true">Squeal</functionlabel>
+        <functionlabel num="8" lockable="true">Mute</functionlabel>
+        <functionlabel num="9" lockable="true">Heavy Load</functionlabel>
+        <functionlabel num="10" lockable="true">Status</functionlabel>
+        <functionlabel num="11" lockable="true">Number Board</functionlabel>
+        <functionlabel num="12" lockable="true">Cab Light</functionlabel>
+      </functionlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes">
       <capability>
@@ -759,7 +778,7 @@
       <variable label="Motor" CV="52.10" default="11" comment="QSI" item="CV52.10">
         <decVal max="15"/>
       </variable>
-      <variable label="Turbo" CV="52.14" default="11" comment="QSI" item="CV52.14" exclude="112">
+      <variable label="Turbo" CV="52.14" default="11" comment="QSI" item="CV52.14" exclude="101, 112">
         <decVal max="15"/>
       </variable>
       <variable label="Air Pump" CV="52.16" default="11" comment="QSI" item="CV52.16">
@@ -777,7 +796,7 @@
       <variable label="Squealing Brakes" CV="52.24" default="11" comment="QSI" item="CV52.24">
         <decVal max="15"/>
       </variable>
-      <variable label="Dynamic Brakes" CV="52.28" default="8" comment="QSI" item="CV52.28">
+      <variable label="Dynamic Brakes" CV="52.28" default="8" comment="QSI" item="CV52.28" exclude="101">
         <decVal max="15"/>
       </variable>
       <variable label="Coupler Sounds" CV="52.34" default="11" comment="QSI" item="CV52.34">

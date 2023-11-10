@@ -19,21 +19,21 @@ public interface SignalAppearanceMap {
      * @param aspect the aspect to check
      * @return true if the aspect can be displayed; false otherwise
      */
-    public boolean checkAspect(String aspect);
+    boolean checkAspect(String aspect);
 
     /**
      * Get all available aspect names.
      *
      * @return an enumeration of available aspects
      */
-    public java.util.Enumeration<String> getAspects();
+    java.util.Enumeration<String> getAspects();
 
     /**
      * Get the associated signal system and the common information it contains.
      *
      * @return the signal system
      */
-    public SignalSystem getSignalSystem();
+    SignalSystem getSignalSystem();
 
     /**
      * Get a property associated with a specific aspect
@@ -42,7 +42,7 @@ public interface SignalAppearanceMap {
      * @param key    the property key
      * @return the property value or null if none is defined for key
      */
-    public String getProperty(String aspect, String key);
+    String getProperty(String aspect, String key);
 
     /**
      * Get an Image Link associated with a specific aspect and type
@@ -51,7 +51,7 @@ public interface SignalAppearanceMap {
      * @param key    the image link key
      * @return the image link or an empty String if none is defined
      */
-    public String getImageLink(String aspect, String key);
+    String getImageLink(String aspect, String key);
 
     /**
      * Get a list of valid icon sets.
@@ -59,7 +59,7 @@ public interface SignalAppearanceMap {
      * @param aspect the aspect to get icon sets for
      * @return a list of sets or an empty list if none are defined
      */
-    public Vector<String> getImageTypes(String aspect);
+    Vector<String> getImageTypes(String aspect);
 
     /**
      * Return the aspect for a specific appearance.
@@ -67,27 +67,27 @@ public interface SignalAppearanceMap {
      * @param appearance the appearance
      * @return the aspect
      */
-    public String getSpecificAppearance(int appearance);
+    String getSpecificAppearance(int appearance);
 
     /**
      * Constant representing the "held" aspect for a signal
      */
-    public final static int HELD = 0;
+    final static int HELD = 0;
 
     /**
      * Constant representing the "permissive" aspect for a signal
      */
-    public final static int PERMISSIVE = 1;
+    final static int PERMISSIVE = 1;
 
     /**
      * Constant representing the "danger" aspect for a signal
      */
-    public final static int DANGER = 2;
+    final static int DANGER = 2;
 
     /**
      * Constant representing the "dark" aspect for a signal
      */
-    public final static int DARK = 3;
+    final static int DARK = 3;
 
     /**
      * Get a list of potential aspects that we could set the SignalMast to,
@@ -96,7 +96,7 @@ public interface SignalAppearanceMap {
      * @param advancedAspect the aspect
      * @return a string array of potential aspects or null if none defined
      */
-    public String[] getValidAspectsForAdvancedAspect(String advancedAspect);
+    String[] getValidAspectsForAdvancedAspect(String advancedAspect);
 
     /**
      * Provide a multi-line summary of the signal system content,
@@ -107,6 +107,6 @@ public interface SignalAppearanceMap {
      * to type, and to change often.
      * @return summary string.
      */
-    public String summary();
+    String summary();
 
 }

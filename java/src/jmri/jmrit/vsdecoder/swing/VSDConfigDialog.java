@@ -10,15 +10,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
+
 import jmri.InstanceManager;
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.roster.Roster;
@@ -29,8 +30,7 @@ import jmri.jmrit.vsdecoder.VSDConfig;
 import jmri.jmrit.vsdecoder.VSDManagerEvent;
 import jmri.jmrit.vsdecoder.VSDManagerListener;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Configuration dialog for setting up a new VSDecoder
@@ -111,6 +111,7 @@ public class VSDConfigDialog extends JDialog {
             }
         });
         initComponents();
+        setLocationRelativeTo(parent);
     }
 
     /**
@@ -274,7 +275,7 @@ public class VSDConfigDialog extends JDialog {
     private void closeButtonActionPerformed(java.awt.event.ActionEvent ae) {
         if (profileComboBox.getSelectedItem() == null) {
             log.debug("Profile item selected: {}", profileComboBox.getSelectedItem());
-            JOptionPane.showMessageDialog(null, "Please select a valid Profile");
+            JmriJOptionPane.showMessageDialog(null, "Please select a valid Profile");
             rosterSaveButton.setEnabled(false);
             closeButton.setEnabled(false);
         } else {
@@ -384,11 +385,11 @@ public class VSDConfigDialog extends JDialog {
                 log.warn("Path not selected.  Ignore Save button press.");
                 return;
             } else {
-                int value = JOptionPane.showConfirmDialog(null,
+                int value = JmriJOptionPane.showConfirmDialog(null,
                         MessageFormat.format(Bundle.getMessage("UpdateRoster"),
                         new Object[]{r.titleString()}),
-                        Bundle.getMessage("SaveRoster?"), JOptionPane.YES_NO_OPTION);
-                if (value == JOptionPane.YES_OPTION) {
+                        Bundle.getMessage("SaveRoster?"), JmriJOptionPane.YES_NO_OPTION);
+                if (value == JmriJOptionPane.YES_OPTION) {
                     r.putAttribute("VSDecoder_Path", path);
                     r.putAttribute("VSDecoder_Profile", profile);
                     if (r.getAttribute("VSDecoder_LaunchThrottle") == null) {
@@ -546,6 +547,6 @@ public class VSDConfigDialog extends JDialog {
         addressSetButton.setEnabled(true);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(VSDConfigDialog.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VSDConfigDialog.class);
 
 }

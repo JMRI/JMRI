@@ -15,7 +15,7 @@ import org.junit.Test;
 
 /**
  * Test DoStringAction
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public class DoStringActionSwingTest {
@@ -23,21 +23,21 @@ public class DoStringActionSwingTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         DoStringActionSwing t = new DoStringActionSwing();
         Assert.assertNotNull("exists",t);
     }
-    
+
     @Test
     public void testCreatePanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         Assert.assertTrue("panel is not null",
             null != new DoStringActionSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
             null != new DoStringActionSwing().getConfigPanel(new DoStringAction("IQDA1", null), new JPanel()));
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -53,7 +53,8 @@ public class DoStringActionSwingTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }

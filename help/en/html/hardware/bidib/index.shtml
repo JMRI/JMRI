@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - BiDiB</title><!--#include virtual="/Style.shtml" -->
+  <meta name="author" content="Eckart Meyer">
+  <meta name="keywords" content="BiDiB java model railroad JMRI install">
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp.shtml" -->
+
+    <div id="mainContent">
+      <h1>Hardware Support: BiDiB</h1>
+      
+      (german version <a href="index_de.shtml">here</a>)<br/>
+
+      
+      <ul>
+        <!-- TOC -->
+
+        <li><a href="#summary">Summary</a></li>
+
+        <li><a href="#hardware">Hardware</a></li>
+
+        <li><a href="#limitations">Limitations</a></li>
+
+        <li><a href="#connecting">Connecting</a></li>
+
+        <li><a href="#tools">JMRI Tools</a></li>
+
+        <li><a href="#documentation">Documentation</a></li>
+      </ul>
+      
+      <img src="images/bidib_logo.png" class="floatRight" alt="BiDiB logo" height="48">
+      
+      <a name="summary" id="summary"></a>
+      <h2>Summary</h2>
+
+      <p>BiDiB&reg; stands for BiDirectional Bus for the digital control of a model train. The term BiDiB&reg; itself refers to the protocol technology, which can be implemented on various physical connections, such as Ethernet, USB or the BiDiBus, which is particularly optimized for the needs of model railroaders and system wiring.</p>
+      
+      <p>BiDiB is not a commercial product and not connected to any particularly hardware. It is a protocol definition which can be implemented by anyone including commercial manufacturers.</p>
+      
+      <p>BiDiB started in 2010 and was developed by Wolfgang Kufer (opendcc.de). For more information BiDiB see <a href="http://bidib.org/index_e.html">bidib.org</a>.</p>
+      
+      <p>BiDiB features:</p>
+      
+      <ul>
+        <li>Bidirectional data transfer. Thus suitable for controlling locos, accessories and lights as well as for receiving occupancy feedback and other input.</li>
+        <li>Binary data transfer secured by a CRC checksum.</li>
+        <li>The Interface ("root node") of a BiDiB network is directly connected to JMRI using a serial-over-USB connection with either 9600 Baud, 115200 Baud or 1MBaud.</li>
+        <li>A node on the network can implement various functions. One node can be the command station controlling the track-signal (probably DCC).</li>
+        <li>Nodes supporting macro functionality can be configured to e.g. implement a complete signal head accepting just the requested aspect.</li>
+        <li>BiDiB supports notifying of loco addresses if RailCom&reg; enabled decoders are used (JMRI Reporters).</li>
+        <li>BiDiB notifications are event driven. No polling is used.</li>
+      </ul>
+
+      <a name="hardware" id="hardware"></a>
+
+      <h2>Supported Hardware</h2>
+      
+      Any hardware which implements BiDiB. See "Third Party info" below.
+
+      <h2>Limitations</h2>
+
+      <p>BiDiB for JMRI is currently beta stage - some functionality may be missing and there are surely a lot of bugs.</p>
+      
+      <a name="connecting" id="connecting"></a>
+
+      <h2>Connecting</h2>
+
+      <h3>Wiring</h3>
+
+      <p>Currently JMRI has support for connection over USB, BiDiB over TCP and there is a BiDiB-Simulator which is configured by a XML file.</p>
+
+      
+	  Open the Connections tab, select "BiDiB" from the System Manufacturer selection box and choose from the following setups.
+          The <a href="../../../html/doc/Technical/Names.shtml">system letter</a> for BiDiB connections is "B".<br>
+          
+          Note that BiDiB supportes hotplugging on the BiDiBus, this is also supported in JMRI-BiDiB. If a node gets lost, all objects which refer to this
+          node are invalidated, but not removed. If a new node was found, all invalid objects are checked if they can be activated again.
+	  
+      <h4>Serial over USB</h4>
+
+      <p>To create a new connection either the port name (e.g. ttyUSB0 on linux or COM1 on Windows) can be selected or the root node UID can be typed in directly.
+          Since UIDs are worldwide unique and do never change for a given hardware, the appropriate port can be found automatically by scanning all usable ports.
+          On Windows all ports COMx are scanned, on Linux and macOS a name filter may be used (default is "ttyUSB*"). When the connection is created by selecting a port
+          from the list of available ports, the UID read from the device is displayed and stored - if the device is a BiDiB node. A checkbox (Autoscan) can be activated so that
+          when JMRI starts again, the port can be found by scanning the available ports. Thus, if more than one BiDiB connection is used, the port naming of the USB device
+          does not matter.
+      </p>
+      
+      <h4>BiDiB over TCP</h4>
+      <p>
+      In this case the hardware is not directly connected to JMRI, but JMRI connects to a TCP server which in turn connects to the hardware. This may be usefull if another program is used
+      as the main control program and JMRI is only used as a CV programmer (decoder pro). The parameters are the IP-Address and the port number of the server to which to connect to.
+      The default port number is 62875.
+      </p>
+      
+      <h4>Simulator</h4>
+      
+      <p>A BiDiB simulator is provided. This connection type has field for a XML file with the simulated configuration. The location for this file is the profile directory.</p>
+      
+      <h3>Settings</h3>
+      
+      <img src="images/BiDiB_Connection.png" alt="BiDiB Connection" height="480">
+      
+      <h4>BiDiB Naming</h4>
+      <p>JMRI System Names generally consist of a system connection prefix Xn where X is the system connection letter and n is either empty or a number for multi-connections, followed by the type letter ("T" for turnout, "L" for lights, "S" for sensors and "R" for reporters (loco address feedback) and the system address.
+      </p>
+      <p>For BiDiB the system connection letter is "B", the system address is a string with the BiDiB address.</p>
+      <p>The BiDiB address generally has the form:</p>
+      <code>node:address</code>
+
+      <p>A node on the BiDiBus is identified either by its worldwide unique identifier (UID) which is a 40 bit hexadecimal number or by a user name configured
+		into the node (using BiDiBWizard). The hexadecimal UID must start with an "X", usernames must start with a letter (better not to start with "X") and must contain only other 
+		letters, numbers, underlines ("_") or dashes ("-"). This is a restriction of JMRI for BiDiB not for BiDiB itself. The node specification is case independent.
+      </p>
+      
+      <p>The node part of the address may be omitted (including the colon), in this case the interface (root node, i.e. the BiDiB node directly connected to JMRI) is used automatically.</p>
+      
+      <p>The address on the node may be prefixed by a single letter address type and - for port addresses only - a single letter port type may follow. The number is required and the two letters are optional. If omitted, suitable defaults will be selected depending of the capabilities of the node: only a command station has DCC addresses, Turnouts are preferable accessories and Lights are preferable ports (digital pins of the device). So the general form of an address on a node is:</p>
+      
+      <code>xny</code>
+      
+      <p>where x is an optional address type, n the numeric address and y is the optional BiDiB port type.</p>
+      
+	  <p>The term "turnouts" in JMRI does not necessarily refer to actual turnouts, but rather to a general hardware I/O port that can have two states, on and off.
+		In BiDiB, switches should not be controlled directly via the ports, but addressed as accessories. This selection is made using the address type letter.</p>
+
+	  <p>List of address types:</p>
+      <table border="1">
+        <tbody><tr>
+          <th>Letter</th>
+          <th>Description</th>
+          <th>Default Type for</th>
+        </tr>
+        <tr>
+          <td>t</td>
+          <td>DCC accessory address ("track")</td>
+          <td>turnouts and sensors if node is a command station (CS). Illegal on non-CS nodes</td>
+        </tr>
+        <tr>
+          <td>a</td>
+          <td>(non-DCC) accessory address</td>
+          <td>turnouts and sensors if node is not a command station and the node supports BiDiB accessories</td>
+        </tr>
+        <tr>
+          <td>f</td>
+          <td>Feedback number</td>
+          <td>sensors if the node has BiDiB feedbacks. Reporters are only valid for nodes which support feedbacks, so always default</td>
+        </tr>
+        <tr>
+          <td>p</td>
+          <td>port number</td>
+          <td>lights. For sensors if the node does not support feedbacks</td>
+        </tr>
+        </tbody>
+      </table>
+      
+      <p>List of BiDiB port types:</p>
+      
+      <table border="1">
+        <tbody><tr>
+          <th>Letter</th>
+          <th>Designation</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>S</td>
+          <td>SWITCHPORT</td>
+          <td>Simple digital output. Either ON or OFF.</td>
+        </tr>
+        <tr>
+          <td>L</td>
+          <td>LIGHTPORT</td>
+          <td>Control of a digital output with various functions like dimming, blinking, etc. Controlled by a state value (similar then aspects for signals)</td>
+        </tr>
+        <tr>
+          <td>V</td>
+          <td>SERVOPORT</td>
+          <td>Control of a connected servo. Start- and end position are configured in the node as well as transition time.</td>
+        </tr>
+        <tr>
+          <td>U</td>
+          <td>SOUNDPORT</td>
+          <td><i>not supported in JMRI for now</i></td>
+        </tr>
+        <tr>
+          <td>M</td>
+          <td>MOTORPORT</td>
+          <td><i>not supported in JMRI for now</i></td>
+        </tr>
+        <tr>
+          <td>A</td>
+          <td>ANALOGPORT</td>
+          <td><i>not supported in JMRI for now</i></td>
+        </tr>
+        <tr>
+          <td>B</td>
+          <td>BACKLIGHTPORT</td>
+          <td><i>not supported in JMRI for now</i></td>
+        </tr>
+        <tr>
+          <td>P</td>
+          <td>SWITCHPAIRPORT</td>
+          <td><i>not supported in JMRI for now</i></td>
+        </tr>
+        <tr>
+          <td>I</td>
+          <td>INPUTPORT</td>
+          <td>Default for sensors. Invalid for others.</td>
+        </tr>
+        </tbody>
+      </table>
+        
+      <p>Examples (the root node is assumed to be the command station and to have the UID 0d68001234 and "MyNode" is the user name):</p>
+      <table border="1">
+        <tbody><tr>
+          <th>System Name</th>
+          <th>Type</th>
+          <th>Address Part</th>
+          <th>resulting Node UID</th>
+          <th>resulting Address</th>
+          <th>Notes</th>
+        </tr>
+        <tr>
+          <td>BSX0d68001234:20</td>
+          <td>Sensor</td>
+          <td>X0d68001234:20</td>
+          <td>0d68001234</td>
+          <td>f20 - feedback 20</td>
+          <td>BiDiB feedback 20 of (interface) node 0d68001234</td>
+        </tr>
+        <tr>
+          <td>BSMyNode:42</td>
+          <td>Sensor</td>
+          <td>MyNode:42</td>
+          <td>0d68001234</td>
+          <td>f42 - feedback 42</td>
+          <td>BiDiB feedback 42 of (interface) node 0d68001234 named "MyNode"</td>
+        </tr>
+        <tr>
+          <td>BT5</td>
+          <td>Turnout</td>
+          <td>5</td>
+          <td>0d68001234</td>
+          <td>t5 - DCC address 5</td>
+          <td>turnout at DCC address 5 of CS node (interface node) 0d68001234</td>
+        </tr>
+        <tr>
+          <td>BTN201:22</td>
+          <td>Turnout</td>
+          <td>N201:22</td>
+          <td>0d68006789</td>
+          <td>a22 - accessory address 22</td>
+          <td>turnout at BiDiB accessory address 22 of non-CS node 0d68006789 named "N201"</td>
+        </tr>
+        <tr>
+          <td>B1LLC6:8L</td>
+          <td>Light</td>
+          <td>LC6:8</td>
+          <td>0d68004321</td>
+          <td>p8L - Port 8</td>
+          <td>Light at output port 8 (type based address model) of node 0d68004321 named "LC6" on second BiDiB connection (B1)</td>
+        </tr>
+        <tr>
+          <td>BLN201:15</td>
+          <td>Light</td>
+          <td>N201:15</td>
+          <td>0d68006789</td>
+          <td>p15L - port 15</td>
+          <td>Light at output port 15 (flat address model) of node 0d68006789 named "N201", port has to be configured as LIGHT</td>
+        </tr>
+        <tr>
+          <td>BSX0d68006789:3</td>
+          <td>Sensor</td>
+          <td>0d68006789:3</td>
+          <td>0d68006789</td>
+          <td>p3I - port 3</td>
+          <td>Sensor at input port 3 (flat address model) of node 0d68006789 (without feedbacks), port has to be configured as INPUT</td>
+        </tr>
+        <tr>
+          <td>BR42</td>
+          <td>Reporter</td>
+          <td>42</td>
+          <td>0d68001234</td>
+          <td>f42 - feedback 42</td>
+          <td>Railcom-feedback on feedback number 42 of (interface) node 0d68001234</td>
+        </tr>
+        </tbody>
+      </table>
+
+      
+      <h4>Sensors</h4>
+      BiDiB Feedbacks and input ports are mapped to sensors.
+      
+      <h4>Turnouts</h4>
+      <p>BiDiB accessories are the equivalent of turnouts. Both signal lamps and actual turnout (track switches) may refer to JMRI turnouts. However,
+		signals should be operated by "signal masts" (see below)</p>
+      
+      <h4>Lights</h4>
+      BiDiB Ports are normally mapped to Lights.
+      
+      <p>BiDiB ports support either a flat addressing model or a type based addressing model. The address model is determined by the firmware of the node.
+          In the flat addressing model all available ports are simply numbered from 0 to the number of ports minus 1.
+          Each port must be configured in the node (e.g. by using the BiDiBWizard) as one of the port types mentioned above which is supported by the hardware itself.
+          In this case the port type letter in the JMRI system address is not neccessary since the type is read from the node.</p>
+      <p>If the node uses the type based addressing model, port types are hardcoded into the firmware and cannot be changed.
+          Each port type has its own address range starting from 0 up to the number of ports for this type minus 1.
+          In this case the port type is part of the port address and the port type letter is required in the BiDiB address. See the examples above.</p>
+      
+      <h4>BiDiB Signal Masts</h4>
+      A <a href="BiDiB-SignalMast.shtml">Signal Mast type for BiDiB Accessories</a> is provided, where a JMRI ascpect can be directly mapped to a BiDiB accessory aspect. Aspect appearence can be programmed
+      into the BiDiB Node with macros using the BiDiB-Wizard.
+      Other Signal Mast types (e.g. the Matrix type) may map to turnouts.
+      
+      <h4>Reporters</h4>
+      Sensors which support loco address feedback report this address to a JMRI reporter. Each reporter address has a feedback address with the same number.
+      
+      <a name="tools" id="tools"></a>
+
+      <h2>JMRI BiDiB Tools</h2><img src="BiDiBMenu.png"
+      width="100" height="100" align="right" alt="Menu">
+
+      <p>When JMRI is connected to a layout via this system, an
+      <b>BiDiB</b> menu is shown:</p>
+
+      <ul>
+        <li><b>Traffic Monitor</b><br>
+        <li><b>Start/Stop BiDiB over TCP server</b><br>the server listens to port 62875 for incoming clients, forwards all messages from the client to the system connection and sends
+        all response messages comming in from the connection to all connected clients. This is something like the opposite of the "BiDiB over TCP" system connection mentioned above.<br>
+<!--
+        <a href="images/OpenLCBMonitor.png"><img src=
+        "images/OpenLCBMonitor.png" alt="Monitor Pane" width="488"
+        height="88"></a>
+-->
+        </li>
+      </ul>
+
+      <h3>BiDiB Wizard</h3>
+      BiDiB hardware can usually be configured in many aspects including definition of macros. This is not in the scope of JMRI. Instead there is the BiDiBWizard.
+      <p>The BiDiBWizard is an external tool - also written in Java and uses the same underlying BiDiB-library (jbidibc - written by Andreas Kuhtz). </p>
+      <p>This tool is used to configure all node parameters, e.g. node user name, the port configurations and many other parameters. Therefore
+        no other configuration tool is integrated into JMRI. The BiDiBWizard can be connected to the BiDiB over TCP server mentioned above.
+      </p>
+        
+
+
+      <h2>Documentation</h2>
+
+<!--
+      <h3>JMRI Help</h3>
+
+      <p>link to page 2, 3</p>
+-->
+      <h3>Third Party info</h3>
+
+      <p>BiDiB home page: <a href="http://bidib.org/index_e.html">english</a> or <a href="http://bidib.org/index.html">german</a></p>
+      <p>BiDiBWizard: unfortunately currently in <a href="http://forum.opendcc.de/wiki/doku.php?id=wizard">german only.</a></p>
+      
+      <h4>BiDiB Manufacturers</h4>
+      <p>The developers of BiDiB sell modules in the <a href="https://fichtelbahn.de">Fichtelbahn</a> shop (german only).</p>
+      <p>There are some other manufacturers - see <a href="http://www.bidib.org/vendors_e.html">www.bidib.org/vendors_e.html</a></p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

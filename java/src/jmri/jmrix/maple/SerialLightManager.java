@@ -4,8 +4,6 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implement LightManager for Maple serial systems.
@@ -60,9 +58,9 @@ public class SerialLightManager extends AbstractLightManager {
             Light lgt = new SerialLight(sysName, userName, getMemo());
             if (!SerialAddress.validSystemNameConfig(sysName, 'L', getMemo())) {
                 log.warn("Light system Name '{}' does not refer to configured hardware.", sysName);
-                javax.swing.JOptionPane.showMessageDialog(null, "WARNING - The Light just added, " + sysName
+                jmri.util.swing.JmriJOptionPane.showMessageDialog(null, "WARNING - The Light just added, " + sysName
                         + ", refers to an unconfigured output bit.", "Configuration Warning",
-                        javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
+                        jmri.util.swing.JmriJOptionPane.INFORMATION_MESSAGE);
             }
             return lgt;
         } else {
@@ -104,6 +102,6 @@ public class SerialLightManager extends AbstractLightManager {
         return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialLightManager.class);
 
 }

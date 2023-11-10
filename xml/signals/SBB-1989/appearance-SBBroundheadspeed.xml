@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year>
+    <year>2010</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Dick</firstname>
+        <surname>Bronson</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+      <email>jake@physics.berkeley.edu</email>
+    </author>
+    <author>
+      <personname>
+        <firstname>Pino</firstname>
+        <surname>Di Biasi</surname>
+      </personname>
+      <email>pinodib@yahoo.com</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+     <revision>
+       <revnumber>1</revnumber>
+       <date>2023-08-01</date>
+       <authorinitials>PDB</authorinitials>
+       <revremark>First version for Swiss Signaling System - N Signals</revremark>
+     </revision>
+  </revhistory>
+
+<aspecttable>SBB</aspecttable>
+  <name>Round head signal with speed table</name>
+  <reference>as per SBB 1989 rules</reference>
+  <description>Appearances for a signal with speed light table</description>
+
+  <appearances>
+
+    <appearance>
+      <aspectname>Spento</aspectname>
+      <show>dark</show>
+      <reference />
+      <comment>Round head: stop; squared head: next signal is red</comment>
+      <imagelink type="vertical">../../../resources/icons/SBBSignals/Roundhead/SBBNvrdark.gif</imagelink>
+      <imagelink type="vertical Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNvrdark.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/SBBSignals/Roundhead/SBBNlrdark.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNlrdark.gif</imagelink>
+      <imagelink type="right">../../../resources/icons/SBBSignals/Roundhead/SBBNrrdark.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNrrdark.gif</imagelink>
+    </appearance>
+
+
+    <appearance>
+      <aspectname>Rosso</aspectname>
+      <show>red</show>
+      <reference />
+      <comment>Stop</comment>
+      <imagelink type="vertical">../../../resources/icons/SBBSignals/Roundhead/SBBNvrred.gif</imagelink>
+      <imagelink type="vertical Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNvrred.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/SBBSignals/Roundhead/SBBNlrred.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNlrred.gif</imagelink>
+      <imagelink type="right">../../../resources/icons/SBBSignals/Roundhead/SBBNrrred.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNrrred.gif</imagelink>
+    </appearance>
+
+     <appearance>
+      <aspectname>Rosso lamp</aspectname>
+      <show>flashred</show>
+      <reference />
+      <comment>Approach</comment>
+      <imagelink type="vertical">../../../resources/icons/SBBSignals/Roundhead/SBBNvblinkingred.gif</imagelink>
+      <imagelink type="vertical Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNvleblinkingred.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/SBBSignals/Roundhead/SBBNlblinkingred.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNlleblinkingred.gif</imagelink>
+      <imagelink type="right">../../../resources/icons/SBBSignals/Roundhead/SBBNrblinkingred.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNrleblinkingred.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Arancione</aspectname>
+      <show>yellow</show>
+      <reference />
+      <comment>Approach</comment>
+      <imagelink type="vertical">../../../resources/icons/SBBSignals/Roundhead/SBBNvrorange.gif</imagelink>
+      <imagelink type="vertical Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNvrorange.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/SBBSignals/Roundhead/SBBNlrorange.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNlrorange.gif</imagelink> 
+      <imagelink type="right">../../../resources/icons/SBBSignals/Roundhead/SBBNrrorange.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNrrorange.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Entrata corta</aspectname>
+      <show>yellow</show>
+      <reference />
+      <comment>Approach 70km/h</comment>
+      <imagelink type="vertical">../../../resources/icons/SBBSignals/Roundhead/SBBNventratacorta.gif</imagelink>
+      <imagelink type="vertical Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNvleentratacorta.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/SBBSignals/Roundhead/SBBNlentratacorta.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNlleentratacorta.gif</imagelink> 
+      <imagelink type="right">../../../resources/icons/SBBSignals/Roundhead/SBBNrentratacorta.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNrleentratacorta.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Entrata su bin. parz. occ.</aspectname>
+      <show>yellow</show>
+      <reference />
+      <comment>Approach 70km/h</comment>
+      <imagelink type="vertical">../../../resources/icons/SBBSignals/Roundhead/SBBNvoccblock.gif</imagelink>
+      <imagelink type="vertical Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNvoccblock.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/SBBSignals/Roundhead/SBBNloccblock.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNloccblock.gif</imagelink> 
+      <imagelink type="right">../../../resources/icons/SBBSignals/Roundhead/SBBNroccblock.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNroccblock.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Preavvertimento</aspectname>
+      <show>yellow</show>
+      <reference />
+      <comment>Approach 70km/h</comment>
+      <imagelink type="vertical">../../../resources/icons/SBBSignals/Roundhead/SBBNvpreavvertimento.gif</imagelink>
+      <imagelink type="vertical Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNvpreavvertimento.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/SBBSignals/Roundhead/SBBNlpreavvertimento.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNlpreavvertimento.gif</imagelink> 
+      <imagelink type="right">../../../resources/icons/SBBSignals/Roundhead/SBBNrpreavvertimento.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNrpreavvertimento.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Arancione 40km/h</aspectname>
+      <show>yellow</show>
+      <reference />
+      <comment>Approach 40km/h</comment>
+      <imagelink type="vertical">../../../resources/icons/SBBSignals/Roundhead/SBBNvrorange40.gif</imagelink>
+      <imagelink type="vertical Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNvrorange40.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/SBBSignals/Roundhead/SBBNlrorange40.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNlrorange40.gif</imagelink> 
+      <imagelink type="right">../../../resources/icons/SBBSignals/Roundhead/SBBNrrorange40.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNrrorange40.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Arancione 60km/h</aspectname>
+      <show>yellow</show>
+      <reference />
+      <comment>Approach 60km/h</comment>
+      <imagelink type="vertical">../../../resources/icons/SBBSignals/Roundhead/SBBNvrorange60.gif</imagelink>
+      <imagelink type="vertical Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNvrorange60.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/SBBSignals/Roundhead/SBBNlrorange60.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNlrorange60.gif</imagelink> 
+      <imagelink type="right">../../../resources/icons/SBBSignals/Roundhead/SBBNrrorange60.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNrrorange60.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Arancione 70km/h</aspectname>
+      <show>yellow</show>
+      <reference />
+      <comment>Approach 70km/h</comment>
+      <imagelink type="vertical">../../../resources/icons/SBBSignals/Roundhead/SBBNvrorange70.gif</imagelink>
+      <imagelink type="vertical Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNvrorange70.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/SBBSignals/Roundhead/SBBNlrorange70.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNlrorange70.gif</imagelink> 
+      <imagelink type="right">../../../resources/icons/SBBSignals/Roundhead/SBBNrrorange70.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNrrorange70.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Arancione 90km/h</aspectname>
+      <show>yellow</show>
+      <reference />
+      <comment>Approach 90km/h</comment>
+      <imagelink type="vertical">../../../resources/icons/SBBSignals/Roundhead/SBBNvrorange90.gif</imagelink>
+      <imagelink type="vertical Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNvrorange90.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/SBBSignals/Roundhead/SBBNlrorange90.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNlrorange90.gif</imagelink> 
+      <imagelink type="right">../../../resources/icons/SBBSignals/Roundhead/SBBNrrorange90.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNrrorange90.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Verde</aspectname>
+      <show>green</show>
+      <reference />
+      <comment>Normal speed</comment>
+      <imagelink type="vertical">../../../resources/icons/SBBSignals/Roundhead/SBBNvrgreen.gif</imagelink>
+      <imagelink type="vertical Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNvrgreen.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/SBBSignals/Roundhead/SBBNlrgreen.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNlrgreen.gif</imagelink> 
+      <imagelink type="right">../../../resources/icons/SBBSignals/Roundhead/SBBNrrgreen.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNrrgreen.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Verde 40km/h</aspectname>
+      <show>yellow</show>
+      <reference />
+      <comment>Limited 40km/h</comment>
+      <imagelink type="vertical">../../../resources/icons/SBBSignals/Roundhead/SBBNvrgreen40.gif</imagelink>
+      <imagelink type="vertical Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNvrgreen40.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/SBBSignals/Roundhead/SBBNlrgreen40.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNlrgreen40.gif</imagelink> 
+      <imagelink type="right">../../../resources/icons/SBBSignals/Roundhead/SBBNrrgreen40.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNrrgreen40.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Verde 60km/h</aspectname>
+      <show>yellow</show>
+      <reference />
+      <comment>Limited 60km/h</comment>
+      <imagelink type="vertical">../../../resources/icons/SBBSignals/Roundhead/SBBNvrgreen60.gif</imagelink>
+      <imagelink type="vertical Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNvrgreen60.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/SBBSignals/Roundhead/SBBNlrgreen60.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNlrgreen60.gif</imagelink> 
+      <imagelink type="right">../../../resources/icons/SBBSignals/Roundhead/SBBNrrgreen60.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNrrgreen60.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Verde 70km/h</aspectname>
+      <show>yellow</show>
+      <reference />
+      <comment>Limited 70km/h</comment>
+      <imagelink type="vertical">../../../resources/icons/SBBSignals/Roundhead/SBBNvrgreen70.gif</imagelink>
+      <imagelink type="vertical Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNvrgreen70.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/SBBSignals/Roundhead/SBBNlrgreen70.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNlrgreen70.gif</imagelink> 
+      <imagelink type="right">../../../resources/icons/SBBSignals/Roundhead/SBBNrrgreen70.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNrrgreen70.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Verde 90km/h</aspectname>
+      <show>yellow</show>
+      <reference />
+      <comment>Limited 90km/h</comment>
+      <imagelink type="vertical">../../../resources/icons/SBBSignals/Roundhead/SBBNvrgreen90.gif</imagelink>
+      <imagelink type="vertical Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNvrgreen90.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/SBBSignals/Roundhead/SBBNlrgreen90.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNlrgreen90.gif</imagelink> 
+      <imagelink type="right">../../../resources/icons/SBBSignals/Roundhead/SBBNrrgreen90.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/SBBSignals/Roundhead/SBBNrrgreen90.gif</imagelink>
+    </appearance>
+
+  </appearances>
+
+  <specificappearances>
+    <danger>
+      <aspect>Rosso</aspect>
+    </danger>
+  </specificappearances>
+
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Arancione</advancedAspect>
+      <ourAspect>Verde</ourAspect>
+
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Rosso</advancedAspect>
+      <ourAspect>Arancione</ourAspect>
+    </aspectMapping>
+
+  </aspectMappings>
+</appearancetable>

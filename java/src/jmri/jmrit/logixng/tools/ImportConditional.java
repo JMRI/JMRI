@@ -7,8 +7,6 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.implementation.DefaultConditionalAction;
-import jmri.jmrit.audio.AudioListener;
-import jmri.jmrit.audio.AudioSource;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
@@ -79,7 +77,9 @@ public class ImportConditional {
 
         Logix logix = new Logix(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
 
-        logix.setExecuteOnChange(_conditional.getTriggerOnChange());
+        logix.setExecuteType(_conditional.getTriggerOnChange()
+                ? Logix.ExecuteType.ExecuteOnChange
+                : Logix.ExecuteType.ExecuteAlways);
 
         Conditional.AntecedentOperator ao = _conditional.getLogicType();
         String antecedentExpression = _conditional.getAntecedentExpression();
@@ -235,18 +235,18 @@ public class ImportConditional {
         for (int i=0; i < conditionalActions.size(); i++) {
             ConditionalAction ca = conditionalActions.get(i);
 
-            DigitalBooleanOnChange.Trigger trigger;
+            DigitalBooleanLogixAction.When trigger;
             switch (ca.getOption()) {
                 case Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE:
-                    trigger = DigitalBooleanOnChange.Trigger.CHANGE_TO_TRUE;
+                    trigger = DigitalBooleanLogixAction.When.True;
                     break;
 
                 case Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE:
-                    trigger = DigitalBooleanOnChange.Trigger.CHANGE_TO_FALSE;
+                    trigger = DigitalBooleanLogixAction.When.False;
                     break;
 
                 case Conditional.ACTION_OPTION_ON_CHANGE:
-                    trigger = DigitalBooleanOnChange.Trigger.CHANGE;
+                    trigger = DigitalBooleanLogixAction.When.Either;
                     break;
 
                 default:
@@ -255,7 +255,7 @@ public class ImportConditional {
             }
 
             DigitalBooleanActionBean booleanAction =
-                    new DigitalBooleanOnChange(InstanceManager.getDefault(DigitalBooleanActionManager.class).getAutoSystemName(), null, trigger);
+                    new DigitalBooleanLogixAction(InstanceManager.getDefault(DigitalBooleanActionManager.class).getAutoSystemName(), null, trigger);
 
             buildAction(booleanAction, ca);
 
@@ -376,10 +376,10 @@ public class ImportConditional {
 
         switch (cv.getType()) {
             case SENSOR_ACTIVE:
-                expression.setBeanState(ExpressionSensor.SensorState.Active);
+                expression.getSelectEnum().setEnum(ExpressionSensor.SensorState.Active);
                 break;
             case SENSOR_INACTIVE:
-                expression.setBeanState(ExpressionSensor.SensorState.Inactive);
+                expression.getSelectEnum().setEnum(ExpressionSensor.SensorState.Inactive);
                 break;
             default:
                 throw new InvalidConditionalVariableException(
@@ -1383,6 +1383,8 @@ public class ImportConditional {
         }
         action.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
 
+        String oblockData;
+
         switch (ca.getType()) {
             case DEALLOCATE_BLOCK:
                 action.getSelectEnum().setEnum(ActionOBlock.DirectOperation.Deallocate);
@@ -1390,7 +1392,7 @@ public class ImportConditional {
 
             case SET_BLOCK_VALUE:
                 action.getSelectEnum().setEnum(ActionOBlock.DirectOperation.SetValue);
-                String oblockData = ca.getActionString();
+                oblockData = ca.getActionString();
                 if (oblockData == null || oblockData.isEmpty()) {
                     throw new InvalidConditionalActionException(
                             Bundle.getMessage("ActionBadOBlockValue", ca.getType().toString()));
@@ -1420,6 +1422,26 @@ public class ImportConditional {
 
             case SET_BLOCK_IN_SERVICE:
                 action.getSelectEnum().setEnum(ActionOBlock.DirectOperation.ClearOutOfService);
+                break;
+
+            case GET_BLOCK_WARRANT:
+                action.getSelectEnum().setEnum(ActionOBlock.DirectOperation.GetBlockWarrant);
+                oblockData = ca.getActionString();
+                if (oblockData == null || oblockData.isEmpty()) {
+                    throw new InvalidConditionalActionException(
+                            Bundle.getMessage("ActionBadOBlockMemory", ca.getType().toString()));
+                }
+                action.getSelectMemoryNamedBean().setNamedBean(oblockData);
+                break;
+
+            case GET_BLOCK_TRAIN_NAME:
+                action.getSelectEnum().setEnum(ActionOBlock.DirectOperation.GetBlockValue);
+                oblockData = ca.getActionString();
+                if (oblockData == null || oblockData.isEmpty()) {
+                    throw new InvalidConditionalActionException(
+                            Bundle.getMessage("ActionBadOBlockMemory", ca.getType().toString()));
+                }
+                action.getSelectMemoryNamedBean().setNamedBean(oblockData);
                 break;
 
             default:

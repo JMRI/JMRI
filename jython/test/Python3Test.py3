@@ -84,6 +84,24 @@ if (not listenerCheck) : raise AssertionError('listenerCheck not set True')
 # local variables require .this. syntax
 print ("local localResult:", m.this.localResult)
 
+# allow test to be run more than once
+IS1.removePropertyChangeListener(m)
+
+# check handling Python Exception
+try:
+    x = 1/0
+    print ("Expected Python exception didn't happen")
+except Exception as e:
+    print("Python exception happened as expected:", e)
+
+# check handling Java Exception
+v = java.util.Vector()
+try:
+    x = v.elementAt(7)
+    print ("Expected Java exception didn't happen")
+except java.lang.ArrayIndexOutOfBoundsException as e:
+    # We don't seem to be able to access e here
+    print("Java exception happened as expected")
 
 print ("Python3Test main execution complete")
 

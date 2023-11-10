@@ -2,14 +2,10 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
@@ -19,6 +15,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame to display which trains service certain car types
@@ -145,10 +142,10 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
      */
     private void save() {
         if (copyCheckBox.isSelected() &&
-                JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("CopyCarType"),
-                        new Object[]{typeComboBox.getSelectedItem(), copyComboBox.getSelectedItem()}),
+                JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("CopyCarType",
+                        typeComboBox.getSelectedItem(), copyComboBox.getSelectedItem()),
                         Bundle.getMessage("CopyCarTypeTitle"),
-                        JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                        JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
             return;
         }
         log.debug("Save {} trains", trainList.size());
@@ -184,7 +181,7 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
             train.addPropertyChangeListener(this);
             JCheckBox cb = new JCheckBox(train.getName());
             cb.setName(train.getId());
-            cb.setToolTipText(MessageFormat.format(Bundle.getMessage("TipTrainCarType"), new Object[]{carType}));
+            cb.setToolTipText(Bundle.getMessage("TipTrainCarType", carType));
             addCheckBoxAction(cb);
             trainList.add(cb);
             cb.setSelected(train.isTypeNameAccepted(carType));
@@ -257,5 +254,5 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainsByCarTypeFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrainsByCarTypeFrame.class);
 }

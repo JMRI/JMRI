@@ -23,6 +23,12 @@
                 <surname>Fournier</surname>
             </personname>
         </author>
+        <author>
+            <personname>
+                <firstname>Michael</firstname>
+                <surname>Mosher</surname>
+            </personname>
+        </author>
     </authorgroup>
     <revhistory xmlns="http://docbook.org/ns/docbook">
         <revision>
@@ -31,221 +37,80 @@
             <authorinitials>MF</authorinitials>
             <revremark>New file, based on TSU Steam file</revremark>
         </revision>
+        <revision>
+            <revnumber>2</revnumber>
+            <date>2023-10-19</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>productID change for 11 bit Soundtraxx ID</revremark>
+        </revision>
     </revhistory>
     <version author="Marc Fournier" version="1" lastUpdated="20211107"/>
     <!-- Decoder Model information follows -->
     <decoder>
         <family name="Econami Steam OEM Bachmann Sound Value" mfg="SoundTraxx (Throttle-Up)" comment="These are the OEM version Econami Steam decoders">
-            <model model="ECO 2-8-0" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="9pin" productID="280" comment="Model 51351">
+            <model model="ECO 4-6-0" numOuts="2" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="8200" comment="AE32087">
                 <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Whistle| ">
-                    <label xml:lang="it">Fischio| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamo| ">
-                    <label xml:lang="it">Dynamo| </label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Cylinder|Cocks">
-                    <label xml:lang="it">Cilindro|Cazzi</label>
-                </output>
-                <output name="10" label="Water|Stop">
-                    <label xml:lang="it">Acqua|Stop</label>
-                </output>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
-                <size length="27" width="10.5" height="5" units="mm"/>
-            </model>
-            <model model="ECO 4-6-0" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="460" comment="Model 32087">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Whistle| ">
-                    <label xml:lang="it">Fischio| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamo| ">
-                    <label xml:lang="it">Dynamo| </label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Cylinder|Cocks">
-                    <label xml:lang="it">Cilindro|Cazzi</label>
-                </output>
-                <output name="10" label="Water|Stop">
-                    <label xml:lang="it">Acqua|Stop</label>
-                </output>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="ECO 4-8-4" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="9pin" productID="484" comment="Model 53251">
+            <model model="ECO 4-6-2" numOuts="2" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="8205" comment="AE32116">
                 <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Whistle| ">
-                    <label xml:lang="it">Fischio| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamo| ">
-                    <label xml:lang="it">Dynamo| </label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Cylinder|Cocks">
-                    <label xml:lang="it">Cilindro|Cazzi</label>
-                </output>
-                <output name="10" label="Water|Stop">
-                    <label xml:lang="it">Acqua|Stop</label>
-                </output>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
-                <size length="30.5" width="15.5" height="6.5" units="mm"/>
-            </model>
-            <model model="ECO 4-8-2" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="9pin" productID="482" comment="Model 53452">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Whistle| ">
-                    <label xml:lang="it">Fischio| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamo| ">
-                    <label xml:lang="it">Dynamo| </label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Cylinder|Cocks">
-                    <label xml:lang="it">Cilindro|Cazzi</label>
-                </output>
-                <output name="10" label="Water|Stop">
-                    <label xml:lang="it">Acqua|Stop</label>
-                </output>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
-                <size length="30.5" width="15.5" height="6.5" units="mm"/>
-            </model>
-            <model model="ECO 2-8-8-4" numOuts="4" numFns="30" maxMotorCurrent="4A" connector="other" productID="2884" comment="Model 80853">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Whistle| ">
-                    <label xml:lang="it">Fischio| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamo| ">
-                    <label xml:lang="it">Dynamo| </label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Cylinder|Cocks">
-                    <label xml:lang="it">Cilindro|Cazzi</label>
-                </output>
-                <output name="10" label="Water|Stop">
-                    <label xml:lang="it">Acqua|Stop</label>
-                </output>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
-                <size length="69" width="30.5" height="14" units="mm"/>
-            </model>
-            <model model="ECO 4-6-4" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="464" comment="Model 53651">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Whistle| ">
-                    <label xml:lang="it">Fischio| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamo| ">
-                    <label xml:lang="it">Dynamo| </label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Cylinder|Cocks">
-                    <label xml:lang="it">Cilindro|Cazzi</label>
-                </output>
-                <output name="10" label="Water|Stop">
-                    <label xml:lang="it">Acqua|Stop</label>
-                </output>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
                 <size length="73.7" width="16.8" height="4.8" units="mm"/>
             </model>
+            <model model="ECO 4-6-4" numOuts="2" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="8201" comment="AE32086">
+                <versionCV lowVersionID="70"/>
+                <size length="73.7" width="16.8" height="4.8" units="mm"/>
+            </model>
+            <model model="ECO 2-8-0" numOuts="2" numFns="30" maxMotorCurrent="1A" connector="DropIn" productID="8193" comment="AE32071">
+                <versionCV lowVersionID="70"/>
+                <size length="27" width="10.5" height="5" units="mm"/>
+            </model>
+            <model model="ECO 2-8-4 HO" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="DropIn" productID="8207" comment="AE32121">
+                <versionCV lowVersionID="70"/>
+                <size length="30.5" width="15.5" height="6.5" units="mm"/>
+            </model>
+            <model model="ECO 4-8-4" numOuts="2" numFns="30" maxMotorCurrent="1A" connector="DropIn" productID="8199" comment="AE32084">
+                <versionCV lowVersionID="70"/>
+                <size length="30.5" width="15.5" height="6.5" units="mm"/>
+            </model>
+            <model model="ECO 4-8-2" numOuts="2" numFns="30" maxMotorCurrent="1A" connector="DropIn" productID="8197" comment="AE32080">
+                <versionCV lowVersionID="70"/>
+                <size length="30.5" width="15.5" height="6.5" units="mm"/>
+            </model>
+            <model model="ECO 2-8-8-4" numOuts="2" numFns="30" maxMotorCurrent="4A" connector="DropIn" productID="8194" comment="AE32076">
+                <versionCV lowVersionID="70"/>
+                <size length="69" width="30.5" height="14" units="mm"/>
+            </model>
+            <output name="3" label="  FX3  "/>
+            <output name="4" label="  FX4  "/>
+            <output name="5" label="Whistle| ">
+                <label xml:lang="it">Fischio| </label>
+            </output>
+            <output name="6" label="Bell| ">
+                <label xml:lang="it">Campana| </label>
+            </output>
+            <output name="7" label="Dynamo| ">
+                <label xml:lang="it">Dynamo| </label>
+            </output>
+            <output name="8" label="Short|Horn">
+                <label xml:lang="it">Breve|Tromba</label>
+            </output>
+            <output name="9" label="Cylinder|Cocks">
+                <label xml:lang="it">Cilindro|Cazzi</label>
+            </output>
+            <output name="10" label="Water|Stop">
+                <label xml:lang="it">Acqua|Stop</label>
+            </output>
+            <output name="11" label="Dimming| ">
+                <label xml:lang="it">Smorzam| </label>
+            </output>
+            <output name="12" label="Mute| ">
+                <label xml:lang="it">Silenzio| </label>
+            </output>
+            <output name="13" label="|"/>	<!-- Not used for for this decoder -->
+            <output name="14" label="Brake| "/>
+            <output name="15" label="Coupler| ">
+                <label xml:lang="it">Accoppiatore| </label>
+            </output>
             <functionlabels>
                 <functionlabel num="0" lockable="true">Headlight</functionlabel>
                 <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -715,10 +580,12 @@
                 <label>3-cylinder exhaust</label>
             </variable>
             <variable CV="112" mask="XVVXXXXX" item="Sound Option 2" default="0" tooltip="&lt;html&gt;Control the variation or timing syncopation when articulated exhaust&lt;br&gt;      is enabled to simulate slipping drive wheels or a double-header.&lt;/html&gt;">
+                <defaultItem default="2" include="8194"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumSlip.xml"/>
                 <label>Slip Rate Control</label>
             </variable>
             <variable CV="112" mask="VXXXXXXX" item="Sound Option 3" default="0" tooltip="Alters the exhaust timing to sound like a simple articulated engine when Auto Exhaust is activated">
+                <defaultItem default="1" include="8194"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumExhaust.xml"/>
                 <label>Articulated Exhaust Control</label>
             </variable>
@@ -726,9 +593,8 @@
                 <decVal max="255"/>
                 <label>Engine Exhaust Control</label>
             </variable>
-            <variable CV="120" mask="XXXXVVVV" item="Sound Option 6" default="0" include="280,2884" tooltip="Selects which Whistle to use">
-                <defaultItem default="11" include="280"/>
-				<defaultItem default="14" include="2884"/>
+            <variable CV="120" mask="XXXXVVVV" item="Sound Option 6" default="11" include="8193,8194" tooltip="Selects which Whistle to use">
+				<defaultItem default="14" include="8194"/>
 				<enumVal>
                     <enumChoice>
                         <choice>Lunkenheimer Flat Top 3-Chime</choice>
@@ -781,8 +647,9 @@
                 </enumVal>
                 <label>Whistle Select</label>
             </variable>
-			<variable CV="120" mask="XXXXVVVV" item="Sound Option 6" default="0" include="484" tooltip="Selects which Whistle to use">
-                <defaultItem default="2" include="484"/>
+			<variable CV="120" mask="XXXXVVVV" item="Sound Option 6" default="0" include="8197,8199,8200" tooltip="Selects which Whistle to use">
+                <defaultItem default="2" include="8199"/>
+                <defaultItem default="3" include="8200"/>
 				<enumVal>
 					<enumChoice>
                         <choice>ATSF Step Top 6-Chime</choice>
@@ -791,7 +658,7 @@
                         <choice>B&amp;O Step Top 3-Chime</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>N&amp;W Step Top 3-Chime (Class J #611)</choice>
+                        <choice>N&amp;W Step Top 3-chime no. 611</choice>
                     </enumChoice>
 					<enumChoice>
                         <choice>Crosby 5" Flat Top 3-Chime</choice>
@@ -835,19 +702,24 @@
                 </enumVal>
                 <label>Whistle Select</label>
             </variable>
-			<variable CV="120" mask="XXXXVVVV" item="Sound Option 6" default="0" include="482" tooltip="Selects which Whistle to use">
-                <defaultItem default="0" include="482"/>
+			<variable CV="120" mask="XXXXVVVV" item="Sound Option 6" default="3" include="8205" tooltip="Selects which Whistle to use">
 				<enumVal>
-					<enumChoice>
-                        <choice>ATSF Step Top 6-Chime</choice>
+                    <enumChoice>
+                        <choice>Baldwin Class B-4G, 2-8-0 GBL 40</choice>
                     </enumChoice>
-					<enumChoice>
-                        <choice>B&amp;O Step Top 5-Chime</choice>
+                    <enumChoice>
+                        <choice>B&amp;O Step Top 3-Chime</choice>
                     </enumChoice>
-					<enumChoice>
-                        <choice>B&amp;M Step Top 5-Chime</choice>
+                    <enumChoice>
+                        <choice>PRR 3-Chime</choice>
                     </enumChoice>
-					<enumChoice>
+                    <enumChoice>
+                        <choice>Baldwin 3-Chime</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>Baldwin Flat Top 3-Chime</choice>
+                    </enumChoice>
+                    <enumChoice>
                         <choice>Crosby 5" Flat Top 3-Chime</choice>
                     </enumChoice>
 					<enumChoice>
@@ -857,40 +729,33 @@
                         <choice>Hancock Short Bell 3-Chime</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>Illinois Central 3-Chime</choice>
+                        <choice>ACL Round Top 3-Chime</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>Lima Step Top 5-Chime</choice>
+                        <choice>Bell Field Bowl 3-Chime</choice>
                     </enumChoice>
 					<enumChoice>
+                        <choice>Star Brass 3-Chime</choice>
+                    </enumChoice>
+					<enumChoice>
+                        <choice>CN Flat Top 3-Chime</choice>
+                    </enumChoice>
+					<enumChoice>
+                        <choice>CB&amp;Q Step Top 3-Chime (Road)</choice>
+                    </enumChoice>
+					<enumChoice>
+                        <choice>ATSF Flat Top 3-Chime</choice>
+                    </enumChoice>
+                    <enumChoice>
                         <choice>Lunkenheimer Flat Top 3-Chime</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>L&amp;N Passenger 3-Chime</choice>
-                    </enumChoice>
-					<enumChoice>
-                        <choice>L&amp;N Freight 3-Chime</choice>
-                    </enumChoice>
-					<enumChoice>
-                        <choice>Nathan Step Top 5-Chime</choice>
-                    </enumChoice>
-                    <enumChoice>
-                        <choice>Reading Flat Top 6-Chime</choice>
-                    </enumChoice>
-					<enumChoice>
-                        <choice>SR 8" Flat Top Single-Chime</choice>
-                    </enumChoice>
-					<enumChoice>
-                        <choice>SR Iron Top 3-Chime</choice>
-                    </enumChoice>
-					<enumChoice>
-                        <choice>SR Flat Top 3-Chime</choice>
+                        <choice>K4 Banshee</choice>
                     </enumChoice>
                 </enumVal>
                 <label>Whistle Select</label>
             </variable>
-			<variable CV="120" mask="XXXXVVVV" item="Sound Option 6" default="0" include="464" tooltip="Selects which Whistle to use">
-                <defaultItem default="3" include="464"/>
+			<variable CV="120" mask="XXXXVVVV" item="Sound Option 6" default="3" include="8201" tooltip="Selects which Whistle to use">
 				<enumVal>
 					<enumChoice>
                         <choice>ATSF Step Top 6-Chime</choice>
@@ -943,8 +808,7 @@
                 </enumVal>
                 <label>Whistle Select</label>
             </variable>
-			<variable CV="120" mask="XXXXVVVV" item="Sound Option 6" default="0" include="460" tooltip="Selects which Whistle to use">
-                <defaultItem default="3" include="46082"/>
+			<variable CV="120" mask="XXXXVVVV" item="Sound Option 6" default="8" include="8207" tooltip="Selects which Whistle to use">
 				<enumVal>
 					<enumChoice>
                         <choice>ATSF Step Top 6-Chime</choice>
@@ -953,52 +817,52 @@
                         <choice>B&amp;O Step Top 5-Chime</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>Baldwin Flat Top 3-Chime</choice>
+                        <choice>N&amp;W Step Top 3-chime no. 611</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>Crosby 5" Flat Top 3-Chime</choice>
+                        <choice>Frisco No. 1522 3-Chime Steamboat</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>Crosby 6" Flat Top 3-Chime</choice>
+                        <choice>Western Pacific 5-Chime</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>Hancock Short Bell 3-Chime</choice>
+                        <choice>Hancock Step Top 3-chime</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>Illinois Central 3-Chime</choice>
+                        <choice>Illinois Central 3-Chime Steamboat</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>Lima Step Top 5-Chime</choice>
+                        <choice>Southern Railway Flat Top 3-Chime PS-4</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>Lunkenheimer Flat Top 3-Chime</choice>
+                        <choice>Powell Round Top 3-Chime D&amp;RGW 489</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>L&amp;N Passenger 3-Chime</choice>
+                        <choice>Single-Chime #1 (ATSF Freight)</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>L&amp;N Freight 3-Chime</choice>
+                        <choice>Colorado &amp; Southern No. 801</choice>
                     </enumChoice>
 					<enumChoice>
                         <choice>Nathan Step Top 5-Chime</choice>
                     </enumChoice>
                     <enumChoice>
-                        <choice>Reading Flat Top 6-Chime</choice>
+                        <choice>Reading Flat Top 6-Chime #1</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>SR 8" Flat Top Single-Chime</choice>
+                        <choice>SP Step Top 6-Chime #1</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>SR Iron Top 3-Chime</choice>
+                        <choice>SP GS-4 No. 4449 Whistle</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>SR Flat Top 3-Chime</choice>
+                        <choice>Leslie A200 Air Horn SP GS-AC Classes</choice>
                     </enumChoice>
                 </enumVal>
                 <label>Whistle Select</label>
             </variable>
-            <variable CV="121" mask="XXXVVVVV" item="Sound Option 7" default="0" include="280,2884" tooltip="Choose an alternate Whistle or a short blast of the primary Whistle">
-                <enumVal>
+            <variable CV="121" mask="XXXVVVVV" item="Sound Option 7" default="0" include="8193,8194" tooltip="Choose an alternate Whistle or a short blast of the primary Whistle">
+				<enumVal>
                     <enumChoice>
                         <choice>Short Whistle</choice>
                     </enumChoice>
@@ -1021,10 +885,10 @@
                         <choice>B&amp;O Step Top 3-Chime</choice>
                     </enumChoice>
                     <enumChoice>
-                        <choice>Nathan Step Top 5-Chime (D&amp;RGW #488)</choice>
+                        <choice>Nathan Step Top 5-Chime</choice>
                     </enumChoice>
                     <enumChoice>
-                        <choice>D&amp;RGW Step Top 5-Chime (D&amp;RGW #487)</choice>
+                        <choice>D&amp;RGW Step Top 5-Chime</choice>
                     </enumChoice>
                     <enumChoice>
                         <choice>SP Step Top 6-Chime</choice>
@@ -1051,11 +915,13 @@
                         <choice>Leslie A200 Airhorn (SP GS/AC Classes)</choice>
                     </enumChoice>
                 </enumVal>
-                <label>Auxiliary Whistle Select</label>
+                <label>Whistle Select</label>
             </variable>
-
-			<variable CV="121" mask="XXXVVVVV" item="Sound Option 7" default="0" include="484" tooltip="Choose an alternate Whistle or a short blast of the primary Whistle">
-                <enumVal>
+			<variable CV="121" mask="XXXVVVVV" item="Sound Option 7" default="0" include="8197,8199,8200" tooltip="Choose an alternate Whistle or a short blast of the primary Whistle">
+				<enumVal>
+                    <enumChoice>
+                        <choice>Short Whistle</choice>
+                    </enumChoice>
 					<enumChoice>
                         <choice>ATSF Step Top 6-Chime</choice>
                     </enumChoice>
@@ -1063,7 +929,7 @@
                         <choice>B&amp;O Step Top 3-Chime</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>N&amp;W Step Top 3-Chime (Class J #611)</choice>
+                        <choice>N&amp;W Step Top 3-chime no. 611</choice>
                     </enumChoice>
 					<enumChoice>
                         <choice>Crosby 5" Flat Top 3-Chime</choice>
@@ -1107,18 +973,27 @@
                 </enumVal>
                 <label>Whistle Select</label>
             </variable>
-			<variable CV="121" mask="XXXVVVVV" item="Sound Option 7" default="0" include="482" tooltip="Choose an alternate Whistle or a short blast of the primary Whistle">
-                <enumVal>
-					<enumChoice>
-                        <choice>ATSF Step Top 6-Chime</choice>
+			<variable CV="121" mask="XXXVVVVV" item="Sound Option 7" default="0" include="8205" tooltip="Choose an alternate Whistle or a short blast of the primary Whistle">
+				<enumVal>
+                    <enumChoice>
+                        <choice>Short Whistle</choice>
                     </enumChoice>
-					<enumChoice>
-                        <choice>B&amp;O Step Top 5-Chime</choice>
+                    <enumChoice>
+                        <choice>Baldwin Class B-4G, 2-8-0 GBL 40</choice>
                     </enumChoice>
-					<enumChoice>
-                        <choice>B&amp;M Step Top 5-Chime</choice>
+                    <enumChoice>
+                        <choice>B&amp;O Step Top 3-Chime</choice>
                     </enumChoice>
-					<enumChoice>
+                    <enumChoice>
+                        <choice>PRR 3-Chime</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>Baldwin 3-Chime</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>Baldwin Flat Top 3-Chime</choice>
+                    </enumChoice>
+                    <enumChoice>
                         <choice>Crosby 5" Flat Top 3-Chime</choice>
                     </enumChoice>
 					<enumChoice>
@@ -1128,40 +1003,37 @@
                         <choice>Hancock Short Bell 3-Chime</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>Illinois Central 3-Chime</choice>
+                        <choice>ACL Round Top 3-Chime</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>Lima Step Top 5-Chime</choice>
+                        <choice>Bell Field Bowl 3-Chime</choice>
                     </enumChoice>
 					<enumChoice>
+                        <choice>Star Brass 3-Chime</choice>
+                    </enumChoice>
+					<enumChoice>
+                        <choice>CN Flat Top 3-Chime</choice>
+                    </enumChoice>
+					<enumChoice>
+                        <choice>CB&amp;Q Step Top 3-Chime (Road)</choice>
+                    </enumChoice>
+					<enumChoice>
+                        <choice>ATSF Flat Top 3-Chime</choice>
+                    </enumChoice>
+                    <enumChoice>
                         <choice>Lunkenheimer Flat Top 3-Chime</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>L&amp;N Passenger 3-Chime</choice>
-                    </enumChoice>
-					<enumChoice>
-                        <choice>L&amp;N Freight 3-Chime</choice>
-                    </enumChoice>
-					<enumChoice>
-                        <choice>Nathan Step Top 5-Chime</choice>
-                    </enumChoice>
-                    <enumChoice>
-                        <choice>Reading Flat Top 6-Chime</choice>
-                    </enumChoice>
-					<enumChoice>
-                        <choice>SR 8" Flat Top Single-Chime</choice>
-                    </enumChoice>
-					<enumChoice>
-                        <choice>SR Iron Top 3-Chime</choice>
-                    </enumChoice>
-					<enumChoice>
-                        <choice>SR Flat Top 3-Chime</choice>
+                        <choice>K4 Banshee</choice>
                     </enumChoice>
                 </enumVal>
                 <label>Whistle Select</label>
             </variable>
-			<variable CV="121" mask="XXXVVVVV" item="Sound Option 7" default="0" include="464" tooltip="Choose an alternate Whistle or a short blast of the primary Whistle">
-                <enumVal>
+			<variable CV="121" mask="XXXVVVVV" item="Sound Option 7" default="0" include="8201" tooltip="Choose an alternate Whistle or a short blast of the primary Whistle">
+				<enumVal>
+                    <enumChoice>
+                        <choice>Short Whistle</choice>
+                    </enumChoice>
 					<enumChoice>
                         <choice>ATSF Step Top 6-Chime</choice>
                     </enumChoice>
@@ -1213,8 +1085,11 @@
                 </enumVal>
                 <label>Whistle Select</label>
             </variable>
-			<variable CV="121" mask="XXXVVVVV" item="Sound Option 7" default="0" include="460" tooltip="Choose an alternate Whistle or a short blast of the primary Whistle">
-                <enumVal>
+			<variable CV="121" mask="XXXVVVVV" item="Sound Option 77" default="0" include="8207" tooltip="Choose an alternate Whistle or a short blast of the primary Whistle">
+				<enumVal>
+                    <enumChoice>
+                        <choice>Short Whistle</choice>
+                    </enumChoice>
 					<enumChoice>
                         <choice>ATSF Step Top 6-Chime</choice>
                     </enumChoice>
@@ -1222,51 +1097,56 @@
                         <choice>B&amp;O Step Top 5-Chime</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>Baldwin Flat Top 3-Chime</choice>
+                        <choice>N&amp;W Step Top 3-chime no. 611</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>Crosby 5" Flat Top 3-Chime</choice>
+                        <choice>Frisco No. 1522 3-Chime Steamboat</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>Crosby 6" Flat Top 3-Chime</choice>
+                        <choice>Western Pacific 5-Chime</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>Hancock Short Bell 3-Chime</choice>
+                        <choice>Hancock Step Top 3-chime</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>Illinois Central 3-Chime</choice>
+                        <choice>Illinois Central 3-Chime Steamboat</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>Lima Step Top 5-Chime</choice>
+                        <choice>Southern Railway Flat Top 3-Chime PS-4</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>Lunkenheimer Flat Top 3-Chime</choice>
+                        <choice>Powell Round Top 3-Chime D&amp;RGW 489</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>L&amp;N Passenger 3-Chime</choice>
+                        <choice>Single-Chime #1 (ATSF Freight)</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>L&amp;N Freight 3-Chime</choice>
+                        <choice>Colorado &amp; Southern No. 801</choice>
                     </enumChoice>
 					<enumChoice>
                         <choice>Nathan Step Top 5-Chime</choice>
                     </enumChoice>
                     <enumChoice>
-                        <choice>Reading Flat Top 6-Chime</choice>
+                        <choice>Reading Flat Top 6-Chime #1</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>SR 8" Flat Top Single-Chime</choice>
+                        <choice>SP Step Top 6-Chime #1</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>SR Iron Top 3-Chime</choice>
+                        <choice>SP GS-4 No. 4449 Whistle</choice>
                     </enumChoice>
 					<enumChoice>
-                        <choice>SR Flat Top 3-Chime</choice>
+                        <choice>Leslie A200 Air Horn SP GS-AC Classes</choice>
                     </enumChoice>
                 </enumVal>
                 <label>Whistle Select</label>
             </variable>
-            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" default="2" tooltip="Bell sound effect and ring-rate">
+            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" default="21" tooltip="Bell sound effect and ring-rate">
+                <defaultItem default="1" include="8207"/>
+                <defaultItem default="3" include="8194"/>
+                <defaultItem default="6" include="8205"/>
+                <defaultItem default="21" include="8197,8199,8201,8200"/>
+                <defaultItem default="25" include="8193"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Heavy Brass: slow</choice>
@@ -1353,6 +1233,8 @@
                 <label>Bell Select</label>
             </variable>
             <variable CV="123" mask="XXXXXVVV" item="Sound Option 1" default="0" tooltip="Select one of five prime mover sound effects">
+                <defaultItem default="1" include="8193,8200,8207"/>
+                <defaultItem default="2" include="8194,8197,8199,8201,8205"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Light</choice>
@@ -1370,6 +1252,9 @@
                 <label>Exhaust Select</label>
             </variable>
             <variable CV="124" mask="XXXXXVVV" item="Sound Option 10" default="0" tooltip="Select the air compressor sound effects">
+                <defaultItem default="1" include="8193,8197,8205,8207"/>
+                <defaultItem default="2" include="8200"/>
+                <defaultItem default="3" include="8194,8199,8201"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Single-phase</choice>
@@ -1390,6 +1275,9 @@
                 <label>Air Compressor Select</label>
             </variable>
             <variable CV="125" mask="XXXXXVVV" item="Sound Option 5" default="0" tooltip="Select one of four dynamo sound effects">
+                <defaultItem default="1" include="8200,8207"/>
+                <defaultItem default="2" include="8193,8197,8199,8201,8205"/>
+                <defaultItem default="3" include="8194"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Dynamo 1</choice>
@@ -1409,10 +1297,14 @@
             <!-- End Sound Selection -->
             <!-- Volume Controls follow -->
             <variable CV="129" mask="VVVVVVVV" item="Sound Setting 2" default="255" tooltip="Sets the volume of the airhorn">
+                <defaultItem default="100" include="8207"/>
+                <defaultItem default="128" include="8193,8194,8197,8199,8201,8200,8205"/>
                 <decVal/>
                 <label>Whistle Volume</label>
             </variable>
             <variable CV="131" mask="VVVVVVVV" item="Sound Setting 4" default="180" tooltip="Sets the volume of the prime mover">
+                <defaultItem default="110" include="8207"/>
+                <defaultItem default="180" include="8193,8194,8197,8199,8201,8200,8205"/>
                 <decVal/>
                 <label>Exhaust Volume</label>
             </variable>
@@ -1429,14 +1321,20 @@
                 <label>Blower Volume</label>
             </variable>
             <variable CV="135" mask="VVVVVVVV" item="Sound Setting 8" default="80" tooltip="Sets the volume of the side rod clank">
+                <defaultItem default="110" include="8207"/>
+                <defaultItem default="180" include="8193,8194,8197,8199,8201,8200,8205"/>
                 <decVal/>
                 <label>Side Rod Clank Volume</label>
             </variable>
             <variable CV="136" mask="VVVVVVVV" item="Sound Setting 9" default="100" tooltip="Sets the volume of the cylinder cocks">
+                <defaultItem default="65" include="8207"/>
+                <defaultItem default="100" include="8193,8194,8197,8199,8201,8200,8205"/>
                 <decVal/>
                 <label>Cylinder Cocks Volume</label>
             </variable>
             <variable CV="142" mask="VVVVVVVV" item="Sound Setting 15" default="64" tooltip="Sets the volume of the air reservoir poppet valve releasing">
+                <defaultItem default="64" include="8193,8194,8197,8199,8201,8200,8205"/>
+                <defaultItem default="80" include="8207"/>
                 <decVal/>
                 <label>Power Reverser Volume</label>
             </variable>
@@ -1449,6 +1347,8 @@
                 <label>Blower Draft Volume</label>
             </variable>
             <variable CV="146" mask="VVVVVVVV" item="Sound Setting 19" default="50" tooltip="Sets the volume of the couplers coupling">
+                <defaultItem default="50" include="8193,8194,8197,8199,8201,8200,8205"/>
+                <defaultItem default="80" include="8207"/>
                 <decVal/>
                 <label>Water Stop Volume</label>
             </variable>

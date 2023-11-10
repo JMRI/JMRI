@@ -195,6 +195,7 @@ public class DefaultCabSignalIT {
     public void tearDown() {
         cs.dispose(); // verify no exceptions
         cs = null;
+        InstanceManager.getDefault(jmri.IdTagManager.class).dispose();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }

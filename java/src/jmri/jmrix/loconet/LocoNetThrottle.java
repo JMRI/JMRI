@@ -56,7 +56,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * @param slot The LocoNetSlot this throttle will talk on.
      */
     public LocoNetThrottle(LocoNetSystemConnectionMemo memo, LocoNetSlot slot) {
-        super(memo);
+        super(memo, 69); // supports up to F68
         this.slot = slot;
         slot.setIsInitialized(false);
         network = memo.getLnTrafficController();
@@ -167,9 +167,21 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         switch (this.getSpeedStepMode()) {
             case NMRA_DCC_28:
             case MOTOROLA_28:
-                return (int) ((fSpeed * 28) * 4) + 12;
+                speed = (int) ((fSpeed * 28) * 4) + 12;
+                // ensure we never send a non-zero speed to loconet 
+                // that we reinterpret as 0 in floatSpeed() later
+                if (speed < 16) {
+                    speed = 16;
+                }
+                return speed;
             case NMRA_DCC_14:
-                return (int) ((fSpeed * 14) * 8) + 8;
+                speed = (int) ((fSpeed * 14) * 8) + 8;
+                // ensure we never send a non-zero speed to loconet
+                // that we reinterpret as 0 in floatSpeed() later
+                if (speed < 16) {
+                    speed = 16;
+                }
+                return speed;
             case NMRA_DCC_128:
                 return speed;
             default:
@@ -188,7 +200,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             1, 1, 1, 1, 1, 1, 1, /** 0-6 */
             2, 2, 2, 2, 2, 2, 2, /** 7 - 13 */
             3, 3, 3, 3, 3, 3, 3, /** 14 -20 */
-            4, 4, 4, 4, 4, 4, 4, 4 /** 11 - 28 */
+            4, 4, 4, 4, 4, 4, 4, 4, /** 21 - 28 */
+            5, 5, 5, 5, 5, 5, 5, 5, 5, 5, // 29 - 69
+            5, 5, 5, 5, 5, 5, 5, 5, 5, 5, // 29 - 69
+            5, 5, 5, 5, 5, 5, 5, 5, 5, 5, // 29 - 69
+            5, 5, 5, 5, 5, 5, 5, 5, 5, 5, // 29 - 69
+            5, 5, 5, 5, 5, 5, 5, 5, 5, 5  // 29 - 69
     };
 
     /**
@@ -214,6 +231,10 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 break;
             case 4:
                 if (momentary) sendMomentaryFunctionGroup4(); else sendExpFunctionGroup4();
+                break;
+            case 5:
+                // send as regular function operations
+                super.sendFunctionGroup(functionNum, momentary);
                 break;
             default:
                 break;
@@ -300,6 +321,86 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 getFunction(25), getFunction(26), getFunction(27), getFunction(28));
 
         log.debug("sendFunctionGroup5 sending {} to LocoNet slot {}", result, slot.getSlot());
+        adapterMemo.get(jmri.CommandStation.class).sendPacket(result, 4); // repeat = 4
+    }
+
+    /**
+     * Sends Function Group 6 values - F29 thru F36, using an "OPC_IMM_PACKET" LocoNet
+     * Message.
+     */
+    @Override
+    protected void sendFunctionGroup6() {
+        // LocoNet practice is to send as a DCC packet
+        int i = 29;
+        byte[] result = jmri.NmraPacket.function29Through36Packet(address, (address >= 128),
+                getFunction(i), getFunction(i+1), getFunction(i+2), getFunction(i+3),
+                getFunction(i+4), getFunction(i+5), getFunction(i+6), getFunction(i+7));
+
+        log.debug("sendFunctionGroup6 sending {} to LocoNet slot {}", result, slot.getSlot());
+        adapterMemo.get(jmri.CommandStation.class).sendPacket(result, 4); // repeat = 4
+    }
+
+    /**
+     * Sends Function Group 7 values - F37 thru F44, using an "OPC_IMM_PACKET" LocoNet
+     * Message.
+     */
+    @Override
+    protected void sendFunctionGroup7() {
+        // LocoNet practice is to send as a DCC packet
+        int i = 37;
+        byte[] result = jmri.NmraPacket.function37Through44Packet(address, (address >= 128),
+                getFunction(i), getFunction(i+1), getFunction(i+2), getFunction(i+3),
+                getFunction(i+4), getFunction(i+5), getFunction(i+6), getFunction(i+7));
+
+        log.debug("sendFunctionGroup7 sending {} to LocoNet slot {}", result, slot.getSlot());
+        adapterMemo.get(jmri.CommandStation.class).sendPacket(result, 4); // repeat = 4
+    }
+
+    /**
+     * Sends Function Group 8 values - F45 thru F52, using an "OPC_IMM_PACKET" LocoNet
+     * Message.
+     */
+    @Override
+    protected void sendFunctionGroup8() {
+        // LocoNet practice is to send as a DCC packet
+        int i = 45;
+        byte[] result = jmri.NmraPacket.function45Through52Packet(address, (address >= 128),
+                getFunction(i), getFunction(i+1), getFunction(i+2), getFunction(i+3),
+                getFunction(i+4), getFunction(i+5), getFunction(i+6), getFunction(i+7));
+
+        log.debug("sendFunctionGroup8 sending {} to LocoNet slot {}", result, slot.getSlot());
+        adapterMemo.get(jmri.CommandStation.class).sendPacket(result, 4); // repeat = 4
+    }
+
+    /**
+     * Sends Function Group 9 values - F53 thru F60, using an "OPC_IMM_PACKET" LocoNet
+     * Message.
+     */
+    @Override
+    protected void sendFunctionGroup9() {
+        // LocoNet practice is to send as a DCC packet
+        int i = 53;
+        byte[] result = jmri.NmraPacket.function53Through60Packet(address, (address >= 128),
+                getFunction(i), getFunction(i+1), getFunction(i+2), getFunction(i+3),
+                getFunction(i+4), getFunction(i+5), getFunction(i+6), getFunction(i+7));
+
+        log.debug("sendFunctionGroup9 sending {} to LocoNet slot {}", result, slot.getSlot());
+        adapterMemo.get(jmri.CommandStation.class).sendPacket(result, 4); // repeat = 4
+    }
+
+    /**
+     * Sends Function Group 10 values - F61 thru F68, using an "OPC_IMM_PACKET" LocoNet
+     * Message.
+     */
+    @Override
+    protected void sendFunctionGroup10() {
+        // LocoNet practice is to send as a DCC packet
+        int i = 61;
+        byte[] result = jmri.NmraPacket.function61Through68Packet(address, (address >= 128),
+                getFunction(i), getFunction(i+1), getFunction(i+2), getFunction(i+3),
+                getFunction(i+4), getFunction(i+5), getFunction(i+6), getFunction(i+7));
+
+        log.debug("sendFunctionGroup10 sending {} to LocoNet slot {}", result, slot.getSlot());
         adapterMemo.get(jmri.CommandStation.class).sendPacket(result, 4); // repeat = 4
     }
 

@@ -2,20 +2,16 @@ package jmri.jmrit.operations.rollingstock.cars.tools;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.text.MessageFormat;
 import java.util.List;
-
-import javax.swing.JOptionPane;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Exports the car roster into a comma delimited file (CSV).
@@ -158,15 +154,15 @@ public class ExportCars extends XmlFile {
             fileOut.flush();
             fileOut.close();
             log.info("Exported {} cars to file {}", _carList.size(), defaultOperationsFilename());
-            JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ExportedCarsToFile"), new Object[]{
-                _carList.size(), defaultOperationsFilename()}), Bundle.getMessage("ExportComplete"),
-                    JOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ExportedCarsToFile",
+                _carList.size(), defaultOperationsFilename()), Bundle.getMessage("ExportComplete"),
+                    JmriJOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
             log.error("Can not open export cars CSV file: {}", file.getName());
-            JOptionPane.showMessageDialog(null,
-                    MessageFormat.format(Bundle.getMessage("ExportedCarsToFile"),
-                            new Object[] { 0, defaultOperationsFilename() }),
-                    Bundle.getMessage("ExportFailed"), JOptionPane.ERROR_MESSAGE);
+            JmriJOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("ExportedCarsToFile",
+                            0, defaultOperationsFilename()),
+                    Bundle.getMessage("ExportFailed"), JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -188,6 +184,6 @@ public class ExportCars extends XmlFile {
 
     private static String operationsFileName = "ExportOperationsCarRoster.csv"; // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(ExportCars.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExportCars.class);
 
 }

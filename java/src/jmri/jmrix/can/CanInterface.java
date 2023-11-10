@@ -7,9 +7,9 @@ package jmri.jmrix.can;
  */
 public interface CanInterface {
 
-    public void addCanListener(CanListener l);
+    void addCanListener(CanListener l);
 
-    public void removeCanListener(CanListener l);
+    void removeCanListener(CanListener l);
 
     /**
      * Test operational status of interface.

@@ -17,6 +17,7 @@ import jmri.jmrit.logixng.swing.AbstractSwingConfigurator;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.swing.SwingTools;
 import jmri.jmrit.logixng.tools.swing.swing.ModuleParametersTableModel;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Configures an DefaultModule object with a Swing JPanel.
@@ -51,10 +52,10 @@ public class DefaultModuleSwing extends AbstractSwingConfigurator {
         if (!femaleSocket.isConnected()) {
             // Nothing to do since nothing is connected to the female socket
             jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
-                JOptionPane.showMessageDialog(null,
+                JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("ExecuteEvaluate_ActionCompleted"),
                         Bundle.getMessage("ExecuteEvaluate_Title"),
-                        JOptionPane.PLAIN_MESSAGE);
+                        JmriJOptionPane.PLAIN_MESSAGE);
             });
             return;
         }

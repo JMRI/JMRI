@@ -14,14 +14,14 @@ public interface ExpressionNode {
      * @return the result
      * @throws JmriException if an error occurs
      */
-    public Object calculate(SymbolTable symbolTable) throws JmriException;
+    Object calculate(SymbolTable symbolTable) throws JmriException;
     
     /**
      * Can this expression be assigned a value?
      * @return true if it's possible to assign a value to this expression,
      *         false otherwise
      */
-    public default boolean canBeAssigned() {
+    default boolean canBeAssigned() {
         return false;
     }
     
@@ -31,7 +31,7 @@ public interface ExpressionNode {
      * @param value the value to assign
      * @throws jmri.JmriException if an error occurs
      */
-    public default void assignValue(SymbolTable symbolTable, Object value) throws JmriException {
+    default void assignValue(SymbolTable symbolTable, Object value) throws JmriException {
         throw new UnsupportedOperationException("This expression can't be assigned");
     }
     
@@ -39,6 +39,6 @@ public interface ExpressionNode {
      * Get a String that defines this expression node.
      * @return the string
      */
-    public String getDefinitionString();
+    String getDefinitionString();
     
 }

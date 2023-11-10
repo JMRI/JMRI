@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
 /**
  * Pane for downloading firmware files files to OpenLCB devices which support
  * firmware updates according to the Firmware Upgrade Protocol.
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2005, 2015 (from the LocoNet version by B.
  * Milhaupt Copyright (C) 2013, 2014) David R Harris (C) 2016 Balazs Racz (C)
@@ -58,7 +57,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         this.mcs = memo.get(MemoryConfigurationService.class);
         this.dcs = memo.get(DatagramService.class);
         this.store = memo.get(MimicNodeStore.class);
-        this.nodeSelector = new NodeSelector(store);
+        this.nodeSelector = new NodeSelector(store, Integer.MAX_VALUE);  // display all ID terms available
         this.loaderClient = memo.get(LoaderClient.class);
         this.nid = memo.get(NodeID.class);
         // We can add to GUI here
@@ -97,6 +96,9 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
     @Override
     public void doRead(JFileChooser chooser) {
+        // has a file been selected? Might not been if Chooser was cancelled
+        if (chooser == null || chooser.getSelectedFile() == null) return;
+
         String fn = chooser.getSelectedFile().getPath();
         readFile(fn);
         bar.setValue(0);

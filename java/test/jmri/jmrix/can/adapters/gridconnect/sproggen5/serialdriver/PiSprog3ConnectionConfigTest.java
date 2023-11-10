@@ -2,7 +2,6 @@ package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**

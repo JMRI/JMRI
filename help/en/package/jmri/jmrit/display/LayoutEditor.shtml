@@ -325,11 +325,19 @@
         whose name is entered on the right</li>
 
         <li><strong>Icon Label</strong> - selects a general purpose icon</li>
+
+        <li><strong>LogixNG Icon</strong> (see <a href="../logixng/InlineLogixNG.shtml#logixng_icon">LogixNG Icon</a>)</li>
+
+        <li><strong>Audio Icon</strong> - selects an Audio icon that can play a sound when clicked.
+        (see <a href="AudioIcon.shtml">Audio Icon</a>)</li>
+
+        <li><strong>Shape</strong> - Create an arbitrary shape</li>
       </ul>
 
       <p>The top 13 items are used to create a track diagram, and are new with Layout Editor. The
-      remaining eight items are icon-based and are similar to corresponding icon items in Panel
-      Editor.</p>
+      next 11 items are icon-based and are similar to corresponding icon items in Panel
+      Editor.  <strong>Shape</strong> is used to create an image using two to nine
+      points connected by lines, such as four points to create a rectangle.</p>
 
       <p>To add all items except Track Segment:</p>
 
@@ -347,6 +355,15 @@
         <li>Click the mouse (left-click).</li>
 
         <li>Release the mouse, and then release the shift key.</li>
+
+        <li>If the item is a <strong>Shape</strong>, the first point has been added.  To
+        add additional points, drag a line from a point.  When the mouse is released a
+        point will be created.  The right click on a point or the center of the shape will
+        display a menu to set various attributes.  Changing the shape type from <strong>
+        Open</strong> to <strong>Closed</strong> will create a final line between the
+        first and last point. To create a rectangle, draw three lines (four points) and
+        select closed.  Note:  The drag process is the same as drawing track segments
+        except there is no destination point until the mouse is released.</li>
       </ol>
 
       <p>A Track Segment is a piece of track connecting two connection points (<strong><span style=
@@ -487,7 +504,7 @@
       Close button <strong><em>hides</em></strong> the toolbox, it does not delete it. To show it
       again, select the toolbox name from the <strong>Window</strong> menu. The minimize button
       behaves in the traditional manner with the toolbox becoming an icon on the operating system
-      task bar. Use the Window menu or click on the task bar icon to make itvisible.</p>
+      task bar. Use the Window menu or click on the task bar icon to make it visible.</p>
 
       <h2 id="filemenu">Using a Panel's File Menu</h2>
 
@@ -546,7 +563,8 @@
         <li><strong>Show Icon tooltips</strong> - This submenu allows you to select whether icon
         tooltips are displayed when in Edit Mode and when not in Edit Mode. When the mouse is
         hovered over an icon, and tooltips are on, the name of the icon is displayed while the
-        mouse remains over the icon. Drawn track items do not have tooltips.  See
+        mouse remains over the icon. Except for turnouts and slips, drawn track items do not have
+        tooltips.  Turnouts and slips were added as of JMRI 5.3.6.  See
         <a href="Tooltips.shtml">Tooltips</a> for more information.</li>
 
         <li><strong>Show Help Bar in Edit Mode</strong> - If this item is checked, the help bar is
@@ -717,19 +735,27 @@
             assigned.</li>
 
             <li><strong>Non-Contiguous Blocks</strong> - A valid block requires one or more track
-            components that are connected to each other. This means that only one occurance of a
+            components that are connected to each other. This means that only one occurrence of a
             block can only exist on a panel.</li>
 
             <li><strong>Unnecessary Anchors</strong> - Anchor points are only required at block
             boundaries or changing track geometry, such as entering a curve, using dashes, hidden
             track, etc.</li>
+
+            <li><strong>Linear Bezier Track Segments</strong> - Find bezier curves that are
+            effectively a straight line.  Consider changing the track segment to a <strong>Line
+            </strong>.</li>
+
+            <li><strong>Fixed Radius Bezier Track Segments</strong> - Find bezier curves that are
+            are effectively a circle with a fixed radius.  Consider changing the track segment to
+            a <strong>Circle</strong>.</li>
           </ul>
         </li>
 
         <li><strong>Assign Block To Selection...</strong> - Set the block for a group of track
         components. Select a block name in the tool bar, do a click/drag to select a group of track
         components and then select <strong>Assign Block To Selection</strong>. The block will be
-        assigned to the selected compnents.</li>
+        assigned to the selected components.</li>
 
         <li><strong>Scale/Translate Track Diagram...</strong> - Selecting this item brings up a
         dialog that allows scaling and translation of the track diagram. (For more information on
@@ -1010,7 +1036,7 @@
       its rate ratio. Icon-based popup menus show the <em>x</em> (horizontal) and <em>y</em>
       (vertical) location of the icon on the panel. These coordinates give the location of the
       upper left corner of the icon. A convenient way to change the location of an icon-based item
-      is to select <strong>Set x & y</strong> in its popup menu. Selecting <strong>Set x &
+      is to select <strong>Set x &amp; y</strong> in its popup menu. Selecting <strong>Set x &amp;
       y</strong> brings up a small window that provides for precise adjustment of the icon's
       position.</p>
 
@@ -1320,7 +1346,7 @@
       placed at the top of the panel and to the right of right-most existing background image. This
       allows easy implementation of multi-slice background images (see below). The <em>x, y</em>
       location of the upper left corner of each background image is shown in it's popup menu. This
-      location may be changed by selecting <strong>Set x & y</strong> in the popup menu.</p>
+      location may be changed by selecting <strong>Set x &amp; y</strong> in the popup menu.</p>
 
       <p>For users building a classic US&amp;S panel, there are two sets of predefined image
       'slices' currently available. One set is 718 pixels high, and the second set is 900 pixels
@@ -1438,7 +1464,7 @@
 
       <p><strong>Draw Unselected Turnout Leg</strong> &mdash; This option only applies to the block
       layer. If the rail count is 1, the rail for the unselected leg is drawn with a gap. If the
-      option is active, the block line will also be drawn. For maximum turnout position visibliy,
+      option is active, the block line will also be drawn. For maximum turnout position visibly,
       turn off the option.</p>
 
       <h2 id="tracking">Train Tracking</h2>

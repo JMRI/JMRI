@@ -1,22 +1,21 @@
 package jmri.jmrit.ctc.editor.gui;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+
+import jmri.*;
+import jmri.jmrit.ctc.NBHSensor;
+import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
+import jmri.jmrit.ctc.ctcserialdata.CallOnData;
+import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
 import jmri.jmrit.ctc.editor.code.CheckJMRIObject;
 import jmri.jmrit.ctc.editor.code.CodeButtonHandlerDataRoutines;
 import jmri.jmrit.ctc.editor.code.CommonSubs;
 import jmri.jmrit.ctc.editor.code.ProgramProperties;
-import java.util.ArrayList;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
-import jmri.*;
-import jmri.jmrit.ctc.NBHSensor;
-import jmri.jmrit.ctc.NBHSignal;
-import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
-import jmri.jmrit.ctc.ctcserialdata.CallOnData;
-import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
-import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  *
@@ -549,20 +548,20 @@ public class FrmCO extends javax.swing.JFrame {
 
     private void _mGroupingListAddReplaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mGroupingListAddReplaceActionPerformed
         if (ProjectsCommonSubs.isNullOrEmptyString((String) _mExternalSignal.getSelectedItem())) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorDlgCOSignalInvalid"),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE); // NOI18N
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorDlgCOSignalInvalid"),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE); // NOI18N
             return;
         }
         if (_mSignalHeadSelected) {
             if (ProjectsCommonSubs.isNullOrEmptyString((String) _mCalledOnExternalSensor.getSelectedItem())) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorDlgCOCalledOnSensorInvalid"),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE); // NOI18N
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorDlgCOCalledOnSensorInvalid"),
+                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE); // NOI18N
                 return;
             }
         } else {
             if (ProjectsCommonSubs.isNullOrEmptyString((String) _mExternalBlock.getSelectedItem())) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorDlgCOBlockInvalid"),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE); // NOI18N
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorDlgCOBlockInvalid"),
+                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE); // NOI18N
                 return;
             }
         }
@@ -583,11 +582,11 @@ public class FrmCO extends javax.swing.JFrame {
 
             // Check for permissive setting
             if (!block.getPermissiveWorking()) {
-                int response = JOptionPane.showConfirmDialog(this,
+                int response = JmriJOptionPane.showConfirmDialog(this,
                         Bundle.getMessage("WarnDlgCOBlockNotPermissive"),
                         Bundle.getMessage("WarningTitle"),
-                        JOptionPane.YES_NO_OPTION);
-                if (response == 0) {
+                        JmriJOptionPane.YES_NO_OPTION);
+                if (response == JmriJOptionPane.YES_OPTION ) {
                     block.setPermissiveWorking(true);
                 }
             }
@@ -605,8 +604,8 @@ public class FrmCO extends javax.swing.JFrame {
 
         CheckJMRIObject.VerifyClassReturnValue verifyClassReturnValue = _mCheckJMRIObject.verifyClass(newCallOnData);
         if (verifyClassReturnValue != null) { // Error:
-            JOptionPane.showMessageDialog(this, verifyClassReturnValue.toString(),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);    // NOI18N
+            JmriJOptionPane.showMessageDialog(this, verifyClassReturnValue.toString(),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);    // NOI18N
             return;
         }
 

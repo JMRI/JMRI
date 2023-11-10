@@ -11,19 +11,19 @@ import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Nonnull;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JViewport;
 import javax.swing.ListCellRenderer;
+
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Abstract base class for common implementation of the ConnectionConfig
@@ -255,7 +255,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
         catch (UnsatisfiedLinkError e1) {
             log.error("UnsatisfiedLinkError - the serial library has not been installed properly");
             log.error("java.library.path={}", System.getProperty("java.library.path", "<unknown>"));
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorComLibLoad"));
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorComLibLoad"));
             return;
         }
 
@@ -489,7 +489,6 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
         return new ArrayList<>();
     }
 
-    private final static Logger log
-            = LoggerFactory.getLogger(AbstractUsbConnectionConfig.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractUsbConnectionConfig.class);
 
 }

@@ -7,7 +7,7 @@ import org.jdom2.Element;
 
 /**
  * IdTag is a pre-parsed representation of an identification message from the
- * layout.  One use of an IdTag is a device that might be attached to any 
+ * layout.  One use of an IdTag is a device that might be attached to any
  * specific piece of rolling stock to uniquely identify it.
  * <p>
  * Examples include
@@ -27,9 +27,15 @@ import org.jdom2.Element;
  *   <li>A list of key/value pairs holding properties</li>
  * </ul>
  * <p>
- * The system name is of the form IDxxxx where xxxx is the same value as the TagID.
+ * "Seen" is defined as a Reporter has indicated that the IdTag is within the
+ * area served by that Reporter.  "Seen" is not updated to a Reporter reports that the IdTag is
+ * leaving that area.
  * <p>
- * The list of key value pairs is maintained by the reporters parsing and 
+ * The system name is of the form "sDxxxx" where "xxxx" is the same value as the TagID
+ * and "s" is the system prefix for the relevant Reporter (for Reporter-type-specific tags)
+ * or "I" in the more general case.
+ * <p>
+ * The list of key value pairs is maintained by the reporters parsing and
  * updating the list.  This information may vary between implementations.
  * <hr>
  * This file is part of JMRI.
@@ -51,7 +57,7 @@ public interface IdTag extends NamedBean {
      * Constant representing an "unseen" state, indicating that the ID tag has
      * not yet been seen.
      */
-    public static final int UNSEEN = 0x02;
+    static final int UNSEEN = 0x02;
 
     /**
      * Constant representing a "seen" state, indicating that the tag has been
@@ -66,7 +72,7 @@ public interface IdTag extends NamedBean {
      * <li>{@link #getWhenLastSeen()}
      * </ul>
      */
-    public static final int SEEN = 0x03;
+    static final int SEEN = 0x03;
 
     /**
      * Retrieve a string representation of this tag ID
@@ -76,7 +82,7 @@ public interface IdTag extends NamedBean {
      * @return the tag ID
      */
     @Nonnull
-    public String getTagID();
+    String getTagID();
 
     /**
      * Set the Reporter that last saw this tag.
@@ -87,7 +93,7 @@ public interface IdTag extends NamedBean {
      * @see #getWhereLastSeen()
      * @see #getWhenLastSeen()
      */
-    public void setWhereLastSeen(Reporter reporter);
+    void setWhereLastSeen(Reporter reporter);
 
     /**
      * Return the Reporter that last saw this tag, or null if not yet seen
@@ -95,7 +101,7 @@ public interface IdTag extends NamedBean {
      * @return Reporter object where last seen, or null
      */
     @CheckForNull
-    public Reporter getWhereLastSeen();
+    Reporter getWhereLastSeen();
 
     /**
      * Return the Date/Time when this tag was last seen, or null if not yet seen
@@ -103,7 +109,7 @@ public interface IdTag extends NamedBean {
      * @return Date object when last seen, or null
      */
     @CheckForNull
-    public Date getWhenLastSeen();
+    Date getWhenLastSeen();
 
     /**
      * Store the contents of this IdTag object as an XML element
@@ -111,13 +117,13 @@ public interface IdTag extends NamedBean {
      * @param storeState Determine if the state of this IdTag should be stored
      * @return Element with IdTag contents
      */
-    public Element store(boolean storeState);
+    Element store(boolean storeState);
 
     /**
      * Load contents of IdTag object from an XML element
      *
      * @param e Element containing IdTag details
      */
-    public void load(@Nonnull Element e);
+    void load(@Nonnull Element e);
 
 }

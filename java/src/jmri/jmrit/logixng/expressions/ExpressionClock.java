@@ -2,7 +2,6 @@ package jmri.jmrit.logixng.expressions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.time.Instant;
 import java.util.*;
 
 import jmri.*;

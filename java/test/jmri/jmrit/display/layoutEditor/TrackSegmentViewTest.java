@@ -626,6 +626,7 @@ public class TrackSegmentViewTest extends LayoutTrackViewTest {
     private TrackSegment segment;
     private TrackSegmentView segmentView;
 
+    @Override
     @BeforeEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
@@ -646,6 +647,7 @@ public class TrackSegmentViewTest extends LayoutTrackViewTest {
         }
     }
 
+    @Override
     @AfterEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
