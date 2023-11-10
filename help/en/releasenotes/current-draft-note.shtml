@@ -732,4 +732,6 @@
             <li>Fixed a validation errors in the xml/schema/auxiliary-configuration.xsd  file.</li>
             <li>Fixed a problem where the run/pause button would not properly show when the
                 Nixie, LCD or Pragotron clocks were resized.</li>
+            <li>Fixed a problem that prevented JMRI from launching on macOS if Java 21 was in use.
+                (Java 11 is still the recommended one)
         </ul>
