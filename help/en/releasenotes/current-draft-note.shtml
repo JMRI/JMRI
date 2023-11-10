@@ -9,23 +9,19 @@
                 <li></li>
             </ul>
 
-	    <h4>Anyma DMX512</h4>
+        <h4>Anyma DMX512</h4>
             <ul>
                 <li></li>
             </ul>
 
-	    <h4>Bachrus Speedo</h4>
+        <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
 
-	    <h4><a href="http://bidib.org/index_e.html">BiDiB</a></h4>
+        <h4><a href="http://bidib.org/index_e.html">BiDiB</a></h4>
             <ul>
-                <li>Eckart Meyer has provided a first implementation
-                    for the
-                    <a href="http://bidib.org/index_e.html">BiDiB</a>
-                    system connection.
-                    </li>
+                <li></li>
             </ul>
 
         <h4>CBUS</h4>
@@ -40,7 +36,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>New Virtual LCD window</li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -110,7 +106,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>Fixed an issue in introduced in 5.5.5 where the incorrect default topics were used for Direction and Function.  The documenation was correct but the code wasn't.</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -130,25 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Updates to most recent OpenLCB Java library, which includes
-                    <ul>
-                        <li>Better status logging of save and restore operations
-                        <li>Allows user to change the default backup filename using
-                            a script like
-                            <a href="https://jmri.org/jython/LCC/ChangeDefaultBackupFileName.py">jython/LCC/ChangeDefaultBackupFileName.py</a>
-                        <li>Fixes a problem that could cause the configuration dialog
-                            to not open for certain nodes, including the DCC-LCC Gateway.
-                        <li>Fixes the display of the "Simple Protocol" availability bit
-                    </ul>
-                </li>
-                <li>Added Window and Help menus to the Configure Node window.
-                <li>The Configure Nodes window will now remember your selected sort order
-                    from one run to the next. </li>
-                <li>Added Window and Help menus to the Configure Node window.</li>
-                <li>Added support for multiple OpenLCB connections in Signal Masts add/edit dialog.</li>
-                <li>Added GUI Icons for OpenLCB signal masts in the add/edit dialog.</li>
-                <li>Fixed a bug where doing Quit while a CDI window is open with changes
-                    didn't properly handle user response to the Cancel/Quit dialog box.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -158,8 +136,7 @@
 
         <h4>RFID</h4>
             <ul>
-                <li>New Getting Started document</li>
-                <li>Script to update Car/Locomotive Tables when new/changed RFID tag seen</li>
+                <li></li>
             </ul>
 
         <h4>Roco z21/Z21</h4>
@@ -239,13 +216,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li>Updated the Series 7 SFX decoder definition.</li>
-            </ul>
-            <ul>
-                <li>Fix NPE, and decode Extended Accessory Signal Aspect IMM commands</li>
-            </ul>
-            <ul>
-                <li>Fix LnSendTool.py to correctly send signal aspects up to 255 NMRA 2.4.3</li>
+                <li></li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -276,12 +247,6 @@
         <h4><a href="http://www.ldhtrenes.com.ar">LDH</a></h4>
             <ul>
                 <li></li>
-            </ul>
-
-        <h4>LEB</h4>
-            <ul>
-                <li>Added the
-                    <a href="http://lebmodelisme.com">LEB signal decoders</a></li>
             </ul>
 
         <h4>Lenz</h4>
@@ -324,15 +289,9 @@
                 <li></li>
             </ul>
 
-        <h4>Piko decoders</h4>
-            <ul>
-                <li>Add Decoders for Piko BR 93 TT XP 5.1 Sound, Piko BR 55 TT XP 5.1 Sound, Piko Smart Decoder XP 5.1 Sound Blank 
-                <li>Support of Decoder XP5.1 FW 1.1 to FW 1.9 and Update Decoder Definitions, Changing pane layout</li>
-            </ul>
-
         <h4>Public Domain and DIY decoders</h4>
             <ul>
-                <li>FREDi - Cleanup; Removed obsolete (leftover) settings from one of the sub-files</li>
+                <li></li>
             </ul>
 
         <h4>QSI</h4>
@@ -352,7 +311,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li>TSU2/BLU/ECO ID update with some model additions</li>
+                <li></li>
             </ul>
 
         <h4>Tam Valley Depot</h4>
@@ -370,7 +329,7 @@
                 <li></li>
             </ul>
 
-	    <h4>Team Digital</h4>
+        <h4>Team Digital</h4>
             <ul>
                 <li></li>
             </ul>
@@ -418,8 +377,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Fixed a bug that prevented output labels from
-                properly showing up in some decoder definitions.</li>
+            <li></li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -431,15 +389,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Check each section against reserved sections for conflicting blocks.</li>
-             <li>Do not turn off block alternate colour when it has already be reallocated.</li>
-        </ul>
-        <ul>
-             <li>Add TransitAction TERMINATE</li>
-             <li>Add TransitAction LOADTRAININFO</li>
-             <li>Process Delays for Active/InActive sensor actions</li>
-             <li>Process delays for OnTrainStop</li>
-             <li>Remove delays for Exit Section as they cannot be processed</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -457,16 +407,12 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li>The LogixNG Icon has been added to the toolbars.  The LogixNG Icon can run inline
-	        LogixNGs by clicking on the icon or text label when converted to text.</li>
-
-	        <li>The Audio Icon has been added to the toolbars.  The Audio Icon can play a sound
-          on a web panel, for example a Tablet.</li>
+            <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
             <ul>
-                <li>Fix Both Way route selection.</li>
+                <li></li>
             </ul>
 
     <h3>Logix</h3>
@@ -478,48 +424,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li><strong>Note:</strong> If tables and panels are stored with this JMRI version, the file
-          might not load in a previous version of JMRI if it includes LogixNG. This is because JMRI
-          now stores some LogixNG data in a different way than before.</li>
-
-          <li>The expression <strong>Timer</strong> has been added. It returns <strong>False</strong>
-          until some time has passed. It then returns <strong>True</strong> once and the timer starts
-          again. This expression is intended to be used together with the action <strong>Sequence</strong></li>.
-
-          <li>The action <strong>Throttle function</strong> has been added. It's similar to the action
-          <strong>Throttle</strong>, except that it only sets a function, not speed or direction, and
-          that it doesn't have any child actions.</li>
-
-          <li>The action <strong>Sequence</strong> is now safe to use in LogixNG modules. The action
-          had a bug which made it sometimes fail if it was used in a module and that module was called
-          from several ConditionalNGs at once.</li>
-
-          <li>When a LogixNG was created and ConditionalNGs
-          was created for that LogixNG, the ConditionalNGs
-          wasn't executing until restart of JMRI if the
-          ConditionalNGs had the <strong>Startup</strong>
-          flag unchecked. That's fixed now.</li>
-
-          <li>Warrant expression was not listening for warrant events.  Fixed along with the long
-          description.</li>
-
-          <li>Add the <strong>GET_BLOCK_WARRANT</strong> and <strong>GET_BLOCK_TRAIN_NAME</strong>
-          OBlock actions to the OBlock Logix import.</li>
-
-          <li>The action <strong>Timer</strong> has been improved. It can now be used within a
-          LogixNG module. It also supports local variables to tell the different delays for the
-          timers in the Timer action.<br>
-          To use the Timer action in a LogixNG module, have an <strong>Always true</strong>
-          expression as <strong>Start</strong> expression for the Timer action, together with the
-          option <strong>Start/Stop by Start expression</strong> selected.</strong></li>
-
-          <li>The action <strong>Audio icon on web panel</strong> is added to the category
-          <strong>Display</strong>. This action can tell an <strong>Audio</strong> icon on
-          a Panel editor to play the sound when the panel is shown in a web browser, for
-          example on a tablet or mobile phone.</li>
-
-          <li>The action <strong>Block</strong> and the expressions <strong>Block</strong>,
-          <strong>Dispatcher</strong> and <strong>Sensor</strong> has been refactored.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -531,38 +436,13 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Improvements to the car, locomotive, and train preview and print tools.</li>
-            <li>Minor improvement to the train build report when routing.</li>
-            <li>Improvements to the router when determining a valid route where multiple trains are using the same route.</li>
-            <li>Updates to the OperationsPro help.</li>
-            <li>To see all changes to OperationsPro, use the link below</li>
-            <li><a href="https://github.com/pulls?q=is%3Apr+author%3ADanielBoudreau+archived%3Afalse+is%3Amerged">OperationsPro Changes</a></li>
-            <li>Script to update Car/Locomotive Tables on update to Id Tag Table User Name</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li>It's now possible to select an icon below another icon. Right-click on
-            the icon to open the popup menu of the icon. If there are any icons at the
-            mouse position below this icon, the sub menu <strong>Icons below</strong>
-            will appear at the end of the popup menu. The sub menu will contain all
-            the icons below this icon. These menu items will open the popup menu for
-            for its icon.</li>
-            <li>A new <strong>Audio</strong> icon has been added to Panel Editor.
-            It can be used to play audio on a web panel, or let the user start
-            playing sound in JMRI by clicking on the Audio icon. When editing the
-            panel, the popup menu for the icon has a new sub menu <strong>Web
-            panels</strong> that sets the options for how the icon should act on
-            a web panel.<br>
-            If the icon is used to play sound on a web panel, the option
-            <strong>Hide when not editing</strong> might be useful if the user
-            shouldn't see the icon. The icon plays the sound even if it's not
-            visible.<br>
-            The LogixNG action <strong>Audio icon on web panel</strong> can be
-            used to tell the <strong>Audio</strong> icon to play the sound when
-            it is displayed on a web browser, for example on a tablet or mobile
-            phone.</li>
+            <li></li>
         </ul>
 
     <h3>Control Panel Editor</h3>
@@ -584,8 +464,7 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li>Each startup action now has an <strong>Enabled</strong> checkbox
-            so that each startup action can be enabled/disabled.</li>
+            <li></li>
         </ul>
 
     <h3>Resources</h3>
@@ -619,7 +498,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>The Italian FS-1987 signal system was updated for better operation.</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -632,22 +511,22 @@
                 <li></li>
             </ul>
 
-    	<h4>Signal Groups</h4>
+        <h4>Signal Groups</h4>
             <ul>
                 <li></li>
             </ul>
 
-	    <h4>Cab Signals</h4>
+        <h4>Cab Signals</h4>
             <ul>
                 <li></li>
             </ul>
 
-    	<h4>Simple Signal Logic</h4>
+        <h4>Simple Signal Logic</h4>
             <ul>
                 <li></li>
             </ul>
 
-	    <h4>USS CTC Logic</h4>
+        <h4>USS CTC Logic</h4>
             <ul>
                 <li></li>
             </ul>
@@ -691,7 +570,7 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li>JMRI Web Frame Server can now access many of the Dialog popup boxes.</li>
+            <li></li>
         </ul>
 
     <h3>Where Used</h3>
@@ -718,20 +597,9 @@
             <li></li>
         </ul>
 
-   <h3>Other Tools</h3>
-        <a id="Tools" name="Tools"></a>
-        <ul>
-            <li>The Power Control now defaults to display all connections.</li>
-        </ul>
-
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>(For developers) Our CI process has been updated to require the
-            @Override annotation on overriding methods and removal of unused import statements.</li>
-            <li>Fixed a validation errors in the xml/schema/auxiliary-configuration.xsd  file.</li>
-            <li>Fixed a problem where the run/pause button would not properly show when the
-                Nixie, LCD or Pragotron clocks were resized.</li>
-            <li>Fixed a problem that prevented JMRI from launching on macOS if Java 21 was in use.
-                (Java 11 is still the recommended one)
+            <li></li>
         </ul>
+
