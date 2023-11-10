@@ -489,7 +489,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testStoreFile() throws Exception {
-        // Ensure the fast clock is stopped at a specified time so it doesn't vary.
+        // Ensure the fast clock is started at a specified time so it doesn't vary.
         // Otherwise the WebRequest.xml will be changed on every run.
         Timebase clock = InstanceManager.getDefault(jmri.Timebase.class);
         clock.setStartSetTime(false, new java.util.Date(0));
