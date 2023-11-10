@@ -60,7 +60,7 @@ This file is created by jmri.jmrit.logixng.actions.WebRequestTest
     </light>
   </lights>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="10:03 PM">
+    <memory value="11:40 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -70,7 +70,7 @@ This file is created by jmri.jmrit.logixng.actions.WebRequestTest
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Nov 06 22:03:34 CET 2023" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Thu Jan 01 01:00:00 CET 1970" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <Thread>
       <id>0</id>
@@ -564,9 +564,9 @@ This file is created by jmri.jmrit.logixng.actions.WebRequestTest
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Mon Nov 06 22:03:34 CET 2023</date>
+      <date>Fri Nov 10 11:40:30 CET 2023</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 5.5.5plus+daniel+2023-11-06T20:59:20Z+R3ab1042 on Mon Nov 06 22:03:34 CET 2023-->
+  <!--Written by JMRI version 5.5.5plus+daniel+2023-11-10T10:39:00Z+R4ada181 on Fri Nov 10 11:40:30 CET 2023-->
 </layout-config>
