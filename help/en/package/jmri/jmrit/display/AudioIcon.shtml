@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Audio Icon Help</title>
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="JMRI help Audio Icon"><!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>Audio Icon<span class="since">since 5.5.6</span></h1>
+
+      <p>The <strong>Audio Icon</strong> can be added to Panel Editor and Layout Editor panels.  When
+      the icon is added, an <a href="../../../../html/tools/Audio.shtml#sources">Audio Source</a> is
+      selected from a list of audio sources.  The icon can be configured to play the sound by
+      clicking on the icon in JMRI and/or by clicking/touching the icon on the current panel
+      displayed by the JMRI Web Server.  It can also be used by LogixNG to play a sound on the
+      current panel displayed by the JMRI Web Server.</p>
+
+      <p>The Audio Icon provides the connectivity between JMRI running on computer and the current
+      panel displayed in a web browser via the JMRI Web Server.</p>
+
+      <p>The web browser has to have <strong>media auto play</strong> enabled.  The procedure depends
+      on the operating system and the browser.  In some cases, clicking on the audio icon on the web
+      page will allow subsequent JMRI requests without <strong>auto play</strong> being enabled.</p>
+
+      <h3>Options</h3>
+
+      <p>The Audio icon options are set using the <strong>Web panels</strong> sub-menu in the Audio
+      Icon context menu.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/audio_icon_web_panels_menu.png"><img class="image-border" src=
+        "images/audio_icon_web_panels_menu.png" alt=
+        "audio icon web panels menu"></a>
+      </div>
+
+      <p>The three mouse options and the Play sound option provide six combinations of when and where
+      sounds will be played.  For example, to play a sound only on the web panel when the web icon
+      is clicked, use the Local option.</p>
+
+      <div style="margin-left: 2em;">
+        <table>
+          <tr><th>Menu Items</th><th>Icon</th><th>Sound Location</th></tr>
+          <tr><td>Global</td><td> JMRI </td><td>JMRI</td></tr>
+          <tr><td></td><td>Web</td><td>JMRI</td></tr>
+          <tr><td>Local</td><td>JMRI</td><td>JMRI</td></tr>
+          <tr><td></td><td>Web</td><td>Web</td></tr>
+          <tr><td>None</td><td>JMRI</td><td>None</td></tr>
+          <tr><td></td><td>Web</td><td>None</td></tr>
+          <tr><td>Global + Play sound</td><td>JMRI</td><td>JMRI and Web</td></tr>
+          <tr><td></td><td>Web</td><td>JMRI and Web</td></tr>
+          <tr><td>Local + Play sound</td><td>JMRI</td><td>JMRI and Web</td></tr>
+          <tr><td></td><td>Web</td><td>Web</td></tr>
+          <tr><td>None + Play sound</td><td>JMRI</td><td>None</td></tr>
+          <tr><td></td><td>Web</td><td>None</td></tr>
+        </table>
+      </div>
+
+      <p>The Stop sound option applies to audio sources that have looping enabled or to stop long running
+      sound files.</p>
+
+      <h3>LogixNG Actions</h3>
+
+      <p>The LogixNG <strong>Audio</strong> action can be used to play sounds on the computer running
+      JMRI but those sounds will not be played on a web panel.  The LogixNG <strong>Audio icon on web
+      panel</strong> action can be used to start and stop sounds on web panels using the Audio Icon.
+      Note: The sounds are not played on the JMRI computer.</p>
+
+      <p>Note: The <strong>Audio icon on web panel</strong> action does not use the <strong>Web
+      panels</strong> options.</p>
+
+      <p>If the icon is used to play a sound using only the LogixNG action, the option <strong>Hide
+      when not editing</strong> might be useful if the user shouldn't see the icon. The icon plays
+      the sound even if it's not visible.</p>
+
+      <p>See <a href="../../../../html/tools/logixng/reference/chapter5.shtml#layout_audio_icon">Audio
+      icon on web panel</a> in the LogixNG Reference for details about the LogixNG action.</p>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

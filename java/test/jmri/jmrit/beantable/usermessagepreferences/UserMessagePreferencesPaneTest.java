@@ -18,6 +18,7 @@ public class UserMessagePreferencesPaneTest extends PreferencesPanelTestBase<Use
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDefaultUserMessagePreferences();
         prefsPanel = new UserMessagePreferencesPane();
     }

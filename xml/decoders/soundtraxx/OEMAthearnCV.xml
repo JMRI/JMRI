@@ -68,7 +68,13 @@
            <authorinitials>JE</authorinitials>
            <revremark>rev CV215 tool tip and range display</revremark>
         </revision>
-   </revhistory>
+        <revision>
+            <revnumber>10</revnumber>
+            <date>2023-10-10</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>move CV to base files</revremark>
+        </revision>
+    </revhistory>
     <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/nmra/vStartHighMid.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
@@ -786,10 +792,6 @@
         <decVal/>
         <label>Coupler Volume</label>
     </variable>
-    <variable CV="139" mask="VVVVVVVV" item="Sound Setting 12" default="100" tooltip="Sets the volume of the brakes squealing">
-        <decVal/>
-        <label>Independent Brake Apply Volume</label>
-    </variable>
     <variable CV="140" mask="VVVVVVVV" item="Sound Setting 13" default="70" tooltip="Sets the volume of the brakes releasing">
         <decVal/>
         <label>Independent Brake Release Volume</label>
@@ -889,10 +891,6 @@
         <label>Automatic Brake Squeal Enable</label>
     </variable>
     <!-- Advanced Motor Control Features follow -->
-    <variable CV="200" item="Sound Group 3 Option 2" default="90" tooltip="Adjust the duration that occurs between each subsequent pop! of the automatic poppet valve sound effect">
-        <decVal/>
-        <label>Poppet Valve Release Rate</label>
-    </variable>
     <variable CV="209" mask="VVVVVVVV" item="EMF Static Config" default="48" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
         <decVal/>
         <label>Motor Kp Coefficient (0-255)</label>
@@ -1164,11 +1162,6 @@
     <variable CV="16.1.298" item="Extended Function Map Bell" default="1">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
         <label>Bell</label>
-        <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
-    </variable>
-    <variable CV="16.1.299" item="Extended Function Map Dynamic Brake" default="4">
-        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-        <label>Dynamic Brake</label>
         <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
     </variable>
     <variable CV="16.1.300" item="Extended Function Map Short Airhorn" default="255">

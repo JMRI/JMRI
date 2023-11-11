@@ -139,6 +139,12 @@
             <authorinitials>JE</authorinitials>
             <revremark>chg includes to TSU2PaneLighting, TSU2PaneASCsteam</revremark>
         </revision>
+        <revision>
+            <revnumber>8</revnumber>
+            <date>2023-10-09</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>productID change for 11 bit Soundtraxx ID</revremark>
+        </revision>
     </revhistory>
     <version author="Michael Mosher" version="1" lastUpdated="20150725"/>
     <version author="Alain Le Marchand" version="1.1" lastUpdated="20150726"/>
@@ -155,217 +161,56 @@
     <version author="Michael Mosher" version="5" lastUpdated="20180815"/>
     <!-- Decoder Model information follows -->
     <decoder>
-        <family name="Econami Steam" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Econami Steam decoders">
-            <model model="ECO-100 Steam" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="9pin" productID="257" comment="Model 881001">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Whistle| ">
-                    <label xml:lang="it">Fischio| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamo| ">
-                    <label xml:lang="it">Dynamo| </label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Cylinder|Cocks">
-                    <label xml:lang="it">Cilindro|Cazzi</label>
-                </output>
-                <output name="10" label="Water|Stop">
-                    <label xml:lang="it">Acqua|Stop</label>
-                </output>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
+        <family name="Econami Steam" mfg="SoundTraxx (Throttle-Up)" lowVersionID="70" comment="These are the -retail- version Econami Steam decoders">
+            <model model="ECO-100 Steam" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="Wires" productID="2049" comment="Model 881001">
                 <size length="27" width="10.5" height="5" units="mm"/>
             </model>
-            <model model="ECO-200 Steam" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="266" comment="Model 881002">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Whistle| ">
-                    <label xml:lang="it">Fischio| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamo| ">
-                    <label xml:lang="it">Dynamo| </label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Cylinder|Cocks">
-                    <label xml:lang="it">Cilindro|Cazzi</label>
-                </output>
-                <output name="10" label="Water|Stop">
-                    <label xml:lang="it">Acqua|Stop</label>
-                </output>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
+            <model model="ECO-200 Steam" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="2058" comment="Model 881002">
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="ECO-21P Steam" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21pin" productID="263" comment="Model 881003">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Whistle| ">
-                    <label xml:lang="it">Fischio| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamo| ">
-                    <label xml:lang="it">Dynamo| </label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Cylinder|Cocks">
-                    <label xml:lang="it">Cilindro|Cazzi</label>
-                </output>
-                <output name="10" label="Water|Stop">
-                    <label xml:lang="it">Acqua|Stop</label>
-                </output>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
+            <model model="ECO-21P Steam" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21pin" productID="2055" comment="Model 881003">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
-            <model model="ECO-21PNEM Steam" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21pin" productID="308" comment="Model 881006">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Whistle| ">
-                    <label xml:lang="it">Fischio| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamo| ">
-                    <label xml:lang="it">Dynamo| </label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Cylinder|Cocks">
-                    <label xml:lang="it">Cilindro|Cazzi</label>
-                </output>
-                <output name="10" label="Water|Stop">
-                    <label xml:lang="it">Acqua|Stop</label>
-                </output>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
+            <model model="ECO-21PNEM Steam" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2100" comment="Model 881006">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
-            <model model="ECO-400 Steam" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="260" comment="Model 881005">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Whistle| ">
-                    <label xml:lang="it">Fischio| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamo| ">
-                    <label xml:lang="it">Dynamo| </label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Cylinder|Cocks">
-                    <label xml:lang="it">Cilindro|Cazzi</label>
-                </output>
-                <output name="10" label="Water|Stop">
-                    <label xml:lang="it">Acqua|Stop</label>
-                </output>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
+            <model model="ECO-400 Steam" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="2052" comment="Model 881005">
                 <size length="69" width="30.5" height="14" units="mm"/>
             </model>
-            <model model="ECO-PNP Steam" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="269" comment="Model 881004">
-                <versionCV lowVersionID="70"/>
-                <output name="3" label="  FX3  "/>
-                <output name="4" label="  FX4  "/>
-                <output name="5" label="Whistle| ">
-                    <label xml:lang="it">Fischio| </label>
-                </output>
-                <output name="6" label="Bell| ">
-                    <label xml:lang="it">Campana| </label>
-                </output>
-                <output name="7" label="Dynamo| ">
-                    <label xml:lang="it">Dynamo| </label>
-                </output>
-                <output name="8" label="Short|Horn">
-                    <label xml:lang="it">Breve|Tromba</label>
-                </output>
-                <output name="9" label="Cylinder|Cocks">
-                    <label xml:lang="it">Cilindro|Cazzi</label>
-                </output>
-                <output name="10" label="Water|Stop">
-                    <label xml:lang="it">Acqua|Stop</label>
-                </output>
-                <output name="11" label="Dimming| ">
-                    <label xml:lang="it">Smorzam| </label>
-                </output>
-                <output name="12" label="Mute| ">
-                    <label xml:lang="it">Silenzio| </label>
-                </output>
-                <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>
-                <output name="15" label="Coupler| ">
-                    <label xml:lang="it">Accoppiatore| </label>
-                </output>
+            <model model="ECO-PNP Steam" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="2061" comment="Model 881004">
                 <size length="73.7" width="16.8" height="4.8" units="mm"/>
             </model>
+            <output name="3" label="  FX3  "/>
+            <output name="4" label="  FX4  "/>
+            <output name="5" label="Whistle| ">
+                <label xml:lang="it">Fischio| </label>
+            </output>
+            <output name="6" label="Bell| ">
+                <label xml:lang="it">Campana| </label>
+            </output>
+            <output name="7" label="Dynamo| ">
+                <label xml:lang="it">Dynamo| </label>
+            </output>
+            <output name="8" label="Short|Horn">
+                <label xml:lang="it">Breve|Tromba</label>
+            </output>
+            <output name="9" label="Cylinder|Cocks">
+                <label xml:lang="it">Cilindro|Cazzi</label>
+            </output>
+            <output name="10" label="Water|Stop">
+                <label xml:lang="it">Acqua|Stop</label>
+            </output>
+            <output name="11" label="Dimming| ">
+                <label xml:lang="it">Smorzam| </label>
+            </output>
+            <output name="12" label="Mute| ">
+                <label xml:lang="it">Silenzio| </label>
+            </output>
+            <output name="13" label="|"/>	<!-- Not used for for this decoder -->
+            <output name="14" label="Brake| "/>
+            <output name="15" label="Coupler| ">
+                <label xml:lang="it">Accoppiatore| </label>
+            </output>
             <functionlabels>
                 <functionlabel num="0" lockable="true">Headlight</functionlabel>
                 <functionlabel num="1" lockable="true">Bell</functionlabel>

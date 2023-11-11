@@ -534,8 +534,13 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                                 track.getName(), testCar.getDestinationName(),
                                 testCar.getDestinationTrackName()));
                     }
-                    continue;
+
+                } else if (_addtoReportVeryDetailed) {
+                    addLine(_buildReport, SEVEN, Bundle.getMessage("RouterSameInterchange", secondTrain.getName(),
+                            track.getLocation().getName(), track.getName()));
+
                 }
+                continue;
             }
             if (debugFlag) {
                 log.debug("Train ({}) can service car ({}) from {} ({}, {}) to final destination ({}, {})",
@@ -576,7 +581,10 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             } else {
                 firstTrain = tmanager.getTrainForCar(testCar, _buildReport);
             }
-            if (firstTrain == secondTrain && track.isInterchange() && track.getPickupOption().equals(Track.ANY)) {
+            if (firstTrain != null &&
+                    firstTrain.getRoute() == secondTrain.getRoute() &&
+                    track.isInterchange() &&
+                    track.getPickupOption().equals(Track.ANY)) {
                 if (_addtoReportVeryDetailed) {
                     addLine(_buildReport, SEVEN, Bundle.getMessage("RouterSameInterchange", firstTrain.getName(),
                             track.getLocation().getName(), track.getName()));
@@ -703,6 +711,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         if (useStaging && !Setup.isCarRoutingViaStagingEnabled())
             return false; // routing via staging is disabled
 
+        if (_addtoReportVeryDetailed) {
+            addLine(_buildReport, SEVEN, BLANK_LINE);
+        }
         if (_lastLocationTracks.isEmpty()) {
             if (useStaging) {
                 addLine(_buildReport, SEVEN, Bundle.getMessage("RouterCouldNotFindStaging",

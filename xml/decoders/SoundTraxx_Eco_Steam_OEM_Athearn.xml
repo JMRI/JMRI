@@ -31,11 +31,17 @@
             <authorinitials>MM</authorinitials>
             <revremark>New file, based on Eco Steam</revremark>
         </revision>
+        <revision>
+            <revnumber>2</revnumber>
+            <date>2023-10-10</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>productID change for 11 bit Soundtraxx ID</revremark>
+        </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
         <family name="Econami Steam OEM Athearn" mfg="SoundTraxx (Throttle-Up)" comment="These are the OEM Athearn version Econami Steam decoders">
-            <model model="E2100.001 2-6-0 2-8-0" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21pin" productID="257" comment="Model E2100.001">
+            <model model="E2100.001 2-6-0 2-8-0" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21pin" productID="2149" comment="Model E2100.001">
                 <versionCV lowVersionID="70"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>

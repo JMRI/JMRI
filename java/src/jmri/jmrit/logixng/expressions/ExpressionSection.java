@@ -115,22 +115,12 @@ public class ExpressionSection extends AbstractDigitalExpression
         String namedBean = _selectNamedBean.getDescription(locale);
         String state;
 
-        switch (_selectEnum.getAddressing()) {
-            case Direct:
-                SectionState sectionState = _selectEnum.getEnum();
-                state = Bundle.getMessage(locale, "AddressByDirect", sectionState._text);
-                break;
-
-            case Reference:
-            case LocalVariable:
-            case Formula:
-                state = _selectEnum.getDescription(locale);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _stateAddressing state: " + _selectEnum.getAddressing().name());
+        if (_selectEnum.isDirectAddressing()) {
+            SectionState sectionState = _selectEnum.getEnum();
+            state = Bundle.getMessage(locale, "AddressByDirect", sectionState._text);
+        } else {
+            state = _selectEnum.getDescription(locale);
         }
-
 
         return Bundle.getMessage(locale, "Section_Long", namedBean, _is_IsNot.toString(), state);
     }

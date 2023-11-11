@@ -376,10 +376,10 @@ public class ImportConditional {
 
         switch (cv.getType()) {
             case SENSOR_ACTIVE:
-                expression.setBeanState(ExpressionSensor.SensorState.Active);
+                expression.getSelectEnum().setEnum(ExpressionSensor.SensorState.Active);
                 break;
             case SENSOR_INACTIVE:
-                expression.setBeanState(ExpressionSensor.SensorState.Inactive);
+                expression.getSelectEnum().setEnum(ExpressionSensor.SensorState.Inactive);
                 break;
             default:
                 throw new InvalidConditionalVariableException(

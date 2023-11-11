@@ -23,11 +23,9 @@ import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrit.beantable.AddNewDevicePanel;
-import jmri.jmrit.display.Positionable;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemType;
 import jmri.util.swing.JmriJOptionPane;
-import jmri.util.swing.JmriMouseEvent;
 
 /**
  * Class for a switchboard interface object.
@@ -303,33 +301,33 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         log.debug("Created switch {}", index);
     }
 
-    static final AffineTransform affinetransform = new AffineTransform();     
-    static final FontRenderContext frc = new FontRenderContext(affinetransform,true,true);    
+    static final AffineTransform affinetransform = new AffineTransform();
+    static final FontRenderContext frc = new FontRenderContext(affinetransform,true,true);
 
     int getLabelFontSize(int radius, String text) {
         int fontSize = Math.max(12, radius/4);
         // see if that fits using font metrics
         if (text != null) {
-            Font font = new Font(Font.SANS_SERIF, Font.BOLD, fontSize); 
+            Font font = new Font(Font.SANS_SERIF, Font.BOLD, fontSize);
             int textwidth = (int)(font.getStringBounds(text, frc).getWidth());
             fontSize = Math.min(fontSize, fontSize*2*radius*9/textwidth/10); // integer arithmetic: fit in 90% of radius*2
             log.trace("calculate fontsize {} from radius {} and textwidth {} for string \"{}\"", fontSize, radius, textwidth, text);
         }
         return Math.max(fontSize, 5); // but go no smaller than 6 point
     }
-    
+
     int getSubLabelFontSize(int radius, String text) {
         int fontSize = Math.max(9, radius/5);
         // see if text fits using font metrics, if not correct it with a smaller font size
         if (text != null) {
-            Font font = new Font(Font.SANS_SERIF, Font.BOLD, fontSize); 
+            Font font = new Font(Font.SANS_SERIF, Font.BOLD, fontSize);
             int textwidth = (int)(font.getStringBounds(text, frc).getWidth());
             fontSize = Math.min(fontSize, fontSize*2*radius*9/textwidth/10); // integer arithmetic: fit in 90% of radius*2
             log.trace("calculate fontsize {} from radius {} and textwidth {} for string \"{}\"", fontSize, radius, textwidth, text);
         }
         return Math.max(fontSize, 5); // but go no smaller than 6 point
     }
-    
+
     public NamedBean getNamedBean() {
         return _bname;
     }
@@ -617,8 +615,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
 
     /**
      * Show pop-up on a switch with its unique attributes including the
-     * (un)connected bean. Derived from
-     * {@link jmri.jmrit.display.switchboardEditor.SwitchboardEditor#showPopUp(Positionable, JmriMouseEvent)}
+     * (un)connected bean.
      *
      * @param e unused because we now our own location
      * @return true when pop up displayed

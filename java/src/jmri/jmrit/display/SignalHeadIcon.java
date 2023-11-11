@@ -171,6 +171,12 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     @Override
+    @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_SignalHead");
+    }
+
+    @Override
     public @Nonnull
     String getNameString() {
         if (namedHead == null) {

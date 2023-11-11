@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
@@ -175,6 +176,12 @@ public class GlobalVariableIcon extends MemoryOrGVIcon implements java.beans.Pro
                 }
             }
         }
+    }
+
+    @Override
+    @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_GlobalVariableIcon");
     }
 
     @Override
@@ -459,11 +466,11 @@ public class GlobalVariableIcon extends MemoryOrGVIcon implements java.beans.Pro
     }
 
     protected void editGlobalVariableValue() {
-    
+
         String reval = (String)JmriJOptionPane.showInputDialog(this,
                                      Bundle.getMessage("EditCurrentGlobalVariableValue", namedGlobalVariable.getName()),
                                      getGlobalVariable().getValue());
-    
+
         setValue(reval);
         updateSize();
     }

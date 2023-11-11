@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-audioicon-client-message",
+    "type": "object",
+    "description": "Schema data object in message from client to JMRI for type \"audioicon\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Always the string 'audioicon'"
+        },
+        "data": {
+            "type": "array",
+            "description": "Data for the audioicon",
+            "items": {
+                "identity": "integer",
+                "description": "The identity of the 'audioicon'"
+            }
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name"]
+}

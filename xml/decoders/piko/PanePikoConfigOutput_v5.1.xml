@@ -35,7 +35,7 @@
 	<name xml:lang="de">Effekte für Funktionsausgänge</name>
 	<name xml:lang="nl">Effecten Functie-uitgangen</name>
 	<name xml:lang="cs">Efekty Výstupy funkce</name>
-	<group exclude="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18">
+	<group exclude="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16">
 		<!--Piko SmartDecoder XP5.1-->
 		<label>
 			<text>CV Bank not available for this Piko SmartDecoder</text>
@@ -46,581 +46,593 @@
 			</label>
 		</row>
 	</group>
-	<group include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18">
+	<group include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16">
 		<!--Piko SmartDecoder XP5.1-->
-		<row>
+		<group include="PIKO SmartDecoder XP5.1 (version 1.1+)">
 			<label>
-				<text>CV Bank available for this Piko SmartDecoder XP 5.1</text>
+				<text>CV Bank not available for this Piko SmartDecoder Firmware version. Please update the decoder</text>
 			</label>
+			<row>
+				<label>
+					<text>    </text>
+				</label>
+			</row>
+		</group>
+		<group exclude="PIKO SmartDecoder XP5.1 (version 1.1+)">
+			<row>
+				<label>
+					<text>CV Bank available for this Piko SmartDecoder XP 5.1</text>
+				</label>
+				<!-- Leerspalte -->
+				<column>
+					<label>
+						<text>     </text>
+					</label>
+				</column>
+				<display item="Bank_Switch_31"/>
+				<!-- Leerspalte -->
+				<column>
+					<label>
+						<text>    </text>
+					</label>
+				</column>
+				<display item="Bank_Switch_32"/>
+			</row>
+			<column>
+				<row>
+					<label>
+						<text>    </text>
+					</label>
+				</row>
+				<label>
+					<text>Effects for the function outputs</text>
+					<text xml:lang="de">Effekte für die Funktionsausgänge</text>
+					<text xml:lang="nl">Snelheidsstap bij Schakelgeluid</text>
+					<text xml:lang="cs">Rychlostní krok pro přepnutí zvuku</text>
+					<text>    </text>
+				</label>
+				<row>
+					<label>
+						<text> </text>
+					</label>
+				</row>
+				<row>
+					<display item="Ausgang F0v Effekt A" layout="above"/>
+				</row>
+				<row>
+					<display item="Ausgang F0v Flags A"/>
+				</row>
+				<row>
+					<label>
+						<text> </text>
+					</label>
+				</row>
+				<row>
+					<display item="Ausgang F0v PWM A" layout="above" label=""/>
+					<display item="Ausgang F0v PWM A" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Ausgang F0v Parameter 1 A" layout="above" label=""/>
+					<display item="Ausgang F0v Parameter 1 A" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Ausgang F0v Parameter 2 A" layout="above" label=""/>
+					<display item="Ausgang F0v Parameter 2 A" layout="above" format="hslider"/>
+				</row>
+				<!-- empty line -->
+				<row>
+					<label>
+						<text> </text>
+					</label>
+				</row>
+				<row>
+					<display item="Ausgang F0v Effekt B" layout="above"/>
+				</row>
+				<row>
+					<display item="Ausgang F0v Flags B"/>
+				</row>
+				<row>
+					<label>
+						<text> </text>
+					</label>
+				</row>
+				<row>
+					<display item="Ausgang F0v PWM B" layout="above" label=""/>
+					<display item="Ausgang F0v PWM B" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Ausgang F0v Parameter 1 B" layout="above" label=""/>
+					<display item="Ausgang F0v Parameter 1 B" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Ausgang F0v Parameter 2 B" layout="above" label=""/>
+					<display item="Ausgang F0v Parameter 2 B" layout="above" format="hslider"/>
+				</row>
+			</column>
 			<!-- Leerspalte -->
 			<column>
 				<label>
 					<text>     </text>
 				</label>
 			</column>
-			<display item="Bank_Switch_31"/>
+			<column>
+				<label>
+					<text>     </text>
+				</label>
+				<!-- empty line -->
+				<row>
+					<label>
+						<text> </text>
+					</label>
+				</row>
+				<!-- empty line -->
+				<row>
+					<label>
+						<text> </text>
+					</label>
+				</row>
+				<row>
+					<display item="Ausgang F0h Effekt A" layout="above"/>
+				</row>
+				<row>
+					<display item="Ausgang F0h Flags A"/>
+				</row>
+				<row>
+					<label>
+						<text> </text>
+					</label>
+				</row>
+				<row>
+					<display item="Ausgang F0h PWM A" layout="above" label=""/>
+					<display item="Ausgang F0h PWM A" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Ausgang F0h Parameter 1 A" layout="above" label=""/>
+					<display item="Ausgang F0h Parameter 1 A" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Ausgang F0h Parameter 2 A" layout="above" label=""/>
+					<display item="Ausgang F0h Parameter 2 A" layout="above" format="hslider"/>
+				</row>
+				<!-- empty line -->
+				<row>
+					<label>
+						<text> </text>
+					</label>
+				</row>
+				<row>
+					<display item="Ausgang F0h Effekt B" layout="above"/>
+				</row>
+				<row>
+					<display item="Ausgang F0h Flags B"/>
+				</row>
+				<row>
+					<label>
+						<text> </text>
+					</label>
+				</row>
+				<row>
+					<display item="Ausgang F0h PWM B" layout="above" label=""/>
+					<display item="Ausgang F0h PWM B" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Ausgang F0h Parameter 1 B" layout="above" label=""/>
+					<display item="Ausgang F0h Parameter 1 B" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Ausgang F0h Parameter 2 B" layout="above" label=""/>
+					<display item="Ausgang F0h Parameter 2 B" layout="above" format="hslider"/>
+				</row>
+			</column>
 			<!-- Leerspalte -->
 			<column>
 				<label>
-					<text>    </text>
+					<text>     </text>
 				</label>
 			</column>
-			<display item="Bank_Switch_32"/>
-		</row>
-		<column>
-			<row>
+			<column>
 				<label>
-					<text>    </text>
+					<text>     </text>
 				</label>
-			</row>
-			<label>
-				<text>Effects for the function outputs</text>
-				<text xml:lang="de">Effekte für die Funktionsausgänge</text>
-				<text xml:lang="nl">Snelheidsstap bij Schakelgeluid</text>
-				<text xml:lang="cs">Rychlostní krok pro přepnutí zvuku</text>
-				<text>    </text>
-			</label>
-			<row>
-				<label>
-					<text> </text>
-				</label>
-			</row>
-			<row>
-				<display item="Ausgang F0v Effekt A" layout="above"/>
-			</row>
-			<row>
-				<display item="Ausgang F0v Flags A"/>
-			</row>
-			<row>
-				<label>
-					<text> </text>
-				</label>
-			</row>
-			<row>
-				<display item="Ausgang F0v PWM A" layout="above" label=""/>
-				<display item="Ausgang F0v PWM A" layout="above" format="hslider"/>
-			</row>
-			<row>
-				<display item="Ausgang F0v Parameter 1 A" layout="above" label=""/>
-				<display item="Ausgang F0v Parameter 1 A" layout="above" format="hslider"/>
-			</row>
-			<row>
-				<display item="Ausgang F0v Parameter 2 A" layout="above" label=""/>
-				<display item="Ausgang F0v Parameter 2 A" layout="above" format="hslider"/>
-			</row>
-			<!-- empty line -->
-			<row>
-				<label>
-					<text> </text>
-				</label>
-			</row>
-			<row>
-				<display item="Ausgang F0v Effekt B" layout="above"/>
-			</row>
-			<row>
-				<display item="Ausgang F0v Flags B"/>
-			</row>
-			<row>
-				<label>
-					<text> </text>
-				</label>
-			</row>
-			<row>
-				<display item="Ausgang F0v PWM B" layout="above" label=""/>
-				<display item="Ausgang F0v PWM B" layout="above" format="hslider"/>
-			</row>
-			<row>
-				<display item="Ausgang F0v Parameter 1 B" layout="above" label=""/>
-				<display item="Ausgang F0v Parameter 1 B" layout="above" format="hslider"/>
-			</row>
-			<row>
-				<display item="Ausgang F0v Parameter 2 B" layout="above" label=""/>
-				<display item="Ausgang F0v Parameter 2 B" layout="above" format="hslider"/>
-			</row>
-		</column>
-		<!-- Leerspalte -->
-		<column>
-			<label>
-				<text>     </text>
-			</label>
-		</column>
-		<column>
-			<label>
-				<text>     </text>
-			</label>
-			<!-- empty line -->
-			<row>
-				<label>
-					<text> </text>
-				</label>
-			</row>
-			<!-- empty line -->
-			<row>
-				<label>
-					<text> </text>
-				</label>
-			</row>
-			<row>
-				<display item="Ausgang F0h Effekt A" layout="above"/>
-			</row>
-			<row>
-				<display item="Ausgang F0h Flags A"/>
-			</row>
-			<row>
-				<label>
-					<text> </text>
-				</label>
-			</row>
-			<row>
-				<display item="Ausgang F0h PWM A" layout="above" label=""/>
-				<display item="Ausgang F0h PWM A" layout="above" format="hslider"/>
-			</row>
-			<row>
-				<display item="Ausgang F0h Parameter 1 A" layout="above" label=""/>
-				<display item="Ausgang F0h Parameter 1 A" layout="above" format="hslider"/>
-			</row>
-			<row>
-				<display item="Ausgang F0h Parameter 2 A" layout="above" label=""/>
-				<display item="Ausgang F0h Parameter 2 A" layout="above" format="hslider"/>
-			</row>
-			<!-- empty line -->
-			<row>
-				<label>
-					<text> </text>
-				</label>
-			</row>
-			<row>
-				<display item="Ausgang F0h Effekt B" layout="above"/>
-			</row>
-			<row>
-				<display item="Ausgang F0h Flags B"/>
-			</row>
-			<row>
-				<label>
-					<text> </text>
-				</label>
-			</row>
-			<row>
-				<display item="Ausgang F0h PWM B" layout="above" label=""/>
-				<display item="Ausgang F0h PWM B" layout="above" format="hslider"/>
-			</row>
-			<row>
-				<display item="Ausgang F0h Parameter 1 B" layout="above" label=""/>
-				<display item="Ausgang F0h Parameter 1 B" layout="above" format="hslider"/>
-			</row>
-			<row>
-				<display item="Ausgang F0h Parameter 2 B" layout="above" label=""/>
-				<display item="Ausgang F0h Parameter 2 B" layout="above" format="hslider"/>
-			</row>
-		</column>
-		<!-- Leerspalte -->
-		<column>
-			<label>
-				<text>     </text>
-			</label>
-		</column>
-		<column>
-			<label>
-				<text>     </text>
-			</label>
-			<!-- empty line -->
-			<row>
-				<label>
-					<text> </text>
-				</label>
-			</row>
-			<!-- empty line -->
-			<row>
-				<label>
-					<text> </text>
-				</label>
-			</row>
-			<row>
-				<display item="Ausgang A1 Effekt A" layout="above"/>
-			</row>
-			<row>
-				<display item="Ausgang A1 Flags A"/>
-			</row>
-			<row>
-				<label>
-					<text> </text>
-				</label>
-			</row>
-			<row>
-				<display item="Ausgang A1 PWM A" layout="above" label=""/>
-				<display item="Ausgang A1 PWM A" layout="above" format="hslider"/>
-			</row>
-			<row>
-				<display item="Ausgang A1 Parameter 1 A" layout="above" label=""/>
-				<display item="Ausgang A1 Parameter 1 A" layout="above" format="hslider"/>
-			</row>
-			<row>
-				<display item="Ausgang A1 Parameter 2 A" layout="above" label=""/>
-				<display item="Ausgang A1 Parameter 2 A" layout="above" format="hslider"/>
-			</row>
-			<!-- empty line -->
-			<row>
-				<label>
-					<text> </text>
-				</label>
-			</row>
-			<row>
-				<display item="Ausgang A1 Effekt B" layout="above"/>
-			</row>
-			<row>
-				<display item="Ausgang A1 Flags B"/>
-			</row>
-			<row>
-				<label>
-					<text> </text>
-				</label>
-			</row>
-			<row>
-				<display item="Ausgang A1 PWM B" layout="above" label=""/>
-				<display item="Ausgang A1 PWM B" layout="above" format="hslider"/>
-			</row>
-			<row>
-				<display item="Ausgang A1 Parameter 1 B" layout="above" label=""/>
-				<display item="Ausgang A1 Parameter 1 B" layout="above" format="hslider"/>
-			</row>
-			<row>
-				<display item="Ausgang A1 Parameter 2 B" layout="above" label=""/>
-				<display item="Ausgang A1 Parameter 2 B" layout="above" format="hslider"/>
-			</row>
-		</column>
-		<!-- Leerspalte -->
-		<column>
-			<label>
-				<text>     </text>
-			</label>
-		</column>
-		<column>
-			<label>
-				<text>     </text>
-			</label>
-			<!-- empty line -->
-			<row>
-				<label>
-					<text> </text>
-				</label>
-			</row>
-			<!-- empty line -->
-			<row>
-				<label>
-					<text> </text>
-				</label>
-			</row>
-			<row>
-				<display item="Ausgang A2 Effekt A" layout="above"/>
-			</row>
-			<row>
-				<display item="Ausgang A2 Flags A"/>
-			</row>
-			<row>
-				<label>
-					<text> </text>
-				</label>
-			</row>
-			<row>
-				<display item="Ausgang A2 PWM A" layout="above" label=""/>
-				<display item="Ausgang A2 PWM A" layout="above" format="hslider"/>
-			</row>
-			<row>
-				<display item="Ausgang A2 Parameter 1 A" layout="above" label=""/>
-				<display item="Ausgang A2 Parameter 1 A" layout="above" format="hslider"/>
-			</row>
-			<row>
-				<display item="Ausgang A2 Parameter 2 A" layout="above" label=""/>
-				<display item="Ausgang A2 Parameter 2 A" layout="above" format="hslider"/>
-			</row>
-			<!-- empty line -->
-			<row>
-				<label>
-					<text> </text>
-				</label>
-			</row>
-			<row>
-				<display item="Ausgang A2 Effekt B" layout="above"/>
-			</row>
-			<row>
-				<display item="Ausgang A2 Flags B"/>
-			</row>
-			<row>
-				<label>
-					<text> </text>
-				</label>
-			</row>
-			<row>
-				<display item="Ausgang A2 PWM B" layout="above" label=""/>
-				<display item="Ausgang A2 PWM B" layout="above" format="hslider"/>
-			</row>
-			<row>
-				<display item="Ausgang A2 Parameter 1 B" layout="above" label=""/>
-				<display item="Ausgang A2 Parameter 1 B" layout="above" format="hslider"/>
-			</row>
-			<row>
-				<display item="Ausgang A2 Parameter 2 B" layout="above" label=""/>
-				<display item="Ausgang A2 Parameter 2 B" layout="above" format="hslider"/>
-			</row>
-		</column>
-		<!-- Leerspalte -->
-		<column>
-			<label>
-				<text>     </text>
-			</label>
-		</column>
-		<column>
-			<!-- BEGIN - Flags Grid -->
-			<grid gridy="1" weightx="10" ipadx="1">
-				<!-- BEGIN - Row 1 (headers)-->
-				<griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END">
+				<!-- empty line -->
+				<row>
 					<label>
-						<text> F0v:A </text>
+						<text> </text>
 					</label>
-				</griditem>
-				<griditem gridx="1" gridy="0" gridwidth="1" anchor="CENTER">
+				</row>
+				<!-- empty line -->
+				<row>
 					<label>
-						<text> F0v:B </text>
+						<text> </text>
 					</label>
-				</griditem>
-				<griditem gridx="2" gridy="0" gridwidth="1" anchor="CENTER">
+				</row>
+				<row>
+					<display item="Ausgang A1 Effekt A" layout="above"/>
+				</row>
+				<row>
+					<display item="Ausgang A1 Flags A"/>
+				</row>
+				<row>
 					<label>
-						<text> F0h:A </text>
+						<text> </text>
 					</label>
-				</griditem>
-				<griditem gridx="3" gridy="0" gridwidth="1" anchor="CENTER">
+				</row>
+				<row>
+					<display item="Ausgang A1 PWM A" layout="above" label=""/>
+					<display item="Ausgang A1 PWM A" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Ausgang A1 Parameter 1 A" layout="above" label=""/>
+					<display item="Ausgang A1 Parameter 1 A" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Ausgang A1 Parameter 2 A" layout="above" label=""/>
+					<display item="Ausgang A1 Parameter 2 A" layout="above" format="hslider"/>
+				</row>
+				<!-- empty line -->
+				<row>
 					<label>
-						<text> F0h:B </text>
+						<text> </text>
 					</label>
-				</griditem>
-				<griditem gridx="4" gridy="0" gridwidth="1" anchor="CENTER">
+				</row>
+				<row>
+					<display item="Ausgang A1 Effekt B" layout="above"/>
+				</row>
+				<row>
+					<display item="Ausgang A1 Flags B"/>
+				</row>
+				<row>
 					<label>
-						<text>  A1:A </text>
+						<text> </text>
 					</label>
-				</griditem>
-				<griditem gridx="5" gridy="0" gridwidth="1" anchor="CENTER">
+				</row>
+				<row>
+					<display item="Ausgang A1 PWM B" layout="above" label=""/>
+					<display item="Ausgang A1 PWM B" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Ausgang A1 Parameter 1 B" layout="above" label=""/>
+					<display item="Ausgang A1 Parameter 1 B" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Ausgang A1 Parameter 2 B" layout="above" label=""/>
+					<display item="Ausgang A1 Parameter 2 B" layout="above" format="hslider"/>
+				</row>
+			</column>
+			<!-- Leerspalte -->
+			<column>
+				<label>
+					<text>     </text>
+				</label>
+			</column>
+			<column>
+				<label>
+					<text>     </text>
+				</label>
+				<!-- empty line -->
+				<row>
 					<label>
-						<text>  A1:B </text>
+						<text> </text>
 					</label>
-				</griditem>
-				<griditem gridx="6" gridy="0" gridwidth="1" anchor="CENTER">
+				</row>
+				<!-- empty line -->
+				<row>
 					<label>
-						<text>  A2:A </text>
+						<text> </text>
 					</label>
-				</griditem>
-				<griditem gridx="7" gridy="0" gridwidth="1" anchor="CENTER">
+				</row>
+				<row>
+					<display item="Ausgang A2 Effekt A" layout="above"/>
+				</row>
+				<row>
+					<display item="Ausgang A2 Flags A"/>
+				</row>
+				<row>
 					<label>
-						<text>  A2:B </text>
+						<text> </text>
 					</label>
-				</griditem>
-				<!-- BEGIN - Row 2 (checkboxes)-->
-				<griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
-					<display item="F0vA.0" format="checkbox"/>
-				</griditem>
-				<griditem gridx="1" gridy="1" gridwidth="1" anchor="CENTER">
-					<display item="F0vB.0" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="2" gridy="1" gridwidth="1" anchor="CENTER">
-					<display item="F0hA.0" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="3" gridy="1" gridwidth="1" anchor="CENTER">
-					<display item="F0hB.0" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="4" gridy="1" gridwidth="1" anchor="CENTER">
-					<display item="A1A.0" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="5" gridy="1" gridwidth="1" anchor="CENTER">
-					<display item="A1B.0" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="6" gridy="1" gridwidth="1" anchor="CENTER">
-					<display item="A2A.0" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="7" gridy="1" gridwidth="1" anchor="CENTER">
-					<display item="A2B.0" format="checkbox" label=""/>
-				</griditem>
-				<!-- BEGIN - Row 3 (checkboxes)-->
-				<griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
-					<display item="F0vA.1" format="checkbox">
+				</row>
+				<row>
+					<display item="Ausgang A2 PWM A" layout="above" label=""/>
+					<display item="Ausgang A2 PWM A" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Ausgang A2 Parameter 1 A" layout="above" label=""/>
+					<display item="Ausgang A2 Parameter 1 A" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Ausgang A2 Parameter 2 A" layout="above" label=""/>
+					<display item="Ausgang A2 Parameter 2 A" layout="above" format="hslider"/>
+				</row>
+				<!-- empty line -->
+				<row>
+					<label>
+						<text> </text>
+					</label>
+				</row>
+				<row>
+					<display item="Ausgang A2 Effekt B" layout="above"/>
+				</row>
+				<row>
+					<display item="Ausgang A2 Flags B"/>
+				</row>
+				<row>
+					<label>
+						<text> </text>
+					</label>
+				</row>
+				<row>
+					<display item="Ausgang A2 PWM B" layout="above" label=""/>
+					<display item="Ausgang A2 PWM B" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Ausgang A2 Parameter 1 B" layout="above" label=""/>
+					<display item="Ausgang A2 Parameter 1 B" layout="above" format="hslider"/>
+				</row>
+				<row>
+					<display item="Ausgang A2 Parameter 2 B" layout="above" label=""/>
+					<display item="Ausgang A2 Parameter 2 B" layout="above" format="hslider"/>
+				</row>
+			</column>
+			<!-- Leerspalte -->
+			<column>
+				<label>
+					<text>     </text>
+				</label>
+			</column>
+			<column>
+				<!-- BEGIN - Flags Grid -->
+				<grid gridy="1" weightx="10" ipadx="1">
+					<!-- BEGIN - Row 1 (headers)-->
+					<griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END">
+						<label>
+							<text> F0v:A </text>
+						</label>
+					</griditem>
+					<griditem gridx="1" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text> F0v:B </text>
+						</label>
+					</griditem>
+					<griditem gridx="2" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text> F0h:A </text>
+						</label>
+					</griditem>
+					<griditem gridx="3" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text> F0h:B </text>
+						</label>
+					</griditem>
+					<griditem gridx="4" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>  A1:A </text>
+						</label>
+					</griditem>
+					<griditem gridx="5" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>  A1:B </text>
+						</label>
+					</griditem>
+					<griditem gridx="6" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>  A2:A </text>
+						</label>
+					</griditem>
+					<griditem gridx="7" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>  A2:B </text>
+						</label>
+					</griditem>
+					<!-- BEGIN - Row 2 (checkboxes)-->
+					<griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
+						<display item="F0vA.0" format="checkbox"/>
+					</griditem>
+					<griditem gridx="1" gridy="1" gridwidth="1" anchor="CENTER">
+						<display item="F0vB.0" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="2" gridy="1" gridwidth="1" anchor="CENTER">
+						<display item="F0hA.0" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="3" gridy="1" gridwidth="1" anchor="CENTER">
+						<display item="F0hB.0" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="4" gridy="1" gridwidth="1" anchor="CENTER">
+						<display item="A1A.0" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="5" gridy="1" gridwidth="1" anchor="CENTER">
+						<display item="A1B.0" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="6" gridy="1" gridwidth="1" anchor="CENTER">
+						<display item="A2A.0" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="7" gridy="1" gridwidth="1" anchor="CENTER">
+						<display item="A2B.0" format="checkbox" label=""/>
+					</griditem>
+					<!-- BEGIN - Row 3 (checkboxes)-->
+					<griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
+						<display item="F0vA.1" format="checkbox">
 					  </display>
-				</griditem>
-				<griditem gridx="1" gridy="2" gridwidth="1" anchor="CENTER">
-					<display item="F0vB.1" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="2" gridy="2" gridwidth="1" anchor="CENTER">
-					<display item="F0hA.1" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="3" gridy="2" gridwidth="1" anchor="CENTER">
-					<display item="F0hB.1" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="4" gridy="2" gridwidth="1" anchor="CENTER">
-					<display item="A1A.1" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="5" gridy="2" gridwidth="1" anchor="CENTER">
-					<display item="A1B.1" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="6" gridy="2" gridwidth="1" anchor="CENTER">
-					<display item="A2A.1" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="7" gridy="2" gridwidth="1" anchor="CENTER">
-					<display item="A2B.1" format="checkbox" label=""/>
-				</griditem>
-				<!-- BEGIN - Row 4 (checkboxes)-->
-				<griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
-					<display item="F0vA.2" format="checkbox">
+					</griditem>
+					<griditem gridx="1" gridy="2" gridwidth="1" anchor="CENTER">
+						<display item="F0vB.1" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="2" gridy="2" gridwidth="1" anchor="CENTER">
+						<display item="F0hA.1" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="3" gridy="2" gridwidth="1" anchor="CENTER">
+						<display item="F0hB.1" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="4" gridy="2" gridwidth="1" anchor="CENTER">
+						<display item="A1A.1" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="5" gridy="2" gridwidth="1" anchor="CENTER">
+						<display item="A1B.1" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="6" gridy="2" gridwidth="1" anchor="CENTER">
+						<display item="A2A.1" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="7" gridy="2" gridwidth="1" anchor="CENTER">
+						<display item="A2B.1" format="checkbox" label=""/>
+					</griditem>
+					<!-- BEGIN - Row 4 (checkboxes)-->
+					<griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
+						<display item="F0vA.2" format="checkbox">
 					  </display>
-				</griditem>
-				<griditem gridx="1" gridy="3" gridwidth="1" anchor="CENTER">
-					<display item="F0vB.2" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="2" gridy="3" gridwidth="1" anchor="CENTER">
-					<display item="F0hA.2" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="3" gridy="3" gridwidth="1" anchor="CENTER">
-					<display item="F0hB.2" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="4" gridy="3" gridwidth="1" anchor="CENTER">
-					<display item="A1A.2" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="5" gridy="3" gridwidth="1" anchor="CENTER">
-					<display item="A1B.2" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="6" gridy="3" gridwidth="1" anchor="CENTER">
-					<display item="A2A.2" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="7" gridy="3" gridwidth="1" anchor="CENTER">
-					<display item="A2B.2" format="checkbox" label=""/>
-				</griditem>
-				<!-- BEGIN - Row 5 (checkboxes)-->
-				<griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
-					<display item="F0vA.3" format="checkbox">
+					</griditem>
+					<griditem gridx="1" gridy="3" gridwidth="1" anchor="CENTER">
+						<display item="F0vB.2" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="2" gridy="3" gridwidth="1" anchor="CENTER">
+						<display item="F0hA.2" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="3" gridy="3" gridwidth="1" anchor="CENTER">
+						<display item="F0hB.2" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="4" gridy="3" gridwidth="1" anchor="CENTER">
+						<display item="A1A.2" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="5" gridy="3" gridwidth="1" anchor="CENTER">
+						<display item="A1B.2" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="6" gridy="3" gridwidth="1" anchor="CENTER">
+						<display item="A2A.2" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="7" gridy="3" gridwidth="1" anchor="CENTER">
+						<display item="A2B.2" format="checkbox" label=""/>
+					</griditem>
+					<!-- BEGIN - Row 5 (checkboxes)-->
+					<griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
+						<display item="F0vA.3" format="checkbox">
 					  </display>
-				</griditem>
-				<griditem gridx="1" gridy="4" gridwidth="1" anchor="CENTER">
-					<display item="F0vB.3" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="2" gridy="4" gridwidth="1" anchor="CENTER">
-					<display item="F0hA.3" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="3" gridy="4" gridwidth="1" anchor="CENTER">
-					<display item="F0hB.3" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="4" gridy="4" gridwidth="1" anchor="CENTER">
-					<display item="A1A.3" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="5" gridy="4" gridwidth="1" anchor="CENTER">
-					<display item="A1B.3" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="6" gridy="4" gridwidth="1" anchor="CENTER">
-					<display item="A2A.3" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="7" gridy="4" gridwidth="1" anchor="CENTER">
-					<display item="A2B.3" format="checkbox" label=""/>
-				</griditem>
-				<!-- BEGIN - Row 6 (checkboxes)-->
-				<griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
-					<display item="F0vA.4" format="checkbox">
+					</griditem>
+					<griditem gridx="1" gridy="4" gridwidth="1" anchor="CENTER">
+						<display item="F0vB.3" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="2" gridy="4" gridwidth="1" anchor="CENTER">
+						<display item="F0hA.3" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="3" gridy="4" gridwidth="1" anchor="CENTER">
+						<display item="F0hB.3" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="4" gridy="4" gridwidth="1" anchor="CENTER">
+						<display item="A1A.3" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="5" gridy="4" gridwidth="1" anchor="CENTER">
+						<display item="A1B.3" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="6" gridy="4" gridwidth="1" anchor="CENTER">
+						<display item="A2A.3" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="7" gridy="4" gridwidth="1" anchor="CENTER">
+						<display item="A2B.3" format="checkbox" label=""/>
+					</griditem>
+					<!-- BEGIN - Row 6 (checkboxes)-->
+					<griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
+						<display item="F0vA.4" format="checkbox">
 					  </display>
-				</griditem>
-				<griditem gridx="1" gridy="5" gridwidth="1" anchor="CENTER">
-					<display item="F0vB.4" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="2" gridy="5" gridwidth="1" anchor="CENTER">
-					<display item="F0hA.4" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="3" gridy="5" gridwidth="1" anchor="CENTER">
-					<display item="F0hB.4" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="4" gridy="5" gridwidth="1" anchor="CENTER">
-					<display item="A1A.4" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="5" gridy="5" gridwidth="1" anchor="CENTER">
-					<display item="A1B.4" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="6" gridy="5" gridwidth="1" anchor="CENTER">
-					<display item="A2A.4" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="7" gridy="5" gridwidth="1" anchor="CENTER">
-					<display item="A2B.4" format="checkbox" label=""/>
-				</griditem>
-				<!-- BEGIN - Row 7 (checkboxes)-->
-				<griditem gridx="0" gridy="6" gridwidth="1" anchor="LINE_END">
-					<display item="F0vA.5" format="checkbox">
+					</griditem>
+					<griditem gridx="1" gridy="5" gridwidth="1" anchor="CENTER">
+						<display item="F0vB.4" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="2" gridy="5" gridwidth="1" anchor="CENTER">
+						<display item="F0hA.4" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="3" gridy="5" gridwidth="1" anchor="CENTER">
+						<display item="F0hB.4" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="4" gridy="5" gridwidth="1" anchor="CENTER">
+						<display item="A1A.4" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="5" gridy="5" gridwidth="1" anchor="CENTER">
+						<display item="A1B.4" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="6" gridy="5" gridwidth="1" anchor="CENTER">
+						<display item="A2A.4" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="7" gridy="5" gridwidth="1" anchor="CENTER">
+						<display item="A2B.4" format="checkbox" label=""/>
+					</griditem>
+					<!-- BEGIN - Row 7 (checkboxes)-->
+					<griditem gridx="0" gridy="6" gridwidth="1" anchor="LINE_END">
+						<display item="F0vA.5" format="checkbox">
 					  </display>
-				</griditem>
-				<griditem gridx="1" gridy="6" gridwidth="1" anchor="CENTER">
-					<display item="F0vB.5" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="2" gridy="6" gridwidth="1" anchor="CENTER">
-					<display item="F0hA.5" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="3" gridy="6" gridwidth="1" anchor="CENTER">
-					<display item="F0hB.5" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="4" gridy="6" gridwidth="1" anchor="CENTER">
-					<display item="A1A.5" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="5" gridy="6" gridwidth="1" anchor="CENTER">
-					<display item="A1B.5" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="6" gridy="6" gridwidth="1" anchor="CENTER">
-					<display item="A2A.5" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="7" gridy="6" gridwidth="1" anchor="CENTER">
-					<display item="A2B.5" format="checkbox" label=""/>
-				</griditem>
-				<!-- BEGIN - Row 8 (checkboxes)-->
-				<griditem gridx="0" gridy="7" gridwidth="1" anchor="LINE_END">
-					<display item="F0vA.6" format="checkbox">
+					</griditem>
+					<griditem gridx="1" gridy="6" gridwidth="1" anchor="CENTER">
+						<display item="F0vB.5" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="2" gridy="6" gridwidth="1" anchor="CENTER">
+						<display item="F0hA.5" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="3" gridy="6" gridwidth="1" anchor="CENTER">
+						<display item="F0hB.5" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="4" gridy="6" gridwidth="1" anchor="CENTER">
+						<display item="A1A.5" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="5" gridy="6" gridwidth="1" anchor="CENTER">
+						<display item="A1B.5" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="6" gridy="6" gridwidth="1" anchor="CENTER">
+						<display item="A2A.5" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="7" gridy="6" gridwidth="1" anchor="CENTER">
+						<display item="A2B.5" format="checkbox" label=""/>
+					</griditem>
+					<!-- BEGIN - Row 8 (checkboxes)-->
+					<griditem gridx="0" gridy="7" gridwidth="1" anchor="LINE_END">
+						<display item="F0vA.6" format="checkbox">
 					  </display>
-				</griditem>
-				<griditem gridx="1" gridy="7" gridwidth="1" anchor="CENTER">
-					<display item="F0vB.6" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="2" gridy="7" gridwidth="1" anchor="CENTER">
-					<display item="F0hA.6" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="3" gridy="7" gridwidth="1" anchor="CENTER">
-					<display item="F0hB.6" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="4" gridy="7" gridwidth="1" anchor="CENTER">
-					<display item="A1A.6" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="5" gridy="7" gridwidth="1" anchor="CENTER">
-					<display item="A1B.6" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="6" gridy="7" gridwidth="1" anchor="CENTER">
-					<display item="A2A.6" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="7" gridy="7" gridwidth="1" anchor="CENTER">
-					<display item="A2B.6" format="checkbox" label=""/>
-				</griditem>
-				<!-- BEGIN - Row 9 (checkboxes)-->
-				<griditem gridx="0" gridy="8" gridwidth="1" anchor="LINE_END">
-					<display item="F0vA.7" format="checkbox">
+					</griditem>
+					<griditem gridx="1" gridy="7" gridwidth="1" anchor="CENTER">
+						<display item="F0vB.6" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="2" gridy="7" gridwidth="1" anchor="CENTER">
+						<display item="F0hA.6" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="3" gridy="7" gridwidth="1" anchor="CENTER">
+						<display item="F0hB.6" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="4" gridy="7" gridwidth="1" anchor="CENTER">
+						<display item="A1A.6" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="5" gridy="7" gridwidth="1" anchor="CENTER">
+						<display item="A1B.6" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="6" gridy="7" gridwidth="1" anchor="CENTER">
+						<display item="A2A.6" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="7" gridy="7" gridwidth="1" anchor="CENTER">
+						<display item="A2B.6" format="checkbox" label=""/>
+					</griditem>
+					<!-- BEGIN - Row 9 (checkboxes)-->
+					<griditem gridx="0" gridy="8" gridwidth="1" anchor="LINE_END">
+						<display item="F0vA.7" format="checkbox">
 					  </display>
-				</griditem>
-				<griditem gridx="1" gridy="8" gridwidth="1" anchor="CENTER">
-					<display item="F0vB.7" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="2" gridy="8" gridwidth="1" anchor="CENTER">
-					<display item="F0hA.7" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="3" gridy="8" gridwidth="1" anchor="CENTER">
-					<display item="F0hB.7" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="4" gridy="8" gridwidth="1" anchor="CENTER">
-					<display item="A1A.7" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="5" gridy="8" gridwidth="1" anchor="CENTER">
-					<display item="A1B.7" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="6" gridy="8" gridwidth="1" anchor="CENTER">
-					<display item="A2A.7" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="7" gridy="8" gridwidth="1" anchor="CENTER">
-					<display item="A2B.7" format="checkbox" label=""/>
-				</griditem>
-			</grid>
-		</column>
+					</griditem>
+					<griditem gridx="1" gridy="8" gridwidth="1" anchor="CENTER">
+						<display item="F0vB.7" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="2" gridy="8" gridwidth="1" anchor="CENTER">
+						<display item="F0hA.7" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="3" gridy="8" gridwidth="1" anchor="CENTER">
+						<display item="F0hB.7" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="4" gridy="8" gridwidth="1" anchor="CENTER">
+						<display item="A1A.7" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="5" gridy="8" gridwidth="1" anchor="CENTER">
+						<display item="A1B.7" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="6" gridy="8" gridwidth="1" anchor="CENTER">
+						<display item="A2A.7" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="7" gridy="8" gridwidth="1" anchor="CENTER">
+						<display item="A2B.7" format="checkbox" label=""/>
+					</griditem>
+				</grid>
+			</column>
+		</group>
 	</group>
 </pane>

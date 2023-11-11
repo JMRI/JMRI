@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
@@ -610,6 +612,29 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             case DCCppConstants.READ_TRACK_CURRENT:
                 log.debug("READ_TRACK_CURRENT detected");
                 generateMeterReplies();
+                break;
+
+            case DCCppConstants.TRACKMANAGER_CMD:
+                log.debug("TRACKMANAGER_CMD detected");
+                reply = DCCppReply.parseDCCppReply("= A MAIN");
+                writeReply(reply);
+                reply = DCCppReply.parseDCCppReply("= B PROG");
+                break;
+
+            case DCCppConstants.LCD_TEXT_CMD:
+                log.debug("LCD_TEXT_CMD detected");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss a");
+                LocalDateTime now = LocalDateTime.now();
+                String dateTimeString = now.format(formatter);
+                reply = DCCppReply.parseDCCppReply("@ 0 0 \"Welcome to DCC-EX -- " + dateTimeString + "\"" );
+                writeReply(reply);
+                reply = DCCppReply.parseDCCppReply("@ 0 1 \"LCD Line 1\"");
+                writeReply(reply);
+                reply = DCCppReply.parseDCCppReply("@ 0 2 \"LCD Line 2\"");
+                writeReply(reply);
+                reply = DCCppReply.parseDCCppReply("@ 0 3 \"     LCD Line 3 with spaces   \"");
+                writeReply(reply);
+                reply = DCCppReply.parseDCCppReply("@ 0 4 \"1234567890123456789012345678901234567890\"");
                 break;
 
             case DCCppConstants.READ_CS_STATUS:

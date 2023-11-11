@@ -26,16 +26,16 @@
 	<!-- Version 5 - Obsolete, replaced by Piko_SmartDecoder_XP5.1_Sound_v1.5 or Piko_SmartDecoder_XP5.1_Sound_v1.8 -->
 	<!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
 	<decoder>
-		<family name="PIKO SmartDecoder XP5.1 (old - not use)" mfg="PIKO" lowVersionID="2" highVersionID="15" comment="Decoders not sorted (necessarily) in numerical order">
+		<family name="PIKO SmartDecoder XP5.1 (old - not use)" mfg="PIKO" lowVersionID="3" highVersionID="15" comment="Decoders not sorted (necessarily) in numerical order">
 			<!-- to be checked by hardware owner -->
-			<model model="PIKO46550-18" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46550-18" lowVersionID="5" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 plug (Plus) (FW 1.5.0)" replacementModel="PIKO46550-18 BR83-TT V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5)">
+			<model model="PIKO46550-18" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46550-18" lowVersionID="5" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 plug (Plus) (FW 1.5.0)" replacementModel="PIKO46550-18 BR83-TT V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
 				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
 				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
 				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
 				<output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
 				<size length="21.5" width="10.5" height="3.7" units="mm"/>
 			</model>
-			<model model="PIKO46551-18" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46551-18" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 93 TT Next18 plug (Plus) (FW 1.8.0)" replacementModel="PIKO46551-18 BR93-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8)">
+			<model model="PIKO46551-18" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46551-18" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 93 TT Next18 plug (Plus) (FW 1.8.0)" replacementModel="PIKO46551-18 BR93-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
 				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
 				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
 				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>

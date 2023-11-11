@@ -1,0 +1,46 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-audio-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"audio\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "System name of the audio"
+        },
+        "userName": {
+            "type": ["string", "null"],
+            "description": "User name of the audio"
+        },
+        "comment": {
+            "type": ["string", "null"],
+            "description": "Comment for the audio"
+        },
+        "properties": {
+            "type": "array",
+            "description": "NamedBean properties of the audio",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "description": "Key by which property is accessed"
+                    },
+                    "value": {
+                        "type": ["string", "null"],
+                        "description": "String value of property or null"
+                    }
+                },
+                "additionalProperties": false,
+                "required": ["name", "value"]
+            }
+        },
+        "state": {
+            "type": "integer",
+            "description": "The state of the audio",
+            "enum": [0, 2, 4, 8]
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name", "userName", "comment", "inverted", "state"]
+}

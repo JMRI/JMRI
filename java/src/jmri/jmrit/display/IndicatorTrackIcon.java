@@ -221,7 +221,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         log.debug("set \"{}\" icon= {}", name, icon);
         _iconMap.put(name, icon);
         if (_status.equals(name)) {
-            setIcon(icon);            
+            setIcon(icon);
         }
     }
 
@@ -299,6 +299,12 @@ public class IndicatorTrackIcon extends PositionableIcon
 
     @Override
     @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_IndicatorTrackIcon");
+    }
+
+    @Override
+    @Nonnull
     public String getNameString() {
         String str = "";
         if (namedOccBlock != null) {
@@ -328,7 +334,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         }
         updateSize();
     }
-    
+
     @Override
     public void rotate(int deg) {
         super.rotate(deg);

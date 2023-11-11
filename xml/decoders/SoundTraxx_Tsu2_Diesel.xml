@@ -189,140 +189,146 @@
             <authorinitials>MM</authorinitials>
             <revremark>Split vars to include file to reuse with Blunami</revremark>
         </revision>
+        <revision>
+            <revnumber>19</revnumber>
+            <date>2023-10-09</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>productID change for 11 bit Soundtraxx ID</revremark>
+        </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
         <family name="Tsunami2 Diesel" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71" comment="These are the -retail- version Tsunami 2 Diesel decoders">
-            <model model="TSU-1100 EMD Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="276" comment="Model 885001">
+            <model model="TSU-1100 EMD Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="2068" comment="Model 885001">
                 <size length="27" width="10.5" height="5" units="mm"/>
             </model>
-            <model model="TSU-1100 EMD-2 Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="310" comment="Model 885021">
+            <model model="TSU-1100 EMD-2 Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="2102" comment="Model 885021">
                 <size length="27" width="10.5" height="5" units="mm"/>
             </model>
-            <model model="TSU-1100 GE Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="277" comment="Model 885002">
+            <model model="TSU-1100 GE Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="2069" comment="Model 885002">
                 <size length="27" width="10.5" height="5" units="mm"/>
             </model>
-            <model model="TSU-1100 Alco Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="278" comment="Model 885003">
+            <model model="TSU-1100 Alco Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="2070" comment="Model 885003">
                 <size length="27" width="10.5" height="5" units="mm"/>
             </model>
-            <model model="TSU-1100 Baldwin Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="279" comment="Model 885004">
+            <model model="TSU-1100 Baldwin Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="2071" comment="Model 885004">
                 <size length="27" width="10.5" height="5" units="mm"/>
             </model>
-            <model model="TSU-2200 EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="280" comment="Model 885005">
+            <model model="TSU-2200 EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="2072" comment="Model 885005">
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="TSU-2200 EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="311" comment="Model 885022">
+            <model model="TSU-2200 EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="2103" comment="Model 885022">
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="TSU-2200 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="281" comment="Model 885006">
+            <model model="TSU-2200 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="2073" comment="Model 885006">
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="TSU-2200 Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="282" comment="Model 885007">
+            <model model="TSU-2200 Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="2074" comment="Model 885007">
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="TSU-2200 Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="283" comment="Model 885008">
+            <model model="TSU-2200 Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="2075" comment="Model 885008">
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="TSU-21PNEM EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="284" comment="Model 885009">
+            <model model="TSU-21PNEM EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2076" comment="Model 885009">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
-            <model model="TSU-21PNEM EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="312" comment="Model 885023">
+            <model model="TSU-21PNEM EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2104" comment="Model 885023">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
-            <model model="TSU-21PNEM GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="285" comment="Model 885010">
+            <model model="TSU-21PNEM GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2077" comment="Model 885010">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
-            <model model="TSU-21PNEM Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="286" comment="Model 885011">
+            <model model="TSU-21PNEM Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2078" comment="Model 885011">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
-            <model model="TSU-21PNEM Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="287" comment="Model 885012">
+            <model model="TSU-21PNEM Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2079" comment="Model 885012">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
-            <model model="TSU-21PNEM8 EMD Diesels" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="325" comment="Model 885809">
+            <model model="TSU-21PNEM8 EMD Diesels" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2117" comment="Model 885809">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
-            <model model="TSU-21PNEM8 EMD-2 Diesels" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="329" comment="Model 885823">
+            <model model="TSU-21PNEM8 EMD-2 Diesels" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2121" comment="Model 885823">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
-            <model model="TSU-21PNEM8 GE Diesels" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="326" comment="Model 885810">
+            <model model="TSU-21PNEM8 GE Diesels" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2118" comment="Model 885810">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
-            <model model="TSU-21PNEM8 Alco Diesels" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="327" comment="Model 885811">
+            <model model="TSU-21PNEM8 Alco Diesels" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2119" comment="Model 885811">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
-            <model model="TSU-21PNEM8 Baldwin Diesels" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="328" comment="Model 885812">
+            <model model="TSU-21PNEM8 Baldwin Diesels" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2120" comment="Model 885812">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
-            <model model="TSU-4400 EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="292" comment="Model 885017">
+            <model model="TSU-4400 EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="2084" comment="Model 885017">
                 <size length="69" width="30.5" height="14" units="mm"/>
             </model>
-            <model model="TSU-4400 EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="314" comment="Model 885025">
+            <model model="TSU-4400 EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="2106" comment="Model 885025">
                 <size length="69" width="30.5" height="14" units="mm"/>
             </model>
-            <model model="TSU-4400 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="293" comment="Model 885018">
+            <model model="TSU-4400 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="2085" comment="Model 885018">
                 <size length="69" width="30.5" height="14" units="mm"/>
             </model>
-            <model model="TSU-4400 Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="294" comment="Model 885019">
+            <model model="TSU-4400 Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="2086" comment="Model 885019">
                 <size length="69" width="30.5" height="14" units="mm"/>
             </model>
-            <model model="TSU-4400 Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="295" comment="Model 885020">
+            <model model="TSU-4400 Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="2087" comment="Model 885020">
                 <size length="69" width="30.5" height="14" units="mm"/>
             </model>
-            <model model="TSU-BH1 EMD Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="343" comment="Model 885840">
+            <model model="TSU-BH1 EMD Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="2135" comment="Model 885840">
                 <size length="97" width="16" height="7.7" units="mm"/>
             </model>
-            <model model="TSU-BH1 GE Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="344" comment="Model 885841">
+            <model model="TSU-BH1 GE Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="2136" comment="Model 885841">
                 <size length="97" width="16" height="7.7" units="mm"/>
             </model>
-            <model model="TSU-BH1 Alco Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="345" comment="Model 885842">
+            <model model="TSU-BH1 Alco Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="2137" comment="Model 885842">
                 <size length="97" width="16" height="7.7" units="mm"/>
             </model>
-            <model model="TSU-KN1 Diesels" numOuts="4" numFns="30" maxMotorCurrent="500mA" connector="DropIn" productID="331" comment="Model 885032">
+            <model model="TSU-KN1 Diesels" numOuts="4" numFns="30" maxMotorCurrent="500mA" connector="DropIn" productID="2123" comment="Model 885032">
                 <size length="55" width="13.8" height="3.2" units="mm"/>
             </model>
-            <model model="TSU-N18 EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="333" comment="Model 885026">
+            <model model="TSU-N18 EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="2125" comment="Model 885026">
                 <size length="25" width="10.5" height="4.1" units="mm"/>
             </model>
-            <model model="TSU-N18 EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="337" comment="Model 885030">
+            <model model="TSU-N18 EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="2129" comment="Model 885030">
                 <size length="25" width="10.5" height="4.1" units="mm"/>
             </model>
-            <model model="TSU-N18 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="334" comment="Model 885027">
+            <model model="TSU-N18 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="2126" comment="Model 885027">
                 <size length="25" width="10.5" height="4.1" units="mm"/>
             </model>
-            <model model="TSU-N18 Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="335" comment="Model 885028">
+            <model model="TSU-N18 Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="2127" comment="Model 885028">
                 <size length="25" width="10.5" height="4.1" units="mm"/>
             </model>
-            <model model="TSU-N18 Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="336" comment="Model 885029">
+            <model model="TSU-N18 Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="Next18" productID="2128" comment="Model 885029">
                 <size length="25" width="10.5" height="4.1" units="mm"/>
             </model>
-            <model model="TSU-PNP EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="288" comment="Model 885013">
+            <model model="TSU-PNP EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="2080" comment="Model 885013">
                 <size length="74" width="17" height="5" units="mm"/>
             </model>
-            <model model="TSU-PNP EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="313" comment="Model 885024">
+            <model model="TSU-PNP EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="2105" comment="Model 885024">
                 <size length="74" width="17" height="5" units="mm"/>
             </model>
-            <model model="TSU-PNP GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="289" comment="Model 885014">
+            <model model="TSU-PNP GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="2081" comment="Model 885014">
                 <size length="74" width="17" height="5" units="mm"/>
             </model>
-            <model model="TSU-PNP Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="290" comment="Model 885015">
+            <model model="TSU-PNP Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="2082" comment="Model 885015">
                 <size length="74" width="17" height="5" units="mm"/>
             </model>
-            <model model="TSU-PNP Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="291" comment="Model 885016">
+            <model model="TSU-PNP Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="2083" comment="Model 885016">
                 <size length="74" width="17" height="5" units="mm"/>
             </model>
-            <model model="TSU-PNP8 EMD Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="319" comment="Model 885813">
+            <model model="TSU-PNP8 EMD Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="2111" comment="Model 885813">
                 <size length="74" width="17" height="5" units="mm"/>
             </model>
-            <model model="TSU-PNP8 EMD-2 Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="323" comment="Model 885824">
+            <model model="TSU-PNP8 EMD-2 Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="2115" comment="Model 885824">
                 <size length="74" width="17" height="5" units="mm"/>
             </model>
-            <model model="TSU-PNP8 GE Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="320" comment="Model 885814">
+            <model model="TSU-PNP8 GE Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="2112" comment="Model 885814">
                 <size length="74" width="17" height="5" units="mm"/>
             </model>
-            <model model="TSU-PNP8 Alco Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="321" comment="Model 885815">
+            <model model="TSU-PNP8 Alco Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="2113" comment="Model 885815">
                 <size length="74" width="17" height="5" units="mm"/>
             </model>
-            <model model="TSU-PNP8 Baldwin Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="322" comment="Model 885816">
+            <model model="TSU-PNP8 Baldwin Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="2114" comment="Model 885816">
                 <size length="74" width="17" height="5" units="mm"/>
             </model>
             <output name="3" label="  FX3  "/>

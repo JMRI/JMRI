@@ -4,13 +4,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import jmri.Audio;
+
 /**
  * Common and utility constants used in the JMRI JSON protocol.
  * <p>
  * <strong>Note</strong> any documented use of a constant is not the exclusive
  * or sole use of the constant. Review the JSON schemas for all uses of any
  * given constant.
- * 
+ *
  * @author Randall Wood (C) 2013, 2014, 2016, 2018, 2019
  */
 public final class JSON {
@@ -167,25 +169,25 @@ public final class JSON {
     public static final String RAILROAD = "railroad"; // NOI18N
     /**
      * {@value #NODE}
-     * 
+     *
      * @since 1.1
      */
     public static final String NODE = "node"; // NOI18N
     /**
      * {@value #ACTIVE_PROFILE}
-     * 
+     *
      * @since 3.0
      */
     public static final String ACTIVE_PROFILE = "activeProfile"; // NOI18N
     /**
      * {@value #FORMER_NODES}
-     * 
+     *
      * @since 1.1
      */
     public static final String FORMER_NODES = "formerNodes"; // NOI18N
     /**
      * {@value #LOCALE}
-     * 
+     *
      * @since 1.1
      */
     public static final String LOCALE = "locale"; // NOI18N
@@ -669,6 +671,32 @@ public final class JSON {
      * JSON State (an unsigned integer)
      */
 
+    /* Audio commands */
+    /**
+     * {@value #AUDIO_ICON_IDENTITY}
+     */
+    public static final String AUDIO_ICON_IDENTITY = "identity";
+    /**
+     * {@value #AUDIO_COMMAND}
+     */
+    public static final String AUDIO_COMMAND = "command";
+    /**
+     * {@value #AUDIO_COMMAND_NONE}
+     */
+    public static final String AUDIO_COMMAND_NONE = "None";
+    /**
+     * {@value #AUDIO_COMMAND_PLAY}
+     */
+    public static final String AUDIO_COMMAND_PLAY = "Play";
+    /**
+     * {@value #AUDIO_COMMAND_PLAY_NUM_LOOPS}
+     */
+    public static final String AUDIO_COMMAND_PLAY_NUM_LOOPS = "playNumLoops";
+    /**
+     * {@value #AUDIO_COMMAND_STOP}
+     */
+    public static final String AUDIO_COMMAND_STOP = "Stop";
+
     /* Common state */
     /**
      * {@value #UNKNOWN}
@@ -694,6 +722,16 @@ public final class JSON {
      * {@value #INCONSISTENT}
      */
     public static final int INCONSISTENT = 0x08;
+
+    /* Audio state */
+    /**
+     * {@value #AUDIO_PLAYING}
+     */
+    public static final int AUDIO_PLAYING = Audio.STATE_PLAYING;
+    /**
+     * {@value #AUDIO_STOPPED}
+     */
+    public static final int AUDIO_STOPPED = Audio.STATE_STOPPED;
 
     /* Route state */
     /**
@@ -829,13 +867,13 @@ public final class JSON {
     public static final String CLIENT = "client"; // NOI18N
     /**
      * {@value #FORCE_DELETE}
-     * 
+     *
      * @since 5.0.0
      */
     public static final String FORCE_DELETE = "forceDelete"; // NOI18N
     /**
      * {@value #CONFLICT}
-     * 
+     *
      * @since 5.0.0
      */
     public static final String CONFLICT = "conflict"; // NOI18N
@@ -847,19 +885,19 @@ public final class JSON {
      * while other services will change the name based on other values. In a
      * message from the server, carries the old name for a recently renamed
      * object in the message.
-     * 
+     *
      * @since 5.0.0
      */
     public static final String RENAME = "rename"; // NOI18N
     /**
      * {@value #RFID}
-     * 
+     *
      * @since 5.0.0
      */
     public static final String RFID = "rfid"; // NOI18N
     /**
      * {@value #TIME}
-     * 
+     *
      * @since 5.0.0
      */
     public static final String TIME = "time"; // NOI18N

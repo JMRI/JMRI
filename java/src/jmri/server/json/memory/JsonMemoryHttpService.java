@@ -31,7 +31,7 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
 
     private JsonIdTagHttpService idTagService = new JsonIdTagHttpService(mapper);
     private JsonReporterHttpService reporterService = new JsonReporterHttpService(mapper);
-    private JsonRosterHttpService rosterService = new JsonRosterHttpService(mapper);   
+    private JsonRosterHttpService rosterService = new JsonRosterHttpService(mapper);
 
     public JsonMemoryHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -100,7 +100,7 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
     }
 
     @Override
-    protected ProvidingManager<Memory> getManager() {
+    protected ProvidingManager<Memory> getProvidingManager() {
         return InstanceManager.getDefault(MemoryManager.class);
     }
 }

@@ -465,6 +465,11 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         return this.numLoops;
     }
 
+    @Override
+    public int getLastNumLoops() {
+        return this.numLoops;
+    }
+
 //    public void setMinLoopDelay(int loopDelay) {
 //        if (this.maxLoopDelay < loopDelay) {
 //            this.maxLoopDelay = loopDelay;

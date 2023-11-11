@@ -495,6 +495,12 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
 
     @Override
     @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_SlipTurnoutIcon");
+    }
+
+    @Override
+    @Nonnull
     public String getNameString() {
         String name;
         if (namedTurnoutWest == null) {

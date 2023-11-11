@@ -11690,7 +11690,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         RouteLocation rlB = route.getRouteLocationBySequenceNumber(2);
         Location boston = rlB.getLocation();
-        Track bostonInterchange1 = boston.getTrackByName("Boston Interchange 1", null);
+        Track bostonYard1 = boston.getTrackByName("Boston Yard 1", null);
         // now configure train 2 to not be able to service c1
         rlB.setMaxTrainLength(40); // c1 length is 40 feet, 44 feet with
                                    // couplers
@@ -11700,9 +11700,12 @@ public class TrainBuilderTest extends OperationsTestCase {
         train2.build();
         Assert.assertTrue("Train 2 status", train2.isBuilt());
 
-        // confirm car destinations, a local move was the only option
+        // Route for car (A 1): (Acton, Acton Spur 1)-> (Train Acton-Boston-Chelmsford 2)-> 
+        // (Boston, Boston Yard 1)-> (Train Acton-Boston-Chelmsford 1)-> (Chelmsford, Chelmsford 
+        // Interchange 2)
+        // confirm car destination
         Assert.assertEquals("c1 assigned to train", train2, c1.getTrain());
-        Assert.assertEquals("c1 destination", bostonInterchange1, c1.getDestinationTrack());
+        Assert.assertEquals("c1 destination", bostonYard1, c1.getDestinationTrack());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }

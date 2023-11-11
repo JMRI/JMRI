@@ -3,6 +3,8 @@ package jmri.jmrit.display;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.annotation.Nonnull;
+
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.NamedBean.DisplayOptions;
@@ -172,6 +174,12 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
             int now = ((Integer) e.getNewValue());
             displayState(now);
         }
+    }
+
+    @Override
+    @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_LightIcon");
     }
 
     @Override
