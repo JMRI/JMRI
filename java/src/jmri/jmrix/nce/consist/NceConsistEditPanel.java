@@ -24,13 +24,13 @@ import jmri.util.swing.JmriJOptionPane;
  * Pane for user edit of NCE Consists
  *
  * NCE Consists are stored in Command Station (CS) memory starting at address
- * xF500 and ending xFAFF. NCE supports up to 127 consists, numbered 1 to 127.
+ * xF500 and ending xFAFF (PH5 0x4E00 - 0x53FF). NCE supports up to 127 consists, numbered 1 to 127.
  * They track the lead loco, rear loco, and four mid locos in the consist file.
  * NCE cabs start at consist 127 when building and reviewing consists, so we
  * also start with 127. Consist lead locos are stored in memory locations xF500
- * through xF5FF. Consist rear locos are stored in memory locations xF600
- * through xF6FF. Mid consist locos (four max) are stored in memory locations
- * xF700 through xFAFF. If a long address is in use, bits 6 and 7 of the high
+ * through xF5FF (PH5 0x4E00 - 0x4EFF). Consist rear locos are stored in memory locations xF600
+ * through xF6FF (PH5 0x4F00 - 0x4FFF). Mid consist locos (four max) are stored in memory locations
+ * xF700 through xFAFF (PH5 0x500 - 0x53FF). If a long address is in use, bits 6 and 7 of the high
  * byte are set. Example: Long address 3 = 0xc0 0x03 Short address 3 = 0x00 0x03
  *
  * NCE file format:

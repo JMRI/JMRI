@@ -24,6 +24,7 @@ import javax.swing.table.TableColumnModel;
 import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceCmdStationMemory;
 import jmri.jmrix.nce.NceCmdStationMemory.CabMemorySerial;
+import jmri.jmrix.nce.NceCmdStationMemory.CabMemorySerialPH5;
 import jmri.jmrix.nce.NceCmdStationMemory.CabMemoryUsb;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
@@ -271,7 +272,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
         // fill in cab array
         minCabNum = CAB_MIN_PRO;
-        maxCabNum = CAB_MAX_PRO;
+        maxCabNum = 59; //CAB_MAX_PRO;
         if ((tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE)
                 && (tc.getCmdGroups() & NceTrafficController.CMDS_MEM) != 0) {
             minCabNum = CAB_MIN_USB;
@@ -464,7 +465,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         firstTime = false;
         // clear bit for active and cab type details
         cabFlag1Array[purgeCabId] = 0;
-        writeCabMemory1(purgeCabId, CabMemorySerial.CAB_FLAGS1, 0);
+        writeCabMemory1(purgeCabId, CabMemorySerialPH5.CAB_FLAGS1, 0);
         if (!waitNce()) {
             return;
         }
@@ -518,7 +519,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
             int foundChange = 0;
             recChar = -1;
             // create cab type by reading the FLAGS1 byte
-            readCabMemory1(currCabId, CabMemorySerial.CAB_FLAGS1);
+            readCabMemory1(currCabId, CabMemorySerialPH5.CAB_FLAGS1);
             if (!waitNce()) {
                 return;
             }
@@ -567,12 +568,12 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     // I don't have anything to do for the USB at this time
                 } else {
                     // read 16 bytes of memory, we'll use 7 of the 16
-                    readCabMemory16(currCabId, CabMemorySerial.CAB_CURR_SPEED);
+                    readCabMemory16(currCabId, CabMemorySerialPH5.CAB_CURR_SPEED);
                     if (!waitNce()) {
                         return;
                     }
                     // read the Speed byte
-                    int readChar = recChars[0];
+                    int readChar = recChars[CabMemorySerialPH5.CAB_CURR_SPEED - CabMemorySerialPH5.CAB_CURR_SPEED];
                     if (cabSpeedArray[currCabId] != readChar) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
@@ -584,7 +585,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     cabData[currCabId].locoSpeed = readChar;
 
                     // read the FLAGS byte
-                    readChar = recChars[CabMemorySerial.CAB_FLAGS - CabMemorySerial.CAB_CURR_SPEED];
+                    readChar = recChars[CabMemorySerialPH5.CAB_FLAGS - CabMemorySerialPH5.CAB_CURR_SPEED];
                     if (cabFlagsArray[currCabId] != readChar) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
@@ -610,7 +611,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     }
 
                     // create loco address, read the high address byte
-                    readChar = recChars[CabMemorySerial.CAB_ADDR_H - CabMemorySerial.CAB_CURR_SPEED];
+                    readChar = recChars[CabMemorySerialPH5.CAB_ADDR_H - CabMemorySerialPH5.CAB_CURR_SPEED];
                     log.debug("Read address high character {}", readChar);
                     int locoAddress = (readChar & 0x3F) * 256;
                     boolean aType = ((readChar & 0xC0) == 0xC0);
@@ -627,7 +628,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         cabData[currCabId].longShort = Bundle.getMessage("IsShortAddr");
                     }
                     // read the low address byte
-                    readChar = recChars[CabMemorySerial.CAB_ADDR_L - CabMemorySerial.CAB_CURR_SPEED];
+                    readChar = recChars[CabMemorySerialPH5.CAB_ADDR_L - CabMemorySerialPH5.CAB_CURR_SPEED];
                     log.debug("Read address low character {}", readChar);
                     locoAddress = locoAddress + (readChar & 0xFF);
                     if (cabLocoArray[currCabId] != locoAddress) {
@@ -640,7 +641,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     cabData[currCabId].locoAddress = locoAddress;
 
                     // create consist address
-                    readChar = recChars[CabMemorySerial.CAB_ALIAS - CabMemorySerial.CAB_CURR_SPEED];
+                    readChar = recChars[CabMemorySerialPH5.CAB_ALIAS - CabMemorySerialPH5.CAB_CURR_SPEED];
                     if (cabConsistArray[currCabId] != readChar) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
@@ -662,7 +663,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     }
 
                     // get the functions 0-4 values
-                    readChar = recChars[CabMemorySerial.CAB_FUNC_L - CabMemorySerial.CAB_CURR_SPEED];
+                    readChar = recChars[CabMemorySerialPH5.CAB_FUNC_L - CabMemorySerialPH5.CAB_CURR_SPEED];
                     if (cabF0Array[currCabId] != readChar) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
@@ -674,7 +675,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     procFunctions0_4(currCabId, readChar);
 
                     // get the functions 5-12 values
-                    readChar = recChars[CabMemorySerial.CAB_FUNC_H - CabMemorySerial.CAB_CURR_SPEED];
+                    readChar = recChars[CabMemorySerialPH5.CAB_FUNC_H - CabMemorySerialPH5.CAB_CURR_SPEED];
                     if (cabF5Array[currCabId] != readChar) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
@@ -686,7 +687,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     procFunctions5_12(currCabId, readChar);
 
                     // get the functions 13-20 values
-                    readCabMemory1(currCabId, CabMemorySerial.CAB_FUNC_13_20);
+                    readCabMemory1(currCabId, CabMemorySerialPH5.CAB_FUNC_13_20);
                     if (!waitNce()) {
                         return;
                     }
@@ -700,7 +701,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     procFunctions13_20(currCabId, recChar);
 
                     // get the functions 21-28 values
-                    readCabMemory1(currCabId, CabMemorySerial.CAB_FUNC_21_28);
+                    readCabMemory1(currCabId, CabMemorySerialPH5.CAB_FUNC_21_28);
                     if (!waitNce()) {
                         return;
                     }
@@ -714,7 +715,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     procFunctions21_28(currCabId, recChar);
 
                     // get the display values
-                    readCabMemory16(currCabId, CabMemorySerial.CAB_LINE_1);
+                    readCabMemory16(currCabId, CabMemorySerialPH5.CAB_LINE_1);
                     if (!waitNce()) {
                         return;
                     }
@@ -738,7 +739,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     cabData[currCabId].text1 = text1.toString();
                     log.debug("TextLine1Debug: {}", debug1);
 
-                    readCabMemory16(currCabId, CabMemorySerial.CAB_LINE_2);
+                    readCabMemory16(currCabId, CabMemorySerialPH5.CAB_LINE_2);
                     if (!waitNce()) {
                         return;
                     }
@@ -1443,7 +1444,11 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     private int getNceCabAddr(int cabNum, int offset) {
         int nceCabAddr;
         if (cabNum < CAB_MAX_PRO) {
+<<<<<<< Updated upstream
             nceCabAddr = (cabNum * CabMemorySerial.CAB_SIZE) + CabMemorySerial.CS_CAB_MEM_PRO + offset;
+=======
+            nceCabAddr = (cabNum * CabMemorySerialPH5.CAB_SIZE) + tc.getCmdStaMemBaseCab() + offset;
+>>>>>>> Stashed changes
         } else {
             nceCabAddr = CabMemorySerial.CS_COMP_CAB_MEM_PRO + offset;
         }
