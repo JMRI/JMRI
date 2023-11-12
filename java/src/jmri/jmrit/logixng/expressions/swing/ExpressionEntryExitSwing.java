@@ -81,7 +81,7 @@ public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
         }
         JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
 
-        _stateComboBox.setRenderer(new ComboBoxRenderer(_stateComboBox.getRenderer()));
+        _stateComboBox.setRenderer(new ComboBoxRenderer<>(_stateComboBox.getRenderer()));
 
         _panelEntryExitStateDirect.add(_stateComboBox);
 
@@ -202,18 +202,18 @@ public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
     }
 
 
-    private static class ComboBoxRenderer<EntryExitState> extends JLabel implements ListCellRenderer<EntryExitState> {
+    private static class ComboBoxRenderer<E> extends JLabel implements ListCellRenderer<E> {
 
         private final JSeparator _separator = new JSeparator(JSeparator.HORIZONTAL);
-        private final ListCellRenderer<EntryExitState> _old;
+        private final ListCellRenderer<E> _old;
 
-        private ComboBoxRenderer(ListCellRenderer<EntryExitState> old) {
+        private ComboBoxRenderer(ListCellRenderer<E> old) {
             this._old = old;
         }
 
         @Override
-        public Component getListCellRendererComponent(JList<? extends EntryExitState> list,
-                EntryExitState value, int index, boolean isSelected, boolean cellHasFocus) {
+        public Component getListCellRendererComponent(JList<? extends E> list,
+                E value, int index, boolean isSelected, boolean cellHasFocus) {
             if (value.toString() == null) {
                 return _separator;
             } else {
