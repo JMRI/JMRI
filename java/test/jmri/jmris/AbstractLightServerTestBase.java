@@ -24,7 +24,6 @@ abstract public class AbstractLightServerTestBase {
         ls.initLight("IL1");
     }
 
-    @BeforeEach
     abstract public void setUp(); // must setup ls as a light server instance;
 
 }

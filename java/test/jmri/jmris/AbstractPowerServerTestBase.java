@@ -85,7 +85,6 @@ abstract public class AbstractPowerServerTestBase {
      * Setup ps and a power manager instance;
      *
      */
-    @BeforeEach
     abstract public void setUp(); 
 
 }

@@ -20,7 +20,6 @@ abstract public class PreferencesPanelTestBase<P extends PreferencesPanel> {
     /**
      * Implementing classes should set the value of prefsPanel in setUp.
      */
-    @BeforeEach
     abstract public void setUp();
 
     @AfterEach

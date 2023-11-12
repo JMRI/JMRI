@@ -192,10 +192,8 @@ public abstract class MaleSocketTestBase {
         Assert.assertNull("debugConfig is null", maleSocketA.getDebugConfig());
     }
     
-    @BeforeEach
     abstract public void setUp();
     
-    @AfterEach
     abstract public void tearDown();
     
 }
