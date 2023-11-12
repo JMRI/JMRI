@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.5.5plus+jake+20231022T1454Z+R89075f1edd on Sun Oct 22 10:55:47 EDT 2023-->
-  <decoderIndex version="5">
+  <!--Written by JMRI version 5.5.5plus+jake+20231107T1707Z+R0f5bdc4f2e on Tue Nov 07 12:07:11 EST 2023-->
+  <decoderIndex version="7">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -12962,15 +12962,15 @@
           <!-- Anfahren/Bremsen -->
         </model>
       </family>
-      <family name="PIKO SmartDecoder XP5.1 (old - not use)" mfg="PIKO" lowVersionID="2" highVersionID="15" file="Piko_SmartDecoder_XP5.1_Sound.xml">
+      <family name="PIKO SmartDecoder XP5.1 (old - not use)" mfg="PIKO" lowVersionID="3" highVersionID="15" file="Piko_SmartDecoder_XP5.1_Sound.xml">
         <!-- to be checked by hardware owner -->
-        <model model="PIKO46550-18" numOuts="4" numFns="68" productID="PIKO46550-18" lowVersionID="5" replacementModel="PIKO46550-18 BR83-TT V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5)">
+        <model model="PIKO46550-18" numOuts="4" numFns="68" productID="PIKO46550-18" lowVersionID="5" replacementModel="PIKO46550-18 BR83-TT V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO46551-18" numOuts="4" numFns="68" productID="PIKO46551-18" lowVersionID="8" replacementModel="PIKO46551-18 BR93-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8)">
+        <model model="PIKO46551-18" numOuts="4" numFns="68" productID="PIKO46551-18" lowVersionID="8" replacementModel="PIKO46551-18 BR93-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
@@ -12991,14 +12991,66 @@
           <output name="4" label=". A2 ." />
         </model>
       </family>
-      <family name="PIKO SmartDecoder XP5.1 (version 1.5+)" mfg="PIKO" lowVersionID="2" highVersionID="5" file="Piko_SmartDecoder_XP5.1_Sound_v1.5.xml">
-        <model model="PIKO46505-18 XP5.1 V1.5" numOuts="4" numFns="68" productID="PIKO46505-18" lowVersionID="5" replacementModel="PIKO46505-18 XP5.1 V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8)">
+      <family name="PIKO SmartDecoder XP5.1 (version 1.1+)" mfg="PIKO" lowVersionID="1" highVersionID="2" file="Piko_SmartDecoder_XP5.1_Sound_v1.1.xml">
+        <model model="PIKO46505-18 XP5.1 V1.1" numOuts="4" numFns="68" productID="PIKO46505-18" replacementModel="PIKO46505-18 XP5.1 V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO46550-18 BR83-TT V1.5" numOuts="4" numFns="68" productID="PIKO46550-18" lowVersionID="5" replacementModel="PIKO46550-18 BR83-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8)">
+        <model model="PIKO56505-22 XP5.1 V1.1" numOuts="9" numFns="68" productID="PIKO56505-22" replacementModel="PIKO56505-22 XP5.1 V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+          <output name="7" label=". A5 ." />
+          <output name="8" label=". A6 ." />
+          <output name="9" label=". A7 ." />
+        </model>
+        <model model="PIKO56508-16 XP5.1 V1.1" numOuts="6" numFns="68" productID="PIKO56508-16" replacementModel="PIKO56508-16 XP5.1 V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+        </model>
+        <model model="PIKO46550-18 BR83-TT V1.1" numOuts="4" numFns="68" productID="PIKO46550-18" lowVersionID="5" replacementModel="PIKO46550-18 BR83-TT V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+      </family>
+      <family name="PIKO SmartDecoder XP5.1 (version 1.5+)" mfg="PIKO" lowVersionID="3" highVersionID="5" file="Piko_SmartDecoder_XP5.1_Sound_v1.5.xml">
+        <model model="PIKO46505-18 XP5.1 V1.5" numOuts="4" numFns="68" productID="PIKO46505-18" replacementModel="PIKO46505-18 XP5.1 V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model model="PIKO56505-22 XP5.1 V1.5" numOuts="9" numFns="68" productID="PIKO56505-22" replacementModel="PIKO56505-22 XP5.1 V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+          <output name="7" label=". A5 ." />
+          <output name="8" label=". A6 ." />
+          <output name="9" label=". A7 ." />
+        </model>
+        <model model="PIKO56508-16 XP5.1 V1.5" numOuts="6" numFns="68" productID="PIKO56508-16" replacementModel="PIKO56508-16 XP5.1 V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+        </model>
+        <model model="PIKO46550-18 BR83-TT V1.5" numOuts="4" numFns="68" productID="PIKO46550-18" lowVersionID="5" replacementModel="PIKO46550-18 BR83-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
@@ -13006,11 +13058,30 @@
         </model>
       </family>
       <family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="9" file="Piko_SmartDecoder_XP5.1_Sound_v1.8.xml">
-        <model model="PIKO46505-18 XP5.1 V1.8" numOuts="4" numFns="68" productID="PIKO46505-18" lowVersionID="8">
+        <model model="PIKO46505-18 XP5.1 V1.8" numOuts="4" numFns="68" productID="PIKO46505-18">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
+        </model>
+        <model model="PIKO56505-22 XP5.1 V1.8" numOuts="9" numFns="68" productID="PIKO56505-22">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="3" label=". A3 ." />
+          <output name="4" label=". A4 ." />
+          <output name="3" label=". A5 ." />
+          <output name="4" label=". A6 ." />
+          <output name="3" label=". A7 ." />
+        </model>
+        <model model="PIKO56508-16 XP5.1 V1.8" numOuts="6" numFns="68" productID="PIKO56508-16">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="3" label=". A3 ." />
+          <output name="4" label=". A4 ." />
         </model>
         <model model="PIKO46550-18 BR83-TT V1.8" numOuts="4" numFns="68" productID="PIKO46550-18" lowVersionID="8">
           <output name="1" label="F0(f)" />
@@ -15039,11 +15110,21 @@
         </functionlabels>
       </family>
       <family name="Blunami Diesel" mfg="SoundTraxx (Throttle-Up)" lowVersionID="72" file="SoundTraxx_Blu_Diesel.xml">
-        <model model="BLU-2200 Alco Diesels" numOuts="6" numFns="30" productID="349" />
-        <model model="BLU-2200 Baldwin Diesels" numOuts="6" numFns="30" productID="350" />
-        <model model="BLU-2200 EMD Diesels" numOuts="6" numFns="30" productID="347" />
-        <model model="BLU-2200 EMD-2 Diesels" numOuts="6" numFns="30" productID="351" />
-        <model model="BLU-2200 GE Diesels" numOuts="6" numFns="30" productID="348" />
+        <model model="BLU-2200 Alco Diesels" numOuts="6" numFns="30" productID="2141" />
+        <model model="BLU-2200 Baldwin Diesels" numOuts="6" numFns="30" productID="2142" />
+        <model model="BLU-2200 EMD Diesels" numOuts="6" numFns="30" productID="2139" />
+        <model model="BLU-2200 EMD-2 Diesels" numOuts="6" numFns="30" productID="2143" />
+        <model model="BLU-2200 GE Diesels" numOuts="6" numFns="30" productID="2140" />
+        <model model="BLU-4408 Alco Diesels" numOuts="8" numFns="30" productID="2148" />
+        <model model="BLU-4408 Baldwin Diesels" numOuts="8" numFns="30" productID="2149" />
+        <model model="BLU-4408 EMD Diesels" numOuts="8" numFns="30" productID="2146" />
+        <model model="BLU-4408 EMD-2 Diesels" numOuts="8" numFns="30" productID="2150" />
+        <model model="BLU-4408 GE Diesels" numOuts="8" numFns="30" productID="2147" />
+        <model model="BLU-PNP8 Alco Diesels" numOuts="8" numFns="30" productID="2154" />
+        <model model="BLU-PNP8 Baldwin Diesels" numOuts="8" numFns="30" productID="2155" />
+        <model model="BLU-PNP8 EMD Diesels" numOuts="8" numFns="30" productID="2152" />
+        <model model="BLU-PNP8 EMD-2 Diesels" numOuts="8" numFns="30" productID="2156" />
+        <model model="BLU-PNP8 GE Diesels" numOuts="8" numFns="30" productID="2153" />
         <model model="BLU PNP8" numOuts="8" numFns="30" productID="16910442" />
         <!-- CV 253-256 contents observed in a decoder -->
         <output name="3" label="  FX3  " />
@@ -15105,7 +15186,8 @@
         </functionlabels>
       </family>
       <family name="Blunami Electric" mfg="SoundTraxx (Throttle-Up)" lowVersionID="72" file="SoundTraxx_Blu_Electric.xml">
-        <model model="BLU-2200 Electric" numOuts="6" numFns="30" productID="352" />
+        <model model="BLU-2200 Electric" numOuts="6" numFns="30" productID="2144" />
+        <model model="BLU-4408 Electric" numOuts="8" numFns="30" productID="2151" />
         <output name="3" label="  FX3  " />
         <output name="4" label="  FX4  " />
         <output name="5" label="Airhorn| ">
@@ -15167,7 +15249,8 @@
         </functionlabels>
       </family>
       <family name="Blunami Steam" mfg="SoundTraxx (Throttle-Up)" lowVersionID="72" file="SoundTraxx_Blu_Steam.xml">
-        <model model="BLU-2200 Steam-2" numOuts="6" numFns="30" productID="346" />
+        <model model="BLU-2200 Steam-2" numOuts="6" numFns="30" productID="2138" />
+        <model model="BLU-4408 Steam-2" numOuts="8" numFns="30" productID="2145" />
         <output name="3" label="  FX3  " />
         <output name="4" label="  FX4  " />
         <output name="5" label="Whistle| ">
@@ -15301,7 +15384,7 @@
         </model>
       </family>
       <family name="Econami Diesel" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Eco_Diesel.xml">
-        <model model="ECO-100 Diesel" numOuts="4" numFns="20" productID="258">
+        <model model="ECO-100 Diesel" numOuts="4" numFns="20" productID="2050">
           <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
@@ -15320,7 +15403,7 @@
           <output name="14" label="Brake| " />
           <output name="15" label="Coupler| " />
         </model>
-        <model model="ECO-200 Diesel" numOuts="6" numFns="30" productID="267">
+        <model model="ECO-200 Diesel" numOuts="6" numFns="30" productID="2059">
           <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
@@ -15339,7 +15422,7 @@
           <output name="14" label="Brake| " />
           <output name="15" label="Coupler| " />
         </model>
-        <model model="ECO-21P Diesel" numOuts="6" numFns="30" productID="264">
+        <model model="ECO-21P Diesel" numOuts="6" numFns="30" productID="2056">
           <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
@@ -15358,7 +15441,7 @@
           <output name="14" label="Brake| " />
           <output name="15" label="Coupler| " />
         </model>
-        <model model="ECO-21PNEM Diesel" numOuts="6" numFns="30" productID="309">
+        <model model="ECO-21PNEM Diesel" numOuts="6" numFns="30" productID="2101">
           <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
@@ -15377,7 +15460,7 @@
           <output name="14" label="Brake| " />
           <output name="15" label="Coupler| " />
         </model>
-        <model model="ECO-400 Diesel" numOuts="6" numFns="30" productID="261">
+        <model model="ECO-400 Diesel" numOuts="6" numFns="30" productID="2053">
           <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
@@ -15396,7 +15479,7 @@
           <output name="14" label="Brake| " />
           <output name="15" label="Coupler| " />
         </model>
-        <model model="ECO-PNP Diesel" numOuts="6" numFns="30" productID="270">
+        <model model="ECO-PNP Diesel" numOuts="6" numFns="30" productID="2062">
           <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
@@ -15437,26 +15520,26 @@
         </functionlabels>
       </family>
       <family name="Econami Diesel OEM Athearn" mfg="SoundTraxx (Throttle-Up)" lowVersionID="70" file="SoundTraxx_Eco_Diesel_OEM_Athearn.xml">
-        <model model="ECO-RTR F59PHI" numOuts="4" numFns="30" productID="825" />
-        <model model="ECO-RTR F59PHI 2" numOuts="4" numFns="30" productID="923" />
-        <model model="ECO-200 SD38" numOuts="4" numFns="30" productID="774" />
-        <model model="ECO-RTR SD38" numOuts="4" numFns="30" productID="774" />
-        <model model="ECO-200 SD38 w/DB" numOuts="4" numFns="30" productID="775" />
-        <model model="ECO-RTR SD38 w/strobe" numOuts="4" numFns="30" productID="780" />
-        <model model="ECO-RTR SD38 w/strobe 2" numOuts="4" numFns="30" productID="851" />
-        <model model="ECO-21PNEM SD38 1" numOuts="6" numFns="30" productID="786" />
-        <model model="ECO-21PNEM SD38 3" numOuts="6" numFns="30" productID="787" />
-        <model model="ECO-21PNEM SD38 5" numOuts="6" numFns="30" productID="788" />
-        <model model="ECO-RTR SD40" numOuts="4" numFns="30" productID="862" />
-        <model model="ECO-21PNEM SD40" numOuts="6" numFns="30" productID="1008" />
-        <model model="ECO-RTR SD40 w/ditch" numOuts="4" numFns="30" productID="975" />
-        <model model="ECO-RTR SD40 w/gyra" numOuts="4" numFns="30" productID="863" />
-        <model model="ECO-RTR SD40-2" numOuts="4" numFns="30" productID="801" />
-        <model model="ECO-RTR SD40-2 w/DB" numOuts="4" numFns="30" productID="789" />
-        <model model="ECO-RTR SD40T-2 w/gyra" numOuts="4" numFns="30" productID="864" />
-        <model model="ECO-RTR SD45 w/DB" numOuts="4" numFns="30" productID="781" />
-        <model model="ECO-200 SD45 w/DB" numOuts="4" numFns="30" productID="773" />
-        <model model="ECO-RTR SD50 w/beacon" numOuts="4" numFns="30" productID="846" />
+        <model model="ECO-RTR F59PHI" numOuts="4" numFns="30" productID="6201" />
+        <model model="ECO-RTR F59PHI 2" numOuts="4" numFns="30" productID="6299" />
+        <model model="ECO-200 SD38" numOuts="4" numFns="30" productID="6150" />
+        <model model="ECO-RTR SD38" numOuts="4" numFns="30" productID="6226" />
+        <model model="ECO-200 SD38 w/DB" numOuts="4" numFns="30" productID="6151" />
+        <model model="ECO-RTR SD38 w/strobe" numOuts="4" numFns="30" productID="6156" />
+        <model model="ECO-RTR SD38 w/strobe 2" numOuts="4" numFns="30" productID="6227" />
+        <model model="ECO-21PNEM SD38 1" numOuts="6" numFns="30" productID="6418" />
+        <model model="ECO-21PNEM SD38 3" numOuts="6" numFns="30" productID="6419" />
+        <model model="ECO-21PNEM SD38 5" numOuts="6" numFns="30" productID="6120" />
+        <model model="ECO-RTR SD40" numOuts="4" numFns="30" productID="6238" />
+        <model model="ECO-21PNEM SD40" numOuts="6" numFns="30" productID="6384" />
+        <model model="ECO-RTR SD40 w/ditch" numOuts="4" numFns="30" productID="6351" />
+        <model model="ECO-RTR SD40 w/gyra" numOuts="4" numFns="30" productID="6239" />
+        <model model="ECO-RTR SD40-2" numOuts="4" numFns="30" productID="6177" />
+        <model model="ECO-RTR SD40-2 w/DB" numOuts="4" numFns="30" productID="6165" />
+        <model model="ECO-RTR SD40T-2 w/gyra" numOuts="4" numFns="30" productID="6240" />
+        <model model="ECO-RTR SD45 w/DB" numOuts="4" numFns="30" productID="6157" />
+        <model model="ECO-200 SD45 w/DB" numOuts="4" numFns="30" productID="6149" />
+        <model model="ECO-RTR SD50 w/beacon" numOuts="4" numFns="30" productID="6222" />
         <output name="3" label="  FX3  " />
         <output name="4" label="  FX4  " />
         <output name="5" label="Airhorn| ">
@@ -15506,135 +15589,11 @@
         </functionlabels>
       </family>
       <family name="Econami Diesel OEM Bachmann Sound Value" mfg="SoundTraxx (Throttle-Up)" lowVersionID="70" file="SoundTraxx_Eco_Diesel_OEM_Bachmann_SndVal.xml">
-        <model model="ECO-SoundValue EMD SD9" numOuts="4" numFns="30" productID="1028" />
-        <output name="3" label="  FX3  " />
-        <output name="4" label="  FX4  " />
-        <output name="5" label="Airhorn| ">
-          <label xml:lang="it">Tromba| </label>
-        </output>
-        <output name="6" label="Bell| ">
-          <label xml:lang="it">Campana| </label>
-        </output>
-        <output name="7" label="Dynamic|Brakes">
-          <label xml:lang="it">Freni|Dinamici</label>
-        </output>
-        <output name="8" label="Short|Horn">
-          <label xml:lang="it">Breve|Tromba</label>
-        </output>
-        <output name="9" label="|" />
-        <!-- Not used for for this decoder -->
-        <output name="10" label="|" />
-        <!-- Not used for for this decoder -->
-        <output name="11" label="Dimming| ">
-          <label xml:lang="it">Smorzam| </label>
-        </output>
-        <output name="12" label="Mute| ">
-          <label xml:lang="it">Silenzio| </label>
-        </output>
-        <output name="13" label="|" />
-        <!-- Not used for for this decoder -->
-        <output name="14" label="|" />
-        <!-- Not used for for this decoder -->
-        <output name="15" label="Coupler| ">
-          <label xml:lang="it">Accoppiatore| </label>
-        </output>
-        <model model="ECO-SoundValue EMD GP38-2" numOuts="4" numFns="30" productID="GP38" />
-        <output name="3" label="  FX3  " />
-        <output name="4" label="  FX4  " />
-        <output name="5" label="Airhorn| ">
-          <label xml:lang="it">Tromba| </label>
-        </output>
-        <output name="6" label="Bell| ">
-          <label xml:lang="it">Campana| </label>
-        </output>
-        <output name="7" label="Dynamic|Brakes">
-          <label xml:lang="it">Freni|Dinamici</label>
-        </output>
-        <output name="8" label="Short|Horn">
-          <label xml:lang="it">Breve|Tromba</label>
-        </output>
-        <output name="9" label="|" />
-        <!-- Not used for for this decoder -->
-        <output name="10" label="|" />
-        <!-- Not used for for this decoder -->
-        <output name="11" label="Dimming| ">
-          <label xml:lang="it">Smorzam| </label>
-        </output>
-        <output name="12" label="Mute| ">
-          <label xml:lang="it">Silenzio| </label>
-        </output>
-        <output name="13" label="|" />
-        <!-- Not used for for this decoder -->
-        <output name="14" label="|" />
-        <!-- Not used for for this decoder -->
-        <output name="15" label="Coupler| ">
-          <label xml:lang="it">Accoppiatore| </label>
-        </output>
-        <model model="ECO-SoundValue EMD GP40" numOuts="4" numFns="30" productID="GP40" />
-        <output name="3" label="  FX3  " />
-        <output name="4" label="  FX4  " />
-        <output name="5" label="Airhorn| ">
-          <label xml:lang="it">Tromba| </label>
-        </output>
-        <output name="6" label="Bell| ">
-          <label xml:lang="it">Campana| </label>
-        </output>
-        <output name="7" label="Dynamic|Brakes">
-          <label xml:lang="it">Freni|Dinamici</label>
-        </output>
-        <output name="8" label="Short|Horn">
-          <label xml:lang="it">Breve|Tromba</label>
-        </output>
-        <output name="9" label="|" />
-        <!-- Not used for for this decoder -->
-        <output name="10" label="|" />
-        <!-- Not used for for this decoder -->
-        <output name="11" label="Dimming| ">
-          <label xml:lang="it">Smorzam| </label>
-        </output>
-        <output name="12" label="Mute| ">
-          <label xml:lang="it">Silenzio| </label>
-        </output>
-        <output name="13" label="|" />
-        <!-- Not used for for this decoder -->
-        <output name="14" label="|" />
-        <!-- Not used for for this decoder -->
-        <output name="15" label="Coupler| ">
-          <label xml:lang="it">Accoppiatore| </label>
-        </output>
-        <model model="ECO-SoundValue EMD SD45" numOuts="4" numFns="30" productID="SD45" />
-        <output name="3" label="  FX3  " />
-        <output name="4" label="  FX4  " />
-        <output name="5" label="Airhorn| ">
-          <label xml:lang="it">Tromba| </label>
-        </output>
-        <output name="6" label="Bell| ">
-          <label xml:lang="it">Campana| </label>
-        </output>
-        <output name="7" label="Dynamic|Brakes">
-          <label xml:lang="it">Freni|Dinamici</label>
-        </output>
-        <output name="8" label="Short|Horn">
-          <label xml:lang="it">Breve|Tromba</label>
-        </output>
-        <output name="9" label="|" />
-        <!-- Not used for for this decoder -->
-        <output name="10" label="|" />
-        <!-- Not used for for this decoder -->
-        <output name="11" label="Dimming| ">
-          <label xml:lang="it">Smorzam| </label>
-        </output>
-        <output name="12" label="Mute| ">
-          <label xml:lang="it">Silenzio| </label>
-        </output>
-        <output name="13" label="|" />
-        <!-- Not used for for this decoder -->
-        <output name="14" label="|" />
-        <!-- Not used for for this decoder -->
-        <output name="15" label="Coupler| ">
-          <label xml:lang="it">Accoppiatore| </label>
-        </output>
-        <model model="ECO-SoundValue GE Dash 8-40CW" numOuts="4" numFns="30" productID="GED" />
+        <model model="ECO-SoundValue EMD SD9" numOuts="2" numFns="30" productID="8196" />
+        <model model="ECO-SoundValue EMD GP38-2" numOuts="2" numFns="30" productID="GP38" />
+        <model model="ECO-SoundValue EMD GP40" numOuts="2" numFns="30" productID="8198" />
+        <model model="ECO-SoundValue EMD SD45" numOuts="2" numFns="30" productID="SD45" />
+        <model model="ECO-SoundValue GE Dash 8-40CW" numOuts="2" numFns="30" productID="8195" />
         <output name="3" label="  FX3  " />
         <output name="4" label="  FX4  " />
         <output name="5" label="Airhorn| ">
@@ -15684,7 +15643,7 @@
         </functionlabels>
       </family>
       <family name="Econami Diesel UK" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Eco_Diesel_UK.xml">
-        <model model="ECO-100 UK Diesel" numOuts="4" numFns="20" productID="301">
+        <model model="ECO-100 UK Diesel" numOuts="4" numFns="20" productID="2093">
           <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
@@ -15703,7 +15662,7 @@
           <output name="14" label="Brake| " />
           <output name="15" label="Coupler| " />
         </model>
-        <model model="ECO-200 UK Diesel" numOuts="6" numFns="30" productID="303">
+        <model model="ECO-200 UK Diesel" numOuts="6" numFns="30" productID="2095">
           <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
@@ -15722,7 +15681,7 @@
           <output name="14" label="Brake| " />
           <output name="15" label="Coupler| " />
         </model>
-        <model model="ECO-21PNEM UK Diesel" numOuts="6" numFns="30" productID="305">
+        <model model="ECO-21PNEM UK Diesel" numOuts="6" numFns="30" productID="2097">
           <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
@@ -15741,7 +15700,7 @@
           <output name="14" label="Brake| " />
           <output name="15" label="Coupler| " />
         </model>
-        <model model="ECO-400 UK Diesel" numOuts="6" numFns="30" productID="307">
+        <model model="ECO-400 UK Diesel" numOuts="6" numFns="30" productID="2099">
           <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
@@ -15784,7 +15743,7 @@
         </functionlabels>
       </family>
       <family name="Econami Electric" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Eco_Electric.xml">
-        <model model="ECO-100 Electric" numOuts="4" numFns="20" productID="259">
+        <model model="ECO-100 Electric" numOuts="4" numFns="20" productID="2051">
           <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
@@ -15802,7 +15761,7 @@
           <!-- Not used for for this decoder -->
           <output name="15" label="Coupler| " />
         </model>
-        <model model="ECO-200 Electric" numOuts="6" numFns="30" productID="268">
+        <model model="ECO-200 Electric" numOuts="6" numFns="30" productID="2060">
           <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
@@ -15820,7 +15779,7 @@
           <!-- Not used for for this decoder -->
           <output name="15" label="Coupler| " />
         </model>
-        <model model="ECO-21P Electric" numOuts="6" numFns="30" productID="265">
+        <model model="ECO-21P Electric" numOuts="6" numFns="30" productID="2057">
           <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
@@ -15838,7 +15797,7 @@
           <!-- Not used for for this decoder -->
           <output name="15" label="Coupler| " />
         </model>
-        <model model="ECO-400 Electric" numOuts="6" numFns="30" productID="262">
+        <model model="ECO-400 Electric" numOuts="6" numFns="30" productID="2054">
           <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
@@ -15856,7 +15815,7 @@
           <!-- Not used for for this decoder -->
           <output name="15" label="Coupler| " />
         </model>
-        <model model="ECO-PNP Electric" numOuts="6" numFns="30" productID="271">
+        <model model="ECO-PNP Electric" numOuts="6" numFns="30" productID="2063">
           <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
@@ -15896,109 +15855,45 @@
           <functionlabel num="27" lockable="true">FX6 Output</functionlabel>
         </functionlabels>
       </family>
-      <family name="Econami Steam" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Eco_Steam.xml">
-        <model model="ECO-100 Steam" numOuts="4" numFns="30" productID="257">
-          <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Whistle| " />
-          <output name="6" label="Bell| " />
-          <output name="7" label="Dynamo| " />
-          <output name="8" label="Short|Horn" />
-          <output name="9" label="Cylinder|Cocks" />
-          <output name="10" label="Water|Stop" />
-          <output name="11" label="Dimming| " />
-          <output name="12" label="Mute| " />
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="Brake| " />
-          <output name="15" label="Coupler| " />
-        </model>
-        <model model="ECO-200 Steam" numOuts="6" numFns="30" productID="266">
-          <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Whistle| " />
-          <output name="6" label="Bell| " />
-          <output name="7" label="Dynamo| " />
-          <output name="8" label="Short|Horn" />
-          <output name="9" label="Cylinder|Cocks" />
-          <output name="10" label="Water|Stop" />
-          <output name="11" label="Dimming| " />
-          <output name="12" label="Mute| " />
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="Brake| " />
-          <output name="15" label="Coupler| " />
-        </model>
-        <model model="ECO-21P Steam" numOuts="6" numFns="30" productID="263">
-          <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Whistle| " />
-          <output name="6" label="Bell| " />
-          <output name="7" label="Dynamo| " />
-          <output name="8" label="Short|Horn" />
-          <output name="9" label="Cylinder|Cocks" />
-          <output name="10" label="Water|Stop" />
-          <output name="11" label="Dimming| " />
-          <output name="12" label="Mute| " />
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="Brake| " />
-          <output name="15" label="Coupler| " />
-        </model>
-        <model model="ECO-21PNEM Steam" numOuts="6" numFns="30" productID="308">
-          <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Whistle| " />
-          <output name="6" label="Bell| " />
-          <output name="7" label="Dynamo| " />
-          <output name="8" label="Short|Horn" />
-          <output name="9" label="Cylinder|Cocks" />
-          <output name="10" label="Water|Stop" />
-          <output name="11" label="Dimming| " />
-          <output name="12" label="Mute| " />
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="Brake| " />
-          <output name="15" label="Coupler| " />
-        </model>
-        <model model="ECO-400 Steam" numOuts="6" numFns="30" productID="260">
-          <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Whistle| " />
-          <output name="6" label="Bell| " />
-          <output name="7" label="Dynamo| " />
-          <output name="8" label="Short|Horn" />
-          <output name="9" label="Cylinder|Cocks" />
-          <output name="10" label="Water|Stop" />
-          <output name="11" label="Dimming| " />
-          <output name="12" label="Mute| " />
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="Brake| " />
-          <output name="15" label="Coupler| " />
-        </model>
-        <model model="ECO-PNP Steam" numOuts="6" numFns="30" productID="269">
-          <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Whistle| " />
-          <output name="6" label="Bell| " />
-          <output name="7" label="Dynamo| " />
-          <output name="8" label="Short|Horn" />
-          <output name="9" label="Cylinder|Cocks" />
-          <output name="10" label="Water|Stop" />
-          <output name="11" label="Dimming| " />
-          <output name="12" label="Mute| " />
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="Brake| " />
-          <output name="15" label="Coupler| " />
-        </model>
+      <family name="Econami Steam" mfg="SoundTraxx (Throttle-Up)" lowVersionID="70" file="SoundTraxx_Eco_Steam.xml">
+        <model model="ECO-100 Steam" numOuts="4" numFns="30" productID="2049" />
+        <model model="ECO-200 Steam" numOuts="6" numFns="30" productID="2058" />
+        <model model="ECO-21P Steam" numOuts="6" numFns="30" productID="2055" />
+        <model model="ECO-21PNEM Steam" numOuts="6" numFns="30" productID="2100" />
+        <model model="ECO-400 Steam" numOuts="6" numFns="30" productID="2052" />
+        <model model="ECO-PNP Steam" numOuts="6" numFns="30" productID="2061" />
+        <output name="3" label="  FX3  " />
+        <output name="4" label="  FX4  " />
+        <output name="5" label="Whistle| ">
+          <label xml:lang="it">Fischio| </label>
+        </output>
+        <output name="6" label="Bell| ">
+          <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="Dynamo| ">
+          <label xml:lang="it">Dynamo| </label>
+        </output>
+        <output name="8" label="Short|Horn">
+          <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="Cylinder|Cocks">
+          <label xml:lang="it">Cilindro|Cazzi</label>
+        </output>
+        <output name="10" label="Water|Stop">
+          <label xml:lang="it">Acqua|Stop</label>
+        </output>
+        <output name="11" label="Dimming| ">
+          <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+          <label xml:lang="it">Silenzio| </label>
+        </output>
+        <output name="13" label="|" />
+        <!-- Not used for for this decoder -->
+        <output name="14" label="Brake| " />
+        <output name="15" label="Coupler| ">
+          <label xml:lang="it">Accoppiatore| </label>
+        </output>
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -16023,7 +15918,7 @@
         </functionlabels>
       </family>
       <family name="Econami Steam OEM Athearn" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Eco_Steam_OEM_Athearn.xml">
-        <model model="E2100.001 2-6-0 2-8-0" numOuts="6" numFns="30" productID="257">
+        <model model="E2100.001 2-6-0 2-8-0" numOuts="6" numFns="30" productID="2149">
           <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
@@ -16064,108 +15959,62 @@
         </functionlabels>
       </family>
       <family name="Econami Steam OEM Bachmann Sound Value" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Eco_Steam_OEM_Bachmann_SndVal.xml">
-        <model model="ECO 2-8-0" numOuts="4" numFns="30" productID="280">
+        <model model="ECO 4-6-0" numOuts="2" numFns="30" productID="8200">
           <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Whistle| " />
-          <output name="6" label="Bell| " />
-          <output name="7" label="Dynamo| " />
-          <output name="8" label="Short|Horn" />
-          <output name="9" label="Cylinder|Cocks" />
-          <output name="10" label="Water|Stop" />
-          <output name="11" label="Dimming| " />
-          <output name="12" label="Mute| " />
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="Brake| " />
-          <output name="15" label="Coupler| " />
         </model>
-        <model model="ECO 4-6-0" numOuts="4" numFns="30" productID="460">
+        <model model="ECO 4-6-2" numOuts="2" numFns="30" productID="8205">
           <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Whistle| " />
-          <output name="6" label="Bell| " />
-          <output name="7" label="Dynamo| " />
-          <output name="8" label="Short|Horn" />
-          <output name="9" label="Cylinder|Cocks" />
-          <output name="10" label="Water|Stop" />
-          <output name="11" label="Dimming| " />
-          <output name="12" label="Mute| " />
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="Brake| " />
-          <output name="15" label="Coupler| " />
         </model>
-        <model model="ECO 4-8-4" numOuts="4" numFns="30" productID="484">
+        <model model="ECO 4-6-4" numOuts="2" numFns="30" productID="8201">
           <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Whistle| " />
-          <output name="6" label="Bell| " />
-          <output name="7" label="Dynamo| " />
-          <output name="8" label="Short|Horn" />
-          <output name="9" label="Cylinder|Cocks" />
-          <output name="10" label="Water|Stop" />
-          <output name="11" label="Dimming| " />
-          <output name="12" label="Mute| " />
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="Brake| " />
-          <output name="15" label="Coupler| " />
         </model>
-        <model model="ECO 4-8-2" numOuts="4" numFns="30" productID="482">
+        <model model="ECO 2-8-0" numOuts="2" numFns="30" productID="8193">
           <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Whistle| " />
-          <output name="6" label="Bell| " />
-          <output name="7" label="Dynamo| " />
-          <output name="8" label="Short|Horn" />
-          <output name="9" label="Cylinder|Cocks" />
-          <output name="10" label="Water|Stop" />
-          <output name="11" label="Dimming| " />
-          <output name="12" label="Mute| " />
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="Brake| " />
-          <output name="15" label="Coupler| " />
         </model>
-        <model model="ECO 2-8-8-4" numOuts="4" numFns="30" productID="2884">
+        <model model="ECO 2-8-4 HO" numOuts="6" numFns="30" productID="8207">
           <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Whistle| " />
-          <output name="6" label="Bell| " />
-          <output name="7" label="Dynamo| " />
-          <output name="8" label="Short|Horn" />
-          <output name="9" label="Cylinder|Cocks" />
-          <output name="10" label="Water|Stop" />
-          <output name="11" label="Dimming| " />
-          <output name="12" label="Mute| " />
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="Brake| " />
-          <output name="15" label="Coupler| " />
         </model>
-        <model model="ECO 4-6-4" numOuts="4" numFns="30" productID="464">
+        <model model="ECO 4-8-4" numOuts="2" numFns="30" productID="8199">
           <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Whistle| " />
-          <output name="6" label="Bell| " />
-          <output name="7" label="Dynamo| " />
-          <output name="8" label="Short|Horn" />
-          <output name="9" label="Cylinder|Cocks" />
-          <output name="10" label="Water|Stop" />
-          <output name="11" label="Dimming| " />
-          <output name="12" label="Mute| " />
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="Brake| " />
-          <output name="15" label="Coupler| " />
         </model>
+        <model model="ECO 4-8-2" numOuts="2" numFns="30" productID="8197">
+          <versionCV lowVersionID="70" />
+        </model>
+        <model model="ECO 2-8-8-4" numOuts="2" numFns="30" productID="8194">
+          <versionCV lowVersionID="70" />
+        </model>
+        <output name="3" label="  FX3  " />
+        <output name="4" label="  FX4  " />
+        <output name="5" label="Whistle| ">
+          <label xml:lang="it">Fischio| </label>
+        </output>
+        <output name="6" label="Bell| ">
+          <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="Dynamo| ">
+          <label xml:lang="it">Dynamo| </label>
+        </output>
+        <output name="8" label="Short|Horn">
+          <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="Cylinder|Cocks">
+          <label xml:lang="it">Cilindro|Cazzi</label>
+        </output>
+        <output name="10" label="Water|Stop">
+          <label xml:lang="it">Acqua|Stop</label>
+        </output>
+        <output name="11" label="Dimming| ">
+          <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+          <label xml:lang="it">Silenzio| </label>
+        </output>
+        <output name="13" label="|" />
+        <!-- Not used for for this decoder -->
+        <output name="14" label="Brake| " />
+        <output name="15" label="Coupler| ">
+          <label xml:lang="it">Accoppiatore| </label>
+        </output>
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -16189,75 +16038,43 @@
           <functionlabel num="27" lockable="true">FX6 Output</functionlabel>
         </functionlabels>
       </family>
-      <family name="Econami Steam UK" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Eco_Steam_UK.xml">
-        <model model="ECO-100 UK Steam" numOuts="4" numFns="30" productID="300">
-          <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Main|Whistle" />
-          <output name="6" label="Shunt|Whistle" />
-          <output name="7" label="Dynamo| " />
-          <output name="8" label="Short|Horn" />
-          <output name="9" label="Cylinder|Cocks" />
-          <output name="10" label="Water|Stop" />
-          <output name="11" label="Dimming| " />
-          <output name="12" label="Mute| " />
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="Brake| " />
-          <output name="15" label="Coupler| " />
-        </model>
-        <model model="ECO-200 UK Steam" numOuts="6" numFns="30" productID="302">
-          <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Main|Whistle" />
-          <output name="6" label="Shunt|Whistle" />
-          <output name="7" label="Dynamo| " />
-          <output name="8" label="Short|Horn" />
-          <output name="9" label="Cylinder|Cocks" />
-          <output name="10" label="Water|Stop" />
-          <output name="11" label="Dimming| " />
-          <output name="12" label="Mute| " />
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="Brake| " />
-          <output name="15" label="Coupler| " />
-        </model>
-        <model model="ECO-21PNEM UK Steam" numOuts="6" numFns="30" productID="304">
-          <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Main|Whistle" />
-          <output name="6" label="Shunt|Whistle" />
-          <output name="7" label="Dynamo| " />
-          <output name="8" label="Short|Horn" />
-          <output name="9" label="Cylinder|Cocks" />
-          <output name="10" label="Water|Stop" />
-          <output name="11" label="Dimming| " />
-          <output name="12" label="Mute| " />
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="Brake| " />
-          <output name="15" label="Coupler| " />
-        </model>
-        <model model="ECO-400 UK Steam" numOuts="6" numFns="30" productID="306">
-          <versionCV lowVersionID="70" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Main|Whistle" />
-          <output name="6" label="Shunt|Whistle" />
-          <output name="7" label="Dynamo| " />
-          <output name="8" label="Short|Horn" />
-          <output name="9" label="Cylinder|Cocks" />
-          <output name="10" label="Water|Stop" />
-          <output name="11" label="Dimming| " />
-          <output name="12" label="Mute| " />
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="Brake| " />
-          <output name="15" label="Coupler| " />
-        </model>
+      <family name="Econami Steam UK" mfg="SoundTraxx (Throttle-Up)" lowVersionID="70" file="SoundTraxx_Eco_Steam_UK.xml">
+        <model model="ECO-100 UK Steam" numOuts="4" numFns="30" productID="2092" />
+        <model model="ECO-200 UK Steam" numOuts="6" numFns="30" productID="2094" />
+        <model model="ECO-21PNEM UK Steam" numOuts="6" numFns="30" productID="2096" />
+        <model model="ECO-400 UK Steam" numOuts="6" numFns="30" productID="2098" />
+        <output name="3" label="  FX3  " />
+        <output name="4" label="  FX4  " />
+        <output name="5" label="Main|Whistle">
+          <label xml:lang="it">Fischio|Primario</label>
+        </output>
+        <output name="6" label="Shunt|Whistle">
+          <label xml:lang="it">Fischio|Manovra</label>
+        </output>
+        <output name="7" label="Dynamo| ">
+          <label xml:lang="it">Dynamo| </label>
+        </output>
+        <output name="8" label="Short|Horn">
+          <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="Cylinder|Cocks">
+          <label xml:lang="it">Cilindro|Cazzi</label>
+        </output>
+        <output name="10" label="Water|Stop">
+          <label xml:lang="it">Acqua|Stop</label>
+        </output>
+        <output name="11" label="Dimming| ">
+          <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+          <label xml:lang="it">Silenzio| </label>
+        </output>
+        <output name="13" label="|" />
+        <!-- Not used for for this decoder -->
+        <output name="14" label="Brake| " />
+        <output name="15" label="Coupler| ">
+          <label xml:lang="it">Accoppiatore| </label>
+        </output>
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
           <functionlabel num="1" lockable="true">Shunt Whistle</functionlabel>
@@ -16784,50 +16601,50 @@
         </functionlabels>
       </family>
       <family name="Tsunami2 Diesel" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71" file="SoundTraxx_Tsu2_Diesel.xml">
-        <model model="TSU-1100 EMD Diesels" numOuts="4" numFns="30" productID="276" />
-        <model model="TSU-1100 EMD-2 Diesels" numOuts="4" numFns="30" productID="310" />
-        <model model="TSU-1100 GE Diesels" numOuts="4" numFns="30" productID="277" />
-        <model model="TSU-1100 Alco Diesels" numOuts="4" numFns="30" productID="278" />
-        <model model="TSU-1100 Baldwin Diesels" numOuts="4" numFns="30" productID="279" />
-        <model model="TSU-2200 EMD Diesels" numOuts="6" numFns="30" productID="280" />
-        <model model="TSU-2200 EMD-2 Diesels" numOuts="6" numFns="30" productID="311" />
-        <model model="TSU-2200 GE Diesels" numOuts="6" numFns="30" productID="281" />
-        <model model="TSU-2200 Alco Diesels" numOuts="6" numFns="30" productID="282" />
-        <model model="TSU-2200 Baldwin Diesels" numOuts="6" numFns="30" productID="283" />
-        <model model="TSU-21PNEM EMD Diesels" numOuts="6" numFns="30" productID="284" />
-        <model model="TSU-21PNEM EMD-2 Diesels" numOuts="6" numFns="30" productID="312" />
-        <model model="TSU-21PNEM GE Diesels" numOuts="6" numFns="30" productID="285" />
-        <model model="TSU-21PNEM Alco Diesels" numOuts="6" numFns="30" productID="286" />
-        <model model="TSU-21PNEM Baldwin Diesels" numOuts="6" numFns="30" productID="287" />
-        <model model="TSU-21PNEM8 EMD Diesels" numOuts="8" numFns="30" productID="325" />
-        <model model="TSU-21PNEM8 EMD-2 Diesels" numOuts="8" numFns="30" productID="329" />
-        <model model="TSU-21PNEM8 GE Diesels" numOuts="8" numFns="30" productID="326" />
-        <model model="TSU-21PNEM8 Alco Diesels" numOuts="8" numFns="30" productID="327" />
-        <model model="TSU-21PNEM8 Baldwin Diesels" numOuts="8" numFns="30" productID="328" />
-        <model model="TSU-4400 EMD Diesels" numOuts="6" numFns="30" productID="292" />
-        <model model="TSU-4400 EMD-2 Diesels" numOuts="6" numFns="30" productID="314" />
-        <model model="TSU-4400 GE Diesels" numOuts="6" numFns="30" productID="293" />
-        <model model="TSU-4400 Alco Diesels" numOuts="6" numFns="30" productID="294" />
-        <model model="TSU-4400 Baldwin Diesels" numOuts="6" numFns="30" productID="295" />
-        <model model="TSU-BH1 EMD Diesels" numOuts="8" numFns="30" productID="343" />
-        <model model="TSU-BH1 GE Diesels" numOuts="8" numFns="30" productID="344" />
-        <model model="TSU-BH1 Alco Diesels" numOuts="8" numFns="30" productID="345" />
-        <model model="TSU-KN1 Diesels" numOuts="4" numFns="30" productID="331" />
-        <model model="TSU-N18 EMD Diesels" numOuts="6" numFns="30" productID="333" />
-        <model model="TSU-N18 EMD-2 Diesels" numOuts="6" numFns="30" productID="337" />
-        <model model="TSU-N18 GE Diesels" numOuts="6" numFns="30" productID="334" />
-        <model model="TSU-N18 Alco Diesels" numOuts="6" numFns="30" productID="335" />
-        <model model="TSU-N18 Baldwin Diesels" numOuts="6" numFns="30" productID="336" />
-        <model model="TSU-PNP EMD Diesels" numOuts="6" numFns="30" productID="288" />
-        <model model="TSU-PNP EMD-2 Diesels" numOuts="6" numFns="30" productID="313" />
-        <model model="TSU-PNP GE Diesels" numOuts="6" numFns="30" productID="289" />
-        <model model="TSU-PNP Alco Diesels" numOuts="6" numFns="30" productID="290" />
-        <model model="TSU-PNP Baldwin Diesels" numOuts="6" numFns="30" productID="291" />
-        <model model="TSU-PNP8 EMD Diesels" numOuts="8" numFns="30" productID="319" />
-        <model model="TSU-PNP8 EMD-2 Diesels" numOuts="8" numFns="30" productID="323" />
-        <model model="TSU-PNP8 GE Diesels" numOuts="8" numFns="30" productID="320" />
-        <model model="TSU-PNP8 Alco Diesels" numOuts="8" numFns="30" productID="321" />
-        <model model="TSU-PNP8 Baldwin Diesels" numOuts="8" numFns="30" productID="322" />
+        <model model="TSU-1100 EMD Diesels" numOuts="4" numFns="30" productID="2068" />
+        <model model="TSU-1100 EMD-2 Diesels" numOuts="4" numFns="30" productID="2102" />
+        <model model="TSU-1100 GE Diesels" numOuts="4" numFns="30" productID="2069" />
+        <model model="TSU-1100 Alco Diesels" numOuts="4" numFns="30" productID="2070" />
+        <model model="TSU-1100 Baldwin Diesels" numOuts="4" numFns="30" productID="2071" />
+        <model model="TSU-2200 EMD Diesels" numOuts="6" numFns="30" productID="2072" />
+        <model model="TSU-2200 EMD-2 Diesels" numOuts="6" numFns="30" productID="2103" />
+        <model model="TSU-2200 GE Diesels" numOuts="6" numFns="30" productID="2073" />
+        <model model="TSU-2200 Alco Diesels" numOuts="6" numFns="30" productID="2074" />
+        <model model="TSU-2200 Baldwin Diesels" numOuts="6" numFns="30" productID="2075" />
+        <model model="TSU-21PNEM EMD Diesels" numOuts="6" numFns="30" productID="2076" />
+        <model model="TSU-21PNEM EMD-2 Diesels" numOuts="6" numFns="30" productID="2104" />
+        <model model="TSU-21PNEM GE Diesels" numOuts="6" numFns="30" productID="2077" />
+        <model model="TSU-21PNEM Alco Diesels" numOuts="6" numFns="30" productID="2078" />
+        <model model="TSU-21PNEM Baldwin Diesels" numOuts="6" numFns="30" productID="2079" />
+        <model model="TSU-21PNEM8 EMD Diesels" numOuts="8" numFns="30" productID="2117" />
+        <model model="TSU-21PNEM8 EMD-2 Diesels" numOuts="8" numFns="30" productID="2121" />
+        <model model="TSU-21PNEM8 GE Diesels" numOuts="8" numFns="30" productID="2118" />
+        <model model="TSU-21PNEM8 Alco Diesels" numOuts="8" numFns="30" productID="2119" />
+        <model model="TSU-21PNEM8 Baldwin Diesels" numOuts="8" numFns="30" productID="2120" />
+        <model model="TSU-4400 EMD Diesels" numOuts="6" numFns="30" productID="2084" />
+        <model model="TSU-4400 EMD-2 Diesels" numOuts="6" numFns="30" productID="2106" />
+        <model model="TSU-4400 GE Diesels" numOuts="6" numFns="30" productID="2085" />
+        <model model="TSU-4400 Alco Diesels" numOuts="6" numFns="30" productID="2086" />
+        <model model="TSU-4400 Baldwin Diesels" numOuts="6" numFns="30" productID="2087" />
+        <model model="TSU-BH1 EMD Diesels" numOuts="8" numFns="30" productID="2135" />
+        <model model="TSU-BH1 GE Diesels" numOuts="8" numFns="30" productID="2136" />
+        <model model="TSU-BH1 Alco Diesels" numOuts="8" numFns="30" productID="2137" />
+        <model model="TSU-KN1 Diesels" numOuts="4" numFns="30" productID="2123" />
+        <model model="TSU-N18 EMD Diesels" numOuts="6" numFns="30" productID="2125" />
+        <model model="TSU-N18 EMD-2 Diesels" numOuts="6" numFns="30" productID="2129" />
+        <model model="TSU-N18 GE Diesels" numOuts="6" numFns="30" productID="2126" />
+        <model model="TSU-N18 Alco Diesels" numOuts="6" numFns="30" productID="2127" />
+        <model model="TSU-N18 Baldwin Diesels" numOuts="6" numFns="30" productID="2128" />
+        <model model="TSU-PNP EMD Diesels" numOuts="6" numFns="30" productID="2080" />
+        <model model="TSU-PNP EMD-2 Diesels" numOuts="6" numFns="30" productID="2105" />
+        <model model="TSU-PNP GE Diesels" numOuts="6" numFns="30" productID="2081" />
+        <model model="TSU-PNP Alco Diesels" numOuts="6" numFns="30" productID="2082" />
+        <model model="TSU-PNP Baldwin Diesels" numOuts="6" numFns="30" productID="2083" />
+        <model model="TSU-PNP8 EMD Diesels" numOuts="8" numFns="30" productID="2111" />
+        <model model="TSU-PNP8 EMD-2 Diesels" numOuts="8" numFns="30" productID="2115" />
+        <model model="TSU-PNP8 GE Diesels" numOuts="8" numFns="30" productID="2112" />
+        <model model="TSU-PNP8 Alco Diesels" numOuts="8" numFns="30" productID="2113" />
+        <model model="TSU-PNP8 Baldwin Diesels" numOuts="8" numFns="30" productID="2114" />
         <output name="3" label="  FX3  " />
         <output name="4" label="  FX4  " />
         <output name="5" label="Airhorn| ">
@@ -16887,134 +16704,183 @@
         </functionlabels>
       </family>
       <family name="Tsunami2 Diesel OEM Genesis" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71" file="SoundTraxx_Tsu2_Diesel_OEM_Genesis.xml">
-        <model model="TSU-GN2200 F3/7 w/DB" numOuts="6" numFns="30" productID="782" />
-        <model model="TSU-GN2200 F3/7 w/DB/gyra" numOuts="6" numFns="30" productID="783" />
-        <model model="TSU-GN2200 F3/7 w/DB/gyra2" numOuts="6" numFns="30" productID="806" />
-        <model model="TSU-GN2208 F7" numOuts="8" numFns="30" productID="942" />
-        <model model="TSU-GN2208 F7 15" numOuts="8" numFns="30" productID="944" />
-        <model model="TSU-GN2208 F7 16" numOuts="8" numFns="30" productID="989" />
-        <model model="TSU-GN2208 F7 17" numOuts="8" numFns="30" productID="990" />
-        <model model="TSU-GN2208 FP7" numOuts="8" numFns="30" productID="954" />
-        <model model="TSU-GN2200 GP7" numOuts="6" numFns="30" productID="770" />
-        <model model="TSU-GN2208 GP7" numOuts="8" numFns="30" productID="916" />
-        <model model="TSU-GN2208 GP7 13" numOuts="8" numFns="30" productID="957" />
-        <model model="TSU-GN2208 GP7 19" numOuts="8" numFns="30" productID="975" />
-        <model model="TSU-GN2208 GP7 20" numOuts="8" numFns="30" productID="981" />
-        <model model="TSU-GN2200 GP7 w/DB" numOuts="6" numFns="30" productID="771" />
-        <model model="TSU-GN2208 GP7A/B" numOuts="8" numFns="30" productID="980" />
-        <model model="TSU-GN2208 GP7R" numOuts="8" numFns="30" productID="871" />
-        <model model="TSU-GN2208 GP7u" numOuts="8" numFns="30" productID="870" />
-        <model model="TSU-GN2200 GP7/GP9" numOuts="6" numFns="30" productID="793" />
-        <model model="TSU-GN2208 GP7/GP9" numOuts="6" numFns="30" productID="860" />
-        <model model="TSU-GN2208 GP7/GP9/GP18" numOuts="8" numFns="30" productID="914" />
-        <model model="TSU-GN2200 GP7/GP9 w/beacon" numOuts="6" numFns="30" productID="824" />
-        <model model="TSU-GN2200 GP7/GP9 w/mars" numOuts="6" numFns="30" productID="788" />
-        <model model="TSU-GN2208 GP9" numOuts="8" numFns="30" productID="858" />
-        <model model="TSU-GN2208 GP9/18" numOuts="8" numFns="30" productID="958" />
-        <model model="TSU-GN2200 GP9 w/beacon" numOuts="6" numFns="30" productID="795" />
-        <model model="TSU-GN2200 GP9 w/beacon2" numOuts="6" numFns="30" productID="796" />
-        <model model="TSU-GN2200 GP9 w/beacon3" numOuts="6" numFns="30" productID="838" />
-        <model model="TSU-GN2208 GP9 w/beacon" numOuts="8" numFns="30" productID="857" />
-        <model model="TSU-GN2200 GP9 w/DB" numOuts="6" numFns="30" productID="772" />
-        <model model="TSU-GN2200 GP9 w/DB,beacon" numOuts="6" numFns="30" productID="837" />
-        <model model="TSU-GN2200 GP9 w/DB,gyra" numOuts="6" numFns="30" productID="794" />
-        <model model="TSU-GN2208 GP9 w/DB,gyra" numOuts="8" numFns="30" productID="859" />
-        <model model="TSU-GN2200 GP9 w/mars" numOuts="6" numFns="30" productID="787" />
-        <model model="TSU-GN2208 GP9B" numOuts="8" numFns="30" productID="861" />
-        <model model="TSU-GN2208 GP18" numOuts="8" numFns="30" productID="978" />
-        <model model="TSU-GN2208 GP18 25" numOuts="8" numFns="30" productID="974" />
-        <model model="TSU-GN2200 GP15-1 w/beacon" numOuts="6" numFns="30" productID="798" />
-        <model model="TSU-GN2208 GP15-1 w/beacon" numOuts="8" numFns="30" productID="986" />
-        <model model="TSU-GN2200 GP15-1 w/beacon2" numOuts="6" numFns="30" productID="799" />
-        <model model="TSU-GN2200 GP15-1 w/ditch" numOuts="6" numFns="30" productID="800" />
-        <model model="TSU-GN2200 GP15T" numOuts="6" numFns="30" productID="797" />
-        <model model="TSU-GN2200 GP38-2" numOuts="6" numFns="30" productID="776" />
-        <model model="TSU-GN2200 GP38-2 2" numOuts="6" numFns="30" productID="844" />
-        <model model="TSU-GN2200 GP38-2 w/ beacon/strobe" numOuts="6" numFns="30" productID="777" />
-        <model model="TSU-GN2200 GP38-2 w/DB" numOuts="6" numFns="30" productID="840" />
-        <model model="TSU-GN2200 GP38-2 w/DB2" numOuts="6" numFns="30" productID="842" />
-        <model model="TSU-GN2200 GP38-2 w/DB/beacon" numOuts="6" numFns="30" productID="841" />
-        <model model="TSU-GN2200 GP38-2 w/DB/beacon2" numOuts="6" numFns="30" productID="843" />
-        <model model="TSU-GN2200 GP38-2 w/ditch" numOuts="6" numFns="30" productID="845" />
-        <model model="TSU-GN2200 GP38-2 w/srobe" numOuts="6" numFns="30" productID="852" />
-        <model model="TSU-GN2208 GP38-2 w/ditch" numOuts="8" numFns="30" productID="919" />
-        <model model="TSU-GN2208 GP38-2 w/gyra" numOuts="8" numFns="30" productID="918" />
-        <model model="TSU-GN2208 GP38-2 w/srobe" numOuts="8" numFns="30" productID="920" />
-        <model model="TSU-GN2208 GP38-2W" numOuts="8" numFns="30" productID="917" />
-        <model model="TSU-GN2200 GP39-2" numOuts="6" numFns="30" productID="828" />
-        <model model="TSU-GN2208 GP39-2 4" numOuts="8" numFns="30" productID="1000" />
-        <model model="TSU-GN2200 GP39-2 w/ beacon/strobe1" numOuts="6" numFns="30" productID="829" />
-        <model model="TSU-GN2200 GP39-2 w/ beacon/strobe2" numOuts="6" numFns="30" productID="830" />
-        <model model="TSU-GN2200 GP39-2 w/ beacon/strobe3" numOuts="6" numFns="30" productID="831" />
-        <model model="TSU-GN2200 GP39-2 w/ strobe" numOuts="6" numFns="30" productID="832" />
-        <model model="TSU-GN2208 GP39X/GP49" numOuts="8" numFns="30" productID="929" />
-        <model model="TSU-GN2208 GP40-2 2" numOuts="8" numFns="30" productID="969" />
-        <model model="TSU-GN2208 GP40-2 5" numOuts="8" numFns="30" productID="970" />
-        <model model="TSU-GN2208 GP40-2 6" numOuts="8" numFns="30" productID="924" />
-        <model model="TSU-GN2200 GP40-2 w/DB" numOuts="6" numFns="30" productID="849" />
-        <model model="TSU-GN2200 GP40-2 w/DB,beacon" numOuts="6" numFns="30" productID="848" />
-        <model model="TSU-GN2200 GP40-2 w/DB,strobe" numOuts="6" numFns="30" productID="847" />
-        <model model="TSU-GN2208 GP40-2 w/ditch" numOuts="8" numFns="30" productID="925" />
-        <model model="TSU-GN2208 GP40-2 w/gyra" numOuts="8" numFns="30" productID="867" />
-        <model model="TSU-GN2208 GP40-2 w/gyra2" numOuts="8" numFns="30" productID="927" />
-        <model model="TSU-GN2208 GP40-2 w/strato" numOuts="8" numFns="30" productID="926" />
-        <model model="TSU-GN2208 GP40-2 w/strato2" numOuts="8" numFns="30" productID="948" />
-        <model model="TSU-GN2200 GP40-2L/W w/ditch" numOuts="6" numFns="30" productID="785" />
-        <model model="TSU-GN2200 GP40-2L/W w/gyra" numOuts="6" numFns="30" productID="786" />
-        <model model="TSU-GN2200 GP40-2L/W w/mars" numOuts="6" numFns="30" productID="784" />
-        <model model="TSU-GN2208 GP40P-2" numOuts="8" numFns="30" productID="868" />
-        <model model="TSU-GN2200 SDP40F w/gyra" numOuts="6" numFns="30" productID="813" />
-        <model model="TSU-GN2208 SDP40F w/gyra" numOuts="8" numFns="30" productID="853" />
-        <model model="TSU-GN2200 SDF40-2 w/beacon" numOuts="6" numFns="30" productID="814" />
-        <model model="TSU-GN2208 SDF40-2 w/beacon" numOuts="8" numFns="30" productID="854" />
-        <model model="TSU-GN2208 SDF40-2 w/beacon 2" numOuts="8" numFns="30" productID="928" />
-        <model model="TSU-GN2200 SDP45/F45 w/beacon" numOuts="6" numFns="30" productID="820" />
-        <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45" numOuts="8" numFns="30" productID="912" />
-        <model model="TSU-GN2208 DDA40X 1" numOuts="8" numFns="30" productID="1001" />
-        <model model="TSU-GN2208 DDA40X 2" numOuts="8" numFns="30" productID="1002" />
-        <model model="TSU-GN2208 DDA40X 3" numOuts="8" numFns="30" productID="1003" />
-        <model model="TSU-GN2208 SD60E" numOuts="8" numFns="30" productID="835" />
-        <model model="TSU-GN2208 SD60E 2" numOuts="8" numFns="30" productID="884" />
-        <model model="TSU-GN2200 SD60I" numOuts="6" numFns="30" productID="804" />
-        <model model="TSU-GN2200 SD60I w/ditch" numOuts="6" numFns="30" productID="803" />
-        <model model="TSU-GN2200 SD60M" numOuts="6" numFns="30" productID="802" />
-        <model model="TSU-GN2200 SD60M w/ditch" numOuts="6" numFns="30" productID="805" />
-        <model model="TSU-GN2200 SD60M 3 win" numOuts="8" numFns="30" productID="972" />
-        <model model="TSU-GN2200 SD60M 4" numOuts="8" numFns="30" productID="936" />
-        <model model="TSU-GN2200 SD60M 8" numOuts="8" numFns="30" productID="938" />
-        <model model="TSU-GN2200 SD60M 9" numOuts="8" numFns="30" productID="973" />
-        <model model="TSU-GN2200 SD60M 10" numOuts="8" numFns="30" productID="937" />
-        <model model="TSU-GN2200 SD70ACe" numOuts="6" numFns="30" productID="791" />
-        <model model="TSU-GN2200 SD70ACe w/LED" numOuts="6" numFns="30" productID="836" />
-        <model model="TSU-GN2208 SD70ACe w/LED 2" numOuts="8" numFns="30" productID="872" />
-        <model model="TSU-GN2208 SD70ACe w/LED" numOuts="8" numFns="30" productID="907" />
-        <model model="TSU-GN2200 SD70ACe w/ditch" numOuts="6" numFns="30" productID="792" />
-        <model model="TSU-GN2208 SD70ACe w/ditch" numOuts="8" numFns="30" productID="873" />
-        <model model="TSU-GN2208 SD70ACU" numOuts="8" numFns="30" productID="1014" />
-        <model model="TSU-GN2208 SD70ACU 13" numOuts="8" numFns="30" productID="1015" />
-        <model model="TSU-GN2200 SD70M/75M" numOuts="6" numFns="30" productID="778" />
-        <model model="TSU-GN2200 SD70M w/ditch" numOuts="6" numFns="30" productID="779" />
-        <model model="TSU-GN2208 SD75M" numOuts="8" numFns="30" productID="898" />
-        <model model="TSU-GN2208 SD80MAC" numOuts="8" numFns="30" productID="935" />
-        <model model="TSU-GN2208 SD80MAC 1" numOuts="8" numFns="30" productID="934" />
-        <model model="TSU-GN2208 SD90MAC-H" numOuts="8" numFns="30" productID="908" />
-        <model model="TSU-GN2208 Dash 9-44CW 1" numOuts="8" numFns="30" productID="1007" />
-        <model model="TSU-GN2208 Dash 9-44CW 2" numOuts="8" numFns="30" productID="963" />
-        <model model="TSU-GN2208 Dash 9-44CW 3" numOuts="8" numFns="30" productID="964" />
-        <model model="TSU-GN2208 Dash 9-44CW" numOuts="8" numFns="30" productID="965" />
-        <model model="TSU-GN2208 Dash 9-44CW 5" numOuts="8" numFns="30" productID="966" />
-        <model model="TSU-GN2208 Dash 9-44CW 6" numOuts="8" numFns="30" productID="967" />
-        <model model="TSU-GN2208 Dash 9-44CW 7" numOuts="8" numFns="30" productID="1022" />
-        <model model="TSU-GN2208 Dash 9-44CW 8" numOuts="8" numFns="30" productID="1023" />
-        <model model="TSU-GN2208 Dash 9-44CW 9" numOuts="8" numFns="30" productID="769" />
-        <model model="TSU-GN2200 ES40DC w/ditch" numOuts="6" numFns="30" productID="816" />
-        <model model="TSU-GN2208 ES40DC w/ditch" numOuts="8" numFns="30" productID="921" />
-        <model model="TSU-GN2208 ES44AC" numOuts="8" numFns="30" productID="855" />
-        <model model="TSU-GN2208 ES44AC 2" numOuts="8" numFns="30" productID="856" />
-        <model model="TSU-GN2200 ES44DC" numOuts="6" numFns="30" productID="815" />
-        <model model="TSU-GN2200 ES44DC w/ditch" numOuts="6" numFns="30" productID="817" />
-        <model model="TSU-GN2208 ES44DC w/ditch" numOuts="8" numFns="30" productID="922" />
-        <model model="TSU-GN2208 P42" numOuts="8" numFns="30" productID="988" />
+        <model model="TSU-GN2208 DDA40X 1" numOuts="8" numFns="30" productID="6377" />
+        <model model="TSU-GN2208 DDA40X 2" numOuts="8" numFns="30" productID="6378" />
+        <model model="TSU-GN2208 DDA40X 3" numOuts="8" numFns="30" productID="6379" />
+        <model model="TSU-GN2200 F3/7 w/DB" numOuts="6" numFns="30" productID="6158" />
+        <model model="TSU-GN2200 F3/7 w/DB/gyra" numOuts="6" numFns="30" productID="6159" />
+        <model model="TSU-GN2200 F3/7 w/DB/gyra2" numOuts="6" numFns="30" productID="6182" />
+        <model model="TSU-GN2208 F3 GP9 22" numOuts="8" numFns="30" productID="6409" />
+        <model model="TSU-GN2208 F7" numOuts="8" numFns="30" productID="6318" />
+        <model model="TSU-GN2208 F7 2" numOuts="8" numFns="30" productID="6270" />
+        <model model="TSU-GN2208 F7 6" numOuts="8" numFns="30" productID="6271" />
+        <model model="TSU-GN2208 F7 7" numOuts="8" numFns="30" productID="6272" />
+        <model model="TSU-GN2208 F7 21" numOuts="8" numFns="30" productID="6367" />
+        <model model="TSU-GN2208 F7 15" numOuts="8" numFns="30" productID="6320" />
+        <model model="TSU-GN2208 F7 16" numOuts="8" numFns="30" productID="6365" />
+        <model model="TSU-GN2208 F7 17" numOuts="8" numFns="30" productID="6366" />
+        <model model="TSU-GN2208 FP7" numOuts="8" numFns="30" productID="6330" />
+        <model model="TSU-GN2200 GP7" numOuts="6" numFns="30" productID="6146" />
+        <model model="TSU-GN2208 GP7" numOuts="8" numFns="30" productID="6292" />
+        <model model="TSU-GN2208 GP7 13" numOuts="8" numFns="30" productID="6333" />
+        <model model="TSU-GN2208 GP7 19" numOuts="8" numFns="30" productID="6351" />
+        <model model="TSU-GN2208 GP7 20" numOuts="8" numFns="30" productID="6357" />
+        <model model="TSU-GN2200 GP7 w/DB" numOuts="6" numFns="30" productID="6147" />
+        <model model="TSU-GN2208 GP7A/B" numOuts="8" numFns="30" productID="6356" />
+        <model model="TSU-GN2208 GP7R" numOuts="8" numFns="30" productID="6247" />
+        <model model="TSU-GN2208 GP7u" numOuts="8" numFns="30" productID="6246" />
+        <model model="TSU-GN2200 GP7/GP9" numOuts="6" numFns="30" productID="6169" />
+        <model model="TSU-GN2208 GP7/GP9" numOuts="6" numFns="30" productID="6236" />
+        <model model="TSU-GN2208 GP7/GP9 22" numOuts="6" numFns="30" productID="6291" />
+        <model model="TSU-GN2208 GP7/GP9/GP18" numOuts="8" numFns="30" productID="6290" />
+        <model model="TSU-GN2200 GP7/GP9 w/beacon" numOuts="6" numFns="30" productID="6200" />
+        <model model="TSU-GN2200 GP7/GP9 w/mars" numOuts="6" numFns="30" productID="6164" />
+        <model model="TSU-GN2208 GP9" numOuts="8" numFns="30" productID="6234" />
+        <model model="TSU-GN2208 GP9 6" numOuts="8" numFns="30" productID="6269" />
+        <model model="TSU-GN2208 GP9/18" numOuts="8" numFns="30" productID="6334" />
+        <model model="TSU-GN2200 GP9 w/beacon" numOuts="6" numFns="30" productID="6171" />
+        <model model="TSU-GN2200 GP9 w/beacon2" numOuts="6" numFns="30" productID="6172" />
+        <model model="TSU-GN2200 GP9 w/beacon3" numOuts="6" numFns="30" productID="6214" />
+        <model model="TSU-GN2208 GP9 w/beacon" numOuts="8" numFns="30" productID="6233" />
+        <model model="TSU-GN2200 GP9 w/DB" numOuts="6" numFns="30" productID="6148" />
+        <model model="TSU-GN2200 GP9 w/DB,beacon" numOuts="6" numFns="30" productID="6213" />
+        <model model="TSU-GN2200 GP9 w/DB,gyra" numOuts="6" numFns="30" productID="6170" />
+        <model model="TSU-GN2208 GP9 w/DB,gyra" numOuts="8" numFns="30" productID="6235" />
+        <model model="TSU-GN2200 GP9 w/mars" numOuts="6" numFns="30" productID="6163" />
+        <model model="TSU-GN2208 GP9B" numOuts="8" numFns="30" productID="6237" />
+        <model model="TSU-GN2208 GP18" numOuts="8" numFns="30" productID="6354" />
+        <model model="TSU-GN2208 GP18 25" numOuts="8" numFns="30" productID="6350" />
+        <model model="TSU-GN2208 GP15-1 27" numOuts="8" numFns="30" productID="6465" />
+        <model model="TSU-GN2208 GP15-1 28" numOuts="8" numFns="30" productID="6466" />
+        <model model="TSU-GN2200 GP15-1 w/beacon" numOuts="6" numFns="30" productID="6174" />
+        <model model="TSU-GN2208 GP15-1 w/beacon" numOuts="8" numFns="30" productID="6362" />
+        <model model="TSU-GN2200 GP15-1 w/beacon2" numOuts="6" numFns="30" productID="6175" />
+        <model model="TSU-GN2200 GP15-1 w/ditch" numOuts="6" numFns="30" productID="6176" />
+        <model model="TSU-GN2200 GP15T" numOuts="6" numFns="30" productID="6173" />
+        <model model="TSU-GN2208 GP15T 5" numOuts="8" numFns="30" productID="6461" />
+        <model model="TSU-GN2208 GP15T 6" numOuts="8" numFns="30" productID="6462" />
+        <model model="TSU-GN2208 GP15T 7" numOuts="8" numFns="30" productID="6463" />
+        <model model="TSU-GN2208 GP15T 8" numOuts="8" numFns="30" productID="6464" />
+        <model model="TSU-GN2200 GP38-2" numOuts="6" numFns="30" productID="6152" />
+        <model model="TSU-GN2200 GP38-2 2" numOuts="6" numFns="30" productID="6220" />
+        <model model="TSU-GN2208 GP38-2 4" numOuts="8" numFns="30" productID="6306" />
+        <model model="TSU-GN2208 GP38-2 7" numOuts="8" numFns="30" productID="6307" />
+        <model model="TSU-GN2208 GP38-2 13" numOuts="8" numFns="30" productID="6308" />
+        <model model="TSU-GN2208 GP38-2 14" numOuts="8" numFns="30" productID="6309" />
+        <model model="TSU-GN2200 GP38-2 w/ beacon/strobe" numOuts="6" numFns="30" productID="6153" />
+        <model model="TSU-GN2200 GP38-2 w/DB" numOuts="6" numFns="30" productID="6216" />
+        <model model="TSU-GN2200 GP38-2 w/DB2" numOuts="6" numFns="30" productID="6218" />
+        <model model="TSU-GN2200 GP38-2 w/DB/beacon" numOuts="6" numFns="30" productID="6217" />
+        <model model="TSU-GN2200 GP38-2 w/DB/beacon2" numOuts="6" numFns="30" productID="6219" />
+        <model model="TSU-GN2200 GP38-2 w/ditch" numOuts="6" numFns="30" productID="6221" />
+        <model model="TSU-GN2200 GP38-2 w/srobe" numOuts="6" numFns="30" productID="6228" />
+        <model model="TSU-GN2208 GP38-2 w/ditch" numOuts="8" numFns="30" productID="6295" />
+        <model model="TSU-GN2208 GP38-2 w/gyra" numOuts="8" numFns="30" productID="6294" />
+        <model model="TSU-GN2208 GP38-2 w/srobe" numOuts="8" numFns="30" productID="6296" />
+        <model model="TSU-GN2208 GP38-2W" numOuts="8" numFns="30" productID="6293" />
+        <model model="TSU-GN2200 GP39-2" numOuts="6" numFns="30" productID="6204" />
+        <model model="TSU-GN2208 GP39-2 1" numOuts="8" numFns="30" productID="6316" />
+        <model model="TSU-GN2208 GP39-2 2" numOuts="8" numFns="30" productID="6317" />
+        <model model="TSU-GN2208 GP39-2 4" numOuts="8" numFns="30" productID="6376" />
+        <model model="TSU-GN2200 GP39-2 w/ beacon/strobe1" numOuts="6" numFns="30" productID="6205" />
+        <model model="TSU-GN2200 GP39-2 w/ beacon/strobe2" numOuts="6" numFns="30" productID="6206" />
+        <model model="TSU-GN2200 GP39-2 w/ beacon/strobe3" numOuts="6" numFns="30" productID="6207" />
+        <model model="TSU-GN2200 GP39-2 w/ strobe" numOuts="6" numFns="30" productID="6208" />
+        <model model="TSU-GN2208 GP39X/GP49" numOuts="8" numFns="30" productID="6305" />
+        <model model="TSU-GN2208 GP40-2 2" numOuts="8" numFns="30" productID="6345" />
+        <model model="TSU-GN2208 GP40-2 5" numOuts="8" numFns="30" productID="6346" />
+        <model model="TSU-GN2208 GP40-2 6" numOuts="8" numFns="30" productID="6300" />
+        <model model="TSU-GN2200 GP40-2 w/DB" numOuts="6" numFns="30" productID="6225" />
+        <model model="TSU-GN2200 GP40-2 w/DB,beacon" numOuts="6" numFns="30" productID="6224" />
+        <model model="TSU-GN2200 GP40-2 w/DB,strobe" numOuts="6" numFns="30" productID="6223" />
+        <model model="TSU-GN2208 GP40-2 w/ditch" numOuts="8" numFns="30" productID="6301" />
+        <model model="TSU-GN2208 GP40-2 w/gyra" numOuts="8" numFns="30" productID="6243" />
+        <model model="TSU-GN2208 GP40-2 w/gyra2" numOuts="8" numFns="30" productID="6303" />
+        <model model="TSU-GN2208 GP40-2 w/strato" numOuts="8" numFns="30" productID="6302" />
+        <model model="TSU-GN2208 GP40-2 w/strato2" numOuts="8" numFns="30" productID="6324" />
+        <model model="TSU-GN2200 GP40-2L/W w/ditch" numOuts="6" numFns="30" productID="6161" />
+        <model model="TSU-GN2200 GP40-2L/W w/gyra" numOuts="6" numFns="30" productID="6162" />
+        <model model="TSU-GN2200 GP40-2L/W w/mars" numOuts="6" numFns="30" productID="6160" />
+        <model model="TSU-GN2208 GP40P-2" numOuts="8" numFns="30" productID="6244" />
+        <model model="TSU-GN2208 GP40P-2 3" numOuts="8" numFns="30" productID="6242" />
+        <model model="TSU-GN2208 GP50 1" numOuts="8" numFns="30" productID="6261" />
+        <model model="TSU-GN2208 GP50 2" numOuts="8" numFns="30" productID="6262" />
+        <model model="TSU-GN2208 GP50 4" numOuts="8" numFns="30" productID="6263" />
+        <model model="TSU-GN2208 GP50 5" numOuts="8" numFns="30" productID="6264" />
+        <model model="TSU-GN2208 GP50 6" numOuts="8" numFns="30" productID="6265" />
+        <model model="TSU-GN2208 GP50 7" numOuts="8" numFns="30" productID="6266" />
+        <model model="TSU-GN2208 GP50 8" numOuts="8" numFns="30" productID="6267" />
+        <model model="TSU-GN2208 GP50 9" numOuts="8" numFns="30" productID="6268" />
+        <model model="TSU-21PNEM8 MP15AC 3" numOuts="8" numFns="30" productID="6423" />
+        <model model="TSU-21PNEM8 SD40T-2" numOuts="8" numFns="30" productID="6453" />
+        <model model="TSU-GN2200 SDP40F w/gyra" numOuts="6" numFns="30" productID="6189" />
+        <model model="TSU-GN2208 SDP40F w/gyra" numOuts="8" numFns="30" productID="6229" />
+        <model model="TSU-GN2200 SDF40-2 w/beacon" numOuts="6" numFns="30" productID="6190" />
+        <model model="TSU-GN2208 SDF40-2 w/beacon" numOuts="8" numFns="30" productID="6230" />
+        <model model="TSU-GN2208 SDF40-2 w/beacon 2" numOuts="8" numFns="30" productID="6304" />
+        <model model="TSU-GN2200 SDP45/F45 w/beacon" numOuts="6" numFns="30" productID="6196" />
+        <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45" numOuts="8" numFns="30" productID="6288" />
+        <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45 1" numOuts="8" numFns="30" productID="6287" />
+        <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45 4" numOuts="8" numFns="30" productID="6289" />
+        <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45 5" numOuts="8" numFns="30" productID="6406" />
+        <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45 9" numOuts="8" numFns="30" productID="6403" />
+        <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45 10" numOuts="8" numFns="30" productID="6404" />
+        <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45 11" numOuts="8" numFns="30" productID="6405" />
+        <model model="TSU-GN2208 SD60E" numOuts="8" numFns="30" productID="6211" />
+        <model model="TSU-GN2208 SD60E 2" numOuts="8" numFns="30" productID="6260" />
+        <model model="TSU-GN2200 SD60I" numOuts="6" numFns="30" productID="6180" />
+        <model model="TSU-GN2200 SD60I w/ditch" numOuts="6" numFns="30" productID="6179" />
+        <model model="TSU-GN2200 SD60M" numOuts="6" numFns="30" productID="6178" />
+        <model model="TSU-GN2200 SD60M w/ditch" numOuts="6" numFns="30" productID="6181" />
+        <model model="TSU-GN2200 SD60M 3 win" numOuts="8" numFns="30" productID="6348" />
+        <model model="TSU-GN2200 SD60M 4" numOuts="8" numFns="30" productID="6312" />
+        <model model="TSU-GN2200 SD60M 8" numOuts="8" numFns="30" productID="6314" />
+        <model model="TSU-GN2200 SD60M 9" numOuts="8" numFns="30" productID="6349" />
+        <model model="TSU-GN2200 SD60M 10" numOuts="8" numFns="30" productID="6313" />
+        <model model="TSU-GN2200 SD70ACe" numOuts="6" numFns="30" productID="6167" />
+        <model model="TSU-GN2200 SD70ACe w/LED" numOuts="6" numFns="30" productID="6212" />
+        <model model="TSU-GN2208 SD70ACe w/LED 2" numOuts="8" numFns="30" productID="6248" />
+        <model model="TSU-GN2208 SD70ACe w/LED" numOuts="8" numFns="30" productID="6283" />
+        <model model="TSU-GN2200 SD70ACe w/ditch" numOuts="6" numFns="30" productID="6168" />
+        <model model="TSU-GN2208 SD70ACe w/ditch" numOuts="8" numFns="30" productID="6249" />
+        <model model="TSU-GN2208 SD70ACU" numOuts="8" numFns="30" productID="6390" />
+        <model model="TSU-GN2208 SD70ACU 13" numOuts="8" numFns="30" productID="6391" />
+        <model model="TSU-GN2208 SD70 1" numOuts="8" numFns="30" productID="6352" />
+        <model model="TSU-GN2208 SD70 3" numOuts="8" numFns="30" productID="6325" />
+        <model model="TSU-GN2208 SD70 4" numOuts="8" numFns="30" productID="6273" />
+        <model model="TSU-GN2208 SD70 8" numOuts="8" numFns="30" productID="6326" />
+        <model model="TSU-GN2208 SD70 9" numOuts="8" numFns="30" productID="6327" />
+        <model model="TSU-GN2208 SD70 10" numOuts="8" numFns="30" productID="6353" />
+        <model model="TSU-GN2200 SD70M/75M" numOuts="6" numFns="30" productID="6154" />
+        <model model="TSU-GN2200 SD70M w/ditch" numOuts="6" numFns="30" productID="6155" />
+        <model model="TSU-GN2208 SD75M" numOuts="8" numFns="30" productID="6274" />
+        <model model="TSU-GN2208 SD80MAC" numOuts="8" numFns="30" productID="6311" />
+        <model model="TSU-GN2208 SD80MAC 1" numOuts="8" numFns="30" productID="6310" />
+        <model model="TSU-GN2208 SD9043MAC 14" numOuts="8" numFns="30" productID="6410" />
+        <model model="TSU-GN2208 SD90MAC-H" numOuts="8" numFns="30" productID="6284" />
+        <model model="TSU-GN2208 AC4400CW 10" numOuts="8" numFns="30" productID="6448" />
+        <model model="TSU-GN2208 AC4400CW 11" numOuts="8" numFns="30" productID="6449" />
+        <model model="TSU-GN2208 AC4400CW 12" numOuts="8" numFns="30" productID="6450" />
+        <model model="TSU-GN2208 Dash 9-44CW 1" numOuts="8" numFns="30" productID="6383" />
+        <model model="TSU-GN2208 Dash 9-44CW 2" numOuts="8" numFns="30" productID="6339" />
+        <model model="TSU-GN2208 Dash 9-44CW 3" numOuts="8" numFns="30" productID="6340" />
+        <model model="TSU-GN2208 Dash 9-44CW" numOuts="8" numFns="30" productID="6341" />
+        <model model="TSU-GN2208 Dash 9-44CW 5" numOuts="8" numFns="30" productID="6342" />
+        <model model="TSU-GN2208 Dash 9-44CW 6" numOuts="8" numFns="30" productID="6343" />
+        <model model="TSU-GN2208 Dash 9-44CW 7" numOuts="8" numFns="30" productID="6398" />
+        <model model="TSU-GN2208 Dash 9-44CW 8" numOuts="8" numFns="30" productID="6399" />
+        <model model="TSU-GN2208 Dash 9-44CW 9" numOuts="8" numFns="30" productID="6401" />
+        <model model="TSU-GN2200 ES40DC w/ditch" numOuts="6" numFns="30" productID="6192" />
+        <model model="TSU-GN2208 ES40DC w/ditch" numOuts="8" numFns="30" productID="6297" />
+        <model model="TSU-GN2208 ES44AC" numOuts="8" numFns="30" productID="6231" />
+        <model model="TSU-GN2208 ES44AC 2" numOuts="8" numFns="30" productID="6232" />
+        <model model="TSU-GN2200 ES44DC" numOuts="6" numFns="30" productID="6191" />
+        <model model="TSU-GN2200 ES44DC w/ditch" numOuts="6" numFns="30" productID="6193" />
+        <model model="TSU-GN2208 ES44DC w/ditch" numOuts="8" numFns="30" productID="6298" />
+        <model model="TSU-GN2208 P42" numOuts="8" numFns="30" productID="6364" />
+        <model model="TSU-GN2208 P42 2" numOuts="8" numFns="30" productID="6285" />
+        <model model="TSU-GN2208 U50 1" numOuts="8" numFns="30" productID="6456" />
+        <model model="TSU-GN2208 U50 2" numOuts="8" numFns="30" productID="6457" />
         <output name="3" label="  FX3  " />
         <output name="4" label="  FX4  " />
         <output name="5" label="Airhorn| ">
@@ -17069,12 +16935,12 @@
         </functionlabels>
       </family>
       <family name="Tsunami2 Electric" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71" file="SoundTraxx_Tsu2_Electric.xml">
-        <model model="TSU-1100 Electric" numOuts="4" numFns="30" productID="296" />
-        <model model="TSU-2200 Electric" numOuts="6" numFns="30" productID="297" />
-        <model model="TSU-21PNEM Electric" numOuts="6" numFns="30" productID="298" />
-        <model model="TSU-21PNEM8 Electric" numOuts="8" numFns="30" productID="330" />
-        <model model="TSU-4400 Electric" numOuts="6" numFns="30" productID="299" />
-        <model model="TSU-N18 Electric" numOuts="6" numFns="30" productID="338" />
+        <model model="TSU-1100 Electric" numOuts="4" numFns="30" productID="2088" />
+        <model model="TSU-2200 Electric" numOuts="6" numFns="30" productID="2089" />
+        <model model="TSU-21PNEM Electric" numOuts="6" numFns="30" productID="2090" />
+        <model model="TSU-21PNEM8 Electric" numOuts="8" numFns="30" productID="2122" />
+        <model model="TSU-4400 Electric" numOuts="6" numFns="30" productID="2091" />
+        <model model="TSU-N18 Electric" numOuts="6" numFns="30" productID="2130" />
         <output name="3" label="  FX3  " />
         <output name="4" label="  FX4  " />
         <output name="5" label="Airhorn| ">
@@ -17136,20 +17002,20 @@
         </functionlabels>
       </family>
       <family name="Tsunami2 Steam" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71" file="SoundTraxx_Tsu2_Steam.xml">
-        <model model="TSU-1100 Steam" numOuts="4" numFns="30" productID="272" />
-        <model model="TSU-1100 Steam-2" numOuts="4" numFns="30" productID="315" />
-        <model model="TSU-1100 Big Steam" numOuts="4" numFns="30" productID="339" />
-        <model model="TSU-2200 Steam" numOuts="6" numFns="30" productID="273" />
-        <model model="TSU-2200 Steam-2" numOuts="6" numFns="30" productID="316" />
-        <model model="TSU-2200 Big Steam" numOuts="6" numFns="30" productID="340" />
-        <model model="TSU-21PNEM Steam" numOuts="6" numFns="30" productID="274" />
-        <model model="TSU-21PNEM Steam-2" numOuts="6" numFns="30" productID="317" />
-        <model model="TSU-21PNEM8 Steam-2" numOuts="8" numFns="30" productID="324" />
-        <model model="TSU-21PNEM8 Big Steam" numOuts="8" numFns="30" productID="341" />
-        <model model="TSU-4400 Steam" numOuts="6" numFns="30" productID="275" />
-        <model model="TSU-4400 Steam-2" numOuts="6" numFns="30" productID="318" />
-        <model model="TSU-BH2 Steam-2" numOuts="8" numFns="30" productID="342" />
-        <model model="TSU-N18 Steam-2" numOuts="6" numFns="30" productID="332" />
+        <model model="TSU-1100 Steam" numOuts="4" numFns="30" productID="2064" />
+        <model model="TSU-1100 Steam-2" numOuts="4" numFns="30" productID="2107" />
+        <model model="TSU-1100 Big Steam" numOuts="4" numFns="30" productID="2131" />
+        <model model="TSU-2200 Steam" numOuts="6" numFns="30" productID="2065" />
+        <model model="TSU-2200 Steam-2" numOuts="6" numFns="30" productID="2108" />
+        <model model="TSU-2200 Big Steam" numOuts="6" numFns="30" productID="2132" />
+        <model model="TSU-21PNEM Steam" numOuts="6" numFns="30" productID="2066" />
+        <model model="TSU-21PNEM Steam-2" numOuts="6" numFns="30" productID="2109" />
+        <model model="TSU-21PNEM8 Steam-2" numOuts="8" numFns="30" productID="2116" />
+        <model model="TSU-21PNEM8 Big Steam" numOuts="8" numFns="30" productID="2133" />
+        <model model="TSU-4400 Steam" numOuts="6" numFns="30" productID="2067" />
+        <model model="TSU-4400 Steam-2" numOuts="6" numFns="30" productID="2110" />
+        <model model="TSU-BH2 Steam-2" numOuts="8" numFns="30" productID="2134" />
+        <model model="TSU-N18 Steam-2" numOuts="6" numFns="30" productID="2124" />
         <output name="3" label="  FX3  " />
         <output name="4" label="  FX4  " />
         <output name="5" label="Whistle| ">
@@ -17215,72 +17081,102 @@
         </functionlabels>
       </family>
       <family name="Tsunami2 Steam OEM Genesis" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71" file="SoundTraxx_Tsu2_Steam_OEM_Genesis.xml">
-        <model model="TSU-21PNEM Big Boy, HO" numOuts="6" numFns="30" productID="946" />
-        <output name="3" label="  FX3  " />
-        <output name="4" label="  FX4  " />
-        <output name="5" label="Whistle| ">
-          <label xml:lang="it">Fischio| </label>
-        </output>
-        <output name="6" label="Bell| ">
-          <label xml:lang="it">Campana| </label>
-        </output>
-        <output name="7" label="Dynamo| ">
-          <label xml:lang="it">Dynamo| </label>
-        </output>
-        <output name="8" label="Short|Whistle">
-          <label xml:lang="it">Breve|Tromba</label>
-        </output>
-        <output name="9" label="Cylinder|Cocks">
-          <label xml:lang="it">Cilindro|Cazzi</label>
-        </output>
-        <output name="10" label="Water|Stop">
-          <label xml:lang="it">Acqua|Stop</label>
-        </output>
-        <output name="11" label="Dimming| ">
-          <label xml:lang="it">Smorzam| </label>
-        </output>
-        <output name="12" label="Mute| ">
-          <label xml:lang="it">Silenzio| </label>
-        </output>
-        <output name="13" label="|" />
-        <!-- Not used for for this decoder -->
-        <output name="14" label="Brakes| " />
-        <output name="15" label="Coupler| ">
-          <label xml:lang="it">Accoppiatore| </label>
-        </output>
-        <model model="TSU-21PNEM Big Boy, N" numOuts="6" numFns="30" productID="983" />
-        <output name="3" label="  FX3  " />
-        <output name="4" label="  FX4  " />
-        <output name="5" label="Whistle| ">
-          <label xml:lang="it">Fischio| </label>
-        </output>
-        <output name="6" label="Bell| ">
-          <label xml:lang="it">Campana| </label>
-        </output>
-        <output name="7" label="Dynamo| ">
-          <label xml:lang="it">Dynamo| </label>
-        </output>
-        <output name="8" label="Short|Whistle">
-          <label xml:lang="it">Breve|Tromba</label>
-        </output>
-        <output name="9" label="Cylinder|Cocks">
-          <label xml:lang="it">Cilindro|Cazzi</label>
-        </output>
-        <output name="10" label="Water|Stop">
-          <label xml:lang="it">Acqua|Stop</label>
-        </output>
-        <output name="11" label="Dimming| ">
-          <label xml:lang="it">Smorzam| </label>
-        </output>
-        <output name="12" label="Mute| ">
-          <label xml:lang="it">Silenzio| </label>
-        </output>
-        <output name="13" label="|" />
-        <!-- Not used for for this decoder -->
-        <output name="14" label="Brakes| " />
-        <output name="15" label="Coupler| ">
-          <label xml:lang="it">Accoppiatore| </label>
-        </output>
+        <model model="TSU-21PNEM Big Boy, Challenger" numOuts="6" numFns="30" productID="6321">
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Whistle| " />
+          <output name="6" label="Bell| " />
+          <output name="7" label="Dynamo| " />
+          <output name="8" label="Short|Whistle" />
+          <output name="9" label="Cylinder|Cocks" />
+          <output name="10" label="Water|Stop" />
+          <output name="11" label="Dimming| " />
+          <output name="12" label="Mute| " />
+          <output name="13" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="14" label="Brakes| " />
+          <output name="15" label="Coupler| " />
+        </model>
+        <model model="TSU-21PNEM Big Boy, HO" numOuts="6" numFns="30" productID="6322">
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Whistle| " />
+          <output name="6" label="Bell| " />
+          <output name="7" label="Dynamo| " />
+          <output name="8" label="Short|Whistle" />
+          <output name="9" label="Cylinder|Cocks" />
+          <output name="10" label="Water|Stop" />
+          <output name="11" label="Dimming| " />
+          <output name="12" label="Mute| " />
+          <output name="13" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="14" label="Brakes| " />
+          <output name="15" label="Coupler| " />
+        </model>
+        <model model="TSU-21PNEM Big Boy, N" numOuts="6" numFns="30" productID="6359">
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Whistle| " />
+          <output name="6" label="Bell| " />
+          <output name="7" label="Dynamo| " />
+          <output name="8" label="Short|Whistle" />
+          <output name="9" label="Cylinder|Cocks" />
+          <output name="10" label="Water|Stop" />
+          <output name="11" label="Dimming| " />
+          <output name="12" label="Mute| " />
+          <output name="13" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="14" label="Brakes| " />
+          <output name="15" label="Coupler| " />
+        </model>
+        <model model="TSU-21PNEM8 MT-4" numOuts="8" numFns="30" productID="6412">
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Whistle| " />
+          <output name="6" label="Bell| " />
+          <output name="7" label="Dynamo| " />
+          <output name="8" label="Short|Whistle" />
+          <output name="9" label="Cylinder|Cocks" />
+          <output name="10" label="Water|Stop" />
+          <output name="11" label="Dimming| " />
+          <output name="12" label="Mute| " />
+          <output name="13" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="14" label="Brakes| " />
+          <output name="15" label="Coupler| " />
+        </model>
+        <model model="TSU-21PNEM8 FEF-2" numOuts="8" numFns="30" productID="6413">
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Whistle| " />
+          <output name="6" label="Bell| " />
+          <output name="7" label="Dynamo| " />
+          <output name="8" label="Short|Whistle" />
+          <output name="9" label="Cylinder|Cocks" />
+          <output name="10" label="Water|Stop" />
+          <output name="11" label="Dimming| " />
+          <output name="12" label="Mute| " />
+          <output name="13" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="14" label="Brakes| " />
+          <output name="15" label="Coupler| " />
+        </model>
+        <model model="TSU-21PNEM8 FEF-3" numOuts="8" numFns="30" productID="6414">
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Whistle| " />
+          <output name="6" label="Bell| " />
+          <output name="7" label="Dynamo| " />
+          <output name="8" label="Short|Whistle" />
+          <output name="9" label="Cylinder|Cocks" />
+          <output name="10" label="Water|Stop" />
+          <output name="11" label="Dimming| " />
+          <output name="12" label="Mute| " />
+          <output name="13" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="14" label="Brakes| " />
+          <output name="15" label="Coupler| " />
+        </model>
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
