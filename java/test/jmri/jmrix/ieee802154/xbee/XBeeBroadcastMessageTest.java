@@ -1,6 +1,5 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import com.digi.xbee.api.packet.GenericXBeePacket;
 import jmri.jmrix.AbstractMessageTestBase;
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
@@ -8,7 +7,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests for the XBeeBroadcastMessage class
  *
@@ -32,6 +30,7 @@ class XBeeBroadcastMessageTest extends AbstractMessageTestBase {
         m = XBeeBroadcastMessage.getTX16BroadcastMessage(testPayload);
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = null;
