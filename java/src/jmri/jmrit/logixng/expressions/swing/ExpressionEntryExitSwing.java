@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.expressions.swing;
 
+import java.awt.Component;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
@@ -79,6 +80,8 @@ public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
             _stateComboBox.addItem(e);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
+
+        _stateComboBox.setRenderer(new ComboBoxRenderer(_stateComboBox.getRenderer()));
 
         _panelEntryExitStateDirect.add(_stateComboBox);
 
@@ -198,6 +201,26 @@ public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
     public void dispose() {
     }
 
+
+    private static class ComboBoxRenderer<EntryExitState> extends JLabel implements ListCellRenderer<EntryExitState> {
+
+        private final JSeparator _separator = new JSeparator(JSeparator.HORIZONTAL);
+        private final ListCellRenderer<Object> _old;
+
+        private ComboBoxRenderer(ListCellRenderer<Object> old) {
+            this._old = old;
+        }
+
+        @Override
+        public Component getListCellRendererComponent(JList<? extends EntryExitState> list,
+                EntryExitState value, int index, boolean isSelected, boolean cellHasFocus) {
+            if (value.toString() == null) {
+                return _separator;
+            } else {
+                return _old.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            }
+        }
+    }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionEntryExitSwing.class);
 
