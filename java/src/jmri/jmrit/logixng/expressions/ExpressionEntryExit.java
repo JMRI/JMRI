@@ -283,9 +283,9 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
         Inactive(0x04, Bundle.getMessage("EntryExitStateInactive")),
         Active(0x02, Bundle.getMessage("EntryExitStateActive")),
         Other(-1, Bundle.getMessage("EntryExitOtherStatus")),
-        Separator1(-1, null),
+        Separator1(-1, Base.SEPARATOR),
         Reverse(-1, Bundle.getMessage("EntryExitReverse")),
-        Separator2(-1, null),
+        Separator2(-1, Base.SEPARATOR),
         BiDirection(-1, Bundle.getMessage("EntryExitBiDirection"));
 
         private final int _id;

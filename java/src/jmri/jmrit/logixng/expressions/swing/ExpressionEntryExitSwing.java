@@ -214,7 +214,7 @@ public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
         @Override
         public Component getListCellRendererComponent(JList<? extends E> list,
                 E value, int index, boolean isSelected, boolean cellHasFocus) {
-            if (value.toString() == null) {
+            if (Base.SEPARATOR.equals(value.toString())) {
                 return _separator;
             } else {
                 return _old.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
