@@ -183,9 +183,9 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
                 }
             case Reversed:
                 if (_is_IsNot == Is_IsNot_Enum.Is) {
-                    return destinationPoints.isReverse();
+                    return destinationPoints.isReversed();
                 } else {
-                    return !destinationPoints.isReverse();
+                    return !destinationPoints.isReversed();
                 }
             case BiDirection:
                 if (_is_IsNot == Is_IsNot_Enum.Is) {
