@@ -205,9 +205,9 @@ public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
     private static class ComboBoxRenderer<EntryExitState> extends JLabel implements ListCellRenderer<EntryExitState> {
 
         private final JSeparator _separator = new JSeparator(JSeparator.HORIZONTAL);
-        private final ListCellRenderer<Object> _old;
+        private final ListCellRenderer<EntryExitState> _old;
 
-        private ComboBoxRenderer(ListCellRenderer<Object> old) {
+        private ComboBoxRenderer(ListCellRenderer<EntryExitState> old) {
             this._old = old;
         }
 
