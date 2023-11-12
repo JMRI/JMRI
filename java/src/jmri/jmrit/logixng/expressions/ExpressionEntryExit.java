@@ -171,11 +171,30 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
             checkEntryExitState = EntryExitState.valueOf(getNewState());
         }
 
-        EntryExitState currentEntryExitState = EntryExitState.get(destinationPoints.getState());
-        if (_is_IsNot == Is_IsNot_Enum.Is) {
-            return currentEntryExitState == checkEntryExitState;
-        } else {
-            return currentEntryExitState != checkEntryExitState;
+        switch (checkEntryExitState) {
+            case Inactive:
+            case Active:
+            case Other:
+                EntryExitState currentEntryExitState = EntryExitState.get(destinationPoints.getState());
+                if (_is_IsNot == Is_IsNot_Enum.Is) {
+                    return currentEntryExitState == checkEntryExitState;
+                } else {
+                    return currentEntryExitState != checkEntryExitState;
+                }
+            case IsReverse:
+                if (_is_IsNot == Is_IsNot_Enum.Is) {
+                    return destinationPoints.isReverse();
+                } else {
+                    return !destinationPoints.isReverse();
+                }
+            case IsBiDirection:
+                if (_is_IsNot == Is_IsNot_Enum.Is) {
+                    return !destinationPoints.isUniDirection();
+                } else {
+                    return destinationPoints.isUniDirection();
+                }
+            default:
+                throw new IllegalArgumentException("checkEntryExitState has unknown value: "+checkEntryExitState.name());
         }
     }
 
@@ -263,7 +282,9 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
     public enum EntryExitState {
         Inactive(0x04, Bundle.getMessage("EntryExitStateInactive")),
         Active(0x02, Bundle.getMessage("EntryExitStateActive")),
-        Other(-1, Bundle.getMessage("EntryExitOtherStatus"));
+        Other(-1, Bundle.getMessage("EntryExitOtherStatus")),
+        IsReverse(-1, Bundle.getMessage("EntryExitIsReverse")),
+        IsBiDirection(-1, Bundle.getMessage("EntryExitIsBiDirection"));
 
         private final int _id;
         private final String _text;
