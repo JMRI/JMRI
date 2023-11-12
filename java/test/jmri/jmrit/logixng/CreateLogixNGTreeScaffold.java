@@ -3709,7 +3709,7 @@ public class CreateLogixNGTreeScaffold {
 
         expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setComment("A comment");
-        expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Reverse);
+        expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Reversed);
         expressionEntryExit.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
         expressionEntryExit.getSelectNamedBean().setFormula("\"IT\"+index");
         expressionEntryExit.getSelectNamedBean().setLocalVariable("index");

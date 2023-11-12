@@ -181,7 +181,7 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
                 } else {
                     return currentEntryExitState != checkEntryExitState;
                 }
-            case Reverse:
+            case Reversed:
                 if (_is_IsNot == Is_IsNot_Enum.Is) {
                     return destinationPoints.isReverse();
                 } else {
@@ -284,7 +284,7 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
         Active(0x02, Bundle.getMessage("EntryExitStateActive")),
         Other(-1, Bundle.getMessage("EntryExitOtherStatus")),
         Separator1(-1, Base.SEPARATOR),
-        Reverse(-1, Bundle.getMessage("EntryExitReverse")),
+        Reversed(-1, Bundle.getMessage("EntryExitReversed")),
         Separator2(-1, Base.SEPARATOR),
         BiDirection(-1, Bundle.getMessage("EntryExitBiDirection"));
 
