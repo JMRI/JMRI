@@ -1314,10 +1314,10 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         setActiveEntryExit(boo, false);
     }
 
-    protected void setActiveEntryExit(boolean boo, boolean reverse) {
+    protected void setActiveEntryExit(boolean boo, boolean reversed) {
         int oldvalue = getState();
         activeEntryExit = boo;
-        activeEntryExitReversed = reverse;
+        activeEntryExitReversed = reversed;
         src.setMenuEnabled(boo);
         firePropertyChange("active", oldvalue, getState());  // NOI18N
     }
