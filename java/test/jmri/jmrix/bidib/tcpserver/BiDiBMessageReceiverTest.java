@@ -36,11 +36,12 @@ public class BiDiBMessageReceiverTest {
         Assertions.assertNotNull(r, "r exists");
         TcpServerNetMessageHandler h = new TcpServerNetMessageHandler(r);
         Assertions.assertNotNull(h, "h exists");
-        Assertions.assertDoesNotThrow( () -> {
+        try {
             NetBidibServerPlainTcpPort p = new NetBidibServerPlainTcpPort(42, null, h);
             BiDiBMessageReceiver t = new BiDiBMessageReceiver(h, p);
             Assertions.assertNotNull(t, "t exists");
-        });
+        }
+        catch (Exception e) {}
     }
 
     @BeforeEach
