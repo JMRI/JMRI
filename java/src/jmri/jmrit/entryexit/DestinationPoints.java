@@ -1298,8 +1298,12 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         return activeEntryExit;
     }
 
-    public boolean isReversed() {
-        return activeEntryExitReversed;
+    public boolean isActiveAndForward() {
+        return activeEntryExit && !activeEntryExitReversed;
+    }
+
+    public boolean isActiveAndReversed() {
+        return activeEntryExit && activeEntryExitReversed;
     }
 
     public boolean isUniDirection() {

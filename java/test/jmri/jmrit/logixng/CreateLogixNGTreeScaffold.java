@@ -3709,7 +3709,7 @@ public class CreateLogixNGTreeScaffold {
 
         expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setComment("A comment");
-        expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Reversed);
+        expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.ActiveForward);
         expressionEntryExit.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
         expressionEntryExit.getSelectNamedBean().setFormula("\"IT\"+index");
         expressionEntryExit.getSelectNamedBean().setLocalVariable("index");
@@ -3719,6 +3719,12 @@ public class CreateLogixNGTreeScaffold {
         expressionEntryExit.setStateFormula("\"IT\"+index2");
         expressionEntryExit.setStateLocalVariable("index2");
         expressionEntryExit.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionEntryExit);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
+        expressionEntryExit.setComment("A comment");
+        expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.ActiveReversed);
         maleSocket = digitalExpressionManager.registerExpression(expressionEntryExit);
         and.getChild(indexExpr++).connect(maleSocket);
 

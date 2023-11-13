@@ -62,7 +62,8 @@
                     <xs:enumeration value="Inactive"/>
                     <xs:enumeration value="Active"/>
                     <xs:enumeration value="Other"/>
-                    <xs:enumeration value="Reversed"/>
+                    <xs:enumeration value="ActiveForward"/>
+                    <xs:enumeration value="ActiveReversed"/>
                     <xs:enumeration value="BiDirection"/>
                   </xs:restriction>
                 </xs:simpleType>
