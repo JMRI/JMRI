@@ -10,9 +10,9 @@ import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
  *
  * @author Andrew Crosland Copyright (C) 2023
  */
-public class piLccSerialDriverAdapter extends GcSerialDriverAdapter {
+public class PiLccSerialDriverAdapter extends GcSerialDriverAdapter {
 
-    public piLccSerialDriverAdapter() {
+    public PiLccSerialDriverAdapter() {
         super("M", purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_IN + purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT);
     }
 

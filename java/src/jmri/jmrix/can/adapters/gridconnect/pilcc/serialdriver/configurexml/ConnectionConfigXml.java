@@ -27,7 +27,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     @Override
     protected void getInstance() {
-        adapter = new piLccSerialDriverAdapter();
+        adapter = new PiLccSerialDriverAdapter();
     }
 
     @Override
