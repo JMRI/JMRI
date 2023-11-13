@@ -1,10 +1,8 @@
 package jmri.jmrix.bidib.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the BiDiBReporterManagerXml class
@@ -12,19 +10,21 @@ import org.junit.Test;
  * @author  Eckart Meyer  Copyright (C) 2020
  */
 public class BiDiBReporterManagerXmlTest {
-    
+
     @Test
     public void testCtor(){
-      Assert.assertNotNull("BiDiBReporterManagerXml constructor",new BiDiBReporterManagerXml());
+        BiDiBReporterManagerXml t = new BiDiBReporterManagerXml();
+        Assertions.assertNotNull(t, "BiDiBReporterManagerXml constructor");
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
-    
-    @After
+
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
 }
