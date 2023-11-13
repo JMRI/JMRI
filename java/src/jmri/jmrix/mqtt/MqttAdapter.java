@@ -161,8 +161,9 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             }
 
             // generate a unique client ID based on the network ID and the system prefix of the MQTT connection.
-            String clientID = jmri.util.node.NodeIdentity.networkIdentity() + getSystemPrefix();
-
+            String clientID = jmri.InstanceManager.getDefault(jmri.web.server.WebServerPreferences.class).getRailroadName() + " "
+                                + getSystemPrefix() + " " + jmri.util.node.NodeIdentity.networkIdentity();
+            
             // ensure that only valid characters are included in the client ID
             clientID = clientID.replaceAll("[^A-Za-z0-9]", "");
             //ensure the length of the client ID doesn't exceed the guaranteed acceptable length of 23
