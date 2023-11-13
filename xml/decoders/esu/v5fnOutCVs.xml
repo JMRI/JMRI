@@ -1844,7 +1844,7 @@
             <decVal max="127"/>
         </variable>
         <!-- exclude AUX5 to AUX18 -->
-        <variables exclude="LokPilot 5 micro,LokPilot 5 micro DCC">
+        <variables exclude="LokPilot 5 micro,LokPilot 5 micro DCC,LokSound 5 micro DCC Direct Atlas Legacy">
             <!-- AUX5 Mode -->
             <variable label="AUX5 Mode" CV="16.0.307" default="1" item="ESU FnOut A5 Mode">
                 <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
@@ -6257,1229 +6257,1234 @@
             </variables>
         </variables>
     </variables>
-    <!-- Headlight [2] Mode -->
-    <variable label="Headlight [2] Mode" CV="16.0.419" default="1" item="ESU FnOut HL-2 Mode">
-        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
-        <!--label xml:lang="de">Licht vorn - 2</label-->
-    </variable>
-    <variable label="Function Switch On Delay" CV="16.0.420" default="0" item="ESU FnOut HL-2 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>27</value>
-        </qualifier>
-        <decVal max="15"/>
-        <label xml:lang="de">Verzögerung beim Einschalten</label>
-    </variable>
-    <variable label="Function Switch Off Delay" CV="16.0.420" default="0" mask="VVVVXXXX" item="ESU FnOut HL-2 Slider 2" tooltip="Units = 0.4 sec">
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>27</value>
-        </qualifier>
-        <decVal max="15"/>
-        <label xml:lang="de">Verzögerung beim Ausschalten</label>
-    </variable>
-    <variable label="Function Auto Switch Off" CV="16.0.421" default="0" item="ESU FnOut HL-2 Slider 3" tooltip="Units = 0.4 sec">
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>27</value>
-        </qualifier>
-        <decVal/>
-        <label xml:lang="de">Ausgang automatisch Ausschalten</label>
-    </variable>
-    <variable item="Brightness CV422" label="Brightness CV" CV="16.0.422" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
-        <decVal/>
-    </variable>
-    <variable label="Brightness" CV="16.0.422" default="31" item="ESU FnOut HL-2 Slider 5" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>le</relation>
-            <value>18</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Helligkeit</label>
-    </variable>
-    <variable label="Mode" CV="16.0.422" default="0" item="ESU FnOut HL-2 Option 1" mask="XXXXXXXV">
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>22</value>
-        </qualifier>
-        <enumVal>
-            <enumChoice choice="Heating control">
-                <choice>Heating control</choice>
-                <choice xml:lang="de">Heizungssteuerung</choice>
-            </enumChoice>
-            <enumChoice choice="Fan control">
-                <choice>Fan control</choice>
-                <choice xml:lang="de">Lüftersteuerung</choice>
-            </enumChoice>
-        </enumVal>
-        <label xml:lang="de">Modus</label>
-    </variable>
-    <variable label="Coupler Force" CV="16.0.422" default="31" item="ESU FnOut HL-2 Slider 7" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>ge</relation>
-            <value>28</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>29</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>30</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>31</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>32</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>le</relation>
-            <value>33</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Stärke des Kupplers</label>
-    </variable>
-    <variable label="Fan Speed" CV="16.0.422" default="31" item="ESU FnOut HL-2 Slider 11" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>23</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Geschwindigkeit</label>
-    </variable>
-    <variable label="Standing heat" CV="16.0.422" default="31" item="ESU FnOut HL-2 Slider 14" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>24</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Heizstufe im Stand</label>
-    </variable>
-    <variable label="Chuff power" CV="16.0.422" default="31" item="ESU FnOut HL-2 Slider 8" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>25</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Dampfstoßstärke</label>
-    </variable>
-    <variable item="Special Function CV423" label="Special Function CV 1" CV="16.0.423" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <decVal/>
-    </variable>
-    <variable label="Fan Acceleration rate" CV="16.0.423" default="0" item="ESU FnOut HL-2 Slider 12" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>23</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Beschleunigungszeit</label>
-    </variable>
-    <variable label="Minimum driving heat" CV="16.0.423" default="0" item="ESU FnOut HL-2 Slider 15" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>24</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Minimale Heizstufe bei Fahrt</label>
-    </variable>
-    <variable label="Fan power" CV="16.0.423" default="0" item="ESU FnOut HL-2 Slider 9" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>25</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Stäke des Bläsers</label>
-    </variable>
-    <variable label="Phase Reverse" CV="16.0.423" default="0" item="ESU FnOut HL-2 Check 6" mask="XXXXXXXV">
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label xml:lang="de">Phase tauschen</label>
-    </variable>
-    <variable label="Grade Crossing" CV="16.0.423" default="0" item="ESU FnOut HL-2 Check 1" mask="XXXXXXVX">
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    </variable>
-    <variable label="Rule 17 Fwd" CV="16.0.423" default="0" item="ESU FnOut HL-2 Check 2" mask="XXXXXVXX">
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label xml:lang="de">Rule 17 vorwärts</label>
-    </variable>
-    <variable label="Rule 17 Rev" CV="16.0.423" default="0" item="ESU FnOut HL-2 Check 3" mask="XXXXVXXX">
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label xml:lang="de">Rule 17 rückwärts</label>
-    </variable>
-    <variable label="Dimmer" CV="16.0.423" default="0" item="ESU FnOut HL-2 Check 4" mask="XXXVXXXX">
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label xml:lang="de">Abdimmen</label>
-    </variable>
-    <variable label="LED Mode" CV="16.0.423" default="0" item="ESU FnOut HL-2 Check 5" mask="VXXXXXXX">
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label xml:lang="de">LED Modus</label>
-    </variable>
-    <variable item="Special Function CV424" label="Special Function CV 2" CV="16.0.424" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <decVal/>
-    </variable>
-    <variable label="Fan Decceleration rate" CV="16.0.424" default="0" item="ESU FnOut HL-2 Slider 13" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>23</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Bremszeit</label>
-    </variable>
-    <variable label="Maximum driving heat" CV="16.0.424" default="0" item="ESU FnOut HL-2 Slider 16" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>24</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Maximale Heizstufe bei Fahrt</label>
-    </variable>
-    <variable label="Timeout" CV="16.0.424" default="0" item="ESU FnOut HL-2 Slider 10" tooltip="Units = 0.25 sec">
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>25</value>
-        </qualifier>
-        <decVal/>
-    </variable>
-    <variable label="Startup Time" CV="16.0.424" default="0" item="ESU FnOut HL-2 Slider 6">
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>ge</relation>
-            <value>16</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>le</relation>
-            <value>17</value>
-        </qualifier>
-        <decVal/>
-        <label xml:lang="de">Startzeit</label>
-    </variable>
-    <variable label="Level" CV="16.0.424" default="0" item="ESU FnOut HL-2 Slider 20" mask="XVVVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut HL-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>19</value>
-        </qualifier>
-        <decVal max="127"/>
-    </variable>
-    <!-- Rearlight [2] Mode -->
-    <variable label="Rearlight [2] Mode" CV="16.0.427" default="1" item="ESU FnOut RL-2 Mode">
-        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
-    </variable>
-    <variable label="Function Switch On Delay" CV="16.0.428" default="0" item="ESU FnOut RL-2 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>27</value>
-        </qualifier>
-        <decVal max="15"/>
-        <label xml:lang="de">Verzögerung beim Einschalten</label>
-    </variable>
-    <variable label="Function Switch Off Delay" CV="16.0.428" default="0" mask="VVVVXXXX" item="ESU FnOut RL-2 Slider 2" tooltip="Units = 0.4 sec">
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>27</value>
-        </qualifier>
-        <decVal max="15"/>
-        <label xml:lang="de">Verzögerung beim Ausschalten</label>
-    </variable>
-    <variable label="Function Auto Switch Off" CV="16.0.429" default="0" item="ESU FnOut RL-2 Slider 3" tooltip="Units = 0.4 sec">
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>27</value>
-        </qualifier>
-        <decVal/>
-        <label xml:lang="de">Ausgang automatisch Ausschalten</label>
-    </variable>
-    <variable item="Brightness CV430" label="Brightness CV" CV="16.0.430" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
-        <decVal/>
-    </variable>
-    <variable label="Brightness" CV="16.0.430" default="31" item="ESU FnOut RL-2 Slider 5" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>le</relation>
-            <value>18</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Helligkeit</label>
-    </variable>
-    <variable label="Mode" CV="16.0.430" default="0" item="ESU FnOut RL-2 Option 1" mask="XXXXXXXV">
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>22</value>
-        </qualifier>
-        <enumVal>
-            <enumChoice choice="Heating control">
-                <choice>Heating control</choice>
-                <choice xml:lang="de">Heizungssteuerung</choice>
-            </enumChoice>
-            <enumChoice choice="Fan control">
-                <choice>Fan control</choice>
-                <choice xml:lang="de">Lüftersteuerung</choice>
-            </enumChoice>
-        </enumVal>
-        <label xml:lang="de">Modus</label>
-    </variable>
-    <variable label="Coupler Force" CV="16.0.430" default="31" item="ESU FnOut RL-2 Slider 7" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>ge</relation>
-            <value>28</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>29</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>30</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>31</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>32</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>le</relation>
-            <value>33</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Stärke des Kupplers</label>
-    </variable>
-    <variable label="Fan Speed" CV="16.0.430" default="31" item="ESU FnOut RL-2 Slider 11" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>23</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Geschwindigkeit</label>
-    </variable>
-    <variable label="Standing heat" CV="16.0.430" default="31" item="ESU FnOut RL-2 Slider 14" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>24</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Heizstufe im Stand</label>
-    </variable>
-    <variable label="Chuff power" CV="16.0.430" default="31" item="ESU FnOut RL-2 Slider 8" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>25</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Dampfstoßstärke</label>
-    </variable>
-    <variable item="Special Function CV431" label="Special Function CV 1" CV="16.0.431" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <decVal/>
-    </variable>
-    <variable label="Fan Acceleration rate" CV="16.0.431" default="0" item="ESU FnOut RL-2 Slider 12" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>23</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Beschleunigungszeit</label>
-    </variable>
-    <variable label="Minimum driving heat" CV="16.0.431" default="0" item="ESU FnOut RL-2 Slider 15" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>24</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Minimale Heizstufe bei Fahrt</label>
-    </variable>
-    <variable label="Fan power" CV="16.0.431" default="0" item="ESU FnOut RL-2 Slider 9" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>25</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Stäke des Bläsers</label>
-    </variable>
-    <variable label="Phase Reverse" CV="16.0.431" default="0" item="ESU FnOut RL-2 Check 6" mask="XXXXXXXV">
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label xml:lang="de">Phase tauschen</label>
-    </variable>
-    <variable label="Grade Crossing" CV="16.0.431" default="0" item="ESU FnOut RL-2 Check 1" mask="XXXXXXVX">
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    </variable>
-    <variable label="Rule 17 Fwd" CV="16.0.431" default="0" item="ESU FnOut RL-2 Check 2" mask="XXXXXVXX">
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label xml:lang="de">Rule 17 vorwärts</label>
-    </variable>
-    <variable label="Rule 17 Rev" CV="16.0.431" default="0" item="ESU FnOut RL-2 Check 3" mask="XXXXVXXX">
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label xml:lang="de">Rule 17 rückwärts</label>
-    </variable>
-    <variable label="Dimmer" CV="16.0.431" default="0" item="ESU FnOut RL-2 Check 4" mask="XXXVXXXX">
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label xml:lang="de">Abdimmen</label>
-    </variable>
-    <variable label="LED Mode" CV="16.0.431" default="0" item="ESU FnOut RL-2 Check 5" mask="VXXXXXXX">
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label xml:lang="de">LED Modus</label>
-    </variable>
-    <variable item="Special Function CV432" label="Special Function CV 2" CV="16.0.432" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <decVal/>
-    </variable>
-    <variable label="Fan Decceleration rate" CV="16.0.432" default="0" item="ESU FnOut RL-2 Slider 13" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>23</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Bremszeit</label>
-    </variable>
-    <variable label="Maximum driving heat" CV="16.0.432" default="0" item="ESU FnOut RL-2 Slider 16" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>24</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Maximale Heizstufe bei Fahrt</label>
-    </variable>
-    <variable label="Timeout" CV="16.0.432" default="0" item="ESU FnOut RL-2 Slider 10" tooltip="Units = 0.25 sec">
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>25</value>
-        </qualifier>
-        <decVal/>
-    </variable>
-    <variable label="Startup Time" CV="16.0.432" default="0" item="ESU FnOut RL-2 Slider 6">
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>ge</relation>
-            <value>16</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>le</relation>
-            <value>17</value>
-        </qualifier>
-        <decVal/>
-        <label xml:lang="de">Startzeit</label>
-    </variable>
-    <variable label="Level" CV="16.0.432" default="0" item="ESU FnOut RL-2 Slider 20" mask="XVVVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut RL-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>19</value>
-        </qualifier>
-        <decVal max="127"/>
-    </variable>
-    <!-- AUX1 [2] Mode -->
-    <variable label="AUX1 [2] Mode" CV="16.0.435" default="1" item="ESU FnOut A1-2 Mode">
-        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
-    </variable>
-    <variable label="Function Switch On Delay" CV="16.0.436" default="0" item="ESU FnOut A1-2 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>27</value>
-        </qualifier>
-        <decVal max="15"/>
-        <label xml:lang="de">Verzögerung beim Einschalten</label>
-    </variable>
-    <variable label="Function Switch Off Delay" CV="16.0.436" default="0" mask="VVVVXXXX" item="ESU FnOut A1-2 Slider 2" tooltip="Units = 0.4 sec">
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>27</value>
-        </qualifier>
-        <decVal max="15"/>
-        <label xml:lang="de">Verzögerung beim Ausschalten</label>
-    </variable>
-    <variable label="Function Auto Switch Off" CV="16.0.437" default="0" item="ESU FnOut A1-2 Slider 3" tooltip="Units = 0.4 sec">
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>27</value>
-        </qualifier>
-        <decVal/>
-        <label xml:lang="de">Ausgang automatisch Ausschalten</label>
-    </variable>
-    <variable item="Brightness CV438" label="Brightness CV" CV="16.0.438" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
-        <decVal/>
-    </variable>
-    <variable label="Brightness" CV="16.0.438" default="31" item="ESU FnOut A1-2 Slider 5" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>le</relation>
-            <value>18</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Helligkeit</label>
-    </variable>
-    <variable label="Mode" CV="16.0.438" default="0" item="ESU FnOut A1-2 Option 1" mask="XXXXXXXV">
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>22</value>
-        </qualifier>
-        <enumVal>
-            <enumChoice choice="Heating control">
-                <choice>Heating control</choice>
-                <choice xml:lang="de">Heizungssteuerung</choice>
-            </enumChoice>
-            <enumChoice choice="Fan control">
-                <choice>Fan control</choice>
-                <choice xml:lang="de">Lüftersteuerung</choice>
-            </enumChoice>
-        </enumVal>
-        <label xml:lang="de">Modus</label>
-    </variable>
-    <variable label="Coupler Force" CV="16.0.438" default="31" item="ESU FnOut A1-2 Slider 7" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>ge</relation>
-            <value>28</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>29</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>30</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>31</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>32</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>le</relation>
-            <value>33</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Stärke des Kupplers</label>
-    </variable>
-    <variable label="Fan Speed" CV="16.0.438" default="31" item="ESU FnOut A1-2 Slider 11" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>23</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Geschwindigkeit</label>
-    </variable>
-    <variable label="Standing heat" CV="16.0.438" default="31" item="ESU FnOut A1-2 Slider 14" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>24</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Heizstufe im Stand</label>
-    </variable>
-    <variable label="Chuff power" CV="16.0.438" default="31" item="ESU FnOut A1-2 Slider 8" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>25</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Dampfstoßstärke</label>
-    </variable>
-    <variable item="Special Function CV439" label="Special Function CV 1" CV="16.0.439" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <decVal/>
-    </variable>
-    <variable label="Fan Acceleration rate" CV="16.0.439" default="0" item="ESU FnOut A1-2 Slider 12" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>23</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Beschleunigungszeit</label>
-    </variable>
-    <variable label="Minimum driving heat" CV="16.0.439" default="0" item="ESU FnOut A1-2 Slider 15" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>24</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Minimale Heizstufe bei Fahrt</label>
-    </variable>
-    <variable label="Fan power" CV="16.0.439" default="0" item="ESU FnOut A1-2 Slider 9" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>25</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Stäke des Bläsers</label>
-    </variable>
-    <variable label="Phase Reverse" CV="16.0.439" default="0" item="ESU FnOut A1-2 Check 6" mask="XXXXXXXV">
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label xml:lang="de">Phase tauschen</label>
-    </variable>
-    <variable label="Grade Crossing" CV="16.0.439" default="0" item="ESU FnOut A1-2 Check 1" mask="XXXXXXVX">
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    </variable>
-    <variable label="Rule 17 Fwd" CV="16.0.439" default="0" item="ESU FnOut A1-2 Check 2" mask="XXXXXVXX">
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label xml:lang="de">Rule 17 vorwärts</label>
-    </variable>
-    <variable label="Rule 17 Rev" CV="16.0.439" default="0" item="ESU FnOut A1-2 Check 3" mask="XXXXVXXX">
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label xml:lang="de">Rule 17 rückwärts</label>
-    </variable>
-    <variable label="Dimmer" CV="16.0.439" default="0" item="ESU FnOut A1-2 Check 4" mask="XXXVXXXX">
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label xml:lang="de">Abdimmen</label>
-    </variable>
-    <variable label="LED Mode" CV="16.0.439" default="0" item="ESU FnOut A1-2 Check 5" mask="VXXXXXXX">
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label xml:lang="de">LED Modus</label>
-    </variable>
-    <variable item="Special Function CV440" label="Special Function CV 2" CV="16.0.440" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <decVal/>
-    </variable>
-    <variable label="Fan Decceleration rate" CV="16.0.440" default="0" item="ESU FnOut A1-2 Slider 13" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>23</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Bremszeit</label>
-    </variable>
-    <variable label="Maximum driving heat" CV="16.0.440" default="0" item="ESU FnOut A1-2 Slider 16" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>24</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Maximale Heizstufe bei Fahrt</label>
-    </variable>
-    <variable label="Timeout" CV="16.0.440" default="0" item="ESU FnOut A1-2 Slider 10" tooltip="Units = 0.25 sec">
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>25</value>
-        </qualifier>
-        <decVal/>
-    </variable>
-    <variable label="Startup Time" CV="16.0.440" default="0" item="ESU FnOut A1-2 Slider 6">
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>ge</relation>
-            <value>16</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>le</relation>
-            <value>17</value>
-        </qualifier>
-        <decVal/>
-        <label xml:lang="de">Startzeit</label>
-    </variable>
-    <variable label="Level" CV="16.0.440" default="0" item="ESU FnOut A1-2 Slider 20" mask="XVVVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A1-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>19</value>
-        </qualifier>
-        <decVal max="127"/>
-    </variable>
-    <!-- AUX2 [2] Mode -->
-    <variable label="AUX2 [2] Mode" CV="16.0.443" default="1" item="ESU FnOut A2-2 Mode">
-        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
-    </variable>
-    <variable label="Function Switch On Delay" CV="16.0.444" default="0" item="ESU FnOut A2-2 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>27</value>
-        </qualifier>
-        <decVal max="15"/>
-        <label xml:lang="de">Verzögerung beim Einschalten</label>
-    </variable>
-    <variable label="Function Switch Off Delay" CV="16.0.444" default="0" mask="VVVVXXXX" item="ESU FnOut A2-2 Slider 2" tooltip="Units = 0.4 sec">
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>27</value>
-        </qualifier>
-        <decVal max="15"/>
-        <label xml:lang="de">Verzögerung beim Ausschalten</label>
-    </variable>
-    <variable label="Function Auto Switch Off" CV="16.0.445" default="0" item="ESU FnOut A2-2 Slider 3" tooltip="Units = 0.4 sec">
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>27</value>
-        </qualifier>
-        <decVal/>
-        <label xml:lang="de">Ausgang automatisch Ausschalten</label>
-    </variable>
-    <variable item="Brightness CV446" label="Brightness CV" CV="16.0.446" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
-        <decVal/>
-    </variable>
-    <variable label="Brightness" CV="16.0.446" default="31" item="ESU FnOut A2-2 Slider 5" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>le</relation>
-            <value>18</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Helligkeit</label>
-    </variable>
-    <variable label="Mode" CV="16.0.446" default="0" item="ESU FnOut A2-2 Option 1" mask="XXXXXXXV">
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>22</value>
-        </qualifier>
-        <enumVal>
-            <enumChoice choice="Heating control">
-                <choice>Heating control</choice>
-                <choice xml:lang="de">Heizungssteuerung</choice>
-            </enumChoice>
-            <enumChoice choice="Fan control">
-                <choice>Fan control</choice>
-                <choice xml:lang="de">Lüftersteuerung</choice>
-            </enumChoice>
-        </enumVal>
-        <label xml:lang="de">Modus</label>
-    </variable>
-    <variable label="Coupler Force" CV="16.0.446" default="31" item="ESU FnOut A2-2 Slider 7" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>ge</relation>
-            <value>28</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>29</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>30</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>31</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>ne</relation>
-            <value>32</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>le</relation>
-            <value>33</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Stärke des Kupplers</label>
-    </variable>
-    <variable label="Fan Speed" CV="16.0.446" default="31" item="ESU FnOut A2-2 Slider 11" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>23</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Geschwindigkeit</label>
-    </variable>
-    <variable label="Standing heat" CV="16.0.446" default="31" item="ESU FnOut A2-2 Slider 14" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>24</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Heizstufe im Stand</label>
-    </variable>
-    <variable label="Chuff power" CV="16.0.446" default="31" item="ESU FnOut A2-2 Slider 8" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>25</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Dampfstoßstärke</label>
-    </variable>
-    <variable item="Special Function CV447" label="Special Function CV 1" CV="16.0.447" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <decVal/>
-    </variable>
-    <variable label="Fan Acceleration rate" CV="16.0.447" default="0" item="ESU FnOut A2-2 Slider 12" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>23</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Beschleunigungszeit</label>
-    </variable>
-    <variable label="Minimum driving heat" CV="16.0.447" default="0" item="ESU FnOut A2-2 Slider 15" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>24</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Minimale Heizstufe bei Fahrt</label>
-    </variable>
-    <variable label="Fan power" CV="16.0.447" default="0" item="ESU FnOut A2-2 Slider 9" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>25</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Stäke des Bläsers</label>
-    </variable>
-    <variable label="Phase Reverse" CV="16.0.447" default="0" item="ESU FnOut A2-2 Check 6" mask="XXXXXXXV">
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label xml:lang="de">Phase tauschen</label>
-    </variable>
-    <variable label="Grade Crossing" CV="16.0.447" default="0" item="ESU FnOut A2-2 Check 1" mask="XXXXXXVX">
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    </variable>
-    <variable label="Rule 17 Fwd" CV="16.0.447" default="0" item="ESU FnOut A2-2 Check 2" mask="XXXXXVXX">
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label xml:lang="de">Rule 17 vorwärts</label>
-    </variable>
-    <variable label="Rule 17 Rev" CV="16.0.447" default="0" item="ESU FnOut A2-2 Check 3" mask="XXXXVXXX">
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label xml:lang="de">Rule 17 rückwärts</label>
-    </variable>
-    <variable label="Dimmer" CV="16.0.447" default="0" item="ESU FnOut A2-2 Check 4" mask="XXXVXXXX">
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label xml:lang="de">Abdimmen</label>
-    </variable>
-    <variable label="LED Mode" CV="16.0.447" default="0" item="ESU FnOut A2-2 Check 5" mask="VXXXXXXX">
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>le</relation>
-            <value>15</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label xml:lang="de">LED Modus</label>
-    </variable>
-    <variable item="Special Function CV448" label="Special Function CV 2" CV="16.0.448" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-        <decVal/>
-    </variable>
-    <variable label="Fan Decceleration rate" CV="16.0.448" default="0" item="ESU FnOut A2-2 Slider 13" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>23</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Bremszeit</label>
-    </variable>
-    <variable label="Maximum driving heat" CV="16.0.448" default="0" item="ESU FnOut A2-2 Slider 16" mask="XXXVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>24</value>
-        </qualifier>
-        <decVal max="31"/>
-        <label xml:lang="de">Maximale Heizstufe bei Fahrt</label>
-    </variable>
-    <variable label="Timeout" CV="16.0.448" default="0" item="ESU FnOut A2-2 Slider 10" tooltip="Units = 0.25 sec">
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>25</value>
-        </qualifier>
-        <decVal/>
-    </variable>
-    <variable label="Startup Time" CV="16.0.448" default="0" item="ESU FnOut A2-2 Slider 6">
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>ge</relation>
-            <value>16</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>le</relation>
-            <value>17</value>
-        </qualifier>
-        <decVal/>
-        <label xml:lang="de">Startzeit</label>
-    </variable>
-    <variable label="Level" CV="16.0.448" default="0" item="ESU FnOut A2-2 Slider 20" mask="XVVVVVVV">
-        <qualifier>
-            <variableref>ESU FnOut A2-2 Mode</variableref>
-            <relation>eq</relation>
-            <value>19</value>
-        </qualifier>
-        <decVal max="127"/>
-    </variable>
+    <!-- Exclude [2] outputs to avoid tripping over a firmware bug -->
+    <!-- At least up to 5.8.156 (current as of writing this) these functions are not -->
+    <!-- accessible through standard CV programming on ESU 58751 -->
+    <variables exclude="LokSound 5 micro DCC Direct Atlas Legacy">
+	<!-- Headlight [2] Mode -->
+	<variable label="Headlight [2] Mode" CV="16.0.419" default="1" item="ESU FnOut HL-2 Mode">
+            <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
+            <!--label xml:lang="de">Licht vorn - 2</label-->
+        </variable>
+        <variable label="Function Switch On Delay" CV="16.0.420" default="0" item="ESU FnOut HL-2 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
+            <qualifier>
+                <variableref>ESU FnOut HL-2 Mode</variableref>
+                <relation>gt</relation>
+                <value>0</value>
+            </qualifier>
+            <qualifier>
+                <variableref>ESU FnOut HL-2 Mode</variableref>
+                <relation>ne</relation>
+                <value>27</value>
+            </qualifier>
+            <decVal max="15"/>
+            <label xml:lang="de">Verzögerung beim Einschalten</label>
+        </variable>
+        <variable label="Function Switch Off Delay" CV="16.0.420" default="0" mask="VVVVXXXX" item="ESU FnOut HL-2 Slider 2" tooltip="Units = 0.4 sec">
+            <qualifier>
+                <variableref>ESU FnOut HL-2 Mode</variableref>
+                <relation>gt</relation>
+                <value>0</value>
+            </qualifier>
+            <qualifier>
+                <variableref>ESU FnOut HL-2 Mode</variableref>
+                <relation>ne</relation>
+                <value>27</value>
+            </qualifier>
+            <decVal max="15"/>
+            <label xml:lang="de">Verzögerung beim Ausschalten</label>
+        </variable>
+	<variable label="Function Auto Switch Off" CV="16.0.421" default="0" item="ESU FnOut HL-2 Slider 3" tooltip="Units = 0.4 sec">
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>27</value>
+	    </qualifier>
+	    <decVal/>
+	    <label xml:lang="de">Ausgang automatisch Ausschalten</label>
+	</variable>
+	<variable item="Brightness CV422" label="Brightness CV" CV="16.0.422" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+	    <decVal/>
+	</variable>
+	<variable label="Brightness" CV="16.0.422" default="31" item="ESU FnOut HL-2 Slider 5" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>le</relation>
+		<value>18</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Helligkeit</label>
+	</variable>
+	<variable label="Mode" CV="16.0.422" default="0" item="ESU FnOut HL-2 Option 1" mask="XXXXXXXV">
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>22</value>
+	    </qualifier>
+	    <enumVal>
+		<enumChoice choice="Heating control">
+		    <choice>Heating control</choice>
+		    <choice xml:lang="de">Heizungssteuerung</choice>
+		</enumChoice>
+		<enumChoice choice="Fan control">
+		    <choice>Fan control</choice>
+		    <choice xml:lang="de">Lüftersteuerung</choice>
+		</enumChoice>
+	    </enumVal>
+	    <label xml:lang="de">Modus</label>
+	</variable>
+	<variable label="Coupler Force" CV="16.0.422" default="31" item="ESU FnOut HL-2 Slider 7" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>ge</relation>
+		<value>28</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>29</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>30</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>31</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>32</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>le</relation>
+		<value>33</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Stärke des Kupplers</label>
+	</variable>
+	<variable label="Fan Speed" CV="16.0.422" default="31" item="ESU FnOut HL-2 Slider 11" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>23</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Geschwindigkeit</label>
+	</variable>
+	<variable label="Standing heat" CV="16.0.422" default="31" item="ESU FnOut HL-2 Slider 14" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>24</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Heizstufe im Stand</label>
+	</variable>
+	<variable label="Chuff power" CV="16.0.422" default="31" item="ESU FnOut HL-2 Slider 8" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>25</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Dampfstoßstärke</label>
+	</variable>
+	<variable item="Special Function CV423" label="Special Function CV 1" CV="16.0.423" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+	    <decVal/>
+	</variable>
+	<variable label="Fan Acceleration rate" CV="16.0.423" default="0" item="ESU FnOut HL-2 Slider 12" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>23</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Beschleunigungszeit</label>
+	</variable>
+	<variable label="Minimum driving heat" CV="16.0.423" default="0" item="ESU FnOut HL-2 Slider 15" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>24</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Minimale Heizstufe bei Fahrt</label>
+	</variable>
+	<variable label="Fan power" CV="16.0.423" default="0" item="ESU FnOut HL-2 Slider 9" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>25</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Stäke des Bläsers</label>
+	</variable>
+	<variable label="Phase Reverse" CV="16.0.423" default="0" item="ESU FnOut HL-2 Check 6" mask="XXXXXXXV">
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	    <label xml:lang="de">Phase tauschen</label>
+	</variable>
+	<variable label="Grade Crossing" CV="16.0.423" default="0" item="ESU FnOut HL-2 Check 1" mask="XXXXXXVX">
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	</variable>
+	<variable label="Rule 17 Fwd" CV="16.0.423" default="0" item="ESU FnOut HL-2 Check 2" mask="XXXXXVXX">
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	    <label xml:lang="de">Rule 17 vorwärts</label>
+	</variable>
+	<variable label="Rule 17 Rev" CV="16.0.423" default="0" item="ESU FnOut HL-2 Check 3" mask="XXXXVXXX">
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	    <label xml:lang="de">Rule 17 rückwärts</label>
+	</variable>
+	<variable label="Dimmer" CV="16.0.423" default="0" item="ESU FnOut HL-2 Check 4" mask="XXXVXXXX">
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	    <label xml:lang="de">Abdimmen</label>
+	</variable>
+	<variable label="LED Mode" CV="16.0.423" default="0" item="ESU FnOut HL-2 Check 5" mask="VXXXXXXX">
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	    <label xml:lang="de">LED Modus</label>
+	</variable>
+	<variable item="Special Function CV424" label="Special Function CV 2" CV="16.0.424" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+	    <decVal/>
+	</variable>
+	<variable label="Fan Decceleration rate" CV="16.0.424" default="0" item="ESU FnOut HL-2 Slider 13" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>23</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Bremszeit</label>
+	</variable>
+	<variable label="Maximum driving heat" CV="16.0.424" default="0" item="ESU FnOut HL-2 Slider 16" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>24</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Maximale Heizstufe bei Fahrt</label>
+	</variable>
+	<variable label="Timeout" CV="16.0.424" default="0" item="ESU FnOut HL-2 Slider 10" tooltip="Units = 0.25 sec">
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>25</value>
+	    </qualifier>
+	    <decVal/>
+	</variable>
+	<variable label="Startup Time" CV="16.0.424" default="0" item="ESU FnOut HL-2 Slider 6">
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>ge</relation>
+		<value>16</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>le</relation>
+		<value>17</value>
+	    </qualifier>
+	    <decVal/>
+	    <label xml:lang="de">Startzeit</label>
+	</variable>
+	<variable label="Level" CV="16.0.424" default="0" item="ESU FnOut HL-2 Slider 20" mask="XVVVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut HL-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>19</value>
+	    </qualifier>
+	    <decVal max="127"/>
+	</variable>
+	<!-- Rearlight [2] Mode -->
+	<variable label="Rearlight [2] Mode" CV="16.0.427" default="1" item="ESU FnOut RL-2 Mode">
+	    <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
+	</variable>
+	<variable label="Function Switch On Delay" CV="16.0.428" default="0" item="ESU FnOut RL-2 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>27</value>
+	    </qualifier>
+	    <decVal max="15"/>
+	    <label xml:lang="de">Verzögerung beim Einschalten</label>
+	</variable>
+	<variable label="Function Switch Off Delay" CV="16.0.428" default="0" mask="VVVVXXXX" item="ESU FnOut RL-2 Slider 2" tooltip="Units = 0.4 sec">
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>27</value>
+	    </qualifier>
+	    <decVal max="15"/>
+	    <label xml:lang="de">Verzögerung beim Ausschalten</label>
+	</variable>
+	<variable label="Function Auto Switch Off" CV="16.0.429" default="0" item="ESU FnOut RL-2 Slider 3" tooltip="Units = 0.4 sec">
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>27</value>
+	    </qualifier>
+	    <decVal/>
+	    <label xml:lang="de">Ausgang automatisch Ausschalten</label>
+	</variable>
+	<variable item="Brightness CV430" label="Brightness CV" CV="16.0.430" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+	    <decVal/>
+	</variable>
+	<variable label="Brightness" CV="16.0.430" default="31" item="ESU FnOut RL-2 Slider 5" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>le</relation>
+		<value>18</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Helligkeit</label>
+	</variable>
+	<variable label="Mode" CV="16.0.430" default="0" item="ESU FnOut RL-2 Option 1" mask="XXXXXXXV">
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>22</value>
+	    </qualifier>
+	    <enumVal>
+		<enumChoice choice="Heating control">
+		    <choice>Heating control</choice>
+		    <choice xml:lang="de">Heizungssteuerung</choice>
+		</enumChoice>
+		<enumChoice choice="Fan control">
+		    <choice>Fan control</choice>
+		    <choice xml:lang="de">Lüftersteuerung</choice>
+		</enumChoice>
+	    </enumVal>
+	    <label xml:lang="de">Modus</label>
+	</variable>
+	<variable label="Coupler Force" CV="16.0.430" default="31" item="ESU FnOut RL-2 Slider 7" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>ge</relation>
+		<value>28</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>29</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>30</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>31</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>32</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>le</relation>
+		<value>33</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Stärke des Kupplers</label>
+	</variable>
+	<variable label="Fan Speed" CV="16.0.430" default="31" item="ESU FnOut RL-2 Slider 11" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>23</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Geschwindigkeit</label>
+	</variable>
+	<variable label="Standing heat" CV="16.0.430" default="31" item="ESU FnOut RL-2 Slider 14" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>24</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Heizstufe im Stand</label>
+	</variable>
+	<variable label="Chuff power" CV="16.0.430" default="31" item="ESU FnOut RL-2 Slider 8" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>25</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Dampfstoßstärke</label>
+	</variable>
+	<variable item="Special Function CV431" label="Special Function CV 1" CV="16.0.431" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+	    <decVal/>
+	</variable>
+	<variable label="Fan Acceleration rate" CV="16.0.431" default="0" item="ESU FnOut RL-2 Slider 12" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>23</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Beschleunigungszeit</label>
+	</variable>
+	<variable label="Minimum driving heat" CV="16.0.431" default="0" item="ESU FnOut RL-2 Slider 15" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>24</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Minimale Heizstufe bei Fahrt</label>
+	</variable>
+	<variable label="Fan power" CV="16.0.431" default="0" item="ESU FnOut RL-2 Slider 9" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>25</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Stäke des Bläsers</label>
+	</variable>
+	<variable label="Phase Reverse" CV="16.0.431" default="0" item="ESU FnOut RL-2 Check 6" mask="XXXXXXXV">
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	    <label xml:lang="de">Phase tauschen</label>
+	</variable>
+	<variable label="Grade Crossing" CV="16.0.431" default="0" item="ESU FnOut RL-2 Check 1" mask="XXXXXXVX">
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	</variable>
+	<variable label="Rule 17 Fwd" CV="16.0.431" default="0" item="ESU FnOut RL-2 Check 2" mask="XXXXXVXX">
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	    <label xml:lang="de">Rule 17 vorwärts</label>
+	</variable>
+	<variable label="Rule 17 Rev" CV="16.0.431" default="0" item="ESU FnOut RL-2 Check 3" mask="XXXXVXXX">
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	    <label xml:lang="de">Rule 17 rückwärts</label>
+	</variable>
+	<variable label="Dimmer" CV="16.0.431" default="0" item="ESU FnOut RL-2 Check 4" mask="XXXVXXXX">
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	    <label xml:lang="de">Abdimmen</label>
+	</variable>
+	<variable label="LED Mode" CV="16.0.431" default="0" item="ESU FnOut RL-2 Check 5" mask="VXXXXXXX">
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	    <label xml:lang="de">LED Modus</label>
+	</variable>
+	<variable item="Special Function CV432" label="Special Function CV 2" CV="16.0.432" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+	    <decVal/>
+	</variable>
+	<variable label="Fan Decceleration rate" CV="16.0.432" default="0" item="ESU FnOut RL-2 Slider 13" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>23</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Bremszeit</label>
+	</variable>
+	<variable label="Maximum driving heat" CV="16.0.432" default="0" item="ESU FnOut RL-2 Slider 16" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>24</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Maximale Heizstufe bei Fahrt</label>
+	</variable>
+	<variable label="Timeout" CV="16.0.432" default="0" item="ESU FnOut RL-2 Slider 10" tooltip="Units = 0.25 sec">
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>25</value>
+	    </qualifier>
+	    <decVal/>
+	</variable>
+	<variable label="Startup Time" CV="16.0.432" default="0" item="ESU FnOut RL-2 Slider 6">
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>ge</relation>
+		<value>16</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>le</relation>
+		<value>17</value>
+	    </qualifier>
+	    <decVal/>
+	    <label xml:lang="de">Startzeit</label>
+	</variable>
+	<variable label="Level" CV="16.0.432" default="0" item="ESU FnOut RL-2 Slider 20" mask="XVVVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut RL-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>19</value>
+	    </qualifier>
+	    <decVal max="127"/>
+	</variable>
+	<!-- AUX1 [2] Mode -->
+	<variable label="AUX1 [2] Mode" CV="16.0.435" default="1" item="ESU FnOut A1-2 Mode">
+	    <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
+	</variable>
+	<variable label="Function Switch On Delay" CV="16.0.436" default="0" item="ESU FnOut A1-2 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>27</value>
+	    </qualifier>
+	    <decVal max="15"/>
+	    <label xml:lang="de">Verzögerung beim Einschalten</label>
+	</variable>
+	<variable label="Function Switch Off Delay" CV="16.0.436" default="0" mask="VVVVXXXX" item="ESU FnOut A1-2 Slider 2" tooltip="Units = 0.4 sec">
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>27</value>
+	    </qualifier>
+	    <decVal max="15"/>
+	    <label xml:lang="de">Verzögerung beim Ausschalten</label>
+	</variable>
+	<variable label="Function Auto Switch Off" CV="16.0.437" default="0" item="ESU FnOut A1-2 Slider 3" tooltip="Units = 0.4 sec">
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>27</value>
+	    </qualifier>
+	    <decVal/>
+	    <label xml:lang="de">Ausgang automatisch Ausschalten</label>
+	</variable>
+	<variable item="Brightness CV438" label="Brightness CV" CV="16.0.438" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+	    <decVal/>
+	</variable>
+	<variable label="Brightness" CV="16.0.438" default="31" item="ESU FnOut A1-2 Slider 5" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>le</relation>
+		<value>18</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Helligkeit</label>
+	</variable>
+	<variable label="Mode" CV="16.0.438" default="0" item="ESU FnOut A1-2 Option 1" mask="XXXXXXXV">
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>22</value>
+	    </qualifier>
+	    <enumVal>
+		<enumChoice choice="Heating control">
+		    <choice>Heating control</choice>
+		    <choice xml:lang="de">Heizungssteuerung</choice>
+		</enumChoice>
+		<enumChoice choice="Fan control">
+		    <choice>Fan control</choice>
+		    <choice xml:lang="de">Lüftersteuerung</choice>
+		</enumChoice>
+	    </enumVal>
+	    <label xml:lang="de">Modus</label>
+	</variable>
+	<variable label="Coupler Force" CV="16.0.438" default="31" item="ESU FnOut A1-2 Slider 7" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>ge</relation>
+		<value>28</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>29</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>30</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>31</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>32</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>le</relation>
+		<value>33</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Stärke des Kupplers</label>
+	</variable>
+	<variable label="Fan Speed" CV="16.0.438" default="31" item="ESU FnOut A1-2 Slider 11" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>23</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Geschwindigkeit</label>
+	</variable>
+	<variable label="Standing heat" CV="16.0.438" default="31" item="ESU FnOut A1-2 Slider 14" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>24</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Heizstufe im Stand</label>
+	</variable>
+	<variable label="Chuff power" CV="16.0.438" default="31" item="ESU FnOut A1-2 Slider 8" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>25</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Dampfstoßstärke</label>
+	</variable>
+	<variable item="Special Function CV439" label="Special Function CV 1" CV="16.0.439" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+	    <decVal/>
+	</variable>
+	<variable label="Fan Acceleration rate" CV="16.0.439" default="0" item="ESU FnOut A1-2 Slider 12" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>23</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Beschleunigungszeit</label>
+	</variable>
+	<variable label="Minimum driving heat" CV="16.0.439" default="0" item="ESU FnOut A1-2 Slider 15" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>24</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Minimale Heizstufe bei Fahrt</label>
+	</variable>
+	<variable label="Fan power" CV="16.0.439" default="0" item="ESU FnOut A1-2 Slider 9" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>25</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Stäke des Bläsers</label>
+	</variable>
+	<variable label="Phase Reverse" CV="16.0.439" default="0" item="ESU FnOut A1-2 Check 6" mask="XXXXXXXV">
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	    <label xml:lang="de">Phase tauschen</label>
+	</variable>
+	<variable label="Grade Crossing" CV="16.0.439" default="0" item="ESU FnOut A1-2 Check 1" mask="XXXXXXVX">
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	</variable>
+	<variable label="Rule 17 Fwd" CV="16.0.439" default="0" item="ESU FnOut A1-2 Check 2" mask="XXXXXVXX">
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	    <label xml:lang="de">Rule 17 vorwärts</label>
+	</variable>
+	<variable label="Rule 17 Rev" CV="16.0.439" default="0" item="ESU FnOut A1-2 Check 3" mask="XXXXVXXX">
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	    <label xml:lang="de">Rule 17 rückwärts</label>
+	</variable>
+	<variable label="Dimmer" CV="16.0.439" default="0" item="ESU FnOut A1-2 Check 4" mask="XXXVXXXX">
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	    <label xml:lang="de">Abdimmen</label>
+	</variable>
+	<variable label="LED Mode" CV="16.0.439" default="0" item="ESU FnOut A1-2 Check 5" mask="VXXXXXXX">
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	    <label xml:lang="de">LED Modus</label>
+	</variable>
+	<variable item="Special Function CV440" label="Special Function CV 2" CV="16.0.440" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+	    <decVal/>
+	</variable>
+	<variable label="Fan Decceleration rate" CV="16.0.440" default="0" item="ESU FnOut A1-2 Slider 13" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>23</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Bremszeit</label>
+	</variable>
+	<variable label="Maximum driving heat" CV="16.0.440" default="0" item="ESU FnOut A1-2 Slider 16" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>24</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Maximale Heizstufe bei Fahrt</label>
+	</variable>
+	<variable label="Timeout" CV="16.0.440" default="0" item="ESU FnOut A1-2 Slider 10" tooltip="Units = 0.25 sec">
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>25</value>
+	    </qualifier>
+	    <decVal/>
+	</variable>
+	<variable label="Startup Time" CV="16.0.440" default="0" item="ESU FnOut A1-2 Slider 6">
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>ge</relation>
+		<value>16</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>le</relation>
+		<value>17</value>
+	    </qualifier>
+	    <decVal/>
+	    <label xml:lang="de">Startzeit</label>
+	</variable>
+	<variable label="Level" CV="16.0.440" default="0" item="ESU FnOut A1-2 Slider 20" mask="XVVVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A1-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>19</value>
+	    </qualifier>
+	    <decVal max="127"/>
+	</variable>
+	<!-- AUX2 [2] Mode -->
+	<variable label="AUX2 [2] Mode" CV="16.0.443" default="1" item="ESU FnOut A2-2 Mode">
+	    <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
+	</variable>
+	<variable label="Function Switch On Delay" CV="16.0.444" default="0" item="ESU FnOut A2-2 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>27</value>
+	    </qualifier>
+	    <decVal max="15"/>
+	    <label xml:lang="de">Verzögerung beim Einschalten</label>
+	</variable>
+	<variable label="Function Switch Off Delay" CV="16.0.444" default="0" mask="VVVVXXXX" item="ESU FnOut A2-2 Slider 2" tooltip="Units = 0.4 sec">
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>27</value>
+	    </qualifier>
+	    <decVal max="15"/>
+	    <label xml:lang="de">Verzögerung beim Ausschalten</label>
+	</variable>
+	<variable label="Function Auto Switch Off" CV="16.0.445" default="0" item="ESU FnOut A2-2 Slider 3" tooltip="Units = 0.4 sec">
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>27</value>
+	    </qualifier>
+	    <decVal/>
+	    <label xml:lang="de">Ausgang automatisch Ausschalten</label>
+	</variable>
+	<variable item="Brightness CV446" label="Brightness CV" CV="16.0.446" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+	    <decVal/>
+	</variable>
+	<variable label="Brightness" CV="16.0.446" default="31" item="ESU FnOut A2-2 Slider 5" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>le</relation>
+		<value>18</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Helligkeit</label>
+	</variable>
+	<variable label="Mode" CV="16.0.446" default="0" item="ESU FnOut A2-2 Option 1" mask="XXXXXXXV">
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>22</value>
+	    </qualifier>
+	    <enumVal>
+		<enumChoice choice="Heating control">
+		    <choice>Heating control</choice>
+		    <choice xml:lang="de">Heizungssteuerung</choice>
+		</enumChoice>
+		<enumChoice choice="Fan control">
+		    <choice>Fan control</choice>
+		    <choice xml:lang="de">Lüftersteuerung</choice>
+		</enumChoice>
+	    </enumVal>
+	    <label xml:lang="de">Modus</label>
+	</variable>
+	<variable label="Coupler Force" CV="16.0.446" default="31" item="ESU FnOut A2-2 Slider 7" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>ge</relation>
+		<value>28</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>29</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>30</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>31</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>ne</relation>
+		<value>32</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>le</relation>
+		<value>33</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Stärke des Kupplers</label>
+	</variable>
+	<variable label="Fan Speed" CV="16.0.446" default="31" item="ESU FnOut A2-2 Slider 11" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>23</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Geschwindigkeit</label>
+	</variable>
+	<variable label="Standing heat" CV="16.0.446" default="31" item="ESU FnOut A2-2 Slider 14" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>24</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Heizstufe im Stand</label>
+	</variable>
+	<variable label="Chuff power" CV="16.0.446" default="31" item="ESU FnOut A2-2 Slider 8" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>25</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Dampfstoßstärke</label>
+	</variable>
+	<variable item="Special Function CV447" label="Special Function CV 1" CV="16.0.447" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+	    <decVal/>
+	</variable>
+	<variable label="Fan Acceleration rate" CV="16.0.447" default="0" item="ESU FnOut A2-2 Slider 12" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>23</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Beschleunigungszeit</label>
+	</variable>
+	<variable label="Minimum driving heat" CV="16.0.447" default="0" item="ESU FnOut A2-2 Slider 15" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>24</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Minimale Heizstufe bei Fahrt</label>
+	</variable>
+	<variable label="Fan power" CV="16.0.447" default="0" item="ESU FnOut A2-2 Slider 9" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>25</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Stäke des Bläsers</label>
+	</variable>
+	<variable label="Phase Reverse" CV="16.0.447" default="0" item="ESU FnOut A2-2 Check 6" mask="XXXXXXXV">
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	    <label xml:lang="de">Phase tauschen</label>
+	</variable>
+	<variable label="Grade Crossing" CV="16.0.447" default="0" item="ESU FnOut A2-2 Check 1" mask="XXXXXXVX">
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	</variable>
+	<variable label="Rule 17 Fwd" CV="16.0.447" default="0" item="ESU FnOut A2-2 Check 2" mask="XXXXXVXX">
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	    <label xml:lang="de">Rule 17 vorwärts</label>
+	</variable>
+	<variable label="Rule 17 Rev" CV="16.0.447" default="0" item="ESU FnOut A2-2 Check 3" mask="XXXXVXXX">
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	    <label xml:lang="de">Rule 17 rückwärts</label>
+	</variable>
+	<variable label="Dimmer" CV="16.0.447" default="0" item="ESU FnOut A2-2 Check 4" mask="XXXVXXXX">
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	    <label xml:lang="de">Abdimmen</label>
+	</variable>
+	<variable label="LED Mode" CV="16.0.447" default="0" item="ESU FnOut A2-2 Check 5" mask="VXXXXXXX">
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>gt</relation>
+		<value>0</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>le</relation>
+		<value>15</value>
+	    </qualifier>
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+	    <label xml:lang="de">LED Modus</label>
+	</variable>
+	<variable item="Special Function CV448" label="Special Function CV 2" CV="16.0.448" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+	    <decVal/>
+	</variable>
+	<variable label="Fan Decceleration rate" CV="16.0.448" default="0" item="ESU FnOut A2-2 Slider 13" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>23</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Bremszeit</label>
+	</variable>
+	<variable label="Maximum driving heat" CV="16.0.448" default="0" item="ESU FnOut A2-2 Slider 16" mask="XXXVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>24</value>
+	    </qualifier>
+	    <decVal max="31"/>
+	    <label xml:lang="de">Maximale Heizstufe bei Fahrt</label>
+	</variable>
+	<variable label="Timeout" CV="16.0.448" default="0" item="ESU FnOut A2-2 Slider 10" tooltip="Units = 0.25 sec">
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>25</value>
+	    </qualifier>
+	    <decVal/>
+	</variable>
+	<variable label="Startup Time" CV="16.0.448" default="0" item="ESU FnOut A2-2 Slider 6">
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>ge</relation>
+		<value>16</value>
+	    </qualifier>
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>le</relation>
+		<value>17</value>
+	    </qualifier>
+	    <decVal/>
+	    <label xml:lang="de">Startzeit</label>
+	</variable>
+	<variable label="Level" CV="16.0.448" default="0" item="ESU FnOut A2-2 Slider 20" mask="XVVVVVVV">
+	    <qualifier>
+		<variableref>ESU FnOut A2-2 Mode</variableref>
+		<relation>eq</relation>
+		<value>19</value>
+	    </qualifier>
+	    <decVal max="127"/>
+	</variable>
+    </variables>
 </variables>
