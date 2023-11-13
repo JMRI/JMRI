@@ -126,7 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Update openlcb.jar to Maven Central version 0.7.33</li>
             </ul>
 
         <h4>Powerline</h4>
