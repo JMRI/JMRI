@@ -1,7 +1,5 @@
 package jmri.jmris;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -78,11 +76,9 @@ abstract public class AbstractTimeServerTestBase {
         assertThat(jmri.InstanceManager.getDefault(jmri.Timebase.class).getRun()).withFailMessage("Timebase stopped").isFalse();
     }
 
-    @BeforeEach
     // derived classes must configure the TimeServer variable (a)
     abstract public void setUp();
 
-    @AfterEach
     // derived classes must clean up the TimeServer variable (a)
     abstract public void tearDown();
 

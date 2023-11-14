@@ -29,7 +29,6 @@ public abstract class AbstractThrottleManagerTestBase {
     /**
      * Overload to load tm with actual object; create scaffolds as needed
      */
-    @BeforeEach
     abstract public void setUp(); 
 
     protected ThrottleManager tm = null; // holds objects under test
