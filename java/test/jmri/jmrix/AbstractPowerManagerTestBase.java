@@ -19,7 +19,6 @@ import org.junit.jupiter.api.*;
 public abstract class AbstractPowerManagerTestBase {
 
     // required setup routine, must set p to an appropriate value.
-    @BeforeEach
     abstract public void setUp();
 
     // service routines to simulate receiving on, off from interface
