@@ -141,8 +141,8 @@
             <relation>ge</relation>
             <value>159</value>
         </qualifier>
-        <tooltip>0 = -10dB, 16 = 0dB, 32 = +10dB</tooltip>
         <decVal min="0" max="32"/>
+        <tooltip>0 = -10dB, 16 = 0dB, 32 = +10dB</tooltip>
     </variable>
     <variable CV="197" default="16" item="Treble setting">
         <qualifier>
@@ -160,8 +160,8 @@
             <relation>ge</relation>
             <value>159</value>
         </qualifier>
-        <tooltip>0 = -10dB, 16 = 0dB, 32 = +10dB</tooltip>
         <decVal min="0" max="32"/>
+        <tooltip>0 = -10dB, 16 = 0dB, 32 = +10dB</tooltip>
     </variable>
     <!-- Indexed variables -->
     <variable CV="16.1.259" default="128" item="Sound Volume 1">
