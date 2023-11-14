@@ -1603,7 +1603,7 @@ public class JUnitUtil {
     final private static Random randomConstantSeed = new Random(0);
 
     public static Random getRandomConstantSeed(){
-        return random;
+        return randomConstantSeed;
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JUnitUtil.class);
