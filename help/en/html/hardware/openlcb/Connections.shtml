@@ -26,6 +26,8 @@
 
       <h3>Via a Lawcell CAN USB</h3>
 
+      <h3>Via a <a href="https://www.sprog-dcc.co.uk>PI-LCC</a> for Raspberry Pi</h3>
+
       <h3>Via a <a href="../can/index.shtml">MERG CAN-RS/-USB</a></h3>
 
       <p>You can simulate a remote OpenLCB connection, e.g. to debug things, on many computers
