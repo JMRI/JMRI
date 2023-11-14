@@ -22,9 +22,9 @@ import org.junit.Assert;
 abstract public class AbstractConsistTestBase {
 
     protected Consist c = null;
-    @BeforeEach
+
     abstract public void setUp();  // should set the consist under test to c.
-    @AfterEach
+
     abstract public void tearDown(); // should clean up the consist c.
 
     @Test public void testCtor() {

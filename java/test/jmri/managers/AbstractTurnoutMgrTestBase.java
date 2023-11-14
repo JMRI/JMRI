@@ -26,7 +26,6 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
     /**
      * Overload to load l with actual object; create scaffolds as needed
      */
-    @BeforeEach
     abstract public void setUp();
 
     protected boolean listenerResult = false;

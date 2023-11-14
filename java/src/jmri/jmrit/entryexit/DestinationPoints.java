@@ -45,6 +45,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
     int entryExitType = EntryExitPairs.SETUPTURNOUTSONLY;//SETUPSIGNALMASTLOGIC;
     boolean enabled = true;
     boolean activeEntryExit = false;
+    boolean activeEntryExitReversed = false;
     List<LayoutBlock> routeDetails = new ArrayList<>();
     LayoutBlock destination;
     boolean disposed = false;
@@ -1211,7 +1212,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 }
 
                 if (getEntryExitType() == EntryExitPairs.FULLINTERLOCK) {
-                    setActiveEntryExit(true);
+                    setActiveEntryExit(true, reverseDirection);
                 }
                 setRoute(true);
             }
@@ -1297,13 +1298,26 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         return activeEntryExit;
     }
 
+    public boolean isReversed() {
+        return activeEntryExitReversed;
+    }
+
+    public boolean isUniDirection() {
+        return uniDirection;
+    }
+
     @Override
     public void setState(int state) {
     }
 
     protected void setActiveEntryExit(boolean boo) {
+        setActiveEntryExit(boo, false);
+    }
+
+    protected void setActiveEntryExit(boolean boo, boolean reversed) {
         int oldvalue = getState();
         activeEntryExit = boo;
+        activeEntryExitReversed = reversed;
         src.setMenuEnabled(boo);
         firePropertyChange("active", oldvalue, getState());  // NOI18N
     }

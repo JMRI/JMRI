@@ -3678,7 +3678,7 @@ public class CreateLogixNGTreeScaffold {
 
         expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setComment("A comment");
-        expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Inactive);
+        expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Active);
         expressionEntryExit.getSelectNamedBean().setNamedBean(dp2);
         expressionEntryExit.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
         expressionEntryExit.getSelectNamedBean().setFormula("\"IT\"+index");
@@ -3694,7 +3694,7 @@ public class CreateLogixNGTreeScaffold {
 
         expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setComment("A comment");
-        expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Inactive);
+        expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Other);
         expressionEntryExit.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
         expressionEntryExit.getSelectNamedBean().setFormula("\"IT\"+index");
         expressionEntryExit.getSelectNamedBean().setLocalVariable("index");
@@ -3709,7 +3709,7 @@ public class CreateLogixNGTreeScaffold {
 
         expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setComment("A comment");
-        expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Inactive);
+        expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Reversed);
         expressionEntryExit.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
         expressionEntryExit.getSelectNamedBean().setFormula("\"IT\"+index");
         expressionEntryExit.getSelectNamedBean().setLocalVariable("index");
@@ -3719,6 +3719,12 @@ public class CreateLogixNGTreeScaffold {
         expressionEntryExit.setStateFormula("\"IT\"+index2");
         expressionEntryExit.setStateLocalVariable("index2");
         expressionEntryExit.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionEntryExit);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
+        expressionEntryExit.setComment("A comment");
+        expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.BiDirection);
         maleSocket = digitalExpressionManager.registerExpression(expressionEntryExit);
         and.getChild(indexExpr++).connect(maleSocket);
 
