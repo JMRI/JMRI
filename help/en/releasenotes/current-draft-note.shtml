@@ -126,6 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
+                <li>Improve the layout of the firmware download page.</li>
                 <li>
                     Added SPROG DCC Ltd PI-LCC Raspberry Pi CAN adapter
                 </li>
