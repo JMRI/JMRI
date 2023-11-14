@@ -35,7 +35,6 @@ abstract public class AbstractOpsModeProgrammerTestBase extends jmri.AddressedPr
     }
     
     // must set the value of programmer in setUp.
-    @BeforeEach
     @Override
     abstract public void setUp();
 
