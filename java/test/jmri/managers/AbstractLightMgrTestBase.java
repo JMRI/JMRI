@@ -22,7 +22,6 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
 
     // implementing classes must provide these abstract members:
     //
-    @BeforeEach
     abstract public void setUp(); // load t with actual object; create scaffolds as needed
 
     abstract public String getSystemName(int i);

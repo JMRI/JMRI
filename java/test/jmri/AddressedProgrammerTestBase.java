@@ -55,9 +55,7 @@ abstract public class AddressedProgrammerTestBase extends ProgrammerTestBase {
         Assert.assertNotNull("String Address",((AddressedProgrammer)programmer).getAddress());
     }
 
-    
     // must set the value of programmer in setUp.
-    @BeforeEach
     @Override
     abstract public void setUp();
 
