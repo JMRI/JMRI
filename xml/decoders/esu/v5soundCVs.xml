@@ -125,6 +125,44 @@
         <decVal/>
         <label>Sound CV16</label>
     </variable>
+    <variable CV="196" default="16" item="Bass setting">
+        <qualifier>
+            <variableref>Firmware Major Version</variableref>
+            <relation>ge</relation>
+            <value>5</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Firmware Minor Version</variableref>
+            <relation>ge</relation>
+            <value>9</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Firmware Build Number</variableref>
+            <relation>ge</relation>
+            <value>159</value>
+        </qualifier>
+        <tooltip>0 = -10dB, 16 = 0dB, 32 = +10dB</tooltip>
+        <decVal min="0" max="32"/>
+    </variable>
+    <variable CV="197" default="16" item="Treble setting">
+        <qualifier>
+            <variableref>Firmware Major Version</variableref>
+            <relation>ge</relation>
+            <value>5</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Firmware Minor Version</variableref>
+            <relation>ge</relation>
+            <value>9</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Firmware Build Number</variableref>
+            <relation>ge</relation>
+            <value>159</value>
+        </qualifier>
+        <tooltip>0 = -10dB, 16 = 0dB, 32 = +10dB</tooltip>
+        <decVal min="0" max="32"/>
+    </variable>
     <!-- Indexed variables -->
     <variable CV="16.1.259" default="128" item="Sound Volume 1">
         <decVal/>
