@@ -3149,6 +3149,7 @@
       <stateReference />
       <stateLocalVariable />
       <stateFormula />
+      <showBidirectionalOptions>no</showBidirectionalOptions>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -3222,6 +3223,7 @@
       <stateReference>{IM2}</stateReference>
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
+      <showBidirectionalOptions>no</showBidirectionalOptions>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -3295,6 +3297,7 @@
       <stateReference>{IM2}</stateReference>
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
+      <showBidirectionalOptions>no</showBidirectionalOptions>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -3368,6 +3371,7 @@
       <stateReference>{IM2}</stateReference>
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
+      <showBidirectionalOptions>no</showBidirectionalOptions>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -3441,6 +3445,7 @@
       <stateReference>{IM2}</stateReference>
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
+      <showBidirectionalOptions>no</showBidirectionalOptions>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
