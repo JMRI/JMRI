@@ -7,6 +7,8 @@ import jmri.DccLocoAddress;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
+import org.junit.jupiter.api.AfterEach;
+
 /**
  * Common tests for classes derived from jmri.jmris.AbstractThrottleServer class
  *
@@ -63,9 +65,9 @@ abstract public class AbstractThrottleServerTestBase {
     // and should also install a throttle manager.
     abstract public void setUp();
 
+    @AfterEach
     public void postTestReset(){
        ats = null;
     }
-
 
 }
