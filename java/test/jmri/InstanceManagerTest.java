@@ -241,7 +241,7 @@ public class InstanceManagerTest {
         public static final String MESSAGE = "dispose called";
         private static int times = 0;
 
-        private static void setUp() {
+        private static void startUp() {
             times = 0;
         }
 
@@ -421,7 +421,7 @@ public class InstanceManagerTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        OkToDispose.setUp();
+        OkToDispose.startUp();
         InstanceManager.getDefault().clearAll();
     }
 
