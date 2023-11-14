@@ -116,6 +116,10 @@
             </li>
 
             <li>
+              <a href="dcc-ex/index.shtml">DCC-EX EX-CommandStation&lt; (arduino)</a>
+            </li>
+
+            <li>
               <a href="dccpp/index.shtml">DCC++&lt; (arduino)</a>
             </li>
 
@@ -425,7 +429,7 @@
           <dd>
             <p class="dl">Configure: See <a href="arduino/index.shtml">the JMRI arduino help
             page</a> for information on configuring for accessory control. See also <a href=
-            "dccpp/index.shtml">DCC++</a> for use as a DCC command station.</p>
+            "dcc-ex/index.shtml">DCC-EX EX-CommandStation</a> for use as a DCC command station.</p>
 
             <p>&nbsp;</p>
           </dd>
@@ -638,6 +642,21 @@
             <p class="dl">Configure: EasyDCC command station via <a href=
             "easydcc/EasyDCC.shtml">Serial</a> or <a href="TerminalServer.shtml">Terminal
             Server</a></p>
+
+            <p>&nbsp;</p>
+          </dd>
+
+          <dt class="im">
+            <a href="https://www.youtube.com/c/DCCEX" target=
+            "_blank"><img src="dcc-ex/images/DCC-EX-logo.png" width="60"  alt="DCC-EX"></a>
+          </dt>
+
+          <dt>
+            <a href="dcc-ex/index.shtml">DCC-EX</a>
+          </dt>
+
+          <dd>
+            <p class="dl">Configure: <a href="dcc-ex/index.shtml">DCC-EX EX-CommandStation - Open Source Arduino Command Station</a>.</p>
 
             <p>&nbsp;</p>
           </dd>
@@ -1396,7 +1415,7 @@
           <dd>
             <p class="dl">Configure: See <a href="arduino/index.shtml">the JMRI arduino help
             page</a> for information on configuring for accessory control. See also <a href=
-            "dccpp/index.shtml">DCC++</a> for use as a DCC command station.</p>
+            "dcc-ex/index.shtml">DCC-EX EX-CommandStation</a> for use as a DCC command station.</p>
 
             <p>&nbsp;</p>
           </dd>

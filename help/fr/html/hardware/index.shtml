@@ -90,6 +90,16 @@
           </dd>
 
           <dt class="im">
+            <a href=https://www.youtube.com/c/DCCEX">
+            <img src="dcc-ex/images/DCC-EX-logo.png" width="60"  alt="DCC-EX EX-CommandStation"></a>
+          </dt>
+          <dt><a href="dcc-ex/index.shtml">DCC++</a></dt>
+          <dd>
+            <p class="dl">Configurer: <a href="dcc-ex/index.shtml">Centrale
+            DCC++ Open Source Arduino</a>.</p>
+          </dd>
+
+          <dt class="im">
             <a href="https://www.youtube.com/channel/UCJmvQx-fe0OMAIH-_g-_rZw">
             <img src="dccpp/images/dccpp_logo.jpg" width="60" height="26" alt="DCC++"></a>
           </dt>
