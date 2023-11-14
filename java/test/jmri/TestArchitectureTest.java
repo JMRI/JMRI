@@ -2,6 +2,7 @@ package jmri;
 
 import org.junit.jupiter.api.*;
 
+import com.tngtech.archunit.core.domain.JavaModifier;
 import com.tngtech.archunit.lang.*;
 import com.tngtech.archunit.junit.*;
 
@@ -90,5 +91,39 @@ public class TestArchitectureTest {
         .and().doNotHaveFullyQualifiedName("jmri.util.TestingLoggerConfiguration")
         .and().doNotHaveFullyQualifiedName("apps.jmrit.log.Log4JTreePaneTest")
         .should().dependOnClassesThat().resideInAPackage("org.apache.logging.log4j");
+
+    /**
+     * setUp methods should normally use the org.junit.jupiter.api.BeforeEach annotation.
+     */
+    @ArchTest
+    public static final ArchRule setUpMethodsHaveBeforeEachAnnotation =
+        methods()
+        .that().haveName("setUp")
+        .and().doNotHaveModifier(JavaModifier.ABSTRACT)
+        .and().areNotDeclaredIn(jmri.util.JUnitUtil.class)
+        // JUnit4
+        .and().areDeclaredInClassesThat().resideOutsideOfPackage("jmri.jmrit.logixng..")
+        .and().areNotDeclaredIn(jmri.jmrit.display.logixng.ActionPositionableTest.class)
+        .and().areNotDeclaredIn(jmri.util.junit.rules.RetryRuleTest.class)
+        .should()
+        .beAnnotatedWith(BeforeEach.class)
+        .orShould().beAnnotatedWith(BeforeAll.class);
+
+    /**
+     * tearDown methods should normally use the org.junit.jupiter.api.AfterEach annotation.
+     */
+    @ArchTest
+    public static final ArchRule tearDownMethodsHaveAfterEachAnnotation =
+        methods()
+        .that().haveName("tearDown")
+        .and().doNotHaveModifier(JavaModifier.ABSTRACT)
+        .and().areNotDeclaredIn(jmri.util.JUnitUtil.class)
+        // JUnit4
+        .and().areDeclaredInClassesThat().resideOutsideOfPackage("jmri.jmrit.logixng..")
+        .and().areNotDeclaredIn(jmri.jmrit.display.logixng.ActionPositionableTest.class)
+        .and().areNotDeclaredIn(jmri.util.junit.rules.RetryRuleTest.class)
+        .should()
+        .beAnnotatedWith(AfterEach.class)
+        .orShould().beAnnotatedWith(AfterAll.class);
 
 }
