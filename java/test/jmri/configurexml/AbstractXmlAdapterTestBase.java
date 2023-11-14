@@ -17,10 +17,8 @@ abstract public class AbstractXmlAdapterTestBase {
         Assert.assertNotNull(xmlAdapter);
     }
 
-    @BeforeEach
     abstract public void setUp();
 
-    @AfterEach
     abstract public void tearDown();
 
 }

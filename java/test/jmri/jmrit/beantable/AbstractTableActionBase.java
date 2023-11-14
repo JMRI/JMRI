@@ -189,13 +189,11 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
     /**
      * Derived classes should use this method to set a.
      */
-    @BeforeEach
     abstract public void setUp();
 
     /**
      * Derived classes should use this method to clean up after tests.
      */
-    @AfterEach
     abstract public void tearDown();
 
     // private final static Logger log = LoggerFactory.getLogger(AbstractTableActionBase.class);

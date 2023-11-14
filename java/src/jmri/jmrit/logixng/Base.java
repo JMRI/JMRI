@@ -21,6 +21,13 @@ import org.apache.commons.lang3.mutable.MutableInt;
 public interface Base extends PropertyChangeProvider {
 
     /**
+     * Separator returned by enums toString() methods to get a separator
+     * in JComboBoxes. See {@link jmri.jmrit.logixng.expressions.ExpressionEntryExit.EntryExitState}
+     * for an example.
+     */
+    String SEPARATOR = "---------------";
+
+    /**
      * The name of the property child count.
      * To get the number of children, use the method getChildCount().
      * This constant is used in calls to firePropertyChange().

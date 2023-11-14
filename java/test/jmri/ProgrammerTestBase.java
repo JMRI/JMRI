@@ -69,10 +69,8 @@ abstract public class ProgrammerTestBase {
                 programmer.writeCV("1",42,null);
     }
     
-    @BeforeEach
     abstract public void setUp();
 
-    @AfterEach
     abstract public void tearDown();
 
 }

@@ -112,10 +112,8 @@ abstract public class AbstractEditorTestBase<T extends Editor> {
     /**
      * Subclasses must instantiate {@link #e} in the setUp method.
      */
-    @BeforeEach
     abstract public void setUp();
 
-    @AfterEach
     abstract public void tearDown();
 
 }
