@@ -3673,6 +3673,7 @@ public class CreateLogixNGTreeScaffold {
         expressionEntryExit.setStateFormula("\"IT\"+index2");
         expressionEntryExit.setStateLocalVariable("index2");
         expressionEntryExit.setStateReference("{IM2}");
+        expressionEntryExit.setShowBidirectionalOptions(true);
         maleSocket = digitalExpressionManager.registerExpression(expressionEntryExit);
         and.getChild(indexExpr++).connect(maleSocket);
 
@@ -3689,6 +3690,7 @@ public class CreateLogixNGTreeScaffold {
         expressionEntryExit.setStateFormula("\"IT\"+index2");
         expressionEntryExit.setStateLocalVariable("index2");
         expressionEntryExit.setStateReference("{IM2}");
+        expressionEntryExit.setShowBidirectionalOptions(false);
         maleSocket = digitalExpressionManager.registerExpression(expressionEntryExit);
         and.getChild(indexExpr++).connect(maleSocket);
 

@@ -51,6 +51,8 @@ public class ExpressionEntryExitXml extends jmri.managers.configurexml.AbstractN
         element.addContent(new Element("stateLocalVariable").addContent(p.getStateLocalVariable()));
         element.addContent(new Element("stateFormula").addContent(p.getStateFormula()));
 
+        element.addContent(new Element("showBidirectionalOptions").addContent(p.isShowBidirectionalOptions() ? "yes" : "no"));
+
         return element;
     }
 
@@ -93,6 +95,11 @@ public class ExpressionEntryExitXml extends jmri.managers.configurexml.AbstractN
 
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);
+        }
+
+        Element showBidirectionalOptions = shared.getChild("showBidirectionalOptions");
+        if (showBidirectionalOptions != null) {
+            h.setShowBidirectionalOptions("yes".equals(showBidirectionalOptions.getTextTrim()));
         }
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);

@@ -33,6 +33,7 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
     private String _stateLocalVariable = "";
     private String _stateFormula = "";
     private ExpressionNode _stateExpressionNode;
+    private boolean _showBidirectionalOptions;
 
     public ExpressionEntryExit(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -123,6 +124,14 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
         } else {
             _stateExpressionNode = null;
         }
+    }
+
+    public void setShowBidirectionalOptions(boolean value) {
+        _showBidirectionalOptions = value;
+    }
+
+    public boolean isShowBidirectionalOptions() {
+        return _showBidirectionalOptions;
     }
 
     /** {@inheritDoc} */
@@ -286,21 +295,23 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
     }
 
     public enum EntryExitState {
-        Inactive(0x04, Bundle.getMessage("EntryExitStateInactive")),
-        Active(0x02, Bundle.getMessage("EntryExitStateActive")),
-        Other(-1, Bundle.getMessage("EntryExitOtherStatus")),
-        Separator1(-1, Base.SEPARATOR),
-        ActiveForward(-1, Bundle.getMessage("EntryExitActiveForward")),
-        ActiveReversed(-1, Bundle.getMessage("EntryExitActiveReversed")),
-        Separator2(-1, Base.SEPARATOR),
-        BiDirection(-1, Bundle.getMessage("EntryExitBiDirection"));
+        Inactive(0x04, Bundle.getMessage("EntryExitStateInactive"), false),
+        Active(0x02, Bundle.getMessage("EntryExitStateActive"), false),
+        Other(-1, Bundle.getMessage("EntryExitOtherStatus"), false),
+        Separator1(-1, Base.SEPARATOR, true),
+        ActiveForward(-1, Bundle.getMessage("EntryExitActiveForward"), true),
+        ActiveReversed(-1, Bundle.getMessage("EntryExitActiveReversed"), true),
+        Separator2(-1, Base.SEPARATOR, true),
+        BiDirection(-1, Bundle.getMessage("EntryExitBiDirection"), true);
 
         private final int _id;
         private final String _text;
+        private final boolean _isBidirectionalOption;
 
-        private EntryExitState(int id, String text) {
+        private EntryExitState(int id, String text, boolean isBidirectionalOption) {
             this._id = id;
             this._text = text;
+            this._isBidirectionalOption = isBidirectionalOption;
         }
 
         static public EntryExitState get(int id) {
@@ -318,6 +329,10 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
 
         public int getID() {
             return _id;
+        }
+
+        public boolean isBidirectionalOption() {
+            return _isBidirectionalOption;
         }
 
         @Override

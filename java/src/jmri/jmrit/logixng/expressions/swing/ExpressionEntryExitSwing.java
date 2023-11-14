@@ -39,12 +39,23 @@ public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
     private JTextField _entryExitStateLocalVariableTextField;
     private JTextField _entryExitStateFormulaTextField;
 
+    private JCheckBox _showBidirectionalOptionsCheckBox;
+
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ExpressionEntryExit expression = (ExpressionEntryExit)object;
 
         panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        _showBidirectionalOptionsCheckBox = new JCheckBox(Bundle.getMessage("ExpressionEntryExit_ShowBidirectionalOptions"));
+        _showBidirectionalOptionsCheckBox.addActionListener((e) -> { updateStateComboBox(); });
+        if (expression != null) {
+            _showBidirectionalOptionsCheckBox.setSelected(expression.isShowBidirectionalOptions());
+        }
+
+        JPanel innerPanel = new JPanel();
 
         _selectNamedBeanSwing = new LogixNG_SelectNamedBeanSwing<>(
                 InstanceManager.getDefault(EntryExitPairs.class), getJDialog(), this);
@@ -76,9 +87,7 @@ public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
         _tabbedPaneEntryExitState.addTab(NamedBeanAddressing.Formula.toString(), _panelEntryExitStateFormula);
 
         _stateComboBox = new JComboBox<>();
-        for (EntryExitState e : EntryExitState.values()) {
-            _stateComboBox.addItem(e);
-        }
+        updateStateComboBox();
         JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
 
         _stateComboBox.setRenderer(new ComboBoxRenderer<>(_stateComboBox.getRenderer()));
@@ -122,7 +131,23 @@ public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
                 Bundle.getMessage("ExpressionEntryExit_Components"), components);
 
-        for (JComponent c : componentList) panel.add(c);
+        for (JComponent c : componentList) innerPanel.add(c);
+
+        panel.add(innerPanel);
+        panel.add(_showBidirectionalOptionsCheckBox);
+    }
+
+    private void updateStateComboBox() {
+        EntryExitState oldState = _stateComboBox.getItemAt(_stateComboBox.getSelectedIndex());
+        _stateComboBox.removeAllItems();
+        for (EntryExitState e : EntryExitState.values()) {
+            if (!e.isBidirectionalOption() || _showBidirectionalOptionsCheckBox.isSelected()) {
+                _stateComboBox.addItem(e);
+            }
+        }
+        if (oldState != null) {
+            _stateComboBox.setSelectedItem(oldState);
+        }
     }
 
     /** {@inheritDoc} */
@@ -189,6 +214,8 @@ public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
         } catch (ParserException e) {
             throw new RuntimeException("ParserException: "+e.getMessage(), e);
         }
+
+        expression.setShowBidirectionalOptions(_showBidirectionalOptionsCheckBox.isSelected());
     }
 
     /** {@inheritDoc} */
