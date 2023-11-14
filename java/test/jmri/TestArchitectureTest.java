@@ -126,6 +126,7 @@ public class TestArchitectureTest {
         .beAnnotatedWith(AfterEach.class)
         .orShould().beAnnotatedWith(AfterAll.class);
 
+    /**
      * JUnit5 should not have abstract methods with Test annotation.
      * Instead, the overriding method should have the Test annotation.
      */
