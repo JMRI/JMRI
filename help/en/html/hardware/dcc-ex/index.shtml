@@ -3,7 +3,7 @@
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - DCC-EX</title>
-  <meta name="author" content="Mark Underwood">
+  <meta name="author" content="Mark Underwood,  Peter Akers">
   <meta name="keywords" content="DCC-EX DCC++EX DCC++ java model railroad JMRI install">
   <!--#include virtual="/Style.shtml" -->
 </head>
@@ -42,15 +42,15 @@
 
       <h2 id="overview">Overview</h2>
 
-      <p>EX-CommandStation from th DCC-EX team is an Open Source Arduino-based <a href="#documentation">Do-it-Yourself</a> DCC
+      <p>EX-CommandStation from the DCC-EX team is an Open Source Arduino-based <a href="#documentation">Do-it-Yourself</a> DCC
       Command Station.</p>
 
       <p>EX-CommandStation directly replaces the older, now unsupported DCC++. It supports and extends the original DCC++ commands. 
-      <br /> EX-CommandStation is, in relation to JMRI, backward compatible such that you can select "DCC++"" as a manufacturer and system and JMRI will work correctly.</p>
+      <br /> EX-CommandStation is, in relation to JMRI, backward compatible such that you can select "DCC++" as a manufacturer and system and JMRI will work correctly.</p>
 
-      <p>Note: DCC-EX is a separate project from JMRI. If you have questions about building a EX-CommandStation system, operating it, etc, you should get help via <a href=
-      "https://discord.gg/bFHAafZE">the DCC-EX Discord server</a>. There's also information on the <a href="https://github.com/DCC-EX">DCC-EX GitHub repository</a> and <a href=
-      "https://dcc-ex.com/">associated documentation</a>. The JMRI discussion groups can only provide limited support for EX-CommnadStation itself.</p>
+      <p>Note: DCC-EX is a separate project from JMRI. If you have questions about building a EX-CommandStation system, operating it, etc, you should get help via their <a href="https://dcc-ex.com/">DCC-EX website</a> or their <a href=
+        "https://discord.gg/bFHAafZE">DCC-EX Discord server</a>. There's also information on the <a href="https://github.com/DCC-EX">DCC-EX GitHub repository</a> and <a href=
+      "https://dcc-ex.com/">associated documentation</a>. The JMRI discussion groups can only provide limited support for EX-CommandStation itself.</p>
 
       <p>Features include:</p>
 
@@ -97,7 +97,9 @@
 
         <li>DriveAway: Place a locomotive on the service track, program it, then drive it off onto the main track</li>
 
-        <li>Sutport for direct connection to the EX-CommnadStation over WiFi, Serial or Blutooth using the WiThrottle or Native DCC-EX protocols</li>
+        <li>Support for direct connection to the EX-CommnadStation over WiFi, Serial or Blutooth using the WiThrottle or Native DCC-EX protocols</li>
+
+        <li>Support for automation using the EXRAIL feature</li>
 
       </ul>
 
@@ -105,7 +107,7 @@
 
       <h3>Command Stations</h3>
 
-      <p>Currently EX-CommandStions can be built from either the Arduino Uno or Arduino Mega platforms, though additional microprocessor are being investigated. JMRI supports connection to the EX-CommandStation using either via USB or WiFi connection.</p>
+      <p>Currently EX-CommandStions can be built on either the Arduino Uno or Arduino Mega platforms, though additional microprocessor are being investigated. JMRI supports connection to the EX-CommandStation using either via USB or WiFi connection.</p>
 
       <h3>Computer Interfaces</h3>
       Currently, four interfaces are supported:
@@ -135,8 +137,7 @@
           <dt class="left">JMRI</dt>
 
           <dd class="first">
-            <p>JMRI currently supports the V1.1 Base Station Interface. Some V1.0 commands may 
-            not work.</p>
+            <p>JMRI currently supports the DCC++ V1.1 Base Station Interface. Some V1.0 commands may not work.</p>
           </dd>
         </dl>
       </div>

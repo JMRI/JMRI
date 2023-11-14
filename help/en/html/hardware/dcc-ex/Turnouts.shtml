@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI: EX-CommandStation (DCC-EX) Turnouts</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: EX-CommandStation (DCC-EX) Turnouts/Points</title><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="DCC-EX DCC++EX DCC++ turnouts points"></head>
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->
@@ -11,11 +12,11 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>EX-CommandStation (DCC-EX) Turnouts and Outputs</h1>
+      <h1>EX-CommandStation (DCC-EX) Turnouts/Points and Outputs</h1>
 
-      <h2 id="types">Types of DCC-EX Turnout Control</h2>
+      <h2 id="types">Types of DCC-EX Turnout/Points Control</h2>
 
-      <p>There are 3 ways to control a turnout via DCC-EX:</p>
+      <p>There are 3 ways to control a turnout/point via DCC-EX:</p>
 
       <ul>
         <li>Direct DCC Accessory Command ("a" command)</li>
@@ -53,7 +54,7 @@
       <ol>
         <li>Click the "Add" button</li>
 
-        <li>Make sure "DCC++" is selected in the System Name chooser. (Unfortunatly JMRI has not been updated yet to the EX_CommnadStation name.)</li>
+        <li>Make sure "DCC++" is selected in the System Name chooser. (Unfortunatly JMRI has not been updated yet to the EX-CommandStation name.)</li>
 
         <li>Enter the turnout's DCC address in the Hardware Address box</li>
 

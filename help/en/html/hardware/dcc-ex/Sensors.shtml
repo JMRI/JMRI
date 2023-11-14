@@ -3,7 +3,7 @@
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: EX-CommandStation (DCC-EX) Sensors</title><!--#include virtual="/Style.shtml" -->
-</head>
+  <meta name="keywords" content="DCC-EX DCC++EX DCC++ sensors"></head>
 <body>
   <!--#include virtual="/Header.shtml" -->
 
