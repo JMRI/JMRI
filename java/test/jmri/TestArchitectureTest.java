@@ -126,4 +126,27 @@ public class TestArchitectureTest {
         .beAnnotatedWith(AfterEach.class)
         .orShould().beAnnotatedWith(AfterAll.class);
 
+     * JUnit5 should not have abstract methods with Test annotation.
+     * Instead, the overriding method should have the Test annotation.
+     */
+    @ArchTest
+    public static final ArchRule noAbstractTestMethods = noMethods()
+        .that().areAnnotatedWith(Test.class)
+        .or().areAnnotatedWith(org.junit.jupiter.params.ParameterizedTest.class)
+        .should()
+        .haveModifier(com.tngtech.archunit.core.domain.JavaModifier.ABSTRACT);
+
+    /**
+     * JUnit5 should not have abstract methods with LifeCycle annotation.
+     * Instead, the overriding method should have the annotation.
+     */
+    @ArchTest
+    public static final ArchRule noAbstractLifeCycleMethods = noMethods()
+        .that().areAnnotatedWith(BeforeEach.class)
+        .or().areAnnotatedWith(AfterEach.class)
+        .or().areAnnotatedWith(BeforeAll.class)
+        .or().areAnnotatedWith(AfterAll.class)
+        .should()
+        .haveModifier(com.tngtech.archunit.core.domain.JavaModifier.ABSTRACT);
+
 }
