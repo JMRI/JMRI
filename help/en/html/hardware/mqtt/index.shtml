@@ -96,7 +96,7 @@
           <a href="#testing">Testing</a>
         </li>
       </ul>
-      <p class="important">This document is up-to-date as of JMRI Release 5.5.6.</p>
+      <p class="important">This document is up-to-date as of JMRI Release 5.5.7.</p>
       </div>
 
 <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
@@ -105,7 +105,8 @@
 
       <p>The first step in using MQTT communication with JMRI is to create a connection to an MQTT
       message broker.  This is done via the Connections pane in the <a href=
-      "../../../package/apps/TabbedPreferences.shtml">Preferences window.</a></p>
+      "../../../package/apps/TabbedPreferences.shtml">Preferences window.</a>
+      (<strong>Edit&rArr; Preferences&rArr;Connections</strong>)</p>
 
       <ul>
         <li>Select "MQTT" as the <strong>System manufacturer</strong></li>
@@ -116,7 +117,11 @@
         simple ways to connect to a message broker.]</li>
 
         <li>The <strong>IP Address/Host Name</strong> should be either the IP address or host name of an external
-        server, or "localhost" if you are running an MQTT message broker on the same machine as JMRI.</li>
+        server, or "localhost" if you are running an MQTT message broker on the same machine as JMRI.<br>
+        <span class="since">Since 5.5.7</span>JMRI will use the Preferences <strong>Railroad Name</strong>
+         when connecting to the broker (<strong>Edit&rArr;Preferences&rArr;Railroad Name</strong>). 
+         This is known as the "MQTT Client ID" and will make it easier to identify the JMRI connection in
+         the MQTT broker logs.</li>
 
         <li>The default <strong>Connection Prefix</strong> for MQTT is "M". [<em>Advanced Usage</em>: this can
         be changed when setting up the connection.]</li>
