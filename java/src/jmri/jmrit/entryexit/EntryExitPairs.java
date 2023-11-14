@@ -419,7 +419,6 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
      * @param nxPair The system or user name of the destination point.
      */
     public void setReversedRoute(String nxPair) {
-        log.info("setReversedRoute: {}", nxPair);
         DestinationPoints dp = getNamedBean(nxPair);
         if (dp != null) {
             String destUUID = dp.getUniqueId();
