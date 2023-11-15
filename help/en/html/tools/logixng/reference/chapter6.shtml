@@ -265,18 +265,35 @@
 
       <h5>Entry/Exit</h5>
 
-      <ul>
-        <li><strong>Inactive:</strong> Evaluate to true if the state of the specified entry/exit
-        pair is inactive.</li>
+      <p>Evaluate if an Entry/Exit pair has a specified state.</p>
 
-        <li><strong>Active:</strong> Evaluate to true if the state of the specified entry/exit pair
-        is active.</li>
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/entryexit_expression.png"><img src=
+        "images/chapter6/entryexit_expression.png" alt="Chapter 6 entryexit expression"></a>
+      </div>
 
-        <li><strong>Other:</strong> Evaluate to true if the state of the specified entry/exit pair
-        is unknown or inconsistent.</li>
+      <dl>
+        <dt>Inactive</dt>
+        <dd>Evaluate to true if the state of the specified entry/exit pair is inactive.</dd>
 
-        <li>Evaluate if an Entry/Exit pair is active, inactive or other.</li>
-      </ul>
+        <dt>Active</dt>
+        <dd>Evaluate to true if the state of the specified entry/exit pair is active.</dd>
+
+        <dt>Other</dt>
+        <dd>Evaluate to true if the state of the specified entry/exit pair is unknown or inconsistent.</dd>
+
+        <dt>Reversed</dt>
+        <dd>Evaluate to true if the specified entry/exit pair is <strong>active</strong> and
+        <strong>reversed</strong>.  A <strong>reversed</strong> route occurs when the sensors for a
+        <strong>bidirectional</strong> entry/exit pair are selected in the reverse order.  The
+        evaluation is triggered by a change to the active/inactive state of the entry/exit pair.</dd>
+
+        <dt>Bidirectional</dt>
+        <dd>Evaluate to true if the specified entry/exit pair has the <strong>Both Way</strong>
+        option enabled in the entry/exit pair table.  The evaluation is triggered by a change to
+        the active/inactive state of the entry/exit pair.  Changes to the Both Way option do not
+        trigger evaluation.</dd>
+      </dl>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
