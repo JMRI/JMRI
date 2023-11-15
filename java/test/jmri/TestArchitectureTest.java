@@ -55,8 +55,7 @@ public class TestArchitectureTest {
     public static final ArchRule junit4TestRule = noClasses().that()
         .doNotHaveFullyQualifiedName("jmri.util.junit.rules.RetryRuleTest").and()
         .doNotHaveFullyQualifiedName("jmri.jmrit.display.logixng.ActionPositionableTest").and()
-        .resideOutsideOfPackage("jmri.jmrit.logixng..").and()
-        .resideOutsideOfPackage("jmri.jmrix.bidib..")
+        .resideOutsideOfPackage("jmri.jmrit.logixng..")
         .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Test");
 
     /**
@@ -66,8 +65,7 @@ public class TestArchitectureTest {
     public static final ArchRule junit4BeforeRule = noClasses().that()
         .doNotHaveFullyQualifiedName("jmri.util.junit.rules.RetryRuleTest").and()
         .doNotHaveFullyQualifiedName("jmri.jmrit.display.logixng.ActionPositionableTest").and()
-        .resideOutsideOfPackage("jmri.jmrit.logixng..").and()
-        .resideOutsideOfPackage("jmri.jmrix.bidib..")
+        .resideOutsideOfPackage("jmri.jmrit.logixng..")
         .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Before");
     
     /**
@@ -77,8 +75,7 @@ public class TestArchitectureTest {
     public static final ArchRule junit4AfterRule = noClasses().that()
         .doNotHaveFullyQualifiedName("jmri.util.junit.rules.RetryRuleTest").and()
         .doNotHaveFullyQualifiedName("jmri.jmrit.display.logixng.ActionPositionableTest").and()
-        .resideOutsideOfPackage("jmri.jmrit.logixng..").and()
-        .resideOutsideOfPackage("jmri.jmrix.bidib..")
+        .resideOutsideOfPackage("jmri.jmrit.logixng..")
         .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.After");
 
     /**
@@ -127,6 +124,13 @@ public class TestArchitectureTest {
         .orShould().beAnnotatedWith(AfterAll.class);
 
     /**
+     * JMRI does not require PackageTest.class .
+     */
+    @ArchTest
+    public static final ArchRule noJUnit4PackageTestsRule = noClasses()
+        .should().haveSimpleName("PackageTest");
+
+    /**
      * JUnit5 should not have abstract methods with Test annotation.
      * Instead, the overriding method should have the Test annotation.
      */
@@ -135,7 +139,7 @@ public class TestArchitectureTest {
         .that().areAnnotatedWith(Test.class)
         .or().areAnnotatedWith(org.junit.jupiter.params.ParameterizedTest.class)
         .should()
-        .haveModifier(com.tngtech.archunit.core.domain.JavaModifier.ABSTRACT);
+        .haveModifier(JavaModifier.ABSTRACT);
 
     /**
      * JUnit5 should not have abstract methods with LifeCycle annotation.
@@ -148,6 +152,6 @@ public class TestArchitectureTest {
         .or().areAnnotatedWith(BeforeAll.class)
         .or().areAnnotatedWith(AfterAll.class)
         .should()
-        .haveModifier(com.tngtech.archunit.core.domain.JavaModifier.ABSTRACT);
+        .haveModifier(JavaModifier.ABSTRACT);
 
 }

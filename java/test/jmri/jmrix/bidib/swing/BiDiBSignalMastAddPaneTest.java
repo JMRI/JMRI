@@ -6,8 +6,8 @@ import jmri.jmrix.bidib.BiDiBInterfaceScaffold;
 import jmri.jmrix.bidib.BiDiBSystemConnectionMemo;
 import jmri.jmrix.bidib.TestBiDiBTrafficController;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the BiDiBSignalMastAddPane class
@@ -15,25 +15,25 @@ import org.junit.Before;
  * @author  Eckart Meyer  Copyright (C) 2020
  */
 public class BiDiBSignalMastAddPaneTest  extends AbstractSignalMastAddPaneTestBase {
-    
+
     BiDiBSystemConnectionMemo memo;
-    
+
     /** {@inheritDoc} */
     @Override
     protected SignalMastAddPane getOTT() {
         return new BiDiBSignalMastAddPane();
     }
-    
+
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new BiDiBSystemConnectionMemo();
         memo.setBiDiBTrafficController(new TestBiDiBTrafficController(new BiDiBInterfaceScaffold()));
     }
-    
+
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
