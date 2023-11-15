@@ -234,7 +234,7 @@
 
         <h4>ESU</h4>
             <ul>
-                <li></li>
+                <li>Added support for "Tone Control" for LokSound 5 (requires firmware 5.9.159 or higher).</li>
             </ul>
 
         <h4>Hornby</h4>
