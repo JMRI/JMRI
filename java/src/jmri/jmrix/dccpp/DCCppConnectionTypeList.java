@@ -15,7 +15,7 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = ConnectionTypeList.class)
 public class DCCppConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
-    public static final String DCCPP = "DCC++";
+    public static final String DCCPP = "DCC++ / DCC-EX";
 
     @Override
     public String[] getAvailableProtocolClasses() {
