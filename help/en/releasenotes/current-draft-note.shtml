@@ -434,6 +434,9 @@
         <ul>
           <li>The expression <strong>Entry/exit</strong> can now check if a
           entry/exit is reversed or bidirectional.</li>
+          <li>The <strong>Entry/Exit</strong> action can activate and deactivate Entry/Exit routes,
+          including activating a reversed route if the Entry/Exit pair has the <strong>Both Way</strong>
+          option enabled.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
