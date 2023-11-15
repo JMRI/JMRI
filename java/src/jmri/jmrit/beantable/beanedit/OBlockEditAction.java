@@ -24,8 +24,6 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
 
     static final java.util.Vector<String> speedList = new java.util.Vector<>();
     private String tabName = Bundle.getMessage("BeanNameOBlock");
-    NamedBeanComboBox<Reporter> reporterComboBox;
-    JCheckBox useCurrent = new JCheckBox();
     TableFrames.BlockPathJPanel blockPathPanel;
     NamedBeanComboBox<Sensor> sensorComboBox;
     NamedBeanComboBox<Sensor> errorSensorComboBox;
@@ -51,7 +49,6 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
         super.initPanels();
         sensor();
         paths();
-        reporterDetails();
         physicalDetails();
     }
 
@@ -134,43 +131,6 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
             setSelectedComponent(paths);
         }
         return paths;
-    }
-
-    BeanItemPanel reporterDetails() {
-        BeanItemPanel reporter = new BeanItemPanel();
-        reporter.setName(Bundle.getMessage("BeanNameReporter"));
-
-        reporterComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(ReporterManager.class), bean.getReporter(), DisplayOptions.DISPLAYNAME);
-        reporterComboBox.setAllowNull(true);
-        JComboBoxUtil.setupComboBoxMaxRows(reporterComboBox);
-
-        reporter.addItem(new BeanEditItem(reporterComboBox, Bundle.getMessage("BeanNameReporter"), Bundle.getMessage("BlockReporterText")));
-
-        reporterComboBox.addActionListener(e -> useCurrent.setEnabled(reporterComboBox.getSelectedItem() != null));
-
-        reporter.addItem(new BeanEditItem(useCurrent, Bundle.getMessage("BlockReporterCurrent"), Bundle.getMessage("BlockUseCurrentText")));
-
-        reporter.setResetItem(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                reporterComboBox.setSelectedItem(bean.getReporter());
-                useCurrent.setSelected(bean.isReportingCurrent());
-                useCurrent.setEnabled(bean.getReporter()!=null);
-            }
-        });
-
-        reporter.setSaveItem(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                bean.setReporter(reporterComboBox.getSelectedItem());
-                bean.setReportingCurrent(useCurrent.isSelected());
-            }
-        });
-        bei.add(reporter);
-        if (InstanceManager.getNullableDefault(ReporterManager.class) == null) {
-            setEnabled(false);
-        }
-        return reporter;
     }
 
     JSpinner lengthSpinner = new JSpinner(); // 2 digit decimal format field, initialized later as instance
