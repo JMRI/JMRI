@@ -319,11 +319,23 @@
             <label>
                 <text> </text>
             </label>
-            <label>
-                <text>Requires decoder firmware version 5.9.159 or greater.</text>
-                <text>You may need to re-read the info pane for DecoderPro to correctly see your firmware version.</text>
-                <text> </text>
-            </label>
+            <group>
+                <qualifier>
+                    <variableref>Firmware Full Version</variableref>
+                    <relation>lt</relation>
+                    <!-- 5.9.159 -> 0x509009f -> 84476063 -->
+                    <value>84476063</value>
+                </qualifier>
+                <label>
+                    <text>Requires decoder firmware version 5.9.159 or greater.</text>
+                </label>
+                <label>
+                    <text>You may need to re-read the info pane for DecoderPro to correctly see your firmware version.</text>
+                </label>
+                <label>
+                    <text> </text>
+                </label>
+            </group>
             <grid gridx="0" gridy="NEXT" ipady="10" anchor="LINE_END">
                 <griditem>
                     <display item="Bass setting"/>
