@@ -42,8 +42,9 @@
 
       <h2 id="overview">Overview</h2>
 
-      <p><strong><em>Note: DCC++ is no longer updated or supported by the DCC-EX development team or the original author.</em></strong>  
-      <br />It has been replaced by the <a href="../dcc-ex/index.html">EX-CommandStation by the DCC-EX team.</a> however it will continute to function with JMRI.  However it is recommended by the DCC-EX team that you upgrade DCC++ systems to EX-CommandStation, which will work on the existing hardware.</p>
+      <p class="important"><strong><em>Note: DCC++ is no longer updated or supported by the DCC-EX development team or the original author.</em></strong>  
+      <br />It has been replaced by the <a href="../dcc-ex/index.html">EX-CommandStation by the DCC-EX team.</a> although it will continue to function with JMRI. 
+      However it is recommended by the DCC-EX team that you upgrade DCC++ systems to EX-CommandStation, which will work on the existing hardware.</p>
   
       <p>DCC++ is an Open Source Arduino-based <a href="#documentation">Do-it-Yourself</a> DCC
       Command Station.</p>
