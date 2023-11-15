@@ -1,11 +1,8 @@
 package jmri.jmrix.bidib;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the BiDiBConnectionTypeList class
@@ -18,15 +15,15 @@ public class BiDiBConnectionTypeListTest {
     public void testCtor() {
 
         BiDiBConnectionTypeList c = new BiDiBConnectionTypeList();
-        Assert.assertNotNull(c);
+        Assertions.assertNotNull(c);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

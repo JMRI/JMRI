@@ -54,8 +54,7 @@ public class TestArchitectureTest {
     public static final ArchRule junit4TestRule = noClasses().that()
         .doNotHaveFullyQualifiedName("jmri.util.junit.rules.RetryRuleTest").and()
         .doNotHaveFullyQualifiedName("jmri.jmrit.display.logixng.ActionPositionableTest").and()
-        .resideOutsideOfPackage("jmri.jmrit.logixng..").and()
-        .resideOutsideOfPackage("jmri.jmrix.bidib..")
+        .resideOutsideOfPackage("jmri.jmrit.logixng..")
         .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Test");
 
     /**
@@ -65,8 +64,7 @@ public class TestArchitectureTest {
     public static final ArchRule junit4BeforeRule = noClasses().that()
         .doNotHaveFullyQualifiedName("jmri.util.junit.rules.RetryRuleTest").and()
         .doNotHaveFullyQualifiedName("jmri.jmrit.display.logixng.ActionPositionableTest").and()
-        .resideOutsideOfPackage("jmri.jmrit.logixng..").and()
-        .resideOutsideOfPackage("jmri.jmrix.bidib..")
+        .resideOutsideOfPackage("jmri.jmrit.logixng..")
         .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Before");
     
     /**
@@ -76,8 +74,7 @@ public class TestArchitectureTest {
     public static final ArchRule junit4AfterRule = noClasses().that()
         .doNotHaveFullyQualifiedName("jmri.util.junit.rules.RetryRuleTest").and()
         .doNotHaveFullyQualifiedName("jmri.jmrit.display.logixng.ActionPositionableTest").and()
-        .resideOutsideOfPackage("jmri.jmrit.logixng..").and()
-        .resideOutsideOfPackage("jmri.jmrix.bidib..")
+        .resideOutsideOfPackage("jmri.jmrit.logixng..")
         .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.After");
 
     /**
@@ -90,6 +87,13 @@ public class TestArchitectureTest {
         .and().doNotHaveFullyQualifiedName("jmri.util.TestingLoggerConfiguration")
         .and().doNotHaveFullyQualifiedName("apps.jmrit.log.Log4JTreePaneTest")
         .should().dependOnClassesThat().resideInAPackage("org.apache.logging.log4j");
+
+    /**
+     * JMRI does not require PackageTest.class .
+     */
+    @ArchTest
+    public static final ArchRule noJUnit4PackageTestsRule = noClasses()
+        .should().haveSimpleName("PackageTest");
 
     /**
      * JUnit5 should not have abstract methods with Test annotation.
