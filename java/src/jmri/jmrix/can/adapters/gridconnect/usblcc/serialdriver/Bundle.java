@@ -1,7 +1,5 @@
 package jmri.jmrix.can.adapters.gridconnect.usblcc.serialdriver;
 
-import jmri.jmrix.can.adapters.gridconnect.usblcc.serialdriver.*;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.util.Locale;
