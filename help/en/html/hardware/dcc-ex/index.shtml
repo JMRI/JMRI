@@ -4,7 +4,7 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - DCC-EX</title>
   <meta name="author" content="Mark Underwood,  Peter Akers">
-  <meta name="keywords" content="DCC-EX DCC++EX DCC++ java model railroad JMRI install">
+  <meta name="keywords" content="DCC-EX DCC++EX DCC++ EX-CommandStation java model railroad JMRI install">
   <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
@@ -45,14 +45,15 @@
       <p>EX-CommandStation from the DCC-EX team is an Open Source Arduino-based <a href="#documentation">Do-it-Yourself</a> DCC
       Command Station.</p>
 
-      <p>EX-CommandStation directly replaces the older, now unsupported DCC++. It supports and extends the original DCC++ commands. 
-      <br /> EX-CommandStation is, in relation to JMRI, backward compatible such that you can select "DCC++" as a manufacturer and system and JMRI will work correctly.</p>
+      <p class="important"><strong><em>Note: EX-CommandStation directly replaces the older, now unsupported DCC++.</em></strong><br />It supports and extends the original DCC++ commands. 
+      <br /> EX-CommandStation is, in relation to JMRI, backward compatible such that you can select "DCC++" as a manufacturer and system and JMRI will work correctly.
+      Most menus and labels still show "DCC++" but work properly with DCC-EX.</p>
 
-      <p>Note: DCC-EX is a separate project from JMRI. If you have questions about building a EX-CommandStation system, operating it, etc, you should get help via their <a href="https://dcc-ex.com/">DCC-EX website</a> or their <a href=
+      <p>Note: DCC-EX is a separate project from JMRI. If you have questions about building an EX-CommandStation system, operating it, etc, you should get help via their <a href="https://dcc-ex.com/">DCC-EX website</a> or their <a href=
         "https://discord.gg/bFHAafZE">DCC-EX Discord server</a>. There's also information on the <a href="https://github.com/DCC-EX">DCC-EX GitHub repository</a> and <a href=
       "https://dcc-ex.com/">associated documentation</a>. The JMRI discussion groups can only provide limited support for EX-CommandStation itself.</p>
 
-      <p>Features include:</p>
+      <p>Features of DCC-EX CommandStation include:</p>
 
       <ul>
         <li>Fully compliant with NMRA DCC standards</li>
@@ -97,7 +98,7 @@
 
         <li>DriveAway: Place a locomotive on the service track, program it, then drive it off onto the main track</li>
 
-        <li>Support for direct connection to the EX-CommnadStation over WiFi, Serial or Blutooth using the WiThrottle or Native DCC-EX protocols</li>
+        <li>Support for direct connection to the EX-CommnadStation over WiFi, Serial or Bluetooth using the WiThrottle or Native DCC-EX protocols</li>
 
         <li>Support for automation using the EXRAIL feature</li>
 
@@ -107,28 +108,31 @@
 
       <h3>Command Stations</h3>
 
-      <p>Currently EX-CommandStions can be built on either the Arduino Uno or Arduino Mega platforms, though additional microprocessor are being investigated. JMRI supports connection to the EX-CommandStation using either via USB or WiFi connection.</p>
+      <p>Currently EX-CommandStation can be built on either the Arduino Uno or Arduino Mega (recommended) platforms, with additional microprocessors being investigated. 
+      JMRI supports connection to the EX-CommandStation using either via USB or WiFi connection.</p>
 
       <h3>Computer Interfaces</h3>
       Currently, four interfaces are supported:
       <ul>
         <li>Serial/USB: Direct connection to Arduino via a USB cable</li>
 
-        <li>Simulator: Simulated Base Station for off-line operation and testing.</li>
+        <li>Simulator: Simulated EX-CommandStation for off-line operation and testing.</li>
 
-        <li>Network: TCP/IP connection from JMRI to a Base Station with an Ethernet or WiFi Shield.</li>
+        <li>Network: TCP/IP connection from JMRI to an EX-CommandStation with an Ethernet or WiFi Shield.</li>
 
-        <li>DCC++ Over TCP: Remote network connection to a local JMRI instance connected to a Base Station</li>
+        <li>DCC++ Over TCP: Remote network connection to a local JMRI instance connected to an EX-CommandStation</li>
       </ul>
 
       <h4>Simulator</h4>
 
-      <p>To use the Simulator, simply choose that option in the JMRI Preferences. Note that some features do not work in the Simulator. For example, the Simulator does not (yet) support assigning, storing, and remembering Sensor and Turnout assignments. The Simulator interface
-      is functional enough to keep JMRI "happy" while working on offline projects such as Operations or Panel and Logix design, but is not intended to be a full-fledged Base Station Emulator.</p>
+      <p>To use the Simulator, simply choose that option in the JMRI Preferences. Note that some features do not work in the Simulator. 
+      For example, the Simulator does not (yet) support assigning, storing, and remembering Sensor and Turnout assignments. The Simulator interface
+      is functional enough to keep JMRI "happy" while working on offline projects such as Operations or Panel and Logix design, but is not intended to be a full-fledged EX-CommandStation Emulator.</p>
 
-      <h4>EX-CommandStation Over TCP</h4>
+      <h4>DCC++ Over TCP</h4>
 
-      <p>For the EX-CommandStation Over TCP, a host computer must be connected to the Base Station over a Serial or Network connection (or a simulator). This host computer then runs the EX-CommandStation Over TCP Server. A remote computer (or several remote computers) can then use the EX-CommandStation Over TCP (Server) interface to remotely access and control the Base Station.</p>
+      <p>For the DCC++ Over TCP connection, a host computer must be connected to the EX-CommandStation over a Serial or Network connection (or a simulator). This host computer then runs the DCC++ Over TCP Server. 
+      A remote computer (or several remote computers) can then use the DCC++ Over TCP (Server) interface to remotely access and control the EX-CommandStation.</p>
 
       <h2 id="Limitations">Limitations</h2>
 
@@ -137,22 +141,22 @@
           <dt class="left">JMRI</dt>
 
           <dd class="first">
-            <p>JMRI currently supports the DCC++ V1.1 Base Station Interface. Some V1.0 commands may not work.</p>
+            <p>EX-CommandStation is under constant development, so it is recommended that you use the current Production version of EX-CommandStation for best results with JMRI. The newest features may require using the Devel version of EX-CommandStation..</p>
           </dd>
         </dl>
       </div>
 
       <h2 id="connecting">Connecting</h2>
 
-      <h3>Configuring an Arduino for use as a EX-CommandStation</h3>
+      <h3>Configuring an Arduino for use as an EX-CommandStation</h3>
 
       <p>In order to use an Arduino as an EX-CommandStation, you must first assemble the device  and download the EX-CommandStation firmware to it. Please follow the <a href=
-      "#documentation">instructiona linked below under Other Info</a>.</p>
+      "#documentation">instructions linked below under Other Info</a>.</p>
 
-      <h3>Connecting to a EX-CommandStation via USB</h3>
+      <h3>Connecting to an EX-CommandStation via USB</h3>
 
       <ol>
-        <li>To connect your computer to a EX-CommandStation, first install the appropriate drivers.</li>
+        <li>To connect your computer to an EX-CommandStation, first install the appropriate drivers.</li>
 
         <li style="list-style: none">
           <ul>
@@ -169,18 +173,17 @@
                   <a href="https://playground.arduino.cc/Learning/Linux/">Linux</a>
                 </li>
               </ul>
-              page<br>
             </li>
           </ul>
 
           <p><strong>Note:</strong> If you have already installed the Arduino IDE software, the device drivers should already be installed.</p>
 
-          <p>When the device drivers are installed, connect the Arduino Base Station to your computer using a standard USB cable.</p>
+          <p>When the device drivers are installed, connect the Arduino with EX-CommandStation to your computer using a standard USB cable.</p>
         </li>
 
         <li>Once the drivers are installed, you are ready to configure JMRI. Start one of the JMRI-based programs, Then go to the preferences panel. This opens automatically the first time a program is run, or you can select it from the "Edit" menu.</li>
 
-        <li>Select "DCC++" from the top selection box ("System Manufacturer"). (Unfortunatly JMRI has not been updated yet to the DCC-EX team name.)</li>
+        <li>Select "DCC++" from the top selection box ("System Manufacturer"). (Unfortunately JMRI has not been updated yet to the DCC-EX team name.)</li>
 
         <li>Select "DCC++ Serial Port" from the second selection box ("System Connection")</li>
 
@@ -191,7 +194,7 @@
         <li>Restart the program. You should be up and running.</li>
       </ol>
 
-      <h3>Connecting to a EX-CommandStation using Network</h3>
+      <h3>Connecting to an EX-CommandStation using Network</h3>
 
       <ol>
         <li>First, connect the EX-CommandStation to wired or WiFi network and record the IP Address and Port number. You may need to connect the Arduino to a host computer temporarily and use the Arduino Serial Monitor to get this information.</li>
@@ -202,14 +205,14 @@
 
         <li>Select "DCC++ Ethernet" from the second selection box ("System Connection").</li>
 
-        <li>Input the IP Address and Port Number of the DCC++ Base Station.</li>
+        <li>Input the IP Address and Port Number of the EX-CommandStation.</li>
 
         <li>Click "Save". You'll be asked if it's OK for the program to quit, click "Yes".</li>
 
         <li>Restart the program. You should be up and running.</li>
       </ol>
 
-      <h3>Connecting to a EX-CommandStation using DCC++ Over TCP</h3>
+      <h3>Connecting to an EX-CommandStation using DCC++ Over TCP</h3>
 
       <ol>
         <li>First, connect the EX-CommandStation to the host computer via the Serial or Network interface as described above.</li>
@@ -229,7 +232,7 @@
         <li>Save your Preferences and restart.</li>
       </ol>
 
-      <p>Once both the Host and Client instances of JMRI are configured, you can use the Client JMRI just the same as if it were directly connected to the Base Station. The client JMRI instance can be on the same computer, in the same house, or across the country from the host.</p>
+      <p>Once both the Host and Client instances of JMRI are configured, you can use the Client JMRI just the same as if it were directly connected to the EX-CommandStation. The client JMRI instance can be on the same computer, in the same house, or across the country from the host.</p>
 
       <h3>Connecting to the DCC++ Simulator</h3>
 
@@ -244,17 +247,21 @@
       </ol>
 
       <h2 id="tools">JMRI DCC++ Tools</h2>
-      <img src="images/DCCppMenu416.png" width="138" height="70" class="floatRight" alt="menu">
-      <p>The DCC++ menu contains 5 tools:</p>
+      <img src="images/DCCppMenu.png" width="193" height="190" class="floatRight" alt="menu">
+      <p>The DCC++ menu contains 7 tools:</p>
 
       <ul>
         <li>DCC++ Traffic Monitor</li>
 
         <li>Send DCC++ Command</li>
 
-        <li>Track Current Meter</li>
+        <li>Configure Base Station</li>
 
-        <li>Configure Sensors and Turnouts</li>
+        <li>Open DCC-EX Virtual LCD</li>
+
+        <li>Voltage / Current Meter</li>
+
+        <li>Roster Export to DCC-EX</li>
 
         <li>Load DCC++ over TCP Server</li>
       </ul>
@@ -279,7 +286,7 @@
       </ul>
 
       <h3>Third Party info</h3>
-      For more information on how to construct and program a DCC++ Base Station, refer to the following:
+      For more information on how to construct and program a DCC-EX EX-CommandStation, refer to the following:
       <ul>
 
         <li>
