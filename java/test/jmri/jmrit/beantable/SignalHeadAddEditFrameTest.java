@@ -798,6 +798,7 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
     }
 
     @Override
+    @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();

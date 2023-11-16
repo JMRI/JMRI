@@ -80,6 +80,7 @@
 <mapID target="html.hardware.cmri.CMRI" url="html/hardware/cmri/CMRI.shtml"/>
 <mapID target="html.hardware.cmri.Signals" url="html/hardware/cmri/Signals.shtml"/>
 <mapID target="html.hardware.dcc4pc.index" url="html/hardware/dcc4pc/index.shtml"/>
+<mapID target="html.hardware.dcc_ex.index" url="html/hardware/dcc-ex/index.shtml"/>
 <mapID target="html.hardware.dccpp.index" url="html/hardware/dccpp/index.shtml"/>
 <mapID target="html.hardware.digirails.index" url="html/hardware/digirails/index.shtml"/>
 <mapID target="html.hardware.easydcc.EasyDCC" url="html/hardware/easydcc/EasyDCC.shtml"/>

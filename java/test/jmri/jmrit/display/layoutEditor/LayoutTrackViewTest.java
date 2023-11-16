@@ -4,6 +4,8 @@ import jmri.util.JUnitUtil;
 
 import java.awt.GraphicsEnvironment;
 
+import org.junit.jupiter.api.*;
+
 /**
  * Test simple functioning of LayoutTrackView
  *
@@ -18,6 +20,7 @@ public class LayoutTrackViewTest {
 
     public LayoutEditor layoutEditor;
 
+    @BeforeEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
         JUnitUtil.setUp();
@@ -28,6 +31,7 @@ public class LayoutTrackViewTest {
         }
     }
 
+    @AfterEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
         if (layoutEditor != null) {
