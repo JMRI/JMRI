@@ -74,6 +74,12 @@ public class ActionEntryExitSwing extends AbstractDigitalActionSwing {
         _selectNamedBeanSwing.validate(action.getSelectNamedBean(), errorMessages);
         _selectOperationSwing.validate(action.getSelectEnum(), errorMessages);
 
+        DestinationPoints dp = _selectNamedBeanSwing.getBean();
+        boolean isReverse = _selectOperationSwing.getEnum() == Operation.SetNXPairReversed;
+        if (dp != null && isReverse && dp.isUniDirection()) {
+            errorMessages.add(Bundle.getMessage("ActionEntryExit_SetReversedError", dp.getDisplayName()));
+        }
+
         return errorMessages.isEmpty();
     }
 

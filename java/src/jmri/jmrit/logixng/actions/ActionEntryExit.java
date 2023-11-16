@@ -100,6 +100,11 @@ public class ActionEntryExit extends AbstractDigitalAction
                     }
                     break;
                 case SetNXPairReversed:
+                    if (entryExit.isUniDirection()) {
+                        throw new IllegalArgumentException("\"" + entryExit.getDisplayName() +
+                                "\" is not enabled for reversed activation (Both Way)");
+                    }
+
                     if (!entryExit.isActive()) {
                         jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).
                                 setReversedRoute(entryExit.getSystemName());
