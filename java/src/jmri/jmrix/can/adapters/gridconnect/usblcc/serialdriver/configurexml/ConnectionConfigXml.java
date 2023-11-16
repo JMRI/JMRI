@@ -3,8 +3,8 @@ package jmri.jmrix.can.adapters.gridconnect.usblcc.serialdriver.configurexml;
 import org.jdom2.Element;
 
 import jmri.jmrix.PortAdapter;
-import jmri.jmrix.can.adapters.gridconnect.canusb.serialdriver.ConnectionConfig;
-import jmri.jmrix.can.adapters.gridconnect.canusb.serialdriver.SerialDriverAdapter;
+import jmri.jmrix.can.adapters.gridconnect.usblcc.serialdriver.ConnectionConfig;
+import jmri.jmrix.can.adapters.gridconnect.usblcc.serialdriver.SerialDriverAdapter;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 
 /**
