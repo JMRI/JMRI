@@ -133,6 +133,9 @@
                 <li>
                     Added SPROG DCC Ltd PI-LCC Raspberry Pi CAN adapter
                 </li>
+                <li>
+                    Added SPROG DCC Ltd USB-LCC CAN adapter
+                </li>
             </ul>
 
         <h4>Powerline</h4>
@@ -158,7 +161,10 @@
         <h4><a href="http://www.sprog-dcc.co.uk">SPROG</a></h4>
             <ul>
                 <li>
-                    Added PI-LCC Raspberry Pi CAN adapter
+                    Added PI-LCC Raspberry Pi CAN adapter for OpenLCB
+                </li>
+                <li>
+                    Added USB-LCC CAN adapter for OpenLCB
                 </li>
             </ul>
 
