@@ -285,9 +285,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
      * @throws BuildFailedException if build failure
      */
     protected void checkNumnberOfEnginesNeededHPT() throws BuildFailedException {
-        if (_train.getNumberEngines().equals("0") ||
-                _train.isDepartingStaging() ||
-                !_train.isBuildConsistEnabled() ||
+        if (!_train.isBuildConsistEnabled() ||
                 Setup.getHorsePowerPerTon() == 0) {
             return;
         }
@@ -299,6 +297,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
         RouteLocation rlNeedHp = null;
         RouteLocation rlStart = _train.getTrainDepartsRouteLocation();
         RouteLocation rlEnd = _train.getTrainTerminatesRouteLocation();
+        boolean departingStaging = _train.isDepartingStaging();
         if (route != null) {
             boolean helper = false;
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
@@ -332,6 +331,10 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                     rlStart = rl;
                     rlNeedHp = null;
                     extraHpNeeded = 0;
+                    departingStaging = false;
+                }
+                if (departingStaging) {
+                    continue;
                 }
                 int weight = rl.getTrainWeight();
                 if (weight > 0) {
