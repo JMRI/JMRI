@@ -54,7 +54,7 @@
       occupancy system up and operating and communicating with your sensors and panels in JMRI in
       just a couple of hours. You can also design a custom layout animation that is triggered by
       Logix or a Jython script and take days to work out all the kinks. You can even use an arduino
-      as your DCC command station with <a href="../dccpp/index.shtml">DCC++</a>. It's up to
+      as your DCC command station with <a href="../dcc-ex/index.shtml">DCC-EX EX-CommandStation</a>. It's up to
       you.</p>
 
       <p>Software to develop code on your arduino is free online at <a href=
@@ -151,7 +151,7 @@
       depending on the function they are performing:</p>
 
       <ul>
-        <li>via a USB port if acting as a <a href="../dccpp/index.shtml">DCC command station.</a>
+        <li>via a USB port if acting as a <a href="../dcc-ex/index.shtml">DCC command station.</a>
         </li>
 
         <li>via connection to the track or a connection to <a href=

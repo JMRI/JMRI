@@ -411,10 +411,10 @@
           </li>
         </ul>
 
-        <h3><a href="../hardware/dccpp/index.shtml#tools">DCC++ Tools</a>
+        <h3><a href="../hardware/dccpp/index.shtml#tools">DCC++ Tools (including DCC-EX EX-CommandStations)</a>
         </h3>
 
-        <p>When JMRI is connected to a layout via DCC++, the <strong>DCC++</strong> menu is
+        <p>When JMRI is connected to a layout via DCC++ (including DCC-EX EX-CommandStations), the <strong>DCC++</strong> menu is
         shown:</p>
 
         <ul>

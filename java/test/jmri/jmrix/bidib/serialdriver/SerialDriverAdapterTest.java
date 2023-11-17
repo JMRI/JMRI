@@ -1,11 +1,8 @@
 package jmri.jmrix.bidib.serialdriver;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the BiDiBSimulatorAdapter class
@@ -17,17 +14,18 @@ public class SerialDriverAdapterTest {
     @Test
     public void testCTor() {
         SerialDriverAdapter t = new SerialDriverAdapter();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
 }

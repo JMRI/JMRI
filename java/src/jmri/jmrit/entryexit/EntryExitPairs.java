@@ -414,6 +414,30 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
     }
 
     /**
+     * Set a reversed route between two points.  Special case to support a LogixNG action.
+     * @since 5.5.7
+     * @param nxPair The system or user name of the destination point.
+     */
+    public void setReversedRoute(String nxPair) {
+        DestinationPoints dp = getNamedBean(nxPair);
+        if (dp != null) {
+            String destUUID = dp.getUniqueId();
+            nxpair.forEach((pd, src) -> {
+                for (String srcUUID : src.getDestinationUniqueId()) {
+                    if (destUUID.equals(srcUUID)) {
+                        log.debug("Found the correct reverse route source: src = {}, dest = {}",
+                                pd.getSensor().getDisplayName(), dp.getDestPoint().getSensor().getDisplayName());
+                        refCounter++;
+                        routesToSet.add(new SourceToDest(src, dp, true, refCounter));
+                        processRoutesToSet();
+                        return;
+                    }
+                }
+            });
+        }
+    }
+
+    /**
      * Set the route between the two points represented by the Destination Point name.
      *
      * @since 4.11.1

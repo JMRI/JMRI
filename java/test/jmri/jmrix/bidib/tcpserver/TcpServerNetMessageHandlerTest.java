@@ -1,18 +1,16 @@
 package jmri.jmrix.bidib.tcpserver;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import jmri.util.JUnitUtil;
-import org.junit.Assert;
-
 import java.io.ByteArrayOutputStream;
+
 import jmri.jmrix.bidib.BiDiBInterfaceScaffold;
 import jmri.jmrix.bidib.BiDiBSystemConnectionMemo;
 import jmri.jmrix.bidib.TestBiDiBTrafficController;
+import jmri.util.JUnitUtil;
+
 import org.bidib.jbidibc.core.NodeListener;
 import org.bidib.jbidibc.messages.exception.ProtocolException;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the TcpServerNetMessageHandler class
@@ -20,19 +18,8 @@ import org.bidib.jbidibc.messages.exception.ProtocolException;
  * @author  Eckart Meyer  Copyright (C) 2023
  */
 public class TcpServerNetMessageHandlerTest {
-    
+
     BiDiBSystemConnectionMemo memo;
-    
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-        memo = new BiDiBSystemConnectionMemo();
-        memo.setBiDiBTrafficController(new TestBiDiBTrafficController(new BiDiBInterfaceScaffold()));
-    }
-    
-    @After
-    public void tearDown() {
-    }
 
     @Test
     public void testCTor() {
@@ -45,9 +32,21 @@ public class TcpServerNetMessageHandlerTest {
             public void removeNodeListener(NodeListener nodeListener) {
             }
         };
-        Assert.assertNotNull("exists", r);
+        Assertions.assertNotNull(r, "r exists");
         TcpServerNetMessageHandler t = new TcpServerNetMessageHandler(r);
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "t exists");
     }
-    
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+        memo = new BiDiBSystemConnectionMemo();
+        memo.setBiDiBTrafficController(new TestBiDiBTrafficController(new BiDiBInterfaceScaffold()));
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }

@@ -42,21 +42,20 @@
 
       <h2 id="overview">Overview</h2>
 
+      <p class="important"><strong><em>Note: DCC++ is no longer updated or supported by the DCC-EX development team or the original author.</em></strong>  
+      <br />It has been replaced by the <a href="../dcc-ex/index.html">EX-CommandStation by the DCC-EX team.</a> although it will continue to function with JMRI. 
+      However it is recommended by the DCC-EX team that you upgrade DCC++ systems to EX-CommandStation, which will work on the existing hardware.</p>
+  
       <p>DCC++ is an Open Source Arduino-based <a href="#documentation">Do-it-Yourself</a> DCC
       Command Station.</p>
 
-      <p>Note: DCC++ is a separate project from JMRI. If you have questions about building a DCC++
-      system, operating it, etc, you should get help via <a href=
-      "https://www.trainboard.com/highball/index.php?threads/dcc-update-project-2020.130071/">the
-      DCC++ TrainBoard thread</a> and the <a href=
+      <p>Note: DCC++ is a separate project from JMRI. If you have questions about building a DCC++ system, operating it, etc, you should get help via <a href=
+      "https://www.trainboard.com/highball/index.php?threads/dcc-update-project-2020.130071/">the DCC++ TrainBoard thread</a> and the <a href=
       "https://www.trainboard.com/highball/index.php?threads/dcc-2020-update-project-documentation.130401/">
       the DCC++ Documentation TrainBoard thread</a>. There's also information on the <a href=
       "https://github.com/DCC-EX">DCC++ GitHub repository</a> and <a href=
-      "https://dcc-ex.com/">associated documentation</a>. There was also an older <a href=
-      "https://sites.google.com/site/dccppsite/home">DCC++ Website</a> and the <a href=
-      "https://www.trainboard.com/highball/index.php?forums/dcc.177/">DCC++ Trainboard
-      discussion</a>. The JMRI discussion groups can only provide limited support for DCC++
-      itself.</p>
+      "https://dcc-ex.com/">associated documentation</a> and the <a href=
+      "https://www.trainboard.com/highball/index.php?forums/dcc.177/">DCC++ Trainboard discussion</a>. The DCC-EX team no longer provide any support for DCC++. The JMRI discussion groups can only provide limited support for DCC++ itself.</p>
 
       <p>Features include:</p>
 
@@ -315,11 +314,6 @@
       following:
       <ul>
         <li>DCC++ <a href="https://github.com/DccPlusPlus">GitHub Repository</a>
-        </li>
-
-        <li>
-          <a href="https://www.youtube.com/channel/UCJmvQx-fe0OMAIH-_g-_rZw/feed">YouTube
-          Channel</a>
         </li>
 
         <li>
