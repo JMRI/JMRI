@@ -35,7 +35,7 @@ public class ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
 
     @Override
     public String name() {
-        return "CAN via USB-LCC adapter";
+        return "CAN via SPROG DCC Ltd USB-LCC";
     }
 
     /**
