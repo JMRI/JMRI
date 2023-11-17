@@ -548,16 +548,16 @@
             <text>regardless of the value attempted to write. This is true for "CV programming" with ESU LokProgrammer</text>
         </label>
         <label>
-            <text>as well, and it occurs at least up to firmware version 5.8.156 (current as of the time of this writing).</text>
+            <text>as well, and it occurs at least up to firmware version 5.9.159 (current as of the time of this writing).</text>
         </label>
         <label>
             <text> </text>
         </label>
         <label>
-            <text>To avoid destroying someones [2]-output configuration, JMRI does not read or write those CVs.</text>
+            <text>To avoid destroying someones [2]-output configuration, JMRI does not read or write CVs to configure [2] outputs.</text>
         </label>
         <label>
-            <text>This is true for both the Function Outputs and the Function Map panes.</text>
+            <text>Some firmware versions also break Function Map of [2] outputs, though they work with 5.9.159.</text>
         </label>
         <label>
             <text> </text>

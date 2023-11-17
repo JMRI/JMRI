@@ -51,7 +51,7 @@
 
         <h4>ESU</h4>
             <ul>
-                <li>Added "LokSound 5 micro DCC Direct Atlas Legacy".</li>
+                <li></li>
             </ul>
 
         <h4>Hornby</h4>
@@ -106,7 +106,9 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>JMRI will now use the railroad name from the preferences
+                    when creating the client ID.  This will make it easier to 
+                    identify the JMRI connection in the MQTT broker logs.</li>
             </ul>
 
         <h4>MRC</h4>
@@ -126,7 +128,11 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Update openlcb.jar to Maven Central version 0.7.33</li>
+                <li>Improve the layout of the firmware download page.</li>
+                <li>
+                    Added SPROG DCC Ltd PI-LCC Raspberry Pi CAN adapter
+                </li>
             </ul>
 
         <h4>Powerline</h4>
@@ -149,9 +155,11 @@
                 <li></li>
             </ul>
 
-        <h4>SPROG</h4>
+        <h4><a href="http://www.sprog-dcc.co.uk">SPROG</a></h4>
             <ul>
-                <li></li>
+                <li>
+                    Added PI-LCC Raspberry Pi CAN adapter
+                </li>
             </ul>
 
         <h4>TAMS</h4>
@@ -226,7 +234,8 @@
 
         <h4>ESU</h4>
             <ul>
-                <li></li>
+                <li>Added "LokSound 5 micro DCC Direct Atlas Legacy".</li>
+                <li>Added support for "Tone Control" for LokSound 5 (requires firmware 5.9.159 or higher).</li>
             </ul>
 
         <h4>Hornby</h4>
@@ -426,6 +435,9 @@
         <ul>
           <li>The expression <strong>Entry/exit</strong> can now check if a
           entry/exit is reversed or bidirectional.</li>
+          <li>The <strong>Entry/Exit</strong> action can activate and deactivate Entry/Exit routes,
+          including activating a reversed route if the Entry/Exit pair has the <strong>Both Way</strong>
+          option enabled.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>

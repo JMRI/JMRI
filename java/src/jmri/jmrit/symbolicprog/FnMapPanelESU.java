@@ -388,9 +388,6 @@ public final class FnMapPanelESU extends JPanel {
                         if (outBlockNum == 1 && item >= thisOutBlockStart + numOutsFromDefinition && item < thisOutBlockStart + numOuts) {
                             log.debug("Skipping previous item because function output AUX {} does not exist on this decoder", item - thisOutBlockStart - 2 + 1);
                         }
-                        else if (outBlockNum == 1 && item >= thisOutBlockStart + numOutsFromDefinition && Integer.parseInt(model.getAttribute("productID").getValue()) == 16777432) {
-                            log.debug("Skipping previous item because [2] function outputs cannot be programmed on ESU 58751 as of 2023-11-12");
-                        }
                         else {
                             // create a JDOM tree with some elements to add to varModel
                             Element root = new Element("decoder-config");
