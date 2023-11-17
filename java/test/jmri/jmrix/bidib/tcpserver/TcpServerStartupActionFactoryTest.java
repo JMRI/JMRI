@@ -1,11 +1,8 @@
 package jmri.jmrix.bidib.tcpserver;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import jmri.util.JUnitUtil;
 
-
-import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the TcpServerStartupActionFactory class
@@ -13,18 +10,21 @@ import org.junit.Assert;
  * @author  Eckart Meyer  Copyright (C) 2023
  */
 public class TcpServerStartupActionFactoryTest {
-    
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
 
     @Test
     public void testCTor() {
         TcpServerStartupActionFactory t = new TcpServerStartupActionFactory();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }

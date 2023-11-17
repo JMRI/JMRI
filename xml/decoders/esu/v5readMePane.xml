@@ -527,6 +527,43 @@
         </label>
         <separator/>
         <label>
+            <text>&lt;html&gt;&lt;h2&gt;LokSound 5 micro DCC Direct Atlas Legacy and their [2] outputs&lt;/h2&gt;&lt;/html&gt;</text>
+        </label>
+        <label>
+            <text> </text>
+        </label>
+        <label>
+            <text>Those decoders have a firmware bug preventing the configuration of the alternate</text>
+        </label>
+        <label>
+            <text>modes for function outputs (i.e. Headlight [2], Rearlight [2], AUX1 [2] and AUX2 [2])</text>
+        </label>
+        <label>
+            <text>through regular CV programming. Depending on the firmware version, this bug either reads all CVs</text>
+        </label>
+        <label>
+            <text>required to configure those outputs back as zero and/or writing to them will set them to zero,</text>
+        </label>
+        <label>
+            <text>regardless of the value attempted to write. This is true for "CV programming" with ESU LokProgrammer</text>
+        </label>
+        <label>
+            <text>as well, and it occurs at least up to firmware version 5.9.159 (current as of the time of this writing).</text>
+        </label>
+        <label>
+            <text> </text>
+        </label>
+        <label>
+            <text>To avoid destroying someones [2]-output configuration, JMRI does not read or write CVs to configure [2] outputs.</text>
+        </label>
+        <label>
+            <text>Some firmware versions also break Function Map of [2] outputs, though they work with 5.9.159.</text>
+        </label>
+        <label>
+            <text> </text>
+        </label>
+        <separator/>
+        <label>
             <text>&lt;html&gt;&lt;h2&gt;Further Assistance&lt;/h2&gt;&lt;/html&gt;</text>
             <text xml:lang="it">&lt;html&gt;&lt;h2&gt;Ulteriore Assistenza&lt;/h2&gt;&lt;/html&gt;</text>
             <text xml:lang="de">&lt;html&gt;&lt;h2&gt;Weitere Hilfe&lt;/h2&gt;&lt;/html&gt;</text>

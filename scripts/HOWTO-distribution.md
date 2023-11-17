@@ -55,6 +55,7 @@ This is the next release in the 5.6 cycle. It's intended to be created from the 
 - If it's a new year, update through-now copyright dates (done for 2023):
     JMRI:
     * build.xml in the jmri.copyright.years property value
+    * project.properties
     * xml/XSLT/build.xml
     * A flock of places in xml/XSLT/
     * scripts/WinInstallFiles/LaunchJMRI.nsi

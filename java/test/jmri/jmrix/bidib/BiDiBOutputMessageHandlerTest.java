@@ -1,12 +1,8 @@
 package jmri.jmrix.bidib;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import org.junit.Assert;
-
 import jmri.util.JUnitUtil;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the BiDiBOutputMessageHandler class
@@ -40,18 +36,18 @@ public class BiDiBOutputMessageHandlerTest {
     public void testCtor() {
         // infrastructure objects
         BiDiBOutputMessageHandler t = new BiDiBOutputMessageHandler(new TestNamedBean(), "T", memo.getBiDiBTrafficController());
-        Assert.assertNotNull(t);
+        Assertions.assertNotNull(t);
         
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new BiDiBSystemConnectionMemo();
         memo.setBiDiBTrafficController(new TestBiDiBTrafficController(new BiDiBInterfaceScaffold()));
     }
     
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

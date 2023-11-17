@@ -59,7 +59,7 @@ public class SpurTableModel extends TrackTableModel {
         if (!spur.checkScheduleValid().equals(Schedule.SCHEDULE_OKAY)) {
             return Color.red;
         }
-        return Color.black;
+        return _table.getForeground();
     }
 
     class MyTableCellRenderer extends DefaultTableCellRenderer {

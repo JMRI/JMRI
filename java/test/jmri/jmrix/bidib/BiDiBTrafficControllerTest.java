@@ -1,11 +1,8 @@
 package jmri.jmrix.bidib;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the BiDiBTrafficController class
@@ -24,17 +21,18 @@ public class BiDiBTrafficControllerTest {
     
     @Test
     public void testCtor() {
-        Assert.assertNotNull(tc);
+        Assertions.assertNotNull(tc);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
             tc = new TestBiDiBTrafficController(new BiDiBInterfaceScaffold());
         }
     
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
     

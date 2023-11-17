@@ -1,6 +1,5 @@
 package jmri.jmrix.openlcb.swing.downloader;
 
-import java.awt.FlowLayout;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.jmrit.MemoryContents;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.util.swing.WrapLayout;
 import org.openlcb.Connection;
 import org.openlcb.LoaderClient;
 import org.openlcb.LoaderClient.LoaderStatusReporter;
@@ -66,13 +66,13 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         JPanel p;
 
         p = new JPanel();
-        p.setLayout(new FlowLayout());
+        p.setLayout(new WrapLayout());
         p.add(new JLabel("Target Node ID: "));
         p.add(nodeSelector);
         selectorPane.add(p);
 
         p = new JPanel();
-        p.setLayout(new FlowLayout());
+        p.setLayout(new WrapLayout());
         p.add(new JLabel("Address Space: "));
 
         spaceField = new JTextField("" + 0xEF);
@@ -81,7 +81,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         spaceField.setToolTipText("The decimal number of the address space, e.g. 239");
 
         p = new JPanel();
-        p.setLayout(new FlowLayout());
+        p.setLayout(new WrapLayout());
         lockNode = new JCheckBox("Lock Node");
         p.add(lockNode);
         selectorPane.add(p);

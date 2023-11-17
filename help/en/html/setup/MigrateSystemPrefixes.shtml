@@ -55,7 +55,7 @@
 
         <li>Next, determine the new prefix for your connection:
           <ul>
-            <li>DCCPP for DCC++ should be changed to D</li>
+            <li>DCCPP for DCC++ (including DCC-EX EX-CommandStations) should be changed to D</li>
 
             <li>DP for DCC4PC should be changed to D</li>
 

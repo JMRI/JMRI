@@ -70,7 +70,6 @@
               <li>Available Objects</li>
               <li>MQTT-connected Object Names</li>
               <li>Topics for MQTT-connected Objects</li>
-              <li>Message Connect for MQTT-connected Objects</li>
             </ul>
           </li>
           <li><a href="#LNG">LogixNG</a>
@@ -97,6 +96,7 @@
           <a href="#testing">Testing</a>
         </li>
       </ul>
+      <p class="important">This document is up-to-date as of JMRI Release 5.5.7.</p>
       </div>
 
 <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
@@ -105,7 +105,8 @@
 
       <p>The first step in using MQTT communication with JMRI is to create a connection to an MQTT
       message broker.  This is done via the Connections pane in the <a href=
-      "../../../package/apps/TabbedPreferences.shtml">Preferences window.</a></p>
+      "../../../package/apps/TabbedPreferences.shtml">Preferences window.</a>
+      (<strong>Edit&rArr; Preferences&rArr;Connections</strong>)</p>
 
       <ul>
         <li>Select "MQTT" as the <strong>System manufacturer</strong></li>
@@ -116,7 +117,11 @@
         simple ways to connect to a message broker.]</li>
 
         <li>The <strong>IP Address/Host Name</strong> should be either the IP address or host name of an external
-        server, or "localhost" if you are running an MQTT message broker on the same machine as JMRI.</li>
+        server, or "localhost" if you are running an MQTT message broker on the same machine as JMRI.<br>
+        <span class="since">Since 5.5.7</span>JMRI will use the Preferences <strong>Railroad Name</strong>
+         when connecting to the broker (<strong>Edit&rArr;Preferences&rArr;Railroad Name</strong>). 
+         This is known as the "MQTT Client ID" and will make it easier to identify the JMRI connection in
+         the MQTT broker logs.</li>
 
         <li>The default <strong>Connection Prefix</strong> for MQTT is "M". [<em>Advanced Usage</em>: this can
         be changed when setting up the connection.]</li>
@@ -139,8 +144,8 @@
       by selecting "Additional Connection Settings" on the MQTT Connection page under
       Preferences, as shown in the picture below.</p>
 
-      <p><a href="images/MQTTPrefs_rel5_0.jpg"><img
-      src="images/MQTTPrefs_rel5_0.jpg" alt="MQTT preferences rel 5.0" ></a></p>
+      <p><a href="images/MQTTPrefs_default_rel5_5_6.jpg"><img
+      src="images/MQTTPrefs_default_rel5_5_6.jpg" alt="MQTT preferences rel 5.5.6" ></a></p>
 
       <ul>
       <li><strong>TCP/UDP Port</strong>: The MQTT Message Broker listens for traffic on a
@@ -225,7 +230,7 @@
       flexibility to set their topic strings, such as some home automation devices.</p>
 
       <p><a href=
-      "images/MQTTPrefs_rel5_0.jpg"><img src="images/MQTTPrefs_rel5_0.jpg" alt="MQTT schematic specific"></a></p>
+      "images/MQTTSchematic2.jpg"><img src="images/MQTTSchematic2.jpg" alt="MQTT schematic specific"></a></p>
 
       <p>Any message topic, defined or custom, can be subscribed to and processed by a <a href="#LNG">LogixNG</a>
       or a custom <a href="#scripts">script</a>. These messages
@@ -249,15 +254,19 @@
 
       <h3>Available Objects</h3>
 
-      <p>Older versions of JMRI (4.12 and earlier) directly support Turnouts only. Sensors and
-      Lights were added in version 4.21.1. Support for Signal Masts were made available in 4.26.
-      Reporters were added in 5.3.2.
-      Direct support for Signal Heads is not yet available.</p>
+      <p>JMRI's MQTT capabilities continue to evolve.  Older versions of JMRI (4.12 and earlier) directly
+      support Turnouts only. Other objects have been added in later releases as indicated below.
+      Direct support for Signal Heads is not yet available.  Any JMRI object can be updated via an MQTT
+      messages using <a href="#scripts">scripts.</a></p>
+      
+      <p>Message "contents" for JMRI standard objects are typically single words that represent the state of
+      the object.  Specifics are discussed following.
+      <em>Advanced Usage</em>: It is also possible to replace the standard message contents by using a <a href=
+      "#scripts">custom version of the message parser</a> (including using <a href=
+      "https://www.json.org/json-en.html" target="_blank">JSON messages</a>).</p>
+
 
       <ul>
-        <li><strong>Sensors</strong>: JMRI expects to receive sensor state on the "Sensor receive
-        topic" (as specified on the Preferences page). JMRI sends state on the "Sensor send topic"
-        if a user changes sensor state e.g. by clicking on a panel or table.</li>
         <li>
           <strong>Turnouts</strong>: JMRI sends on the "Turnout send topic" if a user commands a
           turnout change e.g. by clicking on a panel or table. Additionally, if a Turnout has been
@@ -265,60 +274,96 @@
           "../../../package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout_Feedback">turnout
           documentation</a>), JMRI expects to receive turnout state on the "Turnout receive
           topic."
+          The message content to be published by turnouts is "CLOSED" and "THROWN". Turnouts in Direct or Monitoring
+          mode can also receive these as well as the messages "INCONSISTENT" and "UNKNOWN" (sets the Known State).
+          Receiving any other message will generate a Warning in the <a href="../../../package/apps/SystemConsole.shtml">
+          JMRI System Console</a> and will set the turnout Known state to "UNKNOWN."
         </li>
 
-        <li><strong>Lights</strong>: JMRI sends on the "Light send topic" if a user commands a
-        Light change e.g. by clicking on a panel or table. JMRI also acts on Light state messages sent
-        from the layout on the "Light receive topic."</li>
-
-        <li><strong>Reporters</strong>: MQTT-connected Reporters expect to receive a message like "123 west",
-        where the first term is the locomotive ID and the rest of the message is free form.
-        The Reporter creates/updates an IdTag with the locomotive ID as the tag ID
-        (e.g. ID123 in the example case)
-        and puts the rest of the message in the "content" parameter. The Reporters do not
-        send anything to MQTT.
-        <br>
-        <em>Advanced Usage</em>: Scripts can read from a JMRI reporter and send the content as
-        a MQTT message.
+        <li>
+          <strong>Lights</strong><span class="since">Since JMRI 4.21.1</span>:
+          JMRI sends on the "Light send topic" if a user commands a
+          Light change e.g. by clicking on a panel or table. JMRI also acts on Light state messages sent
+          from the layout on the "Light receive topic."
+          The expected message content for lights is "OFF", "ON"
+          and "INTENSITY dddd" where ddd is a number between 0.00 and 1.00.
+          Receiving any other messages will result in a Warning in the <a href=
+          "../../../package/apps/SystemConsole.shtml">JMRI System Console.</a> and cause the Light
+          state to be set to "UNKNOWN."
         </li>
 
-        <li><strong>Signal Heads</strong>: MQTT-connected Signal Heads are not yet implemented.
-        You can use e.g. the Three Turnout Signal Head style with MQTT turnouts as a
-        work around. <em>Advanced Usage</em>: You can also write a script that sends the content
-        of a virtual or other Signal Head to the layout.
+        <li>
+          <strong>Sensors</strong><span class="since">Since JMRI 4.21.1</span>:
+          JMRI expects to receive sensor state on the "Sensor receive
+          topic" (as specified on the Preferences page). JMRI sends state on the "Sensor send topic"
+          if a user changes sensor state e.g. by clicking on a panel or table.
+          The expected message content for sensors is
+          "ACTIVE" and "INACTIVE". Any other message will generate a Warning in the <a href=
+          "../../../package/apps/SystemConsole.shtml">JMRI System Console</a> but will not change the
+          Sensor state.
+        </li>
+        
+        <li>
+          <strong>Reporters</strong><span class="since">Since JMRI 5.3.2</span>:  
+          MQTT-connected Reporters expect to receive a message like "nnnn text",
+          where nnnn is the locomotive ID and the rest of the message is free form text.
+          The Reporter creates/updates an <a href="../../tools/IdTags.shtml">IdTag</a> with the locomotive ID as the tag ID
+          (e.g. ID1234) and puts the rest of the message in the "content" parameter. Reporters
+          do not publish any MQTT messages.
+          A Reporter can also receive an empty message which clears the current report but
+          doesn't update any IdTags.
+          <br>
+          <em>Advanced Usage</em>: <a href="#scripts">Scripts</a> can read from a JMRI reporter
+          and send the content asa MQTT message as needed.
         </li>
 
-        <li><strong>Signal Masts</strong>: You can define MQTT-connected Signal Masts which will send
-        their aspect when changed.  These do not receive anything from the layout.
+        <li>
+          <strong>Signal Heads</strong>: MQTT-connected Signal Heads are not yet implemented.
+          You can use e.g. the Three Turnout Signal Head style with MQTT turnouts as a
+          work around. <em>Advanced Usage</em>: You can also write a <a href="#scripts">script</a> 
+          that sends the content of a virtual or other Signal Head to the layout.
         </li>
 
-        <li><strong>Track Power</strong>: JMRI sends Track Power ON/OFF commands on the "Power
-        send topic" and receives the track power status on the "Power receive topic".
+        <li>
+          <strong>Signal Masts</strong><span class="since">Since JMRI 4.26</span>:
+          You can define MQTT-connected Signal Masts which will send
+          their aspect when changed.  These do not receive anything from the layout.
+          A JMRI MQTT Signal Mast will send the
+          aspect name, followed by the held status and the lit status. Examples are
+          "Approach Medium; Lit; Unheld" and "Clear; Unlit; Held". The available
+          aspect names are defined in the signal system definition being used.
         </li>
 
-        <li><strong>Throttle Control</strong>: JMRI supports controlling cabs over MQTT.  The protocol is
-        controller agnostic though the internal design of JMRI imposes some compliance with DCC standards.
-        <br>Using a Throttle Control over MQTT provides for:
-        <ul>
-        <li><strong>Throttle</strong>: The speed setting as a 0-100 percentage value is sent on the
-        "Throttle send topic" and received on the "Throttle receive topic".</li>
-        <li><strong>Direction</strong>: The throttle direction is sent on the "Direction send topic" and
-        received on the "Direction receive topic".  Direction values are "FORWARD" and "REVERSE", and "STOP"
-        for an emergency stop.</li>
-        <li><strong>Function</strong>: Function states are sent on the "Function send topic" and received
-        on the "Function receive topic".  The placeholder "{1}" within each topic is substituted with
-        the number of the function.Function state values are "ON" and "OFF".</li>
-        <li><strong>Consist</strong>: MQTT supports Command Station Consists in JMRI using the standard
-         Consist Tool. All of the loco addresses that make up a consist are listed in the
-        "Consist send topic" when a throttle is controlling that consist address.  It is up to the controller
-        to determine how it controls the individual locos in the consist.</li>
-        </ul>
+        <li>
+          <strong>Track Power</strong><span class="since">Since JMRI 5.5.4</span>:
+          JMRI sends Track Power ON/OFF commands on the "Power
+          send topic" and receives the track power status on the "Power receive topic".
+        </li>
 
-        In the topics listed above, the placeholder "{0}" in the topic name is replaced with the loco
-        or consist address that the throttle is controlling.  When the throttle is Released, all of the
-        above topics are removed from MQTT. If a throttle is Dispatched, the topics are retained on MQTT -
-        this allows for locos to be controlled from a script but be able to be taken over and manually
-        controlled as required (ie for shunting operations).
+        <li><strong>Throttle Control</strong><span class="since">Since JMRI 5.5.4</span>:
+          JMRI supports controlling cabs over MQTT.  The protocol is
+          controller agnostic though the internal design of JMRI imposes some compliance with DCC standards.
+          <br>Using a Throttle Control over MQTT provides for:
+          <ul>
+            <li><strong>Throttle</strong>: The speed setting as a 0-100 percentage value is sent on the
+            "Throttle send topic" and received on the "Throttle receive topic".</li>
+            <li><strong>Direction</strong>: The throttle direction is sent on the "Direction send topic" and
+            received on the "Direction receive topic".  Direction values are "FORWARD" and "REVERSE", and "STOP"
+            for an emergency stop.</li>
+            <li><strong>Function</strong>: Function states are sent on the "Function send topic" and received
+            on the "Function receive topic".  The placeholder "{1}" within each topic is substituted with
+            the number of the function.Function state values are "ON" and "OFF".</li>
+            <li><strong>Consist</strong>: MQTT supports Command Station Consists in JMRI using the standard
+             Consist Tool. All of the loco addresses that make up a consist are listed in the
+            "Consist send topic" when a throttle is controlling that consist address.  It is up to the controller
+            to determine how it controls the individual locos in the consist.</li>
+            </ul>
+
+          In the topics listed above, the placeholder "{0}" in the topic name is replaced with the loco
+          or consist address that the throttle is controlling.  When the throttle is Released, all of the
+          above topics are removed from MQTT. If a throttle is Dispatched, the topics are retained on MQTT -
+          this allows for locos to be controlled from a script but be able to be taken over and manually
+          controlled as required (ie for shunting operations).
 
       </ul>
 
@@ -373,51 +418,8 @@
       "Jsend/to/{0}/state" so JMRI will generate "<em>mytrains/Jsend/to/abcd1/state</em>" for
       turnout "MTabcd1".</p>
 
-      <p><a href="images/MQTTPrefs_example.jpg"><img src="images/MQTTPrefs_example.jpg" alt=
+      <p><a href="images/MQTTPrefs_example_rel5_5_6.jpg"><img src="images/MQTTPrefs_example_rel5_5_6.jpg" alt=
       "MQTT preferences example"></a></p>
-
-     <h3>Message Contents for MQTT-connected objects</h3>
-
-     <p>Message "contents" for JMRI objects are typically single words that represent the state of
-      the object. <em>Advanced Usage</em>: It is also possible to replace the standard message contents by using a <a href=
-      "#scripts">custom version of the message parser</a> (including using <a href=
-      "https://www.json.org/json-en.html" target="_blank">JSON messages</a>).</p>
-
-      <h4>Sensors</h4>
-      The expected message content for sensors is
-      "ACTIVE" and "INACTIVE". Any other message will generate a Warning in the <a href=
-      "../../../package/apps/SystemConsole.shtml">JMRI System Console</a> but will not change the
-      Sensor state.
-
-      <h4>Turnouts</h4>
-      The message content to be published by turnouts is "CLOSED" and "THROWN". Turnouts in Direct or Monitoring
-      mode can also receive these as well as the messages "INCONSISTENT" and "UNKNOWN" (sets the Known State).
-      Receiving any other message will generate a Warning in the <a href="../../../package/apps/SystemConsole.shtml">
-      JMRI System Console</a> and will set the turnout Known state to "UNKNOWN."
-
-      <h4>Lights</h4>
-      The expected message content for lights is "OFF", "ON"
-      and "INTENSITY dddd" where ddd is a number between 0.00 and 1.00.
-      Receiving any other messages will result in a Warning in the <a href=
-      "../../../package/apps/SystemConsole.shtml">JMRI System Console.</a> and cause the Light
-      state to be set to "UNKNOWN."
-
-      <h4 id="reporters"> Reporters</h4>
-      <span class="since">Since JMRI 5.3.2</span>
-        MQTT-connected Reporters expect to receive a message like "123 west",
-        where the first term is the locomotive ID and the rest of the message is free form.
-        The Reporter creates/updates an IdTag with the locomotive ID as the tag ID
-        (e.g. ID123 in the example case)
-        and puts the rest of the message in the "content" parameter.
-        A Reporter can also receive an empty message, which clears the report but
-        doesn't update any IdTags.
-        Reporters do not send anything to MQTT.
-
-      <h4>Signal Masts</h4>
-      <span class="since">Since JMRI 4.26</span> A JMRI MQTT Signal Mast will send the
-      aspect name, followed by the held status and the lit status. Examples are
-      "Approach Medium; Lit; Unheld" and "Clear; Unlit; Held". The available
-      aspect names are defined in the signal system definition being used.
 
       <p><a href="#top"><em><small>[Go to top of page]</small></em></a>
       </p>
