@@ -5,7 +5,7 @@
   <title>JMRI Hardware Support - LocoBuffer-II to LocoNet&reg;</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>

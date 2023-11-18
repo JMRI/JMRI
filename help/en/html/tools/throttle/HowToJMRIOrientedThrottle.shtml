@@ -6,10 +6,10 @@
   <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro">
   <meta name="description" content="Throttle documentation for JMRI project">
   <meta name="keywords" content="JMRI">
-  <meta name="author" content="Lionel Jeanson"><!--#include virtual="/Style.shtml" -->
+  <meta name="author" content="Lionel Jeanson"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -76,11 +76,11 @@
       "https://www.jmri.org/jython/Jynstruments/Launchers/Throttles.jyn/">loading the default throttle
       layout button</a>.<br>
       <span style="font-style: italic;">Note: It is not possible to save customizations of steps 5)
-      and 6) at the moment.</span> <!--#include virtual="/Footer.shtml" -->
+      and 6) at the moment.</span> <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

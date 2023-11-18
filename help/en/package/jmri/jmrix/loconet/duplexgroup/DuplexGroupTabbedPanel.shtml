@@ -5,7 +5,7 @@
   <title>JMRI: Duplex Network Configuration Tool</title>
   <meta name="author" content="B. Milhaupt">
   <meta name="keywords" content="JMRI configure LocoNet UR92 UR92CE">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
   <!-- center class -->
 
   <style>
@@ -13,7 +13,7 @@
   </style>
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -708,10 +708,10 @@
 
       <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
       Inc.</a></p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

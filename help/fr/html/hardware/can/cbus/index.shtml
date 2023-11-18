@@ -3,7 +3,7 @@
 <head>
   <!-- Updated by Blorec Herv&#233;  2017-01-19-->
   <title>JMRI Mat&#233;riel - CBUS&reg;</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -156,6 +156,6 @@ sauf que  la lettre type est "L"au lieu de "T", par exemple, <code>ML-18;+21</co
     <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

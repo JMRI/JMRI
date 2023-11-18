@@ -5,10 +5,10 @@
   <!-- Copyright Bob Jacobsen 2008 -->
 
   <title>JMRI: DecoderPro User Guide - Locomotive Files</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -54,9 +54,9 @@
       &lt;CVvalue name="2" value="0" /&gt;<br>
       &lt;CVvalue name="3" value="0" /&gt;<br>
       &lt;CVvalue name="4" value="0" /&gt;<br></p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div><!-- close #mainContent -->
   </div><!-- closes #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

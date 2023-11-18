@@ -4,7 +4,7 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
   <title>JMRI: DecoderPro User Guide - Use XSLT Transformation for complex decoders File</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
@@ -526,6 +526,6 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
     <!-- close #mainContent -->
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

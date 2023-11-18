@@ -4,7 +4,7 @@
 <!-- Copyright Bob Jacobsen 2003-2008 -->
 <!-- Updated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-03 -->
 <title>JMRI: DecoderPro Programmateur Symbolique</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -96,6 +96,6 @@ Pour en savoir plus, consultez les
 <!--#include virtual="/Footer_fr.shtml" -->
 </div><!-- closes #mainContent-->
 </div><!-- closes #mBody-->
-<script src="/js/main.js"></script>
+<script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

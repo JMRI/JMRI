@@ -5,7 +5,7 @@
   <title>JMRI Hardware Support - Chubb C/MRI</title>
   <meta name="author" content="Bob Jacobsen, Egbert Broerse">
   <meta name="keywords" content="Bruce Chubb C/MRI Computer interface java model railroad JMRI install windows">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -753,6 +753,6 @@ Cliquez "Edit Node" pour actualiser, puis fermez le volet.
     <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

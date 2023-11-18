@@ -3,7 +3,7 @@
 <head>
   <!-- Translated by Herv&#233; Blorec 2017-01-26 -->
   <title>JMRI Hardware Support - JMRIClient and SimpleServer</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -105,6 +105,6 @@ a indiqu&#233; qu'il s'int&#233;resse &#224; l'appareil.</p>
     <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

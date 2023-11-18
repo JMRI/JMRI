@@ -3,7 +3,7 @@
 <head>
   <!-- Updated by Herv&#233; Blorec le 2017-02-06-->
   <title>JMRI Mat&#233;rielle - OpenLCB</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -122,6 +122,6 @@ la lettre type est "T" au lieu de "S", par exemple "<code> MT1.2.3.4.5.6.7.8; 1.
       <!--#include virtual="/Footer_fr.shtml" -->
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
-    <script src="/js/main.js"></script>
+    <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
   </body>
 </html>

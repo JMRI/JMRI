@@ -7,7 +7,7 @@
   <title>JMRI: Glossaire</title>
   <meta name="author" content="Egbert Broerse">
   <meta name="keywords" content="model railroad JMRI decoderpro panelpro operations GUI I18N">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
   <!-- Sortable tables -->
@@ -1790,6 +1790,6 @@
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

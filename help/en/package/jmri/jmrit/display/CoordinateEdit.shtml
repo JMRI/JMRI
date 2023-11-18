@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Coordinate Edit Help</title>
   <meta name="author" content="Dan Boudreau">
-  <meta name="keywords" content="JMRI Coordinate Edit Help"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI Coordinate Edit Help"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -90,11 +90,11 @@
       Close this pane by clicking on "Okay" to update the Panel with your changes, "Cancel" to
       abort or click "Apply" to update the Panel using your edits but keep the Properties pane
       open.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

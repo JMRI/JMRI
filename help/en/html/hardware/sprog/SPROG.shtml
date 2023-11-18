@@ -5,10 +5,10 @@
   <title>JMRI Hardware Support - SPROG</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="SPROG java model railroad JMRI install windows linux mac osx">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="../SidebarUp.shtml" -->
@@ -230,11 +230,11 @@
       "https://in03.hostcontrol.com/resources/510743ee26f0d6/cd00fcd9b6/file-object/Handleiding%20Sprog%20v2-2017.pdf">
       SPROG Beginner's Manual</a> is available as a PDF from <a href=
       "https://domburgtrainsupport.nl">Domburg Train Support</a>.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

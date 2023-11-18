@@ -3,7 +3,7 @@
 <head>
 <title>Comprehensive Programmer - Advanced Features Pane</title>
 <!-- Translated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-06-15 -->
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
@@ -108,6 +108,6 @@ Apr&#232;s ajout des images dans les cadres pour image principale et ic&#244;ne,
     <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
  </body>
 </html>

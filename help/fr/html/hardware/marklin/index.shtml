@@ -3,7 +3,7 @@
 <head>
   <!-- translated by Herv&#233; Blorec 2017-02-05 -->
   <title>JMRI Hardware Support - M&auml;rklin Command Station 2</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -62,6 +62,6 @@ La prise en charge des r&#233;gulateurs inclut la possibilit&#233; de s&#233;lec
     <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

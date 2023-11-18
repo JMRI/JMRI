@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: NCE USB Interface Tool</title>
   <meta name="author" content="Ken Cameron">
-  <meta name="keywords" content="JMRI Help NCE Cab Monitor"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI Help NCE Cab Monitor"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -23,10 +23,10 @@
       <p>This tool used to (prior to 4.1.1) try to find the current USB cab id, but the method was
       imperfect and did not allow for resetting the id when the cab id was not vaild for the system
       it was plugged into.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

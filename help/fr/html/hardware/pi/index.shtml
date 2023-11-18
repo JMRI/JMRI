@@ -5,7 +5,7 @@
   <title>JMRI Hardware Setup Support - Raspberry Pi GPIO</title>
   <meta name="author" content="Paul Bender">
   <meta name="keywords" content="Raspberry Pi GPIO Configuration Information for JMRI">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -85,6 +85,6 @@ sp&#233;cifiques au mod&#232;le.
     <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
  </body>
 </html>

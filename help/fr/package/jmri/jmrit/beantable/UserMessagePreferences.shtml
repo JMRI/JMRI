@@ -5,7 +5,7 @@
   <title>JMRI: User Message Preferences</title>
   <meta name="author" content="Kevin Dickerson">
   <meta name="keywords" content="User Message Preferences">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -25,6 +25,6 @@
       <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

@@ -5,10 +5,10 @@
   <title>JMRI: Configure LocoIO (deprecated)</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help LocoNet configure LocoIO">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -24,11 +24,11 @@
       <p>The legacy <a href="../../../../../html/hardware/loconet/LocoIO.shtml">LocoIO tool</a>
       is no longer supported from JMRI version 3.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

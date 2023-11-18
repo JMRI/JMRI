@@ -4,7 +4,7 @@
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Updated by Herv&#233; Blorec  bzh56420@yahoo.fr 2013-11-02-->
   <title>JMRI: Multi-Decoder Control</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -125,6 +125,6 @@
       <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

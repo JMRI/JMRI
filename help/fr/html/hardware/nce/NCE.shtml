@@ -5,7 +5,7 @@
   <title>JMRI Hardware Guide: NCE</title>
   <META name="author" CONTENT="Bob Jacobsen">
   <META NAME="keywords" CONTENT="JMRI help NCE">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -391,6 +391,6 @@ Catalogue Cabs</a></p>
       <!--#include virtual="/Footer_fr.shtml" -->
       </div>
     </div>
-    <script src="/js/main.js"></script>
+    <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
   </body>
 </html>

@@ -8,10 +8,10 @@
   <meta name="Author" content="Bob Jacobsen">
   <meta name="Author" content="Egbert Broerse">
   <meta name="Author" content="B. Milhaupt">
-  <meta name="Date.Modified" content="20200106"><!--#include virtual="/Style.shtml" -->
+  <meta name="Date.Modified" content="20200106"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -538,11 +538,11 @@ signals.getSignalHead("IH1").setAppearance(YELLOW)
         same signals.
         </li>
       </ul>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

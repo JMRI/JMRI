@@ -5,10 +5,10 @@
   <!-- Copyright Bob Jacobsen 2008, 2022 -->
 
   <title>JMRI: DecoderPro - Tour</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -287,11 +287,11 @@
       <p>Here's more information on <a href="MoreInfo.shtml">how DecoderPro works</a> and
       <a href="CreateDecoder.shtml">how to add a new Decoder Type</a>.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- close #mainContent -->
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

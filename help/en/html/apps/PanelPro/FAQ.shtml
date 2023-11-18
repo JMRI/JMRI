@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI: PanelPro Frequently Asked Questions</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: PanelPro Frequently Asked Questions</title><!--#include virtual="/help/en/parts/Style.shtml" -->
   <!-- FAQ-Head -->
 
   <script type="text/javascript">
@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/web/css/faq.css" media="screen"><!-- /FAQ-Head -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -233,7 +233,7 @@
           See <a href="../../setup/Files.shtml">JMRI Configuration Files</a>
         </dd>
       </dl>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

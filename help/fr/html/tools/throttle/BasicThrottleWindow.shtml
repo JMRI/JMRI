@@ -9,7 +9,7 @@
   <meta name="author" content="Lionel Jeanson">
   <meta name="Robots" content="Index, Follow">
   <meta name="Revisit-After" content="7 Days">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -232,6 +232,6 @@ lui-m&#234;me, non pas sur la barre d'outils.</span>
 		    <!--#include virtual="/Footer_fr.shtml" -->
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

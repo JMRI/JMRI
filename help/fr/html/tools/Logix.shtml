@@ -5,7 +5,7 @@
  <title>JMRI: Logix Documentation</title>
  <meta name="author" content="David Duchamp">
  <meta name="keywords" content="java model railroad JMRI Logix">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -857,6 +857,6 @@ Un groupe de Conditions a &#233;t&#233; choisi pour plusieurs raisons, notamment
       <!--#include virtual="/Footer_fr.shtml" -->
 	  </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

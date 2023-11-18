@@ -4,7 +4,7 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright ($Author$) 2016 -->
 
-  <title>JMRI: Timetable Tool</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Timetable Tool</title><!--#include virtual="/help/en/parts/Style.shtml" -->
 
   <style type="text/css">
     td,
@@ -56,7 +56,7 @@
   </style>
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -705,11 +705,11 @@
       <p>A sample Jython program, <strong>TimeTable.py</strong>, is included in the JMRI
       distribution. The program shows how to establish the data manager connection and navigate the
       timetable data structure.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

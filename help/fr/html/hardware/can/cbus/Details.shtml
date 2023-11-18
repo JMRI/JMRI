@@ -3,7 +3,7 @@
 <head>
   <!-- Updated by Blorec Herv&#233;  2017-01-16-->
   <title>JMRI Mat&#233;riel - CBUS&reg; - D&#233;tails Tech</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -54,6 +54,6 @@ a sugg&#233;r&#233; que JMRI utilise un ID CBUS de 126. Actuellement, c'est une 
     <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

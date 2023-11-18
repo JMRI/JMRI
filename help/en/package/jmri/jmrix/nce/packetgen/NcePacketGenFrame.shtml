@@ -5,10 +5,10 @@
   <title>JMRI: Command Generator</title>
   <meta name="author" content="Dan Boudreau">
   <meta name="keywords" content="JMRI Help NCE Command Generator">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -224,10 +224,10 @@
       baud rate to 9600) (0) Returns nothing</p>
 
       <p>0xAD (4 data bytes) Accy/signal and macro commands (1) !,1</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

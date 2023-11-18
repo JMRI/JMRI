@@ -7,7 +7,7 @@
   </title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Consist Tool">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>

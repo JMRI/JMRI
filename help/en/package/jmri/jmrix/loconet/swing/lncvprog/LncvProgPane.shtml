@@ -5,10 +5,10 @@
   <title>JMRI: LocoNet LNCV Programming Pane</title>
   <meta name="author" content="Egbert Broerse">
   <meta name="keywords" content="JMRI help send loconet lncv uhlenbrock">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -138,10 +138,10 @@
       "part_1.part_3".<br>
       For example CV6 in the DR5033 is defined as:<br>
       <code>&lt;variable CV="5033.6" readOnly="yes" item="Temperature"&gt;</code></p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

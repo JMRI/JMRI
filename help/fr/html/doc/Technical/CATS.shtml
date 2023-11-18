@@ -5,7 +5,7 @@
   <title>JMRI: Integration CATS</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code Java CATS">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -108,6 +108,6 @@ Puis ex&#233;cutez le script appropri&#233; "cats.csh" (Linux, Mac OS X) et "cat
 
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

@@ -5,10 +5,10 @@
   <title>JMRI: Unit testing with JUnit</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code JUnit testing">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -1143,11 +1143,11 @@ milliseconds can improve the reliability of tests. Also, setting
       dynamically. Instead, the right long-term fix is to have all classes with JUnit loader issues
       included in the <code>test/junit/runner/excluded.properties</code> file. JUnit uses those
       properties to decide how to handle loading and reloading of classes.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

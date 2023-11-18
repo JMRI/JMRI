@@ -3,7 +3,7 @@
 <head>
   <!-- Updated by Blorec Herv&#233; 2017-01-20-->
   <title>JMRI Mat&#233;riel - R&#233;seau CAN</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -151,6 +151,6 @@ Pr&#233;f&#233;rences et s&#233;lectionnez:</p>
     <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

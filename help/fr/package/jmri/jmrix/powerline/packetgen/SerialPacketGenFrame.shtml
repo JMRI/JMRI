@@ -5,7 +5,7 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI help Send grapevine message packet">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>

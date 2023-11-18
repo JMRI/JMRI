@@ -6,10 +6,10 @@
   <meta name="Author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "light lights hardware variable timed intensity automated layout control controls effect lighting model railroad JMRI CMRI panelpro tools dmx512">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -430,11 +430,11 @@
       <p><a href="../../package/jmri/jmrit/simplelightctrl/SimpleLightCtrl.shtml">Manual Light
       Control Tool</a>
       </p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

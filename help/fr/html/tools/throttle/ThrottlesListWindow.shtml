@@ -6,7 +6,7 @@
   <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro" />
 	<meta name="description" content="Throttle documentation for JMRI project" />
 	<meta name="author" content="Lionel Jeanson" />
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>

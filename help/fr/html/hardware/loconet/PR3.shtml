@@ -5,7 +5,7 @@
  <title>JMRI Hardware Support - Connecting to a Digitrax PR3 (Xtra)</title>
 	<meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -231,7 +231,7 @@ juste avant de retirer la locomotive de la voie.
 		<!--#include virtual="/Footer_fr.shtml" -->
      </div>
    </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>
 

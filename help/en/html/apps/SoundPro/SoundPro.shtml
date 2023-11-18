@@ -5,10 +5,10 @@
   <title>JMRI: SoundPro Main Window</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="author" content="Matthew Harris">
-  <meta name="keywords" content="JMRI help preferences"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help preferences"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -22,10 +22,10 @@
       Tables &rArr; Audio</strong>.</p>
 
       <p>The main help page is at <a href="../../tools/Audio.shtml">Audio</a>
-      <!--#include virtual="/Footer.shtml" --></p>
+      <!--#include virtual="/help/en/parts/Footer.shtml" --></p>
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

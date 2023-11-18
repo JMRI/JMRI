@@ -6,7 +6,7 @@
   <title>JMRI: DS54 Examples</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI LocoNet DS54">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
@@ -171,6 +171,6 @@
       <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

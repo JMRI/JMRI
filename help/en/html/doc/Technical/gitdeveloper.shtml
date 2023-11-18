@@ -10,10 +10,10 @@
   <!-- easily replace the common header/footer code for all the web pages -->
   <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
   <!-- or change them to reflect your alternative logo -->
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -363,11 +363,11 @@ you've committed all your local changes.
       <p>A smaller group of JMRI "maintainers" on GitHub have the ability to edit, label and close
       all Issues and PRs, and to merge the contents of PRs to the main repository. This group does
       the infrastructure work that keeps the project code moving forward while avoiding unnecessary
-      risk to the project's code and other assets. <!--#include virtual="/Footer.shtml" --></p>
+      risk to the project's code and other assets. <!--#include virtual="/help/en/parts/Footer.shtml" --></p>
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

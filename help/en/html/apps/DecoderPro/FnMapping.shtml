@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: Function Mapping in Programmer Files</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Function Mapping in Programmer Files</title><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -176,11 +176,11 @@ models.
         &lt;constant item="F7 controls output 9" minOut="9" minFn="7" default="1" /&gt; 
         &lt;constant item="F8 controls output 10" minOut="10" minFn="8" default="1" /&gt; 
 </pre>This will be displayed in the same way as other mappings, except that the individual
-checkboxes will be inactive (grayed out). <!--#include virtual="/Footer.shtml" -->
+checkboxes will be inactive (grayed out). <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

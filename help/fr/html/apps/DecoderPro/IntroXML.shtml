@@ -4,7 +4,7 @@
 <!-- Copyright Bob Jacobsen 2008 -->
 <!-- Translated by Herv&#233. BLOREC <bzh56420@yahoo.fr> on 2016-06-27 -->
 <title>JMRI: DecoderPro In Depth</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -120,6 +120,6 @@ vous imprimez &#224; partir du format "de base", et une liste de tout lorsque vo
 <!--#include virtual="/Footer_fr.shtml" -->
 </div>
 </div>  <!-- close #mBody -->
-<script src="/js/main.js"></script>
+<script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

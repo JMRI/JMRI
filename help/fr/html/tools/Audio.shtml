@@ -3,7 +3,7 @@
 <head>
   <!-- Updated by Blorec Herv&#233; 2013-09-20-->
   <title>JMRI: Audio</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>

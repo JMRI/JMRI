@@ -3,7 +3,7 @@
 <head>
   <!-- Updated by Blorec Herv&#233; 2013-09-20 -->
   <title>JMRI Hardware Support - Outil de Configuration XPressNet LI101F</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -54,6 +54,6 @@ paul.bender@acm.org
     <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

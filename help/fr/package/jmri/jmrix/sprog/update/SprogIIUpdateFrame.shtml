@@ -4,7 +4,7 @@
   <!-- Copyright 2008 -->
   <!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14-->
   <title>JMRI: SPROG II Update Tool</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -20,6 +20,6 @@
       <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: DecoderPro Frequently Asked Questions</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
   <!-- FAQ-Head -->
 
   <script type="text/javascript">
@@ -12,7 +12,7 @@
   <link rel="stylesheet" type="text/css" href="/web/css/faq.css" media="screen"><!-- /FAQ-Head -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -105,12 +105,12 @@
         Click <em>OK</em>. Close the Properties panel. Restart JMRI and verify your connection
         settings.</dd>
       </dl>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script> <!-- FAQ-Tail -->
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script> <!-- FAQ-Tail -->
    
   <script src="/web/js/faq.js"></script><!-- /FAQ-Tail -->
 </body>

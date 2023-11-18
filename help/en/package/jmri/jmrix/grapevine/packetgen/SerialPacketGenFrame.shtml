@@ -5,19 +5,19 @@
   <title>JMRI: Send Grapevine message</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Send grapevine message packet">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
       <h1>Send Grapevine Message</h1>
       This is the help/jmri/jmrix/grapevine/packetgen/SerialPacketGenFrame help page 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

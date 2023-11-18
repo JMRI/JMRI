@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI Setup - FAQ</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI Setup - FAQ</title><!--#include virtual="/help/en/parts/Style.shtml" -->
   <!-- FAQ-Head -->
 
   <script type="text/javascript">
@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="https://www.jmri.org/web/css/faq.css" media="screen"><!-- /FAQ-Head -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -35,13 +35,13 @@
           "https://groups.io/g/jmriusers" target="_blank">JMRI User Forum.</a>
         </dd>
       </dl>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
   <!-- FAQ-Tail -->
   <script type="text/javascript" src="https://www.jmri.org/web/js/faq.js"></script><!-- /FAQ-Tail -->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

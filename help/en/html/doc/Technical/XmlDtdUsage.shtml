@@ -5,10 +5,10 @@
   <title>JMRI: XML DTD Usage</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code xml usage">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -69,11 +69,11 @@
         </li>
       </ul>
       <strong>Starting with JMRI 2.9.4, JMRI uses <a href="XmlSchema.shtml">XML schema</a> instead
-      of DTDs, and this process is different.</strong> <!--#include virtual="/Footer.shtml" -->
+      of DTDs, and this process is different.</strong> <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

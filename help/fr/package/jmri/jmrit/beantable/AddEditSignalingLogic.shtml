@@ -8,7 +8,7 @@
   <meta name="Date.Modified" content="20150523">
   <meta name="author" content="Kevin Dickerson, Egbert Broerse">
   <meta name="keywords" content="JMRI help SignalMast Logic Add Edit">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>

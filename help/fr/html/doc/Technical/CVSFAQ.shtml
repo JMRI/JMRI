@@ -5,7 +5,7 @@
   <title>JMRI: CVS FAQ</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code CVS FAQ">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -179,6 +179,6 @@ remarquer le probl&#232;me, et les changements ne peuvent pas &#234;tre v&#233;r
     <!--#include virtual="/Footer_fr.shtml" -->
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

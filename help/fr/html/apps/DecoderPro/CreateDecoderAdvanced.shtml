@@ -4,7 +4,7 @@
 <!-- Copyright Bob Jacobsen 2008 -->
 <!--Translated by Herv&#233; Blorec le 2016-06-18 -->
 <title>JMRI: DecoderPro User Guide - Advanced Decoder Definitions</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
@@ -750,7 +750,7 @@ variable version-number a une valeur trop faible:</p>
 <!--#include virtual="/Footer_fr.shtml" -->
  </div><!-- closes #mainContent-->
 </div>  <!-- close #mBody -->
-<script src="/js/main.js"></script>
+<script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>
 

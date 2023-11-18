@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Edit NCE Macro</title>
   <meta name="author" content="Dan Boudreau">
-  <meta name="keywords" content="JMRI Help NCE Edit Macro"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI Help NCE Edit Macro"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -56,10 +56,10 @@
       empty macro, click the "Empty Macro" box located in the upper right hand corner. And finally,
       if you're a diehard NCE fan and just can't stand using the terms "Thrown" and "Closed" to
       describe a turnout, click the "NCE Turnout" box and the accessory buttons will become
-      "Normal" and "Reverse" just like your NCE throttle! <!--#include virtual="/Footer.shtml" -->
+      "Normal" and "Reverse" just like your NCE throttle! <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

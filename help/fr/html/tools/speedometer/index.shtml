@@ -4,7 +4,7 @@
 <head>
   <!-- Copyright Bob Jacobsen 2008 -->
   <title>JMRI: Compteur</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -76,6 +76,6 @@ fen&#234;tres d'outils Compteur ouvertes si vous le souhaitez.</p>
       <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

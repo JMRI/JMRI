@@ -5,7 +5,7 @@
   <title>JMRI Hardware Support - Digitrax LocoNet</title>
   <meta name="keywords" content=
   "Digitrax LocoNet LocoBuffer LocoBuffer-II LocoBuffer-USB LocoBuffer-NG MS100 PR2 PR3 PR4 DCS210 DCS240 DCS100 DCS240 DCS50 DCS51 DB150 JMRI DCS210Plus">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 
   <style>
     .ctr {
@@ -14,7 +14,7 @@
   </style>
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -1377,11 +1377,11 @@
 
       <p>LocoNet&reg; is a registered trademark of <a href="https://www.digitrax.com">Digitrax,
       Inc.</a></p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

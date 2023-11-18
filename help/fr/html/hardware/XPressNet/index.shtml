@@ -5,7 +5,7 @@
   <title>JMRI Hardware Support - XPressNet</title>
   <meta name="author" content="Paul Bender, Egbert Broerse">
   <meta name="keywords" content="XPressNet java model railroad JMRI install">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -1178,7 +1178,7 @@ l'Elite Hornby est la 2.1.2</b>
     <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>
 

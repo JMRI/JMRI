@@ -5,7 +5,7 @@
   <title>JMRI: LogixNG Documentation</title>
   <meta name="author" content="Daniel Bergqvist">
   <meta name="keywords" content="logixng model railroad JMRI LogixNG PanelPro">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
   <div id="container">
@@ -309,6 +309,6 @@
     <!-- closes #mBody-->
   </div>
   <!-- closes #container -->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

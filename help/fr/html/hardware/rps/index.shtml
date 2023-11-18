@@ -3,7 +3,7 @@
 <!-- Updated by Blorec Herv&#233;  2017-02-06-->
 <head>
  <title>JMRI Hardware Support - NAC Services RPS</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -209,6 +209,6 @@ Il y a plus d'informations disponibles sur le
     <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

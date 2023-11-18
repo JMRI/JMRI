@@ -7,7 +7,7 @@
   <title>JMRI: Glossary</title>
   <meta name="author" content="Egbert Broerse">
   <meta name="keywords" content="model railroad JMRI decoderpro panelpro operations GUI I18N">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
   <!-- Sortable tables -->
   <!-- <script src="../../../web/js/sorttable.js"></script> for local testing -->
 
@@ -25,7 +25,7 @@
   </style>
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="../html/Sidebar.shtml" -->
@@ -1833,11 +1833,11 @@
         <!-- end of Glossary table -->
       </div>
       <!-- end of wide-table div -->
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

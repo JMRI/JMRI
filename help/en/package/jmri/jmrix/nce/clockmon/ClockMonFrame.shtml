@@ -5,10 +5,10 @@
   <title>JMRI: NCE Clock Monitor</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI NCE clock monitor fastclock source">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -86,10 +86,10 @@
 
       <p>This adjusts how much the rate of change between the current error and the prior error is
       used in adjusting the clock.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

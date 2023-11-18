@@ -6,7 +6,7 @@
   <!-- Copyright ($Author$) 2016 -->
   <!-- Translated by Moi le 2016-17-06-->
   <title>JMRI: ???Page Title</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
   <!-- If UTF-8 is used, uncomment next line: -->
   <!--  <meta http-equiv="content-type" content="text/html; charset=utf-8">-->
 </head>
@@ -24,6 +24,6 @@
       <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- ferme #mainContent-->
   </div><!-- ferme #mBody-->
-  <script src="/js/main.js"></script><!-- drives the title bar etc -->
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script><!-- drives the title bar etc -->
 </body>
 </html>

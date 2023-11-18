@@ -6,7 +6,7 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI technical code Continuous Integration jenkins CVS">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -119,6 +119,6 @@ du code Hudson et supporte le  m&#234;me <a href="http://en.wikipedia.org/wiki/A
     <!--#include virtual="/Footer_fr.shtml" -->
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

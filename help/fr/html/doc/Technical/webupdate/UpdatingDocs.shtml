@@ -9,7 +9,7 @@
   <meta name="Revision"
         content="Updated instructions for GitHub instead of single file edit and ZIP">
   <title>How to Update the JMRI Documentation</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -138,6 +138,6 @@ changements et se connecter &#224; GitHub, SVP Lire <a href="../getgitcode.shtml
     <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

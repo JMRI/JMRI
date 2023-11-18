@@ -6,10 +6,10 @@
 
   <title>JMRI: Simple Signal Logic Example</title>
   <meta name="author" content="Bob Jacobsen, Egbert Broerse">
-  <meta name="Date.Modified" content="20151107"><!--#include virtual="/Style.shtml" -->
+  <meta name="Date.Modified" content="20151107"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -331,10 +331,10 @@ respectively.
       Logic help page</a>.</p>
 
       <p>Located at en\html\tools\signaling\</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

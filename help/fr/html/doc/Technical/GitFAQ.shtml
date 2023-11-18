@@ -4,7 +4,7 @@
   <title>JMRI: Git FAQ</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code Git FAQ">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
   <!-- FAQ-Head -->
@@ -782,7 +782,7 @@ développement: Elle a commencé á une autre personne, mais c'est maintenant la
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
   <!-- FAQ-Tail -->
   <script src="/web/js/faq.js"></script> <!-- /FAQ-Tail -->
 </body>

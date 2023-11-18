@@ -41,17 +41,17 @@
     <xsl:comment>Do not edit it directly</xsl:comment>
     <xsl:comment>=====================================================================</xsl:comment>
 
-    <xsl:comment>#include virtual="/Style.shtml" </xsl:comment>
+    <xsl:comment>#include virtual="/help/en/parts/Style.shtml" </xsl:comment>
     </head>
 
     <body>
-    <xsl:comment>#include virtual="/Header.shtml" </xsl:comment>
+    <xsl:comment>#include virtual="/help/en/parts/Header.shtml" </xsl:comment>
     <xsl:comment>#include virtual="indexheader" </xsl:comment>
     <ul>
         <xsl:apply-templates/>
     </ul>
 
-    <xsl:comment>#include virtual="/Footer.shtml" </xsl:comment>
+    <xsl:comment>#include virtual="/help/en/parts/Footer.shtml" </xsl:comment>
     </body>
     </html>
 </xsl:template>
@@ -97,17 +97,17 @@
     <xsl:comment>Do not edit it directly</xsl:comment>
     <xsl:comment>=====================================================================</xsl:comment>
 
-    <xsl:comment>#include virtual="/Style.shtml" </xsl:comment>
+    <xsl:comment>#include virtual="/help/en/parts/Style.shtml" </xsl:comment>
     </head>
 
     <body>
-    <xsl:comment>#include virtual="/Header.shtml" </xsl:comment>
+    <xsl:comment>#include virtual="/help/en/parts/Header.shtml" </xsl:comment>
     <xsl:comment>#include virtual="tocheader" </xsl:comment>
     <ul>
         <xsl:apply-templates/>
     </ul>
 
-    <xsl:comment>#include virtual="/Footer.shtml" </xsl:comment>
+    <xsl:comment>#include virtual="/help/en/parts/Footer.shtml" </xsl:comment>
     </body>
     </html>
 </xsl:template>

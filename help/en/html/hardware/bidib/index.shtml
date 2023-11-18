@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI Hardware Support - BiDiB</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI Hardware Support - BiDiB</title><!--#include virtual="/help/en/parts/Style.shtml" -->
   <meta name="author" content="Eckart Meyer">
   <meta name="keywords" content="BiDiB java model railroad JMRI install">
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="../SidebarUp.shtml" -->
@@ -364,11 +364,11 @@
       <h4>BiDiB Manufacturers</h4>
       <p>The developers of BiDiB sell modules in the <a href="https://fichtelbahn.de">Fichtelbahn</a> shop (german only).</p>
       <p>There are some other manufacturers - see <a href="http://www.bidib.org/vendors_e.html">www.bidib.org/vendors_e.html</a></p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

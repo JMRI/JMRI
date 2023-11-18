@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Using Enums</title>
   <meta name="author" content="YOUR NAME HERE">
-  <meta name="keywords" content="SOME KEYWORDS"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="SOME KEYWORDS"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" --><!-- select the local or global Sidebar file -->
@@ -199,11 +199,11 @@
          &lt;/xs:simpleType&gt;
         &lt;/xs:attribute&gt;
 </pre>This can also be used for elements (which is the generally prefered approach) 
-<!--#include virtual="/Footer.shtml" -->
+<!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody, was opened by Sidebar -->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

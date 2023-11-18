@@ -5,10 +5,10 @@
   <title>JMRI: Edit NCE Consist</title>
   <meta name="author" content="Dan Boudreau">
   <meta name="keywords" content="JMRI Help NCE Edit Consist">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -158,10 +158,10 @@
         been added, the direction of the loco isn't known. And if a loco has been deleted from the
         consist, the editor wants you to know!</dd>
       </dl>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

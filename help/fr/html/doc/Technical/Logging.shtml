@@ -5,7 +5,7 @@
   <title>JMRI: Comment faire pour utiliser le Rapport</title>
   <meta name="Author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI log4j logging log">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
@@ -192,6 +192,6 @@ ainsi que toutes ses informations de retraçage.
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

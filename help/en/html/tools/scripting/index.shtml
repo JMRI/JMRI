@@ -5,10 +5,10 @@
   <!-- Copyright Bob Jacobsen 2008 -->
   <meta name="keywords" content=
   "custom jmri script, jython, automation, combine java python, user scripts, jython examples">
-  <title>JMRI: Scripting</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Scripting</title><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -88,11 +88,11 @@
       "../../doc/Technical/StartUpScripts.shtml" target="_blank">documented for your operating
       system</a> (different operating systems have different launchers that are configured
       differently).</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

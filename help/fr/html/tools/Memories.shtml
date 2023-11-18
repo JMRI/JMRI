@@ -3,7 +3,7 @@
 <!--Updated by Blorec Herv&#233; le 2013-09-24-->
 <head>
 <title>JMRI: Memories</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -75,6 +75,6 @@ ic&#244;nes affich&#233;es lors de l'utilisation d'une ic&#244;ne de la m&#233;m
       <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

@@ -6,10 +6,10 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Consist Tool">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -90,9 +90,9 @@
       <img src="images/ConsistTool-ScanForConsists.png" alt="Scan Roster for Consists">
       <p>For more information on consisting and the JMRI consist tool, please see the main <a href=
       "../../../../html/tools/consisttool/ConsistTool.shtml#tool">consisting page</a>.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

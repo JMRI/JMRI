@@ -6,7 +6,7 @@
 	<meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro">
 	<meta name="description" content="Throttle documentation for JMRI project">
 	<meta name="author" content="Lionel Jeanson">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -101,6 +101,6 @@ et cliquer sur "afficher tous les boutons de fonction" </a>.</span>
       <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

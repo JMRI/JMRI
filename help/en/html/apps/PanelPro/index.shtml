@@ -5,10 +5,10 @@
   <!-- Copyright Bob Jacobsen 2008, 2019 -->
 
   <title>JMRI: PanelPro, an application for making Control Panels</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -55,7 +55,7 @@
         <dd>
           Most of the PanelPro features are included in the Tools menu items and sub-menus. See
           <a href="ToolsMenu.shtml">Tools Menu</a>. For an overview of the PanelPro tools, see
-          <a href="../../tools/">PanelPro Tools</a>.
+          <a href="../../tools/index.shtml">PanelPro Tools</a>.
         </dd>
 
         <dt>Roster</dt>
@@ -342,10 +342,11 @@
       LocoNet connection). As a second system connection is required to use a different prefix, it
       is simple to use more than one hardware system at the same time. See the page on <a href=
       "../../doc/Technical/Names.shtml">Names & Naming</a> for more information.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

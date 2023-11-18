@@ -3,7 +3,7 @@
 <!-- Translated by Herv&#233; BLOREC bzh56420@yahoo.fr on 2017-01-01 -->
 <head>
   <title>JMRI: Setup</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -76,6 +76,6 @@ ouvrir le programme de la mani&#232;re habituelle pour votre syst&#232;me. Windo
     <!--#include virtual="/Footer_fr.shtml" -->
   </div><!-- closes #mainContent-->
  </div> <!-- closes #mBody-->
-<script src="/js/main.js"></script>
+<script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

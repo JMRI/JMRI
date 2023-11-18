@@ -3,7 +3,7 @@
 <!-- Translated by Blorec Herv&#233; le 2013-10-07-->
 <head>
   <title>JMRI: Acc&egrave;s Web</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -259,6 +259,6 @@ uniquement en utilisant une transformation XSLT.
       </div>
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: NCE Cab Monitor</title>
   <meta name="author" content="Ken Cameron">
-  <meta name="keywords" content="JMRI Help NCE Cab Monitor"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI Help NCE Cab Monitor"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -23,10 +23,10 @@
       <p>The purge button will remove a cab id from the 'active' polling list. This will reduce the
       frequency that the cab is polled which will improve the response speed of the other active
       cabs. Generally this only helps larger club type layouts with many active cabs.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

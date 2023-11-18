@@ -7,7 +7,7 @@
   <meta name="description" content="Throttle documentation for JMRI project">
   <meta name="author" content="Paul Fraker (paul@frakers.com)">
   <meta name="Robots" content="Index, Follow">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -53,6 +53,6 @@ capacit&#233; de commander les fonctions de lumi&#232;re et du son.</p>
         <!--#include virtual="/Footer_fr.shtml" -->
       </div> <!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

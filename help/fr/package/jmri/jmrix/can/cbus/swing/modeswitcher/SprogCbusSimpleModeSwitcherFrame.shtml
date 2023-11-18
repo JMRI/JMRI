@@ -4,7 +4,7 @@
   <title>JMRI : SPROG CBUS® ; Outil de commutation de mode simple</title>
   <meta name="author" content="Andrew Crosland">
   <meta name="keywords" content="JMRI SPROG CBUS Simple Mode Switcher Tool">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
@@ -42,6 +42,6 @@
       <!--#include virtual="/Footer_fr.shtml" -->
     </div> <!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

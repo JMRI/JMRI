@@ -4,10 +4,10 @@
   <title>JMRI: Display / Edit Log Categories</title>
   <meta name="author" content="Steve Young">
   <meta name="keywords" content="JMRI help display view edit update debug log logging category categories log4j log4j2 slf4j">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -64,11 +64,11 @@
       <p>To make permanent changes to the logging levels, see <a href="../../../../html/apps/Debug.shtml">JMRI Debugging and Logging</a>
       which discusses the Logging Configuration File, (default_lcf.xml) options.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

@@ -5,10 +5,10 @@
   <title>JMRI Hardware Support - Roco z21/Z21</title>
   <meta name="author" content="Paul Bender, Egbert Broerse">
   <meta name="keywords" content="Fleischmann Roco z21/Z21 java model railroad JMRI install">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -180,11 +180,11 @@
       <h3>Credits</h3>
 
       <p>Thanks to Paul Bender and others for implementing Z21 Support in JMRI.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>

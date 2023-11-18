@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Item Palette Help</title>
   <meta name="author" content="Pete Cressman">
-  <meta name="keywords" content="JMRI help Item Palette"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Item Palette"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -207,11 +207,11 @@
 
       <p>When an <strong>Edit Icons</strong> window is displayed all icons are shown, Icons from
       the Icon Catalog may be dragged and dropped to any icon shown.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
 </body>
 </html>
