@@ -63,15 +63,8 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         // Attach XBee to the port
         try {
             if( p instanceof XBeeAdapter) {
-               XBeeAdapter xbp = (XBeeAdapter) p;
-               xbee = new XBeeDevice(xbp);
-               xbee.open();
-               xbee.setReceiveTimeout(200);
-               xbee.addPacketListener(this);
-               xbee.addModemStatusListener(this);
-               xbee.addDataListener(this);
+               configureLocalXBee((XBeeAdapter) p);
                resetLocalXBee();
-
             } else {
                throw new java.lang.IllegalArgumentException("Wrong adapter type specified when connecting to the port.");
             }
@@ -80,7 +73,10 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         } catch (XBeeException xbe ) {
             log.error("Exception during XBee communication start up. Error was {} ",xbe.getCause(), xbe);
         }
-        // and start threads
+        startTransmitThread();
+    }
+
+    private void startTransmitThread() {
         xmtThread = jmri.util.ThreadingUtil.newThread(
                 xmtRunnable = () -> {
                     try {
@@ -103,6 +99,15 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         xmtThread.setDaemon(true);
         xmtThread.setPriority(Thread.MAX_PRIORITY-1);      //bump up the priority
         xmtThread.start();
+    }
+
+    private void configureLocalXBee(XBeeAdapter p) throws XBeeException {
+        xbee = new XBeeDevice(p);
+        xbee.open();
+        xbee.setReceiveTimeout(200);
+        xbee.addPacketListener(this);
+        xbee.addModemStatusListener(this);
+        xbee.addDataListener(this);
     }
 
     @SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "WA_NOT_IN_LOOP"}, justification="The unconditional wait outside of a loop is used to allow the hardware to react to a reset request.")
