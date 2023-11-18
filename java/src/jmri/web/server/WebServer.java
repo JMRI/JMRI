@@ -216,6 +216,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
             ResourceHandler projectHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath.replace(FileUtil.PROGRAM, FileUtil.PROFILE)));
             ResourceHandler settingsHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath.replace(FileUtil.PROGRAM, FileUtil.SETTINGS)));
             ResourceHandler programHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath));
+            log.error("AAAAAAAA DirectoryHandler: {}", FileUtil.getAbsoluteFilename(filePath));
             handlers.setHandlers(new Handler[]{preferenceHandler, projectHandler, settingsHandler, programHandler, new DefaultHandler()});
         } else if (filePath.startsWith(FileUtil.SETTINGS) && !filePath.equals(FileUtil.SETTINGS)) {
             // make it possible to override anything under settings: with an identical path under preference: or profile:
