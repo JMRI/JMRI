@@ -133,6 +133,9 @@
                 <li>
                     Added SPROG DCC Ltd PI-LCC Raspberry Pi CAN adapter
                 </li>
+                <li>
+                    Added SPROG DCC Ltd USB-LCC CAN adapter
+                </li>
                 <li>Fix a problem that would sometimes leave the node list improperly sorted</li>
             </ul>
 
@@ -159,7 +162,10 @@
         <h4><a href="http://www.sprog-dcc.co.uk">SPROG</a></h4>
             <ul>
                 <li>
-                    Added PI-LCC Raspberry Pi CAN adapter
+                    Added PI-LCC Raspberry Pi CAN adapter for OpenLCB
+                </li>
+                <li>
+                    Added USB-LCC CAN adapter for OpenLCB
                 </li>
             </ul>
 
@@ -614,6 +620,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Improved the 
+            "<a href="http://jmri.org/help/en/html/apps/DecoderPro/FileUpdate.shtml">Updating Decoder Definitions</a>"
+            page.</li>
         </ul>
 
