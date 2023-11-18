@@ -1,13 +1,14 @@
-package jmri.jmrix.can.adapters.gridconnect.pilcc.serialdriver;
+package jmri.jmrix.can.adapters.gridconnect.usblcc.serialdriver;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
- * Definition of objects to handle configuring a layout connection via a PI-LCC
+ * Definition of objects to handle configuring a layout connection via a USB-LCC
  * SerialDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Andrew Crosland 2008
+ * @author Andrew Crosland 2023
  */
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "name assigned historically")
 public class ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
@@ -34,11 +35,7 @@ public class ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
 
     @Override
     public String name() {
-        return "CAN via SPROG DCC Ltd PI-LCC";
-    }
-
-    public boolean isOptList2Advanced() {
-        return false;
+        return "CAN via SPROG DCC Ltd USB-LCC";
     }
 
     /**
@@ -47,7 +44,7 @@ public class ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
     @Override
     protected void setInstance() {
         if (adapter == null) {
-            adapter = new PiLccSerialDriverAdapter();
+            adapter = new SerialDriverAdapter();
         }
     }
 

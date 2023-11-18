@@ -26,15 +26,19 @@
 
       <h3>Via a Lawcell CAN USB</h3>
 
-      <h3>Via a <a href="https://www.sprog-dcc.co.uk>PI-LCC</a> for Raspberry Pi</h3>
+      <h3>Via an RR-Cirkits LCC Buffer-USB</h3>
 
-      <h3>Via a <a href="../can/index.shtml">MERG CAN-RS/-USB</a></h3>
+      <h3>Via a <a href="https://www.sprog-dcc.co.uk/lcc/usb-lcc>USB-LCC"></a></h3>
+
+      <h3>Via a <a href="https://www.sprog-dcc.co.uk/lcc/pi-lcc>PI-LCC"> for Raspberry Pi</a></h3>
+
+      <h3>Via a <a href="https://www.merg.org.uk/content/kits">MERG CANUSB4</a></h3>
 
       <p>You can simulate a remote OpenLCB connection, e.g. to debug things, on many computers
       using the "nc" command:</p>
 
       <pre>
-nc -l 12022
+
 </pre>
       <h2 id="documentation">Documentation</h2>
 
