@@ -1218,11 +1218,11 @@
       </variable>
         
 <!-- RL effect configuration -->
-      <variable item="RL First Function" CV="136" default="64">
+      <variable item="RL First Function" CV="136" default="128">
         <decVal min="0" max="255" />
         <tooltip>First function number which turn on RL</tooltip>
       </variable>
-      <variable item="RL Second Function" CV="137" default="1">
+      <variable item="RL Second Function" CV="137" default="2">
         <decVal min="0" max="255" /> 
         <tooltip>Second function number which turn on RL</tooltip>   
       </variable>
@@ -1268,11 +1268,11 @@
       </variable>
       
 <!-- AUX3 effect configuration -->
-      <variable item="AUX3 First Function" CV="152" default="64">
+      <variable item="AUX3 First Function" CV="152" default="3">
         <decVal min="0" max="255" />
         <tooltip>First function number which turn on AUX3</tooltip>
       </variable>
-      <variable item="AUX3 Second Function" CV="153" default="1">
+      <variable item="AUX3 Second Function" CV="153" default="63">
         <decVal min="0" max="255" /> 
         <tooltip>Second function number which turn on AUX3</tooltip> 
       </variable>
@@ -1318,11 +1318,11 @@
       </variable>
       
 <!-- AUX4 effect configuration -->
-      <variable item="AUX4 First Function" CV="168" default="64">
+      <variable item="AUX4 First Function" CV="168" default="4">
         <decVal min="0" max="255" />
         <tooltip>First function number which turn on AUX4</tooltip>
       </variable>
-      <variable item="AUX4 Second Function" CV="169" default="1">
+      <variable item="AUX4 Second Function" CV="169" default="63">
         <decVal min="0" max="255" /> 
         <tooltip>Second function number which turn on AUX4</tooltip> 
       </variable>
@@ -1368,11 +1368,11 @@
       </variable>  
       
 <!-- AUX5 effect configuration -->
-      <variable item="AUX5 First Function" CV="184" default="64">
+      <variable item="AUX5 First Function" CV="184" default="5">
         <decVal min="0" max="255" />
         <tooltip>First function number which turn on AUX5</tooltip>
       </variable>
-      <variable item="AUX5 Second Function" CV="185" default="1">
+      <variable item="AUX5 Second Function" CV="185" default="63">
         <decVal min="0" max="255" /> 
         <tooltip>Second function number which turn on AUX5</tooltip> 
       </variable>
@@ -1418,11 +1418,11 @@
       </variable>          
                   
 <!-- AUX6 effect configuration -->
-      <variable item="AUX6 First Function" CV="200" default="64">
+      <variable item="AUX6 First Function" CV="200" default="6">
         <decVal min="0" max="255" />
         <tooltip>First function number which turn on AUX6</tooltip>
       </variable>
-      <variable item="AUX6 Second Function" CV="201" default="1">
+      <variable item="AUX6 Second Function" CV="201" default="63">
         <decVal min="0" max="255" /> 
         <tooltip>Second function number which turn on AUX6</tooltip> 
       </variable>
@@ -1562,7 +1562,188 @@
   <pane>
       <name>Extented Function Map</name>
       <column>
-          <display item="Output Mapping Mode" />
+          <row>
+              <column>
+                  <label>
+                      <text>This decoder supports two different function mapping solutions. The standard  mapping and an extended function mapping. </text>
+                  </label>
+                  <label>
+                      <text>The standard mapping is managed from the function mapping tab. The extended function mapping is managed from this tab</text>
+                  </label>
+                  <label>
+                      <text>The extended function mapping allows to set two functions per output, with direction control.</text>
+                  </label>
+                  <label>
+                      <text>It also can set a specific function to disable the output</text>
+                  </label>
+                  <label>
+                      <text> </text> 
+                  </label>
+                  <display item="Output Mapping Mode" />
+                  <label>
+                      <text> </text>
+                  </label>
+                  <separator/>
+              </column>
+          </row>
+          <label>
+              <text> </text>
+          </label>
+          <row>
+              <column>
+                 <grid ipadx="5" ipady="5">
+                    <!-- column labels -->
+                    <griditem gridx="0" gridy="1">
+                        <label>
+                            <text>FL</text>
+                        </label>
+                    </griditem>
+                    <griditem gridx="0" gridy="2">
+                        <label>
+                            <text>RL</text>
+                        </label>
+                    </griditem>
+                    <griditem gridx="0" gridy="3">
+                        <label>
+                            <text>AUX3</text>
+                        </label>
+                    </griditem>
+                    <griditem gridx="0" gridy="4">
+                        <label>
+                            <text>AUX4</text>
+                        </label>
+                    </griditem>
+                    <griditem gridx="0" gridy="5">
+                        <label>
+                            <text>AUX5</text>
+                        </label>
+                    </griditem>
+                    <griditem gridx="0" gridy="6">
+                        <label>
+                            <text>AUX6</text>
+                        </label>
+                    </griditem>
+
+                    <!-- row labels -->
+                    <griditem gridx="1" gridy="0">
+                        <label>
+                            <text>First</text>
+                        </label>
+                    </griditem>
+                    <griditem gridx="2" gridy="0">
+                        <label>
+                            <text>Second</text>
+                        </label>
+                    </griditem>
+                    <griditem gridx="3" gridy="0">
+                        <label>
+                            <text>Turn Off</text>
+                        </label>
+                    </griditem>
+
+                    <griditem gridx="1" gridy="1">
+                        <display item="FL First Function"  label=""/>
+                    </griditem>
+                    <griditem gridx="2" gridy="1">
+                        <display item="FL Second Function"  label=""/>
+                    </griditem>
+                    <griditem gridx="3" gridy="1">
+                        <display item="FL Function Turn Off" label=""/>
+                    </griditem>
+                    <griditem gridx="1" gridy="2">
+                        <display item="RL First Function"  label=""/>
+                    </griditem>
+                    <griditem gridx="2" gridy="2">
+                        <display item="RL Second Function"  label=""/>
+                    </griditem>
+                    <griditem gridx="3" gridy="2">
+                        <display item="RL Function Turn Off" label=""/>
+                    </griditem>
+                    <griditem gridx="1" gridy="3">
+                        <display item="AUX3 First Function"  label=""/>
+                    </griditem>
+                    <griditem gridx="2" gridy="3">
+                        <display item="AUX3 Second Function"  label=""/>
+                    </griditem>
+                    <griditem gridx="3" gridy="3">
+                        <display item="AUX3 Function Turn Off" label=""/>
+                    </griditem>
+                     <griditem gridx="1" gridy="4">
+                        <display item="AUX4 First Function"  label=""/>
+                    </griditem>
+                    <griditem gridx="2" gridy="4">
+                        <display item="AUX4 Second Function"  label=""/>
+                    </griditem>
+                    <griditem gridx="3" gridy="4">
+                        <display item="AUX4 Function Turn Off" label=""/>
+                    </griditem>
+                    <griditem gridx="1" gridy="5">
+                        <display item="AUX5 First Function"  label=""/>
+                    </griditem>
+                    <griditem gridx="2" gridy="5">
+                        <display item="AUX5 Second Function"  label=""/>
+                    </griditem>
+                    <griditem gridx="3" gridy="5">
+                        <display item="AUX5 Function Turn Off" label=""/>
+                    </griditem>
+                    <griditem gridx="1" gridy="6">
+                        <display item="AUX6 First Function"  label=""/>
+                    </griditem>
+                    <griditem gridx="2" gridy="6">
+                        <display item="AUX6 Second Function"  label=""/>
+                    </griditem>
+                    <griditem gridx="3" gridy="6">
+                        <display item="AUX6 Function Turn Off" label=""/>
+                    </griditem>          
+                 </grid>
+              </column>
+              <column>
+                <label>
+                  <text> </text>
+                </label>
+              </column>
+              <separator/>
+              <column>
+                <label>
+                  <text> </text>
+                </label>            
+              </column>
+              <column>
+                  <label>
+                      <text>SETTINGS</text>
+                  </label>
+                  <label>
+                      <text> </text>
+                  </label>
+                  <label>
+                      <text>n (n&lt;=28) - Function number "n" will turn on</text>
+                  </label>
+                  <label>
+                      <text> </text>
+                  </label>
+                  <label>
+                      <text>n+ 128 (n&lt;=28) - Function number "n" will turn on in reverse direction only</text>
+                  </label>
+                  <label>                   
+                      <text> </text>
+                  </label>
+                  <label>
+                      <text>n+ 64 (n&lt;=28) - Function number "n" will turn on in forward direction only</text>
+                  </label>
+                  <label>
+                      <text> </text>
+                  </label>
+                  <label>
+                      <text>28 &lt; n &lt; 64 - setting has no effect</text>
+                  </label>
+                  <label>
+                      <text> </text>
+                  </label>
+                  <label>
+                      <text>n + 192 (n&lt;=28) - output is always turned on</text>
+                  </label>
+              </column>
+          </row>                                                   
       </column>
   </pane>
   
@@ -1923,7 +2104,7 @@
       <display item="Enable RailCom" format="checkbox"/>
       <display item="RailCom Address" format="checkbox"/>
       <display item="RailCom Data" format="checkbox"/>
- 
+      <display item="RailCom Dynamic Mode" format="checkbox" />
 
     </column>
   </pane>
