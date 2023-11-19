@@ -1,7 +1,6 @@
 package jmri.web.servlet.directory;
 
 import java.io.IOException;
-import java.util.Objects;
 
 import org.eclipse.jetty.server.handler.ResourceHandler;
 
@@ -37,13 +36,7 @@ public class DirectoryHandler extends ResourceHandler {
 
     @Override
     public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-//        log.error("DirectoryHandler: target: {}, baseRequest: {}, request: {}, response: {}", target, Objects.hashCode(baseRequest), Objects.hashCode(request), Objects.hashCode(response));
-        log.error("DirectoryHandler: target: {}, baseRequest: {}, request: {}, response: {}", target, baseRequest, request, response);
-
-//        if (target.equals("/help/en/html/web/js/side.js")) {
-//            target = "Hello";
-//        }
-
+//        log.error("DirectoryHandler: target: {}, URI: {}", target, request.getRequestURI());
         super.handle(target, baseRequest, request, response);
     }
 

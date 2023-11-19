@@ -47,38 +47,30 @@ public class HelpSSIServlet extends HttpServlet {
         String ext = fileName.substring(fileName.lastIndexOf('.')+1).toLowerCase();
         switch (ext) {
             case "svg":
-                log.error("Image svg: {}", fileName);
                 response.setContentType("image/svg");
                 break;
             case "png":
-                log.error("Image png: {}", fileName);
                 response.setContentType("image/png");
                 break;
             case "gif":
-                log.error("Image gif: {}", fileName);
                 response.setContentType("image/gif");
                 break;
             case "jpg":
-                log.error("Image jpeg: {}", fileName);
                 response.setContentType("image/jpeg");
                 break;
             case "jpeg":
-                log.error("Image jpeg: {}", fileName);
                 response.setContentType("image/jpeg");
                 break;
             case "js":
-                log.error("Javascript: {}", fileName);
                 response.setContentType(APPLICATION_JAVASCRIPT);
                 break;
             default:
-                log.error("Image binary: {}", fileName);
                 response.setContentType("application/octet-stream");
         }
         byte[] b = new byte[1024];
         try (InputStream inputStream = new FileInputStream(fileName);) {
             int byteRead;
             while ((byteRead = inputStream.read(b)) != -1) {
-//                log.error("Read {} bytes from {}", byteRead, fileName);
                 response.getOutputStream().write(b, 0, byteRead);
             }
         }
@@ -87,7 +79,6 @@ public class HelpSSIServlet extends HttpServlet {
 
     private String convertDotDotFolders(String theFileName, String path) {
         if (theFileName.startsWith("../")) {
-            log.error("convertDotDotFolders: {}, {}", theFileName, path);
             String[] paths = path.split("/");
             int numDotDots = 0;
             while (theFileName.startsWith("../")) {
@@ -105,16 +96,20 @@ public class HelpSSIServlet extends HttpServlet {
                 theFileName = '/' + theFileName;
             }
         }
-        log.error("convertDotDotFolders: result: {}", theFileName);
         return theFileName;
     }
 
+    private String quoteBackslash(String content) {
+        // A single backslash needs to be replaced by a double backslash
+        return content.replaceAll("\\\\", "\\\\\\\\");
+    }
+
     private String readAndParseFile(String fileName, String origPath, boolean helpFolder) throws IOException {
-        log.error("File: {}, {}", fileName, FileUtil.getProgramPath() + fileName);
+//        log.error("File: {}, {}", fileName, FileUtil.getProgramPath() + fileName);
 
         int lastSlash = fileName.lastIndexOf('/');
         String path = lastSlash != -1 ? fileName.substring(0, lastSlash+1) : "";
-        log.error("Path: {}", path);
+//        log.error("Path: {}", path);
 
         if (origPath == null) {
             origPath = path;
@@ -143,30 +138,27 @@ public class HelpSSIServlet extends HttpServlet {
 
         content = matcher.replaceAll((MatchResult t) -> {
             String theFileName = t.group(1);
-            log.error("Group: {}", theFileName);
             try {
                 theFileName = convertDotDotFolders(theFileName, opath);
 
                 if (theFileName.startsWith("/") && theFileName.lastIndexOf('/') == 0) {
                     // theFileName contains one and only one slash
-                    log.error("Filename starts with /");
-                    return readAndParseFile("web/website" + theFileName, opath, false);
+//                    log.error("Filename starts with /");
+                    return quoteBackslash(readAndParseFile("web/website" + theFileName, opath, false));
                 } else if (theFileName.startsWith("./help/") || helpFolder) {
-                    log.error("Filename starts with ./help/ or is helpFolder");
-                    return readAndParseFile(theFileName, opath, true);
+//                    log.error("Filename starts with ./help/ or is helpFolder");
+                    return quoteBackslash(readAndParseFile(theFileName, opath, true));
 //                    return readAndParseFile("./" + theFileName);
                 } else {
-                    log.error("Filename starts with other: fileName: {}, path: {}, theFileName: {}", fn, path, theFileName);
+//                    log.error("Filename starts with other: fileName: {}, path: {}, theFileName: {}", fn, path, theFileName);
                     if (opath.startsWith("/")) {
-                        log.error("readAndParseFile AAA: file: {}, opath: {}", theFileName, opath);
                         if (theFileName.startsWith("/")) {
-                            return readAndParseFile(theFileName, opath, false);
+                            return quoteBackslash(readAndParseFile(theFileName, opath, false));
                         } else {
-                            return readAndParseFile(opath + theFileName, opath, false);
+                            return quoteBackslash(readAndParseFile(opath + theFileName, opath, false));
                         }
                     } else {
-                        log.error("readAndParseFile BBB: file: {}, opath: {}", "web/" + path + theFileName, opath);
-                        return readAndParseFile("web/" + path + theFileName, opath, false);
+                        return quoteBackslash(readAndParseFile("web/" + path + theFileName, opath, false));
                     }
                 }
             } catch (IOException ex) {
@@ -183,28 +175,7 @@ public class HelpSSIServlet extends HttpServlet {
         Pattern pattern = Pattern.compile(serverSideIncludePattern);
         Matcher matcher = pattern.matcher(content);
         content = matcher.replaceAll((MatchResult t) -> {
-            return "DANIEL_website" + t.group(1);
-/*
-            String theFileName = t.group(1);
-//            log.error("Group: {}", theFileName);
-            try {
-                if (theFileName.startsWith("/") || helpFolder) {
-                    log.error("Filename starts with /");
-                    return readAndParseFile("web/website/" + theFileName, false);
-                } else if (theFileName.startsWith("./help/") || helpFolder) {
-                    log.error("Filename starts with ./help/ or is helpFolder");
-                    return readAndParseFile(theFileName, true);
-//                    return readAndParseFile("./" + theFileName);
-                } else {
-                    log.error("Filename starts with other");
-                    return readAndParseFile("web/" + theFileName, false);
-//                    return readAndParseFile(theFileName, false);
-                }
-            } catch (IOException ex) {
-                log.warn("Cannot include SSI: {}", theFileName, ex);
-                return "";
-            }
-*/
+            return "<script src=\"" + "/web/website" + t.group(1) + "\"></script>";
         });
         return content;
     }
@@ -214,22 +185,11 @@ public class HelpSSIServlet extends HttpServlet {
 
         if (!request.getRequestURI().endsWith(".shtml")) {
             if (!(request instanceof Request)) throw new IllegalArgumentException("request is not a Request");
-//            Request r = (Request) request;
-            log.error("target: {}", request.getRequestURI());
-            try {
-//                programHandler.handle(request.getRequestURI(), r, request, response);
-                String fileName = FileUtil.getProgramPath() + request.getRequestURI();
-                readFile(fileName, response);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//            log.error("target: {}", request.getRequestURI());
+            String fileName = FileUtil.getProgramPath() + request.getRequestURI();
+            readFile(fileName, response);
             return;
-//            String newUrl = request.getRequestURI().replaceFirst("/help2/", "/help/");
-//            log.error("newUrl: {}", newUrl);
-//            response.sendRedirect(newUrl);
         }
-
-//        log.error("HelpServlet: {}", request.getRequestURI());
 
         String content = readAndParseFile(request.getRequestURI(), null, false);
 
