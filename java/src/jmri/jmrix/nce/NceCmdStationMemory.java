@@ -30,7 +30,7 @@ public class NceCmdStationMemory {
         public final static int CS_ACCY_SIZE = 0x100;   // 256 bytes for the accessory range
         public static final int CS_CLOCK_MEM_ADDR = 0x3E00; // base for clock values
         public static final int CS_AIU_FLAG_MEM = 0x3E15;   // addr for AIU broadcast flag
-        public static final int CS_MIN_CAB = 1;    // min number of cab memory slots
+        public static final int CS_MIN_CAB = 0;    // min number of cab memory slots
         public static final int CS_MAX_CAB = 59;    // number of cab memory slots
 
         public static final int NUM_CONSIST = 96;   // number of lines in the file
