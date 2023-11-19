@@ -546,7 +546,7 @@ public class NceMonBinary {
             case (REPLY_DATA):
                 break;
             default:
-                log.debug("Unhandled reply type code: {}, display as raw", replyType);
+                log.debug("Unhandled reply type code1: {}, display as raw", replyType);
                 break;
         }
         return MessageFormat.format(Bundle.getMessage("NceReply"), new Object[]{r.toString()});

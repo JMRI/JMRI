@@ -21,7 +21,8 @@ public class NceConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
             "jmri.jmrix.nce.serialdriver.ConnectionConfig",
             "jmri.jmrix.nce.networkdriver.ConnectionConfig",
             "jmri.jmrix.nce.usbdriver.ConnectionConfig",
-            "jmri.jmrix.nce.simulator.ConnectionConfig"
+            "jmri.jmrix.nce.simulator.ConnectionConfig",
+            "jmri.jmrix.nce.ph5driver.ConnectionConfig"
         };
     }
 
