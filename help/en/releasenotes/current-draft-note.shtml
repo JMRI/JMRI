@@ -136,6 +136,7 @@
                 <li>
                     Added SPROG DCC Ltd USB-LCC CAN adapter
                 </li>
+                <li>Fix a problem that would sometimes leave the node list improperly sorted</li>
             </ul>
 
         <h4>Powerline</h4>
