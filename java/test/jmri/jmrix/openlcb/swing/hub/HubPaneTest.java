@@ -1,15 +1,16 @@
 package jmri.jmrix.openlcb.swing.hub;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.TestTrafficController;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-
-import jmri.jmrix.can.TestTrafficController;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * @author Bob Jacobsen Copyright 2013
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class HubPaneTest {
 
     HubPane hub = null;

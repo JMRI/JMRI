@@ -72,6 +72,12 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                     order = SortOrder.BY_NAME;
                 }
                 super.setSortOrder(order);
+                // and do it a little later to make sure the table has been shown
+                final var localOrder = order;
+                jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> {
+                    super.setSortOrder(localOrder);
+                }, 750
+                );
             }
             
             // This overrides setOrder to preserve the order

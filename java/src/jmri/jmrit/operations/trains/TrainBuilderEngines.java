@@ -3,6 +3,7 @@ package jmri.jmrit.operations.trains;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -65,6 +66,44 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                         engine.getLocationName());
                 _engineList.remove(indexEng--);
                 continue;
+            }
+            // is engine at interchange?
+            if (engine.getTrack().isInterchange()) {
+                // don't service a engine at interchange and has been dropped off
+                // by this train
+                if (engine.getTrack().getPickupOption().equals(Track.ANY) &&
+                        engine.getLastRouteId().equals(_train.getRoute().getId())) {
+                    addLine(_buildReport, SEVEN, Bundle.getMessage("buildExcludeEngineDropByTrain", engine.toString(),
+                            engine.getTypeName(), _train.getRoute().getName(), engine.getLocationName(), engine.getTrackName()));
+                    _engineList.remove(indexEng--);
+                    continue;
+                }
+            }
+            // is engine at interchange or spur and is this train allowed to pull?
+            if (engine.getTrack().isInterchange() || engine.getTrack().isSpur()) {
+                if (engine.getTrack().getPickupOption().equals(Track.TRAINS) ||
+                        engine.getTrack().getPickupOption().equals(Track.EXCLUDE_TRAINS)) {
+                    if (engine.getTrack().isPickupTrainAccepted(_train)) {
+                        log.debug("Engine ({}) can be picked up by this train", engine.toString());
+                    } else {
+                        addLine(_buildReport, SEVEN,
+                                Bundle.getMessage("buildExcludeEngineByTrain", engine.toString(), engine.getTypeName(),
+                                        engine.getTrack().getTrackTypeName(), engine.getLocationName(), engine.getTrackName()));
+                        _engineList.remove(indexEng--);
+                        continue;
+                    }
+                } else if (engine.getTrack().getPickupOption().equals(Track.ROUTES) ||
+                        engine.getTrack().getPickupOption().equals(Track.EXCLUDE_ROUTES)) {
+                    if (engine.getTrack().isPickupRouteAccepted(_train.getRoute())) {
+                        log.debug("Engine ({}) can be picked up by this route", engine.toString());
+                    } else {
+                        addLine(_buildReport, SEVEN,
+                                Bundle.getMessage("buildExcludeEngineByRoute", engine.toString(), engine.getTypeName(),
+                                        engine.getTrack().getTrackTypeName(), engine.getLocationName(), engine.getTrackName()));
+                        _engineList.remove(indexEng--);
+                        continue;
+                    }
+                }
             }
         }
     }
@@ -285,9 +324,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
      * @throws BuildFailedException if build failure
      */
     protected void checkNumnberOfEnginesNeededHPT() throws BuildFailedException {
-        if (_train.getNumberEngines().equals("0") ||
-                _train.isDepartingStaging() ||
-                !_train.isBuildConsistEnabled() ||
+        if (!_train.isBuildConsistEnabled() ||
                 Setup.getHorsePowerPerTon() == 0) {
             return;
         }
@@ -299,6 +336,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
         RouteLocation rlNeedHp = null;
         RouteLocation rlStart = _train.getTrainDepartsRouteLocation();
         RouteLocation rlEnd = _train.getTrainTerminatesRouteLocation();
+        boolean departingStaging = _train.isDepartingStaging();
         if (route != null) {
             boolean helper = false;
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
@@ -332,6 +370,10 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                     rlStart = rl;
                     rlNeedHp = null;
                     extraHpNeeded = 0;
+                    departingStaging = false;
+                }
+                if (departingStaging) {
+                    continue;
                 }
                 int weight = rl.getTrainWeight();
                 if (weight > 0) {
