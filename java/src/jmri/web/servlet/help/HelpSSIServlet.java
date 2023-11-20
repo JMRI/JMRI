@@ -133,7 +133,7 @@ public class HelpSSIServlet extends HttpServlet {
 
         Pattern pattern = Pattern.compile(serverSideIncludePattern);
         Matcher matcher = pattern.matcher(content);
-        String fn = fileName;
+//        String fn = fileName;
         String opath = origPath;
 
         content = matcher.replaceAll((MatchResult t) -> {
