@@ -38,7 +38,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         return "DCC++ Simulator";
     }
 
-    String manufacturerName = "DCC++";
+    String manufacturerName = jmri.jmrix.dccpp.DCCppConnectionTypeList.DCCPP;
 
     @Override
     public String getManufacturer() {
