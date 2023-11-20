@@ -56,8 +56,6 @@ public class HelpSSIServlet extends HttpServlet {
                 response.setContentType("image/gif");
                 break;
             case "jpg":
-                response.setContentType("image/jpeg");
-                break;
             case "jpeg":
                 response.setContentType("image/jpeg");
                 break;
