@@ -1,5 +1,7 @@
 package jmri.jmrix.bidib;
 
+import jmri.util.JUnitAppender;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
@@ -33,7 +35,16 @@ public class BiDiBOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgra
     @Test
     public void testGetCanWriteAddress() {
         //Assert.assertTrue("can write address", programmer.getCanWrite("1234"));
-    }   
+    }
+
+    @Test
+    @Override
+    public void testWriteCVNullListener() throws jmri.ProgrammerException {
+        super.testWriteCVNullListener();
+        // test may require further setup?
+        JUnitAppender.suppressWarnMessageStartsWith(
+            "The node is no longer registered. Skip send message to node:");
+    }
 
     @Override
     @BeforeEach
@@ -49,6 +60,8 @@ public class BiDiBOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgra
     @AfterEach
     public void tearDown() {
         programmer = null;
+        memo.dispose();
+        memo.getBiDiBTrafficController().terminate();
         //JUnitUtil.resetWindows(false,false);
         //JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
