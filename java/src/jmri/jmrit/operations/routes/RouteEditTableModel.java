@@ -475,7 +475,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             if (JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("LimitTrainLength",
                     length, Setup.getLengthUnit().toLowerCase(), rl.getName()),
                     Bundle.getMessage("WarningTooShort"),
-                    JmriJOptionPane.OK_CANCEL_OPTION) == JmriJOptionPane.CANCEL_OPTION) {
+                    JmriJOptionPane.OK_CANCEL_OPTION) != JmriJOptionPane.OK_OPTION) {
                 return;
             }
         }
