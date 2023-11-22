@@ -10,8 +10,6 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
-import jmri.jmrix.nce.NceCmdStationMemory.CabMemorySerial;
-import jmri.jmrix.nce.NceCmdStationMemory.CabMemorySerialPH5;
 
 /**
  * Converts Stream-based I/O to/from NCE messages. The "NceInterface" side
@@ -25,7 +23,7 @@ import jmri.jmrix.nce.NceCmdStationMemory.CabMemorySerialPH5;
  * message.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @author ken cameron Copyright (C) 2013, 2023
+ * @author Ken Cameron Copyright (C) 2013, 2023
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface, CommandStation {
 
@@ -171,7 +169,6 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     private boolean pwrProVer060203orLater = false;
     private final int[] pwrProVers = new int[3];
     private boolean simulatorRunning = false; // true if simulator is running
-    private boolean ncePH5 = true;
 
     /**
      * Return the Power Pro firmware version as user-friendly hex text.
@@ -701,148 +698,9 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     }
     
     /*
-     * return memory base offset for Cab data block
+     * the command station memory object
      */
-    public int getCmdStaMemBaseCab()
-    {
-        if (ncePH5) {
-            return CabMemorySerialPH5.CS_CAB_MEM_PRO;
-        } else {
-            return CabMemorySerial.CS_CAB_MEM_PRO;
-        }
-    }
-    
-    /*
-     * return memory base offset for Cab data block
-     */
-    public int getCmdStaMemBaseCompCab()
-    {
-        if (ncePH5) {
-            return CabMemorySerialPH5.CS_COMP_CAB_MEM_PRO;
-        } else {
-            return CabMemorySerial.CS_COMP_CAB_MEM_PRO;
-        }
-    }
-    
-    /*
-     * return memory base offset for Clock data block
-     */
-    public int getCmdStaMemBaseClock()
-    {
-        if (ncePH5) {
-            return CabMemorySerialPH5.CS_CLOCK_MEM_ADDR;
-        } else {
-            return CabMemorySerial.CS_CLOCK_MEM_ADDR;
-        }
-    }
-    
-    /*
-     * return memory base offset for Macro data block
-     */
-    public int getCmdStaMemBaseMacro()
-    {
-        if (ncePH5) {
-            return CabMemorySerialPH5.CS_MACRO_MEM;
-        } else {
-            return CabMemorySerial.CS_MACRO_MEM;
-        }
-    }
-
-    /*
-     * return memory size for Macro data block
-     */
-    public int getCmdStaMemSizeMacro()
-    {
-        if (ncePH5) {
-            return CabMemorySerialPH5.CS_MACRO_SIZE;
-        } else {
-            return CabMemorySerial.CS_MACRO_SIZE;
-        }
-    }
-    
-    /*
-     * return memory base offset for Consist data block
-     */
-    public int getCmdStaMemBaseConsist()
-    {
-        if (ncePH5) {
-            return CabMemorySerialPH5.CS_CONSIST_MEM;
-        } else {
-            return CabMemorySerial.CS_CONSIST_MEM;
-        }
-    }
-
-    /*
-     * return memory base offset for Consist rear data block
-     */
-    public int getCmdStaMemBaseConsistRear()
-    {
-        if (ncePH5) {
-            return CabMemorySerialPH5.CS_CON_MEM_REAR;
-        } else {
-            return CabMemorySerial.CS_CON_MEM_REAR;
-        }
-    }
-
-    /*
-     * return memory base offset for Consist middle data block
-     */
-    public int getCmdStaMemBaseConsistMid()
-    {
-        if (ncePH5) {
-            return CabMemorySerialPH5.CS_CON_MEM_MID;
-        } else {
-            return CabMemorySerial.CS_CON_MEM_MID;
-        }
-    }
-
-    /*
-     * return memory size for Consist data block
-     */
-    public int getCmdStaMemSizeConsist()
-    {
-        if (ncePH5) {
-            return CabMemorySerialPH5.CS_CONSIST_SIZE;
-        } else {
-            return CabMemorySerial.CS_CONSIST_SIZE;
-        }
-    }
-
-    /*
-     * return memory base offset for Accessory data block
-     */
-    public int getCmdStaMemBaseAccy()
-    {
-        if (ncePH5) {
-            return CabMemorySerialPH5.CS_ACCY_MEM;
-        } else {
-            return CabMemorySerial.CS_ACCY_MEM;
-        }
-    }
-
-    /*
-     * return memory size for Accessory data block
-     */
-    public int getCmdStaMemSizeAccy()
-    {
-        if (ncePH5) {
-            return CabMemorySerialPH5.CS_ACCY_SIZE;
-        } else {
-            return CabMemorySerial.CS_ACCY_SIZE;
-        }
-    }
-
-    /*
-     * return memory base offset for Clock data block
-     */
-    public int getCmdStaMemBaseAiuFlag()
-    {
-        if (ncePH5) {
-            return CabMemorySerialPH5.CS_AIU_FLAG_MEM;
-        } else {
-            return CabMemorySerial.CS_AIU_FLAG_MEM;
-        }
-    }
+    public NceCmdStationMemory csm;
     
     private final static Logger log = LoggerFactory.getLogger(NceTrafficController.class);
 

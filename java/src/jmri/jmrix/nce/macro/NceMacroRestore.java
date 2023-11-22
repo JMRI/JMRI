@@ -75,7 +75,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
     public NceMacroRestore(NceTrafficController t) {
         super();
         this.tc = t;
-        cs_macro_mem = tc.getCmdStaMemBaseMacro();
+        cs_macro_mem = tc.csm.getMacroAddr();
     }
 
     @Override

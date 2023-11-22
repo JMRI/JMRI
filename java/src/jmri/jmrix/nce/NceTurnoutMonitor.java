@@ -153,7 +153,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
                 log.trace("found turnouts block {}", currentBlock);
 
                 // Read NCE CS memory
-                int nceAccAddress = tc.getCmdStaMemBaseAccy() + currentBlock * BLOCK_LEN;
+                int nceAccAddress = tc.csm.getAccyMemAddr() + currentBlock * BLOCK_LEN;
                 byte[] bl = NceBinaryCommand.accMemoryRead(nceAccAddress);
                 NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_LEN);
                 return m;

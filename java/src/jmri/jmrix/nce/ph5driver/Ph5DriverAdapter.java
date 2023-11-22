@@ -112,6 +112,7 @@ public class Ph5DriverAdapter extends NcePortController {
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
+        tc.csm = new Ph5CmdStationMemory();
     }
 
     // base class methods for the NcePortController interface

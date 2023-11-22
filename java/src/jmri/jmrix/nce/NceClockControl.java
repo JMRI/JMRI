@@ -480,7 +480,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
 
     private void issueReadOnlyRequest() {
         if (!waitingForCmdRead) {
-            byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(tc.getCmdStaMemBaseClock());
+            byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(tc.csm.getClockAddr());
             NceMessage cmdNce = jmri.jmrix.nce.NceMessage.createBinaryMessage(tc, cmd, CS_CLOCK_MEM_SIZE);
             waiting++;
             waitingForCmdRead = true;
@@ -498,7 +498,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         b[0] = (byte) ss;
         b[1] = (byte) mm;
         b[2] = (byte) hh;
-        byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryWriteN(tc.getCmdStaMemBaseClock() + CS_CLOCK_SECONDS, b);
+        byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryWriteN(tc.csm.getClockAddr() + CS_CLOCK_SECONDS, b);
         NceMessage cmdNce = jmri.jmrix.nce.NceMessage.createBinaryMessage(tc, cmd, CMD_MEM_SET_REPLY_SIZE);
         waiting++;
         waitingForCmdTime = true;

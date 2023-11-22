@@ -12,6 +12,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
 import jmri.jmrix.nce.NceBinaryCommand;
+import jmri.jmrix.nce.NceCmdStationMemory;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceTrafficController;
@@ -156,7 +157,8 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
                 }
                 if (fileValid) {
                     StringBuilder buf = new StringBuilder();
-                    buf.append(":").append(Integer.toHexString(tc.getCmdStaMemBaseMacro() + (macroNum * MACRO_LNTH)));
+                    buf.append(":").append(Integer.toHexString(tc.csm.getMacroAddr() + (macroNum * MACRO_LNTH)));
+
 
                     for (int i = 0; i < MACRO_LNTH; i++) {
                         buf.append(" ").append(StringUtil.twoHexFromInt(NCE_MACRO_DATA[i++]));
@@ -237,7 +239,7 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
     // Reads 16 bytes of NCE macro memory, and adjusts for second read
     private NceMessage readMacroMemory(int macroNum, boolean second) {
         secondRead = second;   // set flag for receive
-        int nceMacroAddr = (macroNum * MACRO_LNTH) + tc.getCmdStaMemBaseMacro();
+        int nceMacroAddr = (macroNum * MACRO_LNTH) + tc.csm.getMacroAddr();
         if (second) {
             nceMacroAddr += REPLY_16;  // adjust for second memory read
         }

@@ -84,7 +84,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
             waiting = 0;
             fileValid = false; // in case we break out early
             int consistNum = 0; // for user status messages
-            int curConsist = tc.getCmdStaMemBaseConsist(); // load the start address of the NCE consist memory
+            int curConsist = tc.csm.getConsistHeadAddr(); // load the start address of the NCE consist memory
             byte[] consistData = new byte[CONSIST_LNTH]; // NCE Consist data
             String line;
 
@@ -118,7 +118,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
                 }
 
                 // consist file found, give the user the choice to continue
-                if (curConsist == tc.getCmdStaMemBaseConsist()) {
+                if (curConsist == tc.csm.getConsistHeadAddr()) {
                     if (JmriJOptionPane.showConfirmDialog(null,
                             Bundle.getMessage("RestoreTakesAwhile"),
                             Bundle.getMessage("NceConsistRestore"),

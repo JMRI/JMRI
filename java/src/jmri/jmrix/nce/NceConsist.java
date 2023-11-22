@@ -370,12 +370,12 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
                 return;
             }
             _locoNum = eNum;
-            int nceMemAddr = (consistNum * 2) + tc.getCmdStaMemBaseConsist();
+            int nceMemAddr = (consistNum * 2) + tc.csm.getConsistHeadAddr();
             if (eNum == REAR) {
-                nceMemAddr = (consistNum * 2) + tc.getCmdStaMemBaseConsistRear();
+                nceMemAddr = (consistNum * 2) + tc.csm.getConsistTailAddr();
             }
             if (eNum == MID) {
-                nceMemAddr = (consistNum * 8) + tc.getCmdStaMemBaseConsistMid();
+                nceMemAddr = (consistNum * 8) + tc.csm.getConsistMidAddr();
             }
             if (eNum == LEAD || _validConsist) {
                 byte[] bl = NceBinaryCommand.accMemoryRead(nceMemAddr);
