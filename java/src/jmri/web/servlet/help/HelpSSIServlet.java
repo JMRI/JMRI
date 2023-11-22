@@ -27,10 +27,9 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood     (C) 2014, 2016
  * @author Daniel Bergqvist (C) 2021
  */
-@WebServlet(name = "HomeServlet",
+@WebServlet(name = "HelpSSIServlet",
         urlPatterns = {
             "/help"
-//            "/help_ssi"
         })
 @ServiceProvider(service = HttpServlet.class)
 public class HelpSSIServlet extends HttpServlet {
@@ -234,7 +233,7 @@ public class HelpSSIServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Daniel Servlet";
+        return "Help SSI Servlet";
     }// </editor-fold>
 
 
