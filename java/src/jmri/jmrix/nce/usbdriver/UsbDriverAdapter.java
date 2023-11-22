@@ -9,6 +9,7 @@ import java.util.Vector;
 import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -192,6 +193,7 @@ public class UsbDriverAdapter extends NcePortController {
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
+        tc.csm = new UsbCmdStationMemory();
     }
 
     // base class methods for the NcePortController interface

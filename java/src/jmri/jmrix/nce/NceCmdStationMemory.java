@@ -85,7 +85,14 @@ public class NceCmdStationMemory {
     public int getConsistMax() {
         return 127;
     }
-    
+
+    /*
+     * give consist num lines
+     */
+    public int getConsistNumLines() {
+        return 96;   // number of lines in the file
+    }
+
     /*
      * give addr macro table
      */
@@ -133,13 +140,6 @@ public class NceCmdStationMemory {
      */
     public int getClockAddr() {
         return 0xDC00;
-    }
-
-    /*
-     * give consist num lines
-     */
-    public int getConsistNumLines() {
-        return 96;   // number of lines in the file
     }
 
     public static int CAB_LINE_1 = 0;  // start of first line for cab display
