@@ -1,6 +1,8 @@
 package jmri.jmrix.nce.macro;
 
 import jmri.jmrix.nce.NceTrafficControlScaffold;
+import jmri.jmrix.nce.NceTrafficController;
+import jmri.jmrix.nce.usbdriver.UsbCmdStationMemory;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -16,6 +18,8 @@ public class NceMacroRestoreTest {
 
     @Test
     public void testCTor() {
+        tcis = (NceTrafficControlScaffold) new NceTrafficController();
+        tcis.csm = new UsbCmdStationMemory();
         NceMacroRestore t = new NceMacroRestore(tcis);
         Assert.assertNotNull("exists",t);
     }
