@@ -1,7 +1,6 @@
 package jmri.jmrix.nce.consist;
 
 import jmri.jmrix.nce.NceTrafficControlScaffold;
-import jmri.jmrix.nce.NceTrafficController;
 import jmri.jmrix.nce.usbdriver.UsbCmdStationMemory;
 import jmri.util.JUnitUtil;
 
@@ -18,7 +17,7 @@ public class NceConsistBackupTest {
 
     @Test
     public void testCTor() {
-        tcis = (NceTrafficControlScaffold) new NceTrafficController();
+        tcis = new NceTrafficControlScaffold();
         tcis.csm = new UsbCmdStationMemory();
         NceConsistBackup t = new NceConsistBackup(tcis);
         Assert.assertNotNull("exists",t);
