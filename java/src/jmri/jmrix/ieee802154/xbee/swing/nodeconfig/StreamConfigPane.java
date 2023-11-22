@@ -108,15 +108,15 @@ public class StreamConfigPane extends JmrixConfigPane {
 
     private boolean isDirty = false;
 
-    JComboBox<String> modeBox = new JComboBox<>();
-    JComboBox<String> manuBox = new JComboBox<>();
+    final JComboBox<String> modeBox = new JComboBox<>();
+    final JComboBox<String> manuBox = new JComboBox<>();
 
-    JPanel details = new JPanel();
+    final JPanel details = new JPanel();
     String[] classConnectionNameList;
     StreamConnectionConfig[] classConnectionList;
-    String[] manufactureNameList;
+    final String[] manufactureNameList;
 
-    jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+    final jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
 
     StreamConnectionConfig ccCurrent = null;
 
@@ -146,9 +146,7 @@ public class StreamConfigPane extends JmrixConfigPane {
                 manuBox.addItem(manuName);
             }
         }
-        manuBox.addActionListener((ActionEvent evt) -> {
-            updateComboConnection();
-        });
+        manuBox.addActionListener((ActionEvent evt) -> updateComboConnection());
 
         // get the list of ConnectionConfig items into a selection box
         classConnectionNameList = manager.getConnectionTypes((String) manuBox.getSelectedItem());
@@ -196,8 +194,8 @@ public class StreamConfigPane extends JmrixConfigPane {
             }
         }
         modeBox.addActionListener((ActionEvent a) -> {
-            if ((String) modeBox.getSelectedItem() != null) {
-                if (!((String) modeBox.getSelectedItem()).equals(NONE_SELECTED)) {
+            if (modeBox.getSelectedItem() != null) {
+                if (!(modeBox.getSelectedItem()).equals(NONE_SELECTED)) {
                     p.setComboBoxLastSelection((String) manuBox.getSelectedItem(), (String) modeBox.getSelectedItem());
                 }
             }
@@ -252,7 +250,7 @@ public class StreamConfigPane extends JmrixConfigPane {
                 } catch (ClassCastException cce) {
                     // the list may include non-StreamConnectinoConfig
                     // objects, so just ignore those.
-                    continue;
+                    log.trace("ignoring {} as invalid connection type", classConnectionNameList1);
                 } catch (NullPointerException | ClassNotFoundException | InstantiationException |
                             IllegalAccessException | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
                     log.warn("Attempt to load {} failed", classConnectionNameList1, e);
@@ -290,8 +288,6 @@ public class StreamConfigPane extends JmrixConfigPane {
               // store the connection config with the node.
               if(ccCurrent instanceof AbstractStreamConnectionConfig) {
                  confNode.setPortController((AbstractStreamConnectionConfig)ccCurrent);
-                 //confNode.connectPortController((AbstractStreamConnectionConfig)ccCurrent);
-              // this.ccCurrent.register();
               }
         }
 
