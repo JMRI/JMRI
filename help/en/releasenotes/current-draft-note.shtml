@@ -133,6 +133,10 @@
                 <li>
                     Added SPROG DCC Ltd PI-LCC Raspberry Pi CAN adapter
                 </li>
+                <li>
+                    Added SPROG DCC Ltd USB-LCC CAN adapter
+                </li>
+                <li>Fix a problem that would sometimes leave the node list improperly sorted</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -158,7 +162,10 @@
         <h4><a href="http://www.sprog-dcc.co.uk">SPROG</a></h4>
             <ul>
                 <li>
-                    Added PI-LCC Raspberry Pi CAN adapter
+                    Added PI-LCC Raspberry Pi CAN adapter for OpenLCB
+                </li>
+                <li>
+                    Added USB-LCC CAN adapter for OpenLCB
                 </li>
             </ul>
 
@@ -345,7 +352,7 @@
 
         <h4>Technologistic (train-O-matic)</h4>
             <ul>
-                <li></li>
+                <li>Support for the FD Micro function decoder family.</li>
             </ul>
 
         <h4>Trix Modelleisenbahn</h4>
@@ -571,7 +578,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Fixed a bug that would cause problems when DELAYED feedback was selected.</li>
         </ul>
 
    <h3>Warrants</h3>
@@ -613,6 +620,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Improved the 
+            "<a href="http://jmri.org/help/en/html/apps/DecoderPro/FileUpdate.shtml">Updating Decoder Definitions</a>"
+            page.</li>
         </ul>
 
