@@ -7,19 +7,36 @@ package jmri.jmrix.nce.usbdriver;
  */
 public class NceCmdStationMemory extends jmri.jmrix.nce.NceCmdStationMemory {
 
-    public int CAB_NUM_CONSIST = 13;  // usb cab number for consist memory
     public int NUM_CONSIST = 16;  // number of consists supported
     public int CS_CON_SIZE = 8;  // memory size per consist entry
-    public int CS_CON_MAX = 127;
-    public int CS_CON_MIN = 112;
-    public int CAB_NUM_MACRO = 14;  // usb cab number for macros
+    /*
+     * give maximum consist number
+     */
+    @Override
+    public int getConsistMin() {
+        return 112;
+    }
+    
     public int CS_MAX_MACRO = 16;  // there are 16 possible macros
     public int CS_MACRO_SIZE = 16;  // 16 bytes per macro
-    public int CS_MIN_CAB = 2;    // min number of cab memory slots
-    public int CS_MAX_CAB = 10;    // max number of cab memory slots
 
     public int CS_PG_CONSIST = 13;  // Context Page for Consist Data
     public int CS_PG_MACRO = 14;  // Context Page for Macro Data
+    
+    /*
+     * give max cab id
+     */
+    @Override
+    public int getCabMin() {
+        return 2;    // number of cab memory slots
+    }
+    /*
+     * give max cab id
+     */
+    @Override
+    public int getCabMax() {
+        return 10;    // number of cab memory slots
+    }
 
     public int CAB_LINE_1 = 0;  // start of first line for cab display
     public int CAB_LINE_2 = 16;  // start of second line for cab display

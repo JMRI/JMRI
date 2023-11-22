@@ -33,7 +33,7 @@ public class NceCmdStationMemory {
     /*
      * give max cab id
      */
-    public int getCabMac() {
+    public int getCabMax() {
         return 65;    // number of cab memory slots
     }
     

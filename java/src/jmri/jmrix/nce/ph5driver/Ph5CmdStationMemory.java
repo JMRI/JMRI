@@ -10,18 +10,62 @@ public class Ph5CmdStationMemory extends jmri.jmrix.nce.NceCmdStationMemory {
     public Ph5CmdStationMemory() {
         super();
     }
+
+    /*
+     * give addr for cab data base
+     */
+    @Override
+    public int getCabAddr() {
+        return 0x0000; // start of NCE CS cab context page for cab 0
+    }
+
+    /*
+     * give max cab id
+     */
+    @Override
+    public int getCabMax() {
+        return 59;    // number of cab memory slots
+    }
     
-    public int CS_CAB_MEM_PRO = 0x0000; // start of NCE CS cab context page for cab 0, PowerPro/CS2
-    public int CS_COMP_CAB_MEM_PRO = 0x3C00; // start of computer cab context page, PowerPro/CS2
-    public int CS_CONSIST_MEM = 0x4e00;  // start of NCE CS Consist memory
-    public int CS_CON_MEM_REAR = 0x4F00;  // start of rear consist locos
-    public int CS_CON_MEM_MID = 0x5000;  // start of mid consist locos
-    public int CS_CONSIST_SIZE = 0x0600;  // size of NCE CS Consist memory
-    public int CS_CON_MIN = 1;
-    public int CS_CON_MAX = 127;
-    public int CS_MACRO_MEM = 0x6000; // start of NCE CS Macro memory 
-    public int CS_MAX_MACRO = 255;  // there are 256 possible macros
-    public int CS_MACRO_SIZE = 20;  // 20 bytes per macro
+    /*
+     * give addr computer cab
+     */
+    @Override
+    public int giveCompCabAddr() {
+        return 0x3C00; // start of computer cab context page, PowerPro/CS2
+    }
+    
+    /*
+     * give addr consist head
+     */
+    @Override
+    public int getConsistHeadAddr() {
+        return 0x4e00;  // start of NCE CS Consist Head memory
+    }
+
+    /*
+     * give addr consist tail
+     */
+    @Override
+    public int getConsistTailAddr() {
+        return 0x4F00;  // start of NCE CS Consist Tail memory
+    }
+    
+    /*
+     * give addr consist middle
+     */
+    @Override
+    public int getConsistMidAddr() {
+        return 0x5000;  // start of NCE CS Consist memory
+    }
+
+    /*
+     * give addr macro table
+     */
+    @Override
+    public int getMacroAddr() {
+        return 0x6000; // start of NCE CS Macro memory 
+    }
     
     @Override
     public int getAccyMemAddr() {
@@ -32,7 +76,14 @@ public class Ph5CmdStationMemory extends jmri.jmrix.nce.NceCmdStationMemory {
     public int getAccyMemSize() {
         return 0x100;
     }
-    public int CS_CLOCK_MEM_ADDR = 0x3E00; // base for clock values
+    
+    /*
+     * give base addr for clock operations
+     */
+    @Override
+    public int getClockAddr() {
+        return 0x3E00; // base for clock values
+    }
 
     /*
      * give the AIU flag address
@@ -44,8 +95,6 @@ public class Ph5CmdStationMemory extends jmri.jmrix.nce.NceCmdStationMemory {
     
     public int CS_MIN_CAB = 0;    // min number of cab memory slots
     public int CS_MAX_CAB = 59;    // number of cab memory slots
-
-    public int NUM_CONSIST = 96;   // number of lines in the file
 
     public static int CAB_LINE_1 = 0;  // start of first line for cab display
     public static int CAB_LINE_2 = 16;  // start of second line for cab display
