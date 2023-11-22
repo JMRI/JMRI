@@ -92,16 +92,56 @@ public class Ph5CmdStationMemory extends jmri.jmrix.nce.NceCmdStationMemory {
     public int getAiuFlagAddr() {
         return 0x3E15;
     }
-    
-    public int CS_MIN_CAB = 0;    // min number of cab memory slots
-    public int CS_MAX_CAB = 59;    // number of cab memory slots
 
-    public static int CAB_FUNC_13_20 = 39; // Function keys 13 - 30
-    public static int CAB_FUNC_21_28 = 40; // Function keys 21 - 28
-    public static int CAB_FUNC_29_36 = 41; // Function keys 29 - 36
-    public static int CAB_FUNC_37_44 = 42; // Function keys 37 - 44
-    public static int CAB_FUNC_45_52 = 43; // Function keys 45 - 52
-    public static int CAB_FUNC_53_60 = 44; // Function keys 53 - 60
-    public static int CAB_FUNC_61_68 = 45; // Function keys 61 - 68
+    /*
+     * give cab index functions 13-20
+     */
+    @Override
+    public int getCabIdxFunct13_20() {
+        return 39; // Function keys 13 - 30
+    }
+    
+    /*
+     * give cab index functions 21-28
+     */
+    @Override
+    public int getCabIdxFunct21_28() {
+        return 40; // Function keys 21 - 28
+    }
+        
+    /*
+     * give cab index functions 29-36
+     */
+    public int getCabIdxFunct29_36() {
+        return 41; // Function keys 29 - 36
+    }
+    
+    /*
+     * give cab index functions 37-44
+     */
+    public int getCabIdxFunct37_44() {
+        return 42; // Function keys 37 - 44
+    }
+    
+    /*
+     * give cab index functions 45-52
+     */
+    public int getCabIdxFunct45_52() {
+        return 43; // Function keys 45 - 52
+    }
+    
+    /*
+     * give cab index functions 53-60
+     */
+    public int getCabIdxFunct53_60() {
+        return 44; // Function keys 53 - 60
+    }
+    
+    /*
+     * give cab index functions 53-60
+     */
+    public int getCabIdxFunct61_68() {
+        return 45; // Function keys 61 - 68
+    }
 
 }

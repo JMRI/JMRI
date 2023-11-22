@@ -570,7 +570,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         return;
                     }
                     // read the Speed byte
-                    int readChar = recChars[NceCmdStationMemory.CAB_CURR_SPEED - NceCmdStationMemory.CAB_CURR_SPEED];
+                    int readChar = recChars[0];
                     if (cabSpeedArray[currCabId] != readChar) {
                         foundChange++;
                         if (log.isDebugEnabled()) {
