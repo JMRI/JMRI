@@ -38,17 +38,27 @@ public class NceCmdStationMemory extends jmri.jmrix.nce.NceCmdStationMemory {
         return 10;    // number of cab memory slots
     }
 
-    public int CAB_LINE_1 = 0;  // start of first line for cab display
-    public int CAB_LINE_2 = 16;  // start of second line for cab display
-    public int CAB_SIZE = 256;  // Each cab has 256 bytes
-    public int CAB_CURR_SPEED = 32; // NCE cab speed
-    public int CAB_ADDR_H = 33;   // loco address, high byte
-    public int CAB_ADDR_L = 34;   // loco address, low byte
-    public int CAB_FLAGS = 35;  // FLAGS
-    public int CAB_FUNC_L = 36;  // Function keys low
-    public int CAB_FUNC_H = 37;  // Function keys high
-    public int CAB_ALIAS = 38;  // Consist address
-    public int CAB_FUNC_13_20 = 99; // Function keys 13 - 30
-    public int CAB_FUNC_21_28 = 100; // Function keys 21 - 28
-    public int CAB_FLAGS1 = 70;  // NCE flag 1
+    /*
+     * give cab index functions 13-20
+     */
+    @Override
+    public int getCabIdxFunct13_20() {
+        return 99; // Function keys 13 - 30
+    }
+    
+    /*
+     * give cab index functions 21-28
+     */
+    @Override
+    public int getCabIdxFunct21_28() {
+        return 100; // Function keys 21 - 28
+    }
+    
+    /*
+     * give cab index for cab status
+     */
+    @Override
+    public int getCabIdxFlag1() {
+        return 70;  // NCE flag 1
+    }
 }

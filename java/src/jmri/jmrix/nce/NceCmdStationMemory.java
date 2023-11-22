@@ -144,7 +144,7 @@ public class NceCmdStationMemory {
 
     public static int CAB_LINE_1 = 0;  // start of first line for cab display
     public static int CAB_LINE_2 = 16;  // start of second line for cab display
-    public static int CAB_SIZE = 256;  // Each cab has 256 bytes
+    //public static int CAB_SIZE = 256;  // Each cab has 256 bytes
     public static int CAB_CURR_SPEED = 32; // NCE cab speed
     public static int CAB_ADDR_H = 33;   // loco address, high byte
     public static int CAB_ADDR_L = 34;   // loco address, low byte
@@ -166,7 +166,13 @@ public class NceCmdStationMemory {
     public int getCabIdxFunct21_28() {
         return 83; // Function keys 21 - 28
     }
-    public static int CAB_FLAGS1 = 101;  // NCE flag 1
+    
+    /*
+     * give cab index for cab status
+     */
+    public int getCabIdxFlag1() {
+        return 101;  // NCE flag 1
+    }
 
     public static int FLAGS_MASK_CONSIST_REAR = 0x80;      // bit 7 set if CAB_ADDR_x is rear loco
     public static int FLAGS1_CABTYPE_DISPLAY = 0x00; // bit 0=0, bit 7=0;

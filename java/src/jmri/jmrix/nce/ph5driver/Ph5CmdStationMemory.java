@@ -96,16 +96,6 @@ public class Ph5CmdStationMemory extends jmri.jmrix.nce.NceCmdStationMemory {
     public int CS_MIN_CAB = 0;    // min number of cab memory slots
     public int CS_MAX_CAB = 59;    // number of cab memory slots
 
-    public static int CAB_LINE_1 = 0;  // start of first line for cab display
-    public static int CAB_LINE_2 = 16;  // start of second line for cab display
-    public static int CAB_SIZE = 256;  // Each cab has 256 bytes
-    public static int CAB_CURR_SPEED = 32; // NCE cab speed
-    public static int CAB_ADDR_H = 33;   // loco address, high byte
-    public static int CAB_ADDR_L = 34;   // loco address, low byte
-    public static int CAB_FLAGS = 35;  // FLAGS
-    public static int CAB_FUNC_L = 36;  // Function keys low
-    public static int CAB_FUNC_H = 37;  // Function keys high
-    public static int CAB_ALIAS = 38;  // Consist address
     public static int CAB_FUNC_13_20 = 39; // Function keys 13 - 30
     public static int CAB_FUNC_21_28 = 40; // Function keys 21 - 28
     public static int CAB_FUNC_29_36 = 41; // Function keys 29 - 36
@@ -113,6 +103,5 @@ public class Ph5CmdStationMemory extends jmri.jmrix.nce.NceCmdStationMemory {
     public static int CAB_FUNC_45_52 = 43; // Function keys 45 - 52
     public static int CAB_FUNC_53_60 = 44; // Function keys 53 - 60
     public static int CAB_FUNC_61_68 = 45; // Function keys 61 - 68
-    public static int CAB_FLAGS1 = 101;  // NCE flag 1
 
 }

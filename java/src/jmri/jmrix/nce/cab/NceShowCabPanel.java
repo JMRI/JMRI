@@ -462,7 +462,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         firstTime = false;
         // clear bit for active and cab type details
         cabFlag1Array[purgeCabId] = 0;
-        writeCabMemory1(purgeCabId, NceCmdStationMemory.CAB_FLAGS1, 0);
+        writeCabMemory1(purgeCabId, tc.csm.getCabIdxFlag1(), 0);
         if (!waitNce()) {
             return;
         }
@@ -484,7 +484,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         firstTime = false;
         // clear bit for active and cab type details
         cabFlag1Array[purgeCabId] = 0;
-        setUsbCabMemoryPointer(purgeCabId, NceCmdStationMemory.CAB_FLAGS1);
+        setUsbCabMemoryPointer(purgeCabId, tc.csm.getCabIdxFlag1());
         if (!waitNce()) {
             return;
         }
@@ -516,7 +516,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
             int foundChange = 0;
             recChar = -1;
             // create cab type by reading the FLAGS1 byte
-            readCabMemory1(currCabId, NceCmdStationMemory.CAB_FLAGS1);
+            readCabMemory1(currCabId, tc.csm.getCabIdxFlag1());
             if (!waitNce()) {
                 return;
             }
@@ -816,7 +816,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
             int foundChange = 0;
             recChar = -1;
             // create cab type by reading the FLAGS1 byte
-            setUsbCabMemoryPointer(currCabId, NceCmdStationMemory.CAB_FLAGS1);
+            setUsbCabMemoryPointer(currCabId, tc.csm.getCabIdxFlag1());
             if (!waitNce()) {
                 return;
             }
