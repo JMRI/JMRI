@@ -1082,7 +1082,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (isTypeNameAccepted(oldType)) {
             deleteTypeName(oldType);
             addTypeName(newType);
-            // adjust custom loads
+            // adjust loads with type in them
             for (String load : getLoadNames()) {
                 String[] splitLoad = load.split(CarLoad.SPLIT_CHAR);
                 if (splitLoad.length > 1) {
