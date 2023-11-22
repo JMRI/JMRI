@@ -22,7 +22,7 @@ import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
 public class XBeeEditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.EditNodeFrame {
 
     private XBeeTrafficController xtc = null;
-    private javax.swing.JTextField nodeIdentifierField = new javax.swing.JTextField();
+    private final javax.swing.JTextField nodeIdentifierField = new javax.swing.JTextField();
     private XBeeNodeConfigFrame parent = null;
 
 
@@ -76,24 +76,14 @@ public class XBeeEditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Ed
         editButton.setText(Bundle.getMessage("ButtonEdit"));
         editButton.setVisible(true);
         editButton.setToolTipText(Bundle.getMessage("TipEditButton"));
-        editButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                editButtonActionPerformed();
-            }
-        });
+        editButton.addActionListener(e -> editButtonActionPerformed());
         panel4.add(editButton);
         panel4.add(cancelButton);
         cancelButton.setText(Bundle.getMessage("ButtonCancel"));
         cancelButton.setVisible(true);
         cancelButton.setToolTipText(Bundle.getMessage("TipCancelButton"));
         panel4.add(cancelButton);
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                cancelButtonActionPerformed();
-            }
-        });
+        cancelButton.addActionListener(e -> cancelButtonActionPerformed());
         contentPane.add(panel4);
 
         // pack for display
@@ -119,7 +109,7 @@ public class XBeeEditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Ed
         // if the 64 bit address field is blank, use the "Unknown" address".
         XBee64BitAddress guid;
         if(!(nodeAddr64Field.getText().equals(""))) {
-           byte GUID[] = jmri.util.StringUtil.bytesFromHexString(nodeAddr64Field.getText());
+           byte[] GUID = jmri.util.StringUtil.bytesFromHexString(nodeAddr64Field.getText());
            guid = new XBee64BitAddress(GUID);
         } else {
            guid = XBee64BitAddress.UNKNOWN_ADDRESS;
@@ -127,7 +117,7 @@ public class XBeeEditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Ed
         // if the 16 bit address field is blank, use the "Unknown" address".
         XBee16BitAddress address;
         if(!(nodeAddrField.getText().equals(""))){
-           byte addr[] = jmri.util.StringUtil.bytesFromHexString(nodeAddrField.getText());
+           byte[] addr = jmri.util.StringUtil.bytesFromHexString(nodeAddrField.getText());
            address = new XBee16BitAddress(addr);
         } else {
            address = XBee16BitAddress.UNKNOWN_ADDRESS;
@@ -173,6 +163,5 @@ public class XBeeEditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Ed
         nodeIdentifierField.setText(((XBeeNode)curNode).getIdentifier());
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(XBeeEditNodeFrame.class);
 
 }

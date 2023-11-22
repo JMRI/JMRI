@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class XBeeNodeManager implements IDiscoveryListener {
 
-    private XBeeTrafficController xtc;
+    private final XBeeTrafficController xtc;
     private XBeeNetwork xbeeNetwork = null;
 
     public XBeeNodeManager(XBeeTrafficController tc) {

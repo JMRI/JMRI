@@ -43,31 +43,31 @@ public class XBeeNode extends IEEE802154Node {
     private XBee16BitAddress userAddress = null;
     private XBee64BitAddress globalAddress = null;
 
-    private final static byte DefaultPanID[] = {0x00,0x00};
+    private final static byte[] DefaultPanID = {0x00,0x00};
 
     /**
      * Create a new instance of XBeeNode.
      */
     public XBeeNode() {
         identifier = "";
-        pinObjects = new HashMap<Integer, NamedBean>();
+        pinObjects = new HashMap<>();
         isPolled = false;
     }
 
-    public XBeeNode(byte pan[], byte user[], byte global[]) {
+    public XBeeNode(byte[] pan, byte[] user, byte[] global) {
         super(pan, user, global);
         identifier = "";
         log.debug("Created new node with panId: {} userId: {} and GUID: {}",
                 StringUtil.arrayToString(pan),
                 StringUtil.arrayToString(user),
                 StringUtil.arrayToString(global));
-        pinObjects = new HashMap<Integer, NamedBean>();
+        pinObjects = new HashMap<>();
         isPolled = false;
         userAddress = new XBee16BitAddress(user);
         globalAddress = new XBee64BitAddress(global);
     }
 
-    public XBeeNode(RemoteXBeeDevice rxd) throws TimeoutException, XBeeException {
+    public XBeeNode(RemoteXBeeDevice rxd) throws XBeeException {
         super(DefaultPanID, rxd.get16BitAddress().getValue(), rxd.get64BitAddress().getValue());
         identifier = rxd.getNodeID();
 
@@ -77,8 +77,8 @@ public class XBeeNode extends IEEE802154Node {
           // we dont need the PAN ID for communicaiton,so just continue.
         }
 
-        log.debug("Created new node from RemoteXBeeDevice: {}", rxd.toString() );
-        pinObjects = new HashMap<Integer, NamedBean>();
+        log.debug("Created new node from RemoteXBeeDevice: {}", rxd );
+        pinObjects = new HashMap<>();
         isPolled = false;
         device = rxd;
         userAddress = device.get16BitAddress();
@@ -164,7 +164,7 @@ public class XBeeNode extends IEEE802154Node {
      */
     @Override
     public void resetTimeout(AbstractMRMessage m) {
-        return;
+        // intentionally empty
     }
 
     /**
@@ -410,10 +410,6 @@ public class XBeeNode extends IEEE802154Node {
     /**
      * Provide a string representation of this XBee Node.
      */
-
-    /**
-     * Provide a string representation of this XBee Node.
-     */
     @Override
     public String toString(){
        return "(" + jmri.util.StringUtil.hexStringFromBytes(getUserAddress()) +
@@ -422,7 +418,7 @@ public class XBeeNode extends IEEE802154Node {
     }
 
 
-    private byte PRValue[] = null;
+    private byte[] PRValue = null;
     private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
     private final Lock readLock = readWriteLock.readLock();
     private final Lock writeLock = readWriteLock.writeLock();
