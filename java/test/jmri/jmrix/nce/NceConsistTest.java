@@ -103,6 +103,8 @@ public class NceConsistTest extends jmri.implementation.AbstractConsistTestBase 
         nnis = new NceInterfaceScaffold();
         memo = new NceSystemConnectionMemo();
         memo.setNceTrafficController(nnis);
+        nnis.csm = new NceCmdStationMemory();
+
         c = new NceConsist(3,memo){
            @Override
            void killConsist(int address, boolean isLong){

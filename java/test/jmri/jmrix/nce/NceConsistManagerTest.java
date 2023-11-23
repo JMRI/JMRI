@@ -63,6 +63,8 @@ public class NceConsistManagerTest extends jmri.implementation.AbstractConsistMa
         tcis = new NceTrafficControlScaffold();
         memo = new NceSystemConnectionMemo();
         memo.setNceTrafficController(tcis);
+        tcis.csm = new NceCmdStationMemory();
+
         cm = new NceConsistManager(memo);
     }
 
