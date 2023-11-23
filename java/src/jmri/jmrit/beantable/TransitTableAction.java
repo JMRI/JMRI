@@ -2375,6 +2375,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                             TransitSectionAction.RAMPTRAINSPEED));
         }    else if (code == TransitSectionAction.PRESTARTDELAY) {
             includeCodes.add(TransitSectionAction.PRESTARTRESUME);
+        } else {
+            excludeCodes.add(TransitSectionAction.PRESTARTRESUME);
         }
         for (int i = 0; i <= TransitSectionAction.NUM_WHATS; i++) {
             if (excludeCodes.size() > 0) {
