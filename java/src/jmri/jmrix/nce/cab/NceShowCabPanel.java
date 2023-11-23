@@ -1444,11 +1444,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     private int getNceCabAddr(int cabNum, int offset) {
         int nceCabAddr;
         if (cabNum < CAB_MAX_PRO) {
-<<<<<<< Updated upstream
             nceCabAddr = (cabNum * CabMemorySerial.CAB_SIZE) + CabMemorySerial.CS_CAB_MEM_PRO + offset;
-=======
-            nceCabAddr = (cabNum * CabMemorySerialPH5.CAB_SIZE) + tc.getCmdStaMemBaseCab() + offset;
->>>>>>> Stashed changes
         } else {
             nceCabAddr = CabMemorySerial.CS_COMP_CAB_MEM_PRO + offset;
         }
