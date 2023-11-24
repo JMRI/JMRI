@@ -3,7 +3,7 @@ package jmri.jmrix.nce.ph5driver;
 /**
  * Updates for command station memory of the PH5.
  *
- * @author kcameron Copyright (C) 2023
+ * @author Ken Cameron Copyright (C) 2023
  */
 public class Ph5CmdStationMemory extends jmri.jmrix.nce.NceCmdStationMemory {
 

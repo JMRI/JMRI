@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.jmrix.nce.*;
+import jmri.jmrix.nce.NceCmdStationMemory;
 import jmri.util.ImmediatePipedOutputStream;
 
 /**
@@ -175,6 +176,7 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
         }
 
         this.getSystemConnectionMemo().configureManagers();
+        tc.csm = new NceCmdStationMemory();
 
         // start the simulator
         sourceThread = new Thread(this);

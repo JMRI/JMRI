@@ -5,9 +5,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+
+import jmri.jmrix.nce.NceCmdStationMemory;
 import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -23,7 +26,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * controlled by the SerialDriverFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @author ken ccameron Copyright (C) 2013
+ * @author Ken Cameron Copyright (C) 2013, 2023
  */
 public class SerialDriverAdapter extends NcePortController {
 
@@ -112,6 +115,7 @@ public class SerialDriverAdapter extends NcePortController {
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
+        tc.csm = new NceCmdStationMemory();
     }
 
     // base class methods for the NcePortController interface

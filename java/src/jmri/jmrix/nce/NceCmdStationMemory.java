@@ -27,14 +27,14 @@ public class NceCmdStationMemory {
      * give min cab id
      */
     public int getCabMin() {
-        return 1;    // min number for cab memory slots
+        return 0;    // min number for cab memory slot
     }
     
     /*
      * give max cab id
      */
     public int getCabMax() {
-        return 65;    // number of cab memory slots
+        return 64;    // max number for cab memory slot
     }
     
     /*

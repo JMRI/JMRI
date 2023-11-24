@@ -3,7 +3,7 @@ package jmri.jmrix.nce.usbdriver;
 /**
  * Updates for command station memory of the PH5.
  *
- * @author kcameron Copyright (C) 2023
+ * @author Ken Cameron Copyright (C) 2023
  */
 public class UsbCmdStationMemory extends jmri.jmrix.nce.NceCmdStationMemory {
 

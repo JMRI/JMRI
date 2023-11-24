@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+
+import jmri.jmrix.nce.NceCmdStationMemory;
 import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
@@ -23,7 +25,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * controlled by the SerialDriverFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @author ken Cameron Copyright (C) 2013, 2023
+ * @author Ken Cameron Copyright (C) 2013, 2023
  */
 public class Ph5DriverAdapter extends NcePortController {
 
@@ -112,7 +114,7 @@ public class Ph5DriverAdapter extends NcePortController {
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
-        tc.csm = new Ph5CmdStationMemory();
+        tc.csm = new NceCmdStationMemory();
     }
 
     // base class methods for the NcePortController interface

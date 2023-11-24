@@ -117,10 +117,6 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
     private static final int FIRST_TIME_SLEEP = 3000; // delay first operation to let panel build
 
-    private static final int CAB_MIN_USB = 2; // USB cabs start at 2
-    private static final int CAB_MIN_PRO = 0; // Serial cabs start at 1
-    private static final int CAB_MAX_USB = 10; // There are up to 10 cabs
-    private static final int CAB_MAX_PRO = 65; // There are up to 64 cabs plus the serial computer cab
     private static final int CAB_LINE_LEN = 16; // display line length of 16 bytes
     private static final int CAB_MAX_CABDATA = 66; // Size for arrays. One more than the highest cab number
 
@@ -268,13 +264,8 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         this.tc = m.getNceTrafficController();
 
         // fill in cab array
-        minCabNum = CAB_MIN_PRO;
-        maxCabNum = 59; //CAB_MAX_PRO;
-        if ((tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE)
-                && (tc.getCmdGroups() & NceTrafficController.CMDS_MEM) != 0) {
-            minCabNum = CAB_MIN_USB;
-            maxCabNum = CAB_MAX_USB;
-        }
+        minCabNum = tc.csm.getCabMin();
+        maxCabNum = tc.csm.getCabMax(); ;
         for (int i = minCabNum; i <= maxCabNum; i++) {
             cabData[i] = new DataRow();
         }
@@ -539,7 +530,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     cabsFound++;
                 }
                 int cabType = recChar & NceCmdStationMemory.FLAGS1_MASK_CABTYPE; // mask off don't care bits
-                if (currCabId == CAB_MAX_PRO) {
+                if (currCabId == minCabNum) {
                     cabData[currCabId].cabType = Bundle.getMessage("TypeSerial");
                 } else if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_DISPLAY) {
                     cabData[currCabId].cabType = Bundle.getMessage("TypeProCab");
@@ -1439,7 +1430,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     // Reads 16 bytes of NCE cab memory
     private int getNceCabAddr(int cabNum, int offset) {
         int nceCabAddr;
-        if (cabNum < CAB_MAX_PRO) {
+        if (cabNum <= maxCabNum) {
             nceCabAddr = (cabNum * tc.csm.getCabSize()) + tc.csm.getCabAddr() + offset;
         } else {
             nceCabAddr = tc.csm.getCabAddr() + offset;
