@@ -152,7 +152,7 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
-                <li></li>
+                <li>Removed a spurious error message from the Z21 Simulator connection.</li>
             </ul>
 
         <h4>Secsi</h4>
