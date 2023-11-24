@@ -265,7 +265,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
         // fill in cab array
         minCabNum = tc.csm.getCabMin();
-        maxCabNum = tc.csm.getCabMax(); ;
+        maxCabNum = tc.csm.getCabMax();
         for (int i = minCabNum; i <= maxCabNum; i++) {
             cabData[i] = new DataRow();
         }
@@ -500,7 +500,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         firstTime = false;
         int cabsFound = 0;
         // build table of cabs
-        for (int currCabId = minCabNum; currCabId <= maxCabNum; currCabId++) {
+        for (int currCabId = minCabNum; currCabId < maxCabNum; currCabId++) {
 
             textStatus.setText(MessageFormat.format(Bundle.getMessage("StatusProcessingCabId"), currCabId));
             cabData[currCabId].cabNumber = currCabId;
@@ -1427,7 +1427,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         tc.sendNceMessage(m, this);
     }
 
-    // Reads 16 bytes of NCE cab memory
+    // get address from cab id and offset
     private int getNceCabAddr(int cabNum, int offset) {
         int nceCabAddr;
         if (cabNum <= maxCabNum) {
