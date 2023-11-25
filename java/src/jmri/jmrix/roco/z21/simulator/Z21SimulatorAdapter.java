@@ -46,8 +46,11 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
     public void configure() {
         log.debug("configure called");
 
-        // connect to a packetizing traffic controller
-        Z21TrafficController packets = new Z21TrafficController();
+        // connect to a packetizing traffic controller that ignores timeouts
+        Z21TrafficController packets = new Z21TrafficController(){
+                @Override
+                protected void warnOnTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {}
+        };
         packets.connectPort(this);
 
         // start operation

@@ -247,7 +247,8 @@ public class AutoTrainAction {
             if (_activeActionList.get(i).getWaitingForSectionExit()
                     && (_activeActionList.get(i).getTargetTransitSection() == ts)) {
                 // this action is waiting for this Section to exit
-                checkDelay(_activeActionList.get(i));
+                // no delay on exit
+                executeAction(_activeActionList.get(i));
             }
         }
         // cancel any O/S actions not triggered.
