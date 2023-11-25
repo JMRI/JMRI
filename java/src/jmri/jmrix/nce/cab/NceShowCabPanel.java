@@ -500,7 +500,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         firstTime = false;
         int cabsFound = 0;
         // build table of cabs
-        for (int currCabId = minCabNum; currCabId < maxCabNum; currCabId++) {
+        for (int currCabId = minCabNum; currCabId <= maxCabNum; currCabId++) {
 
             textStatus.setText(MessageFormat.format(Bundle.getMessage("StatusProcessingCabId"), currCabId));
             cabData[currCabId].cabNumber = currCabId;
