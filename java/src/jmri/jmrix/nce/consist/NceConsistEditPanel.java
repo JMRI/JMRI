@@ -55,8 +55,8 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     
     NceConsistRoster nceConsistRoster = InstanceManager.getDefault(NceConsistRoster.class);
 
-    private static final int CONSIST_MIN = 1;    // NCE doesn't use consist 0
-    private static final int CONSIST_MAX = 127;
+    private int CONSIST_MIN = 1;    // NCE doesn't use consist 0
+    private int CONSIST_MAX = 127;
     private static final int LOC_ADR_MIN = 0;    // loco address range
     private static final int LOC_ADR_MAX = 9999; // max range for NCE
     private static final int LOC_ADR_REPLACE = 0x3FFF;  // dummy loco address
@@ -259,6 +259,8 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     public void initComponents(NceSystemConnectionMemo m) {
         this.memo = m;
         this.tc = m.getNceTrafficController();
+        CONSIST_MIN = tc.csm.getConsistMin();
+        CONSIST_MAX = tc.csm.getConsistMax();
         // the following code sets the frame's initial state
 
         textConsist.setText(Bundle.getMessage("L_Consist"));
