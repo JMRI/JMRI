@@ -69,7 +69,7 @@ public class NceConnectionStatus implements NceListener {
     private static final int MM_2012 = 2;
     
     // PH5 details, 2023
-    private static final int VV_PH5 = 7;    // 1st Edition
+    private static final int VV_PH5 = 8;    // 1st Edition
     private static final int MM_PH5 = 0;
     
     // USB -> Cab bus adapter:
@@ -306,7 +306,7 @@ public class NceConnectionStatus implements NceListener {
             // Is the reply valid? Check major revision, there are only three valid
             // responses
             // note that VV_2004 = VV_2007 = VV_USB
-            if (VV != VV_2012 && VV != VV_2004 && VV != VV_1999) {
+            if (VV != VV_PH5 && VV != VV_2012 && VV != VV_2004 && VV != VV_1999) {
                 log.error("Wrong major revision: {}", Integer.toHexString(VV & 0xFF));
                 // show the entire revision number
                 log.info("NCE EPROM revision = {}", tc.getPwrProVersHexText());

@@ -773,9 +773,12 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
     private void changeNceClockRatio() {
         try {
             int newRatio = Integer.parseInt(rateNce.getText().trim());
+            if ((newRatio <= 0) || (newRatio > 15)) {
+                throw new NumberFormatException();
+            }
             issueClockRatio(newRatio);
         } catch (NumberFormatException e) {
-            log.error("Invalid value: {}", rateNce.getText().trim());
+            log.error("Invalid ratio value: {}", rateNce.getText().trim());
         }
     }
 
@@ -1568,6 +1571,18 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
     }
 
     private void issueClockSet(int hh, int mm, int ss) {
+        if ((hh < 0) || (hh > 23)) {
+            log.error("hours value out of range: {}", hh);
+            return;
+        }
+        if ((mm < 0) || (mm > 23)) {
+            log.error("minutes value out of range: {}", mm);
+            return;
+        }
+        if ((ss < 0) || (ss > 23)) {
+            log.error("seconds value out of range: {}", ss);
+            return;
+        }
         issueClockSetMem(hh, mm, ss);
     }
 
