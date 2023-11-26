@@ -102,19 +102,12 @@ public class Ph5DriverAdapter extends NcePortController {
         this.getSystemConnectionMemo().setNceTrafficController(tc);
         tc.setAdapterMemo(this.getSystemConnectionMemo());
 
-        if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[0])) {
-            // setting binary mode
-            this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_2006);
-            this.getSystemConnectionMemo().setNceCmdGroups(~NceTrafficController.CMDS_USB);
-        } else {
-            this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_2004);
-            this.getSystemConnectionMemo().setNceCmdGroups(~NceTrafficController.CMDS_USB);
-        }
-
+        this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_PH5);
+        this.getSystemConnectionMemo().setNceCmdGroups(~NceTrafficController.CMDS_USB);
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
-        tc.csm = new NceCmdStationMemory();
+        tc.csm = new Ph5CmdStationMemory();
     }
 
     // base class methods for the NcePortController interface

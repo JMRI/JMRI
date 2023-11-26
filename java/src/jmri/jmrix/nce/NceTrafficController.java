@@ -159,6 +159,12 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      */
     static public final int OPTION_1_65 = 40;
     /**
+     * Create commands compatible with the PH5.
+     * <p>
+     * For PH5
+     */
+    static public final int OPTION_PH5 = 80;
+    /**
      * Create all commands in the binary format.
      */
     static public final int OPTION_FORCE_BINARY = 10000;
