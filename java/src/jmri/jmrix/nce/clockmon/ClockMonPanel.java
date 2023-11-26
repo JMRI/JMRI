@@ -1575,11 +1575,11 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
             log.error("hours value out of range: {}", hh);
             return;
         }
-        if ((mm < 0) || (mm > 23)) {
+        if ((mm < 0) || (mm > 59)) {
             log.error("minutes value out of range: {}", mm);
             return;
         }
-        if ((ss < 0) || (ss > 23)) {
+        if ((ss < 0) || (ss > 59)) {
             log.error("seconds value out of range: {}", ss);
             return;
         }
