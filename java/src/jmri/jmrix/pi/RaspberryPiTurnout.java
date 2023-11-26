@@ -60,7 +60,7 @@ public class RaspberryPiTurnout extends AbstractTurnout implements java.io.Seria
            try {
             pin = gpio.provisionDigitalOutputPin(p, getSystemName());
            } catch (java.lang.RuntimeException re) {
-               log.error("Provisioning turnout {} failed with: {}", systemName, re.getMessage(), re);
+               log.error("Provisioning turnout {} failed with: {}", systemName, re.getMessage());
                throw new IllegalArgumentException(re.getMessage());
            }
            if (pin != null) {

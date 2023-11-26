@@ -2,7 +2,6 @@ package jmri.jmrix.pi.simulator;
 
 import com.pi4j.io.gpio.*;
 import com.pi4j.io.gpio.event.GpioPinListener;
-import com.pi4j.io.gpio.trigger.GpioTrigger;
 
 import java.util.concurrent.*;
 
