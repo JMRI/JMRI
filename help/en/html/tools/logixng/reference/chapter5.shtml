@@ -301,7 +301,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>Entry/Exit</h4>
+      <h4 id="EntryExitActions">Entry/Exit</h4>
 
       <p>Manage an Entry/Exit pair.  The last three items are implemented in JMRI 5.5.7.</p>
 
