@@ -145,6 +145,11 @@
                 <li></li>
             </ul>
 
+        <h4>Raspberry Pi GPIO pins</h4>
+            <ul>
+                <li>Added support for Turnouts in the RPi simulator.</li>
+            </ul>
+
         <h4>RFID</h4>
             <ul>
                 <li></li>
