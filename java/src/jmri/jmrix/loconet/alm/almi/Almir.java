@@ -201,7 +201,7 @@ public class Almir {
                 ents = 0;
                 be = bs + 7;
                 break;
-                
+
             default:
                 dev = Bundle.getMessage("LN_MSG_ALM_HELPER_DEVICE_UNKNOWN");
                 be = bs;
@@ -218,7 +218,7 @@ public class Almir {
             return Bundle.getMessage("LN_MSG_ALM_SEL_ROUTE_QUERY", rn, re, re+3);
         }
 
-        if (Alm.isDs74CapsRpt(l) || Alm.isDs78vCapsRpt(l) || 
+        if (Alm.isDs74CapsRpt(l) || Alm.isDs78vCapsRpt(l) ||
                 Alm.isSe74CapsRpt(l) || Alm.isPm74CapsRpt(l) ) {
             if (Alm.isDs74CapsRpt(l) || Alm.isDs78vCapsRpt(l) ) {
                 switch ((l.getElement(10) & 0x1e) >>1) {
@@ -259,12 +259,12 @@ public class Almir {
             }
 
             mode = Bundle.getMessage(mode);
-            
+
             if (Alm.isPm74CapsRpt(l)) {
                 return Bundle.getMessage("LN_MSG_DEVICE_NO_ROUTES_CAPABILITIES_REPLY",
                    dev, ser, bs );
             }
-            
+
             return Bundle.getMessage("LN_MSG_DEVICE_ROUTES_CAPABILITIES_REPLY",
                    dev, ser, mode, enable, bs, be, rts, ents );
         }
