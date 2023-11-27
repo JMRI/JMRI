@@ -86,7 +86,9 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Improved the internal queuing mechanism for transmitted messages.
+                    This will prevent messages being delayed occasionally.
+                </li>
             </ul>
 
         <h4>Maple</h4>

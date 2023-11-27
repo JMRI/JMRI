@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet;
 
-import java.util.NoSuchElementException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -235,12 +234,11 @@ public class LnPacketizerStrict extends LnPacketizer {
             while (true) { // loop permanently
                 // any input?
                 try {
-                    // get content; failure is a NoSuchElementException
+                    // get content; blocks until present
                     log.trace("check for input"); // NOI18N
-                    byte msg[] = null;
-                    synchronized (this) {
-                        msg = xmtList.removeFirst();
-                    }
+
+                    byte msg[] = xmtList.take();
+
                     // input - now send
                     try {
                         if (ostream != null) {
@@ -340,11 +338,8 @@ public class LnPacketizerStrict extends LnPacketizer {
                     } catch (java.io.IOException e) {
                         log.warn("sendLocoNetMessage: IOException: {}", e.toString()); // NOI18N
                     }
-                } catch (NoSuchElementException e) {
-                    // message queue was empty, wait for input
-                    log.trace("start wait"); // NOI18N
-                    new jmri.util.WaitHandler(this); // handle synchronization, spurious wake, interruption
-                    log.trace("end wait"); // NOI18N
+                } catch (InterruptedException ie) {
+                    return; // ending the thread
                 }
             }
         }

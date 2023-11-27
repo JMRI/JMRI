@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
-import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 import jmri.jmrix.loconet.LnNetworkPortController;
 import jmri.jmrix.loconet.LnPacketizer;
@@ -228,12 +227,10 @@ public class LnOverTcpPacketizer extends LnPacketizer {
             while (true) {   // loop permanently
                 // any input?
                 try {
-                    // get content; failure is a NoSuchElementException
+                    // get content; blocks write until present
                     log.debug("check for input");
-                    byte msg[] = null;
-                    synchronized (this) {
-                        msg = xmtList.removeFirst();
-                    }
+
+                    byte msg[] = xmtList.take();
 
                     // input - now send
                     try {
@@ -266,13 +263,8 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                     } catch (java.io.IOException e) {
                         log.warn("sendLocoNetMessage: IOException: {}", e.toString());
                     }
-                } catch (NoSuchElementException e) {
-                    // message queue was empty, wait for input
-                    log.debug("start wait");
-
-                    new jmri.util.WaitHandler(this);  // handle synchronization, spurious wake, interruption
-
-                    log.debug("end wait");
+                } catch (InterruptedException ie) {
+                    return; // ending the thread
                 }
             }
         }
