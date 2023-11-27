@@ -4,6 +4,9 @@ import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.alm.Alm;
 
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+
 /**
  * ALM Interpretation for Routes
  *
@@ -174,24 +177,31 @@ public class Almir {
         int rts;            // number of routes
         int ents;           // number of entries in routes
         switch (l.getElement(9)) {
-            case 0x74:
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DS74:
                 dev = "DS74"; //NOI18N
                 rts = 8;
                 ents = 8;
                 be = ((mod == DevMode.DS74_LIGHT)?(bs + 7):(bs + 3));
                 break;
-            case 0x7c:
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DS78V:
                 dev = "DS78V"; //NOI18N
                 rts = 16;
                 ents = 8;
                 be = ((mod == DevMode.DS78V_3_POS)?(bs + 15):(bs + 7));
                 break;
-            case 0x46:
+            case LnConstants.RE_IPL_DIGITRAX_HOST_SE74:
                 dev = "SE74"; //NOI18N
                 rts = 64;
                 ents = 16;
                 be = bs + 36;
                 break;
+            case LnConstants.RE_IPL_DIGITRAX_HOST_PM74:
+                dev = "PM74"; //NOI18N
+                rts = 0;
+                ents = 0;
+                be = bs + 7;
+                break;
+                
             default:
                 dev = Bundle.getMessage("LN_MSG_ALM_HELPER_DEVICE_UNKNOWN");
                 be = bs;
@@ -208,7 +218,8 @@ public class Almir {
             return Bundle.getMessage("LN_MSG_ALM_SEL_ROUTE_QUERY", rn, re, re+3);
         }
 
-        if (Alm.isDs74CapsRpt(l) || Alm.isDs78vCapsRpt(l) || Alm.isSe74CapsRpt(l) ) {
+        if (Alm.isDs74CapsRpt(l) || Alm.isDs78vCapsRpt(l) || 
+                Alm.isSe74CapsRpt(l) || Alm.isPm74CapsRpt(l) ) {
             if (Alm.isDs74CapsRpt(l) || Alm.isDs78vCapsRpt(l) ) {
                 switch ((l.getElement(10) & 0x1e) >>1) {
                     case 0:
@@ -239,12 +250,21 @@ public class Almir {
             } else if (Alm.isSe74CapsRpt(l)) { // element 10 observed at 0
                 mode = "LN_MSG_ALM_HELPER_DEV_MODE_UNDEF"; // NOI18N
                 // addressing has already been set above
+            } else if (Alm.isPm74CapsRpt(l)) { // element 10 observed at 0
+                mode = "LN_MSG_ALM_HELPER_DEV_MODE_UNDEF"; // NOI18N
+                // addressing has already been set above
             } else {
                 be = bs;  // only show one address
                 mode = "LN_MSG_ALM_HELPER_DEV_MODE_UNDEF"; // NOI18N
             }
 
             mode = Bundle.getMessage(mode);
+            
+            if (Alm.isPm74CapsRpt(l)) {
+                return Bundle.getMessage("LN_MSG_DEVICE_NO_ROUTES_CAPABILITIES_REPLY",
+                   dev, ser, bs );
+            }
+            
             return Bundle.getMessage("LN_MSG_DEVICE_ROUTES_CAPABILITIES_REPLY",
                    dev, ser, mode, enable, bs, be, rts, ents );
         }
@@ -343,5 +363,6 @@ public class Almir {
         DS78V_3_POS,
         UNKN
     }
+//    private final static Logger log = LoggerFactory.getLogger(Almir.class);
 
 }
