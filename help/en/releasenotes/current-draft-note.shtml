@@ -107,7 +107,7 @@
         <h4>MQTT</h4>
             <ul>
                 <li>JMRI will now use the railroad name from the preferences
-                    when creating the client ID.  This will make it easier to 
+                    when creating the client ID.  This will make it easier to
                     identify the JMRI connection in the MQTT broker logs.</li>
             </ul>
 
@@ -434,7 +434,8 @@
 
         <h4>NX - Entry/Exit Tool</h4>
             <ul>
-                <li></li>
+                <li>Validate the sensor selections for the <strong>Add Pair</strong> action.</li>
+                <li>Check for LogixNG references before deleting an Entry/Exit pair.</li>
             </ul>
 
     <h3>Logix</h3>
@@ -626,7 +627,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Improved the 
+            <li>Improved the
             "<a href="http://jmri.org/help/en/html/apps/DecoderPro/FileUpdate.shtml">Updating Decoder Definitions</a>"
             page.</li>
         </ul>
