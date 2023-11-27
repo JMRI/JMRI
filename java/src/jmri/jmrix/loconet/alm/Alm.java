@@ -48,6 +48,11 @@ public class Alm {
         0x08, 0x46, 0x00, 0x46, 0x08, 0x7C, 0x01, 0x00
     });
 
+    private static final LocoNetMessage drcPm74 = new LocoNetMessage(new int[] {
+        0xE6, 0x10, 0x02, 0x00, 0x01, 0x00, 0x00, 0x02,
+        0x04, 0x4A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+    });
+
     private static final LocoNetMessage almchga = new LocoNetMessage (new int[] {
         0xEE, 0x10, 2, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
     private static final int[] almchgam = {
@@ -68,6 +73,10 @@ public class Alm {
 
     public static boolean isSe74CapsRpt(LocoNetMessage l) {
         return l.equals(drcSe74, ds74CapabilitiesMasks);
+    }
+
+    public static boolean isPm74CapsRpt(LocoNetMessage l) {
+        return l.equals(drcPm74, ds74CapabilitiesMasks);
     }
 
     public static boolean isDevBAW(LocoNetMessage l) {
