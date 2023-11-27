@@ -361,7 +361,7 @@ public class LnPacketizer extends LnTrafficController {
             while (!threadStopRequest) {   // loop until asked to stop
                 // any input?
                 try {
-                    // get content; blocks until preset
+                    // get content; blocks until present
                     log.trace("check for input"); // NOI18N
 
                     byte msg[] = xmtList.take();

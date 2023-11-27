@@ -75,7 +75,7 @@ public class UhlenbrockPacketizer extends LnPacketizer {
         if (log.isDebugEnabled()) {
             log.debug("queue LocoNet packet: {}", m.toString());
         }
-        // in an atomic operation, queue the request and wake the xmit thread
+        // queue the request
         try {
             xmtLocoNetList.addLast(m);
             xmtList.add(msg);
