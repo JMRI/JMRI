@@ -116,6 +116,11 @@ public final class MarklinConstants {
     public final static int DCCSTART = 0xC000;
     public final static int DCCEND = 0xFFFF;
 
+    /**
+     * These CAN bus ranges do not translate to track signals
+     * They are free for adressing equipment by 3rd parties,
+     * i.e. sending commands to accessory or providing firmware updates.
+     */
     // Free for clubs and individuals
     public final static int CLUBRANGESTART = 0x1800;
     public final static int CLUBRANGEEND = 0x1BFF;
