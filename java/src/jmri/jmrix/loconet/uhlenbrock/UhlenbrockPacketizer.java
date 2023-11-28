@@ -2,8 +2,7 @@ package jmri.jmrix.loconet.uhlenbrock;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Calendar;
-import java.util.LinkedList;
-import java.util.NoSuchElementException;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetMessageException;
@@ -76,13 +75,10 @@ public class UhlenbrockPacketizer extends LnPacketizer {
         if (log.isDebugEnabled()) {
             log.debug("queue LocoNet packet: {}", m.toString());
         }
-        // in an atomic operation, queue the request and wake the xmit thread
+        // queue the request
         try {
-            synchronized (xmtHandler) {
-                xmtLocoNetList.addLast(m);
-                xmtList.addLast(msg);
-                xmtHandler.notify();
-            }
+            xmtLocoNetList.add(m); // done first to make sure it's there before xmtList has an element
+            xmtList.add(msg);
         } catch (RuntimeException e) {
             log.warn("passing to xmit: unexpected exception: ", e);
         }
@@ -94,7 +90,7 @@ public class UhlenbrockPacketizer extends LnPacketizer {
      * This is public to allow access from the internal class(es) when compiling
      * with Java 1.1
      */
-    public LinkedList<LocoNetMessage> xmtLocoNetList = new LinkedList<LocoNetMessage>();
+    public ConcurrentLinkedQueue<LocoNetMessage> xmtLocoNetList = new ConcurrentLinkedQueue<>();
 
     /**
      * Captive class to handle incoming characters. This is a permanent loop,
@@ -201,9 +197,6 @@ public class UhlenbrockPacketizer extends LnPacketizer {
                     if (msg.equals(lastMessage)) {
                         log.debug("We have our returned message and can send back out our next instruction");
                         mCurrentState = NOTIFIEDSTATE;
-                        synchronized (xmtHandler) {
-                            xmtHandler.notify();
-                        }
                     }
 
                     // message is complete, dispatch it !!
@@ -260,14 +253,13 @@ public class UhlenbrockPacketizer extends LnPacketizer {
             while (true) {   // loop permanently
                 // any input?
                 try {
-                    // get content; failure is a NoSuchElementException
+                    // get content; blocks until present
                     log.debug("check for input");
                     byte msg[] = null;
                     lastMessage = null;
-                    synchronized (this) {
-                        lastMessage = xmtLocoNetList.removeFirst();
-                        msg = xmtList.removeFirst();
-                    }
+                    msg = xmtList.take();
+                    lastMessage = xmtLocoNetList.remove(); // done second to make sure xmlList had an element
+
                     //log.debug("-------------------Uhlenbrock IB-COM LocoNet message to SEND: {}", msg.toString());
 
                     // input - now send
@@ -293,13 +285,8 @@ public class UhlenbrockPacketizer extends LnPacketizer {
                     } catch (java.io.IOException e) {
                         log.warn("sendLocoNetMessage: IOException: {}", e.toString());
                     }
-                } catch (NoSuchElementException e) {
-                    // message queue was empty, wait for input
-                    log.debug("start wait");
-
-                    new jmri.util.WaitHandler(this);  // handle synchronization, spurious wake, interruption
-
-                    log.debug("end wait");
+                } catch (InterruptedException ie) {
+                    return; // ending the thread
                 }
             }
         }

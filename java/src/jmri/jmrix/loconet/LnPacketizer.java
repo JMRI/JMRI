@@ -2,8 +2,7 @@ package jmri.jmrix.loconet;
 
 import java.io.DataInputStream;
 import java.io.OutputStream;
-import java.util.LinkedList;
-import java.util.NoSuchElementException;
+import java.util.concurrent.LinkedTransferQueue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,7 +60,7 @@ public class LnPacketizer extends LnTrafficController {
     /**
      * Synchronized list used as a transmit queue.
      */
-    protected LinkedList<byte[]> xmtList = new LinkedList<>();
+    protected LinkedTransferQueue<byte[]> xmtList = new LinkedTransferQueue<>();
 
     /**
      * XmtHandler (a local class) object to implement the transmit thread.
@@ -106,10 +105,7 @@ public class LnPacketizer extends LnTrafficController {
         // But the thread might not be running, in which case the request is just
         // queued up.
         try {
-            synchronized (xmtHandler) {
-                xmtList.addLast(msg);
-                xmtHandler.notifyAll();
-            }
+            xmtList.add(msg);
         } catch (RuntimeException e) {
             log.warn("passing to xmit: unexpected exception: ", e);
         }
@@ -365,12 +361,10 @@ public class LnPacketizer extends LnTrafficController {
             while (!threadStopRequest) {   // loop until asked to stop
                 // any input?
                 try {
-                    // get content; failure is a NoSuchElementException
+                    // get content; blocks until present
                     log.trace("check for input"); // NOI18N
-                    byte msg[] = null;
-                    synchronized (this) {
-                        msg = xmtList.removeFirst();
-                    }
+
+                    byte msg[] = xmtList.take();
 
                     // input - now send
                     try {
@@ -392,13 +386,10 @@ public class LnPacketizer extends LnTrafficController {
                     } catch (java.io.IOException e) {
                         log.warn("sendLocoNetMessage: IOException: {}", e.toString()); // NOI18N
                     }
-                } catch (NoSuchElementException e) {
-                    // message queue was empty, wait for input
-                    log.trace("start wait"); // NOI18N
-
-                    new jmri.util.WaitHandler(this); // handle synchronization, spurious wake, interruption
-
-                    log.trace("end wait"); // NOI18N
+                } catch (InterruptedException ie) {
+                    return; // ending the thread
+                } catch (RuntimeException rt) {
+                    log.error("Exception on take() call", rt);
                 }
             }
         }
