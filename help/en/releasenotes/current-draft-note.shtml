@@ -86,7 +86,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Added LocoNet Monitor support for PM74.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -630,4 +630,3 @@
             "<a href="http://jmri.org/help/en/html/apps/DecoderPro/FileUpdate.shtml">Updating Decoder Definitions</a>"
             page.</li>
         </ul>
-
