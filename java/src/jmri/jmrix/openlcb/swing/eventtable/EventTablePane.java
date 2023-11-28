@@ -267,16 +267,20 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 str.printRecord("Event ID", "Event Name", "Producer Node", "Producer Node Name",
                                 "Consumer Node", "Consumer Node Name", "Paths");
                 for (int i = 0; i < model.getRowCount(); i++) {
-                    String contextInfo = model.getValueAt(i, EventTableDataModel.COL_CONTEXT_INFO).toString().replace("\n", " / "); // multi-line cell
 
-                    str.printRecord(model.getValueAt(i, EventTableDataModel.COL_EVENTID),
-                                    model.getValueAt(i, EventTableDataModel.COL_EVENTNAME),
-                                    model.getValueAt(i, EventTableDataModel.COL_PRODUCER_NODE),
-                                    model.getValueAt(i, EventTableDataModel.COL_PRODUCER_NAME),
-                                    model.getValueAt(i, EventTableDataModel.COL_CONSUMER_NODE),
-                                    model.getValueAt(i, EventTableDataModel.COL_CONSUMER_NAME),
-                                    contextInfo
-                            );
+                    str.print(model.getValueAt(i, EventTableDataModel.COL_EVENTID));
+                    str.print(model.getValueAt(i, EventTableDataModel.COL_EVENTNAME));
+                    str.print(model.getValueAt(i, EventTableDataModel.COL_PRODUCER_NODE));
+                    str.print(model.getValueAt(i, EventTableDataModel.COL_PRODUCER_NAME));
+                    str.print(model.getValueAt(i, EventTableDataModel.COL_CONSUMER_NODE));
+                    str.print(model.getValueAt(i, EventTableDataModel.COL_CONSUMER_NAME));
+
+                    String[] contexts = model.getValueAt(i, EventTableDataModel.COL_CONTEXT_INFO).toString().split("\n"); // multi-line cell
+                    for (String context : contexts) {
+                        str.print(context);
+                    }
+                    
+                    str.println();
                 }
                 str.flush();
             } catch (IOException ex) {

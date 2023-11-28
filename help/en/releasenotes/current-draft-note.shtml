@@ -138,6 +138,8 @@
                 </li>
                 <li>Fix a problem that would sometimes leave the node list improperly sorted</li>
                 <li>Reduced the start up delay when opening the OpenLCB hub.</li>
+                <li>Changed the formatting of the CSV file written by the Event Table so that
+                    multiple paths are broken out into multiple columns</li>
             </ul>
 
         <h4>Powerline</h4>
