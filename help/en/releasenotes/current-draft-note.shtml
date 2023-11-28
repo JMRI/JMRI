@@ -86,6 +86,7 @@
 
         <h4>LocoNet</h4>
             <ul>
+                <li>Added LocoNet Monitor support for PM74.</li>
                 <li>Improved the internal queuing mechanism for transmitted messages.
                     This will prevent messages being delayed occasionally.
                 </li>
@@ -633,4 +634,3 @@
             "<a href="http://jmri.org/help/en/html/apps/DecoderPro/FileUpdate.shtml">Updating Decoder Definitions</a>"
             page.</li>
         </ul>
-
