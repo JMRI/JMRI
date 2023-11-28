@@ -20,11 +20,11 @@ public class AssignmentTableModel extends AbstractTableModel {
    public static final int SYSNAME_COLUMN = 1;
    public static final int USERNAME_COLUMN = 2;
 
-   private String[] assignmentTableColumnNames = {Bundle.getMessage("HeadingBit"),
+   private final String[] assignmentTableColumnNames = {Bundle.getMessage("HeadingBit"),
    Bundle.getMessage("HeadingSystemName"),
    Bundle.getMessage("HeadingUserName")};
 
-   private String free = Bundle.getMessage("AssignmentFree");
+   private final String free = Bundle.getMessage("AssignmentFree");
 
    public void setNode(XBeeNode node) {
       curNode = node;
@@ -78,7 +78,7 @@ public class AssignmentTableModel extends AbstractTableModel {
 
    @Override
    public Object getValueAt(int r, int c) {
-      Integer pin = Integer.valueOf(r);
+      int pin = r;
       try {
          switch (c) {
             case BIT_COLUMN:

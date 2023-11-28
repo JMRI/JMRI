@@ -34,7 +34,7 @@ public class ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
 
     @Override
     public String name() {
-        return "CAN via PI-LCC adapter";
+        return "CAN via SPROG DCC Ltd PI-LCC";
     }
 
     public boolean isOptList2Advanced() {

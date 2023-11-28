@@ -478,6 +478,37 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(f);
     }
+    
+    @Test
+    public void testMinTrainLength() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        // create a route
+        Route route = JUnitOperationsUtil.createFiveLocationRoute();
+        route.setName("5 Locations");
+        RouteLocation rl = route.getDepartsRouteLocation();
+
+        RouteEditFrame f = new RouteEditFrame();
+        f.initComponents(route);
+
+        // need to show entire table
+        f.setSize(new Dimension(1200, Control.panelHeight400));
+
+        // confirm default value
+        Assert.assertEquals("Max Length", 1000, rl.getMaxTrainLength());
+        
+        JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("WarningTooShort"), Bundle.getMessage("ButtonCancel"));           
+        JFrameOperator jfo = new JFrameOperator(f);
+        JTableOperator tbl = new JTableOperator(jfo);
+        tbl.setValueAt(499, 0, tbl.findColumn(Bundle.getMessage("MaxLength")));   
+        Assert.assertEquals("Old Max Length", 1000, rl.getMaxTrainLength());
+        
+        JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("WarningTooShort"), Bundle.getMessage("ButtonOK"));
+        tbl.setValueAt(499, 0, tbl.findColumn(Bundle.getMessage("MaxLength")));
+        Assert.assertEquals("New Max Length", 499, rl.getMaxTrainLength());
+
+        JUnitUtil.dispose(f);
+    }
 
     @Test
     public void testRouteEditFrameRead() {

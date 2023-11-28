@@ -45,8 +45,9 @@
         <li>Sakae Akanuma provided a Japanese translation.</li>
 
         <li>Peter Akers, <!-- flash62au -->
-        who provided JMRI documentation for DCC-EX</li>
-        
+        who provided JMRI documentation for DCC-EX and is a key contributor
+        to Engine Driver.</li>
+
         <li>Kerry Albrecht, who helped debug a problem loading panel files</li>
 
         <li>Nelson Allison, who provided scripts for Roco cranes</li>
@@ -125,8 +126,7 @@
         <li>Leo Bicknell, who updated the LocoNet monitor</li>
 
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Albijlsma+">Lolke Bijlsma</a>, <!-- lbijlsma  -->
-        who provided a decoder definition for the Shine Plus decoder series from
-        Train-O-Rama.</li>
+        who provided decoder definitions for Train-O-Rama decoders.</li>
 
         <li>Pierre Billon, <!-- PierreMc -->
         who translated decoder files to German and French and provided decoder

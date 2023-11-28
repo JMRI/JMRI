@@ -107,7 +107,7 @@
         <h4>MQTT</h4>
             <ul>
                 <li>JMRI will now use the railroad name from the preferences
-                    when creating the client ID.  This will make it easier to 
+                    when creating the client ID.  This will make it easier to
                     identify the JMRI connection in the MQTT broker logs.</li>
             </ul>
 
@@ -133,11 +133,21 @@
                 <li>
                     Added SPROG DCC Ltd PI-LCC Raspberry Pi CAN adapter
                 </li>
+                <li>
+                    Added SPROG DCC Ltd USB-LCC CAN adapter
+                </li>
+                <li>Fix a problem that would sometimes leave the node list improperly sorted</li>
+                <li>Reduced the start up delay when opening the OpenLCB hub.</li>
             </ul>
 
         <h4>Powerline</h4>
             <ul>
                 <li></li>
+            </ul>
+
+        <h4>Raspberry Pi GPIO pins</h4>
+            <ul>
+                <li>Added support for Turnouts in the RPi simulator.</li>
             </ul>
 
         <h4>RFID</h4>
@@ -147,7 +157,7 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
-                <li></li>
+                <li>Removed a spurious error message from the Z21 Simulator connection.</li>
             </ul>
 
         <h4>Secsi</h4>
@@ -158,7 +168,10 @@
         <h4><a href="http://www.sprog-dcc.co.uk">SPROG</a></h4>
             <ul>
                 <li>
-                    Added PI-LCC Raspberry Pi CAN adapter
+                    Added PI-LCC Raspberry Pi CAN adapter for OpenLCB
+                </li>
+                <li>
+                    Added USB-LCC CAN adapter for OpenLCB
                 </li>
             </ul>
 
@@ -345,7 +358,7 @@
 
         <h4>Technologistic (train-O-matic)</h4>
             <ul>
-                <li></li>
+                <li>Support for the FD Micro function decoder family.</li>
             </ul>
 
         <h4>Trix Modelleisenbahn</h4>
@@ -421,7 +434,8 @@
 
         <h4>NX - Entry/Exit Tool</h4>
             <ul>
-                <li></li>
+                <li>Validate the sensor selections for the <strong>Add Pair</strong> action.</li>
+                <li>Check for LogixNG references before deleting an Entry/Exit pair.</li>
             </ul>
 
     <h3>Logix</h3>
@@ -571,7 +585,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Fixed a bug that would cause problems when DELAYED feedback was selected.</li>
         </ul>
 
    <h3>Warrants</h3>
@@ -613,6 +627,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Improved the
+            "<a href="http://jmri.org/help/en/html/apps/DecoderPro/FileUpdate.shtml">Updating Decoder Definitions</a>"
+            page.</li>
         </ul>
 

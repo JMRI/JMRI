@@ -263,7 +263,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Entry/Exit</h5>
+      <h5 id="EntryExitExpressions">Entry/Exit</h5>
 
       <p>Evaluate if an Entry/Exit pair has a specified state.</p>
 

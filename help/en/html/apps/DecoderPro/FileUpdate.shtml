@@ -17,15 +17,29 @@
       <h1>JMRI: DecoderPro User Guide</h1>
 
       <h2>Updating Decoder Definitions</h2>
-      Many people have contributed decoder definition files to DecoderPro. Between new releases,
-      new files may be created that you might want to use. These can usually be found either on
-      <a href="https://www.jmri.org/xml/decoders/">the JMRI website</a> or in the <a href=
-      "https://groups.io/g/jmriusers/files">files area of JMRI users</a> (log in to access).
+      New and updated decoder definitions are occasionally created.
+      The best way to get them is to update your copy of JMRI to the 
+      most recent 
+      <a href="https://www.jmri.org/download/">test release</a>.
+      If you don't want to wait for a monthly test release, you can also 
+      pick up a 
+      <a href="https://www.jmri.org/download/">development release</a>. 
+      Development releases are available within a day of the new decoder definition being
+      merged into JMRI.
+      
+      <p>Sometimes, a user will put a new/updated definition in the <a href=
+      "https://groups.io/g/jmriusers/files">files area of JMRI users</a> (log in to access).</p>
+      
       <p>To use these xml files you need to download and install them.</p>
 
       <p>The installation process was simplified in JMRI 2.3.6, where "Import Decoder File" and
       "Import Decoder URL" menu items were added to the Debug menu (in PanelPro or "legacy"
       DecoderPro) and to the File menu (in DecoderPro "Roster view").</p>
+      
+      <p><strong>Note that this download and install process only works for the main 
+      decoder definition file.</strong>
+      Some decoder definitions include small subsidiary files from subdirectories.  Updates
+      to these are best obtained via a test or development release to ensure consistency.</p>
 
       <h2 id="after236">JMRI v 2.3.6 and later</h2>
       This section describes adding a new decoder definition when you are using JMRI version 2.3.6
@@ -60,6 +74,7 @@
       </ul>
       Unless there are errors, the file will be copied into your JMRI Preferences directory and
       installed.
+      
       <h3>How This Works</h3>
       Both of these tools take the decoder definition information from the source you indicate and
       copy it to your local JMRI Preferences directory so that it will be available from now on.

@@ -44,6 +44,9 @@
       Active Trains traveling the same path through the layout to have different
       <strong>Actions</strong>.</p>
 
+      <p>Special <strong>Actions</strong> that have not been executed when the section is deallocated are <strong>cancelled</strong>.
+      This is to prevent actions being fired randomly when a condition is met hours later.</p>
+
       <h2>Requesting an Action</h2>
 
       <p>An Action is requested by specifying <strong><em>when</em></strong> an action is to be
@@ -63,7 +66,7 @@
         <li><strong>On Section Entry</strong>
         </li>
 
-        <li><strong>On Section Exit</strong>
+        <li><strong>On Section Exit</strong> - This does not support a delay.
         </li>
 
         <li><strong>On Block Entry</strong>
@@ -83,13 +86,20 @@
 
         <li><strong>On Sensor INACTIVE</strong>
         </li>
+
+        <li><strong>Delay Start</strong> - The delay is the time between the time the engine
+        is commanded to start and when it will start. <strong>Delay Start Action</strong> are
+        executed during this period.
+        </li>
+
+        <li><strong>Delay Start Action</strong> - The delay is measured from when <strong>Delay Start</strong>
+        is executed.
+        </li>
       </ul>
 
       <p>Optionally a <strong>Delay</strong> may be set for each <strong><em>When</em></strong>
-      event, specified in milliseconds. If the Delay time is set to zero (the default), the action
-      will be performed immediately after the <strong><em>When</em></strong> event occurs. If a
-      Delay time is specified, the program will wait for the specified time in fast clock minutes
-      after the <strong><em>When</em></strong> event occurs before performing the action.</p>
+      event, specified in real seconds or milliseconds. If the Delay time is set to zero (the default), the action
+      will be performed immediately after the <strong><em>When</em></strong> event occurs.</p>
 
       <h3 id="what">What action to perform?</h3>
 
@@ -188,6 +198,18 @@
 
         <li><strong>Release Signal</strong> - Set a specified Signal Mast or Signal Head to NOT
         HELD. Select either a Signal Mast or Head from one of the drop downs.</li>
+
+        <li><strong>E Stop</strong> - Use E-stop to stop the train.</li>
+
+        <li><strong>Terminate Train</strong> - Terminates the current train. By delaying the terminate, actions can be
+        run between the train stopping and being terminated. Do not specify terminate train in the traininfo file.</li>
+
+        <li><strong>Load TrainInfo</strong> - Load and run a TrainInfo file. This can be any valid traininfo file and
+        the locomotive to use can be: Default (the locomotive specified in the file); Current (the locomotive running his train);
+        Roster (A Roster Entry) or Address (A numeric locomotive address).
+        If running a Traininfo which uses the current locomotive or starting in the this section, the action <strong>must</strong>
+        be executed less than 2 seconds before a <strong>terminate</strong>. </li>
+
       </ul>
 
       <h2>The View Actions Window</h2>

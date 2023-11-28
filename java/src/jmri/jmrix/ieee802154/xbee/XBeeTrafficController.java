@@ -8,6 +8,7 @@ import com.digi.xbee.api.listeners.IDataReceiveListener;
 import com.digi.xbee.api.listeners.IModemStatusReceiveListener;
 import com.digi.xbee.api.listeners.IPacketReceiveListener;
 import com.digi.xbee.api.models.ModemStatusEvent;
+import com.digi.xbee.api.packet.XBeeAPIPacket;
 import com.digi.xbee.api.packet.XBeePacket;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrix.AbstractMRListener;
@@ -30,6 +31,10 @@ import org.slf4j.LoggerFactory;
 public class XBeeTrafficController extends IEEE802154TrafficController implements IPacketReceiveListener, IModemStatusReceiveListener, IDataReceiveListener, XBeeInterface {
 
     private XBeeDevice xbee = null;
+
+    public XBeeTrafficController() {
+        super();
+    }
 
     /**
      * Get a message of a specific length for filling in.
@@ -54,25 +59,12 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      * Make connection to an existing PortController object.
      */
     @Override
-    @SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "WA_NOT_IN_LOOP"}, justification="The unconditional wait outside of a loop is used to allow the hardware to react to a reset request.")
     public void connectPort(AbstractPortController p) {
         // Attach XBee to the port
         try {
             if( p instanceof XBeeAdapter) {
-               XBeeAdapter xbp = (XBeeAdapter) p;
-               xbee = new XBeeDevice(xbp);
-               xbee.open();
-               xbee.reset();
-               try {
-                  synchronized(this){
-                     wait(2000);
-                  }
-               } catch (java.lang.InterruptedException e) {
-               }
-               xbee.addPacketListener(this);
-               xbee.addModemStatusListener(this);
-               xbee.addDataListener(this);
-
+               configureLocalXBee((XBeeAdapter) p);
+               resetLocalXBee();
             } else {
                throw new java.lang.IllegalArgumentException("Wrong adapter type specified when connecting to the port.");
             }
@@ -81,6 +73,53 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         } catch (XBeeException xbe ) {
             log.error("Exception during XBee communication start up. Error was {} ",xbe.getCause(), xbe);
         }
+        startTransmitThread();
+    }
+
+    private void startTransmitThread() {
+        xmtThread = jmri.util.ThreadingUtil.newThread(
+                xmtRunnable = () -> {
+                    try {
+                        transmitLoop();
+                    } catch (ThreadDeath td) {
+                        if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", td, td);
+                        // ThreadDeath must be thrown per Java API Javadocs
+                        throw td;
+                    } catch (Throwable e) {
+                        if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", e, e);
+                    }
+                });
+
+        String[] packages = this.getClass().getName().split("\\.");
+        xmtThread.setName(
+                (packages.length>=2 ? packages[packages.length-2]+"." :"")
+                        +(packages.length>=1 ? packages[packages.length-1] :"")
+                        +" Transmit thread");
+
+        xmtThread.setDaemon(true);
+        xmtThread.setPriority(Thread.MAX_PRIORITY-1);      //bump up the priority
+        xmtThread.start();
+    }
+
+    private void configureLocalXBee(XBeeAdapter p) throws XBeeException {
+        xbee = new XBeeDevice(p);
+        xbee.open();
+        xbee.setReceiveTimeout(200);
+        xbee.addPacketListener(this);
+        xbee.addModemStatusListener(this);
+        xbee.addDataListener(this);
+    }
+
+    @SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "WA_NOT_IN_LOOP"}, justification="The unconditional wait outside of a loop is used to allow the hardware to react to a reset request.")
+    private void resetLocalXBee() throws XBeeException {
+        xbee.reset();
+        try {
+           synchronized(this){
+              wait(2000);
+           }
+        } catch (InterruptedException e) {
+            log.debug("timeout interupted after reset request");
+        }
     }
 
     /**
@@ -88,9 +127,17 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      */
     @Override
     synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
+        log.trace("forwardToPort message: [{}]", m);
         if (log.isDebugEnabled()) {
             log.debug("forwardToPort message: [{}]", m);
         }
+        if (!(m instanceof XBeeMessage))
+        {
+            throw new IllegalArgumentException();
+        }
+
+        XBeeMessage xbm = (XBeeMessage) m;
+
         // remember who sent this
         mLastSender = reply;
 
@@ -100,15 +147,24 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         Runnable r = new XmtNotifier(m, mLastSender, this);
         javax.swing.SwingUtilities.invokeLater(r);
 
-        /* TODO: Check to see if we need to do any of the error handling
-         in AbstractMRTrafficController here */
-        // forward using XBee Specific message format
-        try {
-            log.trace("Sending message {}",m);
-            xbee.sendPacketAsync(((XBeeMessage) m).getXBeeRequest());
-        } catch (XBeeException xbe) {
-            log.error("Error Sending message to XBee", xbe);
-        }
+        sendWithErrorHandling(xbm);
+    }
+
+    private void sendWithErrorHandling(XBeeMessage xbm) {
+       /* TODO: Check to see if we need to do any of the error handling
+          in AbstractMRTrafficController here */
+       // forward using XBee Specific message format
+       try {
+           log.trace("Sending message {}", xbm);
+           sendXBeePacketAsync(xbm.getXBeeRequest());
+       } catch (XBeeException xbe) {
+           log.error("Error Sending message to XBee {}", xbe,xbe);
+       }
+    }
+
+    private void sendXBeePacketAsync(XBeeAPIPacket xBeeAPIPacket) throws XBeeException {
+        log.trace("Sending XBeeAPIPacket +{}",xBeeAPIPacket.toPrettyString());
+        xbee.sendPacketAsync(xBeeAPIPacket);
     }
 
     /**
@@ -264,7 +320,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         msgQueue.addLast(m);
         listenerQueue.addLast(reply);
         if (m != null) {
-            log.debug("just notified transmit thread with message {}", m.toString());
+            log.debug("just notified transmit thread with message {}", m);
         }
     }
 
@@ -291,7 +347,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
             ((XBeeListener) client).reply((XBeeReply) r);
         } else {
             // we're using some non-XBee specific code, like the monitor
-            // that only registeres as an IEEE802154Listener.
+            // that only registers as an IEEE802154Listener.
             ((IEEE802154Listener) client).reply((IEEE802154Reply) r);
         }
     }
@@ -344,6 +400,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     @Override
     protected void terminate(){
        if(xbee!=null) {
+          terminateThreads();
           xbee.close();
           xbee=null;
        }
