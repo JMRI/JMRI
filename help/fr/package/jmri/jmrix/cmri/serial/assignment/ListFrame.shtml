@@ -4,11 +4,11 @@
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Translated  by Blorec Herv&#233; le 2011-11-1-->
   <title>JMRI: Connector Pin Assignments</title>
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -17,9 +17,9 @@
       broches pour votre n&Aring;"ud C/MRI.JMRI: Connector Pin
       Assignments.</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

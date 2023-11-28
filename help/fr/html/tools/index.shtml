@@ -7,11 +7,11 @@
   </title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -317,9 +317,9 @@ beaucoup de puissance pour commander votre r&#233;seau de la fa&#231;on que vous
 <p>Ex&#233;cutez vos propres scripts ou des scripts partag&#233;s par un autre utilisateur JMRI depuis
 le menu Panneaux --> Ex&#233;cution Script...</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

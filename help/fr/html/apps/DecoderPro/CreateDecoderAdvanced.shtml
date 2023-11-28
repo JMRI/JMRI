@@ -4,12 +4,12 @@
 <!-- Copyright Bob Jacobsen 2008 -->
 <!--Translated by Herv&#233; Blorec le 2016-06-18 -->
 <title>JMRI: DecoderPro User Guide - Advanced Decoder Definitions</title>
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
 <body>
-<!--#include virtual="/Header_fr.shtml" -->
+<!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -747,10 +747,10 @@ variable version-number a une valeur trop faible:</p>
   affichage d&#233;pendra de la valeur par d&#233;faut depuis le fichier qui pourrait induire en erreur l'utilisateur.
 </p>
 
-<!--#include virtual="/Footer_fr.shtml" -->
+<!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
  </div><!-- closes #mainContent-->
 </div>  <!-- close #mBody -->
-<script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+<script src="/js/help.js"></script>
 </body>
 </html>
 

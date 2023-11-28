@@ -9,11 +9,11 @@
   <meta name="Revision"
         content="Updated instructions for GitHub instead of single file edit and ZIP">
   <title>How to Update the JMRI Documentation</title>
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="../Sidebar.shtml" -->
     <div id="mainContent">
@@ -135,9 +135,9 @@ GitHub.</p>
 <p>Vous pouvez voir  <a href="https://github.com/JMRI/JMRI">le r&#233;pertoire JMRI actuel sur GitHub</a>. Pour apprendre comment faire des 
 changements et se connecter &#224; GitHub, SVP Lire <a href="../getgitcode.shtml">Utilisation de Git</a>.</p>
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

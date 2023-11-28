@@ -4,11 +4,11 @@
 <!-- Copyright Bob Jacobsen 2008 -->
 <!-- Updated by Blorec Herv&#233; le 2016-09-11-->
 <title>JMRI: Defining Your Own Signaling System</title>
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -333,9 +333,9 @@ Lexique:
     <li>* Apparence (du M&#226;t)= ce qu'il signifie ex: Rappel de ralentissement</li>
 </ul>
 
-        <!--#include virtual="/Footer_fr.shtml" -->
+        <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </body>
 </html>

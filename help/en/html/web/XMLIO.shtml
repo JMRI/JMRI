@@ -265,6 +265,6 @@ it's returned in the reply as a value element with the proper value at that poin
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

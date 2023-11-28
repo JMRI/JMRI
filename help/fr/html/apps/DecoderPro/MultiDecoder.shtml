@@ -5,12 +5,12 @@
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Updated by Herv&#233;. BLOREC <bzh56420@yahoo.fr> on 2016-06-28 -->
   <title>JMRI: DecoderPro - Multi-Decoder Tool</title>
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -194,11 +194,11 @@ et CV 16 sont égaux, tous les CV dans le décodeur peuvent être lu ou écrit. 
       pour de nombreuses centrales de commande existantes, pour donner une réponse. Ceci peut être
       fait plus rapidement dans l'avenir en ayant des centrales de commande qui essayent de lire
       simplement la valeur attendue, au lieu de 0 à 255, en l'absence d'un accusé de réception.</p>
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
     <!-- close #mainContent -->
   </div>
   <!-- close #mBody -->
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

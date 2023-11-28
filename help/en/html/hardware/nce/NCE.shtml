@@ -592,6 +592,6 @@ limitation when connected to a Power Pro.</p> -->
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

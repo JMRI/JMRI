@@ -5,11 +5,11 @@
   <title>JMRI Hardware Support - Multiple Computers to LocoNet&reg; via LbServer</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="Digitrax Chief DCS Command Station LocoNet Server LocoBuffer java model railroad JMRI install windows">
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header_fr.shtml" -->
+<!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 <div id="mBody">
   <!--#include virtual="Sidebar.shtml" -->
   <div id="mainContent">

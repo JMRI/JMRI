@@ -9,11 +9,11 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "Oak Tree Systems Railroad Control Interface RCI java model railroad JMRI install windows">
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="../Sidebar.shtml" -->
     <div id="mainContent">
@@ -175,9 +175,9 @@
       <p>Pour plus d'informations sur le mat&eacute;riel Oak Tree
       Systems, voir leur <a href=
       "http://www.oaktreesystems.com">site web</a> .</p>
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

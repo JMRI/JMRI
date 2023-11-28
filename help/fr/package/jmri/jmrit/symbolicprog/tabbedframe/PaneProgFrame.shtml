@@ -6,12 +6,12 @@
   <!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
   <!-- Translated  by Blorec Herv&#233; le 2011-11-5-->
   <title>JMRI: DecoderPro Service Mode Programmer</title>
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -115,9 +115,9 @@
       vers le bas . Notez que les valeurs ne changent pas dessous celle que vous avez cochée. Ils
       ne changent pas pour les crans au-dessus, si un cran inférieur est modifié.</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

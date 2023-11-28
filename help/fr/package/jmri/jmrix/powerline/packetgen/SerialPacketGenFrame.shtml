@@ -5,11 +5,11 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI help Send grapevine message packet">
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -18,7 +18,7 @@
       <p>Ceci est de page d'aide
       help/jmri/jmrix/powerline/ packetgen/SerialPacketGenFrame</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

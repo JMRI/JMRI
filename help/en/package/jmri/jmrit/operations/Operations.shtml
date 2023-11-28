@@ -6302,6 +6302,6 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

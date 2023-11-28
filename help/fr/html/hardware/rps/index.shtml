@@ -3,11 +3,11 @@
 <!-- Updated by Blorec Herv&#233;  2017-02-06-->
 <head>
  <title>JMRI Hardware Support - NAC Services RPS</title>
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -206,9 +206,9 @@ Les informations RPS peuvent &#234;tre utilis&#233;es pour d&#233;tecter l'occup
 Il y a plus d'informations disponibles sur le
 <a href="http://www.proto87.com/RPS-MR-position-detection-system.html"> Site Web RPS</a>.
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

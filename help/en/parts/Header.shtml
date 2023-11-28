@@ -10,7 +10,7 @@
           </div>
 
           <div class="button inline" style="padding:0;">
-              <a href="/" title="Return to home page" accesskey="1">
+              <a href="https://jmri.org" title="JMRI Home Page" accesskey="1">
                   <img src="/images/jmri-small.svg" alt="JMRI Logo" height="45">
               </a>
           </div>
@@ -37,9 +37,6 @@
               <div id="nav_ack" class="button inline"><a
                         href="/help/en/Acknowledgements.shtml"
                         title="Who is JMRI">Acknowledgements</a></div>
-<!--              <a class="dropdown-menuitem button"-->
-<!--                 href="/"-->
-<!--                 title="Les pages d'aide JMRI en francais"><i class="fa fa-caret-right"></i> Français</a>-->
           </div>
 
           <div id="drop-nav" class="dropdown inline">

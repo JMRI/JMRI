@@ -1,0 +1,92 @@
+<!-- responsive Header_fr.shtml for French help, copied from Header.shtml -->
+  <p class="skipLink"><a href="#mainContent" accesskey="2">Au contenu principal</a></p>
+
+  <div id="header">
+      <!-- Top tool bar -->
+      <div id="mainNav" class="bar-1">
+
+          <div id="show-side" class="button inline xlarge"
+              onclick="side_open()"><i class="fa fa-bars"></i>
+          </div>
+
+          <div class="button inline" style="padding:0;">
+              <a href="https://jmri.org/index_fr.shtml" title="Revenir à la page initial JMRI.org" accesskey="1">
+                  <img src="/images/jmri-small.svg" alt="Logo JMRI" height="45">
+              </a>
+          </div>
+
+          <div id="hor-nav" class="inline"><!-- "hor-nav" show/hide by mediaquery -->
+              <div id="nav_dl" class="button inline"><a
+                        href="/download/index.shtml"
+                        title="Le logiciel JMRI à télécharger">Versions</a></div>
+              <div id="nav_apps" class="button inline"><a
+                        href="/help/fr/html/apps/index.shtml"
+                        title="Les applications JMRI">Applications</a></div>
+              <div id="nav_hw" class="button inline"><a
+                        href="/help/fr/html/hardware/index.shtml"
+                        title="Quels logiciels supportes JMRI">Materiel</a></div>
+              <div id="nav_help" class="button inline"><a
+                        href="/help/fr/webtoc.shtml"
+                        title="Les pages d'aide JMRI">Pages d'Aide</a></div>
+              <div id="nav_manuals" class="button inline"><a
+                        href="/help/fr/manual/index.shtml"
+                        title="Les manuels JMRI">Manuels</a></div>
+              <div id="nav_dev" class="button inline"><a
+                        href="/help/fr/html/doc/Technical/index.shtml"
+                        title="Programmer et adapter JMRI">Developeurs</a></div>
+              <div id="nav_ack" class="button inline"><a
+                        href="/help/fr/Acknowledgements.shtml"
+                        title="Qui a fait JMRI?">Remerciements</a></div>
+              <div id="nav_en" class="button inline"><a
+                      href="/"
+                      title="Les pages d'aide en anglais">en</a></div>
+          </div>
+
+          <div id="drop-nav" class="dropdown inline">
+              <!-- show/hide by mediaquery, openMore() @param2 = title when dropped down -->
+              <div id="navbtn-more" onclick="open_more(this, 'aide etc. ')"
+                   class="button inline">aide etc. <i class="fa fa-caret-down"></i>
+              </div>
+              <div id="more" class="dropdown-content" style="display:none">
+                  <a class="dropdown-menuitem button"
+                     href="/download/index.shtml"
+                     title="Le logiciel JMRI à télécharger">Versions</a>
+                  <a class="dropdown-menuitem button"
+                     href="/help/fr/html/apps/index.shtml"
+                     title="Les applications JMRI">Applications</a>
+                  <a class="dropdown-menuitem button"
+                     href="/help/fr/html/hardware/index.shtml"
+                     title="Quels logiciels supportes JMRI">Materiel</a>
+                  <a class="dropdown-menuitem button"
+                     href="/help/fr/webtoc.shtml"
+                     title="Les pages d'aide JMRI">Pages d'Aide</a>
+                  <a class="dropdown-menuitem button"
+                     href="/help/fr/manual/index.shtml"
+                     title="Les manuels JMRI">Manuels</a>
+                  <a class="dropdown-menuitem button"
+                     href="/help/fr/html/doc/Technical/index.shtml"
+                     title="Programmer et adapter JMRI">Developeurs</a>
+                  <a class="dropdown-menuitem button"
+                     href="/help/fr/Acknowledgements.shtml"
+                     title="Qui a fait JMRI?">Remerciements</a>
+                  <a class="dropdown-menuitem button"
+                     href="/"
+                     title="Go to the english language JMRI Help"><i class="fa fa-caret-right"></i> English</a>
+              </div>
+          </div>
+
+          <div class="button inline xlarge floatRight" onclick="open_search(this)" id="magnify"
+              title="Recherge JMRI.org"><i class="fa fa-search"></i>
+          </div>
+          <!--  Search Form -->
+          <div id="searchform" class="inline" style="display:none; padding:0;">
+              <div class="gcse-search"></div>
+          </div> <!--  End #searchform -->
+
+      </div>
+  </div> <!-- closes #header-->
+<!--website2021 javascript includes for dropdown menu-item and GoogleSearch form-->
+<script async src="https://cse.google.com/cse.js?cx=ec997d9b2c290dd18"></script>
+<!--website 2021 to collapse menu on narrow screens-->
+<script src="/js/header.js"></script>
+<!-- /Header_fr.shtml -->

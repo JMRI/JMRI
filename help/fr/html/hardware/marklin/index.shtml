@@ -3,11 +3,11 @@
 <head>
   <!-- translated by Herv&#233; Blorec 2017-02-05 -->
   <title>JMRI Hardware Support - M&auml;rklin Command Station 2</title>
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="../Sidebar.shtml" -->
     <div id="mainContent">
@@ -59,9 +59,9 @@ La prise en charge des r&#233;gulateurs inclut la possibilit&#233; de s&#233;lec
 <h4>Envoi Commandes Marklin</h4>
 <img src="images/MarklinCS2SendCommand.png" width="252" height="137" alt="Menu">
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

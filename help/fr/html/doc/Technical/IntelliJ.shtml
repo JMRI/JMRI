@@ -5,11 +5,11 @@
   <meta name="author" content="Egbert Broerse">
   <meta name="keywords" content="JMRI technical code IntelliJ IDEA 15 2016 IDE">
   <!-- Translated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-28 -->
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -327,9 +327,9 @@
 	<a name="more"></a><h2>Aide suppl&#233;mentaire</h2>
 	<p>Voir la r&#233;f&#233;rence web <a href="https://www.jetbrains.com/idea/help/reference.html">IntelliJ IDEA</a> et autres <a href="https://www.jetbrains.com/idea/help/using-online-resources.html">ressources</a> pour plus d'information sur l'utilisation de cet IDE.
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

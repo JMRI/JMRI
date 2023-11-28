@@ -496,6 +496,6 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
     <!-- close #mainContent -->
   </div>
   <!-- close #mBody -->
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

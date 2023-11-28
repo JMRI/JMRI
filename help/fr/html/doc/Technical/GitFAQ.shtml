@@ -4,7 +4,7 @@
   <title>JMRI: Git FAQ</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code Git FAQ">
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
   <!-- FAQ-Head -->
@@ -15,7 +15,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -777,12 +777,12 @@ développement: Elle a commencé á une autre personne, mais c'est maintenant la
         </dd>
       </dl>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
   <!-- FAQ-Tail -->
   <script src="/web/js/faq.js"></script> <!-- /FAQ-Tail -->
 </body>
