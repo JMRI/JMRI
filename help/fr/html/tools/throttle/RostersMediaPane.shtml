@@ -7,11 +7,11 @@
   <meta name="description" content="Throttle documentation for JMRI project">
   <meta name="aAuthor" content="Lionel Jeanson">
   <meta name="Robots" content="Index, Follow">
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -119,9 +119,9 @@
       Jynstruments pour le bouton de fonction avanc&eacute;e.<br>
       </p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

@@ -10,7 +10,7 @@
           </div>
 
           <div class="button inline" style="padding:0;">
-              <a href="/" title="Return to home page" accesskey="1">
+              <a href="https://jmri.org" title="JMRI Home Page" accesskey="1">
                   <img src="/images/jmri-small.svg" alt="JMRI Logo" height="45">
               </a>
           </div>

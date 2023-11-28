@@ -3,11 +3,11 @@
 <head>
   <!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-13-->
   <title>JMRI: R&eacute;gulateur Android</title>
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -146,9 +146,9 @@
         <p>Ceci est la page d'aide
         help/en/package/jmri/jmrit//withrottle/EngineDriverAndroidThrottle</p>
 
-        <!--#include virtual="/Footer_fr.shtml" -->
+        <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-    <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+    <script src="/js/help.js"></script>
 </body>
 </html>

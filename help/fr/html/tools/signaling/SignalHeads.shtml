@@ -6,11 +6,11 @@
   <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
   <meta name="Date.Modified" content="20160323"/>
   <meta name="keywords" content="turnout model railroad JMRI decoderpro panelpro">
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -71,9 +71,9 @@ L'information Feu de Signalisation est sauvegard&#233;e comme une partie de la c
 
 <p>Retour &#224; la <a href="index.shtml#tools">page principale d'aide Signalisation</a>.</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

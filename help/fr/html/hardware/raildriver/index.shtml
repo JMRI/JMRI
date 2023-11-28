@@ -4,12 +4,12 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Updated by Blorec Herv&#233; le 2013-09-18-->
   <title>JMRI: RailDriver Throttle</title>
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -77,9 +77,9 @@
 
       <p>Pour des renseignements techniques, s'il vous plaît voir la <a href="details.shtml">page
       de détails</a>.</p>
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

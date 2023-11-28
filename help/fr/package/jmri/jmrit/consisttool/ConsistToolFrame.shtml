@@ -7,11 +7,11 @@
   </title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Consist Tool">
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -113,9 +113,9 @@ voir la
 <a href="../../../../html/tools/consisttool/ConsistTool.shtml#tool"> page couplage</a> principale.
 <p>La page d'aide package\JMRI\jmrit\consisttool</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <!--#include virtual="/Footer_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
 </body>
 </html>

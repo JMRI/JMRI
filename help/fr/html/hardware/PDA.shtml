@@ -6,11 +6,11 @@
     <meta name="author" content="Michael Beck">
     <meta name="author" content="John Plocher">
     <meta name="keywords" content="model railroad JMRI PDA">
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header_fr.shtml" -->
+<!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -89,9 +89,9 @@ Pour une approche acyuellement prise en charge, impliquant l'ex&#233;cution d'un
 sur votre Smartphone, voir la page
     <a href="../../package/jmri/jmrit/withrottle/UserInterface.shtml">r&#233;gulateur Wi</a>.</p>
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

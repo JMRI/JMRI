@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <title>JMRI: Web Server</title>
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
   <meta http-equiv="refresh" content="0; url=index.shtml">
 </head>
 

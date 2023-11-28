@@ -4,11 +4,11 @@
 <!-- Copyright Bob Jacobsen 2008 -->
 <!-- Updated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-03 -->
 <title>JMRI: Roster File Details</title>
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header_fr.shtml" -->
+<!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -38,9 +38,9 @@ r&#233;pertoire appel&#233; "roster". Vous avez besoin de d&#233;placer le fichi
 
 Plus de renseignement <a href="../../setup/Files.shtml">Configuration Fichiers JMRI</a>
     
- <!--#include virtual="/Footer_fr.shtml" -->
+ <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
   </div> <!-- close #mainContent -->
 </div>  <!-- close #mBody -->
-<script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+<script src="/js/help.js"></script>
 </body>
 </html>

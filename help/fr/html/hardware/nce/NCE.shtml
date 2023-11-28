@@ -5,11 +5,11 @@
   <title>JMRI Hardware Guide: NCE</title>
   <META name="author" CONTENT="Bob Jacobsen">
   <META NAME="keywords" CONTENT="JMRI help NCE">
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="../Sidebar.shtml" -->
     <div id="mainContent">
@@ -388,9 +388,9 @@ Vous devriez &#234;tre capable de communiquer avec d'autres utilisateurs JMRI qu
 <p>Syst&#232;mes <a href="http://www.ncedcc.com/"> NCE et
 Catalogue Cabs</a></p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
       </div>
     </div>
-    <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+    <script src="/js/help.js"></script>
   </body>
 </html>

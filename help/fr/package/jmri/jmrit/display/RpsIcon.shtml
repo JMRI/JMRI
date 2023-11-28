@@ -4,11 +4,11 @@
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-11-01-->
   <title>JMRI: RPS Icon</title>
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -307,9 +307,9 @@
       <p>Une belle interface graphique pour faire cela est
       &agrave; venir, mais elle n'est pas encore l&agrave;.</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

@@ -4,13 +4,13 @@
   <!-- Copyright ($Author$) 2022 -->
   <!-- Translated by Moi le 2022-21-08-->
   <title>JMRI: ???Page Title</title>
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
   <!-- If UTF-8 is used, uncomment next line: -->
   <!--  <meta http-equiv="content-type" content="text/html; charset=utf-8">-->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -21,9 +21,9 @@
       menu sur le c&ocirc;t&eacute;, qui vient du fichier "Sidebar"
       dans le m&ecirc;me r&eacute;pertoire.</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- ferme #mainContent-->
   </div><!-- ferme #mBody-->
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script><!-- drives the title bar etc -->
+  <script src="/js/help.js"></script><!-- drives the title bar etc -->
 </body>
 </html>

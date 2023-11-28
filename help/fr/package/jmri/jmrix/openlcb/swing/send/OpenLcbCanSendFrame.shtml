@@ -6,11 +6,11 @@
   <!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14-->
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help send loconet packets">
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-   <!--#include virtual="/Header_fr.shtml" -->
+   <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -127,9 +127,9 @@
       <p>"Envoyer Confirmation" envoie la confirmation de tous les
       datagrammes que vous recevez en r&eacute;ponse.</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-   <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+   <script src="/js/help.js"></script>
 </body>
 </html>

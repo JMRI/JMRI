@@ -3,11 +3,11 @@
 <head>
   <!-- Updated by Blorec Herv&#233; 2013-09-20-->
   <title>JMRI: Audio</title>
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -165,7 +165,7 @@
  $ sudo apt-get install libopenal-dev
 </pre>
       <p>Pour Ubuntu 12-04, logithèque ---&gt;OpenAl.</p>
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

@@ -916,6 +916,6 @@ can then look at the exact changes in that commit to see what went wrong.
   <!-- FAQ-Tail -->
   <script type="text/javascript" src="https://www.jmri.org/web/js/faq.js"></script><!-- /FAQ-Tail -->
    
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

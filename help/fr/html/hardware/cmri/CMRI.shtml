@@ -5,11 +5,11 @@
   <title>JMRI Hardware Support - Chubb C/MRI</title>
   <meta name="author" content="Bob Jacobsen, Egbert Broerse">
   <meta name="keywords" content="Bruce Chubb C/MRI Computer interface java model railroad JMRI install windows">
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -750,9 +750,9 @@ Cliquez "Edit Node" pour actualiser, puis fermez le volet.
       <li>Le site web <a href="http://www.easeeinterfaces.com">Easee Interfaces</a>.</li>
     </ul>
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

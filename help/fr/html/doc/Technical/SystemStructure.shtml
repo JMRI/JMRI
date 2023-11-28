@@ -5,11 +5,11 @@
   <title>JMRI: System Structure</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical system add">
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -103,9 +103,9 @@ internes pour plus de d&#233;tails.</p>
 Les applications JMRI elles-mêmes utilisent un m&#233;chanisme "profile" plus puissant 
 qui a h&#233;rit&#233; des classes apps.Apps et apps.AppsBase.</p>
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

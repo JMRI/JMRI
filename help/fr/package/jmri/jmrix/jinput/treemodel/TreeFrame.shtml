@@ -4,12 +4,12 @@
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Translated  by Blorec Herv&#233; le 2011-11-1-->
   <title>JMRI: USB Input Control</title>
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -51,9 +51,9 @@
       cette version, vos informations de configuration ne sont pas rétablie après vous ayez
       quitté et redémarréez le programme. Ce sera ajouté dans la prochaine Version JMRI.</p>
       
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

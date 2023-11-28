@@ -42,6 +42,6 @@
   <!-- closes #mBody-->
   <!-- FAQ-Tail -->
   <script type="text/javascript" src="https://www.jmri.org/web/js/faq.js"></script><!-- /FAQ-Tail -->
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

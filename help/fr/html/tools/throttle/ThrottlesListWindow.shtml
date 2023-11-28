@@ -6,11 +6,11 @@
   <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro" />
 	<meta name="description" content="Throttle documentation for JMRI project" />
 	<meta name="author" content="Lionel Jeanson" />
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -36,7 +36,7 @@ Le M&#234;me que dans <a href="ThrottleToolBar.shtml"> la Fen&#234;tre barre d'o
 <h2>Bouton d'arr&#234;t</h2>
 Le M&#234;me que dans<a href="ThrottleToolBar.shtml"> la Fen&#234;tre barre d'outils R&#233;gulateur </a>. <br />
 
-<!--#include virtual="/Footer_fr.shtml" -->
+<!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
   </body>

@@ -5,11 +5,11 @@
   <title>JMRI: Liaison</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code threading">
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -68,9 +68,9 @@ les deux versions. SVP essayez de choisir la bonne la plupart du temps l'une lor
 ou javax.swing.SwingUtilities.invokeAndWait( r ); Ceux-ci seront migr&#233;s vers les nouvelles m&#233;thodes sp&#233;cifiques JMRI 
 &#224; l'avenir pour garder notre code juste un petit peu plus propre  et plus souple.)
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

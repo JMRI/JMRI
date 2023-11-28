@@ -10,7 +10,7 @@
         <!--Do not edit it directly-->
         <!--=====================================================================-->
         <!--#include virtual="/help/en/parts/Style.shtml" -->
-        <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+        <script src="/js/help.js"></script>
         
     </head>
     <body>

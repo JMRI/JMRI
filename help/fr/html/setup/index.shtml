@@ -3,11 +3,11 @@
 <!-- Translated by Herv&#233; BLOREC bzh56420@yahoo.fr on 2017-01-01 -->
 <head>
   <title>JMRI: Setup</title>
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header_fr.shtml" -->
+<!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -73,9 +73,9 @@ ouvrir le programme de la mani&#232;re habituelle pour votre syst&#232;me. Windo
 	  <li><a href="Faq.shtml">Questions Fr&#233;quemment Pos&#233;es</a></li>
 	</ul>
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
   </div><!-- closes #mainContent-->
  </div> <!-- closes #mBody-->
-<script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+<script src="/js/help.js"></script>
 </body>
 </html>

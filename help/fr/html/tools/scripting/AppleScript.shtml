@@ -4,11 +4,11 @@
 <head>
   <title>JMRI: AppleScript</title>
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -135,9 +135,9 @@ osascript-e 'tell application "DecoderPro" to get its |user.name|'
       recherche Google</a> retrouvera de nombreuses ressources
       int&eacute;ressantes.</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

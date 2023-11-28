@@ -3,11 +3,11 @@
 <head>
   <!-- Translated  by Blorec Herv&#233; le 2017-01-20 -->
   <title>JMRI Mat&#233;riel - CAN - Scripts</title>
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header_fr.shtml" -->
+<!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -73,9 +73,9 @@ jmri.jmrix.can.TrafficController.instance().addCanListener(MyCanListener())
 	<li>Retour &#224; la page <a href="index.shtml">support d'Aide Principale R&#233;seau CAN</a>.
 	</ul>
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

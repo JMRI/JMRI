@@ -3,11 +3,11 @@
 <head>
   <!-- Updated by Blorec Herv&#233;  2017-01-12-->
   <title>JMRI Hardware Support - XPressNet - Lenz Feedback Bus Addressing</title>
-  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -204,9 +204,9 @@ programmes affectera automatiquement un pr&#233;fixe XS pour vous</p>
 Paul Bender<br>
 paul.bender@acm.org
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

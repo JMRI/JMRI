@@ -110,7 +110,7 @@
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/jquery-2.2.4.min.js"></script><script src="/js/help.js"></script> <!-- FAQ-Tail -->
+  <script src="/js/help.js"></script> <!-- FAQ-Tail -->
    
   <script src="/web/js/faq.js"></script><!-- /FAQ-Tail -->
 </body>
