@@ -20,7 +20,7 @@
           <dt><a href="/help/fr/html/hardware/index.shtml">Materiel pris en Charge</a></dt>
           <dd>JMRI prend en charge un large &#233;ventail de "Centrale" DCC produits par
           diff&#233;rents fournisseurs pour l'automatisation de r&#233;seaux miniatures.</dd>
-	  <!-- If someday we want to show the whole list, use #include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->
+	  <!-- If someday we want to show the whole list, use #include virtual="/help/fr/parts/SidebarSupportedHardware.shtml" -->
 
    	    <!--#include virtual="/help/fr/parts/SidebarInstall.shtml" -->
 

@@ -3,10 +3,10 @@
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Memories</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -74,11 +74,11 @@
       Signal Heads, etc. To store this information on disk, allowing you to <a href=
       "../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload it</a> next time you run JMRI,
       see <a href="../apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>. 
-      <!--#include virtual="/Footer.shtml" --></p>
+      <!--#include virtual="/help/en/parts/Footer.shtml" --></p>
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

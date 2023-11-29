@@ -5,12 +5,12 @@
   <!-- Copyright Me 2008 -->
   <!-- Updated by Blorec Herv&#233; 2013-09-18-->
   <title>JMRI: RailDriver Throttle Details</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -37,9 +37,9 @@
       Windows, Mac OS X et Linux, le script est organisé autour du numéro (index) de la composante,
       et non pas de son nom. Les trois plates-formes fournissent les composants dans le même
       ordre.</p>
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

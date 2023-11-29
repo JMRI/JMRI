@@ -5,10 +5,10 @@
   <title>JMRI: Configure Digitrax SE8c</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help configure loconet SE8C">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -62,11 +62,11 @@
 
       <p>Documentation for the SE8c can be found at the <a href=
       "http://www.digitrax.com/tsd/product/SE8C/">Digitrax Web Site</a>.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

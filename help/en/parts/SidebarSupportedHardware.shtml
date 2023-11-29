@@ -2,7 +2,7 @@
 <!-- This is the common sidebar definition for supported hardware pages -->
 <!-- ALPHABETIC ORDER -->
 
-		<dt><a href="/help/en/html/hardware/">Supported Hardware</a></dt>
+		<dt><a href="/help/en/html/hardware/index.shtml">Supported Hardware</a></dt>
 		<dd>Devices, command stations, networks, and protocols:
 		  <ul>
         <li><a href="/help/en/html/hardware/anyma/index.shtml">Anyma DMX</a>

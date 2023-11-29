@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI Operations - Manifest Print Options</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI Operations - Manifest Print Options</title><!--#include virtual="/help/en/parts/Style.shtml" -->
   <!-- OperationsPro Styles -->
 
   <style>
@@ -11,7 +11,7 @@
   </style>
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -213,7 +213,7 @@
         <p><a href="Ops_Trains.shtml">Back to Trains</a><a href="index.shtml#Main"></a>
         </p>
       </div>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
 </body>

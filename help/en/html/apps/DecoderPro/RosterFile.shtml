@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: DecoderPro - Roster File Details</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: DecoderPro - Roster File Details</title><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -32,11 +32,11 @@
       directory called "roster". You need to move the "roster.xml" file, the "roster" directory,
       and all it's contents. Read more about the <a href="../../setup/Files.shtml">JMRI
       Configuration Files</a>.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- close #mainContent -->
   </div>
   <!-- closes #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

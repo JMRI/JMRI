@@ -6,10 +6,10 @@
   <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro">
   <meta name="Description" content="Throttle documentation for JMRI project">
   <meta name="Author" content="Lionel Jeanson">
-  <meta name="Language" content="EN"><!--#include virtual="/Style.shtml" -->
+  <meta name="Language" content="EN"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -98,11 +98,11 @@
       "ThrottleWindowMenus.shtml">Throttle Windows menu</a> will update these entries from the
       Function Panel if required. See the Functions Panel documentation in the <a href="BasicThrottleWindow.shtml">Basic
       Throttle Window description</a>.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

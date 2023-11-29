@@ -4,7 +4,7 @@
   <title>JMRI: Conditional Tree Editor</title>
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="JMRI help Logix Conditional Add Edit">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
   <style type="text/css">
@@ -14,7 +14,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -382,9 +382,9 @@
       <!--#include virtual="LogixDocList.shtml" -->
       <p>Traduction2021-03-28</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div> <!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

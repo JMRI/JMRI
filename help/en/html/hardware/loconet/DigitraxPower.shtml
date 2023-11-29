@@ -3,10 +3,10 @@
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - Measurements on power leads of Digitrax components</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -151,11 +151,11 @@
       Inc.</a></p>
 
       <p>Back to the <a href="Digitrax.shtml">Digitrax Hardware main Help Page</a></p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

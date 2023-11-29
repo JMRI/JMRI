@@ -5,10 +5,10 @@
   <title>JMRI: Turnout Control</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI Turnout Control Panel">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -82,10 +82,10 @@
 
       <p>To help you select a set of turnouts to lock, a route can be locked. All turnouts that are
       being monitored by the JMRI program and are included in the route will be locked.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

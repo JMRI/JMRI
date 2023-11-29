@@ -5,11 +5,11 @@
  <title>JMRI Hardware Support - EasyDCC</title>
 	<meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="EasyDCC CVP Products java model railroad JMRI install windows">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header_fr.shtml" -->
+<!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 <div id="mBody">
   <!--#include virtual="../Sidebar.shtml" -->
     <div id="mainContent">
@@ -96,10 +96,10 @@
 <h3>Autre Source d'info</h3>
 		<p>Les <a href="http://www.cvpusa.com/easydcc_system.php">ManuelsCVP EasyDCC Manuals</a></p>
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>
 
