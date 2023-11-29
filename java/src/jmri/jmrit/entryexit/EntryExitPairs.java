@@ -751,7 +751,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
      * @since 4.11.2
      * @param sensor The sensor whose pairs should be deleted.
      * @return true if the delete was successful. False if prevented by
-     * Conditional references or user choice.
+     * Conditional/LogixNG references or user choice.
      */
     public boolean deleteNxPair(NamedBean sensor) {
         if (sensor == null) {
@@ -759,8 +759,8 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
             return false;
         }
         createDeletePairList(sensor);
-        if (checkNxPairs()) {
-            // No Conditional references.
+        if (checkNxPairs() && checkLogixNG()) {
+            // No Conditional or LogixNG references.
             if (confirmDeletePairs()) {
                 deleteNxPairs();
                 return true;
@@ -776,25 +776,27 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
      * @param entrySensor The sensor that acts as the entry point.
      * @param exitSensor The sensor that acts as the exit point.
      * @param panel The layout editor panel that contains the entry sensor.
-     * @return true if the delete was successful. False if there are Conditional references.
+     * @return true if the delete was successful. False if there are Conditional/LogixNG references.
      */
     public boolean deleteNxPair(NamedBean entrySensor, NamedBean exitSensor, LayoutEditor panel) {
         if (entrySensor == null || exitSensor == null || panel == null) {
             log.error("deleteNxPair: One or more null inputs");  // NOI18N
             return false;
         }
+
         deletePairList.clear();
         deletePairList.add(new DeletePair(entrySensor, exitSensor, panel));
-        if (checkNxPairs()) {
-            // No Conditional references.
+        if (checkNxPairs() && checkLogixNG()) {
+            // No Conditional or LogixNG references.
             deleteNxPairs();  // Delete with no prompt
             return true;
         }
+
         return false;
     }
 
     /**
-     * Find Logix Conditionals that have Variables or Actions for the affected NX Pairs
+     * Find Logix Conditionals that have Variables or Actions for the affected NX Pairs.
      * If any are found, display a dialog box listing the Conditionals and return false.
      * <p>
      * @since 4.11.2
@@ -842,6 +844,41 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
         StringBuilder msg = new StringBuilder(Bundle.getMessage("DeleteReferences"));
         for (String ref : conditionalReferences) {
             msg.append("\n    " + ref);  // NOI18N
+        }
+        JmriJOptionPane.showMessageDialog(null,
+                msg.toString(),
+                Bundle.getMessage("WarningTitle"),  // NOI18N
+                JmriJOptionPane.WARNING_MESSAGE);
+
+        return false;
+    }
+
+    /**
+     * Find LogixNG ConditionalNGs that have Expressions or Actions for the affected NX Pairs.
+     * If any are found, display a dialog box listing the details and return false.
+     * <p>
+     * @since 5.5.7
+     * @return true if there are no references.
+     */
+    private boolean checkLogixNG() {
+        List<String> conditionalReferences = new ArrayList<>();
+        for (DeletePair dPair : deletePairList) {
+            if (dPair.dp == null) {
+                continue;
+            }
+            var usage = jmri.jmrit.logixng.util.WhereUsed.whereUsed(dPair.dp);
+            if (!usage.isEmpty()) {
+                conditionalReferences.add(usage);
+            }
+        }
+        if (conditionalReferences.isEmpty()) {
+            return true;
+        }
+
+        conditionalReferences.sort(null);
+        StringBuilder msg = new StringBuilder(Bundle.getMessage("DeleteReferences"));
+        for (String ref : conditionalReferences) {
+            msg.append("\n" + ref);  // NOI18N
         }
         JmriJOptionPane.showMessageDialog(null,
                 msg.toString(),

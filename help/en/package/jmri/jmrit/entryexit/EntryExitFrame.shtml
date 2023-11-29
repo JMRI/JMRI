@@ -56,7 +56,8 @@
       <ul>
         <li><strong>Add Pair</strong> &mdash; Select sensors from the Entry Point and Exit Point lists,
         select the NX Type and click on <strong>Add Pair</strong>. <strong>Notice:</strong> <em>The
-        sensor pair is not checked for validity</em>.</li>
+        sensor pair is not checked for validity</em>.  Validation has been added as of JMRI 5.5.7.
+        See <a href="../../../../html/tools/EntryExit.shtml#validate_add_pair">Add Pair Validation</a></li>
 
         <li><strong>Auto Generate Entry-Exit Pairs</strong> &mdash; The auto generate process will find
         all of the valid sensor pairs on all of the panels using the Layout Editor Block routing

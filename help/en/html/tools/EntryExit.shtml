@@ -150,14 +150,21 @@
       described above and select either a different sensor or the blank row at the top of the
       sensor list.</p>
 
-      <h4>Logix Conditional Check</h4>
+      <h4>Logix/LogixNG Checks</h4>
 
       <p>Before the delete process can begin, the Entry/Exit pairs that use the selected sensor
       cannot be used in any Logix Conditional. If any are used, a list of the Conditionals is
       displayed and the delete process is terminated.</p>
 
-      <div style="margin-left: 1em"><img src="images/EntryExitConditionalList.png" height="167"
-      width="503" alt="NX Conditional List">
+      <div style="margin-left: 1em"><img src="images/EntryExitConditionalList.png"
+      alt="NX Conditional List">
+      </div>
+
+      <p>The same check applies to LogixNG expressions and actions.</p>
+
+      <div style="margin-left: 1em;">
+        <a href="images/EntryExitLogixNGList.png"><img src=
+        "images/EntryExitLogixNGList.png" alt="NX LogixNG List"></a>
       </div>
 
       <h4>Entry/Exit Pair Check</h4>
@@ -213,6 +220,17 @@
       <p>With the manual method, it is possible to create invalid pairs. Invalid pairs will never
       be used.</p>
 
+      <p id="validate_add_pair"><span class="since">since 5.5.7</span>The manual selections will be
+      validated after the NX pair has been added.  If the validation fails, a dialog will be displayed.</p>
+
+      <div style="margin-left: 1em;">
+        <a href="images/EntryExitValidateDialog.png"><img src=
+        "images/EntryExitValidateDialog.png" alt="NX validation dialog"></a>
+      </div>
+
+      <p>Click on <strong>Yes</strong> to delete the NX pair that was just added.  Click on
+      <strong>No</strong> to skip the delete. This might be needed in certain cases where the
+      validation detects a <strong><em>false positive</em></strong> validation failure.</p>
       <h2>Usage</h2>
 
       <p>Once the NX pairs have been created, a route can be set by selecting the <strong>Entry
@@ -290,10 +308,9 @@
       request will not provide the stack option.</p>
 
       <h3>Logix/LogixNG Support</h3>
-      There are two conditional variables (expressions) and three actions that can be used in
-      Logix/LogixNG Conditionals.
+      There are two conditional variables and three actions that can be used in Logix Conditionals.
       <ul>
-        <li>Variables/Expressions
+        <li>Variables
           <ul>
             <li>NX Pair Active &mdash; Check if a segment for the selected NX Pair is Active.</li>
 
@@ -315,6 +332,10 @@
           </ul>
         </li>
       </ul>
+
+      <p>For LogixNG support see <a href="logixng/reference/chapter6.shtml#EntryExitExpressions">Expressions</a>
+      and <a href="logixng/reference/chapter5.shtml#EntryExitActions">Actions</a>.</p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
