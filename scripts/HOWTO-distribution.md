@@ -258,13 +258,13 @@ For each, if it doesn't have the right milestone set, add the current milestone.
 ```
         git checkout master
         git pull
-        sed -i .bak s/5.5.5-SNAPSHOT/5.5.7-SNAPSHOT/g pom.xml
+        sed -i .bak s/5.5.6-SNAPSHOT/5.5.7-SNAPSHOT/g pom.xml
         git commit -m"5.5.7 until next release" pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i .bak s/release.build=5/release.build=6/g release.properties
+        sed -i .bak s/release.build=6/release.build=7/g release.properties
         git commit -m"5.5.7 until next release" release.properties
 ```
  - Check that both those edits left 5.5.7 defined in the two files
@@ -322,7 +322,7 @@ Maintainers, please set the (next series, i.e. 5.7.1) milestone on pulls from no
 
 Jenkins will be creating files shortly at the [CI server](https://builds.jmri.org/jenkins/job/TestReleases/job/5.5.7/)
 
-If you're developing any additional (post-5.5.7) changes that you want in the JMRI 5.4 production release, please start from this branch, i.e. do `git fetch; git checkout release-5.5.7; git checkout -b myBranchName` to start your work.
+If you're developing any additional (post-5.5.7) changes that you want in the JMRI 5.6 production release, please start from this branch, i.e. do `git fetch; git checkout release-5.5.7; git checkout -b myBranchName` to start your work.
 ```
 
 
@@ -495,9 +495,10 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.5.7+Re5414c68ff.dmg](https://github.com/JMRI/JMRI/releases/download/v5.5.7/JMRI.5.5.7+Re5414c68ff.dmg) | fbfbab9a3685971a3b576c3051af0ce1e34ab4fdd034974acebd8a406f90dac2
-[JMRI.5.5.7+Re5414c68ff.exe](https://github.com/JMRI/JMRI/releases/download/v5.5.7/JMRI.5.5.7+Re5414c68ff.exe) | 7768b1e0a4eab6aab42195bae9e1e3afa70b45dd47f4fb41b948614a4574c81e
-[JMRI.5.5.7+Re5414c68ff.tgz](https://github.com/JMRI/JMRI/releases/download/v5.5.7/JMRI.5.5.7+Re5414c68ff.tgz) | e1d59e34a7feaae0da09aef838422cd067c085eea673905a38078adb09cf3db6
+[JMRI.5.5.7+R0d26427e10.dmg](https://github.com/JMRI/JMRI/releases/download/v5.5.7/JMRI.5.5.7+R0d26427e10.dmg) | 0b65a0e9bddb751a3dc4f6f88922ef697680036ede968f168e1a4b0d7252e696
+[JMRI.5.5.7+R0d26427e10.exe](https://github.com/JMRI/JMRI/releases/download/v5.5.7/JMRI.5.5.7+R0d26427e10.exe) | c5f3892cd8f1afd04236e818ac9b3293a71cea145a839b094739511df83ee0d4
+[JMRI.5.5.7+R0d26427e10.tgz](https://github.com/JMRI/JMRI/releases/download/v5.5.7/JMRI.5.5.7+R0d26427e10.tgz) | 3207cac41f4d1ed75f5e8aaf07b2bcac423de7cc5fe662eaf553653eeb567b45
+
 
 ```
 
