@@ -7,47 +7,53 @@ package jmri.jmrix.marklin;
  */
 public final class MarklinConstants {
 
+    /* See also
+    https://www.maerklin.de/fileadmin/media/produkte/CS2_can-protokoll_1-0.pdf
+    https://streaming.maerklin.de/public-media/cs2/cs2CAN-Protokoll-2_0.pdf
+    */
     /* various bit masks */
-    //Priority 2+2bit
-    //Need to work these out correctly
+    // Priority 2+2bit
+    // Need to work these out correctly
     public final static int PRIO_1 = 0x00;  /* Priority 1: Stop / go / short message    */
 
-    public final static int PRIO_2 = 0x01;  /* Priority 2: feedback    */
+    public final static int PRIO_2 = 0x01;  /* Priority 2: Feedback    */
 
     public final static int PRIO_3 = 0x02;  /* Priority 3: Engine Stop    */
 
-    public final static int PRIO_4 = 0x03;  /* Priority 4: Engine/acessory command    */
+    public final static int PRIO_4 = 0x03;  /* Priority 4: Engine / accessory command    */
 
-    //System Commands
+    // As of spec 2.0 - Commands
+
+    // System Commands
     public final static int SYSCOMMANDNO = 1;
     public final static int SYSCOMMANDSTART = 0x00;
     public final static int SYSCOMMANDEND = 0x00;
 
-    //Management Commands
+    // Management Commands
     public final static int MANCOMMANDNO = 8;
     public final static int MANCOMMANDSTART = 0x01;
     public final static int MANCOMMANDEND = 0x0A;
 
-    //Accessory Commands
+    // Accessory Commands
     public final static int ACCCOMMANDNO = 2;
     public final static int ACCCOMMANDSTART = 0x0B;
     public final static int ACCCOMMANDEND = 0x0D;
 
-    //software commands
+    // Software commands
     public final static int SOFCOMMANDNO = 6;
     public final static int SOFCOMMANDSTART = 0x18;
     public final static int SOFCOMMANDEND = 0x1C;
 
-    //GUI Commands
+    // GUI Commands
     public final static int GUICOMMANDNO = 3;
     public final static int GUICOMMANDSTART = 0x20;
     public final static int GUICOMMANDEND = 0x22;
 
-    //Automation Commnads
+    // Automation Commnads
     public final static int AUTCOMMANDSTART = 0x30;
     public final static int AUTCOMMANDEND = 0xFF;
 
-    //Feedback Commands
+    // Feedback Commands
     public final static int FEECOMMANDSTART = 0x10;
     public final static int FEECOMMANDEND = 0x12;
 
@@ -69,8 +75,8 @@ public final class MarklinConstants {
     public final static int PROTOCOL_SX = 0x04;
     public final static int PROTOCOL_MM2 = 0x08;
 
-    //CAN ADDRESS Ranages, lower two bytes of the address, upper - 0x0000
-    //0x03FF MM1, 2 locomotives and function decoder (20 & 40 kHz, 80 & 255 addresses)
+    // CAN ADDRESS Ranges, lower two bytes of the address, upper - 0x0000
+    // 0x03FF MM1, 2 locomotives and function decoder (20 & 40 kHz, 80 & 255 addresses)
     public final static int MM1START = 0x0000;
     public final static int MM1END = 0x03FF;
 
@@ -82,29 +88,48 @@ public final class MarklinConstants {
     public final static int MM1LOCOSTART = 0x2000;
     public final static int MM1LOCOEND = 0x23FF;
 
+    // SX1
     public final static int SX1START = 0x0800;
     public final static int SX1END = 0x0BFF;
 
-    //SX1 - accessories (extension)
+    // SX1 - accessories (extension)
     public final static int SX1ACCSTART = 0x2800;
     public final static int SX1ACCEND = 0x2BFF;
 
-    //MM1 2 accessories article decoder (40 kHz, 320 & 1024 addresses)
+    // MM1 2 accessories article decoder (40 kHz, 320 & 1024 addresses)
     public final static int MM1ACCSTART = 0x3000;
     public final static int MM1ACCEND = 0x33FF;
 
-    //MM1 2 accessories article decoder (40 kHz, 320 & 1024 addresses)
+    // DCC accessories article decoder (40 kHz, 320 & 1024 addresses)
     public final static int DCCACCSTART = 0x3800;
     public final static int DCCACCEND = 0x3FFF;
 
+    // MFX Decoders
     public final static int MFXSTART = 0x4000;
     public final static int MFXEND = 0x7FFF;
 
+    // Selectrix 2
     public final static int SX2START = 0x8000;
     public final static int SX2END = 0xBFFF;
 
+    // DCC locomotives
     public final static int DCCSTART = 0xC000;
     public final static int DCCEND = 0xFFFF;
+
+    /**
+     * These CAN bus ranges do not translate to track signals
+     * They are free for adressing equipment by 3rd parties,
+     * i.e. sending commands to accessory or providing firmware updates.
+     */
+    // Free for clubs and individuals
+    public final static int CLUBRANGESTART = 0x1800;
+    public final static int CLUBRANGEEND = 0x1BFF;
+    // Free for 3rd Party Vendors - Probably the range used by CdB products
+    public final static int VENDORRANGESTART = 0x1C00;
+    public final static int VENDORRANGEEND = 0x1FFF;
+
+
+
 
     public final static int LOCOEMERGENCYSTOP = 0x03;
     public final static int LOCOSPEED = 0x04;
@@ -118,4 +143,6 @@ public final class MarklinConstants {
     public final static int STEPLONG128 = 0x04;
 
     public final static int S88EVENT = 0x11;
+    public final static int MCAN_BROADCAST = 0x00000000;
+    public final static int MCAN_UNINITIALIZED = 0xFFFFFFFF;
 }
