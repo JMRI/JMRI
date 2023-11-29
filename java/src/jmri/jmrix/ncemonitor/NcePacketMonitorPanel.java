@@ -484,7 +484,15 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         portBox.setEnabled(false);
         baudBox.setEnabled(false);
         // Open the port
-        openPort((String) portBox.getSelectedItem(), validSpeedValues[baudBox.getSelectedIndex()], "JMRI");
+        String openStatus = openPort((String) portBox.getSelectedItem(), validSpeedValues[baudBox.getSelectedIndex()], "JMRI");
+        if (openStatus != null) {
+            log.error(openStatus);
+            // enable options
+            openPortButton.setEnabled(true);
+            portBox.setEnabled(true);
+            baudBox.setEnabled(true);
+            return;
+        }
         // start the reader
         readerThread = new Thread(new Reader());
         readerThread.start();
@@ -552,7 +560,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
             } catch (PortInUseException p) {
                 handlePortBusy(p, portName);
-                return "Port " + p + " in use already";
+                return "Port " + portName + " in use already";
             }
 
             // try to set it for communication via SerialDriver
@@ -607,7 +615,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     }
 
     void handlePortBusy(PortInUseException p, String port) {
-        log.error("Port {} in use, cannot open", port, p);
+        log.error("Port {} in use, cannot open", port);
     }
 
     DataInputStream serialStream = null;
