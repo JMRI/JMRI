@@ -106,9 +106,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>JMRI will now use the railroad name from the preferences
-                    when creating the client ID.  This will make it easier to
-                    identify the JMRI connection in the MQTT broker logs.</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -128,26 +126,12 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Update openlcb.jar to Maven Central version 0.7.33</li>
-                <li>Improve the layout of the firmware download page.</li>
-                <li>
-                    Added SPROG DCC Ltd PI-LCC Raspberry Pi CAN adapter
-                </li>
-                <li>
-                    Added SPROG DCC Ltd USB-LCC CAN adapter
-                </li>
-                <li>Fix a problem that would sometimes leave the node list improperly sorted</li>
-                <li>Reduced the start up delay when opening the OpenLCB hub.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
             <ul>
                 <li></li>
-            </ul>
-
-        <h4>Raspberry Pi GPIO pins</h4>
-            <ul>
-                <li>Added support for Turnouts in the RPi simulator.</li>
             </ul>
 
         <h4>RFID</h4>
@@ -157,7 +141,7 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
-                <li>Removed a spurious error message from the Z21 Simulator connection.</li>
+                <li></li>
             </ul>
 
         <h4>Secsi</h4>
@@ -165,14 +149,9 @@
                 <li></li>
             </ul>
 
-        <h4><a href="http://www.sprog-dcc.co.uk">SPROG</a></h4>
+        <h4>SPROG</h4>
             <ul>
-                <li>
-                    Added PI-LCC Raspberry Pi CAN adapter for OpenLCB
-                </li>
-                <li>
-                    Added USB-LCC CAN adapter for OpenLCB
-                </li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -247,8 +226,7 @@
 
         <h4>ESU</h4>
             <ul>
-                <li>Added "LokSound 5 micro DCC Direct Atlas Legacy".</li>
-                <li>Added support for "Tone Control" for LokSound 5 (requires firmware 5.9.159 or higher).</li>
+                <li></li>
             </ul>
 
         <h4>Hornby</h4>
@@ -358,7 +336,7 @@
 
         <h4>Technologistic (train-O-matic)</h4>
             <ul>
-                <li>Support for the FD Micro function decoder family.</li>
+                <li></li>
             </ul>
 
         <h4>Trix Modelleisenbahn</h4>
@@ -434,8 +412,7 @@
 
         <h4>NX - Entry/Exit Tool</h4>
             <ul>
-                <li>Validate the sensor selections for the <strong>Add Pair</strong> action.</li>
-                <li>Check for LogixNG references before deleting an Entry/Exit pair.</li>
+                <li></li>
             </ul>
 
     <h3>Logix</h3>
@@ -447,11 +424,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The expression <strong>Entry/exit</strong> can now check if a
-          entry/exit is reversed or bidirectional.</li>
-          <li>The <strong>Entry/Exit</strong> action can activate and deactivate Entry/Exit routes,
-          including activating a reversed route if the Entry/Exit pair has the <strong>Both Way</strong>
-          option enabled.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -585,7 +558,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>Fixed a bug that would cause problems when DELAYED feedback was selected.</li>
+            <li></li>
         </ul>
 
    <h3>Warrants</h3>
@@ -627,8 +600,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Improved the
-            "<a href="http://jmri.org/help/en/html/apps/DecoderPro/FileUpdate.shtml">Updating Decoder Definitions</a>"
-            page.</li>
+            <li></li>
         </ul>
 
