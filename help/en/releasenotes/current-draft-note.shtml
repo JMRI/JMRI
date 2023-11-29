@@ -618,7 +618,7 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>Handle ServerSideIncludes for /help folder #12638, makes Help from the local web server match the online version</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
