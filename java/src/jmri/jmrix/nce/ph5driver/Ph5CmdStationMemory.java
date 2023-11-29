@@ -31,7 +31,7 @@ public class Ph5CmdStationMemory extends jmri.jmrix.nce.NceCmdStationMemory {
      * give addr computer cab
      */
     @Override
-    public int giveCompCabAddr() {
+    public int getCompCabAddr() {
         return 0x3C00; // start of computer cab context page, PowerPro/CS2
     }
     

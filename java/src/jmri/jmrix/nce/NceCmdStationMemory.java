@@ -40,7 +40,7 @@ public class NceCmdStationMemory {
     /*
      * give addr computer cab
      */
-    public int giveCompCabAddr() {
+    public int getCompCabAddr() {
         return 0xED00; // start of computer cab context page, PowerPro/CS2
     }
     

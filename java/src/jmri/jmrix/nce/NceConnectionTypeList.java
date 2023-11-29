@@ -8,6 +8,7 @@ import org.openide.util.lookup.ServiceProvider;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
+ * @author Ken Cameron (C) 2023
   *
  */
 @ServiceProvider(service = ConnectionTypeList.class)

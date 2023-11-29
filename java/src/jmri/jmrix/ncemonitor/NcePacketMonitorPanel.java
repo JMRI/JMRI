@@ -20,6 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JToggleButton;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
+import jmri.jmrix.nce.ncemon.Bundle;
 import jmri.jmrix.nce.swing.NcePanelInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,12 +38,13 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Ken Cameron Copyright (C) 2010 derived from -
  * @author Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Ken Cameron Copyright (C) 2023
  */
 @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "serialStream is access from separate thread, and this class isn't used much")
 public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements NcePanelInterface {
-
+    
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ncemonitor.NcePacketMonitorBundle");
-
+    
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
     NceSystemConnectionMemo memo = null;
@@ -50,6 +52,11 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     JToggleButton checkButton = new JToggleButton("Info");
     JRadioButton locoSpeedButton = new JRadioButton("Hide loco packets");
     JCheckBox truncateCheckBox = new JCheckBox("+ on");
+
+    protected JComboBox<String> baudBox = new JComboBox<>();
+    protected JLabel baudBoxLabel;
+    private String[] validSpeedNames = new String[]{Bundle.getMessage("Baud38400"), Bundle.getMessage("Baud115200")};
+    private int[] validSpeedValues = new int[]{38400, 115200};
 
     public NcePacketMonitorPanel() {
         super();
@@ -111,6 +118,12 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         for (int i = 0; i < v.size(); i++) {
             portBox.addItem(v.elementAt(i));
         }
+        // offer baud rate choice
+        baudBox.setToolTipText("Select baud rate");
+        baudBox.setAlignmentX(LEFT_ALIGNMENT);
+        for (int i = 0; i < validSpeedNames.length; i++) {
+            baudBox.addItem(validSpeedNames[i]);
+        }
         openPortButton.setText("Open");
         openPortButton.setToolTipText("Configure program to use selected port");
         openPortButton.addActionListener(new java.awt.event.ActionListener() {
@@ -134,6 +147,8 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         p1.setLayout(new FlowLayout());
         p1.add(new JLabel("Serial port: "));
         p1.add(portBox);
+        p1.add(new JLabel("Baud Rate:"));
+        p1.add(baudBox);
         p1.add(openPortButton);
         p1.setMaximumSize(p1.getPreferredSize());
         add(p1);
@@ -467,8 +482,9 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         // can't change this anymore
         openPortButton.setEnabled(false);
         portBox.setEnabled(false);
+        baudBox.setEnabled(false);
         // Open the port
-        openPort((String) portBox.getSelectedItem(), "JMRI");
+        openPort((String) portBox.getSelectedItem(), validSpeedValues[baudBox.getSelectedIndex()], "JMRI");
         // start the reader
         readerThread = new Thread(new Reader());
         readerThread.start();
@@ -527,7 +543,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SR_NOT_CHECKED",
                                         justification="this is for skip-chars while loop: no matter how many, we're skipping")
-    public synchronized String openPort(String portName, String appName) {
+    public synchronized String openPort(String portName, int baudRate, String appName) {
         // open the port, check ability to set moderators
         try {
             // get and open the primary port
@@ -542,7 +558,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             // try to set it for communication via SerialDriver
             try {
                 // Doc says 7 bits, but 8 seems needed
-                activeSerialPort.setSerialPortParams(38400, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+                activeSerialPort.setSerialPortParams(baudRate, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();

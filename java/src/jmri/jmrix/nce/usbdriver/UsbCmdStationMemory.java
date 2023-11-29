@@ -53,4 +53,20 @@ public class UsbCmdStationMemory extends jmri.jmrix.nce.NceCmdStationMemory {
     public int getCabIdxFlag1() {
         return 70;  // NCE flag 1
     }
+    
+    /*
+     * give size of macro entry
+     */
+    @Override
+    public int getMacroSize() {
+        return 16;  // 16 bytes per macro
+    }
+    
+    /*
+     * give number of macro limit
+     */
+    @Override
+    public int getMacroLimit() {
+        return 16;  // there are 16 possible macros
+    }
 }
