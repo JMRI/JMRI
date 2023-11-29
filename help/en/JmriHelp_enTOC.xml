@@ -47,6 +47,8 @@
 
   <tocitem text="CVP EasyDCC " target="html.hardware.easydcc.EasyDCC"/>
 
+  <tocitem text="DCC-EX EX-CommandStation " target="html.hardware.dcc-ex.index"/>
+
   <tocitem text="DCC++ " target="html.hardware.dccpp.index"/>
 
   <tocitem text="DCC4PC Railcom Reader " target="html.hardware.dcc4pc.index"/>

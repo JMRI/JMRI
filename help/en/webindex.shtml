@@ -10,7 +10,7 @@
         <!--Do not edit it directly-->
         <!--=====================================================================-->
         <!--#include virtual="/help/en/parts/Style.shtml" -->
-        <script src="/js/help.js"></script>       
+        <script src="/js/help.js"></script>
     </head>
     <body>
         <!--#include virtual="/help/en/parts/Header.shtml" -->
@@ -428,6 +428,11 @@
              
             <li>
                 <a href="html/hardware/misc/DccSpecialties.shtml">DCC Specialties - Hardware, Connection, Tools </a>
+                <ul></ul>
+            </li>
+             
+            <li>
+                <a href="html/hardware/dcc-ex/index.shtml">DCC-EX EX-CommandStation Hardware, Connection, Tools </a>
                 <ul></ul>
             </li>
              

@@ -42,6 +42,7 @@
     <xsl:comment>=====================================================================</xsl:comment>
 
     <xsl:comment>#include virtual="/help/en/parts/Style.shtml" </xsl:comment>
+    <script src="/js/help.js"></script>
     </head>
 
     <body>
@@ -98,6 +99,7 @@
     <xsl:comment>=====================================================================</xsl:comment>
 
     <xsl:comment>#include virtual="/help/en/parts/Style.shtml" </xsl:comment>
+    <script src="/js/help.js"></script>
     </head>
 
     <body>
