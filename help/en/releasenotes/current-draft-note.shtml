@@ -588,7 +588,7 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>Add browser WebSocket support message to About page</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
