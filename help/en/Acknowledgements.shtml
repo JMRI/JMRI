@@ -568,9 +568,10 @@
         Dispatcher, including a fix to allow dispatcher to allocate to the end block.</li>
 
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3ALionel642+">Lionel Jeanson</a>, <!-- Lionel642 -->
-        who added images to the roster, updated the throttle to add preferences
-        for displaying them, cleaned up some code problems in the throttle, and created
-        Jynstruments for improving the GUI</li>
+        who added the media pane to the roster entries, improved the native JMRI
+      	throttles to provide a better user experience (images, modernized UI, user preferences, 
+      	customizations...). He also introduced Jynstruments for improving the GUI with Jython. 
+      	Did a first	rework on the Consist UI. And, added the initial MQTT connector to JMRI.</li>
 
         <li>The good people at JogAmp.org. who maintain a library we use
         for advanced audio.
