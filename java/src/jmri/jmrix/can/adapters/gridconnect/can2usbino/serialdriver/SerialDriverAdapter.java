@@ -5,10 +5,8 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
 import jmri.jmrix.can.adapters.gridconnect.GcTrafficController;
 import jmri.jmrix.can.adapters.gridconnect.can2usbino.GridConnectDoubledMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
+
+import com.fazecast.jSerialComm.SerialPort;
 
 /**
  * Implements SerialPortAdapter for GridConnect adapters.
@@ -28,16 +26,13 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter {
 
     @Override
     public String openPort(String portName, String appName) {
-        try {
-            String retval = super.openPort(portName, appName);
-            activeSerialPort.setSerialPortParams(activeSerialPort.getBaudRate(), SerialPort.DATABITS_8, SerialPort.STOPBITS_2, SerialPort.PARITY_NONE);
-            activeSerialPort.setFlowControlMode(SerialPort.FLOWCONTROL_XONXOFF_OUT);
-            activeSerialPort.setFlowControlMode(SerialPort.FLOWCONTROL_XONXOFF_IN);
-            return retval;
-        } catch (UnsupportedCommOperationException e) {
-            log.error("error configuring port", e);
-            return null;
-        }
+        var retval = super.openPort(portName, appName);
+        
+        activeSerialPort.setFlowControl(
+            SerialPort.FLOW_CONTROL_XONXOFF_IN_ENABLED |
+            SerialPort.FLOW_CONTROL_XONXOFF_OUT_ENABLED);
+
+        return retval;
     }
 
     /**
@@ -75,6 +70,6 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter {
         };
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }
