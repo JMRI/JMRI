@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Sound Editor</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help sound editor"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help sound editor"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -105,10 +105,10 @@
       files to a Digitrax decoder if you have a Digitrax PR2 interface.
       <p>The <a href="../sdfeditor/EditorFrame.shtml">SDF Editor</a>, referenced above, lets you
       edit the SDF program within a SPJ file.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

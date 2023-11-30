@@ -5,10 +5,10 @@
   <title>JMRI: Panel Tooltips</title>
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="JMRI help tooltips">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -108,11 +108,11 @@
         possible to have both the default name and additional text.  For example:  <code>Sensor Name
         (IS101): Used to trigger a Route</code>.</dd>
       </dl>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

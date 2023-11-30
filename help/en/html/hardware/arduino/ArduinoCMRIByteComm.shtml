@@ -6,10 +6,10 @@
   <!-- Copyright 2020 Jerry Grochow -->
   <meta name="author" content="Jerry Grochow">
   <meta name="keywords" content="Arduino CMRI JMRI Byte Communication">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -143,11 +143,11 @@
         </dl>
       </div>
       <!-- closes #list -->
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody, from before Sidebar -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

@@ -6,11 +6,11 @@
 	<meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro">
 	<meta name="description" content="Throttle documentation for JMRI project">
 	<meta name="author" content="Lionel Jeanson">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -98,9 +98,9 @@ et cliquer sur "afficher tous les boutons de fonction" </a>.</span>
 <p>Cette option activera une <a  href="ThrottleToolBar.shtml">Barre d'Outils qui
   appara&#238;tra dans toutes les Fen&#234;tres R&#233;gulateurs</a>.</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

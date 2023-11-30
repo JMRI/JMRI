@@ -6,10 +6,10 @@
   <meta name="author" content="Kevin Dickerson">
   <meta name="keywords" content=
   "hardware layout java model railroad JMRI nx entryexit entry exit routing interlocking">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -336,11 +336,12 @@
       <p>For LogixNG support see <a href="logixng/reference/chapter6.shtml#EntryExitExpressions">Expressions</a>
       and <a href="logixng/reference/chapter5.shtml#EntryExitActions">Actions</a>.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+      
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

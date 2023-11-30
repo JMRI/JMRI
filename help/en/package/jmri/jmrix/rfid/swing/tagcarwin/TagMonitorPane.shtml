@@ -4,10 +4,10 @@
   <title>Monitor RFID tags by Car</title>
   <meta name="author" content="J. Scott Walton">
   <meta name="keywords" content="JMRI help monitor rfid">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/help/en/parts/Header.shtml" -->
 <div id=""mBody">
   <div id="mainContent" class="no-sidebar">
     <h1>Monitor RFID Tags by Car</h1>

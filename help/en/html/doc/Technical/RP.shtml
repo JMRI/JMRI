@@ -5,10 +5,10 @@
   <title>JMRI: Recommended Practices</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code standards recommendation Swing">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -364,11 +364,11 @@ the log.
       article</a>. As Tony Hoare - one of the giants of computer science - wrote, "I call it my
       billion-dollar mistake. It was the invention of the null reference in 1965. I couldn't resist
       the temptation to put in a null reference, simply because it was so easy to implement."
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

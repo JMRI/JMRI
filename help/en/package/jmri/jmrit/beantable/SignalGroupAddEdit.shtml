@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Adding Signal Groups</title>
   <meta name="author" content="Bob Jacobsen, Egbert Broerse">
-  <meta name="Date.Modified" content="20181104"><!--#include virtual="/Style.shtml" -->
+  <meta name="Date.Modified" content="20181104"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -71,11 +71,11 @@
       new Group will appear in the Table.</p>
 
       <p>Back to the <a href="SignalGroupTable.shtml">Signal Group Table help page</a>.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

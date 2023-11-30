@@ -156,6 +156,8 @@
  </indexitem>
  <indexitem text="DCC Specialties - Hardware, Connection, Tools " target="html.hardware.misc.DccSpecialties"/>
 
+ <indexitem text="DCC-EX EX-CommandStation Hardware, Connection, Tools " target="html.hardware.dcc-ex.index"/>
+
  <indexitem text="DCC++ Hardware, Connection, Tools " target="html.hardware.dccpp.index"/>
 
  <indexitem text="Debug Menu " target="html.apps.PanelPro.DebugMenu"/>

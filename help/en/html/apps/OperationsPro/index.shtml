@@ -5,10 +5,10 @@
   <title>JMRI: OperationsPro, an application for creating train manifests for operating
   sessions</title>
   <meta name="keywords" content="operations, Operations, OperationsPro">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="../Sidebar.shtml" -->
@@ -60,11 +60,11 @@
 
       <p>OperationsPro functions can be accessed from the main PanelPro menu by clicking on
       <strong>Tools &rArr; OperationsPro</strong>.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

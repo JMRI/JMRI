@@ -5,11 +5,11 @@
   <title>Acc&#232;s de Jython</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code CVS FAQ">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -366,9 +366,9 @@ Une fois que la t&#226;che principale JMRI (ou t&#226;che Swing GUI ?) a commenc
 Il serait bon de comprendre ce qui emp&#234;cher le programme
 d'arr&#234;ter quand il obtient l'^D. 
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

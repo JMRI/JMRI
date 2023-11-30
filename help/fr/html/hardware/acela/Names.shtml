@@ -3,11 +3,11 @@
 <head>
   <!-- Updated by Blorec Herv&#233;  2017-01-15-->
   <title>JMRI Hardware Support - CTI Acela System Names</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header_fr.shtml" -->
+<!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 <div id="mBody">
     <!--#include virtual="../Sidebar.shtml" -->
     <div id="mainContent">
@@ -155,9 +155,9 @@ Bouton "Enregistrer" sur la
 <p>Des informations compl&#233;mentaires sur le mat&#233;riel  peuvent &#234;tre trouv&#233;es sur le 
 <a href="http://www.cti-electronics.com/app_sw.htm">Site web CTI</a>.</p>
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

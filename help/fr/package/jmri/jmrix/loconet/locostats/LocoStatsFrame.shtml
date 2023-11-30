@@ -5,11 +5,11 @@
   <title>JMRI: LocoNet Statistics</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help digitrax downloader">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -28,10 +28,10 @@
 
       <dl>
         <dt>jmri/jmrix/loconet/locostats/LocoStatsFrame 
-        <!--#include virtual="/Footer_fr.shtml" --></dt>
+        <!--#include virtual="/help/fr/parts/Footer_fr.shtml" --></dt>
 
         <dt>jmri/jmrix/loconet/locostats/LocoStatsFrame 
-        <!--#include virtual="/Footer_fr.shtml" --></dt>
+        <!--#include virtual="/help/fr/parts/Footer_fr.shtml" --></dt>
 
         <dt>Version</dt>
 
@@ -101,9 +101,9 @@
       d'autres o&ugrave; il agit comme une interface (MS100
       mode).</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

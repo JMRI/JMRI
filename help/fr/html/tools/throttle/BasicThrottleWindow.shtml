@@ -9,11 +9,11 @@
   <meta name="author" content="Lionel Jeanson">
   <meta name="Robots" content="Index, Follow">
   <meta name="Revisit-After" content="7 Days">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -229,9 +229,9 @@ Mais ce n'est qu'un &#233;chantillon, ayez un &#339;il sur le code et personnali
 Jynstrumentable, donc ici nous d&#233;posons le Jynstruments sur </span> <span style="font-style: italic;"> le contenu fen&#234;tre </span> <span style="font-style: italic;">
 lui-m&#234;me, non pas sur la barre d'outils.</span>
 
-		    <!--#include virtual="/Footer_fr.shtml" -->
+		    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

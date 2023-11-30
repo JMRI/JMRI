@@ -6,10 +6,10 @@
 <meta name="author" content="Dan Boudreau">
 <meta name="keywords"
   content="JMRI Help Operations Setup Settings Cars Engines Locomotives Trains Routes Locations Schedules">
-<!--#include virtual="/Style.shtml" -->
+<!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <!-- This document contains general descriptions of the OperaitonsPro functions and should, therefore,  be considered
 for moving to the help/en/html/apps/OperationsPro subdirectory of the help hierarchy to be consistent with "Organization of the help files"
@@ -6297,11 +6297,11 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
       </p>
 
       <p>End of OperationsPro&trade; help.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>
