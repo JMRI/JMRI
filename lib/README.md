@@ -536,6 +536,10 @@ Windows and Linux libraries from <https://jogamp.org/deployment/archive/rc/v2.4.
 ##### servlet.jar:
 - jakarta-servletapi-3.2.3-src/lib/servlet.jar but no longer included
 
+##### jSerialComm-2.10.4.jar
+- possible new serial lib
+- from https://fazecast.github.io/jSerialComm/
+
 ##### RXTXcomm.jar, librxtxSerial.jnilib
 - From Rxtx-2.2pre2  http://rxtx.qbang.org (http://rxtx.qbang.org/pub/rxtx/rxtx-2.2pre2-bins.zip)
 - The win32 and win64 directories contain the necessary rxtxSerial.dll for the two windows varients

@@ -120,6 +120,7 @@
     <path id="runtime.class.path">
         <pathelement location="${libdir}/JavaVersionCheckWindow.jar"/> <!-- Java 8 check, keep at start -->
         <pathelement location="${libdir}/jmri.script.jsr223graalpython.jar"/> <!-- Optional GraalVM-built code -->
+        <pathelement location="${libdir}/jSerialComm-2.10.4.jar"/>
         <pathelement location="${libdir}/purejavacomm-1.0.5.jar"/>
         <pathelement location="${libdir}/xercesImpl-2.12.2.jar"/>
         <pathelement location="${libdir}/gluegen-rt.jar"/>
