@@ -6,10 +6,10 @@
   <meta name="Author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -368,11 +368,11 @@
       of the 'veto' Sensors and the 'veto' Turnout, if there is one, must be in their non-veto
       state _and_ at least one of the triggering Sensors or a triggering Turnout must see the
       appropriate change for the Route to be set.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

@@ -5,10 +5,10 @@
   <title>JMRI: Plug-in mechanisms</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code plugins extension plug-in">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -313,11 +313,11 @@
         <dd>Additional file paths, redirections, explicitly blocked paths in the JMRI web server
         can be specified by providing a service that implements this.</dd>
       </dl>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

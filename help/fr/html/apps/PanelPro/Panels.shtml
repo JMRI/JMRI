@@ -4,11 +4,11 @@
 <!--Updated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-04 -->
 <head>
 <title>JMRI: Creating Control Panels </title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header_fr.shtml" -->
+<!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 <div id="mBody">
 	<!--#include virtual="Sidebar.shtml" -->
 
@@ -130,9 +130,9 @@ Ou ce pourrait &#234;tre un glisser-droit.  D&#233;sol&#233;, je n'ai pas de mac
 Il y a aussi un menu d&#233;roulant(ctrl - clic sur un Mac) qui vous permet de pivoter l'ic&#244;ne afin qu'elle pointe dans la
 direction que vous voulez.</p>
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

@@ -5,21 +5,21 @@
   <title>JMRI: Send SPROG Command</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Send SPROG command packet">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
       <h1>Send SPROG Command</h1>
       <img src="../images/SprogSendTool.png" width="228" height="94" alt="send packet window">
       <p>This is the help/jmri/jmrix/sprog/packetgen/SprogPacketGenFrame help page.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

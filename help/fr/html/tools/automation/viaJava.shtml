@@ -5,12 +5,12 @@
   <!-- Translated by Herv&#233; Blorec le 2016/09/09-->
   <title>JMRI: Layout Automation in Java</title>
 
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
 <!-- Page Body -->
-    <!--#include virtual="/Header_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
     <div id="mBody">
         <!--#include virtual="Sidebar.shtml" -->
         <div id="mainContent">
@@ -184,9 +184,9 @@ jmri.jmrit.automat.SampleAutomaton().start()
 
 <p>Retour &#224; la <a href="index.shtml">page d'Aide Automatisation</a>.</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

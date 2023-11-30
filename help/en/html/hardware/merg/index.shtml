@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <meta name="keywords" content="MERG supports JMRI help support">
   <title>JMRI Hardware Support - MERG Main Support</title>
-  <meta name="author" content="Andrew Crosland Oct 2020"><!--#include virtual="/Style.shtml" -->
+  <meta name="author" content="Andrew Crosland Oct 2020"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -294,7 +294,7 @@
       </div>
 
       <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

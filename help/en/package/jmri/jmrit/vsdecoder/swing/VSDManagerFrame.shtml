@@ -5,10 +5,10 @@
   <title>JMRI: Virtual Sound Decoder Manager Window</title>
   <meta name="author" content="Mark Underwood">
   <meta name="keywords" content="JMRI help Virtual Sound Decoder">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -202,10 +202,10 @@
 
       <hr>
       <a id="prefs">(This is the jmri.jmrit.vsdecoder.swing.VSDManagerFrame help page) 
-      <!--#include virtual="/Footer.shtml" --></a>
+      <!--#include virtual="/help/en/parts/Footer.shtml" --></a>
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

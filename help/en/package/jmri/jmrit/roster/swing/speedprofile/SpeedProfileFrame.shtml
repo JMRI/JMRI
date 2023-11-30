@@ -5,10 +5,10 @@
   <title>JMRI: Speed Profiling</title>
   <meta name="author" content="Kevin Dickerson">
   <meta name="keywords" content="JMRI help Roster Speed Profiling">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -110,10 +110,10 @@
       In the example (using simulated timings) cells with unexpected (non-incrementing) values are
       marked in red. Such cells are editable to correct the value or the whole row for that step
       can be deleted. Normally the red instruction will not display.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

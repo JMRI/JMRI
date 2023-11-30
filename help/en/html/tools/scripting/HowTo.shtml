@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI: Scripting "How To..."</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Scripting "How To..."</title><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body id="HowToTopOfPage">
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -667,7 +667,7 @@ SensndExample().start()
         </p>
       </div>
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

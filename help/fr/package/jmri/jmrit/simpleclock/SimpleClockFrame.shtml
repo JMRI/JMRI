@@ -5,11 +5,11 @@
   <title>JMRI: Setup Fast Clock</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Setup Fast Clock">
-  <!--#include virtual="/Style.shtml" -->  <!-- /Style -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -288,9 +288,9 @@
       "http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html">ici</a>.
       </p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>
