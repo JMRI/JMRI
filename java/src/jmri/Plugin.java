@@ -21,9 +21,9 @@ public interface Plugin {
 
     /**
      * Add menu items to the Tools menu if desired.
-     * @param menu the Tools menu
+     * @param menu the Tools menu (JMenu)
      */
-    public default void addToolsMenu(JMenu menu) {
+    public default void addToolsMenu(Object menu) {
     }
 
 }
