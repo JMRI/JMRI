@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import jmri.JmriException;
-import jmri.jmrix.sprog.sprogslotmon.Bundle;
 import jmri.util.startup.AbstractStartupModel;
 
 /**
@@ -33,7 +32,7 @@ public class LoadPluginModel extends AbstractStartupModel {
         } catch (IOException | ClassNotFoundException | IllegalAccessException
                 | InstantiationException | NoSuchMethodException
                 | InvocationTargetException ex) {
-            throw new JmriException(Bundle.formatMessage("CannotLoadPlugin",
+            throw new JmriException(Bundle.getMessage("CannotLoadPlugin",
                     this.getFileName(), ex.getLocalizedMessage()));
         }
     }
