@@ -35,7 +35,7 @@ public class PluginLoader {
 
         try (URLClassLoader cl = new URLClassLoader(urls)) {
             for (String className : classNameList) {
-                Class cls = cl.loadClass(className);
+                Class<?> cls = cl.loadClass(className);
                 if (Plugin.class.isAssignableFrom(cls)) {
                     Object o = cls.getDeclaredConstructor().newInstance();
                     if (o instanceof Plugin) {

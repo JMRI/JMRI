@@ -15,7 +15,7 @@ import org.jdom2.Element;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Ken Cameron Copyright: Copyright (c) 2014
  * @author Daniel Bergqvist (C) 2023
- * @see jmri.util.startup.LoadPluginModelFactory
+ * @see jmri.util.plugin.LoadPluginModelFactory
  */
 public class LoadPluginModelXml extends jmri.configurexml.AbstractXmlAdapter {
 

@@ -41,5 +41,5 @@ public class PluginFileChooser extends jmri.util.swing.JmriJFileChooser {
         this.setFileSelectionMode(JFileChooser.FILES_ONLY);
     }
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PluginFileChooser.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PluginFileChooser.class);
 }
