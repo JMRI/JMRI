@@ -600,6 +600,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>A new plugin management is added. See <a href="https://github.com/JMRI/JMRI/pull/12679">PR #12679</a>.</li>
         </ul>
 
