@@ -12,7 +12,9 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
+import jmri.InstanceManager;
 import jmri.Plugin;
+import jmri.PluginManager;
 
 /**
  * Loads a plugin JAR file.
@@ -39,6 +41,7 @@ public class PluginLoader {
                     if (o instanceof Plugin) {
                         Plugin p = (Plugin)o;
                         p.init();
+                        InstanceManager.getDefault(PluginManager.class).addPlugin(p);
                     } else {
                         throw new IllegalArgumentException("Class is not a jmri.Plugin");
                     }

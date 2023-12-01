@@ -1,5 +1,7 @@
 package jmri;
 
+import javax.swing.JMenu;
+
 /**
  * Plugin to JMRI.
  * <P>
@@ -11,6 +13,17 @@ package jmri;
  */
 public interface Plugin {
 
-    public void init();
+    /**
+     * Initialize this plugin.
+     */
+    public default void init() {
+    }
+
+    /**
+     * Add menu items to the Tools menu if desired.
+     * @param menu the Tools menu
+     */
+    public default void addToolsMenu(JMenu menu) {
+    }
 
 }

@@ -8,6 +8,8 @@ import javax.swing.JSeparator;
 import javax.annotation.CheckForNull;
 
 import jmri.InstanceManager;
+import jmri.Plugin;
+import jmri.PluginManager;
 import jmri.jmrit.throttle.ThrottleCreationAction;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.AddressedProgrammerManager;
@@ -32,10 +34,10 @@ public class ToolsMenu extends JMenu {
 
     ConnectionConfig serModeProCon = null;
     ConnectionConfig opsModeProCon = null;
-    
+
     AbstractAction serviceAction = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("MenuItemDecoderProServiceProgrammer"));
     AbstractAction opsAction = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("MenuItemDecoderProOpsModeProgrammer"));
-        
+
     public ToolsMenu(String name) {
         this();
         setText(name);
@@ -46,7 +48,7 @@ public class ToolsMenu extends JMenu {
         super();
 
         setText(Bundle.getMessage("MenuTools"));
-        
+
         JMenu programmerMenu = new JMenu(Bundle.getMessage("MenuProgrammers"));
         programmerMenu.add(new jmri.jmrit.simpleprog.SimpleProgAction());
         programmerMenu.add(serviceAction);
@@ -217,6 +219,10 @@ public class ToolsMenu extends JMenu {
                     updateProgrammerStatus(evt);
                 });
         InstanceManager.getList(GlobalProgrammerManager.class).forEach(m -> m.addPropertyChangeListener(this::updateProgrammerStatus));
+
+        for (Plugin p : InstanceManager.getDefault(PluginManager.class).getPlugins()) {
+            p.addToolsMenu(this);
+        }
     }
 
     /**
@@ -224,7 +230,7 @@ public class ToolsMenu extends JMenu {
      * available.
      *
      * Adapted from similar named function in @link jmri.jmrit.roster.swing.RosterFrame.java
-     * 
+     *
      * @param evt the triggering event; if not null and if a removal of a
      *            ProgrammerManager, care will be taken not to trigger the
      *            automatic creation of a new ProgrammerManager
@@ -317,5 +323,5 @@ public class ToolsMenu extends JMenu {
     }
 
     private final static Logger log = LoggerFactory.getLogger(jmri.jmrit.ToolsMenu.class);
-    
+
 }

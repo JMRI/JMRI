@@ -85,6 +85,10 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
             return new ProxyMeterManager();
         }
 
+        if (type == PluginManager.class) {
+            return new DefaultPluginManager();
+        }
+
         if (type == RailComManager.class) {
             return new DefaultRailComManager();
         }
@@ -172,6 +176,7 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
                 LogixManager.class,
                 MemoryManager.class,
                 MeterManager.class,
+                PluginManager.class,
                 RailComManager.class,
                 ReporterManager.class,
                 RouteManager.class,
