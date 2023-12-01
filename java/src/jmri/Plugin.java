@@ -1,7 +1,5 @@
 package jmri;
 
-import javax.swing.JMenu;
-
 /**
  * Plugin to JMRI.
  * <P>
