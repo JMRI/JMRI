@@ -3,11 +3,11 @@
 <head>
   <!--Updated by Herv&#233; Blorec 2017-02-05-->
   <title>JMRI Hardware Support - OpenLCB - Naming</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
 	  <div id="mainContent">
@@ -52,9 +52,9 @@ fournit une syntaxe de CV qui peut &#234;tre utilis&#233;e pour acc&#233;der &#2
 
 <p>Retour &#224; la <a href="index.shtml">page principale d'Aide OpenLCB</a></p>
      
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

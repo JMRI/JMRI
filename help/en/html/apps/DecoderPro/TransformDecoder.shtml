@@ -5,10 +5,10 @@
   <!-- Copyright Bob Jacobsen 2008 -->
 
   <title>JMRI: DecoderPro User Guide - Use XSLT Transformation for complex decoders File</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -491,11 +491,11 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       prefix <strong>http://jmri.org/xml</strong> is guaranteed to resolve to the
       <strong>xml</strong> directory of your local JMRI installation. For more mapping, please see
       other JMRI documentation.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- close #mainContent -->
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

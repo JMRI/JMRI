@@ -5,10 +5,10 @@
   <title>JMRI: Blocks Documentation</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="layout java model railroad JMRI tools dcc">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -78,11 +78,11 @@
       run JMRI, see <a href="../apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>. Note
       that the occupied/unoccupied state of each Block is not saved in the configuration file. When
       Blocks are loaded from a configuration file, their status is read from the Sensors.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

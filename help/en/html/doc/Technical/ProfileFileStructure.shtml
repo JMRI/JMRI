@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Profile Directory Tutorial</title>
   <meta name="author" content="YOUR NAME HERE">
-  <meta name="keywords" content="SOME KEYWORDS"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="SOME KEYWORDS"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" --><!-- select the local or global Sidebar file -->
@@ -285,11 +285,11 @@
       "https://jmri.org/help/en/html/doc/Technical/FileNames.shtml">the FileNames page</a>. For a
       full list of prefixes, see <a href=
       "https://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html#getExternalFilename-java.lang.String-">the
-      JavaDocs for the FileUtil class</a>. <!--#include virtual="/Footer.shtml" --></p>
+      JavaDocs for the FileUtil class</a>. <!--#include virtual="/help/en/parts/Footer.shtml" --></p>
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody, from before Sidebar -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>
