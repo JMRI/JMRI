@@ -143,15 +143,17 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             js.setMaximumSize(new Dimension(10000, 10));
             add(js);
         }
-        JPanel p1 = new JPanel();
-        p1.setLayout(new FlowLayout());
-        p1.add(new JLabel("Serial port: "));
-        p1.add(portBox);
-        p1.add(new JLabel("Baud Rate:"));
-        p1.add(baudBox);
-        p1.add(openPortButton);
-        p1.setMaximumSize(p1.getPreferredSize());
-        add(p1);
+        {
+            JPanel p1 = new JPanel();
+            p1.setLayout(new FlowLayout());
+            p1.add(new JLabel("Serial port: "));
+            p1.add(portBox);
+            p1.add(new JLabel("Baud Rate:"));
+            p1.add(baudBox);
+            p1.add(openPortButton);
+            //p1.setMaximumSize(p1.getPreferredSize());
+            add(p1);
+        }
 
         // add user part of GUI
         {

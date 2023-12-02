@@ -125,6 +125,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     NceListener listener;
 
     // polling parameters and variables
+    private boolean loggedAiuNotSupported = false;  // set after logging that AIU isn't supported on this config
     private final int shortCycleInterval = 200;
     private final int longCycleInterval = 10000;  // when we know async messages are flowing
     private final long maxSilentInterval = 30000;  // max slow poll time without hearing an async message
@@ -167,6 +168,14 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
      *
      */
     private void buildActiveAIUs() {
+        if ((getMemo().getNceTrafficController().getCmdGroups() & NceTrafficController.CMDS_AUI_READ) 
+                != NceTrafficController.CMDS_AUI_READ) {
+            if (!loggedAiuNotSupported) {
+                log.error("AIU not supported in this configuration");
+                loggedAiuNotSupported = true;
+                return;
+            }
+        }
         activeAIUMax = 0;
         for (int a = MINAIU; a <= MAXAIU; ++a) {
             if (aiuArray[a] != null) {
@@ -197,10 +206,11 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     public NceMessage makeAIUPoll(int aiuNo) {
-        // use old 4 byte read command if not USB
         if (getMemo().getNceTrafficController().getUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
+            // use old 4 byte read command if not USB
             return makeAIUPoll4ByteReply(aiuNo);
         } else {
+            // use new 2 byte read command if USB
             return makeAIUPoll2ByteReply(aiuNo);
         }
     }
@@ -244,48 +254,56 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
      * one poll of each sensor before squelching active polls.
      */
     private void pollManager() {
-        while (!stopPolling) {
-            for (int a = 0; a < activeAIUMax; ++a) {
-                int aiuNo = activeAIUs[a];
-                currentAIU = aiuArray[aiuNo];
-                if (currentAIU != null) {    // in case it has gone away
-                    NceMessage m = makeAIUPoll(aiuNo);
-                    synchronized (this) {
-                        log.debug("queueing poll request for AIU {}", aiuNo);
-                        getMemo().getNceTrafficController().sendNceMessage(m, this);
-                        awaitingReply = true;
-                        try {
-                            wait(pollTimeout);
-                        } catch (InterruptedException e) {
-                            Thread.currentThread().interrupt(); // retain if needed later
-                            return;
+        if ((getMemo().getNceTrafficController().getCmdGroups() & NceTrafficController.CMDS_AUI_READ) 
+                != NceTrafficController.CMDS_AUI_READ) {
+            if (!loggedAiuNotSupported) {
+                log.error("AIU not supported in this configuration");
+                loggedAiuNotSupported = true;
+            }
+        } else {
+            while (!stopPolling) {
+                for (int a = 0; a < activeAIUMax; ++a) {
+                    int aiuNo = activeAIUs[a];
+                    currentAIU = aiuArray[aiuNo];
+                    if (currentAIU != null) {    // in case it has gone away
+                        NceMessage m = makeAIUPoll(aiuNo);
+                        synchronized (this) {
+                            log.debug("queueing poll request for AIU {}", aiuNo);
+                            getMemo().getNceTrafficController().sendNceMessage(m, this);
+                            awaitingReply = true;
+                            try {
+                                wait(pollTimeout);
+                            } catch (InterruptedException e) {
+                                Thread.currentThread().interrupt(); // retain if needed later
+                                return;
+                            }
                         }
-                    }
-                    int delay = shortCycleInterval;
-                    if (aiuCycleCount >= 2
-                            && lastMessageReceived >= System.currentTimeMillis() - maxSilentInterval) {
-                        delay = longCycleInterval;
-                    }
-                    synchronized (this) {
-                        if (awaitingReply && !stopPolling) {
-                            log.warn("timeout awaiting poll response for AIU {}", aiuNo);
-                            // slow down the poll since we're not getting responses
-                            // this lets NceConnectionStatus to do its thing
-                            delay = pollTimeout;
+                        int delay = shortCycleInterval;
+                        if (aiuCycleCount >= 2
+                                && lastMessageReceived >= System.currentTimeMillis() - maxSilentInterval) {
+                            delay = longCycleInterval;
                         }
-                        try {
-                            awaitingDelay = true;
-                            wait(delay);
-                        } catch (InterruptedException e) {
-                            Thread.currentThread().interrupt(); // retain if needed later
-                            return;
-                        } finally {
-                            awaitingDelay = false;
+                        synchronized (this) {
+                            if (awaitingReply && !stopPolling) {
+                                log.warn("timeout awaiting poll response for AIU {}", aiuNo);
+                                // slow down the poll since we're not getting responses
+                                // this lets NceConnectionStatus to do its thing
+                                delay = pollTimeout;
+                            }
+                            try {
+                                awaitingDelay = true;
+                                wait(delay);
+                            } catch (InterruptedException e) {
+                                Thread.currentThread().interrupt(); // retain if needed later
+                                return;
+                            } finally {
+                                awaitingDelay = false;
+                            }
                         }
                     }
                 }
+                ++aiuCycleCount;
             }
-            ++aiuCycleCount;
         }
     }
 

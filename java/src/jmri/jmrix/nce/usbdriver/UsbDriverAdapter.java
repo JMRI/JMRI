@@ -132,9 +132,7 @@ public class UsbDriverAdapter extends NcePortController {
                 this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_65);
             } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[2])) { //PowerPro
                 tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERPRO);
-                tc.setCmdGroups(NceTrafficController.CMDS_OPS_PGM
-                        | NceTrafficController.CMDS_AUI_READ
-                        | NceTrafficController.CMDS_USB
+                tc.setCmdGroups(NceTrafficController.CMDS_USB
                         | NceTrafficController.CMDS_ALL_SYS);
                 this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_2006);
             } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[1])) { //SB3
