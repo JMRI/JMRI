@@ -10,7 +10,7 @@ import org.jdom2.Element;
  * Handle XML persistance of SampleFunctionalClass objects.
  * <p>
  * Mote we have not (yet) updated xml/schema to provide an XML schema for this
- * sample.  Configure PanelPro to run the jython/dis.py script to disable
+ * sample.  Configure PanelPro to first run the jython/TurnOffXmlValidation.py script to disable
  * verification when loading files written by this.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2018
