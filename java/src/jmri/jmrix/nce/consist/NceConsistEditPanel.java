@@ -1714,8 +1714,8 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                 return;
             }
             // delete loco from any existing consists
-            sendNceBinaryCommand(locoAddr,
-                    NceMessage.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
+            //sendNceBinaryCommand(locoAddr,
+            //        NceMessage.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
 
             // check to see if loco is already a lead or rear in another consist
             verifyLocoAddr(locoAddr);
@@ -1810,8 +1810,8 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         }
 
         // delete loco from any existing consists
-        sendNceBinaryCommand(locoAddr,
-                NceMessage.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
+        //sendNceBinaryCommand(locoAddr,
+        //        NceMessage.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
         // now we need to determine if lead, rear, or mid loco
         // lead loco?
         if (locoTextField == locoTextField1) {
