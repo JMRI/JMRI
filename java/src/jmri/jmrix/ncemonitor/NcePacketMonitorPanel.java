@@ -488,7 +488,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         // Open the port
         String openStatus = openPort((String) portBox.getSelectedItem(), validSpeedValues[baudBox.getSelectedIndex()], "JMRI");
         if (openStatus != null) {
-            log.error("{}", openStatus);
+            log.error("{} ", openStatus);
             // enable options
             openPortButton.setEnabled(true);
             portBox.setEnabled(true);
