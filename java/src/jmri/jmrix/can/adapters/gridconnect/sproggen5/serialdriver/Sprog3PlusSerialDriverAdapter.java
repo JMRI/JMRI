@@ -6,8 +6,7 @@ import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
 import jmri.jmrix.can.adapters.gridconnect.canrs.MergTrafficController;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.fazecast.jSerialComm.*;
 
 /**
  * Implements SerialPortAdapter for SPROG Generation 5.
@@ -22,7 +21,7 @@ import org.slf4j.LoggerFactory;
 public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
 
     public Sprog3PlusSerialDriverAdapter() {
-        super("S", purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_IN + purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT);
+        super("S", SerialPort.FLOW_CONTROL_RTS_ENABLED | SerialPort.FLOW_CONTROL_CTS_ENABLED);
         option2Name = "CANID";
         options.put(option2Name, new Option(Bundle.getMessage("JMRICANID"), new String[]{"127", "126", "125", "124", "123", "122", "121", "120"}));
         _progMode = ConfigurationManager.ProgModeSwitch.SPROG3PLUS;
@@ -84,6 +83,6 @@ public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
         return 0;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Sprog3PlusSerialDriverAdapter.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Sprog3PlusSerialDriverAdapter.class);
 
 }

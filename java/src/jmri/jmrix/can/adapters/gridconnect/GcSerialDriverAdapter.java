@@ -23,7 +23,7 @@ import com.fazecast.jSerialComm.*;
 public class GcSerialDriverAdapter extends GcPortController {
 
     protected SerialPort activeSerialPort = null;
-    protected int flowControl = purejavacomm.SerialPort.FLOWCONTROL_NONE;
+    protected int flowControl = SerialPort.FLOW_CONTROL_DISABLED;
 
     /**
      * Creates a new CAN GridConnect Network Driver Adapter.
@@ -235,10 +235,6 @@ public class GcSerialDriverAdapter extends GcPortController {
                 } else {
                     log.warn("Error reading serial port {}", portName, e);
                 }
-            }
-            catch (purejavacomm.PureJavaIllegalStateException e) {
-                log.error("PureJavaIllegalStateException Illegal State, closing read thread.");
-                return null;
             }
             return tail;
         }

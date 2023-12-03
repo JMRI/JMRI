@@ -2,6 +2,8 @@ package jmri.jmrix.can.adapters.gridconnect.pilcc.serialdriver;
 
 import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
 
+import com.fazecast.jSerialComm.*;
+
 /**
  * Implements SerialPortAdapter for PI-LCC GridConnect adapter.
  * <p>
@@ -13,7 +15,7 @@ import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
 public class PiLccSerialDriverAdapter extends GcSerialDriverAdapter {
 
     public PiLccSerialDriverAdapter() {
-        super("M", purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_IN + purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT);
+        super("M", SerialPort.FLOW_CONTROL_RTS_ENABLED | SerialPort.FLOW_CONTROL_CTS_ENABLED);
     }
 
     /**
