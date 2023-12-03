@@ -31,67 +31,73 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
 		</revision>
+		<revision>
+			<revnumber>2</revnumber>
+			<date>2023-12-03</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add English translations</revremark>
+		</revision>
 	</revhistory>
 	<variable item="Motor Management 1" CV="240" default="16">
 		<decVal max="32"/>
-		<label>Messlücken CV</label>
-		<label xml:lang="de">Messlücken CV</label>
+		<label>Measurement gaps (CV 240)</label>
+		<label xml:lang="de">Messlücke (CV 240)</label>
 		<tooltip>Distance measurement in measuring gap, measurement BEMF motor offset</tooltip>
 		<tooltip xml:lang="de">Abstand Messung in Messlücke, Messung BEMF Motor Offset (0-32)</tooltip>
 	</variable>
 	<variable item="Motor Management 2" CV="241" default="200">
 		<decVal/>
-		<label>Regelfaktor DC digital</label>
-		<label xml:lang="de">Regelfaktor DC digital</label>
+		<label>Control factor DC digital (CV 241)</label>
+		<label xml:lang="de">Regelfaktor DC digital (CV 241)</label>
 		<tooltip>Proportional increasing Limit DC digital</tooltip>
 		<tooltip xml:lang="de">Proportional steigend Limit DC digital (0-255)</tooltip>
 	</variable>
 	<variable item="Motor Management 3" CV="242" default="40">
 		<decVal/>
-		<label>Regelfaktor AC analog</label>
-		<label xml:lang="de">Regelfaktor AC analog</label>
+		<label>Control factor AC analog (CV 242)</label>
+		<label xml:lang="de">Regelfaktor AC analog (CV 242)</label>
 		<tooltip>Proportional increasing Limit AC analog</tooltip>
 		<tooltip xml:lang="de">Proportional steigend Limit AC analog (0-255)</tooltip>
 	</variable>
 	<variable item="Motor Management 4" CV="243" default="0">
 		<decVal max="50"/>
-		<label>Minimale Steuerpaketbreite</label>
-		<label xml:lang="de">Minimale Steuerpaketbreite</label>
+		<label>Minimum control package width (CV 243)</label>
+		<label xml:lang="de">Minimale Steuerpaketbreite (CV 243)</label>
 		<tooltip>Offset controller, control</tooltip>
 		<tooltip xml:lang="de">Offset Regler, Ansteuerung (0-255)</tooltip>
 	</variable>
 	<variable item="Motor Management 5" CV="244" default="200">
 		<decVal/>
-		<label>Regelfaktor DC digital</label>
-		<label xml:lang="de">Regelfaktor DC digital</label>
+		<label>Control factor DC digital (CV 244)</label>
+		<label xml:lang="de">Regelfaktor DC digital (CV 244)</label>
 		<tooltip>Proportional decreasing Limit DC digital</tooltip>
 		<tooltip xml:lang="de">Proportional fallend Limit DC digital (0-255)</tooltip>
 	</variable>
 	<variable item="Motor Management 6" CV="245" default="220">
 		<decVal/>
-		<label>Regelfaktor AC analog</label>
-		<label xml:lang="de">Regelfaktor AC analog</label>
+		<label>Control factor AC analog (CV 245)</label>
+		<label xml:lang="de">Regelfaktor AC analog (CV 245)</label>
 		<tooltip>Proportional decreasing Limit AC analog</tooltip>
 		<tooltip xml:lang="de">Proportional fallend Limit AC analog (0-255)</tooltip>
 	</variable>
 	<variable item="Motor Management 7" CV="246" default="0">
 		<decVal/>
-		<label>CV 246</label>
-		<label xml:lang="de">Schnelles Absenken des Steuerstroms</label>
+		<label>Rapid reduction of the control current (CV 246)</label>
+		<label xml:lang="de">Schnelles Absenken des Steuerstroms (CV 246)</label>
 		<tooltip>Fast lowering of the control current</tooltip>
 		<tooltip xml:lang="de">Differenz Schnelles Absenken des Steuerstroms (0-255)</tooltip>
 	</variable>
 	<variable item="Motor Management 8" CV="247" default="0">
 		<decVal/>
-		<label>CV 247</label>
-		<label xml:lang="de">Dämpfen des Aufschwingens</label>
+		<label>Damping the upward swing (CV 247)</label>
+		<label xml:lang="de">Dämpfen des Aufschwingens (CV 247)</label>
 		<tooltip>Damping of the upswing during spinning</tooltip>
 		<tooltip xml:lang="de">Dämpfen des Aufschwingens beim Schleudern (0-255)</tooltip>
 	</variable>
 	<variable item="Motor Management 9" CV="250" default="0">
 		<decVal max="7"/>
-		<label>CV 250</label>
-		<label xml:lang="de">Erweiterte Zentralen Kompatibilität</label>
+		<label>Extended central station compatibility (CV 250)</label>
+		<label xml:lang="de">Erweiterte Zentralen Kompatibilität (CV 250)</label>
 		<tooltip>Enhanced Central Station Compatibility</tooltip>
 		<tooltip xml:lang="de">Erweiterte Zentralen Kompatibilität  (0-7)</tooltip>
 	</variable>
