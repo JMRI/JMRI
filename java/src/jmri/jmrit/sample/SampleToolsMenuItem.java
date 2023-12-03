@@ -24,7 +24,7 @@ import jmri.util.swing.WindowInterface;
  * @author Bob Jacobsen  Copyright (C) 2023
  */
  
-// Remove the // from the next line and import able to activate this sample.
+// Remove the // from the next line and the import statement above to activate this sample.
 //@ServiceProvider(service = jmri.jmrit.swing.ToolsMenuAction.class)
 
 public class SampleToolsMenuItem extends JmriAbstractAction implements ToolsMenuAction {
