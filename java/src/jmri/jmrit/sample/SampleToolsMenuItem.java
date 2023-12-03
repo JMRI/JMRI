@@ -12,7 +12,7 @@ import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
 
-import org.openide.util.lookup.ServiceProvider;
+// import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Sample Action to create a new user-defined item in the Tools menu.
@@ -24,7 +24,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Bob Jacobsen  Copyright (C) 2023
  */
  
-// Remove the // from the next line to activate this sample.
+// Remove the // from the next line and import able to activate this sample.
 //@ServiceProvider(service = jmri.jmrit.swing.ToolsMenuAction.class)
 
 public class SampleToolsMenuItem extends JmriAbstractAction implements ToolsMenuAction {
