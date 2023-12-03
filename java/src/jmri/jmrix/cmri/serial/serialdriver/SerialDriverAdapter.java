@@ -2,19 +2,14 @@ package jmri.jmrix.cmri.serial.serialdriver;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialPortAdapter;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.NoSuchPortException;
-import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
+
+import com.fazecast.jSerialComm.*;
 
 /**
  * Provide access to C/MRI via a serial com port. Normally controlled by the
@@ -33,70 +28,37 @@ public class SerialDriverAdapter extends SerialPortAdapter {
 
     @Override
     public String openPort(String portName, String appName) {
-        try {
-            // get and open the primary port
-            CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
-            try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
-            } catch (PortInUseException p) {
-                return handlePortBusy(p, portName, log);
-            }
-            // try to set it for CMRI serial
-            try {
-                setSerialPort();
-            } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
-                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
-            }
+        // open the port, check ability to set moderators
+ 
+        // get and open the primary port
+        activeSerialPort = SerialPort.getCommPort(portName);  // name of program, msec to wait
+        activeSerialPort.openPort();
+        
+        // try to set it for communication via SerialDriver
+        // find the baud rate value, configure comm options
+        int baud = currentBaudNumber(mBaudRate);
+        activeSerialPort.setBaudRate(baud);
+        activeSerialPort.setDTR();
+        activeSerialPort.setRTS();
+        activeSerialPort.setFlowControl(
+                SerialPort.FLOW_CONTROL_DTR_ENABLED |
+                SerialPort.FLOW_CONTROL_CTS_ENABLED);
+        activeSerialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, 0, 0);
+            
+        // get and save stream
+        serialStream = activeSerialPort.getInputStream();
 
-            // set framing (end) character
-            try {
-                activeSerialPort.enableReceiveFraming(0x03);
-                log.debug("Serial framing was observed as: {} {}", activeSerialPort.isReceiveFramingEnabled(),
-                        activeSerialPort.getReceiveFramingByte());
-            } catch (Exception ef) {
-                log.debug("failed to set serial framing", ef);
-            }
+        // purge contents, if any
+        //purgeStream(serialStream);
 
-            // set timeout; framing should work before this anyway
-            try {
-                activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: {}", activeSerialPort.getReceiveTimeout()
-                        + " " + activeSerialPort.isReceiveTimeoutEnabled());
-            } catch (Exception et) {
-                log.info("failed to set serial timeout: ", et);
-            }
-
-            // get and save stream
-            serialStream = activeSerialPort.getInputStream();
-
-            // purge contents, if any
-            purgeStream(serialStream);
-
-            // report status?
-            if (log.isInfoEnabled()) {
-                // report now
-                log.info("{} port opened at {} baud with DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
-            }
-            if (log.isDebugEnabled()) {
-                // report additional status
-                log.debug(" port flow control shows {}", // NOI18N
-                        (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
-
-                // log events
-                setPortEventLogging(activeSerialPort);
-            }
-
-            opened = true;
-
-        } catch (NoSuchPortException p) {
-            return handlePortNotFound(p, portName, log);
-        } catch (IOException ex) {
-            log.error("Unexpected exception while opening port {}", portName, ex);
-            return "Unexpected error while opening port " + portName + ": " + ex;
+        // report status?
+        if (log.isInfoEnabled()) {
+            log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  name: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.getDTR(), activeSerialPort.getRTS(), activeSerialPort.getDSR(), activeSerialPort.getCTS(), activeSerialPort);
         }
 
-        return null; // normal operation
+        opened = true;
+
+        return null; // indicates OK return
     }
 
     /**
@@ -134,12 +96,8 @@ public class SerialDriverAdapter extends SerialPortAdapter {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
         }
-        try {
-            return new DataOutputStream(activeSerialPort.getOutputStream());
-        } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: {}", e.getMessage());
-        }
-        return null;
+
+        return new DataOutputStream(activeSerialPort.getOutputStream());
     }
 
     @Override
@@ -150,16 +108,15 @@ public class SerialDriverAdapter extends SerialPortAdapter {
     /**
      * Local method to do specific port configuration.
      *
-     * @throws UnsupportedCommOperationException when underlying port can't do what's requested
      */
-    protected void setSerialPort() throws UnsupportedCommOperationException {
+    protected void setSerialPort() {
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(mBaudRate);
-        activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
-                SerialPort.STOPBITS_2, SerialPort.PARITY_NONE);
+        activeSerialPort.setComPortParameters(baud, 8,
+                SerialPort.TWO_STOP_BITS, SerialPort.NO_PARITY);
 
         // find and configure flow control
-        int flow = SerialPort.FLOWCONTROL_NONE; // default
+        int flow = SerialPort.FLOW_CONTROL_DISABLED; // default
         configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
@@ -193,6 +150,6 @@ public class SerialDriverAdapter extends SerialPortAdapter {
     private boolean opened = false;
     InputStream serialStream = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

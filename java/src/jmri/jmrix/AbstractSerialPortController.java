@@ -107,7 +107,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
-     * Set the control leads and flow control. This handles any necessary
+     * Set the control leads and flow control for purejavacomm. This handles any necessary
      * ordering.
      *
      * @param serialPort Port to be updated
@@ -115,7 +115,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param rts        set RTS active if true
      * @param dtr        set DTR active if true
      */
-    protected void configureLeadsAndFlowControl(SerialPort serialPort, int flow, boolean rts, boolean dtr) {
+    protected void configureLeadsAndFlowControl(purejavacomm.SerialPort serialPort, int flow, boolean rts, boolean dtr) {
         // (Jan 2018) PJC seems to mix termios and ioctl access, so it's not clear
         // what's preserved and what's not. Experimentally, it seems necessary
         // to write the control leads, set flow control, and then write the control
@@ -135,12 +135,46 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
-     * Set the flow control, while also setting RTS and DTR to active.
+     * Set the control leads and flow control for jSerialComm. This handles any necessary
+     * ordering.
+     *
+     * @param serialPort Port to be updated
+     * @param flow       flow control mode from (@link com.fazecast.jSerialComm.SerialPort}
+     * @param rts        set RTS active if true
+     * @param dtr        set DTR active if true
+     */
+    protected void configureLeadsAndFlowControl(com.fazecast.jSerialComm.SerialPort serialPort, int flow, boolean rts, boolean dtr) {
+        if (rts) { 
+            serialPort.setRTS();
+        } else {
+            serialPort.clearRTS();
+        }
+        if (dtr) {
+            serialPort.setDTR();
+        } else {
+            serialPort.clearDTR();
+        }
+
+        serialPort.setFlowControl(flow);
+    }
+
+    /**
+     * Set the flow control for purejavacomm, while also setting RTS and DTR to active.
      *
      * @param serialPort Port to be updated
      * @param flow       flow control mode from (@link purejavacomm.SerialPort}
      */
-    protected void configureLeadsAndFlowControl(SerialPort serialPort, int flow) {
+    protected void configureLeadsAndFlowControl(purejavacomm.SerialPort serialPort, int flow) {
+        configureLeadsAndFlowControl(serialPort, flow, true, true);
+    }
+
+    /**
+     * Set the flow control for jSerialComm, while also setting RTS and DTR to active.
+     *
+     * @param serialPort Port to be updated
+     * @param flow       flow control mode from (@link purejavacomm.SerialPort}
+     */
+    protected void configureLeadsAndFlowControl(com.fazecast.jSerialComm.SerialPort serialPort, int flow) {
         configureLeadsAndFlowControl(serialPort, flow, true, true);
     }
 

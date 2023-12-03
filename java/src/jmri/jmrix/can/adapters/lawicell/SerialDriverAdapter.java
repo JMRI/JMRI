@@ -2,12 +2,10 @@ package jmri.jmrix.can.adapters.lawicell;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+
 import jmri.jmrix.can.TrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.fazecast.jSerialComm.*;
 
@@ -142,6 +140,6 @@ public class SerialDriverAdapter extends PortController {
     private boolean opened = false;
     InputStream serialStream = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }
