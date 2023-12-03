@@ -4,11 +4,11 @@
   <title>JMRI: G&eacute;n&eacute;rateur ECoS</title>
   <meta name="author" content="Dan Boudreau">
   <meta name="keywords" content="JMRI Help NCE Command Generator">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -18,9 +18,9 @@
       taper un message pour la station de commande ECoS et puis de
       l'envoyer.</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

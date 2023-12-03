@@ -4,11 +4,11 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Loading and Storing Your Work</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="Author" content="Jerry Grochow"><!--#include virtual="/Style.shtml" -->
+  <meta name="Author" content="Jerry Grochow"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head><!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -435,11 +435,11 @@
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
       <!--   <p><a href="#TopOfPage">[Go to top of page]</a></p>     -->
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

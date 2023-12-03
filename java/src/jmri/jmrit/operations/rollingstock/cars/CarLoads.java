@@ -49,7 +49,8 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
     }
 
     /**
-     * Replace a car type. Transfers load priority, drop and load comments.
+     * Replace a car type. Transfers load type, priority, isHardous, drop and
+     * load comments.
      *
      * @param oldType old car type
      * @param newType new car type
@@ -59,7 +60,9 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
         addType(newType);
         for (String name : names) {
             addName(newType, name);
+            setLoadType(newType, name, getLoadType(oldType, name));
             setPriority(newType, name, getPriority(oldType, name));
+            setHazardous(newType, name, isHazardous(oldType, name));
             setDropComment(newType, name, getDropComment(oldType, name));
             setPickupComment(newType, name, getPickupComment(oldType, name));
         }

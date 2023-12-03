@@ -5,11 +5,11 @@
     <title>JMRI: Technical Info</title>
     <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code ">
-    <!--#include virtual="/Style.shtml" -->
+    <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
 	  <!--#include virtual="Sidebar.shtml" -->
 	  <div id="mainContent">
@@ -261,9 +261,9 @@ et dynamique repr&#233;sentation visuelle du changement pour que les d&#233;velo
 modifications dans les fichiers qui composent un projet. Plus d'informations sont disponibles sur
 <a href="/community/visuals/codeswarm.shtml"> Code Swarm </a>.</p>
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

@@ -524,12 +524,12 @@ class AlmirTest {
             0xEE, 0x10, 0x02, 0x0f, 0x00, 0x00, 0x00, 0x00,
             0x00, 0x74, 0x00, 0x01, 0x02, 0x03, 0x04, 0x00});
         Assert.assertEquals("basic check 1",
-                "Change DS74, s/n 0x101 to use new starting address 516.\n",
+                "Change DS74, s/n 0x101 to use new Base Address 516.\n",
                 Almir.interpretAlmRoutes(l));
 
         l.setElement(9,0x7c);
         Assert.assertEquals("basic check 1",
-                "Change DS78V, s/n 0x101 to use new starting address 516.\n",
+                "Change DS78V, s/n 0x101 to use new Base Address 516.\n",
                 Almir.interpretAlmRoutes(l));
 
         l.setElement(9,0x74);
@@ -539,7 +539,7 @@ class AlmirTest {
             l.setElement(11, i);
             Assert.assertEquals("basic check 3 loop "+i,
                     "Change DS74, s/n 0x"
-                    +Integer.toHexString(i)+" to use new starting address 516.\n",
+                    +Integer.toHexString(i)+" to use new Base Address 516.\n",
                     Almir.interpretAlmRoutes(l));
             i <<= 1;
         }
@@ -549,7 +549,7 @@ class AlmirTest {
             l.setElement(12, i);
             Assert.assertEquals("basic check 4 loop "+i,
                     "Change DS78V, s/n 0x"
-                    +Integer.toHexString(i<<7)+" to use new starting address 516.\n",
+                    +Integer.toHexString(i<<7)+" to use new Base Address 516.\n",
                     Almir.interpretAlmRoutes(l));
             i <<= 1;
         }
@@ -558,7 +558,7 @@ class AlmirTest {
         for (i = 1; i< 0x80;) {
             l.setElement(13, i);
             Assert.assertEquals("basic check 5 loop "+i,
-                    "Change DS78V, s/n 0x0 to use new starting address "+(i+1)+".\n",
+                    "Change DS78V, s/n 0x0 to use new Base Address "+(i+1)+".\n",
                     Almir.interpretAlmRoutes(l));
             i <<= 1;
         }
@@ -567,7 +567,7 @@ class AlmirTest {
         for (i = 1; i< 0x80;) {
             l.setElement(14, i);
             Assert.assertEquals("basic check 6 loop "+i,
-                    "Change DS74, s/n 0x0 to use new starting address "+Integer.toString(((i<<7)+1))+".\n",
+                    "Change DS74, s/n 0x0 to use new Base Address "+Integer.toString(((i<<7)+1))+".\n",
                     Almir.interpretAlmRoutes(l));
             i <<= 1;
         }

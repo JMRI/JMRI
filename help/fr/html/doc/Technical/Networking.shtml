@@ -5,11 +5,11 @@
   <title>JMRI: Acc&egrave;s au r&eacute;seau</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI network access">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -187,9 +187,9 @@
       <p>Voir aussi "man dns-sd" pour de plus d'informations sur
       l'outil DNS-SD de d&eacute;bogage en ligne de commande.</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

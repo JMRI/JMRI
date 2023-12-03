@@ -5,11 +5,11 @@
   <title>JMRI: Fen&ecirc;tre Principale DecoderPro</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help preferences">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -88,9 +88,9 @@
       programme JMRI.</p>
 
       <p>Ceci est la page d'aide
-      apps.DecoderPro.DecoderPro.shtml</p><!--#include virtual="/Footer_fr.shtml" -->
+      apps.DecoderPro.DecoderPro.shtml</p><!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

@@ -3,11 +3,11 @@
 <head>
   <!-- Updated by Blorec Herv&#233; 2017-01-20-->
   <title>JMRI Mat&#233;riel - R&#233;seau CAN</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header_fr.shtml" -->
+<!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 <div id="mBody">
 	<!--#include virtual="Sidebar.shtml" -->
 	<div id="mainContent">
@@ -148,9 +148,9 @@ Pr&#233;f&#233;rences et s&#233;lectionnez:</p>
 <h3>Autre Source d'Info</h3>
 <p><a href="http://www.openlcb.org">OpenLCB.org</a></p>
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

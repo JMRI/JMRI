@@ -17,23 +17,15 @@ import org.slf4j.LoggerFactory;
  */
 public class XBeeTurnout extends AbstractTurnout {
 
-    private String nodeIdentifier;
-    /* This is a string representation of
-     the XBee address in the system name
-     It may be an address or it may be
-     the NodeIdentifier string stored in
-     the NI parameter on the node.*/
+
 
     private XBeeNode node = null; // Which node does this belong too.
 
-    private int address;
     private int pin;
     /* Which DIO pin does this turnout represent. */
 
     private int pin2 = -1;
     /* Which 2nd DIO pin does this turnout represent. */
-
-    private String systemName;
 
     protected XBeeTrafficController tc = null;
 
@@ -62,7 +54,6 @@ public class XBeeTurnout extends AbstractTurnout {
      */
     private void init(String id) {
         // store address
-        systemName = id;
         jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo m = tc.getAdapterMemo();
         if (!(m instanceof XBeeConnectionMemo)) {
             log.error("Memo associated with the traffic controller is not the right type");
@@ -70,12 +61,17 @@ public class XBeeTurnout extends AbstractTurnout {
         } else {
             XBeeConnectionMemo memo = (XBeeConnectionMemo) m;
             String prefix = memo.getTurnoutManager().getSystemPrefix();
-            if (systemName.contains(":")) {
+            String nodeIdentifier;     /* This is a string representation of
+                                          the XBee address in the system name
+                                          It may be an address or it may be
+                                          the NodeIdentifier string stored in
+                                          the NI parameter on the node.*/
+            if (id.contains(":")) {
                 //Address format passed is in the form of encoderAddress:output or T:turnout address
-                int seperator = systemName.indexOf(":");
-                int seperator2 = systemName.indexOf(":", seperator + 1);
+                int seperator = id.indexOf(":");
+                int seperator2 = id.indexOf(":", seperator + 1);
                 try {
-                    nodeIdentifier = systemName.substring(prefix.length() + 1, seperator);
+                    nodeIdentifier = id.substring(prefix.length() + 1, seperator);
                     if ((node = (XBeeNode) tc.getNodeFromName(nodeIdentifier)) == null) {
                         if ((node = (XBeeNode) tc.getNodeFromAddress(nodeIdentifier)) == null) {
                             try {
@@ -88,28 +84,28 @@ public class XBeeTurnout extends AbstractTurnout {
                             }
                         }
                     }
-                    pin = Integer.parseInt(systemName.substring(seperator + 1, seperator2 > 0 ? seperator2 : systemName.length()));
+                    pin = Integer.parseInt(id.substring(seperator + 1, seperator2 > 0 ? seperator2 : id.length()));
                     if (seperator2 > 0) {
-                        pin2 = Integer.parseInt(systemName.substring(seperator2 + 1));
+                        pin2 = Integer.parseInt(id.substring(seperator2 + 1));
                     }
                 } catch (NumberFormatException ex) {
-                    log.debug("Unable to convert {} into the cab and input format of nn:xx", systemName);
-                    throw new IllegalArgumentException("Unable to convert " + systemName + " into the cab and input format of nn:xx");
+                    log.debug("Unable to convert {} into the cab and input format of nn:xx", id);
+                    throw new IllegalArgumentException("Unable to convert " + id + " into the cab and input format of nn:xx");
                 }
             } else {
                 try {
-                    nodeIdentifier = systemName.substring(prefix.length() + 1, id.length() - 1);
-                    address = Integer.parseInt(systemName.substring(prefix.length() + 1));
+                    nodeIdentifier = id.substring(prefix.length() + 1, id.length() - 1);
+                    int address = Integer.parseInt(id.substring(prefix.length() + 1));
                     node = (XBeeNode) tc.getNodeFromAddress(address / 10);
                     // calculate the pin to use.
                     pin = ((address) % 10);
                 } catch (NumberFormatException ex) {
-                    log.debug("Unable to convert {} Hardware Address to a number", systemName);
-                    throw new IllegalArgumentException("Unable to convert " + systemName + " Hardware Address to a number");
+                    log.debug("Unable to convert {} Hardware Address to a number", id);
+                    throw new IllegalArgumentException("Unable to convert " + id + " Hardware Address to a number");
                 }
             }
             if (log.isDebugEnabled()) {
-                log.debug("Created Turnout {} (NodeIdentifier {} D{}{})", systemName, nodeIdentifier, pin, pin2 > 0 ? " D" + pin2 : "");
+                log.debug("Created Turnout {} (NodeIdentifier {} D{}{})", id, nodeIdentifier, pin, pin2 > 0 ? " D" + pin2 : "");
             }
         }
     }

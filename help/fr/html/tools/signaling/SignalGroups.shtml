@@ -8,11 +8,11 @@
   <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
   <meta name="Date.Modified" content="20150125"/>
   <meta name="keywords" content="model railroad JMRI decoderpro panelpro signal">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header_fr.shtml" -->
+<!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
 	<!--#include virtual="Sidebar.shtml" -->
 	<div id="mainContent">
@@ -74,9 +74,9 @@ fichier ( recommand&#233; ) s&#233;lectionnez <b>Fichier--> Enregistrer --> Sauv
 
 <p>Retour &#224; la <a href="index.shtml#tools">page principale de l'aide Signalisation</a>.</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

@@ -13,7 +13,7 @@ public class XBeeComponentFactory extends jmri.jmrix.swing.ComponentFactory {
         this.memo = memo;
     }
 
-    XBeeConnectionMemo memo;
+    final XBeeConnectionMemo memo;
 
     /**
      * Provide a menu with all items attached to this system connection

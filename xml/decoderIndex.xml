@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.5.5plus+jake+20231107T1707Z+R0f5bdc4f2e on Tue Nov 07 12:07:11 EST 2023-->
-  <decoderIndex version="7">
+  <!--Written by JMRI version 5.5.6plus+jake+20231128T1936Z+Rec83b4b38c on Tue Nov 28 14:36:34 EST 2023-->
+  <decoderIndex version="11">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -7290,6 +7290,7 @@
         </model>
         <model model="LokSound 5 MKL" maxFnNum="31" numOuts="20" extFnsESU="V5" productID="33554598" />
         <model model="LokSound 5 micro KATO" maxFnNum="31" numOuts="20" extFnsESU="V5" productID="16777405" />
+        <model model="LokSound 5 micro DCC Direct Atlas Legacy" maxFnNum="31" numOuts="6" extFnsESU="V5" productID="16777432" />
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <!-- Copyright (C) JMRI 2019 All rights reserved -->
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
@@ -26508,6 +26509,16 @@
       <family name="Quad-LN_S" mfg="Tam Valley Depot" type="stationary" file="TamValleyDepot_QuadLn_S_11.xml">
         <model model="Quad-LN_S_v1" lowVersionID="6" />
         <model model="Quad-LN_S_v3" lowVersionID="7" />
+      </family>
+      <family name="Function Decoders" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_FD.xml">
+        <model model="FD Micro" numOuts="6" numFns="32" lowVersionID="1" highVersionID="7" productID="2010106,2010107,2010108,2010109,2010110,2010111,2010112">
+          <output name="1" />
+          <output name="2" />
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Aux3" />
+          <output name="6" label="Aux4" />
+        </model>
       </family>
       <family name="Lokommander 2 v3" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_Lokommander_2.xml">
         <model model="Lokommander 2 Micro" numOuts="6" numFns="15" lowVersionID="3" highVersionID="3" productID="2010220,2010221,2010222,2010223,2010227">

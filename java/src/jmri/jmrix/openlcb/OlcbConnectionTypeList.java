@@ -31,6 +31,7 @@ public class OlcbConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
             "jmri.jmrix.can.adapters.gridconnect.canusb.serialdriver.ConnectionConfig",
             "jmri.jmrix.can.adapters.gridconnect.lccbuffer.serialdriver.ConnectionConfig",
             "jmri.jmrix.can.adapters.gridconnect.pilcc.serialdriver.ConnectionConfig",
+            "jmri.jmrix.can.adapters.gridconnect.usblcc.serialdriver.ConnectionConfig",
             "jmri.jmrix.can.adapters.gridconnect.net.ConnectionConfig",
             "jmri.jmrix.can.adapters.lawicell.canusb.serialdriver.ConnectionConfig",
             "jmri.jmrix.can.adapters.loopback.ConnectionConfig",

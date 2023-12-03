@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright ($Author$) 2008 -->
 
-  <title>JMRI: Memory Monitor Tool</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Memory Monitor Tool</title><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -39,10 +39,10 @@
         <li>The right column is the total memory available to JMRI.</li>
       </ul>
       At the top of the left column, the maximum memory that can be available to JMRI is displayed.
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

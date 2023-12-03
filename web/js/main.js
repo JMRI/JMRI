@@ -158,7 +158,7 @@ function setFontSize(change) {
     if (size <= minFontSize) {
         $("#font-size-smaller").parent().addClass("disabled");
     }
-    log.log("Body font size is " + $("body").css("fontSize"));
+    console.log("Body font size is " + $("body").css("fontSize"));
 }
 
 /*
@@ -190,14 +190,14 @@ function setNavbarFixed(fixed) {
     }
     if (fixed === true) {
         $(".navbar").removeClass("navbar-static-top").addClass("navbar-fixed-top");
-        $("body").css("padding-top", "50px");
+        $("body").css("padding-top", "50px");  
     } else {
         $(".navbar").removeClass("navbar-fixed-top").addClass("navbar-static-top");
         $("body").css("padding-top", "0px");
     }
     $("#navbar-fixed-position").prop("checked", (fixed === true) ? "checked" : "");
     window.localStorage.setItem("jmri.css.navbar.fixed", ((fixed === true) ? 1 : 0));
-    log.log("Navbar is " + ((fixed === true) ? "fixed" : "floating"));
+    console.log("Navbar is " + ((fixed === true) ? "fixed" : "floating"));
 }
 
 /*
@@ -280,6 +280,21 @@ if (!window.localStorage) {
         this.enumerable = true;
     })());
 }
+
+//insert jquery if not available
+//if (!window.jQuery) {
+//    console.log("inserting jQuery");
+//    var script = document.createElement('script');
+//    script.src = '/js/jquery-2.2.4.min.js'; // 
+//    document.getElementsByTagName('head')[0].appendChild(script);
+//}
+//insert logger.js if not available
+//if (!window.Logger) {
+//    var script = document.createElement('script');
+//    script.src = '/js/logger.js'; // 
+//    document.getElementsByTagName('head')[0].appendChild(script);
+//    log.log("inserting Logger");
+//}
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
 // perform tasks that all BootStrap-based servlets need
 $(document).ready(function () {

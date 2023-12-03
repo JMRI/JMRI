@@ -6,10 +6,10 @@
 <meta name="author" content="Dan Boudreau">
 <meta name="keywords"
   content="JMRI Help Operations Setup Settings Cars Engines Locomotives Trains Routes Locations Schedules">
-<!--#include virtual="/Style.shtml" -->
+<!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <!-- This document contains general descriptions of the OperaitonsPro functions and should, therefore,  be considered
 for moving to the help/en/html/apps/OperationsPro subdirectory of the help hierarchy to be consistent with "Organization of the help files"
@@ -2463,10 +2463,10 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
       <p>
         If you restrict a track to certain trains or train routes, the table in the <a
           href="#AddLocation">Edit Location</a> window for that track will have an additional column
-        called "Restrictions". If you've built a list of trains or routes that can only set out cars
+        called "Restrictions". If you've built a list of trains or routes that can only set out rolling stock
         to the track, you will see "SO" followed by the number of trains or routes that are allowed
-        to place cars onto that track. For car pickup restrictions, you will see "PU" followed by
-        the number of trains or routes that are allowed to pull cars from that track. A small "x"
+        to place rolling stock onto that track. For rolling stock pickup restrictions, you will see "PU" followed by
+        the number of trains or routes that are allowed to pull rolling stock from that track. A small "x"
         appears before the number if you built of list of train or route exclusions for that track.
       </p>
 
@@ -2889,10 +2889,10 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
       </p>
 
       <p>
-        The <a href="#BuildReports">build report</a> will provide a list of cars on the C/I track
+        The <a href="#BuildReports">build report</a> will provide a list of rolling stock on the C/I track
         that were previously set out by a train using the same route, or aren't allowed to be pulled
         due to restrictions that you've added. The build report uses the term "Excluded" when
-        detailing which cars can't be pulled from the C/I track.
+        detailing which rolling stock can't be pulled from the C/I track.
       </p>
 
       <p>Given the complexity of this type of track, it is strongly recommended that you not use
@@ -6297,11 +6297,11 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
       </p>
 
       <p>End of OperationsPro&trade; help.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

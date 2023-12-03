@@ -3,12 +3,12 @@
 <!-- Translated  by Blorec Herv&#233; le 2011-09-22-->
 <head>
   <title>Measurements on power leads of Digitrax components</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
 <body>
-<!--#include virtual="/Header_fr.shtml" -->
+<!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 <div id="mBody">
   <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -141,9 +141,9 @@ câblés sur les rails et l'alimentation électrique commune avec la même polar
 visibles ci-dessus montrent pourquoi vous avez besoin de faire cela; si deux unités DS54
 ont été connectée de fa&ccedil;on opposée, elles seraient incapables de créer une référence de masse cohérente.</p>
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

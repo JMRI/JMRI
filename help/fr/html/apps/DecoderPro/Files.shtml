@@ -4,11 +4,11 @@
 <!-- Copyright Bob Jacobsen 2008 -->
 <!-- Translated by Herv&#233. BLOREC <bzh56420@yahoo.fr> on 2016-06-24 -->
 <title>JMRI: DecoderPro User Guide - Configuration Files</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header_fr.shtml" -->
+<!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -107,9 +107,9 @@ o&#249; sont-ils localis&#233;s?
 Plus d'information au sujet des Fichiers de Configuration JMRI <a href="../../setup/Files.shtml">Fichiers de Configuration 
 JMRI</a>
 
-		<!--#include virtual="/Footer_fr.shtml" -->
+		<!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
 		</div>
 </div>  <!-- close #mBody -->
-<script src="/js/main.js"></script>
+<script src="/js/help.js"></script>
 </body>
 </html>

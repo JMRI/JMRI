@@ -8,11 +8,11 @@
   <meta name="Date.Modified" content="20150523">
   <meta name="author" content="Kevin Dickerson, Egbert Broerse">
   <meta name="keywords" content="JMRI help SignalMast Logic Add Edit">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -97,7 +97,7 @@
       Mât de Signalisation</a>.</p>
 
       <p>Traduction 2021-03-26</p>
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

@@ -5,11 +5,11 @@
   <title>JMRI Hardware Setup Support - USB to Serial adapters</title>
   <meta name="Author" content="Bob Jacobsen">
   <meta name="keywords" content="USB serial adapter JMRI install">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -122,9 +122,9 @@ commande RS232 fournisse le contr&#244;le de flux.</p>
 personnes utilisant un LI101 avec un adaptateur USB/s&#233;rie. Plus d'informations
 seraient grandement appr&#233;ci&#233;es.</p>
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

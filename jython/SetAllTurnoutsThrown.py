@@ -9,6 +9,11 @@
 #
 # Part of the JMRI distribution
 
+# This script kicks off an independent series of actions that will take some time to 
+# complete once the script itself completes.  If you are running this script as a 
+# startup action, you might need to include a pause startup action before you run any
+# additional scripts later.
+
 import jmri
 
 class SetAllTurnoutsThrown(jmri.jmrit.automat.AbstractAutomaton) :
