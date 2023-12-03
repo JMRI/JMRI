@@ -171,7 +171,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         if ((getMemo().getNceTrafficController().getCmdGroups() & NceTrafficController.CMDS_AUI_READ) 
                 != NceTrafficController.CMDS_AUI_READ) {
             if (!loggedAiuNotSupported) {
-                log.error("AIU not supported in this configuration");
+                log.warn("AIU not supported in this configuration");
                 loggedAiuNotSupported = true;
                 return;
             }
@@ -257,7 +257,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         if ((getMemo().getNceTrafficController().getCmdGroups() & NceTrafficController.CMDS_AUI_READ) 
                 != NceTrafficController.CMDS_AUI_READ) {
             if (!loggedAiuNotSupported) {
-                log.error("AIU not supported in this configuration");
+                log.warn("AIU not supported in this configuration");
                 loggedAiuNotSupported = true;
             }
         } else {
