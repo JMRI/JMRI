@@ -16,9 +16,14 @@ import jmri.util.swing.WindowInterface;
 
 /**
  * Sample Action to create a new user-defined item in the Tools menu.
- *
+ *<P>
  * This is disabled by default so it doesn't appear in the default Tools menu.
  * Uncomment the line indicated below to allow this to appear in the Tools menu.
+ *<P>
+ * For more on why this inherits from {@link jmri.util.swing.JmriAbstractAction}
+ * and the use of {@link jmri.util.swing.JmriPanel} and {@link jmri.util.swing.WindowInterface},
+ * please see 
+ * <a href="https://www.jmri.org/help/en/html/doc/Technical/Swing.shtml">JMRI's Use of Swing page</a>.
  *
  * @author Paul Bender   Copyright (C) 2003
  * @author Bob Jacobsen  Copyright (C) 2023
