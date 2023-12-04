@@ -87,9 +87,7 @@ public class GcSerialDriverAdapter extends GcPortController {
         activeSerialPort.setBaudRate(baud);
         activeSerialPort.setDTR();
         activeSerialPort.setRTS();
-        activeSerialPort.setFlowControl(
-                SerialPort.FLOW_CONTROL_DTR_ENABLED |
-                SerialPort.FLOW_CONTROL_CTS_ENABLED);
+        activeSerialPort.setFlowControl(flow);
         activeSerialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, 0, 0);
             
         // get and save stream
