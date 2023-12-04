@@ -79,6 +79,7 @@ public class GcSerialDriverAdapter extends GcPortController {
         // get and open the primary port
         activeSerialPort = SerialPort.getCommPort(portName);  // name of program, msec to wait
         activeSerialPort.openPort();
+        log.info("Connecting CAN to {} {}", portName, activeSerialPort);
         
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options

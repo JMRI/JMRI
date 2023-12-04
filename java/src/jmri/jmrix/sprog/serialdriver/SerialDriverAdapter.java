@@ -67,9 +67,8 @@ public class SerialDriverAdapter extends SprogPortController {
     public String openPort(String portName, String appName) {
         // get and open the primary port
         activeSerialPort = SerialPort.getCommPort(portName);
-        //activeSerialPort = SerialPort.getCommPorts()[3];
         activeSerialPort.openPort();
-        log.info("Connecting SPROG to {}", activeSerialPort);
+        log.info("Connecting SPROG to {} {}", portName, activeSerialPort);
 
         // try to set it for communication via SerialDriver
         activeSerialPort.setBaudRate(baudRate);
@@ -170,8 +169,6 @@ public class SerialDriverAdapter extends SprogPortController {
      * Set up all of the other objects to operate with an Sprog command station
      * connected to this port.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SLF4J_FORMAT_SHOULD_BE_CONST",
-        justification = "passing exception text")
     @Override
     public void configure() {
         // connect to the traffic controller
@@ -185,7 +182,7 @@ public class SerialDriverAdapter extends SprogPortController {
             try {
                 this.getSystemConnectionMemo().getPowerManager().setPower(jmri.PowerManager.ON);
             } catch (jmri.JmriException e) {
-                log.error(e.toString());
+                log.error("Error setting power on {}", e.toString());
             }
         }
     }
