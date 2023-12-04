@@ -26,9 +26,14 @@
         documented on <a href="Swing.shtml">another page</a>.
         </li>
 
-        <li>JMRI uses the <a href=
-        "http://www.sparetimelabs.com/purejavacomm/purejavacomm.php">PureJavaComm libraries</a> to
-        support serial communications on Macintosh, Linux and Windows. Before JMRI 4.7.5, we used
+        <li>JMRI uses the 
+        <a href="https://fazecast.github.io/jSerialComm/">jSerialCommn</a>
+        to support serial communications on Windows, Linux and macOS.
+        Before JMRI 5.7.1 we used the
+        <a href=
+        "http://www.sparetimelabs.com/purejavacomm/purejavacomm.php">PureJavaComm libraries</a>
+        for this. PureJavaComm references are slowly being removed.
+        Before JMRI 4.7.5, we used
         the RXTX and SerialIO libraries for this, but these were then removed.
         </li>
 
