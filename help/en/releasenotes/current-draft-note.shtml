@@ -600,6 +600,9 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The Linux and macOS application launchers and the Ant build process
+                have been updated to allow access to jar files in the preferences:lib/
+                directory. This gives creators of JMRI plug-ins a way to distribute
+                their code separate from JMRI.</li>
         </ul>
 
