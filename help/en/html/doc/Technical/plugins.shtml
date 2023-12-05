@@ -278,6 +278,30 @@
 
         <dt>
           <a href=
+          "https://www.jmri.org/JavaDoc/doc/jmri/jmrit/swing/ToolsMenuAction.html">
+          ToolsMenuAction</a>
+        </dt>
+
+        <dd>
+          Let you add a new item at the bottom of the main Tools menu.
+          
+          <p>Implementing <code>ToolsMenuAction</code> in a class that inherits from
+          <code>Action</code>,
+          <code>AbstractAction</code>, or
+          <code>JMenuItem</code>
+          and providing the appropriate service provider annotation will
+          result in your item being added at the bottom of the main Tools menu.
+
+          <p>For an example, see the SampleToolsMenuItem class 
+          <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/sample/SampleToolsMenuItem.java">
+          here</a>.
+          Note that this sample has some indicated lines commented out so that
+          it doesn't actually appear in the menu.  Remove those comments 
+          and rebuild to see how it works.</p>
+        </dd>
+
+        <dt>
+          <a href=
           "https://www.jmri.org/JavaDoc/doc/jmri/jmrit/beantable/signalmast/SignalMastAddPane.SignalMastAddPaneProvider.html">
           SignalMastAddPaneProvider</a>
         </dt>
