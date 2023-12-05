@@ -25,6 +25,10 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.29.0
+; - Prepend the "Settings/lib" jars before the prepended "Cp=*", where "Settings"
+;   is generally the JMRI directory immediately below the user's "home" directory. 
+; -------------------------------------------------------------------------
 ; - Version 0.1.28.1
 ; - Do not set the jmri.log.path System property.
 ; -------------------------------------------------------------------------
@@ -170,7 +174,7 @@
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
 !define COPYRIGHT  "(C) 1997-2023 JMRI Community" ; Copyright string
-!define VER        "0.1.28.1"                     ; Launcher version
+!define VER        "0.1.29.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
@@ -649,6 +653,24 @@ Section "Main"
   StrCpy $CLASSPATH "$CLASSPATH;$9"
   DetailPrint "ClassPath: $CLASSPATH"
 
+; add something here to "prepend" any/all .jar filenames, separated by a ";",
+; from the "Settings:lib" directory.
+
+  StrCpy $0 "$PROFILE\JMRI\lib"
+  DetailPrint "Check $0 for any prepended classpath entries"
+
+  Call GetSettingsClassPath
+  DetailPrint "Checked GetSettingsClassPath from $0 and found $9"
+
+  StrCmp $9 "" ContinueClasspathPrepend
+    StrCmp $P_CLASSPATH "" NoCpPrepend
+      ; add a ";" if $P_CLASSPATH > ""
+      StrCpy $9 "$9;"
+    NoCpPrepend:
+    StrCpy $P_CLASSPATH "$9$P_CLASSPATH"
+    DetailPrint "Prepend Classpath is $P_CLASSPATH"
+
+  ContinueClasspathPrepend:
   ; -- Now prepend and/or append when required
   DetailPrint "Check for any prepended/appended classpath entries"
   StrCmp $P_CLASSPATH "" ClassPathAppend
@@ -704,7 +726,10 @@ SectionEnd
 
 Function .onInit
   ; -- Setup the default environment
+  ;    This can be overriden by us of the "/debug" or "[/noisy]" parameter.
+
   SetSilent silent
+
   StrCpy $NOISY ${SW_MINIMIZE}
   StrCpy $FORCE32BIT ${FLAG_NO}
   StrCpy $ALTLAUNCH ${FLAG_YES}
@@ -1033,6 +1058,57 @@ Function GetClassPath
   finished:
 FunctionEnd
 
+Function GetSettingsClassPath
+; -------------------------------------------------------------------------
+; - Get any additional class path items from preferences:lib for "prepending" to
+;   the CLASSPATH
+; - input:  $0 path to search (i.e. the equivalent of "preferences:lib")
+; - output: $9 AddToClassPath
+; -------------------------------------------------------------------------
+  ;DetailPrint ""
+  ;DetailPrint "Checking $0 for jar files"
+  ; find the first "*.jar" file at $0.
+  StrCpy $9 ""
+
+  FindFirst $2 $1 "$0\*.jar"
+
+  loop:
+    ; DetailPrint "Checking: $1"
+    
+    ; quit if now done
+    StrCmp $1 "" Done
+
+    ; NOTE: the "find" operation WILL find filenames that have other characters
+    ; than the ones specified in FindFirst operation.  So look for the last 4 
+    ; characters of the filename to match ".jar"...
+
+    ; check if found object ends in ".jar"
+    StrCpy $4 $1 4 -4
+    
+    ; DetailPrint "end of text is $4"
+    StrCmp $4 ".jar" 0 GoingToNext
+    
+    ; DetailPrint "answer $0\$1"
+
+    StrCmp $9 "" SkipSemicolon
+      StrCpy $9 "$9;"
+
+    SkipSemicolon:
+    ; add the latest jar file to the end of the list of 
+    ; preferences:lib files
+    StrCpy $9 "$9$0\$1"
+
+    GoingToNext:
+    ; Find the next one, if available
+    FindNext $2 $1
+    Goto loop
+
+  Done:
+  FindClose $0
+  ;DetailPrint ""
+
+FunctionEnd
+
 Function GetParameters
 ; -------------------------------------------------------------------------
 ; - Gets command line parameters
@@ -1124,7 +1200,7 @@ FunctionEnd
 
 Function CheckUserHome
 ; -------------------------------------------------------------------------
-; - Check if the value of the registry key that Java uses to detemine
+; - Check if the value of the registry key that Java uses to determine
 ; - user.home points to the user profile directory.
 ; - For non NT-based systems, always return FLAG_YES
 ; - input:  none
