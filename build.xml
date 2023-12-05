@@ -112,7 +112,7 @@
         </and>
     </condition>
 
-    <condition property="settings.dir" value="${user.home}/.jmri">
+    <condition property="settings.dir" value="${user.home}/JMRI">
         <os family="windows" />
     </condition>
     <condition property="settings.dir" value="${user.home}/Library/Preferences/JMRI"> <!-- has to be before unix clause -->
