@@ -112,13 +112,13 @@
         </and>
     </condition>
 
-    <condition property="settings.dir" value="${env.HOME}/.jmri">
+    <condition property="settings.dir" value="${user.home}/.jmri">
         <os family="windows" />
     </condition>
-    <condition property="settings.dir" value="${env.HOME}/Library/Preferences/JMRI"> <!-- has to be before unix clause -->
+    <condition property="settings.dir" value="${user.home}/Library/Preferences/JMRI"> <!-- has to be before unix clause -->
             <os family="mac" />
     </condition>
-    <condition property="settings.dir" value="${env.HOME}/.jmri">
+    <condition property="settings.dir" value="${user.home}/.jmri">
             <os family="unix" />
     </condition>
     <echo message="settings.dir assumed to be ${settings.dir}"/>
