@@ -326,7 +326,7 @@
       
       Starting with JMRI 5.7.1, you should have them place your jar file
       in the lib/ directory that's found within their
-      <a href="StartUpScripts.shtml">JMRI preferences directory</a>.
+      <a href="ProfileFileStructure.shtml">JMRI settings directory</a>.
       On easy way to locate this directory is to open "File Locations"
       in the JMRI Help menu and click "Open Settings Location". The lib/ 
       directory should be available in the file finder window that opens.

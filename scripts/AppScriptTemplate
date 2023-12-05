@@ -503,7 +503,7 @@ CP="${CP}.:classes:target/classes:jmri.jar"
 # add contents of lib
 CP="${CP}:$( ls -m ${LIBDIR}/*.jar | tr -d ' \n' | tr ',' ':' )"
 
-# add contents of the user preferences lib directory, if anything 
+# add contents of the user settings / lib directory, if anything 
 mkdir -p ${settingsdir}/lib
 if [ ! -z "$(ls -A ${settingsdir}/lib)" ]; then
     CP="${CP}:$( ls -m ${settingsdir}/lib/*.jar | tr -d ' \n' | tr ',' ':' )"
