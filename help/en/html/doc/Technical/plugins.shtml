@@ -329,7 +329,7 @@
       <a href="ProfileFileStructure.shtml">JMRI settings directory</a>.
       On easy way to locate this directory is to open "File Locations"
       in the JMRI Help menu and click "Open Settings Location". The lib/ 
-      directory should be available in the file finder window that opens.
+      directory should be available in the file manager window that opens.
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
