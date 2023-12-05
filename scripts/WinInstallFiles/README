@@ -9,16 +9,16 @@ Should you need to recreate the LaunchJMRI.exe use 'ant launchjmri.exe` or
 Note that this ant target is not included in the package-windows target: We  do 
 not remake the LaunchJMRI.exe file as part of the build of the release packages.  
 
-Note that there have been problems reported doing this on macOS, though others 
+Note that there have been problems reported doing this on MacOS, though others 
 have made it work. Check that the length of the created file is reasonable.
 
 When the "/debug" parameter is selected, the launcher opens a window that is 
-independent of JAVA, that effectively contains "debuggging log" that the 
+independent of JAVA, that effectively contains "debugging log" that the 
 Launcher functionality provides.  This window remains alive until JMRI exits, 
 and the JAVA code returns a "completion" code to the Launcher.  If used from a 
 "command prompt", this window must be closed before the command prompt can be
 used for additional commands.
 
 When the "/noisy" parameter is selected, the launcher opens a window that is 
-independent of JAVA, that effectively contains the JMRI "console log".  This 
+independent of JAVA which effectively contains the JMRI "console log".  This 
 window remains alive during the entire JMRI run.
