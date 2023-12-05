@@ -2,6 +2,8 @@ package jmri.jmrix.can.adapters.gridconnect.usblcc.serialdriver;
 
 import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
 
+import com.fazecast.jSerialComm.*;
+
 /**
  * Implements SerialPortAdapter for GridConnect adapters.
  * <p>
@@ -13,6 +15,17 @@ import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
  * @author Andrew Crosland Copyright (C) 2023
  */
 public class SerialDriverAdapter extends GcSerialDriverAdapter {
+
+    /** 
+     * Set up the flow control to RTS and CTS
+     */
+    @Override
+    protected void setFlowControl() {
+        activeSerialPort.setFlowControl(
+            SerialPort.FLOW_CONTROL_RTS_ENABLED |
+            SerialPort.FLOW_CONTROL_CTS_ENABLED
+        );
+    }
 
     /**
      * {@inheritDoc}

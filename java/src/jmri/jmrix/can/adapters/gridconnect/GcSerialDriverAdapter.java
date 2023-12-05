@@ -87,7 +87,7 @@ public class GcSerialDriverAdapter extends GcPortController {
         activeSerialPort.setBaudRate(baud);
         activeSerialPort.setDTR();
         activeSerialPort.setRTS();
-        activeSerialPort.setFlowControl(flowControl);
+        setFlowControl();
         activeSerialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, 0, 0);
             
         // get and save stream
@@ -106,6 +106,15 @@ public class GcSerialDriverAdapter extends GcPortController {
         return null; // indicates OK return
     }
 
+    /** 
+     * Set up the flow control.  This version 
+     * takes the default {@link flowControl} value unless
+     * a constructor argument has overridden it.
+     */
+    protected void setFlowControl() {
+        activeSerialPort.setFlowControl(flowControl);
+    }
+        
     /**
      * Set up all of the other objects to operate with a CAN RS adapter
      * connected to this port.
