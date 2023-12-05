@@ -2,6 +2,9 @@ package jmri.jmrix.loconet.locobuffer;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -90,9 +93,22 @@ public class LocoBufferAdapter extends LnPortController {
         return portNameVector;
     }
 
+    private String _portName;
     @Override
     public String openPort(String portName, String appName) {
         // open the primary and secondary ports in LocoNet mode, check ability to set moderators
+        _portName = portName;
+        if (portName.startsWith("pipe:")   ) {
+            activeSerialPort = null;
+            try {
+                serialStream = new DataInputStream(new FileInputStream(portName.substring(5) + "_REC"));
+                opened = true;
+                return null;
+            } catch (FileNotFoundException fnf) {
+                opened = false;
+                return "Cannot open pipe " + portName + ": " + fnf.getMessage();
+            }
+        }
         try {
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
@@ -163,6 +179,9 @@ public class LocoBufferAdapter extends LnPortController {
      */
     @Override
     public boolean okToSend() {
+        if (_portName.startsWith("pipe:")) {
+            return true;
+        }
         return activeSerialPort.isCTS();
     }
 
@@ -208,6 +227,15 @@ public class LocoBufferAdapter extends LnPortController {
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available"); // NOI18N
+        }
+        if (_portName.startsWith("pipe:")   ) {
+            activeSerialPort = null;
+            try {
+                return  new DataOutputStream(new FileOutputStream(_portName.substring(5) + "_SEND"));
+            } catch (FileNotFoundException fnf) {
+                log.error("getOutputStream exception: {}", fnf.getMessage());
+            }
+            return null;
         }
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
