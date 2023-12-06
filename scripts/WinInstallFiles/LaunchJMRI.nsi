@@ -687,6 +687,45 @@ Section "Main"
   DetailPrint "MaxLen: ${NSIS_MAX_STRLEN}"
   DetailPrint `ExeString: "$JEXEPATH" $OPTIONS -Djava.class.path="$CLASSPATH" $CLASS $PARAMETERS`
 
+
+  ; -- Create a preferences:\lib directory for this user
+  IfFileExists "$PROFILE\JMRI\lib\*.*" +2
+    CreateDirectory "$PROFILE\JMRI\lib"
+
+  ; -- Create the directory and README.txt file
+  IfFileExists "$PROFILE\JMRI\lib\*.*" +2
+    CreateDirectory "$PROFILE\JMRI\lib"
+
+  IfFileExists "$PROFILE\JMRI\lib\README.txt" ReadMeIsCreated
+
+  ; Create a "$JMRIPREFS\lib\README.txt" file
+  Push $0
+  FileOpen $0 "$JMRIPREFS\lib\README.txt" w
+  FileWrite $0 '(Since JMRI version 5.5.8.)$\r$\n'
+  FileWrite $0 '$\r$\n'
+  FileWrite $0 'This directory can be used to hold "Plugin" files for JMRI.$\r$\n'
+  FileWrite $0 '$\r$\n'
+  FileWrite $0 'Third-party developers, and, on occasion, JMRI developers, may wish to provide$\r$\n'
+  FileWrite $0 'a "Plugin" to enhance JMRI functionality.  One way to install such a plugin into$\r$\n'
+  FileWrite $0 'JMRI is to:$\r$\n'
+  FileWrite $0 '  1. Quit all JMRI programs.$\r$\n'
+  FileWrite $0 '  2. Acquire the plugin.$\r$\n'
+  FileWrite $0 '  3. Copy the acquired plugin to this directory.$\r$\n'
+  FileWrite $0 '  4. Re-start the JMRI programs that you use.$\r$\n'
+  FileWrite $0 'If it has been installed correctly, JMRI will now use the plugin.  Any plugins $\r$\n'
+  FileWrite $0 'installed here will be available to all JMRI instances >for this user<, except $\r$\n'
+  FileWrite $0 'when JMRI has a similarly-implemented function.$\r$\n'
+  FileWrite $0 '$\r$\n'
+  FileWrite $0 'Note: Plugin files installed in this directory are only available on a "user-"$\r$\n'
+  FileWrite $0 'specific basis.  If a plugin is to be available to multiple Windows users using$\r$\n'
+  FileWrite $0 'this type of install, each Windows "user" who needs access to the plugin will$\r$\n'
+  FileWrite $0 'need to install the plugin in their own user-specific JMRI directory$\'s "lib"$\r$\n'
+  FileWrite $0 'directory.$\r$\n'
+  FileWrite $0 '$\r$\n'
+  FileClose $0
+  Pop $0
+  ReadMeIsCreated:
+
   ; -- Finally get ready to run the application
   SetOutPath $JMRIHOME
 
