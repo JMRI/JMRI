@@ -637,56 +637,63 @@ Section "Main"
   EnvJmriHomeDone:
 
   ; -- Build the ClassPath
+  ;
+  ; The CLASSPATH shall be made up as, first to last:
+  ;  a) Any path elements specified with the -cp:p prepend argument
+  ;  b) JMRI’s code itself via the jmri.jar file
+  ;  c) contents of the program lib/ directory
+  ;  d) contents of the settings:lib/ directory 
+  ;  e) Any path elements specified with the --cp:a append argument
+
   StrCpy $CLASSPATH ".;classes"
   StrCpy $0 "$JMRIHOME" ; normally 'C:\Program Files\JMRI'
   StrCpy $3 "jmri.jar" ; set to jmri.jar to skip jmri.jar
   StrCpy $4 "" ; no prefix required
   Call GetClassPath
   StrCmp $9 "" +2 0
-  StrCpy $CLASSPATH "$CLASSPATH;$9"
+    StrCpy $CLASSPATH "$CLASSPATH;$9"
   StrCpy $CLASSPATH "$CLASSPATH;jmri.jar"
   StrCpy $3 "" ; set to blank to include all .jar files
   StrCpy $4 "lib\" ; lib prefix
   StrCpy $0 "$JMRIHOME\lib" ; normally 'C:\Program Files\JMRI\lib'
   Call GetClassPath
   StrCmp $9 "" +2 0
-  StrCpy $CLASSPATH "$CLASSPATH;$9"
+    StrCpy $CLASSPATH "$CLASSPATH;$9"
   DetailPrint "ClassPath: $CLASSPATH"
 
-; add something here to "prepend" any/all .jar filenames, separated by a ";",
-; from the "Settings:lib" directory.
+  ; -- Now prepend and/or append when required
+  DetailPrint "Check for any prepended/appended classpath entries"
+  StrCmp $P_CLASSPATH "" ClassPathAppend
+    StrCpy $CLASSPATH "$P_CLASSPATH;$CLASSPATH"
+    DetailPrint "Prepended $P_CLASSPATH"
+
+  ClassPathAppend:
+
+  ContinueClassAppend:
+
+; add something here to "append" any/all "settings:"\lib\.jar filenames, 
+; separated by a ";".
 
   StrCpy $0 "$PROFILE\JMRI\lib"
-  DetailPrint "Check $0 for any prepended classpath entries"
+  DetailPrint "Check $0 for any appended classpath entries"
 
   Call GetSettingsClassPath
   DetailPrint "Checked GetSettingsClassPath from $0 and found $9"
 
-  StrCmp $9 "" ContinueClasspathPrepend
-    StrCmp $P_CLASSPATH "" NoCpPrepend
-      ; add a ";" if $P_CLASSPATH > ""
-      StrCpy $9 "$9;"
-    NoCpPrepend:
-    StrCpy $P_CLASSPATH "$9$P_CLASSPATH"
-    DetailPrint "Prepend Classpath is $P_CLASSPATH"
+  StrCmp $9 "" ContinueClasspathAppend
+    StrCpy $CLASSPATH "$CLASSPATH;$9"
+    DetailPrint "  Adding $9 to Classpath."
 
-  ContinueClasspathPrepend:
-  ; -- Now prepend and/or append when required
-  DetailPrint "Check for any prepended/appended classpath entries"
-  StrCmp $P_CLASSPATH "" ClassPathAppend
-  StrCpy $CLASSPATH "$P_CLASSPATH;$CLASSPATH"
-  DetailPrint "Prepended $P_CLASSPATH"
-  ClassPathAppend:
-  StrCmp $CLASSPATH_A "" ClassPathDone
-  StrCpy $CLASSPATH "$CLASSPATH;$CLASSPATH_A"
-  DetailPrint "Appended $CLASSPATH_A"
+  ContinueClasspathAppend:
 
-  ClassPathDone:
+  StrCmp $CLASSPATH_A "" ContinueClassAppend
+    StrCpy $CLASSPATH "$CLASSPATH;$CLASSPATH_A"
+    DetailPrint "Appended $CLASSPATH_A"
+
   DetailPrint "Final ClassPath: $CLASSPATH"
 
   DetailPrint "MaxLen: ${NSIS_MAX_STRLEN}"
   DetailPrint `ExeString: "$JEXEPATH" $OPTIONS -Djava.class.path="$CLASSPATH" $CLASS $PARAMETERS`
-
 
   ; -- Create a preferences:\lib directory for this user
   IfFileExists "$PROFILE\JMRI\lib\*.*" +2
@@ -715,6 +722,8 @@ Section "Main"
   FileWrite $0 'If it has been installed correctly, JMRI will now use the plugin.  Any plugins $\r$\n'
   FileWrite $0 'installed here will be available to all JMRI instances >for this user<, except $\r$\n'
   FileWrite $0 'when JMRI has a similarly-implemented function.$\r$\n'
+  FileWrite $0 '$\r$\n'
+  FileWrite $0 'Any of these .jar files shall be added as the last .jar files in the CLASSPATH.$\r$\n'
   FileWrite $0 '$\r$\n'
   FileWrite $0 'Note: Plugin files installed in this directory are only available on a "user-"$\r$\n'
   FileWrite $0 'specific basis.  If a plugin is to be available to multiple Windows users using$\r$\n'
@@ -912,6 +921,7 @@ Function ProcessParameters
   ; -- to append 'CLASSPATH' to classpath
   ; -- $1 already contains complete option with '--cp:a=' prefix
   StrCpy $CLASSPATH_A $1 "" 7 ; strip first 7 chars
+  DetailPrint "Classpath_a is $CLASSPATH_A"
   Return
 
   optsPCP:
