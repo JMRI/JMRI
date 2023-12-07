@@ -86,7 +86,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>JMRI's "Windows Launcher" program will automatically load any JMRI "Plugin" 
+                    files which have been installed in "settings:lib\" directory.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -602,4 +603,3 @@
         <ul>
             <li></li>
         </ul>
-
