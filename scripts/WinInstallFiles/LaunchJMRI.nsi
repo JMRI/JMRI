@@ -669,8 +669,6 @@ Section "Main"
 
   ClassPathAppend:
 
-  ContinueClassAppend:
-
 ; add something here to "append" any/all "settings:"\lib\.jar filenames, 
 ; separated by a ";".
 
@@ -689,6 +687,8 @@ Section "Main"
   StrCmp $CLASSPATH_A "" ContinueClassAppend
     StrCpy $CLASSPATH "$CLASSPATH;$CLASSPATH_A"
     DetailPrint "Appended $CLASSPATH_A"
+
+  ContinueClassAppend:
 
   DetailPrint "Final ClassPath: $CLASSPATH"
 
