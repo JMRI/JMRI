@@ -600,6 +600,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Added an 
+            <a href="https://www.jmri.org/help/en/html/doc/Technical/plugins.shtml">SPI mechanism</a>
+            for extending the Tools menu.</li>
         </ul>
 
