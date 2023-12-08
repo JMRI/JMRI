@@ -2,6 +2,7 @@ package jmri.jmrit.throttle;
 
 import java.awt.GraphicsEnvironment;
 
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -21,6 +22,8 @@ public class ThrottleWindowTest extends jmri.util.JmriJFrameTestBase {
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDebugThrottleManager();
         if (!GraphicsEnvironment.isHeadless()) {
+            // this will disable svg icons, batik randomly crashes JUnit tests
+            InstanceManager.getDefault(ThrottlesPreferences.class).setUseLargeSpeedSlider(false);
             frame = new ThrottleWindow();
         }
     }

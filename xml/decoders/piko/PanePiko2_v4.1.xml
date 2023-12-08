@@ -35,12 +35,18 @@
 			<date>2023-01-08</date>
 			<authorinitials>UG</authorinitials>
 			<revremark>Add CVs 100, 101 for Function Mapping Shift </revremark>
-		</revision>		
+		</revision>
+		<revision>
+			<revnumber>3</revnumber>
+			<date>2023-12-03</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add English translations</revremark>
+		</revision>
 	</revhistory>
 	<name>Piko 2/2</name>
 	<column>
 		<label>
-			<text>Decoder Programming Lock</text>
+			<text>&gt;&gt; Decoder Programming Lock &lt;&lt;</text>
 			<text xml:lang="de">&gt;&gt; Decoder Programmiersperre &lt;&lt;</text>
 			<text xml:lang="nl">Decoder Programmeerslot</text>
 			<text xml:lang="cs">Zámek programování dekodéru</text>
@@ -56,7 +62,7 @@
 		<!-- CVs 50-51 -->
 		<separator/>
 		<label>
-			<text>Decoder Config 1</text>
+			<text>&gt;&gt; Decoder Config 1 &lt;&lt;</text>
 			<text xml:lang="de">&gt;&gt; Decoder Konfiguration 1 (CV 50) &lt;&lt;</text>
 		</label>
 		<label>
@@ -74,7 +80,7 @@
 			<text>  </text>
 		</label>
 		<label>
-			<text>Decoder Config 2</text>
+			<text>&gt;&gt; Decoder Config 2 &lt;&lt;</text>
 			<text xml:lang="de">&gt;&gt; Decoder Konfiguration 2 (CV 51) &lt;&lt;</text>
 		</label>
 		<label>
@@ -88,7 +94,7 @@
 		</label>
 		<separator/>
 		<label>
-			<text>Motorola Adressen (read only)</text>
+			<text>&gt;&gt; Motorola Adressen (read only) &lt;&lt;</text>
 			<text xml:lang="de">&gt;&gt; Motorola Adressen (read only)(CV 47-49) &lt;&lt;</text>
 		</label>
 		<label>
@@ -301,7 +307,7 @@
 		</label>
 		<separator/>
 		<label>
-			<text>PWM</text>
+			<text>&gt;&gt; PWM &lt;&lt;</text>
 			<text xml:lang="de">&gt;&gt; PWM &lt;&lt;</text>
 		</label>
 		<label>
@@ -365,7 +371,7 @@
 		</label>
 		<separator/>
 		<label>
-			<text>Special Light Effects</text>
+			<text>&gt;&gt; Special Light Effects &lt;&lt;</text>
 			<text xml:lang="de">&gt;&gt; Spezial Licht Effekte &lt;&lt;</text>
 			<text xml:lang="cs">Zvláštní světelné efekty</text>
 		</label>
