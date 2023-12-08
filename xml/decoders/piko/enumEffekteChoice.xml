@@ -13,21 +13,27 @@
 <!-- for more details.                                                      -->
 <!-- 																		-->
 <!-- Version 1 - Include file for Piko SmartDecoder 4.1 and XP5.1 (11/2022) -->
+<!-- Version 2 - Add English translations                         (11/2023) -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 	<enumChoice choice="ohne Effekt">
-		<choice> 0: ohne Effekt</choice>
+		<choice> 0: none Effect</choice>
+		<choice xml:lang="de"> 0: ohne Effekt</choice>
 	</enumChoice>
 	<enumChoice choice="Blinken 1">
-		<choice> 1: Blinken 1</choice>
+		<choice> 1: Flashing 1</choice>
+		<choice xml:lang="de"> 1: Blinken 1</choice>
 	</enumChoice>
 	<enumChoice choice="Blinken 2">
-		<choice> 2: Blinken 2</choice>
+		<choice> 2: Flashing 2</choice>
+		<choice xml:lang="de"> 2: Blinken 2</choice>
 	</enumChoice>
 	<enumChoice choice="Blinken 3">
-		<choice> 3: Blinken 3</choice>
+		<choice> 3: Flashing 3</choice>
+		<choice xml:lang="de"> 3: Blinken 3</choice>
 	</enumChoice>
 	<enumChoice choice="Blinken 4">
-		<choice> 4: Blinken 4</choice>
+		<choice> 4: Flashing 4</choice>
+		<choice xml:lang="de"> 4: Blinken 4</choice>
 	</enumChoice>
 	<enumChoice choice="Mars light" value="10">
 		<choice>10: Mars light</choice>
@@ -36,69 +42,91 @@
 		<choice>11: Gyro light</choice>
 	</enumChoice>
 	<enumChoice choice="Blinkendes Spitzenlicht" value="12">
-		<choice>12: Blinkendes Spitzenlicht</choice>
+		<choice>12: Flashing top light</choice>
+		<choice xml:lang="de">12: Blinkendes Spitzenlicht</choice>
 	</enumChoice>
 	<enumChoice choice="Stufiges Blinken" value="13">
-		<choice>13: Stufiges Blinken</choice>
+		<choice>13: Gradual flashing</choice>
+		<choice xml:lang="de">13: Stufiges Blinken</choice>
 	</enumChoice>
 	<enumChoice choice="Flaches Ausblenden" value="14">
-		<choice>14: Flaches Ausblenden</choice>
+		<choice>14: Flat fade-out</choice>
+		<choice xml:lang="de">14: Flaches Ausblenden</choice>
 	</enumChoice>
 	<enumChoice choice="15" value="15">
-		<choice>15: Rundumleuchte</choice>
+		<choice>15: Rotating beacon</choice>
+		<choice xml:lang="de">15: Rundumleuchte</choice>
 	</enumChoice>
 	<enumChoice choice="16" value="16">
-		<choice>16: Einzelblitz wiederholend</choice>
+		<choice>16: Single flash repeating</choice>
+		<choice xml:lang="de">16: Einzelblitz wiederholend</choice>
 	</enumChoice>
 	<enumChoice choice="17" value="17">
-		<choice>17: Doppelblitz wiederholend</choice>
+		<choice>17: Double flash repeating</choice>
+		<choice xml:lang="de">17: Doppelblitz wiederholend</choice>
 	</enumChoice>
 	<enumChoice choice="18" value="18">
-		<choice>18: Multiblitz wiederholend</choice>
+		<choice>18: Multi-flash repeating</choice>
+		<choice xml:lang="de">18: Multiblitz wiederholend</choice>
 	</enumChoice>
 	<enumChoice choice="30" value="30">
-		<choice>30: Einzelner Blitz</choice>
+		<choice>30: Single flash</choice>
+		<choice xml:lang="de">30: Einzelner Blitz</choice>
 	</enumChoice>
 	<enumChoice choice="31" value="31">
-		<choice>31: Mehrfacher Blitz</choice>
+		<choice>31: Multiple flash</choice>
+		<choice xml:lang="de">31: Mehrfacher Blitz</choice>
 	</enumChoice>
 	<enumChoice choice="32" value="32">
-		<choice>32: Schaltblitz</choice>
+		<choice>32: Shift lightning</choice>
+		<choice xml:lang="de">32: Schaltblitz</choice>
 	</enumChoice>
 	<enumChoice choice="33" value="33">
-		<choice>33: Zufall linear</choice>
+		<choice>33: Random linear</choice>
+		<choice xml:lang="de">33: Zufall linear</choice>
 	</enumChoice>
 	<enumChoice choice="34" value="34">
-		<choice>34: Feuerbüchse</choice>
+		<choice>34: Firebox</choice>
+		<choice xml:lang="de">34: Feuerbüchse</choice>
 	</enumChoice>
 	<enumChoice choice="35" value="35">
-		<choice>35: Leuchtstofflampe</choice>
+		<choice>35: Fluorescent lamp</choice>
+		<choice xml:lang="de">35: Leuchtstofflampe</choice>
 	</enumChoice>
 	<enumChoice choice="36" value="36">
-		<choice>36: Leuchtstofflampe defekt</choice>
+		<choice>36: Fluorescent lamp defective</choice>
+		<choice xml:lang="de">36: Leuchtstofflampe defekt</choice>
 	</enumChoice>
 	<enumChoice choice="37" value="37">
-		<choice>37: Energiesparlampe</choice>
+		<choice>37: Energy saving lamp</choice>
+		<choice xml:lang="de">37: Energiesparlampe</choice>
 	</enumChoice>
 	<enumChoice choice="40" value="40">
-		<choice>40: Verdampfer lastabhängig</choice>
+		<choice>40: Vaporizerr load-dependent</choice>
+		<choice xml:lang="de">40: Verdampfer lastabhängig</choice>
 	</enumChoice>
 	<enumChoice choice="41" value="41">
-		<choice>41: Verdampfer speedabhängig</choice>
+		<choice>41: Vaporizer speed-dependent</choice>
+		<choice xml:lang="de">41: Verdampfer speedabhängig</choice>
 	</enumChoice>
 	<enumChoice choice="50" value="50">
 		<choice>50: Servo 1</choice>
+		<choice xml:lang="de">50: Servo 1</choice>
 	</enumChoice>
 	<enumChoice choice="51" value="51">
 		<choice>51: Servo 2</choice>
+		<choice xml:lang="de">51: Servo 2</choice>
 	</enumChoice>
 	<enumChoice choice="52" value="52">
 		<choice>52: Servo 3</choice>
+		<choice xml:lang="de">52: Servo 3</choice>
 	</enumChoice>
 	<enumChoice choice="53" value="53">
 		<choice>53: Servo 4</choice>
+		<choice xml:lang="de">53: Servo 4</choice>
 	</enumChoice>
 	<enumChoice choice="255" value="255">
-		<choice>255:Ausgang/Effekt aus</choice>
+		<choice>255:Output/Effect off</choice>
+		<choice xml:lang="de">255:Ausgang/Effekt aus</choice>
 	</enumChoice>
 </enumVal>
