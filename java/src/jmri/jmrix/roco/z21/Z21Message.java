@@ -47,6 +47,9 @@ public class Z21Message extends AbstractMRMessage {
     // from an LocoNetNet message (used for protocol tunneling)
     public Z21Message(jmri.jmrix.loconet.LocoNetMessage m) {
         this(m.getNumDataElements() + 4);
+        if ((m.getOpCode() & 0x08) == 0x00) {
+            mReplyExpected = false;
+        }
         this.setOpCode(0x00A2);
         for (int i = 0; i < m.getNumDataElements(); i++) {
             setElement(i + 4, m.getElement(i));
@@ -86,6 +89,12 @@ public class Z21Message extends AbstractMRMessage {
     public Z21Message(byte[] a, int l) {
         super(String.valueOf(a));
         setBinary(true);
+    }
+
+    boolean mReplyExpected = true;
+    @Override
+    public boolean replyExpected() {
+        return mReplyExpected; 
     }
 
     @Override
