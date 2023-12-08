@@ -157,9 +157,11 @@
       </ul>
       We encourage you to <a href="gitdeveloper.shtml">contribute your code to for inclusion in
       JMRI</a>. That way, lots of people benefit. But if you don't want to do that, you can package
-      it up as a separate .jar file which can just be dropped into the JMRI lib/ directory. By
+      it up as a separate .jar file which can just be dropped into the JMRI lib directory
+      in the user's settings directory. By
       using the approach listed above (and the services listed below), JMRI will automatically pick
-      it up and use it.
+      it up and use it.  For more on this mechanism, see the
+      <a href="Patterns.shtml#SPI">discussion on the Patterns page</a>.
 
       <h2 id="service">Implement a Service Provider</h2>
       Sometimes what you want to add provides a very specific technical function. Many of those can
@@ -276,6 +278,30 @@
         validate preferences within a JMRI configuration profile. If a plugin needs to take action
         very early in the JMRI application startup sequence, it would need to provide a
         PreferencesManager service.</dd>
+
+        <dt>
+          <a href=
+          "https://www.jmri.org/JavaDoc/doc/jmri/jmrit/swing/ToolsMenuAction.html">
+          ToolsMenuAction</a>
+        </dt>
+
+        <dd>
+          Let you add a new item at the bottom of the main Tools menu.
+          
+          <p>Implementing <code>ToolsMenuAction</code> in a class that inherits from
+          <code>Action</code>,
+          <code>AbstractAction</code>, or
+          <code>JMenuItem</code>
+          and providing the appropriate service provider annotation will
+          result in your item being added at the bottom of the main Tools menu.
+
+          <p>For an example, see the SampleToolsMenuItem class 
+          <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/sample/SampleToolsMenuItem.java">
+          here</a>.
+          Note that this sample has some indicated lines commented out so that
+          it doesn't actually appear in the menu.  Remove those comments 
+          and rebuild to see how it works.</p>
+        </dd>
 
         <dt>
           <a href=
