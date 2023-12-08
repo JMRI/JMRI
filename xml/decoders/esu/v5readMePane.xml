@@ -85,8 +85,8 @@
             <text xml:lang="ca">Si això passa, no s'ha perdut tot. Les CV correctes es poden restaurar</text>
         </label>
         <label>
-            <text>Contact your dealer, the LokSound Yahoo® group or ESU LLC USA and request an</text>
-            <text xml:lang="de">Kontaktieren Sie ihren Händler, die LokSound Yahoo® group oder ESU und fordern eine "exportierte CV-Liste"</text>
+            <text>Contact your dealer, the LokSound Groups.io group or ESU LLC USA and request an</text>
+            <text xml:lang="de">Kontaktieren Sie ihren Händler, die LokSound Groups.io group oder ESU und fordern eine "exportierte CV-Liste"</text>
             <text xml:lang="ca">Contacta el teu venedor, Grup de LokSound, ESU i demana</text>
         </label>
         <label>
@@ -322,9 +322,9 @@
             <text xml:lang="ca">del manual del LokProgrammer. Es pot descarrregar del </text>
         </label>
         <label>
-            <text>LokSound Yahoo® group at https://groups.yahoo.com/neo/groups/loksound/files</text>
-            <text xml:lang="de">LokSound Yahoo® Gruppe unter https://groups.yahoo.com/neo/groups/loksound/files</text>
-            <text xml:lang="ca">Grup de Yahoo de LokSound a https://groups.yahoo.com/neo/groups/loksound/files</text>
+            <text>LokSound Groups.io group at https://groups.io/g/Loksound</text>
+            <text xml:lang="de">LokSound Groups.io Gruppe unter https://groups.io/g/Loksound</text>
+            <text xml:lang="ca">Grup de Groups.io de LokSound a https://groups.io/g/Loksound</text>
         </label>
         <label>
             <text> </text>
@@ -348,8 +348,8 @@
             <text xml:lang="ca">Si tens dificultats per a entendre el panell de mapejat, demana assistència</text>
         </label>
         <label>
-            <text>on the JMRI or (preferably) LokSound Yahoo® group.</text>
-            <text xml:lang="de">bitten Sie um Hilfe in der JMRI oder (vorzugsweise) LokSound Yahoo® Gruppe.</text>
+            <text>on the JMRI or (preferably) LokSound Groups.io group.</text>
+            <text xml:lang="de">bitten Sie um Hilfe in der JMRI oder (vorzugsweise) LokSound Groups.io Gruppe.</text>
         </label>
         <label>
             <text> </text>
@@ -573,10 +573,10 @@
             <text> </text>
         </label>
         <label>
-            <text>For help with programming these decoders, the LokSound Yahoo® group is recommended.</text>
-            <text xml:lang="it">Per aiuto nella programmazione di questi Decoder si raccomanda il Gruppo di Yahoo® dedicato a LokSound</text>
-            <text xml:lang="de">Für die Programmierung dieser Decoder wird die LokSound Yahoo® Gruppe empfohlen.</text>
-            <text xml:lang="ca">Per ajuda amb la programació, es recomana el grup de Yahoo LokSound</text>	
+            <text>For help with programming these decoders, the LokSound Groups.io group is recommended.</text>
+            <text xml:lang="it">Per aiuto nella programmazione di questi Decoder si raccomanda il Gruppo di Groups.io dedicato a LokSound</text>
+            <text xml:lang="de">Für die Programmierung dieser Decoder wird die LokSound Groups.io Gruppe empfohlen.</text>
+            <text xml:lang="ca">Per ajuda amb la programació, es recomana el grup de Groups.io LokSound</text>	
         </label>
         <label>
             <text> </text>
@@ -588,10 +588,10 @@
             <text xml:lang="ca">Si creus que la plantilla del decóder té alguna errada, sisusplau contacta amb nosaltres</text>
         </label>
         <label>
-            <text>posting to either the JMRI groups.io or LokSound Yahoo® groups or by logging an Issue bug report on</text>
-            <text xml:lang="it">Mettendo un post sul Gruppo di JMRI groups.io o Yahoo® o inserendo un report Issue</text>
-            <text xml:lang="de">Senden Sie ein Posting an die JMRI groups.io oder LokSound Yahoo® Gruppen oder durch das Melden eines Bug Report Issues auf</text>
-            <text xml:lang="ca">Enviar a JMRI groups.io o grup de Yahoo de LokSound o asvisant d'un error Issue a</text>
+            <text>posting to either the JMRI groups.io or LokSound Groups.io groups or by logging an Issue bug report on</text>
+            <text xml:lang="it">Mettendo un post sul Gruppo di JMRI groups.io o Groups.io o inserendo un report Issue</text>
+            <text xml:lang="de">Senden Sie ein Posting an die JMRI groups.io oder LokSound Groups.io Gruppen oder durch das Melden eines Bug Report Issues auf</text>
+            <text xml:lang="ca">Enviar a JMRI groups.io o grup de Groups.io de LokSound o asvisant d'un error Issue a</text>
         </label>
         <label>
             <text>the JMRI GitHub page at https://github.com/JMRI/JMRI/issues</text>
