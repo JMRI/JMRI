@@ -26,8 +26,9 @@
 ; - Version History
 ; -------------------------------------------------------------------------
 ; - Version 0.1.29.0
-; - Prepend the "Settings/lib" jars before the prepended "Cp=*", where "Settings"
-;   is generally the JMRI directory immediately below the user's "home" directory. 
+; - Prepend the "Settings/lib" jars before the appended "Cp:a=..." entry, if used,
+;   where "Settings" is generally the JMRI directory immediately below the user's 
+;   "home" directory. 
 ; -------------------------------------------------------------------------
 ; - Version 0.1.28.1
 ; - Do not set the jmri.log.path System property.
