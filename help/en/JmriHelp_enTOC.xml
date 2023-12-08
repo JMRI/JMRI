@@ -125,6 +125,8 @@
 
   <tocitem text="TAMs Master Control " target="html.hardware.tams.index"/>
 
+  <tocitem text="TCS CS-105 " target="html.hardware.openlcb.TCS"/>
+
   <tocitem text="X10 " target="html.hardware.powerline.index"/>
 
   <tocitem text="xAP " target="html.hardware.xap.index"/>

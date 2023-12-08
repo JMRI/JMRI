@@ -112,6 +112,7 @@
 <mapID target="html.hardware.oaktree.OakTree" url="html/hardware/oaktree/OakTree.shtml"/>
 <mapID target="html.hardware.openlcb.Names" url="html/hardware/openlcb/Names.shtml"/>
 <mapID target="html.hardware.openlcb.OlcbSignalMast" url="html/hardware/openlcb/OlcbSignalMast.shtml"/>
+<mapID target="html.hardware.openlcb.TCS" url="html/hardware/openlcb/TCS.shtml"/>
 <mapID target="html.hardware.openlcb.index" url="html/hardware/openlcb/index.shtml"/>
 <mapID target="html.hardware.pi.index" url="html/hardware/pi/index.shtml"/>
 <mapID target="html.hardware.powerline.index" url="html/hardware/powerline/index.shtml"/>
