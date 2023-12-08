@@ -157,9 +157,11 @@
       </ul>
       We encourage you to <a href="gitdeveloper.shtml">contribute your code to for inclusion in
       JMRI</a>. That way, lots of people benefit. But if you don't want to do that, you can package
-      it up as a separate .jar file which can just be dropped into the JMRI lib/ directory. By
+      it up as a separate .jar file which can just be dropped into the JMRI lib directory
+      in the user's settings directory. By
       using the approach listed above (and the services listed below), JMRI will automatically pick
-      it up and use it.
+      it up and use it.  For more on this mechanism, see the
+      <a href="Patterns.shtml#SPI">discussion on the Patterns page</a>.
 
       <h2 id="service">Implement a Service Provider</h2>
       Sometimes what you want to add provides a very specific technical function. Many of those can
