@@ -160,6 +160,7 @@
       it up as a separate .jar file which can just be dropped into the JMRI lib/ directory. By
       using the approach listed above (and the services listed below), JMRI will automatically pick
       it up and use it.
+
       <h2 id="service">Implement a Service Provider</h2>
       Sometimes what you want to add provides a very specific technical function. Many of those can
       be (though historically, perhaps weren't) written as Service Provider classes. When they can
@@ -313,6 +314,23 @@
         <dd>Additional file paths, redirections, explicitly blocked paths in the JMRI web server
         can be specified by providing a service that implements this.</dd>
       </dl>
+      
+      <h2 id="install">Distributing and Installing the Plug In</h2>
+      
+      Once you have Java code that you'd like to distribute to JMRI, 
+      you have to tell users how to install it. 
+      
+      Prior to JMRI 5.7.1, you should have them place your jar file
+      in the lib/ directory within the JMRI program directory.  On Linux and macOS
+      this will have to be done every time the user updates or reinstalls JMRI.
+      
+      Starting with JMRI 5.7.1, you should have them place your jar file
+      in the lib/ directory that's found within their
+      <a href="ProfileFileStructure.shtml">JMRI settings directory</a>.
+      One easy way to locate this directory is to open "File Locations"
+      in the JMRI Help menu and click "Open Settings Location". The lib/ 
+      directory should be available in the file manager window that opens.
+
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
