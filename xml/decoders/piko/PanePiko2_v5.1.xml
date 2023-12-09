@@ -30,11 +30,17 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
 		</revision>
+		<revision>
+			<revnumber>2</revnumber>
+			<date>2023-12-03</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add English translations</revremark>
+		</revision>
 	</revhistory>
 	<name>Piko 2/2</name>
 	<column>
 		<label>
-			<text>Decoder Programming Lock</text>
+			<text>&gt;&gt; Decoder Programming Lock &lt;&lt;</text>
 			<text xml:lang="de">&gt;&gt; Decoder Programmiersperre &lt;&lt;</text>
 			<text xml:lang="nl">Decoder Programmeerslot</text>
 			<text xml:lang="cs">Zámek programování dekodéru</text>
@@ -50,7 +56,7 @@
 		<!-- ** CVs 160-163 ** -->
 		<separator/>
 		<label>
-			<text>Soundparameter</text>
+			<text>&gt;&gt; Sound parameters &lt;&lt;</text>
 			<text xml:lang="de">&gt;&gt; Soundparameter &lt;&lt;</text>
 		</label>
 		<label>
@@ -67,7 +73,7 @@
 		<!-- CVs 47 -->
 		<separator/>
 		<label>
-			<text>Special function</text>
+			<text>&gt;&gt; Special functions &lt;&lt;</text>
 			<text xml:lang="de">&gt;&gt; Spezialfunktionen &lt;&lt;</text>
 		</label>
 		<label>
@@ -131,7 +137,7 @@
 				</griditem>
 				<griditem gridx="0" gridy="3" anchor="LINE_END">
 					<display item="SUSI 115 Bit 0" format="checkbox">
-						<label>Activate Function in SUSI:</label>
+						<label>SUSI Send option 1 (CV 115):</label>
 						<label xml:lang="de">SUSI Sendeoption 1 (CV 115):</label>
 						<label xml:lang="nl">Activeer functie in SUSI:</label>
 						<label xml:lang="cs">Aktivujte funkci v SUSI:</label>
@@ -160,7 +166,7 @@
 				</griditem>
 				<griditem gridx="0" gridy="4" anchor="LINE_END">
 					<display item="SUSI 116 Bit 0" format="checkbox">
-						<label>Activate Function in SUSI:</label>
+						<label>SUSI Send option 2 (CV 116):</label>
 						<label xml:lang="de">SUSI Sendeoption 2 (CV 116):</label>
 						<label xml:lang="nl">Activeer functie in SUSI:</label>
 						<label xml:lang="cs">Aktivujte funkci v SUSI:</label>
@@ -201,14 +207,14 @@
 		</row>
 		<separator/>
 		<label>
-			<text>Servo 1 - 4</text>
+			<text>&gt;&gt; Servo 1 - 4 &lt;&lt;</text>
 			<text xml:lang="de">&gt;&gt; Servo 1 - 4 &lt;&lt;</text>
 		</label>
 		<label>
 			<text>  </text>
 		</label>
 		<label>
-			<text>Einstellung der Servo 1 - 4 (CV 202 - CV 222) nicht implementiert</text>
+			<text>Setting of servos 1 - 4 (CV 202 - CV 222) not implemented</text>
 			<text xml:lang="de">Einstellung der Servo 1 - 4 (CV 202 - CV 222) noch nicht implementiert</text>
 		</label>
 		<label>
@@ -256,7 +262,7 @@
 		</label>
 		<separator/>
 		<label>
-			<text>Special Light Effects</text>
+			<text>&gt;&gt; Special Light Effects &lt;&lt;</text>
 			<text xml:lang="de">&gt;&gt; Spezial Licht Effekte &lt;&lt;</text>
 			<text xml:lang="cs">Zvláštní světelné efekty</text>
 		</label>

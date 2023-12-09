@@ -112,6 +112,19 @@
         </and>
     </condition>
 
+    <condition property="settings.dir" value="${user.home}/JMRI">
+        <os family="windows" />
+    </condition>
+    <condition property="settings.dir" value="${user.home}/Library/Preferences/JMRI"> <!-- has to be before unix clause -->
+            <os family="mac" />
+    </condition>
+    <condition property="settings.dir" value="${user.home}/.jmri">
+            <os family="unix" />
+    </condition>
+    <echo message="settings.dir assumed to be ${settings.dir}"/>
+    <mkdir dir="${settings.dir}/lib"/>
+
+
     <!-- this is the list of jar files and class path elements that are not
          a part of the JMRI codebase itself but which are needed at runtime
          for the various apps.  These will all be copied into the release
@@ -263,7 +276,10 @@
     <path id="project.class.path">
         <pathelement path="${cp.prepend}"/>   <!-- prepended by user -->
         <pathelement location="${jartarget}"/>
-        <path        refid="runtime.class.path"/>
+        <path        refid="runtime.class.path"/>  <!-- contents of user preferences lib dir -->
+        <fileset dir="${settings.dir}/lib">
+            <include name="*.jar" />
+        </fileset>
         <pathelement location="${target}/"/>  <!-- after declared jars to check for name collisions -->
         <pathelement path="${cp.append}"/>    <!-- appended by user -->
     </path>
@@ -1013,6 +1029,7 @@
     <!-- ============================================================================= -->
 
 
+
     <target name="runtime-library-selection">
 
         <condition property="baseOS" value="windows">
@@ -1090,6 +1107,7 @@
 
         <property name="arch.lib.path" value="${libdir}/${baseOS}/${baseArch}:${libdir}/${baseOS}"/>
         <echo message="arch.lib.path ${arch.lib.path}"/>
+
     </target>
 
 

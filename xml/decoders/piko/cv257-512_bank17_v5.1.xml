@@ -37,6 +37,12 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Add CVs for Extended Function Mapping Shift Bank CV31 = 17, CV indexing modified</revremark>
 		</revision>
+		<revision>
+			<revnumber>3</revnumber>
+			<date>2023-12-03</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add English translations</revremark>
+		</revision>
 	</revhistory>
 	<!-- Bank 3 variables -->
 	<!-- CVs 257.17.0 bis 512.17.0-->

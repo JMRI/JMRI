@@ -493,6 +493,7 @@ if [ -z "$ARCH" ] ; then
 fi
 
 # build classpath dynamically
+# add pre classpath
 CP=""
 if [ -n "${pre_classpath}" ] ; then
     pre_classpath="${pre_classpath#:}"
@@ -502,6 +503,13 @@ CP="${CP}.:classes:target/classes:jmri.jar"
 # add contents of lib
 CP="${CP}:$( ls -m ${LIBDIR}/*.jar | tr -d ' \n' | tr ',' ':' )"
 
+# add contents of the user settings / lib directory, if anything 
+mkdir -p ${settingsdir}/lib
+if [ ! -z "$(ls -A ${settingsdir}/lib)" ]; then
+    CP="${CP}:$( ls -m ${settingsdir}/lib/*.jar | tr -d ' \n' | tr ',' ':' )"
+fi
+
+# add post classpath
 if [ -n "${post_classpath}" ] ; then
     post_classpath="${post_classpath#:}"
     CP="${CP}:${post_classpath}"
