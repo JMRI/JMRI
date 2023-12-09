@@ -86,8 +86,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>JMRI's "Windows Launcher" program will automatically load any JMRI "Plugin" 
-                    files which have been installed in "settings:lib\" directory.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -614,4 +613,7 @@
                 have been updated to allow access to jar files in the settings:lib/
                 directory. This gives creators of JMRI plug-ins a way to distribute
                 their code separate from JMRI.</li>
+            <li>The Windows application launcher has been updated to allow access to
+                jar files in the settings:lib/ directory. This gives creators of JMRI 
+                plug-ins a way to distribute their code separate from JMRI.</li>
         </ul>
