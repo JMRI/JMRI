@@ -289,6 +289,11 @@
                 <li></li>
             </ul>
 
+        <h4>Piko</h4>
+            <ul>
+                <li>Added English translations</li>
+            </ul>
+
         <h4>Public Domain and DIY decoders</h4>
             <ul>
                 <li></li>
@@ -540,7 +545,8 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Throttle Save menu entry behaviour was updated. Documentation updated accordingly.</li>
+            <li>Default Throttle UI on a new JMRI setup are now using icons and colors, can be reverted to classic in Preferences (see &ldquo;Enable button icons when available&ldquo; and &ldquo;Use large speed slider and control buttons&ldquo; throttle preferences entry )</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -588,7 +594,7 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>Add browser WebSocket support message to About page</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
@@ -600,6 +606,14 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Added an 
+                <a href="https://www.jmri.org/help/en/html/doc/Technical/plugins.shtml">SPI mechanism</a>
+                for extending the Tools menu.</li>
+            <li>The Linux and macOS application launchers and the Ant build process
+                have been updated to allow access to jar files in the settings:lib/
+                directory. This gives creators of JMRI plug-ins a way to distribute
+                their code separate from JMRI.</li>
+            <li>The Windows application launcher has been updated to allow access to
+                jar files in the settings:lib/ directory. This gives creators of JMRI 
+                plug-ins a way to distribute their code separate from JMRI.</li>
         </ul>
-

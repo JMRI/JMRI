@@ -31,16 +31,19 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Initial version for Piko SmartDecoder 4.1 and XP5.1</revremark>
 		</revision>
+		<revision>
+			<revnumber>2</revnumber>
+			<date>2023-12-03</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add English translations</revremark>
+		</revision>
 	</revhistory>
-	<name>Beschleunigungs-/Bremsverhalten</name>
+	<name>Acceleration/Deceleration</name>
+	<name xml:lang="de">Beschleunigungs-/Bremsverhalten</name>
 	<column>
-		<!--		<label>
-			<text>PanePikoAccelDecel.xml Mai 2022</text>
-		</label>
-		<separator/>  -->
 		<label>
-			<text>Accel/Decel Delays</text>
-			<text xml:lang="de">Anfahrt-/Bremsverzögerung</text>
+			<text>&gt;&gt; Accel/Decel Delays &lt;&lt;</text>
+			<text xml:lang="de">&gt;&gt; Anfahrt-/Bremsverzögerung &lt;&lt;</text>
 			<text xml:lang="nl">Wegrij-/Remvertraging</text>
 			<text xml:lang="cs">Zpoždění Zrychlení/Zpomalení</text>
 		</label>
@@ -76,38 +79,6 @@
 				<text> </text>
 			</label>
 		</row>
-		<!--		<label>
-			<text>Constant Brakedist</text>
-			<text xml:lang="de">Konstanter Bremsweg</text>
-		</label>
-		<label>
-			<text> </text>
-		</label>
-		<grid gridy="1" weightx="1" ipadx="4" ipady="2">
-			<griditem gridx="0" gridy="0" anchor="LINE_END">
-				<display item="Constant Brakedist 1"/>
-			</griditem>
-			<griditem gridx="1" gridy="0" anchor="LINE_END">
-				<display item="Constant Brakedist 2"/>
-			</griditem>
-			<griditem gridx="2" gridy="0" anchor="LINE_END">
-				<display item="Constant Brakedist Threshold"/>
-			</griditem>
-			<griditem gridx="0" gridy="1" anchor="LINE_END">
-				<display item="Constant Brakedist Max"/>
-			</griditem>
-			<griditem gridx="1" gridy="1" anchor="LINE_END">
-				<display item="Constant Brakedist Rest"/>
-			</griditem>
-			<griditem gridx="2" gridy="1" anchor="LINE_END">
-				<display item="Constant Brakedist Trigger"/>
-			</griditem>
-		</grid>
-		<row>
-			<label>
-				<text> </text>
-			</label>
-		</row>-->
 		<separator/>
 		<row>
 			<label>

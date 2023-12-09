@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022, 2023 All rights reserved                      -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2023</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2023-11-30</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
+		</revision>
+		<revision>
+			<revnumber>2</revnumber>
+			<date>2023-12-03</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add English translations</revremark>
+		</revision>
+	</revhistory>
+	<variable item="Auto Off F0v" CV="180" default="6">
+		<decVal/>
+		<label>Time Auto Off F0v (CV 180)</label>
+		<label xml:lang="de">Zeit auto AUS F0v (CV 180)</label>
+		<tooltip>Automatic switch off of F0v after = CV value * 0,5 sec</tooltip>
+		<tooltip xml:lang="de">Automatisches Abschalten von F0v nach = CV-Wert * 0,5 sek</tooltip>
+	</variable>
+	<variable item="Auto Off F0h" CV="181" default="6">
+		<decVal/>
+		<label>Time Auto Off F0h (CV 181)</label>
+		<label xml:lang="de">Zeit auto AUS F0h (CV 181)</label>
+		<tooltip>automatic switch off of F0h after = CV value * 0,5 sec</tooltip>
+		<tooltip xml:lang="de">Automatisches Abschalten von F0h nach = CV-Wert * 0,5 sek</tooltip>
+	</variable>
+	<variable item="Auto Off A1" CV="182" default="6">
+		<decVal/>
+		<label>Time Auto Off  A1 (CV 182)</label>
+		<label xml:lang="de">Zeit auto AUS  A1 (CV 182)</label>
+		<tooltip>automatic switch off of A1 after = CV value * 0,5 sec</tooltip>
+		<tooltip xml:lang="de">Automatisches Abschalten von A1 nach = CV-Wert * 0,5 sek</tooltip>
+	</variable>
+	<variable item="Auto Off  A2" CV="183" default="6">
+		<decVal/>
+		<label>Time Auto Off A2 (CV 183)</label>
+		<label xml:lang="de">Zeit auto AUS  A2 (CV 183)</label>
+		<tooltip>automatic switch off of A2 after = CV value * 0,5 sec</tooltip>
+		<tooltip xml:lang="de">Automatisches Abschalten von A2 nach = CV-Wert * 0,5 sek</tooltip>
+	</variable>
+</variables>

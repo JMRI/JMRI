@@ -92,12 +92,7 @@
                   <xs:attribute name="systemName" type="beanNameType" /><!-- This will now store either a user or system name -->
                 </xs:complexType>
               </xs:element>
-              <xs:element name="reporter" minOccurs="0" maxOccurs="1" >
-                <xs:complexType>
-                <xs:attribute name="systemName" type="systemNameType" />
-                <xs:attribute name="useCurrent" type="yesNoType" />
-                </xs:complexType>
-              </xs:element>
+
               <xs:element name="deniedBlocks" minOccurs="0" maxOccurs="1" >
                 <xs:complexType>
                     <xs:sequence>
@@ -106,6 +101,13 @@
                 </xs:complexType>
               </xs:element>
               
+              <xs:element name="reporter" minOccurs="0" maxOccurs="1" >
+                <xs:complexType>
+                <xs:attribute name="systemName" type="systemNameType" />
+                <xs:attribute name="useCurrent" type="yesNoType" />
+                </xs:complexType>
+              </xs:element>
+
               <xs:element name="path" minOccurs="0" maxOccurs="unbounded" >
                 <xs:complexType>
                     <xs:sequence>

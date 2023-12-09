@@ -229,6 +229,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
         log.debug("Loading default throttle file : {}", dtf);
         loadThrottle(dtf);
+        setLastUsedSaveFile(null);
         isLoadingDefault = false;
     }
 
@@ -1018,10 +1019,16 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
         throttle = t;
         if ((InstanceManager.getDefault(ThrottlesPreferences.class).isUsingExThrottle())
-                && (InstanceManager.getDefault(ThrottlesPreferences.class).isAutoLoading())
-                && (addressPanel != null) && (addressPanel.getRosterEntry() != null)
-                && ((getLastUsedSaveFile() == null) || (getLastUsedSaveFile().compareTo(getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml") != 0))) {
-            loadThrottle(getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml");
+                && (InstanceManager.getDefault(ThrottlesPreferences.class).isAutoLoading()) && (addressPanel != null)) {
+            if ((addressPanel.getRosterEntry() != null)
+                    && ((getLastUsedSaveFile() == null) || (getLastUsedSaveFile().compareTo(getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml") != 0))) {
+                loadThrottle(getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml");
+                setLastUsedSaveFile(getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml");
+            } else if ((addressPanel.getRosterEntry() == null)
+                    && ((getLastUsedSaveFile() == null) || (getLastUsedSaveFile().compareTo(getDefaultThrottleFolder() + addressPanel.getCurrentAddress()+ ".xml") != 0))) {
+                loadThrottle(getDefaultThrottleFolder() + throttle.getLocoAddress().getNumber() + ".xml");
+                setLastUsedSaveFile(getDefaultThrottleFolder() + throttle.getLocoAddress().getNumber() + ".xml");
+            }
         } else {
             if ((addressPanel != null) && (addressPanel.getRosterEntry() == null)) { // no known roster entry
                 loadDefaultThrottle();

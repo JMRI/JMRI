@@ -49,42 +49,48 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Add CV Fade-in-out</revremark>
 		</revision>
+		<revision>
+		<revnumber>5</revnumber>
+			<date>2023-12-03</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add English translations</revremark>
+		</revision>
 	</revhistory>
 	<!-- Interner Zusatzcontroller CVs -->
 	<!-- Declaration of the "switch" CV, not for direct use but for checking value -->
 	<variable item="SUSI_Bank_Switch" CV="1021" default="0">
 		<enumVal>
 			<enumChoice choice="Bank 0" value="0">
-				<choice>Bank 0 - Output 1 / 2</choice>
+				<choice>Bank 0 - Output 1 &amp; Output 2</choice>
 				<choice xml:lang="de">Bank 0 - Ausgang 1 &amp; Ausgang 2</choice>
 				<choice xml:lang="nl">Bank 0 - ...</choice>
 				<choice xml:lang="cs">Banka 0 - ...</choice>
 			</enumChoice>
 			<enumChoice choice="Bank 1" value="1">
-				<choice>Bank 1 - Output 3 / 4</choice>
+				<choice>Bank 1 - Output 3 &amp; Output 4</choice>
 				<choice xml:lang="de">Bank 1 - Ausgang 3 &amp; Ausgang 4</choice>
 				<choice xml:lang="nl">Bank 1 - ...</choice>
 				<choice xml:lang="cs">Banka 1 - ...</choice>
 			</enumChoice>
 			<enumChoice choice="Bank 2" value="2">
-				<choice>Bank 2 - Output 5 / 6</choice>
+				<choice>Bank 2 - Output 5 &amp; Output 6</choice>
 				<choice xml:lang="de">Bank 2 - Ausgang 5 &amp; Ausgang 6</choice>
 				<choice xml:lang="nl">Bank 2 - ...</choice>
 				<choice xml:lang="cs">Banka 2 - ...</choice>
 			</enumChoice>
 			<enumChoice choice="Bank 3" value="3">
-				<choice>Bank 3 - PWM 1 - 6"</choice>
-				<choice xml:lang="de">Bank 3 - PWM von Ausgang 1 - 6</choice>
+				<choice>Bank 3 - PWM Output 1 to Output 6</choice>
+				<choice xml:lang="de">Bank 3 - PWM von Ausgang 1 bis 6</choice>
 				<choice xml:lang="nl">Bank 3 - ...</choice>
 				<choice xml:lang="cs">Banka 3 - ...</choice>
 			</enumChoice>
 		</enumVal>
-		<label>Program</label>
-		<label xml:lang="de">Programmieren</label>
-		<label xml:lang="nl">Programmeer</label>
-		<label xml:lang="cs">Programování</label>
-		<tooltip>Setting that determines which bank 0-3 is programmed. Reset to Bank 0 - Manufacturer when done!</tooltip>
-		<tooltip xml:lang="de">Auswahl der zu programmierenden Bank 0 - 3. Zurückstellen nach "Bank 0 - Hersteller" wenn fertig!</tooltip>
+		<label>Select CV-Bank</label>
+		<label xml:lang="de">Auswahl CV-Bank</label>
+		<label xml:lang="nl">Selecteer CV-Bank</label>
+		<label xml:lang="cs">Vyberte banku CV</label>
+		<tooltip>Setting that determines which bank 0-3 is programmed. Reset to "Bank 0" when done!</tooltip>
+		<tooltip xml:lang="de">Auswahl der zu programmierenden Bank 0 - 3. Zurückstellen nach "Bank 0" wenn fertig!</tooltip>
 		<tooltip xml:lang="cs">Nastavení programování banky 0 - 3. Po dokončení obnovte na Banka 0!</tooltip>
 	</variable>
 	<!-- Bank 0 variables CV1021 = 0 !! name="cvFirst" = true-->
@@ -4183,50 +4189,50 @@
 	<!--Ausgang 7 Wert = F-Taste - nur Ein - CV1018-->
 	<variable item="A7_F_Key" CV="1018.1021=2" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF68Off255.xml"/>
-		<label>Key to activate A7:</label>
+		<label>Function key to activate A7:</label>
 		<label xml:lang="de">Ausgang 7 Ein </label>
 	</variable>
 	<!-- PWM Dimmung A1 - A6 -->
 	<variable item="PWM1_A1" CV="982.1021=3" default="255">
 		<decVal/>
-		<label>PWM1 A1</label>
+		<label>Dimming output 1</label>
 		<label xml:lang="de">Dimmung Ausgang 1</label>
 		<tooltip>0 - 255</tooltip>
 	</variable>
 	<variable item="PWM1_A2" CV="985.1021=3" default="255">
 		<decVal/>
-		<label>PWM1 A2</label>
+		<label>Dimming output 2</label>
 		<label xml:lang="de">Dimmung Ausgang 2</label>
 		<tooltip>0 - 255</tooltip>
 	</variable>
 	<variable item="PWM1_A3" CV="988.1021=3" default="255">
 		<decVal/>
-		<label>PWM1 A3</label>
+		<label>Dimming output 3</label>
 		<label xml:lang="de">Dimmung Ausgang 3</label>
 		<tooltip>0 - 255</tooltip>
 	</variable>
 	<variable item="PWM1_A4" CV="991.1021=3" default="255">
 		<decVal/>
-		<label>PWM1 A4</label>
+		<label>Dimming output 4</label>
 		<label xml:lang="de">Dimmung Ausgang 4</label>
 		<tooltip>0 - 255</tooltip>
 	</variable>
 	<variable item="PWM1_A5" CV="994.1021=3" default="255">
 		<decVal/>
-		<label>PWM1 A5</label>
+		<label>Dimming output 5</label>
 		<label xml:lang="de">Dimmung Ausgang 5</label>
 		<tooltip>0 - 255</tooltip>
 	</variable>
 	<variable item="PWM1_A6" CV="997.1021=3" default="255">
 		<decVal/>
-		<label>PWM1 A6</label>
+		<label>Dimming output 6</label>
 		<label xml:lang="de">Dimmung Ausgang 6</label>
 		<tooltip>0 - 255</tooltip>
 	</variable>
 	<!-- Ein- und Ausblenddauer alle Ausgänge -->
 	<variable item="PWM_Time" CV="1012.1021=3" default="0">
 		<decVal/>
-		<label>PWM Time</label>
+		<label>Time steps for fading the outputs in and out</label>
 		<label xml:lang="de">Zeitstufen zum Ein- und Ausblenden der Ausgänge</label>
 		<tooltip>0 - 255</tooltip>
 	</variable>
@@ -4234,13 +4240,15 @@
 		<decVal max="15"/>
 		<label>Fade In  A1 to A6</label>
 		<label xml:lang="de">Einblenden A1 bis A6</label>
-		<tooltip>0 - 15 Zeitstufen</tooltip>
+		<tooltip>0 - 15 Time steps</tooltip>
+		<tooltip xml:lang="de">0 - 15 Zeitstufen</tooltip>
 	</variable>
 	<variable CV="1012.1021=3" mask="VVVVXXXX" item="Fade_out_time" default="0">
 		<decVal max="15"/>
 		<label>Fade Out A1 to A6</label>
 		<label xml:lang="de">Ausblenden A1 bis A6</label>
-		<tooltip>0 - 15 Zeitstufen</tooltip>
+		<tooltip>0 - 15 Time steps</tooltip>
+		<tooltip xml:lang="de">0 - 15 Zeitstufen</tooltip>
 	</variable>
 </variables>
 
