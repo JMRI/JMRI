@@ -202,7 +202,6 @@ public class LocoBufferAdapter extends LnPortController {
     protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};
 
     // private control members
-    private boolean opened = false;
     InputStream serialStream = null;
 
     /**
