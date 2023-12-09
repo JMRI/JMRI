@@ -249,7 +249,7 @@ function checkSensors()
 
 
 
-// window.setInterval(runTrain, 50);
+window.setInterval(runTrain, 50);
 
 function runTrain()
 {
