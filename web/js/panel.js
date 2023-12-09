@@ -1196,11 +1196,13 @@ function processPanelXML($returnedData, $success, $xhr) {
                             //draw the LayoutShape
                             $drawLayoutShape($widget);
                             break;
+                        case "positionableRectangle" : //just like RoundRect except cornerRadius set to 0;
                         case "positionableRoundRect" :
                             //log.log("#### positionableRoundRect ####");
                             //copy and reformat some attributes from children into object
                             $widget['width'] = $(this).find('size').attr('width');
                             $widget['height'] = $(this).find('size').attr('height');
+                            $widget['cornerRadius'] = 0; //default to no corner
                             $widget['cornerRadius'] = $(this).find('size').attr('cornerRadius');
                             lc = $(this).find('lineColor');
                             $widget['lineColor'] = 
@@ -2394,6 +2396,7 @@ var $getWidgetFamily = function($widget, $element) {
         case "levelxing" :
         case "layoutturntable" :
         case "layoutShape" :
+        case "positionableRectangle" :
         case "positionableRoundRect" :
             return "drawn";
             break;

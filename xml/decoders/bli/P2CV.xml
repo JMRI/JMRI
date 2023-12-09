@@ -17,7 +17,7 @@
         <decVal/>
         <label>Pitch Shift</label>
       </variable>
-      <variable item="Horn Select" CV="224" default="0">
+      <variable item="Sound Group 1 Option 12" CV="224" default="0">
         <enumVal>
           <enumChoice choice="Default">
             <choice>Default</choice>
