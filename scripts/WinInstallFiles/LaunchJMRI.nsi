@@ -709,7 +709,7 @@ Section "Main"
   ; Create a "$JMRIPREFS\lib\README.txt" file
   Push $0
   FileOpen $0 "$JMRIPREFS\lib\README.txt" w
-  FileWrite $0 '(Since JMRI version 5.5.8.)$\r$\n'
+  FileWrite $0 '(Since JMRI version 5.7.1.)$\r$\n'
   FileWrite $0 '$\r$\n'
   FileWrite $0 'This directory can be used to hold "Plugin" files for JMRI.$\r$\n'
   FileWrite $0 '$\r$\n'
