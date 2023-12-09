@@ -126,7 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Fixed an index exception while the Event Table is writing a CSV file.</li>
             </ul>
 
         <h4>Powerline</h4>
