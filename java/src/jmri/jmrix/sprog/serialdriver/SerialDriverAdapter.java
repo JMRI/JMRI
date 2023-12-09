@@ -9,8 +9,6 @@ import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.update.SprogType;
 
-import com.fazecast.jSerialComm.*;
-
 /**
  * Implements SerialPortAdapter for the Sprog system.
  * <p>
@@ -59,37 +57,39 @@ public class SerialDriverAdapter extends SprogPortController {
         this.getSystemConnectionMemo().setSprogTrafficController(new SprogTrafficController(this.getSystemConnectionMemo()));
     }
 
-    SerialPort activeSerialPort = null;
-
     private int baudRate = -1;
 
     @Override
     public String openPort(String portName, String appName) {
         // get and open the primary port
-        activeSerialPort = SerialPort.getCommPort(portName);
-        activeSerialPort.openPort();
+        activeSerialPort = activatePort(portName, log);
+        if (activeSerialPort == null) {
+            log.error("failed to connect SPROG to {}", portName);
+            return Bundle.getMessage("SerialPortNotFound", portName);
+        }
         log.info("Connecting SPROG to {} {}", portName, activeSerialPort);
 
         // try to set it for communication via SerialDriver
-        activeSerialPort.setBaudRate(baudRate);
-        activeSerialPort.setDTR();
-        activeSerialPort.setRTS();
-        activeSerialPort.setFlowControl(SerialPort.FLOW_CONTROL_DISABLED);
-        activeSerialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, 0, 0);
+        setBaudRate(activeSerialPort, baudRate);
+        configureLeads(activeSerialPort, true, true);
+        setFlowControl(activeSerialPort, FlowControl.NONE);
 
         // get and save stream
         serialStream = new DataInputStream(activeSerialPort.getInputStream());
         log.trace("SerialDriverAdapter serialStream: {}", serialStream);
 
+        // purge contents, if any
+        purgeStream(serialStream);
+
         // add Sprog Traffic Controller as event listener
-        activeSerialPort.addDataListener( new SerialPortDataListener() {
+        activeSerialPort.addDataListener( new com.fazecast.jSerialComm.SerialPortDataListener() {
             @Override 
             public int getListeningEvents() {
                 log.trace("getListeningEvents");
-                return SerialPort.LISTENING_EVENT_DATA_AVAILABLE;
+                return com.fazecast.jSerialComm.SerialPort.LISTENING_EVENT_DATA_AVAILABLE;
             }
             @Override
-            public void serialEvent(SerialPortEvent event) {
+            public void serialEvent(com.fazecast.jSerialComm.SerialPortEvent event) {
                 log.trace("serial event start");
                 // invoke
                 getSystemConnectionMemo().getSprogTrafficController().handleOneIncomingReply();
@@ -98,26 +98,26 @@ public class SerialDriverAdapter extends SprogPortController {
         }
         );
 
+        // report status?
+        if (log.isInfoEnabled()) {
+            log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  name: {}", 
+                    portName, activeSerialPort.getBaudRate(), activeSerialPort.getDTR(), 
+                    activeSerialPort.getRTS(), activeSerialPort.getDSR(), activeSerialPort.getCTS(), 
+                    activeSerialPort);
+        }
+
         opened = true;
         return null; // indicates OK return
 
     }
 
-    public void setHandshake(boolean on) {
-        log.warn("setHandshake");
-        if (on) {
-            activeSerialPort.setFlowControl(
-                SerialPort.FLOW_CONTROL_RTS_ENABLED |
-                SerialPort.FLOW_CONTROL_CTS_ENABLED
-            );
-        } else {
-            activeSerialPort.setFlowControl(SerialPort.FLOW_CONTROL_DISABLED);
-        }
-//         try {
-//             activeSerialPort.setFlowControlMode(mode);
-//         } catch (UnsupportedCommOperationException ex) {
-//             log.error("Unexpected exception while setting COM port handshake mode,", ex);
-//         }
+    /**
+     * Set the flow control. This method hide the 
+     * actual serial port behind this object
+     * @param flow Set flow control to RTS/CTS when true
+     */
+    public void setHandshake(FlowControl flow) {
+        setFlowControl(activeSerialPort, flow);
     }
 
     // base class methods for the SprogPortController interface

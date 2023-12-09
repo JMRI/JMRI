@@ -11,8 +11,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.can.TrafficController;
 
-import com.fazecast.jSerialComm.*;
-
 /**
  * Implements SerialPortAdapter for the GridConnect protocol.
  *
@@ -22,8 +20,7 @@ import com.fazecast.jSerialComm.*;
  */
 public class GcSerialDriverAdapter extends GcPortController {
 
-    protected SerialPort activeSerialPort = null;
-    protected int flowControl = SerialPort.FLOW_CONTROL_DISABLED;
+    protected FlowControl flowControl = FlowControl.NONE; // disabled to start
 
     /**
      * Creates a new CAN GridConnect Network Driver Adapter.
@@ -57,9 +54,9 @@ public class GcSerialDriverAdapter extends GcPortController {
      * <p>
      * Allows for default systemPrefix other than "M".
      * @param prefix System Prefix.
-     * @param flow flow control.
+     * @param flow flow control, true for RTS/CTS
      */
-    public GcSerialDriverAdapter(String prefix, int flow) {
+    public GcSerialDriverAdapter(String prefix, FlowControl flow) {
         super(new jmri.jmrix.can.CanSystemConnectionMemo(prefix));
         option1Name = "Protocol"; // NOI18N
         options.put(option1Name, new Option(Bundle.getMessage("ConnectionProtocol"),
@@ -74,31 +71,34 @@ public class GcSerialDriverAdapter extends GcPortController {
      */
     @Override
     public String openPort(String portName, String appName) {
-        // open the port, check ability to set moderators
- 
+
         // get and open the primary port
-        activeSerialPort = SerialPort.getCommPort(portName);  // name of program, msec to wait
-        activeSerialPort.openPort();
-        log.info("Connecting CAN to {} {}", portName, activeSerialPort);
+        activeSerialPort = activatePort(portName, log);
+        if (activeSerialPort == null) {
+            log.error("failed to connect SPROG to {}", portName);
+            return Bundle.getMessage("SerialPortNotFound", portName);
+        }
+        log.info("Connecting C/MRI to {} {}", portName, activeSerialPort);
         
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(mBaudRate);
-        activeSerialPort.setBaudRate(baud);
-        activeSerialPort.setDTR();
-        activeSerialPort.setRTS();
-        setFlowControl();
-        activeSerialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, 0, 0);
-            
+        setBaudRate(activeSerialPort, baud);
+        configureLeads(activeSerialPort, true, true);
+        localSetFlowControl();
+
         // get and save stream
         serialStream = activeSerialPort.getInputStream();
 
         // purge contents, if any
-        //purgeStream(serialStream);
+        purgeStream(serialStream);
 
         // report status?
         if (log.isInfoEnabled()) {
-            log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  name: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.getDTR(), activeSerialPort.getRTS(), activeSerialPort.getDSR(), activeSerialPort.getCTS(), activeSerialPort);
+            log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  name: {}", 
+                    portName, activeSerialPort.getBaudRate(), activeSerialPort.getDTR(), 
+                    activeSerialPort.getRTS(), activeSerialPort.getDSR(), activeSerialPort.getCTS(), 
+                    activeSerialPort);
         }
 
         opened = true;
@@ -107,14 +107,12 @@ public class GcSerialDriverAdapter extends GcPortController {
     }
 
     /** 
-     * Set up the flow control.  This version 
-     * takes the default {@link flowControl} value unless
-     * a constructor argument has overridden it.
+     * Local set up the flow contro, here to allow override
      */
-    protected void setFlowControl() {
-        activeSerialPort.setFlowControl(flowControl);
+    protected void localSetFlowControl() {
+        setFlowControl(activeSerialPort, flowControl);
     }
-        
+
     /**
      * Set up all of the other objects to operate with a CAN RS adapter
      * connected to this port.

@@ -5,8 +5,6 @@ import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it operates
@@ -89,19 +87,18 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
         return true;
     }
 
+    @Override
+    protected void reportOpen(String portName) {
+        log.info("Connecting Uhlenbrock via {} {}", portName, activeSerialPort);
+    }
+
     /**
-     * Local method to do specific configuration, overridden in class.
+     * Always off flow control
      */
     @Override
-    protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
-        // find the baud rate value, configure comm options
-        int baud = currentBaudNumber(mBaudRate);
-        activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
-                SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-
-        configureLeadsAndFlowControl(activeSerialPort, SerialPort.FLOWCONTROL_NONE);
-
-        log.info("Uhlenbrock adapter{}{} RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN, activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=", activeSerialPort.getFlowControlMode());
+    protected void setLocalFlowControl() {
+        FlowControl flow = FlowControl.NONE;
+        setFlowControl(activeSerialPort, flow);
     }
 
     /**

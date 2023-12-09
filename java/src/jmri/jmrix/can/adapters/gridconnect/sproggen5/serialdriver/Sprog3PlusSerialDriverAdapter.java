@@ -6,8 +6,6 @@ import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
 import jmri.jmrix.can.adapters.gridconnect.canrs.MergTrafficController;
 
-import com.fazecast.jSerialComm.*;
-
 /**
  * Implements SerialPortAdapter for SPROG Generation 5.
  * <p>
@@ -21,7 +19,7 @@ import com.fazecast.jSerialComm.*;
 public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
 
     public Sprog3PlusSerialDriverAdapter() {
-        super("S", SerialPort.FLOW_CONTROL_RTS_ENABLED | SerialPort.FLOW_CONTROL_CTS_ENABLED);
+        super("S", FlowControl.RTSCTS);  // enable RTS/CTS flow control
         option2Name = "CANID";
         options.put(option2Name, new Option(Bundle.getMessage("JMRICANID"), new String[]{"127", "126", "125", "124", "123", "122", "121", "120"}));
         _progMode = ConfigurationManager.ProgModeSwitch.SPROG3PLUS;

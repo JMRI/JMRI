@@ -85,13 +85,6 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
         return opened;
     }
 
-    /**
-     * Local method to do specific port configuration
-     */
-    @Override
-    protected void setSerialPort() {
-    }
-
     @Override
     public String getCurrentPortName(){
        return "";

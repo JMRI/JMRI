@@ -7,8 +7,6 @@ import java.util.Arrays;
 
 import jmri.jmrix.can.TrafficController;
 
-import com.fazecast.jSerialComm.*;
-
 /**
  * Implements SerialPortAdapter for the LAWICELL protocol.
  *
@@ -16,8 +14,6 @@ import com.fazecast.jSerialComm.*;
  * @author Andrew Crosland Copyright (C) 2008
  */
 public class SerialDriverAdapter extends PortController {
-
-    SerialPort activeSerialPort = null;
 
     public SerialDriverAdapter() {
         super(new jmri.jmrix.can.CanSystemConnectionMemo());
@@ -28,32 +24,34 @@ public class SerialDriverAdapter extends PortController {
 
     @Override
     public String openPort(String portName, String appName) {
-        // open the port, check ability to set moderators
- 
-        // get and open the primary port
-        activeSerialPort = SerialPort.getCommPort(portName);  // name of program, msec to wait
-        activeSerialPort.openPort();
-        log.info("Connecting CAN to {} {}", portName, activeSerialPort);
 
+        // get and open the primary port
+        activeSerialPort = activatePort(portName, log);
+        if (activeSerialPort == null) {
+            log.error("failed to connect SPROG to {}", portName);
+            return Bundle.getMessage("SerialPortNotFound", portName);
+        }
+        log.info("Connecting C/MRI to {} {}", portName, activeSerialPort);
+        
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(mBaudRate);
-        activeSerialPort.setBaudRate(baud);
-        activeSerialPort.setDTR();
-        activeSerialPort.setRTS();
-        activeSerialPort.setFlowControl(
-                SerialPort.FLOW_CONTROL_DISABLED);
-        activeSerialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, 0, 0);
-            
+        setBaudRate(activeSerialPort, baud);
+        configureLeads(activeSerialPort, true, true);
+        setFlowControl(activeSerialPort, FlowControl.NONE);
+
         // get and save stream
         serialStream = activeSerialPort.getInputStream();
 
         // purge contents, if any
-        //purgeStream(serialStream);
+        purgeStream(serialStream);
 
         // report status?
         if (log.isInfoEnabled()) {
-            log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  name: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.getDTR(), activeSerialPort.getRTS(), activeSerialPort.getDSR(), activeSerialPort.getCTS(), activeSerialPort);
+            log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  name: {}", 
+                    portName, activeSerialPort.getBaudRate(), activeSerialPort.getDTR(), 
+                    activeSerialPort.getRTS(), activeSerialPort.getDSR(), activeSerialPort.getCTS(), 
+                    activeSerialPort);
         }
 
         opened = true;

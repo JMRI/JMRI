@@ -118,7 +118,8 @@ public class SprogTrafficController implements SprogInterface,
         this.sprogState = s;
         if (s == SprogState.V4BOOTMODE) {
             // enable flow control - required for sprog v4 bootloader
-            getController().setHandshake(true); // set RTS/CTS
+            var controller = getController();
+            controller.setHandshake(jmri.jmrix.AbstractSerialPortController.FlowControl.RTSCTS);
 
         } else {
             // disable flow control

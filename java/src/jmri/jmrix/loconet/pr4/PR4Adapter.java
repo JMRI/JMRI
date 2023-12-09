@@ -7,8 +7,6 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Override {@link jmri.jmrix.loconet.locobuffer.LocoBufferAdapter} so that it refers to the
@@ -29,28 +27,9 @@ public class PR4Adapter extends LocoBufferAdapter {
 
     }
 
-    /**
-     * Sets up the serial port characteristics.  Always uses flow control, which is
-     * not considered a user-settable option.  Sets the PR4 for the appropriate
-     * operating mode, based on the selected "command station type".
-     *
-     * @param activeSerialPort  the port to be configured
-     */
     @Override
-    protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
-        // find the baud rate value, configure comm options
-        int baud = currentBaudNumber(mBaudRate);
-        activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
-                SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-
-        // configure flow control to always on
-        int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
-        if (getOptionState(option1Name).equals(validOption1[1])) {
-            flow = SerialPort.FLOWCONTROL_NONE;
-        }
-        configureLeadsAndFlowControl(activeSerialPort, flow);
-
-        log.info("PR4 adapter{}{} RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN, activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=", activeSerialPort.getFlowControlMode());
+    protected void reportOpen(String portName) {
+        log.info("Connecting PR4 via {} {}", portName, activeSerialPort);
     }
 
     /**

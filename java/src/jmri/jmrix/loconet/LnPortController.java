@@ -1,7 +1,6 @@
 package jmri.jmrix.loconet;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,10 +21,6 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     // returns the InputStream from the port
     @Override
     public abstract DataInputStream getInputStream();
-
-    // returns the outputStream to the port
-    @Override
-    public abstract DataOutputStream getOutputStream();
 
     /**
      * Check that this object is ready to operate. This is a question of

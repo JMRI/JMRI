@@ -1,15 +1,12 @@
 package jmri.jmrix.cmri.serial.serialdriver;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.util.Arrays;
 
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialPortAdapter;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
-
-import com.fazecast.jSerialComm.*;
 
 /**
  * Provide access to C/MRI via a serial com port. Normally controlled by the
@@ -24,37 +21,36 @@ public class SerialDriverAdapter extends SerialPortAdapter {
         this.manufacturerName = jmri.jmrix.cmri.CMRIConnectionTypeList.CMRI;
     }
 
-    SerialPort activeSerialPort = null;
-
     @Override
     public String openPort(String portName, String appName) {
-        // open the port, check ability to set moderators
- 
+
         // get and open the primary port
-        activeSerialPort = SerialPort.getCommPort(portName);  // name of program, msec to wait
-        activeSerialPort.openPort();
-        log.info("Connecting CMRI to {} {}", portName, activeSerialPort);
+        activeSerialPort = activatePort(portName, log);
+        if (activeSerialPort == null) {
+            log.error("failed to connect SPROG to {}", portName);
+            return Bundle.getMessage("SerialPortNotFound", portName);
+        }
+        log.info("Connecting C/MRI to {} {}", portName, activeSerialPort);
         
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(mBaudRate);
-        activeSerialPort.setBaudRate(baud);
-        activeSerialPort.setDTR();
-        activeSerialPort.setRTS();
-        activeSerialPort.setFlowControl(
-                SerialPort.FLOW_CONTROL_DTR_ENABLED |
-                SerialPort.FLOW_CONTROL_CTS_ENABLED);
-        activeSerialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, 0, 0);
-            
+        setBaudRate(activeSerialPort, baud);
+        configureLeads(activeSerialPort, true, true);
+        setFlowControl(activeSerialPort, FlowControl.NONE);
+
         // get and save stream
         serialStream = activeSerialPort.getInputStream();
 
         // purge contents, if any
-        //purgeStream(serialStream);
+        purgeStream(serialStream);
 
         // report status?
         if (log.isInfoEnabled()) {
-            log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  name: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.getDTR(), activeSerialPort.getRTS(), activeSerialPort.getDSR(), activeSerialPort.getCTS(), activeSerialPort);
+            log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  name: {}", 
+                    portName, activeSerialPort.getBaudRate(), activeSerialPort.getDTR(), 
+                    activeSerialPort.getRTS(), activeSerialPort.getDSR(), activeSerialPort.getCTS(), 
+                    activeSerialPort);
         }
 
         opened = true;
@@ -92,33 +88,18 @@ public class SerialDriverAdapter extends SerialPortAdapter {
         return new DataInputStream(serialStream);
     }
 
-    @Override
-    public DataOutputStream getOutputStream() {
-        if (!opened) {
-            log.error("getOutputStream called before load(), stream not available");
-        }
-
-        return new DataOutputStream(activeSerialPort.getOutputStream());
-    }
+//     @Override
+//     public DataOutputStream getOutputStream() {
+//         if (!opened) {
+//             log.error("getOutputStream called before load(), stream not available");
+//         }
+// 
+//         return new DataOutputStream(activeSerialPort.getOutputStream());
+//     }
 
     @Override
     public boolean status() {
         return opened;
-    }
-
-    /**
-     * Local method to do specific port configuration.
-     *
-     */
-    protected void setSerialPort() {
-        // find the baud rate value, configure comm options
-        int baud = currentBaudNumber(mBaudRate);
-        activeSerialPort.setComPortParameters(baud, 8,
-                SerialPort.TWO_STOP_BITS, SerialPort.NO_PARITY);
-
-        // find and configure flow control
-        int flow = SerialPort.FLOW_CONTROL_DISABLED; // default
-        configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
     /**

@@ -6,13 +6,13 @@ import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
 import jmri.jmrix.can.adapters.gridconnect.GcTrafficController;
 import jmri.jmrix.can.adapters.gridconnect.can2usbino.GridConnectDoubledMessage;
 
-import com.fazecast.jSerialComm.SerialPort;
-
 /**
  * Implements SerialPortAdapter for GridConnect adapters.
  * <p>
  * This connects a CAN-USB CAN adapter via a serial com port. Normally
  * controlled by the SerialDriverFrame class.
+ *
+ * This asserts XON/XOFF flow control.
  *
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2009, 2012
@@ -28,9 +28,7 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter {
     public String openPort(String portName, String appName) {
         var retval = super.openPort(portName, appName);
         
-        activeSerialPort.setFlowControl(
-            SerialPort.FLOW_CONTROL_XONXOFF_IN_ENABLED |
-            SerialPort.FLOW_CONTROL_XONXOFF_OUT_ENABLED);
+        setFlowControl(activeSerialPort, FlowControl.XONXOFF);
 
         return retval;
     }

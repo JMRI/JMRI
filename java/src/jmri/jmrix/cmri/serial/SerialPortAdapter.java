@@ -1,7 +1,6 @@
 package jmri.jmrix.cmri.serial;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import jmri.SystemConnectionMemo;
 
 /**
@@ -20,10 +19,6 @@ public abstract class SerialPortAdapter extends jmri.jmrix.AbstractSerialPortCon
     // returns the InputStream from the port
     @Override
     public abstract DataInputStream getInputStream();
-
-    // returns the outputStream to the port
-    @Override
-    public abstract DataOutputStream getOutputStream();
 
     // check that this object is ready to operate
     @Override
