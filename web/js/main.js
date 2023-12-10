@@ -60,13 +60,13 @@ function getNetworkServices() {
             if (!Array.isArray(data)) {
                 data = [data];
             }
-            // show all hidden when service is available elements 
+            // show all hidden when service is available elements
             $(".hidden-jmri_jmri-json").addClass("show").removeClass("hidden");
             $(".hidden-jmri_jmri-locormi").addClass("show").removeClass("hidden");
             $(".hidden-jmri_jmri-simple").addClass("show").removeClass("hidden");
             $(".hidden-jmri_srcp").addClass("show").removeClass("hidden");
             $(".hidden-jmri_withrottle").addClass("show").removeClass("hidden");
-            // hide all visible when service is available elements 
+            // hide all visible when service is available elements
             $(".visible-jmri_jmri-json").addClass("hidden").removeClass("show");
             $(".visible-jmri_jmri-locormi").addClass("hidden").removeClass("show");
             $(".visible-jmri_jmri-simple").addClass("hidden").removeClass("show");
@@ -190,7 +190,7 @@ function setNavbarFixed(fixed) {
     }
     if (fixed === true) {
         $(".navbar").removeClass("navbar-static-top").addClass("navbar-fixed-top");
-        $("body").css("padding-top", "50px");  
+        $("body").css("padding-top", "50px");
     } else {
         $(".navbar").removeClass("navbar-fixed-top").addClass("navbar-static-top");
         $("body").css("padding-top", "0px");
@@ -285,13 +285,13 @@ if (!window.localStorage) {
 //if (!window.jQuery) {
 //    console.log("inserting jQuery");
 //    var script = document.createElement('script');
-//    script.src = '/js/jquery-2.2.4.min.js'; // 
+//    script.src = '/js/jquery-2.2.4.min.js'; //
 //    document.getElementsByTagName('head')[0].appendChild(script);
 //}
 //insert logger.js if not available
 //if (!window.Logger) {
 //    var script = document.createElement('script');
-//    script.src = '/js/logger.js'; // 
+//    script.src = '/js/logger.js'; //
 //    document.getElementsByTagName('head')[0].appendChild(script);
 //    log.log("inserting Logger");
 //}
@@ -314,8 +314,8 @@ $(document).ready(function () {
         open: function () {
             nbJmri.getPower();
         },
-    	hello: function(data) {
-    		nbJmri.getList("rosterGroups"); // request updates to the rosterGroups via websocket 
+        hello: function(data) {
+            nbJmri.getList("rosterGroups"); // request updates to the rosterGroups via websocket
         },
         rosterGroups: function (name, data) {
             getRosterGroups(); // refresh the roster groups in menu

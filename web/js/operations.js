@@ -14,7 +14,7 @@ function getTrains(showAll) {
         url: "/operations/trains?format=html" + ((showAll) ? "&show=all" : ""),
         data: {},
         success: function (data) {
-//        	jmri.log("redrawing Trains table");
+//          jmri.log("redrawing Trains table");
             if (data.length === 0) {
                 $("#warning-no-trains").removeClass("hidden").addClass("show");
                 $("#trains").removeClass("show").addClass("hidden");
@@ -139,7 +139,7 @@ function getConductor(id, location) {
                 if ($("#move-train").data("statuscode") == CODE_TERMINATED) {
                     $("#move-train").prop("disabled", true);
                 }
-                
+
                 // add function to move button
                 $("#move-train").click(function () {
                     getConductor(id, $("#move-train").data("location"));
@@ -194,7 +194,7 @@ $(document).ready(function () {
             getTrains($("#show-all-trains > input").is(":checked")); //refresh the trains table
         },
         train: function (id, data) {
-//        	jmri.log("in train: for " + data.iconName);
+//          jmri.log("in train: for " + data.iconName);
             if (view === "manifest") {
                 if (id == $("html").data("train")) {
                     $("title").text(data.iconName + " (" + data.description + ") Manifest | " + $("html").data("railroad"));
@@ -217,11 +217,11 @@ $(document).ready(function () {
                     $(row).children(".train-trainTerminatesName").text(data.trainTerminatesName); // destination
                     $(row).children(".train-route").text(data.route); // route
                 } else { //add unknown trains only if showAll is checked, or train has cars (active)
-                	if ($("#show-all-trains > input").is(":checked") 
-                		|| data.cars.length > 0 ) {
-//                		jmri.log("new train found, reloading trains table");
-                		getTrains($("#show-all-trains > input").is(":checked"));
-                	}
+                    if ($("#show-all-trains > input").is(":checked")
+                        || data.cars.length > 0 ) {
+//                      jmri.log("new train found, reloading trains table");
+                        getTrains($("#show-all-trains > input").is(":checked"));
+                    }
                 }
             }
         }
