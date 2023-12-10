@@ -31,7 +31,7 @@ public class SerialDriverAdapter extends PortController {
             log.error("failed to connect SPROG to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
-        log.info("Connecting C/MRI to {} {}", portName, activeSerialPort);
+        log.info("Connecting CAN Lawicell to {} {}", portName, activeSerialPort);
         
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options
