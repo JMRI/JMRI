@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
  * NceTrafficController, see nextAiuPoll()
  *
  * @author Bob Jacobsen Copyright (C) 2003
+ * @author Ken Cameron (C) 2023
  */
 public class NceSensorManager extends jmri.managers.AbstractSensorManager
         implements NceListener {

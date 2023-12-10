@@ -16,6 +16,7 @@ import jmri.util.swing.JmriJOptionPane;
  * Confirms connection to PowerCab by issuing dummy loco command.
  *
  * @author Daniel Boudreau (C) 2007, 2010, 2012, 2021
+ * @author Ken Cameron (C) 2023
  *
  */
 public class NceConnectionStatus implements NceListener {
