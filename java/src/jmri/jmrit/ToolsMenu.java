@@ -173,6 +173,7 @@ public class ToolsMenu extends JMenu {
         add(new JSeparator());
         JMenu serverMenu = new JMenu(Bundle.getMessage("MenuServers"));
         serverMenu.add(new jmri.jmrit.withrottle.WiThrottleCreationAction());
+        serverMenu.add(new jmri.jmrit.z21server.z21serverCreationAction());
         serverMenu.add(new jmri.web.server.WebServerAction());
         serverMenu.add(new JSeparator());
         serverMenu.add(new jmri.jmris.srcp.JmriSRCPServerAction());
