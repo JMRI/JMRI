@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
  * Stands in for the NceTrafficController class
  *
  * @author Bob Jacobsen
+ * @author Ken Cameron Copyright (C) 2023
  */
 public class NceInterfaceScaffold extends NceTrafficController {
 

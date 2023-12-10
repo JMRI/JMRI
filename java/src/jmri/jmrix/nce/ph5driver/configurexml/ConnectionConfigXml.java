@@ -15,6 +15,7 @@ import jmri.jmrix.nce.ph5driver.Ph5DriverAdapter;
  * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
+ * @author Ken Cameron Copyright (c) 2023
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 

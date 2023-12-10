@@ -20,6 +20,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  *
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
+ * @author Ken Cameron Copyright (C) 2023
  */
 public class Bundle extends jmri.jmrix.nce.Bundle {
 

@@ -15,6 +15,7 @@ import org.junit.jupiter.api.*;
  * Test for the jmri.jmrix.nce.NceConsist class
  *
  * @author Paul Bender Copyright (C) 2016,2017
+ * @author Ken Cameron Copyright (C) 2023
  */
 
 public class NceConsistTest extends jmri.implementation.AbstractConsistTestBase {
