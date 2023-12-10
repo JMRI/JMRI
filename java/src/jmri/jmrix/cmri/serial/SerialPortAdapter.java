@@ -16,10 +16,6 @@ public abstract class SerialPortAdapter extends jmri.jmrix.AbstractSerialPortCon
         super(connectionMemo);
     }
 
-    // returns the InputStream from the port
-    @Override
-    public abstract DataInputStream getInputStream();
-
     // check that this object is ready to operate
     @Override
     public abstract boolean status();

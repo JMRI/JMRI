@@ -52,12 +52,6 @@ public class MS100Adapter extends LnPortController {
         configureLeads(activeSerialPort, true, false);  // for MS100 power
         setFlowControl(activeSerialPort, FlowControl.NONE);
 
-        // get and save stream
-        serialStream = activeSerialPort.getInputStream();
-
-        // purge contents, if any
-        purgeStream(serialStream);
-
         // report status
         reportPortStatus(log, portName);
 
@@ -88,16 +82,6 @@ public class MS100Adapter extends LnPortController {
 
         // start operation
         packets.startThreads();
-    }
-
-    // base class methods for the LnPortController interface
-    @Override
-    public DataInputStream getInputStream() {
-        if (!opened) {
-            log.error("called before load(), stream not available");
-            return null;
-        }
-        return new DataInputStream(serialStream);
     }
 
     @Override
@@ -141,7 +125,6 @@ public class MS100Adapter extends LnPortController {
 
     // private control members
     private boolean opened = false;
-    InputStream serialStream = null;
  
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MS100Adapter.class);
 

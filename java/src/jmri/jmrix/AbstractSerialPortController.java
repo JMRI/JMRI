@@ -1,5 +1,6 @@
 package jmri.jmrix;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.Enumeration;
 import java.util.Vector;
@@ -257,7 +258,18 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         
     }
     
-    
+   
+    // When PureJavaComm is removed, set this to 'final' to find 
+    // identical implementations in the subclasses.
+    @Override
+    public DataInputStream getInputStream() {
+        if (!opened) {
+            log.error("getInputStream called before load(), stream not available");
+            return null;
+        }
+        return new DataInputStream(activeSerialPort.getInputStream());
+    }
+ 
     // When PureJavaComm is removed, set this to 'final' to find 
     // identical implementations in the subclasses.
     @Override

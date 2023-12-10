@@ -80,11 +80,6 @@ public class LocoBufferAdapter extends LnPortController {
         setBaudRate(activeSerialPort, baud);
         configureLeads(activeSerialPort, true, true);
         setLocalFlowControl();
-        // get and save stream
-        serialStream = activeSerialPort.getInputStream();
-
-        // purge contents, if any
-        purgeStream(serialStream);
 
         // report status
         reportPortStatus(log, portName);
@@ -154,16 +149,6 @@ public class LocoBufferAdapter extends LnPortController {
         packets.startThreads();
     }
 
-    // base class methods for the LnPortController interface
-    @Override
-    public DataInputStream getInputStream() {
-        if (!opened) {
-            log.error("getInputStream called before load(), stream not available"); // NOI18N
-            return null;
-        }
-        return new DataInputStream(serialStream);
-    }
-
     @Override
     public boolean status() {
         return opened;
@@ -195,9 +180,6 @@ public class LocoBufferAdapter extends LnPortController {
 
     // meanings are assigned to these above, so make sure the order is consistent
     protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};
-
-    // private control members
-    InputStream serialStream = null;
 
     /**
      *  Define the readable data and internal code

@@ -41,12 +41,6 @@ public class SerialDriverAdapter extends SerialPortController {
         configureLeads(activeSerialPort, true, true);
         setFlowControl(activeSerialPort, FlowControl.NONE);
 
-        // get and save stream
-        serialStream = activeSerialPort.getInputStream();
-
-        // purge contents, if any
-        purgeStream(serialStream);
-
         // report status
         reportPortStatus(log, portName);
 
@@ -81,24 +75,6 @@ public class SerialDriverAdapter extends SerialPortController {
     }
 
     // Base class methods for the SerialPortController interface
-
-    @Override
-    public DataInputStream getInputStream() {
-        if (!opened) {
-            log.error("getInputStream called before load(), stream not available");
-            return null;
-        }
-        return new DataInputStream(serialStream);
-    }
-
-//     @Override
-//     public DataOutputStream getOutputStream() {
-//         if (!opened) {
-//             log.error("getOutputStream called before load(), stream not available");
-//         }
-// 
-//         return new DataOutputStream(activeSerialPort.getOutputStream());
-//     }
 
     @Override
     public boolean status() {
@@ -152,7 +128,6 @@ public class SerialDriverAdapter extends SerialPortController {
 
     // private control members
     private boolean opened = false;
-    InputStream serialStream = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 

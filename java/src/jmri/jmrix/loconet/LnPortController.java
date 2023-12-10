@@ -18,10 +18,6 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
         setManufacturer(LnConnectionTypeList.DIGITRAX);
     }
 
-    // returns the InputStream from the port
-    @Override
-    public abstract DataInputStream getInputStream();
-
     /**
      * Check that this object is ready to operate. This is a question of
      * configuration, not transient hardware status.

@@ -89,9 +89,8 @@ public class GcSerialDriverAdapter extends GcPortController {
 
         // get and save stream
         serialStream = activeSerialPort.getInputStream();
-
-        // purge contents, if any
-        purgeStream(serialStream);
+        // this is referenced in several other methods, 
+        // so can't easily be removed.
 
         // report status
         reportPortStatus(log, portName);
@@ -373,18 +372,6 @@ public class GcSerialDriverAdapter extends GcPortController {
             }
             return new DataInputStream(bufferedStream);
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public DataOutputStream getOutputStream() {
-        if (!opened) {
-            log.error("getOutputStream called before load(), stream not available");
-        }
-        
-        return new DataOutputStream(activeSerialPort.getOutputStream());
     }
 
     /**

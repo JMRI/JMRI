@@ -74,13 +74,6 @@ public class SerialDriverAdapter extends SprogPortController {
         configureLeads(activeSerialPort, true, true);
         setFlowControl(activeSerialPort, FlowControl.NONE);
 
-        // get and save stream
-        serialStream = new DataInputStream(activeSerialPort.getInputStream());
-        log.trace("SerialDriverAdapter serialStream: {}", serialStream);
-
-        // purge contents, if any
-        purgeStream(serialStream);
-
         // add Sprog Traffic Controller as event listener
         activeSerialPort.addDataListener( new com.fazecast.jSerialComm.SerialPortDataListener() {
             @Override 
@@ -115,25 +108,6 @@ public class SerialDriverAdapter extends SprogPortController {
         setFlowControl(activeSerialPort, flow);
     }
 
-    // base class methods for the SprogPortController interface
-    @Override
-    public DataInputStream getInputStream() {
-        
-        if (!opened) {
-            log.error("getInputStream called before load(), stream not available", new Exception("traceback"));
-            return null;
-        }
-        return serialStream;
-    }
-
-    @Override
-    public DataOutputStream getOutputStream() {
-        if (!opened) {
-            log.error("getOutputStream called before load(), stream not available", new Exception("traceback"));
-        }
-        return new DataOutputStream(activeSerialPort.getOutputStream());
-    }
-
     /**
      * {@inheritDoc}
      * Currently only 9,600 bps
@@ -155,8 +129,6 @@ public class SerialDriverAdapter extends SprogPortController {
     public int defaultBaudIndex() {
         return 0;
     }
-
-    DataInputStream serialStream = null;
 
     protected int numSlots = 1;
 

@@ -39,12 +39,6 @@ public class SerialDriverAdapter extends SerialPortAdapter {
         configureLeads(activeSerialPort, true, true);
         setFlowControl(activeSerialPort, FlowControl.NONE);
 
-        // get and save stream
-        serialStream = activeSerialPort.getInputStream();
-
-        // purge contents, if any
-        purgeStream(serialStream);
-
         // report status
         reportPortStatus(log, portName);
 
@@ -72,25 +66,6 @@ public class SerialDriverAdapter extends SerialPortAdapter {
         ((CMRISystemConnectionMemo)getSystemConnectionMemo()).setTrafficController(tc);
         ((CMRISystemConnectionMemo)getSystemConnectionMemo()).configureManagers();
     }
-
-    // base class methods for the SerialPortAdapter interface
-    @Override
-    public DataInputStream getInputStream() {
-        if (!opened) {
-            log.error("getInputStream called before load(), stream not available");
-            return null;
-        }
-        return new DataInputStream(serialStream);
-    }
-
-//     @Override
-//     public DataOutputStream getOutputStream() {
-//         if (!opened) {
-//             log.error("getOutputStream called before load(), stream not available");
-//         }
-// 
-//         return new DataOutputStream(activeSerialPort.getOutputStream());
-//     }
 
     @Override
     public boolean status() {
@@ -125,7 +100,6 @@ public class SerialDriverAdapter extends SerialPortAdapter {
 
     // private control members
     private boolean opened = false;
-    InputStream serialStream = null;
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialDriverAdapter.class);
 

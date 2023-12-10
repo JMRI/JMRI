@@ -24,20 +24,6 @@ public abstract class GcPortController extends jmri.jmrix.AbstractSerialPortCont
     }
 
     /**
-     * Get the InputStream to the port.
-     * {@inheritDoc}
-     */
-    @Override
-    public abstract DataInputStream getInputStream();
-
-    /**
-     * Get the outputStream to the port.
-     * {@inheritDoc}
-     */
-    @Override
-    public abstract DataOutputStream getOutputStream();
-
-    /**
      * Get the CAN System Connection.
      * {@inheritDoc}
      */
