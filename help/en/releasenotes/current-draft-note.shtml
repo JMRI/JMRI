@@ -26,7 +26,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>CBUS serial connections have been updated to use a new serial library.</li>  
             </ul>
 
         <h4>C/MRI</h4>
@@ -131,7 +131,7 @@
 
         <h4>Powerline</h4>
             <ul>
-                <li></li>
+                <li>Powerline connections have been updated to use a new serial library.</li>
             </ul>
 
         <h4>RFID</h4>
