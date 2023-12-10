@@ -158,6 +158,9 @@ public class CbusConsoleStatsPane extends javax.swing.JPanel {
         keepAliveTimer = new TimerTask(){
             @Override
             public void run () {
+                if ( disposed ) {
+                    return;
+                }
                 long currentTime = System.currentTimeMillis();
                 float secsDuration = (currentTime-startTime)/1000f;
                 framesLastSecondField.setText(Integer.toString(
@@ -172,9 +175,7 @@ public class CbusConsoleStatsPane extends javax.swing.JPanel {
                 dccCountField.setText(Integer.toString(dccTotal));
                 statsClearButton.setToolTipText(Bundle.getMessage("ResetButtonLastRestTip",
                     String.format("%.01f", secsDuration)));
-                if ( !disposed ) {
-                    jmri.util.TimerUtil.scheduleOnGUIThread(keepAliveTimer, 500);
-                }
+                jmri.util.TimerUtil.scheduleOnGUIThread(keepAliveTimer, 500);
             }
         };
         jmri.util.TimerUtil.scheduleOnGUIThread(keepAliveTimer, 500);
