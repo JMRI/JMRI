@@ -1083,7 +1083,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <tooltip xml:lang="nl">0 voor Rood, xxxx1 voor Groen</tooltip>
           </variable>
 
-          <!-- vars 93-100 1. Magnetartikelbefehl für Gleis 1-8 wenn „frei“ -->
+          <!-- vars 93-108 1. Magnetartikelbefehl für Gleis 1-16 wenn „frei“ -->
           <variable CV="6333.93" item="Free Track 1 Command 1" mask="10" default="0">
             <decVal max="10000"/>
             <label xml:lang="de">Frei 1. Befehl:</label>
@@ -1212,8 +1212,136 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <tooltip xml:lang="de">xxxx0 für Rot, xxxx1 für Grün</tooltip>
             <tooltip xml:lang="nl">0 voor Rood, xxxx1 voor Groen</tooltip>
           </variable>
+          <variable CV="6333.101" item="Free Track 9 Command 1" mask="10" default="0">
+            <decVal max="10000"/>
+            <label xml:lang="de">Frei 1. Befehl:</label>
+            <label xml:lang="fr">Libré Instr. 1:</label>
+            <label xml:lang="nl">Vrij instr. 1:</label>
+            <label>Unoccupied: Command 1:</label>
+            <tooltip>Turnout command 1 when Section 9 goes Unoccupied</tooltip>
+            <tooltip xml:lang="de">1. Magnetartikelbefehl als Gleis 9 "frei"</tooltip>
+            <tooltip xml:lang="nl">1e commando bij "vrije" sectie 9</tooltip>
+          </variable>
+          <variable CV="6333.101" item="Free Track 9 Command 1 Type" mask="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGDigit0.xml"/>
+            <tooltip>xxxx0 for Red, xxxx1 for Green</tooltip>
+            <tooltip xml:lang="de">xxxx0 für Rot, xxxx1 für Grün</tooltip>
+            <tooltip xml:lang="nl">0 voor Rood, xxxx1 voor Groen</tooltip>
+          </variable>
+          <variable CV="6333.102" item="Free Track 10 Command 1" mask="10" default="0">
+            <decVal max="10000"/>
+            <label xml:lang="de">Frei 1. Befehl:</label>
+            <label xml:lang="fr">Libré Instr. 1:</label>
+            <label xml:lang="nl">Vrij instr. 1:</label>
+            <label>Unoccupied: Command 1:</label>
+            <tooltip>Turnout command 1 when Section 10 goes Unoccupied</tooltip>
+            <tooltip xml:lang="de">1. Magnetartikelbefehl als Gleis 10 "frei"</tooltip>
+            <tooltip xml:lang="nl">1e commando bij "vrije" sectie 10</tooltip>
+          </variable>
+          <variable CV="6333.102" item="Free Track 10 Command 1 Type" mask="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGDigit0.xml"/>
+            <tooltip>xxxx0 for Red, xxxx1 for Green</tooltip>
+            <tooltip xml:lang="de">xxxx0 für Rot, xxxx1 für Grün</tooltip>
+            <tooltip xml:lang="nl">0 voor Rood, xxxx1 voor Groen</tooltip>
+          </variable>
+          <variable CV="6333.103" item="Free Track 11 Command 1" mask="10" default="0">
+            <decVal max="10000"/>
+            <label xml:lang="de">Frei 1. Befehl:</label>
+            <label xml:lang="fr">Libré Instr. 1:</label>
+            <label xml:lang="nl">Vrij instr. 1:</label>
+            <label>Unoccupied: Command 1:</label>
+            <tooltip>Turnout command 1 when Section 11 goes Unoccupied</tooltip>
+            <tooltip xml:lang="de">1. Magnetartikelbefehl als Gleis 11 "frei"</tooltip>
+            <tooltip xml:lang="nl">1e commando bij "vrije" sectie 11</tooltip>
+          </variable>
+          <variable CV="6333.103" item="Free Track 11 Command 1 Type" mask="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGDigit0.xml"/>
+            <tooltip>xxxx0 for Red, xxxx1 for Green</tooltip>
+            <tooltip xml:lang="de">xxxx0 für Rot, xxxx1 für Grün</tooltip>
+            <tooltip xml:lang="nl">0 voor Rood, xxxx1 voor Groen</tooltip>
+          </variable>
+          <variable CV="6333.104" item="Free Track 12 Command 1" mask="10" default="0">
+            <decVal max="10000"/>
+            <label xml:lang="de">Frei 1. Befehl:</label>
+            <label xml:lang="fr">Libré Instr. 1:</label>
+            <label xml:lang="nl">Vrij instr. 1:</label>
+            <label>Unoccupied: Command 1:</label>
+            <tooltip>Turnout command 1 when Section 12 goes Unoccupied</tooltip>
+            <tooltip xml:lang="de">1. Magnetartikelbefehl als Gleis 12 "frei"</tooltip>
+            <tooltip xml:lang="nl">1e commando bij "vrije" sectie 12</tooltip>
+          </variable>
+          <variable CV="6333.104" item="Free Track 12 Command 1 Type" mask="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGDigit0.xml"/>
+            <tooltip>xxxx0 for Red, xxxx1 for Green</tooltip>
+            <tooltip xml:lang="de">xxxx0 für Rot, xxxx1 für Grün</tooltip>
+            <tooltip xml:lang="nl">0 voor Rood, xxxx1 voor Groen</tooltip>
+          </variable>
+          <variable CV="6333.105" item="Free Track 13 Command 1" mask="10" default="0">
+            <decVal max="10000"/>
+            <label xml:lang="de">Frei 1. Befehl:</label>
+            <label xml:lang="fr">Libré Instr. 1:</label>
+            <label xml:lang="nl">Vrij instr. 1:</label>
+            <label>Unoccupied: Command 1:</label>
+            <tooltip>Turnout command 1 when Section 13 goes Unoccupied</tooltip>
+            <tooltip xml:lang="de">1. Magnetartikelbefehl als Gleis 13 "frei"</tooltip>
+            <tooltip xml:lang="nl">1e commando bij "vrije" sectie 13</tooltip>
+          </variable>
+          <variable CV="6333.105" item="Free Track 13 Command 1 Type" mask="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGDigit0.xml"/>
+            <tooltip>xxxx0 for Red, xxxx1 for Green</tooltip>
+            <tooltip xml:lang="de">xxxx0 für Rot, xxxx1 für Grün</tooltip>
+            <tooltip xml:lang="nl">0 voor Rood, xxxx1 voor Groen</tooltip>
+          </variable>
+          <variable CV="6333.106" item="Free Track 14 Command 1" mask="10" default="0">
+            <decVal max="10000"/>
+            <label xml:lang="de">Frei 1. Befehl:</label>
+            <label xml:lang="fr">Libré Instr. 1:</label>
+            <label xml:lang="nl">Vrij instr. 1:</label>
+            <label>Unoccupied: Command 1:</label>
+            <tooltip>Turnout command 1 when Section 14 goes Unoccupied</tooltip>
+            <tooltip xml:lang="de">1. Magnetartikelbefehl als Gleis 14 "frei"</tooltip>
+            <tooltip xml:lang="nl">1e commando bij "vrije" sectie 14</tooltip>
+          </variable>
+          <variable CV="6333.106" item="Free Track 14 Command 1 Type" mask="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGDigit0.xml"/>
+            <tooltip>xxxx0 for Red, xxxx1 for Green</tooltip>
+            <tooltip xml:lang="de">xxxx0 für Rot, xxxx1 für Grün</tooltip>
+            <tooltip xml:lang="nl">0 voor Rood, xxxx1 voor Groen</tooltip>
+          </variable>
+          <variable CV="6333.107" item="Free Track 15 Command 1" mask="10" default="0">
+            <decVal max="10000"/>
+            <label xml:lang="de">Frei 1. Befehl:</label>
+            <label xml:lang="fr">Libré Instr. 1:</label>
+            <label xml:lang="nl">Vrij instr. 1:</label>
+            <label>Unoccupied: Command 1:</label>
+            <tooltip>Turnout command 1 when Section 15 goes Unoccupied</tooltip>
+            <tooltip xml:lang="de">1. Magnetartikelbefehl als Gleis 15 "frei"</tooltip>
+            <tooltip xml:lang="nl">1e commando bij "vrije" sectie 15</tooltip>
+          </variable>
+          <variable CV="6333.107" item="Free Track 15 Command 1 Type" mask="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGDigit0.xml"/>
+            <tooltip>xxxx0 for Red, xxxx1 for Green</tooltip>
+            <tooltip xml:lang="de">xxxx0 für Rot, xxxx1 für Grün</tooltip>
+            <tooltip xml:lang="nl">0 voor Rood, xxxx1 voor Groen</tooltip>
+          </variable>
+          <variable CV="6333.108" item="Free Track 16 Command 1" mask="10" default="0">
+            <decVal max="10000"/>
+            <label xml:lang="de">Frei 1. Befehl:</label>
+            <label xml:lang="fr">Libré Instr. 1:</label>
+            <label xml:lang="nl">Vrij instr. 1:</label>
+            <label>Unoccupied: Command 1:</label>
+            <tooltip>Turnout command 1 when Section 16 goes Unoccupied</tooltip>
+            <tooltip xml:lang="de">1. Magnetartikelbefehl als Gleis 16 "frei"</tooltip>
+            <tooltip xml:lang="nl">1e commando bij "vrije" sectie 16</tooltip>
+          </variable>
+          <variable CV="6333.108" item="Free Track 16 Command 1 Type" mask="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGDigit0.xml"/>
+            <tooltip>xxxx0 for Red, xxxx1 for Green</tooltip>
+            <tooltip xml:lang="de">xxxx0 für Rot, xxxx1 für Grün</tooltip>
+            <tooltip xml:lang="nl">0 voor Rood, xxxx1 voor Groen</tooltip>
+          </variable>
 
-          <!-- vars 109-116 2. Magnetartikelbefehl für Gleis 1-8 wenn „frei“ -->
+          <!-- vars 109-124 2. Magnetartikelbefehl für Gleis 1-16 wenn „frei“ -->
           <variable CV="6333.109" item="Free Track 1 Command 2" mask="10" default="0">
             <decVal max="10000"/>
             <label xml:lang="de">Frei 2. Befehl:</label>
@@ -1337,6 +1465,134 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <tooltip xml:lang="nl">2e commando bij "vrije" sectie 8</tooltip>
           </variable>
           <variable CV="6333.116" item="Free Track 8 Command 2 Type" mask="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGDigit0.xml"/>
+            <tooltip>xxxx0 for Red, xxxx1 for Green</tooltip>
+            <tooltip xml:lang="de">xxxx0 für Rot, xxxx1 für Grün</tooltip>
+            <tooltip xml:lang="nl">0 voor Rood, xxxx1 voor Groen</tooltip>
+          </variable>
+          <variable CV="6333.117" item="Free Track 9 Command 2" mask="10" default="0">
+            <decVal max="10000"/>
+            <label xml:lang="de">2. Befehl:</label>
+            <label xml:lang="fr">Instr. 2:</label>
+            <label xml:lang="nl">instr. 2:</label>
+            <label> Command 2:</label>
+            <tooltip>Turnout command 2 when Section 9 goes Unoccupied</tooltip>
+            <tooltip xml:lang="de">2. Magnetartikelbefehl als Gleis 9 "frei"</tooltip>
+            <tooltip xml:lang="nl">2e commando bij "vrije" sectie 9</tooltip>
+          </variable>
+          <variable CV="6333.117" item="Free Track 9 Command 2 Type" mask="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGDigit0.xml"/>
+            <tooltip>xxxx0 for Red, xxxx1 for Green</tooltip>
+            <tooltip xml:lang="de">xxxx0 für Rot, xxxx1 für Grün</tooltip>
+            <tooltip xml:lang="nl">0 voor Rood, xxxx1 voor Groen</tooltip>
+          </variable>
+          <variable CV="6333.118" item="Free Track 10 Command 2" mask="10" default="0">
+            <decVal max="10000"/>
+            <label xml:lang="de">2. Befehl:</label>
+            <label xml:lang="fr">Instr. 2:</label>
+            <label xml:lang="nl">instr. 2:</label>
+            <label> Command 2:</label>
+            <tooltip>Turnout command 2 when Section 10 goes Unoccupied</tooltip>
+            <tooltip xml:lang="de">2. Magnetartikelbefehl als Gleis 10 "frei"</tooltip>
+            <tooltip xml:lang="nl">2e commando bij "vrije" sectie 10</tooltip>
+          </variable>
+          <variable CV="6333.118" item="Free Track 10 Command 2 Type" mask="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGDigit0.xml"/>
+            <tooltip>xxxx0 for Red, xxxx1 for Green</tooltip>
+            <tooltip xml:lang="de">xxxx0 für Rot, xxxx1 für Grün</tooltip>
+            <tooltip xml:lang="nl">0 voor Rood, xxxx1 voor Groen</tooltip>
+          </variable>
+          <variable CV="6333.119" item="Free Track 11 Command 2" mask="10" default="0">
+            <decVal max="10000"/>
+            <label xml:lang="de">2. Befehl:</label>
+            <label xml:lang="fr">Instr. 2:</label>
+            <label xml:lang="nl">instr. 2:</label>
+            <label> Command 2:</label>
+            <tooltip>Turnout command 2 when Section 11 goes Unoccupied</tooltip>
+            <tooltip xml:lang="de">2. Magnetartikelbefehl als Gleis 11 "frei"</tooltip>
+            <tooltip xml:lang="nl">2e commando bij "vrije" sectie 11</tooltip>
+          </variable>
+          <variable CV="6333.119" item="Free Track 11 Command 2 Type" mask="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGDigit0.xml"/>
+            <tooltip>xxxx0 for Red, xxxx1 for Green</tooltip>
+            <tooltip xml:lang="de">xxxx0 für Rot, xxxx1 für Grün</tooltip>
+            <tooltip xml:lang="nl">0 voor Rood, xxxx1 voor Groen</tooltip>
+          </variable>
+          <variable CV="6333.120" item="Free Track 12 Command 2" mask="10" default="0">
+            <decVal max="10000"/>
+            <label xml:lang="de">2. Befehl:</label>
+            <label xml:lang="fr">Instr. 2:</label>
+            <label xml:lang="nl">instr. 2:</label>
+            <label> Command 2:</label>
+            <tooltip>Turnout command 2 when Section 12 goes Unoccupied</tooltip>
+            <tooltip xml:lang="de">2. Magnetartikelbefehl als Gleis 12 "frei"</tooltip>
+            <tooltip xml:lang="nl">2e commando bij "vrije" sectie 12</tooltip>
+          </variable>
+          <variable CV="6333.120" item="Free Track 12 Command 2 Type" mask="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGDigit0.xml"/>
+            <tooltip>xxxx0 for Red, xxxx1 for Green</tooltip>
+            <tooltip xml:lang="de">xxxx0 für Rot, xxxx1 für Grün</tooltip>
+            <tooltip xml:lang="nl">0 voor Rood, xxxx1 voor Groen</tooltip>
+          </variable>
+          <variable CV="6333.121" item="Free Track 13 Command 2" mask="10" default="0">
+            <decVal max="10000"/>
+            <label xml:lang="de">2. Befehl:</label>
+            <label xml:lang="fr">Instr. 2:</label>
+            <label xml:lang="nl">instr. 2:</label>
+            <label> Command 2:</label>
+            <tooltip>Turnout command 2 when Section 13 goes Unoccupied</tooltip>
+            <tooltip xml:lang="de">2. Magnetartikelbefehl als Gleis 13 "frei"</tooltip>
+            <tooltip xml:lang="nl">2e commando bij "vrije" sectie 13</tooltip>
+          </variable>
+          <variable CV="6333.121" item="Free Track 13 Command 2 Type" mask="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGDigit0.xml"/>
+            <tooltip>xxxx0 for Red, xxxx1 for Green</tooltip>
+            <tooltip xml:lang="de">xxxx0 für Rot, xxxx1 für Grün</tooltip>
+            <tooltip xml:lang="nl">0 voor Rood, xxxx1 voor Groen</tooltip>
+          </variable>
+          <variable CV="6333.122" item="Free Track 14 Command 2" mask="10" default="0">
+            <decVal max="10000"/>
+            <label xml:lang="de">2. Befehl:</label>
+            <label xml:lang="fr">Instr. 2:</label>
+            <label xml:lang="nl">instr. 2:</label>
+            <label> Command 2:</label>
+            <tooltip>Turnout command 2 when Section 14 goes Unoccupied</tooltip>
+            <tooltip xml:lang="de">2. Magnetartikelbefehl als Gleis 14 "frei"</tooltip>
+            <tooltip xml:lang="nl">2e commando bij "vrije" sectie 14</tooltip>
+          </variable>
+          <variable CV="6333.122" item="Free Track 14 Command 2 Type" mask="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGDigit0.xml"/>
+            <tooltip>xxxx0 for Red, xxxx1 for Green</tooltip>
+            <tooltip xml:lang="de">xxxx0 für Rot, xxxx1 für Grün</tooltip>
+            <tooltip xml:lang="nl">0 voor Rood, xxxx1 voor Groen</tooltip>
+          </variable>
+          <variable CV="6333.123" item="Free Track 15 Command 2" mask="10" default="0">
+            <decVal max="10000"/>
+            <label xml:lang="de">2. Befehl:</label>
+            <label xml:lang="fr">Instr. 2:</label>
+            <label xml:lang="nl">instr. 2:</label>
+            <label> Command 2:</label>
+            <tooltip>Turnout command 2 when Section 15 goes Unoccupied</tooltip>
+            <tooltip xml:lang="de">2. Magnetartikelbefehl als Gleis 15 "frei"</tooltip>
+            <tooltip xml:lang="nl">2e commando bij "vrije" sectie 15</tooltip>
+          </variable>
+          <variable CV="6333.123" item="Free Track 15 Command 2 Type" mask="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGDigit0.xml"/>
+            <tooltip>xxxx0 for Red, xxxx1 for Green</tooltip>
+            <tooltip xml:lang="de">xxxx0 für Rot, xxxx1 für Grün</tooltip>
+            <tooltip xml:lang="nl">0 voor Rood, xxxx1 voor Groen</tooltip>
+          </variable>
+          <variable CV="6333.124" item="Free Track 16 Command 2" mask="10" default="0">
+            <decVal max="10000"/>
+            <label xml:lang="de">2. Befehl:</label>
+            <label xml:lang="fr">Instr. 2:</label>
+            <label xml:lang="nl">instr. 2:</label>
+            <label> Command 2:</label>
+            <tooltip>Turnout command 2 when Section 16 goes Unoccupied</tooltip>
+            <tooltip xml:lang="de">2. Magnetartikelbefehl als Gleis 16 "frei"</tooltip>
+            <tooltip xml:lang="nl">2e commando bij "vrije" sectie 16</tooltip>
+          </variable>
+          <variable CV="6333.124" item="Free Track 16 Command 2 Type" mask="1">
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGDigit0.xml"/>
             <tooltip>xxxx0 for Red, xxxx1 for Green</tooltip>
             <tooltip xml:lang="de">xxxx0 für Rot, xxxx1 für Grün</tooltip>
@@ -1823,6 +2079,447 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
                 <value>1</value>
               </qualifier>
               <row><display item="Free Delay Track 8"/></row>
+            </group>
+          </row>
+
+        </column>
+        <column>
+          <!-- per output setting, output 9-16 -->
+          <separator/>
+          <row>
+            <label>
+              <text>&lt;html&gt;&lt;strong&gt;Input 9 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 9 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 9 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 9 &lt;/strong&gt;&lt;/html&gt;</text>
+            </label>
+            <display item="Feedback 9 Address"/>
+          </row>
+          <row>
+            <display item="Occupied Track 9 Command 1"/>
+            <display item="Occupied Track 9 Command 1 Type" label=""/>
+            <display item="Occupied Track 9 Command 2"/>
+            <display item="Occupied Track 9 Command 2 Type" label=""/>
+            <display item="Occupied Delay Track 9"/>
+          </row>
+          <row>
+            <display item="Free Track 9 Command 1"/>
+            <display item="Free Track 9 Command 1 Type" label=""/>
+            <display item="Free Track 9 Command 2"/>
+            <display item="Free Track 9 Command 2 Type" label=""/>
+            <display item="Free Delay Track 9"/>
+          </row>
+
+          <separator/>
+          <row>
+            <label>
+              <text>&lt;html&gt;&lt;strong&gt;Input 10 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 10 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 10 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 10 &lt;/strong&gt;&lt;/html&gt;</text>
+            </label>
+            <group><!--hide/see Track 10 Address box-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Feedback 10 Address"/></row>
+            </group>
+            <group><!--hide/see Track 10 autonumber box-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>0</value>
+              </qualifier>
+              <label>
+                <text>(Input 1 Address + 1)</text>
+                <text xml:lang="de">(Adresse Gleis 1 + 1)</text>
+                <text xml:lang="fr">(Addresse Voie 1 + 1)</text>
+                <text xml:lang="nl">(adres 1 + 1)</text>
+              </label>
+            </group>
+          </row>
+          <row>
+            <display item="Occupied Track 10 Command 1"/>
+            <display item="Occupied Track 10 Command 1 Type" label=""/>
+            <display item="Occupied Track 10 Command 2"/>
+            <display item="Occupied Track 10 Command 2 Type" label=""/>
+            <group><!--hide/see Track 10 Delay box-->
+              <qualifier>
+                <variableref>Configuration 2</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Occupied Delay Track 10"/></row>
+            </group>
+          </row>
+          <row>
+            <display item="Free Track 10 Command 1"/>
+            <display item="Free Track 10 Command 1 Type" label=""/>
+            <display item="Free Track 10 Command 2"/>
+            <display item="Free Track 10 Command 2 Type" label=""/>
+            <group><!--hide/see Track 10 Delay box-->
+              <qualifier>
+                <variableref>Configuration 2</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Free Delay Track 10"/></row>
+            </group>
+          </row>
+
+          <separator/>
+          <row>
+            <label>
+              <text>&lt;html&gt;&lt;strong&gt;Input 11 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 11 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 11 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 11 &lt;/strong&gt;&lt;/html&gt;</text>
+            </label>
+            <group><!--hide/see Track 11 Address box-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Feedback 11 Address"/></row>
+            </group>
+            <group><!--hide/see Track 11 autonumber label-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>0</value>
+              </qualifier>
+              <label>
+                <text>(Input 1 Address + 2)</text>
+                <text xml:lang="de">(Adresse Gleis 1 + 2)</text>
+                <text xml:lang="fr">(Addresse Voie 1 + 2)</text>
+                <text xml:lang="nl">(adres 1 + 2)</text>
+              </label>
+            </group>
+          </row>
+          <row>
+            <display item="Occupied Track 11 Command 1"/>
+            <display item="Occupied Track 11 Command 1 Type" label=""/>
+            <display item="Occupied Track 11 Command 2"/>
+            <display item="Occupied Track 11 Command 2 Type" label=""/>
+            <group><!--hide/see Track 11 Delay box-->
+              <qualifier>
+                <variableref>Configuration 2</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Occupied Delay Track 11"/></row>
+            </group>
+          </row>
+          <row>
+            <display item="Free Track 11 Command 1"/>
+            <display item="Free Track 11 Command 1 Type" label=""/>
+            <display item="Free Track 11 Command 2"/>
+            <display item="Free Track 11 Command 2 Type" label=""/>
+            <group><!--hide/see Track 11 Delay box-->
+              <qualifier>
+                <variableref>Configuration 2</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Free Delay Track 11"/></row>
+            </group>
+          </row>
+
+          <separator/>
+          <row>
+            <label>
+              <text>&lt;html&gt;&lt;strong&gt;Input 12 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 12 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 12 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 12 &lt;/strong&gt;&lt;/html&gt;</text>
+            </label>
+            <group><!--hide/see Track 12 Address box-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Feedback 12 Address"/></row>
+            </group>
+            <group><!--hide/see Track 12 autonumber label-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>0</value>
+              </qualifier>
+              <label>
+                <text>(Input 1 Address + 3)</text>
+                <text xml:lang="de">(Adresse Gleis 1 + 3)</text>
+                <text xml:lang="fr">(Addresse Voie 1 + 3)</text>
+                <text xml:lang="nl">(adres 1 + 3)</text>
+              </label>
+            </group>
+          </row>
+          <row>
+            <display item="Occupied Track 12 Command 1"/>
+            <display item="Occupied Track 12 Command 1 Type" label=""/>
+            <display item="Occupied Track 12 Command 2"/>
+            <display item="Occupied Track 12 Command 2 Type" label=""/>
+            <group><!--hide/see Track 12 Delay box-->
+              <qualifier>
+                <variableref>Configuration 2</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Occupied Delay Track 12"/></row>
+            </group>
+          </row>
+          <row>
+            <display item="Free Track 12 Command 1"/>
+            <display item="Free Track 12 Command 1 Type" label=""/>
+            <display item="Free Track 12 Command 2"/>
+            <display item="Free Track 12 Command 2 Type" label=""/>
+            <group><!--hide/see Track 12 Delay box-->
+              <qualifier>
+                <variableref>Configuration 2</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Free Delay Track 12"/></row>
+            </group>
+          </row>
+
+          <separator/>
+          <row>
+            <label>
+              <text>&lt;html&gt;&lt;strong&gt;Input 13 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 13 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 13 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 13 &lt;/strong&gt;&lt;/html&gt;</text>
+            </label>
+            <group><!--hide/see Track 13 Address box-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Feedback 13 Address"/></row>
+            </group>
+            <group><!--hide/see Track 13 autonumber label-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>0</value>
+              </qualifier>
+              <label>
+                <text>(Input 1 Address + 4)</text>
+                <text xml:lang="de">(Adresse Gleis 1 + 4)</text>
+                <text xml:lang="fr">(Addresse Voie 1 + 4)</text>
+                <text xml:lang="nl">(adres 1 + 4)</text>
+              </label>
+            </group>
+          </row>
+          <row>
+            <display item="Occupied Track 13 Command 1"/>
+            <display item="Occupied Track 13 Command 1 Type" label=""/>
+            <display item="Occupied Track 13 Command 2"/>
+            <display item="Occupied Track 13 Command 2 Type" label=""/>
+            <group><!--hide/see Track 13 Delay box-->
+              <qualifier>
+                <variableref>Configuration 2</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Occupied Delay Track 13"/></row>
+            </group>
+          </row>
+          <row>
+            <display item="Free Track 13 Command 1"/>
+            <display item="Free Track 13 Command 1 Type" label=""/>
+            <display item="Free Track 13 Command 2"/>
+            <display item="Free Track 13 Command 2 Type" label=""/>
+            <group><!--hide/see Track 13 Delay box-->
+              <qualifier>
+                <variableref>Configuration 2</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Free Delay Track 13"/></row>
+            </group>
+          </row>
+
+          <separator/>
+          <row>
+            <label>
+              <text>&lt;html&gt;&lt;strong&gt;Input 14 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 14 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 14 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 14 &lt;/strong&gt;&lt;/html&gt;</text>
+            </label>
+            <group><!--hide/see Track 14 Address box-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Feedback 14 Address"/></row>
+            </group>
+            <group><!--hide/see Track 4 autonumber label-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>0</value>
+              </qualifier>
+              <label>
+                <text>(Input 1 Address + 5)</text>
+                <text xml:lang="de">(Adresse Gleis 1 + 5)</text>
+                <text xml:lang="fr">(Addresse Voie 1 + 5)</text>
+                <text xml:lang="nl">(adres 1 + 5)</text>
+              </label>
+            </group>
+          </row>
+          <row>
+            <display item="Occupied Track 14 Command 1"/>
+            <display item="Occupied Track 14 Command 1 Type" label=""/>
+            <display item="Occupied Track 14 Command 2"/>
+            <display item="Occupied Track 14 Command 2 Type" label=""/>
+            <group><!--hide/see Track 14 Delay box-->
+              <qualifier>
+                <variableref>Configuration 2</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Occupied Delay Track 14"/></row>
+            </group>
+          </row>
+          <row>
+            <display item="Free Track 14 Command 1"/>
+            <display item="Free Track 14 Command 1 Type" label=""/>
+            <display item="Free Track 14 Command 2"/>
+            <display item="Free Track 14 Command 2 Type" label=""/>
+            <group><!--hide/see Track 14 Delay box-->
+              <qualifier>
+                <variableref>Configuration 2</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Free Delay Track 14"/></row>
+            </group>
+          </row>
+
+          <separator/>
+          <row>
+            <label>
+              <text>&lt;html&gt;&lt;strong&gt;Input 15 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 15 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 15 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 15 &lt;/strong&gt;&lt;/html&gt;</text>
+            </label>
+            <group><!--hide/see Track 15 Address box-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Feedback 15 Address"/></row>
+            </group>
+            <group><!--hide/see Track 15 autonumber label-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>0</value>
+              </qualifier>
+              <label>
+                <text>(Input 1 Address + 6)</text>
+                <text xml:lang="de">(Adresse Gleis 1 + 6)</text>
+                <text xml:lang="fr">(Addresse Voie 1 + 6)</text>
+                <text xml:lang="nl">(adres 1 + 6)</text>
+              </label>
+            </group>
+          </row>
+          <row>
+            <display item="Occupied Track 15 Command 1"/>
+            <display item="Occupied Track 15 Command 1 Type" label=""/>
+            <display item="Occupied Track 15 Command 2"/>
+            <display item="Occupied Track 15 Command 2 Type" label=""/>
+            <group><!--hide/see Track 15 Delay box-->
+              <qualifier>
+                <variableref>Configuration 2</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Occupied Delay Track 15"/></row>
+            </group>
+          </row>
+          <row>
+            <display item="Free Track 15 Command 1"/>
+            <display item="Free Track 15 Command 1 Type" label=""/>
+            <display item="Free Track 15 Command 2"/>
+            <display item="Free Track 15 Command 2 Type" label=""/>
+            <group><!--hide/see Track 15 Delay box-->
+              <qualifier>
+                <variableref>Configuration 2</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Free Delay Track 15"/></row>
+            </group>
+          </row>
+
+          <separator/>
+          <row>
+            <label>
+              <text>&lt;html&gt;&lt;strong&gt;Input 16 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 16 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 16 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 16 &lt;/strong&gt;&lt;/html&gt;</text>
+            </label>
+            <group><!--hide/see Track 16 Address box-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Feedback 16 Address"/></row>
+            </group>
+            <group><!--hide/see Track 16 autonumber label-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>0</value>
+              </qualifier>
+              <label>
+                <text>(Input 1 Address + 7)</text>
+                <text xml:lang="de">(Adresse Gleis 1 + 7)</text>
+                <text xml:lang="fr">(Addresse Voie 1 + 7)</text>
+                <text xml:lang="nl">(adres 1 + 7)</text>
+              </label>
+            </group>
+          </row>
+          <row>
+            <display item="Occupied Track 16 Command 1"/>
+            <display item="Occupied Track 16 Command 1 Type" label=""/>
+            <display item="Occupied Track 16 Command 2"/>
+            <display item="Occupied Track 16 Command 2 Type" label=""/>
+            <group><!--hide/see Track 16 Delay box-->
+              <qualifier>
+                <variableref>Configuration 2</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Occupied Delay Track 16"/></row>
+            </group>
+          </row>
+          <row>
+            <display item="Free Track 16 Command 1"/>
+            <display item="Free Track 16 Command 1 Type" label=""/>
+            <display item="Free Track 16 Command 2"/>
+            <display item="Free Track 16 Command 2 Type" label=""/>
+            <group><!--hide/see Track 16 Delay box-->
+              <qualifier>
+                <variableref>Configuration 2</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Free Delay Track 16"/></row>
             </group>
           </row>
 
