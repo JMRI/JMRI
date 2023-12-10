@@ -480,7 +480,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
      * @param e open button event
      */
     void openPortButtonActionPerformed(java.awt.event.ActionEvent e) {
-        log.info("Open button pushed");
+        //log.info("Open button pushed");
         // can't change this anymore
         openPortButton.setEnabled(false);
         portBox.setEnabled(false);
@@ -488,7 +488,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         // Open the port
         String openStatus = openPort((String) portBox.getSelectedItem(), validSpeedValues[baudBox.getSelectedIndex()], "JMRI");
         if (openStatus != null) {
-            log.error("{} ", openStatus);
+            log.debug("Open Returned: {} ", openStatus);
             // enable options
             openPortButton.setEnabled(true);
             portBox.setEnabled(true);
@@ -570,7 +570,6 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 // Doc says 7 bits, but 8 seems needed
                 activeSerialPort.setSerialPortParams(baudRate, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
@@ -604,13 +603,10 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             }
 
         } catch (java.io.IOException ex) {
-            log.error("IO error while opening port {}", portName, ex);
             return "IO error while opening port " + portName + ": " + ex;
         } catch (UnsupportedCommOperationException ex) {
-            log.error("Unsupported communications operation while opening port {}", portName, ex);
             return "Unsupported communications operation while opening port " + portName + ": " + ex;
         } catch (NoSuchPortException ex) {
-            log.error("No such port: {}", portName, ex);
             return "No such port: " + portName + ": " + ex;
         }
         return null; // indicates OK return
