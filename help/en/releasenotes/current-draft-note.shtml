@@ -49,6 +49,11 @@
                 <li></li>
             </ul>
 
+        <h4>EasyDCC</h4>
+            <ul>
+                <li>EasyDCC serial connections have been updated to use a new serial library.</li>
+            </ul>
+
         <h4>ESU</h4>
             <ul>
                 <li></li>

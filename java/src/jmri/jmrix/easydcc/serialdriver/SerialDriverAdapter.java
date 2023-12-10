@@ -3,16 +3,10 @@ package jmri.jmrix.easydcc.serialdriver;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import jmri.jmrix.easydcc.EasyDccPortController;
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.NoSuchPortException;
-import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the EasyDCC system.
@@ -32,54 +26,27 @@ public class SerialDriverAdapter extends EasyDccPortController {
         setManufacturer(jmri.jmrix.easydcc.EasyDccConnectionTypeList.EASYDCC);
     }
 
-    SerialPort activeSerialPort = null;
-
     @Override
     public String openPort(String portName, String appName) {
-        // open the port, check ability to set moderators
-        try {
-            // get and open the primary port
-            CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
-            try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000); // name of program, msec to wait
-            } catch (PortInUseException p) {
-                return handlePortBusy(p, portName, log);
-            }
 
-            // try to set it for communication via SerialDriver
-            try {
-                activeSerialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
-                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
-            }
-
-            // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
-            configureLeadsAndFlowControl(activeSerialPort, 0);
-
-            // set timeout
-            // activeSerialPort.enableReceiveTimeout(1000);
-            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
-
-            // get and save stream
-            serialStream = activeSerialPort.getInputStream();
-
-            // purge contents, if any
-            purgeStream(serialStream);
-
-            // report status?
-            if (log.isInfoEnabled()) {
-                log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
-            }
-
-            opened = true;
-
-        } catch (NoSuchPortException p) {
-            return handlePortNotFound(p, portName, log);
-        } catch (IOException ex) {
-            log.error("Unexpected exception while opening port {}", portName, ex);
-            return "Unexpected error while opening port " + portName + ": " + ex;
+        // get and open the primary port
+        activeSerialPort = activatePort(portName, log);
+        if (activeSerialPort == null) {
+            log.error("failed to connect SPROG to {}", portName);
+            return Bundle.getMessage("SerialPortNotFound", portName);
         }
+        log.info("Connecting EasyDCC to {} {}", portName, activeSerialPort);
+        
+        // try to set it for communication via SerialDriver
+        // baud rate is fixed at 9600
+        setBaudRate(activeSerialPort, 9600);
+        configureLeads(activeSerialPort, true, true);
+        setFlowControl(activeSerialPort, FlowControl.NONE);
+
+        // report status
+        reportPortStatus(log, portName);
+
+        opened = true;
 
         return null; // indicates OK return
     }
@@ -100,34 +67,6 @@ public class SerialDriverAdapter extends EasyDccPortController {
     }
 
     // Base class methods for the EasyDccPortController interface
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public DataInputStream getInputStream() {
-        if (!opened) {
-            log.error("getInputStream called before load(), stream not available");
-            return null;
-        }
-        return new DataInputStream(serialStream);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public DataOutputStream getOutputStream() {
-        if (!opened) {
-            log.error("getOutputStream called before load(), stream not available");
-        }
-        try {
-            return new DataOutputStream(activeSerialPort.getOutputStream());
-        } catch (java.io.IOException e) {
-            log.error("getOutputStream exception", e);
-        }
-        return null;
-    }
 
     /**
      * {@inheritDoc}
@@ -161,7 +100,6 @@ public class SerialDriverAdapter extends EasyDccPortController {
 
     // private control members
     private boolean opened = false;
-    InputStream serialStream = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
