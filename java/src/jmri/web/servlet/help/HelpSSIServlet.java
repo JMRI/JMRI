@@ -1,8 +1,9 @@
 package jmri.web.servlet.help;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.net.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.regex.*;
@@ -28,7 +29,8 @@ import org.openide.util.lookup.ServiceProvider;
  */
 @WebServlet(name = "HelpSSIServlet",
         urlPatterns = {
-            "/help"
+            "/help",
+            "/plugin"
         })
 @ServiceProvider(service = HttpServlet.class)
 public class HelpSSIServlet extends HttpServlet {
@@ -57,10 +59,26 @@ public class HelpSSIServlet extends HttpServlet {
                 response.setContentType("application/octet-stream");
         }
         byte[] b = new byte[1024];
-        try (InputStream inputStream = new FileInputStream(fileName);) {
-            int byteRead;
-            while ((byteRead = inputStream.read(b)) != -1) {
-                response.getOutputStream().write(b, 0, byteRead);
+        if (fileName.startsWith("/plugin/")) {
+            String resourceName = fileName.substring("/plugin/".length());
+            try (InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(resourceName)) {
+                if (inputStream != null) {
+                    int byteRead;
+                    while ((byteRead = inputStream.read(b)) != -1) {
+                        response.getOutputStream().write(b, 0, byteRead);
+                    }
+                } else {
+                    String error = String.format("--- ERROR: Plugin resource \"%s\" couldn't be found", resourceName);
+                    response.getOutputStream().write(error.getBytes());
+                    log.warn(error);
+                }
+            }
+        } else {
+            try (InputStream inputStream = new FileInputStream(fileName);) {
+                int byteRead;
+                while ((byteRead = inputStream.read(b)) != -1) {
+                    response.getOutputStream().write(b, 0, byteRead);
+                }
             }
         }
         response.getOutputStream().flush();
@@ -99,11 +117,31 @@ public class HelpSSIServlet extends HttpServlet {
         int lastSlash = fileName.lastIndexOf('/');
         String path = lastSlash != -1 ? fileName.substring(0, lastSlash+1) : "";
 
-        fileName = FileUtil.getProgramPath() + fileName;
+        if (!fileName.startsWith("/plugin/")) {
+            fileName = FileUtil.getProgramPath() + fileName;
+        }
 
         String content;
         try {
-            content = new String(Files.readAllBytes(Paths.get(fileName)));
+            if (fileName.startsWith("/plugin/")) {
+                String resourceName = fileName.substring("/plugin/".length());
+                InputStream is = this.getClass().getClassLoader().getResourceAsStream(resourceName);
+                if (is != null) {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+
+                    StringBuilder sb = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line);
+                    }
+                    content = sb.toString();
+                } else {
+                    content = String.format("%n<br>%nERROR: Plugin resource \"%s\" couldn't be found%n<br>%n", resourceName);
+                    log.warn("Plugin resource \"{}\" couldn't be found", resourceName);
+                }
+            } else {
+                content = new String(Files.readAllBytes(Paths.get(fileName)));
+            }
         } catch (IOException ex) {
             content = "Exception thrown: " + ex.getMessage();
             log.warn("Cannot read file: {}", fileName, ex);
@@ -142,7 +180,10 @@ public class HelpSSIServlet extends HttpServlet {
         if (!uri.endsWith(".shtml")) {
             if (!(request instanceof Request)) throw new IllegalArgumentException("request is not a Request");
             log.debug("Handling regular file: '{}'", uri);
-            String fileName = FileUtil.getProgramPath() + uri;
+            String fileName = uri;
+            if (!fileName.startsWith("/plugin/")) {
+                fileName = FileUtil.getProgramPath() + uri;
+            }
             handleRegularFile(fileName, response);
             return;
         }
