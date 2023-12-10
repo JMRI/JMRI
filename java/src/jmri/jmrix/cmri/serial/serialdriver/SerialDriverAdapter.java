@@ -45,13 +45,8 @@ public class SerialDriverAdapter extends SerialPortAdapter {
         // purge contents, if any
         purgeStream(serialStream);
 
-        // report status?
-        if (log.isInfoEnabled()) {
-            log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  name: {}", 
-                    portName, activeSerialPort.getBaudRate(), activeSerialPort.getDTR(), 
-                    activeSerialPort.getRTS(), activeSerialPort.getDSR(), activeSerialPort.getCTS(), 
-                    activeSerialPort);
-        }
+        // report status
+        reportPortStatus(log, portName);
 
         opened = true;
 

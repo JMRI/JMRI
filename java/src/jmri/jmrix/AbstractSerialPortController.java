@@ -91,7 +91,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * 
      * @param portName local system name for the desired port
      * @param log Logger to use for errors, passed so that errors are logged from low-level class
-     * @returns the serial port object for later use
+     * @return the serial port object for later use
      */
     final protected com.fazecast.jSerialComm.SerialPort activatePort(String portName, org.slf4j.Logger log) {
         com.fazecast.jSerialComm.SerialPort serialPort = null;
@@ -240,6 +240,23 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     protected void configureLeadsAndFlowControl(purejavacomm.SerialPort serialPort, int flow) {
         configureLeadsAndFlowControl(serialPort, flow, true, true);
     }
+    
+    /** 
+     * Report the connection status. 
+     * Typically used after the connection is complete
+     * @param log The low-level logger to get this reported against the right class
+     * @param portName low-level name of selected port
+     */
+    protected void reportPortStatus(org.slf4j.Logger log, String portName) {
+        if (log.isInfoEnabled()) {
+            log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  name: {}", 
+                    portName, activeSerialPort.getBaudRate(), activeSerialPort.getDTR(), 
+                    activeSerialPort.getRTS(), activeSerialPort.getDSR(), activeSerialPort.getCTS(), 
+                    activeSerialPort);
+        }
+        
+    }
+    
     
     // When PureJavaComm is removed, set this to 'final' to find 
     // identical implementations in the subclasses.
