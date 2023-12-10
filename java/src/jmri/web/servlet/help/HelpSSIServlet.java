@@ -123,19 +123,20 @@ public class HelpSSIServlet extends HttpServlet {
         try {
             if (fileName.startsWith("/plugin/")) {
                 String resourceName = fileName.substring("/plugin/".length());
-                InputStream is = this.getClass().getClassLoader().getResourceAsStream(resourceName);
-                if (is != null) {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+                try (InputStream is = this.getClass().getClassLoader().getResourceAsStream(resourceName)) {
+                    if (is != null) {
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
 
-                    StringBuilder sb = new StringBuilder();
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        sb.append(line);
+                        StringBuilder sb = new StringBuilder();
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            sb.append(line);
+                        }
+                        content = sb.toString();
+                    } else {
+                        content = String.format("%n<br>%nERROR: Plugin resource \"%s\" couldn't be found%n<br>%n", resourceName);
+                        log.warn("Plugin resource \"{}\" couldn't be found", resourceName);
                     }
-                    content = sb.toString();
-                } else {
-                    content = String.format("%n<br>%nERROR: Plugin resource \"%s\" couldn't be found%n<br>%n", resourceName);
-                    log.warn("Plugin resource \"{}\" couldn't be found", resourceName);
                 }
             } else {
                 content = new String(Files.readAllBytes(Paths.get(fileName)));
