@@ -269,12 +269,12 @@ public class FrmIL extends javax.swing.JFrame {
                 ""
             }
         ) {
-            Class<?>[] types = new Class<?> [] {
+            Class[] types = new Class [] {
                 java.lang.String.class
             };
 
             @Override
-            public Class<?> getColumnClass(int columnIndex) {
+            public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
@@ -316,7 +316,7 @@ public class FrmIL extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(_mTableOfSignalNamesPrompt))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -333,7 +333,7 @@ public class FrmIL extends javax.swing.JFrame {
                         .addComponent(_mOS_NumberEntry, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BT_Replace)))
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addGap(123, 123, 123))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

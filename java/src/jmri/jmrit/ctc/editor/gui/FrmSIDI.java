@@ -531,12 +531,12 @@ public class FrmSIDI extends javax.swing.JFrame {
                 ""
             }
         ) {
-            Class<?>[] types = new Class<?> [] {
+            Class[] types = new Class [] {
                 java.lang.String.class
             };
 
             @Override
-            public Class<?> getColumnClass(int columnIndex) {
+            public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
@@ -550,7 +550,7 @@ public class FrmSIDI extends javax.swing.JFrame {
             .addGroup(_mSIDI_LeftRightSignalsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(_mSIDI_LeftRightSignalsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
                     .addComponent(_mTableOfLeftToRightTrafficSignalNamesPrompt))
                 .addContainerGap())
         );
@@ -673,12 +673,12 @@ public class FrmSIDI extends javax.swing.JFrame {
                 ""
             }
         ) {
-            Class<?>[] types = new Class<?> [] {
+            Class[] types = new Class [] {
                 java.lang.String.class
             };
 
             @Override
-            public Class<?> getColumnClass(int columnIndex) {
+            public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
@@ -693,7 +693,7 @@ public class FrmSIDI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(_mSIDI_RightLeftSignalsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(_mTableOfRightToLeftTrafficSignalNamesPrompt)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))
                 .addContainerGap())
         );
         _mSIDI_RightLeftSignalsLayout.setVerticalGroup(
@@ -726,7 +726,7 @@ public class FrmSIDI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(_mSIDI_LeftRightSignals, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(_mSIDI_RightLeftSignals, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(_mSIDI_RightLeftSignals, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(17, 17, 17))))
         );
         layout.setVerticalGroup(
