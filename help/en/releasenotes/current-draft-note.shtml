@@ -86,7 +86,7 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
-                <li></li>
+                <li>Lenz XPressNet connections have been updated to use a new serial library.</li>
             </ul>
 
         <h4>LocoNet</h4>

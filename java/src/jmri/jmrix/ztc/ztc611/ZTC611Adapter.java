@@ -1,21 +1,10 @@
 package jmri.jmrix.ztc.ztc611;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetSerialPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.NoSuchPortException;
-import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Provide access to XpressNet via a ZTC611 connected via an FTDI virtual comm
@@ -34,60 +23,35 @@ public class ZTC611Adapter extends XNetSerialPortController {
 
     @Override
     public String openPort(String portName, String appName) {
-        // open the port in XpressNet mode, check ability to set moderators
-        try {
-            // get and open the primary port
-            CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
-            try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
-            } catch (PortInUseException p) {
-                return handlePortBusy(p, portName, log);
-            }
-            // try to set it for XNet
-            try {
-                setSerialPort();
-            } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
-                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
-            }
-
-            // set timeout
-            activeSerialPort.enableReceiveTimeout(10);
-            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(),
-                    activeSerialPort.isReceiveTimeoutEnabled());
-
-            // get and save stream
-            serialStream = activeSerialPort.getInputStream();
-
-            // purge contents, if any
-            purgeStream(serialStream);
-
-            // report status?
-            if (log.isInfoEnabled()) {
-                // report now
-                log.info("{} port opened at {} baud with DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
-            }
-            if (log.isDebugEnabled()) {
-                // report additional status
-                log.debug(" port flow control shows {}", activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"); // NOI18N
-
-                // log events
-                setPortEventLogging(activeSerialPort);
-            }
-
-            opened = true;
-
-        } catch (NoSuchPortException p) {
-            return handlePortNotFound(p, portName, log);
-        } catch (IOException ex) {
-            log.error("IO exception while opening port {}", portName, ex);
-            return "IO Exception while opening port " + portName + ": " + ex;
-        } catch (UnsupportedCommOperationException ucex) {
-            log.error("unsupported Comm Operation exception while opening port {}", portName, ucex);
-            return "Unsupported Comm Exception while opening port " + portName + ": " + ucex;
+        // get and open the primary port
+        activeSerialPort = activatePort(portName, log);
+        if (activeSerialPort == null) {
+            log.error("failed to connect SPROG to {}", portName);
+            return Bundle.getMessage("SerialPortNotFound", portName);
         }
+        log.info("Connecting ZTC611 to {} {}", portName, activeSerialPort);
+        
+        // try to set it for communication via SerialDriver
+        // find the baud rate value, configure comm options
+        int baud = currentBaudNumber(mBaudRate);
+        setBaudRate(activeSerialPort, baud);
+        configureLeads(activeSerialPort, true, true);
+        
+        // find and configure flow control
+        FlowControl flow = FlowControl.NONE;  // no flow control is first in the elite setup,
+        // since it doesn't seem to work with flow
+        // control enabled.
+        if (!getOptionState(option1Name).equals(validOption1[0])) {
+            flow = FlowControl.RTSCTS;
+        }
+        setFlowControl(activeSerialPort, flow);
 
-        return null; // normal operation
+        // report status
+        reportPortStatus(log, portName);
+
+        opened = true;
+
+        return null; // indicates OK return
     }
 
     /**
@@ -112,52 +76,8 @@ public class ZTC611Adapter extends XNetSerialPortController {
 
     // base class methods for the XNetSerialPortController interface
     @Override
-    public DataInputStream getInputStream() {
-        if (!opened) {
-            log.error("getInputStream called before load(), stream not available");
-            return null;
-        }
-        return new DataInputStream(serialStream);
-    }
-
-    @Override
-    public DataOutputStream getOutputStream() {
-        if (!opened) {
-            log.error("getOutputStream called before load(), stream not available");
-        }
-        try {
-            return new DataOutputStream(activeSerialPort.getOutputStream());
-        } catch (IOException e) {
-            log.error("getOutputStream exception: {}", e.getMessage());
-        }
-        return null;
-    }
-
-    @Override
     public boolean status() {
         return opened;
-    }
-
-    /**
-     * Local method to do specific configuration.
-     *
-     * @throws UnsupportedCommOperationException if there is an error
-     *                                                  configuring the port
-     */
-    protected void setSerialPort() throws UnsupportedCommOperationException {
-        // find the baud rate value, configure comm options
-        int baud = currentBaudNumber(mBaudRate);
-        activeSerialPort.setSerialPortParams(baud,
-                SerialPort.DATABITS_8,
-                SerialPort.STOPBITS_1,
-                SerialPort.PARITY_NONE);
-
-        // find and configure flow control
-        int flow = 0; // default, but also deftaul for getOptionState(option1Name)
-        if (!getOptionState(option1Name).equals(validOption1[0])) {
-            flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
-        }
-        configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
     /**
@@ -188,8 +108,7 @@ public class ZTC611Adapter extends XNetSerialPortController {
     protected final String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNoRecomm"), Bundle.getMessage("FlowOptionHw")};
 
     private boolean opened = false;
-    InputStream serialStream = null;
 
-    private final static Logger log = LoggerFactory.getLogger(ZTC611Adapter.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ZTC611Adapter.class);
 
 }

@@ -1,8 +1,6 @@
 package jmri.jmrix.lenz;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import purejavacomm.SerialPort;
+import com.fazecast.jSerialComm.SerialPort;
 
 /**
  * Abstract base for classes representing an XNet communications port
@@ -11,8 +9,6 @@ import purejavacomm.SerialPort;
  * @author Paul Bender Copyright (C) 2004,2010
  */
 public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerialPortController implements XNetPortController {
-
-    protected SerialPort activeSerialPort = null;
 
     private boolean outputBufferEmpty = true;
 
@@ -34,13 +30,14 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
      */
     @Override
     public boolean okToSend() {
-        if ((activeSerialPort.getFlowControlMode() & SerialPort.FLOWCONTROL_RTSCTS_OUT) == SerialPort.FLOWCONTROL_RTSCTS_OUT) {
+        if ((activeSerialPort.getFlowControlSettings() & (SerialPort.FLOW_CONTROL_RTS_ENABLED|SerialPort.FLOW_CONTROL_RTS_ENABLED) ) 
+                        == (SerialPort.FLOW_CONTROL_RTS_ENABLED|SerialPort.FLOW_CONTROL_RTS_ENABLED) ) {
             if (checkBuffer) {
-                log.debug("CTS: {} Buffer Empty {}",activeSerialPort.isCTS(),outputBufferEmpty);
-                return (activeSerialPort.isCTS() && outputBufferEmpty);
+                log.debug("CTS: {} Buffer Empty {}",activeSerialPort.getCTS(),outputBufferEmpty);
+                return (activeSerialPort.getCTS() && outputBufferEmpty);
             } else {
-                log.debug("CTS: {}",activeSerialPort.isCTS());
-                return (activeSerialPort.isCTS());
+                log.debug("CTS: {}",activeSerialPort.getCTS());
+                return (activeSerialPort.getCTS());
             }
         } else {
             if (checkBuffer) {
@@ -115,6 +112,6 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
         return (XNetSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(XNetSerialPortController.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(XNetSerialPortController.class);
 
 }
