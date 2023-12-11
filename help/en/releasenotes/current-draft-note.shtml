@@ -116,7 +116,7 @@
 
         <h4>MRC</h4>
             <ul>
-                <li></li>
+                <li>MERG CAN serial connections have been updated to use a new serial library.</li>
             </ul>
 
         <h4>NCE</h4>

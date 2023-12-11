@@ -21,14 +21,6 @@ public abstract class MrcPortController extends jmri.jmrix.AbstractSerialPortCon
     @Override
     abstract public boolean status();
 
-    // returns the InputStream from the port
-    @Override
-    public abstract DataInputStream getInputStream();
-
-    // returns the outputStream to the port
-    @Override
-    public abstract DataOutputStream getOutputStream();
-
     public boolean okToSend() {
         return true;
     }
