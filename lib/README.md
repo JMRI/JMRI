@@ -143,11 +143,16 @@ which checks the dates of the control files to make sure they've been updated wh
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
 
+##### jSerialComm-2.10.4.jar
+- Supported serial lib since JMRI 5.7.1
+- from https://fazecast.github.io/jSerialComm/
+
 ##### purejavacomm-1.0.5.jar
 - version 1.0.5 plus custom change to the Mac M1 support (only)
 - from https://search.maven.org/artifact/org.opensmarthouse/purejavacomm/1.0.5/jar
 - formerly from http://www.sparetimelabs.com/maven2/com/sparetimelabs/purejavacomm/1.0.1/
 - javadoc still at https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE
+- we are migrating away from this for JMRI itself, but we keep distributing it because BiDib and some scripts use it
 
 ##### security.policy
 - (JMRI file)
@@ -535,10 +540,6 @@ Windows and Linux libraries from <https://jogamp.org/deployment/archive/rc/v2.4.
 
 ##### servlet.jar:
 - jakarta-servletapi-3.2.3-src/lib/servlet.jar but no longer included
-
-##### jSerialComm-2.10.4.jar
-- possible new serial lib
-- from https://fazecast.github.io/jSerialComm/
 
 ##### RXTXcomm.jar, librxtxSerial.jnilib
 - From Rxtx-2.2pre2  http://rxtx.qbang.org (http://rxtx.qbang.org/pub/rxtx/rxtx-2.2pre2-bins.zip)
