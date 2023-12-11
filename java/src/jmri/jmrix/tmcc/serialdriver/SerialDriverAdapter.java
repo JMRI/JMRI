@@ -1,7 +1,5 @@
 package jmri.jmrix.tmcc.serialdriver;
 
-import java.io.DataInputStream;
-import java.io.InputStream;
 import java.util.Arrays;
 import jmri.jmrix.tmcc.SerialPortController;
 import jmri.jmrix.tmcc.SerialTrafficController;

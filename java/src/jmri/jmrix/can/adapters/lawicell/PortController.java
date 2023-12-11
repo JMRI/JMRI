@@ -1,7 +1,5 @@
 package jmri.jmrix.can.adapters.lawicell;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import jmri.SystemConnectionMemo;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 

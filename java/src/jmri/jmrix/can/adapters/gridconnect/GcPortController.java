@@ -1,7 +1,5 @@
 package jmri.jmrix.can.adapters.gridconnect;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**

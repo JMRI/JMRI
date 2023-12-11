@@ -1,8 +1,5 @@
 package jmri.jmrix.easydcc.serialdriver;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import jmri.jmrix.easydcc.EasyDccPortController;
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 import org.slf4j.Logger;

@@ -1,9 +1,5 @@
 package jmri.jmrix.powerline.serialdriver;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import jmri.jmrix.powerline.SerialPortController;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;

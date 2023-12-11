@@ -1,8 +1,5 @@
 package jmri.jmrix.sprog.serialdriver;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 import jmri.jmrix.sprog.SprogPortController;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;

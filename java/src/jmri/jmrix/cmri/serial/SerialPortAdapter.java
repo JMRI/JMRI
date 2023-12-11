@@ -1,6 +1,5 @@
 package jmri.jmrix.cmri.serial;
 
-import java.io.DataInputStream;
 import jmri.SystemConnectionMemo;
 
 /**

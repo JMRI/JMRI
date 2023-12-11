@@ -1,8 +1,5 @@
 package jmri.jmrix.can.adapters.lawicell;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
 import java.util.Arrays;
 
 import jmri.jmrix.can.TrafficController;

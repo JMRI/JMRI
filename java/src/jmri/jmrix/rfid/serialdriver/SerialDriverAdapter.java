@@ -1,9 +1,5 @@
 package jmri.jmrix.rfid.serialdriver;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import jmri.jmrix.rfid.RfidPortController;
 import jmri.jmrix.rfid.RfidProtocol;
@@ -23,11 +19,6 @@ import jmri.jmrix.rfid.protocol.parallax.ParallaxRfidProtocol;
 import jmri.jmrix.rfid.protocol.seeedstudio.SeeedStudioRfidProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.NoSuchPortException;
-import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Provide access to RFID devices via a serial com port.
@@ -40,8 +31,6 @@ import purejavacomm.UnsupportedCommOperationException;
  * @since 2.11.4
  */
 public class SerialDriverAdapter extends RfidPortController {
-
-    SerialPort activeSerialPort = null;
 
     public SerialDriverAdapter() {
         super(new RfidSystemConnectionMemo());
@@ -58,69 +47,40 @@ public class SerialDriverAdapter extends RfidPortController {
 
     @Override
     public String openPort(String portName, String appName) {
-        try {
-            // get and open the primary port
-            CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
-            try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
-            } catch (PortInUseException p) {
-                return handlePortBusy(p, portName, log);
-            }
-            // try to set it for serial
-            try {
-                setSerialPort();
-            } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage()); // NOI18N
-                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage(); // NOI18N
-            }
-
-            // set framing (end) character
-            try {
-                log.debug("Serial framing was observed as: {} {}", activeSerialPort.isReceiveFramingEnabled(), // NOI18N
-                        activeSerialPort.getReceiveFramingByte()); // NOI18N
-            } catch (Exception ef) {
-                log.debug("failed to set serial framing", ef); // NOI18N
-            }
-
-            // set timeout; framing should work before this anyway
-            try {
-                activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), // NOI18N
-                        activeSerialPort.isReceiveTimeoutEnabled()); // NOI18N
-            } catch (UnsupportedCommOperationException et) {
-                log.info("failed to set serial timeout", et); // NOI18N
-            }
-
-            // get and save stream
-            serialStream = activeSerialPort.getInputStream();
-
-            // purge contents, if any
-            purgeStream(serialStream);
-
-            // report status?
-            if (log.isInfoEnabled()) {
-                // report now
-                log.info("{} port opened at {} baud with DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
-            }
-            if (log.isDebugEnabled()) {
-                // report additional status
-                log.debug(" port flow control shows {}", // NOI18N
-                        (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
-
-                // log events
-                setPortEventLogging(activeSerialPort);
-            }
-
-            opened = true;
-
-        } catch (NoSuchPortException p) {
-            return handlePortNotFound(p, portName, log);
-        } catch (IOException ex) {
-            log.error("Unexpected exception while opening port {}", portName, ex);
-            return "Unexpected error while opening port " + portName + ": " + ex; // NOI18N
+        // get and open the primary port
+        activeSerialPort = activatePort(portName, log);
+        if (activeSerialPort == null) {
+            log.error("failed to connect SPROG to {}", portName);
+            return Bundle.getMessage("SerialPortNotFound", portName);
         }
+        log.info("Connecting RFID to {} {}", portName, activeSerialPort);
+        
+        // try to set it for communication via SerialDriver
+        // find the baud rate value, configure comm options
+        int baud = currentBaudNumber(mBaudRate);
 
-        return null; // normal operation
+        // the Parallax reader uses 2400 baud, so set that here
+        if (getOptionState(option3Name).equals("Parallax")) {
+            log.debug("Set baud rate to 2400 for Parallax reader");
+            baud = 2400;
+        }
+        setBaudRate(activeSerialPort, baud);
+        configureLeads(activeSerialPort, true, true);
+        // find and configure flow control
+        FlowControl flow = FlowControl.NONE; // default
+        if (getOptionState(option1Name).equals("MERG Concentrator")) {
+            // Set Hardware Flow Control for Concentrator
+            log.debug("Set hardware flow control for Concentrator");
+            flow = FlowControl.RTSCTS;
+        }
+        setFlowControl(activeSerialPort, flow);
+
+        // report status
+        reportPortStatus(log, portName);
+
+        opened = true;
+
+        return null; // indicates OK return
     }
 
     /**
@@ -240,60 +200,10 @@ public class SerialDriverAdapter extends RfidPortController {
     }
 
     // base class methods for the RfidPortController interface
-    @Override
-    public DataInputStream getInputStream() {
-        if (!opened) {
-            log.error("getInputStream called before load(), stream not available");
-            return null;
-        }
-        return new DataInputStream(serialStream);
-    }
-
-    @Override
-    public DataOutputStream getOutputStream() {
-        if (!opened) {
-            log.error("getOutputStream called before load(), stream not available");
-        }
-        try {
-            return new DataOutputStream(activeSerialPort.getOutputStream());
-        } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: {}", e.getMessage());
-        }
-        return null;
-    }
-
+    
     @Override
     public boolean status() {
         return opened;
-    }
-
-    /**
-     * Local method to do specific port configuration
-     *
-     * @throws UnsupportedCommOperationException if unable to configure port
-     */
-    protected void setSerialPort() throws UnsupportedCommOperationException {
-        // find the baud rate value, configure comm options
-        int baud = currentBaudNumber(mBaudRate);
-
-        // the Parallax reader uses 2400 baud, so set that here
-        if (getOptionState(option3Name).equals("Parallax")) {
-            log.debug("Set baud rate to 2400 for Parallax reader");
-            baud = 2400;
-        }
-
-        // check for specific port type
-        activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
-                SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-
-        // find and configure flow control
-        int flow = SerialPort.FLOWCONTROL_NONE; // default
-        if (getOptionState(option1Name).equals("MERG Concentrator")) {
-            // Set Hardware Flow Control for Concentrator
-            log.debug("Set hardware flow control for Concentrator");
-            flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
-        }
-        configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
     /**
@@ -322,7 +232,6 @@ public class SerialDriverAdapter extends RfidPortController {
 
     // private control members
     private boolean opened = false;
-    InputStream serialStream = null;
 
     private static final Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 

@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet;
 
-import java.io.DataInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

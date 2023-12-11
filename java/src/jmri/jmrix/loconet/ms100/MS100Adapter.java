@@ -1,10 +1,5 @@
 package jmri.jmrix.loconet.ms100;
 
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Enumeration;
 import java.util.Vector;
 
 import jmri.jmrix.loconet.LnPacketizer;

@@ -1,7 +1,5 @@
 package jmri.jmrix.easydcc;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import jmri.SystemConnectionMemo;
 
 /**
