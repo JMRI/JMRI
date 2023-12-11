@@ -71,7 +71,7 @@ import jmri.util.swing.sdi.JmriJFrameInterface;
  * disposed, when closed, set the DefaultCloseOperation to DO_NOTHING_ON_CLOSE
  * or HIDE_ON_CLOSE depending on what you're looking for.
  *
- * @author Bob Jacobsen Copyright 2003, 2008
+ * @author Bob Jacobsen Copyright 2003, 2008, 2023
  */
 public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedFlag,
         ComponentListener, WindowInterface, BeanInterface {
@@ -98,14 +98,17 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         windowInterface = new JmriJFrameInterface();
 
         /*
-         * This ensures that different jframes do not get placed directly on top of each other, but offset by the top
-         * inset. However a saved preferences can over ride this
+         * This ensures that different jframes do not get placed directly on top of each other, 
+         * but are offset. However a saved preferences can override this.
          */
         JmriJFrameManager m = getJmriJFrameManager();
+        int X_MARGIN = 3; // observed uncertainty in window position, maybe due to roundoff
+        int Y_MARGIN = 3;
         synchronized (m) {
             for (JmriJFrame j : m) {
                 if ((j.getExtendedState() != ICONIFIED) && (j.isVisible())) {
-                    if ((j.getX() == this.getX()) && (j.getY() == this.getY())) {
+                    if ( Math.abs(j.getX() - this.getX()) < X_MARGIN+j.getInsets().left
+                        && Math.abs(j.getY() - this.getY()) < Y_MARGIN+j.getInsets().top) {
                         offSetFrameOnScreen(j);
                     }
                 }
@@ -438,13 +441,22 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
 
     }
 
+    /**
+     * Move a frame down and to the left by it's top offset or a fixed amount, whichever is larger
+     * @param f JmirJFrame to move
+     */
     void offSetFrameOnScreen(JmriJFrame f) {
         /*
-         * We use the frame that we are moving away from insets, as at this point our own insets have not been correctly
+         * We use the frame that we are moving away from for insets, as at this point our own insets have not been correctly
          * built and always return a size of zero
          */
-        int frameOffSetx = this.getX() + f.getInsets().top;
-        int frameOffSety = this.getY() + f.getInsets().top;
+        int REQUIRED_OFFSET = 25; // units are pixels
+        int REQUIRED_OFFSET_X = Math.max(REQUIRED_OFFSET, f.getInsets().left);
+        int REQUIRED_OFFSET_Y = Math.max(REQUIRED_OFFSET, f.getInsets().top);
+        
+        int frameOffSetx = this.getX() + REQUIRED_OFFSET_X;
+        int frameOffSety = this.getY() + REQUIRED_OFFSET_Y;
+        
         Dimension dim = getMaximumSize();
 
         if (frameOffSetx >= (dim.getWidth() * 0.75)) {
