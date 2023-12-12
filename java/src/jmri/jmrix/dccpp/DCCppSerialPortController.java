@@ -1,10 +1,6 @@
 package jmri.jmrix.dccpp;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import purejavacomm.SerialPort;
+import com.fazecast.jSerialComm.SerialPort;
 
 /**
  * Abstract base for classes representing a DCC++ communications port.
@@ -16,8 +12,6 @@ import purejavacomm.SerialPort;
  */
 public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSerialPortController implements DCCppPortController {
 
-    protected SerialPort activeSerialPort = null;
-
     private boolean outputBufferEmpty = true;
 
     public DCCppSerialPortController() {
@@ -25,16 +19,6 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
         //option2Name = "Buffer";
         //options.put(option2Name, new Option("Check Buffer : ", validOption2));
     }
-
-    // base class. Implementations will provide InputStream and OutputStream
-    // objects to XNetTrafficController classes, who in turn will deal in messages.    
-    // returns the InputStream from the port
-    @Override
-    public abstract DataInputStream getInputStream();
-
-    // returns the outputStream to the port
-    @Override
-    public abstract DataOutputStream getOutputStream();
 
     /**
      * Check that this object is ready to operate. This is a question of
@@ -51,13 +35,14 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
      */
     @Override
     public boolean okToSend() {
-        if ((activeSerialPort.getFlowControlMode() & SerialPort.FLOWCONTROL_RTSCTS_OUT) == SerialPort.FLOWCONTROL_RTSCTS_OUT) {
+        if ((activeSerialPort.getFlowControlSettings() & (SerialPort.FLOW_CONTROL_RTS_ENABLED|SerialPort.FLOW_CONTROL_CTS_ENABLED) ) 
+                        == (SerialPort.FLOW_CONTROL_RTS_ENABLED|SerialPort.FLOW_CONTROL_CTS_ENABLED) ) {
             if (checkBuffer) {
-                log.debug("CTS: {} Buffer Empty: {}", activeSerialPort.isCTS(), outputBufferEmpty);
-                return (activeSerialPort.isCTS() && outputBufferEmpty);
+                log.debug("CTS: {} Buffer Empty: {}", activeSerialPort.getCTS(), outputBufferEmpty);
+                return (activeSerialPort.getCTS() && outputBufferEmpty);
             } else {
-                log.debug("CTS: {}", activeSerialPort.isCTS());
-                return (activeSerialPort.isCTS());
+                log.debug("CTS: {}", activeSerialPort.getCTS());
+                return (activeSerialPort.getCTS());
             }
         } else {
             if (checkBuffer) {
@@ -105,6 +90,6 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
         return (DCCppSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppSerialPortController.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppSerialPortController.class);
 
 }
