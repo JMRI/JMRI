@@ -240,6 +240,29 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @return flow control setting observed in the port
      */
     final protected FlowControl getFlowControl(com.fazecast.jSerialComm.SerialPort serialPort) {
+        // do a cross-check, just in case there's an issue
+        int nowFlow = serialPort.getFlowControlSettings();
+        
+        switch (lastFlowControl) {
+        
+            case NONE:
+                if (nowFlow != com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_DISABLED) 
+                    log.error("Expected flow {} but found {}", lastFlowControl, nowFlow);
+                    break;
+            case RTSCTS:
+                if (nowFlow != (com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_RTS_ENABLED
+                                      | com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_CTS_ENABLED)) 
+                    log.error("Expected flow {} but found {}", lastFlowControl, nowFlow);
+                    break;
+            case XONXOFF:
+                if (nowFlow != (com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_XONXOFF_IN_ENABLED
+                                      | com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_XONXOFF_OUT_ENABLED)) 
+                    log.error("Expected flow {} but found {}", lastFlowControl, nowFlow);
+                    break;
+            default:
+                log.warn("Unexpected FlowControl mode: {}", lastFlowControl);
+        }
+    
         return lastFlowControl;
     }
     
@@ -262,7 +285,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      */
     protected void reportPortStatus(org.slf4j.Logger log, String portName) {
         if (log.isInfoEnabled()) {
-            log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  FLow: {} name: {}", 
+            log.info("Port {} opened at {} baud, sees DTR: {} RTS: {} DSR: {} CTS: {} flow: {} type: {}", 
                     portName, currentSerialPort.getBaudRate(), currentSerialPort.getDTR(), 
                     currentSerialPort.getRTS(), currentSerialPort.getDSR(), currentSerialPort.getCTS(),
                     getFlowControl(currentSerialPort), currentSerialPort);
