@@ -220,17 +220,21 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     final protected void setFlowControl(com.fazecast.jSerialComm.SerialPort serialPort, FlowControl flow) {
         lastFlowControl = flow;
         
+        boolean result = true;
+        
         if (flow == FlowControl.RTSCTS) {
-            serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_RTS_ENABLED
+            result = serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_RTS_ENABLED
                                       | com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_CTS_ENABLED );
         } else if (flow == FlowControl.XONXOFF) {
-            serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_XONXOFF_IN_ENABLED
+            result = serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_XONXOFF_IN_ENABLED
                                       | com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_XONXOFF_OUT_ENABLED);
         } else if (flow == FlowControl.NONE) {
-            serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_DISABLED);
+            result = serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_DISABLED);
         } else {
             log.error("Invalid FlowControl enum member: {}", flow);
         }
+        
+        if (!result) log.error("Port did not accept flow control setting {}", flow);
     }
     
     private FlowControl lastFlowControl = FlowControl.NONE;
