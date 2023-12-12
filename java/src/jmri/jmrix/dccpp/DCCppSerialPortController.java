@@ -35,8 +35,7 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
      */
     @Override
     public boolean okToSend() {
-        if ((activeSerialPort.getFlowControlSettings() & (SerialPort.FLOW_CONTROL_RTS_ENABLED|SerialPort.FLOW_CONTROL_CTS_ENABLED) ) 
-                        == (SerialPort.FLOW_CONTROL_RTS_ENABLED|SerialPort.FLOW_CONTROL_CTS_ENABLED) ) {
+        if (getFlowControl(activeSerialPort) == FlowControl.RTSCTS) {
             if (checkBuffer) {
                 log.debug("CTS: {} Buffer Empty: {}", activeSerialPort.getCTS(), outputBufferEmpty);
                 return (activeSerialPort.getCTS() && outputBufferEmpty);

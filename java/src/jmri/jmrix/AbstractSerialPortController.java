@@ -218,6 +218,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param flow  set which kind of flow control to use
      */
     final protected void setFlowControl(com.fazecast.jSerialComm.SerialPort serialPort, FlowControl flow) {
+        lastFlowControl = flow;
+        
         if (flow == FlowControl.RTSCTS) {
             serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_RTS_ENABLED
                                       | com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_CTS_ENABLED );
@@ -229,6 +231,16 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         } else {
             log.error("Invalid FlowControl enum member: {}", flow);
         }
+    }
+    
+    private FlowControl lastFlowControl = FlowControl.NONE;
+    /**
+     * get the flow control mode back from the actual port.
+     * @param serialPort Port to be examined
+     * @return flow control setting observed in the port
+     */
+    protected FlowControl getFlowControl(com.fazecast.jSerialComm.SerialPort serialPort) {
+        return lastFlowControl;
     }
     
     /**
@@ -250,10 +262,10 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      */
     protected void reportPortStatus(org.slf4j.Logger log, String portName) {
         if (log.isInfoEnabled()) {
-            log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  name: {}", 
+            log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  FLow: {} name: {}", 
                     portName, activeSerialPort.getBaudRate(), activeSerialPort.getDTR(), 
-                    activeSerialPort.getRTS(), activeSerialPort.getDSR(), activeSerialPort.getCTS(), 
-                    activeSerialPort);
+                    activeSerialPort.getRTS(), activeSerialPort.getDSR(), activeSerialPort.getCTS(),
+                    getFlowControl(activeSerialPort), activeSerialPort);
         }
         
     }
