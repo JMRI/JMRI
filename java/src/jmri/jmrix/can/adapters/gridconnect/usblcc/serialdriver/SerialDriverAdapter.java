@@ -19,7 +19,7 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter {
      */
     @Override
     protected void localSetFlowControl() {
-        setFlowControl(activeSerialPort, FlowControl.RTSCTS);
+        setFlowControl(currentSerialPort, FlowControl.RTSCTS);
     }
 
     /**

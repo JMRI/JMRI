@@ -29,7 +29,7 @@ public class UsbDcs240Adapter extends LocoBufferAdapter {
 
     @Override
     protected void reportOpen(String portName) {
-        log.info("Connecting USB DCS240 via {} {}", portName, activeSerialPort);
+        log.info("Connecting USB DCS240 via {} {}", portName, currentSerialPort);
     }
 
     /**
@@ -38,7 +38,7 @@ public class UsbDcs240Adapter extends LocoBufferAdapter {
     @Override
     protected void setLocalFlowControl() {
         FlowControl flow = FlowControl.RTSCTS;
-        setFlowControl(activeSerialPort, flow);
+        setFlowControl(currentSerialPort, flow);
     }
 
     /**

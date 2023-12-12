@@ -29,23 +29,23 @@ public class SerialDriverAdapter extends Mx1PortController {
     @Override
     public String openPort(String portName, String appName) {
         // get and open the primary port
-        activeSerialPort = activatePort(portName, log);
-        if (activeSerialPort == null) {
+        currentSerialPort = activatePort(portName, log);
+        if (currentSerialPort == null) {
             log.error("failed to connect SPROG to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
-        log.info("Connecting Zimo MX1 to {} {}", portName, activeSerialPort);
+        log.info("Connecting Zimo MX1 to {} {}", portName, currentSerialPort);
         
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(mBaudRate);
-        setBaudRate(activeSerialPort, baud);
-        configureLeads(activeSerialPort, true, true);
+        setBaudRate(currentSerialPort, baud);
+        configureLeads(currentSerialPort, true, true);
         FlowControl flow = FlowControl.RTSCTS; // default, but also defaults in selectedOption1
         if (getOptionState(option1Name).equals(validOption1[1])) {
             flow = FlowControl.NONE;
         }
-        setFlowControl(activeSerialPort, flow);
+        setFlowControl(currentSerialPort, flow);
 
         // report status
         reportPortStatus(log, portName);
@@ -63,7 +63,7 @@ public class SerialDriverAdapter extends Mx1PortController {
      */
     @Override
     public boolean okToSend() {
-        return activeSerialPort.getCTS();
+        return currentSerialPort.getCTS();
     }
 
     /**

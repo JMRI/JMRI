@@ -26,7 +26,7 @@ public class PR3Adapter extends LocoBufferAdapter {
 
     @Override
     protected void reportOpen(String portName) {
-        log.info("Connecting PR3 via {} {}", portName, activeSerialPort);
+        log.info("Connecting PR3 via {} {}", portName, currentSerialPort);
     }
 
     /**
@@ -35,7 +35,7 @@ public class PR3Adapter extends LocoBufferAdapter {
     @Override
     protected void setLocalFlowControl() {
         FlowControl flow = FlowControl.RTSCTS;
-        setFlowControl(activeSerialPort, flow);
+        setFlowControl(currentSerialPort, flow);
     }
 
     /**

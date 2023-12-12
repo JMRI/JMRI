@@ -21,7 +21,7 @@ public class PR2Adapter extends LocoBufferAdapter {
 
     @Override
     protected void reportOpen(String portName) {
-        log.info("Connecting PR2 via {} {}", portName, activeSerialPort);
+        log.info("Connecting PR2 via {} {}", portName, currentSerialPort);
     }
 
     /**

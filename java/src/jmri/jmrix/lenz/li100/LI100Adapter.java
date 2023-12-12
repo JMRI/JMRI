@@ -29,23 +29,23 @@ public class LI100Adapter extends XNetSerialPortController {
     @Override
     public String openPort(String portName, String appName) {
         // get and open the primary port
-        activeSerialPort = activatePort(portName, log);
-        if (activeSerialPort == null) {
+        currentSerialPort = activatePort(portName, log);
+        if (currentSerialPort == null) {
             log.error("failed to connect SPROG to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
-        log.info("Connecting LI100 to {} {}", portName, activeSerialPort);
+        log.info("Connecting LI100 to {} {}", portName, currentSerialPort);
         
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(mBaudRate);
-        setBaudRate(activeSerialPort, baud);
-        configureLeads(activeSerialPort, true, true);
+        setBaudRate(currentSerialPort, baud);
+        configureLeads(currentSerialPort, true, true);
         FlowControl flow = FlowControl.RTSCTS; // default, but also default for getOptionState(option1Name)
         if (!getOptionState(option1Name).equals(validOption1[0])) {
             flow = FlowControl.NONE;
         }
-        setFlowControl(activeSerialPort, flow);
+        setFlowControl(currentSerialPort, flow);
 
         // report status
         reportPortStatus(log, portName);

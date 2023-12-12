@@ -89,7 +89,7 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
 
     @Override
     protected void reportOpen(String portName) {
-        log.info("Connecting Uhlenbrock via {} {}", portName, activeSerialPort);
+        log.info("Connecting Uhlenbrock via {} {}", portName, currentSerialPort);
     }
 
     /**
@@ -98,7 +98,7 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
     @Override
     protected void setLocalFlowControl() {
         FlowControl flow = FlowControl.NONE;
-        setFlowControl(activeSerialPort, flow);
+        setFlowControl(currentSerialPort, flow);
     }
 
     /**

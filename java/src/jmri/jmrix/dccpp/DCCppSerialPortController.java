@@ -1,7 +1,5 @@
 package jmri.jmrix.dccpp;
 
-import com.fazecast.jSerialComm.SerialPort;
-
 /**
  * Abstract base for classes representing a DCC++ communications port.
  * Based on XNetSerialPortController by Bob Jacobsen and Paul Bender.
@@ -35,13 +33,13 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
      */
     @Override
     public boolean okToSend() {
-        if (getFlowControl(activeSerialPort) == FlowControl.RTSCTS) {
+        if (getFlowControl(currentSerialPort) == FlowControl.RTSCTS) {
             if (checkBuffer) {
-                log.debug("CTS: {} Buffer Empty: {}", activeSerialPort.getCTS(), outputBufferEmpty);
-                return (activeSerialPort.getCTS() && outputBufferEmpty);
+                log.debug("CTS: {} Buffer Empty: {}", currentSerialPort.getCTS(), outputBufferEmpty);
+                return (currentSerialPort.getCTS() && outputBufferEmpty);
             } else {
-                log.debug("CTS: {}", activeSerialPort.getCTS());
-                return (activeSerialPort.getCTS());
+                log.debug("CTS: {}", currentSerialPort.getCTS());
+                return (currentSerialPort.getCTS());
             }
         } else {
             if (checkBuffer) {

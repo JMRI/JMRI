@@ -27,18 +27,18 @@ public class SerialDriverAdapter extends EasyDccPortController {
     public String openPort(String portName, String appName) {
 
         // get and open the primary port
-        activeSerialPort = activatePort(portName, log);
-        if (activeSerialPort == null) {
+        currentSerialPort = activatePort(portName, log);
+        if (currentSerialPort == null) {
             log.error("failed to connect SPROG to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
-        log.info("Connecting EasyDCC to {} {}", portName, activeSerialPort);
+        log.info("Connecting EasyDCC to {} {}", portName, currentSerialPort);
         
         // try to set it for communication via SerialDriver
         // baud rate is fixed at 9600
-        setBaudRate(activeSerialPort, 9600);
-        configureLeads(activeSerialPort, true, true);
-        setFlowControl(activeSerialPort, FlowControl.NONE);
+        setBaudRate(currentSerialPort, 9600);
+        configureLeads(currentSerialPort, true, true);
+        setFlowControl(currentSerialPort, FlowControl.NONE);
 
         // report status
         reportPortStatus(log, portName);

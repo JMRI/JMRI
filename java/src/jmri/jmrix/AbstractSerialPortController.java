@@ -12,7 +12,7 @@ import jmri.SystemConnectionMemo;
  * The intent is to hide, to the extent possible, all the references to the
  * actual serial library in use within this class. Subclasses then 
  * rely on methods here to maniplate the content of the
- * protected activeSerialPort variable/
+ * protected currentSerialPort variable/
  *
  * @see jmri.jmrix.SerialPortAdapter
  *
@@ -24,7 +24,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         super(connectionMemo);
     }
 
-    protected com.fazecast.jSerialComm.SerialPort activeSerialPort = null;
+    protected com.fazecast.jSerialComm.SerialPort currentSerialPort = null;
 
     /**
      * Standard error handling for port-busy case.
@@ -239,7 +239,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param serialPort Port to be examined
      * @return flow control setting observed in the port
      */
-    protected FlowControl getFlowControl(com.fazecast.jSerialComm.SerialPort serialPort) {
+    final protected FlowControl getFlowControl(com.fazecast.jSerialComm.SerialPort serialPort) {
         return lastFlowControl;
     }
     
@@ -263,9 +263,9 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     protected void reportPortStatus(org.slf4j.Logger log, String portName) {
         if (log.isInfoEnabled()) {
             log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  FLow: {} name: {}", 
-                    portName, activeSerialPort.getBaudRate(), activeSerialPort.getDTR(), 
-                    activeSerialPort.getRTS(), activeSerialPort.getDSR(), activeSerialPort.getCTS(),
-                    getFlowControl(activeSerialPort), activeSerialPort);
+                    portName, currentSerialPort.getBaudRate(), currentSerialPort.getDTR(), 
+                    currentSerialPort.getRTS(), currentSerialPort.getDSR(), currentSerialPort.getCTS(),
+                    getFlowControl(currentSerialPort), currentSerialPort);
         }
         
     }
@@ -279,7 +279,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             log.error("getInputStream called before load(), stream not available");
             return null;
         }
-        return new DataInputStream(activeSerialPort.getInputStream());
+        return new DataInputStream(currentSerialPort.getInputStream());
     }
  
     // When PureJavaComm is removed, set this to 'final' to find 
@@ -290,7 +290,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             log.error("getOutputStream called before load(), stream not available");
         }
 
-        return new DataOutputStream(activeSerialPort.getOutputStream());
+        return new DataOutputStream(currentSerialPort.getOutputStream());
     }
 
 

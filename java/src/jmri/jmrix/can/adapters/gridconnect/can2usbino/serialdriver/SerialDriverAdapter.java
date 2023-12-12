@@ -28,7 +28,7 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter {
     public String openPort(String portName, String appName) {
         var retval = super.openPort(portName, appName);
         
-        setFlowControl(activeSerialPort, FlowControl.XONXOFF);
+        setFlowControl(currentSerialPort, FlowControl.XONXOFF);
 
         return retval;
     }

@@ -19,7 +19,7 @@ public class LocoBufferUsbAdapter extends LocoBufferAdapter {
 
     @Override
     protected void reportOpen(String portName) {
-        log.info("Connecting LocoBuffer-USB via {} {}", portName, activeSerialPort);
+        log.info("Connecting LocoBuffer-USB via {} {}", portName, currentSerialPort);
     }
 
     /**
@@ -28,7 +28,7 @@ public class LocoBufferUsbAdapter extends LocoBufferAdapter {
     @Override
     protected void setLocalFlowControl() {
         FlowControl flow = FlowControl.RTSCTS;
-        setFlowControl(activeSerialPort, flow);
+        setFlowControl(currentSerialPort, flow);
     }
 
 

@@ -29,7 +29,7 @@ public class PR4Adapter extends LocoBufferAdapter {
 
     @Override
     protected void reportOpen(String portName) {
-        log.info("Connecting PR4 via {} {}", portName, activeSerialPort);
+        log.info("Connecting PR4 via {} {}", portName, currentSerialPort);
     }
 
     /**

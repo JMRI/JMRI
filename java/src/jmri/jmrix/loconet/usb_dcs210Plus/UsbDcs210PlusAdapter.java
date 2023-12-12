@@ -29,7 +29,7 @@ public class UsbDcs210PlusAdapter extends LocoBufferAdapter {
 
     @Override
     protected void reportOpen(String portName) {
-        log.info("Connecting USB DCS210Plus via {} {}", portName, activeSerialPort);
+        log.info("Connecting USB DCS210Plus via {} {}", portName, currentSerialPort);
     }
 
     /**

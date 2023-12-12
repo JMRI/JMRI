@@ -65,8 +65,8 @@ public class LocoBufferAdapter extends LnPortController {
     @Override
     public String openPort(String portName, String appName) {
         // get and open the primary port
-        activeSerialPort = activatePort(portName, log);
-        if (activeSerialPort == null) {
+        currentSerialPort = activatePort(portName, log);
+        if (currentSerialPort == null) {
             log.error("failed to connect SPROG to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
@@ -75,8 +75,8 @@ public class LocoBufferAdapter extends LnPortController {
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(mBaudRate);
-        setBaudRate(activeSerialPort, baud);
-        configureLeads(activeSerialPort, true, true);
+        setBaudRate(currentSerialPort, baud);
+        configureLeads(currentSerialPort, true, true);
         setLocalFlowControl();
 
         // report status
@@ -92,7 +92,7 @@ public class LocoBufferAdapter extends LnPortController {
      * @param portName To appear in message
      */
     protected void reportOpen(String portName) {
-        log.info("Connecting LocoBuffer via {} {}", portName, activeSerialPort);
+        log.info("Connecting LocoBuffer via {} {}", portName, currentSerialPort);
     }
     
     /**
@@ -103,7 +103,7 @@ public class LocoBufferAdapter extends LnPortController {
         if (getOptionState(option1Name).equals(validOption1[1])) {
             flow = FlowControl.NONE;
         }
-        setFlowControl(activeSerialPort, flow);
+        setFlowControl(currentSerialPort, flow);
     }
     
     /**
@@ -116,7 +116,7 @@ public class LocoBufferAdapter extends LnPortController {
      */
     @Override
     public boolean okToSend() {
-        return activeSerialPort.getCTS();
+        return currentSerialPort.getCTS();
     }
 
     /**

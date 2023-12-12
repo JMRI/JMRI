@@ -34,18 +34,18 @@ public class MS100Adapter extends LnPortController {
     public String openPort(String portName, String appName) {
 
         // get and open the primary port
-        activeSerialPort = activatePort(portName, log);
-        if (activeSerialPort == null) {
+        currentSerialPort = activatePort(portName, log);
+        if (currentSerialPort == null) {
             log.error("failed to connect SPROG to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
-        log.info("Connecting MS100 via {} {}", portName, activeSerialPort);
+        log.info("Connecting MS100 via {} {}", portName, currentSerialPort);
         
         // try to set it for communication via SerialDriver
         // fixed baud rate
-        setBaudRate(activeSerialPort, 16600);
-        configureLeads(activeSerialPort, true, false);  // for MS100 power
-        setFlowControl(activeSerialPort, FlowControl.NONE);
+        setBaudRate(currentSerialPort, 16600);
+        configureLeads(currentSerialPort, true, false);  // for MS100 power
+        setFlowControl(currentSerialPort, FlowControl.NONE);
 
         // report status
         reportPortStatus(log, portName);

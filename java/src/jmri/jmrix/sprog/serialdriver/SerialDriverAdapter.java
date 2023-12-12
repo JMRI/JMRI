@@ -59,20 +59,20 @@ public class SerialDriverAdapter extends SprogPortController {
     @Override
     public String openPort(String portName, String appName) {
         // get and open the primary port
-        activeSerialPort = activatePort(portName, log);
-        if (activeSerialPort == null) {
+        currentSerialPort = activatePort(portName, log);
+        if (currentSerialPort == null) {
             log.error("failed to connect SPROG to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
-        log.info("Connecting SPROG to {} {}", portName, activeSerialPort);
+        log.info("Connecting SPROG to {} {}", portName, currentSerialPort);
 
         // try to set it for communication via SerialDriver
-        setBaudRate(activeSerialPort, baudRate);
-        configureLeads(activeSerialPort, true, true);
-        setFlowControl(activeSerialPort, FlowControl.NONE);
+        setBaudRate(currentSerialPort, baudRate);
+        configureLeads(currentSerialPort, true, true);
+        setFlowControl(currentSerialPort, FlowControl.NONE);
 
         // add Sprog Traffic Controller as event listener
-        activeSerialPort.addDataListener( new com.fazecast.jSerialComm.SerialPortDataListener() {
+        currentSerialPort.addDataListener( new com.fazecast.jSerialComm.SerialPortDataListener() {
             @Override 
             public int getListeningEvents() {
                 log.trace("getListeningEvents");
@@ -102,7 +102,7 @@ public class SerialDriverAdapter extends SprogPortController {
      * @param flow Set flow control to RTS/CTS when true
      */
     public void setHandshake(FlowControl flow) {
-        setFlowControl(activeSerialPort, flow);
+        setFlowControl(currentSerialPort, flow);
     }
 
     /**

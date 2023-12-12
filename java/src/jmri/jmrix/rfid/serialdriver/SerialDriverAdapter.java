@@ -48,12 +48,12 @@ public class SerialDriverAdapter extends RfidPortController {
     @Override
     public String openPort(String portName, String appName) {
         // get and open the primary port
-        activeSerialPort = activatePort(portName, log);
-        if (activeSerialPort == null) {
+        currentSerialPort = activatePort(portName, log);
+        if (currentSerialPort == null) {
             log.error("failed to connect SPROG to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
-        log.info("Connecting RFID to {} {}", portName, activeSerialPort);
+        log.info("Connecting RFID to {} {}", portName, currentSerialPort);
         
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options
@@ -64,8 +64,8 @@ public class SerialDriverAdapter extends RfidPortController {
             log.debug("Set baud rate to 2400 for Parallax reader");
             baud = 2400;
         }
-        setBaudRate(activeSerialPort, baud);
-        configureLeads(activeSerialPort, true, true);
+        setBaudRate(currentSerialPort, baud);
+        configureLeads(currentSerialPort, true, true);
         // find and configure flow control
         FlowControl flow = FlowControl.NONE; // default
         if (getOptionState(option1Name).equals("MERG Concentrator")) {
@@ -73,7 +73,7 @@ public class SerialDriverAdapter extends RfidPortController {
             log.debug("Set hardware flow control for Concentrator");
             flow = FlowControl.RTSCTS;
         }
-        setFlowControl(activeSerialPort, flow);
+        setFlowControl(currentSerialPort, flow);
 
         // report status
         reportPortStatus(log, portName);

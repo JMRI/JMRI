@@ -65,7 +65,7 @@ public class SerialDriverAdapter extends NcePortController {
             activeSerialPort.enableReceiveTimeout(50);  // 50 mSec timeout before sending chars
 
             // set timeout
-            // activeSerialPort.enableReceiveTimeout(1000);
+            // currentSerialPort.enableReceiveTimeout(1000);
             log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream

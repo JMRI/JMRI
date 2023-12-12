@@ -1,8 +1,5 @@
 package jmri.jmrix.mrc;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-
 /**
  * Abstract base for classes representing a MRC communications port
  *

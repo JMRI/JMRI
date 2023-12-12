@@ -28,12 +28,12 @@ public class SerialDriverAdapter extends SerialPortController {
     public String openPort(String portName, String appName) {
 
         // get and open the primary port
-        activeSerialPort = activatePort(portName, log);
-        if (activeSerialPort == null) {
+        currentSerialPort = activatePort(portName, log);
+        if (currentSerialPort == null) {
             log.error("failed to connect SPROG to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
-        log.info("Connecting Powerline to {} {}", portName, activeSerialPort);
+        log.info("Connecting Powerline to {} {}", portName, currentSerialPort);
         
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options
@@ -51,9 +51,9 @@ public class SerialDriverAdapter extends SerialPortController {
             // set to 19200 baud
             baud = 19200;
         }
-        setBaudRate(activeSerialPort, baud);
-        configureLeads(activeSerialPort, true, true);
-        setFlowControl(activeSerialPort, FlowControl.NONE);
+        setBaudRate(currentSerialPort, baud);
+        configureLeads(currentSerialPort, true, true);
+        setFlowControl(currentSerialPort, FlowControl.NONE);
 
         // report status
         reportPortStatus(log, portName);

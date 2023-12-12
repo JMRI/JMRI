@@ -1,10 +1,6 @@
 package jmri.jmrix.dccpp.serial;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import jmri.jmrix.dccpp.DCCppCommandStation;
@@ -31,19 +27,19 @@ public class DCCppAdapter extends DCCppSerialPortController {
     @Override
     public String openPort(String portName, String appName) {
         // get and open the primary port
-        activeSerialPort = activatePort(portName, log);
-        if (activeSerialPort == null) {
+        currentSerialPort = activatePort(portName, log);
+        if (currentSerialPort == null) {
             log.error("failed to connect SPROG to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
-        log.info("Connecting C/MRI to {} {}", portName, activeSerialPort);
+        log.info("Connecting C/MRI to {} {}", portName, currentSerialPort);
         
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(mBaudRate);
-        setBaudRate(activeSerialPort, baud);
-        configureLeads(activeSerialPort, true, true);
-        setFlowControl(activeSerialPort, FlowControl.NONE);
+        setBaudRate(currentSerialPort, baud);
+        configureLeads(currentSerialPort, true, true);
+        setFlowControl(currentSerialPort, FlowControl.NONE);
 
         // report status
         reportPortStatus(log, portName);

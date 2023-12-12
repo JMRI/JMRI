@@ -72,22 +72,22 @@ public class GcSerialDriverAdapter extends GcPortController {
     public String openPort(String portName, String appName) {
 
         // get and open the primary port
-        activeSerialPort = activatePort(portName, log);
-        if (activeSerialPort == null) {
+        currentSerialPort = activatePort(portName, log);
+        if (currentSerialPort == null) {
             log.error("failed to connect SPROG to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
-        log.info("Connecting CAN to {} {}", portName, activeSerialPort);
+        log.info("Connecting CAN to {} {}", portName, currentSerialPort);
         
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(mBaudRate);
-        setBaudRate(activeSerialPort, baud);
-        configureLeads(activeSerialPort, true, true);
+        setBaudRate(currentSerialPort, baud);
+        configureLeads(currentSerialPort, true, true);
         localSetFlowControl();
 
         // get and save stream
-        serialStream = activeSerialPort.getInputStream();
+        serialStream = currentSerialPort.getInputStream();
         // this is referenced in several other methods, 
         // so can't easily be removed.
 
@@ -103,7 +103,7 @@ public class GcSerialDriverAdapter extends GcPortController {
      * Local set up the flow contro, here to allow override
      */
     protected void localSetFlowControl() {
-        setFlowControl(activeSerialPort, flowControl);
+        setFlowControl(currentSerialPort, flowControl);
     }
 
     /**
@@ -162,12 +162,12 @@ public class GcSerialDriverAdapter extends GcPortController {
             bufferedStream = null;
         }
         catch ( IOException e ) {
-            log.error("unable to close {}",this.activeSerialPort);
+            log.error("unable to close {}",this.currentSerialPort);
         }
-        if (activeSerialPort!=null) {
-            activeSerialPort.closePort();
+        if (currentSerialPort!=null) {
+            currentSerialPort.closePort();
         }
-        activeSerialPort = null;
+        currentSerialPort = null;
     }
 
     /**
@@ -367,7 +367,7 @@ public class GcSerialDriverAdapter extends GcPortController {
         }
         synchronized (this) {
             if (bufferedStream == null) {
-                bufferedStream = new AsyncBufferInputStream(serialStream, activeSerialPort.toString());
+                bufferedStream = new AsyncBufferInputStream(serialStream, currentSerialPort.toString());
             }
             return new DataInputStream(bufferedStream);
         }
