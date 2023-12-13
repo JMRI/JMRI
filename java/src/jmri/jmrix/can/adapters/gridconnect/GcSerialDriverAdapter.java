@@ -232,7 +232,7 @@ public class GcSerialDriverAdapter extends GcPortController {
                     log.error("Closing read thread due to too many IO errors", e);
                     return null;
                 } else {
-                    log.warn("Error reading serial port {}", portName, e);
+                    log.debug("Error reading serial port {}", portName, e);
                 }
             }
             return tail;
