@@ -27,7 +27,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     protected com.fazecast.jSerialComm.SerialPort currentSerialPort = null;
 
     /**
-     * Standard error handling for port-busy case.
+     * Standard error handling for purejavacomm port-busy case.
      *
      * @param p        the exception being handled, if additional information
      *                 from it is desired
@@ -47,7 +47,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
-     * Standard error handling for port-not-found case.
+     * Standard error handling for purejavacomm port-not-found case.
      * @param p no such port exception.
      * @param portName port name.
      * @param log system log.
@@ -56,18 +56,17 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     //@Deprecated(forRemoval=true) // with PureJavaComm
     public String handlePortNotFound(purejavacomm.NoSuchPortException p, String portName, org.slf4j.Logger log) {
         log.error("Serial port {} not found", portName);
-        /*JmriJOptionPane.showMessageDialog(null, "Serial port "+portName+" not found",
-         "Error", JmriJOptionPane.ERROR_MESSAGE);*/
         ConnectionStatus.instance().setConnectionState(this.getSystemPrefix(), portName, ConnectionStatus.CONNECTION_DOWN);
         return Bundle.getMessage("SerialPortNotFound", portName);
     }
 
     /**
-     * Standard error handling for port-not-found case.
+     * Standard error handling for purejavacomm port-not-found case.
      * @param portName port name.
      * @param log system log, passed so logging comes from bottom level class
      * @return human readable string with error detail.
      */
+    //@Deprecated(forRemoval=true) // Removed with PureJavaComm
     public String handlePortNotFound(String portName, org.slf4j.Logger log) {
         log.error("Serial port {} not found", portName);
         ConnectionStatus.instance().setConnectionState(this.getSystemPrefix(), portName, ConnectionStatus.CONNECTION_DOWN);
@@ -85,10 +84,9 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     /**
      * Do the formal opening of the port,
      * set the port for blocking reads without timeout,
-     * and set the port to 8-1-none.
-     *
-     * Does not do the rest of the setup implied
-     * in the openPort method.
+     * and set the port to 8-2-none.
+     * <p>
+     * Does not do the rest of the setup implied in the {@link #openPort} method.
      * 
      * @param portName local system name for the desired port
      * @param log Logger to use for errors, passed so that errors are logged from low-level class
@@ -101,7 +99,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             serialPort.openPort();
             serialPort.setComPortTimeouts(com.fazecast.jSerialComm.SerialPort.TIMEOUT_READ_BLOCKING, 0, 0);
             serialPort.setNumDataBits(8);
-            serialPort.setNumStopBits(2);
+            serialPort.setNumStopBits(com.fazecast.jSerialComm.SerialPort.TWO_STOP_BITS);
             serialPort.setParity(com.fazecast.jSerialComm.SerialPort.NO_PARITY);
         } catch (com.fazecast.jSerialComm.SerialPortInvalidPortException ePE) {
             handlePortNotFound(portName, log);
