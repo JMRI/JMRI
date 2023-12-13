@@ -440,10 +440,9 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     /** {@inheritDoc} */
     @Override
     public boolean makeBackup(File file) {
-        return makeBackupFile(defaultBackupDirectory, file);
+        String backupDirectory = FileUtil.getUserFilesPath() + "backupPanels";
+        return makeBackupFile(backupDirectory, file);
     }
-
-    String defaultBackupDirectory = FileUtil.getUserFilesPath() + "backupPanels";
 
     /**
      *
