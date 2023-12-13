@@ -126,7 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Fixed an index exception while the Event Table is writing a CSV file.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -503,7 +503,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>The FS-1987 signal system was updated to have better aspect ordering.</li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -620,4 +620,5 @@
                 the JAR file. See <a href="https://github.com/JMRI/JMRI/pull/12705">PR #12705</a> and
                 <a href="https://github.com/danielb987/JmriPlugin">JmriPlugin</a> for example and
                 documentation.</li>
+            <li>Improve how JMRI avoids opening a new window on top of an existing one.</li>
         </ul>
