@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.locations.schedules;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -11,6 +12,7 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
 import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsTableModel;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -24,7 +26,7 @@ import jmri.util.table.ButtonRenderer;
  *
  * @author Daniel Boudreau Copyright (C) 2009, 2011, 2013
  */
-public class SchedulesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
+public class SchedulesTableModel extends OperationsTableModel implements PropertyChangeListener {
 
     ScheduleManager scheduleManager; // There is only one manager
 
@@ -77,10 +79,12 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     List<Schedule> sysList = null;
-    JTable table;
+    JTable _table;
 
     public void initTable(SchedulesTableFrame frame, JTable table) {
-        this.table = table;
+        this._table = table;
+        super.initTable(table);
+        
         // Install the button handlers
         TableColumnModel tcm = table.getColumnModel();
         ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -89,8 +93,6 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         tcm.getColumn(EDIT_COLUMN).setCellEditor(buttonEditor);
         tcm.getColumn(DELETE_COLUMN).setCellRenderer(buttonRenderer);
         tcm.getColumn(DELETE_COLUMN).setCellEditor(buttonEditor);
-        table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
-        table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
         // set column preferred widths
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(40);
@@ -226,6 +228,14 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
                 break;
         }
     }
+    
+    @Override
+    protected Color getForegroundColor(int row) {
+        if (!getScheduleStatus(row).equals(Bundle.getMessage("ButtonOK"))) {
+            return Color.red;
+        }
+        return super.getForegroundColor(row);
+    }
 
     ScheduleEditFrame sef = null;
 
@@ -310,8 +320,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 
     protected void comboBoxActionPerformed(ActionEvent ae) {
         log.debug("combobox action");
-        if (table.isEditing()) {
-            table.getCellEditor().stopCellEditing(); // Allows the table
+        if (_table.isEditing()) {
+            _table.getCellEditor().stopCellEditing(); // Allows the table
                                                      // contents to update
         }
     }
