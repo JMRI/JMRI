@@ -616,5 +616,9 @@
             <li>The Windows application launcher has been updated to allow access to
                 jar files in the settings:lib/ directory. This gives creators of JMRI 
                 plug-ins a way to distribute their code separate from JMRI.</li>
+            <li>Plugins can now have help files, including images and css files, withing
+                the JAR file. See <a href="https://github.com/JMRI/JMRI/pull/12705">PR #12705</a> and
+                <a href="https://github.com/danielb987/JmriPlugin">JmriPlugin</a> for example and
+                documentation.</li>
             <li>Improve how JMRI avoids opening a new window on top of an existing one.</li>
         </ul>
