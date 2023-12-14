@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.5.8plus+jake+20231214T1549Z+R6a7ea3c19b3 on Thu Dec 14 10:49:24 EST 2023-->
-  <decoderIndex version="560">
+  <!--Written by JMRI version 5.5.8plus+jake+20231214T1621Z+R643e15b394b on Thu Dec 14 11:21:45 EST 2023-->
+  <decoderIndex version="562">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -90,6 +90,7 @@
       <manufacturer mfg="LaisDCC" mfgID="134" />
       <manufacturer mfg="Lenz" mfgID="99" />
       <manufacturer mfg="Lionel" mfgID="1001" />
+      <manufacturer mfg="Logic Rail Technologies" mfgID="1003" />
       <manufacturer mfg="MAWE Elektronik" mfgID="68" />
       <manufacturer mfg="MBTronik - PiN GITmBH" mfgID="26" />
       <manufacturer mfg="MD Electronics" mfgID="160" />
