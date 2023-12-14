@@ -419,14 +419,15 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     }
                     // When table is constrained, these rows don't match up, need to find constrained row
                     var viewRow = sorter.convertRowIndexToView(row);
-                    // set height
-                    if (height < lineIncrement) {
-                        height = height+lineIncrement; // when no lines, assume 1
+                    if (viewRow >= 0) { // make sure it's a valid row in the table
+                        // set height
+                        if (height < lineIncrement) {
+                            height = height+lineIncrement; // when no lines, assume 1
+                        }
+                       if (Math.abs(height - table.getRowHeight(row)) > lineIncrement/2) {
+                            table.setRowHeight(viewRow, height);
+                        }
                     }
-                   if (Math.abs(height - table.getRowHeight(row)) > lineIncrement/2) {
-                        table.setRowHeight(viewRow, height);
-                    }
-
                     return new String(result);
                 default: return "Illegal row "+row+" "+col;
             }
