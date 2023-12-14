@@ -137,7 +137,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         ConfigureManager cm = InstanceManager.setDefault(ConfigureManager.class, new AppsConfigurationManager());
 
         // record startup
-        InstanceManager.getDefault(FileHistory.class).addOperation("app", nameString, null);
+        String appString = String.format("%s (v%s)", jmri.Application.getApplicationName(), Version.getCanonicalVersion());
+        InstanceManager.getDefault(FileHistory.class).addOperation("app", appString, null);
 
         // Install abstractActionModel
         InstanceManager.store(new apps.CreateButtonModel(), apps.CreateButtonModel.class);

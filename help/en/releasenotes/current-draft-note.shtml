@@ -444,6 +444,19 @@
             <li></li>
         </ul>
 
+    <h3>PanelPro</h3>
+        <a id="PanelPro" name="PanelPro"></a>
+        <ul>
+            <li>The path for the <strong>backupPanels</strong> directory has been fixed so that it
+            now refers to the user files location instead of the profile location.  This only affects
+            the backup files location when user data is shared by multiple profiles.</li>
+
+            <li>The <strong>File &rArr; Show file history</strong> content has been enhanced.  The
+            <strong>app</strong> entries show the JMRI version.  The <strong>Store</strong> entries
+            show the name of the file that was created.
+            <li>
+        </ul>
+
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
@@ -606,7 +619,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Added an 
+            <li>Added a
                 <a href="https://www.jmri.org/help/en/html/doc/Technical/plugins.shtml">SPI mechanism</a>
                 for extending the Tools menu.</li>
             <li>The Linux and macOS application launchers and the Ant build process
@@ -614,6 +627,6 @@
                 directory. This gives creators of JMRI plug-ins a way to distribute
                 their code separate from JMRI.</li>
             <li>The Windows application launcher has been updated to allow access to
-                jar files in the settings:lib/ directory. This gives creators of JMRI 
+                jar files in the settings:lib/ directory. This gives creators of JMRI
                 plug-ins a way to distribute their code separate from JMRI.</li>
         </ul>

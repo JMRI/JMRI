@@ -1,5 +1,6 @@
 package jmri.jmrit.revhistory.configurexml;
 
+import java.io.File;
 import java.util.ArrayList;
 import jmri.jmrit.revhistory.FileHistory;
 import org.jdom2.Element;
@@ -114,12 +115,12 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
      */
     @Override
     public Element store(Object o) {
-        return storeDirectly(o);
+        return storeDirectly(o, "");
     }
 
     static int defaultDepth = 5;
 
-    static public Element storeDirectly(Object o) {
+    static public Element storeDirectly(Object o, String fileName) {
         final FileHistory r = (FileHistory) o;
         if (r == null) {
             return null;  // no file history object, not recording
@@ -127,12 +128,13 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
         Element e = historyElement(r, defaultDepth);
 
         // add one more element for this store
+        String name = fileName == null ? "" : fileName;
         FileHistory.OperationMemo rev
                 = r.new OperationMemo() {
                     {
                         type = "Store";
                         date = (new java.util.Date()).toString();
-                        filename = "";
+                        filename = name;
                         history = null;
                     }
                 };
