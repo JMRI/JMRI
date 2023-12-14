@@ -31,14 +31,20 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Initial version for Piko SmartDecoder 4.1 and XP5.1</revremark>
 		</revision>
+		<revision>
+			<revnumber>2</revnumber>
+			<date>2023-12-03</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add English translations</revremark>
+		</revision>
 	</revhistory>
 	<name>Piko 1/2</name>
 	<column>
 		<label>
-			<text>Piko configuration</text>
+			<text>&gt;&gt; Operating Modes &lt;&lt;</text>
 			<text xml:lang="de">&gt;&gt; Betriebsarten &lt;&lt;</text>
-			<text xml:lang="nl">Piko Configuratie</text>
-			<text xml:lang="cs">Konfigurace Piko</text>
+			<text xml:lang="nl">Bedrijfsmodi</text>
+			<text xml:lang="cs">Provozní režimy</text>
 		</label>
 		<label>
 			<text/>
@@ -60,7 +66,7 @@
 		</label>
 		<separator/>
 		<label>
-			<text>Braking</text>
+			<text>&gt;&gt; Braking &lt;&lt;</text>
 			<text xml:lang="de">&gt;&gt; ABC Bremsen &lt;&lt;</text>
 			<text xml:lang="nl">ABC Remmen</text>
 			<text xml:lang="cs">ABC Brždění</text>
@@ -88,7 +94,7 @@
 		</label>
 		<separator/>
 		<label>
-			<text>Constant Distance</text>
+			<text>&gt;&gt; Constant Braking Distance &lt;&lt;</text>
 			<text xml:lang="de">&gt;&gt; Konstanter Bremsweg &lt;&lt;</text>
 			<text xml:lang="nl">Vaste Remweg</text>
 			<text xml:lang="cs">Konstantní vzdálenost</text>
@@ -101,13 +107,13 @@
 		<display item="Constant Brakedist 2"/>
 		<display item="Constant Brakedist Max"/>
 		<display item="Constant Brakedist Rest"/>
-		<row>
-			<display item="Constant Brakedist Trigger"/>
-		</row>
+		<!--		<row>-->
+		<display item="Constant Brakedist Trigger"/>
+		<!--		</row>-->
 	</column>
 	<column>
 		<label>
-			<text>Load detection</text>
+			<text>&gt;&gt; Load detection for sound control &lt;&lt;</text>
 			<text xml:lang="de">&gt;&gt; Lasterkennung zur Soundansteuerung &lt;&lt;</text>
 		</label>
 		<label>
@@ -121,7 +127,7 @@
 		</label>
 		<separator/>
 		<label>
-			<text>Coupling</text>
+			<text>&gt;&gt; Digital Coupling &lt;&lt;</text>
 			<text xml:lang="de">&gt;&gt; Elektrische Kupplung &lt;&lt;                 </text>
 			<text xml:lang="nl">Elektr. koppeling</text>
 			<text xml:lang="cs">Spřahování</text>
@@ -145,7 +151,7 @@
 		</label>
 		<separator/>
 		<label>
-			<text>Switching Tango</text>
+			<text>&gt;&gt; Shunting Tango &lt;&lt;</text>
 			<text xml:lang="de">&gt;&gt; Rangiertango &lt;&lt;</text>
 			<text xml:lang="nl">Rangeertango</text>
 			<text xml:lang="cs">Posunovací Tango</text>
@@ -164,7 +170,7 @@
 		</label>
 		<separator/>
 		<label>
-			<text>Smoke Generator</text>
+			<text>&gt;&gt; Smoke Generator &lt;&lt;</text>
 			<text xml:lang="de">&gt;&gt; Rauchgenerator &lt;&lt;</text>
 			<text xml:lang="nl">Rookgenerator</text>
 			<text xml:lang="cs">Kouřový generátor</text>
@@ -175,8 +181,8 @@
 		<group include="PIKO46550-18,PIKO46551-18">
 			<!--Piko SmartDecoder XP5.1-->
 			<label>
-				<text>Smoke Generator</text>
-				<text xml:lang="de">Einstellung erfolgt in der SUSI Bank CV31 = 18</text>
+				<text>Setting is made in the SUSI bank CV 31 = 18</text>
+				<text xml:lang="de">Einstellung erfolgt in der SUSI Bank CV 31 = 18</text>
 			</label>
 		</group>
 		<display item="Smoke generator option 1"/>
@@ -191,7 +197,7 @@
 		</label>
 		<separator/>
 		<label>
-			<text>Errors and Information (Read-Only)</text>
+			<text>&gt;&gt; Errors and Information (Read-Only) &lt;&lt;</text>
 			<text xml:lang="de">&gt;&gt; Fehler und Information (Read-Only) &lt;&lt;</text>
 			<text xml:lang="it">Informazioni o Errori (Solo-Lettura)</text>
 			<text xml:lang="nl">Fouten en ov. informatie (Alleen Lezen)</text>

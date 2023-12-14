@@ -1951,17 +1951,17 @@ public class TrainBuilderTest extends OperationsTestCase {
         new TrainBuilder().build(train1);
         Assert.assertTrue("train status", train1.isBuilt());
 
-        // all four cars are going to Acton
-        Assert.assertEquals("car destination", actonSpur1, c3.getDestinationTrack());
-        Assert.assertEquals("car destination", actonSpur1, c4.getDestinationTrack());
-        Assert.assertEquals("car destination", actonSpur1, c5.getDestinationTrack());
-        Assert.assertEquals("car destination", actonSpur1, c6.getDestinationTrack());
+        // all four cars are going to Chelmsford
+        Assert.assertEquals("car destination", chelmsfordSpur1, c3.getDestinationTrack());
+        Assert.assertEquals("car destination", chelmsfordSpur1, c4.getDestinationTrack());
+        Assert.assertEquals("car destination", chelmsfordSpur1, c5.getDestinationTrack());
+        Assert.assertEquals("car destination", chelmsfordSpur1, c6.getDestinationTrack());
 
         // confirm where in the route the cars are pulled
-        Assert.assertEquals("car pulled", rlBoston2, c3.getRouteLocation());
-        Assert.assertEquals("car pulled", rlBoston2, c4.getRouteLocation());
-        Assert.assertEquals("car pulled", rlBoston2, c5.getRouteLocation());
-        Assert.assertEquals("car pulled", rlBoston2, c6.getRouteLocation());
+        Assert.assertEquals("car pulled", rlBoston1, c3.getRouteLocation());
+        Assert.assertEquals("car pulled", rlBoston1, c4.getRouteLocation());
+        Assert.assertEquals("car pulled", rlBoston1, c5.getRouteLocation());
+        Assert.assertEquals("car pulled", rlBoston1, c6.getRouteLocation());
 
         // now prevent the 2nd pull from Boston
         rlBoston2.setMaxCarMoves(0);
@@ -1970,7 +1970,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         new TrainBuilder().build(train1);
         Assert.assertTrue("train status", train1.isBuilt());
 
-        // all four cars are going to Acton
+        // Three cars are going to Acton
         Assert.assertEquals("car destination", actonSpur1, c3.getDestinationTrack());
         Assert.assertEquals("car destination", chelmsfordSpur1, c4.getDestinationTrack());
         Assert.assertEquals("car destination", actonSpur1, c5.getDestinationTrack());
@@ -1981,6 +1981,25 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("car pulled", rlBoston1, c4.getRouteLocation());
         Assert.assertEquals("car pulled", rlBoston1, c5.getRouteLocation());
         Assert.assertEquals("car pulled", rlBoston1, c6.getRouteLocation());
+        
+        // now limit the the pulls from the 1st Boston
+        rlBoston1.setMaxCarMoves(2);
+        rlBoston2.setMaxCarMoves(4); // restore
+
+        train1.reset();
+        new TrainBuilder().build(train1);
+        Assert.assertTrue("train status", train1.isBuilt());
+
+        Assert.assertEquals("car destination", chelmsfordSpur1, c3.getDestinationTrack());
+        Assert.assertEquals("car destination", chelmsfordSpur1, c4.getDestinationTrack());
+        Assert.assertEquals("car destination", actonSpur1, c5.getDestinationTrack());
+        Assert.assertEquals("car destination", actonSpur1, c6.getDestinationTrack());
+
+        // confirm where in the route the cars are pulled
+        Assert.assertEquals("car pulled", rlBoston1, c3.getRouteLocation());
+        Assert.assertEquals("car pulled", rlBoston1, c4.getRouteLocation());
+        Assert.assertEquals("car pulled", rlBoston2, c5.getRouteLocation());
+        Assert.assertEquals("car pulled", rlBoston2, c6.getRouteLocation());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }

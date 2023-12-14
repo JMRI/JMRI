@@ -1,11 +1,11 @@
 package jmri.jmrix.can.cbus.swing.console;
 
+import java.util.LinkedList;
+import java.util.TimerTask;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 
 /**
  * Panel for CBUS Console Stats
@@ -14,29 +14,39 @@ import javax.swing.JTextField;
  * @author Steve Young Copyright (C) 2018
  */
 public class CbusConsoleStatsPane extends javax.swing.JPanel {
-    
+
     private JTextField sentCountField;
     private JTextField rcvdCountField;
     private JTextField eventsCountField;
     private JTextField dccCountField;
     private JTextField totalCountField;
+    private JTextField framesLastSecondField;
+    private JTextField meanFramesPerSecondField;
+    private JTextField maxFramesPerSecondField;
     private JButton statsClearButton;
-    
-    transient private int _sent;
-    transient private int _rcvd;
-    transient private int _events;
-    transient private int _dcc;
-    transient private int _total;
-    
+
+    private int sentTotal = 0;
+    private int rcvdTotal = 0;
+    private int eventTotal = 0;
+    private int dccTotal = 0;
+    private int total = 0;
+    private int maxPerSecondCount = 0;
+    private long startTime;
+
+    private final LinkedList<Long> frameTimes;
+    private transient TimerTask keepAliveTimer = null;
+    private boolean disposed = false;
+
     public CbusConsoleStatsPane(CbusConsolePane mainPane){
         super();
+        frameTimes = new LinkedList<>();
         initButtons();
-        statsClearButtonActionPerformed(null);
         addToPanel();
+        CbusConsoleStatsPane.this.setLayout(new jmri.util.swing.WrapLayout());
     }
 
     private void addToPanel() {
-    
+
         setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createEtchedBorder(), Bundle.getMessage("StatisticsTitle")));
         add(sentCountField);
@@ -44,47 +54,54 @@ public class CbusConsoleStatsPane extends javax.swing.JPanel {
         add(totalCountField);
         add(eventsCountField);
         add(dccCountField);
+        add(framesLastSecondField);
+        add(meanFramesPerSecondField);
+        add(maxFramesPerSecondField);
+
         add(statsClearButton);
-    
         statsClearButton.addActionListener(this::statsClearButtonActionPerformed);
-        
+        startUpdateTimer();
+
     }
-    
+
     protected void incremenetTotal(){
-        totalCountField.setText(Integer.toString(++_total));
+        total++;
+        long currentTime = System.currentTimeMillis();
+        frameTimes.add(currentTime);
+        countFramesInLastSecond(currentTime); // update Max value
     }
-    
+
     protected void incremenetReceived(){
-        rcvdCountField.setText(Integer.toString(++_rcvd));
+        rcvdTotal++;
     }
-    
+
     protected void incremenetSent(){
-        sentCountField.setText(Integer.toString(++_sent));
+        sentTotal++;
     }
-    
-    
+
     protected void incrementEvents() {
-        eventsCountField.setText(Integer.toString(++_events));
+        eventTotal++;
     }
-    
+
     protected void incrementDcc() {
-        dccCountField.setText(Integer.toString(++_dcc));
+        dccTotal++;
     }
-    
+
     private void initButtons() {
-        
-        sentCountField = new JTextField("0", 8);
-        rcvdCountField = new JTextField("0", 8);
-        eventsCountField = new JTextField("0", 8);
-        dccCountField = new JTextField("0", 8);
-        totalCountField = new JTextField("0", 8);
+        sentCountField = new JTextField("0", 7);
+        rcvdCountField = new JTextField("0", 7);
+        eventsCountField = new JTextField("0", 7);
+        dccCountField = new JTextField("0", 7);
+        totalCountField = new JTextField("0", 7);
+        framesLastSecondField = new JTextField("0", 7);
+        meanFramesPerSecondField = new JTextField("0", 7);
+        maxFramesPerSecondField = new JTextField("0", 7);
         statsClearButton = new JButton();
         initButtonBorderToolTips();
     }
-    
-    
+
     private void initButtonBorderToolTips(){
-    
+
         sentCountField.setToolTipText(Bundle.getMessage("TooltipSent"));
         sentCountField.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), Bundle.getMessage("SentTitle")));
@@ -99,30 +116,87 @@ public class CbusConsoleStatsPane extends javax.swing.JPanel {
 
         dccCountField.setToolTipText(Bundle.getMessage("dccCountFieldTip"));
         dccCountField.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), Bundle.getMessage("dccCountField")));                
-                
+                BorderFactory.createEtchedBorder(), Bundle.getMessage("dccCountField")));
+
         totalCountField.setToolTipText(Bundle.getMessage("totalCountFieldTip"));
         totalCountField.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), Bundle.getMessage("totalCountField")));                
-        
-        statsClearButton.setText(Bundle.getMessage("ButtonClear"));
+                BorderFactory.createEtchedBorder(), Bundle.getMessage("totalCountField")));
+
+        framesLastSecondField.setToolTipText(Bundle.getMessage("FramesPerSecondTip"));
+        framesLastSecondField.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), Bundle.getMessage("FramesPerSecond")));
+
+        meanFramesPerSecondField.setToolTipText(Bundle.getMessage("AverageFramesPerSecondTip"));
+        meanFramesPerSecondField.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), Bundle.getMessage("AverageFramesPerSecond")));
+
+        maxFramesPerSecondField.setToolTipText(Bundle.getMessage("MaxFramesPerSecondTip"));
+        maxFramesPerSecondField.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), Bundle.getMessage("MaxFramesPerSecond")));
+
+        statsClearButton.setText(Bundle.getMessage("ButtonReset"));
         statsClearButton.setVisible(true);
-        statsClearButton.setToolTipText(Bundle.getMessage("TooltipClearCounters"));
-    
-    }
-    
-    private void statsClearButtonActionPerformed(java.awt.event.ActionEvent e) {
-        _sent = 0;
-        _rcvd = 0;
-        _events = 0;
-        _dcc = 0;
-        _total = 0;
-        sentCountField.setText("0");
-        rcvdCountField.setText("0");
-        eventsCountField.setText("0");
-        dccCountField.setText("0");
-        totalCountField.setText("0");
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusConsoleStatsPane.class);
+    private void statsClearButtonActionPerformed(java.awt.event.ActionEvent e) {
+        frameTimes.clear();
+        startTime = System.currentTimeMillis();
+        sentTotal = 0;
+        rcvdTotal = 0;
+        eventTotal = 0;
+        dccTotal = 0;
+        total = 0;
+        maxPerSecondCount = 0;
+    }
+
+    /**
+     * Set up the GUI Update Timer, and start it.
+     */
+    private void startUpdateTimer() {
+        disposed = false;
+        startTime = System.currentTimeMillis();
+        keepAliveTimer = new TimerTask(){
+            @Override
+            public void run () {
+                if ( disposed ) {
+                    return;
+                }
+                long currentTime = System.currentTimeMillis();
+                float secsDuration = (currentTime-startTime)/1000f;
+                framesLastSecondField.setText(Integer.toString(
+                    countFramesInLastSecond(currentTime)));
+                maxFramesPerSecondField.setText(Integer.toString(maxPerSecondCount));
+                float average = total / secsDuration;
+                meanFramesPerSecondField.setText(String.format("%.01f", average));
+                totalCountField.setText(Integer.toString(total));
+                rcvdCountField.setText(Integer.toString(rcvdTotal));
+                sentCountField.setText(Integer.toString(sentTotal));
+                eventsCountField.setText(Integer.toString(eventTotal));
+                dccCountField.setText(Integer.toString(dccTotal));
+                statsClearButton.setToolTipText(Bundle.getMessage("ResetButtonLastRestTip",
+                    String.format("%.01f", secsDuration)));
+                jmri.util.TimerUtil.scheduleOnGUIThread(keepAliveTimer, 500);
+            }
+        };
+        jmri.util.TimerUtil.scheduleOnGUIThread(keepAliveTimer, 500);
+    }
+
+    private int countFramesInLastSecond(long currentTime) {
+        while (!frameTimes.isEmpty() && currentTime - frameTimes.peek() > 1000) {
+            frameTimes.remove(); // Remove Frames older than 1 second
+        }
+        maxPerSecondCount = Math.max(maxPerSecondCount, frameTimes.size());
+        return frameTimes.size();
+    }
+
+    public void dispose() {
+        disposed = true; // cancels GUI updates
+        if (keepAliveTimer != null) {
+            keepAliveTimer.cancel();
+            keepAliveTimer = null;
+        }
+    }
+
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusConsoleStatsPane.class);
+
 }

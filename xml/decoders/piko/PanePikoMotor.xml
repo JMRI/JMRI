@@ -37,6 +37,12 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Add decoder</revremark>
 		</revision>
+		<revision>
+			<revnumber>3</revnumber>
+			<date>2023-12-03</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add English translations</revremark>
+		</revision>
 	</revhistory>
 	<name>Motor</name>
 	<column>
@@ -46,8 +52,8 @@
 					<text> </text>
 				</label>
 				<label>
-					<text>Errors or Information (Read-Only)</text>
-					<text xml:lang="de">Fehler oder Information (Read-Only)</text>
+					<text>&gt;&gt; Errors or Information (Read-Only) &lt;&lt;</text>
+					<text xml:lang="de">&gt;&gt; Fehler oder Information (Read-Only) &lt;&lt;</text>
 					<text xml:lang="it">Informazioni o Errori (Solo-Lettura)</text>
 					<text xml:lang="nl">Fouten en ov. informatie (Alleen Lezen)</text>
 					<text xml:lang="cs">Chyby nebo Informace (Pouze pro čtení)</text>
@@ -73,8 +79,8 @@
 					<text> </text>
 				</label>
 				<label>
-					<text>Decoder Programming Lock</text>
-					<text xml:lang="de">          Decoder Programmiersperre</text>
+					<text>&gt;&gt; Decoder Programming Lock &lt;&lt;</text>
+					<text xml:lang="de">          &gt;&gt; Decoder Programmiersperre &lt;&lt;</text>
 					<text xml:lang="nl">          Decoder Programmeerslot</text>
 					<text xml:lang="cs">          Zámek programování dekodéru</text>
 				</label>
@@ -97,8 +103,8 @@
 			<row>
 				<column>
 					<label>
-						<text>Decoder Config 2 </text>
-						<text xml:lang="de">                   SmartDecoder 4.1 Konfiguration 2 (CV 51-58, 200-202)</text>
+						<text>&gt;&gt; PSD 4.2 Config 2 CV 51-58, 200-202) &lt;&lt;</text>
+						<text xml:lang="de">               &gt;&gt; SmartDecoder 4.1 Konfiguration 2 (CV 51-58, 200-202) &lt;&lt;</text>
 					</label>
 					<display item="Motor Control" format="checkbox"/>
 					<display item="Motor Control PIDSX"/>
@@ -141,8 +147,8 @@
 			<row>
 				<column>
 					<label>
-						<text>Motor Management Settings</text>
-						<text xml:lang="de">Motorregelung PSD XP5.1 CV 62</text>
+						<text>&gt;&gt; Motor Management Settings XP5.1 CV 62 &lt;&lt;</text>
+						<text xml:lang="de">&gt;&gt; Motorregelung PSD XP5.1 CV 62 &lt;&lt;</text>
 						<text xml:lang="nl">Motorregeling</text>
 						<text xml:lang="cs">Správa nastavení motoru</text>
 					</label>
@@ -158,8 +164,8 @@
 						<text>      </text>
 					</label>
 					<label>
-						<text>Motor Management Settings</text>
-						<text xml:lang="de">Motorregelung PSD XP5.1 CV 240-250</text>
+						<text>&gt;&gt; Motor Management Settings XP5.1 CV 240-250 &lt;&lt;</text>
+						<text xml:lang="de">&gt;&gt; Motorregelung PSD XP5.1 CV 240-250 &lt;&lt;</text>
 						<text xml:lang="nl">Motorregeling</text>
 						<text xml:lang="cs">Správa nastavení motoru</text>
 					</label>

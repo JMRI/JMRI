@@ -180,6 +180,10 @@
             </li>
 
             <li>
+              <a href="openlcb/TCS.shtml">TCS CS-105</a>
+            </li>
+
+            <li>
               <a href="loconet/Digitrax.shtml">Uhlenbrock Intellibox</a>
             </li>
 
@@ -951,6 +955,25 @@
 
             <p>&nbsp;</p>
           </dd>
+
+
+          <dt class="im">
+            <a href="https://www.tcsdcc.com" target="_blank"><img src="https://static.wixstatic.com/media/8ed9df_bc9a6b6a34aa415591de2fe1bdb7248b~mv2.png/v1/fill/w_172,h_115,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Official_Clear.png"
+            width="64" height="30" alt="TAMS"></a>
+          </dt>
+
+          <dt>
+            <a href="openlcb/TCS.shtml">TCS</a>
+          </dt>
+
+          <dd>
+            <p class="dl">Configure 
+            <a href="openlcb/TCS.shtml">connection to the TCS CS-105 command station.</a></p>
+
+            <p>&nbsp;</p>
+          </dd>
+
+
 
           <dt class="im">
             <a href="https://www.uhlenbrock.de/de_DE/index.htm" target="_blank"><img src="images/ico-Ur.gif" width=

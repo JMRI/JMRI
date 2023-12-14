@@ -755,6 +755,8 @@
 
  <indexitem text="TCH Tech " target="html.hardware.tchtech.index"/>
 
+ <indexitem text="TCS " target="html.hardware.openlcb.TCS"/>
+
  <indexitem text="Technical " target="html.doc.Technical.index"/>
 
  <indexitem text="Terminal Server connection " target="html.hardware.TerminalServer"/>

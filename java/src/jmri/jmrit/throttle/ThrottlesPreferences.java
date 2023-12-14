@@ -27,8 +27,8 @@ public class ThrottlesPreferences implements jmri.InstanceManagerAutoDefault {
 
     private boolean _useExThrottle = true;
     private boolean _useToolBar = true;
-    private boolean _useFunctionIcon = false;
-    private boolean _useLargeSpeedSlider = false;
+    private boolean _useFunctionIcon = true;
+    private boolean _useLargeSpeedSlider = true;
     private boolean _resizeWinImg = false;
     private boolean _useRosterImage = true;
     private boolean _enableRosterSearch = true;

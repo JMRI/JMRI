@@ -30,6 +30,12 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
 		</revision>
+		<revision>
+			<revnumber>2</revnumber>
+			<date>2023-12-03</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add English translations</revremark>
+		</revision>
 	</revhistory>
 	<name>Extended Function Mapping</name>
 	<name xml:lang="de">Erweitertes Funktionsmapping</name>
@@ -74,9 +80,16 @@
 		</group>
 		<group exclude="PIKO SmartDecoder XP5.1 (version 1.1+)">
 			<row>
-				<label>
-					<text>CV Bank available for this Piko SmartDecoder XP 5.1</text>
-				</label>
+				<column>
+					<label>
+						<text>CV Bank available for this Piko SmartDecoder XP 5.1</text>
+					</label>
+					<label>
+						<text>Reset to "Bank 0" when done!</text>
+						<text xml:lang="de">Zurückstellen nach "Bank 0" wenn fertig!</text>
+						<text xml:lang="cs">Po dokončení obnovte na Banka 0!</text>
+					</label>
+				</column>
 				<!-- Leerspalte -->
 				<column>
 					<label>
@@ -87,7 +100,7 @@
 				<!-- Leerspalte -->
 				<column>
 					<label>
-						<text>     </text>
+						<text>    </text>
 					</label>
 				</column>
 				<display item="Bank_Switch_32"/>
@@ -105,7 +118,7 @@
 				</row>
 				<row>
 					<label>
-						<text>CV32=0: only Ext. Function Mapping on Bank 17.0</text>
+						<text>CV32=0: for Extended Function Mapping on Bank 17.0</text>
 						<text xml:lang="de">CV32=0: für Erweitertes Funktions Mapping in Bank 17.0</text>
 					</label>
 				</row>
@@ -117,7 +130,8 @@
 							</label>
 						</row>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #1 CV# Bit 0 - 7</text>
+							<text>Extended Function Mapping #1 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #1 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV257"/>
@@ -218,7 +232,8 @@
 					</column>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #2 CV# Bit 0 - 7</text>
+							<text>Extended Function Mapping #2 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #2 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV265"/>
@@ -319,7 +334,8 @@
 					</column>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #3 CV# Bit 0 - 7</text>
+							<text>Extended Function Mapping #3 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #3 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV273"/>
@@ -417,7 +433,8 @@
 				<row>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #4  CV# Bit 0 - 7 </text>
+							<text>Extended Function Mapping #4 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #4 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV281"/>
@@ -518,7 +535,8 @@
 					</column>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #5 CV# Bit 0 - 7</text>
+							<text>Extended Function Mapping #5 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #5 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV289"/>
@@ -619,7 +637,8 @@
 					</column>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #6 CV# Bit 0 - 7</text>
+							<text>Extended Function Mapping #6 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #6 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV297"/>
@@ -717,7 +736,8 @@
 				<row>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #7 CV# Bit 0 - 7 </text>
+							<text>Extended Function Mapping #7 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #7 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV305"/>
@@ -818,7 +838,8 @@
 					</column>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #8 CV# Bit 0 - 7</text>
+							<text>Extended Function Mapping #8 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #8 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV313"/>
@@ -919,7 +940,8 @@
 					</column>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #9 CV# Bit 0 - 7</text>
+							<text>Extended Function Mapping #9 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #9 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV321"/>
@@ -1017,7 +1039,8 @@
 				<row>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #10 CV# Bit 0 - 7 </text>
+							<text>Extended Function Mapping #10 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #10 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV329"/>
@@ -1118,7 +1141,8 @@
 					</column>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #11 CV# Bit 0 - 7</text>
+							<text>Extended Function Mapping #11 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #11 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV337"/>
@@ -1219,7 +1243,8 @@
 					</column>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #12 CV# Bit 0 - 7</text>
+							<text>Extended Function Mapping #12 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #12 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV345"/>
@@ -1317,7 +1342,8 @@
 				<row>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #13 CV# Bit 0 - 7 </text>
+							<text>Extended Function Mapping #13 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #13 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV353"/>
@@ -1418,7 +1444,8 @@
 					</column>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #14 CV# Bit 0 - 7</text>
+							<text>Extended Function Mapping #14 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #14 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV361"/>
@@ -1519,7 +1546,8 @@
 					</column>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #15 CV# Bit 0 - 7</text>
+							<text>Extended Function Mapping #15 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #15 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV369"/>
@@ -1617,7 +1645,8 @@
 				<row>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #16 CV# Bit 0 - 7 </text>
+							<text>Extended Function Mapping #16 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #16 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV377"/>
@@ -1718,7 +1747,8 @@
 					</column>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #17 CV# Bit 0 - 7</text>
+							<text>Extended Function Mapping #17 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #17 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV385"/>
@@ -1819,7 +1849,8 @@
 					</column>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #18 CV# Bit 0 - 7</text>
+							<text>Extended Function Mapping #18 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #18 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV393"/>
@@ -1917,7 +1948,8 @@
 				<row>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #19 CV# Bit 0 - 7 </text>
+							<text>Extended Function Mapping #19 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #19 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV401"/>
@@ -2018,7 +2050,8 @@
 					</column>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #20 CV# Bit 0 - 7</text>
+							<text>Extended Function Mapping #20 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #20 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV409"/>
@@ -2119,7 +2152,8 @@
 					</column>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #21 CV# Bit 0 - 7</text>
+							<text>Extended Function Mapping #21 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #21 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV417"/>
@@ -2217,7 +2251,8 @@
 				<row>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #22 CV# Bit 0 - 7 </text>
+							<text>Extended Function Mapping #22 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #22 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV425"/>
@@ -2318,7 +2353,8 @@
 					</column>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #23 CV# Bit 0 - 7</text>
+							<text>Extended Function Mapping #23 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #23 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV433"/>
@@ -2419,7 +2455,8 @@
 					</column>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #24 CV# Bit 0 - 7</text>
+							<text>Extended Function Mapping #24 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #24 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV441"/>
@@ -2517,7 +2554,8 @@
 				<row>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #25 CV# Bit 0 - 7 </text>
+							<text>Extended Function Mapping #25 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #25 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV449"/>
@@ -2618,7 +2656,8 @@
 					</column>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #26 CV# Bit 0 - 7</text>
+							<text>Extended Function Mapping #26 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #26 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV457"/>
@@ -2719,7 +2758,8 @@
 					</column>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #27 CV# Bit 0 - 7</text>
+							<text>Extended Function Mapping #27 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #27 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV465"/>
@@ -2817,7 +2857,8 @@
 				<row>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #28 CV# Bit 0 - 7 </text>
+							<text>Extended Function Mapping #28 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #28 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV473"/>
@@ -2918,7 +2959,8 @@
 					</column>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #29 CV# Bit 0 - 7</text>
+							<text>Extended Function Mapping #29 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #29 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV481"/>
@@ -3019,7 +3061,8 @@
 					</column>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #30 CV# Bit 0 - 7</text>
+							<text>Extended Function Mapping #30 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #30 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV489"/>
@@ -3117,7 +3160,8 @@
 				<row>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #31 CV# Bit 0 - 7 </text>
+							<text>Extended Function Mapping #31 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #31 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV497"/>
@@ -3218,7 +3262,8 @@
 					</column>
 					<column>
 						<label>
-							<text>Erweitertes Fkt.-Mapping #32 CV# Bit 0 - 7</text>
+							<text>Extended Function Mapping #32 CV# Bit 0 - 7</text>
+							<text xml:lang="de">Erweitertes Fkt.-Mapping #32 CV# Bit 0 - 7</text>
 						</label>
 						<row>
 							<display item="Bank_17_CV505"/>

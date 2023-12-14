@@ -665,7 +665,7 @@ public class TrainBuilderBase extends TrainCommon {
             if (car.isCaboose() || car.hasFred()) {
                 addLine(_buildReport, SEVEN,
                         Bundle.getMessage("buildExcludeCarTypeAtLoc", car.toString(), car.getTypeName(),
-                                car.getLocationName(), car.getTrackName()));
+                                car.getTypeExtensions(), car.getLocationName(), car.getTrackName()));
                 // code check, should never be staging
                 if (car.getTrack() == _departStageTrack) {
                     throw new BuildFailedException("ERROR: Attempt to removed car with FRED or Caboose from staging"); // NOI18N
@@ -677,7 +677,7 @@ public class TrainBuilderBase extends TrainCommon {
     }
 
     /**
-     * Save the car's final destination and schedule id in case of train reset
+     * Save the car's final destination and schedule,  id in case of train reset
      */
     protected void saveCarFinalDestinations() {
         for (Car car : _carList) {
@@ -2246,7 +2246,7 @@ public class TrainBuilderBase extends TrainCommon {
         for (Track track : testDestination.getTracksByNameList(null)) {
             if (track.isAlternate()) {
                 addLine(_buildReport, SEVEN, Bundle.getMessage("buildTrackIsAlternate", car.toString(),
-                        track.getTrackTypeName(), track.getName()));
+                        track.getTrackTypeName(), track.getLocation().getName(), track.getName()));
             }
         }
         // now find a track for this car
@@ -2302,8 +2302,9 @@ public class TrainBuilderBase extends TrainCommon {
                 if (!status.equals(Track.OKAY)) {
                     addLine(_buildReport, SEVEN,
                             Bundle.getMessage("buildCanNotDropCarBecause", car.toString(),
-                                    testTrack.getAlternateTrack().getName(), status,
-                                    testTrack.getAlternateTrack().getTrackTypeName()));
+                                    testTrack.getAlternateTrack().getTrackTypeName(),
+                                    testTrack.getLocation().getName(), testTrack.getAlternateTrack().getName(),
+                                    status));
                     continue;
                 }
                 // send car to alternate track
@@ -2313,8 +2314,9 @@ public class TrainBuilderBase extends TrainCommon {
             }
             // okay to drop car?
             if (!status.equals(Track.OKAY)) {
-                addLine(_buildReport, SEVEN, Bundle.getMessage("buildCanNotDropCarBecause", car.toString(),
-                        testTrack.getName(), status, testTrack.getTrackTypeName()));
+                addLine(_buildReport, SEVEN,
+                        Bundle.getMessage("buildCanNotDropCarBecause", car.toString(), testTrack.getTrackTypeName(),
+                                testTrack.getLocation().getName(), testTrack.getName(), status));
                 continue;
             }
             if (!checkForLocalMove(car, testTrack)) {
@@ -2423,8 +2425,9 @@ public class TrainBuilderBase extends TrainCommon {
                 return _terminateStageTrack;
             }
         }
-        addLine(_buildReport, SEVEN, Bundle.getMessage("buildCanNotDropCarBecause", car.toString(),
-                _terminateStageTrack.getName(), status, _terminateStageTrack.getTrackTypeName()));
+        addLine(_buildReport, SEVEN,
+                Bundle.getMessage("buildCanNotDropCarBecause", car.toString(), _terminateStageTrack.getTrackTypeName(),
+                        _terminateStageTrack.getLocation().getName(), _terminateStageTrack.getName(), status));
         return null;
     }
 
@@ -2525,7 +2528,7 @@ public class TrainBuilderBase extends TrainCommon {
         }
         if (!stageTrack.isRoadNameAccepted(car.getRoadName())) {
             addLine(_buildReport, SEVEN,
-                    Bundle.getMessage("buildStagingTrackRoad", stageTrack.getName(), car.getTypeName()));
+                    Bundle.getMessage("buildStagingTrackRoad", stageTrack.getName(), car.getRoadName()));
             return false;
         }
         // Departing and returning to same location in staging?
@@ -2647,8 +2650,9 @@ public class TrainBuilderBase extends TrainCommon {
                         Bundle.getMessage("buildAddingScheduleLoad", loads.size(), car.getLoadName(), car.toString()));
                 return true;
             }
-            addLine(_buildReport, SEVEN, Bundle.getMessage("buildCanNotDropCarBecause", car.toString(),
-                    stageTrack.getName(), status, stageTrack.getTrackTypeName()));
+            addLine(_buildReport, SEVEN,
+                    Bundle.getMessage("buildCanNotDropCarBecause", car.toString(), stageTrack.getTrackTypeName(),
+                            stageTrack.getLocation().getName(), stageTrack.getName(), status));
         }
         car.setLoadName(oldLoad); // restore load and report failure
         addLine(_buildReport, SEVEN, Bundle.getMessage("buildUnableNewLoadStaging", car.toString(), car.getTrackName(),

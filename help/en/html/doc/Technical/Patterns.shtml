@@ -231,6 +231,10 @@ and distribute JMRI.
         </dt>
       </dl>
 
+      <p>To see more on the places where SPI can be used to insert functionality into 
+      JMRI, see the
+      <a href="plugins.shtml">Plug-in page</a>.
+
       <p>Classes that provide SPI also have to be registered with the system so they can be found.
       JMRI does this with entries inside files in the
       <code>target/classes/META-INF/services/</code> directory. These entries are created

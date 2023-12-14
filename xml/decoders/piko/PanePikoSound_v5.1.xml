@@ -48,15 +48,21 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Add decoder</revremark>
 		</revision>
+		<revision>
+			<revnumber>5</revnumber>
+			<date>2023-12-03</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add English translations</revremark>
+		</revision>
 	</revhistory>
-    <name>Sound Levels</name>
-    <name xml:lang="ca">Volum de so</name>
-    <name xml:lang="cs">Hladiny zvuku</name>
-    <name xml:lang="da">Lydstyrker</name>
-    <name xml:lang="de">Sound Lautstärke</name>
-    <name xml:lang="fr">Volume des Sons</name>
-    <name xml:lang="it">Livelli dei Suoni</name>
-    <name xml:lang="nl">Geluidvolume</name>
+	<name>Sound Volume</name>
+	<name xml:lang="ca">Volum de so</name>
+	<name xml:lang="cs">Hladiny zvuku</name>
+	<name xml:lang="da">Lydstyrker</name>
+	<name xml:lang="de">Sound Lautstärke</name>
+	<name xml:lang="fr">Volume des Sons</name>
+	<name xml:lang="it">Livelli dei Suoni</name>
+	<name xml:lang="nl">Geluidvolume</name>
 	<group exclude="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16">
 		<!--Piko SmartDecoder XP5.1-->
 		<label>
@@ -82,9 +88,16 @@
 		</group>
 		<group exclude="PIKO SmartDecoder XP5.1 (version 1.1+)">
 			<row>
-				<label>
-					<text>CV Bank available for this Piko SmartDecoder XP 5.1</text>
-				</label>
+				<column>
+					<label>
+						<text>CV Bank available for this Piko SmartDecoder XP 5.1</text>
+					</label>
+					<label>
+						<text>Reset to "Bank 0" when done!</text>
+						<text xml:lang="de">Zurückstellen nach "Bank 0" wenn fertig!</text>
+						<text xml:lang="cs">Po dokončení obnovte na Banka 0!</text>
+					</label>
+				</column>
 				<!-- Leerspalte -->
 				<column>
 					<label>
@@ -103,10 +116,10 @@
 			<column>
 				<!--Bank 16-->
 				<label>
-					<text>Speed Step activating Switching Sound</text>
-					<text xml:lang="de">Lautstärke Sound</text>
-					<text xml:lang="nl">Snelheidsstap bij Schakelgeluid</text>
-					<text xml:lang="cs">Rychlostní krok pro přepnutí zvuku</text>
+					<text>             &gt;&gt; Sound Volume &lt;&lt;</text>
+					<text xml:lang="de">             &gt;&gt; Lautstärke Sound &lt;&lt;</text>
+					<text xml:lang="nl">                Snelheidsstap bij Schakelgeluid</text>
+					<text xml:lang="cs">                Rychlostní krok pro přepnutí zvuku</text>
 				</label>
 				<label>
 					<text> </text>
@@ -172,8 +185,8 @@
 					<text>     </text>
 				</label>
 				<label>
-					<text>Volume individual sound</text>
-					<text xml:lang="de">           Lautstärke Einzelsonds</text>
+					<text>        &gt;&gt; Volume of the Individual Sounds &lt;&lt;</text>
+					<text xml:lang="de">        &gt;&gt; Lautstärke der Einzelsounds &lt;&lt;</text>
 				</label>
 				<label>
 					<text>     </text>

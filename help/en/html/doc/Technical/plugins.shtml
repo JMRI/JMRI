@@ -146,7 +146,7 @@
 
         <li>A <a href=
         "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/sample/swing/SampleConfigPane.java">
-          swing.SampleConfigPane</a> class to provide the basis of a cGUI configuration pane. This
+          swing.SampleConfigPane</a> class to provide the basis of a GUI configuration pane. This
           one just shows a label in its window, but you can build it out with whatever else is
           needed. It's connected to the rest of JMRI so that you can access configure connections
           to it in the Preferences.
@@ -157,9 +157,12 @@
       </ul>
       We encourage you to <a href="gitdeveloper.shtml">contribute your code to for inclusion in
       JMRI</a>. That way, lots of people benefit. But if you don't want to do that, you can package
-      it up as a separate .jar file which can just be dropped into the JMRI lib/ directory. By
+      it up as a separate .jar file which can just be dropped into the JMRI lib directory
+      in the user's settings directory. By
       using the approach listed above (and the services listed below), JMRI will automatically pick
-      it up and use it.
+      it up and use it.  For more on this mechanism, see the
+      <a href="Patterns.shtml#SPI">discussion on the Patterns page</a>.
+
       <h2 id="service">Implement a Service Provider</h2>
       Sometimes what you want to add provides a very specific technical function. Many of those can
       be (though historically, perhaps weren't) written as Service Provider classes. When they can
@@ -278,6 +281,30 @@
 
         <dt>
           <a href=
+          "https://www.jmri.org/JavaDoc/doc/jmri/jmrit/swing/ToolsMenuAction.html">
+          ToolsMenuAction</a>
+        </dt>
+
+        <dd>
+          Let you add a new item at the bottom of the main Tools menu.
+          
+          <p>Implementing <code>ToolsMenuAction</code> in a class that inherits from
+          <code>Action</code>,
+          <code>AbstractAction</code>, or
+          <code>JMenuItem</code>
+          and providing the appropriate service provider annotation will
+          result in your item being added at the bottom of the main Tools menu.
+
+          <p>For an example, see the SampleToolsMenuItem class 
+          <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/sample/SampleToolsMenuItem.java">
+          here</a>.
+          Note that this sample has some indicated lines commented out so that
+          it doesn't actually appear in the menu.  Remove those comments 
+          and rebuild to see how it works.</p>
+        </dd>
+
+        <dt>
+          <a href=
           "https://www.jmri.org/JavaDoc/doc/jmri/jmrit/beantable/signalmast/SignalMastAddPane.SignalMastAddPaneProvider.html">
           SignalMastAddPaneProvider</a>
         </dt>
@@ -313,6 +340,23 @@
         <dd>Additional file paths, redirections, explicitly blocked paths in the JMRI web server
         can be specified by providing a service that implements this.</dd>
       </dl>
+      
+      <h2 id="install">Distributing and Installing the Plug In</h2>
+      
+      Once you have Java code that you'd like to distribute to JMRI, 
+      you have to tell users how to install it. 
+      
+      Prior to JMRI 5.7.1, you should have them place your jar file
+      in the lib/ directory within the JMRI program directory.  On Linux and macOS
+      this will have to be done every time the user updates or reinstalls JMRI.
+      
+      Starting with JMRI 5.7.1, you should have them place your jar file
+      in the lib/ directory that's found within their
+      <a href="ProfileFileStructure.shtml">JMRI settings directory</a>.
+      One easy way to locate this directory is to open "File Locations"
+      in the JMRI Help menu and click "Open Settings Location". The lib/ 
+      directory should be available in the file manager window that opens.
+
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
