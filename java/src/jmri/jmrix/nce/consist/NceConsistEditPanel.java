@@ -96,6 +96,8 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     private int consistCount = 0;      // search count not to exceed CONSIST_MAX
 
     private boolean refresh = false;     // when true, refresh loco info from CS
+    
+    private static int DELAY_AFTER_CLEAR = 1000;    // number of mSec to wait after sending a del loco
 
     // member declarations
     JLabel textConsist = new JLabel();
@@ -1714,9 +1716,14 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                 return;
             }
             // delete loco from any existing consists
-            //sendNceBinaryCommand(locoAddr,
-            //        NceMessage.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
-
+            sendNceBinaryCommand(locoAddr,
+                    NceMessage.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
+            synchronized (this) {
+                try {
+                    wait(DELAY_AFTER_CLEAR);  // needed for booster to reset
+                } catch (InterruptedException ignored) {
+                }
+            }
             // check to see if loco is already a lead or rear in another consist
             verifyLocoAddr(locoAddr);
 
@@ -1810,8 +1817,14 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         }
 
         // delete loco from any existing consists
-        //sendNceBinaryCommand(locoAddr,
-        //        NceMessage.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
+        sendNceBinaryCommand(locoAddr,
+                NceMessage.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
+        synchronized (this) {
+            try {
+                wait(DELAY_AFTER_CLEAR);  // needed for booster to reset
+            } catch (InterruptedException ignored) {
+            }
+        }
         // now we need to determine if lead, rear, or mid loco
         // lead loco?
         if (locoTextField == locoTextField1) {
