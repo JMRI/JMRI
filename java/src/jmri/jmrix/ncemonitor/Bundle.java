@@ -1,4 +1,4 @@
-package jmri.jmrix.nce.ncemon;
+package jmri.jmrix.ncemonitor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
@@ -20,12 +20,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
  *
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
- * @author Ken Cameron (C) 2023
+ * @author Ken Cameron Copyright (C) 2023
  */
 public class Bundle extends jmri.jmrix.nce.Bundle {
 
     @CheckForNull
-    private static final String name = "jmri.jmrix.nce.ncemon.NceMonBinaryBundle"; // NOI18N
+    private static final String name = "jmri.jmrix.nce.ncemonitor.NcePacketMonitorBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
@@ -39,7 +39,7 @@ public class Bundle extends jmri.jmrix.nce.Bundle {
      * @param key Bundle key to be translated
      * @return Internationalized text
      */
-    public static String getMessage(String key) {
+    static String getMessage(String key) {
         return getBundle().handleGetMessage(key);
     }
 

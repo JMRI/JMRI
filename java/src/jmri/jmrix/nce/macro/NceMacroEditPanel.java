@@ -14,8 +14,6 @@ import javax.swing.JTextField;
 
 import jmri.InstanceManager;
 import jmri.jmrix.nce.NceBinaryCommand;
-import jmri.jmrix.nce.NceCmdStationMemory.CabMemorySerial;
-import jmri.jmrix.nce.NceCmdStationMemory.CabMemoryUsb;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
@@ -26,7 +24,7 @@ import jmri.util.swing.JmriJOptionPane;
  * Frame for user edit of NCE macros
  *
  * NCE macros are stored in Command Station (CS) memory starting at address
- * xC800. Each macro consists of 20 bytes. The last macro 255 is at address
+ * xC800 (PH5 0x6000). Each macro consists of 20 bytes. The last macro 255 is at address
  * xDBEC.
  *
  * Macro addr 0 xC800 1 xC814 2 xC828 3 xC83C . . . . 255 xDBEC
@@ -69,15 +67,15 @@ import jmri.util.swing.JmriJOptionPane;
  *
  *
  * @author Dan Boudreau Copyright (C) 2007
- * @author Ken Cameron Copyright (C) 2013
+ * @author Ken Cameron Copyright (C) 2013, 2023
  */
 public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
     
     private NceTrafficController tc = null;
-    private int maxNumMacros = CabMemorySerial.CS_MAX_MACRO;
-    private int macroSize = CabMemorySerial.CS_MACRO_SIZE;
-    private int memBase = CabMemorySerial.CS_MACRO_MEM;
-    private boolean isUsb = false;
+    private int memBase;
+    private int maxNumMacros;
+    private int macroSize;
+    private boolean isUsb;
 
     private int macroNum = 0; // macro being worked
     private int replyLen = 0; // expected byte length
@@ -248,12 +246,12 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     public void initComponents(NceSystemConnectionMemo memo) {
         this.memo = memo;
         this.tc = memo.getNceTrafficController();
-
+        memBase = tc.csm.getMacroAddr();
+        maxNumMacros = tc.csm.getMacroLimit();
+        macroSize = tc.csm.getMacroSize();
         if ((tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) &&
                 (tc.getCmdGroups() & NceTrafficController.CMDS_MEM) != 0) {
-            maxNumMacros = CabMemoryUsb.CS_MAX_MACRO;
             isUsb = true;
-            macroSize = CabMemoryUsb.CS_MACRO_SIZE;
             memBase = -1;
         }
 
@@ -818,7 +816,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     private int readMacroMemory(int mN) {
         int entriesRead = 0;
         if (isUsb) {
-            setUsbCabMemoryPointer(CabMemoryUsb.CAB_NUM_MACRO, (mN * macroSize));
+            setUsbCabMemoryPointer(tc.csm.getMacroAddr(), (mN * macroSize));
             if (!waitNce()) {
                 return -1;
             }
@@ -920,7 +918,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
                     deleteButton8);
             return entriesRead;
         } else {
-            int memPtr = CabMemorySerial.CS_MACRO_MEM + (mN * macroSize);
+            int memPtr = tc.csm.getMacroAddr() + (mN * macroSize);
             int readPtr = 0;
             int[] workBuf = new int[2];
             // 1st word of macro
@@ -1252,7 +1250,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
      */
     private boolean writeMacroMemory(int macroNum, byte[] b) {
         if (isUsb) {
-            setUsbCabMemoryPointer(CabMemoryUsb.CAB_NUM_MACRO, (macroNum * macroSize));
+            setUsbCabMemoryPointer(tc.csm.getMacroAddr(), (macroNum * macroSize));
             if (!waitNce()) {
                 return false;
             }

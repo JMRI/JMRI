@@ -24,13 +24,13 @@ import jmri.util.swing.JmriJOptionPane;
  * Pane for user edit of NCE Consists
  *
  * NCE Consists are stored in Command Station (CS) memory starting at address
- * xF500 and ending xFAFF. NCE supports up to 127 consists, numbered 1 to 127.
+ * xF500 and ending xFAFF (PH5 0x4E00 - 0x53FF). NCE supports up to 127 consists, numbered 1 to 127.
  * They track the lead loco, rear loco, and four mid locos in the consist file.
  * NCE cabs start at consist 127 when building and reviewing consists, so we
  * also start with 127. Consist lead locos are stored in memory locations xF500
- * through xF5FF. Consist rear locos are stored in memory locations xF600
- * through xF6FF. Mid consist locos (four max) are stored in memory locations
- * xF700 through xFAFF. If a long address is in use, bits 6 and 7 of the high
+ * through xF5FF (PH5 0x4E00 - 0x4EFF). Consist rear locos are stored in memory locations xF600
+ * through xF6FF (PH5 0x4F00 - 0x4FFF). Mid consist locos (four max) are stored in memory locations
+ * xF700 through xFAFF (PH5 0x500 - 0x53FF). If a long address is in use, bits 6 and 7 of the high
  * byte are set. Example: Long address 3 = 0xc0 0x03 Short address 3 = 0x00 0x03
  *
  * NCE file format:
@@ -48,15 +48,15 @@ import jmri.util.swing.JmriJOptionPane;
  *
  * @author Dan Boudreau Copyright (C) 2007 2008 Cloned from NceConsistEditFrame
  * by
- * @author kcameron Copyright (C) 2010
+ * @author kcameron Copyright (C) 2010, 2023
  */
 public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implements
         jmri.jmrix.nce.NceListener {
     
     NceConsistRoster nceConsistRoster = InstanceManager.getDefault(NceConsistRoster.class);
 
-    private static final int CONSIST_MIN = 1;    // NCE doesn't use consist 0
-    private static final int CONSIST_MAX = 127;
+    private int CONSIST_MIN = 1;    // NCE doesn't use consist 0
+    private int CONSIST_MAX = 127;
     private static final int LOC_ADR_MIN = 0;    // loco address range
     private static final int LOC_ADR_MAX = 9999; // max range for NCE
     private static final int LOC_ADR_REPLACE = 0x3FFF;  // dummy loco address
@@ -96,6 +96,8 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     private int consistCount = 0;      // search count not to exceed CONSIST_MAX
 
     private boolean refresh = false;     // when true, refresh loco info from CS
+    
+    private static int DELAY_AFTER_CLEAR = 1000;    // number of mSec to wait after sending a del loco
 
     // member declarations
     JLabel textConsist = new JLabel();
@@ -259,6 +261,8 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     public void initComponents(NceSystemConnectionMemo m) {
         this.memo = m;
         this.tc = m.getNceTrafficController();
+        CONSIST_MIN = tc.csm.getConsistMin();
+        CONSIST_MAX = tc.csm.getConsistMax();
         // the following code sets the frame's initial state
 
         textConsist.setText(Bundle.getMessage("L_Consist"));
@@ -856,12 +860,12 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
      */
     private void readConsistMemory(int consistNum, int engPosition) {
         locoPosition = engPosition;
-        int nceMemAddr = (consistNum * 2) + NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM;
+        int nceMemAddr = (consistNum * 2) + tc.csm.getConsistHeadAddr();
         if (locoPosition == REAR) {
-            nceMemAddr = (consistNum * 2) + NceCmdStationMemory.CabMemorySerial.CS_CON_MEM_REAR;
+            nceMemAddr = (consistNum * 2) + tc.csm.getConsistTailAddr();
         }
         if (locoPosition == MID) {
-            nceMemAddr = (consistNum * 8) + NceCmdStationMemory.CabMemorySerial.CS_CON_MEM_MID;
+            nceMemAddr = (consistNum * 8) + tc.csm.getConsistMidAddr();
         }
         log.debug("Read consist ({}) position ({}) NCE memory address ({})", consistNum, engPosition, Integer.toHexString(nceMemAddr));
         byte[] bl = NceBinaryCommand.accMemoryRead(nceMemAddr);
@@ -1714,7 +1718,12 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             // delete loco from any existing consists
             sendNceBinaryCommand(locoAddr,
                     NceMessage.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
-
+            synchronized (this) {
+                try {
+                    wait(DELAY_AFTER_CLEAR);  // needed for booster to reset
+                } catch (InterruptedException ignored) {
+                }
+            }
             // check to see if loco is already a lead or rear in another consist
             verifyLocoAddr(locoAddr);
 
@@ -1810,6 +1819,12 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         // delete loco from any existing consists
         sendNceBinaryCommand(locoAddr,
                 NceMessage.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
+        synchronized (this) {
+            try {
+                wait(DELAY_AFTER_CLEAR);  // needed for booster to reset
+            } catch (InterruptedException ignored) {
+            }
+        }
         // now we need to determine if lead, rear, or mid loco
         // lead loco?
         if (locoTextField == locoTextField1) {

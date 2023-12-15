@@ -1,4 +1,4 @@
-package jmri.jmrix.nce.serialdriver;
+package jmri.jmrix.nce.ph5driver;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -6,11 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
-import jmri.jmrix.nce.NceCmdStationMemory;
 import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -28,15 +26,15 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Ken Cameron Copyright (C) 2013, 2023
  */
-public class SerialDriverAdapter extends NcePortController {
+public class Ph5DriverAdapter extends NcePortController {
 
     SerialPort activeSerialPort = null;
 
-    public SerialDriverAdapter() {
+    public Ph5DriverAdapter() {
         super(new NceSystemConnectionMemo());
         option1Name = "Eprom"; // NOI18N
-        // the default is 2006 or later
-        options.put(option1Name, new Option("Command Station EPROM", new String[]{"2006 or later", "2004 or earlier"}));
+        // the default is 2023 or later
+        options.put(option1Name, new Option("Command Station EPROM", new String[]{"2023 or later"}));
         // TODO I18N
         setManufacturer(jmri.jmrix.nce.NceConnectionTypeList.NCE);
     }
@@ -103,19 +101,12 @@ public class SerialDriverAdapter extends NcePortController {
         this.getSystemConnectionMemo().setNceTrafficController(tc);
         tc.setAdapterMemo(this.getSystemConnectionMemo());
 
-        if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[0])) {
-            // setting binary mode
-            this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_2006);
-            this.getSystemConnectionMemo().setNceCmdGroups(~NceTrafficController.CMDS_USB);
-        } else {
-            this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_2004);
-            this.getSystemConnectionMemo().setNceCmdGroups(~NceTrafficController.CMDS_USB);
-        }
-
+        this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_PH5);
+        this.getSystemConnectionMemo().setNceCmdGroups(~NceTrafficController.CMDS_USB);
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
-        tc.csm = new NceCmdStationMemory();
+        tc.csm = new Ph5CmdStationMemory();
     }
 
     // base class methods for the NcePortController interface
@@ -175,6 +166,6 @@ public class SerialDriverAdapter extends NcePortController {
     private boolean opened = false;
     InputStream serialStream = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
+    private final static Logger log = LoggerFactory.getLogger(Ph5DriverAdapter.class);
 
 }

@@ -16,6 +16,7 @@ import jmri.util.swing.JmriJOptionPane;
  * Confirms connection to PowerCab by issuing dummy loco command.
  *
  * @author Daniel Boudreau (C) 2007, 2010, 2012, 2021
+ * @author Ken Cameron (C) 2023
  *
  */
 public class NceConnectionStatus implements NceListener {
@@ -41,6 +42,7 @@ public class NceConnectionStatus implements NceListener {
     private static final int ERROR6_STATE = 21; // Wrong NCE System, detected Smart Booster SB3
     private static final int ERROR7_STATE = 22; // Wrong NCE System, detected Power Pro
     private static final int ERROR8_STATE = 23; // Wrong NCE System, detected SB5
+    private static final int ERROR9_STATE = 24; // Wrong NCE System, detected PH5
 
     private int epromState = INIT_STATE; // EPROM state
     private boolean epromChecked = false;
@@ -66,7 +68,11 @@ public class NceConnectionStatus implements NceListener {
 
     private static final int VV_2012 = 7; // Revision 2012 EPROM VV.MM.mm = 7.2.0
     private static final int MM_2012 = 2;
-
+    
+    // PH5 details, 2023
+    private static final int VV_PH5 = 8;    // 1st Edition
+    private static final int MM_PH5 = 0;
+    
     // USB -> Cab bus adapter:
     // When used with PowerCab V1.28 - 6.3.0
     // When used with SB3 V1.28 - 6.3.1 (No program track on an SB3)
@@ -97,6 +103,7 @@ public class NceConnectionStatus implements NceListener {
     private static final int mm_USB_V7_SB3 = 5; // SB3 with 1.28c
     private static final int mm_USB_V7_PH = 6; // PowerPro with 3.1.2007
     // private static final int mm_USB_V7_ALL = 7; // All systems
+    
 
     private NceTrafficController tc = null;
 
@@ -300,7 +307,7 @@ public class NceConnectionStatus implements NceListener {
             // Is the reply valid? Check major revision, there are only three valid
             // responses
             // note that VV_2004 = VV_2007 = VV_USB
-            if (VV != VV_2012 && VV != VV_2004 && VV != VV_1999) {
+            if (VV != VV_PH5 && VV != VV_2012 && VV != VV_2004 && VV != VV_1999) {
                 log.error("Wrong major revision: {}", Integer.toHexString(VV & 0xFF));
                 // show the entire revision number
                 log.info("NCE EPROM revision = {}", tc.getPwrProVersHexText());
@@ -411,6 +418,20 @@ public class NceConnectionStatus implements NceListener {
                     tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_SB5) {
                 log.error("System Connection is incorrect, detected USB connected to a Smart Booster SB5");
                 epromState = ERROR8_STATE;
+            }
+        }
+        // check for PH5 not on PH5 connection
+        if ((VV == VV_PH5) && (MM == MM_PH5)) {
+            if (tc.getCommandOptions() != NceTrafficController.OPTION_PH5) {
+                log.error("System Connection is incorrect, detected PH5 not connected as a PH5");
+                epromState = ERROR9_STATE;
+            }
+        }
+        // check for PH5 connection to a non-PH5 command station
+        if (tc.getCommandOptions() == NceTrafficController.OPTION_PH5) {
+            if ((VV != VV_PH5) || (MM != MM_PH5)) {
+                log.error("System Connection is incorrect, detected something other than a PH5");
+                epromState = ERROR4_STATE;
             }
         }
     }
