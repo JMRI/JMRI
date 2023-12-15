@@ -28,6 +28,9 @@
   Updates made for 5.5.5 schema and additional JMRI capabilities by jerryg2003:
    [Update info for LogixNG DigitalBooleanActions               (2023-10-10)
    [Add info for LogixNG Icon in paneleditor                    (2023-10-10)
+   [Add type for different types of reporters                   (2023-12-15)
+   [Add positionableRectangle and reportericon                    (2023-12-15)
+   [Add position info for most icons and text                   (2023-12-15)
 -->
 
 <!-- This file is part of JMRI.  Copyright 2007-2011, 2016, 2018, 2022, 2023.     -->
@@ -304,7 +307,9 @@ This page was produced by <a href="https://www.jmri.org">JMRI</a>.
 <!-- each one becomes a table         -->
 <xsl:template match="layout-config/reporters">
 <p><a href="#toc">[Click to go back to TOC]</a></p>
-<h2 style="page-break-before: always">Reporters</h2>
+<h2 style="page-break-before: always">Reporters (<xsl:call-template name="substring-after-last">
+  <xsl:with-param name="string" select="substring-before(@class,'ManagerXml')" /><xsl:with-param name="delimiter" select="'.'" /></xsl:call-template>)</h2>
+  <!-- NOTE: ")</h2>" above must be on same as selection or TOC script fails to generate a link -->
     <table style="width:50%" border="1">
         <tr><th>System Name</th><th>User Name</th><th>Comment</th></tr>
         <!-- index through individual reporter elements -->
@@ -1915,22 +1920,34 @@ value="<xsl:value-of select="@dataString"/>"
 
 <!-- *************************************************************************************** -->
 <xsl:template match="signalheadicon">
-<tr><td>Signalhead Icon </td><td><xsl:value-of select="@signalhead"/></td></tr>
+<tr><td>Signalhead Icon </td>
+    <td><xsl:value-of select="@signalhead"/></td>
+    <td>x="<xsl:value-of select="@x"/>"  y="<xsl:value-of select="@y"/>"</td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="signalmasticon">
-<tr><td>Signalmast Icon </td><td><xsl:value-of select="@signalmast"/></td></tr>
+<tr><td>Signalmast Icon </td>
+    <td><xsl:value-of select="@signalmast"/></td>
+    <td>x="<xsl:value-of select="@x"/>"  y="<xsl:value-of select="@y"/>"</td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="turnouticon">
-<tr><td>Turnout Icon </td><td><xsl:value-of select="@turnout"/></td></tr>
+<tr><td>Turnout Icon </td>
+    <td><xsl:value-of select="@turnout"/></td>
+    <td>x="<xsl:value-of select="@x"/>"  y="<xsl:value-of select="@y"/>"</td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="sensoricon">
-<tr><td>Sensor Icon </td><td><xsl:value-of select="@sensor"/></td></tr>
+<tr><td>Sensor Icon </td>
+    <td><xsl:value-of select="@sensor"/></td>
+    <td>x="<xsl:value-of select="@x"/>"  y="<xsl:value-of select="@y"/>"</td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
@@ -1943,7 +1960,7 @@ value="<xsl:value-of select="@dataString"/>"
 </td>
 <td></td><td>
 <xsl:choose>
-  <xsl:when test="( @text != '' )" >"<xsl:value-of select="@text"/>"</xsl:when>
+  <xsl:when test="( @text != '' )" >"<xsl:value-of select="@text"/>" x="<xsl:value-of select="@x"/>"  y="<xsl:value-of select="@y"/>"</xsl:when>
   <xsl:when test="( icon/@url != '' )" ><xsl:value-of select="icon/@url"/></xsl:when>
 </xsl:choose>
 </td>
@@ -2042,7 +2059,10 @@ connects to "<xsl:value-of select="@connect2name"/>" (type=<xsl:value-of select=
 
 <!-- *************************************************************************************** -->
 <xsl:template match="memoryicon">
-<tr><td>Memory Icon </td><td><xsl:value-of select="@memory"/></td></tr>
+<tr><td>Memory Icon </td>
+    <td><xsl:value-of select="@memory"/></td>
+    <td>x="<xsl:value-of select="@x"/>"  y="<xsl:value-of select="@y"/>"</td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
@@ -2071,7 +2091,10 @@ paths:
 
 <!-- *************************************************************************************** -->
 <xsl:template match="BlockContentsIcon">
-<tr><td>Block Contents Icon </td><td><xsl:value-of select="@blockcontents"/></td></tr>
+<tr><td>Block Contents Icon </td>
+    <td><xsl:value-of select="@blockcontents"/></td>
+    <td>x="<xsl:value-of select="@x"/>"  y="<xsl:value-of select="@y"/>"</td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
@@ -2107,13 +2130,35 @@ connects to "<xsl:value-of select="@connect2name"/>" (type=<xsl:value-of select=
 </xsl:template>
 
 <!-- *************************************************************************************** -->
+<xsl:template match="reportericon">
+<tr><td>Reporter Icon </td>
+    <td><xsl:value-of select="@reporter"/></td>
+    <td>x="<xsl:value-of select="@x"/>"  y="<xsl:value-of select="@y"/>"</td>
+</tr>
+</xsl:template>
+
+<!-- *************************************************************************************** -->
+<xsl:template match="positionableRectangle">
+<tr><td>Positionable Rectangle </td>
+    <td></td>
+    <td>x="<xsl:value-of select="@x"/>"  y="<xsl:value-of select="@y"/>"</td>
+</tr>
+</xsl:template>
+
+<!-- *************************************************************************************** -->
 <xsl:template match="locoicon">
-<tr><td>Loco icon </td><td><xsl:value-of select="@text"/>"</td></tr>
+<tr><td>Loco icon </td>
+    <td><xsl:value-of select="@text"/>"</td>
+    <td>x="<xsl:value-of select="@x"/>"  y="<xsl:value-of select="@y"/>"</td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="LightIcon">
-<tr><td>Light Icon </td><td><xsl:value-of select="@light"/></td></tr>
+<tr><td>Light Icon </td>
+    <td><xsl:value-of select="@light"/></td>
+    <td>x="<xsl:value-of select="@x"/>"  y="<xsl:value-of select="@y"/>"</td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
