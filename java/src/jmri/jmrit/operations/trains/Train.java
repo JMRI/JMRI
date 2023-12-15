@@ -3125,7 +3125,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             if (!InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists()) {
                 JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("LoadDirectoryNameFileName",
-                                InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(),
+                                InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryPathName(),
                                         InstanceManager.getDefault(TrainCustomManifest.class).getFileName()),
                         Bundle.getMessage("ManifestCreatorNotFound"), JmriJOptionPane.ERROR_MESSAGE);
             }
