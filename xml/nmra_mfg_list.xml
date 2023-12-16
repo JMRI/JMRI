@@ -218,7 +218,8 @@
       <!-- we include Lionel as a special case to support TMCC -->
       <manufacturer mfg="Lionel" mfgID="1001" />
 
-      <!-- not registered, provide custom number -->
+      <!-- not registered, provide custom numbers -->
       <manufacturer mfg="LEB" mfgID="1002" />
+      <manufacturer mfg="Logic Rail Technologies" mfgID="1003" />
 
 </mfgList>
