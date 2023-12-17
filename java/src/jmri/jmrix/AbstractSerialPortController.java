@@ -220,16 +220,23 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         
         boolean result = true;
         
-        if (flow == FlowControl.RTSCTS) {
-            result = serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_RTS_ENABLED
-                                      | com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_CTS_ENABLED );
-        } else if (flow == FlowControl.XONXOFF) {
-            result = serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_XONXOFF_IN_ENABLED
-                                      | com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_XONXOFF_OUT_ENABLED);
-        } else if (flow == FlowControl.NONE) {
-            result = serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_DISABLED);
-        } else {
+        if (null == flow) {
             log.error("Invalid FlowControl enum member: {}", flow);
+        } else switch (flow) {
+            case RTSCTS:
+                result = serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_RTS_ENABLED
+                        | com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_CTS_ENABLED );
+                break;
+            case XONXOFF:
+                result = serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_XONXOFF_IN_ENABLED
+                        | com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_XONXOFF_OUT_ENABLED);
+                break;
+            case NONE:
+                result = serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_DISABLED);
+                break;
+            default:
+                log.error("Invalid FlowControl enum member: {}", flow);
+                break;
         }
         
         if (!result) log.error("Port did not accept flow control setting {}", flow);
@@ -250,17 +257,17 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             case NONE:
                 if (nowFlow != com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_DISABLED) 
                     log.error("Expected flow {} but found {}", lastFlowControl, nowFlow);
-                    break;
+                break;
             case RTSCTS:
                 if (nowFlow != (com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_RTS_ENABLED
                                       | com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_CTS_ENABLED)) 
                     log.error("Expected flow {} but found {}", lastFlowControl, nowFlow);
-                    break;
+                break;
             case XONXOFF:
                 if (nowFlow != (com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_XONXOFF_IN_ENABLED
                                       | com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_XONXOFF_OUT_ENABLED)) 
                     log.error("Expected flow {} but found {}", lastFlowControl, nowFlow);
-                    break;
+                break;
             default:
                 log.warn("Unexpected FlowControl mode: {}", lastFlowControl);
         }
