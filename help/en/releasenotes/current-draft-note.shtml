@@ -387,7 +387,9 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Added a SplitHundredsVal which defines a large value
+                split across multiple CVs in groups of two decimal digits.
+                This is used by the new Logic Rail Tech definition.</li>
         </ul>
 
     <h3>CTC Tool</h3>
