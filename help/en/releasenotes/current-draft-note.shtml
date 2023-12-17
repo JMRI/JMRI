@@ -116,7 +116,7 @@
 
         <h4>NCE</h4>
             <ul>
-                <li></li>
+                <li>NCE serial connections have been updated to use a new serial library.</li>
             </ul>
 
         <h4>Oak Tree</h4>
