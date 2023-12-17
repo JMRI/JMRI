@@ -203,7 +203,7 @@ This is the next release in the 5.6 cycle. It's intended to be created from the 
 - Check if any section headings were added to the release-note fragment
 
 ```
-        diff help/en/releasenotes/current-draft-note.shtml help/en/releasenotes/jmri5.3-master.shtml | grep '^>'
+        diff help/en/releasenotes/current-draft-note.shtml help/en/releasenotes/jmri5.7-master.shtml | grep '^>'
 ```
 
    If there were, update the master copy
@@ -230,7 +230,7 @@ This is the next release in the 5.6 cycle. It's intended to be created from the 
 
 - Create the new draft note section
 ```
-        cp help/en/releasenotes/jmri5.5-master.shtml help/en/releasenotes/current-draft-note.shtml
+        cp help/en/releasenotes/jmri5.7-master.shtml help/en/releasenotes/current-draft-note.shtml
         cp help/en/releasenotes/warnings-master.shtml help/en/releasenotes/current-draft-warnings.shtml
         git commit -m"start for 5.7.2 release note" help/en/releasenotes/*.shtml
         git push github
