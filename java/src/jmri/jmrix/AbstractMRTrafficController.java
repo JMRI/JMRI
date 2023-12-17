@@ -924,7 +924,8 @@ public abstract class AbstractMRTrafficController {
         }
         if (!threadStopRequest) { // if e.g. unexpected end
             ConnectionStatus.instance().setConnectionState(controller.getUserName(), controller.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
-            log.error("Exit from rcv loop in {}", this.getClass());
+            log.debug("Exit from rcv loop in {}", this.getClass());
+            log.info("Exiting receive loop");
             recovery(); // see if you can restart
         }
     }

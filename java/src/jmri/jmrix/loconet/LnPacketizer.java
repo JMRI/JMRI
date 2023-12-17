@@ -479,7 +479,7 @@ public class LnPacketizer extends LnTrafficController {
             } catch (InterruptedException e) { log.warn("unexpected InterruptedException", e);}
         }
         if (rcvThread != null) {
-            rcvThread.stop(); // interrupt not sufficient, because jtermios hangs in select via purejavacomm.PureJavaSerialPort$2.read
+            rcvThread.stop(); // interrupt not sufficient with the previous serial library. Not known if OK with SerialComm?
             try {
                 rcvThread.join();
             } catch (InterruptedException e) { log.warn("unexpected InterruptedException", e);}
