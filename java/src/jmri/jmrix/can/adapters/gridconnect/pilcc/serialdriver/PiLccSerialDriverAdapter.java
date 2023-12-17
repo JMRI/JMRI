@@ -13,7 +13,7 @@ import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
 public class PiLccSerialDriverAdapter extends GcSerialDriverAdapter {
 
     public PiLccSerialDriverAdapter() {
-        super("M", purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_IN + purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT);
+        super("M", FlowControl.RTSCTS); // enable RTS/CTS flow control
     }
 
     /**

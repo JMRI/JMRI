@@ -3,8 +3,6 @@ package jmri.jmrix.loconet.locobufferusb;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Override {@link jmri.jmrix.loconet.locobuffer.LocoBufferAdapter} so that it refers to the
@@ -19,23 +17,20 @@ public class LocoBufferUsbAdapter extends LocoBufferAdapter {
         options.remove(option1Name);
     }
 
+    @Override
+    protected void reportOpen(String portName) {
+        log.info("Connecting LocoBuffer-USB via {} {}", portName, currentSerialPort);
+    }
+
     /**
-     * Always use flow control, not considered a user-settable option.
+     * Always on flow control
      */
     @Override
-    protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
-        // find the baud rate value, configure comm options
-        // default, must match fixed adapter setting as speed not stored for LB usb
-        int baud = currentBaudNumber(mBaudRate);
-        activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
-                SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-
-        // configure flow control to always on
-        int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
-        configureLeadsAndFlowControl(activeSerialPort, flow);
-
-        log.info("LocoBuffer-USB adapter{}{} RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN, activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=", activeSerialPort.getFlowControlMode());
+    protected void setLocalFlowControl() {
+        FlowControl flow = FlowControl.RTSCTS;
+        setFlowControl(currentSerialPort, flow);
     }
+
 
     /**
      * {@inheritDoc}

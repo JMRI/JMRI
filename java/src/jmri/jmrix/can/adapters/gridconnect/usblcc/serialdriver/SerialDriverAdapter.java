@@ -14,6 +14,14 @@ import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
  */
 public class SerialDriverAdapter extends GcSerialDriverAdapter {
 
+    /** 
+     * Force the flow control to RTS and CTS
+     */
+    @Override
+    protected void localSetFlowControl() {
+        setFlowControl(currentSerialPort, FlowControl.RTSCTS);
+    }
+
     /**
      * {@inheritDoc}
      */

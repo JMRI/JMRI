@@ -1,7 +1,5 @@
 package jmri.jmrix.can.adapters.lawicell;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import jmri.SystemConnectionMemo;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
@@ -18,14 +16,6 @@ public abstract class PortController extends jmri.jmrix.AbstractSerialPortContro
     protected PortController(SystemConnectionMemo connectionMemo) {
         super(connectionMemo);
     }
-
-    // returns the InputStream from the port
-    @Override
-    public abstract DataInputStream getInputStream();
-
-    // returns the outputStream to the port
-    @Override
-    public abstract DataOutputStream getOutputStream();
 
     // check that this object is ready to operate
     @Override

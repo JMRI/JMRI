@@ -1,23 +1,10 @@
 package jmri.jmrix.sprog.serialdriver;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.TooManyListenersException;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 import jmri.jmrix.sprog.SprogPortController;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.update.SprogType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.NoSuchPortException;
-import purejavacomm.PortInUseException;
-import purejavacomm.PureJavaIllegalStateException;
-import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the Sprog system.
@@ -67,117 +54,55 @@ public class SerialDriverAdapter extends SprogPortController {
         this.getSystemConnectionMemo().setSprogTrafficController(new SprogTrafficController(this.getSystemConnectionMemo()));
     }
 
-    SerialPort activeSerialPort = null;
-
     private int baudRate = -1;
 
     @Override
     public String openPort(String portName, String appName) {
-        // open the port, check ability to set moderators
-        try {
-            // get and open the primary port
-            CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
-            try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
-            } catch (PortInUseException p) {
-                return handlePortBusy(p, portName, log);
-            }
-
-            // try to set it for communication via SerialDriver
-            try {
-                activeSerialPort.setSerialPortParams(baudRate, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
-                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
-            }
-
-            // set RTS high, DTR high
-            boolean doNotlog = false; // if using socat to forward serial port though network, following
-            try {                     // commands will fail, as well as bellow logging
-                activeSerialPort.setRTS(true); // not connected in some serial ports and adapters
-                activeSerialPort.setDTR(true);
-            } catch (PureJavaIllegalStateException e) {
-                log.info("Cannot setRTS/DTR will continue anyway");
-                doNotlog = true;
-            }
-            // pin 1 in DIN8; on main connector, this is DTR
-            // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
-            //AJB: Removed Jan 2010 -
-            //Setting flow control mode to zero kills comms - SPROG doesn't send data
-            //Concern is that will disabling this affect other SPROGs? Serial ones?
-            //activeSerialPort.setFlowControlMode(0);
-
-            // set timeout
-            // activeSerialPort.enableReceiveTimeout(1000);
-            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(),
-                    activeSerialPort.isReceiveTimeoutEnabled());
-
-            // get and save stream
-            serialStream = activeSerialPort.getInputStream();
-
-            // purge contents, if any
-            purgeStream(serialStream);
-
-            // report status?
-            if (log.isInfoEnabled()) {
-                if (doNotlog) {
-                    log.info("{} port opened at {} baud", portName, activeSerialPort.getBaudRate());
-                } else {
-                    log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
-                    }
-            }
-
-            //add Sprog Traffic Controller as event listener
-            try {
-                activeSerialPort.addEventListener(this.getSystemConnectionMemo().getSprogTrafficController());
-            } catch (TooManyListenersException e) {
-            }
-
-            // AJB - activate the DATA_AVAILABLE notifier
-            activeSerialPort.notifyOnDataAvailable(true);
-
-            opened = true;
-
-        } catch (NoSuchPortException p) {
-            return handlePortNotFound(p, portName, log);
-        } catch (IOException ex) {
-            log.error("Unexpected exception while opening port {}", portName, ex);
-            return "Unexpected error while opening port " + portName + ": " + ex;
+        // get and open the primary port
+        currentSerialPort = activatePort(portName, log);
+        if (currentSerialPort == null) {
+            log.error("failed to connect SPROG to {}", portName);
+            return Bundle.getMessage("SerialPortNotFound", portName);
         }
+        log.info("Connecting SPROG to {} {}", portName, currentSerialPort);
 
+        // try to set it for communication via SerialDriver
+        setBaudRate(currentSerialPort, baudRate);
+        configureLeads(currentSerialPort, true, true);
+        setFlowControl(currentSerialPort, FlowControl.NONE);
+
+        // add Sprog Traffic Controller as event listener
+        currentSerialPort.addDataListener( new com.fazecast.jSerialComm.SerialPortDataListener() {
+            @Override 
+            public int getListeningEvents() {
+                log.trace("getListeningEvents");
+                return com.fazecast.jSerialComm.SerialPort.LISTENING_EVENT_DATA_AVAILABLE;
+            }
+            @Override
+            public void serialEvent(com.fazecast.jSerialComm.SerialPortEvent event) {
+                log.trace("serial event start");
+                // invoke
+                getSystemConnectionMemo().getSprogTrafficController().handleOneIncomingReply();
+                log.trace("serial event end");
+            }
+        }
+        );
+
+        // report status
+        reportPortStatus(log, portName);
+
+        opened = true;
         return null; // indicates OK return
 
     }
 
-    public void setHandshake(int mode) {
-        try {
-            activeSerialPort.setFlowControlMode(mode);
-        } catch (UnsupportedCommOperationException ex) {
-            log.error("Unexpected exception while setting COM port handshake mode,", ex);
-        }
-    }
-
-    // base class methods for the SprogPortController interface
-    @Override
-    public DataInputStream getInputStream() {
-        if (!opened) {
-            log.error("getInputStream called before load(), stream not available");
-            return null;
-        }
-        return new DataInputStream(serialStream);
-    }
-
-    @Override
-    public DataOutputStream getOutputStream() {
-        if (!opened) {
-            log.error("getOutputStream called before load(), stream not available");
-        }
-        try {
-            return new DataOutputStream(activeSerialPort.getOutputStream());
-        } catch (java.io.IOException e) {
-            log.error("getOutputStream exception", e);
-        }
-        return null;
+    /**
+     * Set the flow control. This method hide the 
+     * actual serial port behind this object
+     * @param flow Set flow control to RTS/CTS when true
+     */
+    public void setHandshake(FlowControl flow) {
+        setFlowControl(currentSerialPort, flow);
     }
 
     /**
@@ -202,16 +127,12 @@ public class SerialDriverAdapter extends SprogPortController {
         return 0;
     }
 
-    InputStream serialStream = null;
-
     protected int numSlots = 1;
 
     /**
      * Set up all of the other objects to operate with an Sprog command station
      * connected to this port.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SLF4J_FORMAT_SHOULD_BE_CONST",
-        justification = "passing exception text")
     @Override
     public void configure() {
         // connect to the traffic controller
@@ -225,7 +146,7 @@ public class SerialDriverAdapter extends SprogPortController {
             try {
                 this.getSystemConnectionMemo().getPowerManager().setPower(jmri.PowerManager.ON);
             } catch (jmri.JmriException e) {
-                log.error(e.toString());
+                log.error("Error setting power on {}", e.toString());
             }
         }
     }
@@ -235,6 +156,6 @@ public class SerialDriverAdapter extends SprogPortController {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

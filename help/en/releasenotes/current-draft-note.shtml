@@ -26,12 +26,13 @@
 
         <h4>CBUS</h4>
             <ul>
+                <li>CBUS serial connections have been updated to use a new serial library.</li>  
                 <li>Console - Improved Statistics display</li>
             </ul>
 
         <h4>C/MRI</h4>
             <ul>
-                <li></li>
+                 <li>C/MRI serial connections have been updated to use a new serial library.</li>  
             </ul>
 
         <h4>DCC++ and DCC-EX</h4>
@@ -47,6 +48,11 @@
         <h4>Direct</h4>
             <ul>
                 <li></li>
+            </ul>
+
+        <h4>EasyDCC</h4>
+            <ul>
+                <li>EasyDCC serial connections have been updated to use a new serial library.</li>
             </ul>
 
         <h4>ESU</h4>
@@ -81,12 +87,12 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
-                <li></li>
+                <li>Lenz XPressNet connections have been updated to use a new serial library.</li>
             </ul>
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>LocoNet serial connections have been updated to use a new serial library.</li>  
             </ul>
 
         <h4>Maple</h4>
@@ -101,7 +107,7 @@
 
         <h4>MERG</h4>
             <ul>
-                <li></li>
+                <li>MERG CAN serial connections have been updated to use a new serial library.</li>  
             </ul>
 
         <h4>MQTT</h4>
@@ -111,7 +117,7 @@
 
         <h4>MRC</h4>
             <ul>
-                <li></li>
+                <li>MERG CAN serial connections have been updated to use a new serial library.</li>
             </ul>
 
         <h4>NCE</h4>
@@ -126,17 +132,18 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
+                <li>OpenLCB/LCC serial connections have been updated to use a new serial library.</li>  
                 <li>Fixed an index exception while the Event Table is writing a CSV file.</li>
             </ul>
 
         <h4>Powerline</h4>
             <ul>
-                <li></li>
+                <li>Powerline connections have been updated to use a new serial library.</li>
             </ul>
 
         <h4>RFID</h4>
             <ul>
-                <li></li>
+                <li>RFID connections have been updated to use a new serial library.</li>
             </ul>
 
         <h4>Roco z21/Z21</h4>
@@ -151,7 +158,8 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li></li>
+                <li>SPROG serial connections have been updated to use a new serial library.  
+                This should fix the incompatibility with recent macOS versions.</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -161,7 +169,7 @@
 
         <h4>TMCC</h4>
             <ul>
-                <li></li>
+                <li>TMCC serial connections have been updated to use a new serial library.</li>  
             </ul>
 
         <h4>Uhlenbrock Intellibox</h4>
@@ -171,7 +179,7 @@
 
         <h4>Zimo MXULF</h4>
             <ul>
-                <li></li>
+                <li>ZIMO serial connections have been updated to use a new serial library.</li>
             </ul>
 
         <h4>ZTC</h4>
@@ -639,4 +647,6 @@
                 <a href="https://github.com/danielb987/JmriPlugin">JmriPlugin</a> for example and
                 documentation.</li>
             <li>Improve how JMRI avoids opening a new window on top of an existing one.</li>
+            <li>JMRI is now using a new serial library. See the above hardware section for 
+                which types of connections have been migrated to this new library.</li>
         </ul>
