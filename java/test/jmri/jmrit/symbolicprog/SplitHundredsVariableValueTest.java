@@ -393,11 +393,11 @@ public class SplitHundredsVariableValueTest extends AbstractVariableValueTestBas
 
         // change to shorter text
         var.focusGained(focusEvent);
-        ((JTextField) var.getCommonRep()).setText("23");  // to start with a value
+        ((JTextField) var.getCommonRep()).setText("203");  // to start with a value
         var.focusLost(focusEvent);
-        Assert.assertEquals("set var text value", "23", ((JTextField) var.getCommonRep()).getText());
-        Assert.assertEquals("set var cv501", 23, cv501.getValue());
-        Assert.assertEquals("set var cv502",  0, cv502.getValue());
+        Assert.assertEquals("set var text value", "203", ((JTextField) var.getCommonRep()).getText());
+        Assert.assertEquals("set var cv501",  3, cv501.getValue());
+        Assert.assertEquals("set var cv502",  2, cv502.getValue());
         Assert.assertEquals("set var cv503",  0, cv503.getValue());
         Assert.assertEquals("set var cv504",  0, cv504.getValue());
 
