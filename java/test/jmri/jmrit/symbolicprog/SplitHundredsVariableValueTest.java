@@ -234,8 +234,6 @@ public class SplitHundredsVariableValueTest extends AbstractVariableValueTestBas
                 highCV, pFactor, pOffset, uppermask, displayCase, extra2, extra3, extra4);
         Assert.assertNotNull("makeVar returned null", var);
 
-        CvValue[] cv = var.usesCVs();
-
         Assert.assertEquals("3", "3", var.getTextFromValue(3));
         
         Assert.assertEquals("12", "12", var.getTextFromValue(12L));
@@ -276,8 +274,6 @@ public class SplitHundredsVariableValueTest extends AbstractVariableValueTestBas
                 v, status, stdname,
                 highCV, pFactor, pOffset, uppermask, displayCase, extra2, extra3, extra4);
         Assert.assertNotNull("makeVar returned null", var);
-
-        CvValue[] cv = var.usesCVs();
 
         Assert.assertEquals("3", 3L, var.getValueFromText("3"));
         
