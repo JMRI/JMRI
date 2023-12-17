@@ -26,13 +26,12 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>CBUS serial connections have been updated to use a new serial library.</li>  
-                <li>Console - Improved Statistics display</li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
             <ul>
-                 <li>C/MRI serial connections have been updated to use a new serial library.</li>  
+                <li></li>
             </ul>
 
         <h4>DCC++ and DCC-EX</h4>
@@ -48,11 +47,6 @@
         <h4>Direct</h4>
             <ul>
                 <li></li>
-            </ul>
-
-        <h4>EasyDCC</h4>
-            <ul>
-                <li>EasyDCC serial connections have been updated to use a new serial library.</li>
             </ul>
 
         <h4>ESU</h4>
@@ -87,12 +81,12 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
-                <li>Lenz XPressNet connections have been updated to use a new serial library.</li>
+                <li></li>
             </ul>
 
         <h4>LocoNet</h4>
             <ul>
-                <li>LocoNet serial connections have been updated to use a new serial library.</li>  
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -107,7 +101,7 @@
 
         <h4>MERG</h4>
             <ul>
-                <li>MERG CAN serial connections have been updated to use a new serial library.</li>  
+                <li></li>
             </ul>
 
         <h4>MQTT</h4>
@@ -117,7 +111,7 @@
 
         <h4>MRC</h4>
             <ul>
-                <li>MERG CAN serial connections have been updated to use a new serial library.</li>
+                <li></li>
             </ul>
 
         <h4>NCE</h4>
@@ -132,18 +126,17 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>OpenLCB/LCC serial connections have been updated to use a new serial library.</li>  
-                <li>Fixed an index exception while the Event Table is writing a CSV file.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
             <ul>
-                <li>Powerline connections have been updated to use a new serial library.</li>
+                <li></li>
             </ul>
 
         <h4>RFID</h4>
             <ul>
-                <li>RFID connections have been updated to use a new serial library.</li>
+                <li></li>
             </ul>
 
         <h4>Roco z21/Z21</h4>
@@ -158,8 +151,7 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li>SPROG serial connections have been updated to use a new serial library.  
-                This should fix the incompatibility with recent macOS versions.</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -169,7 +161,7 @@
 
         <h4>TMCC</h4>
             <ul>
-                <li>TMCC serial connections have been updated to use a new serial library.</li>  
+                <li></li>
             </ul>
 
         <h4>Uhlenbrock Intellibox</h4>
@@ -179,7 +171,7 @@
 
         <h4>Zimo MXULF</h4>
             <ul>
-                <li>ZIMO serial connections have been updated to use a new serial library.</li>
+                <li></li>
             </ul>
 
         <h4>ZTC</h4>
@@ -262,11 +254,6 @@
                 <li></li>
             </ul>
 
-        <h4>Logic Rail Technology</h4>
-            <ul>
-                <li>Added a definition for the LightEFX16.</li>
-            </ul>
-
         <h4>MD Electronics</h4>
              <ul>
                 <li></li>
@@ -300,11 +287,6 @@
         <h4>Norsk Modelljernbane (NJM)</h4>
             <ul>
                 <li></li>
-            </ul>
-
-        <h4>Piko</h4>
-            <ul>
-                <li>Added English translations</li>
             </ul>
 
         <h4>Public Domain and DIY decoders</h4>
@@ -354,7 +336,7 @@
 
         <h4>Technologistic (train-O-matic)</h4>
             <ul>
-                <li>Added Lokommander II Next18 decoder used in NMJ Skd224 models</li>
+                <li></li>
             </ul>
 
         <h4>Trix Modelleisenbahn</h4>
@@ -457,19 +439,6 @@
             <li></li>
         </ul>
 
-    <h3>PanelPro</h3>
-        <a id="PanelPro" name="PanelPro"></a>
-        <ul>
-            <li>The path for the <strong>backupPanels</strong> directory has been fixed so that it
-            now refers to the user files location instead of the profile location.  This only affects
-            the backup files location when user data is shared by multiple profiles.</li>
-
-            <li>The <strong>File &rArr; Show file history</strong> content has been enhanced.  The
-            <strong>app</strong> entries show the JMRI version.  The <strong>Store</strong> entries
-            show the name of the file that was created.
-            <li>
-        </ul>
-
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
@@ -529,7 +498,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>The FS-1987 signal system was updated to have better aspect ordering.</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -571,8 +540,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>Throttle Save menu entry behaviour was updated. Documentation updated accordingly.</li>
-            <li>Default Throttle UI on a new JMRI setup are now using icons and colors, can be reverted to classic in Preferences (see &ldquo;Enable button icons when available&ldquo; and &ldquo;Use large speed slider and control buttons&ldquo; throttle preferences entry )</li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -620,7 +588,7 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li>Add browser WebSocket support message to About page</li>
+            <li></li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
@@ -632,21 +600,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Added a
-                <a href="https://www.jmri.org/help/en/html/doc/Technical/plugins.shtml">SPI mechanism</a>
-                for extending the Tools menu.</li>
-            <li>The Linux and macOS application launchers and the Ant build process
-                have been updated to allow access to jar files in the settings:lib/
-                directory. This gives creators of JMRI plug-ins a way to distribute
-                their code separate from JMRI.</li>
-            <li>The Windows application launcher has been updated to allow access to
-                jar files in the settings:lib/ directory. This gives creators of JMRI
-                plug-ins a way to distribute their code separate from JMRI.</li>
-            <li>Plugins can now have help files, including images and css files, withing
-                the JAR file. See <a href="https://github.com/JMRI/JMRI/pull/12705">PR #12705</a> and
-                <a href="https://github.com/danielb987/JmriPlugin">JmriPlugin</a> for example and
-                documentation.</li>
-            <li>Improve how JMRI avoids opening a new window on top of an existing one.</li>
-            <li>JMRI is now using a new serial library. See the above hardware section for 
-                which types of connections have been migrated to this new library.</li>
+            <li></li>
         </ul>
+

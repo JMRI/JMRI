@@ -13,7 +13,7 @@ import jmri.NamedBean.DisplayOptions;
 public class ReporterWhereUsed {
 
     /**
-     * Populate a textarea with the where used content for the supplied sensor.
+     * Populate a textarea with the where used content for the supplied reporter.
      * @param reporter The reporter bean.
      * @return a populated textarea.
      */
@@ -24,6 +24,9 @@ public class ReporterWhereUsed {
         textArea.append(Bundle.getMessage("ListenerCount", reporter.getNumPropertyChangeListeners()));  // NOI18N
 
         textArea.append(WhereUsedCollectors.checkBlocks(reporter));
+        textArea.append(WhereUsedCollectors.checkLogixConditionals(reporter));
+        textArea.append(WhereUsedCollectors.checkLogixNGConditionals(reporter));
+        textArea.append(WhereUsedCollectors.checkPanels(reporter));
         return textArea;
     }
 }
