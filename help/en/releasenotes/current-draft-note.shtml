@@ -122,7 +122,14 @@
 
         <h4>NCE</h4>
             <ul>
-                <li></li>
+                <li>Support for PH5 added
+                	<p>
+                	This required rewriting how memory addresses were managed for all NCE systems.
+                	This required significant code changes for anything where JMRI is
+                	addressing memory in the command stations.
+                </li>
+               	<li>NCE Packet Monitor - added new baud rate selection for new version of device.
+               	</li>
             </ul>
 
         <h4>Oak Tree</h4>
