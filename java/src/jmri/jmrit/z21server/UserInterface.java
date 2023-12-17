@@ -8,16 +8,12 @@ import jmri.jmrit.throttle.StopAllButton;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.prefs.JmriPreferencesActionFactory;
-import jmri.util.zeroconf.ZeroConfServiceManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.InetAddress;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Set;
 
 public class UserInterface extends JmriJFrame {
 
@@ -49,32 +45,17 @@ public class UserInterface extends JmriJFrame {
 
         isListen = true;
         facelessServer = FacelessServer.getInstance();
+        String host = "";
+        try {
+            host = InetAddress.getLocalHost().getHostAddress();
+        } catch (Exception e) { host = "unknown ip"; }
 
-        //show all IPv4 addresses in window, for use by manual connections
-        addIPAddressesToUI();
+        this.manualPortLabel.setText("<html>" + host + "</html>"); // NOI18N
 
         createWindow();
 
     } // End of constructor
 
-    private void addIPAddressesToUI() {
-        //get port# directly from prefs
-        int port =  21105; //InstanceManager.getDefault(WiThrottlePreferences.class).getPort();
-        //list IPv4 addresses on the UI, for manual connections
-        //TODO: use some mechanism that is not tied to zeroconf networking
-        StringBuilder as = new StringBuilder(); //build multiline string of valid addresses
-        ZeroConfServiceManager manager = InstanceManager.getDefault(ZeroConfServiceManager.class);
-        Set<InetAddress> addresses = manager.getAddresses(ZeroConfServiceManager.Protocol.IPv4, false, false);
-        if (addresses.isEmpty()) {
-            // include IPv6 and link-local addresses if no non-link-local IPv4 addresses are available
-            addresses = manager.getAddresses(ZeroConfServiceManager.Protocol.All, true, false);
-        }
-        for (InetAddress ha : addresses) {
-            this.portLabel.setText(ha.getHostName());
-            as.append(ha.getHostAddress()).append(":").append(port).append("<br/>");
-        }
-        this.manualPortLabel.setText("<html>" + as + "</html>"); // NOI18N
-    }
 
     protected void createWindow() {
         panel = new JPanel();
@@ -85,7 +66,7 @@ public class UserInterface extends JmriJFrame {
         con.weightx = 0.5;
         con.weighty = 0;
 
-        JLabel label = new JLabel(/*MessageFormat.format(*/Bundle.getMessage("LabelListening")/*, new Object[]{DeviceServer.getWiTVersion()})*/);
+        JLabel label = new JLabel(Bundle.getMessage("LabelListening"));
         con.gridx = 0;
         con.gridy = 0;
         con.gridwidth = 2;
@@ -159,7 +140,7 @@ public class UserInterface extends JmriJFrame {
         buildMenu();
 
         //  Set window size & location
-        this.setTitle("WiThrottle");
+        this.setTitle("Z21 App Server");
         this.pack();
 
         this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
@@ -195,7 +176,6 @@ public class UserInterface extends JmriJFrame {
                 } else { // Restart server
                     enableServer();
                     serverOnOff.setText(Bundle.getMessage("MenuMenuStop"));
-                    addIPAddressesToUI();
                 }
             }
         });
@@ -206,14 +186,14 @@ public class UserInterface extends JmriJFrame {
 
         Action prefsAction = InstanceManager.getDefault(JmriPreferencesActionFactory.class).getCategorizedAction(
                 Bundle.getMessage("MenuMenuPrefs"),
-                "WITHROTTLE");
+                "Z21 App Server");
 
         menu.add(prefsAction);
 
         this.getJMenuBar().add(menu);
 
         // add help menu
-        addHelpMenu("package.jmri.jmrit.withrottle.UserInterface", true);
+        addHelpMenu("package.jmri.jmrit.z21server.UserInterface", true);
     }
 
 
