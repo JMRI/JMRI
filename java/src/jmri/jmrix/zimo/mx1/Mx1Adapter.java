@@ -28,7 +28,7 @@ public class Mx1Adapter extends Mx1PortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect SPROG to {}", portName);
+            log.error("failed to connect ZIMO MX1 to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting ZIMO MX1 to {} {}", portName, currentSerialPort);

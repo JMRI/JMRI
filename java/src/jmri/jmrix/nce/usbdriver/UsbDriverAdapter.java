@@ -33,10 +33,10 @@ public class UsbDriverAdapter extends NcePortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect SPROG to {}", portName);
+            log.error("failed to connect NCE USB to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
-        log.info("Connecting C/MRI to {} {}", portName, currentSerialPort);
+        log.info("Connecting NCE USB to {} {}", portName, currentSerialPort);
         
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options

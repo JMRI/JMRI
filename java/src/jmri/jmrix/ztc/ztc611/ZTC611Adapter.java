@@ -26,7 +26,7 @@ public class ZTC611Adapter extends XNetSerialPortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect SPROG to {}", portName);
+            log.error("failed to connect ZTC611 to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting ZTC611 to {} {}", portName, currentSerialPort);

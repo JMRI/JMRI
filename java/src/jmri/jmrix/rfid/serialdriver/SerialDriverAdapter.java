@@ -50,7 +50,7 @@ public class SerialDriverAdapter extends RfidPortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect SPROG to {}", portName);
+            log.error("failed to connect RFID to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting RFID to {} {}", portName, currentSerialPort);

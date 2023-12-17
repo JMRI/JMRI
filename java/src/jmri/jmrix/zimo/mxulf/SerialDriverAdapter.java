@@ -31,10 +31,10 @@ public class SerialDriverAdapter extends Mx1PortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect SPROG to {}", portName);
+            log.error("failed to connect Zimo MXULF to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
-        log.info("Connecting Zimo MX1 to {} {}", portName, currentSerialPort);
+        log.info("Connecting Zimo MXULF to {} {}", portName, currentSerialPort);
         
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options

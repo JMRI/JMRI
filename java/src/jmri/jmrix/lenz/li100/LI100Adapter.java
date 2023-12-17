@@ -31,7 +31,7 @@ public class LI100Adapter extends XNetSerialPortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect SPROG to {}", portName);
+            log.error("failed to connect LI100 to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting LI100 to {} {}", portName, currentSerialPort);

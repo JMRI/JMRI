@@ -27,7 +27,7 @@ public class SerialDriverAdapter extends MrcPortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect SPROG to {}", portName);
+            log.error("failed to connect MRC to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting MRC to {} {}", portName, currentSerialPort);
