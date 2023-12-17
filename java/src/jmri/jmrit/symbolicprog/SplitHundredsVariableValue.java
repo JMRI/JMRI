@@ -65,7 +65,10 @@ public class SplitHundredsVariableValue extends SplitVariableValue {
         while (val > 0) {
             long digits = val % INRADIX;
             val = val/INRADIX;
-            result = "" + digits + result;// that's a String prepend operation
+            result = "" + String.format("%02d", digits) + result;// that's a String prepend operation
+        }
+        while (result.startsWith("0")) {
+            result = result.substring(1);
         }
         return result;
     }
