@@ -221,7 +221,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         boolean result = true;
         
         if (null == flow) {
-            log.error("Invalid FlowControl enum member: {}", flow);
+            log.error("Invalid null FlowControl enum member");
         } else switch (flow) {
             case RTSCTS:
                 result = serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_RTS_ENABLED
