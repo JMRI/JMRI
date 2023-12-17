@@ -343,6 +343,19 @@ public class SplitHundredsVariableValueTest extends AbstractVariableValueTestBas
         Assert.assertEquals("set CV" + cv[1].number(), 76, cv[1].getValue());
 
         Assert.assertEquals("set var full value", "12347698", ((JTextField) var.getCommonRep()).getText());
+
+        // change sto zero value
+        cv[0].setValue(0);
+        cv[1].setValue(0);
+        cv[2].setValue(0);
+        cv[3].setValue(0);
+
+        Assert.assertEquals("set CV" + cv[0].number(), 0, cv[0].getValue());
+        Assert.assertEquals("set CV" + cv[1].number(), 0, cv[1].getValue());
+        Assert.assertEquals("set CV" + cv[2].number(), 0, cv[2].getValue());
+        Assert.assertEquals("set CV" + cv[3].number(), 0, cv[3].getValue());
+
+        Assert.assertEquals("set var full value", "0", ((JTextField) var.getCommonRep()).getText());
     }
 
     @Test
@@ -398,6 +411,16 @@ public class SplitHundredsVariableValueTest extends AbstractVariableValueTestBas
         Assert.assertEquals("set var text value", "203", ((JTextField) var.getCommonRep()).getText());
         Assert.assertEquals("set var cv501",  3, cv501.getValue());
         Assert.assertEquals("set var cv502",  2, cv502.getValue());
+        Assert.assertEquals("set var cv503",  0, cv503.getValue());
+        Assert.assertEquals("set var cv504",  0, cv504.getValue());
+
+        // change to 0 input
+        var.focusGained(focusEvent);
+        ((JTextField) var.getCommonRep()).setText("0");  // to start with a value
+        var.focusLost(focusEvent);
+        Assert.assertEquals("set var text value", "0", ((JTextField) var.getCommonRep()).getText());
+        Assert.assertEquals("set var cv501",  0, cv501.getValue());
+        Assert.assertEquals("set var cv502",  0, cv502.getValue());
         Assert.assertEquals("set var cv503",  0, cv503.getValue());
         Assert.assertEquals("set var cv504",  0, cv504.getValue());
 

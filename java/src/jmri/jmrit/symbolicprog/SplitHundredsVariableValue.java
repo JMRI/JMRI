@@ -67,7 +67,10 @@ public class SplitHundredsVariableValue extends SplitVariableValue {
             val = val/INRADIX;
             result = "" + String.format("%02d", digits) + result;// that's a String prepend operation
         }
+        result = "0"+result;  // never blank, even if the input is zero
+        // remove leading zeros for appearance sake
         while (result.startsWith("0")) {
+            if (result.length() <= 1) break;  // leave one zero if thats all there is
             result = result.substring(1);
         }
         return result;
