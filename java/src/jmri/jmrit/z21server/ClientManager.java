@@ -56,6 +56,16 @@ public class ClientManager implements ThrottleListener {
         }
     }
 
+    synchronized public void heartbeat(InetAddress clientAddress) {
+        AppClient client = registeredClients.get(clientAddress);
+        if (client != null) client.heartbeat();
+    }
+
+    synchronized public void handleExpiredClients() {
+        for (AppClient c : registeredClients.values()) {
+            if (c.isTimestampExpired()) registeredClients.remove(c.getAddress());
+        }
+    }
 
     @Override
     synchronized public void notifyThrottleFound(DccThrottle t) {

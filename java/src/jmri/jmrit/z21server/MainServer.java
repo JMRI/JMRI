@@ -31,6 +31,8 @@ public class MainServer implements Runnable {
 
                 InetAddress clientAddress = packet.getAddress();
 
+                ClientManager.getInstance().heartbeat(clientAddress);
+
                 byte[] rawData = packet.getData();
                 int dataLenght = rawData[0];
                 byte[] actualData = Arrays.copyOf(rawData, dataLenght);
@@ -59,6 +61,7 @@ public class MainServer implements Runnable {
                         System.out.println(ident + "Service not yet implemented : 0x" + Integer.toHexString(actualData[2]));
                 }
 
+                ClientManager.getInstance().handleExpiredClients();
             }
 
             log.info("Z21 App Server shut down.");
