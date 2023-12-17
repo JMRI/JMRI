@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable CV="121" item="Light 1 Brightness" default="100" opsOnly="yes">
     <decVal />
     <label>Light 1 Brightness</label>
@@ -192,6 +192,74 @@
       <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumInputType.xml"/>
       <label>Light 16 Input Type</label>
   </variable>
+
+
+  <variable CV="201" item="Light 1 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="181" max="2099"/>
+    <label>Light 1 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="202" item="Light 2 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="182" max="2099"/>
+    <label>Light 2 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="203" item="Light 3 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="183" max="2099"/>
+    <label>Light 3 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="204" item="Light 4 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="184" max="2099"/>
+    <label>Light 4 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="205" item="Light 5 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="185" max="2099"/>
+    <label>Light 5 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="206" item="Light 6 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="186" max="2099"/>
+    <label>Light 6 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="207" item="Light 7 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="187" max="2099"/>
+    <label>Light 7 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="208" item="Light 8 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="188" max="2099"/>
+    <label>Light 8 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="209" item="Light 9 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="189" max="2099"/>
+    <label>Light 9 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="210" item="Light 10 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="190" max="2099"/>
+    <label>Light 10 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="211" item="Light 11 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="191" max="2099"/>
+    <label>Light 11 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="212" item="Light 12 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="192" max="2099"/>
+    <label>Light 12 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="213" item="Light 13 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="193" max="2099"/>
+    <label>Light 13 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="214" item="Light 14 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="194" max="2099"/>
+    <label>Light 14 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="215" item="Light 15 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="195" max="2099"/>
+    <label>Light 15 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="216" item="Light 16 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="196" max="2099"/>
+    <label>Light 16 Accessory Decoder Number</label>
+  </variable>
+
+
   <variable CV="181" item="Light 1 Accessory Decoder Number thousands-hundreds" default="0" opsOnly="yes">
     <decVal />
     <label>Light 1 Accessory Decoder Number thousands-hundreds</label>
