@@ -1,6 +1,10 @@
 
     <!-- contains new warnings for the release under development -->
-    <li>
+    <li>Several systems have had extensive updates to their serial
+        support.  If you have trouble connecting to your layout hardware
+        after installing this version, please contact us
+        <a href="https://groups.io/g/jmriusers">on the JMRIusers list</a>
+        for assistance.
     </li>
     <li>
     </li>
