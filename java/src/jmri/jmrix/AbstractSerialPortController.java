@@ -308,7 +308,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
-            log.error("getInputStream called before load(), stream not available");
+            log.error("getInputStream called before open, stream not available");
             return null;
         }
         return new DataInputStream(currentSerialPort.getInputStream());
@@ -319,7 +319,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
-            log.error("getOutputStream called before load(), stream not available");
+            log.error("getOutputStream called before open, stream not available");
         }
 
         return new DataOutputStream(currentSerialPort.getOutputStream());
