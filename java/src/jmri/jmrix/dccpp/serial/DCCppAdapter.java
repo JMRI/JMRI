@@ -109,6 +109,8 @@ public class DCCppAdapter extends DCCppSerialPortController {
     // protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHw"), Bundle.getMessage("FlowOptionNo")};
     protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNo")};
 
+    private boolean opened = false;
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppAdapter.class);
 
 }

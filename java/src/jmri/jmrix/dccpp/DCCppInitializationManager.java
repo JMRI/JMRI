@@ -51,15 +51,6 @@ public class DCCppInitializationManager {
 
         systemMemo.register();
 
-        String base_station = "Unknown";
-        String code_build   = "Unknown";
-        String version      = "Unknown";
-        if (cs != null) {
-            base_station    = cs.getStationType();
-            code_build      = cs.getBuild();
-            version         = cs.getVersion();
-        }
-        
         log.info("DCC++ Initialization Complete");
     }
 
