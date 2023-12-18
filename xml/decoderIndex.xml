@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.5.7plus+jake+20231207T2140Z+R651c3b881a3 on Thu Dec 07 16:40:04 EST 2023-->
-  <decoderIndex version="558">
+  <!--Written by JMRI version 5.7.1plus+jake+20231217T1834Z+R0a15abd2cd3 on Sun Dec 17 13:34:30 EST 2023-->
+  <decoderIndex version="571">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -90,6 +90,7 @@
       <manufacturer mfg="LaisDCC" mfgID="134" />
       <manufacturer mfg="Lenz" mfgID="99" />
       <manufacturer mfg="Lionel" mfgID="1001" />
+      <manufacturer mfg="Logic Rail Technologies" mfgID="1003" />
       <manufacturer mfg="MAWE Elektronik" mfgID="68" />
       <manufacturer mfg="MBTronik - PiN GITmBH" mfgID="26" />
       <manufacturer mfg="MD Electronics" mfgID="160" />
@@ -9517,6 +9518,29 @@
       <family name="LGB MFX decoder" mfg="LGB" file="LGB_v3_MFX.xml">
         <model model="LGB MFX 27-pin sound decoder." lowVersionID="3" highVersionID="3" numOuts="0" numFns="32" productID="199" />
       </family>
+      <family name="Signal and Lighting" mfg="Logic Rail Technologies" file="LRT_LightEFX16.xml">
+        <model model="Light EFX-16">
+          <output name="1" label="Light 1" />
+          <output name="2" label="Light 2" />
+          <output name="3" label="Light 3" />
+          <output name="4" label="Light 4" />
+          <output name="5" label="Light 5" />
+          <output name="6" label="Light 6" />
+          <output name="7" label="Light 7" />
+          <output name="8" label="Light 8" />
+          <output name="9" label="Light 9" />
+          <output name="10" label="Light 10" />
+          <output name="11" label="Light 11" />
+          <output name="12" label="Light 12" />
+          <output name="13" label="Light 13" />
+          <output name="14" label="Light 14" />
+          <output name="15" label="Light 15" />
+          <output name="16" label="Light 16" />
+          <protocols>
+            <protocol>dcc</protocol>
+          </protocols>
+        </model>
+      </family>
       <family name="LS Models Function Mapping definitions" mfg="LS Models Sprl" file="LSM_SUSI_Function_Mapping.xml">
         <model model="LS Models SUSI Outputs Function Mapping" />
       </family>
@@ -12985,7 +13009,7 @@
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO46540-18 BR55TT V1.8 no SUSI" numOuts="4" numFns="68" productID="PIKO46540-18" lowVersionID="8">
+        <model model="PIKO46540-18 BR55-TT V1.8 no SUSI" numOuts="4" numFns="68" productID="PIKO46540-18" lowVersionID="8">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
@@ -13070,19 +13094,19 @@
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
-          <output name="3" label=". A3 ." />
-          <output name="4" label=". A4 ." />
-          <output name="3" label=". A5 ." />
-          <output name="4" label=". A6 ." />
-          <output name="3" label=". A7 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+          <output name="7" label=". A5 ." />
+          <output name="8" label=". A6 ." />
+          <output name="9" label=". A7 ." />
         </model>
         <model model="PIKO56508-16 XP5.1 V1.8" numOuts="6" numFns="68" productID="PIKO56508-16">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
-          <output name="3" label=". A3 ." />
-          <output name="4" label=". A4 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
         </model>
         <model model="PIKO46550-18 BR83-TT V1.8" numOuts="4" numFns="68" productID="PIKO46550-18" lowVersionID="8">
           <output name="1" label="F0(f)" />
@@ -26629,7 +26653,7 @@
           <output name="5" label="Aux3" />
           <output name="6" label="Aux4" />
         </model>
-        <model model="Lokommander 2 Micro N18" numOuts="8" numFns="15" lowVersionID="5" highVersionID="6" productID="2010216">
+        <model model="Lokommander 2 Micro N18" numOuts="8" numFns="15" lowVersionID="5" highVersionID="6" productID="2010216,2010226">
           <output name="1" />
           <output name="2" />
           <output name="3" label="Aux1" />

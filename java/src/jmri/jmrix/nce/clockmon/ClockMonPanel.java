@@ -51,12 +51,11 @@ import jmri.jmrix.nce.*;
  * 6. The nce clock must be left running, or it doesn't tic and
  * therefore doesn't go out over the bus.
  *
- * @author Ken Cameron Copyright (C) 2007
+ * @author Ken Cameron Copyright (C) 2007, 2023
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  */
 public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceListener {
 
-    public static final int CS_CLOCK_MEM_ADDR = 0xDC00;
     public static final int CS_CLOCK_MEM_SIZE = 0x10;
     public static final int CS_CLOCK_SCALE = 0x00;
     public static final int CS_CLOCK_TICK = 0x01;
@@ -774,9 +773,12 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
     private void changeNceClockRatio() {
         try {
             int newRatio = Integer.parseInt(rateNce.getText().trim());
+            if ((newRatio <= 0) || (newRatio > 15)) {
+                throw new NumberFormatException();
+            }
             issueClockRatio(newRatio);
         } catch (NumberFormatException e) {
-            log.error("Invalid value: {}", rateNce.getText().trim());
+            log.error("Invalid ratio value: {}", rateNce.getText().trim());
         }
     }
 
@@ -1497,7 +1499,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
 
     private void issueReadOnlyRequest() {
         if (!waitingForCmdRead) {
-            byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(CS_CLOCK_MEM_ADDR);
+            byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(tc.csm.getClockAddr());
             NceMessage cmdNce = jmri.jmrix.nce.NceMessage.createBinaryMessage(tc, cmd, CS_CLOCK_MEM_SIZE);
             waiting++;
             waitingForCmdRead = true;
@@ -1508,7 +1510,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
 
     private void issueReadAllRequest() {
         if (!waitingForCmdRead) {
-            byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(CS_CLOCK_MEM_ADDR);
+            byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(tc.csm.getClockAddr());
             NceMessage cmdNce = jmri.jmrix.nce.NceMessage.createBinaryMessage(tc, cmd, CS_CLOCK_MEM_SIZE);
             waiting++;
             waitingForCmdRead = true;
@@ -1523,7 +1525,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private void issueReadTimeRequest() {
         if (!waitingForCmdRead) {
-            byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(CS_CLOCK_MEM_ADDR);
+            byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(tc.csm.getClockAddr());
             NceMessage cmdNce = jmri.jmrix.nce.NceMessage.createBinaryMessage(tc, cmd, CS_CLOCK_MEM_SIZE);
             waiting++;
             waitingForCmdRead = true;
@@ -1535,7 +1537,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private void issueReadRatioRequest() {
         if (!waitingForCmdRead) {
-            byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(CS_CLOCK_MEM_ADDR);
+            byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(tc.csm.getClockAddr());
             NceMessage cmdNce = jmri.jmrix.nce.NceMessage.createBinaryMessage(tc, cmd, CS_CLOCK_MEM_SIZE);
             waiting++;
             waitingForCmdRead = true;
@@ -1547,7 +1549,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private void issueReadFormatRequest() {
         if (!waitingForCmdRead) {
-            byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(CS_CLOCK_MEM_ADDR);
+            byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(tc.csm.getClockAddr());
             NceMessage cmdNce = jmri.jmrix.nce.NceMessage.createBinaryMessage(tc, cmd, CS_CLOCK_MEM_SIZE);
             waiting++;
             waitingForCmdRead = true;
@@ -1559,7 +1561,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private void issueReadStatusRequest() {
         if (!waitingForCmdRead) {
-            byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(CS_CLOCK_MEM_ADDR);
+            byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(tc.csm.getClockAddr());
             NceMessage cmdNce = jmri.jmrix.nce.NceMessage.createBinaryMessage(tc, cmd, CS_CLOCK_MEM_SIZE);
             waiting++;
             waitingForCmdRead = true;
@@ -1569,6 +1571,18 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
     }
 
     private void issueClockSet(int hh, int mm, int ss) {
+        if ((hh < 0) || (hh > 23)) {
+            log.error("hours value out of range: {}", hh);
+            return;
+        }
+        if ((mm < 0) || (mm > 59)) {
+            log.error("minutes value out of range: {}", mm);
+            return;
+        }
+        if ((ss < 0) || (ss > 59)) {
+            log.error("seconds value out of range: {}", ss);
+            return;
+        }
         issueClockSetMem(hh, mm, ss);
     }
 
@@ -1577,7 +1591,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
         b[0] = (byte) ss;
         b[1] = (byte) mm;
         b[2] = (byte) hh;
-        byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryWriteN(CS_CLOCK_MEM_ADDR + CS_CLOCK_SECONDS, b);
+        byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryWriteN(tc.csm.getClockAddr() + CS_CLOCK_SECONDS, b);
         NceMessage cmdNce = jmri.jmrix.nce.NceMessage.createBinaryMessage(tc, cmd, CMD_MEM_SET_REPLY_SIZE);
         waiting++;
         waitingForCmdTime = true;

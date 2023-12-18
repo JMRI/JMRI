@@ -163,11 +163,29 @@
 
       <div>
         <img src=
-        "../../../../../../../html/hardware/can/cbus/images/swing/console/merg-cbus-console-statistics-608x73.png"
-        width="608" height="73" alt="CBUS Console Statistics">
-        <p>This part of the window shows the number of packets received and transmitted.</p>
+        "../../../../../../../html/hardware/can/cbus/images/swing/console/merg-cbus-console-statistics-851x87.png"
+        width="851" height="87" alt="CBUS Console Statistics">
+        <p>This part of the window shows some CAN Frame statistics.</p>
 
-        <p>Clear button resets the packet counts to zero.</p>
+        <p>The statistics show Frames from the Console opening.</p>
+        <p>The <span class="textbutton">Reset</span> button resets the values to zero
+            and resets the timer for average calculations.</p>
+
+        <ul>
+            <li>Sent - Frames Sent</li>
+            <li>Received - Frames Received</li>
+            <li>Total - Total Sent and Received Frames</li>
+            <li>Events - Number of Event Frames</li>
+            <li>DCC - Number of DCC Frames</li>
+            <li>CAN / Sec - Frames within previous Second of value update.</li>
+            <li>Avg / Sec - Mean Frames per Second</li>
+            <li>Max / Sec - Maximum number of Frames within 1 Second of each other.</li>
+        </ul>
+
+        <p>Note that there is upstream buffering of CAN Frames within JMRI
+        before the Console receives them, so values may not necessarily
+        reflect those on the actual CAN.
+        </p>
       </div>
 
       <h2 id="packet">Packets</h2>

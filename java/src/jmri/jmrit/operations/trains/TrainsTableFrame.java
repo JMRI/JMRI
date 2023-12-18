@@ -353,11 +353,11 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
             // Processes the CSV Manifest files using an external custom program.
             TrainCustomManifest tcm = InstanceManager.getDefault(TrainCustomManifest.class);
             if (!tcm.excelFileExists()) {
-                log.warn("Manifest creator file not found!, directory name: {}, file name: {}", tcm.getDirectoryName(),
+                log.warn("Manifest creator file not found!, directory path: {}, file name: {}", tcm.getDirectoryPathName(),
                         tcm.getFileName());
                 JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("LoadDirectoryNameFileName",
-                                tcm.getDirectoryName(), tcm.getFileName()),
+                                tcm.getDirectoryPathName(), tcm.getFileName()),
                         Bundle.getMessage("ManifestCreatorNotFound"), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }

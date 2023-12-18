@@ -288,11 +288,21 @@ public class ArchitectureTest {
      * Confine purejavacomm to jmri.jmrix packages.
      */
     @ArchTest
-    public static final ArchRule checkPurejavacoomOutsideConfigurexml = noClasses()
+    public static final ArchRule checkPurejavacoomOutsideJmrix = noClasses()
         .that().resideOutsideOfPackage("jmri.jmrix..").and()
         .doNotHaveFullyQualifiedName("apps.util.issuereporter.SystemInfo").and()
         .doNotHaveFullyQualifiedName("jmri.jmrit.mailreport.ReportContext")
         .should().accessClassesThat().resideInAPackage("purejavacomm..");
+
+    /**
+     * Confine jSerialComm to jmri.jmrix packages.
+     */
+    @ArchTest
+    public static final ArchRule checkJSerialCommOutsideJmrix = noClasses()
+        .that().resideOutsideOfPackage("jmri.jmrix..").and()
+        .doNotHaveFullyQualifiedName("apps.util.issuereporter.SystemInfo").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrit.mailreport.ReportContext")
+        .should().accessClassesThat().resideInAPackage("com.fazecast.jSerialComm..");
 
     /**
      * Check that *Bundle classes inherit from their parent.

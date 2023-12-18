@@ -9,6 +9,7 @@ import java.util.Vector;
 import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -25,7 +26,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Daniel Boudreau Copyright (C) 2007
- * @author ken cameron Copyright (C) 2013
+ * @author Ken Cameron Copyright (C) 2013, 2023
  */
 public class UsbDriverAdapter extends NcePortController {
 
@@ -68,7 +69,7 @@ public class UsbDriverAdapter extends NcePortController {
             activeSerialPort.enableReceiveTimeout(50);  // 50 mSec timeout before sending chars
 
             // set timeout
-            // activeSerialPort.enableReceiveTimeout(1000);
+            // currentSerialPort.enableReceiveTimeout(1000);
             log.debug("Serial timeout was observed as: {}", activeSerialPort.getReceiveTimeout()
                     + " " + activeSerialPort.isReceiveTimeoutEnabled());
 
@@ -131,9 +132,7 @@ public class UsbDriverAdapter extends NcePortController {
                 this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_65);
             } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[2])) { //PowerPro
                 tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERPRO);
-                tc.setCmdGroups(NceTrafficController.CMDS_OPS_PGM
-                        | NceTrafficController.CMDS_AUI_READ
-                        | NceTrafficController.CMDS_USB
+                tc.setCmdGroups(NceTrafficController.CMDS_USB
                         | NceTrafficController.CMDS_ALL_SYS);
                 this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_2006);
             } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[1])) { //SB3
@@ -192,6 +191,7 @@ public class UsbDriverAdapter extends NcePortController {
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
+        tc.csm = new UsbCmdStationMemory();
     }
 
     // base class methods for the NcePortController interface

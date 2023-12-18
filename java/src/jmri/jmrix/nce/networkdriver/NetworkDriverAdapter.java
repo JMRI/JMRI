@@ -1,5 +1,6 @@
 package jmri.jmrix.nce.networkdriver;
 
+import jmri.jmrix.nce.NceCmdStationMemory;
 import jmri.jmrix.nce.NceNetworkPortController;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
@@ -11,6 +12,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * controlled by the NetworkDriverFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003
+ * @author Ken Cameron Copyright (C) 2023
  */
 public class NetworkDriverAdapter extends NceNetworkPortController {
 
@@ -46,6 +48,7 @@ public class NetworkDriverAdapter extends NceNetworkPortController {
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
+        tc.csm = new NceCmdStationMemory();
     }
 
 }

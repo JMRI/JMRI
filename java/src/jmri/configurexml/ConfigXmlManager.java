@@ -327,10 +327,11 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         }
     }
 
-    protected void includeHistory(Element root) {
+    protected void includeHistory(Element root, File file) {
         // add history to end of document
         if (InstanceManager.getNullableDefault(FileHistory.class) != null) {
-            root.addContent(jmri.jmrit.revhistory.configurexml.FileHistoryXml.storeDirectly(InstanceManager.getDefault(FileHistory.class)));
+            root.addContent(jmri.jmrit.revhistory.configurexml.FileHistoryXml.storeDirectly(
+                    InstanceManager.getDefault(FileHistory.class), file.getPath()));
         }
     }
 
@@ -412,7 +413,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         if (!addConfigStore(root)) {
             result = false;
         }
-        includeHistory(root);
+        includeHistory(root, file);
         if (!finalStore(root, file)) {
             result = false;
         }
@@ -430,7 +431,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         if (!addUserStore(root)) {
             result = false;
         }
-        includeHistory(root);
+        includeHistory(root, file);
         if (!finalStore(root, file)) {
             result = false;
         }
@@ -440,10 +441,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     /** {@inheritDoc} */
     @Override
     public boolean makeBackup(File file) {
-        return makeBackupFile(defaultBackupDirectory, file);
+        return makeBackupFile(FileUtil.getUserFilesPath() + "backupPanels", file);
     }
-
-    String defaultBackupDirectory = FileUtil.getUserFilesPath() + "backupPanels";
 
     /**
      *
@@ -698,7 +697,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                     included = jmri.jmrit.revhistory.configurexml.FileHistoryXml.loadFileHistory(filehistory);
                 }
             }
-            r.addOperation((result ? "Load OK" : "Load with errors"), url.getFile(), included);
+            String friendlyName = url.getFile().replaceAll("%20", " ");
+            r.addOperation((result ? "Load OK" : "Load with errors"), friendlyName, included);
         } else {
             log.info("Not recording file history");
         }

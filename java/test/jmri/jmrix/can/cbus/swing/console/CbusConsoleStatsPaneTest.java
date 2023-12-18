@@ -21,6 +21,7 @@ public class CbusConsoleStatsPaneTest  {
         // for now, just makes sure there isn't an exception.
         CbusConsoleStatsPane t = new CbusConsoleStatsPane(mainConsolePane);
         Assertions.assertNotNull(t);
+        t.dispose();
         
     }
     

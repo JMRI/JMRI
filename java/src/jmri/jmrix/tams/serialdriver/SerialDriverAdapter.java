@@ -57,7 +57,7 @@ public class SerialDriverAdapter extends TamsPortController {
             }
 
             // Hardware flow control
-            //configureLeadsAndFlowControl(activeSerialPort, SerialPort.FLOWCONTROL_RTSCTS_IN | SerialPort.FLOWCONTROL_RTSCTS_OUT);
+            //configureLeadsAndFlowControl(currentSerialPort, SerialPort.FLOWCONTROL_RTSCTS_IN | SerialPort.FLOWCONTROL_RTSCTS_OUT);
 
             // Xon/Xoff flow control
             configureLeadsAndFlowControl(activeSerialPort, 0);
