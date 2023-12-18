@@ -117,7 +117,7 @@
           </p>
 
           <p>The &quot;default_lcf.xml&quot; file contains lots of comments on what the various terms mean.
-          <br>Content within the <code>&lt;&#45;&#45; &#45;&#45;&gt;</code> symbols is processed as a comment,
+          <br>Content within the <code>&lt;&#33;&#45;&#45; &#45;&#45;&gt;</code> symbols is processed as a comment,
           not part of the configuration.</p>
           
           <p>Of most relevance is the section towards the bottom of the file containing the Logger elements.
