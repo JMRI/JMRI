@@ -1640,6 +1640,13 @@ public class LocoNetMessageInterpretTest {
                 case 0x7C:
                     s = "Digitrax DS78V host";
                     break;
+                case 70:
+                    s = "Digitrax SE74 host";
+                    break;
+                case 74:
+                    s = "Digitrax PM74 host";
+                    break;
+                            
                 default:
                     s = "Digitrax (unknown host device type "+i+")";
                     break;
