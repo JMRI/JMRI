@@ -60,7 +60,7 @@ public class DCCppInitializationManager {
             version         = cs.getVersion();
         }
         
-        log.info("DCC++ Initialization Complete with station type '{}', version '{}' and build '{}'", base_station, version, code_build);
+        log.info("DCC++ Initialization Complete");
     }
 
     private final static Logger log = LoggerFactory.getLogger(DCCppInitializationManager.class);
