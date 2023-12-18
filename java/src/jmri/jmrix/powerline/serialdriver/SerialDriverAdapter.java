@@ -140,7 +140,6 @@ public class SerialDriverAdapter extends SerialPortController {
     }
 
     // private control members
-    private boolean opened = false;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 

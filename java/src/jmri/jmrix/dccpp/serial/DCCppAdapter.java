@@ -1,7 +1,5 @@
 package jmri.jmrix.dccpp.serial;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.Arrays;
 import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppInitializationManager;
@@ -29,10 +27,10 @@ public class DCCppAdapter extends DCCppSerialPortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect C/MRI to {}", portName);
+            log.error("failed to connect DCC++ to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
-        log.info("Connecting C/MRI to {} {}", portName, currentSerialPort);
+        log.info("Connecting DCC++ to {} {}", portName, currentSerialPort);
         
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options
@@ -68,13 +66,13 @@ public class DCCppAdapter extends DCCppSerialPortController {
 
     // base class methods for the XNetSerialPortController interface
 
-    public BufferedReader getInputStreamBR() {
-        if (!opened) {
-            log.error("getInputStream called before load(), stream not available");
-            return null;
-        }
-        return new BufferedReader(new InputStreamReader(getInputStream()));
-    }
+//     public BufferedReader getInputStreamBR() {
+//         if (!opened) {
+//             log.error("getInputStream called before load(), stream not available");
+//             return null;
+//         }
+//         return new BufferedReader(new InputStreamReader(getInputStream()));
+//     }
 
     @Override
     public boolean status() {
@@ -108,8 +106,6 @@ public class DCCppAdapter extends DCCppSerialPortController {
     // meanings are assigned to these above, so make sure the order is consistent
     // protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHw"), Bundle.getMessage("FlowOptionNo")};
     protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNo")};
-
-    private boolean opened = false;
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppAdapter.class);
 

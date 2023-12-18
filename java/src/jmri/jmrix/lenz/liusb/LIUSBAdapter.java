@@ -105,8 +105,6 @@ public class LIUSBAdapter extends XNetSerialPortController {
     protected final String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm23150")
             , Bundle.getMessage("FlowOptionNoReq23151")};
 
-    private boolean opened = false;
-
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LIUSBAdapter.class);
 
 }

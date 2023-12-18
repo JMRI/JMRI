@@ -96,8 +96,6 @@ public class SerialDriverAdapter extends EasyDccPortController {
     }
 
     // private control members
-    private boolean opened = false;
-
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

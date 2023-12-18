@@ -113,8 +113,6 @@ public class LI100Adapter extends XNetSerialPortController {
     // meanings are assigned to these above, so make sure the order is consistent
     protected final String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};
 
-    private boolean opened = false;
- 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LI100Adapter.class);
 
 }

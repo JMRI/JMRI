@@ -183,9 +183,6 @@ public class UsbDriverAdapter extends NcePortController {
         return 0;
     }
 
-    // private control members
-    private boolean opened = false;
-
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(UsbDriverAdapter.class);
 
 }

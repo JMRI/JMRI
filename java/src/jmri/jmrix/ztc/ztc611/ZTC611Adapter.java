@@ -107,8 +107,6 @@ public class ZTC611Adapter extends XNetSerialPortController {
     // meanings are assigned to these above, so make sure the order is consistent
     protected final String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNoRecomm"), Bundle.getMessage("FlowOptionHw")};
 
-    private boolean opened = false;
-
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ZTC611Adapter.class);
 
 }

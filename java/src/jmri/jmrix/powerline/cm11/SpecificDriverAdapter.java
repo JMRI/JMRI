@@ -86,8 +86,8 @@ public class SpecificDriverAdapter extends SerialPortController {
     public boolean status() {
         return opened;
     }
+
     // private control members
-    private boolean opened = false;
 
     protected String[] validSpeeds = new String[]{Bundle.getMessage("BaudAutomatic")};
     protected int[] validSpeedValues = new int[]{4800};

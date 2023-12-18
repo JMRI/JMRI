@@ -120,7 +120,6 @@ public class SerialDriverAdapter extends Mx1PortController {
     protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};
 
     //protected String selectedOption1=validOption1[0];
-    private boolean opened = false;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 

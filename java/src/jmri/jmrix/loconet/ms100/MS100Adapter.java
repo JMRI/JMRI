@@ -119,8 +119,6 @@ public class MS100Adapter extends LnPortController {
     }
 
     // private control members
-    private boolean opened = false;
- 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MS100Adapter.class);
 
 }

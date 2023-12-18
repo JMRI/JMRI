@@ -231,7 +231,6 @@ public class SerialDriverAdapter extends RfidPortController {
     }
 
     // private control members
-    private boolean opened = false;
 
     private static final Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
