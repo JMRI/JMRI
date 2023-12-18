@@ -27,7 +27,6 @@ public class DCCppInitializationManager {
 
         log.debug("Starting DCC++ Initialization Process");
 
-        DCCppCommandStation cs = systemMemo.getDCCppTrafficController().getCommandStation();
         jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
         systemMemo.setProgrammerManager(new DCCppProgrammerManager(new DCCppProgrammer(systemMemo.getDCCppTrafficController()), systemMemo));
         if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
