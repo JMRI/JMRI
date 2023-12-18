@@ -23,6 +23,7 @@
       <column>
         <display item="Light 4 Brightness" label="Brightness (1-100)" />
         <display item="Light 4 Auto-Off Timer" label="Auto-Off Timer (0-255 sec)" />
+        <display item="Light 4 Accessory Decoder Number" label="Accessory Decoder Number (0-2099)" />
         <display item="Light 4 Accessory Decoder Number thousands-hundreds" label="Accessory Decoder Number thousands-hundreds (0-20)" />
         <display item="Light 4 Accessory Decoder Number tens-ones" label="Accessory Decoder Number tens-ones (0-99)" />
       </column>
