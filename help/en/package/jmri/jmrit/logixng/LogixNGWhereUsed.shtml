@@ -16,7 +16,7 @@
     <div id="mainContent">
       <h1>JMRI: LogixNG Where Used</h1>
 
-      <p>The LogixNG Where Used tool is used to find where tables entries have been used in a
+      <p>The LogixNG Where Used tool is used to find where JMRI table entries have been used in a
       LogixNG, a LogixNG module or in the LogixNG clipboard.  References are shown using the normal
       LogixNG Browser format.  The tool is based on the standard Where Used at <strong>Tools &rArr;
       Where Used</strong>.</p>

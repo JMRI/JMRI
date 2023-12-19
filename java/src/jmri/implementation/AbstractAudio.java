@@ -1,7 +1,10 @@
 package jmri.implementation;
 
-import jmri.Audio;
-import jmri.InstanceManager;
+import java.util.ArrayList;
+import java.util.List;
+
+import jmri.*;
+import jmri.jmrit.audio.AudioSource;
 
 /**
  * Base implementation of the Audio class.
@@ -94,4 +97,18 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
         return Bundle.getMessage("BeanNameAudio");
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            if (this instanceof AudioSource) {
+                var source = (AudioSource) this;
+                if (bean.equals(source.getAssignedBuffer())) {
+                    report.add(new NamedBeanUsageReport("AudioBuffer"));  // NOI18N
+                }
+            }
+        }
+        return report;
+    }
 }
