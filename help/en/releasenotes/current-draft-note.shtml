@@ -216,7 +216,8 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li></li>
+                <li>Updated LocoNet Monitor to display PM74 and SE74 device 
+		types for certain LocoNet messages.</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
