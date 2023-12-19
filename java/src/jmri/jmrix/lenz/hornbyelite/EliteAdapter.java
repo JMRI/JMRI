@@ -25,7 +25,7 @@ public class EliteAdapter extends XNetSerialPortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect SPROG to {}", portName);
+            log.error("failed to connect Elite Adapter to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting Elite Adapter to {} {}", portName, currentSerialPort);

@@ -25,7 +25,7 @@ public class SerialDriverAdapter extends SerialPortAdapter {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect SPROG to {}", portName);
+            log.error("failed to connect C/MRI to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting C/MRI to {} {}", portName, currentSerialPort);
@@ -97,7 +97,6 @@ public class SerialDriverAdapter extends SerialPortAdapter {
     }
 
     // private control members
-    private boolean opened = false;
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialDriverAdapter.class);
 

@@ -36,7 +36,7 @@ public class MS100Adapter extends LnPortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect SPROG to {}", portName);
+            log.error("failed to connect MS100 to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting MS100 via {} {}", portName, currentSerialPort);
@@ -119,8 +119,6 @@ public class MS100Adapter extends LnPortController {
     }
 
     // private control members
-    private boolean opened = false;
- 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MS100Adapter.class);
 
 }

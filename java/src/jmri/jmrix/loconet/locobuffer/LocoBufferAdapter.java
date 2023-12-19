@@ -67,7 +67,7 @@ public class LocoBufferAdapter extends LnPortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect SPROG to {}", portName);
+            log.error("failed to connect LocoBuffer to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         reportOpen(portName);

@@ -27,7 +27,7 @@ public class SpecificDriverAdapter extends SerialPortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect SPROG to {}", portName);
+            log.error("failed to connect CM11 to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting CM11 to {} {}", portName, currentSerialPort);
@@ -86,8 +86,8 @@ public class SpecificDriverAdapter extends SerialPortController {
     public boolean status() {
         return opened;
     }
+
     // private control members
-    private boolean opened = false;
 
     protected String[] validSpeeds = new String[]{Bundle.getMessage("BaudAutomatic")};
     protected int[] validSpeedValues = new int[]{4800};

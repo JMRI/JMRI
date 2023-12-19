@@ -26,7 +26,7 @@ public class ZTC640Adapter extends XNetSerialPortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect SPROG to {}", portName);
+            log.error("failed to connect ZTC640 to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting ZTC640 to {} {}", portName, currentSerialPort);

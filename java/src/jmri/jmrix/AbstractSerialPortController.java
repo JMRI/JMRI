@@ -220,16 +220,23 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         
         boolean result = true;
         
-        if (flow == FlowControl.RTSCTS) {
-            result = serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_RTS_ENABLED
-                                      | com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_CTS_ENABLED );
-        } else if (flow == FlowControl.XONXOFF) {
-            result = serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_XONXOFF_IN_ENABLED
-                                      | com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_XONXOFF_OUT_ENABLED);
-        } else if (flow == FlowControl.NONE) {
-            result = serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_DISABLED);
-        } else {
-            log.error("Invalid FlowControl enum member: {}", flow);
+        if (null == flow) {
+            log.error("Invalid null FlowControl enum member");
+        } else switch (flow) {
+            case RTSCTS:
+                result = serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_RTS_ENABLED
+                        | com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_CTS_ENABLED );
+                break;
+            case XONXOFF:
+                result = serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_XONXOFF_IN_ENABLED
+                        | com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_XONXOFF_OUT_ENABLED);
+                break;
+            case NONE:
+                result = serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_DISABLED);
+                break;
+            default:
+                log.error("Invalid FlowControl enum member: {}", flow);
+                break;
         }
         
         if (!result) log.error("Port did not accept flow control setting {}", flow);
@@ -250,17 +257,17 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             case NONE:
                 if (nowFlow != com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_DISABLED) 
                     log.error("Expected flow {} but found {}", lastFlowControl, nowFlow);
-                    break;
+                break;
             case RTSCTS:
                 if (nowFlow != (com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_RTS_ENABLED
                                       | com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_CTS_ENABLED)) 
                     log.error("Expected flow {} but found {}", lastFlowControl, nowFlow);
-                    break;
+                break;
             case XONXOFF:
                 if (nowFlow != (com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_XONXOFF_IN_ENABLED
                                       | com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_XONXOFF_OUT_ENABLED)) 
                     log.error("Expected flow {} but found {}", lastFlowControl, nowFlow);
-                    break;
+                break;
             default:
                 log.warn("Unexpected FlowControl mode: {}", lastFlowControl);
         }
@@ -301,7 +308,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
-            log.error("getInputStream called before load(), stream not available");
+            log.error("getInputStream called before open, stream not available");
             return null;
         }
         return new DataInputStream(currentSerialPort.getInputStream());
@@ -312,7 +319,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
-            log.error("getOutputStream called before load(), stream not available");
+            log.error("getOutputStream called before open, stream not available");
         }
 
         return new DataOutputStream(currentSerialPort.getOutputStream());

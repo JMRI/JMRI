@@ -27,7 +27,7 @@ public class SerialDriverAdapter extends MrcPortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect SPROG to {}", portName);
+            log.error("failed to connect MRC to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting MRC to {} {}", portName, currentSerialPort);
@@ -92,7 +92,6 @@ public class SerialDriverAdapter extends MrcPortController {
     }
 
     // private control members
-    private boolean opened = false;
 
     protected String[] validOption1 = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};// NOI18N
 

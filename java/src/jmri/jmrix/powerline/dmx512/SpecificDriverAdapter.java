@@ -27,7 +27,7 @@ public class SpecificDriverAdapter extends SerialPortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect SPROG to {}", portName);
+            log.error("failed to connect DMX512 to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting DMX512 to {} {}", portName, currentSerialPort);
@@ -88,7 +88,6 @@ public class SpecificDriverAdapter extends SerialPortController {
         return opened;
     }
     // private control members
-    private boolean opened = false;
 
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud250000")};
     protected int[] validSpeedValues = new int[]{250000};
