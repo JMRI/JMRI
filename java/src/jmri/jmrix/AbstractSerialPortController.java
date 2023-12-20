@@ -87,6 +87,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * and set the port to 8-2-none.
      * <p>
      * Does not do the rest of the setup implied in the {@link #openPort} method.
+     * This is usually followed by calls to 
+     * {@link #setBaudRate}, {@link #configureLeads} and {@link #setFlowControl}.
      * 
      * @param portName local system name for the desired port
      * @param log Logger to use for errors, passed so that errors are logged from low-level class
@@ -102,6 +104,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * and set the port to 8 bits, the indicated number of stop bits, and no parity.
      * <p>
      * Does not do the rest of the setup implied in the {@link #openPort} method.
+     * This is usually followed by calls to 
+     * {@link #setBaudRate}, {@link #configureLeads} and {@link #setFlowControl}.
      * 
      * @param portName local system name for the desired port
      * @param log Logger to use for errors, passed so that errors are logged from low-level class'
