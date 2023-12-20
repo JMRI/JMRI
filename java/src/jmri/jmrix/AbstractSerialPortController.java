@@ -84,7 +84,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     /**
      * Do the formal opening of the port,
      * set the port for blocking reads without timeout,
-     * and set the port to 8-2-none.
+     * and set the port to 8-1-none.
      * <p>
      * Does not do the rest of the setup implied in the {@link #openPort} method.
      * This is usually followed by calls to 
@@ -95,7 +95,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @return the serial port object for later use
      */
     final protected com.fazecast.jSerialComm.SerialPort activatePort(String portName, org.slf4j.Logger log) {
-        return this.activatePort(portName, log, 2); 
+        return this.activatePort(portName, log, 1); 
     }
     
     /**
