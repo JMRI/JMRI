@@ -115,9 +115,19 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     final protected com.fazecast.jSerialComm.SerialPort activatePort(String portName, org.slf4j.Logger log, int stop_bits) {
         com.fazecast.jSerialComm.SerialPort serialPort = null;
         
-        int stop_bits_code = com.fazecast.jSerialComm.SerialPort.TWO_STOP_BITS;
-        if (stop_bits == 1) stop_bits_code = com.fazecast.jSerialComm.SerialPort.ONE_STOP_BIT;
-        
+        // convert the 1 or 2 stop_bits argument to the proper jSerialComm code value
+        int stop_bits_code;
+        switch (stop_bits) {
+            case 1:
+                stop_bits_code = com.fazecast.jSerialComm.SerialPort.ONE_STOP_BIT;
+                break;
+            case 2:
+                stop_bits_code = com.fazecast.jSerialComm.SerialPort.TWO_STOP_BITS;
+                break;
+            default:
+                throw new IllegalArgumentException("Incorrect stop_bits argument: "+stop_bits);
+        }
+                
         try {
             serialPort = com.fazecast.jSerialComm.SerialPort.getCommPort(portName);
             serialPort.openPort();
