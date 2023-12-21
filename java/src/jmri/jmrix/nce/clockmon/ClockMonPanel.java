@@ -800,7 +800,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
             issueClockRatio(newRatio);
         } catch (NumberFormatException e) {
             JmriJOptionPane.showMessageDialog(this,
-                    Bundle.getMessage("DIALOG_InvalidRatio", CLOCKRATIO_MIN, CLOCKRATIO_MAX, newRatioStr),
+                    Bundle.getMessage("DIALOG_InvalidRatio", newRatioStr, CLOCKRATIO_MIN, CLOCKRATIO_MAX),
                     Bundle.getMessage("DIALOG_NceClockMon"),
                     JmriJOptionPane.ERROR_MESSAGE);
         }
@@ -1233,7 +1233,10 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
 
     private void changePollingSpeed(double newInterval) {
         if (newInterval < MIN_POLLING_INTERVAL || newInterval > MAX_POLLING_INTERVAL) {
-            log.error("reseting pollingInterval, invalid value:{}", newInterval);
+            JmriJOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("DIALOG_PolingOutOfRange", newInterval, MIN_POLLING_INTERVAL, MAX_POLLING_INTERVAL),
+                    Bundle.getMessage("DIALOG_NceClockMon"),
+                    JmriJOptionPane.ERROR_MESSAGE);
         } else {
             pollingInterval = newInterval;
             pollingSpeed.setText("" + pollingInterval);
