@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.function.Predicate;
 
 import javax.swing.*;
 
@@ -274,6 +275,11 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
             case ENTRYEXIT:
                 nameBox = new NamedBeanComboBox<>(InstanceManager.getDefault(EntryExitPairs.class));
                 break;
+            case AUDIO:
+                Predicate<Audio> filter = (bean) -> { return bean.getSubType() != Audio.BUFFER; };
+                nameBox = new NamedBeanComboBox<>(InstanceManager.getDefault(AudioManager.class),
+                        null, jmri.NamedBean.DisplayOptions.DISPLAYNAME, filter);
+                break;
             default:
                 return null;             // Skip any other items.
         }
@@ -301,7 +307,8 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
         BLOCK("BeanNameBlock"),
         SECTION("BeanNameSection"),
         WARRANT("BeanNameWarrant"),
-        ENTRYEXIT("BeanNameEntryExit");
+        ENTRYEXIT("BeanNameEntryExit"),
+        AUDIO("BeanNameAudio");
 
         private final String _bundleKey;
 

@@ -28,7 +28,7 @@ public class LI101Adapter extends XNetSerialPortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect SPROG to {}", portName);
+            log.error("failed to connect LI101 to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting LI101 to {} {}", portName, currentSerialPort);
@@ -108,8 +108,6 @@ public class LI101Adapter extends XNetSerialPortController {
 
     // meanings are assigned to these above, so make sure the order is consistent
     protected final String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};
-
-    private boolean opened = false;
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LI101Adapter.class);
 

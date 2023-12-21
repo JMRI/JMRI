@@ -116,7 +116,7 @@
 
         <h4>NCE</h4>
             <ul>
-                <li></li>
+                <li>NCE serial connections have been updated to use a new serial library.</li>
             </ul>
 
         <h4>Oak Tree</h4>
@@ -216,7 +216,8 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li></li>
+                <li>Updated LocoNet Monitor to display PM74 and SE74 device 
+		types for certain LocoNet messages.</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -426,7 +427,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+            <li>Add Audio support to Where Used.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -578,7 +579,7 @@
     <h3>Where Used</h3>
         <a id="WhereUsed" name="WhereUsed"></a>
         <ul>
-            <li></li>
+            <li>Add Audio support.</li>
         </ul>
 
    <h3>WiThrottle Server</h3>

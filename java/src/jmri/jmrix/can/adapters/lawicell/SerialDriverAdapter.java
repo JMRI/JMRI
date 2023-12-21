@@ -25,7 +25,7 @@ public class SerialDriverAdapter extends PortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect SPROG to {}", portName);
+            log.error("failed to connect CAN Lawicell to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting CAN Lawicell to {} {}", portName, currentSerialPort);
@@ -103,7 +103,6 @@ public class SerialDriverAdapter extends PortController {
     }
 
     // private control members
-    private boolean opened = false;
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialDriverAdapter.class);
 

@@ -27,7 +27,7 @@ public class SerialDriverAdapter extends SerialPortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect SPROG to {}", portName);
+            log.error("failed to connect TMCC to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting TMCC to {} {}", portName, currentSerialPort);
@@ -125,7 +125,6 @@ public class SerialDriverAdapter extends SerialPortController {
     }
 
     // private control members
-    private boolean opened = false;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
