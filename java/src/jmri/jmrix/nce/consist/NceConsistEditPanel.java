@@ -760,6 +760,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         newConsist = true;
         int consistNumber = validConsist(consistTextField.getText());
         if (consistNumber == CONSIST_ERROR) {
+            consistStatus.setText(Bundle.getMessage("EditStateERROR"));
             consistSearchPrevious = false;
             consistSearchNext = false;
             return consistNumber;
@@ -813,6 +814,10 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             return CONSIST_ERROR;
         }
         if (consistNumber < CONSIST_MIN || consistNumber > CONSIST_MAX) {
+            JmriJOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("DIALOG_ConsistOutOfRange", s, CONSIST_MIN, CONSIST_MAX),
+                    Bundle.getMessage("DIALOG_NceConsist"),
+                    JmriJOptionPane.ERROR_MESSAGE);
             return CONSIST_ERROR;
         } else {
             return consistNumber;
@@ -893,7 +898,10 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                 loadFullRoster(nceConsistRosterEntry);
                 saveLoadButton.setEnabled(false);
             } else {
-                log.error("roster consist number is out of range: {}", consistNum);
+                JmriJOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("DIALOG_ConsistOutOfRange", CONSIST_MIN, CONSIST_MAX, consistNum),
+                    Bundle.getMessage("DIALOG_NceConsist"),
+                    JmriJOptionPane.ERROR_MESSAGE);
                 consistStatus.setText(Bundle.getMessage("EditStateERROR"));
             }
         }
@@ -2174,7 +2182,11 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                         Bundle.getMessage("DIALOG_NceConsist"), JmriJOptionPane.WARNING_MESSAGE);
                 break;
             default:
-                log.error("Error code out of range");
+                JmriJOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("DIALOG_ErrorUnknown", errorCode),
+                        Bundle.getMessage("DIALOG_NceConsist"),
+                        JmriJOptionPane.ERROR_MESSAGE);
+                log.error("Error code out of range: {0}", errorCode);
         }
         errorCode = 0;
     }

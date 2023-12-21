@@ -9,7 +9,16 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.Timer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +28,7 @@ import jmri.InstanceManager;
 import jmri.Timebase;
 import jmri.TimebaseRateException;
 import jmri.jmrix.nce.*;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Frame displaying and programming a NCE clock monitor.
@@ -73,6 +83,8 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
     public static final int MAX_ERROR_ARRAY = 4;
     public static final double MIN_POLLING_INTERVAL = 1.0;
     public static final double MAX_POLLING_INTERVAL = 120;
+    public static final int CLOCKRATIO_MIN = 0;
+    public static final int CLOCKRATIO_MAX = 15;
     public static final double DEFAULT_POLLING_INTERVAL = 5;
     public static final double TARGET_SYNC_DELAY = 55;
     public static final int SYNCMODE_OFF = 0;    //0 - clocks independent
@@ -260,10 +272,13 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
         pane2.setBorder(pane2Titled);
         pane2.add(new JLabel(Bundle.getMessage("LabelTime")));
         pane2.add(hours);
+        hours.setToolTipText("0 - 23");
         pane2.add(new JLabel(Bundle.getMessage("LabelTimeSep")));
         pane2.add(minutes);
+        minutes.setToolTipText("0 - 59");
         pane2.add(new JLabel(Bundle.getMessage("LabelTimeSep")));
         pane2.add(seconds);
+        seconds.setToolTipText("0 - 59");
         seconds.setEditable(false);
         pane2.add(new JLabel(" "));
         pane2.add(amPm);
@@ -280,6 +295,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
         pane2.setBorder(pane2Titled);
         pane2.add(new JLabel(Bundle.getMessage("LabelRatio")));
         pane2.add(rateNce);
+        rateNce.setToolTipText(CLOCKRATIO_MIN + " - "+ CLOCKRATIO_MAX);
         pane2.add(new JLabel(Bundle.getMessage("LabelToOne")));
         pane2.add(setRatioButton);
         add(pane2);
@@ -352,6 +368,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
         pane2.add(new JLabel(" "));
         pane2.add(pollingSpeed);
         pollingSpeed.setText("" + pollingInterval);
+        pollingSpeed.setToolTipText(MIN_POLLING_INTERVAL + " - " + MAX_POLLING_INTERVAL);
         pane2.add(new JLabel(" "));
         pane2.add(new JLabel(Bundle.getMessage("InterfaceUpdRateSufix")));
         pane2.add(new JLabel(" "));
@@ -615,7 +632,10 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
 
     private void alarmDisplayUpdateHandler() {
         if (pollingInterval < MIN_POLLING_INTERVAL || pollingInterval > MAX_POLLING_INTERVAL) {
-            log.error("reseting pollingInterval, invalid value:{}", pollingInterval);
+            JmriJOptionPane.showMessageDialog(this,
+                Bundle.getMessage("DIALOG_PolingIntOutOfRange", MIN_POLLING_INTERVAL, MAX_POLLING_INTERVAL, pollingInterval),
+                Bundle.getMessage("DIALOG_NceClockMon"),
+                JmriJOptionPane.ERROR_MESSAGE);
             pollingInterval = DEFAULT_POLLING_INTERVAL;
         }
         // initialize things if not running
@@ -771,14 +791,18 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
     }
 
     private void changeNceClockRatio() {
+        String newRatioStr = rateNce.getText().trim();
         try {
-            int newRatio = Integer.parseInt(rateNce.getText().trim());
-            if ((newRatio <= 0) || (newRatio > 15)) {
+            int newRatio = Integer.parseInt(newRatioStr);
+            if ((newRatio <= CLOCKRATIO_MIN) || (newRatio > CLOCKRATIO_MAX)) {
                 throw new NumberFormatException();
             }
             issueClockRatio(newRatio);
         } catch (NumberFormatException e) {
-            log.error("Invalid ratio value: {}", rateNce.getText().trim());
+            JmriJOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("DIALOG_InvalidRatio", CLOCKRATIO_MIN, CLOCKRATIO_MAX, newRatioStr),
+                    Bundle.getMessage("DIALOG_NceClockMon"),
+                    JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -1572,15 +1596,24 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
 
     private void issueClockSet(int hh, int mm, int ss) {
         if ((hh < 0) || (hh > 23)) {
-            log.error("hours value out of range: {}", hh);
+            JmriJOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("DIALOG_BadHour", hh),
+                    Bundle.getMessage("DIALOG_NceClockMon"),
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         if ((mm < 0) || (mm > 59)) {
-            log.error("minutes value out of range: {}", mm);
+            JmriJOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("DIALOG_BadMinute", mm),
+                    Bundle.getMessage("DIALOG_NceClockMon"),
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         if ((ss < 0) || (ss > 59)) {
-            log.error("seconds value out of range: {}", ss);
+            JmriJOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("DIALOG_BadSecond", ss),
+                    Bundle.getMessage("DIALOG_NceClockMon"),
+                    JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         issueClockSetMem(hh, mm, ss);
