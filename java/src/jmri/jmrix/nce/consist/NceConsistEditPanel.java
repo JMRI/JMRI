@@ -2186,7 +2186,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                         Bundle.getMessage("DIALOG_ErrorUnknown", errorCode),
                         Bundle.getMessage("DIALOG_NceConsist"),
                         JmriJOptionPane.ERROR_MESSAGE);
-                log.error("Error code out of range: {0}", errorCode);
+                log.error("Error code out of range: " + errorCode);
         }
         errorCode = 0;
     }
