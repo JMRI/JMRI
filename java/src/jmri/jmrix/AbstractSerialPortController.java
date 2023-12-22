@@ -84,7 +84,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     /**
      * Do the formal opening of the port,
      * set the port for blocking reads without timeout,
-     * and set the port to 8-1-none.
+     * set the port to 8-1-none,
+     * and purge the port's input stream.
      * <p>
      * Does not do the rest of the setup implied in the {@link #openPort} method.
      * This is usually followed by calls to 
@@ -101,7 +102,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     /**
      * Do the formal opening of the port,
      * set the port for blocking reads without timeout,
-     * and set the port to 8 bits, the indicated number of stop bits, and no parity.
+     * set the port to 8 bits, the indicated number of stop bits, no parity,
+     * and purge the port's input stream.
      * <p>
      * Does not do the rest of the setup implied in the {@link #openPort} method.
      * This is usually followed by calls to 
@@ -135,6 +137,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             serialPort.setNumDataBits(8);
             serialPort.setNumStopBits(stop_bits_code);
             serialPort.setParity(com.fazecast.jSerialComm.SerialPort.NO_PARITY);
+            purgeStream(serialPort.getInputStream());
         } catch (com.fazecast.jSerialComm.SerialPortInvalidPortException ePE) {
             handlePortNotFound(portName, log);
         }
