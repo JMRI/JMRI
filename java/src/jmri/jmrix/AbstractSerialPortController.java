@@ -84,7 +84,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     /**
      * Do the formal opening of the port,
      * set the port for blocking reads without timeout,
-     * set the port to 8-1-none,
+     * set the port to 8 data bits, 1 stop bit, no parity
      * and purge the port's input stream.
      * <p>
      * Does not do the rest of the setup implied in the {@link #openPort} method.
@@ -102,7 +102,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     /**
      * Do the formal opening of the port,
      * set the port for blocking reads without timeout,
-     * set the port to 8 bits, the indicated number of stop bits, no parity,
+     * set the port to 8 data bits, the indicated number of stop bits, no parity,
      * and purge the port's input stream.
      * <p>
      * Does not do the rest of the setup implied in the {@link #openPort} method.
