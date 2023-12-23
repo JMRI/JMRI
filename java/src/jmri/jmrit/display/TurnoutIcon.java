@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map.Entry;
 
+import javax.annotation.Nonnull;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JPopupMenu;
 
@@ -213,6 +214,12 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     public String getStateName(int state) {
         return _state2nameMap.get(state);
 
+    }
+
+    @Override
+    @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_TurnoutIcon");
     }
 
     @Override

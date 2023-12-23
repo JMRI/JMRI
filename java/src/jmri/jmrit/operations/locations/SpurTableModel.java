@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.locations;
 
+import java.awt.Color;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JTable;
@@ -8,6 +9,7 @@ import javax.swing.SwingUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.setup.Control;
 
 /**
@@ -22,6 +24,7 @@ public class SpurTableModel extends TrackTableModel {
     }
 
     public void initTable(JTable table, Location location) {
+        super.initTable(table);
         super.initTable(table, location, Track.SPUR);
     }
 
@@ -47,6 +50,15 @@ public class SpurTableModel extends TrackTableModel {
             default:
                 return super.getColumnName(col);
         }
+    }
+
+    @Override
+    protected Color getForegroundColor(int row) {
+        Track spur = _tracksList.get(row);
+        if (!spur.checkScheduleValid().equals(Schedule.SCHEDULE_OKAY)) {
+            return Color.red;
+        }
+        return super.getForegroundColor(row);
     }
 
     // this table listens for changes to a location and it's spurs

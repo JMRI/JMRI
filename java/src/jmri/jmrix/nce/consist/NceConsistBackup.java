@@ -14,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import jmri.jmrix.nce.NceBinaryCommand;
-import jmri.jmrix.nce.NceCmdStationMemory;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceTrafficController;
@@ -41,6 +40,7 @@ import jmri.util.swing.TextFilter;
  * This backup routine uses the same consist data format as NCE.
  *
  * @author Dan Boudreau Copyright (C) 2007
+ * @author Ken Cameron Copyright (C) 2023
  */
 public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListener {
 
@@ -59,10 +59,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 
     public NceConsistBackup(NceTrafficController t) {
         tc = t;
-        workingNumConsists = NceCmdStationMemory.CabMemorySerial.NUM_CONSIST;
-        if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
-            workingNumConsists = NceCmdStationMemory.CabMemoryUsb.NUM_CONSIST;
-        }
+        workingNumConsists = tc.csm.getConsistMax();
     }
 
     @Override
@@ -144,7 +141,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
                 if (fileValid) {
                     StringBuilder buf = new StringBuilder();
                     buf.append(":").append(Integer.toHexString(
-                            NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM + (consistNum * CONSIST_LNTH)));
+                            tc.csm.getConsistHeadAddr() + (consistNum * CONSIST_LNTH)));
 
                     for (int i = 0; i < CONSIST_LNTH; i++) {
                         buf.append(" ").append(StringUtil.twoHexFromInt(nceConsistData[i++]));
@@ -219,7 +216,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
     // Reads 16 bytes of NCE consist memory
     private NceMessage readConsistMemory(int consistNum) {
 
-        int nceConsistAddr = (consistNum * CONSIST_LNTH) + NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM;
+        int nceConsistAddr = (consistNum * CONSIST_LNTH) + tc.csm.getConsistHeadAddr();
         replyLen = NceMessage.REPLY_16; // Expect 16 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.accMemoryRead(nceConsistAddr);

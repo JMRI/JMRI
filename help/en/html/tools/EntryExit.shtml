@@ -6,10 +6,10 @@
   <meta name="author" content="Kevin Dickerson">
   <meta name="keywords" content=
   "hardware layout java model railroad JMRI nx entryexit entry exit routing interlocking">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -24,7 +24,7 @@
 
       <p>NX Routing builds a dynamic valid path between two locations on a Layout Editor panel. The
       path can traverse a number of Turnouts and different <a href="Blocks.shtml">Blocks</a>.
-      The Entry and Exit locations on the Layout Editor are defined by the placement of 
+      The Entry and Exit locations on the Layout Editor are defined by the placement of
       <a href="Sensors.shtml">Sensors</a> at various Block boundaries. When
       two Sensors are activated and a clear and valid route is found between them, then the
       Turnouts in the route will automatically be set accordingly. If the path between the two
@@ -150,14 +150,21 @@
       described above and select either a different sensor or the blank row at the top of the
       sensor list.</p>
 
-      <h4>Logix Conditional Check</h4>
+      <h4>Logix/LogixNG Checks</h4>
 
       <p>Before the delete process can begin, the Entry/Exit pairs that use the selected sensor
       cannot be used in any Logix Conditional. If any are used, a list of the Conditionals is
       displayed and the delete process is terminated.</p>
 
-      <div style="margin-left: 1em"><img src="images/EntryExitConditionalList.png" height="167"
-      width="503" alt="NX Conditional List">
+      <div style="margin-left: 1em"><img src="images/EntryExitConditionalList.png"
+      alt="NX Conditional List">
+      </div>
+
+      <p>The same check applies to LogixNG expressions and actions.</p>
+
+      <div style="margin-left: 1em;">
+        <a href="images/EntryExitLogixNGList.png"><img src=
+        "images/EntryExitLogixNGList.png" alt="NX LogixNG List"></a>
       </div>
 
       <h4>Entry/Exit Pair Check</h4>
@@ -199,17 +206,31 @@
 
       <p><strong>Auto Generate Entry-Exit Pairs</strong> will discover all the valid Entry Exit
       pairs on the Layout Editor layout. Using the combo boxes it is also possible to manually add
-      in additional Entry Exit pairs.<br>
-      In all cases when the <strong>From</strong> Sensor is set active followed by the
-      <strong>To</strong> Sensor, the route will be set between those two points and the two
-      Sensors will return back to the "Inactive" state. If the <strong>Both Way</strong> option is
-      ticked, then it is possible to activate the route in either direction, i.e. you can select
-      the <strong>To</strong> Sensor prior to the <strong>From</strong> Sensor and the same route
-      will be set.</p>
+      in additional Entry Exit pairs.</p>
+
+      <p>In all cases when the <strong>Entry</strong> Sensor is set active followed by the
+      <strong>Exit</strong> Sensor, the route will be set between those two points and the two
+      Sensors will return back to the "Inactive" state.</p>
+
+      <p>If the <strong>Both Way</strong> option is ticked, a <strong>reversed</strong> route can be
+      selected by clicking on the <strong>Exit</strong> sensor and then the <strong>Entry</strong>
+      sensor.  Both Way cannot be selected if either block boundary also has a signal assigned or
+      the destination is at an end bumper.</p>
 
       <p>With the manual method, it is possible to create invalid pairs. Invalid pairs will never
       be used.</p>
 
+      <p id="validate_add_pair"><span class="since">since 5.5.7</span>The manual selections will be
+      validated after the NX pair has been added.  If the validation fails, a dialog will be displayed.</p>
+
+      <div style="margin-left: 1em;">
+        <a href="images/EntryExitValidateDialog.png"><img src=
+        "images/EntryExitValidateDialog.png" alt="NX validation dialog"></a>
+      </div>
+
+      <p>Click on <strong>Yes</strong> to delete the NX pair that was just added.  Click on
+      <strong>No</strong> to skip the delete. This might be needed in certain cases where the
+      validation detects a <strong><em>false positive</em></strong> validation failure.</p>
       <h2>Usage</h2>
 
       <p>Once the NX pairs have been created, a route can be set by selecting the <strong>Entry
@@ -287,10 +308,9 @@
       request will not provide the stack option.</p>
 
       <h3>Logix/LogixNG Support</h3>
-      There are two conditional variables (expressions) and three actions that can be used in
-      Logix/LogixNG Conditionals.
+      There are two conditional variables and three actions that can be used in Logix Conditionals.
       <ul>
-        <li>Variables/Expressions
+        <li>Variables
           <ul>
             <li>NX Pair Active &mdash; Check if a segment for the selected NX Pair is Active.</li>
 
@@ -312,11 +332,16 @@
           </ul>
         </li>
       </ul>
-      <!--#include virtual="/Footer.shtml" -->
+
+      <p>For LogixNG support see <a href="logixng/reference/chapter6.shtml#EntryExitExpressions">Expressions</a>
+      and <a href="logixng/reference/chapter5.shtml#EntryExitActions">Actions</a>.</p>
+
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+      
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

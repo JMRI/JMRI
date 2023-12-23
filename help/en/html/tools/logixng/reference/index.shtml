@@ -5,10 +5,10 @@
   <title>LogixNG Reference</title>
   <meta name="author" content="Daniel Bergqvist">
   <meta name="author" content="Dave Sand">
-  <meta name="keywords" content="jmri LogixNG reference"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="jmri LogixNG reference"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="../Sidebar.shtml" -->
@@ -89,11 +89,11 @@
           <span class="since">since 4.99.7</span>
         </li>
       </ul>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

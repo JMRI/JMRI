@@ -2,7 +2,6 @@ package jmri.jmrix.powerline.dmx512;
 
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialTrafficController;
-import purejavacomm.SerialPort;
 
 import java.io.IOException;
 
@@ -37,7 +36,7 @@ public class SpecificTrafficController extends SerialTrafficController {
     private boolean oneTimeLog = true;
     public byte[] dmxArray = new byte[513];
     private int intensitySteps = 255;
-    private SerialPort activePort = null;
+    private com.fazecast.jSerialComm.SerialPort activePort = null;
     
     /**
      * set value in dmxArray
@@ -87,7 +86,14 @@ public class SpecificTrafficController extends SerialTrafficController {
                     // break should be for 176 mSec 
                     if (activePort != null) {
                         //log.info("Start Break");
-                        activePort.sendBreak(0);
+                        activePort.setBreak();
+                        try {
+                            wait(10);
+                        } catch (InterruptedException e) {
+                            log.warn("transmitLoop did not expected to be interrupted");
+                            break;
+                        }
+                        activePort.clearBreak();
                         //log.info("Break Sent");
                     }
                     /**

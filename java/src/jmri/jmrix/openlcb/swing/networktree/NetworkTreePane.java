@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.DefaultMutableTreeNode;
+
+import jmri.*;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
@@ -11,6 +13,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.swing.CanPanelInterface;
 import jmri.jmrix.openlcb.swing.ClientActions;
 import jmri.util.JmriJFrame;
+
 import org.openlcb.Connection;
 import org.openlcb.MimicNodeStore;
 import org.openlcb.NodeID;
@@ -51,7 +54,39 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
         // add GUI components
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
 
-        treePane = new TreePane();
+        treePane = new TreePane(){
+            UserPreferencesManager pref = jmri.InstanceManager.getDefault(UserPreferencesManager.class);
+            String sortPreferenceName = NetworkTreePane.class.getName() + ".selectedSortOrder";
+
+            @Override
+            public void initComponents(MimicNodeStore store, final Connection connection,
+                            final NodeID node, final NodeTreeRep.SelectionKeyLoader loader) {
+                super.initComponents(store, connection, node, loader);
+                // finally handle sort-by JComboBox preferences WITHOUT setting preferences
+                var name = pref.getProperty(this.getClass().getName(), sortPreferenceName);
+                if (name == null) name = "BY_NAME";
+                SortOrder order;
+                try {
+                    order = SortOrder.valueOf((String)name);
+                } catch (IllegalArgumentException e) {
+                    order = SortOrder.BY_NAME;
+                }
+                super.setSortOrder(order);
+                // and do it a little later to make sure the table has been shown
+                final var localOrder = order;
+                jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> {
+                    super.setSortOrder(localOrder);
+                }, 750
+                );
+            }
+            
+            // This overrides setOrder to preserve the order
+            @Override
+            public void setSortOrder(SortOrder order) {
+                pref.setProperty(this.getClass().getName(), sortPreferenceName, order.name());
+                super.setSortOrder(order);
+            }
+        };
         treePane.setPreferredSize(new Dimension(300, 300));
 
         treePane.initComponents(memo.get(MimicNodeStore.class), memo.get(Connection.class), memo.get(NodeID.class), new ActionLoader(memo)

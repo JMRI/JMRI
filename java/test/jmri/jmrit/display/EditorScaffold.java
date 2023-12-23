@@ -95,15 +95,6 @@ public class EditorScaffold extends Editor {
     }
 
     /**
-     * Editor Views should make calls to this class (Editor) to set popup menu
-     * items. See 'Popup Item Methods' above for the calls.
-     *
-     */
-    @Override
-    protected void showPopUp(Positionable p, JmriMouseEvent event){
-    }
-
-    /**
      * After construction, initialize all the widgets to their saved config
      * settings.
      */

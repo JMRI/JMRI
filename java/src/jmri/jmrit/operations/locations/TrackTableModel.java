@@ -6,7 +6,6 @@ import java.util.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 
 import org.slf4j.Logger;
@@ -14,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsPanel;
+import jmri.jmrit.operations.OperationsTableModel;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.swing.XTableColumnModel;
@@ -25,7 +25,7 @@ import jmri.util.table.ButtonRenderer;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012
  */
-public abstract class TrackTableModel extends AbstractTableModel implements PropertyChangeListener, TableColumnModelListener {
+public abstract class TrackTableModel extends OperationsTableModel implements PropertyChangeListener, TableColumnModelListener {
 
     protected Location _location;
     protected List<Track> _tracksList = new ArrayList<>();
@@ -496,7 +496,7 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
         int size = track.getDestinationListSize();
         if (track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
             size = InstanceManager.getDefault(LocationManager.class).getNumberOfLocations() - size;
-        } else if (size == 1) {
+        } else if (size == 1 && track.getDestinationOption().equals(Track.INCLUDE_DESTINATIONS)) {
             // if there's only one destination return the destination name
             Location loc =
                     InstanceManager.getDefault(LocationManager.class).getLocationById(track.getDestinationIds()[0]);

@@ -243,6 +243,12 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
 
     @Override
     @Nonnull
+    public String getTypeString() {
+        return Bundle.getMessage("PositionableType_PortalIcon");
+    }
+
+    @Override
+    @Nonnull
     public String getNameString() {
         Portal p = getPortal();
         if (p == null) return "No Portal Defined";

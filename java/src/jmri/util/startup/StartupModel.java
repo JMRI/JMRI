@@ -40,7 +40,21 @@ public interface StartupModel {
     boolean isValid();
 
     /**
+     * Set whenether this action is enabled or not.
+     * @param value true if enabled, false otherwise
+     */
+    void setEnabled(boolean value);
+
+    /**
+     * Get whenether this action is enabled or not.
+     * @return true if enabled, false otherwise
+     */
+    boolean isEnabled();
+
+    /**
      * Perform the startup action.
+     * The caller is responsible to ensure that this startup model is enabled
+     * before calling this method.
      *
      * @throws JmriException if there is an exception thrown initializing the
      *                       startup item; the original exception should be

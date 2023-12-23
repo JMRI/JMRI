@@ -6,10 +6,10 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "java model railroad JMRI decoderpro panelpro names people credits">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="AcknowledgementsSidebar.shtml" -->
@@ -43,6 +43,10 @@
          who updated the AnyRail export-import documentation.</li>
 
         <li>Sakae Akanuma provided a Japanese translation.</li>
+
+        <li>Peter Akers, <!-- flash62au -->
+        who provided JMRI documentation for DCC-EX and is a key contributor
+        to Engine Driver.</li>
 
         <li>Kerry Albrecht, who helped debug a problem loading panel files</li>
 
@@ -122,8 +126,7 @@
         <li>Leo Bicknell, who updated the LocoNet monitor</li>
 
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Albijlsma+">Lolke Bijlsma</a>, <!-- lbijlsma  -->
-        who provided a decoder definition for the Shine Plus decoder series from
-        Train-O-Rama.</li>
+        who provided decoder definitions for Train-O-Rama decoders.</li>
 
         <li>Pierre Billon, <!-- PierreMc -->
         who translated decoder files to German and French and provided decoder
@@ -565,9 +568,10 @@
         Dispatcher, including a fix to allow dispatcher to allocate to the end block.</li>
 
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3ALionel642+">Lionel Jeanson</a>, <!-- Lionel642 -->
-        who added images to the roster, updated the throttle to add preferences
-        for displaying them, cleaned up some code problems in the throttle, and created
-        Jynstruments for improving the GUI</li>
+        who added the media pane to the roster entries, improved the native JMRI
+      	throttles to provide a better user experience (images, modernized UI, user preferences, 
+      	customizations...). He also introduced Jynstruments for improving the GUI with Jython. 
+      	Did a first	rework on the Consist UI. And, added the initial MQTT connector to JMRI.</li>
 
         <li>The good people at JogAmp.org. who maintain a library we use
         for advanced audio.
@@ -1172,11 +1176,11 @@
       Swarm is a fascinating and dynamic visual representation of change as developers come and go
       and make changes to the files that make up a project. More information is available on the
       <a href="https://www.jmri.org/community/visuals/codeswarm.shtml">Code Swarm</a> page.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

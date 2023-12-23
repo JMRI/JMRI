@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: Defining Your Own Signaling System</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Defining Your Own Signaling System</title><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -290,10 +290,10 @@ entered, the corresponding <code>&lt;aspect&gt;</code> entry must be a valid
 
       <p>The advantage of placing new and amended signal mast Appearance files here is that when
       JMRI is updated, then these files will not get overwritten and lost!</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

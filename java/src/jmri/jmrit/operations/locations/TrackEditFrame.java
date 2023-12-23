@@ -1097,7 +1097,7 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         JPanel p = new JPanel();
         p.add(clearButton);
         p.add(setButton);
-        if (_track != null && !_track.getScheduleId().equals(Track.NONE)) {
+        if (_track != null && _track.isSpur()) {
             p.add(autoSelectButton);
         }
         GridBagConstraints gc = new GridBagConstraints();

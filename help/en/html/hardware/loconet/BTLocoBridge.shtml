@@ -6,10 +6,10 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "Digitrax LocoNet Bluetooth LocoBridge java model railroad JMRI install windows">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -26,8 +26,12 @@
 
       <h2>Setup</h2>
 
-      <p>On recent Mac and Windows systems, all necessary software comes with the JMRI
-      download.</p>
+      <p>On Intel Mac and Windows systems, all necessary software comes with the JMRI
+      download. </p>
+      <p>Note that this connection is not directly supported on Apple Silicon Macs, e.g.
+        the M1, M2, M3 etc.  To use this on one of those Macs, please 
+        <a href="/java/index.shtml">install an Intel-architecture version of Javav</a>
+        so that Rosetta 2 can do the translation for you.</p>
 
       <p>On Linux and other systems, you need to have a libbluetooth installed. Depending on which
       Linux distribution you are using, you might have to use commands like "sudo apt-get install
@@ -56,11 +60,11 @@
 
         <li>Click "Save" at the bottom of the Preferences window, quit JMRI and restart.</li>
       </ol>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

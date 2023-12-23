@@ -306,6 +306,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             case DCCppConstants.TRACKMANAGER_CMD:
                 text = "TrackManager:" + toString();
                 break;
+            case DCCppConstants.LCD_TEXT_CMD:
+                text = "LCD Text '" + getLCDTextString() + "', disp " + getLCDDisplayNumString() + ", line " + getLCDLineNumString();
+                break;
                 
             default:
                 text = "Unrecognized reply: '" + toString() + "'";
@@ -536,6 +539,11 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             case DCCppConstants.DIAG_REPLY:
                 if (s.matches(DCCppConstants.DIAG_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.DIAG_REPLY_REGEX;
+                }
+                return (r);
+            case DCCppConstants.LCD_TEXT_REPLY:
+                if (s.matches(DCCppConstants.LCD_TEXT_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.LCD_TEXT_REPLY_REGEX;
                 }
                 return (r);
             case DCCppConstants.WRITE_EEPROM_REPLY:
@@ -1612,6 +1620,41 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         return (Integer.parseInt(this.getClockRateString()));
     }
 
+    // <@ 0 8 "message text">
+    public boolean isLCDTextReply() {
+        return (this.matches(DCCppConstants.LCD_TEXT_REPLY_REGEX));
+    }   
+    public String getLCDTextString() {
+        if (this.isLCDTextReply()) {
+            return (this.getValueString(3));
+        } else {
+            log.error("getLCDTextString Parser called on non-LCDTextString message type {}", this.getOpCodeChar());
+            return ("error");
+        }
+    }
+    public String getLCDDisplayNumString() {
+        if (this.isLCDTextReply()) {
+            return (this.getValueString(1));
+        } else {
+            log.error("getLCDDisplayNumString Parser called on non-LCDTextString message type {}", this.getOpCodeChar());
+            return ("error");
+        }
+    }
+    public int getLCDDisplayNumInt() {
+        return (Integer.parseInt(this.getLCDDisplayNumString()));
+    }
+    public String getLCDLineNumString() {
+        if (this.isLCDTextReply()) {
+            return (this.getValueString(2));
+        } else {
+            log.error("getLCDLineNumString Parser called on non-LCDTextString message type {}", this.getOpCodeChar());
+            return ("error");
+        }
+    }
+    public int getLCDLineNumInt() {
+        return (Integer.parseInt(this.getLCDLineNumString()));
+    }
+
     // -------------------------------------------------------------------
 
     // Message Identification functions
@@ -1761,6 +1804,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     public boolean isValidReplyFormat() {
         if ((this.matches(DCCppConstants.THROTTLE_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.MAXNUMSLOTS_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.TURNOUT_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.PROGRAM_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.PROGRAM_REPLY_V4_REGEX)) ||
@@ -1776,6 +1820,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 (this.matches(DCCppConstants.SENSOR_INACTIVE_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.SENSOR_ACTIVE_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.OUTPUT_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.OUTPUT_DEF_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.MADC_FAIL_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.MADC_SUCCESS_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.STATUS_REPLY_REGEX)) ||
@@ -1783,8 +1828,18 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 (this.matches(DCCppConstants.STATUS_REPLY_ESP32_REGEX)) ||
                 (this.matches(DCCppConstants.STATUS_REPLY_DCCEX_REGEX)) ||
                 (this.matches(DCCppConstants.LOCO_STATE_REGEX)) ||
-                (this.matches(DCCppConstants.TURNOUT_IDS_REGEX)) ||
-                (this.matches(DCCppConstants.TURNOUT_ID_REGEX))) {
+                (this.matches(DCCppConstants.TURNOUT_IDS_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_ID_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_IMPL_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_DEF_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_DEF_DCC_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_DEF_SERVO_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_DEF_VPIN_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_DEF_LCN_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.LCD_TEXT_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.CLOCK_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.DIAG_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.TRACKMANAGER_REPLY_REGEX))) {
             return (true);
         } else {
             return (false);

@@ -33,7 +33,7 @@ public class StagingEditFrame extends TrackEditFrame {
     
     @Override
     public void initComponents(Track track) {
-        setTitle(Bundle.getMessage("EditStaging"));
+        setTitle(Bundle.getMessage("EditStaging", track.getLocation().getName()));
         initComponents(track.getLocation(), track);
     }
 

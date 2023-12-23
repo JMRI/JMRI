@@ -5,11 +5,11 @@
  <title>JMRI Hardware Support - Bachrus</title>
     <meta name="author" content="Andrew Crosland">
     <meta name="keywords" content="Bachrus java model railroad JMRI install windows">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header_fr.shtml" -->
+<!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 <div id="mBody">
     <!--#include virtual="../Sidebar.shtml" -->
     <div id="mainContent">
@@ -48,9 +48,9 @@ C&#244;t&#233; droit du panneau Speedo
 <p>Informations suppl&#233;mentaires sur les produitd de mesure de vitesse Bachrus sur le site web 
 <a href="http://www.bachrus.com/speedometer.php">Bachrus</a>.   
       
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

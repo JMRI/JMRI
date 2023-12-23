@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: DecoderPro 3</title>
   <meta name="author" content="Nigel Cliffe">
-  <meta name="keywords" content="JMRI help DecoderPro 3"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help DecoderPro 3"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -317,11 +317,11 @@
       menu option (under Settings), or with the triangular shrink/expand keys in the frame border.
       Removing a loco from a Roster Group can be done using the "Roster Group Table Associations"
       pane, accessible from the "Settings" menu.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

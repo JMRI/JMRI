@@ -13,6 +13,7 @@ import jmri.jmrit.logixng.expressions.ExpressionDispatcher.DispatcherState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.DispatcherActiveTrainManager;
 import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
@@ -21,6 +22,8 @@ import jmri.util.swing.JComboBoxUtil;
  * @author Daniel Bergqvist Copyright 2021
  */
 public class ExpressionDispatcherSwing extends AbstractDigitalExpressionSwing {
+
+    private LogixNG_SelectEnumSwing<DispatcherState> _selectEnumSwing;
 
     private JTabbedPane _tabbedPaneDispatcher;
     private JPanel _panelDispatcherDirect;
@@ -35,21 +38,25 @@ public class ExpressionDispatcherSwing extends AbstractDigitalExpressionSwing {
 
     private JComboBox<Is_IsNot_Enum> _is_IsNot_ComboBox;
 
-    private JTabbedPane _tabbedPaneDispatcherState;
-    private JPanel _panelDispatcherStateDirect;
-    private JPanel _panelDispatcherStateReference;
-    private JPanel _panelDispatcherStateLocalVariable;
-    private JPanel _panelDispatcherStateFormula;
-
-    private JComboBox<DispatcherState> _stateComboBox;
-    private JTextField _dispatcherStateReferenceTextField;
-    private JTextField _dispatcherStateLocalVariableTextField;
-    private JTextField _dispatcherStateFormulaTextField;
-
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ExpressionDispatcher expression = (ExpressionDispatcher)object;
+
+        _selectEnumSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
+
+
+        JPanel _tabbedPaneEnum;
+
+        if (expression != null) {
+//            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(expression.getSelectNamedBean());
+            _tabbedPaneEnum = _selectEnumSwing.createPanel(expression.getSelectEnum(), DispatcherState.values());
+        } else {
+//            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(null);
+            _tabbedPaneEnum = _selectEnumSwing.createPanel(null, DispatcherState.values());
+        }
+
+
 
         panel = new JPanel();
 
@@ -91,37 +98,6 @@ public class ExpressionDispatcherSwing extends AbstractDigitalExpressionSwing {
         JComboBoxUtil.setupComboBoxMaxRows(_is_IsNot_ComboBox);
 
 
-        _tabbedPaneDispatcherState = new JTabbedPane();
-        _panelDispatcherStateDirect = new javax.swing.JPanel();
-        _panelDispatcherStateReference = new javax.swing.JPanel();
-        _panelDispatcherStateLocalVariable = new javax.swing.JPanel();
-        _panelDispatcherStateFormula = new javax.swing.JPanel();
-
-        _tabbedPaneDispatcherState.addTab(NamedBeanAddressing.Direct.toString(), _panelDispatcherStateDirect);
-        _tabbedPaneDispatcherState.addTab(NamedBeanAddressing.Reference.toString(), _panelDispatcherStateReference);
-        _tabbedPaneDispatcherState.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelDispatcherStateLocalVariable);
-        _tabbedPaneDispatcherState.addTab(NamedBeanAddressing.Formula.toString(), _panelDispatcherStateFormula);
-
-        _stateComboBox = new JComboBox<>();
-        for (DispatcherState e : DispatcherState.values()) {
-            _stateComboBox.addItem(e);
-        }
-        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
-
-        _panelDispatcherStateDirect.add(_stateComboBox);
-
-        _dispatcherStateReferenceTextField = new JTextField();
-        _dispatcherStateReferenceTextField.setColumns(30);
-        _panelDispatcherStateReference.add(_dispatcherStateReferenceTextField);
-
-        _dispatcherStateLocalVariableTextField = new JTextField();
-        _dispatcherStateLocalVariableTextField.setColumns(30);
-        _panelDispatcherStateLocalVariable.add(_dispatcherStateLocalVariableTextField);
-
-        _dispatcherStateFormulaTextField = new JTextField();
-        _dispatcherStateFormulaTextField.setColumns(30);
-        _panelDispatcherStateFormula.add(_dispatcherStateFormulaTextField);
-
 
         if (expression != null) {
             switch (expression.getAddressing()) {
@@ -138,24 +114,12 @@ public class ExpressionDispatcherSwing extends AbstractDigitalExpressionSwing {
             _dispatcherFormulaTextField.setText(expression.getFormula());
 
             _is_IsNot_ComboBox.setSelectedItem(expression.get_Is_IsNot());
-
-            switch (expression.getStateAddressing()) {
-                case Direct: _tabbedPaneDispatcherState.setSelectedComponent(_panelDispatcherStateDirect); break;
-                case Reference: _tabbedPaneDispatcherState.setSelectedComponent(_panelDispatcherStateReference); break;
-                case LocalVariable: _tabbedPaneDispatcherState.setSelectedComponent(_panelDispatcherStateLocalVariable); break;
-                case Formula: _tabbedPaneDispatcherState.setSelectedComponent(_panelDispatcherStateFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + expression.getAddressing().name());
-            }
-            _stateComboBox.setSelectedItem(expression.getBeanState());
-            _dispatcherStateReferenceTextField.setText(expression.getStateReference());
-            _dispatcherStateLocalVariableTextField.setText(expression.getStateLocalVariable());
-            _dispatcherStateFormulaTextField.setText(expression.getStateFormula());
         }
 
         JComponent[] components = new JComponent[]{
             _tabbedPaneDispatcher,
             _is_IsNot_ComboBox,
-            _tabbedPaneDispatcherState};
+            _tabbedPaneEnum};
 
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
                 Bundle.getMessage("ExpressionDispatcher_Components"), components);
@@ -166,13 +130,12 @@ public class ExpressionDispatcherSwing extends AbstractDigitalExpressionSwing {
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
-        if (_tabbedPaneDispatcherState.getSelectedComponent() == _panelDispatcherStateDirect) {
-            DispatcherState state = (DispatcherState) _stateComboBox.getSelectedItem();
+        if (_selectEnumSwing.getAddressing() == NamedBeanAddressing.Direct) {
+            DispatcherState state = _selectEnumSwing.getEnum();
             if (state.getType().equals("Separator")) {
                 errorMessages.add(Bundle.getMessage("Dispatcher_No_Status_Selected"));
             }
         }
-
 
         // Create a temporary expression to test formula
         ExpressionDispatcher expression = new ExpressionDispatcher("IQDE1", null);
@@ -186,14 +149,7 @@ public class ExpressionDispatcherSwing extends AbstractDigitalExpressionSwing {
             return false;
         }
 
-        try {
-            if (_tabbedPaneDispatcherState.getSelectedComponent() == _panelDispatcherStateReference) {
-                expression.setStateReference(_dispatcherStateReferenceTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-            return false;
-        }
+        _selectEnumSwing.validate(expression.getSelectEnum(), errorMessages);
 
         try {
             expression.setFormula(_dispatcherFormulaTextField.getText());
@@ -256,21 +212,7 @@ public class ExpressionDispatcherSwing extends AbstractDigitalExpressionSwing {
 
             expression.set_Is_IsNot((Is_IsNot_Enum)_is_IsNot_ComboBox.getSelectedItem());
 
-            if (_tabbedPaneDispatcherState.getSelectedComponent() == _panelDispatcherStateDirect) {
-                expression.setStateAddressing(NamedBeanAddressing.Direct);
-                expression.setBeanState((DispatcherState)_stateComboBox.getSelectedItem());
-            } else if (_tabbedPaneDispatcherState.getSelectedComponent() == _panelDispatcherStateReference) {
-                expression.setStateAddressing(NamedBeanAddressing.Reference);
-                expression.setStateReference(_dispatcherStateReferenceTextField.getText());
-            } else if (_tabbedPaneDispatcherState.getSelectedComponent() == _panelDispatcherStateLocalVariable) {
-                expression.setStateAddressing(NamedBeanAddressing.LocalVariable);
-                expression.setStateLocalVariable(_dispatcherStateLocalVariableTextField.getText());
-            } else if (_tabbedPaneDispatcherState.getSelectedComponent() == _panelDispatcherStateFormula) {
-                expression.setStateAddressing(NamedBeanAddressing.Formula);
-                expression.setStateFormula(_dispatcherStateFormulaTextField.getText());
-            } else {
-                throw new IllegalArgumentException("_tabbedPaneDispatcherState has unknown selection");
-            }
+            _selectEnumSwing.updateObject(expression.getSelectEnum());
         } catch (ParserException e) {
             throw new RuntimeException("ParserException: " + e.getMessage(), e);
         }
@@ -283,16 +225,14 @@ public class ExpressionDispatcherSwing extends AbstractDigitalExpressionSwing {
     }
 
     @Override
-    public void setDefaultValues() {
-        if (_stateComboBox.getSelectedIndex() < 1) {
-            _stateComboBox.setSelectedIndex(1);
-        }
+    public void dispose() {
+        _selectEnumSwing.dispose();
     }
 
     @Override
-    public void dispose() {
+    public void setDefaultValues() {
+        _selectEnumSwing.setEnum(DispatcherState.Manual);
     }
-
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionDispatcherSwing.class);
 

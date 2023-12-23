@@ -4,8 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
 
-import javax.annotation.Nonnull;
-
 import jmri.*;
 import jmri.Block;
 import jmri.Sensor;
@@ -14,8 +12,6 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.*;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.util.ThreadingUtil;
 
 /**
@@ -34,13 +30,9 @@ public class ActionBlock extends AbstractDigitalAction
     private final LogixNG_SelectEnum<DirectOperation> _selectEnum =
             new LogixNG_SelectEnum<>(this, DirectOperation.values(), DirectOperation.SetOccupied, this);
 
-    private NamedBeanAddressing _dataAddressing = NamedBeanAddressing.Direct;
-    private String _dataReference = "";
-    private String _dataLocalVariable = "";
-    private String _dataFormula = "";
-    private ExpressionNode _dataExpressionNode;
+    private final LogixNG_SelectString _selectBlockValue =
+            new LogixNG_SelectString(this, this);
 
-    private String _blockValue = "";
 
     public ActionBlock(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -57,13 +49,7 @@ public class ActionBlock extends AbstractDigitalAction
         copy.setComment(getComment());
         _selectNamedBean.copy(copy._selectNamedBean);
         _selectEnum.copy(copy._selectEnum);
-
-        copy.setDataAddressing(_dataAddressing);
-        copy.setDataReference(_dataReference);
-        copy.setDataLocalVariable(_dataLocalVariable);
-        copy.setDataFormula(_dataFormula);
-        copy.setBlockValue(_blockValue);
-
+        _selectBlockValue.copy(copy._selectBlockValue);
         return manager.registerAction(copy);
     }
 
@@ -75,61 +61,8 @@ public class ActionBlock extends AbstractDigitalAction
         return _selectEnum;
     }
 
-     public void setDataAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _dataAddressing = addressing;
-        parseDataFormula();
-    }
-
-    public NamedBeanAddressing getDataAddressing() {
-        return _dataAddressing;
-    }
-
-    public void setDataReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _dataReference = reference;
-    }
-
-    public String getDataReference() {
-        return _dataReference;
-    }
-
-    public void setDataLocalVariable(@Nonnull String localVariable) {
-        _dataLocalVariable = localVariable;
-    }
-
-    public String getDataLocalVariable() {
-        return _dataLocalVariable;
-    }
-
-    public void setDataFormula(@Nonnull String formula) throws ParserException {
-        _dataFormula = formula;
-        parseDataFormula();
-    }
-
-    public String getDataFormula() {
-        return _dataFormula;
-    }
-
-    private void parseDataFormula() throws ParserException {
-        if (_dataAddressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _dataExpressionNode = parser.parseExpression(_dataFormula);
-        } else {
-            _dataExpressionNode = null;
-        }
-    }
-
-
-    public void setBlockValue(@Nonnull String value) {
-        _blockValue = value;
-    }
-
-    public String getBlockValue() {
-        return _blockValue;
+    public LogixNG_SelectString getSelectBlockValue() {
+        return _selectBlockValue;
     }
 
     /** {@inheritDoc} */
@@ -138,38 +71,16 @@ public class ActionBlock extends AbstractDigitalAction
         return Category.ITEM;
     }
 
-    private Object getNewData(SymbolTable symbolTable) throws JmriException {
-
-        switch (_dataAddressing) {
-            case Direct:
-                return _blockValue;
-
-            case Reference:
-                return ReferenceUtil.getReference(symbolTable, _dataReference);
-
-            case LocalVariable:
-                return symbolTable.getValue(_dataLocalVariable);
-
-            case Formula:
-                return _dataExpressionNode != null
-                        ? _dataExpressionNode.calculate(symbolTable)
-                        : null;
-
-            default:
-                throw new IllegalArgumentException("invalid _dataAddressing state: " + _dataAddressing.name());
-        }
-    }
-
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        Block block = _selectNamedBean.evaluateNamedBean(getConditionalNG());
+        ConditionalNG conditionalNG = getConditionalNG();
+
+        Block block = _selectNamedBean.evaluateNamedBean(conditionalNG);
 
         if (block == null) {
             return;
         }
-
-        SymbolTable symbolTable = getConditionalNG().getSymbolTable();
 
         DirectOperation oper = _selectEnum.evaluateEnum(getConditionalNG());
 
@@ -225,7 +136,7 @@ public class ActionBlock extends AbstractDigitalAction
                     block.setValue(null);
                     break;
                 case SetValue:
-                    block.setValue(getNewData(symbolTable));
+                    block.setValue(_selectBlockValue.evaluateValue(conditionalNG));
                     break;
                 default:
                     throw new IllegalArgumentException("invalid oper state: " + theOper.name());
@@ -253,21 +164,10 @@ public class ActionBlock extends AbstractDigitalAction
         String namedBean = _selectNamedBean.getDescription(locale);
         String state = _selectEnum.getDescription(locale);
 
-        if (_selectEnum.getAddressing() == NamedBeanAddressing.Direct) {
+        if (_selectEnum.isDirectAddressing()) {
             if (_selectEnum.getEnum() == DirectOperation.SetValue) {
                 String bundleKey = "ActionBlock_Long_Value";
-                switch (_dataAddressing) {
-                    case Direct:
-                        return Bundle.getMessage(locale, bundleKey, namedBean, _blockValue);
-                    case Reference:
-                        return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByReference", _dataReference));
-                    case LocalVariable:
-                        return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByLocalVariable", _dataLocalVariable));
-                    case Formula:
-                        return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByFormula", _dataFormula));
-                    default:
-                        throw new IllegalArgumentException("invalid _dataAddressing state: " + _dataAddressing.name());
-                }
+                return Bundle.getMessage(locale, bundleKey, namedBean, _selectBlockValue.getDescription(locale));
             }
         }
 
@@ -285,6 +185,7 @@ public class ActionBlock extends AbstractDigitalAction
     public void registerListenersForThisClass() {
         _selectNamedBean.registerListeners();
         _selectEnum.registerListeners();
+        _selectBlockValue.registerListeners();
     }
 
     /** {@inheritDoc} */
@@ -292,6 +193,7 @@ public class ActionBlock extends AbstractDigitalAction
     public void unregisterListenersForThisClass() {
         _selectNamedBean.unregisterListeners();
         _selectEnum.unregisterListeners();
+        _selectBlockValue.unregisterListeners();
     }
 
     /** {@inheritDoc} */

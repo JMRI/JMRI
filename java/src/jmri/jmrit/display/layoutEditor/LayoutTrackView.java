@@ -489,6 +489,7 @@ abstract public class LayoutTrackView implements InlineLogixNG {
     protected void addCommonPopupItems(@Nonnull JmriMouseEvent mouseEvent, @Nonnull JPopupMenu popup) {
         popup.addSeparator();
         setLogixNGPositionableMenu(popup);
+        layoutEditor.addPopupItems(popup, mouseEvent);
     }
 
     @Override

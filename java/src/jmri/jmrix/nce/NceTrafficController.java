@@ -23,7 +23,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * message.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @author ken cameron Copyright (C) 2013
+ * @author Ken Cameron Copyright (C) 2013, 2023
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface, CommandStation {
 
@@ -158,6 +158,12 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * For PowerCab/SB5/Twin update post-Nov 2012
      */
     static public final int OPTION_1_65 = 40;
+    /**
+     * Create commands compatible with the PH5.
+     * <p>
+     * For PH5
+     */
+    static public final int OPTION_PH5 = 80;
     /**
      * Create all commands in the binary format.
      */
@@ -696,7 +702,12 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         }
         return memo.getSystemPrefix();
     }
-
+    
+    /*
+     * the command station memory object
+     */
+    public NceCmdStationMemory csm;
+    
     private final static Logger log = LoggerFactory.getLogger(NceTrafficController.class);
 
 }

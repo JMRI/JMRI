@@ -6,10 +6,10 @@
   <meta name="author" content="Daniel Bergqvist">
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="jmri LogixNG reference expression items">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -263,20 +263,37 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Entry/Exit</h5>
+      <h5 id="EntryExitExpressions">Entry/Exit</h5>
 
-      <ul>
-        <li><strong>Inactive:</strong> Evaluate to true if the state of the specified entry/exit
-        pair is inactive.</li>
+      <p>Evaluate if an Entry/Exit pair has a specified state.</p>
 
-        <li><strong>Active:</strong> Evaluate to true if the state of the specified entry/exit pair
-        is active.</li>
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/entryexit_expression.png"><img src=
+        "images/chapter6/entryexit_expression.png" alt="Chapter 6 entryexit expression"></a>
+      </div>
 
-        <li><strong>Other:</strong> Evaluate to true if the state of the specified entry/exit pair
-        is unknown or inconsistent.</li>
+      <dl>
+        <dt>Inactive</dt>
+        <dd>Evaluate to true if the state of the specified entry/exit pair is inactive.</dd>
 
-        <li>Evaluate if an Entry/Exit pair is active, inactive or other.</li>
-      </ul>
+        <dt>Active</dt>
+        <dd>Evaluate to true if the state of the specified entry/exit pair is active.</dd>
+
+        <dt>Other</dt>
+        <dd>Evaluate to true if the state of the specified entry/exit pair is unknown or inconsistent.</dd>
+
+        <dt>Reversed</dt>
+        <dd>Evaluate to true if the specified entry/exit pair is <strong>active</strong> and
+        <strong>reversed</strong>.  A <strong>reversed</strong> route occurs when the sensors for a
+        <strong>bidirectional</strong> entry/exit pair are selected in the reverse order.  The
+        evaluation is triggered by a change to the active/inactive state of the entry/exit pair.</dd>
+
+        <dt>Bidirectional</dt>
+        <dd>Evaluate to true if the specified entry/exit pair has the <strong>Both Way</strong>
+        option enabled in the entry/exit pair table.  The evaluation is triggered by a change to
+        the active/inactive state of the entry/exit pair.  Changes to the Both Way option do not
+        trigger evaluation.</dd>
+      </dl>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -715,6 +732,21 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h5 id="timer_id">Timer</h5>
+
+      <p>The <strong>Timer</strong> expression returns <strong>False</strong> until some time has
+      passed. It then returns <strong>True</strong> once and the timer starts again. This expression
+      is intended to be used together with the <a href="chapter5#sequence_id">Sequence</a> action.
+      This makes it possible to have sequence steps based on time durations.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/timer_expression.png"><img class="image-border" src=
+        "images/chapter6/timer_expression.png"
+        alt="Chapter 6 timer expression"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h3 id="digital_expression_flow_control">Digital expression :: Flow Control
       <span class="since">since 5.1.3</span></h3>
 
@@ -1060,11 +1092,11 @@
 
       <p><a href="index.shtml">Return to the Reference TOC</a>
       </p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

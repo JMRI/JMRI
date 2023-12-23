@@ -304,7 +304,7 @@ public class GpioSimulator implements GpioController {
 
     @Override
     public GpioPinDigitalOutput provisionDigitalOutputPin(Pin pin, String string) {
-        throw new UnsupportedOperationException("Not supported");
+        return new GpioPinDigitalOutputSimulator(pin, string);
     }
 
     @Override

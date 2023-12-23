@@ -147,7 +147,7 @@ public class AutoTrainAction {
                         if (!waitOnSensor(tsa)) {
                             // execute operation immediately -
                             //  no sensor found, or sensor already in requested state
-                            executeAction(tsa);
+                            checkDelay(tsa);
                         } else {
                             tsa.setWaitingForSensor(true);
                         }
@@ -209,7 +209,7 @@ public class AutoTrainAction {
                         tsa.getTriggerSensor().removePropertyChangeListener(tsa.getSensorListener());
                         tsa.setSensorListener(null);
                     }
-                    executeAction(tsa);
+                    checkDelay(tsa);
                     return;
                 }
             }
@@ -247,7 +247,8 @@ public class AutoTrainAction {
             if (_activeActionList.get(i).getWaitingForSectionExit()
                     && (_activeActionList.get(i).getTargetTransitSection() == ts)) {
                 // this action is waiting for this Section to exit
-                checkDelay(_activeActionList.get(i));
+                // no delay on exit
+                executeAction(_activeActionList.get(i));
             }
         }
         // cancel any O/S actions not triggered.
@@ -369,6 +370,43 @@ public class AutoTrainAction {
         Sensor s = null;
         float temp = 0.0f;
         switch (tsa.getWhatCode()) {
+            case TransitSectionAction.TERMINATETRAIN:
+                log.trace("Terminate Train Section [[{}]",tsa.getTargetTransitSection().getSectionName());
+                InstanceManager.getDefault(DispatcherFrame.class).terminateActiveTrain(_activeTrain,true,false);
+                break;
+            case TransitSectionAction.LOADTRAININFO:
+                log.info("Section[[{}] LoadTrain [{}]",tsa.getTargetTransitSection().getSectionName(),tsa.getStringWhat());
+                switch (tsa.getDataWhat2()) {
+                    case TransitSectionAction.LOCOADDRESSTYPEROSTER:
+                        log.debug("Spinning off load of {}, using Roster entry {}",tsa.getStringWhat(),tsa.getStringWhat2());
+                        jmri.util.ThreadingUtil.runOnLayoutDelayed(()-> {
+                            InstanceManager.getDefault(DispatcherFrame.class).loadTrainFromTrainInfo(tsa.getStringWhat(),DispatcherFrame.OVERRIDETYPE_ROSTER,tsa.getStringWhat2());},2000);
+                        break;
+                    case TransitSectionAction.LOCOADDRESSTYPENUMBER:
+                        log.debug("Spinning off load of {}, using USER entered address {}",tsa.getStringWhat(),tsa.getStringWhat2());
+                        jmri.util.ThreadingUtil.runOnLayoutDelayed(()-> {
+                            InstanceManager.getDefault(DispatcherFrame.class).loadTrainFromTrainInfo(tsa.getStringWhat(),DispatcherFrame.OVERRIDETYPE_USER,tsa.getStringWhat2());},2000);
+                        break;
+                    case TransitSectionAction.LOCOADDRESSTYPECURRENT:
+                        if ( _activeTrain.getTrainSource() == ActiveTrain.ROSTER) {
+                            log.debug("Spinning off load of {}, using current Roster {}",tsa.getStringWhat(),_activeTrain.getRosterEntry().getId());
+                            jmri.util.ThreadingUtil.runOnLayoutDelayed(()-> {
+                                InstanceManager.getDefault(DispatcherFrame.class).loadTrainFromTrainInfo(tsa.getStringWhat(),
+                                        DispatcherFrame.OVERRIDETYPE_ROSTER,_activeTrain.getRosterEntry().getId());},2000);
+                        } else {
+                            log.debug("Spinning off load of {}, using current address {}",tsa.getStringWhat(),_activeTrain.getDccAddress());
+                            jmri.util.ThreadingUtil.runOnLayoutDelayed(()-> {
+                                InstanceManager.getDefault(DispatcherFrame.class).loadTrainFromTrainInfo(tsa.getStringWhat(),
+                                        DispatcherFrame.OVERRIDETYPE_USER,_activeTrain.getDccAddress());},2000);
+                        }
+                        break;
+                    case TransitSectionAction.LOCOADDRESSTYPEDEFAULT:
+                    default:
+                        log.debug("Spinning off load of {}, using defaults",tsa.getStringWhat());
+                        jmri.util.ThreadingUtil.runOnLayoutDelayed(()-> {
+                            InstanceManager.getDefault(DispatcherFrame.class).loadTrainFromTrainInfo(tsa.getStringWhat(),DispatcherFrame.OVERRIDETYPE_NONE,null);},2000);
+                }
+                break;
             case TransitSectionAction.PAUSE:
                 log.trace("Pause Started Section:[{}]",tsa.getTargetTransitSection().getSectionName());
                 // pause for a number of fast minutes--e.g. station stop
@@ -704,7 +742,7 @@ public class AutoTrainAction {
                                 Thread.sleep(_delay);
                             }
                         }
-                        executeAction(_tsa);
+                        checkDelay(_tsa);
                     } catch (InterruptedException e) {
                         // interrupting will cause termination without executing the action
                     }
@@ -738,7 +776,7 @@ public class AutoTrainAction {
                                 Thread.sleep(_delay);
                             }
                         }
-                        executeAction(_tsa);
+                        checkDelay(_tsa);
                     } catch (InterruptedException e) {
                         // interrupting will cause termination without executing the action
                     }

@@ -141,7 +141,9 @@ def whenSendDccButtonClicked(event) :
          im2 = im2 * 16     # shift up by 5 bits
          im2 = im2 + (toLsb * 2) + 1
          # print "im2 final", im2
-         im3 = int(aspect.text)
+         im3 = int(aspect.text) & 0x7F
+         if (int(aspect.text) & 0X80) == 0x80:
+            dhi = dhi + 4
          numOfBytes = 3
 
      reps = repeatCount + (numOfBytes * 16)

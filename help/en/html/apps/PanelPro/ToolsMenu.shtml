@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI: Tools Menu</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Tools Menu</title><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -355,10 +355,10 @@
         </li>
       </ul>
       For more information, see also the <a href="../../../html/tools/index.shtml">general tools
-      index</a>. <!--#include virtual="/Footer.shtml" -->
+      index</a>. <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

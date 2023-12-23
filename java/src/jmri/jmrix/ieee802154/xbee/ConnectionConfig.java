@@ -28,7 +28,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
-    JButton b = new JButton(Bundle.getMessage("ConfigureXbeeTitle"));
+    final JButton b = new JButton(Bundle.getMessage("ConfigureXbeeTitle"));
 
     /**
      * {@inheritDoc}
@@ -45,10 +45,6 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     @Override
     public String name() {
         return Bundle.getMessage("XBeeNetworkTitle");
-    }
-
-    public boolean isOptList1Advanced() {
-        return false;
     }
 
     @Override

@@ -92,14 +92,27 @@ public class HelpUtil {
     }
 
     public static void displayHelpRef(String ref) {
-        // We only have English (en) and French (fr) help files.
+        log.debug("displayHelpRef: {}", ref);
+
+        // Plugin help is included in the plugin JAR file
+        boolean isPluginHelp = ref.startsWith("plugin:");
+
+        // We only have English (en) and French (fr) help files
+        // and we assume that plugins doesn't have French help files.
         boolean isFrench = "fr"
                 .equals(InstanceManager.getDefault(GuiLafPreferencesManager.class).getLocale().getLanguage());
-        String localeStr = isFrench ? "fr" : "en";
+        String localeStr = isFrench && !isPluginHelp ? "fr" : "en";
 
         HelpUtilPreferences preferences = InstanceManager.getDefault(HelpUtilPreferences.class);
 
-        String tempFile = "help/" + localeStr + "/" + ref.replace(".", "/");
+        String tempFile;
+        if (isPluginHelp) {
+            tempFile = "plugin";
+            ref = ref.substring("plugin:".length());
+        } else {
+            tempFile = "help/" + localeStr;
+        }
+        tempFile += "/" + ref.replace(".", "/");
         String[] fileParts = tempFile.split("_", 2);
         String file = fileParts[0] + ".shtml";
         if (fileParts.length > 1) {
@@ -110,17 +123,18 @@ public class HelpUtil {
         boolean webError = false;
 
         // Use jmri.org if selected.
-        if (preferences.getOpenHelpOnline()) {
+        if (preferences.getOpenHelpOnline() && !isPluginHelp) {
             url = "https://www.jmri.org/" + file;
             if (jmri.util.HelpUtil.showWebPage(ref, url)) return;
             webError = true;
         }
 
-        // Use the local JMRI web server if selected.
-        if (preferences.getOpenHelpOnJMRIWebServer()) {
+        // Use the local JMRI web server if selected or if plugin help
+        if (preferences.getOpenHelpOnJMRIWebServer() || isPluginHelp) {
             WebServerPreferences webServerPreferences = InstanceManager.getDefault(WebServerPreferences.class);
             String port = Integer.toString(webServerPreferences.getPort());
             url = "http://localhost:" + port + "/" + file;
+            log.debug("displayHelpRef: url: {}", url);
             if (jmri.util.HelpUtil.showWebPage(ref, url)) return;
             webError = true;
         }
@@ -130,6 +144,9 @@ public class HelpUtil {
                     Bundle.getMessage("HelpWeb_ServerError"),
                     Bundle.getMessage("HelpWeb_Title"),
                     JmriJOptionPane.ERROR_MESSAGE);
+
+            // Don't show any more help if plugin
+            if (isPluginHelp) return;
         }
 
         // Open a local help file by default or a failure of jmri.org or the local JMRI web server.

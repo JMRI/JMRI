@@ -5,10 +5,10 @@
   <title>JMRI: LogixNG Where Used</title>
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="JMRI logixng where used">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="../../../../html/tools/logixng/Sidebar.shtml"-->
@@ -16,7 +16,7 @@
     <div id="mainContent">
       <h1>JMRI: LogixNG Where Used</h1>
 
-      <p>The LogixNG Where Used tool is used to find where tables entries have been used in a
+      <p>The LogixNG Where Used tool is used to find where JMRI table entries have been used in a
       LogixNG, a LogixNG module or in the LogixNG clipboard.  References are shown using the normal
       LogixNG Browser format.  The tool is based on the standard Where Used at <strong>Tools &rArr;
       Where Used</strong>.</p>
@@ -49,11 +49,11 @@
     Control Editor :: SensorIcon :: x=30, y=130
 </pre>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

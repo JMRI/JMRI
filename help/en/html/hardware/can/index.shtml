@@ -5,10 +5,10 @@
   <title>JMRI Hardware Support - CAN Network</title>
   <meta name="author" content=
   "Andrew Crosland Oct 2020 CBUS has it's own trademark and should not be referred to as MERG CBUS">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -157,6 +157,11 @@
           interface.
         </dd>
 
+        <dd>
+          <a href="https://www.sprog-dcc.co.uk/lcc/usb-lcc">USB-LCC</a> A galvanically isolated LCC to USB
+          interface.
+        </dd>
+
         <dt>CANable</dt>
 
         <dd>
@@ -164,6 +169,15 @@
           CAN via Lawicell CANUSB System Connection.
         </dd>
 
+      </dl>
+
+      <h4>Raspberry Pi Adapters</h4>
+      <dl>
+        <dt>SPROG DCC Ltd</dt>
+
+        <dd>
+          <a href="https://www.sprog-dcc.co.uk/lcc/pi-lcc">PI-LCC</a> Raspberry Pi adapter for OpenLCB/LCC (New product).
+        </dd>
       </dl>
 
       <h4>Other CAN Hardware Interfaces</h4>
@@ -196,7 +210,7 @@
         <dt>SPROG DCC Ltd</dt>
 
         <dd>
-          <a href="https://www.sprog-dcc.co.uk">SPROG DCC Pi-SPROG 3 Plus</a> CBUS DCC Command
+          <a href="https://www.sprog-dcc.co.uk/pi-sprog/pi-sprog-3-plus">SPROG DCC Pi-SPROG 3 Plus</a> CBUS DCC Command
           Station for direct attachment to a Raspberry-Pi via its 40-pin I/O connector.
         </dd>
 
@@ -408,11 +422,11 @@
       </p>
 
       <p>CBUS is a registered trade mark of Dr Michael Bolton</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

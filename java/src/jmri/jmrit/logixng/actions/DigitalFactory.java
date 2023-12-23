@@ -44,6 +44,7 @@ public class DigitalFactory implements DigitalActionFactory {
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ActionSignalMast.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ActionSound.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ActionThrottle.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ActionThrottleFunction.class),
                         new AbstractMap.SimpleEntry<>(Category.COMMON, ActionTimer.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ActionTurnout.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ActionTurnoutLock.class),

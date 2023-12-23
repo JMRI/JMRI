@@ -419,17 +419,23 @@ public class LocationEditFrameTest extends OperationsTestCase {
 
         // confirm edit staging track window exists
         JUnitUtil.waitFor(() -> {
-            return JmriJFrame.getFrame(Bundle.getMessage("EditStaging")) != null;
+            return JmriJFrame.getFrame(Bundle.getMessage("EditStaging", loc.getName())) != null;
         }, "esf not null");
-        JmriJFrame tef = JmriJFrame.getFrame(Bundle.getMessage("EditStaging"));
+        JmriJFrame tef = JmriJFrame.getFrame(Bundle.getMessage("EditStaging", loc.getName()));
         Assert.assertNotNull(tef);
 
         Track t = loc.getTracksList().get(0);
         Assert.assertNotNull(t);
         t.setLength(350); // change track length to create property change
 
+        TrackEditFrame tefc = (TrackEditFrame) tef;
+        JUnitUtil.waitFor(() -> {
+            return tefc.trackLengthTextField.getText().equals("350");
+        }, "Field updated");
+        Assert.assertEquals("Track Length", "350", tefc.trackLengthTextField.getText());
+
         JUnitUtil.dispose(f);
-        tef = JmriJFrame.getFrame(Bundle.getMessage("EditStaging"));
+        tef = JmriJFrame.getFrame(Bundle.getMessage("EditStaging", loc.getName()));
         Assert.assertNull(tef);
     }
     
@@ -547,17 +553,23 @@ public class LocationEditFrameTest extends OperationsTestCase {
 
         // confirm edit spur track window exists
         JUnitUtil.waitFor(() -> {
-            return JmriJFrame.getFrame(Bundle.getMessage("EditSpur")) != null;
+            return JmriJFrame.getFrame(Bundle.getMessage("EditSpur", loc.getName())) != null;
         }, "esf not null");
-        JmriJFrame tef = JmriJFrame.getFrame(Bundle.getMessage("EditSpur"));
+        JmriJFrame tef = JmriJFrame.getFrame(Bundle.getMessage("EditSpur", loc.getName()));
         Assert.assertNotNull(tef);
 
-        Track t = loc.getTrackByName("Test Location Spur 1", null);
+        Track t = loc.getTrackByName("Test Location Spur 2", null);
         Assert.assertNotNull(t);
         t.setLength(222); // change track length to create property change
 
+        TrackEditFrame tefc = (TrackEditFrame) tef;
+        JUnitUtil.waitFor(() -> {
+            return tefc.trackLengthTextField.getText().equals("222");
+        }, "Field updated");
+        Assert.assertEquals("Track Length", "222", tefc.trackLengthTextField.getText());
+
         JUnitUtil.dispose(f);
-        tef = JmriJFrame.getFrame(Bundle.getMessage("EditSpur"));
+        tef = JmriJFrame.getFrame(Bundle.getMessage("EditSpur", loc.getName()));
         Assert.assertNull(tef);
     }
 
@@ -682,17 +694,23 @@ public class LocationEditFrameTest extends OperationsTestCase {
 
         // confirm edit interchange track window exists
         JUnitUtil.waitFor(() -> {
-            return JmriJFrame.getFrame(Bundle.getMessage("EditInterchange")) != null;
+            return JmriJFrame.getFrame(Bundle.getMessage("EditInterchange", loc.getName())) != null;
         }, "esf not null");
-        JmriJFrame tef = JmriJFrame.getFrame(Bundle.getMessage("EditInterchange"));
+        JmriJFrame tef = JmriJFrame.getFrame(Bundle.getMessage("EditInterchange", loc.getName()));
         Assert.assertNotNull(tef);
 
-        Track t = loc.getTrackByName("Test Location Interchange 1", null);
+        Track t = loc.getTrackByName("Test Location Interchange 2", null);
         Assert.assertNotNull(t);
         t.setLength(222); // change track length to create property change
 
+        TrackEditFrame tefc = (TrackEditFrame) tef;
+        JUnitUtil.waitFor(() -> {
+            return tefc.trackLengthTextField.getText().equals("222");
+        }, "Field updated");
+        Assert.assertEquals("Track Length", "222", tefc.trackLengthTextField.getText());
+
         JUnitUtil.dispose(f);
-        tef = JmriJFrame.getFrame(Bundle.getMessage("EditInterchange"));
+        tef = JmriJFrame.getFrame(Bundle.getMessage("EditInterchange", loc.getName()));
         Assert.assertNull(tef);
     }
     
@@ -804,17 +822,23 @@ public class LocationEditFrameTest extends OperationsTestCase {
 
         // confirm edit interchange track window exists
         JUnitUtil.waitFor(() -> {
-            return JmriJFrame.getFrame(Bundle.getMessage("EditYard")) != null;
+            return JmriJFrame.getFrame(Bundle.getMessage("EditYard", loc.getName())) != null;
         }, "esf not null");
-        JmriJFrame tef = JmriJFrame.getFrame(Bundle.getMessage("EditYard"));
+        JmriJFrame tef = JmriJFrame.getFrame(Bundle.getMessage("EditYard", loc.getName()));
         Assert.assertNotNull(tef);
 
-        Track t = loc.getTrackByName("Test Location Yard 1", null);
+        Track t = loc.getTrackByName("Test Location Yard 2", null);
         Assert.assertNotNull(t);
         t.setLength(222); // change track length to create property change
 
+        TrackEditFrame tefc = (TrackEditFrame) tef;
+        JUnitUtil.waitFor(() -> {
+            return tefc.trackLengthTextField.getText().equals("222");
+        }, "Field updated");
+        Assert.assertEquals("Track Length", "222", tefc.trackLengthTextField.getText());
+
         JUnitUtil.dispose(f);
-        tef = JmriJFrame.getFrame(Bundle.getMessage("EditYard"));
+        tef = JmriJFrame.getFrame(Bundle.getMessage("EditYard", loc.getName()));
         Assert.assertNull(tef);
     }
     

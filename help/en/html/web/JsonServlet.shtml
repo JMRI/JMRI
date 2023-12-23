@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI JSON Servlet</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI JSON Servlet</title><!--#include virtual="/help/en/parts/Style.shtml" -->
 
   <style type="text/css">
     table#jsonResponses {
@@ -25,7 +25,7 @@
   </style>
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -199,11 +199,11 @@
           "https://github.com/JMRI/JMRI/blob/master/web/power.html">/web/power.html</a>
         </dd>
       </dl>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

@@ -1913,6 +1913,8 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
                 addTextEditor();
             } else if ("BlockLabel".equals(name)) {
                 addBlockContentsEditor();
+            } else if ("Audio".equals(name)) {
+                addAudioEditor();
             } else if ("LogixNG".equals(name)) {
                 addLogixNGEditor();
             } else {
@@ -2267,6 +2269,19 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
         _iconEditorFrame.put("Icon", frame);
 
         ActionListener addIconAction = a -> putIcon();
+        editor.makeIconPanel(true);
+        editor.complete(addIconAction, true, false, false);
+        frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
+    }
+
+    protected void addAudioEditor() {
+        IconAdder editor = new IconAdder("Audio");
+        editor.setIcon(0, "plainIcon", "resources/icons/audio_icon.gif");
+        JFrameItem frame = makeAddIconFrame("Audio", true, false, editor);
+        _iconEditorFrame.put("Audio", frame);
+        editor.setPickList(PickListModel.audioPickModelInstance());
+
+        ActionListener addIconAction = a -> putAudio();
         editor.makeIconPanel(true);
         editor.complete(addIconAction, true, false, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
@@ -2653,6 +2668,36 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
      *
      * @return The LogixNG icon that was added to the target.
      */
+    protected Positionable putAudio() {
+        IconAdder iconEditor = getIconEditor("Audio");
+        String url = iconEditor.getIcon("plainIcon").getURL();
+        NamedIcon icon = NamedIcon.getIconByName(url);
+        if (log.isDebugEnabled()) {
+            log.debug("putAudio: {} url= {}", (icon == null ? "null" : "icon"), url);
+        }
+        AudioIcon result = new AudioIcon(icon, this);
+        NamedBean b = iconEditor.getTableSelection();
+        if (b != null) {
+            result.setAudio(b.getDisplayName());
+        }
+//        l.setPopupUtility(null);        // no text
+        result.setDisplayLevel(ICONS);
+        setNextLocation(result);
+        try {
+            putItem(result);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putAudio() with null id has thrown DuplicateIdException", e);
+        }
+        result.updateSize();
+        return result;
+    }
+
+    /**
+     * Add a LogixNG icon to the target.
+     *
+     * @return The LogixNG icon that was added to the target.
+     */
     protected Positionable putLogixNG() {
         IconAdder iconEditor = getIconEditor("LogixNG");
         String url = iconEditor.getIcon("plainIcon").getURL();
@@ -2806,6 +2851,8 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
             BundleName = "BeanNameBlock";
         } else if ("GlobalVariable".equals(name)) {
             BundleName = "BeanNameGlobalVariable";
+        } else if ("Audio".equals(name)) {
+            BundleName = "BeanNameAudio";
         } else {
             BundleName = name;
         }
@@ -3523,15 +3570,6 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
     abstract protected void setNextLocation(Positionable obj);
 
     /**
-     * Editor Views should make calls to this class (Editor) to set popup menu
-     * items. See 'Popup Item Methods' above for the calls.
-     *
-     * @param p     the item containing or requiring the context menu
-     * @param event the event triggering the menu
-     */
-    abstract protected void showPopUp(Positionable p, JmriMouseEvent event);
-
-    /**
      * After construction, initialize all the widgets to their saved config
      * settings.
      */
@@ -3579,6 +3617,18 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
                 } else if (pos instanceof LightIcon) {
                     LightIcon icon = (LightIcon) pos;
                     if (bean.equals(icon.getLight())) {
+                        report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                    }
+
+                } else if (pos instanceof ReporterIcon) {
+                    ReporterIcon icon = (ReporterIcon) pos;
+                    if (bean.equals(icon.getReporter())) {
+                        report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                    }
+
+                } else if (pos instanceof AudioIcon) {
+                    AudioIcon icon = (AudioIcon) pos;
+                    if (bean.equals(icon.getAudio())) {
                         report.add(new NamedBeanUsageReport("PositionalIcon", data));
                     }
 

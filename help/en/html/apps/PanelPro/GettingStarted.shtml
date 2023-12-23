@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>PanelPro: Getting Started with PanelPro</title><!--#include virtual="/Style.shtml" -->
+  <title>PanelPro: Getting Started with PanelPro</title><!--#include virtual="/help/en/parts/Style.shtml" -->
 
   <style type="text/css">
     a.reflink, span.reflink {
@@ -25,7 +25,7 @@
   </style>
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -636,11 +636,11 @@
       as CTC, Entry/Exit or Dispatching.</p>
 
       <p class="refPanel">Demo panel: GS-4-Masts SML.xml</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

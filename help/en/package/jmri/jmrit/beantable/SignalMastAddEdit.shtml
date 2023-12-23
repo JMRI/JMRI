@@ -6,10 +6,10 @@
   <meta name="author" content="Bob Jacobsen, Egbert Broerse">
   <meta name="Date.Modified" content="20191212">
   <meta name="keywords" content="JMRI help Signal Mast Add Edit Matrix Turnout DCC">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -199,11 +199,11 @@
       Table.</p>
 
       <p>Back to the <a href="SignalMastTable.shtml">Signal Mast Table help page</a>.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

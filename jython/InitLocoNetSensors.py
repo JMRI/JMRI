@@ -6,6 +6,11 @@
 #                    from which this script has been developed.
 # Created by Phil Klein
 
+# This script kicks off an independent series of actions that will take some time to 
+# complete once the script itself completes.  If you are running this script as a 
+# startup action, you might need to include a pause startup action before you run any
+# additional scripts later.
+
 import java
 import javax.swing
 import jmri

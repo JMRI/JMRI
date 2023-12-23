@@ -1082,7 +1082,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (isTypeNameAccepted(oldType)) {
             deleteTypeName(oldType);
             addTypeName(newType);
-            // adjust custom loads
+            // adjust loads with type in them
             for (String load : getLoadNames()) {
                 String[] splitLoad = load.split(CarLoad.SPLIT_CHAR);
                 if (splitLoad.length > 1) {
@@ -3125,7 +3125,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             if (!InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists()) {
                 JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("LoadDirectoryNameFileName",
-                                InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(),
+                                InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryPathName(),
                                         InstanceManager.getDefault(TrainCustomManifest.class).getFileName()),
                         Bundle.getMessage("ManifestCreatorNotFound"), JmriJOptionPane.ERROR_MESSAGE);
             }

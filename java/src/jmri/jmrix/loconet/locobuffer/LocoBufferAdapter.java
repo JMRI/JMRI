@@ -1,11 +1,6 @@
 package jmri.jmrix.loconet.locobuffer;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.Vector;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LnPacketizer;
@@ -14,11 +9,6 @@ import jmri.jmrix.loconet.LnPortController;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.NoSuchPortException;
-import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Provide access to LocoNet via a LocoBuffer attached to a serial com port.
@@ -71,88 +61,51 @@ public class LocoBufferAdapter extends LnPortController {
     }
     
     Vector<String> portNameVector = null;
-    SerialPort activeSerialPort = null;
-
-    @Override
-    public Vector<String> getPortNames() {
-        // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector<>();
-        Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
-        // find the names of suitable ports
-        while (portIDs.hasMoreElements()) {
-            CommPortIdentifier id = portIDs.nextElement();
-            // filter out line printers 
-            if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
-            {
-                portNameVector.addElement(id.getName());
-            }
-        }
-        return portNameVector;
-    }
 
     @Override
     public String openPort(String portName, String appName) {
-        // open the primary and secondary ports in LocoNet mode, check ability to set moderators
-        try {
-            // get and open the primary port
-            CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
-            try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
-            } catch (PortInUseException p) {
-                return handlePortBusy(p, portName, log);
-            }
-            // try to set it for LocoNet via LocoBuffer
-            try {
-                setSerialPort(activeSerialPort);
-            } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
-                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage(); // NOI18N
-            }
-
-            // set timeout
-            try {
-                activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: {} enabled: {} threshold: {} enabled: {}", // NOI18N
-                    activeSerialPort.getReceiveTimeout(), 
-                    activeSerialPort.isReceiveTimeoutEnabled(),
-                    activeSerialPort.getReceiveThreshold(),
-                    activeSerialPort.isReceiveThresholdEnabled()                                        
-                );
-            } catch (Exception et) {
-                log.info("failed to set serial timeout: ", et); // NOI18N
-            }
-
-            // get and save stream
-            serialStream = activeSerialPort.getInputStream();
-
-            // purge contents, if any
-            purgeStream(serialStream);
-
-            // report status?
-            if (log.isInfoEnabled()) {
-                // report now
-                log.info("{} port opened at {} baud with DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
-            }
-            if (log.isDebugEnabled()) {
-                // report additional status
-                log.debug(" port flow control shows {}", activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"); // NOI18N
-
-                // log events
-                setPortEventLogging(activeSerialPort);
-            }
-
-            opened = true;
-
-        } catch (NoSuchPortException p) {
-            return handlePortNotFound(p, portName, log);
-        } catch (IOException ex) {
-            log.error("Unexpected exception while opening port {} trace follows:", portName, ex); // NOI18N
-            return "Unexpected error while opening port " + portName + ": " + ex;
+        // get and open the primary port
+        currentSerialPort = activatePort(portName, log);
+        if (currentSerialPort == null) {
+            log.error("failed to connect LocoBuffer to {}", portName);
+            return Bundle.getMessage("SerialPortNotFound", portName);
         }
+        reportOpen(portName);
+        
+        // try to set it for communication via SerialDriver
+        // find the baud rate value, configure comm options
+        int baud = currentBaudNumber(mBaudRate);
+        setBaudRate(currentSerialPort, baud);
+        configureLeads(currentSerialPort, true, true);
+        setLocalFlowControl();
 
-        return null; // normal operation
+        // report status
+        reportPortStatus(log, portName);
+
+        opened = true;
+
+        return null; // indicates OK return
     }
 
+    /**
+     * Allow subtypes to change the opening message
+     * @param portName To appear in message
+     */
+    protected void reportOpen(String portName) {
+        log.info("Connecting LocoBuffer via {} {}", portName, currentSerialPort);
+    }
+    
+    /**
+     * Allow subtypes to change the flow control algorithm
+     */
+    protected void setLocalFlowControl() {
+        FlowControl flow = FlowControl.RTSCTS;
+        if (getOptionState(option1Name).equals(validOption1[1])) {
+            flow = FlowControl.NONE;
+        }
+        setFlowControl(currentSerialPort, flow);
+    }
+    
     /**
      * Can the port accept additional characters? The state of CTS determines
      * this, as there seems to be no way to check the number of queued bytes and
@@ -163,7 +116,7 @@ public class LocoBufferAdapter extends LnPortController {
      */
     @Override
     public boolean okToSend() {
-        return activeSerialPort.isCTS();
+        return currentSerialPort.getCTS();
     }
 
     /**
@@ -194,53 +147,9 @@ public class LocoBufferAdapter extends LnPortController {
         packets.startThreads();
     }
 
-    // base class methods for the LnPortController interface
-    @Override
-    public DataInputStream getInputStream() {
-        if (!opened) {
-            log.error("getInputStream called before load(), stream not available"); // NOI18N
-            return null;
-        }
-        return new DataInputStream(serialStream);
-    }
-
-    @Override
-    public DataOutputStream getOutputStream() {
-        if (!opened) {
-            log.error("getOutputStream called before load(), stream not available"); // NOI18N
-        }
-        try {
-            return new DataOutputStream(activeSerialPort.getOutputStream());
-        } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: {}", e.getMessage());
-        }
-        return null;
-    }
-
     @Override
     public boolean status() {
         return opened;
-    }
-
-    /**
-     * Local method to do specific configuration, overridden in class
-     * @param activeSerialPort is the serial port to be configured
-     * @throws UnsupportedCommOperationException Usually if the hardware isn't present or capable
-     */
-    protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
-        // find the baud rate value, configure comm options
-        int baud = currentBaudNumber(mBaudRate);
-        activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
-                SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-
-        // find and configure flow control from option
-        int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also defaults in selectedOption1
-        if (getOptionState(option1Name).equals(validOption1[1])) {
-            flow = SerialPort.FLOWCONTROL_NONE;
-        }
-        configureLeadsAndFlowControl(activeSerialPort, flow);
-
-        log.info("LocoBuffer (serial) adapter{}{} RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN, activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=", activeSerialPort.getFlowControlMode());
     }
 
     /**
@@ -269,10 +178,6 @@ public class LocoBufferAdapter extends LnPortController {
 
     // meanings are assigned to these above, so make sure the order is consistent
     protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};
-
-    // private control members
-    private boolean opened = false;
-    InputStream serialStream = null;
 
     /**
      *  Define the readable data and internal code

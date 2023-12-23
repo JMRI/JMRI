@@ -5,11 +5,11 @@
   <title>JMRI Hardware Support - Bluetooth LocoBridge Adapter</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="Digitrax LocoNet Bluetooth LocoBridge java model railroad JMRI install windows">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header_fr.shtml" -->
+<!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 <div id="mBody">
   <!--#include virtual="Sidebar.shtml" -->
 	<div id="mainContent">
@@ -54,9 +54,9 @@ utilises pour acc&#233;der &#224; Bluetooth.
 	<li>Cliquez "Enregistrer" au bas de la fen&#234;tre Pr&#233;f&#233;rences, quittez JMRI et red&#233;marrez.
 </ol>
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

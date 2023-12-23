@@ -156,6 +156,8 @@
  </indexitem>
  <indexitem text="DCC Specialties - Hardware, Connection, Tools " target="html.hardware.misc.DccSpecialties"/>
 
+ <indexitem text="DCC-EX EX-CommandStation Hardware, Connection, Tools " target="html.hardware.dcc-ex.index"/>
+
  <indexitem text="DCC++ Hardware, Connection, Tools " target="html.hardware.dccpp.index"/>
 
  <indexitem text="Debug Menu " target="html.apps.PanelPro.DebugMenu"/>
@@ -752,6 +754,8 @@
  <indexitem text="TAMs " target="html.hardware.tams.index"/>
 
  <indexitem text="TCH Tech " target="html.hardware.tchtech.index"/>
+
+ <indexitem text="TCS " target="html.hardware.openlcb.TCS"/>
 
  <indexitem text="Technical " target="html.doc.Technical.index"/>
 

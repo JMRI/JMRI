@@ -45,6 +45,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
     int entryExitType = EntryExitPairs.SETUPTURNOUTSONLY;//SETUPSIGNALMASTLOGIC;
     boolean enabled = true;
     boolean activeEntryExit = false;
+    boolean activeEntryExitReversed = false;
     List<LayoutBlock> routeDetails = new ArrayList<>();
     LayoutBlock destination;
     boolean disposed = false;
@@ -190,19 +191,28 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             }
             int now = ((Integer) e.getNewValue());
 
+            LayoutBlock lBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(blk);
+            if (lBlock == null){
+                log.error("Unable to get layout block from block {}",blk);
+                return;
+            }
+
             if (now == Block.OCCUPIED) {
-                LayoutBlock lBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(blk);
                 //If the block was previously active or inactive then we will
                 //reset the useExtraColor, but not if it was previously unknown or inconsistent.
-                if (lBlock==null){
-                    log.error("Unable to get layout block from block {}",blk);
-                    return;
-                }
                 lBlock.setUseExtraColor(false);
                 blk.removePropertyChangeListener(propertyBlockListener); //was this
                 removeBlockFromRoute(lBlock);
             } else {
-                log.debug("state was {} and did not go through reset",now);  // NOI18N
+                if (src.getStart() == lBlock) {
+                    // Remove listener when the start block becomes unoccupied.
+                    // When the start block is occupied when the route is created, the normal
+                    // removal does not occur.
+                    lBlock.getBlock().removePropertyChangeListener(propertyBlockListener);
+                    log.debug("Remove listener from start block {} for {}", lBlock.getDisplayName(), this.getDisplayName());
+                } else {
+                    log.debug("state was {} and did not go through reset",now);  // NOI18N
+                }
             }
         }
     }
@@ -1064,10 +1074,12 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                         toadd.setErrorMessage(errorMessage);
                         pathList.add(toadd);
                     } else {
-                        startlBlock = srcProLBlock;
-                        protectLBlock = getFacing();
+                        // Handle reversed direction - Only used when Both Way is enabled.
+                        // The controlling block references are flipped
+                        startlBlock = point.getProtecting().get(0);
+                        protectLBlock = point.getFacing();
 
-                        destinationLBlock = src.getStart();
+                        destinationLBlock = src.getSourceProtecting().get(0);
                         if (log.isDebugEnabled()) {
                             log.debug("reverse set destination is set going for {} {} {}", startlBlock.getDisplayName(), destinationLBlock.getDisplayName(), protectLBlock.getDisplayName());  // NOI18N
                         }
@@ -1200,7 +1212,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 }
 
                 if (getEntryExitType() == EntryExitPairs.FULLINTERLOCK) {
-                    setActiveEntryExit(true);
+                    setActiveEntryExit(true, reverseDirection);
                 }
                 setRoute(true);
             }
@@ -1286,13 +1298,26 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         return activeEntryExit;
     }
 
+    public boolean isReversed() {
+        return activeEntryExitReversed;
+    }
+
+    public boolean isUniDirection() {
+        return uniDirection;
+    }
+
     @Override
     public void setState(int state) {
     }
 
     protected void setActiveEntryExit(boolean boo) {
+        setActiveEntryExit(boo, false);
+    }
+
+    protected void setActiveEntryExit(boolean boo, boolean reversed) {
         int oldvalue = getState();
         activeEntryExit = boo;
+        activeEntryExitReversed = reversed;
         src.setMenuEnabled(boo);
         firePropertyChange("active", oldvalue, getState());  // NOI18N
     }
