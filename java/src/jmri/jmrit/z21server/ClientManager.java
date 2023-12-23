@@ -6,6 +6,8 @@ import jmri.ThrottleListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.HashMap;
 
@@ -14,7 +16,7 @@ public class ClientManager implements ThrottleListener {
     private static ClientManager instance;
     private static HashMap<InetAddress, AppClient> registeredClients;
     private static HashMap<Integer, InetAddress> requestedThrottlesList;
-    private static float speedMultiplier = 1.0f / 128.0f;
+    public static float speedMultiplier = 1.0f / 128.0f;
 
     private final static Logger log = LoggerFactory.getLogger(ClientManager.class);
 
@@ -67,6 +69,15 @@ public class ClientManager implements ThrottleListener {
         }
     }
 
+    synchronized public byte[] getLocoStatusMessage(InetAddress address, Integer locoAddress) {
+        if (registeredClients.containsKey(address)) {
+            AppClient client = registeredClients.get(address);
+            return client.getLocoStatusMessage(locoAddress);
+        } else {
+            return null;
+        }
+    }
+
     @Override
     synchronized public void notifyThrottleFound(DccThrottle t) {
         int locoAddress = t.getLocoAddress().getNumber();
@@ -86,6 +97,14 @@ public class ClientManager implements ThrottleListener {
     @Override
     synchronized public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
         jmri.InstanceManager.throttleManagerInstance().responseThrottleDecision(address, ClientManager.getInstance(), ThrottleListener.DecisionType.SHARE);
+    }
+
+    public static byte xor(byte[] packet) {
+        byte xor = (byte) (packet[0] ^ packet[1]);
+        for (int i = 2; i < (packet.length - 1); i++) {
+            xor = (byte) (xor ^ packet[i]);
+        }
+        return xor;
     }
 
 }

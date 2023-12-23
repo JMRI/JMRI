@@ -6,17 +6,16 @@ import org.slf4j.LoggerFactory;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 public class MainServer implements Runnable {
 
     private final static Logger log = LoggerFactory.getLogger(MainServer.class);
+    private final static int port = 21105;
     @Override
     public void run() {
         try {
-            DatagramSocket mySS = new DatagramSocket(21105);
+            DatagramSocket mySS = new DatagramSocket(port);
 
             byte[] buf = new byte[256];
             DatagramPacket packet = new DatagramPacket(buf, buf.length);
@@ -43,6 +42,8 @@ public class MainServer implements Runnable {
                     log.info("error, frame : " + bytesToHex(actualData));
                 }
 
+                byte[] response = null;
+
                 switch (actualData[2]) {
                     case 0x50:
                         byte[] maskArray = Arrays.copyOfRange(actualData, HEADER_SIZE, dataLenght);
@@ -54,11 +55,20 @@ public class MainServer implements Runnable {
                         break;
                     case 0x40:
                         byte[] payloadData = Arrays.copyOfRange(actualData, HEADER_SIZE, dataLenght);
-                        Service40.handleService(payloadData, clientAddress);
+                        response = Service40.handleService(payloadData, clientAddress);
                         break;
 
                     default:
                         System.out.println(ident + "Service not yet implemented : 0x" + Integer.toHexString(actualData[2]));
+                }
+
+                if (response != null) {
+                    DatagramPacket responsePacket = new DatagramPacket(response, response.length, clientAddress, port);
+                    try {
+                        mySS.send(responsePacket);
+                    } catch (Exception e) {
+                        log.info("Unable to send packet to client " + clientAddress.toString());
+                    }
                 }
 
                 ClientManager.getInstance().handleExpiredClients();
