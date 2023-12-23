@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import java.net.InetAddress;
 import java.util.HashMap;
 
+import static java.lang.Thread.State.TERMINATED;
+
 public class FacelessServer {
 
     private static FacelessServer instance;
@@ -26,12 +28,12 @@ public class FacelessServer {
     }
 
     public void start() {
-        log.info("Trying to start new z21 server...");
-        if (currentThread == null) {
+        if (currentThread == null || currentThread.getState() == TERMINATED) {
+            log.info("Trying to start new z21 server...");
             currentThread = new Thread(server);
             currentThread.setName("Z21 App Server");
+            currentThread.start();
         }
-        currentThread.start();
     }
 
     public void stop() {

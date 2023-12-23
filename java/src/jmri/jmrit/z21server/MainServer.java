@@ -12,10 +12,11 @@ public class MainServer implements Runnable {
 
     private final static Logger log = LoggerFactory.getLogger(MainServer.class);
     private final static int port = 21105;
+    DatagramSocket mySS;
     @Override
     public void run() {
         try {
-            DatagramSocket mySS = new DatagramSocket(port);
+            mySS = new DatagramSocket(port);
 
             byte[] buf = new byte[256];
             DatagramPacket packet = new DatagramPacket(buf, buf.length);
@@ -24,9 +25,18 @@ public class MainServer implements Runnable {
 
             while (true) {
 
-                if (Thread.currentThread().isInterrupted()) break;
+                if (Thread.interrupted()) break;
+                boolean bReceivedData;
 
-                mySS.receive(packet);
+                mySS.setSoTimeout(500);
+                try {
+                    mySS.receive(packet);
+                    bReceivedData = true;
+                } catch (Exception e) {
+                    bReceivedData = false;
+                }
+
+                if (!bReceivedData) continue;
 
                 InetAddress clientAddress = packet.getAddress();
 
@@ -80,6 +90,11 @@ public class MainServer implements Runnable {
             e.printStackTrace();
             log.info("Z21 App Server encountered an error, exiting.");
         }
+
+        if (mySS != null) {
+            mySS.close();
+        }
+
     }
 
     private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
