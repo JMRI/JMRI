@@ -1,8 +1,6 @@
 package jmri.jmrit.z21server;
 
 import jmri.InstanceManager;
-import jmri.UserPreferencesManager;
-import jmri.jmrit.roster.swing.RosterGroupComboBox;
 import jmri.jmrit.throttle.LargePowerManagerButton;
 import jmri.jmrit.throttle.StopAllButton;
 import jmri.util.FileUtil;
@@ -12,7 +10,6 @@ import jmri.util.prefs.JmriPreferencesActionFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.net.InetAddress;
 
 public class UserInterface extends JmriJFrame {
@@ -21,15 +18,7 @@ public class UserInterface extends JmriJFrame {
     JMenuBar menuBar;
     JMenuItem serverOnOff;
     JPanel panel;
-    JLabel portLabel = new JLabel(Bundle.getMessage("LabelPending"));
     JLabel manualPortLabel = new JLabel();
-    String manualPortLabelString = ""; //append IPv4 addresses as they respond to zeroconf
-    JLabel numConnected;
-    JScrollPane scrollTable;
-    JTable withrottlesList;
-    UserPreferencesManager userPreferences = InstanceManager.getDefault(UserPreferencesManager.class);
-    String rosterGroupSelectorPreferencesName = this.getClass().getName() + ".rosterGroupSelector";
-    RosterGroupComboBox rosterGroupSelector = new RosterGroupComboBox(userPreferences.getComboBoxLastSelection(rosterGroupSelectorPreferencesName));
 
     //keep a reference to the actual server
     private FacelessServer facelessServer;
@@ -75,28 +64,15 @@ public class UserInterface extends JmriJFrame {
         con.gridx = 0;
         con.gridy = 1;
         con.gridwidth = 2;
-        panel.add(portLabel, con);
 
         con.gridy = 2;
         panel.add(manualPortLabel, con);
 
-        numConnected = new JLabel(Bundle.getMessage("LabelClients") + " " /*+ deviceList.size()*/);
-        con.weightx = 0;
-        con.gridx = 2;
-        con.gridy = 2;
-        con.ipadx = 5;
-        con.gridwidth = 1;
-        panel.add(numConnected, con);
 
-        JPanel rgsPanel = new JPanel();
-        rgsPanel.add(new JLabel(Bundle.getMessage("RosterGroupLabel")));
-        rgsPanel.add(rosterGroupSelector);
-        rgsPanel.setToolTipText(Bundle.getMessage("RosterGroupToolTip"));
         JToolBar withrottleToolBar = new JToolBar();
         withrottleToolBar.setFloatable(false);
         withrottleToolBar.add(new StopAllButton());
         withrottleToolBar.add(new LargePowerManagerButton());
-        withrottleToolBar.add(rgsPanel);
         con.weightx = 0.5;
         con.ipadx = 0;
         con.gridx = 1;
@@ -105,7 +81,7 @@ public class UserInterface extends JmriJFrame {
         panel.add(withrottleToolBar, con);
 
         JLabel icon;
-        java.net.URL imageURL = FileUtil.findURL("resources/IconForWiThrottle.gif");
+        java.net.URL imageURL = FileUtil.findURL("resources/z21appIcon.png");
 
         if (imageURL != null) {
             ImageIcon image = new ImageIcon(imageURL);
@@ -118,14 +94,6 @@ public class UserInterface extends JmriJFrame {
             panel.add(icon, con);
         }
 
-        //  Add a list of connected devices and the address they are set to.
-        //withrottlesListModel = new WiThrottlesListModel(deviceList);
-        withrottlesList = new JTable();
-        withrottlesList.setPreferredScrollableViewportSize(new Dimension(300, 80));
-
-        withrottlesList.setRowHeight(20);
-        scrollTable = new JScrollPane(withrottlesList);
-
         con.gridx = 0;
         con.gridy = 4;
         con.weighty = 1.0;
@@ -134,9 +102,8 @@ public class UserInterface extends JmriJFrame {
         con.gridheight = 3;
         con.gridwidth = GridBagConstraints.REMAINDER;
         con.fill = GridBagConstraints.BOTH;
-        panel.add(scrollTable, con);
 
-        //  Create the menu to use with WiThrottle window. Has to be before pack() for Windows.
+        //  Create the menu to use with the window. Has to be before pack() for Windows.
         buildMenu();
 
         //  Set window size & location
@@ -146,17 +113,8 @@ public class UserInterface extends JmriJFrame {
         this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 
         setVisible(true);
-        setMinimumSize(new Dimension(400, 250));
+        setMinimumSize(new Dimension(400, 100));
 
-        rosterGroupSelector.addActionListener(new ActionListener() {
-
-            @SuppressWarnings("unchecked")
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String s = (String) ((JComboBox<String>) e.getSource()).getSelectedItem();
-                userPreferences.setComboBoxLastSelection(rosterGroupSelectorPreferencesName, s);
-            }
-        });
     }
 
     protected void buildMenu() {
@@ -171,11 +129,15 @@ public class UserInterface extends JmriJFrame {
                 if (isListen) { // Stop server, remove addresses from UI
                     disableServer();
                     serverOnOff.setText(Bundle.getMessage("MenuMenuStart"));
-                    portLabel.setText(Bundle.getMessage("LabelNone"));
                     manualPortLabel.setText(null);
                 } else { // Restart server
                     enableServer();
                     serverOnOff.setText(Bundle.getMessage("MenuMenuStop"));
+                    String host = "";
+                    try {
+                        host = InetAddress.getLocalHost().getHostAddress();
+                    } catch (Exception e) { host = "unknown ip"; }
+                    manualPortLabel.setText("<html>" + host + "</html>");
                 }
             }
         });
@@ -197,15 +159,11 @@ public class UserInterface extends JmriJFrame {
     }
 
 
-
-
-    // this is package protected so tests can trigger easily.
     void disableServer() {
         facelessServer.stop();
         isListen = false;
     }
 
-    //tell the server thread to start listening again
     private void enableServer() {
         facelessServer.start();
         isListen = true;
