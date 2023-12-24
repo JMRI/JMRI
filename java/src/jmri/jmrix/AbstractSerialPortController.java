@@ -67,8 +67,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @return human readable string with error detail.
      */
     //@Deprecated(forRemoval=true) // Removed with PureJavaComm
-    public String handlePortNotFound(String portName, org.slf4j.Logger log) {
-        log.error("Serial port {} not found", portName);
+    public String handlePortNotFound(String portName, org.slf4j.Logger log, Exception ex) {
+        log.error("Serial port {} not found: {}", portName, ex.getMessage());
         ConnectionStatus.instance().setConnectionState(this.getSystemPrefix(), portName, ConnectionStatus.CONNECTION_DOWN);
         return Bundle.getMessage("SerialPortNotFound", portName);
     }
@@ -138,8 +138,10 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             serialPort.setNumStopBits(stop_bits_code);
             serialPort.setParity(com.fazecast.jSerialComm.SerialPort.NO_PARITY);
             purgeStream(serialPort.getInputStream());
-        } catch (com.fazecast.jSerialComm.SerialPortInvalidPortException ePE) {
-            handlePortNotFound(portName, log);
+        } catch (java.io.IOException | com.fazecast.jSerialComm.SerialPortInvalidPortException ex) {
+            // IOException includes 
+            //      com.fazecast.jSerialComm.SerialPortIOException
+            handlePortNotFound(portName, log, ex);
         }
         return serialPort;
     }
