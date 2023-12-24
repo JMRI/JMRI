@@ -814,6 +814,34 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
                     .getMessage("CanNotSave"), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
+        if ((change1Engine.isSelected() && !checkModel(modelEngine1Box, numEngines1Box, roadEngine1Box)) ||
+                (change2Engine.isSelected() && !checkModel(modelEngine2Box, numEngines2Box, roadEngine2Box))) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkModel(JComboBox<String> modelEngineBox, JComboBox<String> numEnginesBox,
+            JComboBox<String> roadEngineBox) {
+        String model = (String) modelEngineBox.getSelectedItem();
+        if (numEnginesBox.getSelectedItem().equals("0") || model.equals(NONE)) {
+            return true;
+        }
+        String type = InstanceManager.getDefault(EngineModels.class).getModelType(model);
+        if (!_train.isTypeNameAccepted(type)) {
+            JmriJOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("TrainModelService", model, type),
+                    Bundle.getMessage("CanNot", Bundle.getMessage("save")),
+                    JmriJOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (roadEngineBox.getItemCount() == 1) {
+            log.debug("No locos available that match the model selected!");
+            JmriJOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("NoLocosModel", model),
+                    Bundle.getMessage("TrainWillNotBuild", _train.getName()),
+                    JmriJOptionPane.WARNING_MESSAGE);
+        }
         return true;
     }
 
@@ -858,7 +886,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     // update caboose road box based on radio selection
     private void updateCabooseRoadComboBox(JComboBox<String> box) {
         box.removeAllItems();
-        box.addItem("");
+        box.addItem(NONE);
         List<String> roads = InstanceManager.getDefault(CarManager.class).getCabooseRoadNames();
         for (String road : roads) {
             box.addItem(road);
@@ -870,7 +898,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             return;
         }
         box.removeAllItems();
-        box.addItem("");
+        box.addItem(NONE);
         List<String> roads = InstanceManager.getDefault(EngineManager.class).getEngineRoadNames(engineModel);
         for (String road : roads) {
             box.addItem(road);
@@ -893,7 +921,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             } else {
                 returnStagingCheckBox.setEnabled(true);
                 returnStagingCheckBox.setSelected(_train.isAllowReturnToStagingEnabled());
-                returnStagingCheckBox.setToolTipText("");
+                returnStagingCheckBox.setToolTipText(NONE);
             }
         }
     }
