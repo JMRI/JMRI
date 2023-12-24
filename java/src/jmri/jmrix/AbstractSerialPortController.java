@@ -84,23 +84,60 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     /**
      * Do the formal opening of the port,
      * set the port for blocking reads without timeout,
-     * and set the port to 8-2-none.
+     * set the port to 8 data bits, 1 stop bit, no parity
+     * and purge the port's input stream.
      * <p>
      * Does not do the rest of the setup implied in the {@link #openPort} method.
+     * This is usually followed by calls to 
+     * {@link #setBaudRate}, {@link #configureLeads} and {@link #setFlowControl}.
      * 
      * @param portName local system name for the desired port
      * @param log Logger to use for errors, passed so that errors are logged from low-level class
      * @return the serial port object for later use
      */
     final protected com.fazecast.jSerialComm.SerialPort activatePort(String portName, org.slf4j.Logger log) {
+        return this.activatePort(portName, log, 1); 
+    }
+    
+    /**
+     * Do the formal opening of the port,
+     * set the port for blocking reads without timeout,
+     * set the port to 8 data bits, the indicated number of stop bits, no parity,
+     * and purge the port's input stream.
+     * <p>
+     * Does not do the rest of the setup implied in the {@link #openPort} method.
+     * This is usually followed by calls to 
+     * {@link #setBaudRate}, {@link #configureLeads} and {@link #setFlowControl}.
+     * 
+     * @param portName local system name for the desired port
+     * @param log Logger to use for errors, passed so that errors are logged from low-level class'
+     * @param stop_bits The number of stop bits, either 1 or 2
+     * @return the serial port object for later use
+     */
+    final protected com.fazecast.jSerialComm.SerialPort activatePort(String portName, org.slf4j.Logger log, int stop_bits) {
         com.fazecast.jSerialComm.SerialPort serialPort = null;
+        
+        // convert the 1 or 2 stop_bits argument to the proper jSerialComm code value
+        int stop_bits_code;
+        switch (stop_bits) {
+            case 1:
+                stop_bits_code = com.fazecast.jSerialComm.SerialPort.ONE_STOP_BIT;
+                break;
+            case 2:
+                stop_bits_code = com.fazecast.jSerialComm.SerialPort.TWO_STOP_BITS;
+                break;
+            default:
+                throw new IllegalArgumentException("Incorrect stop_bits argument: "+stop_bits);
+        }
+                
         try {
             serialPort = com.fazecast.jSerialComm.SerialPort.getCommPort(portName);
             serialPort.openPort();
             serialPort.setComPortTimeouts(com.fazecast.jSerialComm.SerialPort.TIMEOUT_READ_BLOCKING, 0, 0);
             serialPort.setNumDataBits(8);
-            serialPort.setNumStopBits(com.fazecast.jSerialComm.SerialPort.TWO_STOP_BITS);
+            serialPort.setNumStopBits(stop_bits_code);
             serialPort.setParity(com.fazecast.jSerialComm.SerialPort.NO_PARITY);
+            purgeStream(serialPort.getInputStream());
         } catch (com.fazecast.jSerialComm.SerialPortInvalidPortException ePE) {
             handlePortNotFound(portName, log);
         }
@@ -119,6 +156,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
     /**
      * {@inheritDoc}
+     *
+     * Overridden in simulator adapter classes to return "";
      */
     @Override
     public String getCurrentPortName() {
@@ -282,7 +321,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param flow       flow control mode from (@link purejavacomm.SerialPort}
      */
     //@Deprecated(forRemoval=true) // with PureJavaComm
-    protected void configureLeadsAndFlowControl(purejavacomm.SerialPort serialPort, int flow) {
+    final protected void configureLeadsAndFlowControl(purejavacomm.SerialPort serialPort, int flow) {
         configureLeadsAndFlowControl(serialPort, flow, true, true);
     }
     
@@ -292,19 +331,36 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param log The low-level logger to get this reported against the right class
      * @param portName low-level name of selected port
      */
-    protected void reportPortStatus(org.slf4j.Logger log, String portName) {
+    final protected void reportPortStatus(org.slf4j.Logger log, String portName) {
         if (log.isInfoEnabled()) {
-            log.info("Port {} opened at {} baud, sees DTR: {} RTS: {} DSR: {} CTS: {} flow: {} type: {}", 
-                    portName, currentSerialPort.getBaudRate(), currentSerialPort.getDTR(), 
+            log.info("Port {} {} opened at {} baud, sees DTR: {} RTS: {} DSR: {} CTS: {} DCD: {} flow: {}", 
+                    portName, currentSerialPort.getDescriptivePortName(),
+                    currentSerialPort.getBaudRate(), currentSerialPort.getDTR(), 
                     currentSerialPort.getRTS(), currentSerialPort.getDSR(), currentSerialPort.getCTS(),
-                    getFlowControl(currentSerialPort), currentSerialPort);
+                    currentSerialPort.getDCD(), getFlowControl(currentSerialPort));
+        }
+        if (log.isDebugEnabled()) {
+            String stopBits;
+            switch (currentSerialPort.getNumStopBits()) {
+                case com.fazecast.jSerialComm.SerialPort.TWO_STOP_BITS:
+                    stopBits = "2";
+                    break;
+                case com.fazecast.jSerialComm.SerialPort.ONE_STOP_BIT:
+                    stopBits = "1";
+                    break;
+                default:
+                    stopBits = "unknown";
+                    break;
+            }
+            log.debug("     {} data bits, {} stop bits", 
+                    currentSerialPort.getNumDataBits(), stopBits);
         }
         
     }
     
    
     // When PureJavaComm is removed, set this to 'final' to find 
-    // identical implementations in the subclasses.
+    // identical implementations in the subclasses - but note simulators are now overriding
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -315,7 +371,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
  
     // When PureJavaComm is removed, set this to 'final' to find 
-    // identical implementations in the subclasses.
+    // identical implementations in the subclasses - but note simulators are now overriding
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
@@ -330,7 +386,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * {@inheritDoc}
      */
     @Override
-    public void configureBaudRate(String rate) {
+    final public void configureBaudRate(String rate) {
         mBaudRate = rate;
     }
 
@@ -338,7 +394,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * {@inheritDoc}
      */
     @Override
-    public void configureBaudRateFromNumber(String indexString) {
+    final public void configureBaudRateFromNumber(String indexString) {
         int baudNum;
         int index = 0;
         final String[] rates = validBaudRates();
@@ -406,7 +462,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * Invalid indexes are ignored.
      */
     @Override
-    public void configureBaudRateFromIndex(int index) {
+    final public void configureBaudRateFromIndex(int index) {
         if (validBaudRates().length > index && index > -1 ) {
             mBaudRate = validBaudRates()[index];
             log.debug("mBaudRate set by index to: {}", mBaudRate);
@@ -438,7 +494,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * {@inheritDoc}
      */
     @Override
-    public String getCurrentBaudNumber() {
+    final public String getCurrentBaudNumber() {
         int[] numbers = validBaudNumbers();
         String[] rates = validBaudRates();
         if (numbers == null || rates == null || numbers.length != rates.length) { // entries in arrays should correspond
@@ -463,7 +519,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     @Override
-    public int getCurrentBaudIndex() {
+    final public int getCurrentBaudIndex() {
         if (mBaudRate != null) {
             String[] rates = validBaudRates();
             // find the configured baud rate value
@@ -508,7 +564,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      *         0 if baudrate not supported by this adapter,
      *         -1 if no match (configuration system should prevent this)
      */
-    public int currentBaudNumber(String currentBaudRate) {
+    final public int currentBaudNumber(String currentBaudRate) {
         String[] rates = validBaudRates();
         int[] numbers = validBaudNumbers();
 

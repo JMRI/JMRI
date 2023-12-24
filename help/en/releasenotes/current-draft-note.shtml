@@ -36,7 +36,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>A problem with serial communications introduced in 5.7.1 has been fixed.</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -151,7 +151,7 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li></li>
+                <li>A problem with serial communications introduced in 5.7.1 has been fixed.</li>
             </ul>
 
         <h4>TAMS</h4>
