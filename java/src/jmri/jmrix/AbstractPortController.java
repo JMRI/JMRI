@@ -560,16 +560,12 @@ abstract public class AbstractPortController implements PortAdapter {
      * @param serialStream input data
      */
      @SuppressFBWarnings(value = "SR_NOT_CHECKED", justification = "skipping all, don't care what skip() returns")
-     protected void purgeStream(@Nonnull java.io.InputStream serialStream) {
-        try {
-            int count = serialStream.available();
-            log.debug("input stream shows {} bytes available", count);
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
-        } catch (IOException e) {
-            log.error("cause exception while trying to purge stream from port", e);
+     protected void purgeStream(@Nonnull java.io.InputStream serialStream) throws IOException {
+        int count = serialStream.available();
+        log.debug("input stream shows {} bytes available", count);
+        while (count > 0) {
+            serialStream.skip(count);
+            count = serialStream.available();
         }
     }
     
