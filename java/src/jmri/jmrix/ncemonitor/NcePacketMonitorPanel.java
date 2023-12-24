@@ -7,7 +7,6 @@ import java.awt.FlowLayout;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Enumeration;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
