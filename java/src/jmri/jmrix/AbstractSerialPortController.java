@@ -61,13 +61,12 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
-     * Standard error handling for purejavacomm port-not-found case.
+     * Standard error handling for the general port-not-found case.
      * @param portName port name.
      * @param log system log, passed so logging comes from bottom level class
      * @return human readable string with error detail.
      */
-    //@Deprecated(forRemoval=true) // Removed with PureJavaComm
-    public String handlePortNotFound(String portName, org.slf4j.Logger log) {
+    final public String handlePortNotFound(String portName, org.slf4j.Logger log) {
         log.error("Serial port {} not found", portName);
         ConnectionStatus.instance().setConnectionState(this.getSystemPrefix(), portName, ConnectionStatus.CONNECTION_DOWN);
         return Bundle.getMessage("SerialPortNotFound", portName);
