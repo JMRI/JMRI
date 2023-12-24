@@ -285,7 +285,8 @@ public class ArchitectureTest {
         .should().accessClassesThat().resideInAPackage("org.jdom2..");
 
     /**
-     * Confine purejavacomm to jmri.jmrix packages.
+     * Confine purejavacomm to existing uses. No additional ones permitted.
+     * Ideally these will all be migrated to jSerialComm eventually.
      */
     @ArchTest
     public static final ArchRule checkPurejavacommUsage = noClasses()
@@ -299,7 +300,7 @@ public class ArchitectureTest {
         .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$1").and()
 
-        // non-typical systems that are not migrated
+        // non-typical systems that are not (yet) migrated
         .doNotHaveFullyQualifiedName("jmri.jmrix.bachrus.SpeedoTrafficController").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.bachrus.kpfserialdriver.SerialDriverAdapter").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.bachrus.serialdriver.SerialDriverAdapter").and()
@@ -320,7 +321,8 @@ public class ArchitectureTest {
         .should().accessClassesThat().resideInAPackage("purejavacomm..");
 
     /**
-     * Confine jSerialComm to jmri.jmrix packages.
+     * Confine jSerialComm to jmri.jmrix.AbstractSerialPortController with 
+     * limited exceptions
      */
     @ArchTest
     public static final ArchRule checkJSerialCommAllowedUses = noClasses()
