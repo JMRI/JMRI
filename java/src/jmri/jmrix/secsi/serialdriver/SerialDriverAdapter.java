@@ -23,7 +23,7 @@ public class SerialDriverAdapter extends SerialPortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect C/MRI to {}", portName);
+            log.error("failed to connect SECSI to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting SECSI to {} {}", portName, currentSerialPort);

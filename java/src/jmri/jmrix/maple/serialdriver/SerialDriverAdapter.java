@@ -23,7 +23,7 @@ public class SerialDriverAdapter extends SerialPortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log, 2); // 2 stop bits
         if (currentSerialPort == null) {
-            log.error("failed to connect C/MRI to {}", portName);
+            log.error("failed to connect Maple to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting Maple to {} {}", portName, currentSerialPort);

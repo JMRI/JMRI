@@ -27,7 +27,7 @@ public class SerialDriverAdapter extends CdBPortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect C/MRI to {}", portName);
+            log.error("failed to connect Marklin CDB to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting Marklin CDB to {} {}", portName, currentSerialPort);

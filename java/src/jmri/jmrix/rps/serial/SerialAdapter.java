@@ -65,7 +65,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect C/MRI to {}", portName);
+            log.error("failed to connect RPS to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting RPS to {} {}", portName, currentSerialPort);

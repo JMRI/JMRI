@@ -22,7 +22,7 @@ public class SerialDriverAdapter extends PortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect C/MRI to {}", portName);
+            log.error("failed to connect Direct Serial to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting Direct Serial to {} {}", portName, currentSerialPort);

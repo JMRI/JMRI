@@ -27,7 +27,7 @@ public class SerialDriverAdapter extends TamsPortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect C/MRI to {}", portName);
+            log.error("failed to connect TAMS to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting TAMS to {} {}", portName, currentSerialPort);

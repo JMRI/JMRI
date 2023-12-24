@@ -32,7 +32,7 @@ public class SerialDriverAdapter extends NcePortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect C/MRI to {}", portName);
+            log.error("failed to connect Wangrow to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting Wangrow to {} {}", portName, currentSerialPort);
