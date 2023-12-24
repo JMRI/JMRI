@@ -69,16 +69,16 @@ public class UserInterface extends JmriJFrame {
         panel.add(manualPortLabel, con);
 
 
-        JToolBar withrottleToolBar = new JToolBar();
-        withrottleToolBar.setFloatable(false);
-        withrottleToolBar.add(new StopAllButton());
-        withrottleToolBar.add(new LargePowerManagerButton());
+        JToolBar toolBar = new JToolBar();
+        toolBar.setFloatable(false);
+        toolBar.add(new StopAllButton());
+        toolBar.add(new LargePowerManagerButton());
         con.weightx = 0.5;
         con.ipadx = 0;
         con.gridx = 1;
         con.gridy = 3;
         con.gridwidth = 2;
-        panel.add(withrottleToolBar, con);
+        panel.add(toolBar, con);
 
         JLabel icon;
         java.net.URL imageURL = FileUtil.findURL("resources/z21appIcon.png");

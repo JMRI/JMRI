@@ -11,9 +11,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 /**
- * Start, and create if needed, the WiThrottle server.
+ * Start, and create if needed, the server.
  *
  * @author Brett Hoffman Copyright (C) 2009
+ * @author Jean-Yves RODA
  *
  */
 public class z21serverCreationAction extends JmriAbstractAction {

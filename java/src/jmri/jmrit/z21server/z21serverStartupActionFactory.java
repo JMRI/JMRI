@@ -20,7 +20,7 @@ public final class z21serverStartupActionFactory extends AbstractStartupActionFa
     @Override
     public String getTitle(Class<?> clazz, Locale locale) throws IllegalArgumentException {
         if (clazz.equals(z21serverCreationAction.class)) {
-            return Bundle.getMessage(locale, "MenuStartWiThrottleServer");
+            return Bundle.getMessage(locale, "MenuStartServer");
         }
         throw new IllegalArgumentException(clazz.getName() + " is not supported by " + this.getClass().getName());
     }
