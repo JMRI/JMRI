@@ -46,10 +46,10 @@ public class MainServer implements Runnable {
                 int dataLenght = rawData[0];
                 byte[] actualData = Arrays.copyOf(rawData, dataLenght);
                 String ident = "[" + clientAddress + "]  ";
-                log.info(ident + " " + bytesToHex(actualData));
+                log.debug(ident + " " + bytesToHex(actualData));
 
                 if (actualData.length < 3) {
-                    log.info("error, frame : " + bytesToHex(actualData));
+                    log.debug("error, frame : " + bytesToHex(actualData));
                 }
 
                 byte[] response = null;
@@ -58,10 +58,10 @@ public class MainServer implements Runnable {
                     case 0x50:
                         byte[] maskArray = Arrays.copyOfRange(actualData, HEADER_SIZE, dataLenght);
                         int mask = fromByteArrayLittleEndian(maskArray);
-                        log.info(ident + "Broadcast request with mask : " + Integer.toBinaryString(mask));
+                        log.debug(ident + "Broadcast request with mask : " + Integer.toBinaryString(mask));
                         break;
                     case 0x30:
-                        log.info(ident + "Disconnect frame");
+                        log.debug(ident + "Disconnect frame");
                         break;
                     case 0x40:
                         byte[] payloadData = Arrays.copyOfRange(actualData, HEADER_SIZE, dataLenght);
@@ -69,7 +69,7 @@ public class MainServer implements Runnable {
                         break;
 
                     default:
-                        System.out.println(ident + "Service not yet implemented : 0x" + Integer.toHexString(actualData[2]));
+                        log.debug(ident + "Service not yet implemented : 0x" + Integer.toHexString(actualData[2]));
                 }
 
                 if (response != null) {
@@ -77,7 +77,7 @@ public class MainServer implements Runnable {
                     try {
                         mySS.send(responsePacket);
                     } catch (Exception e) {
-                        log.info("Unable to send packet to client " + clientAddress.toString());
+                        log.debug("Unable to send packet to client " + clientAddress.toString());
                     }
                 }
 
