@@ -143,6 +143,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             // IOException includes 
             //      com.fazecast.jSerialComm.SerialPortIOException
             handlePortNotFound(portName, log, ex);
+            return null;
         }
         return serialPort;
     }
