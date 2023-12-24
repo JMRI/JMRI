@@ -6,7 +6,7 @@
 
         <h4>Acela CTI</h4>
             <ul>
-                <li></li>
+                <li>Acela CTI serial connections have been updated to use a new serial library.</li>  
             </ul>
 
         <h4>Anyma DMX512</h4>
@@ -46,7 +46,7 @@
 
         <h4>Direct</h4>
             <ul>
-                <li></li>
+                <li>Direct DCC serial connections have been updated to use a new serial library.</li>  
             </ul>
 
         <h4>ESU</h4>
@@ -91,7 +91,7 @@
 
         <h4>Maple</h4>
             <ul>
-                <li></li>
+                <li>Maple serial connections have been updated to use a new serial library.</li>  
             </ul>
 
         <h4>Marklin CS2</h4>
@@ -121,7 +121,7 @@
 
         <h4>Oak Tree</h4>
             <ul>
-                <li></li>
+                <li>Oak Tree serial connections have been updated to use a new serial library.</li>  
             </ul>
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
@@ -146,7 +146,7 @@
 
         <h4>Secsi</h4>
             <ul>
-                <li></li>
+                <li>SECSI serial connections have been updated to use a new serial library.</li>  
             </ul>
 
         <h4>SPROG</h4>
@@ -156,7 +156,7 @@
 
         <h4>TAMS</h4>
             <ul>
-                <li></li>
+                <li>TAMS serial connections have been updated to use a new serial library.</li>  
             </ul>
 
         <h4>TMCC</h4>
