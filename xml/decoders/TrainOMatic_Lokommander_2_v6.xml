@@ -35,7 +35,7 @@
         <output name="6"  label="Aux4" />
         <size length="12.9" width="9.2" height="3.3" units="mm"/>
       </model>
-      <model model="Lokommander 2 Micro N18" numOuts="8" numFns="15" lowVersionID="5" highVersionID="6" connector="Next18" productID="2010216">
+      <model model="Lokommander 2 Micro N18" numOuts="8" numFns="15" lowVersionID="5" highVersionID="6" connector="Next18" productID="2010216,2010226">
         <output name="1" >
             <label>FL</label>
             <label xml:lang="cs">Světla|vpřed</label>

@@ -5435,7 +5435,7 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
       List Creator". You can find a copies of the programs at <a
         href="https://manifestcreator.weebly.com/">Manifest Creator - Add on to JMRI.</a> Place the
       program "MC4JMRI.xls" or "SWC4JMRI.xlsm" along with any other files needed in the
-      JMRI/operations/csvManifest directory. You can of course create your own program and also
+      JMRI/Your_Profile_Name.jmri/operations/csvManifest directory. You can of course create your own program and also
       install it in the csvManifest directory.
       <p>
         You can enable the creation of the comma separated values (.csv) files needed for an
@@ -5445,7 +5445,7 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
 
       <p>
         You can also create custom switch lists. Place the programs in the
-        JMRI/operations/csvSwitchList directory. You can configure the name of the Excel program by
+        JMRI/Your_Profile_Name.jmri/operations/csvSwitchList directory. You can configure the name of the Excel program by
         opening the "Switch List by Location" window using the "Switch Lists" button at the bottom
         of the "Trains" window. Then under "Tools" in the "Switch List by Location" window, select
         "Setup Excel Program (Manifest Creator)". You must also enable the creation of CSV switch

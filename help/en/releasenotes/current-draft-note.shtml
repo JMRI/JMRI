@@ -26,7 +26,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>Console - Improved Statistics display</li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -36,7 +36,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>A problem with serial communications introduced in 5.7.1 has been fixed.</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -116,7 +116,7 @@
 
         <h4>NCE</h4>
             <ul>
-                <li></li>
+                <li>NCE serial connections have been updated to use a new serial library.</li>
             </ul>
 
         <h4>Oak Tree</h4>
@@ -151,7 +151,7 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li></li>
+                <li>A problem with serial communications introduced in 5.7.1 has been fixed.</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -216,7 +216,8 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li></li>
+                <li>Updated LocoNet Monitor to display PM74 and SE74 device 
+		types for certain LocoNet messages.</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -287,11 +288,6 @@
         <h4>Norsk Modelljernbane (NJM)</h4>
             <ul>
                 <li></li>
-            </ul>
-
-        <h4>Piko</h4>
-            <ul>
-                <li>Added English translations</li>
             </ul>
 
         <h4>Public Domain and DIY decoders</h4>
@@ -382,7 +378,9 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Added a SplitHundredsVal which defines a large value
+                split across multiple CVs in groups of two decimal digits.
+                This is used by the new Logic Rail Tech definition.</li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -429,7 +427,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+            <li>Add Audio support to Where Used.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -545,8 +543,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>Throttle Save menu entry behaviour was updated. Documentation updated accordingly.</li>
-            <li>Default Throttle UI on a new JMRI setup are now using icons and colors, can be reverted to classic in Preferences (see &ldquo;Enable button icons when available&ldquo; and &ldquo;Use large speed slider and control buttons&ldquo; throttle preferences entry )</li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -582,7 +579,7 @@
     <h3>Where Used</h3>
         <a id="WhereUsed" name="WhereUsed"></a>
         <ul>
-            <li></li>
+            <li>Add Audio support.</li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -601,7 +598,7 @@
     <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li>Add browser WebSocket support message to About page</li>
+            <li></li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
@@ -613,14 +610,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Added an 
-                <a href="https://www.jmri.org/help/en/html/doc/Technical/plugins.shtml">SPI mechanism</a>
-                for extending the Tools menu.</li>
-            <li>The Linux and macOS application launchers and the Ant build process
-                have been updated to allow access to jar files in the settings:lib/
-                directory. This gives creators of JMRI plug-ins a way to distribute
-                their code separate from JMRI.</li>
-            <li>The Windows application launcher has been updated to allow access to
-                jar files in the settings:lib/ directory. This gives creators of JMRI 
-                plug-ins a way to distribute their code separate from JMRI.</li>
+            <li></li>
         </ul>
+

@@ -1416,6 +1416,35 @@
       <strong>Current Use Count:</strong>. When panels are saved to disk, only those blocks with a
       use count greater than zero are saved.</p>
 
+        <h3>Block Recommendations for Signal Masts and Signal Mast Logic (SML)</h3>
+
+        <p>Signal masts protect points of conflict between trains, such as at turnouts.  Turnouts,
+        or groups of turnouts, should have their own block.  This provides the block boundaries for
+        attaching the signal masts.  A group of turnouts can occur where turnouts are closely related
+        such as interlocking plants, yard ladders, simulated 3-way turnouts, etc.  For a group of
+        turnouts, the required connecting track segments would also have the same block.</p>
+
+        <p>Single crossovers have edit fields for four blocks.  Based on the recommendation for
+        turnouts, this implies four additional blocks.  In practice, only two blocks are needed.
+        The <strong>Block</strong> and <strong>Block 2</strong> entries get a block and the
+        <strong>Block 3</strong> and <strong>Block 4</strong> entries get a different block.  When
+        the crossover is closed, the two blocks make it possible for trains to move through the
+        crossover without signal logic conflicts.</p>
+
+        <p>Double crossovers also have four block fields but they need three blocks.  The first pair
+        or the second pair need to have two blocks.  The JMRI block connectivity logic has a limit of
+        one direct connection between any two blocks.  A double crossover has 2 connections.  There
+        is one between <strong>Block</strong> and <strong>Block 3</strong> and one between
+        <strong>Block 2</strong> and <strong>Block 4</strong>.  Two single crossovers acting as a
+        double crossover would also need three blocks.  This is implemented by using
+        the upper or lower track segment connecting the two crossovers to provide the block boundary.</p>
+
+        <div style="margin-left: 2em;"><img src="images/le_double_blocks.png" alt=
+        "Layout Editor double blocks">
+        </div>
+
+        <p>This is an example of using two single crossovers to act as a double crossover.</p>
+
       <h2 id="trackdrawoptions">Track Drawing Options</h2>
 
       <p>The appearance of the track components as drawn on the Layout Editor panel is set by the

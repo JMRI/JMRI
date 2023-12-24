@@ -434,12 +434,12 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         }
         // Processes the CSV Manifest files using an external custom program.
         if (!InstanceManager.getDefault(TrainCustomSwitchList.class).excelFileExists()) {
-            log.warn("Manifest creator file not found!, directory name: {}, file name: {}",
-                    InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryName(),
+            log.warn("Manifest creator file not found!, directory path: {}, file name: {}",
+                    InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryPathName(),
                     InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName());
             JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("LoadDirectoryNameFileName",
-                            InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryName(),
+                            InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryPathName(),
                                     InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName()),
                     Bundle.getMessage("ManifestCreatorNotFound"), JmriJOptionPane.ERROR_MESSAGE);
             return;

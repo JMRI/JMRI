@@ -3,13 +3,12 @@ package jmri.jmrix;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.SystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide an abstract base for *PortController classes.
@@ -559,15 +558,18 @@ abstract public class AbstractPortController implements PortAdapter {
      * Service method to purge a stream of initial contents
      * while opening the connection.
      * @param serialStream input data
-     * @throws java.io.IOException from underlying operations
      */
      @SuppressFBWarnings(value = "SR_NOT_CHECKED", justification = "skipping all, don't care what skip() returns")
-     protected void purgeStream(@Nonnull java.io.InputStream serialStream) throws java.io.IOException {
-        int count = serialStream.available();
-         log.debug("input stream shows {} bytes available", count);
-        while (count > 0) {
-            serialStream.skip(count);
-            count = serialStream.available();
+     protected void purgeStream(@Nonnull java.io.InputStream serialStream) {
+        try {
+            int count = serialStream.available();
+            log.debug("input stream shows {} bytes available", count);
+            while (count > 0) {
+                serialStream.skip(count);
+                count = serialStream.available();
+            }
+        } catch (IOException e) {
+            log.error("cause exception while trying to purge stream from port", e);
         }
     }
     
@@ -608,6 +610,6 @@ abstract public class AbstractPortController implements PortAdapter {
         this.connectionMemo = connectionMemo;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractPortController.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractPortController.class);
 
 }

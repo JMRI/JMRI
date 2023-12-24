@@ -360,7 +360,7 @@
         "Store Only table content (No Panels)... {Store configuration}" rather than "Store ALL
         table content and panels... {Store configuration and panels}" and overwrote an existing
         panel file. Don't panic - the backup copy (in the directory "backupPanels" in the <a href=
-        "../doc/Technical/ProfileFileStructure.shtml">Profile Location</a>) is there. Best practice
+        "../doc/Technical/ProfileFileStructure.shtml">User Files Location</a>) is there. Best practice
         in working with PanelPro is to almost always use <strong>"Store ALL table content and
         panels...</strong> {<em>Old: <strong>Store configuration and panels</strong></em>}" or
         <strong>"Store ALL table content and panels...</strong> {<em>Old: <strong>Store

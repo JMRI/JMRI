@@ -1,8 +1,5 @@
 package jmri.jmrix.mrc;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-
 /**
  * Abstract base for classes representing a MRC communications port
  *
@@ -20,14 +17,6 @@ public abstract class MrcPortController extends jmri.jmrix.AbstractSerialPortCon
     // check that this object is ready to operate
     @Override
     abstract public boolean status();
-
-    // returns the InputStream from the port
-    @Override
-    public abstract DataInputStream getInputStream();
-
-    // returns the outputStream to the port
-    @Override
-    public abstract DataOutputStream getOutputStream();
 
     public boolean okToSend() {
         return true;

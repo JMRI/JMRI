@@ -34,35 +34,6 @@ public final class HelpUtilPreferences extends PreferencesBean implements Instan
         _openHelpOnline = sharedPreferences.getBoolean(OPEN_HELP_ONLINE, _openHelpOnline);
         _openHelpOnFile = sharedPreferences.getBoolean(OPEN_HELP_ON_FILE, _openHelpOnFile);
         _openHelpOnJMRIWebServer = sharedPreferences.getBoolean(OPEN_HELP_ON_JMRI_WEB_SERVER, _openHelpOnJMRIWebServer);
-
-/*
-        this.allowRemoteConfig = sharedPreferences.getBoolean(ALLOW_REMOTE_CONFIG, this.allowRemoteConfig);
-        this.clickDelay = sharedPreferences.getInt(CLICK_DELAY, this.clickDelay);
-        this.simple = sharedPreferences.getBoolean(SIMPLE, this.simple);
-        this.railroadName = sharedPreferences.get(RAILROAD_NAME, this.railroadName);
-        this.readonlyPower = sharedPreferences.getBoolean(READONLY_POWER, this.readonlyPower);
-        this.refreshDelay = sharedPreferences.getInt(REFRESH_DELAY, this.refreshDelay);
-        this.useAjax = sharedPreferences.getBoolean(USE_AJAX, this.useAjax);
-        this.disableFrames = sharedPreferences.getBoolean(DISABLE_FRAME_SERVER, this.disableFrames);
-        this.redirectFramesToPanels = sharedPreferences.getBoolean(REDIRECT_FRAMES, this.redirectFramesToPanels);
-        try {
-            Preferences frames = sharedPreferences.node(DISALLOWED_FRAMES);
-            if (frames.keys().length != 0) {
-                this.disallowedFrames.clear();
-                for (String key : frames.keys()) { // throws BackingStoreException
-                    String frame = frames.get(key, null);
-                    if (frame != null && !frame.trim().isEmpty()) {
-                        this.disallowedFrames.add(frame);
-                    }
-                }
-            }
-        } catch (BackingStoreException ex) {
-            // this is expected if sharedPreferences have not been written previously,
-            // so do nothing.
-        }
-        this.port = sharedPreferences.getInt(PORT, this.port);
-        this.useZeroConf = sharedPreferences.getBoolean(USE_ZERO_CONF, this.useZeroConf);
-*/
         setIsDirty(false);
     }
 

@@ -1,24 +1,10 @@
 package jmri.jmrix.dccpp.serial;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Arrays;
 import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppInitializationManager;
 import jmri.jmrix.dccpp.DCCppSerialPortController;
 import jmri.jmrix.dccpp.DCCppTrafficController;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.NoSuchPortException;
-import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Provide access to DCC++ via a FTDI Virtual Com Port.
@@ -38,62 +24,27 @@ public class DCCppAdapter extends DCCppSerialPortController {
 
     @Override
     public String openPort(String portName, String appName) {
-        // open the port in DCC++ mode, check ability to set moderators
-        try {
-            // get and open the primary port
-            CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
-            try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
-            } catch (PortInUseException p) {
-                return handlePortBusy(p, portName, log);
-            }
-            // try to set it for DCC++
-            try {
-                setSerialPort();
-            } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
-                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
-            }
-
-            // set timeout
-            try {
-                activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: {} {}",
-                        activeSerialPort.getReceiveTimeout(),
-                        activeSerialPort.isReceiveTimeoutEnabled());
-            } catch (UnsupportedCommOperationException et) {
-                log.info("failed to set serial timeout", et);
-            }
-
-            // get and save stream
-            serialStream = activeSerialPort.getInputStream();
-
-            // purge contents, if any
-            purgeStream(serialStream);
-
-            // report status?
-            log.info("{} port opened at {} baud with DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
-
-            if (log.isDebugEnabled()) {
-                // report additional status
-                log.debug(" port flow control shows {}", activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"); // NOI18N
-
-                // log events
-                setPortEventLogging(activeSerialPort);
-
-            }
-
-            opened = true;
-
-        } catch (NoSuchPortException p) {
-
-            return handlePortNotFound(p, portName, log);
-        } catch (IOException ex) {
-            log.error("Unexpected exception while opening port {}", portName, ex);
-            return "Unexpected error while opening port " + portName + ": " + ex;
+        // get and open the primary port
+        currentSerialPort = activatePort(portName, log);
+        if (currentSerialPort == null) {
+            log.error("failed to connect DCC++ to {}", portName);
+            return Bundle.getMessage("SerialPortNotFound", portName);
         }
+        log.info("Connecting DCC++ to {} {}", portName, currentSerialPort);
+        
+        // try to set it for communication via SerialDriver
+        // find the baud rate value, configure comm options
+        int baud = currentBaudNumber(mBaudRate);
+        setBaudRate(currentSerialPort, baud);
+        configureLeads(currentSerialPort, true, true);
+        setFlowControl(currentSerialPort, FlowControl.NONE);
 
-        return null; // normal operation
+        // report status
+        reportPortStatus(log, portName);
+
+        opened = true;
+
+        return null; // indicates OK return
     }
 
     /**
@@ -115,63 +66,17 @@ public class DCCppAdapter extends DCCppSerialPortController {
 
     // base class methods for the XNetSerialPortController interface
 
-    public BufferedReader getInputStreamBR() {
-        if (!opened) {
-            log.error("getInputStream called before load(), stream not available");
-            return null;
-        }
-        return new BufferedReader(new InputStreamReader(serialStream));
-    }
-
-    @Override
-    public DataInputStream getInputStream() {
-        //log.error("Not Using DataInputStream version anymore!");
-        if (!opened) {
-            log.error("getInputStream called before load(), stream not available");
-        }
-        try {
-            return new DataInputStream(activeSerialPort.getInputStream());
-        } catch (java.io.IOException e) {
-            log.error("getInputStream exception: {}", e.getMessage());
-        }
-        return null;
-    }
-
-    @Override
-    public DataOutputStream getOutputStream() {
-        if (!opened) {
-            log.error("getOutputStream called before load(), stream not available");
-        }
-        try {
-            return new DataOutputStream(activeSerialPort.getOutputStream());
-        } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: {}", e.getMessage());
-        }
-        return null;
-    }
+//     public BufferedReader getInputStreamBR() {
+//         if (!opened) {
+//             log.error("getInputStream called before load(), stream not available");
+//             return null;
+//         }
+//         return new BufferedReader(new InputStreamReader(getInputStream()));
+//     }
 
     @Override
     public boolean status() {
         return opened;
-    }
-
-    /**
-     * Local method to do specific configuration.
-     * @throws UnsupportedCommOperationException if the underlying port cannot comply
-     */
-    protected void setSerialPort() throws UnsupportedCommOperationException {
-        // find the baud rate value, configure comm options
-        int baud = currentBaudNumber(mBaudRate);
-        activeSerialPort.setSerialPortParams(baud,
-                                       SerialPort.DATABITS_8,
-                                       SerialPort.STOPBITS_1,
-                                       SerialPort.PARITY_NONE);
-
-        // find and configure flow control
-        int flow = SerialPort.FLOWCONTROL_NONE;
-        configureLeadsAndFlowControl(activeSerialPort, flow);
-        // if (getOptionState(option2Name).equals(validOption2[0]))
-        // checkBuffer = true;
     }
 
     /**
@@ -202,9 +107,6 @@ public class DCCppAdapter extends DCCppSerialPortController {
     // protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHw"), Bundle.getMessage("FlowOptionNo")};
     protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNo")};
 
-    private boolean opened = false;
-    InputStream serialStream = null;
-
-    private final static Logger log = LoggerFactory.getLogger(DCCppAdapter.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppAdapter.class);
 
 }
