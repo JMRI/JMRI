@@ -2,7 +2,6 @@ package jmri.jmrit.z21server;
 
 import jmri.InstanceManager;
 import jmri.ThrottleManager;
-import jmri.jmrit.z21server.UserInterface;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 

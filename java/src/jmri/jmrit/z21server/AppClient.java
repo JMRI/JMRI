@@ -5,7 +5,6 @@ import jmri.DccThrottle;
 
 import java.net.InetAddress;
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -18,14 +17,12 @@ public class AppClient {
 
     private Date timestamp;
 
-    private byte[] lastMessageToSend;
     private static final int packetLenght = 14;
 
 
     public AppClient(InetAddress address) {
         this.address = address;
         throttles = new HashMap<>();
-        lastMessageToSend = new byte[0];
         heartbeat();
     }
 
@@ -83,7 +80,7 @@ public class AppClient {
         int packetspeed = Math.round(speed / speedMultiplier);
         if (speed < 0) packetspeed = 0;
         if (packetspeed > 128) packetspeed = 128;
-        locoPacket[8] = (byte) ((byte) (t.getIsForward() ? (byte) 0x80 : 0) + ((byte) packetspeed));
+        locoPacket[8] = (byte) ((t.getIsForward() ? (byte) 0x80 : 0) + ((byte) packetspeed));
         // Loco functions data
         locoPacket[9] = (byte) ((byte)
                 (t.getFunction(0) ? 0x10 : 0) +
@@ -122,7 +119,7 @@ public class AppClient {
                 (t.getFunction(22) ? 0x02 : 0) +
                 (t.getFunction(21) ? 0x01 : 0)
         );
-        locoPacket[13] = ClientManager.xor(locoPacket);;
+        locoPacket[13] = ClientManager.xor(locoPacket);
 
         return locoPacket;
     }

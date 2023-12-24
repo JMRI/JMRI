@@ -119,9 +119,5 @@ public class MainServer implements Runnable {
 
     private static final short HEADER_SIZE = 4;
 
-    private static final int Z21_BROADCAST_DRIVE = 0x00000001;
-    private static final int Z21_BROADCAST_RBUS = 0x00000002;
-    private static final int Z21_BROADCAST_RAILCOM = 0x00000004;
-    private static final int Z21_BROADCAST_SYSTEM = 0x00000100;
 
 }
