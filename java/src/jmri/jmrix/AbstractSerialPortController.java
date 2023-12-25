@@ -47,7 +47,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
-     * Standard error handling for purejavacomm port-not-found case.
+     * Specific error handling for purejavacomm port-not-found case.
      * @param p no such port exception.
      * @param portName port name.
      * @param log system log.
@@ -64,10 +64,11 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * Standard error handling for the general port-not-found case.
      * @param portName port name.
      * @param log system log, passed so logging comes from bottom level class
+     * @param ex Underlying Exception that caused this failure
      * @return human readable string with error detail.
      */
-    final public String handlePortNotFound(String portName, org.slf4j.Logger log) {
-        log.error("Serial port {} not found", portName);
+    final public String handlePortNotFound(String portName, org.slf4j.Logger log, Exception ex) {
+        log.error("Serial port {} not found: {}", portName, ex.getMessage());
         ConnectionStatus.instance().setConnectionState(this.getSystemPrefix(), portName, ConnectionStatus.CONNECTION_DOWN);
         return Bundle.getMessage("SerialPortNotFound", portName);
     }
@@ -137,8 +138,11 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             serialPort.setNumStopBits(stop_bits_code);
             serialPort.setParity(com.fazecast.jSerialComm.SerialPort.NO_PARITY);
             purgeStream(serialPort.getInputStream());
-        } catch (com.fazecast.jSerialComm.SerialPortInvalidPortException ePE) {
-            handlePortNotFound(portName, log);
+        } catch (java.io.IOException | com.fazecast.jSerialComm.SerialPortInvalidPortException ex) {
+            // IOException includes 
+            //      com.fazecast.jSerialComm.SerialPortIOException
+            handlePortNotFound(portName, log, ex);
+            return null;
         }
         return serialPort;
     }
