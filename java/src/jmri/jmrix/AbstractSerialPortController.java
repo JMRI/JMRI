@@ -683,25 +683,18 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         port.notifyOnDSR(true);
     }
 
-    Vector<String> portNameVector = null;
-
     /**
      * {@inheritDoc}
      */
-    //@Deprecated(forRemoval=true) // with PureJavaComm
     @Override
     public Vector<String> getPortNames() {
         // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector<String>();
-        Enumeration<purejavacomm.CommPortIdentifier> portIDs = purejavacomm.CommPortIdentifier.getPortIdentifiers();
-        // find the names of suitable ports
-        while (portIDs.hasMoreElements()) {
-            purejavacomm.CommPortIdentifier id = portIDs.nextElement();
-            // filter out line printers
-            if (id.getPortType() != purejavacomm.CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
-            {
-                portNameVector.addElement(id.getName());
-            }
+        Vector<String> portNameVector = new Vector<String>();
+
+        com.fazecast.jSerialComm.SerialPort[] portIDs = com.fazecast.jSerialComm.SerialPort.getCommPorts();
+                // find the names of suitable ports
+        for (com.fazecast.jSerialComm.SerialPort portID : portIDs) {
+            portNameVector.addElement(portID.getSystemPortName());
         }
         return portNameVector;
     }
