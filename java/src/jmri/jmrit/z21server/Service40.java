@@ -93,7 +93,16 @@ public class Service40 {
             ClientManager.getInstance().setLocoSpeedAndDirection(clientAddress, locomotiveAddress, actualSpeed, bForward);
 
             return ClientManager.getInstance().getLocoStatusMessage(clientAddress, locomotiveAddress);
+        }
+        if (data[0] == (byte)0xF8) {
+            int locomotiveAddress = (((data[1] & 0xFF) & 0x3F) << 8) + (data[2] & 0xFF);
+            boolean bOn = (((data[3] & 0xFF) & 0x40) >> 6) == 1;
+            int functionNumber = (data[3] & 0xFF) & 0x3F;
+            log.debug("Set loco no {} function no {} to {}", locomotiveAddress, functionNumber, (bOn ? "ON" : "OFF"));
 
+            ClientManager.getInstance().setLocoFunction(clientAddress, locomotiveAddress, functionNumber, bOn);
+
+            return ClientManager.getInstance().getLocoStatusMessage(clientAddress, locomotiveAddress);
         }
         return null;
     }

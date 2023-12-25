@@ -54,6 +54,20 @@ public class ClientManager implements ThrottleListener {
         }
     }
 
+    synchronized public void setLocoFunction(InetAddress clientAddress, int locoAddress, int functionNumber, boolean bOn) {
+        AppClient client = registeredClients.get(clientAddress);
+        if (client != null) {
+            DccThrottle throttle = client.getThrottleFromLocoAddress(locoAddress);
+            if (throttle != null) {
+                throttle.setFunction(functionNumber, bOn);
+            } else {
+                log.info("Unable to find throttle for loco {} from client {}", locoAddress, clientAddress);
+            }
+        } else {
+            log.info("App client {} is not registered", clientAddress);
+        }
+    }
+
     synchronized public void heartbeat(InetAddress clientAddress) {
         AppClient client = registeredClients.get(clientAddress);
         if (client != null) client.heartbeat();
