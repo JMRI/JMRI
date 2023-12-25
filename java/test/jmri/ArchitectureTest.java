@@ -285,23 +285,62 @@ public class ArchitectureTest {
         .should().accessClassesThat().resideInAPackage("org.jdom2..");
 
     /**
-     * Confine purejavacomm to jmri.jmrix packages.
+     * Confine purejavacomm to existing uses. No additional ones permitted.
+     * Ideally these will all be migrated to jSerialComm eventually.
      */
     @ArchTest
-    public static final ArchRule checkPurejavacoomOutsideJmrix = noClasses()
-        .that().resideOutsideOfPackage("jmri.jmrix..").and()
+    public static final ArchRule checkPurejavacommUsage = noClasses()
+        .that()
+        //.resideOutsideOfPackage("jmri.jmrix..").and()
+        
         .doNotHaveFullyQualifiedName("apps.util.issuereporter.SystemInfo").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrit.mailreport.ReportContext")
+        .doNotHaveFullyQualifiedName("jmri.jmrit.mailreport.ReportContext").and()
+
+        .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialConnectionConfig").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$1").and()
+
+        // non-typical systems that are not (yet) migrated
+        .doNotHaveFullyQualifiedName("jmri.jmrix.bachrus.SpeedoTrafficController").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.bachrus.kpfserialdriver.SerialDriverAdapter").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.bachrus.serialdriver.SerialDriverAdapter").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.dcc4pc.Dcc4PcTrafficController").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.dcc4pc.serialdriver.SerialDriverAdapter").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.ieee802154.xbee.XBeeAdapter").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.ieee802154.IEEE802154PortController").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.ncemonitor.NcePacketMonitorPanel").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.pricom.downloader.LoaderPane").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.pricom.downloader.LoaderPane$LocalReader").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.pricom.pockettester.DataSource").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.qsi.serialdriver.SerialDriverAdapter").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.serialsensor.SerialSensorAdapter").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.serialsensor.SerialSensorAdapter$2").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.xpa.serialdriver.SerialDriverAdapter")
+        
         .should().accessClassesThat().resideInAPackage("purejavacomm..");
 
     /**
-     * Confine jSerialComm to jmri.jmrix packages.
+     * Confine jSerialComm to jmri.jmrix.AbstractSerialPortController with 
+     * limited exceptions
      */
     @ArchTest
-    public static final ArchRule checkJSerialCommOutsideJmrix = noClasses()
-        .that().resideOutsideOfPackage("jmri.jmrix..").and()
-        .doNotHaveFullyQualifiedName("apps.util.issuereporter.SystemInfo").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrit.mailreport.ReportContext")
+    public static final ArchRule checkJSerialCommAllowedUses = noClasses()
+        .that()
+        
+        .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController").and()
+
+        // migrated atypical systems
+        .doNotHaveFullyQualifiedName("jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.dccpp.DCCppSerialPortController").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.lenz.XNetSerialPortController").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.loconet.locobuffer.LocoBufferAdapter").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.powerline.SerialSystemConnectionMemo").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.powerline.dmx512.SpecificTrafficController").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.sprog.serialdriver.SerialDriverAdapter").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.zimo.mx1.Mx1Adapter").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.zimo.mxulf.SerialDriverAdapter")
+
         .should().accessClassesThat().resideInAPackage("com.fazecast.jSerialComm..");
 
     /**
