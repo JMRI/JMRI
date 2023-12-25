@@ -16,7 +16,15 @@ public class FacelessServer {
     private final static Logger log = LoggerFactory.getLogger(FacelessServer.class);
 
     private FacelessServer() {
+        initServer();
+        createThread();
+    }
+
+    private static void initServer() {
         server = new MainServer();
+    }
+
+    private static synchronized void createThread() {
         currentThread = new Thread(server);
         currentThread.setName("Z21 App Server");
     }
@@ -28,10 +36,9 @@ public class FacelessServer {
         return instance;
     }
 
-    public void start() {
+    public synchronized void start() {
         if (currentThread.getState() == TERMINATED) {
-            currentThread = new Thread(server);
-            currentThread.setName("Z21 App Server");
+            createThread();
         }
         if (currentThread.getState() == NEW) {
             log.info("Trying to start new z21 server...");
@@ -39,7 +46,7 @@ public class FacelessServer {
         }
     }
 
-    public void stop() {
+    public synchronized void stop() {
         currentThread.interrupt();
     }
 

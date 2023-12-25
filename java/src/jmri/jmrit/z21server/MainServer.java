@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketException;
 import java.util.Arrays;
 
 public class MainServer implements Runnable {
@@ -46,7 +47,7 @@ public class MainServer implements Runnable {
                 int dataLenght = rawData[0];
                 byte[] actualData = Arrays.copyOf(rawData, dataLenght);
                 String ident = "[" + clientAddress + "]  ";
-                log.debug("{} {} ", ident, bytesToHex(actualData));
+                log.debug("{}: raw frame {} ", ident, bytesToHex(actualData));
 
                 if (actualData.length < 3) {
                     log.debug("error, frame : {}", bytesToHex(actualData));
@@ -86,7 +87,7 @@ public class MainServer implements Runnable {
 
             log.info("Z21 App Server shut down.");
 
-        } catch (Exception e) {
+        } catch (SocketException e) {
             log.info("Z21 App Server encountered an error, exiting.", e);
         }
 
