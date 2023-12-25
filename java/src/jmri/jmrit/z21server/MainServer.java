@@ -46,10 +46,10 @@ public class MainServer implements Runnable {
                 int dataLenght = rawData[0];
                 byte[] actualData = Arrays.copyOf(rawData, dataLenght);
                 String ident = "[" + clientAddress + "]  ";
-                log.debug(ident + " " + bytesToHex(actualData));
+                log.debug("{} {} ", ident, bytesToHex(actualData));
 
                 if (actualData.length < 3) {
-                    log.debug("error, frame : " + bytesToHex(actualData));
+                    log.debug("error, frame : {}", bytesToHex(actualData));
                 }
 
                 byte[] response = null;
@@ -58,10 +58,10 @@ public class MainServer implements Runnable {
                     case 0x50:
                         byte[] maskArray = Arrays.copyOfRange(actualData, HEADER_SIZE, dataLenght);
                         int mask = fromByteArrayLittleEndian(maskArray);
-                        log.debug(ident + "Broadcast request with mask : " + Integer.toBinaryString(mask));
+                        log.debug("{} Broadcast request with mask : {}", ident, Integer.toBinaryString(mask));
                         break;
                     case 0x30:
-                        log.debug(ident + "Disconnect frame");
+                        log.debug("{} Disconnect frame", ident);
                         break;
                     case 0x40:
                         byte[] payloadData = Arrays.copyOfRange(actualData, HEADER_SIZE, dataLenght);
@@ -69,7 +69,7 @@ public class MainServer implements Runnable {
                         break;
 
                     default:
-                        log.debug(ident + "Service not yet implemented : 0x" + Integer.toHexString(actualData[2]));
+                        log.debug("{} Service not yet implemented : 0x{}", ident,  Integer.toHexString(actualData[2]));
                 }
 
                 if (response != null) {
@@ -77,7 +77,7 @@ public class MainServer implements Runnable {
                     try {
                         mySS.send(responsePacket);
                     } catch (Exception e) {
-                        log.debug("Unable to send packet to client " + clientAddress.toString());
+                        log.debug("Unable to send packet to client {}", clientAddress.toString());
                     }
                 }
 
@@ -87,8 +87,7 @@ public class MainServer implements Runnable {
             log.info("Z21 App Server shut down.");
 
         } catch (Exception e) {
-            e.printStackTrace();
-            log.info("Z21 App Server encountered an error, exiting.");
+            log.info("Z21 App Server encountered an error, exiting.", e);
         }
 
         if (mySS != null) {

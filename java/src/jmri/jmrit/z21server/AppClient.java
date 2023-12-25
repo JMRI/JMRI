@@ -54,6 +54,8 @@ public class AppClient {
         /* Per Z21 Spec, clients are deemed lost after one minute of inactivity. */
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+       justification = "Messages can be of any length, null is used to indicate absence of message for caller")
     public byte[] getLocoStatusMessage(Integer locoAddress) {
         if (throttles.containsKey(locoAddress)) {
             return buildLocoPacket(throttles.get(locoAddress));

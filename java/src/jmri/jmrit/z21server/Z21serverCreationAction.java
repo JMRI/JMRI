@@ -16,13 +16,13 @@ import java.awt.event.ActionEvent;
  * @author Jean-Yves RODA
  *
  */
-public class z21serverCreationAction extends JmriAbstractAction {
+public class Z21serverCreationAction extends JmriAbstractAction {
 
-    public z21serverCreationAction(String s, WindowInterface wi) {
+    public Z21serverCreationAction(String s, WindowInterface wi) {
         super(s, wi);
     }
 
-    public z21serverCreationAction(String s, Icon i, WindowInterface wi) {
+    public Z21serverCreationAction(String s, Icon i, WindowInterface wi) {
         super(s, i, wi);
     }
 
@@ -31,7 +31,7 @@ public class z21serverCreationAction extends JmriAbstractAction {
      *
      * @param name Labels frame in GUI
      */
-    public z21serverCreationAction(String name) {
+    public Z21serverCreationAction(String name) {
         super(name);
         if (InstanceManager.getNullableDefault(ThrottleManager.class) == null) {
             super.setEnabled(false);
@@ -41,7 +41,7 @@ public class z21serverCreationAction extends JmriAbstractAction {
     /**
      * Create a new network server.
      */
-    public z21serverCreationAction() {
+    public Z21serverCreationAction() {
         this(Bundle.getMessage("MenuStartz21serverServer"));
     }
 

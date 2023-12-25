@@ -12,15 +12,13 @@ import java.util.HashMap;
 public class ClientManager implements ThrottleListener {
 
     private static ClientManager instance;
-    private static HashMap<InetAddress, AppClient> registeredClients;
-    private static HashMap<Integer, InetAddress> requestedThrottlesList;
+    private static final HashMap<InetAddress, AppClient> registeredClients = new HashMap<>();;
+    private static final HashMap<Integer, InetAddress> requestedThrottlesList = new HashMap<>();
     public static float speedMultiplier = 1.0f / 128.0f;
 
     private final static Logger log = LoggerFactory.getLogger(ClientManager.class);
 
     private ClientManager() {
-        registeredClients = new HashMap<>();
-        requestedThrottlesList = new HashMap<>();
     }
 
     synchronized public static ClientManager getInstance() {
@@ -49,10 +47,10 @@ public class ClientManager implements ThrottleListener {
                 if (throttle.getIsForward() != forward) throttle.setIsForward(forward);
                 throttle.setSpeedSetting(speed * speedMultiplier);
             } else {
-                log.info("Unable to find throttle for loco " + locoAddress + " from client " +  clientAddress);
+                log.info("Unable to find throttle for loco {} from client {}", locoAddress, clientAddress);
             }
         } else {
-            log.info("App client " +  clientAddress + " is not registered");
+            log.info("App client {} is not registered", clientAddress);
         }
     }
 
@@ -67,6 +65,8 @@ public class ClientManager implements ThrottleListener {
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+    justification = "Messages can be of any length, null is used to indicate absence of message for caller")
     synchronized public byte[] getLocoStatusMessage(InetAddress address, Integer locoAddress) {
         if (registeredClients.containsKey(address)) {
             AppClient client = registeredClients.get(address);
@@ -88,7 +88,7 @@ public class ClientManager implements ThrottleListener {
 
     @Override
     synchronized public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
-        log.info("Unable to get Throttle for loco address " + address.getNumber() + ", reason : " + reason);
+        log.info("Unable to get Throttle for loco address {}, reason : {}", address.getNumber(), reason);
         requestedThrottlesList.remove(address.getNumber());
     }
 

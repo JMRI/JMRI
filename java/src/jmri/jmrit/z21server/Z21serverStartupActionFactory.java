@@ -13,11 +13,11 @@ import java.util.Locale;
  * @author Randall Wood Copyright 2020
  */
 @ServiceProvider(service = StartupActionFactory.class)
-public final class z21serverStartupActionFactory extends AbstractStartupActionFactory {
+public final class Z21serverStartupActionFactory extends AbstractStartupActionFactory {
 
     @Override
     public String getTitle(Class<?> clazz, Locale locale) throws IllegalArgumentException {
-        if (clazz.equals(z21serverCreationAction.class)) {
+        if (clazz.equals(Z21serverCreationAction.class)) {
             return Bundle.getMessage(locale, "MenuStartServer");
         }
         throw new IllegalArgumentException(clazz.getName() + " is not supported by " + this.getClass().getName());
@@ -25,7 +25,7 @@ public final class z21serverStartupActionFactory extends AbstractStartupActionFa
 
     @Override
     public Class<?>[] getActionClasses() {
-        return new Class[]{z21serverCreationAction.class};
+        return new Class[]{Z21serverCreationAction.class};
     }
 
 }

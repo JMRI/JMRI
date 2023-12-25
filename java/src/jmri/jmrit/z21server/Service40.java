@@ -7,11 +7,13 @@ import java.net.InetAddress;
 import java.util.Arrays;
 
 public class Service40 {
-    private static String moduleIdent = "[Service 40] ";
+    private static final String moduleIdent = "[Service 40] ";
 
-    private final static Logger log = LoggerFactory.getLogger(MainServer.class);
+    private final static Logger log = LoggerFactory.getLogger(Service40.class);
 
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+    justification = "Messages can be of any length, null is used to indicate absence of message for caller")
     public static byte[] handleService(byte[] data, InetAddress clientAddress) {
         int command = data[0];
         switch (command){
@@ -22,12 +24,14 @@ public class Service40 {
             case (byte)0xE4:
                 return handleHeaderE4(Arrays.copyOfRange(data, 1, 5), clientAddress);
             default:
-                System.out.println(moduleIdent + "Header " + Integer.toHexString(command) + " not yet supported");
+                log.debug("{} Header {} not yet supported", moduleIdent, Integer.toHexString(command));
                 break;
         }
         return null;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+    justification = "Messages can be of any length, null is used to indicate absence of message for caller")
     private static byte[] handleHeader21(int db0){
         switch (db0){
             case 0x21:
@@ -46,10 +50,10 @@ public class Service40 {
                 answer[7] = ClientManager.xor(answer);
                 return answer;
             case 0x80:
-                log.debug(moduleIdent + "Set track power to off");
+                log.debug("{} Set track power to off", moduleIdent);
                 break;
             case 0x81:
-                log.debug(moduleIdent + "Set track power to on");
+                log.debug("{} Set track power to on", moduleIdent);
                 break;
             default:
                 break;
@@ -57,30 +61,34 @@ public class Service40 {
         return null;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+    justification = "Messages can be of any length, null is used to indicate absence of message for caller")
     private static byte[] handleHeaderE3(byte[] data, InetAddress clientAddress) {
         int db0 = data[0];
         if (db0 == (byte)0xF0) {
             // Get loco status command
             int locomotiveAddress = (((data[1] & 0xFF) & 0x3F) << 8) + (data[2] & 0xFF);
-            log.debug(moduleIdent + "Get loco no " + locomotiveAddress + " status");
+            log.debug("{} Get loco no {} status", moduleIdent, locomotiveAddress);
 
             ClientManager.getInstance().registerLocoIfNeeded(clientAddress, locomotiveAddress);
 
             return ClientManager.getInstance().getLocoStatusMessage(clientAddress, locomotiveAddress);
 
         } else {
-            log.debug(moduleIdent + "Header E3 with function " + Integer.toHexString(db0) + " is not supported");
+            log.debug("{} Header E3 with function {} is not supported", moduleIdent,  Integer.toHexString(db0));
         }
         return null;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+    justification = "Messages can be of any length, null is used to indicate absence of message for caller")
     private static byte[] handleHeaderE4(byte[] data, InetAddress clientAddress) {
         if (data[0] == 0x13) {
             int locomotiveAddress = (((data[1] & 0xFF) & 0x3F) << 8) + (data[2] & 0xFF);
             int rawSpeedData = data[3] & 0xFF;
             boolean bForward = ((rawSpeedData & 0x80) >> 7) == 1;
             int actualSpeed = rawSpeedData & 0x7F;
-            log.debug("Set loco no " + locomotiveAddress + " direction " + (bForward ? "FWD" : "RWD") + " with speed " + actualSpeed);
+            log.debug("Set loco no {} direction {} with speed {}",locomotiveAddress, (bForward ? "FWD" : "RWD"), actualSpeed);
 
             ClientManager.getInstance().setLocoSpeedAndDirection(clientAddress, locomotiveAddress, actualSpeed, bForward);
 
