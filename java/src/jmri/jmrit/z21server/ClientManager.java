@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class ClientManager implements ThrottleListener {
 
     private static ClientManager instance;
-    private static final HashMap<InetAddress, AppClient> registeredClients = new HashMap<>();;
+    private static final HashMap<InetAddress, AppClient> registeredClients = new HashMap<>();
     private static final HashMap<Integer, InetAddress> requestedThrottlesList = new HashMap<>();
     public static float speedMultiplier = 1.0f / 128.0f;
 
