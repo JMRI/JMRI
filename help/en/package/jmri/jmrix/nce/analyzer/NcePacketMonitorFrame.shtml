@@ -51,9 +51,10 @@
       will remember the configuration when it is powered down.</p>
 
       <p>The checkbox for filtering duplicate packets will count how many repeats there were.
-      When a different packet happens, it will print the deplicated packet with a trailing count
+      When a different packet happens, it will print the duplicated packet with a trailing count
       shown as " [nn] " meaning it was repeated nn times. It with then print the new packet. The
-      timestamps for these two packets will be slightly off due to this processing.</p>
+      timestamps for the duplicate packet will be that of the new packet, not the timestamp of the
+      last duplicate packet.</p>
       <!--
       <p>The "+ on" checkbox allows you to suppress identical packets. Each time the JMRI program
       detects a packet that it identical to the previous it will replace the packet with a "+"
