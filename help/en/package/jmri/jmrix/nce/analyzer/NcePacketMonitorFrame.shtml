@@ -4,6 +4,7 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: NCE DCC Packet Analyzer</title>
   <meta name="author" content="Dan Boudreau">
+  <meta name="author" content="Ken Cameron">
   <meta name="keywords" content="JMRI Help DCC Analyzer"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
@@ -37,23 +38,35 @@
       </table>
 
       <h2>Using the Analyzer</h2>
-      Select the "Serial port:" and push the "Open" button before using any of the radio buttons.
-      The baud rate is fixed at 38.4Kbps. If nothing appears on the screen immediately, select a
-      new display mode (e.g. "Verbose") and some packet types to display (e.g. "Idle Packets").
+      <p>There are two versions of the analyzer. The original that was sold as a PC board came out
+      around 2002. It used serial port at a fixed 38.4Kbps. The new DCC Meter/Analyzer was
+      released in 2023. It uses a USB port for the analyzer connection but also has a display
+      for being a DCC amp and volt meter.</p>
+      
+      <p>Select the "Serial port:" and push the "Open" button before using any of the radio buttons.
+      If nothing appears on the screen immediately, select a
+      new display mode (e.g. "Verbose") and some packet types to display (e.g. "Idle Packets").</p>
+      
       <p>Use the radio buttons to configure the analyzer to your liking. Note that the NCE analyzer
       will remember the configuration when it is powered down.</p>
 
+      <p>The checkbox for filtering duplicate packets will count how many repeats there were.
+      When a different packet happens, it will print the deplicated packet with a trailing count
+      shown as " [nn] " meaning it was repeated nn times. It with then print the new packet. The
+      timestamps for these two packets will be slightly off due to this processing.</p>
+      <!--
       <p>The "+ on" checkbox allows you to suppress identical packets. Each time the JMRI program
       detects a packet that it identical to the previous it will replace the packet with a "+"
       character. Warning, the JMRI program will only display the suppressed packets ("+"
       characters) after receiving a packet that isn't identical to the previous. If there's little
       activity it is recommended that you not use the suppress feature. This way you will
       immediately see all packets being captured by the analyzer.</p>
-
+       -->
       <p>The "Info" button will cause the analyzer to display its inbuilt help screen and the
       Analyzer version number. Press the "Res." button to resume normal operation.</p>
 
-      <p>The following help was copied from NCE Corporation with their permission. <a href=
+      <p>The following help was copied from NCE Corporation with their permission. It is for the original
+      version of the Packet Analyzer. <a href=
       "https://ncedcc.zendesk.com/hc/en-us/article_attachments/200259175/Analyzer1_1.pdf" target=
       "_blank">Click here</a> to download the full Analyzer manual.</p>
 

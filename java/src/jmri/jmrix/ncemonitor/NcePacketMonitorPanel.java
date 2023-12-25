@@ -648,7 +648,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
 
         static final int maxMsg = 80;
         StringBuffer msg;
-        StringBuffer duplicates = new StringBuffer(maxMsg);
+        private int duplicates = 0;
         String msgString;
         String matchString = "";
 
@@ -674,31 +674,30 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
 
             // is this a duplicate?
             if (msgString.equals(matchString) && truncateCheckBox.isSelected()) {
-                // yes, suppress and represent with a '+'
-                duplicates.append('+');
+                // yes, keep count
+                duplicates++;
             } else {
                 // no, message is complete, dispatch it!!
-
-                // prepend the duplicate info
-                matchString = msgString;
-                if (duplicates.length() != 0) {
-                    duplicates.append('\n');
-                    msgString = " " + (new String(duplicates)) + (msgString);
-                } else {
-                    msgString = "\n" + msgString;
+                if (!msgString.equals(matchString) && truncateCheckBox.isSelected() && (duplicates > 0)) {
+                    // prepend the duplicate info
+                    String dupString = matchString + " [" + duplicates + "]\n";
+                    // return a notification via the queue to ensure end
+                    Runnable r = new Runnable() {
+                        @Override
+                        public void run() {
+                            nextLine(dupString, "");
+                        }
+                    };
+                    javax.swing.SwingUtilities.invokeLater(r);
                 }
-                duplicates.setLength(0);
-
+                duplicates = 0;
+                matchString = msgString;
+                msgString = msgString + "\n";
                 // return a notification via the queue to ensure end
                 Runnable r = new Runnable() {
-                    // reset the duplicates
-
-                    // retain a copy of the message at startup
-                    String msgForLater = msgString;
-
                     @Override
                     public void run() {
-                        nextLine(msgForLater, "");
+                        nextLine(msgString, "");
                     }
                 };
                 javax.swing.SwingUtilities.invokeLater(r);
