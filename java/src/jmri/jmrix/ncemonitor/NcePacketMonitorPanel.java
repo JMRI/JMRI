@@ -7,7 +7,6 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Enumeration;
-import java.util.ResourceBundle;
 import java.util.Vector;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -20,7 +19,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JToggleButton;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
-import jmri.jmrix.nce.ncemon.Bundle;
 import jmri.jmrix.nce.swing.NcePanelInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,42 +41,43 @@ import purejavacomm.UnsupportedCommOperationException;
 @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "serialStream is access from separate thread, and this class isn't used much")
 public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements NcePanelInterface {
     
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ncemonitor.NcePacketMonitorBundle");
-    
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
     NceSystemConnectionMemo memo = null;
 
-    protected JToggleButton checkButton = new JToggleButton("Info");
-    protected JCheckBox duplicatesCheckBox = new JCheckBox("+ on");
+    //protected JToggleButton unitHelpButton = new JToggleButton(Bundle.getMessage("UnitHelpButtonLabel"));
+    protected JCheckBox dupFilterCheckBox = new JCheckBox(Bundle.getMessage("DupFilterCheckBoxLabel"));
     protected JComboBox<String> portBox = new javax.swing.JComboBox<String>();
-    protected javax.swing.JButton openPortButton = new javax.swing.JButton("Open");
-    protected javax.swing.JButton closePortButton = new javax.swing.JButton("Close");
-    protected JRadioButton verboseButton = new JRadioButton("Verbose");
-    protected JRadioButton hex0Button = new JRadioButton("Hex with preamble symbol");
-    protected JRadioButton hex1Button = new JRadioButton("(as above with spaces)");
-    protected JRadioButton hex2Button = new JRadioButton("Hex without preamble symbol");
-    protected JRadioButton hex3Button = new JRadioButton("(as above with spaces)");
-    protected JRadioButton hex4Button = new JRadioButton("Hex with preamble count in hex");
-    protected JRadioButton hex5Button = new JRadioButton("(as above with spaces)");
-    protected JRadioButton accOffButton = new JRadioButton("Hide acc packets");
-    protected JRadioButton accOnButton = new JRadioButton("Show acc packets");
-    protected JRadioButton idleOffButton = new JRadioButton("Hide idle packets");
-    protected JRadioButton idleOnButton = new JRadioButton("Show idle packets");
-    protected JRadioButton locoOffButton = new JRadioButton("Hide loco packets");
-    protected JRadioButton locoOnButton = new JRadioButton("Show loco packets");
-    protected JRadioButton resetOffButton = new JRadioButton("Hide reset packets");
-    protected JRadioButton resetOnButton = new JRadioButton("Show reset packets");
-    protected JRadioButton signalOffButton = new JRadioButton("Hide signal packets");
-    protected JRadioButton signalOnButton = new JRadioButton("Show signal packets");
-    protected JRadioButton accSingleButton = new JRadioButton("Acc addresses single");
-    protected JRadioButton accPairedButton = new JRadioButton("Acc addresses paired");
+    protected javax.swing.JButton openButton = new javax.swing.JButton(Bundle.getMessage("OpenButtonLabel"));
+    protected javax.swing.JButton closePortButton = new javax.swing.JButton(Bundle.getMessage("CloseButtonLabel"));
+    protected JRadioButton verboseButton = new JRadioButton(Bundle.getMessage("VerboseButtonLabel"));
+    protected JRadioButton hex0Button = new JRadioButton(Bundle.getMessage("Hex0Label"));
+    protected JRadioButton hex1Button = new JRadioButton(Bundle.getMessage("Hex1Label"));
+    protected JRadioButton hex2Button = new JRadioButton(Bundle.getMessage("Hex2Label"));
+    protected JRadioButton hex3Button = new JRadioButton(Bundle.getMessage("Hex3Label"));
+    protected JRadioButton hex4Button = new JRadioButton(Bundle.getMessage("Hex4Label"));
+    protected JRadioButton hex5Button = new JRadioButton(Bundle.getMessage("Hex5Label"));
+    protected JRadioButton accOffButton = new JRadioButton(Bundle.getMessage("AccOffLabel"));
+    protected JRadioButton accOnButton = new JRadioButton(Bundle.getMessage("AccOnLabel"));
+    protected JRadioButton idleOffButton = new JRadioButton(Bundle.getMessage("IdleOffLabel"));
+    protected JRadioButton idleOnButton = new JRadioButton(Bundle.getMessage("IdleOnLabel"));
+    protected JRadioButton locoOffButton = new JRadioButton(Bundle.getMessage("LocoOffLabel"));
+    protected JRadioButton locoOnButton = new JRadioButton(Bundle.getMessage("LocoOnLabel"));
+    protected JRadioButton resetOffButton = new JRadioButton(Bundle.getMessage("ResetOffLabel"));
+    protected JRadioButton resetOnButton = new JRadioButton(Bundle.getMessage("ResetOffLabel"));
+    protected JRadioButton signalOffButton = new JRadioButton(Bundle.getMessage("SignalOffLabel"));
+    protected JRadioButton signalOnButton = new JRadioButton(Bundle.getMessage("SignalOnLabel"));
+    protected JRadioButton accSingleButton = new JRadioButton(Bundle.getMessage("AccSingleLabel"));
+    protected JRadioButton accPairedButton = new JRadioButton(Bundle.getMessage("AccPairedLabel"));
 
     protected JComboBox<String> modelBox = new JComboBox<>();
     protected JLabel modelBoxLabel;
     private String[] validModelNames = new String[]{Bundle.getMessage("PacketAnalyzer"), Bundle.getMessage("DccMeter/Analyzer")};
-    private int[] validModelValues = new int[]{1, 2};
+    private int[] validModelValues = new int[]{0, 1};
     private int[] modelBaudRates = new int[]{38400, 115200};
+    private int[] modelBitValues = new int[] {SerialPort.DATABITS_8, SerialPort.DATABITS_8};
+    private int[] modelStopValues = new int[] {SerialPort.STOPBITS_1, SerialPort.STOPBITS_1};
+    private int[] modelParityValues = new int[] {SerialPort.PARITY_NONE, SerialPort.PARITY_NONE};
 
     public NcePacketMonitorPanel() {
         super();
@@ -121,7 +120,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             x.append("NCE_");
         }
         x.append(": ");
-        x.append(rb.getString("Title"));
+        x.append(Bundle.getMessage("Title"));
         return x.toString();
     }
     
@@ -135,21 +134,20 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         // populate the GUI, invoked as part of startup
         enableDisableWhenOpen(false);
         // load the port selection part
-        portBox.setToolTipText("Select the port to use");
+        portBox.setToolTipText(Bundle.getMessage("PortBoxToolTip"));
         portBox.setAlignmentX(JLabel.LEFT_ALIGNMENT);
         Vector<String> v = getPortNames();
         for (int i = 0; i < v.size(); i++) {
             portBox.addItem(v.elementAt(i));
         }
         // offer model choice
-        modelBox.setToolTipText("Select analyzer model");
+        modelBox.setToolTipText(Bundle.getMessage("ModelBoxToolTip"));
         modelBox.setAlignmentX(LEFT_ALIGNMENT);
         for (int i = 0; i < validModelNames.length; i++) {
             modelBox.addItem(validModelNames[i]);
         }
-        openPortButton.setText("Open");
-        openPortButton.setToolTipText("Configure program to use selected port");
-        openPortButton.addActionListener(new java.awt.event.ActionListener() {
+        openButton.setToolTipText(Bundle.getMessage("OpenButtonToolTip"));
+        openButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
@@ -161,7 +159,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 }
             }
         });
-        closePortButton.setToolTipText("Release the selected port and stop monitoring");
+        closePortButton.setToolTipText(Bundle.getMessage("CloseButtonToolTip"));
         closePortButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -182,11 +180,11 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         {
             JPanel p1 = new JPanel();
             p1.setLayout(new FlowLayout());
-            p1.add(new JLabel("Serial port: "));
+            p1.add(new JLabel(Bundle.getMessage("SerialPortLabel")));
             p1.add(portBox);
-            p1.add(new JLabel("Baud Rate:"));
+            p1.add(new JLabel(Bundle.getMessage("ModelBoxLabel")));
             p1.add(modelBox);
-            p1.add(openPortButton);
+            p1.add(openButton);
             p1.add(closePortButton);
             //p1.setMaximumSize(p1.getPreferredSize());
             add(p1);
@@ -202,26 +200,27 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         {
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            checkButton.setToolTipText("?");
-            checkButton.setEnabled(false);
-            p.add(checkButton);
-            checkButton.addActionListener(new java.awt.event.ActionListener() {
+            /*
+            unitHelpButton.setToolTipText(Bundle.getMessage("UnitHelpButtonToolTip"));
+            unitHelpButton.setEnabled(false);
+            p.add(unitHelpButton);
+            unitHelpButton.addActionListener(new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    if (checkButton.isSelected()) {
+                    if (unitHelpButton.isSelected()) {
                         sendBytes(new byte[]{(byte) '?'});
-                        checkButton.setText("Res.");
-                        checkButton.setToolTipText("Resume packet monitoring");
+                        unitHelpButton.setText(Bundle.getMessage("UnitHelpPageButtonLabel"));
+                        unitHelpButton.setToolTipText(Bundle.getMessage("UnitHelpPageButtonToolTip"));
                     } else {
                         sendBytes(new byte[]{(byte) ' '});
-                        checkButton.setText("Info");
-                        checkButton.setToolTipText("?");
+                        unitHelpButton.setText(Bundle.getMessage("UnitHelpButtonLabel"));
+                        unitHelpButton.setToolTipText(Bundle.getMessage("UnitHelpButtonToolTip"));
                     }
                 }
             });
-            duplicatesCheckBox
-                    .setToolTipText("Check this box to suppress identical packets");
-            p.add(duplicatesCheckBox);
+            */
+            dupFilterCheckBox.setToolTipText(Bundle.getMessage("DupFilterCheckBoxToolTip"));
+            p.add(dupFilterCheckBox);
             p2.add(p);
         }
 
@@ -229,7 +228,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
-            verboseButton.setToolTipText("V");
+            verboseButton.setToolTipText(Bundle.getMessage("VerboseButtonToolTip"));
             g.add(verboseButton);
             p.add(verboseButton);
             verboseButton.addActionListener(new java.awt.event.ActionListener() {
@@ -238,7 +237,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                     sendBytes(new byte[]{(byte) 'V'});
                 }
             });
-            hex0Button.setToolTipText("H0");
+            //hex0Button.setToolTipText(Bundle.getMessage("Hex0ButtonToolTip"));
             g.add(hex0Button);
             p.add(hex0Button);
             hex0Button.addActionListener(new java.awt.event.ActionListener() {
@@ -248,7 +247,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 }
             });
             p2.add(p);
-            hex1Button.setToolTipText("H1");
+            //hex1Button.setToolTipText(Bundle.getMessage("Hex1ButtonToolTip"));
             g.add(hex1Button);
             p.add(hex1Button);
             hex1Button.addActionListener(new java.awt.event.ActionListener() {
@@ -258,7 +257,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 }
             });
             p2.add(p);
-            hex2Button.setToolTipText("H2");
+            //hex2Button.setToolTipText(Bundle.getMessage("Hex2ButtonToolTip"));
             g.add(hex2Button);
             p.add(hex2Button);
             hex2Button.addActionListener(new java.awt.event.ActionListener() {
@@ -268,7 +267,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 }
             });
             p2.add(p);
-            hex3Button.setToolTipText("H3");
+            //hex3Button.setToolTipText(Bundle.getMessage("Hex3ButtonToolTip"));
             g.add(hex3Button);
             p.add(hex3Button);
             hex3Button.addActionListener(new java.awt.event.ActionListener() {
@@ -278,7 +277,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 }
             });
             p2.add(p);
-            hex4Button.setToolTipText("H4");
+            //hex4Button.setToolTipText(Bundle.getMessage("Hex4ButtonToolTip"));
             g.add(hex4Button);
             p.add(hex4Button);
             hex4Button.addActionListener(new java.awt.event.ActionListener() {
@@ -288,7 +287,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 }
             });
             p2.add(p);
-            hex5Button.setToolTipText("H5");
+            //hex5Button.setToolTipText(Bundle.getMessage("Hex5ButtonToolTip"));
             g.add(hex5Button);
             p.add(hex5Button);
             hex5Button.addActionListener(new java.awt.event.ActionListener() {
@@ -304,7 +303,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
-            accOffButton.setToolTipText("A-");
+            //accOffButton.setToolTipText(Bundle.getMessage("AccOffButtonToolTip"));
             g.add(accOffButton);
             p.add(accOffButton);
             accOffButton.addActionListener(new java.awt.event.ActionListener() {
@@ -313,7 +312,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                     sendBytes(new byte[]{(byte) 'A', (byte) '-'});
                 }
             });
-            accOnButton.setToolTipText("A+");
+            //accOnButton.setToolTipText(Bundle.getMessage("AccOnButtonToolTip"));
             g.add(accOnButton);
             p.add(accOnButton);
             accOnButton.addActionListener(new java.awt.event.ActionListener() {
@@ -329,7 +328,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
-            idleOffButton.setToolTipText("I-");
+            //idleOffButton.setToolTipText(Bundle.getMessage("IdleOffButtonToolTip"));
             g.add(idleOffButton);
             p.add(idleOffButton);
             idleOffButton.addActionListener(new java.awt.event.ActionListener() {
@@ -338,7 +337,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                     sendBytes(new byte[]{(byte) 'I', (byte) '-'});
                 }
             });
-            idleOnButton.setToolTipText("I+");
+            //idleOnButton.setToolTipText(Bundle.getMessage("IdleOnButtonToolTip"));
             g.add(idleOnButton);
             p.add(idleOnButton);
             idleOnButton.addActionListener(new java.awt.event.ActionListener() {
@@ -354,7 +353,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
-            locoOffButton.setToolTipText("L-");
+            //locoOffButton.setToolTipText(Bundle.getMessage("LocoOffButtonToolTip"));
             g.add(locoOffButton);
             p.add(locoOffButton);
             locoOffButton.addActionListener(new java.awt.event.ActionListener() {
@@ -363,7 +362,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                     sendBytes(new byte[]{(byte) 'L', (byte) '-'});
                 }
             });
-            locoOnButton.setToolTipText("L+");
+            //locoOnButton.setToolTipText(Bundle.getMessage("LocoOnButtonToolTip"));
             g.add(locoOnButton);
             p.add(locoOnButton);
             locoOnButton.addActionListener(new java.awt.event.ActionListener() {
@@ -379,7 +378,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
-            resetOffButton.setToolTipText("R-");
+            //resetOffButton.setToolTipText(Bundle.getMessage("ResetOffButtonToolTip"));
             g.add(resetOffButton);
             p.add(resetOffButton);
             resetOffButton.addActionListener(new java.awt.event.ActionListener() {
@@ -388,7 +387,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                     sendBytes(new byte[]{(byte) 'R', (byte) '-'});
                 }
             });
-            resetOnButton.setToolTipText("R+");
+            //resetOnButton.setToolTipText(Bundle.getMessage("ResetOnButtonToolTip"));
             g.add(resetOnButton);
             p.add(resetOnButton);
             resetOnButton.addActionListener(new java.awt.event.ActionListener() {
@@ -404,7 +403,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
-            signalOffButton.setToolTipText("S-");
+            //signalOffButton.setToolTipText(Bundle.getMessage("SignalOffButtonToolTip"));
             g.add(signalOffButton);
             p.add(signalOffButton);
             signalOffButton.addActionListener(new java.awt.event.ActionListener() {
@@ -413,7 +412,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                     sendBytes(new byte[]{(byte) 'S', (byte) '-'});
                 }
             });
-            signalOnButton.setToolTipText("S+");
+            //signalOnButton.setToolTipText(Bundle.getMessage("SignalOnButtonToolTip"));
             g.add(signalOnButton);
             p.add(signalOnButton);
             signalOnButton.addActionListener(new java.awt.event.ActionListener() {
@@ -431,7 +430,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             JLabel t = new JLabel("Monitor Command");
             p.add(t);
             ButtonGroup g = new ButtonGroup();
-            accSingleButton.setToolTipText("AS");
+            //accSingleButton.setToolTipText(Bundle.getMessage("AccSingleButtonToolTip"));
             g.add(accSingleButton);
             p.add(accSingleButton);
             accSingleButton.addActionListener(new java.awt.event.ActionListener() {
@@ -440,7 +439,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                     sendBytes(new byte[]{(byte) 'A', (byte) 'S'});
                 }
             });
-            accPairedButton.setToolTipText("AP");
+            //accPairedButton.setToolTipText(Bundle.getMessage("AccPairedButtonToolTip"));
             g.add(accPairedButton);
             p.add(accPairedButton);
             accPairedButton.addActionListener(new java.awt.event.ActionListener() {
@@ -492,11 +491,11 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
      * @param isOpen enables/disables buttons/checkbox when connection is open/closed
      */
     void enableDisableWhenOpen(boolean isOpen) {
-        openPortButton.setEnabled(!isOpen);
+        openButton.setEnabled(!isOpen);
         closePortButton.setEnabled(isOpen);
         portBox.setEnabled(!isOpen);
         modelBox.setEnabled(!isOpen);
-        checkButton.setEnabled(isOpen);
+        unitHelpButton.setEnabled(isOpen);
         verboseButton.setEnabled(isOpen);
         hex0Button.setEnabled(isOpen);
         hex1Button.setEnabled(isOpen);
@@ -551,12 +550,12 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         // release port
         if (activeSerialPort != null) {
             activeSerialPort.close();
+            log.info("{} port closed", portBox.getSelectedItem());
         }
         serialStream = null;
         ostream = null;
         activeSerialPort = null;
         portNameVector = null;
-        log.info("{} port closed", portBox.getSelectedItem());
         // enable buttons
         enableDisableWhenOpen(false);
     }
@@ -611,8 +610,8 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
 
             // try to set it for communication via SerialDriver
             try {
-                // Doc says 7 bits, but 8 seems needed
-                activeSerialPort.setSerialPortParams(modelBaudRates[modelValue], SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+                // set port settings
+                activeSerialPort.setSerialPortParams(modelBaudRates[modelValue], modelBitValues[modelValue], modelStopValues[modelValue], modelParityValues[modelValue]);
             } catch (UnsupportedCommOperationException e) {
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
@@ -717,12 +716,12 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             msgString = msg.toString();
 
             // is this a duplicate?
-            if (msgString.equals(matchString) && duplicatesCheckBox.isSelected()) {
+            if (msgString.equals(matchString) && dupFilterCheckBox.isSelected()) {
                 // yes, keep count
                 duplicates++;
             } else {
                 // no, message is complete, dispatch it!!
-                if (!msgString.equals(matchString) && duplicatesCheckBox.isSelected() && (duplicates > 0)) {
+                if (!msgString.equals(matchString) && dupFilterCheckBox.isSelected() && (duplicates > 0)) {
                     // prepend the duplicate info
                     String dupString = matchString + " [" + duplicates + "]\n";
                     // return a notification via the queue to ensure end

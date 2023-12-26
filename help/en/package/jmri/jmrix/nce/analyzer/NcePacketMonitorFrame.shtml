@@ -50,19 +50,11 @@
       <p>Use the radio buttons to configure the analyzer to your liking. Note that the NCE analyzer
       will remember the configuration when it is powered down.</p>
 
-      <p>The checkbox for filtering duplicate packets will count how many repeats there were.
+      <p>The check box for filtering duplicate packets, Verbose, will count how many repeats there were.
       When a different packet happens, it will print the duplicated packet with a trailing count
       shown as " [nn] " meaning it was repeated nn times. It with then print the new packet. The
-      timestamps for the duplicate packet will be that of the new packet, not the timestamp of the
+      time stamps for the duplicate packet will be that of the new packet, not the time stamp of the
       last duplicate packet.</p>
-      <!--
-      <p>The "+ on" checkbox allows you to suppress identical packets. Each time the JMRI program
-      detects a packet that it identical to the previous it will replace the packet with a "+"
-      character. Warning, the JMRI program will only display the suppressed packets ("+"
-      characters) after receiving a packet that isn't identical to the previous. If there's little
-      activity it is recommended that you not use the suppress feature. This way you will
-      immediately see all packets being captured by the analyzer.</p>
-       -->
       <p>The "Info" button will cause the analyzer to display its inbuilt help screen and the
       Analyzer version number. Press the "Res." button to resume normal operation.</p>
 
