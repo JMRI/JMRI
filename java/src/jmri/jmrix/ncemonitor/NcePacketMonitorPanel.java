@@ -559,11 +559,11 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     
     Thread readerThread;
 
-    // use deprecated stop method to stop thread,
-    // which will be sitting waiting for input
-    @SuppressWarnings("deprecation") // Thread.stop
+    /*
+     * tell the reader thread to close down
+     */
     void stopThread(Thread t) {
-        t.stop();
+        t.interrupt();
     }
 
     @Override
@@ -664,6 +664,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                     handleIncomingData();
                 } catch (java.io.IOException e) {
                     log.warn("run: Exception: {}", e.toString());
+                    return;
                 }
             }
         }
