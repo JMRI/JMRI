@@ -221,6 +221,7 @@
             <ul>
                 <li>Updated LocoNet Monitor to display PM74 and SE74 device 
 		types for certain LocoNet messages.</li>
+                <li>Added DN163K5B decoder</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -591,7 +592,14 @@
             <li></li>
         </ul>
 
-   <h3>Web Server</h3>
+    <h3>Z21 App Server</h3>
+        <a id="Z21" name="Z21"></a>
+        <ul>
+            <li>Added basic throttle function with the Roco Z21 Application on smartphones and tablets</li>
+        </ul>
+
+
+    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
             <li>Now displays "index.shtml" files if present in a directory.</li>
