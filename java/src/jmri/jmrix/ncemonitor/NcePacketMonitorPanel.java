@@ -495,7 +495,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         closePortButton.setEnabled(isOpen);
         portBox.setEnabled(!isOpen);
         modelBox.setEnabled(!isOpen);
-        unitHelpButton.setEnabled(isOpen);
+        //unitHelpButton.setEnabled(isOpen);
         verboseButton.setEnabled(isOpen);
         hex0Button.setEnabled(isOpen);
         hex1Button.setEnabled(isOpen);
