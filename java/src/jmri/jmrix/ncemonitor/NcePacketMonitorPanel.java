@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JToggleButton;
+//import javax.swing.JToggleButton;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.swing.NcePanelInterface;
 import org.slf4j.Logger;
