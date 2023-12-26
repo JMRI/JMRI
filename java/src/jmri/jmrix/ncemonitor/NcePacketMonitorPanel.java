@@ -1,14 +1,15 @@
 package jmri.jmrix.ncemonitor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Enumeration;
 import java.util.ResourceBundle;
 import java.util.Vector;
+
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
@@ -19,11 +20,11 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JToggleButton;
+
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.ncemon.Bundle;
 import jmri.jmrix.nce.swing.NcePanelInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import purejavacomm.CommPortIdentifier;
 import purejavacomm.NoSuchPortException;
 import purejavacomm.PortInUseException;
@@ -536,19 +537,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     }
 
     public Vector<String> getPortNames() {
-        // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector<String>();
-        Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
-        // find the names of suitable ports
-        while (portIDs.hasMoreElements()) {
-            CommPortIdentifier id = portIDs.nextElement();
-            // filter out line printers
-            if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
-            {
-                portNameVector.addElement(id.getName());
-            }
-        }
-        return portNameVector;
+        return jmri.jmrix.AbstractSerialPortController.getActualPortNames();
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SR_NOT_CHECKED",
@@ -619,7 +608,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     DataInputStream serialStream = null;
     OutputStream ostream = null;
 
-    private final static Logger log = LoggerFactory.getLogger(NcePacketMonitorPanel.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NcePacketMonitorPanel.class);
 
     /**
      * Internal class to handle the separate character-receive thread

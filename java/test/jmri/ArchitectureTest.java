@@ -293,10 +293,6 @@ public class ArchitectureTest {
         .that()
         //.resideOutsideOfPackage("jmri.jmrix..").and()
         
-        .doNotHaveFullyQualifiedName("apps.util.issuereporter.SystemInfo").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrit.mailreport.ReportContext").and()
-
-        .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialConnectionConfig").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$1").and()
 

@@ -5,7 +5,6 @@ import java.io.File;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 
@@ -24,7 +23,6 @@ import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.util.zeroconf.ZeroConfServiceManager;
-import purejavacomm.CommPortIdentifier;
 
 /**
  * Provide the JMRI context info.
@@ -301,33 +299,19 @@ public class ReportContext {
      * Add communication port information
      */
     private void addCommunicationPortInfo() {
-        Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
+        var portNames = jmri.jmrix.AbstractSerialPortController.getActualPortNames();
 
-        ArrayList<CommPortIdentifier> ports = new ArrayList<>();
-
-        // find the names of suitable ports
-        while (portIDs.hasMoreElements()) {
-            CommPortIdentifier id = portIDs.nextElement();
-            // filter out line printers 
-            if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) {
-                ports.add(id);
-            }
-        }
-
-        addString(String.format(" Found %s serial ports", ports.size()));
+        addString(String.format(" Found %s serial ports", portNames.size()));
 
         // now output the details
-        for (CommPortIdentifier id : ports) {
+        for (String name : portNames) {
             // output details
-            SerialPortFriendlyName port = PortNameMapper.getPortNameMap().get(id.getName());
+            SerialPortFriendlyName port = PortNameMapper.getPortNameMap().get(name);
             if (port == null) {
-                port = new SerialPortFriendlyName(id.getName(), null);
-                PortNameMapper.getPortNameMap().put(id.getName(), port);
+                port = new SerialPortFriendlyName(name, null);
+                PortNameMapper.getPortNameMap().put(name, port);
             }
-            addString(" Port: " + port.getDisplayName()
-                    + (id.isCurrentlyOwned()
-                            ? " - in use by: " + id.getCurrentOwner()
-                            : " - not in use") + "   ");
+            addString(" Port: " + name);
         }
     }
 
