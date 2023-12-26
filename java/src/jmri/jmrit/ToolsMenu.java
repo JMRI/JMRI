@@ -10,6 +10,7 @@ import javax.annotation.CheckForNull;
 
 import jmri.InstanceManager;
 import jmri.jmrit.throttle.ThrottleCreationAction;
+import jmri.jmrit.z21server.Z21serverCreationAction;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
@@ -173,6 +174,7 @@ public class ToolsMenu extends JMenu {
         add(new JSeparator());
         JMenu serverMenu = new JMenu(Bundle.getMessage("MenuServers"));
         serverMenu.add(new jmri.jmrit.withrottle.WiThrottleCreationAction());
+        serverMenu.add(new Z21serverCreationAction());
         serverMenu.add(new jmri.web.server.WebServerAction());
         serverMenu.add(new JSeparator());
         serverMenu.add(new jmri.jmris.srcp.JmriSRCPServerAction());
