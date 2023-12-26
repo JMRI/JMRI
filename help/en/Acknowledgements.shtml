@@ -889,6 +889,9 @@
         products, helped fix a problem with overrunning LocoNet command stations, and provided
         example web pages for layout control via the mini-webserver.</li>
 
+        <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Ajy-roda+">Jean-Yves Roda</a>, <!-- jy-roda  -->
+        who provided the server for the Roco Z21 app.
+        
         <li>Rodrigo Rodriguez, <!-- RodrigoFXE  -->
         who translated the decoder definitions and much of the GUI into Spanish.
 
