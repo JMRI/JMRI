@@ -71,6 +71,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     private String[] validModelNames = new String[]{Bundle.getMessage("PacketAnalyzer"), Bundle.getMessage("DccMeter/Analyzer")};
     private int[] validModelValues = new int[]{0, 1};
     private int[] modelBaudRates = new int[]{38400, 115200};
+    // For old model, Doc says 7 bits, but 8 seems needed, new calls for 115,200 n 8 1
     private int[] modelBitValues = new int[] {8, 8};
     private int[] modelStopValues = new int[] {SerialPort.ONE_STOP_BIT, SerialPort.ONE_STOP_BIT};
     private int[] modelParityValues = new int[] {SerialPort.NO_PARITY, SerialPort.NO_PARITY};
@@ -595,8 +596,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         activeSerialPort = com.fazecast.jSerialComm.SerialPort.getCommPort(portName);
         activeSerialPort.openPort();
         
-        // try to set it for communication via SerialDriver
-        // Doc says 7 bits, but 8 seems needed
+        // set it for communication
         activeSerialPort.setNumDataBits(modelBitValues[modelValue]);
         activeSerialPort.setNumStopBits(modelStopValues[modelValue]);
         activeSerialPort.setParity(modelParityValues[modelValue]);
@@ -616,8 +616,6 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         serialStream = new DataInputStream(activeSerialPort.getInputStream());
         ostream = activeSerialPort.getOutputStream();
 
-        // make less verbose
-        sendBytes(new byte[]{(byte) 'L', (byte) '-', 10, 13});
         // purge contents, if any
         try {
             int count = serialStream.available();
