@@ -285,6 +285,15 @@
         <pathelement path="${cp.append}"/>    <!-- appended by user -->
     </path>
 
+    <!-- path to create Jar files:  Same as project.class.path except for reference to settings dir -->
+    <path id="jar.class.path">
+        <pathelement path="${cp.prepend}"/>   <!-- prepended by user -->
+        <pathelement location="${jartarget}"/>
+        <path        refid="runtime.class.path"/>  <!-- contents of user preferences lib dir -->
+        <pathelement location="${target}/"/>  <!-- after declared jars to check for name collisions -->
+        <pathelement path="${cp.append}"/>    <!-- appended by user -->
+    </path>
+
     <!-- path to run tests -->
     <path id="test.class.path">
         <pathelement location="${jartarget}"/>
@@ -1854,7 +1863,7 @@
             description="create working jar file with current contents"
             depends="debug">
         <manifestclasspath property="jar.classpath" jarfile="${jartarget}/jmri.jar">
-          <classpath refid="project.class.path" />
+          <classpath refid="jar.class.path" />
         </manifestclasspath>
         <jar jarfile="${jartarget}/jmri.jar"
              basedir="${target}"
@@ -1887,7 +1896,7 @@
             description="create working jar file with test file contents"
             depends="tests">
         <manifestclasspath property="jar.classpath" jarfile="${jartarget}/jmri.jar">
-          <classpath refid="project.class.path" />
+          <classpath refid="jar.class.path" />
         </manifestclasspath>
         <jar jarfile="${jartarget}/jmri-tests.jar"
              basedir="${testtarget}"
