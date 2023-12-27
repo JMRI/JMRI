@@ -259,7 +259,11 @@
     <label>Light 16 Accessory Decoder Number</label>
   </variable>
 
+  <!-- the definition no long needs the sepearate thousands-hundreds and tens-ones -->
+  <!-- variables.  We comment them out instead of deleting them in case that was -->
+  <!-- an incorrect decision -->
 
+<!-- 
   <variable CV="181" item="Light 1 Accessory Decoder Number thousands-hundreds" default="0" opsOnly="yes">
     <decVal />
     <label>Light 1 Accessory Decoder Number thousands-hundreds</label>
@@ -324,6 +328,7 @@
     <decVal />
     <label>Light 16 Accessory Decoder Number thousands-hundreds</label>
   </variable>
+  
   <variable CV="201" item="Light 1 Accessory Decoder Number tens-ones" default="0" opsOnly="yes">
     <decVal />
     <label>Light 1 Accessory Decoder Number tens-ones</label>
@@ -452,4 +457,6 @@
     <decVal />
     <label>Light 16 Auto-Off Timer</label>
   </variable>
+ -->
+ 
 </variables>
