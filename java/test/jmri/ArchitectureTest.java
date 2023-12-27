@@ -292,10 +292,6 @@ public class ArchitectureTest {
     public static final ArchRule checkPurejavacommUsage = noClasses()
         .that()
         
-        .doNotHaveFullyQualifiedName("apps.util.issuereporter.SystemInfo").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrit.mailreport.ReportContext").and()
-
-        .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialConnectionConfig").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$1").and()
 
