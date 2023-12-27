@@ -150,7 +150,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 try {
                     openPortButtonActionPerformed(evt);
                 } catch (java.lang.UnsatisfiedLinkError ex) {
-                    log.error("Error while opening port.  Did you select the right one?", ex);
+                    log.error("Error while opening port.  Did you select the right one?\nException: {}", ex);
                 }
             }
         });
@@ -161,7 +161,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 try {
                     closePortButtonActionPerformed();
                 } catch (java.lang.UnsatisfiedLinkError ex) {
-                    log.error("Error while closing port.  Did you select the right one?", ex);
+                    log.error("Error while closing port.  Did you select the right one?\\nException: {}", ex);
                 }
             }
         });
@@ -453,10 +453,10 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 ostream.write(endbyte);
             }
         } catch (IOException e) {
-            log.error("Exception on output", e);
+            log.error("Exception on output: {}", e);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); // retain if needed later
-            log.error("Interrupted output", e);
+            log.error("Interrupted output: {}", e);
         }
     }
     
@@ -601,7 +601,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 count = serialStream.available();
             }
         } catch (IOException e) {
-            log.error("problem purging port at startup", e);
+            log.error("problem purging port at startup\n{}", e);
         }
 
         // report status?
@@ -639,10 +639,10 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 try {
                     handleIncomingData();
                 } catch (java.io.EOFException e) {
-                    log.info(Thread.currentThread().getName() + " thread ending, port closed");
+                    log.info("{} thread ending, port closed", Thread.currentThread().getName());
                     return;
                 } catch (java.io.IOException e) {
-                    log.warn(Thread.currentThread().getName() + " thread ending: Exception: {}", e.toString());
+                    log.warn("{} thread ending: Exception: {}", Thread.currentThread().getName(), e.toString());
                     return;
                 }
             }
