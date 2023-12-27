@@ -552,15 +552,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     }
 
     public Vector<String> getPortNames() {
-        // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector<String>();
-
-        SerialPort[] portIDs = SerialPort.getCommPorts();
-                // find the names of suitable ports
-        for (SerialPort portID : portIDs) {
-            portNameVector.addElement(portID.getSystemPortName());
-        }
-        return portNameVector;
+        return jmri.jmrix.AbstractSerialPortController.getActualPortNames();
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SR_NOT_CHECKED",
