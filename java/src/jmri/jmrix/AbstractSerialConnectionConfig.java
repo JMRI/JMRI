@@ -9,10 +9,10 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Vector;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -23,12 +23,10 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.SpinnerNumberModel;
+
 import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
 import jmri.util.swing.JComboBoxUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import purejavacomm.CommPortIdentifier;
 
 /**
  * Abstract base class for common implementation of the SerialConnectionConfig.
@@ -617,24 +615,17 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         }
     }
 
-    @SuppressWarnings("UseOfObsoleteCollectionType")
+    /**
+     * Provide a vector of valid port names, each a String.
+     * This may be implemented differently in subclasses 
+     * that e.g. do loopback or use a custom port-access library.
+     * @return Valid port names in the form used to select them later.
+     */
+    @SuppressWarnings("UseOfObsoleteCollectionType") // historical interface
     protected Vector<String> getPortNames() {
-        //reloadDriver(); // Refresh the list of communication ports
-        // first, check that the comm package can be opened and ports seen
-        Vector<String> portNameVector = new Vector<>();
-        Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
-        // find the names of suitable ports
-        while (portIDs.hasMoreElements()) {
-            CommPortIdentifier id = portIDs.nextElement();
-            // filter out line printers
-            if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
-            {
-                portNameVector.addElement(id.getName());
-            }
-        }
-        return portNameVector;
+        return AbstractSerialPortController.getActualPortNames();
     }
-
+        
     /**
      * This provides a method to return potentially meaningful names that are
      * used in OS to help identify ports against Hardware.
@@ -655,6 +646,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractSerialConnectionConfig.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractSerialConnectionConfig.class);
 
 }
