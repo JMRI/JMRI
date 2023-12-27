@@ -464,6 +464,16 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
     ToolTipTimer _tooltipTimer;
 
     protected void setToolTip(ToolTip tt) {
+        if (tt != null) {
+            var pos = tt.getPositionable();
+            if (pos != null) {  // LE turnout tooltips do not have a Positionable
+                if (pos.isHidden() && !isEditable()) {
+                    // Skip hidden objects
+                    return;
+                }
+            }
+        }
+
         if (tt == null) {
             _tooltip = null;
             if (_tooltipTimer != null) {
