@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+  <name>Light 11</name>
+  <column>
+    <group>
+      <label>
+        <text></text>
+      </label>
+      <row>
+        <display item="Light 11 Effect" label="Lighting Effect" layout="above" />
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Light 11 Input Type" label="Input Type [Set to 0 or 1 if the input board is not attached]" layout="above" />
+      </row>
+      <label>
+        <text> </text>
+      </label>
+    </group>
+    <group>
+      <column>
+        <display item="Light 11 Brightness" label="Brightness (1-100)" />
+        <display item="Light 11 Auto-Off Timer" label="Auto-Off Timer (0-255 sec)" />
+        <display item="Light 11 Accessory Decoder Number" label="Accessory Decoder Number (0-2047)" />
+        <display item="Light 11 Accessory Decoder Number thousands-hundreds" label="Accessory Decoder Number thousands-hundreds (0-20)" />
+        <display item="Light 11 Accessory Decoder Number tens-ones" label="Accessory Decoder Number tens-ones (0-99)" />
+      </column>
+    </group>
+  </column>
+</pane>

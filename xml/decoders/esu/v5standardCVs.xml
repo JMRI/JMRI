@@ -1043,6 +1043,11 @@
         <decVal/>
         <label>Firmware Major Version</label>
     </variable>
+    <variable CV="0.255.285:4" readOnly="yes" item="Firmware Full Version">
+        <splitHexVal/>
+        <label>Firmware Full Version</label>
+        <tooltip>A machine-comparable value calculated from the different parts of the Firmware Version</tooltip>
+    </variable>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoCVs.xml"/>
     <variables exclude="Essential Sound Unit">
         <xi:include href="http://jmri.org/xml/decoders/esu/v4projectInfoCVs.xml"/>

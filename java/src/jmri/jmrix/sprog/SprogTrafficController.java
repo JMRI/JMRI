@@ -12,9 +12,6 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractPortController;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;
-import purejavacomm.SerialPort;
-import purejavacomm.SerialPortEvent;
-import purejavacomm.SerialPortEventListener;
 
 /**
  * Converts Stream-based I/O to/from Sprog messages. The "SprogInterface" side
@@ -29,7 +26,7 @@ import purejavacomm.SerialPortEventListener;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Andrew Crosland Copyright (C) 2018
  */
-public class SprogTrafficController implements SprogInterface, SerialPortEventListener,
+public class SprogTrafficController implements SprogInterface,
         Runnable {
 
     private SprogReply reply = new SprogReply();
@@ -121,14 +118,14 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         this.sprogState = s;
         if (s == SprogState.V4BOOTMODE) {
             // enable flow control - required for sprog v4 bootloader
-            getController().setHandshake(SerialPort.FLOWCONTROL_RTSCTS_IN
-                    | SerialPort.FLOWCONTROL_RTSCTS_OUT);
+            var controller = getController();
+            controller.setHandshake(jmri.jmrix.AbstractSerialPortController.FlowControl.RTSCTS);
 
         } else {
             // disable flow control
             // removed Jan 2010 - this stops SPROG from sending. Could cause problems with
             // serial Sprogs, but I have no way of testing:
-            // getController().setHandshake(0);
+            // getController().setHandshake(false);
         }
         log.debug("Setting sprogState {}", s);
     }
@@ -411,37 +408,6 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     }
 
     private boolean unsolicited;
-
-    /**
-     * Respond to an event triggered by RXTX.
-     * <p>
-     * In this case we are only dealing with DATA_AVAILABLE but the other
-     * events are left here for reference.
-     *
-     * @author AJB Jan 2010
-     */
-    @Override
-    public void serialEvent(SerialPortEvent event) {
-        switch (event.getEventType()) {
-            case SerialPortEvent.BI:
-            case SerialPortEvent.OE:
-            case SerialPortEvent.FE:
-            case SerialPortEvent.PE:
-            case SerialPortEvent.CD:
-            case SerialPortEvent.CTS:
-            case SerialPortEvent.DSR:
-            case SerialPortEvent.RI:
-            case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
-                break;
-            case SerialPortEvent.DATA_AVAILABLE:
-                log.debug("Data Available in sprogState {}", sprogState);
-                handleOneIncomingReply();
-                break;
-            default:
-                log.warn("Unhandled serial port event code: {}", event.getEventType());
-                break;
-        }
-    }
 
     /**
      * Handle an incoming reply.

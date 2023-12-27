@@ -4,7 +4,7 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Hardware Support</title>
   <meta name="Author" content="Bob Jacobsen, Egbert Broerse, Jerry Grochow">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 
   <style type="text/css">
   * {
@@ -29,7 +29,7 @@
 </head><!-- Reorg and additions by @jerryg2003 2020-04-25 -->
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -116,6 +116,10 @@
             </li>
 
             <li>
+              <a href="dcc-ex/index.shtml">DCC-EX EX-CommandStation&lt; (arduino)</a>
+            </li>
+
+            <li>
               <a href="dccpp/index.shtml">DCC++&lt; (arduino)</a>
             </li>
 
@@ -173,6 +177,10 @@
 
             <li>
               <a href="tams/index.shtml">TAMS Master Control</a>
+            </li>
+
+            <li>
+              <a href="openlcb/TCS.shtml">TCS CS-105</a>
             </li>
 
             <li>
@@ -425,7 +433,7 @@
           <dd>
             <p class="dl">Configure: See <a href="arduino/index.shtml">the JMRI arduino help
             page</a> for information on configuring for accessory control. See also <a href=
-            "dccpp/index.shtml">DCC++</a> for use as a DCC command station.</p>
+            "dcc-ex/index.shtml">DCC-EX EX-CommandStation</a> for use as a DCC command station.</p>
 
             <p>&nbsp;</p>
           </dd>
@@ -638,6 +646,21 @@
             <p class="dl">Configure: EasyDCC command station via <a href=
             "easydcc/EasyDCC.shtml">Serial</a> or <a href="TerminalServer.shtml">Terminal
             Server</a></p>
+
+            <p>&nbsp;</p>
+          </dd>
+
+          <dt class="im">
+            <a href="https://www.youtube.com/c/DCCEX" target=
+            "_blank"><img src="dcc-ex/images/DCC-EX-logo.png" width="60"  alt="DCC-EX"></a>
+          </dt>
+
+          <dt>
+            <a href="dcc-ex/index.shtml">DCC-EX</a>
+          </dt>
+
+          <dd>
+            <p class="dl">Configure: <a href="dcc-ex/index.shtml">DCC-EX EX-CommandStation - Open Source Arduino Command Station</a>.</p>
 
             <p>&nbsp;</p>
           </dd>
@@ -932,6 +955,25 @@
 
             <p>&nbsp;</p>
           </dd>
+
+
+          <dt class="im">
+            <a href="https://www.tcsdcc.com" target="_blank"><img src="https://static.wixstatic.com/media/8ed9df_bc9a6b6a34aa415591de2fe1bdb7248b~mv2.png/v1/fill/w_172,h_115,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Official_Clear.png"
+            width="64" height="30" alt="TAMS"></a>
+          </dt>
+
+          <dt>
+            <a href="openlcb/TCS.shtml">TCS</a>
+          </dt>
+
+          <dd>
+            <p class="dl">Configure 
+            <a href="openlcb/TCS.shtml">connection to the TCS CS-105 command station.</a></p>
+
+            <p>&nbsp;</p>
+          </dd>
+
+
 
           <dt class="im">
             <a href="https://www.uhlenbrock.de/de_DE/index.htm" target="_blank"><img src="images/ico-Ur.gif" width=
@@ -1396,7 +1438,7 @@
           <dd>
             <p class="dl">Configure: See <a href="arduino/index.shtml">the JMRI arduino help
             page</a> for information on configuring for accessory control. See also <a href=
-            "dccpp/index.shtml">DCC++</a> for use as a DCC command station.</p>
+            "dcc-ex/index.shtml">DCC-EX EX-CommandStation</a> for use as a DCC command station.</p>
 
             <p>&nbsp;</p>
           </dd>
@@ -1640,11 +1682,11 @@
 
       <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

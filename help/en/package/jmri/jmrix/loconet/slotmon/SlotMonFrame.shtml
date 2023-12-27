@@ -5,10 +5,10 @@
   <title>JMRI: LocoNet Slot Monitor</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help loconet slot monitor">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -99,10 +99,10 @@
 
         <dd>The current function settings. A check mark indicates a function is On.</dd>
       </dl>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

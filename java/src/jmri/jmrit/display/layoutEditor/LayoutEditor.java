@@ -298,6 +298,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private boolean turnoutCirclesWithoutEditMode = false;
     private boolean tooltipsWithoutEditMode = false;
     private boolean tooltipsInEditMode = true;
+    private boolean tooltipsAlwaysOrNever = false;     // When true, don't call setAllShowToolTip().
 
     // turnout size parameters - saved with panel
     private double turnoutBX = LayoutTurnout.turnoutBXDefault; // RH, LH, WYE
@@ -697,11 +698,15 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         controlCheckBoxMenuItem.setSelected(allControlling());
 
         if (isEditable()) {
-            setAllShowToolTip(tooltipsInEditMode);
-            setAllShowLayoutTurnoutToolTip(tooltipsInEditMode);
+            if (!tooltipsAlwaysOrNever) {
+                setAllShowToolTip(tooltipsInEditMode);
+                setAllShowLayoutTurnoutToolTip(tooltipsInEditMode);
+            }
         } else {
-            setAllShowToolTip(tooltipsWithoutEditMode);
-            setAllShowLayoutTurnoutToolTip(tooltipsWithoutEditMode);
+            if (!tooltipsAlwaysOrNever) {
+                setAllShowToolTip(tooltipsWithoutEditMode);
+                setAllShowLayoutTurnoutToolTip(tooltipsWithoutEditMode);
+            }
         }
 
         scrollNoneMenuItem.setSelected(_scrollState == Editor.SCROLL_NONE);
@@ -856,8 +861,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
 
             if (isEditable()) {
-                setAllShowToolTip(tooltipsInEditMode);
-                setAllShowLayoutTurnoutToolTip(tooltipsInEditMode);
+                if (!tooltipsAlwaysOrNever) {
+                    setAllShowToolTip(tooltipsInEditMode);
+                    setAllShowLayoutTurnoutToolTip(tooltipsInEditMode);
+                }
 
                 // redo using the "Extra" color to highlight the selected block
                 if (highlightSelectedBlockFlag) {
@@ -866,8 +873,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     }
                 }
             } else {
-                setAllShowToolTip(tooltipsWithoutEditMode);
-                setAllShowLayoutTurnoutToolTip(tooltipsWithoutEditMode);
+                if (!tooltipsAlwaysOrNever) {
+                    setAllShowToolTip(tooltipsWithoutEditMode);
+                    setAllShowLayoutTurnoutToolTip(tooltipsWithoutEditMode);
+                }
 
                 // undo using the "Extra" color to highlight the selected block
                 if (highlightSelectedBlockFlag) {
@@ -986,6 +995,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         tooltipNoneMenuItem.addActionListener((ActionEvent event) -> {
             tooltipsInEditMode = false;
             tooltipsWithoutEditMode = false;
+            tooltipsAlwaysOrNever = true;
             setAllShowToolTip(false);
             setAllShowLayoutTurnoutToolTip(false);
         });
@@ -996,6 +1006,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         tooltipAlwaysMenuItem.addActionListener((ActionEvent event) -> {
             tooltipsInEditMode = true;
             tooltipsWithoutEditMode = true;
+            tooltipsAlwaysOrNever = true;
             setAllShowToolTip(true);
             setAllShowLayoutTurnoutToolTip(true);
         });
@@ -1006,6 +1017,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         tooltipInEditMenuItem.addActionListener((ActionEvent event) -> {
             tooltipsInEditMode = true;
             tooltipsWithoutEditMode = false;
+            tooltipsAlwaysOrNever = false;
             setAllShowToolTip(isEditable());
             setAllShowLayoutTurnoutToolTip(isEditable());
         });
@@ -1016,6 +1028,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         tooltipNotInEditMenuItem.addActionListener((ActionEvent event) -> {
             tooltipsInEditMode = false;
             tooltipsWithoutEditMode = true;
+            tooltipsAlwaysOrNever = false;
             setAllShowToolTip(!isEditable());
             setAllShowLayoutTurnoutToolTip(!isEditable());
         });
@@ -7900,6 +7913,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         if (tooltipsWithoutEditMode != state) {
             tooltipsWithoutEditMode = state;
             setTooltipSubMenu();
+            setTooltipsAlwaysOrNever();
         }
     }
 
@@ -7907,7 +7921,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         if (tooltipsInEditMode != state) {
             tooltipsInEditMode = state;
             setTooltipSubMenu();
+            setTooltipsAlwaysOrNever();
         }
+    }
+
+    private void setTooltipsAlwaysOrNever() {
+        tooltipsAlwaysOrNever = ((tooltipsInEditMode && tooltipsWithoutEditMode) ||
+                    (!tooltipsInEditMode && !tooltipsWithoutEditMode));
     }
 
     private void setTooltipSubMenu() {

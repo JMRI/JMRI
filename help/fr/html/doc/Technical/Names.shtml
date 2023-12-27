@@ -5,11 +5,11 @@
   <title>JMRI: Noms et D&eacute;signations</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code names user name system name">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -287,9 +287,9 @@ Pour ce faire, deux r&#232;gles informelles sont utilis&#233;es:
         le programme tente de faire</li>
       </ul>
 
-        <!--#include virtual="/Footer_fr.shtml" -->
+        <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

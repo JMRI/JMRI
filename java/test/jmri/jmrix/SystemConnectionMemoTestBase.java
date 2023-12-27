@@ -119,10 +119,8 @@ abstract public class SystemConnectionMemoTestBase<M extends DefaultSystemConnec
         Assert.assertEquals("Output Interval after set", 50, scm.getOutputInterval());
     }
 
-    @BeforeEach
     abstract public void setUp();
 
-    @AfterEach
     abstract public void tearDown();
 
 }

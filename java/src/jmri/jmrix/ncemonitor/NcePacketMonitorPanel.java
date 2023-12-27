@@ -1,14 +1,15 @@
 package jmri.jmrix.ncemonitor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Enumeration;
 import java.util.ResourceBundle;
 import java.util.Vector;
+
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
@@ -19,15 +20,12 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JToggleButton;
+
 import jmri.jmrix.nce.NceSystemConnectionMemo;
+import jmri.jmrix.nce.ncemon.Bundle;
 import jmri.jmrix.nce.swing.NcePanelInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.NoSuchPortException;
-import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
+
+import com.fazecast.jSerialComm.SerialPort;
 
 /**
  * Simple GUI for access to an NCE monitor card
@@ -36,13 +34,14 @@ import purejavacomm.UnsupportedCommOperationException;
  * rest of the GUI then appears.
  *
  * @author Ken Cameron Copyright (C) 2010 derived from -
- * @author Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2023
+ * @author Ken Cameron Copyright (C) 2023
  */
 @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "serialStream is access from separate thread, and this class isn't used much")
 public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements NcePanelInterface {
-
+    
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ncemonitor.NcePacketMonitorBundle");
-
+    
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
     NceSystemConnectionMemo memo = null;
@@ -50,6 +49,11 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     JToggleButton checkButton = new JToggleButton("Info");
     JRadioButton locoSpeedButton = new JRadioButton("Hide loco packets");
     JCheckBox truncateCheckBox = new JCheckBox("+ on");
+
+    protected JComboBox<String> baudBox = new JComboBox<>();
+    protected JLabel baudBoxLabel;
+    private String[] validSpeedNames = new String[]{Bundle.getMessage("Baud38400"), Bundle.getMessage("Baud115200")};
+    private int[] validSpeedValues = new int[]{38400, 115200};
 
     public NcePacketMonitorPanel() {
         super();
@@ -111,6 +115,12 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         for (int i = 0; i < v.size(); i++) {
             portBox.addItem(v.elementAt(i));
         }
+        // offer baud rate choice
+        baudBox.setToolTipText("Select baud rate");
+        baudBox.setAlignmentX(LEFT_ALIGNMENT);
+        for (int i = 0; i < validSpeedNames.length; i++) {
+            baudBox.addItem(validSpeedNames[i]);
+        }
         openPortButton.setText("Open");
         openPortButton.setToolTipText("Configure program to use selected port");
         openPortButton.addActionListener(new java.awt.event.ActionListener() {
@@ -130,13 +140,17 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             js.setMaximumSize(new Dimension(10000, 10));
             add(js);
         }
-        JPanel p1 = new JPanel();
-        p1.setLayout(new FlowLayout());
-        p1.add(new JLabel("Serial port: "));
-        p1.add(portBox);
-        p1.add(openPortButton);
-        p1.setMaximumSize(p1.getPreferredSize());
-        add(p1);
+        {
+            JPanel p1 = new JPanel();
+            p1.setLayout(new FlowLayout());
+            p1.add(new JLabel("Serial port: "));
+            p1.add(portBox);
+            p1.add(new JLabel("Baud Rate:"));
+            p1.add(baudBox);
+            p1.add(openPortButton);
+            //p1.setMaximumSize(p1.getPreferredSize());
+            add(p1);
+        }
 
         // add user part of GUI
         {
@@ -463,12 +477,21 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
      * @param e open button event
      */
     void openPortButtonActionPerformed(java.awt.event.ActionEvent e) {
-        log.info("Open button pushed");
+        //log.info("Open button pushed");
         // can't change this anymore
         openPortButton.setEnabled(false);
         portBox.setEnabled(false);
+        baudBox.setEnabled(false);
         // Open the port
-        openPort((String) portBox.getSelectedItem(), "JMRI");
+        String openStatus = openPort((String) portBox.getSelectedItem(), validSpeedValues[baudBox.getSelectedIndex()], "JMRI");
+        if (openStatus != null) {
+            log.debug("Open Returned: {} ", openStatus);
+            // enable options
+            openPortButton.setEnabled(true);
+            portBox.setEnabled(true);
+            baudBox.setEnabled(true);
+            return;
+        }
         // start the reader
         readerThread = new Thread(new Reader());
         readerThread.start();
@@ -498,7 +521,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
 
         // release port
         if (activeSerialPort != null) {
-            activeSerialPort.close();
+            activeSerialPort.closePort();
         }
         serialStream = null;
         ostream = null;
@@ -512,92 +535,73 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     public Vector<String> getPortNames() {
         // first, check that the comm package can be opened and ports seen
         portNameVector = new Vector<String>();
-        Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
-        // find the names of suitable ports
-        while (portIDs.hasMoreElements()) {
-            CommPortIdentifier id = portIDs.nextElement();
-            // filter out line printers
-            if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
-            {
-                portNameVector.addElement(id.getName());
-            }
+
+        SerialPort[] portIDs = SerialPort.getCommPorts();
+                // find the names of suitable ports
+        for (SerialPort portID : portIDs) {
+            portNameVector.addElement(portID.getSystemPortName());
         }
         return portNameVector;
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SR_NOT_CHECKED",
                                         justification="this is for skip-chars while loop: no matter how many, we're skipping")
-    public synchronized String openPort(String portName, String appName) {
+    public synchronized String openPort(String portName, int baudRate, String appName) {
         // open the port, check ability to set moderators
+
+        // get and open the primary port
+        activeSerialPort = com.fazecast.jSerialComm.SerialPort.getCommPort(portName);
+        activeSerialPort.openPort();
+        
+        // try to set it for communication via SerialDriver
+        // Doc says 7 bits, but 8 seems needed
+        activeSerialPort.setNumDataBits(8);
+        activeSerialPort.setNumStopBits(com.fazecast.jSerialComm.SerialPort.ONE_STOP_BIT);
+        activeSerialPort.setParity(com.fazecast.jSerialComm.SerialPort.NO_PARITY);
+        activeSerialPort.setBaudRate(baudRate);
+        
+        // set RTS high, DTR high
+        activeSerialPort.setRTS(); // not connected in some serial ports and adapters
+        activeSerialPort.setDTR(); // pin 1 in DIN8; on main connector, this is DTR
+
+        // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
+        activeSerialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_DISABLED);
+
+        // set timeout
+        activeSerialPort.setComPortTimeouts(com.fazecast.jSerialComm.SerialPort.TIMEOUT_READ_BLOCKING, 0, 0);
+
+        // get and save stream
+        serialStream = new DataInputStream(activeSerialPort.getInputStream());
+        ostream = activeSerialPort.getOutputStream();
+
+        // make less verbose
+        sendBytes(new byte[]{(byte) 'L', (byte) '-', 10, 13});
+        // purge contents, if any
         try {
-            // get and open the primary port
-            CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
-            try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
-            } catch (PortInUseException p) {
-                handlePortBusy(p, portName);
-                return "Port " + p + " in use already";
-            }
-
-            // try to set it for communication via SerialDriver
-            try {
-                // Doc says 7 bits, but 8 seems needed
-                activeSerialPort.setSerialPortParams(38400, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
-                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
-            }
-
-            // set RTS high, DTR high
-            activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
-
-            // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
-            activeSerialPort.setFlowControlMode(0);
-
-            // set timeout
-            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
-
-            // get and save stream
-            serialStream = new DataInputStream(activeSerialPort.getInputStream());
-            ostream = activeSerialPort.getOutputStream();
-
-            // make less verbose
-            sendBytes(new byte[]{(byte) 'L', (byte) '-', 10, 13});
-            // purge contents, if any
             int count = serialStream.available();
             log.debug("input stream shows {} bytes available", count);
             while (count > 0) {
                 serialStream.skip(count);
                 count = serialStream.available();
             }
-
-            // report status?
-            if (log.isInfoEnabled()) {
-                log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
-            }
-
-        } catch (java.io.IOException ex) {
-            log.error("IO error while opening port {}", portName, ex);
-            return "IO error while opening port " + portName + ": " + ex;
-        } catch (UnsupportedCommOperationException ex) {
-            log.error("Unsupported communications operation while opening port {}", portName, ex);
-            return "Unsupported communications operation while opening port " + portName + ": " + ex;
-        } catch (NoSuchPortException ex) {
-            log.error("No such port: {}", portName, ex);
-            return "No such port: " + portName + ": " + ex;
+        } catch (IOException e) {
+            log.error("problem purging port at startup", e);
         }
-        return null; // indicates OK return
-    }
 
-    void handlePortBusy(PortInUseException p, String port) {
-        log.error("Port {} in use, cannot open", port, p);
+        // report status?
+        if (log.isInfoEnabled()) {
+            log.info("Port {} {} opened at {} baud, sees DTR: {} RTS: {} DSR: {} CTS: {} DCD: {}", 
+                    portName, activeSerialPort.getDescriptivePortName(),
+                    activeSerialPort.getBaudRate(), activeSerialPort.getDTR(), 
+                    activeSerialPort.getRTS(), activeSerialPort.getDSR(), activeSerialPort.getCTS(),
+                    activeSerialPort.getDCD());
+        }
+
+        return null; // indicates OK return
     }
 
     DataInputStream serialStream = null;
     OutputStream ostream = null;
-
-    private final static Logger log = LoggerFactory.getLogger(NcePacketMonitorPanel.class);
 
     /**
      * Internal class to handle the separate character-receive thread
@@ -697,4 +701,6 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                     jmri.InstanceManager.getDefault(NceSystemConnectionMemo.class));
         }
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NcePacketMonitorPanel.class);
 }

@@ -31,10 +31,10 @@ import jmri.util.swing.TextFilter;
  * appropriate consist address.
  *
  * @author Dan Boudreau Copyright (C) 2007
+ * @author Ken Cameron Copyright (C) 2023
  */
 public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListener {
 
-    private static final int CS_CONSIST_MEM = 0xF500; // start of NCE CS Consist memory
     private static final int CONSIST_LNTH = 16; // 16 bytes per consist line
     private static final int REPLY_1 = 1; // reply length of 1 byte expected
     private int replyLen = 0; // expected byte length
@@ -84,7 +84,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
             waiting = 0;
             fileValid = false; // in case we break out early
             int consistNum = 0; // for user status messages
-            int curConsist = CS_CONSIST_MEM; // load the start address of the NCE consist memory
+            int curConsist = tc.csm.getConsistHeadAddr(); // load the start address of the NCE consist memory
             byte[] consistData = new byte[CONSIST_LNTH]; // NCE Consist data
             String line;
 
@@ -118,7 +118,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
                 }
 
                 // consist file found, give the user the choice to continue
-                if (curConsist == CS_CONSIST_MEM) {
+                if (curConsist == tc.csm.getConsistHeadAddr()) {
                     if (JmriJOptionPane.showConfirmDialog(null,
                             Bundle.getMessage("RestoreTakesAwhile"),
                             Bundle.getMessage("NceConsistRestore"),

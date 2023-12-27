@@ -464,6 +464,16 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
     ToolTipTimer _tooltipTimer;
 
     protected void setToolTip(ToolTip tt) {
+        if (tt != null) {
+            var pos = tt.getPositionable();
+            if (pos != null) {  // LE turnout tooltips do not have a Positionable
+                if (pos.isHidden() && !isEditable()) {
+                    // Skip hidden objects
+                    return;
+                }
+            }
+        }
+
         if (tt == null) {
             _tooltip = null;
             if (_tooltipTimer != null) {
@@ -3617,6 +3627,18 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
                 } else if (pos instanceof LightIcon) {
                     LightIcon icon = (LightIcon) pos;
                     if (bean.equals(icon.getLight())) {
+                        report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                    }
+
+                } else if (pos instanceof ReporterIcon) {
+                    ReporterIcon icon = (ReporterIcon) pos;
+                    if (bean.equals(icon.getReporter())) {
+                        report.add(new NamedBeanUsageReport("PositionalIcon", data));
+                    }
+
+                } else if (pos instanceof AudioIcon) {
+                    AudioIcon icon = (AudioIcon) pos;
+                    if (bean.equals(icon.getAudio())) {
                         report.add(new NamedBeanUsageReport("PositionalIcon", data));
                     }
 

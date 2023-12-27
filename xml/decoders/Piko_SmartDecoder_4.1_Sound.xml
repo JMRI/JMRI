@@ -17,6 +17,8 @@
 	<!-- Version 2 - Add CVs 100, 101 for Function Mapping Shift -->
 	<version author="Ulrich Gerlach" version="3" lastUpdated="2023-07-19"/>
 	<!-- Version 3 - Add CVs for Extended Function Mapping Shift Bank 1 & 2 -->
+	<version author="Ulrich Gerlach" version="4" lastUpdated="2023-12-03"/>
+	<!-- Version 4 - Add English translations -->
 	<!-- WARNING: output names fully linked to function mapping include file - do not change independently       -->
 	<decoder>
 		<family name="PIKO SmartDecoder 4.1" mfg="PIKO" lowVersionID="30" highVersionID="35" comment="Decoders not sorted (necessarily) in numerical order">
@@ -34,7 +36,7 @@
 				<!-- Anfahren/Bremsen -->
 				<size length="21.5" width="10.5" height="3.7" units="mm"/>
 			</model>
-			<model model="PIKO46440-18"  replacementFamily="PIKO SmartDecoder 4.1" numOuts="4" numFns="28" maxMotorCurrent="0.8A" formFactor="TT" connector="Next18" productID="PIKO46440-18" comment="Piko SmartDecoder 4.1 Sound Next18-S Steam loco BR 55 plug and RailCom(R) (Plus)">
+			<model model="PIKO46440-18" replacementFamily="PIKO SmartDecoder 4.1" numOuts="4" numFns="28" maxMotorCurrent="0.8A" formFactor="TT" connector="Next18" productID="PIKO46440-18" comment="Piko SmartDecoder 4.1 Sound Next18-S Steam loco BR 55 plug and RailCom(R) (Plus)">
 				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
 				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
 				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
@@ -117,35 +119,12 @@
 			<!-- CV 17 - 18 already in place with CV 1-->
 			<!-- CV 19 Consisting Information -->
 			<xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-			<!-- CV 27 ABC stop -->
-			<variable item="ABC stop with asymmetrical DCC (right rail higher)" CV="27" default="0" mask="XXXXXXXV">
-				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-				<label>ABC stop with asymmetrical DCC (right rail higher)</label>
-				<label xml:lang="de">ABC rechte Schiene positiver</label>
-				<label xml:lang="cs">ABC zastavení s asymetrickým DCC (pravá kolejnice vyšší)</label>
-			</variable>
-			<variable item="ABC stop with asymmetrical DCC (left rail higher)" CV="27" default="0" mask="XXXXXXVX">
-				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-				<label>ABC stop with asymmetrical DCC (left rail higher)</label>
-				<label xml:lang="de">ABC linke Schiene positiver</label>
-				<label xml:lang="cs">ABC zastavení s asymetrickým DCC (levá kolejnice vyšší)</label>
-			</variable>
-			<variable item="DC stop when polarity in opposite direction" CV="27" default="0" mask="XXXVXXXX">
-				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-				<label>DC stop when polarity in opposite direction</label>
-				<label xml:lang="de">DC mit Fahrtrichtung entgegengesetzt</label>
-				<label xml:lang="cs">DC zastavení když je polarita v opačném směru</label>
-			</variable>
-			<variable item="DC stop when polarity in same direction" CV="27" default="0" mask="XXVXXXXX">
-				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-				<label>DC stop when polarity in same direction</label>
-				<label xml:lang="de">DC mit Fahrtrichtung gleich</label>
-				<label xml:lang="cs">DC zastavení když je polarita ve stejném směru</label>
-			</variable>
+			<!-- CV 27 - ABC stop configuration -->
+			<xi:include href="http://jmri.org/xml/decoders/piko/cv27.xml"/>
 			<variable item="ABC stop when moving backward (enabled) or forward (disabled)" CV="27" default="0" mask="VXXXXXXX">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 				<label>ABC stop when moving backward (Yes) or forward (No)</label>
-				<label xml:lang="de">ABC in Fahrtrichtung rückwärts</label>
+				<label xml:lang="de">ABC in Fahrtrichtung rückwärts (Ja), sonst vorwärts (Nein)</label>
 				<label xml:lang="cs">ABC zastavení když je pohyb zpět (povoleno) nebo vpřed (zakázáno)</label>
 			</variable>
 			<!-- CV 28 RailCom -->
@@ -221,47 +200,47 @@
 				<tooltip xml:lang="de">Bit 0 bis Bit 7</tooltip>
 			</variable>
 			<variable item="Fn Map Shift F1" CV="100" default="0" mask="XXXXXXXV">
-                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-            </variable>
-            <variable item="Fn Map Shift F2" CV="100" default="0" mask="XXXXXXVX">
-                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-            </variable>
-            <variable item="Fn Map Shift F3" CV="100" default="0" mask="XXXXXVXX">
-                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-            </variable>
-            <variable item="Fn Map Shift F4" CV="100" default="0" mask="XXXXVXXX">
-                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-            </variable>
-            <variable item="Fn Map Shift F0f" CV="100" default="0" mask="XXXVXXXX">
-                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-            </variable>
-            <variable item="Fn Map Shift F0r" CV="100" default="0" mask="XXVXXXXX">
-                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-            </variable>
-            <variable item="Fn Map Shift F5" CV="101" default="0" mask="XXXXXXXV">
-                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-            </variable>
-            <variable item="Fn Map Shift F6" CV="101" default="0" mask="XXXXXXVX">
-                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-            </variable>
-            <variable item="Fn Map Shift F7" CV="101" default="0" mask="XXXXXVXX">
-                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-            </variable>
-            <variable item="Fn Map Shift F8" CV="101" default="0" mask="XXXXVXXX">
-                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-            </variable>
-            <variable item="Fn Map Shift F9" CV="101" default="0" mask="XXXVXXXX">
-                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-            </variable>
-            <variable item="Fn Map Shift F10" CV="101" default="0" mask="XXVXXXXX">
-                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-            </variable>
-            <variable item="Fn Map Shift F11" CV="101" default="0" mask="XVXXXXXX">
-                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-            </variable>
-            <variable item="Fn Map Shift F12" CV="101" default="0" mask="VXXXXXXX">
-                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-            </variable>			
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			</variable>
+			<variable item="Fn Map Shift F2" CV="100" default="0" mask="XXXXXXVX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			</variable>
+			<variable item="Fn Map Shift F3" CV="100" default="0" mask="XXXXXVXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			</variable>
+			<variable item="Fn Map Shift F4" CV="100" default="0" mask="XXXXVXXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			</variable>
+			<variable item="Fn Map Shift F0f" CV="100" default="0" mask="XXXVXXXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			</variable>
+			<variable item="Fn Map Shift F0r" CV="100" default="0" mask="XXVXXXXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			</variable>
+			<variable item="Fn Map Shift F5" CV="101" default="0" mask="XXXXXXXV">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			</variable>
+			<variable item="Fn Map Shift F6" CV="101" default="0" mask="XXXXXXVX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			</variable>
+			<variable item="Fn Map Shift F7" CV="101" default="0" mask="XXXXXVXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			</variable>
+			<variable item="Fn Map Shift F8" CV="101" default="0" mask="XXXXVXXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			</variable>
+			<variable item="Fn Map Shift F9" CV="101" default="0" mask="XXXVXXXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			</variable>
+			<variable item="Fn Map Shift F10" CV="101" default="0" mask="XXVXXXXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			</variable>
+			<variable item="Fn Map Shift F11" CV="101" default="0" mask="XVXXXXXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			</variable>
+			<variable item="Fn Map Shift F12" CV="101" default="0" mask="VXXXXXXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			</variable>
 			<variable item="Analog Control option 1" CV="102" default="2" mask="XXXXXXVV">
 				<enumVal>
 					<enumChoice choice="Inactive">
@@ -1162,7 +1141,6 @@
 			<xi:include href="http://jmri.org/xml/decoders/piko/cv353-368_v4.1.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/piko/cv369-384_v4.1.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/piko/cv385-400_v4.1.xml"/>
-			
 			<xi:include href="http://jmri.org/xml/decoders/piko/cv401-416_v4.1.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/piko/cv417-432_v4.1.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/piko/cv433-448_v4.1.xml"/>
@@ -1170,7 +1148,6 @@
 			<xi:include href="http://jmri.org/xml/decoders/piko/cv465-480_v4.1.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/piko/cv481-496_v4.1.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/piko/cv497-512_v4.1.xml"/>
-			
 			<!--Sound CVs -->
 			<xi:include href="http://jmri.org/xml/decoders/piko/cv900-1024_v4.1.xml"/>
 			<!-- CV 900.1021=4-931.1021=4 Piko Info: Volume 0-255 of the single sounds -->

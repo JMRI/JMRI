@@ -1,7 +1,7 @@
 <!-- SidebarTools.shtml -->
 <!-- This is the common sidebar definition for Tools pages -->
 
-        <dt><a href="/help/en/html/tools/">Tools</a></dt>
+        <dt><a href="/help/en/html/tools/index.shtml">Tools</a></dt>
         <dd>JMRI tools for working with your layout:
         <ul> <!-- Try to organize within category by frequency of use or alphabetical -->
             <li><i style="padding-left: 1em;">Common Tools:</i>

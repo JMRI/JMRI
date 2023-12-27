@@ -2,7 +2,6 @@ package jmri.jmrix;
 
 import jmri.ProgrammingMode;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -18,24 +17,26 @@ abstract public class AbstractOpsModeProgrammerTestBase extends jmri.AddressedPr
 
     @Test
     public void testDefaultViaBestMode() {
-        Assert.assertEquals("Check Default", ProgrammingMode.OPSBYTEMODE,
-                ((AbstractProgrammer)programmer).getBestMode());        
+        Assertions.assertEquals( ProgrammingMode.OPSBYTEMODE,
+            ((AbstractProgrammer)programmer).getBestMode(),"Check Default");        
     }
 
     @Override
     @Test
     public void testGetCanRead() {
-        Assert.assertFalse("can read", programmer.getCanRead());
+        Assertions.assertFalse( programmer.getCanRead(),"can read");
     }
     
     @Override
     @Test
     public void testSetGetMode() {
-        Assert.assertThrows(IllegalArgumentException.class, () -> programmer.setMode(ProgrammingMode.REGISTERMODE));
+        IllegalArgumentException iae = Assertions.assertThrows(
+            IllegalArgumentException.class, () ->
+                programmer.setMode(ProgrammingMode.REGISTERMODE));
+        Assertions.assertNotNull(iae);
     }
     
     // must set the value of programmer in setUp.
-    @BeforeEach
     @Override
     abstract public void setUp();
 

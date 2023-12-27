@@ -5,10 +5,10 @@
   <title>JMRI Hardware Support - SPROG Generation 5 Hardware Support</title>
   <meta name="author" content="Andrew Crosland">
   <meta name="keywords" content="SPROG java model railroad JMRI install windows linux mac osx">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="../SidebarUp.shtml" -->
@@ -111,11 +111,11 @@
       <p>Click Next to complete the setup.</p>
 
       <p>CBUS is a registered trade mark of Dr Michael Bolton</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

@@ -1,10 +1,74 @@
-The definitive copy of LaunchJMRI.exe is kept in Git in this directory.  This keeps it stable in the interest of managing the large number of anti-virus approaches on Windows systems.
+InstallJMRI.exe and LaunchJMRI.exe are two different NSIS-generated programs:
 
-Should you need to recreate the LaunchJMRI.exe use 'ant launchjmri.exe` or
+- InstallJMRI.exe is used to create an installable software package.  
 
-/opt/local/bin/makensis -V2 LaunchJMRI.nsi
+- LaunchJMRI.exe is used to start a JMRI package after it has been installed 
+(using InstallJMRI.exe).
 
-Note that this ant target is not included in the package-windows target: We  do not remake the LaunchJMRI.exe file as part of the build of the release packages.  
+--------
+Note on InstallJMRI.exe
+--------
 
-Note that there have been problems reported doing this on macOS, though others have made it work. Check that the length of the created file is reasonable.
+Developers are _not recommended_ to use the NSIS "interactive GUI" tool to generate the 
+"InstallJMRI.exe" program.  The "InstallJMRI.exe" tool is best done via the 
+"ant package-windows" target.  
 
+--------
+Notes on LaunchJMRI.exe
+--------
+
+1. Why isn't LaunchJMRI.exe re-generated as part of "package-windows"?
+
+The definitive copy of LaunchJMRI.exe is kept in Git in this directory.  This 
+keeps it stable in the interest of managing the large number of anti-virus 
+approaches on Windows systems.  As such, changes to LaunchJMRI.nsi should be changed 
+only when necessary.  
+
+We _do not_ regularly remake the LaunchJMRI.exe file as part of the build of the
+release package.  This is because the LaunchJMRI.exe package is subject to the 
+various "Anti-Virus" checks.  Every time it changes, it takes a while for the 
+virus checkers to calm down".  And that means user complaints...
+
+So note that this ant target is not included in the package-windows target!  Modify 
+the LaunchJMRI.nsi file ONLY when necessary, and ONLY commit changes to 
+LaunchJMRI.nsi and/or LaunchJMRI.exe when they are NEEDED!
+
+2. Which NSIS version was used?
+
+This executable was generated using NSIS version 3.09 with the "Special build" 
+called "Large strings".  This was downloaded from nsis.sourceforge.io in early 
+December, 2023.
+
+3. How should I make a new LaunchJMRI.exe?
+
+(See LaunchJMRI.exe item 1. above!)
+
+Should you need to recreate the LaunchJMRI.exe program, use 
+
+   ant launchjmri.exe 
+
+or execute on Linux: 
+
+   /opt/local/bin/makensis -V2 LaunchJMRI.nsi
+
+Note that there have been problems reported doing this on MacOS, though others 
+have made it work. Check that the length of the created file is reasonable.
+
+4.  How are the NSIS "parameters" used?
+ 
+- When the "/debug" parameter is selected, the launcher opens a window that is 
+independent of JAVA, that effectively contains "debugging log" that the 
+Launcher functionality provides.  This window remains alive until JMRI exits, 
+and the JAVA code returns a "completion" code to the Launcher.  If used from a 
+"command prompt", this window must be closed before the command prompt can be
+used for additional commands.
+
+- When the "/noisy" parameter is selected, the launcher opens a window that is 
+independent of JAVA which effectively contains the JMRI "console log".  This 
+window remains alive during the entire JMRI run.
+
+- These parameters are separate from JMRI's "parameters".  JMRI' parameters are 
+discussed in the "help" for the "developers" page about "How the startup scripts 
+work", at:
+
+  https://www.jmri.org/help/en/html/doc/Technical/StartUpScripts.shtml .

@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +19,9 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import jmri.*;
 import jmri.NamedBean.DisplayOptions;
+import jmri.jmrit.dispatcher.TrainInfoFile;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.util.JmriJFrame;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.swing.JComboBoxUtil;
@@ -1375,30 +1378,21 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             panel1.add(sectionNameLabel);
             panel1.add(fixedSectionLabel);
             contentPane.add(panel1);
-            // add table of Actions
-            JPanel pctSpace = new JPanel();
-            pctSpace.setLayout(new FlowLayout());
-            pctSpace.add(new JLabel("   "));
-            contentPane.add(pctSpace);
+            addFrame.getContentPane().add(new JSeparator());
             JPanel pct = new JPanel();
+            pct.setLayout(new BorderLayout());
             // initialize table of actions
             actionTableModel = new SpecialActionTableModel();
             JTable actionTable = new JTable(actionTableModel);
             actionTable.setRowSelectionAllowed(false);
-            actionTable.setPreferredScrollableViewportSize(
-                    new java.awt.Dimension(750, 200));
             TableColumnModel actionColumnModel = actionTable
                     .getColumnModel();
             TableColumn whenColumn = actionColumnModel
                     .getColumn(SpecialActionTableModel.WHEN_COLUMN);
             whenColumn.setResizable(true);
-            whenColumn.setMinWidth(270);
-            whenColumn.setMaxWidth(300);
             TableColumn whatColumn = actionColumnModel
                     .getColumn(SpecialActionTableModel.WHAT_COLUMN);
             whatColumn.setResizable(true);
-            whatColumn.setMinWidth(290);
-            whatColumn.setMaxWidth(350);
             TableColumn editColumn = actionColumnModel
                     .getColumn(SpecialActionTableModel.EDIT_COLUMN);
             // install button renderer and editor
@@ -1410,9 +1404,11 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             actionTable.setRowHeight(testButton.getPreferredSize().height);
             editColumn.setResizable(false);
             editColumn.setMinWidth(testButton.getPreferredSize().width);
+            editColumn.setMaxWidth(testButton.getPreferredSize().width);
             TableColumn removeColumn = actionColumnModel
                     .getColumn(SpecialActionTableModel.REMOVE_COLUMN);
             removeColumn.setMinWidth(testButton.getPreferredSize().width);
+            removeColumn.setMaxWidth(testButton.getPreferredSize().width);
             removeColumn.setResizable(false);
             JScrollPane actionTableScrollPane = new JScrollPane(
                     actionTable);
@@ -1487,6 +1483,14 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private final JSpinner whatMinuteSpinner2 = new JSpinner(new SpinnerNumberModel(100, 100, 65500, 1)); // time in ms
     private final JSpinner locoFunctionSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 28, 1));       // function ID
     private final JTextField whatStringField = new JTextField(12);
+    private final JTextField locoAddress = new JTextField(12);
+    private RosterEntryComboBox rosterComboBox = new RosterEntryComboBox();
+    private JComboBox<String> trainInfoComboBox = new JComboBox<>();
+    private JRadioButton locoAddressDefault = new JRadioButton(rbx.getString("TrainInfoUseDefault"));
+    private JRadioButton locoAddressRoster = new JRadioButton(rbx.getString("TrainInfoUseRoster"));
+    private JRadioButton locoAddressNumber = new JRadioButton(rbx.getString("TrainInfoUseAddress"));
+    private JRadioButton locoAddressCurrent = new JRadioButton(rbx.getString("TrainInfoUseCurrentAddress"));
+    private ButtonGroup locoAddressGroup = new ButtonGroup();
     private JButton updateActionButton = null;
     private JButton createActionButton = null;
     private JButton cancelAddEditActionButton = null;
@@ -1500,6 +1504,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private JPanel panelDelay;
     private JLabel panelDelayLabel = new JLabel();
     private JPanel panelWhatBox;
+    private JPanel panelLoadTrainInfo;
     private final NamedBeanComboBox<Sensor> doneSensorComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SensorManager.class), null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalMast> signalMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> signalHeadComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalHeadManager.class), null, DisplayOptions.DISPLAYNAME);
@@ -1597,6 +1602,63 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             panelWhatBox.add(whatStringField);
             whatStringField.setToolTipText(rbx.getString("HintSoundHornPatternString"));
             panelx.add(panelWhatBox);
+
+            // Train Info
+            TitledBorder trainInfoBorder = BorderFactory.createTitledBorder(rbx.getString("SelectTrain"));
+            panelLoadTrainInfo = new JPanel();
+            panelLoadTrainInfo.setLayout(new BoxLayout(panelLoadTrainInfo, BoxLayout.Y_AXIS));
+            panelLoadTrainInfo.setBorder(trainInfoBorder);
+            JPanel panelUseInfo = new JPanel();
+            panelUseInfo.setBorder(trainInfoBorder);
+            panelUseInfo.add(new JLabel(rbx.getString("TrainInfoFile")));
+            panelUseInfo.add(trainInfoComboBox);
+            trainInfoComboBox.setToolTipText(rbx.getString("HintTrainInfoFile"));
+            panelLoadTrainInfo.add(panelUseInfo);
+            TitledBorder useLocoBorder = BorderFactory.createTitledBorder(rbx.getString("SelectALoco"));
+            JPanel panelUseLoco = new JPanel();
+            panelUseLoco.setBorder(useLocoBorder);
+
+            locoAddressGroup.add(locoAddressDefault);
+            locoAddressDefault.setToolTipText(rbx.getString("TrainInfoUseDefaultHint"));
+            locoAddressDefault.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    updateTrainInfoAddressFields(e);
+                }
+            });
+            panelUseLoco.add(locoAddressDefault);
+            locoAddressGroup.add(locoAddressCurrent);
+            locoAddressCurrent.setToolTipText(rbx.getString("TrainInfoUseCurrentAddressHint"));
+            locoAddressCurrent.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    updateTrainInfoAddressFields(e);
+                }
+            });
+            panelUseLoco.add(locoAddressCurrent);
+            locoAddressGroup.add(locoAddressRoster);
+            locoAddressRoster.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    updateTrainInfoAddressFields(e);
+                }
+            });
+            panelUseLoco.add(locoAddressRoster);
+            locoAddressGroup.add(locoAddressNumber);
+            locoAddressNumber.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    updateTrainInfoAddressFields(e);
+                }
+            });
+            panelUseLoco.add(locoAddressNumber);
+            panelUseLoco.add(locoAddress);
+            locoAddress.setToolTipText(rbx.getString("HintLocoMotiveAddress"));
+            panelUseLoco.add(rosterComboBox);
+            panelLoadTrainInfo.add(panelUseLoco);
+            panelx.add(panelLoadTrainInfo);
+            panelLoadTrainInfo.setVisible(false);
+
             panelPercentageSpinner = new JPanel();
             panelPercentageSpinner.setLayout(new FlowLayout());
             whatPercentSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.00f), Float.valueOf(1.5f), Float.valueOf(0.01f)));
@@ -1669,11 +1731,15 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             whenDataSpinnerFloat.setValue(Float.valueOf(f/1000.0f));
             whenSensorComboBox.setSelectedItemByName(curTSA.getStringWhen());
             // spinners are set in setWhat()
-            whatStringField.setText(curTSA.getStringWhat());
+            tWhatString2 = curTSA.getStringWhat2();
+            tWhatString = curTSA.getStringWhat();
+            whatStringField.setText(tWhatString);
             onButton.setSelected(true);
             if (curTSA.getStringWhat().equals("Off")) {
                 offButton.setSelected(true);
             }
+            locoAddress.setText(curTSA.getStringWhat2());
+            panelLoadTrainInfo.setVisible(false);
             log.debug("setWhen called for edit of action, editmode = {}", editActionMode);
             whenBox.setSelectedItem(getWhenMenuText(curTSA.getWhenCode()));
             // setWhen(curTSA.getWhenCode()) and setWhat(idem) are set via whenBox and whatBox
@@ -1697,9 +1763,11 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             signalHeadComboBox.setSelectedItem(0);
             doneSensorComboBox.setSelectedItem(0);
             whatStringField.setText("");
+            locoAddress.setText("");
             onButton.setSelected(true);
             updateActionButton.setVisible(false);
             createActionButton.setVisible(true);
+            panelLoadTrainInfo.setVisible(false);
             setBlockBox();
         }
         addEditActionFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -1730,8 +1798,10 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         log.debug("setWhen code = {}", code);
         initializeWhatBox(code);
         switch (code) {
-            case TransitSectionAction.ENTRY:
             case TransitSectionAction.EXIT:
+                panelDelay.setVisible(false);
+                break;
+            case TransitSectionAction.ENTRY:
             case TransitSectionAction.TRAINSTOP:
             case TransitSectionAction.TRAINSTART:
             case TransitSectionAction.PRESTARTACTION:
@@ -1780,8 +1850,51 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         doneSensorLabel.setVisible(false);
         doneSensorComboBox.setVisible(false);
         panelDelay.setEnabled(true);
+        panelLoadTrainInfo.setVisible(false);
         log.debug("setWhat code = {}", code);
         switch (code) {
+            case TransitSectionAction.TERMINATETRAIN:
+                break;
+            case TransitSectionAction.LOADTRAININFO:
+                rosterComboBox.update();
+                String[] names = new TrainInfoFile().getTrainInfoFileNames();
+                trainInfoComboBox.removeAllItems();
+                for (String fn: names) {
+                    trainInfoComboBox.addItem(fn);
+                    if (fn.equals(tWhatString)) {
+                        trainInfoComboBox.setSelectedItem(fn);
+                    }
+                }
+                locoAddress.setText(Integer.toString(tWhatData1));
+                switch (tWhatData2) {
+                    case TransitSectionAction.LOCOADDRESSTYPEROSTER:
+                        locoAddressRoster.setSelected(true);
+                        rosterComboBox.setSelectedItem(tWhatString2);
+                        rosterComboBox.setVisible(true);
+                        locoAddress.setVisible(false);
+                        break;
+                    case TransitSectionAction.LOCOADDRESSTYPENUMBER:
+                        locoAddressNumber.setSelected(true);
+                        locoAddress.setText(tWhatString2);
+                        rosterComboBox.setVisible(false);
+                        locoAddress.setVisible(true);
+                        break;
+                    case TransitSectionAction.LOCOADDRESSTYPECURRENT:
+                        locoAddressCurrent.setSelected(true);
+                        locoAddress.setText("");
+                        rosterComboBox.setVisible(false);
+                        locoAddress.setVisible(false);
+                        break;
+                    case TransitSectionAction.LOCOADDRESSTYPEDEFAULT:
+                    default:
+                        locoAddressDefault.setSelected(true);
+                        rosterComboBox.setVisible(false);
+                        locoAddress.setVisible(false);
+                        locoAddress.setText("");
+                        break;
+                }
+                panelLoadTrainInfo.setVisible(true);
+                break;
             case TransitSectionAction.PAUSE:
                 if (getWhenMenuCode((String)whenBox.getSelectedItem()) == TransitSectionAction.PRESTARTDELAY) {
                     panelDelay.setEnabled(false);
@@ -1894,6 +2007,31 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         addEditActionFrame.setVisible(true);
     }
 
+    private void updateTrainInfoAddressFields(ActionEvent e) {
+        if (!((JRadioButton)e.getSource()).isSelected() ) {
+            return;
+        }
+        if (e.getSource() == locoAddressRoster) {
+            tWhatData2 = TransitSectionAction.LOCOADDRESSTYPEROSTER;
+            rosterComboBox.setVisible(true);
+            locoAddress.setVisible(false);
+        } else if (e.getSource() == locoAddressNumber) {
+            tWhatData2 = TransitSectionAction.LOCOADDRESSTYPENUMBER;
+            rosterComboBox.setVisible(false);
+            locoAddress.setVisible(true);
+        } else if (e.getSource() == locoAddressDefault) {
+            tWhatData2 = TransitSectionAction.LOCOADDRESSTYPEDEFAULT;
+            rosterComboBox.setVisible(false);
+            locoAddress.setVisible(false);
+        } else if (e.getSource() == locoAddressCurrent) {
+            tWhatData2 = TransitSectionAction.LOCOADDRESSTYPECURRENT;
+            rosterComboBox.setVisible(false);
+            locoAddress.setVisible(false);
+        } else {
+            log.warn("Unknown button Source");
+        }
+    }
+
     // temporary action variables
     private int tWhen = 0;
     private int tWhenData = 0;
@@ -1902,6 +2040,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private int tWhatData1 = 0;
     private int tWhatData2 = 0;
     private String tWhatString = "";
+    private String tWhatString2 = "";
 
     /**
      * Handle button presses in Add/Edit Transit Action window.
@@ -1913,7 +2052,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             return;
         }
         // entered data is OK, create a special action
-        curTSA = new TransitSectionAction(tWhen, tWhat, tWhenData, tWhatData1, tWhatData2, tWhenString, tWhatString);
+        curTSA = new TransitSectionAction(tWhen, tWhat, tWhenData, tWhatData1, tWhatData2, tWhenString, tWhatString, tWhatString2);
         List<TransitSectionAction> list = action.get(activeRow);
         list.add(curTSA);
         actionTableModel.fireTableDataChanged();
@@ -1934,6 +2073,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         curTSA.setDataWhat2(tWhatData2);
         curTSA.setStringWhen(tWhenString);
         curTSA.setStringWhat(tWhatString);
+        curTSA.setStringWhat2(tWhatString2);
         actionTableModel.fireTableDataChanged();
         addEditActionFrame.setVisible(false);
         addEditActionFrame.dispose();
@@ -2055,6 +2195,43 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 break;
             case TransitSectionAction.STARTBELL:
             case TransitSectionAction.STOPBELL:
+            case TransitSectionAction.TERMINATETRAIN:
+                break;
+            case TransitSectionAction.LOADTRAININFO:
+                if (trainInfoComboBox.getSelectedIndex() < 0 ) {
+                    JmriJOptionPane.showMessageDialog(addEditActionFrame, (rbx.getString("MissingTrainInfoFile")),
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+                    return false;
+                }
+                tWhatString = (String)trainInfoComboBox.getSelectedItem();
+                if (locoAddressRoster.isSelected()) {
+                    tWhatData2 = TransitSectionAction.LOCOADDRESSTYPEROSTER;
+                    // the first item is "select..."
+                    if (rosterComboBox.getSelectedIndex() < 1) {
+                        JmriJOptionPane.showMessageDialog(addEditActionFrame, (rbx.getString("MissingRosterEntryOrLocoAddress")),
+                                Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+                        return false;
+                    }
+                    tWhatString2 =((RosterEntry) rosterComboBox.getSelectedItem()).getId();
+                } else if (locoAddressNumber.isSelected()) {
+                    tWhatData2 = TransitSectionAction.LOCOADDRESSTYPENUMBER;
+                    tWhatString2 = locoAddress.getText();
+                    if ((tWhatString2 == null) || tWhatString2.isEmpty() || (tWhatString2.length() < 1)) {
+                        JmriJOptionPane.showMessageDialog(addEditActionFrame, (rbx.getString("MissingRosterEntryOrLocoAddress")),
+                                Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+                        return false;
+                    }
+                } else if (locoAddressDefault.isSelected()) {
+                    tWhatData2 = TransitSectionAction.LOCOADDRESSTYPEDEFAULT;
+                    tWhatString2 = "";
+                } else if (locoAddressCurrent.isSelected()) {
+                    tWhatData2 = TransitSectionAction.LOCOADDRESSTYPECURRENT;
+                    tWhatString2 = "";
+                } else {
+                    JmriJOptionPane.showMessageDialog(addEditActionFrame, (rbx.getString("UnKnownlocoaddresstype")),
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+                    return false;
+                }
                 break;
             case TransitSectionAction.PAUSE:
             case TransitSectionAction.SOUNDHORN:
@@ -2198,6 +2375,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                             TransitSectionAction.RAMPTRAINSPEED));
         }    else if (code == TransitSectionAction.PRESTARTDELAY) {
             includeCodes.add(TransitSectionAction.PRESTARTRESUME);
+        } else {
+            excludeCodes.add(TransitSectionAction.PRESTARTRESUME);
         }
         for (int i = 0; i <= TransitSectionAction.NUM_WHATS; i++) {
             if (excludeCodes.size() > 0) {
@@ -2218,6 +2397,10 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         switch (i) {
             case TransitSectionAction.SELECTWHAT:
                 return rbx.getString("SelectWhat");
+            case TransitSectionAction.TERMINATETRAIN:
+                return rbx.getString("TerminateTrain");
+            case TransitSectionAction.LOADTRAININFO:
+                return rbx.getString("LoadTrainInfo");
             case TransitSectionAction.PAUSE:
                 return rbx.getString("Pause");
             case TransitSectionAction.SETMAXSPEED:
@@ -2261,6 +2444,12 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private int getWhatMenuCode(String s) {
         if (s.equals(rbx.getString("SelectWhat"))) {
             return TransitSectionAction.SELECTWHAT;
+        }
+        if (s.equals(rbx.getString("TerminateTrain"))) {
+            return TransitSectionAction.TERMINATETRAIN;
+        }
+        if (s.equals(rbx.getString("LoadTrainInfo"))) {
+            return TransitSectionAction.LOADTRAININFO;
         }
         if (s.equals(rbx.getString("Pause"))) {
             return TransitSectionAction.PAUSE;
@@ -2498,6 +2687,24 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                         new Object[]{tsa.getDataWhen()});
             case TransitSectionAction.ESTOP:
                 return rbx.getString("EStopFull");
+            case TransitSectionAction.TERMINATETRAIN:
+                return rbx.getString("TerminateTrain");
+            case TransitSectionAction.LOADTRAININFO:
+                switch (tWhatData2) {
+                    case TransitSectionAction.LOCOADDRESSTYPEROSTER:
+                        return java.text.MessageFormat.format(rbx.getString("LoadTrainInfoRosterFull"),
+                                new Object[]{tsa.getStringWhat(),tsa.getStringWhat2()});
+                    case TransitSectionAction.LOCOADDRESSTYPENUMBER:
+                        return java.text.MessageFormat.format(rbx.getString("LoadTrainInfoNumberFull"),
+                                new Object[]{tsa.getStringWhat(),tsa.getStringWhat2()});
+                    case TransitSectionAction.LOCOADDRESSTYPECURRENT:
+                        return java.text.MessageFormat.format(rbx.getString("LoadTrainInfoCurrentFull"),
+                                new Object[]{tsa.getStringWhat()});
+                    case TransitSectionAction.LOCOADDRESSTYPEDEFAULT:
+                    default:
+                        return java.text.MessageFormat.format(rbx.getString("LoadTrainInfoDefaultFull"),
+                                new Object[]{tsa.getStringWhat()});
+                 }
             case TransitSectionAction.SELECTWHAT:
                 return rbx.getString("SelectWhat");
             default:

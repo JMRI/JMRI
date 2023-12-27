@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI Hardware Support - BiDiB</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI Hardware Support - BiDiB</title><!--#include virtual="/help/en/parts/Style.shtml" -->
   <meta name="author" content="Eckart Meyer">
   <meta name="keywords" content="BiDiB java model railroad JMRI install">
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
-    <!--#include virtual="Sidebar.shtml" -->
+    <!--#include virtual="../SidebarUp.shtml" -->
 
     <div id="mainContent">
       <h1>Hardware Unterstützung: BiDiB</h1>
@@ -374,11 +374,11 @@
       <h4>BiDiB Hersteller</h4>
       <p>Die Entwickler von BiDiB verkaufen Module im Shop <a href="https://fichtelbahn.de">Fichtelbahn</a>.</p>
       <p>Es gibt einige andere Hersteller - siehe <a href="http://www.bidib.org/vendors.html">www.bidib.org/vendors.html</a></p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

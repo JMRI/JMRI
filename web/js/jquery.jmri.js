@@ -4,7 +4,7 @@
  * NOTE this library makes assumptions about JSON arrays returned by JMRI that
  * __do not__ match documented JMRI behavior. It is recommended that no methods
  * expecting a data array of a single type be relied upon.
- * 
+ *
  * This library depends on jQuery 1.9 or newer.
  *
  * To be useful, you need to override one or more of the following functions:
@@ -69,7 +69,7 @@
  * turnouts(data array)
  * version(version)
  * as demonstrated in the power.html demonstration web app
- * 
+ *
  * @author Copyright (C) Randall Wood 2013, 2014
  * @param {a jQuery object} $
  * @returns {a JMRI object}
@@ -112,7 +112,7 @@
             };
             jmri.audios = function (data) {
             };
-            jmri.audioicon = function (identity, command) {
+            jmri.audioicon = function (identity, command, playNumLoops) {
             };
             jmri.block = function (name, value, data) {
             };
@@ -235,7 +235,7 @@
                     jmri.socket.send("audio", { name: name });
                 } else {
                     $.getJSON(jmri.url + "audio/" + name, function (json) {
-                        jmri.audio(json.data.name, json.data.identity, json.data.command);
+                        jmri.audio(json.data.name, json.data.state, json.data);
                     });
                 }
             };
@@ -260,7 +260,7 @@
                     jmri.socket.send("audioicon", { identity: identity });
                 } else {
                     $.getJSON(jmri.url + "audioicon/" + identity, function (json) {
-                        jmri.audioicon(json.data.identity, json.data.command);
+                        jmri.audioicon(json.data.identity, json.data.command, json.data.playNumLoops);
                     });
                 }
             };
@@ -552,10 +552,10 @@
                 if (jmri.socket) {
                     jmri.socket.send("power", {});
                 } else {
-                	$.getJSON(jmri.url + "power", function (json) {
-                		if ($.isArray(json)) json=json[0]; //unwrap array                   	
-                		jmri.power(json.data.state);
-                	});
+                    $.getJSON(jmri.url + "power", function (json) {
+                        if ($.isArray(json)) json=json[0]; //unwrap array
+                        jmri.power(json.data.state);
+                    });
                 }
             };
             jmri.setPower = function (state) {
@@ -729,10 +729,10 @@
                 if (jmri.socket) {
                     jmri.socket.send("time", {});
                 } else {
-                	$.getJSON(jmri.url + "time", function (json) {
-                		if ($.isArray(json)) json=json[0]; //unwrap array                   	
-                		jmri.time(json.data.time, json.data);
-                	});
+                    $.getJSON(jmri.url + "time", function (json) {
+                        if ($.isArray(json)) json=json[0]; //unwrap array
+                        jmri.time(json.data.time, json.data);
+                    });
                 }
             };
             jmri.getTrain = function (name) {
@@ -770,7 +770,7 @@
                 }
             };
             jmri.clickLogixNGIcon = function (identity) {
-				// This function executes the inline LogixNG of a LogixNGIcon on a panel.
+                // This function executes the inline LogixNG of a LogixNGIcon on a panel.
                 if (jmri.socket) {
                     jmri.socket.send("logixngicon", { identity: identity }, 'post');
                 } else {
@@ -878,7 +878,7 @@
                     jmri.audio(e.data.name, e.data.state, e.data);
                 },
                 audioicon: function (e) {
-                    jmri.audioicon(e.data.identity, e.data.command);
+                    jmri.audioicon(e.data.identity, e.data.command, e.data.playNumLoops);
                 },
                 block: function (e) {
                     jmri.block(e.data.name, e.data.value, e.data);
@@ -935,8 +935,8 @@
                     jmri.locations(e.data);
                 },
                 logixngicon: function (e) {
-					// Do nothing. We get this event as response when we call jmri.clickLogixNGIcon()
-					// but there is nothing to do when this event arrives.
+                    // Do nothing. We get this event as response when we call jmri.clickLogixNGIcon()
+                    // but there is nothing to do when this event arrives.
                 },
                 memory: function (e) {
                     jmri.memory(e.data.name, e.data.value, e.data);

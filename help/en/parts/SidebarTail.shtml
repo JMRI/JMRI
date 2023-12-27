@@ -19,7 +19,7 @@
     </p>
 
     <!-- JS to highlight items in the sidebar -->
-    <script src="/web/js/jquery-2.0.3.min.js"></script>
+    <script src="/web/js/jquery-2.2.4.min.js"></script>
     <script src="/web/js/here.js"></script>
 
 

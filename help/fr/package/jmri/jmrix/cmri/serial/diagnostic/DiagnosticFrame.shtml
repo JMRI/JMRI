@@ -4,11 +4,11 @@
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Translated  by Blorec Herv&#233; le 2011-11-1-->
   <title>JMRI: C/MRI Diagnostics</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -23,9 +23,9 @@
       r&eacute;f&egrave;re &agrave; la "1er" carte de
       sortie, etc</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

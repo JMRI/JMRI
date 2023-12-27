@@ -112,6 +112,19 @@
         </and>
     </condition>
 
+    <condition property="settings.dir" value="${user.home}/JMRI">
+        <os family="windows" />
+    </condition>
+    <condition property="settings.dir" value="${user.home}/Library/Preferences/JMRI"> <!-- has to be before unix clause -->
+            <os family="mac" />
+    </condition>
+    <condition property="settings.dir" value="${user.home}/.jmri">
+            <os family="unix" />
+    </condition>
+    <echo message="settings.dir assumed to be ${settings.dir}"/>
+    <mkdir dir="${settings.dir}/lib"/>
+
+
     <!-- this is the list of jar files and class path elements that are not
          a part of the JMRI codebase itself but which are needed at runtime
          for the various apps.  These will all be copied into the release
@@ -120,6 +133,7 @@
     <path id="runtime.class.path">
         <pathelement location="${libdir}/JavaVersionCheckWindow.jar"/> <!-- Java 8 check, keep at start -->
         <pathelement location="${libdir}/jmri.script.jsr223graalpython.jar"/> <!-- Optional GraalVM-built code -->
+        <pathelement location="${libdir}/jSerialComm-2.10.4.jar"/>
         <pathelement location="${libdir}/purejavacomm-1.0.5.jar"/>
         <pathelement location="${libdir}/xercesImpl-2.12.2.jar"/>
         <pathelement location="${libdir}/gluegen-rt.jar"/>
@@ -211,15 +225,15 @@
         <pathelement location="${libdir}/xml-apis-ext-1.3.04.jar"/>
         <pathelement location="${libdir}/xmlgraphics-commons-2.6.jar"/>
         <!-- //BiDiB client library -->
-        <pathelement location="${libdir}/jbidibc-core-2.0.13.jar"/>
-        <pathelement location="${libdir}/jbidibc-messages-2.0.13.jar"/>
-        <pathelement location="${libdir}/jbidibc-net-serial-over-tcp-2.0.13.jar"/>
-        <pathelement location="${libdir}/jbidibc-purejavacomm-2.0.13.jar"/>
-        <pathelement location="${libdir}/jbidibc-serial-2.0.13.jar"/>
-        <pathelement location="${libdir}/jbidibc-simulation-2.0.13.jar"/>
-        <pathelement location="${libdir}/bidibwizard-common-2.0.13.jar"/>
-        <pathelement location="${libdir}/bidibwizard-model-2.0.13.jar"/>
-        <pathelement location="${libdir}/bidibwizard-simulation-2.0.13.jar"/>
+        <pathelement location="${libdir}/jbidibc-core-2.0.16.jar"/>
+        <pathelement location="${libdir}/jbidibc-messages-2.0.16.jar"/>
+        <pathelement location="${libdir}/jbidibc-net-serial-over-tcp-2.0.16.jar"/>
+        <pathelement location="${libdir}/jbidibc-purejavacomm-2.0.16.jar"/>
+        <pathelement location="${libdir}/jbidibc-serial-2.0.16.jar"/>
+        <pathelement location="${libdir}/jbidibc-simulation-2.0.16.jar"/>
+        <pathelement location="${libdir}/bidibwizard-common-2.0.16.jar"/>
+        <pathelement location="${libdir}/bidibwizard-model-2.0.16.jar"/>
+        <pathelement location="${libdir}/bidibwizard-simulation-2.0.16.jar"/>
         <!-- BiDiB dependencies -->
         <pathelement location="${libdir}/commons-collections4-4.4.jar"/>
         <pathelement location="${libdir}/eventbus-1.4.jar"/>
@@ -263,7 +277,19 @@
     <path id="project.class.path">
         <pathelement path="${cp.prepend}"/>   <!-- prepended by user -->
         <pathelement location="${jartarget}"/>
-        <path        refid="runtime.class.path"/>
+        <path        refid="runtime.class.path"/>  <!-- contents of user preferences lib dir -->
+        <fileset dir="${settings.dir}/lib">
+            <include name="*.jar" />
+        </fileset>
+        <pathelement location="${target}/"/>  <!-- after declared jars to check for name collisions -->
+        <pathelement path="${cp.append}"/>    <!-- appended by user -->
+    </path>
+
+    <!-- path to create Jar files:  Same as project.class.path except for reference to settings dir -->
+    <path id="jar.class.path">
+        <pathelement path="${cp.prepend}"/>   <!-- prepended by user -->
+        <pathelement location="${jartarget}"/>
+        <path        refid="runtime.class.path"/>  <!-- contents of user preferences lib dir -->
         <pathelement location="${target}/"/>  <!-- after declared jars to check for name collisions -->
         <pathelement path="${cp.append}"/>    <!-- appended by user -->
     </path>
@@ -1013,6 +1039,7 @@
     <!-- ============================================================================= -->
 
 
+
     <target name="runtime-library-selection">
 
         <condition property="baseOS" value="windows">
@@ -1090,6 +1117,7 @@
 
         <property name="arch.lib.path" value="${libdir}/${baseOS}/${baseArch}:${libdir}/${baseOS}"/>
         <echo message="arch.lib.path ${arch.lib.path}"/>
+
     </target>
 
 
@@ -1835,7 +1863,7 @@
             description="create working jar file with current contents"
             depends="debug">
         <manifestclasspath property="jar.classpath" jarfile="${jartarget}/jmri.jar">
-          <classpath refid="project.class.path" />
+          <classpath refid="jar.class.path" />
         </manifestclasspath>
         <jar jarfile="${jartarget}/jmri.jar"
              basedir="${target}"
@@ -1868,7 +1896,7 @@
             description="create working jar file with test file contents"
             depends="tests">
         <manifestclasspath property="jar.classpath" jarfile="${jartarget}/jmri.jar">
-          <classpath refid="project.class.path" />
+          <classpath refid="jar.class.path" />
         </manifestclasspath>
         <jar jarfile="${jartarget}/jmri-tests.jar"
              basedir="${testtarget}"
@@ -2041,6 +2069,8 @@
             <!-- <link href="http://java.sun.com/products/javacomm/reference/api/"/> redirected to next line -->
             <link href="https://docs.oracle.com/cd/E17802_01/products/products/javacomm/reference/api/" />
 
+            <link href="https://fazecast.github.io/jSerialComm/javadoc" />
+            
             <!-- <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>  redirected to next line -->
             <link href="https://download.java.net/media/java3d/javadoc/1.3.2/" />
 
@@ -2149,6 +2179,8 @@
 
             <!-- <link href="http://java.sun.com/products/javacomm/reference/api/"/> redirected to next line -->
             <link href="https://docs.oracle.com/cd/E17802_01/products/products/javacomm/reference/api/" />
+
+            <link href="https://fazecast.github.io/jSerialComm/javadoc" />
 
             <!-- <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>  redirected to next line -->
             <link href="https://download.java.net/media/java3d/javadoc/1.3.2/" />

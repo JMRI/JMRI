@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>5.5.5-SNAPSHOT</version>
+    <version>5.7.1-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -26,7 +26,7 @@
         <jackson-databind.version>2.13.4.2</jackson-databind.version>
         <jackson-annotations.version>2.13.4</jackson-annotations.version>
         <jogamp.version>2.3.2</jogamp.version>
-        <openlcb.version>0.7.32</openlcb.version>
+        <openlcb.version>0.7.33</openlcb.version>
         <netbeans.version>RELEASE150</netbeans.version>
         <jacoco.version>0.8.5</jacoco.version>
         <jacoco.reportDir>${basedir}/target/</jacoco.reportDir>
@@ -164,7 +164,7 @@
                                     <sourceDirectories>
                                         <sourceDirectory>${basedir}</sourceDirectory>
                                     </sourceDirectories>
-                                    <includes>**/*</includes>
+                                    <includes>java/**/*</includes>
                                     <excludes>**/*.jpg,**/*.PNG,**/*.jar,**/*.dll,**/*.dylib,**/*.so,**/*.exe,
                                         **/*.zip,**/*.icns,**/*.bat,**/*.ttf,**/*.vsd,**/*.wav,**/*.spj,
                                         **/*.pdf,.metadata/.plugins/org.eclipse.core.resources/**,
@@ -724,6 +724,8 @@
                         <!-- <link>https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/</link> -->
                         <link>https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/</link>
                         <link>https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/</link>
+                        <link>https://fazecast.github.io/jSerialComm/javadoc</link>
+
                     </links>
                 </configuration>
             </plugin>
@@ -1491,8 +1493,10 @@
                 </exclusion>
             </exclusions>
             <!-- the next two lines force use of the local lib/openlcb.jar file -->
+<!-- 
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/openlcb.jar</systemPath>
+ -->
         </dependency>
         <dependency>
             <groupId>org.usb4java</groupId>
@@ -1559,6 +1563,11 @@
             <groupId>org.opensmarthouse</groupId>
             <artifactId>purejavacomm</artifactId>
             <version>1.0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fazecast</groupId>
+            <artifactId>jSerialComm</artifactId>
+            <version>2.10.4</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
@@ -1681,26 +1690,26 @@
             </exclusions>
         </dependency>
 		<!-- //BiDiB client library -->
-		<!-- jbidibc 2.0.13 -->
+		<!-- jbidibc 2.0.16 -->
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-core</artifactId>
-            <version>2.0.13</version>
+            <version>2.0.16</version>
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-serial</artifactId>
-            <version>2.0.13</version>
+            <version>2.0.16</version>
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-simulation</artifactId>
-            <version>2.0.13</version>
+            <version>2.0.16</version>
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-purejavacomm</artifactId>
-            <version>2.0.13</version>
+            <version>2.0.16</version>
             <exclusions>
 				<!-- don't use special purejavacomm mentioned in jbidibc-purejavacomm -->
                 <exclusion>
@@ -1712,28 +1721,28 @@
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-messages</artifactId>
-            <version>2.0.13</version>
+            <version>2.0.16</version>
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-net-serial-over-tcp</artifactId>
-            <version>2.0.13</version>
+            <version>2.0.16</version>
         </dependency>
-		<!-- BiDiB Wizard Simulation 2.0.13 -->
+		<!-- BiDiB Wizard Simulation 2.0.16 -->
        <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>bidibwizard-common</artifactId>
-            <version>2.0.13</version>
+            <version>2.0.16</version>
         </dependency>
        <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>bidibwizard-model</artifactId>
-            <version>2.0.13</version>
+            <version>2.0.16</version>
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>bidibwizard-simulation</artifactId>
-            <version>2.0.13</version>
+            <version>2.0.16</version>
         </dependency>
         <!--  dependencies from jbidibc and bidibwizard -->
         <dependency>

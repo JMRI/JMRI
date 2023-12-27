@@ -68,8 +68,16 @@ public class TransitSectionAction {
     public static final int RELEASESIGNAL = 15; // set specified signalhead or signalmast to NOT HELD
     public static final int ESTOP = 16;   // set ESTOP
     public static final int PRESTARTRESUME = 17; // Resume after prestart
-    public static final int NUM_WHATS = 17; // Must correspond to the number of entries above
+    public static final int TERMINATETRAIN = 18; // terminate train
+    public static final int LOADTRAININFO = 19; // terminate train and run traininfo file
+    public static final int NUM_WHATS = 19; // Must correspond to the number of entries above
     // other action 'whats" may be defined above, increment NUM_WHATS to match
+
+    // For loadtraininfo loco address type
+    public static final int LOCOADDRESSTYPEDEFAULT = 0;
+    public static final int LOCOADDRESSTYPEROSTER = 1;
+    public static final int LOCOADDRESSTYPENUMBER = 2;
+    public static final int LOCOADDRESSTYPECURRENT = 3;
 
     /**
      * Create a TransitSectionAction.
@@ -108,6 +116,32 @@ public class TransitSectionAction {
         mStringWhat = sWhat;
     }
 
+    /**
+     * Create a TransitSectionAction.
+     *
+     * @param when      one of
+     *                  {@link #ENTRY}, {@link #EXIT}, {@link #BLOCKENTRY}, {@link #BLOCKEXIT}, {@link #TRAINSTOP}, {@link #TRAINSTART}, {@link #SENSORACTIVE}, {@link #SENSORINACTIVE}
+     * @param what      one of
+     *                  {@link #PAUSE}, {@link #SETMAXSPEED}, {@link #SETCURRENTSPEED}, {@link #RAMPTRAINSPEED}, {@link #TOMANUALMODE}, {@link #SETLIGHT}, {@link #STARTBELL}, {@link #STOPBELL}, {@link #SOUNDHORN}, {@link #SOUNDHORNPATTERN}, {@link #LOCOFUNCTION}, {@link #SETSENSORACTIVE}, {@link #SETSENSORINACTIVE}, {@link #HOLDSIGNAL}, {@link #RELEASESIGNAL}
+     * @param dataWhen  a data element for when
+     * @param dataWhat1 a data element for what
+     * @param dataWhat2 a data element for what
+     * @param sWhen     typically a readable description of when or the name of
+     *                  the triggering sensors
+     * @param sWhat     typically a readable description of what or data such as TrainInfo File Name
+     * @param sWhat2    typically a second string parameter for the action such as DCCAddress or roster entry.
+     */
+    public TransitSectionAction(int when, int what, int dataWhen, int dataWhat1, int dataWhat2, String sWhen, String sWhat, String sWhat2) {
+        mWhen = when;
+        mWhat = what;
+        mDataWhen = dataWhen;
+        mDataWhat1 = dataWhat1;
+        mDataWhat2 = dataWhat2;
+        mStringWhen = sWhen;
+        mStringWhat = sWhat;
+        mStringWhat2 = sWhat2;
+    }
+
 
     // instance variables
     private int mWhen = 0;
@@ -118,6 +152,7 @@ public class TransitSectionAction {
     private int mDataWhat2 = -1;    // negative number signified no data 
     private String mStringWhen = "";
     private String mStringWhat = "";
+    private String mStringWhat2 = "";
     private Object threadObject;
 
     /*
@@ -191,6 +226,14 @@ public class TransitSectionAction {
 
     public void setStringWhat(String s) {
         mStringWhat = s;
+    }
+
+    public String getStringWhat2() {
+        return mStringWhat2;
+    }
+
+    public void setStringWhat2(String s) {
+        mStringWhat2 = s;
     }
 
     /*

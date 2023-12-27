@@ -41,6 +41,9 @@ import org.jdom2.*;
  * <dt>numOuts</dt>
  * <dd>Number of physical outputs (information only, not used by the code).</dd>
  * <dd>&nbsp;</dd>
+ * <dt>numOutsFromDefinition</dt>
+ * <dd>Number of physical outputs read from decoder definition.</dd>
+ * <dd>&nbsp;</dd>
  * <dt>numFns</dt>
  * <dd>Number of mapping rows to display.</dd>
  * <dd><em>Only use this parameter if the specific decoder definition implements
@@ -164,6 +167,9 @@ public final class FnMapPanelESU extends JPanel {
     int numFns = 1;
     int numRows = 5;
     int numOuts = 2;
+    // numOuts above is used for calculating correct offsets
+    // the following is actually read from the definition
+    int numOutsFromDefinition = numOuts;
     int numStates = 2;
     int numWheelSensors = 1;
     int numReserved = 1;
@@ -301,6 +307,7 @@ public final class FnMapPanelESU extends JPanel {
             currentCol = firstCol;
             int outBlockNum = -1;
             int nextOutBlockStart = 0;
+            int thisOutBlockStart = 0;
             int nextFreeBit = 0;
             // add row shift buttons
             {
@@ -336,6 +343,7 @@ public final class FnMapPanelESU extends JPanel {
                 if (item == nextOutBlockStart) {
                     outBlockNum++;
                     outBlockStartCol[outBlockNum] = item;
+                    thisOutBlockStart = item;
                     nextOutBlockStart = item + outBlockLength[outBlockNum];
                     blockItemsSelectorPanel = new JPanel();
                     siCV = outBlockSiStartCv[outBlockNum] + (iRow / outBlockSiCvModulus[outBlockNum]);
@@ -375,8 +383,12 @@ public final class FnMapPanelESU extends JPanel {
                             savedValue = cvObject.getValue();
                         }
                         String defaultValue = Integer.toString((savedValue & bitValue) >>> (nextFreeBit % BIT_MODULUS));
-
-                        {
+                        
+                        // skip function settings for nonexistant function outputs
+                        if (outBlockNum == 1 && item >= thisOutBlockStart + numOutsFromDefinition && item < thisOutBlockStart + numOuts) {
+                            log.debug("Skipping previous item because function output AUX {} does not exist on this decoder", item - thisOutBlockStart - 2 + 1);
+                        }
+                        else {
                             // create a JDOM tree with some elements to add to varModel
                             Element root = new Element("decoder-config");
                             Document doc = new Document(root);
@@ -956,8 +968,18 @@ public final class FnMapPanelESU extends JPanel {
         } catch (NumberFormatException e) {
             log.error("error handling decoder's numFns value");
         }
-        log.debug("loadModelAttributes numFns={}, numRows={}, numOuts={}, numItems={}",
-                            numFns, numRows, numOuts, numItems);
+        
+        a = model.getAttribute("numOuts");
+        try {
+            if (a != null) {
+                numOutsFromDefinition = Integer.parseInt(a.getValue());
+            }
+        } catch (NumberFormatException e) {
+            log.error("error handling decoder's numOuts value");
+        }
+        
+        log.debug("loadModelAttributes numFns={}, numRows={}, numOuts={}, numOutsFromDefinition={}, numItems={}",
+                            numFns, numRows, numOuts, numOutsFromDefinition, numItems);
     }
 
     /**

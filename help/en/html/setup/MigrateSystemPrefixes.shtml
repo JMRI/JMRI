@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Setup - Migrating System Prefixes</title>
   <meta name="keywords" content="java model railroad JMRI install Dropbox">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -55,7 +55,7 @@
 
         <li>Next, determine the new prefix for your connection:
           <ul>
-            <li>DCCPP for DCC++ should be changed to D</li>
+            <li>DCCPP for DCC++ (including DCC-EX EX-CommandStations) should be changed to D</li>
 
             <li>DP for DCC4PC should be changed to D</li>
 
@@ -101,11 +101,11 @@
         able to use your existing configuration or panel files.</li>
       </ul>
       We're sorry for this inconvenience, but we really do have to fix this. Giving people over 18
-      months lead time seems sufficient. <!--#include virtual="/Footer.shtml" -->
+      months lead time seems sufficient. <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

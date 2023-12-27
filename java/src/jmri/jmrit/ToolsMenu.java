@@ -1,6 +1,7 @@
 package jmri.jmrit;
 
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
@@ -9,15 +10,14 @@ import javax.annotation.CheckForNull;
 
 import jmri.InstanceManager;
 import jmri.jmrit.throttle.ThrottleCreationAction;
+import jmri.jmrit.z21server.Z21serverCreationAction;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
+import jmri.jmrit.swing.ToolsMenuAction;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Create a "Tools" menu containing the Jmri system-independent tools
@@ -174,6 +174,7 @@ public class ToolsMenu extends JMenu {
         add(new JSeparator());
         JMenu serverMenu = new JMenu(Bundle.getMessage("MenuServers"));
         serverMenu.add(new jmri.jmrit.withrottle.WiThrottleCreationAction());
+        serverMenu.add(new Z21serverCreationAction());
         serverMenu.add(new jmri.web.server.WebServerAction());
         serverMenu.add(new JSeparator());
         serverMenu.add(new jmri.jmris.srcp.JmriSRCPServerAction());
@@ -217,6 +218,20 @@ public class ToolsMenu extends JMenu {
                     updateProgrammerStatus(evt);
                 });
         InstanceManager.getList(GlobalProgrammerManager.class).forEach(m -> m.addPropertyChangeListener(this::updateProgrammerStatus));
+
+        // add items given by ToolsMenuItem service provider
+        var newItemList = new ArrayList<ToolsMenuAction>();
+        java.util.ServiceLoader.load(jmri.jmrit.swing.ToolsMenuAction.class).forEach((toolsMenuAction) -> {
+            newItemList.add(toolsMenuAction);
+        });
+        if (!newItemList.isEmpty()) {
+            add(new JSeparator());
+            newItemList.forEach((item) -> {
+                log.info("Adding Plug In \'{}\' to Tools Menu", item);
+                add(item);
+            });
+        }
+
     }
 
     /**
@@ -316,6 +331,6 @@ public class ToolsMenu extends JMenu {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(jmri.jmrit.ToolsMenu.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(jmri.jmrit.ToolsMenu.class);
     
 }

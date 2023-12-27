@@ -91,6 +91,19 @@ public class AudioIcon extends PositionableLabel {
         return Bundle.getMessage("PositionableType_AudioIcon");
     }
 
+    @Override
+    @Nonnull
+    public String getNameString() {
+        String name;
+        if (_namedAudio == null) {
+            name = Bundle.getMessage("NotConnected");
+        } else {
+            name = _namedAudio.getBean().getDisplayName(
+                    NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
+        }
+        return name;
+    }
+
     public int getIdentity() {
         return _identity;
     }

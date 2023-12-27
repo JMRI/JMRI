@@ -55,7 +55,8 @@
                         <xs:attribute name="whenstring" type="xs:string" />                      
                         <xs:attribute name="whatdata1" type="xs:integer" />                      
                         <xs:attribute name="whatdata2" type="xs:integer" />                      
-                        <xs:attribute name="whatstring" type="xs:string" />                      
+                        <xs:attribute name="whatstring" type="xs:string" />
+                        <xs:attribute name="whatstring2" type="xs:string" />
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>

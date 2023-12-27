@@ -3,7 +3,7 @@
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Frequently Asked Questions (General)</title>
-  <meta name="author" content="Jerry Grochow"><!--#include virtual="/Style.shtml" -->
+  <meta name="author" content="Jerry Grochow"><!--#include virtual="/help/en/parts/Style.shtml" -->
   <!-- special inline FAQ styles -->
 
   <style type="text/css">
@@ -32,7 +32,7 @@
   <link rel="stylesheet" type="text/css" href="/web/css/faq.css" media="screen"><!-- /FAQ-Head -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -310,7 +310,7 @@
         </dl>
       </div>
       <!-- close Para -->
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
@@ -318,6 +318,6 @@
   <!-- FAQ-Tail -->
   <script type="text/javascript" src="/web/js/faq.js"></script><!-- /FAQ-Tail -->
 
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

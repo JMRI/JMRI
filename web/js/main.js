@@ -60,13 +60,13 @@ function getNetworkServices() {
             if (!Array.isArray(data)) {
                 data = [data];
             }
-            // show all hidden when service is available elements 
+            // show all hidden when service is available elements
             $(".hidden-jmri_jmri-json").addClass("show").removeClass("hidden");
             $(".hidden-jmri_jmri-locormi").addClass("show").removeClass("hidden");
             $(".hidden-jmri_jmri-simple").addClass("show").removeClass("hidden");
             $(".hidden-jmri_srcp").addClass("show").removeClass("hidden");
             $(".hidden-jmri_withrottle").addClass("show").removeClass("hidden");
-            // hide all visible when service is available elements 
+            // hide all visible when service is available elements
             $(".visible-jmri_jmri-json").addClass("hidden").removeClass("show");
             $(".visible-jmri_jmri-locormi").addClass("hidden").removeClass("show");
             $(".visible-jmri_jmri-simple").addClass("hidden").removeClass("show");
@@ -158,7 +158,7 @@ function setFontSize(change) {
     if (size <= minFontSize) {
         $("#font-size-smaller").parent().addClass("disabled");
     }
-    log.log("Body font size is " + $("body").css("fontSize"));
+    console.log("Body font size is " + $("body").css("fontSize"));
 }
 
 /*
@@ -197,7 +197,7 @@ function setNavbarFixed(fixed) {
     }
     $("#navbar-fixed-position").prop("checked", (fixed === true) ? "checked" : "");
     window.localStorage.setItem("jmri.css.navbar.fixed", ((fixed === true) ? 1 : 0));
-    log.log("Navbar is " + ((fixed === true) ? "fixed" : "floating"));
+    console.log("Navbar is " + ((fixed === true) ? "fixed" : "floating"));
 }
 
 /*
@@ -280,6 +280,21 @@ if (!window.localStorage) {
         this.enumerable = true;
     })());
 }
+
+//insert jquery if not available
+//if (!window.jQuery) {
+//    console.log("inserting jQuery");
+//    var script = document.createElement('script');
+//    script.src = '/js/jquery-2.2.4.min.js'; //
+//    document.getElementsByTagName('head')[0].appendChild(script);
+//}
+//insert logger.js if not available
+//if (!window.Logger) {
+//    var script = document.createElement('script');
+//    script.src = '/js/logger.js'; //
+//    document.getElementsByTagName('head')[0].appendChild(script);
+//    log.log("inserting Logger");
+//}
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
 // perform tasks that all BootStrap-based servlets need
 $(document).ready(function () {
@@ -299,8 +314,8 @@ $(document).ready(function () {
         open: function () {
             nbJmri.getPower();
         },
-    	hello: function(data) {
-    		nbJmri.getList("rosterGroups"); // request updates to the rosterGroups via websocket 
+        hello: function(data) {
+            nbJmri.getList("rosterGroups"); // request updates to the rosterGroups via websocket
         },
         rosterGroups: function (name, data) {
             getRosterGroups(); // refresh the roster groups in menu

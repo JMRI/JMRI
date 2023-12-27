@@ -3,10 +3,10 @@
  <head>
    <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
    <title>JMRI: Dispatcher System</title>
-   <!--#include virtual="/Style.shtml" -->
+   <!--#include virtual="/help/en/parts/Style.shtml" -->
  </head>
  <body>
-   <!--#include virtual="/Header.shtml" -->
+   <!--#include virtual="/help/en/parts/Header.shtml" -->
   <div id="mBody">
   <div id="mainContent" class="no-sidebar">
     <h1>Dispatcher System</h1>
@@ -265,11 +265,11 @@
         At present if a train is in a station en route, the system will not re-route to avoid the train,
         and the train may get stuck.
         Care must be taken when running trains.</li>
-      <!--#include virtual="/Footer.shtml" --></ol>
+      <!--#include virtual="/help/en/parts/Footer.shtml" --></ol>
   </div>
   <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-   <script src="/js/main.js"></script>
+   <script src="/js/help.js"></script>
  </body>
  </html>

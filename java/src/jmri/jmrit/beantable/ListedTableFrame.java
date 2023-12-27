@@ -252,7 +252,11 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
         fileMenu.add(newItem);
         newItem.addActionListener((ActionEvent e) -> actionList.openNewTableWindow(list.getSelectedIndex()));
 
-        fileMenu.add(new jmri.configurexml.StoreMenu());
+        // do not display Store All Table Content in IdTag Table 
+        if (!( item.getAAClass() instanceof IdTagTableAction || 
+            item.getAAClass() instanceof IdTagTableTabAction ) ) {
+            fileMenu.add(new jmri.configurexml.StoreMenu());
+        }
 
         JMenuItem printItem = new JMenuItem(Bundle.getMessage("PrintTable"));
         fileMenu.add(printItem);

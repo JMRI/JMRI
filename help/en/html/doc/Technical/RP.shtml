@@ -5,10 +5,10 @@
   <title>JMRI: Recommended Practices</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code standards recommendation Swing">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -26,9 +26,14 @@
         documented on <a href="Swing.shtml">another page</a>.
         </li>
 
-        <li>JMRI uses the <a href=
-        "http://www.sparetimelabs.com/purejavacomm/purejavacomm.php">PureJavaComm libraries</a> to
-        support serial communications on Macintosh, Linux and Windows. Before JMRI 4.7.5, we used
+        <li>JMRI uses the 
+        <a href="https://fazecast.github.io/jSerialComm/">jSerialCommn</a>
+        to support serial communications on Windows, Linux and macOS.
+        Before JMRI 5.7.1 we used the
+        <a href=
+        "http://www.sparetimelabs.com/purejavacomm/purejavacomm.php">PureJavaComm libraries</a>
+        for this. PureJavaComm references are slowly being removed.
+        Before JMRI 4.7.5, we used
         the RXTX and SerialIO libraries for this, but these were then removed.
         </li>
 
@@ -364,11 +369,11 @@ the log.
       article</a>. As Tony Hoare - one of the giants of computer science - wrote, "I call it my
       billion-dollar mistake. It was the invention of the null reference in 1965. I couldn't resist
       the temptation to put in a null reference, simply because it was so easy to implement."
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

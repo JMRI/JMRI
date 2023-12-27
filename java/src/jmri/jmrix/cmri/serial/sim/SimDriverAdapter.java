@@ -8,7 +8,6 @@ import java.io.PipedInputStream;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.util.ImmediatePipedOutputStream;
-import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Extends the serialdriver.SimDriverAdapter class to act as simulated
@@ -84,13 +83,6 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     @Override
     public boolean status() {
         return opened;
-    }
-
-    /**
-     * Local method to do specific port configuration
-     */
-    @Override
-    protected void setSerialPort() throws UnsupportedCommOperationException {
     }
 
     @Override

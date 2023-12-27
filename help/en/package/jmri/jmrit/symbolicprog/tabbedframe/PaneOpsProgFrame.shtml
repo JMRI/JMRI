@@ -5,10 +5,10 @@
   <!-- Copyright Bob Jacobsen 2009 -->
   <!-- Copyright Walt Thompson 2010 -->
 
-  <title>JMRI: DecoderPro Operations Mode Programmer</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: DecoderPro Operations Mode Programmer</title><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -98,10 +98,10 @@
       slider are very useful. To see how they work check one in the middle of the table then slide
       the last slider down. Notice that the values do not change below the one you checked. They
       also do not change for steps above if a lower step is changed.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

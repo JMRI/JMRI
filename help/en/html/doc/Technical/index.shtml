@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Technical Info</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI technical code"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI technical code"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -222,11 +222,11 @@
       Swarm is a fascinating and dynamic visual representation of change as developers come and go
       and make changes to the files that make up a project. More information is available on the
       <a href="https://www.jmri.org/community/visuals/codeswarm.shtml">Code Swarm</a> page.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

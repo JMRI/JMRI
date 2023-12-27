@@ -265,9 +265,15 @@ public final class DCCppConstants {
     public static final String CLOCK_SET_REGEX         = "^J\\s*C\\s+(\\d+)\\s*(\\d*)$"; // <J C 123 4> or <j C 124> outgoing set to 123min past midnight, rate 4
     public static final String CLOCK_REPLY_REGEX       = "^j\\s*C\\s+(\\d+)\\s*(\\d*)$"; // <j C 123 4> or <j C 124> incoming version of above 
     
-    //Track Manager (will be in 5.x if it is ever released)
+    //Track Manager (in 5.x)
     public static final char   TRACKMANAGER_CMD        = '=';
     public static final String TRACKMANAGER_CMD_REGEX  = "=";
     public static final String TRACKMANAGER_REPLY_REGEX= "\\s*=\\s*[A-H]\\s+([A-Z]+)\\s*(\\d*)"; //<= A PROG> or <= B DC 1234>  
+
+    //LCD message
+    public static final char   LCD_TEXT_CMD         = '@'; //request that LCD messages be sent to this instance of JMRI
+    public static final String LCD_TEXT_CMD_REGEX   = "@";
+    public static final char   LCD_TEXT_REPLY       = '@';
+    public static final String LCD_TEXT_REPLY_REGEX = "^\\s*@\\s*(\\d+)\\s+(\\d+)\\s+\\\"(.*)\\\"$"; //<@ 0 3 "message text"> where 0 is display# and 3 is line#  
 
 }

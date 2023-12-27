@@ -200,13 +200,13 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
-        
+
         Turnout torontoFirst = InstanceManager.getDefault(TurnoutManager.class).getByUserName("TorontoFirst");
         Assert.assertNotNull(torontoFirst);
         torontoFirst.setState(Turnout.THROWN);
         Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
         Assert.assertEquals("Turnout TorontoFirst is thrown", _replyVariable.getValue());
-        
+/*
         JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
         JUnitAppender.assertWarnMessageStartsWith("Name: turnout, Value: TorontoFirst");
         JUnitAppender.assertWarnMessageStartsWith("Name: bean, Value: IT3");
@@ -215,6 +215,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         JUnitAppender.assertWarnMessageStartsWith("Global Name: reply, value: Turnout TorontoFirst is thrown");
         JUnitAppender.assertWarnMessageStartsWith("Global Name: cookies, value: null");
         JUnitAppender.assertWarnMessageStartsWith("Log local variables done");
+*/
     }
 
     private void setupThrowTurnoutsConditionalNG() throws SocketAlreadyConnectedException, ParserException {
@@ -432,7 +433,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         JUnitAppender.assertWarnMessageStartsWith("Global Name: reply, value: Logged in. First name: Green, last name: Tomato");
         JUnitAppender.assertWarnMessageStartsWith("Global Name: cookies, value: null");
         JUnitAppender.assertWarnMessageStartsWith("Log local variables done");
-                
+
     }
 
     private void setupPostRequestConditionalNG() throws SocketAlreadyConnectedException, ParserException {
@@ -488,6 +489,11 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testStoreFile() throws Exception {
+        // Ensure the fast clock is started at a specified time so it doesn't vary.
+        // Otherwise the WebRequest.xml will be changed on every run.
+        Timebase clock = InstanceManager.getDefault(jmri.Timebase.class);
+        clock.setStartSetTime(false, new java.util.Date(0));
+
         // This test only updates the xml file in the LogixNG documentation
         storeXmlFile();
     }

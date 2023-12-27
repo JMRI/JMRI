@@ -657,6 +657,60 @@ public class CreateLogixNGTreeScaffold {
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+        actionDispatcher = new ActionDispatcher(digitalActionManager.getAutoSystemName(), null);
+        actionDispatcher.setTrainInfoFileName("MyTrainInfo.xml");
+        actionDispatcher.setAddressing(NamedBeanAddressing.Direct);
+        actionDispatcher.setReference("{IM1}");
+        actionDispatcher.setLocalVariable("MyVar");
+        actionDispatcher.setFormula("a+b");
+        actionDispatcher.getSelectEnum().setEnum(ActionDispatcher.DirectOperation.TrainPriority);
+        actionDispatcher.setDataAddressing(NamedBeanAddressing.Direct);
+        actionDispatcher.setDataReference("{IM3}");
+        actionDispatcher.setDataLocalVariable("SomeVar");
+        actionDispatcher.setDataFormula("x+y");
+        actionDispatcher.setTrainPriority(2);
+        actionDispatcher.setResetOption(false);
+        actionDispatcher.setTerminateOption(false);
+        maleSocket = digitalActionManager.registerAction(actionDispatcher);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionDispatcher = new ActionDispatcher(digitalActionManager.getAutoSystemName(), null);
+        actionDispatcher.setTrainInfoFileName("MyOtherTrainInfo.xml");
+        actionDispatcher.setAddressing(NamedBeanAddressing.LocalVariable);
+        actionDispatcher.setReference("{IM2}");
+        actionDispatcher.setLocalVariable("MyOtherVar");
+        actionDispatcher.setFormula("a+b+c");
+        actionDispatcher.getSelectEnum().setEnum(ActionDispatcher.DirectOperation.TrainPriority);
+        actionDispatcher.setDataAddressing(NamedBeanAddressing.Direct);
+        actionDispatcher.setDataReference("{IM5}");
+        actionDispatcher.setDataLocalVariable("SomeOtherVar");
+        actionDispatcher.setDataFormula("x+y+z");
+        actionDispatcher.setTrainPriority(4);
+        actionDispatcher.setResetOption(false);
+        actionDispatcher.setTerminateOption(true);
+        maleSocket = digitalActionManager.registerAction(actionDispatcher);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionDispatcher = new ActionDispatcher(digitalActionManager.getAutoSystemName(), null);
+        actionDispatcher.setTrainInfoFileName("MyOtherTrainInfo.xml");
+        actionDispatcher.setAddressing(NamedBeanAddressing.LocalVariable);
+        actionDispatcher.setReference("{IM8}");
+        actionDispatcher.setLocalVariable("MyOtherVar");
+        actionDispatcher.setFormula("a+c");
+        actionDispatcher.getSelectEnum().setEnum(ActionDispatcher.DirectOperation.TrainPriority);
+        actionDispatcher.setDataAddressing(NamedBeanAddressing.Direct);
+        actionDispatcher.setDataReference("{IM7}");
+        actionDispatcher.setDataLocalVariable("SomeOtherVar");
+        actionDispatcher.setDataFormula("x+z");
+        actionDispatcher.setTrainPriority(8);
+        actionDispatcher.setResetOption(true);
+        actionDispatcher.setTerminateOption(false);
+        maleSocket = digitalActionManager.registerAction(actionDispatcher);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
 
         ActionFindTableRowOrColumn actionFindTableRowOrColumn = new ActionFindTableRowOrColumn(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionFindTableRowOrColumn);
@@ -726,6 +780,11 @@ public class CreateLogixNGTreeScaffold {
         actionLight.getSelectEnum().setFormula("\"IT\"+index2");
         actionLight.getSelectEnum().setLocalVariable("index2");
         actionLight.getSelectEnum().setReference("{IM2}");
+        actionLight.setDataAddressing(NamedBeanAddressing.Direct);
+        actionLight.setLightValue(10);
+        actionLight.setDataReference("{MyRef}");
+        actionLight.setDataLocalVariable("MyLocalVariable");
+        actionLight.setDataFormula("a+b-c");
         maleSocket = digitalActionManager.registerAction(actionLight);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortExecution);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -742,6 +801,11 @@ public class CreateLogixNGTreeScaffold {
         actionLight.getSelectEnum().setFormula("\"IT\"+index2");
         actionLight.getSelectEnum().setLocalVariable("index2");
         actionLight.getSelectEnum().setReference("{IM2}");
+        actionLight.setDataAddressing(NamedBeanAddressing.Formula);
+        actionLight.setLightValue(15);
+        actionLight.setDataReference("{MyOtherRef}");
+        actionLight.setDataLocalVariable("MyOtherLocalVariable");
+        actionLight.setDataFormula("a+b*c");
         maleSocket = digitalActionManager.registerAction(actionLight);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogError);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -3614,7 +3678,7 @@ public class CreateLogixNGTreeScaffold {
 
         expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setComment("A comment");
-        expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Inactive);
+        expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Active);
         expressionEntryExit.getSelectNamedBean().setNamedBean(dp2);
         expressionEntryExit.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
         expressionEntryExit.getSelectNamedBean().setFormula("\"IT\"+index");
@@ -3630,7 +3694,7 @@ public class CreateLogixNGTreeScaffold {
 
         expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setComment("A comment");
-        expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Inactive);
+        expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Other);
         expressionEntryExit.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
         expressionEntryExit.getSelectNamedBean().setFormula("\"IT\"+index");
         expressionEntryExit.getSelectNamedBean().setLocalVariable("index");
@@ -3645,7 +3709,7 @@ public class CreateLogixNGTreeScaffold {
 
         expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setComment("A comment");
-        expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Inactive);
+        expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Reversed);
         expressionEntryExit.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
         expressionEntryExit.getSelectNamedBean().setFormula("\"IT\"+index");
         expressionEntryExit.getSelectNamedBean().setLocalVariable("index");
@@ -3655,6 +3719,12 @@ public class CreateLogixNGTreeScaffold {
         expressionEntryExit.setStateFormula("\"IT\"+index2");
         expressionEntryExit.setStateLocalVariable("index2");
         expressionEntryExit.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionEntryExit);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
+        expressionEntryExit.setComment("A comment");
+        expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.BiDirection);
         maleSocket = digitalExpressionManager.registerExpression(expressionEntryExit);
         and.getChild(indexExpr++).connect(maleSocket);
 
@@ -5201,7 +5271,7 @@ public class CreateLogixNGTreeScaffold {
 
 
     private static final PrimitiveIterator.OfInt iterator =
-            JUnitUtil.getRandom().ints('a', 'z'+10).iterator();
+            JUnitUtil.getRandomConstantSeed().ints('a', 'z'+10).iterator();
 
     private static String getRandomString(int count) {
         StringBuilder s = new StringBuilder();

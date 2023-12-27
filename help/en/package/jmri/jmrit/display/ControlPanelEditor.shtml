@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Control Panel Editor Help</title>
   <meta name="author" content="Pete Cressman">
-  <meta name="keywords" content="JMRI help Panel Editor"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Panel Editor"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -268,11 +268,11 @@
       one of the items in the selection group then the font size is changed in all items in the
       group. If say, a fast clock were included in this group, then no change would be made to the
       clock.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

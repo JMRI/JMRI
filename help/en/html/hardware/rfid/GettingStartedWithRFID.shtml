@@ -5,12 +5,12 @@
     <title>JMRI: Getting Started with RFID</title>
     <meta name="author" content="Jerry Grochow">
     <meta name="keywords" content="JMRI RFID Reporters OperationsPro IDTags Blocks">
-    <!--#include virtual="/Style.shtml" -->
+    <!--#include virtual="/help/en/parts/Style.shtml" -->
   </head>
   
   <!-- ******************************************************************************************************* -->
   <body>
-    <!--#include virtual="/Header.shtml" -->
+    <!--#include virtual="/help/en/parts/Header.shtml" -->
     <div id="mBody">
       <!--#include virtual="Sidebar.shtml" -->
       <div id="mainContent">
@@ -475,11 +475,11 @@
           <a href="#top">[Go to top of page]</a>
           
   <!-- ******************************************************************************************************* -->
-          <!--#include virtual="/Footer.shtml" -->
+          <!--#include virtual="/help/en/parts/Footer.shtml" -->
       </div>
       <!-- closes #mainContent-->
     </div>
     <!-- closes #mBody-->
-    <script src="/js/main.js"></script>
+    <script src="/js/help.js"></script>
   </body>
 </html>

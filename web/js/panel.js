@@ -1196,11 +1196,13 @@ function processPanelXML($returnedData, $success, $xhr) {
                             //draw the LayoutShape
                             $drawLayoutShape($widget);
                             break;
+                        case "positionableRectangle" : //just like RoundRect except cornerRadius set to 0;
                         case "positionableRoundRect" :
                             //log.log("#### positionableRoundRect ####");
                             //copy and reformat some attributes from children into object
                             $widget['width'] = $(this).find('size').attr('width');
                             $widget['height'] = $(this).find('size').attr('height');
+                            $widget['cornerRadius'] = 0; //default to no corner
                             $widget['cornerRadius'] = $(this).find('size').attr('cornerRadius');
                             lc = $(this).find('lineColor');
                             $widget['lineColor'] = 
@@ -1488,6 +1490,8 @@ function $handleClick(e) {
         switch ($widget['onClickOperation']) {
             case "PlaySoundLocally":
                 if ($widget['audio_widget'].paused) {   // Sound is stopped
+                    $widget['audio_widget'].loop = false;
+//                    $widget['audio_widget'].loop = (playNumLoops == -1);
                     $widget['audio_widget'].play();
                 } else {                                // Sound is playing
                     $widget['audio_widget'].pause();
@@ -2392,6 +2396,7 @@ var $getWidgetFamily = function($widget, $element) {
         case "levelxing" :
         case "layoutturntable" :
         case "layoutShape" :
+        case "positionableRectangle" :
         case "positionableRoundRect" :
             return "drawn";
             break;
@@ -2502,13 +2507,15 @@ $(document).ready(function() {
                         $widget['audio_widget'].currentTime = 0;
                     } else if (state == 17 && $widget['playSoundWhenJmriPlays']) {  // Sound is playing
                         $widget['audio_widget'].currentTime = 0;
+                        $widget['audio_widget'].loop = (data.playNumLoops == -1);
                         $widget['audio_widget'].play();
                     }
                 });
             },
-            audioicon: function(identity, command) {
+            audioicon: function(identity, command, playNumLoops) {
                 $widget = audioIconIDs['audioicon:'+identity];
                 if (command == "Play") {
+                    $widget['audio_widget'].loop = (playNumLoops == -1);
                     $widget['audio_widget'].play();
                 } else if (command == "Stop") {
                     $widget['audio_widget'].pause();

@@ -61,6 +61,10 @@ public abstract class TrainCustomCommon {
         directoryName = name;
     }
 
+    public String getDirectoryPathName() {
+        return InstanceManager.getDefault(OperationsManager.class).getFile(getDirectoryName()).getPath();
+    }
+
     /**
      * Adds one CSV file path to the collection of files to be processed.
      *

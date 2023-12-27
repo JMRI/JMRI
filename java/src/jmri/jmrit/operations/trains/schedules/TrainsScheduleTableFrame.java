@@ -264,12 +264,12 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         if (ae.getSource() == runFileButton) {
             // Processes the CSV Manifest files using an external custom program.
             if (!InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists()) {
-                log.warn("Manifest creator file not found!, directory name: {}, file name: {}",
-                        InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(),
+                log.warn("Manifest creator file not found!, directory path: {}, file name: {}",
+                        InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryPathName(),
                         InstanceManager.getDefault(TrainCustomManifest.class).getFileName()); // NOI18N
                 JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("LoadDirectoryNameFileName",
-                                InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(),
+                                InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryPathName(),
                                         InstanceManager.getDefault(TrainCustomManifest.class).getFileName()),
                         Bundle.getMessage("ManifestCreatorNotFound"), JmriJOptionPane.ERROR_MESSAGE);
                 return;
