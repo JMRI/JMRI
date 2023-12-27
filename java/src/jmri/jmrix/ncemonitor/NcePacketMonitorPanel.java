@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+
 //import javax.swing.JToggleButton;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.swing.NcePanelInterface;
@@ -41,7 +42,6 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     SerialPort activeSerialPort = null;
     NceSystemConnectionMemo memo = null;
 
-    //protected JToggleButton unitHelpButton = new JToggleButton(Bundle.getMessage("UnitHelpButtonLabel"));
     protected JCheckBox dupFilterCheckBox = new JCheckBox(Bundle.getMessage("DupFilterCheckBoxLabel"));
     protected JComboBox<String> portBox = new javax.swing.JComboBox<String>();
     protected javax.swing.JButton openButton = new javax.swing.JButton(Bundle.getMessage("OpenButtonLabel"));
@@ -149,8 +149,6 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     openPortButtonActionPerformed(evt);
-                    //} catch (jmri.jmrix.SerialConfigException ex) {
-                    //    log.error("Error while opening port.  Did you select the right one?\n"+ex);
                 } catch (java.lang.UnsatisfiedLinkError ex) {
                     log.error("Error while opening port.  Did you select the right one?", ex);
                 }
@@ -162,8 +160,6 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     closePortButtonActionPerformed();
-                    //} catch (jmri.jmrix.SerialConfigException ex) {
-                    //    log.error("Error while closing port.  Did you select the right one?\n"+ex);
                 } catch (java.lang.UnsatisfiedLinkError ex) {
                     log.error("Error while closing port.  Did you select the right one?", ex);
                 }
@@ -197,25 +193,6 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         {
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            /*
-            unitHelpButton.setToolTipText(Bundle.getMessage("UnitHelpButtonToolTip"));
-            unitHelpButton.setEnabled(false);
-            p.add(unitHelpButton);
-            unitHelpButton.addActionListener(new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    if (unitHelpButton.isSelected()) {
-                        sendBytes(new byte[]{(byte) '?'});
-                        unitHelpButton.setText(Bundle.getMessage("UnitHelpPageButtonLabel"));
-                        unitHelpButton.setToolTipText(Bundle.getMessage("UnitHelpPageButtonToolTip"));
-                    } else {
-                        sendBytes(new byte[]{(byte) ' '});
-                        unitHelpButton.setText(Bundle.getMessage("UnitHelpButtonLabel"));
-                        unitHelpButton.setToolTipText(Bundle.getMessage("UnitHelpButtonToolTip"));
-                    }
-                }
-            });
-            */
             dupFilterCheckBox.setToolTipText(Bundle.getMessage("DupFilterCheckBoxToolTip"));
             p.add(dupFilterCheckBox);
             p2.add(p);
@@ -492,7 +469,6 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         closePortButton.setEnabled(isOpen);
         portBox.setEnabled(!isOpen);
         modelBox.setEnabled(!isOpen);
-        //unitHelpButton.setEnabled(isOpen);
         verboseButton.setEnabled(isOpen);
         hex0Button.setEnabled(isOpen);
         hex1Button.setEnabled(isOpen);
@@ -662,8 +638,11 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             while (true) {   // loop permanently, stream close will exit via exception
                 try {
                     handleIncomingData();
+                } catch (java.io.EOFException e) {
+                    log.info(Thread.currentThread().getName() + " thread ending, port closed");
+                    return;
                 } catch (java.io.IOException e) {
-                    log.warn("run: Exception: {}", e.toString());
+                    log.warn(Thread.currentThread().getName() + " thread ending: Exception: {}", e.toString());
                     return;
                 }
             }
