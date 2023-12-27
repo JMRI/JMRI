@@ -33,7 +33,7 @@ public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler
         if (e instanceof Error) {
             if (!GraphicsEnvironment.isHeadless()) {
                 jmri.util.swing.ExceptionDisplayFrame.displayExceptionDisplayFrame(null,
-                    new ErrorContext(new Exception(e)));
+                    new ErrorContext(e));
             }
             log.error("System Exiting");
             systemExit();
