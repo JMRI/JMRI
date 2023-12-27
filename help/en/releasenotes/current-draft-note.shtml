@@ -120,11 +120,11 @@
                 <li>Clock, Macro, and Consist added and improved error notification to user
                	when invalid inputs entered. Prior these were silently ignored or only
                	logged to the console.</li>
-               	<li>NCE Monitor has internal improvements to prevent errors due to port not
+               	<li>NCE Packet Analyzer has internal improvements to prevent errors due to port not
                	being open. Duplicates are now given as a count instead of a row of +++ as
                	the time stamp wasn't being placed correctly and a count is more meaningful.
                	The option to close the connection was added to manage selecting a different
-               	port.</li>
+               	port. It now supports the old and new versions of the analyzer.</li>
             </ul>
 
         <h4>Oak Tree</h4>
