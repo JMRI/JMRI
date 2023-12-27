@@ -219,7 +219,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li>Updated LocoNet Monitor to display PM74 and SE74 device 
+                <li>Updated LocoNet Monitor to display PM74 and SE74 device
 		types for certain LocoNet messages.</li>
                 <li>Added DN163K5B decoder</li>
             </ul>
@@ -414,7 +414,9 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Do not display tooltips for hidden items.</li>
+            <li>Do not reset all tooltip settings for Always or Never tooltip selections when changing
+            the editor mode.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -449,13 +451,13 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>Do not display tooltips for hidden items.</li>
         </ul>
 
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>Do not display tooltips for hidden items.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
