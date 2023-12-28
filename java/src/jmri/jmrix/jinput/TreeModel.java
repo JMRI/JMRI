@@ -45,7 +45,7 @@ public final class TreeModel extends DefaultTreeModel {
         // load initial USB objects
         boolean pass = loadSystem();
         if (!pass) {
-            log.error("loadSystem failed");
+            log.warn("loading of HID System failed");
         }
 
         // If you don't call loadSystem, the following line was
