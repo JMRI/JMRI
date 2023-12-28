@@ -271,6 +271,12 @@ public final class TreeModel extends DefaultTreeModel {
             return false;
         }
 
+        if (controllers().length == 0) {
+            log.warn("No controllers found; tool is probably not working");
+            jmri.util.HelpUtil.displayHelpRef("package.jmri.jmrix.jinput.treemodel.TreeFrame");
+            return false;
+        }
+        
         for (Controller controller : controllers()) {
             UsbNode controllerNode = null;
             UsbNode deviceNode = null;
