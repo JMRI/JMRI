@@ -259,7 +259,7 @@
     <label>Light 16 Accessory Decoder Number</label>
   </variable>
 
-  <!-- the definition no long needs the sepearate thousands-hundreds and tens-ones -->
+  <!-- the definition no longer needs the separate thousands-hundreds and tens-ones -->
   <!-- variables.  We comment them out instead of deleting them in case that was -->
   <!-- an incorrect decision -->
 
