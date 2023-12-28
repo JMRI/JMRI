@@ -56,7 +56,7 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
                 case inconsistentText:
                     return INCONSISTENT;
                 default:
-                    log.warn("Unknown state : {}, substitute UNKNOWN", payload);
+                    log.warn("{} saw unknown state : {}", getDisplayName(), payload);
                     return UNKNOWN;
             }
         }
@@ -130,7 +130,7 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
     @Override
     public void notifyMqttMessage(String receivedTopic, String message) {
         if (! ( receivedTopic.endsWith(rcvTopic) || receivedTopic.endsWith(sendTopic) ) ) {
-            log.error("Got a message whose topic ({}) wasn't for me ({})", receivedTopic, rcvTopic);
+            log.error("{} got a message whose topic ({}) wasn't for me ({})", getDisplayName(), receivedTopic, rcvTopic);
             return;
         }
         

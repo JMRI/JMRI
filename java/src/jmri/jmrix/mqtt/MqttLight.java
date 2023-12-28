@@ -65,7 +65,7 @@ public class MqttLight extends AbstractVariableLight implements MqttEventListene
                 setState(state);
                 log.trace("   setState {}", state);
             } else {
-                log.warn("failure to decode topic {} {}", topic, payload);
+                log.warn("{} failure to decode topic {} {}", getDisplayName(), topic, payload);
             }
         }
 
@@ -80,7 +80,7 @@ public class MqttLight extends AbstractVariableLight implements MqttEventListene
                     toReturn = offText;
                     break;
                 default:
-                    log.error("Light has a state which is not supported {}", newState);
+                    log.error("Light {} has a state which is not supported {}", getDisplayName(), newState);
                     break;
             }
             return toReturn;
@@ -126,7 +126,7 @@ public class MqttLight extends AbstractVariableLight implements MqttEventListene
             // first look for the double case, which we can't handle
             if ((newState & Light.OFF) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both ON and OFF {}", newState);
+                log.error("Cannot command {} to both ON and OFF {}", getDisplayName(), newState);
                 return;
             } else {
                 // send a ON command
@@ -171,7 +171,7 @@ public class MqttLight extends AbstractVariableLight implements MqttEventListene
     @Override
     public void notifyMqttMessage(String receivedTopic, String message) {
         if (! ( receivedTopic.endsWith(rcvTopic) || receivedTopic.endsWith(sendTopic) ) ) {
-            log.error("Got a message whose topic ({}) wasn't for me ({})", receivedTopic, rcvTopic);
+            log.error("{} got a message whose topic ({}) wasn't for me ({})", getDisplayName(), receivedTopic, rcvTopic);
             return;
         }
         log.debug("notifyMqttMessage with {}", message);

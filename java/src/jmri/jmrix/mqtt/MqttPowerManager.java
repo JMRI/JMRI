@@ -12,8 +12,6 @@ import jmri.JmriException;
 import jmri.managers.AbstractPowerManager;
 
 import javax.annotation.Nonnull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class MqttPowerManager extends AbstractPowerManager<MqttSystemConnectionMemo> implements MqttEventListener {
 
@@ -57,6 +55,8 @@ public class MqttPowerManager extends AbstractPowerManager<MqttSystemConnectionM
         } else if (v == OFF) {
             // send TRACK_POWER_OFF
             sendMessage(offText);
+        } else {
+            log.warn("Saw unknown power state : {}", v);
         }
     }
 
@@ -88,7 +88,7 @@ public class MqttPowerManager extends AbstractPowerManager<MqttSystemConnectionM
             switch (message) {
                 case onText: super.setPower(ON); break;
                 case offText: super.setPower(OFF); break;
-                default: log.error("Invalid message {}", message); break;
+                default: log.error("Invalid message to power manager: {}", message); break;
             }
         } catch (JmriException e) {
             log.error("JMRI Exception", e);
@@ -96,7 +96,7 @@ public class MqttPowerManager extends AbstractPowerManager<MqttSystemConnectionM
     }
 
     // Initialize logging information
-    private final static Logger log = LoggerFactory.getLogger(MqttPowerManager.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttPowerManager.class);
 
 }
 
