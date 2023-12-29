@@ -439,6 +439,10 @@
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
             <li>Add Audio support to Where Used.</li>
+            <li>The action <strong>Local Variable</strong> can now set
+                a constant of different types: <strong>String</strong>,
+                <strong>Integer</strong>, <strong>Floating number</strong>,
+                <strong>Boolean</strong>.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
