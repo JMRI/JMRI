@@ -1120,6 +1120,7 @@ public class CreateLogixNGTreeScaffold {
         actionLocalVariable.setComment("A comment");
         actionLocalVariable.setLocalVariable("result");
         actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.CopyReferenceToVariable);
+        actionLocalVariable.setConstantType(ActionLocalVariable.ConstantType.Boolean);
         actionLocalVariable.setConstantValue("1");
         actionLocalVariable.setOtherLocalVariable("SomeVar");
         actionLocalVariable.setReference("{{MyVarName}}");
@@ -1132,6 +1133,7 @@ public class CreateLogixNGTreeScaffold {
         actionLocalVariable.setComment("A comment");
         actionLocalVariable.setLocalVariable("result");
         actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
+        actionLocalVariable.setConstantType(ActionLocalVariable.ConstantType.FloatingNumber);
         actionLocalVariable.setConstantValue("1");
         actionLocalVariable.setOtherLocalVariable("SomeVar");
         actionLocalVariable.setReference("{{MyVarName}}");
@@ -1144,6 +1146,7 @@ public class CreateLogixNGTreeScaffold {
         actionLocalVariable.setComment("A comment");
         actionLocalVariable.setLocalVariable("result");
         actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.CopyMemoryToVariable);
+        actionLocalVariable.setConstantType(ActionLocalVariable.ConstantType.Integer);
         actionLocalVariable.setConstantValue("1");
         actionLocalVariable.setOtherLocalVariable("SomeVar");
         actionLocalVariable.getSelectMemoryNamedBean().setNamedBean(memory3);
@@ -1157,6 +1160,7 @@ public class CreateLogixNGTreeScaffold {
         actionLocalVariable.setComment("A comment");
         actionLocalVariable.setLocalVariable("result");
         actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.CopyBlockToVariable);
+        actionLocalVariable.setConstantType(ActionLocalVariable.ConstantType.String);
         actionLocalVariable.setConstantValue("1");
         actionLocalVariable.setOtherLocalVariable("SomeVar");
         actionLocalVariable.getSelectMemoryNamedBean().setNamedBean(memory3);

@@ -17,8 +17,8 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-5-5-5.xsd">
   <jmriversion>
     <major>5</major>
-    <minor>5</minor>
-    <test>6</test>
+    <minor>7</minor>
+    <test>1</test>
     <modifier>plus</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -85,7 +85,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="4:50 PM">
+    <memory value="11:01 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -176,7 +176,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Nov 14 16:49:29 CET 2023" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Dec 29 23:01:46 CET 2023" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <Thread>
       <id>0</id>
@@ -23949,6 +23949,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>SetToString</variableOperation>
+      <constantType>String</constantType>
       <constant />
       <otherVariable />
       <reference />
@@ -24057,6 +24058,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>CopyReferenceToVariable</variableOperation>
+      <constantType>Boolean</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference>{{MyVarName}}</reference>
@@ -24165,6 +24167,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>CalculateFormula</variableOperation>
+      <constantType>FloatingNumber</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference>{{MyVarName}}</reference>
@@ -24275,6 +24278,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>CopyMemoryToVariable</variableOperation>
+      <constantType>Integer</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference />
@@ -24385,6 +24389,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>CopyBlockToVariable</variableOperation>
+      <constantType>String</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference />
@@ -24495,6 +24500,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>CopyReporterToVariable</variableOperation>
+      <constantType>String</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference />
@@ -24603,6 +24609,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>CopyVariableToVariable</variableOperation>
+      <constantType>String</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference />
@@ -24725,6 +24732,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>CopyTableCellToVariable</variableOperation>
+      <constantType>String</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference />
@@ -24845,6 +24853,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>SetToNull</variableOperation>
+      <constantType>String</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference />
@@ -24965,6 +24974,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>SetToString</variableOperation>
+      <constantType>String</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference />
@@ -47596,9 +47606,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Tue Nov 14 16:50:11 CET 2023</date>
-      <filename />
+      <date>Fri Dec 29 23:01:50 CET 2023</date>
+      <filename>/home/daniel/Documents/GitHub/JMRI/temp/temp/LogixNG_temp.xml</filename>
     </operation>
   </filehistory>
-  <!--Written by JMRI version 5.5.6plus+daniel+2023-11-14T15:38:10Z+Re450e78 on Tue Nov 14 16:50:11 CET 2023-->
+  <!--Written by JMRI version 5.7.1plus+daniel+2023-12-29T22:01:42Z+Re4442d7 on Fri Dec 29 23:01:50 CET 2023-->
 </layout-config>
