@@ -60,7 +60,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     protected JRadioButton locoOffButton = new JRadioButton(Bundle.getMessage("LocoOffLabel"));
     protected JRadioButton locoOnButton = new JRadioButton(Bundle.getMessage("LocoOnLabel"));
     protected JRadioButton resetOffButton = new JRadioButton(Bundle.getMessage("ResetOffLabel"));
-    protected JRadioButton resetOnButton = new JRadioButton(Bundle.getMessage("ResetOffLabel"));
+    protected JRadioButton resetOnButton = new JRadioButton(Bundle.getMessage("ResetOnLabel"));
     protected JRadioButton signalOffButton = new JRadioButton(Bundle.getMessage("SignalOffLabel"));
     protected JRadioButton signalOnButton = new JRadioButton(Bundle.getMessage("SignalOnLabel"));
     protected JRadioButton accSingleButton = new JRadioButton(Bundle.getMessage("AccSingleLabel"));
