@@ -31,7 +31,8 @@
 
         <h4>C/MRI</h4>
             <ul>
-                <li></li>
+                <li>C/MRI serial now uses 2 stop bits, which solves communication
+                    issues on certain hardware.</li>
             </ul>
 
         <h4>DCC++ and DCC-EX</h4>
