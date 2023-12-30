@@ -106,6 +106,9 @@
 
         <h4>MQTT</h4>
             <ul>
+                <li>The new Jython script <strong>jython/MQTT/MqttSignalHead2.py</strong>
+                has been added. It's an improvement of jython/MQTT/MqttSignalHead.py
+                as it doesn't need any manual configuration to work.</li>
                 <li>Made certain error messages specific to a single device.</li>
             </ul>
 
