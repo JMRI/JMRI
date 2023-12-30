@@ -66,8 +66,8 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     protected JComboBox<String> modelBox = new JComboBox<>();
     protected JLabel modelBoxLabel;
     private String[] validModelNames = new String[]{Bundle.getMessage("PacketAnalyzer"), Bundle.getMessage("DccMeter/Analyzer")};
-    private int ModelOrig = 0;
-    private int ModelNew = 1;
+    private static int ModelOrig = 0;
+    private static int ModelNew = 1;
     private int[] validModelValues = new int[]{ModelOrig, ModelNew};
     private int[] modelBaudRates = new int[]{38400, 115200};
     // For old model, Doc says 7 bits, but 8 seems needed, new calls for 115,200 n 8 1
