@@ -66,9 +66,9 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     protected JComboBox<String> modelBox = new JComboBox<>();
     protected JLabel modelBoxLabel;
     private String[] validModelNames = new String[]{Bundle.getMessage("PacketAnalyzer"), Bundle.getMessage("DccMeter/Analyzer")};
-    private static int ModelOrig = 0;
-    private static int ModelNew = 1;
-    private int[] validModelValues = new int[]{ModelOrig, ModelNew};
+    private final static int MODELORIG = 0;
+    private final static int MODELNEW = 1;
+    private int[] validModelValues = new int[]{MODELORIG, MODELNEW};
     private int[] modelBaudRates = new int[]{38400, 115200};
     // For old model, Doc says 7 bits, but 8 seems needed, new calls for 115,200 n 8 1
     private int[] modelBitValues = new int[] {8, 8};
@@ -452,7 +452,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         portBox.setEnabled(!isOpen);
         modelBox.setEnabled(!isOpen);
         verboseButton.setEnabled(isOpen);
-        if (!isOpen || (modelBox.getSelectedIndex() == ModelOrig)) {
+        if (!isOpen || (modelBox.getSelectedIndex() == MODELORIG)) {
             origHex0Button.setEnabled(isOpen);
             origHex1Button.setEnabled(isOpen);
             origHex2Button.setEnabled(isOpen);
@@ -460,7 +460,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             origHex4Button.setEnabled(isOpen);
             origHex5Button.setEnabled(isOpen);
         }
-        if (!isOpen || (modelBox.getSelectedIndex() == ModelNew)) {
+        if (!isOpen || (modelBox.getSelectedIndex() == MODELNEW)) {
             newHex0Button.setEnabled(isOpen);
             newHex1Button.setEnabled(isOpen);
         }
