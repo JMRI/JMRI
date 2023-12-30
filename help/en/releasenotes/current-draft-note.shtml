@@ -264,6 +264,11 @@
                 <li></li>
             </ul>
 
+        <h4>Leb</h4>
+            <ul>
+                <li>Fixed XML files when cross-referencing additional decoder details.</li>
+            </ul>
+
         <h4>MD Electronics</h4>
              <ul>
                 <li></li>
@@ -321,7 +326,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li></li>
+                <li>Fixed XML files when cross-referencing additional decoder details.</li>
             </ul>
 
         <h4>Tam Valley Depot</h4>
