@@ -167,7 +167,7 @@
         </programming>
         <!-- Configuration Variable (CV) information follows -->
         <variables>
-            <xi:include href="/xml/decoders/soundtraxx/SoundTraxx_Blu_Tsu2_Diesel_cv.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/soundtraxx/SoundTraxx_Blu_Tsu2_Diesel_cv.xml"/>
         </variables>
         <resets>
             <factReset label="Reset all CVs to factory defaults" CV="8" default="8"/>
