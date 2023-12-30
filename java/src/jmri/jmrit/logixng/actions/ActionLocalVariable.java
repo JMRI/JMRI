@@ -337,7 +337,8 @@ public class ActionLocalVariable extends AbstractDigitalAction
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_Null", _localVariable);
 
             case SetToString:
-                return Bundle.getMessage(locale, "ActionLocalVariable_Long_Value", _localVariable, _constantValue);
+                return Bundle.getMessage(locale, "ActionLocalVariable_Long_Value",
+                        _localVariable, _constantType._text, _constantValue);
 
             case CopyVariableToVariable:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyVariableToVariable",
