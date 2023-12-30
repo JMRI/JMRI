@@ -15,7 +15,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.tree.TreeCellEditor;
 
 import jmri.*;
-import static jmri.jmrit.beantable.BeanTableDataModel.SYSNAMECOL;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
 import jmri.jmrit.logixng.tools.swing.LogixNGEditor;
@@ -309,7 +308,7 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
     }
 
 
-    protected class TableModel extends AbstractLogixNGTableAction.TableModel {
+    protected class TableModel extends AbstractLogixNGTableAction<LogixNG>.TableModel {
 
         // overlay the state column with the edit column
         static public final int STARTUP_COL = NUMCOLUMN;
@@ -386,7 +385,6 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
             if (col == STARTUP_COL) {
                 // alternate
                 LogixNG x = (LogixNG) getValueAt(row, SYSNAMECOL);
-                boolean v = isEnabled(x);
 
                 for (int i=0; i < x.getNumConditionalNGs(); i++) {
                     ConditionalNG cng = x.getConditionalNG(i);
