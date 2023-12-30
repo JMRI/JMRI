@@ -443,7 +443,27 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+            <li><strong>Note:</strong> If tables and panels are stored
+                with this JMRI version, the file might not load in a
+                previous version of JMRI if it includes LogixNG. This is
+                because JMRI now stores some LogixNG data in a different
+                way than before.</li>
             <li>Add Audio support to Where Used.</li>
+            <li>The action <strong>Local Variable</strong> can now set
+                a constant of different types: <strong>String</strong>,
+                <strong>Integer</strong>, <strong>Floating number</strong>,
+                <strong>Boolean</strong>.</li>
+            <li>The LogixNG table now shows whenether the ConditionalNGs
+                of a LogixNG has <strong>Startup</strong> enabled or not.
+                The <strong>Startup</strong> checkbox in the LogixNG
+                table can have three states: Checked, unchecked and
+                partially checked. If the user checks/unchecks the
+                checkbox, all the ConditionalNGs will have the
+                <strong>Startup</strong> enabled/disabled.
+                <br>
+                The column <strong>Startup</strong> is at the far right
+                in the LogixNG table. You might need to resize the table
+                to see the new column.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>

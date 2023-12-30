@@ -196,6 +196,7 @@
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>CopyTableCellToVariable</variableOperation>
+      <constantType>String</constantType>
       <constant />
       <otherVariable />
       <reference />
