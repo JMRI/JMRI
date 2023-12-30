@@ -55,15 +55,10 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     protected JRadioButton origHex5Button = new JRadioButton(Bundle.getMessage("OrigHex5Label"));
     protected JRadioButton newHex0Button = new JRadioButton(Bundle.getMessage("NewHex0Label"));
     protected JRadioButton newHex1Button = new JRadioButton(Bundle.getMessage("NewHex1Label"));
-    protected JRadioButton accOffButton = new JRadioButton(Bundle.getMessage("AccOffLabel"));
     protected JRadioButton accOnButton = new JRadioButton(Bundle.getMessage("AccOnLabel"));
-    protected JRadioButton idleOffButton = new JRadioButton(Bundle.getMessage("IdleOffLabel"));
     protected JRadioButton idleOnButton = new JRadioButton(Bundle.getMessage("IdleOnLabel"));
-    protected JRadioButton locoOffButton = new JRadioButton(Bundle.getMessage("LocoOffLabel"));
     protected JRadioButton locoOnButton = new JRadioButton(Bundle.getMessage("LocoOnLabel"));
-    protected JRadioButton resetOffButton = new JRadioButton(Bundle.getMessage("ResetOffLabel"));
     protected JRadioButton resetOnButton = new JRadioButton(Bundle.getMessage("ResetOnLabel"));
-    protected JRadioButton signalOffButton = new JRadioButton(Bundle.getMessage("SignalOffLabel"));
     protected JRadioButton signalOnButton = new JRadioButton(Bundle.getMessage("SignalOnLabel"));
     protected JRadioButton accSingleButton = new JRadioButton(Bundle.getMessage("AccSingleLabel"));
     protected JRadioButton accPairedButton = new JRadioButton(Bundle.getMessage("AccPairedLabel"));
@@ -226,7 +221,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         {   // begin old hex group
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            //origHex0Button.setToolTipText(Bundle.getMessage("OrigHex0ButtonToolTip"));
+            origHex0Button.setToolTipText(Bundle.getMessage("OrigHex0ButtonToolTip"));
             gD.add(origHex0Button);
             p.add(origHex0Button);
             origHex0Button.addActionListener(new java.awt.event.ActionListener() {
@@ -236,7 +231,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 }
             });
             p2B.add(p);
-            //origHex1Button.setToolTipText(Bundle.getMessage("OrigHex1ButtonToolTip"));
+            origHex1Button.setToolTipText(Bundle.getMessage("OrigHex1ButtonToolTip"));
             gD.add(origHex1Button);
             p.add(origHex1Button);
             origHex1Button.addActionListener(new java.awt.event.ActionListener() {
@@ -246,7 +241,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 }
             });
             p2B.add(p);
-            //origHex2Button.setToolTipText(Bundle.getMessage("OrigHex2ButtonToolTip"));
+            origHex2Button.setToolTipText(Bundle.getMessage("OrigHex2ButtonToolTip"));
             gD.add(origHex2Button);
             p.add(origHex2Button);
             origHex2Button.addActionListener(new java.awt.event.ActionListener() {
@@ -256,7 +251,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 }
             });
             p2.add(p);
-            //origHex3Button.setToolTipText(Bundle.getMessage("OrigHex3ButtonToolTip"));
+            origHex3Button.setToolTipText(Bundle.getMessage("OrigHex3ButtonToolTip"));
             gD.add(origHex3Button);
             p.add(origHex3Button);
             origHex3Button.addActionListener(new java.awt.event.ActionListener() {
@@ -266,7 +261,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 }
             });
             p2B.add(p);
-            //origHex4Button.setToolTipText(Bundle.getMessage("OrigHex4ButtonToolTip"));
+            origHex4Button.setToolTipText(Bundle.getMessage("OrigHex4ButtonToolTip"));
             gD.add(origHex4Button);
             p.add(origHex4Button);
             origHex4Button.addActionListener(new java.awt.event.ActionListener() {
@@ -276,7 +271,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 }
             });
             p2.add(p);
-            //origHex5Button.setToolTipText(Bundle.getMessage("OrigHex5ButtonToolTip"));
+            origHex5Button.setToolTipText(Bundle.getMessage("OrigHex5ButtonToolTip"));
             gD.add(origHex5Button);
             p.add(origHex5Button);
             origHex5Button.addActionListener(new java.awt.event.ActionListener() {
@@ -291,7 +286,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         {   // begin new hex group
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            //newHex0Button.setToolTipText(Bundle.getMessage("NewHex0ButtonToolTip"));
+            newHex0Button.setToolTipText(Bundle.getMessage("NewHex0ButtonToolTip"));
             gD.add(newHex0Button);
             p.add(newHex0Button);
             newHex0Button.addActionListener(new java.awt.event.ActionListener() {
@@ -301,7 +296,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                 }
             });
             p2C.add(p);
-            //newHex1Button.setToolTipText(Bundle.getMessage("NewHex1ButtonToolTip"));
+            newHex1Button.setToolTipText(Bundle.getMessage("NewHex1ButtonToolTip"));
             gD.add(newHex1Button);
             p.add(newHex1Button);
             newHex1Button.addActionListener(new java.awt.event.ActionListener() {
@@ -318,112 +313,71 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         p2A.add(p2D);
         p2.add(p2A);
 
-        ButtonGroup gAcc = new ButtonGroup();
-        ButtonGroup gIdle = new ButtonGroup();
-        ButtonGroup gLoco = new ButtonGroup();
-        ButtonGroup gReset = new ButtonGroup();
-        ButtonGroup gSignal = new ButtonGroup();
         { // start on
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            //accOnButton.setToolTipText(Bundle.getMessage("AccOnButtonToolTip"));
-            gAcc.add(accOnButton);
+            accOnButton.setToolTipText(Bundle.getMessage("AccOnButtonToolTip"));
             p.add(accOnButton);
             accOnButton.addActionListener(new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte) 'A', (byte) '+'});
+                    if (accOnButton.isSelected()) {
+                        sendBytes(new byte[]{(byte) 'A', (byte) '+'});
+                    } else {
+                        sendBytes(new byte[]{(byte) 'A', (byte) '-'});
+                    }
                 }
             });
-            //idleOnButton.setToolTipText(Bundle.getMessage("IdleOnButtonToolTip"));
-            gIdle.add(idleOnButton);
+            idleOnButton.setToolTipText(Bundle.getMessage("IdleOnButtonToolTip"));
             p.add(idleOnButton);
             idleOnButton.addActionListener(new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte) 'I', (byte) '+'});
+                    if (idleOnButton.isSelected()) {
+                        sendBytes(new byte[]{(byte) 'I', (byte) '+'});
+                    } else {
+                        sendBytes(new byte[]{(byte) 'I', (byte) '-'});
+                    }
                 }
             });
-            //locoOnButton.setToolTipText(Bundle.getMessage("LocoOnButtonToolTip"));
-            gLoco.add(locoOnButton);
+            locoOnButton.setToolTipText(Bundle.getMessage("LocoOnButtonToolTip"));
             p.add(locoOnButton);
             locoOnButton.addActionListener(new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte) 'L', (byte) '+'});
+                    if (locoOnButton.isSelected()) {
+                        sendBytes(new byte[]{(byte) 'L', (byte) '+'});
+                    } else {
+                        sendBytes(new byte[]{(byte) 'L', (byte) '-'});
+                    }
                 }
             });
-            //resetOnButton.setToolTipText(Bundle.getMessage("ResetOnButtonToolTip"));
-            gReset.add(resetOnButton);
+            resetOnButton.setToolTipText(Bundle.getMessage("ResetOnButtonToolTip"));
             p.add(resetOnButton);
             resetOnButton.addActionListener(new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte) 'R', (byte) '+'});
+                    if (resetOnButton.isSelected()) {
+                        sendBytes(new byte[]{(byte) 'R', (byte) '+'});
+                    } else {
+                        sendBytes(new byte[]{(byte) 'R', (byte) '-'});
+                    }
                 }
             });
-            //signalOnButton.setToolTipText(Bundle.getMessage("SignalOnButtonToolTip"));
-            gSignal.add(signalOnButton);
+            signalOnButton.setToolTipText(Bundle.getMessage("SignalOnButtonToolTip"));
             p.add(signalOnButton);
             signalOnButton.addActionListener(new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte) 'S', (byte) '+'});
+                    if (signalOnButton.isSelected()) {
+                        sendBytes(new byte[]{(byte) 'S', (byte) '+'});
+                    } else {
+                        sendBytes(new byte[]{(byte) 'S', (byte) '-'});
+                    }
                 }
             });
             p2.add(p);
         }  // end on
-
-        { // start off
-            JPanel p = new JPanel();
-            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            //accOffButton.setToolTipText(Bundle.getMessage("AccOffButtonToolTip"));
-            gAcc.add(accOffButton);
-            p.add(accOffButton);
-            accOffButton.addActionListener(new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte) 'A', (byte) '-'});
-                }
-            });
-            //idleOffButton.setToolTipText(Bundle.getMessage("IdleOffButtonToolTip"));
-            gIdle.add(idleOffButton);
-            p.add(idleOffButton);
-            idleOffButton.addActionListener(new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte) 'I', (byte) '-'});
-                }
-            });
-            //locoOffButton.setToolTipText(Bundle.getMessage("LocoOffButtonToolTip"));
-            gLoco.add(locoOffButton);
-            p.add(locoOffButton);
-            locoOffButton.addActionListener(new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte) 'L', (byte) '-'});
-                }
-            });
-            //resetOffButton.setToolTipText(Bundle.getMessage("ResetOffButtonToolTip"));
-            gReset.add(resetOffButton);
-            p.add(resetOffButton);
-            resetOffButton.addActionListener(new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte) 'R', (byte) '-'});
-                }
-            });
-            //signalOffButton.setToolTipText(Bundle.getMessage("SignalOffButtonToolTip"));
-            gSignal.add(signalOffButton);
-            p.add(signalOffButton);
-            signalOffButton.addActionListener(new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte) 'S', (byte) '-'});
-                }
-            });
-            p2.add(p);
-        }  // end off
 
         { // Monitor command acc single/double
             JPanel p = new JPanel();
@@ -432,7 +386,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p.add(t);
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup gA = new ButtonGroup();
-            //accSingleButton.setToolTipText(Bundle.getMessage("AccSingleButtonToolTip"));
+            accSingleButton.setToolTipText(Bundle.getMessage("AccSingleButtonToolTip"));
             gA.add(accSingleButton);
             p.add(accSingleButton);
             accSingleButton.addActionListener(new java.awt.event.ActionListener() {
@@ -441,7 +395,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                     sendBytes(new byte[]{(byte) 'A', (byte) 'S'});
                 }
             });
-            //accPairedButton.setToolTipText(Bundle.getMessage("AccPairedButtonToolTip"));
+            accPairedButton.setToolTipText(Bundle.getMessage("AccPairedButtonToolTip"));
             gA.add(accPairedButton);
             p.add(accPairedButton);
             accPairedButton.addActionListener(new java.awt.event.ActionListener() {
@@ -510,15 +464,10 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             newHex0Button.setEnabled(isOpen);
             newHex1Button.setEnabled(isOpen);
         }
-        accOffButton.setEnabled(isOpen);
         accOnButton.setEnabled(isOpen);
-        idleOffButton.setEnabled(isOpen);
         idleOnButton.setEnabled(isOpen);
-        locoOffButton.setEnabled(isOpen);
         locoOnButton.setEnabled(isOpen);
-        resetOffButton.setEnabled(isOpen);
         resetOnButton.setEnabled(isOpen);
-        signalOffButton.setEnabled(isOpen);
         signalOnButton.setEnabled(isOpen);
         accSingleButton.setEnabled(isOpen);
         accPairedButton.setEnabled(isOpen);
