@@ -354,7 +354,8 @@
 
         <h4>Trix Modelleisenbahn</h4>
             <ul>
-                <li></li>
+                <li>Fix URIs in the xml/decoders/trix/mLD_mSD_functionmap.xml that were pointing to
+                    http://jmri.oSound6/xml/   This should be pointing to: http://jmri.org/xml/</li>
             </ul>
 
         <h4>Uhlenbrock</h4>
