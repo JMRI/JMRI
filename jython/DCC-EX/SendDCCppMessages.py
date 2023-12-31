@@ -1,4 +1,4 @@
-# Example of sending various messages to a DCCpp connection.
+# Example of sending various messages to a DCCpp/DCC-EX connection.
 # 
 #   Useful for intializing turnout definitions, power state, etc.
 #   adapted from SendReceiveLocoNetPeerXfrMessage.py
@@ -28,7 +28,7 @@ dl = tc.addDCCppListener(0xFF,PeerListener())
     
 
 #-----------------------------------------------------------
-# list of messages to send, examples are from DCC-EX 3.1.7+
+# list of messages to send, these examples are from DCC-EX 3.1.7+
 send("T 27 DCC 27 1")   # Add Turnout DCC: ID:27, Address:27, Subaddr:1
 send("T 28 DCC 28 0")   # Add Turnout DCC: ID:28, Address:28, Subaddr:0
 send("T 29 DCC 29 1")   # Add Turnout DCC: ID:29, Address:29, Subaddr:1
@@ -44,3 +44,7 @@ send("T")               # request list of Turnout definitions
 send("S")               # request list of Sensor definitions
 send("Z")               # request list of Output definitions
 send("s")               # request update of all state lists
+# example TrackManager messages, these are from DCC-EX 5.0+
+send("= B PROG")   # Set track B to PROG
+send("= B MAIN")   # Set track B back to MAIN
+send("=")          # request updated trackmanager status
