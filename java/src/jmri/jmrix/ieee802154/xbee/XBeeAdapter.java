@@ -7,6 +7,7 @@ import java.util.Arrays;
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortDataListener;
 import com.fazecast.jSerialComm.SerialPortEvent;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -161,6 +162,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         return SerialPort.LISTENING_EVENT_DATA_AVAILABLE;
     }
 
+    @SuppressFBWarnings(value = {"NN_NAKED_NOTIFY"}, justification="The notify call is notifying the receive thread that data is available due to an event.")
     @Override
     public void serialEvent(SerialPortEvent serialPortEvent) {
         if (serialPortEvent.getEventType() != SerialPort.LISTENING_EVENT_DATA_AVAILABLE)
