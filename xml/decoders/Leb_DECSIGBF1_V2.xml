@@ -26,7 +26,7 @@
     </family>
     <programming direct="no" paged="yes" register="no" ops="no"/>
     <variables>
- 	<xi:include href="file:/xml/decoders/leb/TableAllumage.xml"/>   
+ 	<xi:include href="http://jmri.org/xml/decoders/leb/TableAllumage.xml"/>   
      <variable CV="1" mask="XXVVVVVV" comment="Decoder address" item="Short Address" default="03">
         <splitVal highCV="9"/>
         <label>Decoder Address</label>
@@ -94,7 +94,7 @@
 
 
  	  	<variable CV="4" item="Indication a la mise sous tension" default="0" minOut="1">
-        <xi:include href="file:/xml/decoders/leb/enum-Signal_Indication.xml"/> 
+        <xi:include href="http://jmri.org/xml/decoders/leb/enum-Signal_Indication.xml"/> 
 	     <label>Indication a la mise sous tension</label>
 		<tooltip>Indication a la mise sous tension</tooltip>
 		</variable>
@@ -224,5 +224,5 @@
    
      <name>DECSIG_B_F1_V2</name>
   </pane>
-  <xi:include href="file:/xml/decoders/leb/TableAllumagePane.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/leb/TableAllumagePane.xml"/>
  </decoder-config>

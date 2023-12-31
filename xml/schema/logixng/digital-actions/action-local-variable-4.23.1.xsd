@@ -97,6 +97,17 @@
                 </xs:simpleType>
               </xs:element>
 
+              <xs:element name="constantType" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:token">
+                    <xs:enumeration value="String"/>
+                    <xs:enumeration value="Integer"/>
+                    <xs:enumeration value="FloatingNumber"/>
+                    <xs:enumeration value="Boolean"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              
               <xs:element name="constant" type="xs:string" minOccurs="0" maxOccurs="1"/>
               <xs:element name="otherTableCell" type="xs:string" minOccurs="0" maxOccurs="1"/>
               <xs:element name="otherVariable" type="xs:string" minOccurs="0" maxOccurs="1"/>

@@ -7,6 +7,7 @@ import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.actions.ActionLocalVariable;
+import jmri.jmrit.logixng.actions.ActionLocalVariable.ConstantType;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectTableXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
@@ -62,6 +63,7 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
 
         element.addContent(new Element("variableOperation").addContent(p.getVariableOperation().name()));   // NOI18N
 
+        element.addContent(new Element("constantType").addContent(p.getConstantType().name()));   // NOI18N
         element.addContent(new Element("constant").addContent(p.getConstantValue()));   // NOI18N
         element.addContent(new Element("otherVariable").addContent(p.getOtherLocalVariable())); // NOI18N
         element.addContent(new Element("reference").addContent(p.getReference())); // NOI18N
@@ -158,6 +160,11 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
             } catch (ParserException e) {
                 log.error("cannot set variable operation: {}", queryType.getTextTrim(), e);  // NOI18N
             }
+        }
+
+        Element constantType = shared.getChild("constantType"); // NOI18N
+        if (constantType != null) {
+            h.setConstantType(ConstantType.valueOf(constantType.getTextTrim()));
         }
 
         Element constant = shared.getChild("constant"); // NOI18N

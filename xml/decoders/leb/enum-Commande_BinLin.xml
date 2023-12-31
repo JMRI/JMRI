@@ -35,5 +35,5 @@
   </revhistory>
   <!-- Specific for Qdecoder accessory decoder -->
 	<!-- Switching modes for + (plus) decoders   -->
-	<xi:include href="file:/xml/decoders/leb/choix-BinLin.xml"/>  
+	<xi:include href="http://jmri.org/xml/decoders/leb/choix-BinLin.xml"/>  
 </enumVal>

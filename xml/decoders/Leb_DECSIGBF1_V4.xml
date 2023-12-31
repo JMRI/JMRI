@@ -20,7 +20,7 @@
 		</family>
 			<programming direct="no" paged="yes" register="no" ops="no"/>
 		<variables>
-			<xi:include href="file:/xml/decoders/leb/TableAllumage.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/leb/TableAllumage.xml"/>
 			
 			<variable CV="1" mask="XVVVVVVV" comment="Decoder address" item="Short Address" default="05">
 				<splitVal highCV="9"/>
@@ -89,41 +89,41 @@
 				<label>2ID separes</label>
 			</variable>
 			<variable CV="4" item="CV 4/516 Indication a la mise sous tension" default="0" minOut="1">
-				<xi:include href="file:/xml/decoders/leb/enum-Signal_Indication.xml"/>
+				<xi:include href="http://jmri.org/xml/decoders/leb/enum-Signal_Indication.xml"/>
 				<label>CV 4/516 Indication a la mise sous tension</label>
 				<tooltip>Indication a la mise sous tension</tooltip>
 			</variable>
 			<variable CV="5" item="CV 5/517 Allumage par no Cible" default="0" minOut="1">
-				<xi:include href="file:/xml/decoders/leb/enum-Signal_Cible.xml"/>
+				<xi:include href="http://jmri.org/xml/decoders/leb/enum-Signal_Cible.xml"/>
 				<label>CV 5/517 Allumage par no Cible</label>
 				<tooltip>Allumage par no Cible</tooltip>
 			</variable>
 			
 			
 			<variable CV="10" item="Mapping Redirection ID1" mask="VVVVXXXX" default="00">
-				<xi:include href="file:/xml/decoders/leb/enum-Signal_REMAP_ID1.xml"/> 
+				<xi:include href="http://jmri.org/xml/decoders/leb/enum-Signal_REMAP_ID1.xml"/> 
 				<label>Mapping Redirection ID1</label>
 				<tooltip>Mapping Redirection ID1</tooltip>
 			</variable>
 			<variable CV="10" item="Mapping Redirection ID2"  mask="XXXXVVVV" default="00">
-				<xi:include href="file:/xml/decoders/leb/enum-Signal_REMAP_ID2.xml"/> 
+				<xi:include href="http://jmri.org/xml/decoders/leb/enum-Signal_REMAP_ID2.xml"/> 
 				<label>Mapping Redirection ID2</label>
 				<tooltip>Mapping Redirection ID2</tooltip>
 			</variable>
 			<variable CV="11" item="Mapping Redirection ID3"  mask="VVVVXXXX" default="00">
-				<xi:include href="file:/xml/decoders/leb/enum-Signal_REMAP_ID3.xml"/> 
+				<xi:include href="http://jmri.org/xml/decoders/leb/enum-Signal_REMAP_ID3.xml"/> 
 				<label>Mapping Redirection ID3</label>
 				<tooltip>Mapping Redirection ID3</tooltip>
 			</variable>
 			<variable CV="11" item="Mapping Redirection OPTION"  mask="XXXXVVVV" default="00">
-				<xi:include href="file:/xml/decoders/leb/enum-Signal_REMAP_OPTION.xml"/> 
+				<xi:include href="http://jmri.org/xml/decoders/leb/enum-Signal_REMAP_OPTION.xml"/> 
 				<label>Mapping Redirection OPTION</label>
 				<tooltip>Mapping Redirection OPTION</tooltip>
 			</variable>
 
 
 			<variable CV="12" item="CV 12/524 Choix Mode de Commande" default="0" minOut="1">
-				<xi:include href="file:/xml/decoders/leb/enum-Commande_BinLin.xml"/> 
+				<xi:include href="http://jmri.org/xml/decoders/leb/enum-Commande_BinLin.xml"/> 
 				<label>CV 12/524 Choix Mode de Commande</label>
 				<tooltip>Mode de Commande</tooltip>
 			</variable>
@@ -278,5 +278,5 @@
 		</column>
 		<name>DECSIG_B_F1_V4</name>
 	</pane>
-	<xi:include href="file:/xml/decoders/leb/TableAllumagePane.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/leb/TableAllumagePane.xml"/>
 </decoder-config>
