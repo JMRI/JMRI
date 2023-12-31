@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.7.1plus+jake+20231217T1834Z+R0a15abd2cd3 on Sun Dec 17 13:34:30 EST 2023-->
-  <decoderIndex version="571">
+  <!--Written by JMRI version 5.7.1plus+jake+20231231T1413Z+R4d931fc88e2 on Sun Dec 31 09:14:38 EST 2023-->
+  <decoderIndex version="573">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -1691,6 +1691,7 @@
           <output name="5" label="Pad" />
           <output name="6" label="Pad" />
         </model>
+        <model model="DN163K5B" numOuts="6" numFns="6" />
         <model model="DN163L0A" numOuts="6" numFns="10">
           <output name="1" label="LED" />
           <output name="2" label="LED" />
