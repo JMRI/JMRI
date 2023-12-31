@@ -6,7 +6,7 @@
 
         <h4>Acela CTI</h4>
             <ul>
-                <li>Acela CTI serial connections have been updated to use a new serial library.</li>  
+                <li></li>
             </ul>
 
         <h4>Anyma DMX512</h4>
@@ -31,13 +31,12 @@
 
         <h4>C/MRI</h4>
             <ul>
-                <li>C/MRI serial now uses 2 stop bits, which solves communication
-                    issues on certain hardware.</li>
+                <li></li>
             </ul>
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>A problem with serial communications introduced in 5.7.1 has been fixed.</li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -47,7 +46,7 @@
 
         <h4>Direct</h4>
             <ul>
-                <li>Direct DCC serial connections have been updated to use a new serial library.</li>  
+                <li></li>
             </ul>
 
         <h4>ESU</h4>
@@ -92,7 +91,7 @@
 
         <h4>Maple</h4>
             <ul>
-                <li>Maple serial connections have been updated to use a new serial library.</li>  
+                <li></li>
             </ul>
 
         <h4>Marklin CS2</h4>
@@ -107,10 +106,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>The new Jython script <strong>jython/MQTT/MqttSignalHead2.py</strong>
-                has been added. It's an improvement of jython/MQTT/MqttSignalHead.py
-                as it doesn't need any manual configuration to work.</li>
-                <li>Made certain error messages specific to a single device.</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -120,21 +116,12 @@
 
         <h4>NCE</h4>
             <ul>
-                <li>NCE serial connections have been updated to use a new serial library.</li>
-                <li>Clock, Macro, and Consist added and improved error notification to user
-               	when invalid inputs entered. Prior these were silently ignored or only
-               	logged to the console.</li>
-               	<li>NCE Packet Analyzer has internal improvements to prevent errors due to port not
-               	being open. Duplicates are now given as a count instead of a row of +++ as
-               	the time stamp wasn't being placed correctly and a count is more meaningful.
-               	The option to close the connection was added to manage selecting a different
-               	port. It now supports the old and new versions of the analyzer. Reworked the 
-               	user interaction options to be easier to use and understand.</li>
+                <li></li>
             </ul>
 
         <h4>Oak Tree</h4>
             <ul>
-                <li>Oak Tree serial connections have been updated to use a new serial library.</li>  
+                <li></li>
             </ul>
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
@@ -159,17 +146,17 @@
 
         <h4>Secsi</h4>
             <ul>
-                <li>SECSI serial connections have been updated to use a new serial library.</li>  
+                <li></li>
             </ul>
 
         <h4>SPROG</h4>
             <ul>
-                <li>A problem with serial communications introduced in 5.7.1 has been fixed.</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
             <ul>
-                <li>TAMS serial connections have been updated to use a new serial library.</li>  
+                <li></li>
             </ul>
 
         <h4>TMCC</h4>
@@ -229,9 +216,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li>Updated LocoNet Monitor to display PM74 and SE74 device
-		types for certain LocoNet messages.</li>
-                <li>Added DN163K5B decoder</li>
+                <li></li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -267,11 +252,6 @@
         <h4>Lenz</h4>
             <ul>
                 <li></li>
-            </ul>
-
-        <h4>Leb</h4>
-            <ul>
-                <li>Fixed XML files when cross-referencing additional decoder details.</li>
             </ul>
 
         <h4>MD Electronics</h4>
@@ -331,7 +311,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li>Fixed XML files when cross-referencing additional decoder details.</li>
+                <li></li>
             </ul>
 
         <h4>Tam Valley Depot</h4>
@@ -361,8 +341,7 @@
 
         <h4>Trix Modelleisenbahn</h4>
             <ul>
-                <li>Fix URIs in the xml/decoders/trix/mLD_mSD_functionmap.xml that were pointing to
-                    http://jmri.oSound6/xml/   This should be pointing to: http://jmri.org/xml/</li>
+                <li></li>
             </ul>
 
         <h4>Uhlenbrock</h4>
@@ -398,9 +377,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Added a SplitHundredsVal which defines a large value
-                split across multiple CVs in groups of two decimal digits.
-                This is used by the new Logic Rail Tech definition.</li>
+            <li></li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -430,9 +407,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Do not display tooltips for hidden items.</li>
-            <li>Do not reset all tooltip settings for Always or Never tooltip selections when changing
-            the editor mode.</li>
+            <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -449,33 +424,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-            <li><strong>Note:</strong> If tables and panels are stored
-                with this JMRI version, the file might not load in a
-                previous version of JMRI if it includes LogixNG. This is
-                because JMRI now stores some LogixNG data in a different
-                way than before.</li>
-            <li>Add Audio support to Where Used.</li>
-            <li>The action <strong>Local Variable</strong> can now set
-                a constant of different types: <strong>String</strong>,
-                <strong>Integer</strong>, <strong>Floating number</strong>,
-                <strong>Boolean</strong>.</li>
-            <li>The LogixNG table now shows whenether the ConditionalNGs
-                of a LogixNG has <strong>Startup</strong> enabled or not.
-                The <strong>Startup</strong> checkbox in the LogixNG
-                table can have three states: Checked, unchecked and
-                partially checked. If the user checks/unchecks the
-                checkbox, all the ConditionalNGs will have the
-                <strong>Startup</strong> enabled/disabled.
-                <br>
-                The column <strong>Startup</strong> is at the far right
-                in the LogixNG table. You might need to resize the table
-                to see the new column.
-                <br>
-                Note: Due to a bug, <strong>Startup</strong> might not
-                be shown as checkboxes but of text labels that cannot be
-                changed. To change <strong>Startup</strong> in this case,
-                edit the LogixNG and change <strong>Startup</strong> for
-                each ConditionalNG.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -493,13 +442,13 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li>Do not display tooltips for hidden items.</li>
+            <li></li>
         </ul>
 
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li>Do not display tooltips for hidden items.</li>
+            <li></li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -627,7 +576,7 @@
     <h3>Where Used</h3>
         <a id="WhereUsed" name="WhereUsed"></a>
         <ul>
-            <li>Add Audio support.</li>
+            <li></li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -636,17 +585,10 @@
             <li></li>
         </ul>
 
-    <h3>Z21 App Server</h3>
-        <a id="Z21" name="Z21"></a>
-        <ul>
-            <li>Added basic throttle function with the Roco Z21 Application on smartphones and tablets</li>
-        </ul>
-
-
-    <h3>Web Server</h3>
+   <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li>Now displays "index.shtml" files if present in a directory.</li>
+            <li></li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
