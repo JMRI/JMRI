@@ -128,7 +128,8 @@
                	being open. Duplicates are now given as a count instead of a row of +++ as
                	the time stamp wasn't being placed correctly and a count is more meaningful.
                	The option to close the connection was added to manage selecting a different
-               	port. It now supports the old and new versions of the analyzer.</li>
+               	port. It now supports the old and new versions of the analyzer. Reworked the 
+               	user interaction options to be easier to use and understand.</li>
             </ul>
 
         <h4>Oak Tree</h4>
