@@ -25,6 +25,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.28.1
+; - Do not set the jinput.plugins property
+; -------------------------------------------------------------------------
 ; - Version 0.1.29.0
 ; - Prepend the "Settings/lib" jars before the appended "Cp:a=..." entry, if used,
 ;   where "Settings" is generally the JMRI directory immediately below the user's 
@@ -557,7 +560,6 @@ Section "Main"
   StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.d3d=false"
   StrCpy $OPTIONS "$OPTIONS -Djava.security.policy=security.policy"
   StrCpy $OPTIONS "$OPTIONS -Djogamp.gluegen.UseTempJarCache=false"
-  StrCpy $OPTIONS "$OPTIONS -Djinput.plugins=net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"
   StrCpy $OPTIONS "$OPTIONS -Dswing.defaultlaf=com.sun.java.swing.plaf.windows.WindowsLookAndFeel"
   StrCmp ${ARCH_64BIT} $x64JRE x64Libs x86Libs
   x86Libs:
