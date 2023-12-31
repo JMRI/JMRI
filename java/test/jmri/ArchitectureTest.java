@@ -336,10 +336,8 @@ public class ArchitectureTest {
         .doNotHaveFullyQualifiedName("jmri.jmrix.sprog.serialdriver.SerialDriverAdapter").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.zimo.mx1.Mx1Adapter").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.zimo.mxulf.SerialDriverAdapter").and()
-        //the XBee code uses an event driven library, so the code registers 
-	//as an event listener.
-	.doNotHaveFullyQualifiedName("jmri.jmrix.ieee802154.xbee.XBeeAdapter")
-
+        //the XBee code uses an event driven library, so the code registers as an event listener.
+        .doNotHaveFullyQualifiedName("jmri.jmrix.ieee802154.xbee.XBeeAdapter")
         .should().accessClassesThat().resideInAPackage("com.fazecast.jSerialComm..");
 
     /**
