@@ -467,7 +467,9 @@
                 <br>
                 Note: Due to a bug, <strong>Startup</strong> might not
                 be shown as checkboxes but of text labels that cannot be
-                changed.</li>
+                changed. To change <strong>Startup</strong> in this case,
+                edit the LogixNG and change <strong>Startup</strong> for
+                each ConditionalNG.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
