@@ -468,7 +468,13 @@
                 <br>
                 The column <strong>Startup</strong> is at the far right
                 in the LogixNG table. You might need to resize the table
-                to see the new column.</li>
+                to see the new column.
+                <br>
+                Note: Due to a bug, <strong>Startup</strong> might not
+                be shown as checkboxes but of text labels that cannot be
+                changed. To change <strong>Startup</strong> in this case,
+                edit the LogixNG and change <strong>Startup</strong> for
+                each ConditionalNG.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
