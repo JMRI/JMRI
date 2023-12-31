@@ -108,7 +108,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
 
     @Override
     public void close() {
-        currentSerialPort.closePort();
+        closeSerialPort(currentSerialPort);
         iConnectionOpened = false;
     }
 
@@ -166,9 +166,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         if (serialPortEvent.getEventType() != SerialPort.LISTENING_EVENT_DATA_AVAILABLE)
             return;
         synchronized (this) {
-            if(currentSerialPort.bytesAvailable()>0) {
-                this.notifyAll();
-            }
+            this.notifyAll();
         }
     }
 

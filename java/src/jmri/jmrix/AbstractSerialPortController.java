@@ -348,6 +348,14 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
+     * Add a data listener to the specified port
+     * @param serialPort Port to be updated
+     */
+    final protected void closeSerialPort(com.fazecast.jSerialComm.SerialPort serialPort){
+        serialPort.closePort();
+    }
+
+    /**
      * Set the flow control for purejavacomm, while also setting RTS and DTR to active.
      *
      * @param serialPort Port to be updated
