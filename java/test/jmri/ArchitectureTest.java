@@ -301,9 +301,9 @@ public class ArchitectureTest {
         .doNotHaveFullyQualifiedName("jmri.jmrix.bachrus.serialdriver.SerialDriverAdapter").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.dcc4pc.Dcc4PcTrafficController").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.dcc4pc.serialdriver.SerialDriverAdapter").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.ieee802154.xbee.XBeeAdapter").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.ieee802154.IEEE802154PortController").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter").and()
+        //.doNotHaveFullyQualifiedName("jmri.jmrix.ieee802154.xbee.XBeeAdapter").and()
+        //.doNotHaveFullyQualifiedName("jmri.jmrix.ieee802154.IEEE802154PortController").and()
+        //.doNotHaveFullyQualifiedName("jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.pricom.downloader.LoaderPane").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.pricom.downloader.LoaderPane$LocalReader").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.pricom.pockettester.DataSource").and()
@@ -322,7 +322,7 @@ public class ArchitectureTest {
     public static final ArchRule checkJSerialCommAllowedUses = noClasses()
         .that()
         
-        // eventually, we want all the serial access confined to here:
+        // eventually, we want all the standard serial access confined to here:
         .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController").and()
 
         // migrated atypical systems - someday these should be refactored into AbstractSerialPortController
@@ -330,14 +330,14 @@ public class ArchitectureTest {
         .doNotHaveFullyQualifiedName("jmri.jmrix.dccpp.DCCppSerialPortController").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.lenz.XNetSerialPortController").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.loconet.locobuffer.LocoBufferAdapter").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.ncemonitor.NcePacketMonitorPanel").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.ncemonitor.NcePacketMonitorPanel").and()       // not the usual PortController structure
         .doNotHaveFullyQualifiedName("jmri.jmrix.powerline.SerialSystemConnectionMemo").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.powerline.dmx512.SpecificTrafficController").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.sprog.serialdriver.SerialDriverAdapter").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.sprog.serialdriver.SerialDriverAdapter").and()  // registers an event listener
         .doNotHaveFullyQualifiedName("jmri.jmrix.zimo.mx1.Mx1Adapter").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.zimo.mxulf.SerialDriverAdapter").and()
-        //the XBee code uses an event driven library, so the code registers as an event listener.
-        .doNotHaveFullyQualifiedName("jmri.jmrix.ieee802154.xbee.XBeeAdapter")
+        .doNotHaveFullyQualifiedName("jmri.jmrix.ieee802154.xbee.XBeeAdapter")             // an event driven library, so the code registers as an event listener.
+        
         .should().accessClassesThat().resideInAPackage("com.fazecast.jSerialComm..");
 
     /**
