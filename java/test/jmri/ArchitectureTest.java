@@ -292,10 +292,6 @@ public class ArchitectureTest {
     public static final ArchRule checkPurejavacommUsage = noClasses()
         .that()
         
-        .doNotHaveFullyQualifiedName("apps.util.issuereporter.SystemInfo").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrit.mailreport.ReportContext").and()
-
-        .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialConnectionConfig").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$1").and()
 
@@ -339,8 +335,9 @@ public class ArchitectureTest {
         .doNotHaveFullyQualifiedName("jmri.jmrix.powerline.dmx512.SpecificTrafficController").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.sprog.serialdriver.SerialDriverAdapter").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.zimo.mx1.Mx1Adapter").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.zimo.mxulf.SerialDriverAdapter")
-
+        .doNotHaveFullyQualifiedName("jmri.jmrix.zimo.mxulf.SerialDriverAdapter").and()
+        //the XBee code uses an event driven library, so the code registers as an event listener.
+        .doNotHaveFullyQualifiedName("jmri.jmrix.ieee802154.xbee.XBeeAdapter")
         .should().accessClassesThat().resideInAPackage("com.fazecast.jSerialComm..");
 
     /**

@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.Enumeration;
 import java.util.Vector;
+
 import jmri.SystemConnectionMemo;
 
 /**
@@ -182,6 +183,26 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
+     * Provide the actual serial port names.
+     * As a public static method, this can be accessed outside the jmri.jmrix
+     * package to get the list of names for e.g. context reports.
+     *
+     * @return the port names in the form they can later be used to open the port
+     */
+    @SuppressWarnings("UseOfObsoleteCollectionType") // historical interface
+    public static Vector<String> getActualPortNames() {
+        // first, check that the comm package can be opened and ports seen
+        var portNameVector = new Vector<String>();
+
+        com.fazecast.jSerialComm.SerialPort[] portIDs = com.fazecast.jSerialComm.SerialPort.getCommPorts();
+                // find the names of suitable ports
+        for (com.fazecast.jSerialComm.SerialPort portID : portIDs) {
+            portNameVector.addElement(portID.getSystemPortName());
+        }
+        return portNameVector;
+    }
+
+    /**
      * Set the control leads and flow control for purejavacomm. This handles any necessary
      * ordering.
      *
@@ -316,7 +337,24 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     
         return lastFlowControl;
     }
-    
+
+    /**
+     * Add a data listener to the specified port
+     * @param serialPort Port to be updated
+     * @param serialPortDataListener the listener to add
+     */
+    final protected void setDataListener(com.fazecast.jSerialComm.SerialPort serialPort,com.fazecast.jSerialComm.SerialPortDataListener serialPortDataListener){
+        currentSerialPort.addDataListener(serialPortDataListener);
+    }
+
+    /**
+     * Add a data listener to the specified port
+     * @param serialPort Port to be updated
+     */
+    final protected void closeSerialPort(com.fazecast.jSerialComm.SerialPort serialPort){
+        serialPort.closePort();
+    }
+
     /**
      * Set the flow control for purejavacomm, while also setting RTS and DTR to active.
      *
@@ -680,29 +718,6 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         port.notifyOnCarrierDetect(true);
         port.notifyOnCTS(true);
         port.notifyOnDSR(true);
-    }
-
-    Vector<String> portNameVector = null;
-
-    /**
-     * {@inheritDoc}
-     */
-    //@Deprecated(forRemoval=true) // with PureJavaComm
-    @Override
-    public Vector<String> getPortNames() {
-        // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector<String>();
-        Enumeration<purejavacomm.CommPortIdentifier> portIDs = purejavacomm.CommPortIdentifier.getPortIdentifiers();
-        // find the names of suitable ports
-        while (portIDs.hasMoreElements()) {
-            purejavacomm.CommPortIdentifier id = portIDs.nextElement();
-            // filter out line printers
-            if (id.getPortType() != purejavacomm.CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
-            {
-                portNameVector.addElement(id.getName());
-            }
-        }
-        return portNameVector;
     }
 
     /**

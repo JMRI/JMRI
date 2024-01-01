@@ -25,7 +25,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrix.nce.Bundle {
 
     @CheckForNull
-    private static final String name = "jmri.jmrix.nce.ncemonitor.NcePacketMonitorBundle"; // NOI18N
+    private static final String name = "jmri.jmrix.ncemonitor.NcePacketMonitorBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

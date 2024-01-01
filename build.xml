@@ -1057,6 +1057,20 @@
             </and>
         </condition>
 
+        <condition property="baseArch" value="aarch64">
+            <and>
+                <os family="mac"/>
+                <equals arg1="${os.arch}" arg2='aarch64'/>
+            </and>
+        </condition>
+
+        <condition property="baseArch" value="x86_64">
+            <and>
+                <os family="mac"/>
+                <equals arg1="${os.arch}" arg2='x86_64'/>
+            </and>
+        </condition>
+
         <condition property="baseArch" value="x64">
             <and>
                 <os family="windows"/>

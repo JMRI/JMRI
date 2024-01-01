@@ -25,8 +25,6 @@ import jmri.util.PortNameMapper.SerialPortFriendlyName;
 import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfServiceManager;
 
-import purejavacomm.CommPortIdentifier;
-
 /**
  * Provide the JMRI context info.
  *
@@ -148,15 +146,18 @@ public class SystemInfo {
     }
 
     private void addComPortInfo(List<String> list) {
-        Collections.list(CommPortIdentifier.getPortIdentifiers()).stream()
-                .filter(id -> id.getPortType() == CommPortIdentifier.PORT_SERIAL)
-                .forEach(id -> {
-                    SerialPortFriendlyName name = PortNameMapper.getPortNameMap()
-                            .getOrDefault(id.getName(), new SerialPortFriendlyName(id.getName(), null));
-                    addLine(list,
-                            "Port " + name.getDisplayName(),
-                            id.isCurrentlyOwned() ? " in use by " + id.getCurrentOwner() : " not in use");
-                });
+        var portNames = jmri.jmrix.AbstractSerialPortController.getActualPortNames();
+
+        // now output the details
+        for (String name : portNames) {
+            // output details
+            SerialPortFriendlyName port = PortNameMapper.getPortNameMap().get(name);
+            if (port == null) {
+                port = new SerialPortFriendlyName(name, null);
+                PortNameMapper.getPortNameMap().put(name, port);
+            }
+            addLine(list, " Port: " + name, "");
+        }
     }
 
     private void addLine(List<String> list, String item, String value) {

@@ -1,7 +1,6 @@
 package jmri.jmrit.beantable;
 
-import java.awt.Container;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.beans.PropertyVetoException;
 import java.io.PrintWriter;
@@ -11,12 +10,16 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumn;
+import javax.swing.tree.TreeCellEditor;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
 import jmri.jmrit.logixng.tools.swing.LogixNGEditor;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.TriStateJCheckBox;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
@@ -56,8 +59,20 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
 
     @Override
     protected void createModel() {
-        super.createModel();
+        m = new TableModel();
         m.setFilter((LogixNG t) -> !t.isInline());
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void configureTable(JTable table) {
+        super.configureTable(table);
+
+        table.setDefaultRenderer(TriStateJCheckBox.State.class, new EnablingTriStateCheckboxRenderer());
+
+        TriStateJCheckBox startupCheckBox = new TriStateJCheckBox();
+        TableColumn col = table.getColumnModel().getColumn(TableModel.STARTUP_COL);
+        col.setCellEditor(new CellEditor(startupCheckBox));
     }
 
     @Override
@@ -290,6 +305,126 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
     @Override
     protected boolean hasChildren(LogixNG logixNG) {
         return logixNG.getNumConditionalNGs() > 0;
+    }
+
+
+    protected class TableModel extends AbstractLogixNGTableAction<LogixNG>.TableModel {
+
+        // overlay the state column with the edit column
+        static public final int STARTUP_COL = NUMCOLUMN;
+
+        /** {@inheritDoc} */
+        @Override
+        public int getColumnCount() {
+            return super.getColumnCount() + 1;
+        }
+
+        @Override
+        public String getColumnName(int col) {
+            if (col == STARTUP_COL) {
+                return Bundle.getMessage("ColumnLogixNGStartup");
+            }
+            return super.getColumnName(col);
+        }
+
+        @Override
+        public Class<?> getColumnClass(int col) {
+            if (col == STARTUP_COL) {
+                return TriStateJCheckBox.State.class;
+            }
+            return super.getColumnClass(col);
+        }
+
+        @Override
+        public int getPreferredWidth(int col) {
+            // override default value for SystemName and UserName columns
+            if (col == STARTUP_COL) {
+                return new JTextField(5).getPreferredSize().width;
+            }
+            return super.getPreferredWidth(col);
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int col) {
+            if (col == STARTUP_COL) {
+                return true;
+            }
+            return super.isCellEditable(row, col);
+        }
+
+        @SuppressWarnings("unchecked")  // Unchecked cast from Object to E
+        @Override
+        public Object getValueAt(int row, int col) {
+            if (col == STARTUP_COL) {
+                LogixNG x = (LogixNG) getValueAt(row, SYSNAMECOL);
+                if (x == null) {
+                    return null;
+                }
+                boolean anyTrue = false;
+                boolean anyFalse = false;
+                for (int i=0; i < x.getNumConditionalNGs(); i++) {
+                    ConditionalNG cng = x.getConditionalNG(i);
+                    if (cng.isExecuteAtStartup()) anyTrue = true;
+                    else anyFalse = true;
+                }
+                if (anyTrue && anyFalse) {
+                    return TriStateJCheckBox.State.PARTIAL;
+                } else if (anyTrue) {
+                    return TriStateJCheckBox.State.CHECKED;
+                } else {
+                    return TriStateJCheckBox.State.UNCHECKED;
+                }
+            } else {
+                return super.getValueAt(row, col);
+            }
+        }
+
+        @SuppressWarnings("unchecked")  // Unchecked cast from Object to E
+        @Override
+        public void setValueAt(Object value, int row, int col) {
+            if (col == STARTUP_COL) {
+                // alternate
+                LogixNG x = (LogixNG) getValueAt(row, SYSNAMECOL);
+
+                for (int i=0; i < x.getNumConditionalNGs(); i++) {
+                    ConditionalNG cng = x.getConditionalNG(i);
+                    cng.setExecuteAtStartup(value == TriStateJCheckBox.State.CHECKED);
+                }
+            } else {
+                super.setValueAt(value, row, col);
+            }
+        }
+
+        @Override
+        public String getValue(String s) {
+            return "";
+        }
+    }
+
+    private static class CellEditor extends AbstractCellEditor
+            implements TableCellEditor, TreeCellEditor {
+
+        TriStateJCheckBox _tristateCheckBox;
+
+        public CellEditor(TriStateJCheckBox tristateCheckBox) {
+            this._tristateCheckBox = tristateCheckBox;
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            return _tristateCheckBox.getState();
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            return _tristateCheckBox;
+        }
+
+        @Override
+        public Component getTreeCellEditorComponent(JTree tree, Object value, boolean isSelected, boolean expanded, boolean leaf, int row) {
+            return _tristateCheckBox;
+        }
+
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGTableAction.class);
