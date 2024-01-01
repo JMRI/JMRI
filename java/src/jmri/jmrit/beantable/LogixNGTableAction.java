@@ -63,18 +63,6 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
         m.setFilter((LogixNG t) -> !t.isInline());
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public void configureTable(JTable table) {
-        super.configureTable(table);
-
-        table.setDefaultRenderer(TriStateJCheckBox.State.class, new EnablingTriStateCheckboxRenderer());
-
-        TriStateJCheckBox startupCheckBox = new TriStateJCheckBox();
-        TableColumn col = table.getColumnModel().getColumn(TableModel.STARTUP_COL);
-        col.setCellEditor(new CellEditor(startupCheckBox));
-    }
-
     @Override
     protected AbstractLogixNGEditor<LogixNG> getEditor(BeanTableDataModel<LogixNG> m, String sName) {
         return new LogixNGEditor(m, sName);
@@ -312,6 +300,18 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
 
         // overlay the state column with the edit column
         static public final int STARTUP_COL = NUMCOLUMN;
+
+        /** {@inheritDoc} */
+        @Override
+        public void configureTable(JTable table) {
+            super.configureTable(table);
+
+            table.setDefaultRenderer(TriStateJCheckBox.State.class, new EnablingTriStateCheckboxRenderer());
+
+            TriStateJCheckBox startupCheckBox = new TriStateJCheckBox();
+            TableColumn col = table.getColumnModel().getColumn(TableModel.STARTUP_COL);
+            col.setCellEditor(new CellEditor(startupCheckBox));
+        }
 
         /** {@inheritDoc} */
         @Override
