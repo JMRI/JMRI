@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2018 All rights reserved                            -->
+<!-- Copyright (C) JMRI 2018, 2023 All rights reserved                      -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -12,74 +12,100 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2019</year>
-    <holder>JMRI</holder>
-  </copyright>
-  <authorgroup xmlns="http://docbook.org/ns/docbook">
-    <author>
-      <personname>
-        <firstname>Alain</firstname>
-        <surname>Le Marchand</surname>
-      </personname>
-    </author>
-  </authorgroup>
-  <revhistory xmlns="http://docbook.org/ns/docbook">
-    <revision>
-      <revnumber>1</revnumber>
-      <date>2019-02-10</date>
-      <authorinitials>ALM</authorinitials>
-      <revremark>Initial version as separate file for Uhlenbrock_73xx5.xml.
-      Based on uhlenbrock/cv62error</revremark>
-    </revision>
-  <!-- Uhlenbrock Decoder Configuration CV 30 - error register -->
-  </revhistory>
-  <variable item="Error register" CV="30" default="0">
-	<enumVal>
-	  <enumChoice choice="No error" value="0">
-            <choice>No error</choice>
-            <choice xml:lang="de">kein Fehler</choice>
-            <choice xml:lang="it">Nessun Errore</choice>
-            <choice xml:lang="nl">Geen fout</choice>
-            <choice xml:lang="cs">Bez chyby</choice>
-	  </enumChoice>
-	  <enumChoice choice="Motor short circuit">
-            <choice>Motor short circuit</choice>
-            <choice xml:lang="de">Kurzschluss Motor</choice>
-            <choice xml:lang="it">Corto-Circuito Motore</choice>
-            <choice xml:lang="nl">Fout in motor</choice>
-            <choice xml:lang="cs">Zkrat na motoru</choice>
-	  </enumChoice>
-	  <enumChoice choice="Function output short circuit">
-            <choice>Function output short circuit</choice>
-            <choice xml:lang="de">Kurzschluss Funktionsausgang</choice>
-            <choice xml:lang="it">Corto-Circuito Functione</choice>
-            <choice xml:lang="nl">Fout in functie-uitgang</choice>
-            <choice xml:lang="cs">Zkrat na funkčním výstupu</choice>
-	  </enumChoice>
-	  <enumChoice choice="Motor+Light short circuit">
-            <choice>Motor+Functions short circuit</choice>
-            <choice xml:lang="de">Kurzschluss Motor+Funktione</choice>
-            <choice xml:lang="it">Corto-Circuito Motore e Functione</choice>
-            <choice xml:lang="nl">Fout in Moter+Functie</choice>
-            <choice xml:lang="cs">Zkrat na motoru + funkčním výstupu</choice>
-	  </enumChoice>
-      <enumChoice choice="Temperature error">
-            <choice>Temperature Error</choice>
-            <choice xml:lang="de">Temperaturüberschreitung</choice>
-            <choice xml:lang="nl">Temperatuuroverschrijding</choice>
-            <choice xml:lang="cs">Chyba teploty</choice>
-       </enumChoice>
-    </enumVal>
-	<label>Error register</label>
-	<label xml:lang="de">Fehlerspeicher</label>
-    <label xml:lang="it">Errore registro</label>
-    <label xml:lang="nl">Fout-register</label>
-	<label xml:lang="cs">Registr chyby</label>
-	<tooltip>0 = No error (reset error register)</tooltip>
-	<tooltip xml:lang="de">0 = kein Fehler (Fehlerspeicher zurücksetzen)</tooltip>
-    <tooltip xml:lang="it">0 = Nessun errore (reset registro errori)</tooltip>
-    <tooltip xml:lang="nl">0 = Geen fout (reset het Fout-register)</tooltip>
-	<tooltip xml:lang="cs">0 = žádná chyba (reset registru chyb)</tooltip>
-  </variable>
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2019</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Alain</firstname>
+				<surname>Le Marchand</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2019-02-10</date>
+			<authorinitials>ALM</authorinitials>
+			<revremark>Initial version as separate file for Uhlenbrock_73xx5.xml. Based on uhlenbrock/cv62error</revremark>
+		</revision>
+		<revision>
+			<revnumber>2</revnumber>
+			<date>2024-12-26</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Error corrections</revremark>
+		</revision>
+	</revhistory>
+	<!-- Uhlenbrock IntelliDrive2 Decoder Configuration CV 30 - error register -->
+	<variable item="Error register" CV="30" default="0">
+		<enumVal>
+			<enumChoice choice="No error" value="0">
+				<choice>No error</choice>
+				<choice xml:lang="de">kein Fehler</choice>
+				<choice xml:lang="it">Nessun Errore</choice>
+				<choice xml:lang="nl">Geen fout</choice>
+				<choice xml:lang="cs">Bez chyby</choice>
+			</enumChoice>
+			<enumChoice choice="Function output short circuit">
+				<choice>Function output short circuit</choice>
+				<choice xml:lang="de">Fehler Funktionsausgang</choice>
+				<choice xml:lang="it">Corto-Circuito Functione</choice>
+				<choice xml:lang="nl">Fout in functie-uitgang</choice>
+				<choice xml:lang="cs">Zkrat na funkčním výstupu</choice>
+			</enumChoice>
+			<enumChoice choice="Motor short circuit">
+				<choice>Motor short circuit</choice>
+				<choice xml:lang="de">Fehler Motor (Kurzschluss)</choice>
+				<choice xml:lang="it">Corto-Circuito Motore</choice>
+				<choice xml:lang="nl">Fout in motor</choice>
+				<choice xml:lang="cs">Zkrat na motoru</choice>
+			</enumChoice>
+			<enumChoice choice="Motor+Light short circuit">
+				<choice>Motor+Functions short circuit</choice>
+				<choice xml:lang="de">Fehler Motor+Funktionen</choice>
+				<choice xml:lang="it">Corto-Circuito Motore e Functione</choice>
+				<choice xml:lang="nl">Fout in Moter+Functie</choice>
+				<choice xml:lang="cs">Zkrat na motoru + funkčním výstupu</choice>
+			</enumChoice>
+			<enumChoice choice="Temperature error">
+				<choice>Temperature Error</choice>
+				<choice xml:lang="de">Temperaturüberschreitung</choice>
+				<choice xml:lang="nl">Temperatuuroverschrijding</choice>
+				<choice xml:lang="cs">Chyba teploty</choice>
+			</enumChoice>
+			<enumChoice choice="Functions+Temperature Error">
+				<choice>Functions+Temperature Error</choice>
+				<choice xml:lang="de">Fehler Funktionen+Temperatur</choice>
+				<choice xml:lang="it">Corto-Circuito Functione e Temperature</choice>
+				<choice xml:lang="nl">Fout in Functie+Temperatuuroverschrijding</choice>
+				<choice xml:lang="cs">Zkrat funkčním výstupu + Chyba teploty</choice>
+			</enumChoice>
+			<enumChoice choice="Motor+Temperature error">
+				<choice>Motor+Temperature error</choice>
+				<choice xml:lang="de">Fehler Motor+Temperatur</choice>
+				<choice xml:lang="it">Corto-Circuito Motore e Temperature</choice>
+				<choice xml:lang="nl">Fout in Moter+Temperatuuroverschrijding</choice>
+				<choice xml:lang="cs">Zkrat na motoru + Chyba teploty</choice>
+			</enumChoice>
+			<enumChoice choice="Motor+Temperature+Light error">
+				<choice>Motor+Temperature+Light error</choice>
+				<choice xml:lang="de">Fehler Motor+Funktionen und Temperatur</choice>
+				<choice xml:lang="it">Corto-Circuito Motore e Functione e Temperature</choice>
+				<choice xml:lang="nl">Fout in Moter+Functie+Temperatuuroverschrijding</choice>
+				<choice xml:lang="cs">Zkrat na motoru + funkčním výstupu + Chyba teploty</choice>
+			</enumChoice>
+		</enumVal>
+		<label>Error register</label>
+		<label xml:lang="de">Inhalt Fehlerspeicher</label>
+		<label xml:lang="it">Errore registro</label>
+		<label xml:lang="nl">Fout-register</label>
+		<label xml:lang="cs">Registr chyby</label>
+		<tooltip>0 = No error (reset error register)</tooltip>
+		<tooltip xml:lang="de">0 = kein Fehler (Fehlerspeicher zurücksetzen)</tooltip>
+		<tooltip xml:lang="it">0 = Nessun errore (reset registro errori)</tooltip>
+		<tooltip xml:lang="nl">0 = Geen fout (reset het Fout-register)</tooltip>
+		<tooltip xml:lang="cs">0 = žádná chyba (reset registru chyb)</tooltip>
+	</variable>
 </variables>
