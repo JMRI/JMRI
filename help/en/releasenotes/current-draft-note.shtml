@@ -256,7 +256,7 @@
 
         <h4>MD Electronics</h4>
              <ul>
-                <li></li>
+                <li>New decoder definitions DRIVE-S, DRIVE-XS</li>
              </ul>
 
         <h4>MGP</h4>
@@ -346,7 +346,8 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li></li>
+                <li>Small corrections and improvements to the IntelliDrive2 decoder definitions.
+                    New decoder definition Tillig 66036 Decoder</li>
             </ul>
 
         <h4>Umelec</h4>
