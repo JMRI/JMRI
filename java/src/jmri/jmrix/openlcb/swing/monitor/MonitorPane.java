@@ -447,7 +447,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
      * Values are increments of 0.25, between 511.75 and -512.00
      */
     private float cvtFastClockRate(int byte6, int byte7) {
-        int data = 0;;
+        int data = 0;
         boolean sign = false;
         float rate = 0;
         
