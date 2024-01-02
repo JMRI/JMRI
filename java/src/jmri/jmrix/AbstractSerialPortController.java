@@ -348,7 +348,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
-     * close the specified serial port
+     * Cleanly close the specified port
      * @param serialPort Port to be closed
      */
     final protected void closeSerialPort(com.fazecast.jSerialComm.SerialPort serialPort){

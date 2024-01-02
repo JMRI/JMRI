@@ -256,7 +256,7 @@
 
         <h4>MD Electronics</h4>
              <ul>
-                <li></li>
+                <li>New decoder definitions DRIVE-S, DRIVE-XS</li>
              </ul>
 
         <h4>MGP</h4>
@@ -346,7 +346,8 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li></li>
+                <li>Small corrections and improvements to the IntelliDrive2 decoder definitions.
+                    New decoder definition Tillig 66036 Decoder</li>
             </ul>
 
         <h4>Umelec</h4>
@@ -424,7 +425,21 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+            <li>The LogixNG table now shows whenether the ConditionalNGs
+                of a LogixNG has <strong>Startup</strong> enabled or not.
+                The <strong>Startup</strong> checkbox in the LogixNG
+                table can have three states: Checked, unchecked and
+                partially checked. If the user checks/unchecks the
+                checkbox, all the ConditionalNGs will have the
+                <strong>Startup</strong> enabled/disabled.
+                <br>
+                The column <strong>Startup</strong> is at the far right
+                in the LogixNG table. You might need to resize the table
+                to see the new column.</li>
+                to see the new column.
+                <br>
+                Note: Due to a bug, this feature didn't work as it
+                should in JMRI 5.7.2 but it's now fixed.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>

@@ -669,7 +669,7 @@
           </enumChoice>
           <enumChoice choice="Firebox" value="36">
             <choice>Firebox</choice>
-            <choice xml:lang="Feuerbüchse"></choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
             <choice xml:lang="nl">Vuurkist</choice>
           </enumChoice>
           <enumChoice choice="Warning light" value="69">
@@ -740,7 +740,7 @@
           </enumChoice>
           <enumChoice choice="Firebox" value="36">
             <choice>Firebox</choice>
-            <choice xml:lang="Feuerbüchse"></choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
             <choice xml:lang="nl">Vuurkist</choice>
           </enumChoice>
           <enumChoice choice="Warning light" value="69">
@@ -811,7 +811,7 @@
           </enumChoice>
           <enumChoice choice="Firebox" value="36">
             <choice>Firebox</choice>
-            <choice xml:lang="Feuerbüchse"></choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
             <choice xml:lang="nl">Vuurkist</choice>
           </enumChoice>
           <enumChoice choice="Warning light" value="69">
@@ -882,7 +882,7 @@
           </enumChoice>
           <enumChoice choice="Firebox" value="36">
             <choice>Firebox</choice>
-            <choice xml:lang="Feuerbüchse"></choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
             <choice xml:lang="nl">Vuurkist</choice>
           </enumChoice>
           <enumChoice choice="Warning light" value="69">
@@ -953,7 +953,7 @@
           </enumChoice>
           <enumChoice choice="Firebox" value="36">
             <choice>Firebox</choice>
-            <choice xml:lang="Feuerbüchse"></choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
             <choice xml:lang="nl">Vuurkist</choice>
           </enumChoice>
           <enumChoice choice="Warning light" value="69">
@@ -1024,7 +1024,7 @@
           </enumChoice>
           <enumChoice choice="Firebox" value="36">
             <choice>Firebox</choice>
-            <choice xml:lang="Feuerbüchse"></choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
             <choice xml:lang="nl">Vuurkist</choice>
           </enumChoice>
           <enumChoice choice="Warning light" value="69">
