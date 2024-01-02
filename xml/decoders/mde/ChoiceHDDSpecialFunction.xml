@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2005, 2011 All rights reserved -->
+<!-- Copyright (C) JMRI 2005, 2011, 2023 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -12,66 +12,94 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - new file  -->
+<!-- version 2 - German translations 12/2023 -->
 <!-- Choices for HDD Special Function option -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-    <enumChoice>
-        <choice>Normal Output</choice>
-    </enumChoice>
-    <enumChoice>
-        <choice>Flash Symmetric</choice>
-    </enumChoice>
-    <enumChoice>
-        <choice>Flash Asymmetric Short ON (1:4)</choice>
-    </enumChoice>
-    <enumChoice>
-        <choice>Flash Asymmetric Short ON (4:1)</choice>
-    </enumChoice>
-    <enumChoice>
-        <choice>Photographer Flash</choice>
-    </enumChoice>
-    <enumChoice>
-        <choice>Monoflop (Automatic Switch Off)</choice>
-    </enumChoice>
-    <enumChoice>
-        <choice>Switch On Delayed</choice>
-    </enumChoice>
-    <enumChoice>
-        <choice>Firebox</choice>
-    </enumChoice>
-    <enumChoice>
-        <choice>TV Flickering</choice>
-    </enumChoice>
-    <enumChoice>
-        <choice>Petroleum Flickering</choice>
-    </enumChoice>
-    <enumChoice>
-        <choice>Flourescent Tube</choice>
-    </enumChoice>
-    <enumChoice>
-        <choice>Defective Flourescent Tube</choice>
-    </enumChoice>
-    <enumChoice>
-        <choice>Alternating Flash To Paired Output</choice>
-    </enumChoice>
-    <enumChoice>
-        <choice>US Strobelight</choice>
-    </enumChoice>
-    <enumChoice>
-        <choice>US Double Strobelight</choice>
-    </enumChoice>
-    <enumChoice>
-        <choice>US Mars Light</choice>
-    </enumChoice>
-    <enumChoice>
-        <choice>US Ditch Light</choice>
-    </enumChoice>
-    <enumChoice>
-        <choice>Sodium Lamp</choice>
-    </enumChoice>
-    <enumChoice>
-        <choice>Welding Light</choice>
-    </enumChoice>
-    <enumChoice>
-        <choice>Occupancy Message</choice>
-    </enumChoice>
+	<enumChoice>
+		<choice>Normal Output</choice>
+		<choice xml:lang="de">Keine (normaler Ausgang)</choice>
+	</enumChoice>
+	<enumChoice>
+		<choice>Flash Symmetric</choice>
+		<choice xml:lang="de">Blinken symmetrisch</choice>
+		<comment>time base (0.1s * cv value)</comment>
+		<comment xml:lang="de">Zeitwert erforderlich (0,1s * CV Wert)</comment>
+	</enumChoice>
+	<enumChoice>
+		<choice>Flash Asymmetric Short ON (1:4)</choice>
+		<choice xml:lang="de">Blinken asymmetrisch kurz AN (1:4)</choice>
+		<comment>time base (0.1s * cv value) is for the longer value</comment>
+		<comment xml:lang="de">Zeitwert erforderlich (0,1s * CV Wert)</comment>
+		</enumChoice>
+	<enumChoice>
+		<choice>Flash Asymmetric Short ON (4:1)</choice>
+		<choice xml:lang="de">Blinken asymmetrisch lang AN (4:1)</choice>
+		<comment>time base (0.1s * cv value) is for the longer value</comment>
+		<comment xml:lang="de">Zeitwert erforderlich (0,1s * CV Wert)</comment>
+		</enumChoice>
+	<enumChoice>
+		<choice>Photographer Flash</choice>
+		<choice xml:lang="de">Fotoblitz</choice>
+		<comment>time base (0.25s * cv value)</comment>
+		<comment xml:lang="de">Zeitwert erforderlich (0,25s * CV Wert)</comment>
+		</enumChoice>
+	<enumChoice>
+		<choice>Monoflop (Automatic Switch Off)</choice>
+		<choice xml:lang="de">Kurzzeitfunktion (autom. Aus)</choice>
+		<comment>time base (0.1s * cv value)</comment>
+		<comment xml:lang="de">Zeitwert erforderlich (0,1s * CV Wert)</comment>
+		</enumChoice>
+	<enumChoice>
+		<choice>Switch On Delayed</choice>
+		<choice xml:lang="de">Verzögertes Einschalten</choice>
+		<comment>time base (0.1s * cv value)</comment>
+		<comment xml:lang="de">Zeitwert erforderlich (0,1s * CV Wert)</comment>
+	</enumChoice>
+	<enumChoice>
+		<choice>Firebox</choice>
+		<choice xml:lang="de">Feuersimulation</choice>
+	</enumChoice>
+	<enumChoice>
+		<choice>TV Flickering</choice>
+		<choice xml:lang="de">TV-Simulation</choice>
+	</enumChoice>
+	<enumChoice>
+		<choice>Petroleum Flickering</choice>
+		<choice xml:lang="de">Simulation Petroleumlampe</choice>
+	</enumChoice>
+	<enumChoice>
+		<choice>Flourescent Tube</choice>
+		<choice xml:lang="de">Einschaltflackern Neonröhre</choice>
+	</enumChoice>
+	<enumChoice>
+		<choice>Defective Flourescent Tube</choice>
+		<choice xml:lang="de">Defekte Neonröhre</choice>
+	</enumChoice>
+	<enumChoice>
+		<choice>Alternating Flash To Paired Output</choice>
+		<choice xml:lang="de">Wechselblinker zu gepaarten Ausgang</choice>
+	</enumChoice>
+	<enumChoice>
+		<choice>US Strobelight</choice>
+	</enumChoice>
+	<enumChoice>
+		<choice>US Double Strobelight</choice>
+	</enumChoice>
+	<enumChoice>
+		<choice>US Mars Light</choice>
+	</enumChoice>
+	<enumChoice>
+		<choice>US Ditch Light</choice>
+	</enumChoice>
+	<enumChoice>
+		<choice>Sodium Lamp</choice>
+		<choice xml:lang="de">Energiesparlampe</choice>
+		</enumChoice>
+	<enumChoice>
+		<choice>Welding Light</choice>
+		<choice xml:lang="de">Schweißlicht</choice>
+	</enumChoice>
+	<enumChoice>
+		<choice>Occupancy Message</choice>
+	</enumChoice>
 </enumVal>

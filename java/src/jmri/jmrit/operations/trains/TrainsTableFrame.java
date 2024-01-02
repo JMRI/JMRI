@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -107,14 +108,20 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         show.add(showTime);
         show.add(showId);
 
+        JPanel build = new JPanel();
+        build.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Build")));
+        build.add(showAllBox);
+
+        JPanel function = new JPanel();
+        function.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Function")));
+        function.add(printPreviewBox);
+        function.add(openFileBox);
+        function.add(runFileBox);
+
         JPanel options = new JPanel();
         options.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
-        options.add(showAllBox);
         options.add(buildMsgBox);
         options.add(buildReportBox);
-        options.add(printPreviewBox);
-        options.add(openFileBox);
-        options.add(runFileBox);
 
         JPanel action = new JPanel();
         action.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Action")));
@@ -124,6 +131,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         action.add(resetRB);
 
         cp1.add(show);
+        cp1.add(build);
+        cp1.add(function);
         cp1.add(options);
         cp1.add(action);
 
@@ -272,7 +281,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true); // NOI18N
 
-        initMinimumSize();
+        initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight250));
 
         addHorizontalScrollBarKludgeFix(controlPane, controlPanel);
 

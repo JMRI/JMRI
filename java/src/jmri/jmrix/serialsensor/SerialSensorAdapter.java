@@ -197,15 +197,6 @@ public class SerialSensorAdapter extends AbstractSerialPortController {
         return 0;
     }
 
-    /**
-     * {@inheritDoc}
-     * This currently does nothing, as there's only one
-     * possible value.
-     */
-    @Override
-    public void configureBaudRate(String rate) {
-    }
-
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;

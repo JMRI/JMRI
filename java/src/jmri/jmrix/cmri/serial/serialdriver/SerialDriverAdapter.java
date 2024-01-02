@@ -10,7 +10,7 @@ import jmri.jmrix.cmri.serial.SerialTrafficController;
  * Provide access to C/MRI via a serial com port. Normally controlled by the
  * cmri.serial.serialdriver.SerialDriverFrame class.
  *
- * @author Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002, 2023
  */
 public class SerialDriverAdapter extends SerialPortAdapter {
 
@@ -23,7 +23,7 @@ public class SerialDriverAdapter extends SerialPortAdapter {
     public String openPort(String portName, String appName) {
 
         // get and open the primary port
-        currentSerialPort = activatePort(portName, log);
+        currentSerialPort = activatePort(portName, log, 2);
         if (currentSerialPort == null) {
             log.error("failed to connect C/MRI to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);

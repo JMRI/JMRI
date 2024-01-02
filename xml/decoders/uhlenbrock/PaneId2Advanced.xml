@@ -24,8 +24,14 @@
 			<revnumber>2</revnumber>
 			<date>2023-01-08</date>
 			<authorinitials>UG</authorinitials>
-			<revremark>Added "Tillig 0423x" decoder</revremark>
-		</revision>		
+			<revremark>Added "Tillig0423x" decoder</revremark>
+		</revision>
+		<revision>
+			<revnumber>3</revnumber>
+			<date>2023-12-26</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Added "Tillig66036" decoder</revremark>
+		</revision>			
 	</revhistory>
     <name>IntelliDrive2</name>
     <column>
@@ -93,7 +99,7 @@
     </column>
     <column>
         <row>
-            <group exclude="76560,Tillig 0423x">
+            <group exclude="76560,Tillig0423x">
                 <!-- BEGIN - Function Mapping Shift Grid in IntelliDrive2-->
                 <grid gridy="3" weightx="1" ipadx="1">
                     <!-- BEGIN - Row 1 (headers)-->
@@ -224,9 +230,11 @@
                 <griditem gridx="3" gridy="0" anchor="CENTER"><label><text>AUX3</text></label></griditem>
                 <griditem gridx="4" gridy="0" anchor="CENTER"><label><text>AUX4</text></label></griditem>
             </group>
-            <group exclude="73105,73115,73145,73405,73415,Tillig 0423x">
+            <group exclude="73105,73115,73145,73405,73415,Tillig0423x">
                 <griditem gridx="5" gridy="0" anchor="CENTER"><label><text>AUX5</text></label></griditem>
                 <griditem gridx="6" gridy="0" anchor="CENTER"><label><text>AUX6</text></label></griditem>
+            </group>
+            <group exclude="73105,73115,73145,73405,73415,Tillig0423x,Tillig66036">
                 <griditem gridx="7" gridy="0" anchor="CENTER"><label><text>AUX7</text></label></griditem>
             </group>
             <!-- BEGIN - Row 2 (Blend in/out)-->
