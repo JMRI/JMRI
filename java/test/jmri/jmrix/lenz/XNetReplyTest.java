@@ -635,7 +635,7 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         r = new XNetReply("42 05 48 0F");
         targetString =
              Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
-             Bundle.getMessage("XNetReplyFeedbackEncoder") + " " + 6 + " ";
+             Bundle.getMessage("XNetReplyFeedbackEncoder") + " " + 5 + " ";
         targetString += Bundle.getMessage("XNetReplyContactLabel") + " 1 ";
         targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
         targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
@@ -652,7 +652,7 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         r = new XNetReply("42 05 57 0F");
         targetString =
              Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
-             Bundle.getMessage("XNetReplyFeedbackEncoder") + " " + 6 + " ";
+             Bundle.getMessage("XNetReplyFeedbackEncoder") + " " + 5 + " ";
         targetString += Bundle.getMessage("XNetReplyContactLabel") + " 5 ";
         targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
         targetString += " " + Bundle.getMessage("PowerStateOn") + "; ";
