@@ -221,7 +221,7 @@
       <p>Since JMRI 4.99.5 there is an easy way to use Advanced Location Following.
       For the setup a LayoutEditor (LE) panel and a simple VSDGeoData.xm file is required.</p>
 
-      <p>The LE Panel must meet some minimum standards:</p>
+      <p>The LE panel must meet some minimum standards:</p>
 
       <ul>
         <li>at least one Track Segment with a Block</li>
@@ -257,7 +257,8 @@
 
       <p>To run a locomotive open PanelPro and load your LayoutEditor panel first. Then add a
       VSDecoder and start the engine. Now enter the DCC address in the Block Tables into a
-      possible starting Block, then open the throttle.</p>
+      possible starting Block (if the DCC address matches "blockvalues.xml", this happens
+      automatically - since JMRI 5.7.3), then open the throttle.</p>
 
       <p>The current sound position is printed in the System Console.</p>
 
