@@ -609,7 +609,8 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Use block values (restored from blockvalues.xml) to get
+            a feasible start block for automatic start.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
