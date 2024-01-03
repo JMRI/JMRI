@@ -644,8 +644,8 @@ public class VSDecoderManager implements PropertyChangeListener {
             if (decoderInBlock.containsKey(locoAddress)) {
                 VSDecoder d = decoderInBlock.get(locoAddress);
                 if (geofile_ok) {
-                    if (alf_version == 2 && blockList.contains(blk)) { // hier gegen possibleStartBlocks pruefen? Nein ... Aber BlockSet? ... ist atStart der richtige Name?  05.11.2023
-                        handleAlf2(d, locoAddress, blk); // bisherige Loesung
+                    if (alf_version == 2 && blockList.contains(blk)) {
+                        handleAlf2(d, locoAddress, blk);
                     } else {
                         log.debug("Block {} not valid for panel {}", blk, d.getModels());
                     }
