@@ -349,11 +349,12 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         sb.append(' ');
         int msgType = (0xF0 & content[6]) >> 4;
         int nib = (0x0F & content[6]);
+        int hour = (content[6] & 0x1F);
         switch (msgType) {
             case 0:
             case 1:
                 sb.append(Bundle.getMessage("TimeClockTimeMsg") + " ");
-                sb.append(content[6]);
+                sb.append(hour);
                 sb.append(':');
                 if (content[7] < 10) {
                     sb.append("0");
@@ -364,8 +365,14 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                 break;
             case 2:     // month day
                 sb.append(Bundle.getMessage("TimeClockDateMsg") + " ");
+                if (nib < 10) {
+                    sb.append('0');
+                }
                 sb.append(nib);
                 sb.append('/');
+                if (content[7] < 10) {
+                    sb.append('0');
+                }
                 sb.append(content[7]);
                 break;
             case 3:     // year
@@ -377,20 +384,10 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                 sb.append(' ');
                 sb.append(cvtFastClockRate(content[6], content[7]));
                 break;
-            case 8:     // set time hh < 16
+            case 8:
+            case 9:
                 sb.append(Bundle.getMessage("TimeClockSetTimeMsg") + " ");
-                sb.append(nib);
-                sb.append(':');
-                if (content[7] < 10) {
-                    sb.append("0");
-                    sb.append(content[7]);
-                } else {
-                    sb.append(content[7]);
-                }
-                break;
-            case 9:     // set time hh >= 16
-                sb.append(Bundle.getMessage("TimeClockSetTimeMsg") + " ");
-                sb.append(((content[6] & 0x1) << 4) | nib);
+                sb.append(hour);
                 sb.append(':');
                 if (content[7] < 10) {
                     sb.append("0");
@@ -401,8 +398,14 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                 break;
             case 0xA:  // set date
                 sb.append(Bundle.getMessage("TimeClockSetDateMsg") + " ");
+                if (nib < 10) {
+                    sb.append('0');
+                }
                 sb.append(nib);
                 sb.append('/');
+                if (content[7] < 10) {
+                    sb.append('0');
+                }
                 sb.append(content[7]);
                 break;
             case 0xB:  // set year
