@@ -1492,7 +1492,8 @@ public class CreateLogixNGTreeScaffold {
         actionScript.setScriptFormula("c+d");
         actionScript.setScriptLocalVariable("myOtherVar");
         actionScript.setScriptReference("{M2}");
-        actionScript.getScriptEngineSelector().setSelectedEngine(ScriptEngineSelector.ECMA_SCRIPT);
+        // ECMA_SCRIPT is not supported on Java 17
+//        actionScript.getScriptEngineSelector().setSelectedEngine(ScriptEngineSelector.ECMA_SCRIPT);
         maleSocket = digitalActionManager.registerAction(actionScript);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -2946,6 +2947,32 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        ProgramOnMain programOnMain = new ProgramOnMain(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(programOnMain);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        programOnMain = new ProgramOnMain(digitalActionManager.getAutoSystemName(), null);
+        programOnMain.setComment("A comment");
+        programOnMain.setMemo(_locoNetMemo);
+        programOnMain.getSelectProgrammingMode().setValue(ProgrammingMode.OPSBYTEMODE.getStandardName());
+        programOnMain.getSelectAddress().setValue(10);
+        programOnMain.getSelectCV().setValue(20);
+        programOnMain.getSelectValue().setValue(30);
+        maleSocket = digitalActionManager.registerAction(programOnMain);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        programOnMain = new ProgramOnMain(digitalActionManager.getAutoSystemName(), null);
+        programOnMain.setComment("A comment");
+        programOnMain.setMemo(null);
+        programOnMain.getSelectProgrammingMode().setValue(ProgrammingMode.OPSBYTEMODE.getStandardName());
+        programOnMain.getSelectAddress().setValue(15);
+        programOnMain.getSelectCV().setValue(25);
+        programOnMain.getSelectValue().setValue(35);
+        maleSocket = digitalActionManager.registerAction(programOnMain);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         Return returnAction = new Return(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(returnAction);
         maleSocket.setEnabled(false);
@@ -4110,7 +4137,7 @@ public class CreateLogixNGTreeScaffold {
         expressionScript.setOperationType(ExpressionScript.OperationType.RunScript);
         expressionScript.setRegisterListenerScript("sensors.provideSensor(\"IS1\").addPropertyChangeListener(self)");
         expressionScript.setUnregisterListenerScript("sensors.provideSensor(\"IS1\").removePropertyChangeListener(self)");
-        expressionScript.getScriptEngineSelector().setSelectedEngine(ScriptEngineSelector.ECMA_SCRIPT);
+        expressionScript.getScriptEngineSelector().setSelectedEngine(ScriptEngineSelector.JYTHON);
         maleSocket = digitalExpressionManager.registerExpression(expressionScript);
         and.getChild(indexExpr++).connect(maleSocket);
 
@@ -4120,7 +4147,8 @@ public class CreateLogixNGTreeScaffold {
         expressionScript.setOperationType(ExpressionScript.OperationType.SingleLineCommand);
         expressionScript.setRegisterListenerScript("sensors.provideSensor(\"IS1\").addPropertyChangeListener(self)");
         expressionScript.setUnregisterListenerScript("sensors.provideSensor(\"IS1\").removePropertyChangeListener(self)");
-        expressionScript.getScriptEngineSelector().setSelectedEngine(ScriptEngineSelector.ECMA_SCRIPT);
+        // ECMA_SCRIPT is not supported on Java 17
+//        expressionScript.getScriptEngineSelector().setSelectedEngine(ScriptEngineSelector.ECMA_SCRIPT);
         maleSocket = digitalExpressionManager.registerExpression(expressionScript);
         and.getChild(indexExpr++).connect(maleSocket);
 
@@ -5401,7 +5429,7 @@ public class CreateLogixNGTreeScaffold {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugPowerManager();
         JUnitUtil.initDebugThrottleManager();
-
+        JUnitUtil.initDebugProgrammerManager();
         JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initDefaultSignalMastManager();
 //        JUnitUtil.initSignalMastLogicManager();

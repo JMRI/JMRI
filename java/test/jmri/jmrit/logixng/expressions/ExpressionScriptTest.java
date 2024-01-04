@@ -10,10 +10,7 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.script.ScriptEngineSelector;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test ActionSimpleScript
@@ -212,6 +209,11 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
     public void testExpression_SingleEcmaCommand() throws Exception {
         expressionScript.getScriptEngineSelector().setSelectedEngine(ScriptEngineSelector.ECMA_SCRIPT);
         expressionScript.setScript(ECMA_SCRIPT);
+
+        // Java 17 doesn't have ECMA_SCRIPT
+        ScriptEngineSelector.Engine engine = expressionScript.getScriptEngineSelector().getSelectedEngine();
+        Assume.assumeNotNull(engine);
+        Assume.assumeTrue(engine.getLanguageName().equals(ScriptEngineSelector.ECMA_SCRIPT));
 
         // Test expression
         Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");

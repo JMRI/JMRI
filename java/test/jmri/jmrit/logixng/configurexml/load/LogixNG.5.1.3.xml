@@ -7380,7 +7380,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <registerListenerScript>sensors.provideSensor("IS1").addPropertyChangeListener(self)</registerListenerScript>
       <unregisterListenerScript>sensors.provideSensor("IS1").removePropertyChangeListener(self)</unregisterListenerScript>
       <scriptLanguage>
-        <language>ECMAScript</language>
+        <language>python</language>
       </scriptLanguage>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
@@ -7470,7 +7470,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <registerListenerScript>sensors.provideSensor("IS1").addPropertyChangeListener(self)</registerListenerScript>
       <unregisterListenerScript>sensors.provideSensor("IS1").removePropertyChangeListener(self)</unregisterListenerScript>
       <scriptLanguage>
-        <language>ECMAScript</language>
+        <language>python</language>
       </scriptLanguage>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
@@ -21721,7 +21721,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <scriptLocalVariable>myOtherVar</scriptLocalVariable>
       <scriptFormula>c+d</scriptFormula>
       <scriptLanguage>
-        <language>ECMAScript</language>
+        <language>python</language>
       </scriptLanguage>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
