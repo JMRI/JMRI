@@ -64,11 +64,7 @@ public class LogixNG_SelectComboBoxSwing {
         _panelMemory = new JPanel();
         _panelLocalVariable = new javax.swing.JPanel();
         _panelFormula = new javax.swing.JPanel();
-        if (selectComboBox != null) {
-            _panelTable = _selectTableSwing.createPanel(selectComboBox.getSelectTable());
-        } else {
-            _panelTable = _selectTableSwing.createPanel(null);
-        }
+        _panelTable = _selectTableSwing.createPanel(selectComboBox.getSelectTable());
 
         _memoryPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
         _listenToMemoryCheckBox = new JCheckBox(Bundle.getMessage("ListenToMemory"));
@@ -89,7 +85,7 @@ public class LogixNG_SelectComboBoxSwing {
             _valuesComboBox.addItem(value);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_valuesComboBox);
-        _valuesComboBox.setRenderer(new ComboBoxRenderer(_valuesComboBox.getRenderer()));
+        _valuesComboBox.setRenderer(new ComboBoxRenderer<>(_valuesComboBox.getRenderer()));
         _panelDirect.add(_valuesComboBox);
 
         _referenceTextField = new JTextField();
@@ -109,25 +105,23 @@ public class LogixNG_SelectComboBoxSwing {
             _valuesComboBox.setSelectedItem(defaultValue);
         }
 
-        if (selectComboBox != null) {
-            switch (selectComboBox.getAddressing()) {
-                case Direct: _tabbedPane.setSelectedComponent(_panelDirect); break;
-                case Reference: _tabbedPane.setSelectedComponent(_panelReference); break;
-                case Memory: _tabbedPane.setSelectedComponent(_panelMemory); break;
-                case LocalVariable: _tabbedPane.setSelectedComponent(_panelLocalVariable); break;
-                case Formula: _tabbedPane.setSelectedComponent(_panelFormula); break;
-                case Table: _tabbedPane.setSelectedComponent(_panelTable); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + selectComboBox.getAddressing().name());
-            }
-            if (selectComboBox.getValue() != null) {
-                _valuesComboBox.setSelectedItem(selectComboBox.getValue());
-            }
-            _referenceTextField.setText(selectComboBox.getReference());
-            _memoryPanel.setDefaultNamedBean(selectComboBox.getMemory());
-            _listenToMemoryCheckBox.setSelected(selectComboBox.getListenToMemory());
-            _localVariableTextField.setText(selectComboBox.getLocalVariable());
-            _formulaTextField.setText(selectComboBox.getFormula());
+        switch (selectComboBox.getAddressing()) {
+            case Direct: _tabbedPane.setSelectedComponent(_panelDirect); break;
+            case Reference: _tabbedPane.setSelectedComponent(_panelReference); break;
+            case Memory: _tabbedPane.setSelectedComponent(_panelMemory); break;
+            case LocalVariable: _tabbedPane.setSelectedComponent(_panelLocalVariable); break;
+            case Formula: _tabbedPane.setSelectedComponent(_panelFormula); break;
+            case Table: _tabbedPane.setSelectedComponent(_panelTable); break;
+            default: throw new IllegalArgumentException("invalid _addressing state: " + selectComboBox.getAddressing().name());
         }
+        if (selectComboBox.getValue() != null) {
+            _valuesComboBox.setSelectedItem(selectComboBox.getValue());
+        }
+        _referenceTextField.setText(selectComboBox.getReference());
+        _memoryPanel.setDefaultNamedBean(selectComboBox.getMemory());
+        _listenToMemoryCheckBox.setSelected(selectComboBox.getListenToMemory());
+        _localVariableTextField.setText(selectComboBox.getLocalVariable());
+        _formulaTextField.setText(selectComboBox.getFormula());
 
         panel.add(_tabbedPane);
         return panel;
@@ -247,18 +241,18 @@ public class LogixNG_SelectComboBoxSwing {
     }
 
 
-    private static class ComboBoxRenderer<String> extends JLabel implements ListCellRenderer<String> {
+    private static class ComboBoxRenderer<E> extends JLabel implements ListCellRenderer<E> {
 
         private final JSeparator _separator = new JSeparator(JSeparator.HORIZONTAL);
-        private final ListCellRenderer<String> _old;
+        private final ListCellRenderer<E> _old;
 
-        private ComboBoxRenderer(ListCellRenderer<String> old) {
+        private ComboBoxRenderer(ListCellRenderer<E> old) {
             this._old = old;
         }
 
         @Override
-        public Component getListCellRendererComponent(JList<? extends String> list,
-                String value, int index, boolean isSelected, boolean cellHasFocus) {
+        public Component getListCellRendererComponent(JList<? extends E> list,
+                E value, int index, boolean isSelected, boolean cellHasFocus) {
             if (Base.SEPARATOR.equals(value)) {
                 return _separator;
             } else {
