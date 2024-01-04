@@ -74,6 +74,8 @@ public class ProgramOnMainSwing extends AbstractDigitalActionSwing {
             }
         }
 
+        _connection.addActionListener((e) -> { updateProgrammingModes(); });
+
 
         panel = new JPanel();
         panel.setLayout(new GridBagLayout());
@@ -115,6 +117,13 @@ public class ProgramOnMainSwing extends AbstractDigitalActionSwing {
         panel.add(_connection, constraint);
         constraint.gridy = 4;
         panel.add(panelProgrammingMode, constraint);
+    }
+
+    private void updateProgrammingModes() {
+        // Create a temporary action to get programming modes
+        ProgramOnMain action = new ProgramOnMain("IQDA1", null);
+        action.setMemo(_connection.getItemAt(_connection.getSelectedIndex())._memo);
+        _selectProgrammingModeSwing.setValues(action.getSelectProgrammingMode().getValues());
     }
 
     /** {@inheritDoc} */

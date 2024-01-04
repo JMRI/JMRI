@@ -236,6 +236,17 @@ public class LogixNG_SelectComboBoxSwing {
         _valuesComboBox.setSelectedItem(value);
     }
 
+    public void setValues(String[] valuesArray) {
+        String selectedValue = _valuesComboBox.getItemAt(_valuesComboBox.getSelectedIndex());
+
+        _valuesComboBox.removeAllItems();
+        for (String value : valuesArray) {
+            _valuesComboBox.addItem(value);
+        }
+
+        _valuesComboBox.setSelectedItem(selectedValue);
+    }
+
     public void dispose() {
         _selectTableSwing.dispose();
     }
