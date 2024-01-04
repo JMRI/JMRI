@@ -29,7 +29,7 @@
      because XPath will evaluate '1997 - 2017' to '20'.
 -->
 
-  <xsl:param name="JmriCopyrightYear" select="concat('1997','-','2023')"/>
+  <xsl:param name="JmriCopyrightYear" select="concat('1997','-','2024')"/>
 
   <!-- This first template matches our root element in the input file.
      This will trigger the generation of the HTML skeleton document.
