@@ -3,7 +3,7 @@
 <!--  Version 1.0   24 Nov 2022,  Nigel Cliffe.   Merging various MX and MS-series files to a single unit for MS-Series decoders                        -->
 <!--  Version 1.1   22 Jun 2023,  Ronald Kuhn.    add german translation                        -->
 
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable item="Load Code 1" CV="260">
     <decVal/>
     <label>Load Code 1</label>

@@ -14,7 +14,7 @@
 <!--                                                                        -->
 <!-- version 1 - initial file, from ECOCV.xml v2.2 (Alain Le Marchand)      -->
 
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <variable item="Analog Mode Function Status - F13" CV="241" mask="XXXXXXXV" default="0" minFn="13">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label xml:lang="it">Stato Funzioni in analogico - F13</label>

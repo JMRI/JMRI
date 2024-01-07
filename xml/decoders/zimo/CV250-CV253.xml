@@ -9,7 +9,7 @@
      For all other decoders, default value defined in decoder definition file
 -->
 <!-- version 2 Add enum for Product ID correspondance to model - Alain Le Marchand - 2022-04-17 -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
       <variable item="Decoder ID 1" CV="250" default="228" readOnly="yes" exclude="226,232,235,247,MX689_v30">
         <decVal/>
         <label>Decoder ID 1</label>

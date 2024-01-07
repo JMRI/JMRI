@@ -4,7 +4,7 @@
 <!--                  Removed CV113,150, altered labels on CV147,148,149 -->
 <!-- version 1.1   26 May 2023  Ronald Kuhn.   Added CV133, 192, 195-199 for MS- and MN-series.  -->
 <!-- version 1.2   22 June 2023  Ronald Kuhn.   Added some german translations.  -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
   <!-- Used unrelated item names used to place CV107-108 on the Lights pane -->
   <variable CV="107" mask="XXXVVVVV" item="Function F0F option 1">
