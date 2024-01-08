@@ -1063,7 +1063,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                         text.append(getTurnoutReplyMonitorString(i, "TurnoutWFeedback"));
                         break;
                     case 2:
-                        text.append(Bundle.getMessage("XNetReplyFeedbackEncoder")).append(" ").append(getFeedbackEncoderMsgAddr(i) + 1);
+                        text.append(Bundle.getMessage("XNetReplyFeedbackEncoder")).append(" ").append(getFeedbackEncoderMsgAddr(i));
                         boolean highnibble = ((getElement(i + 1) & 0x10) == 0x10);
                         text.append(" ").append(Bundle.getMessage(X_NET_REPLY_CONTACT_LABEL)).append(" ").append(highnibble ? 5 : 1);
 

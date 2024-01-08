@@ -316,9 +316,15 @@
 
       <h5>Use Blocks</h5>
       <a id="use-blocks"></a>
-      <p>If unchecked, Blocks are ignored. This may be helpful on <a href=
+      <p>This option is intended for the use of VSD on the base of a LayoutEditor panel.<br>
+      If unchecked, Blocks are ignored. This may be helpful on <a href=
       "VSDLocationsMgr.shtml#advanced_location_following">Advanced Location Following</a>
-      in Simulator Mode. Default: checked.</p>
+      or in a Simulator mode.<br>
+      If checked, VSD is listening to tracking hardware.
+      If there is no tracking hardware, you need to trigger changes manually,
+      e.g. set a sensor state.<br>
+      Restart PanelPro after a change to ensure the new setting works.<br>
+      Default: checked.</p>
 
       <h5>Default VSD File Path</h5>
 

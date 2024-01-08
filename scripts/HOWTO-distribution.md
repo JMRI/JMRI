@@ -60,8 +60,9 @@ This is the next release in the 5.6 cycle. It's intended to be created from the 
     * A flock of places in xml/XSLT/
     * scripts/WinInstallFiles/LaunchJMRI.nsi
     website:
-    * Copyright.html (3 places)
-    * Footer Footer.shtml
+    * Copyright.shtml (2 places)
+    * Footer.shtml Footer_fr.shtml
+    * Help.html
     * (grep -r for the previous year in the web site, xml; don't change initial copyright notices!)
 
 - Bring in all possible GitHub JMRI/JMRI [pull requests](https://github.com/JMRI/JMRI/pulls). This includes PRs that have passed CI and have been approved, but have not yet reached the 24 hold time. PRs that have not passed CI and/or have not been approved should not be included. Do not merge PRs that are marked WIP or have an “After Next Test Release” label.

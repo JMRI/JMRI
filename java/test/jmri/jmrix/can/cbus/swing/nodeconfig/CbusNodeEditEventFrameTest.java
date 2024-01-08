@@ -12,8 +12,7 @@ import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.*;
 
 /**
  * Test simple functioning of CbusNodeEditEventFrame
@@ -49,6 +48,34 @@ public class CbusNodeEditEventFrameTest extends jmri.util.JmriJFrameTestBase {
         Assert.assertTrue(getDeleteButtonEnabled(jfo));
 
 
+        Thread t = new Thread(() -> {
+            // delete event? yes / no
+            JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("DelEvPopTitle"));
+            JButtonOperator jbo = new JButtonOperator(jdo, Bundle.getMessage("ButtonYes"));
+            jbo.pushNoBlock();
+        });
+        t.setName("Confirm Delete Event Dialog Thread");
+        t.start();
+
+        new JButtonOperator(jfo,Bundle.getMessage("ButtonDelete")).doClick();
+
+        JUnitUtil.waitFor(()-> !t.isAlive(), "Confirm Delete Event Dialog finished");
+
+        JUnitUtil.waitFor(()-> !tcis.outbound.isEmpty(), "at least 1 frame sent");
+
+        Assertions.assertEquals("[5f8] 53 01 00", tcis.outbound.get(0).toString()
+            ,"Node Enter Learn Mode");
+
+        JUnitUtil.waitFor(()-> tcis.outbound.size() > 1, "2 frames sent");
+        Assertions.assertEquals("[5f8] 95 00 00 00 07", tcis.outbound.get(1).toString()
+            ,"Unlearn Event 7");
+
+        JUnitUtil.waitFor(()-> tcis.outbound.size() > 2, "3 frames sent");
+        Assertions.assertEquals("[5f8] 54 01 00", tcis.outbound.get(2).toString()
+            ,"Node Exit Learn Mode");
+
+        // window auto-closes as Event no longer exists
+        jfo.waitClosed();
     }
 
     private boolean getEditButtonEnabled( JFrameOperator jfo ){

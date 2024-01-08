@@ -2,7 +2,7 @@
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2023')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2024')" />
 <xsl:output method="html" encoding="ISO-8859-1"/>
 
 
