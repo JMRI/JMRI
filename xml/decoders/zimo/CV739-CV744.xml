@@ -8,7 +8,7 @@
 <!-- see Zimo German manual for small decoders, -->
   <!-- v1.1,  Added CVs for Sound Sample selection.   Mark Waters, 11 Mar 2016 -->
   <!-- v1.2,  Added some german translation.   Ronald Kuhn, 26 Apr 2019 -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <!-- include this CV to put it onto the Sound Levels pane -->
   <variable CV="738" item="Switch input 1 Sound Sample" include="208,210,214,215,221,222,224,227,230">
     <decVal/>

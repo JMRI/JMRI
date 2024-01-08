@@ -15,7 +15,7 @@
 <!-- Function Map pane for Märklin mLD/3 and mSD/3 decoders                 -->
 <!-- 					Alain Le Marchand (2018-03-31)																-->
 
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Function Map</name>
   <name xml:lang="ca">Mapejat de funcions</name>
   <name xml:lang="cs">Přiřazení funkcí</name>

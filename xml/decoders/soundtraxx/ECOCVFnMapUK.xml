@@ -17,7 +17,7 @@
 <!-- References for V1: Econami_Diesel_Users_Guide 1.6 Ref.F
                         Econami-Diesel-Tech-Reference 1.6 Rev.E             -->
 <!--                                                                        -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
 
     <!-- Extended function map - functions common to all ECO and TSU2 versions -->
     <variable CV="16.1.257" item="Extended Function Map Headlight" default="0">

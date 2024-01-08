@@ -8,7 +8,7 @@
 <!-- version 1.3 - Ronald Kuhn - add options for v37+ -->
 <!-- version 1.4 - Ronald Kuhn - add Fade-in and Fade-Out options -->
 <!-- version 1.5 - Ronald Kuhn - add Value for effect dimming and SUSI usage-->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <name>Function Output</name>
     <name xml:lang="it">Funzione Uscita</name>
     <name xml:lang="cs">Funkční výstup</name>

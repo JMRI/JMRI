@@ -4,7 +4,7 @@
 <!-- version 1.1 - Ronald Kuhn - add german translation -->
 <!-- version 1.2 - Ronald Kuhn - add options for v39 -->
 <!-- version 1.2 - Ronald Kuhn - transfer label for CV#830-833 to CV700-CV899_MS_series.xml -->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>ABC</name>
   <column>
     <display item="MAN Key Extension (Disable HLU or ABC signal control)">

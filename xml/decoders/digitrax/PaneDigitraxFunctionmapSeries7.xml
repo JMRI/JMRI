@@ -32,7 +32,7 @@
 <!--  any F# that are configured for expanded control. Any F# page that is not enabled will automatically -->
 <!--  use legacy output mapping and FX controls.                                            -->
 <!-- ...decoders/digitrax/functionmap7.xml										-->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"  include="SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd"  include="SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <row>
      <column>
      <display item="XfnC Page"/>
