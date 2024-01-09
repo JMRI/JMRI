@@ -99,12 +99,6 @@ public class ProgramOnMain extends AbstractDigitalAction implements PropertyChan
             modeList.add(ProgrammingMode.OPSBYTEMODE.getStandardName());
         }
 
-        // Add OPSBYTEMODE in case we don't have any mode,
-        // for example if we are running a simulator.
-        if (modeList.isEmpty()) {
-            modeList.add(ProgrammingMode.OPSBYTEMODE.getStandardName());
-        }
-
         String[] modes = modeList.toArray(String[]::new);
         _selectProgrammingMode.setValues(modes);
     }
