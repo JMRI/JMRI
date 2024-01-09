@@ -41,6 +41,20 @@ public class ProgramOnMainXml extends jmri.managers.configurexml.AbstractNamedBe
 
         storeCommon(p, element);
 
+        Element e2 = new Element("Socket");
+        e2.addContent(new Element("socketName").addContent(p.getExecuteSocket().getName()));
+        MaleSocket socket = p.getExecuteSocket().getConnectedSocket();
+        String socketSystemName;
+        if (socket != null) {
+            socketSystemName = socket.getSystemName();
+        } else {
+            socketSystemName = p.getExecuteSocketSystemName();
+        }
+        if (socketSystemName != null) {
+            e2.addContent(new Element("systemName").addContent(socketSystemName));
+        }
+        element.addContent(e2);
+
         element.addContent(selectProgrammingModeXml.store(
                 p.getSelectProgrammingMode(), "programmingMode"));
         element.addContent(selectAddressXml.store(p.getSelectAddress(), "address"));
@@ -52,7 +66,7 @@ public class ProgramOnMainXml extends jmri.managers.configurexml.AbstractNamedBe
                     .addContent(p.getMemo().getSystemPrefix()));
         }
 
-        element.addContent(new Element("localVariableForResult").addContent(p.getLocalVariableForResult()));
+        element.addContent(new Element("localVariableForStatus").addContent(p.getLocalVariableForStatus()));
 
         return element;
     }
@@ -71,13 +85,28 @@ public class ProgramOnMainXml extends jmri.managers.configurexml.AbstractNamedBe
 
         loadCommon(h, shared);
 
+        Element executeSocket = shared.getChild("Socket");
+        // Keep this if statement for backwards compability with JMRI 4.26. Remove for 5.2
+        if ((executeSocket == null) && (shared.getChild("Socket") != null)) {
+            executeSocket = shared.getChild("Socket");
+        }
+        if (executeSocket != null) {
+            Element socketNameElement = executeSocket.getChild("socketName");
+            String socketName = socketNameElement.getTextTrim();
+            Element socketSystemNameElement = executeSocket.getChild("systemName");
+            String socketSystemName = null;
+            if (socketSystemNameElement != null) {
+                socketSystemName = socketSystemNameElement.getTextTrim();
+            }
+
+            h.getExecuteSocket().setName(socketName);
+            h.setExecuteSocketSystemName(socketSystemName);
+        }
+
         selectProgrammingModeXml.load(shared.getChild("programmingMode"), h.getSelectProgrammingMode());
         selectAddressXml.load(shared.getChild("address"), h.getSelectAddress());
         selectCVXml.load(shared.getChild("cv"), h.getSelectCV());
         selectValueXml.load(shared.getChild("value"), h.getSelectValue());
-
-        Element elem = shared.getChild("localVariableForResult");  // NOI18N
-        h.setLocalVariableForResult((elem != null) ? elem.getValue() : "");
 
         Element systemConnection = shared.getChild("systemConnection");
         if (systemConnection != null) {
@@ -92,6 +121,9 @@ public class ProgramOnMainXml extends jmri.managers.configurexml.AbstractNamedBe
                 }
             }
         }
+
+        Element elem = shared.getChild("localVariableForStatus");  // NOI18N
+        h.setLocalVariableForStatus((elem != null) ? elem.getValue() : "");
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;

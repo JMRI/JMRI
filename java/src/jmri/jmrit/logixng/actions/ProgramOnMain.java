@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.LogixNG_SelectComboBox;
 import jmri.jmrit.logixng.util.LogixNG_SelectInteger;
 
@@ -15,8 +16,14 @@ import jmri.jmrit.logixng.util.LogixNG_SelectInteger;
  *
  * @author Daniel Bergqvist Copyright 2024
  */
-public class ProgramOnMain extends AbstractDigitalAction implements PropertyChangeListener {
+public class ProgramOnMain extends AbstractDigitalAction
+        implements FemaleSocketListener, PropertyChangeListener {
 
+    private static final ResourceBundle rbx =
+            ResourceBundle.getBundle("jmri.jmrit.logixng.implementation.ImplementationBundle");
+
+    private String _executeSocketSystemName;
+    private final FemaleDigitalActionSocket _executeSocket;
     private SystemConnectionMemo _memo;
     private AddressedProgrammerManager _programmerManager;
     private ThrottleManager _throttleManager;
@@ -24,7 +31,8 @@ public class ProgramOnMain extends AbstractDigitalAction implements PropertyChan
     private final LogixNG_SelectInteger _selectAddress = new LogixNG_SelectInteger(this, this);
     private final LogixNG_SelectInteger _selectCV = new LogixNG_SelectInteger(this, this);
     private final LogixNG_SelectInteger _selectValue = new LogixNG_SelectInteger(this, this);
-    private String _localVariableForResult = "";
+    private String _localVariableForStatus = "";
+    private final InternalFemaleSocket _internalSocket = new InternalFemaleSocket();
 
     public ProgramOnMain(String sys, String user) {
         super(sys, user);
@@ -35,6 +43,9 @@ public class ProgramOnMain extends AbstractDigitalAction implements PropertyChan
 
         // Set the _programmerManager and _throttleManager variables
         setMemo(null);
+
+        _executeSocket = InstanceManager.getDefault(DigitalActionManager.class)
+                .createFemaleSocket(this, this, Bundle.getMessage("ProgramOnMain_Socket"));
     }
 
     @Override
@@ -50,7 +61,7 @@ public class ProgramOnMain extends AbstractDigitalAction implements PropertyChan
         _selectAddress.copy(copy._selectAddress);
         _selectCV.copy(copy._selectCV);
         _selectValue.copy(copy._selectValue);
-        copy.setLocalVariableForResult(_localVariableForResult);
+        copy.setLocalVariableForStatus(_localVariableForStatus);
         return manager.registerAction(copy);
     }
 
@@ -70,12 +81,12 @@ public class ProgramOnMain extends AbstractDigitalAction implements PropertyChan
         return _selectValue;
     }
 
-    public void setLocalVariableForResult(String localVariable) {
-        _localVariableForResult = localVariable;
+    public void setLocalVariableForStatus(String localVariable) {
+        _localVariableForStatus = localVariable;
     }
 
-    public String getLocalVariableForResult() {
-        return _localVariableForResult;
+    public String getLocalVariableForStatus() {
+        return _localVariableForStatus;
     }
 
     public final void setMemo(SystemConnectionMemo memo) {
@@ -124,10 +135,9 @@ public class ProgramOnMain extends AbstractDigitalAction implements PropertyChan
         return Category.ITEM;
     }
 
-    @SuppressWarnings("SleepWhileInLoop")   // We need to wait until the programmer has completed.
     private void doProgrammingOnMain(ConditionalNG conditionalNG,
-            ProgrammingMode progMode, int address,
-            int cv, int value)
+            DefaultSymbolTable newSymbolTable, ProgrammingMode progMode,
+            int address, int cv, int value)
             throws JmriException {
         try {
             AddressedProgrammer programmer = _programmerManager.getAddressedProgrammer(
@@ -141,6 +151,15 @@ public class ProgramOnMain extends AbstractDigitalAction implements PropertyChan
                 AtomicInteger result = new AtomicInteger(-1);
                 programmer.writeCV("" + cv, value, (int value1, int status) -> {
                     result.set(status);
+
+                    log.debug("Result of programming cv {} to value {} for address {}: {}", cv, value, address, status);
+
+                    synchronized(ProgramOnMain.this) {
+                        _internalSocket.conditionalNG = conditionalNG;
+                        _internalSocket.newSymbolTable = newSymbolTable;
+                        _internalSocket.status = status;
+                        conditionalNG.execute(_internalSocket);
+                    }
                 });
 
                 try {
@@ -151,12 +170,6 @@ public class ProgramOnMain extends AbstractDigitalAction implements PropertyChan
                     log.warn("Waiting for programmer to complete was aborted");
                 }
 
-                log.debug("Result of programming cv {} to value {} for address {}: {}", cv, value, address, result.get());
-
-                if (!_localVariableForResult.isEmpty()) {
-                    conditionalNG.getSymbolTable().setValue(
-                            _localVariableForResult, result.get());
-                }
             } else {
                 throw new IllegalArgumentException("An addressed programmer isn't available for address " + address);
             }
@@ -169,6 +182,7 @@ public class ProgramOnMain extends AbstractDigitalAction implements PropertyChan
     @Override
     public void execute() throws JmriException {
         ConditionalNG conditionalNG = this.getConditionalNG();
+        DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(conditionalNG.getSymbolTable());
 
         String progModeStr = _selectProgrammingMode.evaluateValue(conditionalNG);
         ProgrammingMode progMode = new ProgrammingMode(progModeStr);
@@ -177,7 +191,42 @@ public class ProgramOnMain extends AbstractDigitalAction implements PropertyChan
         int cv = _selectCV.evaluateValue(conditionalNG);
         int value = _selectValue.evaluateValue(conditionalNG);
 
-        doProgrammingOnMain(conditionalNG, progMode, address, cv, value);
+        doProgrammingOnMain(conditionalNG, newSymbolTable, progMode, address, cv, value);
+    }
+
+    @Override
+    public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
+        switch (index) {
+            case 0:
+                return _executeSocket;
+
+            default:
+                throw new IllegalArgumentException(
+                        String.format("index has invalid value: %d", index));
+        }
+    }
+
+    @Override
+    public int getChildCount() {
+        return 1;
+    }
+
+    @Override
+    public void connected(FemaleSocket socket) {
+        if (socket == _executeSocket) {
+            _executeSocketSystemName = socket.getConnectedSocket().getSystemName();
+        } else {
+            throw new IllegalArgumentException("unkown socket");
+        }
+    }
+
+    @Override
+    public void disconnected(FemaleSocket socket) {
+        if (socket == _executeSocket) {
+            _executeSocketSystemName = null;
+        } else {
+            throw new IllegalArgumentException("unkown socket");
+        }
     }
 
     @Override
@@ -203,10 +252,48 @@ public class ProgramOnMain extends AbstractDigitalAction implements PropertyChan
         }
     }
 
+    public FemaleDigitalActionSocket getExecuteSocket() {
+        return _executeSocket;
+    }
+
+    public String getExecuteSocketSystemName() {
+        return _executeSocketSystemName;
+    }
+
+    public void setExecuteSocketSystemName(String systemName) {
+        _executeSocketSystemName = systemName;
+    }
+
     /** {@inheritDoc} */
     @Override
     public void setup() {
-        // Do nothing
+        try {
+            if (!_executeSocket.isConnected()
+                    || !_executeSocket.getConnectedSocket().getSystemName()
+                            .equals(_executeSocketSystemName)) {
+
+                String socketSystemName = _executeSocketSystemName;
+
+                _executeSocket.disconnect();
+
+                if (socketSystemName != null) {
+                    MaleSocket maleSocket =
+                            InstanceManager.getDefault(DigitalActionManager.class)
+                                    .getBySystemName(socketSystemName);
+                    if (maleSocket != null) {
+                        _executeSocket.connect(maleSocket);
+                        maleSocket.setup();
+                    } else {
+                        log.error("cannot load digital action {}", socketSystemName);
+                    }
+                }
+            } else {
+                _executeSocket.getConnectedSocket().setup();
+            }
+        } catch (SocketAlreadyConnectedException ex) {
+            // This shouldn't happen and is a runtime error if it does.
+            throw new RuntimeException("socket is already connected");
+        }
     }
 
     /** {@inheritDoc} */
@@ -214,6 +301,54 @@ public class ProgramOnMain extends AbstractDigitalAction implements PropertyChan
     public void propertyChange(PropertyChangeEvent evt) {
         getConditionalNG().execute();
     }
+
+
+    private class InternalFemaleSocket extends jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket {
+
+        private ConditionalNG conditionalNG;
+        private SymbolTable newSymbolTable;
+        private int status;
+
+        public InternalFemaleSocket() {
+            super(null, new FemaleSocketListener(){
+                @Override
+                public void connected(FemaleSocket socket) {
+                    // Do nothing
+                }
+
+                @Override
+                public void disconnected(FemaleSocket socket) {
+                    // Do nothing
+                }
+            }, "A");
+        }
+
+        @Override
+        public void execute() throws JmriException {
+            if (_executeSocket != null) {
+                MaleSocket maleSocket = (MaleSocket)ProgramOnMain.this.getParent();
+                try {
+                    SymbolTable oldSymbolTable = conditionalNG.getSymbolTable();
+                    conditionalNG.setSymbolTable(newSymbolTable);
+                    if (!_localVariableForStatus.isEmpty()) {
+                        newSymbolTable.setValue(_localVariableForStatus, status);
+                    }
+                    _executeSocket.execute();
+                    conditionalNG.setSymbolTable(oldSymbolTable);
+                } catch (JmriException e) {
+                    if (e.getErrors() != null) {
+                        maleSocket.handleError(ProgramOnMain.this, rbx.getString("ExceptionExecuteMulti"), e.getErrors(), e, log);
+                    } else {
+                        maleSocket.handleError(ProgramOnMain.this, Bundle.formatMessage(rbx.getString("ExceptionExecuteAction"), e.getLocalizedMessage()), e, log);
+                    }
+                } catch (RuntimeException e) {
+                    maleSocket.handleError(ProgramOnMain.this, Bundle.formatMessage(rbx.getString("ExceptionExecuteAction"), e.getLocalizedMessage()), e, log);
+                }
+            }
+        }
+
+    }
+
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProgramOnMain.class);
 

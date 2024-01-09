@@ -2969,7 +2969,7 @@ public class CreateLogixNGTreeScaffold {
         programOnMain.getSelectAddress().setValue(15);
         programOnMain.getSelectCV().setValue(25);
         programOnMain.getSelectValue().setValue(35);
-        programOnMain.setLocalVariableForResult("result");
+        programOnMain.setLocalVariableForStatus("status");
         maleSocket = digitalActionManager.registerAction(programOnMain);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
