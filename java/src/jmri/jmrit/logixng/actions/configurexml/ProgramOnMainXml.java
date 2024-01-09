@@ -86,7 +86,6 @@ public class ProgramOnMainXml extends jmri.managers.configurexml.AbstractNamedBe
         loadCommon(h, shared);
 
         Element executeSocket = shared.getChild("Socket");
-        // Keep this if statement for backwards compability with JMRI 4.26. Remove for 5.2
         if ((executeSocket == null) && (shared.getChild("Socket") != null)) {
             executeSocket = shared.getChild("Socket");
         }

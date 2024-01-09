@@ -62,7 +62,7 @@ public class ProgramOnMain extends AbstractDigitalAction
         _selectCV.copy(copy._selectCV);
         _selectValue.copy(copy._selectValue);
         copy.setLocalVariableForStatus(_localVariableForStatus);
-        return manager.registerAction(copy);
+        return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
     public final LogixNG_SelectComboBox getSelectProgrammingMode() {
