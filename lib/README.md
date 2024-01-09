@@ -505,8 +505,8 @@ Windows and Linux libraries from <https://jogamp.org/deployment/archive/rc/v2.4.
 - Used for testing only, not at runtime
 
 
-##### org.jacoco.ant-0.8.5-nodeps.jar
-- version 0.8.5
+##### org.jacoco.ant-0.8.11-nodeps.jar
+- version 0.8.11
 
 ## Older, no longer present:
 
