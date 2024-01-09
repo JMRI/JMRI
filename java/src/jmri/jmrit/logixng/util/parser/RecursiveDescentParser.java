@@ -854,10 +854,16 @@ public class RecursiveDescentParser {
             State newState2;
             if ((accept(TokenType.RIGHT_PARENTHESIS, newState)) == null) {
                 ExpressionNodeAndState exprNodeAndState = firstRule.parse(state);
+                if (exprNodeAndState == null) {
+                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"));
+                }
                 parameterList.add(exprNodeAndState._exprNode);
 
                 while ((newState2 = accept(TokenType.COMMA, exprNodeAndState._state)) != null) {
                     exprNodeAndState = firstRule.parse(newState2);
+                    if (exprNodeAndState == null) {
+                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"));
+                    }
                     parameterList.add(exprNodeAndState._exprNode);
                 }
 
