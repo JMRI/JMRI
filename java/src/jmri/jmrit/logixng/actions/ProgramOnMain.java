@@ -24,6 +24,7 @@ public class ProgramOnMain extends AbstractDigitalAction implements PropertyChan
     private final LogixNG_SelectInteger _selectAddress = new LogixNG_SelectInteger(this, this);
     private final LogixNG_SelectInteger _selectCV = new LogixNG_SelectInteger(this, this);
     private final LogixNG_SelectInteger _selectValue = new LogixNG_SelectInteger(this, this);
+    private String _localVariableForResult = "";
 
     public ProgramOnMain(String sys, String user) {
         super(sys, user);
@@ -49,6 +50,7 @@ public class ProgramOnMain extends AbstractDigitalAction implements PropertyChan
         _selectAddress.copy(copy._selectAddress);
         _selectCV.copy(copy._selectCV);
         _selectValue.copy(copy._selectValue);
+        copy.setLocalVariableForResult(_localVariableForResult);
         return manager.registerAction(copy);
     }
 
@@ -66,6 +68,14 @@ public class ProgramOnMain extends AbstractDigitalAction implements PropertyChan
 
     public final LogixNG_SelectInteger getSelectValue() {
         return _selectValue;
+    }
+
+    public void setLocalVariableForResult(String localVariable) {
+        _localVariableForResult = localVariable;
+    }
+
+    public String getLocalVariableForResult() {
+        return _localVariableForResult;
     }
 
     public final void setMemo(SystemConnectionMemo memo) {
@@ -115,7 +125,8 @@ public class ProgramOnMain extends AbstractDigitalAction implements PropertyChan
     }
 
     @SuppressWarnings("SleepWhileInLoop")   // We need to wait until the programmer has completed.
-    private void doProgrammingOnMain(ProgrammingMode progMode, int address,
+    private void doProgrammingOnMain(ConditionalNG conditionalNG,
+            ProgrammingMode progMode, int address,
             int cv, int value)
             throws JmriException {
         try {
@@ -139,6 +150,13 @@ public class ProgramOnMain extends AbstractDigitalAction implements PropertyChan
                 } catch (InterruptedException e) {
                     log.warn("Waiting for programmer to complete was aborted");
                 }
+
+                log.debug("Result of programming cv {} to value {} for address {}: {}", cv, value, address, result.get());
+
+                if (!_localVariableForResult.isEmpty()) {
+                    conditionalNG.getSymbolTable().setValue(
+                            _localVariableForResult, result.get());
+                }
             } else {
                 throw new IllegalArgumentException("An addressed programmer isn't available for address " + address);
             }
@@ -159,7 +177,7 @@ public class ProgramOnMain extends AbstractDigitalAction implements PropertyChan
         int cv = _selectCV.evaluateValue(conditionalNG);
         int value = _selectValue.evaluateValue(conditionalNG);
 
-        doProgrammingOnMain(progMode, address, cv, value);
+        doProgrammingOnMain(conditionalNG, progMode, address, cv, value);
     }
 
     @Override

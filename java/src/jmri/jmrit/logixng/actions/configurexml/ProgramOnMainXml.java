@@ -52,6 +52,8 @@ public class ProgramOnMainXml extends jmri.managers.configurexml.AbstractNamedBe
                     .addContent(p.getMemo().getSystemPrefix()));
         }
 
+        element.addContent(new Element("localVariableForResult").addContent(p.getLocalVariableForResult()));
+
         return element;
     }
 
@@ -73,6 +75,9 @@ public class ProgramOnMainXml extends jmri.managers.configurexml.AbstractNamedBe
         selectAddressXml.load(shared.getChild("address"), h.getSelectAddress());
         selectCVXml.load(shared.getChild("cv"), h.getSelectCV());
         selectValueXml.load(shared.getChild("value"), h.getSelectValue());
+
+        Element elem = shared.getChild("localVariableForResult");  // NOI18N
+        h.setLocalVariableForResult((elem != null) ? elem.getValue() : "");
 
         Element systemConnection = shared.getChild("systemConnection");
         if (systemConnection != null) {

@@ -26,6 +26,7 @@ public class ProgramOnMainSwing extends AbstractDigitalActionSwing {
     private LogixNG_SelectIntegerSwing _selectCVSwing;
     private LogixNG_SelectIntegerSwing _selectValueSwing;
     private JComboBox<Connection> _connection;
+    private JTextField _localVariableForResult;
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
@@ -40,6 +41,7 @@ public class ProgramOnMainSwing extends AbstractDigitalActionSwing {
         JLabel valueLabel = new JLabel(Bundle.getMessage("ProgramOnMainSwing_Value"));
         JLabel connectionLabel = new JLabel(Bundle.getMessage("ProgramOnMainSwing_Connection"));
         JLabel programmingModeLabel = new JLabel(Bundle.getMessage("ProgramOnMainSwing_ProgrammingMode"));
+        JLabel localVariableForResultLabel = new JLabel(Bundle.getMessage("ProgramOnMainSwing_LocalVariableResult"));
 
         _selectProgrammingModeSwing = new LogixNG_SelectComboBoxSwing(getJDialog(), this);
         _selectAddressSwing = new LogixNG_SelectIntegerSwing(getJDialog(), this);
@@ -77,6 +79,10 @@ public class ProgramOnMainSwing extends AbstractDigitalActionSwing {
         _connection.addActionListener((e) -> { updateProgrammingModes(); });
 
 
+        _localVariableForResult = new JTextField(20);
+        _localVariableForResult.setText(action.getLocalVariableForResult());
+
+
         panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         GridBagConstraints constraint = new GridBagConstraints();
@@ -99,6 +105,9 @@ public class ProgramOnMainSwing extends AbstractDigitalActionSwing {
         constraint.gridy = 4;
         panel.add(programmingModeLabel, constraint);
         programmingModeLabel.setLabelFor(panelProgrammingMode);
+        constraint.gridy = 5;
+        panel.add(localVariableForResultLabel, constraint);
+        localVariableForResultLabel.setLabelFor(_localVariableForResult);
 
         // Add some space
         constraint.gridx = 1;
@@ -117,6 +126,8 @@ public class ProgramOnMainSwing extends AbstractDigitalActionSwing {
         panel.add(_connection, constraint);
         constraint.gridy = 4;
         panel.add(panelProgrammingMode, constraint);
+        constraint.gridy = 5;
+        panel.add(_localVariableForResult, constraint);
     }
 
     private void updateProgrammingModes() {
@@ -161,6 +172,8 @@ public class ProgramOnMainSwing extends AbstractDigitalActionSwing {
         _selectValueSwing.updateObject(action.getSelectValue());
 
         action.setMemo(_connection.getItemAt(_connection.getSelectedIndex())._memo);
+
+        action.setLocalVariableForResult(_localVariableForResult.getText());
     }
 
     /** {@inheritDoc} */
