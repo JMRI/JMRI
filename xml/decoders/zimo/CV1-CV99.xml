@@ -8,7 +8,7 @@
 <!-- version 1.4 14 Dec 2016 Ronald Kuhn -  excludes for Function decoder -->
 <!-- version 1.5 19 Apr 2019 Ronald Kuhn -  some german translations, sorts and default values -->
 <!-- version 1.6 10 Mar 2021  Nigel Cliffe -  minor changes to menus called for CV23,24, to improve appearance in panes -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/nmra/vStartHighMid.xml"/>

@@ -11,7 +11,7 @@ Uhlenbrock publishes the Article number for each (new) device.
 The Uhlenbrock LocoNet IR Empfanger 63830 has an Article number 6383, which was registered with Uhlenbrock.
 See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
 
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
     <version author="Egbert Broerse" version="1.0" lastUpdated="20220728"/>
     <!-- version 1 - new decoder definition using programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
 

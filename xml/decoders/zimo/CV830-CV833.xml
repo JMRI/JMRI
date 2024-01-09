@@ -4,7 +4,7 @@
 <!-- Ronald Kuhn, 28th Feb 2018 -->
 <!-- CV's 830-833 control adjustment for constant stopping distance -->
 <!-- see Zimo manual for small decoders, -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <!-- include this CV to adjustment for constant stopping distance -->
   <variable CV="830" item="stopping distance fwd high">
     <decVal/>

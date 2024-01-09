@@ -29,8 +29,7 @@
             } else { // must be in JMRI/website
                 target = "https://github.com/JMRI/website/blob/master"+target;
             }
-            //document.write(target+" ")
-//            document.write("<a href=\""+target+"\" title=\"File history on GitHub.com\">history of this page and propose edits</a>.")
+            document.write("<a href=\""+target+"\" title=\"File history on GitHub.com\">history of this page and propose edits</a>.")
         </script>
         </p>
 

@@ -22,6 +22,7 @@ import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import jmri.Sensor;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.vsdecoder.LoadVSDFileAction;
@@ -49,6 +50,7 @@ import jmri.util.swing.JmriJOptionPane;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
+ * @author Klaus Killinger Copyright (C) 2024
  */
 public class VSDManagerFrame extends JmriJFrame {
 
@@ -79,6 +81,7 @@ public class VSDManagerFrame extends JmriJFrame {
     private VSDConfigDialog cd;
     private List<JMenu> menuList;
     private boolean is_auto_loading;
+    private boolean is_block_using;
     private boolean is_viewing;
     private List<VSDecoder> vsdlist;
 
@@ -89,6 +92,7 @@ public class VSDManagerFrame extends JmriJFrame {
         super(true, true);
         this.addPropertyChangeListener(VSDecoderManager.instance());
         is_auto_loading = VSDecoderManager.instance().getVSDecoderPreferences().isAutoLoadingVSDFile();
+        is_block_using = VSDecoderManager.instance().getVSDecoderPreferences().getUseBlocksSetting();
         is_viewing = VSDecoderManager.instance().getVSDecoderList().isEmpty() ? false : true;
         initGUI();
     }
@@ -263,10 +267,11 @@ public class VSDManagerFrame extends JmriJFrame {
         log.debug("internal config dialog handler");
         // If this decoder already exists, don't create a new Control
         // In Viewing Mode up to 4 existing VSDecoders are possible, so skip the check
+        VSDecoder newDecoder = null;
         if (! is_viewing && VSDecoderManager.instance().getVSDecoderByAddress(config.getLocoAddress().toString()) != null) {
             JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("MgrAddDuplicateMessage"));
         } else {
-            VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
+            newDecoder = VSDecoderManager.instance().getVSDecoder(config);
             if (newDecoder == null) {
                 log.error("Lost context, VSDecoder is null. Quit JMRI and start over. No New Decoder constructed! Address: {}, profile: {}",
                         config.getLocoAddress(), config.getProfileName());
@@ -301,6 +306,36 @@ public class VSDManagerFrame extends JmriJFrame {
             this.pack();
             //this.setVisible(true);
             // Do we need to make newControl a listener to newDecoder?
+        }
+        if (newDecoder != null) {
+            getStartBlock(newDecoder);
+        }
+    }
+
+    private void getStartBlock(VSDecoder vsd) {
+        jmri.Block start_block = null;
+        for (jmri.Block blk : jmri.InstanceManager.getDefault(jmri.BlockManager.class).getNamedBeanSet()) {
+            if (VSDecoderManager.instance().possibleStartBlocks.containsKey(blk)) {
+                int locoAddress = VSDecoderManager.instance().getLocoAddr(blk);
+                if (locoAddress == vsd.getAddress().getNumber()) {
+                    log.debug("found start block: {}, loco address: {}", blk, locoAddress);
+                    Sensor s = blk.getSensor();
+                    if (s != null && is_block_using) {
+                        if (s.getKnownState() == Sensor.UNKNOWN) {
+                            try {
+                                s.setState(Sensor.ACTIVE);
+                            } catch (jmri.JmriException ex) {
+                                log.debug("Exception setting sensor");
+                            }
+                        }
+                    }
+                    start_block = blk;
+                    break; // one loco address per block
+                }
+            }
+        }
+        if (start_block != null) {
+           VSDecoderManager.instance().atStart(start_block);
         }
     }
 

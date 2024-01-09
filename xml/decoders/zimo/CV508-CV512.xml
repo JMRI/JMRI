@@ -6,7 +6,7 @@
 <!-- from version 37 firmware -->
 <!-- CV's 508-512 control dimming options in swiss mapping -->
 <!-- see Zimo German manual for small decoders, -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
      <qualifier>
           <variableref>Decoder Version</variableref>
           <relation>ge</relation>

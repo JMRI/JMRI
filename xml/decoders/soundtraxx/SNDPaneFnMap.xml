@@ -14,7 +14,7 @@
 <!-- version 1 -  new pane file for SoundTraxx SoundCar with Flex-Map function mapping
       Created from ECOPaneFnMap.xml version 2.1
       No Auxiliary map registers, as direction of travel is not known in a SoundCar -->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Function Map</name>
   <name xml:lang="ca">Mapejat de funcions</name>
   <name xml:lang="cs">Přiřazení funkcí</name>

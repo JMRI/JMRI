@@ -54,7 +54,7 @@ import org.jdom2.Element;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2018-2023
+ * @author Klaus Killinger Copyright (C) 2018-2024
  */
 public class VSDecoderManager implements PropertyChangeListener {
 
@@ -83,7 +83,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     private HashMap<Integer, VSDecoder> decoderInBlock; // list of active decoders by LocoAddress.getNumber()
     private HashMap<String, String> profiletable; // list of loaded profiles key = profile name, value = path
     HashMap<VSDecoder, Block> currentBlock; // list of active blocks by decoders
-    private HashMap<Block, LayoutEditor> possibleStartBlocks; // list of possible start blocks and their LE panel
+    public HashMap<Block, LayoutEditor> possibleStartBlocks; // list of possible start blocks and their LE panel
     private HashMap<String, Timer> timertable; // list of active timers by decoder System ID
 
     private int locoInBlock[][]; // Block status for locos
@@ -631,6 +631,79 @@ public class VSDecoderManager implements PropertyChangeListener {
         }).start();
     }
 
+    /**
+     * Prepare the start of a VSDecoder on the layout
+     *
+     * @param blk The current Block of the VSDecoder
+     */
+    public void atStart(Block blk) {
+        // blk could be the start block or a current block for an existing VSDecoder
+        int locoAddress = getLocoAddr(blk);
+        if (locoAddress != 0) {
+            // look for an existing and configured VSDecoder
+            if (decoderInBlock.containsKey(locoAddress)) {
+                VSDecoder d = decoderInBlock.get(locoAddress);
+                if (geofile_ok) {
+                    if (alf_version == 2 && blockList.contains(blk)) {
+                        handleAlf2(d, locoAddress, blk);
+                    } else {
+                        log.debug("Block {} not valid for panel {}", blk, d.getModels());
+                    }
+                } else {
+                    d.savedSound.setTunnel(blk.getPhysicalLocation().isTunnel());
+                    d.setPosition(blk.getPhysicalLocation());
+                }
+            } else {
+                log.warn("Block value \"{}\" is not a valid VSDecoder address", blk.getValue());
+            }
+        }
+    }
+
+    /**
+     * Get the loco address from a Block
+     *
+     * @param blk The current Block of the VSDecoder
+     * @return The number of the loco address
+     */
+    public int getLocoAddr(Block blk) {
+        if (blk == null || blk.getValue() == null) {
+            return 0;
+        }
+
+        String repVal = null;
+        int locoAddress = 0;
+
+        // handle different formats or objects to get the address
+        if (blk.getValue() instanceof String) {
+            repVal = blk.getValue().toString();
+            if (Roster.getDefault().getEntryForId(repVal) != null) {
+                locoAddress = Integer.parseInt(Roster.getDefault().getEntryForId(repVal).getDccAddress()); // numeric RosterEntry Id
+            } else if (org.apache.commons.lang3.StringUtils.isNumeric(repVal)) {
+                locoAddress = Integer.parseInt(repVal);
+            } else if (jmri.InstanceManager.getDefault(TrainManager.class).getTrainByName(repVal) != null) {
+                // Operations Train
+                Train selected_train = jmri.InstanceManager.getDefault(TrainManager.class).getTrainByName(repVal);
+                if (selected_train.getLeadEngineDccAddress().isEmpty()) {
+                    locoAddress = 0;
+                } else {
+                    locoAddress = Integer.parseInt(selected_train.getLeadEngineDccAddress());
+                }
+            }
+        } else if (blk.getValue() instanceof jmri.BasicRosterEntry) {
+            locoAddress = Integer.parseInt(((RosterEntry) blk.getValue()).getDccAddress());
+        } else if (blk.getValue() instanceof jmri.implementation.DefaultIdTag) {
+            // Covers TranspondingTag also
+            repVal = ((DefaultIdTag) blk.getValue()).getTagID();
+            if (org.apache.commons.lang3.StringUtils.isNumeric(repVal)) {
+                locoAddress = Integer.parseInt(repVal);
+            }
+        } else {
+            log.warn("Block Value \"{}\" found - unsupported object!", blk.getValue());
+        }
+        log.debug("loco address: {}", locoAddress);
+        return locoAddress;
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         log.debug("property change type {} name {} old {} new {}",
@@ -703,62 +776,12 @@ public class VSDecoderManager implements PropertyChangeListener {
                     log.debug("Ignoring report. not an OCCUPIED event.");
                     return;
                 }
+                log.debug("block repVal: {}", repVal);
             } else if (eventName.equals("value")) { // NOI18N
                 if (event.getNewValue() == null ) {
                     return; // block value was cleared, nothing to do
                 }
-
-                int locoAddress = 0;
-
-                if (event.getNewValue() instanceof String) {
-                    repVal = event.getNewValue().toString();
-                    if (Roster.getDefault().getEntryForId(repVal) != null) {
-                        locoAddress = Integer.parseInt(Roster.getDefault().getEntryForId(repVal).getDccAddress()); // numeric RosterEntry Id
-                    } else if (org.apache.commons.lang3.StringUtils.isNumeric(repVal)) {
-                        locoAddress = Integer.parseInt(repVal);
-                    } else if (jmri.InstanceManager.getDefault(TrainManager.class).getTrainByName(repVal) != null) {
-                        // Operations Train
-                        Train selected_train = jmri.InstanceManager.getDefault(TrainManager.class).getTrainByName(repVal);
-                        if (selected_train.getLeadEngineDccAddress().isEmpty()) {
-                            locoAddress = 0;
-                        } else {
-                            locoAddress = Integer.parseInt(selected_train.getLeadEngineDccAddress());
-                        }
-                    }
-                    log.debug("loco address: {}", locoAddress);
-                } else if (event.getNewValue() instanceof jmri.BasicRosterEntry) {
-                    locoAddress = Integer.parseInt(((RosterEntry) event.getNewValue()).getDccAddress());
-                } else if (event.getNewValue() instanceof jmri.implementation.DefaultIdTag) {
-                    // Covers TranspondingTag also
-                    repVal = ((DefaultIdTag) event.getNewValue()).getTagID(); // get the system name without the identifier, e.g. "6"
-                    if (org.apache.commons.lang3.StringUtils.isNumeric(repVal)) {
-                        locoAddress = Integer.parseInt(repVal);
-                    }
-                } else {
-                    log.warn("Block Value \"{}\" found - unsupported object!", event.getNewValue());
-                }
-
-                if (locoAddress != 0) {
-                    // look for an existing and configured VSDecoder
-                    if (decoderInBlock.containsKey(locoAddress)) {
-                        // ready to set the sound position
-                        VSDecoder d = decoderInBlock.get(locoAddress);
-                        // look for additional geometric layout information
-                        if (geofile_ok) {
-                            if (alf_version == 2 && blockList.contains(blk)) {
-                                handleAlf2(d, locoAddress, blk);
-                            } else {
-                                log.debug("Block {} not valid for panel {}", blk, d.getModels());
-                            }
-                        } else {
-                            d.savedSound.setTunnel(blk.getPhysicalLocation().isTunnel());
-                            d.setPosition(blk.getPhysicalLocation());
-                        }
-                        return;
-                    } else {
-                        log.warn("Block value \"{}\" is not a valid VSDecoder address", event.getNewValue());
-                    }
-                }
+                atStart(blk);
             } else {
                 log.debug("Not a supported Block event type.  Ignoring.");
                 return;
@@ -768,7 +791,7 @@ public class VSDecoderManager implements PropertyChangeListener {
             if (repVal == null) {
                 log.debug("Report from Block {} is null!", blk.getSystemName());
             }
-            if (blk.getDirection(repVal) == PhysicalLocationReporter.Direction.ENTER) {
+            if (repVal != null && blk.getDirection(repVal) == PhysicalLocationReporter.Direction.ENTER) {
                 setDecoderPositionByAddr(blk.getLocoAddress(repVal), blk.getPhysicalLocation());
             }
             return;
@@ -915,7 +938,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     private void handleAlf2(VSDecoder d, int locoAddress, Block newBlock) {
         if (currentBlock.get(d) != newBlock) {
             int ix = getArrayIndex(locoAddress); // ix = decoder number 0 - max_decoder-1
-            if (locoInBlock[ix][DIR_FN] == 0) { // On start
+            if (locoInBlock[ix][DIR_FN] == 0) { // at start
                 if (d.getLayoutTrack() == null) {
                     if (possibleStartBlocks.get(newBlock) != null) {
                         d.setModels(possibleStartBlocks.get(newBlock)); // get the models from the HashMap via block
@@ -929,25 +952,26 @@ public class VSDecoderManager implements PropertyChangeListener {
                                 }
                             }
                         }
-                        log.info("on start - TS: {}, block: {}, panel: {}", ts, newBlock, d.getModels());
-                        TrackSegmentView tsv = d.getModels().getTrackSegmentView(ts);
-                        d.setLayoutTrack(ts);
-                        d.setReturnTrack(d.getLayoutTrack());
-                        d.setReturnLastTrack(tsv.getConnect2());
-                        d.setLastTrack(tsv.getConnect1());
-                        d.setReturnDistance(MathUtil.distance(d.getModels().getCoords(tsv.getConnect1(), tsv.getType1()),
-                                d.getModels().getCoords(tsv.getConnect2(), tsv.getType2())));
-                        d.setDistance(0);
-                        d.distanceOnTrack = 0.5d * d.getReturnDistance(); // halved to get starting position (mid or centre of the track)
-                        if (d.dirfn == -1) { // in case the loco is running in reverse direction
-                            d.setLayoutTrack(d.getReturnTrack());
-                            d.setLastTrack(d.getReturnLastTrack());
+                        if (ts != null) {
+                            TrackSegmentView tsv = d.getModels().getTrackSegmentView(ts);
+                            d.setLayoutTrack(ts);
+                            d.setReturnTrack(d.getLayoutTrack());
+                            d.setReturnLastTrack(tsv.getConnect2());
+                            d.setLastTrack(tsv.getConnect1());
+                            d.setReturnDistance(MathUtil.distance(d.getModels().getCoords(tsv.getConnect1(), tsv.getType1()),
+                                    d.getModels().getCoords(tsv.getConnect2(), tsv.getType2())));
+                            d.setDistance(0);
+                            d.distanceOnTrack = 0.5d * d.getReturnDistance(); // halved to get starting position (mid or centre of the track)
+                            if (d.dirfn == -1) { // in case the loco is running in reverse direction
+                                d.setLayoutTrack(d.getReturnTrack());
+                                d.setLastTrack(d.getReturnLastTrack());
+                            }
+                            locoInBlock[ix][DIR_FN] = d.dirfn;
+                            currentBlock.put(d, newBlock);
+                            // prepare navigation
+                            d.posToSet = new PhysicalLocation(0.0f, 0.0f, 0.0f);
+                            log.info("at start - TS: {}, block: {}, loco: {}, panel: {}", ts.getName(), newBlock, locoAddress, d.getModels().getTitle());
                         }
-                        locoInBlock[ix][DIR_FN] = d.dirfn;
-                        currentBlock.put(d, newBlock);
-                        // prepare navigation
-                        d.setLocation(new Point2D.Double(0, 0));
-                        d.posToSet = new PhysicalLocation(0.0f, 0.0f, 0.0f);
                     } else {
                         log.warn("block {} is not a valid start block; valid start blocks are: {}", newBlock, possibleStartBlocks);
                     }
@@ -967,7 +991,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                     if (d.getLayoutTrack() instanceof TrackSegment) {
                         TrackSegmentView tsv = d.getModels().getTrackSegmentView((TrackSegment) d.getLayoutTrack());
                         log.debug(" true - layout track: {}, last track: {}, connect1: {}, connect2: {}, last block: {}",
-                                d.getLayoutTrack(), d.getLastTrack(), tsv.getConnect1(), tsv.getConnect2(), tsv.getBlockName());
+                                d.getLayoutTrack().getName(), d.getLastTrack().getName(), tsv.getConnect1(), tsv.getConnect2(), tsv.getBlockName());
                         if (tsv.getConnect1().equals(d.getLastTrack())) {
                             d.setLayoutTrack(tsv.getConnect2());
                         } else if (tsv.getConnect2().equals(d.getLastTrack())) {
@@ -1108,7 +1132,6 @@ public class VSDecoderManager implements PropertyChangeListener {
                                         d.dirfn, d.getLayoutTrack(), d.getLastTrack(), d.getReturnTrack(), d.getReturnDistance(), d.distanceOnTrack, d.getDistance());
                                 d.setDistance(0);
                                 d.navigate();
-                                d.getModels().repaint();
                             }
                         }
                         if ((d.getEngineSound().isEngineStarted() && actualspeed > 0.0f) || d.getLayoutTrack() instanceof LayoutTurntable) {
@@ -1122,7 +1145,6 @@ public class VSDecoderManager implements PropertyChangeListener {
                             d.posToSet.z = 0.0f;
                             log.debug("address {} position to set: {}, location: {}", d.getAddress(), d.posToSet, loc);
                             d.setPosition(d.posToSet);
-                            d.getModels().repaint();
                         }
                     }
                 }
@@ -1174,7 +1196,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                     // JMRI speed is 0-1; actual speed is speed after speedCurve(float); in steam1 it is calculated from actual RPM; convert MPH to meter/second; regard layout scale
                     float speed_ms = actualspeed * (d.dirfn == 1 ? d.topspeed : d.topspeed_rev) * 0.44704f / layout_scale;
                     d.distanceMeter = speed_ms * check_time / 1000; // distance in Meter
-                    if (locoInBlock[dadr_index][DIR_FN] == 0) { // On start
+                    if (locoInBlock[dadr_index][DIR_FN] == 0) { // at start
                         locoInBlock[dadr_index][DIR_FN] = d.dirfn;
                     }
                     distance_rest_old = locoInBlock[dadr_index][DISTANCE_TO_GO] / 100.0f; // Distance to go in meter

@@ -233,12 +233,12 @@ public class CbusNodeEventManager {
      */
     public int getOutstandingEvVars(){
         int count = 0;
-        ArrayList<CbusNodeEvent> _evs = getEventArray();
-        if (  _evs == null ){
+        ArrayList<CbusNodeEvent> evs = getEventArray();
+        if (  evs == null ){
             return -1;
         }
-        for (int i = 0; i < _evs.size(); i++) {
-            count = count + _evs.get(i).getOutstandingVars();
+        for (int i = 0; i < evs.size(); i++) {
+            count += evs.get(i).getOutstandingVars();
         }
         return count;
     }
@@ -249,11 +249,11 @@ public class CbusNodeEventManager {
      * This sets the remaining ev vars to 0 so are not requested
      */
     protected void remainingEvVarsNotNeeded(){
-        ArrayList<CbusNodeEvent> _evs = getEventArray();
-        if (_evs!=null) {
-            for (int i = 0; i < _evs.size(); i++) {
-                if ( _evs.get(i).getNextOutstanding() > 0 ) {
-                    _evs.get(i).allOutstandingEvVarsNotNeeded();
+        ArrayList<CbusNodeEvent> evs = getEventArray();
+        if (evs!=null) {
+            for (int i = 0; i < evs.size(); i++) {
+                if ( evs.get(i).getNextOutstanding() > 0 ) {
+                    evs.get(i).allOutstandingEvVarsNotNeeded();
 
                     // cancel Timer
                     _node.getNodeTimerManager().clearNextEvVarTimeout();
@@ -455,10 +455,12 @@ public class CbusNodeEventManager {
             _node.send.nodeUnlearnEvent( nn, en );
             setEvIndexValid(false);
         }, 50 );
+        log.info("Deleted Event {} on Node {}",
+            new jmri.jmrix.can.cbus.CbusEvent(nn,en),_node.getNodeNumber());
         ThreadingUtil.runOnGUIDelayed( () -> {
             _node.send.nodeExitLearnEvMode( _node.getNodeNumber() );
             // notify ui
-            _node.notifyPropertyChangeListener("DELETEEVCOMPLETE", null, null);
+            _node.notifyPropertyChangeListener("DELETEEVCOMPLETE", null, "");
         }, 100 );
     }
 

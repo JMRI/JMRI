@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1.1 - 2023-07-26 - RK - disable Pane for Decoder that not support SUSI -->
 <!-- version 1 - 2015-03-05 - PB - Created  -->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" exclude="60,130,131,132,133,134">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" exclude="60,130,131,132,133,134">
   <name>SUSI</name>
   <column>
     <label>

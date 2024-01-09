@@ -19,7 +19,7 @@
 <!-- many additions for v34 firmware,  Nigel Cliffe, 23 Jan 2015, edited with qualifiers to be included in this file instead of a seperate v34 file -->  
 <!-- version 1.1, correction to CV354 by Nigel Cliffe -->
 <!-- version 1, Mark Waters - for Unified Software version 30, added additional CV313 settings to CV260-CV355sound.xml -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable item="Load Code 1" CV="260">
     <decVal/>
     <label>Load Code 1</label>
