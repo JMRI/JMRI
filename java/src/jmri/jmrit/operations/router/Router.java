@@ -521,18 +521,24 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             testCar.setDestinationTrack(car.getFinalDestinationTrack());
             Train secondTrain = tmanager.getTrainForCar(testCar, _buildReport);
             if (secondTrain == null) {
-                if (debugFlag) {
-                    log.debug("Could not find a train to service car from {} ({}, {}) to destination ({}, {})",
-                            trackType, track.getLocation().getName(), track.getName(), testCar.getDestinationName(),
-                            testCar.getDestinationTrackName()); // NOI18N
+                // maybe the train being built can service the car?
+                String specified = canSpecifiedTrainService(testCar);
+                if (specified.equals(NOT_NOW)) {
+                    secondTrain = _train;
+                } else {
+                    if (debugFlag) {
+                        log.debug("Could not find a train to service car from {} ({}, {}) to destination ({}, {})",
+                                trackType, track.getLocation().getName(), track.getName(), testCar.getDestinationName(),
+                                testCar.getDestinationTrackName()); // NOI18N
+                    }
+                    if (_addtoReportVeryDetailed) {
+                        addLine(_buildReport, SEVEN, Bundle.getMessage("RouterNotFindTrain",
+                                Track.getTrackTypeName(trackType), track.getLocation().getName(),
+                                track.getName(), testCar.getDestinationName(),
+                                testCar.getDestinationTrackName()));
+                    }
+                    continue;
                 }
-                if (_addtoReportVeryDetailed) {
-                    addLine(_buildReport, SEVEN, Bundle.getMessage("RouterNotFindTrain",
-                            Track.getTrackTypeName(trackType), track.getLocation().getName(),
-                            track.getName(), testCar.getDestinationName(),
-                            testCar.getDestinationTrackName()));
-                }
-                continue;
             }
             if (debugFlag) {
                 log.debug("Train ({}) can service car ({}) from {} ({}, {}) to final destination ({}, {})",
