@@ -1177,6 +1177,18 @@ public class RecursiveDescentParserTest {
         Map<String, Variable> variables = new HashMap<>();
         RecursiveDescentParser t = new RecursiveDescentParser(variables);
 
+        ExpressionNode exprNode = t.parseExpression("");
+        Assert.assertNull("expression is null", exprNode);
+
+        exprNode = t.parseExpression("     ");
+        Assert.assertNull("expression is null", exprNode);
+
+        exprNode = t.parseExpression("       \t\t     ");
+        Assert.assertNull("expression is null", exprNode);
+
+        exprNode = t.parseExpression("  \t\t  \n \n \t   ");
+        Assert.assertNull("expression is null", exprNode);
+
         exceptionIsThrown.set(false);
         try {
             t.parseExpression("[LongString]");

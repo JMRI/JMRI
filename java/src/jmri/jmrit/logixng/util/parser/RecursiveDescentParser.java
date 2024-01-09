@@ -65,6 +65,12 @@ public class RecursiveDescentParser {
         ExpressionNodeAndState exprNodeAndState = firstRule.parse(new State(0, _tokens.get(0), 0, new Token()));
 
         if (exprNodeAndState == null) {
+            while (!_tokens.isEmpty() && _tokens.get(0)._tokenType.equals(TokenType.SPACE)) {
+                _tokens.remove(0);
+            }
+            if (!_tokens.isEmpty()) {
+                throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"));
+            }
             return null;
         }
 
