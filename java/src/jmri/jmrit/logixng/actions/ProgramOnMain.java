@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.actions;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
@@ -113,6 +114,7 @@ public class ProgramOnMain extends AbstractDigitalAction implements PropertyChan
         return Category.ITEM;
     }
 
+    @SuppressWarnings("SleepWhileInLoop")   // We need to wait until the programmer has completed.
     private void doProgrammingOnMain(ProgrammingMode progMode, int address,
             int cv, int value)
             throws JmriException {
@@ -125,7 +127,18 @@ public class ProgramOnMain extends AbstractDigitalAction implements PropertyChan
                 if (!progMode.equals(programmer.getMode())) {
                     throw new IllegalArgumentException("The addressed programmer doesn't support mode " + progMode.getStandardName());
                 }
-                programmer.writeCV("" + cv, value, null);
+                AtomicInteger result = new AtomicInteger(-1);
+                programmer.writeCV("" + cv, value, (int value1, int status) -> {
+                    result.set(status);
+                });
+
+                try {
+                    while (result.get() == -1) {
+                        Thread.sleep(10);
+                    }
+                } catch (InterruptedException e) {
+                    log.warn("Waiting for programmer to complete was aborted");
+                }
             } else {
                 throw new IllegalArgumentException("An addressed programmer isn't available for address " + address);
             }
