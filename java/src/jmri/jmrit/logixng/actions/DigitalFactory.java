@@ -66,6 +66,7 @@ public class DigitalFactory implements DigitalActionFactory {
                         new AbstractMap.SimpleEntry<>(Category.OTHER, LogData.class),
                         new AbstractMap.SimpleEntry<>(Category.OTHER, LogLocalVariables.class),
                         new AbstractMap.SimpleEntry<>(Category.COMMON, DigitalMany.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ProgramOnMain.class),
                         new AbstractMap.SimpleEntry<>(Category.FLOW_CONTROL, Return.class),
                         new AbstractMap.SimpleEntry<>(Category.FLOW_CONTROL, RunOnce.class),
                         new AbstractMap.SimpleEntry<>(Category.FLOW_CONTROL, Sequence.class),
