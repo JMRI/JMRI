@@ -9,13 +9,11 @@ import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.expressions.True;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.script.ScriptEngineSelector;
+import jmri.script.ScriptEngineSelector.Engine;
 import jmri.util.JUnitUtil;
 import jmri.util.JUnitAppender;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test ActionSimpleScript
@@ -220,6 +218,12 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
     @Test
     public void testAction_SingleEcmaCommand() throws Exception {
         actionScript.getScriptEngineSelector().setSelectedEngine(ScriptEngineSelector.ECMA_SCRIPT);
+
+        // Java 17 doesn't have ECMA_SCRIPT
+        Engine engine = actionScript.getScriptEngineSelector().getSelectedEngine();
+        Assume.assumeNotNull(engine);
+        Assume.assumeTrue(engine.getLanguageName().equals(ScriptEngineSelector.ECMA_SCRIPT));
+
         actionScript.setScript(ECMA_SCRIPT);
 
         // Test action
