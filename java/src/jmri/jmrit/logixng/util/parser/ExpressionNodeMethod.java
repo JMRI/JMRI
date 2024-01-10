@@ -16,7 +16,8 @@ public class ExpressionNodeMethod implements ExpressionNodeWithParameter {
     private final String _method;
     private final List<ExpressionNode> _parameterList;
 
-    public ExpressionNodeMethod(String method, Map<String, Variable> variables, List<ExpressionNode> parameterList) throws FunctionNotExistsException {
+    public ExpressionNodeMethod(String method, Map<String, Variable> variables,
+            List<ExpressionNode> parameterList) throws FunctionNotExistsException {
         _method = method;
         _parameterList = parameterList;
     }
@@ -24,10 +25,40 @@ public class ExpressionNodeMethod implements ExpressionNodeWithParameter {
     private boolean isAssignableFrom(Class<?> type, Object param) {
         if (param == null) return true;
         if (type.isAssignableFrom(param.getClass())) return true;
+
+        if ((type == Byte.TYPE) && (param instanceof Byte)) return true;
+        if ((type == Short.TYPE) && (param instanceof Byte)) return true;
+        if ((type == Integer.TYPE) && (param instanceof Byte)) return true;
+        if ((type == Long.TYPE) && (param instanceof Byte)) return true;
+        if ((type == Float.TYPE) && (param instanceof Byte)) return true;
+        if ((type == Double.TYPE) && (param instanceof Byte)) return true;
+
+        if ((type == Byte.TYPE) && (param instanceof Short)) return true;
+        if ((type == Short.TYPE) && (param instanceof Short)) return true;
+        if ((type == Integer.TYPE) && (param instanceof Short)) return true;
+        if ((type == Long.TYPE) && (param instanceof Short)) return true;
+        if ((type == Float.TYPE) && (param instanceof Short)) return true;
+        if ((type == Double.TYPE) && (param instanceof Short)) return true;
+
+        if ((type == Byte.TYPE) && (param instanceof Integer)) return true;
+        if ((type == Short.TYPE) && (param instanceof Integer)) return true;
+        if ((type == Integer.TYPE) && (param instanceof Integer)) return true;
+        if ((type == Long.TYPE) && (param instanceof Integer)) return true;
+        if ((type == Float.TYPE) && (param instanceof Integer)) return true;
+        if ((type == Double.TYPE) && (param instanceof Integer)) return true;
+
         if ((type == Byte.TYPE) && (param instanceof Long)) return true;
         if ((type == Short.TYPE) && (param instanceof Long)) return true;
         if ((type == Integer.TYPE) && (param instanceof Long)) return true;
-        return ((type == Float.TYPE) && (param instanceof Double));
+        if ((type == Long.TYPE) && (param instanceof Long)) return true;
+        if ((type == Float.TYPE) && (param instanceof Long)) return true;
+        if ((type == Double.TYPE) && (param instanceof Long)) return true;
+
+        if ((type == Float.TYPE) && (param instanceof Float)) return true;
+        if ((type == Double.TYPE) && (param instanceof Float)) return true;
+
+        if ((type == Float.TYPE) && (param instanceof Double)) return true;
+        return ((type == Double.TYPE) && (param instanceof Double));
     }
 
     private boolean canCall(Method m, Object[] params) {
@@ -46,12 +77,46 @@ public class ExpressionNodeMethod implements ExpressionNodeWithParameter {
         Object[] newParams = new Object[params.length];
         for (int i=0; i < params.length; i++) {
             Object newParam;
-            if ((params[i] == null) || (paramTypes[i].isAssignableFrom(params[i].getClass()))) newParam = params[i];
+            if ((params[i] == null) || (paramTypes[i].isAssignableFrom(params[i].getClass()))) {
+                newParam = params[i];
+            }
+
+            else if ((paramTypes[i] == Byte.TYPE) && (params[i] instanceof Byte)) newParam = (byte)(byte)params[i];
+            else if ((paramTypes[i] == Short.TYPE) && (params[i] instanceof Byte)) newParam = (short)(byte)params[i];
+            else if ((paramTypes[i] == Integer.TYPE) && (params[i] instanceof Byte)) newParam = (int)(byte)params[i];
+            else if ((paramTypes[i] == Long.TYPE) && (params[i] instanceof Byte)) newParam = (long)(byte)params[i];
+            else if ((paramTypes[i] == Float.TYPE) && (params[i] instanceof Byte)) newParam = (float)(byte)params[i];
+            else if ((paramTypes[i] == Double.TYPE) && (params[i] instanceof Byte)) newParam = (double)(byte)params[i];
+
+            else if ((paramTypes[i] == Byte.TYPE) && (params[i] instanceof Short)) newParam = (byte)(short)params[i];
+            else if ((paramTypes[i] == Short.TYPE) && (params[i] instanceof Short)) newParam = (short)(short)params[i];
+            else if ((paramTypes[i] == Integer.TYPE) && (params[i] instanceof Short)) newParam = (int)(short)params[i];
+            else if ((paramTypes[i] == Long.TYPE) && (params[i] instanceof Short)) newParam = (long)(short)params[i];
+            else if ((paramTypes[i] == Float.TYPE) && (params[i] instanceof Short)) newParam = (float)(short)params[i];
+            else if ((paramTypes[i] == Double.TYPE) && (params[i] instanceof Short)) newParam = (double)(short)params[i];
+
+            else if ((paramTypes[i] == Byte.TYPE) && (params[i] instanceof Integer)) newParam = (byte)(int)params[i];
+            else if ((paramTypes[i] == Short.TYPE) && (params[i] instanceof Integer)) newParam = (short)(int)params[i];
+            else if ((paramTypes[i] == Integer.TYPE) && (params[i] instanceof Integer)) newParam = (int)(int)params[i];
+            else if ((paramTypes[i] == Long.TYPE) && (params[i] instanceof Integer)) newParam = (long)(int)params[i];
+            else if ((paramTypes[i] == Float.TYPE) && (params[i] instanceof Integer)) newParam = (float)(int)params[i];
+            else if ((paramTypes[i] == Double.TYPE) && (params[i] instanceof Integer)) newParam = (double)(int)params[i];
+
             else if ((paramTypes[i] == Byte.TYPE) && (params[i] instanceof Long)) newParam = (byte)(long)params[i];
             else if ((paramTypes[i] == Short.TYPE) && (params[i] instanceof Long)) newParam = (short)(long)params[i];
             else if ((paramTypes[i] == Integer.TYPE) && (params[i] instanceof Long)) newParam = (int)(long)params[i];
+            else if ((paramTypes[i] == Long.TYPE) && (params[i] instanceof Long)) newParam = (long)(long)params[i];
+            else if ((paramTypes[i] == Float.TYPE) && (params[i] instanceof Long)) newParam = (float)(long)params[i];
+            else if ((paramTypes[i] == Double.TYPE) && (params[i] instanceof Long)) newParam = (double)(long)params[i];
+
+            else if ((paramTypes[i] == Float.TYPE) && (params[i] instanceof Float)) newParam = (float)(float)params[i];
+            else if ((paramTypes[i] == Double.TYPE) && (params[i] instanceof Float)) newParam = (double)(float)params[i];
+
             else if ((paramTypes[i] == Float.TYPE) && (params[i] instanceof Double)) newParam = (float)(double)params[i];
-            else throw new RuntimeException(String.format("%s cannot be assigned to %s", params[i].getClass().getName(), paramTypes[i].getName()));
+            else if ((paramTypes[i] == Double.TYPE) && (params[i] instanceof Double)) newParam = (double)(double)params[i];
+
+            else throw new RuntimeException(String.format("%s can not be assigned to %s", params[i].getClass().getName(), paramTypes[i].getName()));
+
             newParams[i] = newParam;
         }
         return method.invoke(obj, newParams);
