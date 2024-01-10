@@ -1671,78 +1671,78 @@ public class ExpressionNodeMethodPrimTest {
 
     public static class TestClass {
 
-        public void testByteByte(byte a, byte b) { };
-        public long testByteByteResult(byte a, byte b) { return a*b; };
-        public void testByteShort(byte a, short b) { };
-        public long testByteShortResult(byte a, short b) { return a*b; };
-        public void testByteInteger(byte a, int b) { };
-        public long testByteIntegerResult(byte a, int b) { return a*b; };
-        public void testByteLong(byte a, long b) { };
-        public long testByteLongResult(byte a, long b) { return a*b; };
-        public void testByteFloat(byte a, float b) { };
-        public double testByteFloatResult(byte a, float b) { return a*b; };
-        public void testByteDouble(byte a, double b) { };
-        public double testByteDoubleResult(byte a, double b) { return a*b; };
-        public void testShortByte(short a, byte b) { };
-        public long testShortByteResult(short a, byte b) { return a*b; };
-        public void testShortShort(short a, short b) { };
-        public long testShortShortResult(short a, short b) { return a*b; };
-        public void testShortInteger(short a, int b) { };
-        public long testShortIntegerResult(short a, int b) { return a*b; };
-        public void testShortLong(short a, long b) { };
-        public long testShortLongResult(short a, long b) { return a*b; };
-        public void testShortFloat(short a, float b) { };
-        public double testShortFloatResult(short a, float b) { return a*b; };
-        public void testShortDouble(short a, double b) { };
-        public double testShortDoubleResult(short a, double b) { return a*b; };
-        public void testIntegerByte(int a, byte b) { };
-        public long testIntegerByteResult(int a, byte b) { return a*b; };
-        public void testIntegerShort(int a, short b) { };
-        public long testIntegerShortResult(int a, short b) { return a*b; };
-        public void testIntegerInteger(int a, int b) { };
-        public long testIntegerIntegerResult(int a, int b) { return a*b; };
-        public void testIntegerLong(int a, long b) { };
-        public long testIntegerLongResult(int a, long b) { return a*b; };
-        public void testIntegerFloat(int a, float b) { };
-        public double testIntegerFloatResult(int a, float b) { return a*b; };
-        public void testIntegerDouble(int a, double b) { };
-        public double testIntegerDoubleResult(int a, double b) { return a*b; };
-        public void testLongByte(long a, byte b) { };
-        public long testLongByteResult(long a, byte b) { return a*b; };
-        public void testLongShort(long a, short b) { };
-        public long testLongShortResult(long a, short b) { return a*b; };
-        public void testLongInteger(long a, int b) { };
-        public long testLongIntegerResult(long a, int b) { return a*b; };
-        public void testLongLong(long a, long b) { };
-        public long testLongLongResult(long a, long b) { return a*b; };
-        public void testLongFloat(long a, float b) { };
-        public double testLongFloatResult(long a, float b) { return a*b; };
-        public void testLongDouble(long a, double b) { };
-        public double testLongDoubleResult(long a, double b) { return a*b; };
-        public void testFloatByte(float a, byte b) { };
-        public double testFloatByteResult(float a, byte b) { return a*b; };
-        public void testFloatShort(float a, short b) { };
-        public double testFloatShortResult(float a, short b) { return a*b; };
-        public void testFloatInteger(float a, int b) { };
-        public double testFloatIntegerResult(float a, int b) { return a*b; };
-        public void testFloatLong(float a, long b) { };
-        public double testFloatLongResult(float a, long b) { return a*b; };
-        public void testFloatFloat(float a, float b) { };
-        public double testFloatFloatResult(float a, float b) { return a*b; };
-        public void testFloatDouble(float a, double b) { };
-        public double testFloatDoubleResult(float a, double b) { return a*b; };
-        public void testDoubleByte(double a, byte b) { };
-        public double testDoubleByteResult(double a, byte b) { return a*b; };
-        public void testDoubleShort(double a, short b) { };
-        public double testDoubleShortResult(double a, short b) { return a*b; };
-        public void testDoubleInteger(double a, int b) { };
-        public double testDoubleIntegerResult(double a, int b) { return a*b; };
-        public void testDoubleLong(double a, long b) { };
-        public double testDoubleLongResult(double a, long b) { return a*b; };
-        public void testDoubleFloat(double a, float b) { };
-        public double testDoubleFloatResult(double a, float b) { return a*b; };
-        public void testDoubleDouble(double a, double b) { };
-        public double testDoubleDoubleResult(double a, double b) { return a*b; };
+        public void testByteByte(byte a, byte b) { }
+        public long testByteByteResult(byte a, byte b) { return a*b; }
+        public void testByteShort(byte a, short b) { }
+        public long testByteShortResult(byte a, short b) { return a*b; }
+        public void testByteInteger(byte a, int b) { }
+        public long testByteIntegerResult(byte a, int b) { return a*b; }
+        public void testByteLong(byte a, long b) { }
+        public long testByteLongResult(byte a, long b) { return a*b; }
+        public void testByteFloat(byte a, float b) { }
+        public double testByteFloatResult(byte a, float b) { return a*b; }
+        public void testByteDouble(byte a, double b) { }
+        public double testByteDoubleResult(byte a, double b) { return a*b; }
+        public void testShortByte(short a, byte b) { }
+        public long testShortByteResult(short a, byte b) { return a*b; }
+        public void testShortShort(short a, short b) { }
+        public long testShortShortResult(short a, short b) { return a*b; }
+        public void testShortInteger(short a, int b) { }
+        public long testShortIntegerResult(short a, int b) { return a*b; }
+        public void testShortLong(short a, long b) { }
+        public long testShortLongResult(short a, long b) { return a*b; }
+        public void testShortFloat(short a, float b) { }
+        public double testShortFloatResult(short a, float b) { return a*b; }
+        public void testShortDouble(short a, double b) { }
+        public double testShortDoubleResult(short a, double b) { return a*b; }
+        public void testIntegerByte(int a, byte b) { }
+        public long testIntegerByteResult(int a, byte b) { return a*b; }
+        public void testIntegerShort(int a, short b) { }
+        public long testIntegerShortResult(int a, short b) { return a*b; }
+        public void testIntegerInteger(int a, int b) { }
+        public long testIntegerIntegerResult(int a, int b) { return a*b; }
+        public void testIntegerLong(int a, long b) { }
+        public long testIntegerLongResult(int a, long b) { return a*b; }
+        public void testIntegerFloat(int a, float b) { }
+        public double testIntegerFloatResult(int a, float b) { return a*b; }
+        public void testIntegerDouble(int a, double b) { }
+        public double testIntegerDoubleResult(int a, double b) { return a*b; }
+        public void testLongByte(long a, byte b) { }
+        public long testLongByteResult(long a, byte b) { return a*b; }
+        public void testLongShort(long a, short b) { }
+        public long testLongShortResult(long a, short b) { return a*b; }
+        public void testLongInteger(long a, int b) { }
+        public long testLongIntegerResult(long a, int b) { return a*b; }
+        public void testLongLong(long a, long b) { }
+        public long testLongLongResult(long a, long b) { return a*b; }
+        public void testLongFloat(long a, float b) { }
+        public double testLongFloatResult(long a, float b) { return a*b; }
+        public void testLongDouble(long a, double b) { }
+        public double testLongDoubleResult(long a, double b) { return a*b; }
+        public void testFloatByte(float a, byte b) { }
+        public double testFloatByteResult(float a, byte b) { return a*b; }
+        public void testFloatShort(float a, short b) { }
+        public double testFloatShortResult(float a, short b) { return a*b; }
+        public void testFloatInteger(float a, int b) { }
+        public double testFloatIntegerResult(float a, int b) { return a*b; }
+        public void testFloatLong(float a, long b) { }
+        public double testFloatLongResult(float a, long b) { return a*b; }
+        public void testFloatFloat(float a, float b) { }
+        public double testFloatFloatResult(float a, float b) { return a*b; }
+        public void testFloatDouble(float a, double b) { }
+        public double testFloatDoubleResult(float a, double b) { return a*b; }
+        public void testDoubleByte(double a, byte b) { }
+        public double testDoubleByteResult(double a, byte b) { return a*b; }
+        public void testDoubleShort(double a, short b) { }
+        public double testDoubleShortResult(double a, short b) { return a*b; }
+        public void testDoubleInteger(double a, int b) { }
+        public double testDoubleIntegerResult(double a, int b) { return a*b; }
+        public void testDoubleLong(double a, long b) { }
+        public double testDoubleLongResult(double a, long b) { return a*b; }
+        public void testDoubleFloat(double a, float b) { }
+        public double testDoubleFloatResult(double a, float b) { return a*b; }
+        public void testDoubleDouble(double a, double b) { }
+        public double testDoubleDoubleResult(double a, double b) { return a*b; }
     }
 
 }

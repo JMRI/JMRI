@@ -192,8 +192,8 @@ public class ExpressionNodeMethodTest {
                     if ("Double".equals(classes[i])) result = "double";
                     if ("Float".equals(classes[j])) result = "double";
                     if ("Double".equals(classes[j])) result = "double";
-                    writer.format("        public void test%s%s(%s a, %s b) { };%n", classes[i], classes[j], types[i], types[j]);
-                    writer.format("        public %s test%s%sResult(%s a, %s b) { return a*b; };%n", result, classes[i], classes[j], types[i], types[j]);
+                    writer.format("        public void test%s%s(%s a, %s b) { }%n", classes[i], classes[j], types[i], types[j]);
+                    writer.format("        public %s test%s%sResult(%s a, %s b) { return a*b; }%n", result, classes[i], classes[j], types[i], types[j]);
                 }
             }
 
