@@ -135,8 +135,8 @@
   </variable>
   <variable CV="137" item="SUSI outputs mapping" mask="XXVXXXXX" exclude="60,130,131,132,133,134">
     <!--xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/-->
-    <enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-     <enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+     <enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
       <enumChoice choice="AUX3">
         <choice>AUX3 and AUX4 on ZCLK and ZDAT</choice>
         <choice xml:lang="de">AUX3 und AUX4 an ZCLK und ZDAT</choice>

@@ -4,7 +4,7 @@
 <!-- version 1.1 - Ronald Kuhn - add german translation -->
 <!-- version 2 - Ronald Kuhn - merged "Alt Funkction Map's" for v39 -->
 <!-- version 2.1 - Nigel Cliffe - added MS series version numbers to include statements --> 
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Alt Function Map</name>
   <name xml:lang="it">Mappa Funzioni Speciali</name>
   <name xml:lang="cs">Alternativní přiřazení funkcí</name>

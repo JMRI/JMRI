@@ -440,6 +440,8 @@
                 <br>
                 Note: Due to a bug, this feature didn't work as it
                 should in JMRI 5.7.2 but it's now fixed.</li>
+            <li>The action <strong>Program On Main</strong> has been
+                added. It lets you program CVs on the main.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -609,7 +611,8 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Use block values (restored from blockvalues.xml) to get
+            a feasible start block for automatic start.</li>
         </ul>
 
     <h3>Miscellaneous</h3>

@@ -25,7 +25,7 @@
     Provides build services for JMRI libraries and applications
     </description>
 
-    <property name="jmri.copyright.year" value="1997-2023"/>
+    <property name="jmri.copyright.year" value="1997-2024"/>
 
     <property environment="env"/>
 
@@ -371,7 +371,7 @@
 
     <!-- Java Code Coverage -->
     <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
-        <classpath path="lib/org.jacoco.ant-0.8.5-nodeps.jar" />
+        <classpath path="lib/org.jacoco.ant-0.8.11-nodeps.jar" />
     </taskdef>
 
     <!-- fileset for the jacoco targets. -->

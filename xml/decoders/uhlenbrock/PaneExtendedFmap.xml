@@ -15,7 +15,7 @@
 <!-- version 1 - For Uhlenbrock_73xx5.xml                                   -->
 <!-- Uhlenbrock IntelliDrive2 Extended Function Mapping                     -->
 <!-- Valid for 73115, 73235, 73405 families (non exhaustive list)           -->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
 	<copyright xmlns="http://docbook.org/ns/docbook">
 		<year>2019</year>
 		<holder>JMRI</holder>

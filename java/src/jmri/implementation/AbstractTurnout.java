@@ -309,8 +309,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     @Nonnull
     public String describeState(int state) {
         switch (state) {
-            case THROWN: return Bundle.getMessage("TurnoutStateThrown");
-            case CLOSED: return Bundle.getMessage("TurnoutStateClosed");
+            case THROWN: return thrownText;
+            case CLOSED: return closedText;
             default: return super.describeState(state);
         }
     }
