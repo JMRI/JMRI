@@ -283,6 +283,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                             }
                         } else {
                             if ((content[0] == 1) && (content[1] == 1) && (content[2] == 0) && (content[3] == 0) && (content[4] == 1)) {
+                                sb.append("\n  Event: ");
                                 sb.append(formatTimeMessage(content));
                             }
                         }
@@ -325,7 +326,6 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
      */
     String formatTimeMessage(int[] content) {
         StringBuilder sb = new StringBuilder();
-        sb.append(' ');
         int clock = content[5];
         switch (clock) {
             case 0:
