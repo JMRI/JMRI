@@ -368,9 +368,6 @@ Windows and Linux libraries from <https://jogamp.org/deployment/archive/rc/v2.4.
 - version 3.1.0
 - Related to Jetty Web Server
 
-##### jhidrawplugin.jar
-- see jinput.jar
-
 ##### jsoup-1.15.3.jar
 - version 1.15.3
 - used to rebuild Help metadata
