@@ -126,7 +126,9 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Switch String input fields to mono-spaced font, and 
+                    limit their content length to the length of the underlying
+                    configuration field.</li>
             </ul>
 
         <h4>Powerline</h4>
