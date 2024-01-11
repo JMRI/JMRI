@@ -459,10 +459,10 @@
             <li></li>
         </ul>
 
-    <h3>Operations</h3>
+    <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Fixed a routing bug that was introduced in JMRI 5.6</li>
         </ul>
 
    <h3>Panel Editor</h3>

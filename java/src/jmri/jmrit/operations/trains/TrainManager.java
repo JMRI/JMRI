@@ -505,14 +505,14 @@ public class TrainManager extends PropertyChangeSupport
             if (excludeTrains.contains(train)) {
                 continue;
             }
+            if (Setup.isOnlyActiveTrainsEnabled() && !train.isBuildEnabled()) {
+                continue;
+            }
             for (Train t : excludeTrains) {
                 if (t != null && train.getRoute() == t.getRoute()) {
                     addLine(buildReport, Bundle.getMessage("trainHasSameRoute", train, t));
                     continue main;
                 }
-            }
-            if (Setup.isOnlyActiveTrainsEnabled() && !train.isBuildEnabled()) {
-                continue;
             }
             // does this train service this car?
             if (train.isServiceable(buildReport, car)) {
