@@ -385,7 +385,9 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>The CV table columns now expand to fill their complete pane.
+                This is to make the table more readable when it contains long
+                value or CV name strings.</li>
         </ul>
 
     <h3>CTC Tool</h3>
