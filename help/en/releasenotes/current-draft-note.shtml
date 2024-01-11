@@ -79,6 +79,11 @@
                 <li></li>
             </ul>
 
+        <h4>LCC/Openlcb</h4>
+            <ul>
+                <li>Monitor now decodes clock messages</li>
+            </ul>
+
         <h4>Lenz XPressNet</h4>
             <ul>
                 <li></li>

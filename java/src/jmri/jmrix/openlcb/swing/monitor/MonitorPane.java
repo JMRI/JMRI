@@ -281,6 +281,11 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                                 sb.append("\n  Event: ");
                                 sb.append(name);
                             }
+                        } else {
+                            if ((content[0] == 1) && (content[1] == 1) && (content[2] == 0) && (content[3] == 0) && (content[4] == 1)) {
+                                sb.append("\n  Event: ");
+                                sb.append(formatTimeMessage(content));
+                            }
                         }
                     }
                 }
@@ -314,6 +319,149 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
             }
         }
         nextLine(formatted + "\n", raw);
+    }
+    
+    /*
+     * format a time message
+     */
+    String formatTimeMessage(int[] content) {
+        StringBuilder sb = new StringBuilder();
+        int clock = content[5];
+        switch (clock) {
+            case 0:
+                sb.append(Bundle.getMessage("TimeClockDefault"));
+                break;
+            case 1:
+                sb.append(Bundle.getMessage("TimeClockReal"));
+                break;
+            case 2:
+                sb.append(Bundle.getMessage("TimeClockAlt1"));
+                break;
+            case 3:
+                sb.append(Bundle.getMessage("TimeClockAlt2"));
+                break;
+            default:
+                sb.append(Bundle.getMessage("TimeClockUnkClock"));
+                sb.append(' ');
+                sb.append(jmri.util.StringUtil.twoHexFromInt(clock));
+                break;
+        }
+        sb.append(' ');
+        int msgType = (0xF0 & content[6]) >> 4;
+        int nib = (0x0F & content[6]);
+        int hour = (content[6] & 0x1F);
+        switch (msgType) {
+            case 0:
+            case 1:
+                sb.append(Bundle.getMessage("TimeClockTimeMsg") + " ");
+                sb.append(hour);
+                sb.append(':');
+                if (content[7] < 10) {
+                    sb.append("0");
+                    sb.append(content[7]);
+                } else {
+                    sb.append(content[7]);
+                }
+                break;
+            case 2:     // month day
+                sb.append(Bundle.getMessage("TimeClockDateMsg") + " ");
+                if (nib < 10) {
+                    sb.append('0');
+                }
+                sb.append(nib);
+                sb.append('/');
+                if (content[7] < 10) {
+                    sb.append('0');
+                }
+                sb.append(content[7]);
+                break;
+            case 3:     // year
+                sb.append(Bundle.getMessage("TimeClockYearMsg") + " ");
+                sb.append(nib << 8 | content[7]);
+                break;
+            case 4:     // rate
+                sb.append(Bundle.getMessage("TimeClockRateMsg") + " ");
+                sb.append(' ');
+                sb.append(cvtFastClockRate(content[6], content[7]));
+                break;
+            case 8:
+            case 9:
+                sb.append(Bundle.getMessage("TimeClockSetTimeMsg") + " ");
+                sb.append(hour);
+                sb.append(':');
+                if (content[7] < 10) {
+                    sb.append("0");
+                    sb.append(content[7]);
+                } else {
+                    sb.append(content[7]);
+                }
+                break;
+            case 0xA:  // set date
+                sb.append(Bundle.getMessage("TimeClockSetDateMsg") + " ");
+                if (nib < 10) {
+                    sb.append('0');
+                }
+                sb.append(nib);
+                sb.append('/');
+                if (content[7] < 10) {
+                    sb.append('0');
+                }
+                sb.append(content[7]);
+                break;
+            case 0xB:  // set year
+                sb.append(Bundle.getMessage("TimeClockSetYearMsg") + " ");
+                sb.append(nib << 8 | content[7]);
+                break;
+            case 0xC:  // set rate
+                sb.append(Bundle.getMessage("TimeClockSetRateMsg") + " ");
+                sb.append(cvtFastClockRate(content[6], content[7]));
+                break;
+            case 0xF:   // specials
+                if (nib == 0 && content[7] ==0) {
+                    sb.append(Bundle.getMessage("TimeClockQueryMsg"));
+                } else if (nib == 0 && content[7] == 1) {
+                    sb.append(Bundle.getMessage("TimeClockStopMsg"));
+                } else if (nib == 0 && content[7] == 2) {
+                    sb.append(Bundle.getMessage("TimeClockStartMsg"));
+                } else if (nib == 0 && content[7] == 3) {
+                    sb.append(Bundle.getMessage("TimeClockDateRollMsg"));
+                } else {
+                    sb.append(Bundle.getMessage("TimeClockUnkData"));
+                    sb.append(' ');
+                    sb.append(jmri.util.StringUtil.twoHexFromInt(content[6]));
+                    sb.append(' ');
+                    sb.append(jmri.util.StringUtil.twoHexFromInt(content[7]));
+                }
+                break;
+            default:
+                sb.append(Bundle.getMessage("TimeClockUnkData"));
+                sb.append(' ');
+                sb.append(jmri.util.StringUtil.twoHexFromInt(content[6]));
+                sb.append(' ');
+                sb.append(jmri.util.StringUtil.twoHexFromInt(content[7]));
+                break;
+        }
+        return(sb.toString());
+    }
+
+    /*
+     * Convert the 12 bit signed, fixed format rate value
+     * That's 11 data and 1 sign bit
+     * Values are increments of 0.25, between 511.75 and -512.00
+     */
+    private float cvtFastClockRate(int byte6, int byte7) {
+        int data = 0;
+        boolean sign = false;
+        float rate = 0;
+        
+        data = ((byte6 & 0x3) << 8 | byte7);
+        sign = (((byte6 & 0x4) >> 3) == 0) ? false : true;
+        if (sign) {
+            rate = (float) (data / 4.0);
+        } else {
+            rate = (float) ((-1 * (~data + 1)) /4.0);
+        }
+        return rate;
     }
 
     @Override
