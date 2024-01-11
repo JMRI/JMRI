@@ -1171,6 +1171,79 @@ public class RecursiveDescentParserTest {
         Assert.assertEquals("myVar is correct", 12, (long)(Long)myMap5.get("A fifth key"));
     }
 
+    @Test
+    public void testOther() throws JmriException {
+        AtomicBoolean exceptionIsThrown = new AtomicBoolean();
+        Map<String, Variable> variables = new HashMap<>();
+        RecursiveDescentParser t = new RecursiveDescentParser(variables);
+
+        ExpressionNode exprNode = t.parseExpression("");
+        Assert.assertNull("expression is null", exprNode);
+
+        exprNode = t.parseExpression("     ");
+        Assert.assertNull("expression is null", exprNode);
+
+        exprNode = t.parseExpression("       \t\t     ");
+        Assert.assertNull("expression is null", exprNode);
+
+        exprNode = t.parseExpression("  \t\t  \n \n \t   ");
+        Assert.assertNull("expression is null", exprNode);
+
+        exceptionIsThrown.set(false);
+        try {
+            t.parseExpression("[LongString]");
+        } catch (InvalidSyntaxException e) {
+            Assert.assertTrue("exception message matches", "Invalid syntax error".equals(e.getMessage()));
+            exceptionIsThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", exceptionIsThrown.get());
+
+        exceptionIsThrown.set(false);
+        try {
+            t.parseExpression("LongString.[substring]");
+        } catch (InvalidSyntaxException e) {
+            Assert.assertTrue("exception message matches", "Invalid syntax error".equals(e.getMessage()));
+            exceptionIsThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", exceptionIsThrown.get());
+
+        exceptionIsThrown.set(false);
+        try {
+            t.parseExpression("LongString.substring({Start},{End})");
+        } catch (InvalidSyntaxException e) {
+            Assert.assertTrue("exception message matches", "Invalid syntax error".equals(e.getMessage()));
+            exceptionIsThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", exceptionIsThrown.get());
+
+        exceptionIsThrown.set(false);
+        try {
+            t.parseExpression("LongString.substring(Start,{End})");
+        } catch (InvalidSyntaxException e) {
+            Assert.assertTrue("exception message matches", "Invalid syntax error".equals(e.getMessage()));
+            exceptionIsThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", exceptionIsThrown.get());
+
+        exceptionIsThrown.set(false);
+        try {
+            t.parseExpression("LongString.substring(Start,[End])");
+        } catch (InvalidSyntaxException e) {
+            Assert.assertTrue("exception message matches", "Invalid syntax error".equals(e.getMessage()));
+            exceptionIsThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", exceptionIsThrown.get());
+
+        exceptionIsThrown.set(false);
+        try {
+            t.parseExpression("LongString.substring([Start],[End])");
+        } catch (InvalidSyntaxException e) {
+            Assert.assertTrue("exception message matches", "Invalid syntax error".equals(e.getMessage()));
+            exceptionIsThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", exceptionIsThrown.get());
+    }
+
 
     // The minimal setup for log4J
     @Before

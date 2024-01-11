@@ -447,6 +447,8 @@
                 <br>
                 Note: Due to a bug, this feature didn't work as it
                 should in JMRI 5.7.2 but it's now fixed.</li>
+            <li>A couple of bugs in the LogixNG formula parser have
+                been fixed.</li>
             <li>The action <strong>Program On Main</strong> has been
                 added. It lets you program CVs on the main.</li>
         </ul>
