@@ -113,99 +113,99 @@
   </enumChoice>
   <enumChoice>
     <choice>F16</choice>
-    <choice xml:lang="de">F15</choice>
-    <choice xml:lang="fr">F15</choice>
-    <choice xml:lang="cs">F15</choice>
+    <choice xml:lang="de">F16</choice>
+    <choice xml:lang="fr">F16</choice>
+    <choice xml:lang="cs">F16</choice>
   </enumChoice>
   <enumChoice>
     <choice>F17</choice>
-    <choice xml:lang="de">F15</choice>
-    <choice xml:lang="fr">F15</choice>
-    <choice xml:lang="cs">F15</choice>
+    <choice xml:lang="de">F17</choice>
+    <choice xml:lang="fr">F17</choice>
+    <choice xml:lang="cs">F17</choice>
   </enumChoice>
   <enumChoice>
     <choice>F18</choice>
-    <choice xml:lang="de">F15</choice>
-    <choice xml:lang="fr">F15</choice>
-    <choice xml:lang="cs">F15</choice>
+    <choice xml:lang="de">F18</choice>
+    <choice xml:lang="fr">F18</choice>
+    <choice xml:lang="cs">F18</choice>
   </enumChoice>
   <enumChoice>
     <choice>F19</choice>
-    <choice xml:lang="de">F15</choice>
-    <choice xml:lang="fr">F15</choice>
-    <choice xml:lang="cs">F15</choice>
+    <choice xml:lang="de">F19</choice>
+    <choice xml:lang="fr">F19</choice>
+    <choice xml:lang="cs">F19</choice>
   </enumChoice>
   <enumChoice>
     <choice>F20</choice>
-    <choice xml:lang="de">F15</choice>
-    <choice xml:lang="fr">F15</choice>
-    <choice xml:lang="cs">F15</choice>
+    <choice xml:lang="de">F20</choice>
+    <choice xml:lang="fr">F20</choice>
+    <choice xml:lang="cs">F20</choice>
   </enumChoice>
   <enumChoice>
     <choice>F21</choice>
-    <choice xml:lang="de">F15</choice>
-    <choice xml:lang="fr">F15</choice>
-    <choice xml:lang="cs">F15</choice>
+    <choice xml:lang="de">F21</choice>
+    <choice xml:lang="fr">F21</choice>
+    <choice xml:lang="cs">F21</choice>
   </enumChoice>
   <enumChoice>
     <choice>F22</choice>
-    <choice xml:lang="de">F15</choice>
-    <choice xml:lang="fr">F15</choice>
-    <choice xml:lang="cs">F15</choice>
+    <choice xml:lang="de">F22</choice>
+    <choice xml:lang="fr">F22</choice>
+    <choice xml:lang="cs">F22</choice>
   </enumChoice>
   <enumChoice>
     <choice>F23</choice>
-    <choice xml:lang="de">F15</choice>
-    <choice xml:lang="fr">F15</choice>
-    <choice xml:lang="cs">F15</choice>
+    <choice xml:lang="de">F23</choice>
+    <choice xml:lang="fr">F23</choice>
+    <choice xml:lang="cs">F23</choice>
   </enumChoice>
   <enumChoice>
     <choice>F24</choice>
-    <choice xml:lang="de">F15</choice>
-    <choice xml:lang="fr">F15</choice>
-    <choice xml:lang="cs">F15</choice>
+    <choice xml:lang="de">F24</choice>
+    <choice xml:lang="fr">F24</choice>
+    <choice xml:lang="cs">F24</choice>
   </enumChoice>
   <enumChoice>
     <choice>F25</choice>
-    <choice xml:lang="de">F15</choice>
-    <choice xml:lang="fr">F15</choice>
-    <choice xml:lang="cs">F15</choice>
+    <choice xml:lang="de">F25</choice>
+    <choice xml:lang="fr">F25</choice>
+    <choice xml:lang="cs">F25</choice>
   </enumChoice>
   <enumChoice>
     <choice>F26</choice>
-    <choice xml:lang="de">F15</choice>
-    <choice xml:lang="fr">F15</choice>
-    <choice xml:lang="cs">F15</choice>
+    <choice xml:lang="de">F26</choice>
+    <choice xml:lang="fr">F26</choice>
+    <choice xml:lang="cs">F26</choice>
   </enumChoice>
   <enumChoice>
     <choice>F27</choice>
-    <choice xml:lang="de">F15</choice>
-    <choice xml:lang="fr">F15</choice>
-    <choice xml:lang="cs">F15</choice>
+    <choice xml:lang="de">F27</choice>
+    <choice xml:lang="fr">F27</choice>
+    <choice xml:lang="cs">F27</choice>
   </enumChoice>
   <enumChoice>
     <choice>F28</choice>
-    <choice xml:lang="de">F15</choice>
-    <choice xml:lang="fr">F15</choice>
-    <choice xml:lang="cs">F15</choice>
+    <choice xml:lang="de">F28</choice>
+    <choice xml:lang="fr">F28</choice>
+    <choice xml:lang="cs">F28</choice>
   </enumChoice>
   <enumChoice>
     <choice>F29</choice>
-    <choice xml:lang="de">F15</choice>
-    <choice xml:lang="fr">F15</choice>
-    <choice xml:lang="cs">F15</choice>
+    <choice xml:lang="de">F29</choice>
+    <choice xml:lang="fr">F29</choice>
+    <choice xml:lang="cs">F29</choice>
   </enumChoice>
   <enumChoice>
     <choice>F30</choice>
-    <choice xml:lang="de">F15</choice>
-    <choice xml:lang="fr">F15</choice>
-    <choice xml:lang="cs">F15</choice>
+    <choice xml:lang="de">F30</choice>
+    <choice xml:lang="fr">F30</choice>
+    <choice xml:lang="cs">F30</choice>
   </enumChoice>
   <enumChoice>
     <choice>F31</choice>
-    <choice xml:lang="de">F15</choice>
-    <choice xml:lang="fr">F15</choice>
-    <choice xml:lang="cs">F15</choice>
+    <choice xml:lang="de">F31</choice>
+    <choice xml:lang="fr">F31</choice>
+    <choice xml:lang="cs">F31</choice>
   </enumChoice>
   <enumChoice value="64">
     <choice>Permanent</choice>
