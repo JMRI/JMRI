@@ -303,13 +303,13 @@
     <choice xml:lang="fr">Manoeuvre</choice>
     <choice xml:lang="cs">Posun</choice>
   </enumChoice>
-  <enumChoice value="114">
+  <enumChoice value="114" include="Märklin mSD/3">
     <choice>Brake squealing off</choice>
     <choice xml:lang="de">Bremsenquietschen aus</choice>
     <choice xml:lang="fr">Désact. Criss. freins</choice>
     <choice xml:lang="cs">Skřípění brzd vypnuto</choice>
   </enumChoice>
-  <enumChoice value="117">
+  <enumChoice value="117" include="Märklin mSD/3">
     <choice>Sound Mute</choice>
     <choice xml:lang="de">Sound Mute</choice>
     <choice xml:lang="fr">Sons Muets</choice>
@@ -321,7 +321,7 @@
     <choice xml:lang="fr">Arrêt moteur</choice>
     <choice xml:lang="cs">Zastavte motor</choice>
   </enumChoice>
-  <enumChoice value="120">
+  <enumChoice value="120" include="Märklin mSD/3">
     <choice>Stop running sound</choice>
     <choice xml:lang="de">Fahrsound halten</choice>
     <choice xml:lang="fr">Maintient bruitage de marche</choice>
