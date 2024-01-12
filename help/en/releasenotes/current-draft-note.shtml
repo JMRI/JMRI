@@ -629,6 +629,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The JInput library used to access certain non-serial USB devices has been
+                updated to version 2.0.9.  This adds support for Apple Silicon and
+                fixes some buffer overflows on Windows.</li>
         </ul>
 
