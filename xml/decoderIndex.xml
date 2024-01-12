@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.7.1plus+jake+20231231T1413Z+R4d931fc88e2 on Sun Dec 31 09:14:38 EST 2023-->
-  <decoderIndex version="573">
+  <!--Written by JMRI version 5.7.2plus+jake+20240112T1529Z+Reb8c83d1bda on Fri Jan 12 10:29:11 EST 2024-->
+  <decoderIndex version="577">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -10176,6 +10176,19 @@
       </family>
       <family name="mXion" mfg="MD Electronics" file="MDE_HDD.xml">
         <model model="HDD" lowVersionID="10" highVersionID="10" />
+      </family>
+      <family name="mXion" mfg="MD Electronics" file="MDE_mXion.xml">
+        <model model="DRIVE-XS" numOuts="3" numFns="68" lowVersionID="10" highVersionID="10">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+        </model>
+        <model model="DRIVE-S" numOuts="4" numFns="68" lowVersionID="10" highVersionID="10">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
       </family>
       <family name="MERG decoders" mfg="MERG" lowVersionID="104" file="MERG_10.xml">
         <model model="MERG 10" numOuts="5" numFns="3">
@@ -20832,9 +20845,8 @@
           <functionlabel num="12" lockable="true">Coupler</functionlabel>
         </functionlabels>
       </family>
-      <family name="Tsunami Steam Bachmann OEM" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Tsu_Steam_Bachmann.xml">
+      <family name="Tsunami Steam Bachmann OEM" mfg="SoundTraxx (Throttle-Up)" lowVersionID="80" highVersionID="83" file="SoundTraxx_Tsu_Steam_Bachmann.xml">
         <model model="HO 2-6-6-2" numOuts="2" numFns="14" productID="2662">
-          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -20995,6 +21007,22 @@
         </model>
         <model model="HO 4-8-4 J Class" numOuts="2" numFns="14" productID="484">
           <versionCV lowVersionID="80" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="Dynamo" />
+          <output name="Short" label="Whistle" />
+          <output name="Steam" label="Release" />
+          <output name="Water" label="Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Injector" />
+          <output name="Brake" label="Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="HO 2 Truck Climax" numOuts="2" numFns="14" productID="2climax">
+          <versionCV lowVersionID="83" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -30906,15 +30934,36 @@
           <versionCV />
         </model>
       </family>
-      <family name="IntelliDrive2" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_Tillig BR89_73xx5.xml">
+      <family name="IntelliDrive2" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_Tillig_BR89_73xx5.xml">
         <!-- to be checked by hardware owner -->
-        <model model="Tillig 0423x" highVersionID="27" numOuts="4" numFns="14" productID="Tillig0423x">
+        <model model="Tillig 0423x" highVersionID="27" numOuts="6" numFns="14" productID="Tillig0423x">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
           <output name="Shunting" label=". RG ." />
+          <!-- Anfahren/Bremsen -->
           <output name="Start/brake" label=". ABV ." />
+          <!-- Anfahren/Bremsen -->
+        </model>
+      </family>
+      <family name="IntelliDrive2" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_Tillig_E44_73xx5.xml">
+        <!-- to be checked by hardware owner -->
+        <model model="Tillig 66036" highVersionID="36" numOuts="8" numFns="28" productID="Tillig066036">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+          <output name="7" label=". A5*." />
+          <output name="8" label=". A6*." />
+          <output name="Shunting" label=". RG ." />
+          <!-- Anfahren/Bremsen -->
+          <output name="Start/brake" label=". ABV ." />
+          <!-- Anfahren/Bremsen -->
         </model>
       </family>
       <family name="Track-Control" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_TrackControl_6922.xml">
