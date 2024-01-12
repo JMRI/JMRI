@@ -111,6 +111,102 @@
     <choice xml:lang="fr">F15</choice>
     <choice xml:lang="cs">F15</choice>
   </enumChoice>
+  <enumChoice>
+    <choice>F16</choice>
+    <choice xml:lang="de">F16</choice>
+    <choice xml:lang="fr">F16</choice>
+    <choice xml:lang="cs">F16</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F17</choice>
+    <choice xml:lang="de">F17</choice>
+    <choice xml:lang="fr">F17</choice>
+    <choice xml:lang="cs">F17</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F18</choice>
+    <choice xml:lang="de">F18</choice>
+    <choice xml:lang="fr">F18</choice>
+    <choice xml:lang="cs">F18</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F19</choice>
+    <choice xml:lang="de">F19</choice>
+    <choice xml:lang="fr">F19</choice>
+    <choice xml:lang="cs">F19</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F20</choice>
+    <choice xml:lang="de">F20</choice>
+    <choice xml:lang="fr">F20</choice>
+    <choice xml:lang="cs">F20</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F21</choice>
+    <choice xml:lang="de">F21</choice>
+    <choice xml:lang="fr">F21</choice>
+    <choice xml:lang="cs">F21</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F22</choice>
+    <choice xml:lang="de">F22</choice>
+    <choice xml:lang="fr">F22</choice>
+    <choice xml:lang="cs">F22</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F23</choice>
+    <choice xml:lang="de">F23</choice>
+    <choice xml:lang="fr">F23</choice>
+    <choice xml:lang="cs">F23</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F24</choice>
+    <choice xml:lang="de">F24</choice>
+    <choice xml:lang="fr">F24</choice>
+    <choice xml:lang="cs">F24</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F25</choice>
+    <choice xml:lang="de">F25</choice>
+    <choice xml:lang="fr">F25</choice>
+    <choice xml:lang="cs">F25</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F26</choice>
+    <choice xml:lang="de">F26</choice>
+    <choice xml:lang="fr">F26</choice>
+    <choice xml:lang="cs">F26</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F27</choice>
+    <choice xml:lang="de">F27</choice>
+    <choice xml:lang="fr">F27</choice>
+    <choice xml:lang="cs">F27</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F28</choice>
+    <choice xml:lang="de">F28</choice>
+    <choice xml:lang="fr">F28</choice>
+    <choice xml:lang="cs">F28</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F29</choice>
+    <choice xml:lang="de">F29</choice>
+    <choice xml:lang="fr">F29</choice>
+    <choice xml:lang="cs">F29</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F30</choice>
+    <choice xml:lang="de">F30</choice>
+    <choice xml:lang="fr">F30</choice>
+    <choice xml:lang="cs">F30</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>F31</choice>
+    <choice xml:lang="de">F31</choice>
+    <choice xml:lang="fr">F31</choice>
+    <choice xml:lang="cs">F31</choice>
+  </enumChoice>
   <enumChoice value="64">
     <choice>Permanent</choice>
     <choice xml:lang="de">Immer</choice>
@@ -199,9 +295,39 @@
     <choice>Deactivate ABV</choice>
     <choice xml:lang="de">ABV ausschalten</choice>
     <choice xml:lang="fr">ABV désactivé</choice>
-    <choice xml:lang="cs">Vypnout křivky</choice>
+   <choice xml:lang="cs">Vypnout křivky</choice>
   </enumChoice>
-  <enumChoice value="176" include="Märklin mSD/3">
+  <enumChoice value="113">
+    <choice>Switching range</choice>
+    <choice xml:lang="de">Rangiergang</choice>
+    <choice xml:lang="fr">Manoeuvre</choice>
+    <choice xml:lang="cs">Posun</choice>
+  </enumChoice>
+  <enumChoice value="114" include="Märklin mSD/3">
+    <choice>Brake squealing off</choice>
+    <choice xml:lang="de">Bremsenquietschen aus</choice>
+    <choice xml:lang="fr">Désact. Criss. freins</choice>
+    <choice xml:lang="cs">Skřípění brzd vypnuto</choice>
+  </enumChoice>
+  <enumChoice value="117" include="Märklin mSD/3">
+    <choice>Sound Mute</choice>
+    <choice xml:lang="de">Sound Mute</choice>
+    <choice xml:lang="fr">Sons Muets</choice>
+    <choice xml:lang="cs">Ztlumit zvuk</choice>
+  </enumChoice>
+  <enumChoice value="119">
+    <choice>Stop motor</choice>
+    <choice xml:lang="de">Motor Stopp</choice>
+    <choice xml:lang="fr">Arrêt moteur</choice>
+    <choice xml:lang="cs">Zastavte motor</choice>
+  </enumChoice>
+  <enumChoice value="120" include="Märklin mSD/3">
+    <choice>Stop running sound</choice>
+    <choice xml:lang="de">Fahrsound halten</choice>
+    <choice xml:lang="fr">Maintient bruitage de marche</choice>
+    <choice xml:lang="cs">Zastavte zvuk běhu</choice>
+  </enumChoice>
+ <enumChoice value="176" include="Märklin mSD/3">
     <choice>Operating Sound</choice>
     <choice xml:lang="de">Fahrsound</choice>
     <choice xml:lang="fr">Son de conduite</choice>
@@ -375,7 +501,355 @@
     <choice xml:lang="fr">Son 28</choice>
     <choice xml:lang="cs">Zvuk 28</choice>
   </enumChoice>
-  <enumChoice value="255">
+  <enumChoice value="160">
+    <choice>And 1</choice>
+    <choice xml:lang="de">Und 1</choice>
+    <choice xml:lang="fr">Et 1</choice>
+    <choice xml:lang="cs">a zároveň 1</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>And 2</choice>
+    <choice xml:lang="de">Und 2</choice>
+    <choice xml:lang="fr">Et 2</choice>
+    <choice xml:lang="cs">a zároveň 2</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>And 3</choice>
+    <choice xml:lang="de">Und 3</choice>
+    <choice xml:lang="fr">Et 3</choice>
+    <choice xml:lang="cs">a zároveň 3</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>And 4</choice>
+    <choice xml:lang="de">Und 4</choice>
+    <choice xml:lang="fr">Et 4</choice>
+    <choice xml:lang="cs">a zároveň 4</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>And 5</choice>
+    <choice xml:lang="de">Und 5</choice>
+    <choice xml:lang="fr">Et 5</choice>
+    <choice xml:lang="cs">a zároveň 5</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>And 6</choice>
+    <choice xml:lang="de">Und 6</choice>
+    <choice xml:lang="fr">Et 6</choice>
+    <choice xml:lang="cs">a zároveň 6</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>And 7</choice>
+    <choice xml:lang="de">Und 7</choice>
+    <choice xml:lang="fr">Et 7</choice>
+    <choice xml:lang="cs">a zároveň 7</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>And 8</choice>
+    <choice xml:lang="de">Und 8</choice>
+    <choice xml:lang="fr">Et 8</choice>
+    <choice xml:lang="cs">a zároveň 8</choice>
+  </enumChoice>
+  <enumChoice value="224">
+    <choice>And 9</choice>
+    <choice xml:lang="de">Und 9</choice>
+    <choice xml:lang="fr">Et 9</choice>
+    <choice xml:lang="cs">a zároveň 9</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>And 10</choice>
+    <choice xml:lang="de">Und 10</choice>
+    <choice xml:lang="fr">Et 10</choice>
+    <choice xml:lang="cs">a zároveň 10</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>And 11</choice>
+    <choice xml:lang="de">Und 11</choice>
+    <choice xml:lang="fr">Et 11</choice>
+    <choice xml:lang="cs">a zároveň 11</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>And 12</choice>
+    <choice xml:lang="de">Und 12</choice>
+    <choice xml:lang="fr">Et 12</choice>
+    <choice xml:lang="cs">a zároveň 12</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>And 13</choice>
+    <choice xml:lang="de">Und 13</choice>
+    <choice xml:lang="fr">Et 13</choice>
+    <choice xml:lang="cs">a zároveň 13</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>And 14</choice>
+    <choice xml:lang="de">Und 14</choice>
+    <choice xml:lang="fr">Et 14</choice>
+    <choice xml:lang="cs">a zároveň 14</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>And 15</choice>
+    <choice xml:lang="de">Und 15</choice>
+    <choice xml:lang="fr">Et 15</choice>
+    <choice xml:lang="cs">a zároveň 15</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>And 16</choice>
+    <choice xml:lang="de">Und 16</choice>
+    <choice xml:lang="fr">Et 16</choice>
+    <choice xml:lang="cs">a zároveň 16</choice>
+  </enumChoice>
+   <enumChoice value="208">
+    <choice>Or 1</choice>
+    <choice xml:lang="de">Oder 1</choice>
+    <choice xml:lang="fr">Ou 1</choice>
+    <choice xml:lang="cs">Ou 1</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Or 2</choice>
+    <choice xml:lang="de">Oder 2</choice>
+    <choice xml:lang="fr">Ou 2</choice>
+    <choice xml:lang="cs">Ou 2</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Or 3</choice>
+    <choice xml:lang="de">Oder 3</choice>
+    <choice xml:lang="fr">Ou 3</choice>
+    <choice xml:lang="cs">Ou 3</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Or 4</choice>
+    <choice xml:lang="de">Oder 4</choice>
+    <choice xml:lang="fr">Ou 4</choice>
+    <choice xml:lang="cs">Ou 4</choice>
+  </enumChoice>
+  <enumChoice value="216">
+    <choice>Xor 1</choice>
+    <choice xml:lang="de">Xoder 1</choice>
+    <choice xml:lang="fr">Xou 1</choice>
+    <choice xml:lang="cs">Xou 1</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Xor 2</choice>
+    <choice xml:lang="de">Xoder 2</choice>
+    <choice xml:lang="fr">Xou 2</choice>
+    <choice xml:lang="cs">Xou 2</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Xor 3</choice>
+    <choice xml:lang="de">Xoder 3</choice>
+    <choice xml:lang="fr">Xou 3</choice>
+    <choice xml:lang="cs">Xou 3</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Xor 4</choice>
+    <choice xml:lang="de">Xoder 4</choice>
+    <choice xml:lang="fr">Xou 4</choice>
+    <choice xml:lang="cs">Xou 4</choice>
+  </enumChoice>
+  <enumChoice value="240">
+    <choice>Flipflop 1 on</choice>
+    <choice xml:lang="de">Flipflop 1 ein</choice>
+    <choice xml:lang="fr">Flipflop 1 act.</choice>
+    <choice xml:lang="cs">Flipflop 1 zapnuto</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Flipflop 1 off</choice>
+    <choice xml:lang="de">Flipflop 1 aus</choice>
+    <choice xml:lang="fr">Flipflop 1 dés.</choice>
+    <choice xml:lang="cs">Flipflop 1 vypnuto</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Flipflop 2 on</choice>
+    <choice xml:lang="de">Flipflop 2 ein</choice>
+    <choice xml:lang="fr">Flipflop 2 act.</choice>
+    <choice xml:lang="cs">Flipflop 2 zapnuto</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Flipflop 2 off</choice>
+    <choice xml:lang="de">Flipflop 2 aus</choice>
+    <choice xml:lang="fr">Flipflop 2 dés.</choice>
+    <choice xml:lang="cs">Flipflop 2 vypnuto</choice>
+  </enumChoice>
+   <enumChoice>
+    <choice>Flipflop 3 on</choice>
+    <choice xml:lang="de">Flipflop 3 ein</choice>
+    <choice xml:lang="fr">Flipflop 3 act.</choice>
+    <choice xml:lang="cs">Flipflop 3 zapnuto</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Flipflop 3 off</choice>
+    <choice xml:lang="de">Flipflop 3 aus</choice>
+    <choice xml:lang="fr">Flipflop 3 dés.</choice>
+    <choice xml:lang="cs">Flipflop 3 vypnuto</choice>
+  </enumChoice>
+   <enumChoice>
+    <choice>Flipflop 4 on</choice>
+    <choice xml:lang="de">Flipflop 4 ein</choice>
+    <choice xml:lang="fr">Flipflop 4 act.</choice>
+    <choice xml:lang="cs">Flipflop 4 zapnuto</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Flipflop 4 off</choice>
+    <choice xml:lang="de">Flipflop 4 aus</choice>
+    <choice xml:lang="fr">Flipflop 4 dés.</choice>
+    <choice xml:lang="cs">Flipflop 4 vypnuto</choice>
+  </enumChoice>
+  <enumChoice value="168">
+    <choice>Timer 1</choice>
+    <choice xml:lang="de">Timer 1</choice>
+    <choice xml:lang="fr">Timer 1</choice>
+    <choice xml:lang="cs">Časovač 1</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Timer 2</choice>
+    <choice xml:lang="de">Timer 2</choice>
+    <choice xml:lang="fr">Timer 2</choice>
+    <choice xml:lang="cs">Časovač 2</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Timer 3</choice>
+    <choice xml:lang="de">Timer 3</choice>
+    <choice xml:lang="fr">Timer 3</choice>
+    <choice xml:lang="cs">Časovač 3</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Timer 4</choice>
+    <choice xml:lang="de">Timer 4</choice>
+    <choice xml:lang="fr">Timer 4</choice>
+    <choice xml:lang="cs">Časovač 4</choice>
+  </enumChoice>
+  <enumChoice value="128">
+    <choice>SUSI F0</choice>
+    <choice xml:lang="de">SUSI F0</choice>
+    <choice xml:lang="fr">SUSI F0</choice>
+    <choice xml:lang="cs">SUSI F0</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>SUSI F1</choice>
+    <choice xml:lang="de">SUSI F1</choice>
+    <choice xml:lang="fr">SUSI F1</choice>
+    <choice xml:lang="cs">SUSI F1</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>SUSI F2</choice>
+    <choice xml:lang="de">SUSI F2</choice>
+    <choice xml:lang="fr">SUSI F2</choice>
+    <choice xml:lang="cs">SUSI F2</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>SUSI F3</choice>
+    <choice xml:lang="de">SUSI F3</choice>
+    <choice xml:lang="fr">SUSI F3</choice>
+    <choice xml:lang="cs">SUSI F3</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>SUSI F4</choice>
+    <choice xml:lang="de">SUSI F4</choice>
+    <choice xml:lang="fr">SUSI F4</choice>
+    <choice xml:lang="cs">SUSI F4</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>SUSI F5</choice>
+    <choice xml:lang="de">SUSI F5</choice>
+    <choice xml:lang="fr">SUSI F5</choice>
+    <choice xml:lang="cs">SUSI F5</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>SUSI F6</choice>
+    <choice xml:lang="de">SUSI F6</choice>
+    <choice xml:lang="fr">SUSI F6</choice>
+    <choice xml:lang="cs">SUSI F6</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>SUSI F7</choice>
+    <choice xml:lang="de">SUSI F7</choice>
+    <choice xml:lang="fr">SUSI F7</choice>
+    <choice xml:lang="cs">SUSI F7</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>SUSI F8</choice>
+    <choice xml:lang="de">SUSI F8</choice>
+    <choice xml:lang="fr">SUSI F8</choice>
+    <choice xml:lang="cs">SUSI F8</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>SUSI F9</choice>
+    <choice xml:lang="de">SUSI F9</choice>
+    <choice xml:lang="fr">SUSI F9</choice>
+    <choice xml:lang="cs">SUSI F9</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>SUSI F10</choice>
+    <choice xml:lang="de">SUSI F10</choice>
+    <choice xml:lang="fr">SUSI F10</choice>
+    <choice xml:lang="cs">SUSI F10</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>SUSI F11</choice>
+    <choice xml:lang="de">SUSI F11</choice>
+    <choice xml:lang="fr">SUSI F11</choice>
+    <choice xml:lang="cs">SUSI F11</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>SUSI F12</choice>
+    <choice xml:lang="de">SUSI F12</choice>
+    <choice xml:lang="fr">SUSI F12</choice>
+    <choice xml:lang="cs">SUSI F12</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>SUSI F13</choice>
+    <choice xml:lang="de">SUSI F13</choice>
+    <choice xml:lang="fr">SUSI F13</choice>
+    <choice xml:lang="cs">SUSI F13</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>SUSI F14</choice>
+    <choice xml:lang="de">SUSI F14</choice>
+    <choice xml:lang="fr">SUSI F14</choice>
+    <choice xml:lang="cs">SUSI F14</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>SUSI F15</choice>
+    <choice xml:lang="de">SUSI F15</choice>
+    <choice xml:lang="fr">SUSI F15</choice>
+    <choice xml:lang="cs">SUSI F15</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>SUSI F16</choice>
+    <choice xml:lang="de">SUSI F16</choice>
+    <choice xml:lang="fr">SUSI F16</choice>
+    <choice xml:lang="cs">SUSI F16</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>SUSI F17</choice>
+    <choice xml:lang="de">SUSI F17</choice>
+    <choice xml:lang="fr">SUSI F17</choice>
+    <choice xml:lang="cs">SUSI F17</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>SUSI F18</choice>
+    <choice xml:lang="de">SUSI F18</choice>
+    <choice xml:lang="fr">SUSI F18</choice>
+    <choice xml:lang="cs">SUSI F18</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>SUSI F18</choice>
+    <choice xml:lang="de">SUSI F18</choice>
+    <choice xml:lang="fr">SUSI F18</choice>
+    <choice xml:lang="cs">SUSI F18</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>SUSI F19</choice>
+    <choice xml:lang="de">SUSI F19</choice>
+    <choice xml:lang="fr">SUSI F19</choice>
+    <choice xml:lang="cs">SUSI F19</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>SUSI F20</choice>
+    <choice xml:lang="de">SUSI F20</choice>
+    <choice xml:lang="fr">SUSI F20</choice>
+    <choice xml:lang="cs">SUSI F20</choice>
+  </enumChoice>
+   <enumChoice value="255">
     <choice>Empty</choice>
     <choice xml:lang="de">Leer</choice>
     <choice xml:lang="fr">Vide</choice>
