@@ -79,11 +79,6 @@
                 <li></li>
             </ul>
 
-        <h4>LCC/Openlcb</h4>
-            <ul>
-                <li>Monitor now decodes clock messages</li>
-            </ul>
-
         <h4>Lenz XPressNet</h4>
             <ul>
                 <li></li>
@@ -131,9 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Switch String input fields to mono-spaced font, and 
-                    limit their content length to the length of the underlying
-                    configuration field.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -263,7 +256,7 @@
 
         <h4>MD Electronics</h4>
              <ul>
-                <li>New decoder definitions DRIVE-S, DRIVE-XS</li>
+                <li></li>
              </ul>
 
         <h4>MGP</h4>
@@ -348,13 +341,12 @@
 
         <h4>Trix Modelleisenbahn</h4>
             <ul>
-                <li>The Trix/Marklin mLD/3 and mSD/3 decoder definitions now have 31 functions</li>
+                <li></li>
             </ul>
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li>Small corrections and improvements to the IntelliDrive2 decoder definitions.
-                    New decoder definition Tillig 66036 Decoder</li>
+                <li></li>
             </ul>
 
         <h4>Umelec</h4>
@@ -385,9 +377,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>The CV table columns now expand to fill their complete pane.
-                This is to make the table more readable when it contains long
-                value or CV name strings.</li>
+            <li></li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -434,25 +424,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-            <li>The LogixNG table now shows whenether the ConditionalNGs
-                of a LogixNG has <strong>Startup</strong> enabled or not.
-                The <strong>Startup</strong> checkbox in the LogixNG
-                table can have three states: Checked, unchecked and
-                partially checked. If the user checks/unchecks the
-                checkbox, all the ConditionalNGs will have the
-                <strong>Startup</strong> enabled/disabled.
-                <br>
-                The column <strong>Startup</strong> is at the far right
-                in the LogixNG table. You might need to resize the table
-                to see the new column.</li>
-                to see the new column.
-                <br>
-                Note: Due to a bug, this feature didn't work as it
-                should in JMRI 5.7.2 but it's now fixed.</li>
-            <li>A couple of bugs in the LogixNG formula parser have
-                been fixed.</li>
-            <li>The action <strong>Program On Main</strong> has been
-                added. It lets you program CVs on the main.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -461,10 +433,10 @@
             <li></li>
         </ul>
 
-    <h3>OperationsPro</h3>
+    <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Fixed a routing bug that was introduced in JMRI 5.6</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -622,15 +594,12 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>Use block values (restored from blockvalues.xml) to get
-            a feasible start block for automatic start.</li>
+            <li></li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>The JInput library used to access certain non-serial USB devices has been
-                updated to version 2.0.9.  This adds support for Apple Silicon and
-                fixes some buffer overflows on Windows.</li>
+            <li></li>
         </ul>
 
