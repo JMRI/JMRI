@@ -39,6 +39,9 @@ public class ActionRequestUpdateOfSensorSwing extends AbstractDigitalActionSwing
                 InstanceManager.getDefault(SensorManager.class), getJDialog(), this);
 
         panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        JPanel innerPanel = new JPanel();
 
         JPanel _tabbedPaneNamedBean;
 
@@ -55,7 +58,13 @@ public class ActionRequestUpdateOfSensorSwing extends AbstractDigitalActionSwing
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
                 Bundle.getMessage("ActionRequestUpdateOfSensor_Components"), components);
 
-        for (JComponent c : componentList) panel.add(c);
+        for (JComponent c : componentList) innerPanel.add(c);
+
+        JPanel infoPanel = new JPanel();
+        infoPanel.add(new JLabel(Bundle.getMessage("ActionRequestUpdateOfSensor_Info")));
+
+        panel.add(innerPanel);
+        panel.add(infoPanel);
     }
 
     /** {@inheritDoc} */
