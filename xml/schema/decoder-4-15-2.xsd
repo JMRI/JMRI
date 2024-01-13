@@ -430,18 +430,20 @@
                   similar attributes on the model element, which are deprecated.
               </xs:documentation></xs:annotation>
               <xs:complexType>
-                <xs:attribute name="maxInputVolts" type="xs:float" />
-                <xs:attribute name="maxPeakTotalCurrent" type="xs:float" >
-                    <xs:annotation><xs:documentation>Unit is Amps</xs:documentation></xs:annotation>
+                <xs:attribute name="maxInputVolts" type="xs:float">
+                    <xs:annotation><xs:documentation>Unit is Volts</xs:documentation></xs:annotation>
                 </xs:attribute>
-                <xs:attribute name="maxPeakMotorCurrent" type="xs:float" >
-                    <xs:annotation><xs:documentation>Unit is Amps</xs:documentation></xs:annotation>
+                <xs:attribute name="continuousTotalCurrent" type="xs:float" >
+                    <xs:annotation><xs:documentation>Max continuous current allowed, including decoder functions and motor control. Unit is Amps</xs:documentation></xs:annotation>
                 </xs:attribute>
-                <xs:attribute name="maxAverageTotalCurrent" type="xs:float" >
-                    <xs:annotation><xs:documentation>Unit is Amps</xs:documentation></xs:annotation>
+                <xs:attribute name="continuousMotorCurrent" type="xs:float" >
+                    <xs:annotation><xs:documentation>Max continuous current allowed for motor control. Unit is Amps</xs:documentation></xs:annotation>
                 </xs:attribute>
-                <xs:attribute name="maxAverageMotorCurrent" type="xs:float" >
-                    <xs:annotation><xs:documentation>Unit is Amps</xs:documentation></xs:annotation>
+                <xs:attribute name="peakTotalCurrent" type="xs:float" >
+                    <xs:annotation><xs:documentation>Short duration peak current that will not damage the decoder, combined total for functions and motor control. Unit is Amps</xs:documentation></xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="peakMotorCurrent" type="xs:float" >
+                    <xs:annotation><xs:documentation>Short duration peak current that will not damage the decoder for motor control. Unit is Amps</xs:documentation></xs:annotation>
                 </xs:attribute>
                 <xs:attribute name="comment" type="xs:string" />
               </xs:complexType>
