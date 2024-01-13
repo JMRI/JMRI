@@ -319,11 +319,12 @@ public class ActionTableSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public boolean canClose() {
-        return selectTableSwing.canClose();
+        return selectTableToSetSwing.canClose() && selectTableSwing.canClose();
     }
 
     @Override
     public void dispose() {
+        selectTableToSetSwing.dispose();
         selectTableSwing.dispose();
     }
 
